@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-String _char(dynamic x) {
+String _char(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -8,7 +8,7 @@ String _char(dynamic x) {
   return String.fromCharCode(x as int);
 }
 
-int _asc(dynamic x) {
+int _asc(Object x) {
   if (_isNotString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -16,7 +16,7 @@ int _asc(dynamic x) {
   return (x as String).codeUnitAt(0);
 }
 
-String _left(dynamic x, dynamic count) {
+String _left(Object x, Object count) {
   if (_isNotString(x) || _isString(count)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -24,7 +24,7 @@ String _left(dynamic x, dynamic count) {
   return (x as String).substring(0, (count as int));
 }
 
-String _right(dynamic x, dynamic count) {
+String _right(Object x, Object count) {
   if (_isNotString(x) || _isString(count)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -36,7 +36,7 @@ String _right(dynamic x, dynamic count) {
   return (x as String).substring(x.length - (count as int));
 }
 
-String _mid(dynamic x, dynamic start, dynamic len) {
+String _mid(Object x, Object start, Object len) {
   if (_isNotString(x) || _isString(start) || _isString(len)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -44,7 +44,7 @@ String _mid(dynamic x, dynamic start, dynamic len) {
   return (x as String).substring((start as int) - 1, start - 1 + (len as int));
 }
 
-int _len(dynamic x) {
+int _len(Object x) {
   if (_isNotString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -52,7 +52,7 @@ int _len(dynamic x) {
   return x.toString().length;
 }
 
-String _str(dynamic x) {
+String _str(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -62,7 +62,7 @@ String _str(dynamic x) {
   return x.toStringAsFixed(3);
 }
 
-dynamic _val(dynamic x) {
+Object _val(Object x) {
   if (int.tryParse(x as String) != null) {
     return int.parse(x).toDouble();
   } else {

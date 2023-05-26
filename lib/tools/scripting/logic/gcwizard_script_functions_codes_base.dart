@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-String _base(dynamic t, dynamic m, dynamic x) {
+String _base(dynamic t, Object m, Object x) {
   if (_isNotInt(t) || _isNotInt(m)) {
     _handleError(INVALIDTYPECAST);
     return '';

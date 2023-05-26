@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-String _wgs84(dynamic x, dynamic y) {
+String _wgs84(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -17,7 +17,7 @@ double _getlat() {
   return GCWizardScript_LAT;
 }
 
-void _setlon(dynamic x) {
+void _setlon(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
   }
@@ -29,7 +29,7 @@ void _setlon(dynamic x) {
   }
 }
 
-void _setlat(dynamic x) {
+void _setlat(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
   }
@@ -41,21 +41,21 @@ void _setlat(dynamic x) {
   }
 }
 
-double _distance(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {
+double _distance(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)).distance;
 }
 
-double _bearing(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {
+double _bearing(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), defaultEllipsoid).bearingAToB;
 }
 
-void _projection(dynamic x1, dynamic y1, dynamic dist, dynamic angle) {
+void _projection(Object x1, Object y1, Object dist, Object angle) {
   if (_isString(x1) || _isString(y1) || _isString(dist) || _isString(angle)) {
     _handleError(INVALIDTYPECAST);
   }
@@ -64,7 +64,7 @@ void _projection(dynamic x1, dynamic y1, dynamic dist, dynamic angle) {
   GCWizardScript_LON = _currentValues.longitude;
 }
 
-void _centerthreepoints(dynamic lat1, dynamic lon1, dynamic lat2, dynamic lon2, dynamic lat3, dynamic lon3) {
+void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
   if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2) || _isString(lat3) || _isString(lon3)) {
     _handleError(INVALIDTYPECAST);
     return;
@@ -82,16 +82,16 @@ void _centerthreepoints(dynamic lat1, dynamic lon1, dynamic lat2, dynamic lon2, 
   GCWizardScript_LAT = -1 * (GCWizardScript_LON - (lon1 + lon2) / 2) / aSlope +  (lat1 + lat2)/2;
 }
 
-void _centertwopoints(dynamic lat1, dynamic lon1, dynamic lat2, dynamic lon2) {
+void _centertwopoints(Object lat1, Object lon1, Object lat2, Object lon2) {
   if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2)) {
     _handleError(INVALIDTYPECAST);
     return;
   }
-  Map<String, dynamic> coord = centerPointTwoPoints(
+  CenterPointDistance coord = centerPointTwoPoints(
       LatLng(lat1 as double, lon1 as double),
       LatLng(lat2 as double, lon2 as double),
-      defaultEllipsoid) as Map<String, dynamic>;
-  GCWizardScript_LAT = coord['centerPoint'].latitude as double;
-  GCWizardScript_LON = coord['centerPoint'].longitude as double;
+      defaultEllipsoid);
+  GCWizardScript_LAT = coord.centerPoint.latitude;
+  GCWizardScript_LON = coord.centerPoint.longitude;
 }
 

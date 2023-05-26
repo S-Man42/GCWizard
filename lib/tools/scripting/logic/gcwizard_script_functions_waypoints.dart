@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-void _wptsadd(dynamic lat, dynamic lon) {
+void _wptsadd(Object lat, Object lon) {
   if (_isString(lat) || _isString(lon)) {
     _handleError(INVALIDTYPECAST);
     return;
@@ -30,7 +30,7 @@ int _wptscount() {
   return _waypoints.length;
 }
 
-double _wptslat(dynamic i) {
+double _wptslat(Object i) {
   if (_isString(i)) {
     _handleError(INVALIDTYPECAST);
     return 0.0;
@@ -42,7 +42,7 @@ double _wptslat(dynamic i) {
   return _waypoints[i - 1].point.latitude;
 }
 
-double _wptslon(dynamic i) {
+double _wptslon(Object i) {
   if (_isString(i)) {
     _handleError(INVALIDTYPECAST);
     return 0.0;
@@ -54,7 +54,7 @@ double _wptslon(dynamic i) {
   return _waypoints[i - 1].point.longitude;
 }
 
-void _wptscenter(dynamic x) {
+void _wptscenter(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return;
@@ -64,7 +64,7 @@ void _wptscenter(dynamic x) {
     coords.add(LatLng(waypoint.point.latitude, waypoint.point.longitude));
   }
   LatLng coord = centroidCenterOfGravity(coords)!;
-  if (x.toInt() == 0) {
+  if ((x as int) == 0) {
     // arithmetic
     coord = centroidArithmeticMean(coords, coord)!;
     GCWizardScript_LAT = coord.latitude;

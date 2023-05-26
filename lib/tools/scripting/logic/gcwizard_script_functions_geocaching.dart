@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-String _rotx(dynamic text, dynamic rot) {
+String _rotx(Object text, Object rot) {
   if (_isNotString(text) || _isString(rot)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -8,7 +8,7 @@ String _rotx(dynamic text, dynamic rot) {
   return Rotator().rotate((text as String), (rot as int));
 }
 
-int _bww(dynamic text, dynamic opt_alph, dynamic opt_itqs) {
+int _bww(Object text, Object opt_alph, Object opt_itqs) {
   if (_isNotString(text) || _isString(opt_alph) || _isString(opt_itqs)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -29,7 +29,7 @@ int _bww(dynamic text, dynamic opt_alph, dynamic opt_itqs) {
   return 0;
 }
 
-String _dectoroman(dynamic x) {
+String _dectoroman(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return '';
@@ -37,7 +37,7 @@ String _dectoroman(dynamic x) {
   return encodeRomanNumbers((x as int), type: RomanNumberType.USE_SUBTRACTION_RULE);
 }
 
-int _romantodec(dynamic x) {
+int _romantodec(Object x) {
   if (_isInt(x) || _isDouble(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;

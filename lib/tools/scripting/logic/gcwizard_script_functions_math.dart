@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-int _sgn(dynamic x) {
+int _sgn(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -14,7 +14,7 @@ int _sgn(dynamic x) {
   }
 }
 
-int _mod(dynamic x, dynamic y) {
+int _mod(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -23,10 +23,10 @@ int _mod(dynamic x, dynamic y) {
     _handleError(DIVISIONBYZERO);
     return 0;
   }
-  return (x.toInt() % y.toInt()) as int;
+  return ((x as int) % (y as int));
 }
 
-double _sqrt(dynamic x) {
+double _sqrt(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -34,7 +34,7 @@ double _sqrt(dynamic x) {
   return sqrt(x as num);
 }
 
-double _sqr(dynamic x) {
+double _sqr(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -42,7 +42,7 @@ double _sqr(dynamic x) {
   return ((x as num) * x) as double;
 }
 
-double _exp(dynamic x) {
+double _exp(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -50,7 +50,7 @@ double _exp(dynamic x) {
   return exp(x as num);
 }
 
-double _sin(dynamic x) {
+double _sin(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -58,7 +58,7 @@ double _sin(dynamic x) {
   return sin(x as num);
 }
 
-double _cos(dynamic x) {
+double _cos(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -66,7 +66,7 @@ double _cos(dynamic x) {
   return cos(x as num);
 }
 
-double _tan(dynamic x) {
+double _tan(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -74,7 +74,7 @@ double _tan(dynamic x) {
   return tan(x as num);
 }
 
-double _asin(dynamic x) {
+double _asin(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -82,7 +82,7 @@ double _asin(dynamic x) {
   return asin(x as num);
 }
 
-double _acos(dynamic x) {
+double _acos(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -90,7 +90,7 @@ double _acos(dynamic x) {
   return acos(x as num);
 }
 
-double _atan(dynamic x) {
+double _atan(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -98,7 +98,7 @@ double _atan(dynamic x) {
   return atan(x as num);
 }
 
-double _deg(dynamic radian) {
+double _deg(Object radian) {
   if (_isString(radian)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -106,7 +106,7 @@ double _deg(dynamic radian) {
   return (radian as num) * 180 / pi;
 }
 
-double _rad(dynamic degree) {
+double _rad(Object degree) {
   if (_isString(degree)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -114,7 +114,7 @@ double _rad(dynamic degree) {
   return (degree as num) * pi / 180;
 }
 
-int _ceil(dynamic x) {
+int _ceil(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -122,7 +122,7 @@ int _ceil(dynamic x) {
   return (x as num).ceil();
 }
 
-int _floor(dynamic x) {
+int _floor(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -130,7 +130,7 @@ int _floor(dynamic x) {
   return (x as num).floor();
 }
 
-double _ln(dynamic x) {
+double _ln(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -138,7 +138,7 @@ double _ln(dynamic x) {
   return log(x as num);
 }
 
-double _log10(dynamic x) {
+double _log10(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -150,7 +150,7 @@ double _pi() {
   return pi;
 }
 
-double _rnd(dynamic x) {
+double _rnd(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -162,7 +162,7 @@ double _rnd(dynamic x) {
   return _randomNumber;
 }
 
-double _fac(dynamic x) {
+double _fac(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -175,7 +175,7 @@ double _fac(dynamic x) {
   return result;
 }
 
-double _frac(dynamic x) {
+double _frac(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -183,7 +183,7 @@ double _frac(dynamic x) {
   return ((x as num) - x.truncate()) as double;
 }
 
-double _trunc(dynamic x) {
+double _trunc(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -191,7 +191,7 @@ double _trunc(dynamic x) {
   return (x as num).truncate() as double;
 }
 
-double _abs(dynamic x) {
+double _abs(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -199,7 +199,7 @@ double _abs(dynamic x) {
   return (x as num).abs() as double;
 }
 
-double _pow(dynamic x, dynamic y) {
+double _pow(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -207,25 +207,25 @@ double _pow(dynamic x, dynamic y) {
   return pow(x as num, y as num) as double;
 }
 
-int _qsum(dynamic x) {
+int _qsum(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
   }
   int result = 0;
-  x.toInt().toString().split('').forEach((digit) {
+  (x as int).toString().split('').forEach((digit) {
     result = result + int.parse(digit);
   });
   return result;
 }
 
-int _iqsum(dynamic x) {
+int _iqsum(Object x) {
   if (_isString(x)) {
     _handleError(INVALIDTYPECAST);
     return 0;
   }
   int result = 0;
-  String number = x.toInt().toString();
+  String number = (x as int).toString();
   while (number.length > 1) {
     result = 0;
     number.split('').forEach((digit) {
@@ -237,7 +237,7 @@ int _iqsum(dynamic x) {
   return result;
 }
 
-int _ggt(dynamic x, dynamic y) {
+int _ggt(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -256,7 +256,7 @@ int _ggt(dynamic x, dynamic y) {
   return x.abs();
 }
 
-int _kgv(dynamic x, dynamic y) {
+int _kgv(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
     _handleError(INVALIDTYPECAST);
     return 0;
@@ -265,7 +265,7 @@ int _kgv(dynamic x, dynamic y) {
   return (((x as int) * (y as int)).abs() / _ggt(x, y)) as int;
 }
 
-String _convert(dynamic value, dynamic startBase, dynamic destinationBase) {
+String _convert(Object value, Object startBase, Object destinationBase) {
   if (_isNotString(value) || _isString(startBase) || _isString(destinationBase)) {
     _handleError(INVALIDTYPECAST);
     return '';

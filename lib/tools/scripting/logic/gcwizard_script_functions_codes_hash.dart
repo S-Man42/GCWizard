@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-String _hash(dynamic t, dynamic b, dynamic km, dynamic k, dynamic x) {
+String _hash(Object t, Object b, Object km, Object k, Object x) {
   if (_isNotString(t) || _isNotInt(b) || _isNotString(k) || _isNotInt(km)) {
     _handleError(INVALIDTYPECAST);
     return '';
   }
-  switch (t.toUpperCase()) {
+  switch ((t as String).toUpperCase()) {
     case 'MD2':
       if (km == 0) {
         return HASH_FUNCTIONS['hashes_md2']!(x as String);
