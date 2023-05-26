@@ -1,12 +1,66 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk_derivative.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 void main() {
-  group("test conversion with GC8PXAD", () {
+  group("BrainfkDerivatives.convertToBrainfk:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'code': '.?..!!.! !  ? ?! !....?', 'derivative': BRAINFKDERIVATIVE_OOK, 'expectedOutput': '>+-,[].+>'},
+      {'code': '.?..!!.! !  ? ?! !....?', 'derivative': BRAINFKDERIVATIVE_SHORTOOK, 'expectedOutput': '>+-,[].+>'},
+      {'code': '.?..!Muss das hier jetzt so!.! WEnn alle!  Aber so? ?! !....?', 'derivative': BRAINFKDERIVATIVE_SHORTOOK, 'expectedOutput': '>+-,[].+>'},
+      {'code': 'Ook. ook? OOK. OOK. ook! oOk!.! !  ? OOk? Ooooo k! !....?', 'derivative': BRAINFKDERIVATIVE_OOK, 'expectedOutput': '>+-,[].+>'},
+      {'code': 'Ook. ook? OOKa. Aber dann OOK. ook! oOk!.! !  Und so? OOk? Ooooo k! !....?', 'derivative': BRAINFKDERIVATIVE_OOK, 'expectedOutput': '>+-,[].+>'},
+
+      {'code': '010011112112', 'derivative': BRAINFKDERIVATIVE_TERNARY, 'expectedOutput': '><++,]'},
+      {'code': '01 00 11 11 21 12', 'derivative': BRAINFKDERIVATIVE_TERNARY, 'expectedOutput': '><++,]'},
+      {'code': '010 011 1121     1   2', 'derivative': BRAINFKDERIVATIVE_TERNARY, 'expectedOutput': '><++,]'},
+      {'code': '0310 011 1444121     1   2', 'derivative': BRAINFKDERIVATIVE_TERNARY, 'expectedOutput': '><++,]'},
+
+      {'code': 'pipi pi pi ka pi pikapi pi ka pika pipi chu', 'derivative': BRAINFKDERIVATIVE_PIKALANG, 'expectedOutput': '>++-+,+-[>]'},
+      {'code': 'pipipipikapipikapipikapikapipichu', 'derivative': BRAINFKDERIVATIVE_PIKALANG, 'expectedOutput': '>+,,,-+<'},
+      {'code': 'pipi pi    pi ka pi PikaPi glu Pi man ka manda    pika pipi chu', 'derivative': BRAINFKDERIVATIVE_PIKALANG, 'expectedOutput': '>++-+,+-[>]'},
+
+      {'code': 'AAAAGH F*CK WHAT?', 'derivative': BRAINFKDERIVATIVE_SCREAMCODE, 'expectedOutput': '<+,'},
+      {'code': 'AAAAGHF*CKWHAT?', 'derivative': BRAINFKDERIVATIVE_SCREAMCODE, 'expectedOutput': '<+,'},
+      {'code': 'aaaaghf*ckwhat?', 'derivative': BRAINFKDERIVATIVE_SCREAMCODE, 'expectedOutput': '<+,'},
+
+      {'code': 'aAaA AAAA aaAA aAaa aaaa aaaA AAAA AAaa aAaA AAaa AaAa', 'derivative': BRAINFKDERIVATIVE_AAA, 'expectedOutput': '>+[,.]+<><-'},
+      {'code': 'aAaAAAAAaaAAaAaaaaaaaaaAAAAAAAaaaAaAAAaaAaAa', 'derivative': BRAINFKDERIVATIVE_AAA, 'expectedOutput': '>+[,.]+<><-'},
+      {'code': 'aAaAAAAaaAAaAaaaaaaaaAAAAAAaaaAaAAaaAaAa', 'derivative': BRAINFKDERIVATIVE_AAA, 'expectedOutput': '>.<-'},
+
+      {'code': "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+          "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+          "REPLACE THE CELL UNDER THE MEMORY POINTER'S VALUE WITH THE ASCII CHARACTER CODE OF USER INPUT\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+          "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+          "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+          "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+          "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+          "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+          "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n",
+        'derivative': BRAINFKDERIVATIVE_DETAILEDFK, 'expectedOutput': '>+[,[].]+<><-'},
+
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('code: ${elem['code']}, input: ${elem['input']}', () {
+        var _actual = (elem['derivative'] as BrainfkDerivatives).convertBrainfkDerivativeToBrainfk(elem['code'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("BrainfkDerivatives.decode", () {
     String brainfck =
         "++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++++++++.<++.++++++++++++++++++++.++++.+++++++.-----------.----.--.++.++++++.++.-----------------.-------.>---------.--------------.++++++++.----------.-----.--.++++.++..";
     String result = "N 48?40.068' E7?50.244";
-    //https://esolangs.org/wiki/Trivial_brainfuck_substitution
+
+/*    //https://esolangs.org/wiki/Trivial_brainfuck_substitution
     String Pewlang = brainfck
         .replaceAll('>', 'pew ')
         .replaceAll('<', 'Pew ')
@@ -191,8 +245,9 @@ void main() {
         .replaceAll('+', 'INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n')
         .replaceAll('-', 'DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n')
         .replaceAll('.', 'PRINT THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE AS AN ASCII CHARACTER\n')
-        .replaceAll(']', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n')
-        .replaceAll('[', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n');
+        .replaceAll('[', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE # COMMAND IN BRAINFUCK\n')
+        .replaceAll(']', 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n')
+        .replaceAll('#', ']');
     String wepmlrIo = brainfck
         .replaceAll('>', 'r ')
         .replaceAll('<', 'l ')
@@ -232,171 +287,21 @@ void main() {
         .replaceAll('-', 'ski ')
         .replaceAll('.', 'an ')
         .replaceAll('[', 'oow ')
-        .replaceAll(']', 'iks ');
+        .replaceAll(']', 'iks ');*/
 
-    List<Map<String, Object?>> _inputsToExpected = [
-      {'derivat': 'brainfck', 'code': brainfck, 'expectedOutput': result},
-      {'derivat': 'Pewlang', 'code': Pewlang, 'expectedOutput': result},
-      {'derivat': 'Roadrunner', 'code': Roadrunner, 'expectedOutput': result},
-      {'derivat': 'Kenny', 'code': Kenny, 'expectedOutput': result},
-      {'derivat': 'pikaLang', 'code': pikaLang, 'expectedOutput': result},
-      {'derivat': 'AAA', 'code': AAA, 'expectedOutput': result},
-      {'derivat': 'Colonoscopy', 'code': Colonoscopy, 'expectedOutput': result},
-      {'derivat': 'fuckbeEs', 'code': fuckbeEs, 'expectedOutput': result},
-      {'derivat': 'ZZZ', 'code': ZZZ, 'expectedOutput': result},
-      {'derivat': 'Fuck', 'code': Fuck, 'expectedOutput': result},
-      {'derivat': 'Morsefuck', 'code': Morsefuck, 'expectedOutput': result},
-      {'derivat': 'Nak', 'code': Nak, 'expectedOutput': result},
-      {'derivat': 'Ook', 'code': Ook, 'expectedOutput': result},
-      {'derivat': 'Blub', 'code': Blub, 'expectedOutput': result},
-      {'derivat': 'Triplet', 'code': Triplet, 'expectedOutput': result},
-      {'derivat': 'Ternary', 'code': Ternary, 'expectedOutput': result},
-      {'derivat': 'BinaryFk', 'code': BinaryFk, 'expectedOutput': result},
-      {'derivat': 'Screamcode', 'code': Screamcode, 'expectedOutput': result},
-      {'derivat': 'FlufflPuff', 'code': FlufflPuff, 'expectedOutput': result},
-      {'derivat': 'UWU', 'code': UWU, 'expectedOutput': result},
-      {'derivat': 'ShortOOK', 'code': ShortOOK, 'expectedOutput': result},
-      {'derivat': 'frqiquartf', 'code': frqiquartf, 'expectedOutput': result},
-      {'derivat': 'alphk', 'code': alphk, 'expectedOutput': result},
-      {'derivat': 'pscript', 'code': pscript, 'expectedOutput': result},
-      {'derivat': 'omam', 'code': omam, 'expectedOutput': result},
-      {'derivat': 'revo9', 'code': revo9, 'expectedOutput': result},
-      {'derivat': 'detail', 'code': detail, 'expectedOutput': result},
-      {'derivat': 'wepmlrIo', 'code': wepmlrIo, 'expectedOutput': result},
-      {'derivat': 'htpf', 'code': htpf, 'expectedOutput': result},
-      {'derivat': 'mierda', 'code': mierda, 'expectedOutput': result},
-      {'derivat': 'gibmerol', 'code': gibmerol, 'expectedOutput': result},
-      {'derivat': 'nagawoosli', 'code': nagawoosli, 'expectedOutput': result},
-    ];
+    for (var elem in BRAINFK_DERIVATIVES.entries) {
+      if (elem.value == 'Custom') {
+        continue;
+      }
 
-    for (var elem in _inputsToExpected) {
-      test('code: ${elem['code']}', () {
-        switch (elem['derivat']) {
-          case 'pikaLang':
-            var _actual = BRAINFKDERIVATIVE_PIKALANG.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'AAA':
-            var _actual = BRAINFKDERIVATIVE_AAA.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Blub':
-            var _actual = BRAINFKDERIVATIVE_BLUB.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Colonoscopy':
-            var _actual = BRAINFKDERIVATIVE_COLONOSCOPY.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'fuckbeEs':
-            var _actual = BRAINFKDERIVATIVE_FKBEES.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Morsefuck':
-            var _actual = BRAINFKDERIVATIVE_MORSEFK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Ook':
-            var _actual = BRAINFKDERIVATIVE_OOK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Pewlang':
-            var _actual = BRAINFKDERIVATIVE_PEWLANG.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Roadrunner':
-            var _actual = BRAINFKDERIVATIVE_ROADRUNNER.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'ZZZ':
-            var _actual = BRAINFKDERIVATIVE_ZZZ.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Fuck':
-            var _actual = BRAINFKDERIVATIVE___FK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Nak':
-            var _actual = BRAINFKDERIVATIVE_NAK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Kenny':
-            var _actual = BRAINFKDERIVATIVE_KENNYSPEAK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Triplet':
-            var _actual = BRAINFKDERIVATIVE_TRIPLET.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'Ternary':
-            var _actual = BRAINFKDERIVATIVE_TERNARY.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'BinaryFk':
-            var _actual = BRAINFKDERIVATIVE_BINARYFK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'ScreamCode':
-            var _actual = BRAINFKDERIVATIVE_SCREAMCODE.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'FlufflPuff':
-            var _actual = BRAINFKDERIVATIVE_FLUFFLEPUFF.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'UWU':
-            var _actual = BRAINFKDERIVATIVE_UWU.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'ShortOOK':
-            var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'frqiquartf':
-            var _actual = BRAINFKDERIVATIVE_BTJZXGQUARTFRQIFJLV.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'alphk':
-            var _actual = BRAINFKDERIVATIVE_ALPHK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'pscript':
-            var _actual = BRAINFKDERIVATIVE_PSSCRIPT.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'omam':
-            var _actual = BRAINFKDERIVATIVE_OMAM.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'revo9':
-            var _actual = BRAINFKDERIVATIVE_REVOLUTION9.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'detail':
-            var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'wepmlrIo':
-            var _actual = BRAINFKDERIVATIVE_WEPMLRIO.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'htpf':
-            var _actual = BRAINFKDERIVATIVE_HTPF.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'mierda':
-            var _actual = BRAINFKDERIVATIVE_MIERDA.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'gibmerol':
-            var _actual = BRAINFKDERIVATIVE_GIBMEROL.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-          case 'nagawoosli':
-            var _actual = BRAINFKDERIVATIVE_NAGAWOOSKI.interpretBrainfkDerivatives(elem['code'] as String);
-            expect(_actual, elem['expectedOutput']);
-            break;
-        }
+      test('derivative: ${elem.value}', () {
+        var derivative = elem.key;
+        var generateCodeFromBf = brainfck;
+        generateCodeFromBf = insertEveryNthCharacter(generateCodeFromBf, 1, ' ');
+        generateCodeFromBf = substitution(generateCodeFromBf, switchMapKeyValue(derivative.substitutions));
+
+        var _actual = derivative.interpretBrainfkDerivatives(generateCodeFromBf);
+        expect(_actual, result);
       });
     }
   });
@@ -489,71 +394,117 @@ void main() {
   });
 
   group("BrainfkDerivat.interpretDetailedFk:", () {
+    // https://esolangs.org/wiki/DetailedFuck
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'code': "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
-            "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
-            "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
-            "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER",
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "IF THE CELL UNDER THE MEMORY POINTER'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE LEFT\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "DECREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n" +
+        "MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE\n" +
+        "PRINT THE CELL UNDER THE MEMORY POINTER'S VALUE AS AN ASCII CHARACTER\n",
         'input': '',
-        'expectedOutput': 'hello world'
+        'expectedOutput': 'Hello World!\n'
       },
     ];
 

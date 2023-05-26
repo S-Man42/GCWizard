@@ -13,7 +13,6 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -30,10 +29,10 @@ class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
 
   @override
-  GeneralSettingsState createState() => GeneralSettingsState();
+ _GeneralSettingsState createState() => _GeneralSettingsState();
 }
 
-class GeneralSettingsState extends State<GeneralSettings> {
+class _GeneralSettingsState extends State<GeneralSettings> {
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
@@ -57,7 +56,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         // data loaded:
                         final Locale? currentLocale = snapshot.data;
 
-                        return GCWStatefulDropDown<String>(
+                        return GCWDropDown<String>(
                             items: SUPPORTED_LOCALES.entries.map((locale) {
                               String languageName = locale.value['name_native'] as String;
 
@@ -74,7 +73,9 @@ class GeneralSettingsState extends State<GeneralSettings> {
                                 ? currentLocale.languageCode
                                 : DEFAULT_LOCALE.languageCode,
                             onChanged: (newValue) {
-                              appLanguage.changeLanguage(newValue);
+                              setState(() {
+                                appLanguage.changeLanguage(newValue);
+                              });
                             });
                       }
                     })),

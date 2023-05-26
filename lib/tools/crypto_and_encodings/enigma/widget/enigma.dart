@@ -22,10 +22,10 @@ class Enigma extends StatefulWidget {
   const Enigma({Key? key}) : super(key: key);
 
   @override
-  EnigmaState createState() => EnigmaState();
+ _EnigmaState createState() => _EnigmaState();
 }
 
-class EnigmaState extends State<Enigma> {
+class _EnigmaState extends State<Enigma> {
   late TextEditingController _inputController;
   late TextEditingController _plugboardController;
 

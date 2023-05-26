@@ -12,10 +12,10 @@ class Windchill extends StatefulWidget {
   const Windchill({Key? key}) : super(key: key);
 
   @override
-  WindchillState createState() => WindchillState();
+ _WindchillState createState() => _WindchillState();
 }
 
-class WindchillState extends State<Windchill> {
+class _WindchillState extends State<Windchill> {
   double _currentTemperature = 0.0;
   double _currentWindSpeed = 0.0;
   GCWSwitchPosition _currentSpeedUnit = GCWSwitchPosition.left;

@@ -11,10 +11,10 @@ class RomanNumbers extends StatefulWidget {
   const RomanNumbers({Key? key}) : super(key: key);
 
   @override
-  RomanNumbersState createState() => RomanNumbersState();
+ _RomanNumbersState createState() => _RomanNumbersState();
 }
 
-class RomanNumbersState extends State<RomanNumbers> {
+class _RomanNumbersState extends State<RomanNumbers> {
   late TextEditingController _decodeController;
 
   var _currentEncodeInput = 1;

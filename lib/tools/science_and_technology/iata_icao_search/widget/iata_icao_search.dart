@@ -11,10 +11,10 @@ class IATAICAOSearch extends StatefulWidget {
   const IATAICAOSearch({Key? key}) : super(key: key);
 
   @override
-  IATAICAOSearchState createState() => IATAICAOSearchState();
+ _IATAICAOSearchState createState() => _IATAICAOSearchState();
 }
 
-class IATAICAOSearchState extends State<IATAICAOSearch> {
+class _IATAICAOSearchState extends State<IATAICAOSearch> {
   late TextEditingController _inputControllerCode;
   late TextEditingController _inputControllerName;
 

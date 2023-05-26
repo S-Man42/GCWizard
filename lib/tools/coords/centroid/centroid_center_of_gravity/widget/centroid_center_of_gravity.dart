@@ -16,10 +16,10 @@ class CentroidCenterOfGravity extends StatefulWidget {
   const CentroidCenterOfGravity({Key? key}) : super(key: key);
 
   @override
-  CentroidCenterOfGravityState createState() => CentroidCenterOfGravityState();
+ _CentroidCenterOfGravityState createState() => _CentroidCenterOfGravityState();
 }
 
-class CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
+class _CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
   var _currentCountCoords = 1;
   final _currentCoords = [defaultBaseCoordinate];
 

@@ -43,10 +43,10 @@ class VariableCoordinate extends StatefulWidget {
   const VariableCoordinate({Key? key, required this.formula}) : super(key: key);
 
   @override
-  VariableCoordinateState createState() => VariableCoordinateState();
+ _VariableCoordinateState createState() => _VariableCoordinateState();
 }
 
-class VariableCoordinateState extends State<VariableCoordinate> {
+class _VariableCoordinateState extends State<VariableCoordinate> {
   Widget _output = GCWCoordsOutput(outputs: const []);
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 

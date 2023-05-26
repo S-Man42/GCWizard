@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/logic/zodiac.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 
 enum _ZODIACSIGNS_ATTRIBUTES {
@@ -22,10 +23,10 @@ class Zodiac extends StatefulWidget {
   const Zodiac({Key? key}) : super(key: key);
 
   @override
-  ZodiacState createState() => ZodiacState();
+ _ZodiacState createState() => _ZodiacState();
 }
 
-class ZodiacState extends State<Zodiac> {
+class _ZodiacState extends State<Zodiac> {
   var _currentMode = GCWSwitchPosition.left;
   var _currentZodiacSign = 0;
   var _currentAttribute = _ZODIACSIGNS_ATTRIBUTES.values.first;
@@ -65,7 +66,7 @@ class ZodiacState extends State<Zodiac> {
           GCWDropDown<_ZODIACSIGNS_ATTRIBUTES>(
             value: _currentAttribute,
             items: _ZODIACSIGNS_ATTRIBUTES.values.map((attribute) {
-              return GCWDropDownMenuItem(value: attribute, child: i18n(context, attribute.name));
+              return GCWDropDownMenuItem(value: attribute, child: i18n(context, enumName(attribute.toString())));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -107,12 +108,12 @@ class ZodiacState extends State<Zodiac> {
 
       return GCWColumnedMultilineOutput(
           data: [
-                  [i18n(context, _ZODIACSIGNS_ATTRIBUTES.date.name), _createDateOutput(zodiacSign.date)],
-                  [i18n(context, _ZODIACSIGNS_ATTRIBUTES.planet.name), _createPlanetOutput(zodiacSign.planet)],
-                  [i18n(context, _ZODIACSIGNS_ATTRIBUTES.element.name), i18n(context, zodiacSign.element)],
-                  [i18n(context, _ZODIACSIGNS_ATTRIBUTES.house.name), zodiacSign.house],
-                  [i18n(context, _ZODIACSIGNS_ATTRIBUTES.quality.name), i18n(context, zodiacSign.quality)],
-                  [i18n(context, _ZODIACSIGNS_ATTRIBUTES.polarity.name), i18n(context, zodiacSign.polarity)],
+                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.date.toString())), _createDateOutput(zodiacSign.date)],
+                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.planet.toString())), _createPlanetOutput(zodiacSign.planet)],
+                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.element.toString())), i18n(context, zodiacSign.element)],
+                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.house.toString())), zodiacSign.house],
+                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.quality.toString())), i18n(context, zodiacSign.quality)],
+                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.polarity.toString())), i18n(context, zodiacSign.polarity)],
                 ],
           flexValues: const [1, 2]
       );

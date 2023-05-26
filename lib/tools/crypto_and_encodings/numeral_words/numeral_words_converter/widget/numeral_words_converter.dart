@@ -17,10 +17,10 @@ class NumeralWordsConverter extends StatefulWidget {
   const NumeralWordsConverter({Key? key}) : super(key: key);
 
   @override
-  NumeralWordsConverterState createState() => NumeralWordsConverterState();
+ _NumeralWordsConverterState createState() => _NumeralWordsConverterState();
 }
 
-class NumeralWordsConverterState extends State<NumeralWordsConverter> {
+class _NumeralWordsConverterState extends State<NumeralWordsConverter> {
   late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';

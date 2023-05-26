@@ -22,20 +22,21 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
+final List<FileType> ANIMATED_IMAGE_ALLOWED_FILETYPES = [FileType.GIF, FileType.PNG, FileType.WEBP];
+
 class AnimatedImage extends StatefulWidget {
   final GCWFile? file;
 
   const AnimatedImage({Key? key, this.file}) : super(key: key);
 
   @override
-  AnimatedImageState createState() => AnimatedImageState();
+ _AnimatedImageState createState() => _AnimatedImageState();
 }
 
-class AnimatedImageState extends State<AnimatedImage> {
+class _AnimatedImageState extends State<AnimatedImage> {
   AnimatedImageOutput? _outData;
   GCWFile? _file;
   bool _play = false;
-  static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class AnimatedImageState extends State<AnimatedImage> {
 
     return Column(children: <Widget>[
       GCWOpenFile(
-        supportedFileTypes: AnimatedImageState.allowedExtensions,
+        supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));

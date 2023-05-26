@@ -10,10 +10,10 @@ class Seasons extends StatefulWidget {
   const Seasons({Key? key}) : super(key: key);
 
   @override
-  SeasonsState createState() => SeasonsState();
+ _SeasonsState createState() => _SeasonsState();
 }
 
-class SeasonsState extends State<Seasons> {
+class _SeasonsState extends State<Seasons> {
   int _currentYear = DateTime.now().year;
 
   @override

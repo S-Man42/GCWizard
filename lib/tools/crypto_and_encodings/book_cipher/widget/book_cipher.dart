@@ -12,10 +12,10 @@ class BookCipher extends StatefulWidget {
   const BookCipher({Key? key}) : super(key: key);
 
   @override
-  BookCipherState createState() => BookCipherState();
+ _BookCipherState createState() => _BookCipherState();
 }
 
-class BookCipherState extends State<BookCipher> {
+class _BookCipherState extends State<BookCipher> {
   var _currentInput = '';
   var _currentSearchMode = GCWSwitchPosition.right;
   var _currentMode = GCWSwitchPosition.left;

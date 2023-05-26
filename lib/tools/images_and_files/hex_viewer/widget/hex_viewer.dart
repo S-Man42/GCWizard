@@ -23,10 +23,10 @@ class HexViewer extends StatefulWidget {
   const HexViewer({Key? key, this.file}) : super(key: key);
 
   @override
-  HexViewerState createState() => HexViewerState();
+ _HexViewerState createState() => _HexViewerState();
 }
 
-class HexViewerState extends State<HexViewer> {
+class _HexViewerState extends State<HexViewer> {
   late ScrollController _scrollControllerHex;
   late ScrollController _scrollControllerASCII;
 

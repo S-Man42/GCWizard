@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:collection/collection.dart';
 
-List<Map<String, String>> _alphabet = [
+const List<Map<String, String>> _alphabet = [
   {'character': '0', 'binary': '00000'},
   {'character': '1', 'binary': '00001'},
   {'character': '2', 'binary': '00010'},

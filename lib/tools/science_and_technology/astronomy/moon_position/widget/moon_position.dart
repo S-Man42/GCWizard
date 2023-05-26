@@ -16,10 +16,10 @@ class MoonPosition extends StatefulWidget {
   const MoonPosition({Key? key}) : super(key: key);
 
   @override
-  MoonPositionState createState() => MoonPositionState();
+ _MoonPositionState createState() => _MoonPositionState();
 }
 
-class MoonPositionState extends State<MoonPosition> {
+class _MoonPositionState extends State<MoonPosition> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultBaseCoordinate;
 

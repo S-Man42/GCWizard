@@ -23,10 +23,10 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
   const GCWCoordsOutputFormatDistance({Key? key, required this.coordFormat, required this.onChanged}) : super(key: key);
 
   @override
-  GCWCoordsOutputFormatDistanceState createState() => GCWCoordsOutputFormatDistanceState();
+ _GCWCoordsOutputFormatDistanceState createState() => _GCWCoordsOutputFormatDistanceState();
 }
 
-class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
+class _GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
   var _currentCoordFormat = defaultCoordinateFormat;
   Length _currentLengthUnit = defaultLengthUnit;
 

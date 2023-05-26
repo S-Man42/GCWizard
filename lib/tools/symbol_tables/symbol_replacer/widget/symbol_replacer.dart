@@ -45,10 +45,10 @@ class SymbolReplacer extends StatefulWidget {
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
 
   @override
-  SymbolReplacerState createState() => SymbolReplacerState();
+ _SymbolReplacerState createState() => _SymbolReplacerState();
 }
 
-class SymbolReplacerState extends State<SymbolReplacer> {
+class _SymbolReplacerState extends State<SymbolReplacer> {
   static String no_symbol_table_key = 'no_symbol_table';
   final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
   SymbolReplacerImage? _symbolImage;

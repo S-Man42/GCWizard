@@ -24,10 +24,10 @@ class Intersection extends StatefulWidget {
   const Intersection({Key? key}) : super(key: key);
 
   @override
-  IntersectionState createState() => IntersectionState();
+ _IntersectionState createState() => _IntersectionState();
 }
 
-class IntersectionState extends State<Intersection> {
+class _IntersectionState extends State<Intersection> {
   var _currentIntersections = <LatLng?>[];
 
   var _currentCoords1 = defaultBaseCoordinate;

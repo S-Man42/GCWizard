@@ -15,10 +15,10 @@ class GCWDatePicker extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWDatePickerState createState() => GCWDatePickerState();
+ _GCWDatePickerState createState() => _GCWDatePickerState();
 }
 
-class GCWDatePickerState extends State<GCWDatePicker> {
+class _GCWDatePickerState extends State<GCWDatePicker> {
   late int _currentYear;
   late int _currentMonth;
   late int _currentDay;

@@ -14,10 +14,10 @@ class ComplexNumbers extends StatefulWidget {
   const ComplexNumbers({Key? key}) : super(key: key);
 
   @override
-  ComplexNumbersState createState() => ComplexNumbersState();
+ _ComplexNumbersState createState() => _ComplexNumbersState();
 }
 
-class ComplexNumbersState extends State<ComplexNumbers> {
+class _ComplexNumbersState extends State<ComplexNumbers> {
   var _currentA = '';
   var _currentB = '';
   var _currentRadius = '';

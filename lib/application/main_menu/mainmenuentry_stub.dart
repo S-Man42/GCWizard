@@ -8,10 +8,10 @@ class MainMenuEntryStub extends StatefulWidget {
   const MainMenuEntryStub({Key? key, required this.content}) : super(key: key);
 
   @override
-  MainMenuEntryStubState createState() => MainMenuEntryStubState();
+ _MainMenuEntryStubState createState() => _MainMenuEntryStubState();
 }
 
-class MainMenuEntryStubState extends State<MainMenuEntryStub> {
+class _MainMenuEntryStubState extends State<MainMenuEntryStub> {
   @override
   Widget build(BuildContext context) {
     return Container(
