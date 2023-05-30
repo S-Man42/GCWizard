@@ -93,24 +93,20 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const AlwaysScrollableScrollPhysics(),
-              // child: GestureDetector(
-              //   onTap: () => _unselectBoardBox(),
-              //   behavior : HitTestBehavior.opaque,
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
-                  child: Row( children: <Widget>[
-                    NumberPyramidBoard(
-                      board: _currentBoard,
-                      onChanged: (newBoard) {
-                        setState(() {
-                          _currentBoard = newBoard;
-                          _unselectBoardBox(); //_selectedBox = null;
-                        });
-                      },
-                    ),
-                  ]),
-                ),
-              // ),
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
+                child: Row( children: <Widget>[
+                  NumberPyramidBoard(
+                    board: _currentBoard,
+                    onChanged: (newBoard) {
+                      setState(() {
+                        _currentBoard = newBoard;
+                        _hideInputTextBox();
+                      });
+                    },
+                  ),
+                ]),
+              ),
             ),
         ),
 
@@ -161,7 +157,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      _unselectBoardBox();
+                      _hideInputTextBox();
                       _currentBoard.solvePyramid(_MAX_SOLUTIONS);
                       if (_currentBoard.solutions == null) {
                         showToast(i18n(context, 'sudokusolver_error'));
@@ -181,7 +177,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearcalculated'),
                     onPressed: () {
                       setState(() {
-                        _unselectBoardBox();
+                        _hideInputTextBox();
                         _currentBoard.removeCalculated();
                       });
                     },
@@ -195,7 +191,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearall'),
                     onPressed: () {
                       setState(() {
-                        _unselectBoardBox();
+                        _hideInputTextBox();
                         _currentBoard = NumberPyramid(_rowCount);
                       });
                     },

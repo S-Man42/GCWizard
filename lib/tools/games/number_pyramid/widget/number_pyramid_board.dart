@@ -4,13 +4,6 @@ Point<int>? _selectedBox;
 Rect? _selectedBoxRect;
 FocusNode? _valueFocusNode;
 
-void _unselectBoardBox() {
-  _selectedBox = null;
-  _selectedBoxRect = null;
-  if (_valueFocusNode != null) {
-    _valueFocusNode!.unfocus();
-  }
-}
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
@@ -60,7 +53,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                         gesturesToOverride: const [GestureType.onTapDown],
                         builder: (context) {
                           return CustomPaint(
-                            painter: NumberPyramidBoardPainter(context, widget.type, widget.board, _showBoxValue)
+                            painter: NumberPyramidBoardPainter(context, widget.type, widget.board, _showInputTextBox, _setState)
                           );
                         },
                       )
@@ -109,30 +102,46 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                 });
               }
           )
-      ); //SizedBox (width: 60, child: Column(children: [textBox()])))
+      );
     }
     return Container();
   }
 
-  void _showBoxValue(Point<int>? selectedBox, Rect? selectedBoxRect) {
+  void _setState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
     setState(() {
-      if (selectedBox != null) {
-        _selectedBox = selectedBox;
+      if (showInputTextBox != null) {
+        _selectedBox = showInputTextBox;
         _selectedBoxRect = selectedBoxRect;
         _currentValueFocusNode.requestFocus();
       } else {
-        _unselectBoardBox();      }
+        _hideInputTextBox();
+      }
     });
+  }
+}
+
+void _hideInputTextBox() {
+  _selectedBox = null;
+  _selectedBoxRect = null;
+  if (_valueFocusNode != null) {
+    _valueFocusNode!.unfocus();
   }
 }
 
 class NumberPyramidBoardPainter extends CustomPainter {
   final BuildContext context;
-  final void Function(Point<int>?, Rect?) showBoxValue;
+  final void Function(Point<int>?, Rect?) showInputTextBox;
+  final void Function() setState;
   final NumberPyramidFillType type;
   final NumberPyramid board;
 
-  NumberPyramidBoardPainter(this.context, this.type, this.board, this.showBoxValue);
+  NumberPyramidBoardPainter(this.context, this.type, this.board, this.showInputTextBox, this.setState);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -166,7 +175,7 @@ class NumberPyramidBoardPainter extends CustomPainter {
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground,
         onTapDown: (tapDetail) {
-          showBoxValue(null, null);
+          showInputTextBox(null, null);
         }
     );
 
@@ -181,13 +190,15 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
-              showBoxValue(Point<int>(boardX, boardY), rect);
+              showInputTextBox(Point<int>(boardX, boardY), rect);
             }
         );
 
         if ((_selectedBox != null) && (_selectedBox!.x == x) && (_selectedBox!.y == y)) {
-          _selectedBoxRect = rect;
-          print(_selectedBoxRect);
+          if (_selectedBoxRect != rect) {
+            _selectedBoxRect = rect;
+            setState();
+          }
         }
 
         _touchCanvas.drawRect(rect, paint);
