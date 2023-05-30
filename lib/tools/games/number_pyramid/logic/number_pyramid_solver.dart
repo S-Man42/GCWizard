@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:gc_wizard/tools/games/number_pyramid/logic/dennistreysa_number_pyramid_solver/pyramid.dart';
-import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
-import 'package:gc_wizard/utils/json_utils.dart';
 
 enum NumberPyramidFillType { USER_FILLED, CALCULATED }
 
@@ -127,51 +124,6 @@ class NumberPyramid {
 				setValue(x, y, solutions![solutionIndex].getValue(x, y), NumberPyramidFillType.CALCULATED);
 			}
 		}
-	}
-
-	String toJson() {
-		var list = <String>[];
-		for(var y = 0; y < pyramid.length; y++) {
-			for (var x = 0; x < pyramid[y].length; x++) {
-				var value = getValue(x, y);
-				var type = getFillType(x, y);
-				if (value != null) {
-					var entryList = <String, dynamic>{'x': x, 'y': y, 'value': value};
-					if (type == NumberPyramidFillType.USER_FILLED) entryList.addAll({'ud': true});
-					list.add(jsonEncode(entryList));
-				}
-			}
-		}
-		var json = jsonEncode({'columns': getColumnsCount(rowCount), 'rows': rowCount, 'values': jsonEncode(list)});
-
-		return json;
-	}
-
-
-	static NumberPyramid? fromJson(String text) {
-		var json = asJsonMapOrNull(jsonDecode(text));
-		if (json == null) return null;
-
-		NumberPyramid pyramid;
-		var rowCount = toIntOrNull(json['rows']);
-		var values = toStringListOrNull(json['values']) ;
-		if (rowCount == null) return null;
-
-		pyramid = NumberPyramid(rowCount);
-		if (values != null) {
-			for (var jsonElement in values) {
-				var element = jsonDecode(jsonElement);
-				var x = toIntOrNull(element['x']);
-				var y = toIntOrNull(element['y']);
-				var value = toIntOrNull(element['v']);
-				var ud = toBoolOrNull(element['ud']);
-				if (x != null && y != null && value != null) {
-					var type = (ud == true) ? NumberPyramidFillType.USER_FILLED : NumberPyramidFillType.CALCULATED;
-					pyramid.setValue(y, x, value, type);
-				}
-			}
-		}
-		return pyramid;
 	}
 }
 

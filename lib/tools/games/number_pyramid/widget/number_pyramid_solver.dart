@@ -6,8 +6,6 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
-import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -89,19 +87,6 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 });
               },
             ),
-            Container(width: 5),
-            GCWPasteButton(
-              iconSize: IconButtonSize.SMALL,
-              onSelected: _parseClipboard,
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              icon: Icons.content_copy,
-              onPressed: () {
-                var copyText = _currentBoard.toJson();
-                insertIntoGCWClipboard(context, copyText);
-              },
-            )
           ])
         ),
         SingleChildScrollView(
@@ -119,7 +104,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                       onChanged: (newBoard) {
                         setState(() {
                           _currentBoard = newBoard;
-                          _selectedBox = null;
+                          _unselectBoardBox(); //_selectedBox = null;
                         });
                       },
                     ),
@@ -224,21 +209,5 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
 
   void _showSolution() {
     _currentBoard.mergeSolution(_currentSolution);
-  }
-
-
-  void _parseClipboard(String text) {
-    setState(() {
-      var pyramid = NumberPyramid.fromJson(text);
-      if (pyramid == null) {
-        _rowCount = 3;
-        _currentBoard = NumberPyramid(_rowCount);
-      } else {
-        _rowCount = pyramid.rowCount;
-        _currentBoard = pyramid;
-      }
-      _selectedBox = null;
-      _selectedBoxRect = null;
-    });
   }
 }

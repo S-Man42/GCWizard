@@ -2,11 +2,14 @@ part of 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solv
 
 Point<int>? _selectedBox;
 Rect? _selectedBoxRect;
+FocusNode? _valueFocusNode;
 
 void _unselectBoardBox() {
-  print('unselect');
   _selectedBox = null;
   _selectedBoxRect = null;
+  if (_valueFocusNode != null) {
+    _valueFocusNode!.unfocus();
+  }
 }
 
 class NumberPyramidBoard extends StatefulWidget {
@@ -32,6 +35,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
   void initState() {
     super.initState();
 
+    _valueFocusNode = _currentValueFocusNode;
     _currentInputController = TextEditingController();
     _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
   }
@@ -76,7 +80,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
         _currentValue = null;
       }
       _currentInputController.text = _currentValue?.toString() ?? '';
-      _currentInputController.selection....
+      _currentInputController.selection = TextSelection.collapsed(offset: _currentInputController.text.length);
 
       return Positioned(
           left: _selectedBoxRect!.left,
@@ -112,12 +116,13 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
 
   void _showBoxValue(Point<int>? selectedBox, Rect? selectedBoxRect) {
     setState(() {
-      print(selectedBox.toString() + ' ' + selectedBoxRect.toString());
-      _selectedBox = selectedBox;
-      _selectedBoxRect = selectedBoxRect;
-      _currentValueFocusNode.requestFocus();
+      if (selectedBox != null) {
+        _selectedBox = selectedBox;
+        _selectedBoxRect = selectedBoxRect;
+        _currentValueFocusNode.requestFocus();
+      } else {
+        _unselectBoardBox();      }
     });
-    // _currentValueFocusNode.requestFocus();
   }
 }
 
@@ -160,7 +165,9 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground,
-        onTapDown: (tapDetail)  => _unselectBoardBox()
+        onTapDown: (tapDetail) {
+          showBoxValue(null, null);
+        }
     );
 
     for (int y = 0; y < board.getRowsCount(); y++) {
@@ -174,15 +181,13 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
-              print('select');
-              // _selectedBox = Point<int>(boardX, boardY);
-              // _selectedBoxRect = rect;
               showBoxValue(Point<int>(boardX, boardY), rect);
             }
         );
 
         if ((_selectedBox != null) && (_selectedBox!.x == x) && (_selectedBox!.y == y)) {
           _selectedBoxRect = rect;
+          print(_selectedBoxRect);
         }
 
         _touchCanvas.drawRect(rect, paint);
