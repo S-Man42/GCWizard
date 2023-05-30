@@ -15,10 +15,10 @@ class Antipodes extends StatefulWidget {
   const Antipodes({Key? key}) : super(key: key);
 
   @override
-  AntipodesState createState() => AntipodesState();
+ _AntipodesState createState() => _AntipodesState();
 }
 
-class AntipodesState extends State<Antipodes> {
+class _AntipodesState extends State<Antipodes> {
   var _currentCoords = defaultBaseCoordinate;
 
   var _currentValues = <LatLng>[];

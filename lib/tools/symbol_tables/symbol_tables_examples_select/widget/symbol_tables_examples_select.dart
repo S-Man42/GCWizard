@@ -22,10 +22,10 @@ class SymbolTableExamplesSelect extends StatefulWidget {
   const SymbolTableExamplesSelect({Key? key}) : super(key: key);
 
   @override
-  SymbolTableExamplesSelectState createState() => SymbolTableExamplesSelectState();
+ _SymbolTableExamplesSelectState createState() => _SymbolTableExamplesSelectState();
 }
 
-class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
+class _SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
   List<Map<String, SymbolData>> images = [];
   List<String> selectedSymbolTables = [];
 

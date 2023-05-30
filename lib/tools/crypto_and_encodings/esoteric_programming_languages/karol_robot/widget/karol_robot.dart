@@ -23,10 +23,10 @@ class KarolRobot extends StatefulWidget {
   const KarolRobot({Key? key}) : super(key: key);
 
   @override
-  KarolRobotState createState() => KarolRobotState();
+ _KarolRobotState createState() => _KarolRobotState();
 }
 
-class KarolRobotState extends State<KarolRobot> {
+class _KarolRobotState extends State<KarolRobot> {
   late TextEditingController _decodeController;
   late TextEditingController _encodeController;
 

@@ -6,8 +6,6 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
-import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -19,7 +17,6 @@ import 'package:gc_wizard/tools/games/number_pyramid/logic/number_pyramid_solver
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_board.dart';
-
 
 class NumberPyramidSolver extends StatefulWidget {
   const NumberPyramidSolver({Key? key}) : super(key: key);
@@ -35,30 +32,14 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   final int _MAX_SOLUTIONS = 10;
   var _rowCount = 3;
   var _currentExpanded = true;
-  int? _currentValue;
-  int? _boardX;
-  int? _boardY;
   double _scale = 1;
-  late TextEditingController _currentInputController;
-  late GCWIntegerTextInputFormatter _integerInputFormatter;
-  final _currentValueFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _currentInputController = TextEditingController();
-    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
 
     _currentBoard = NumberPyramid(_rowCount);
     _showBoxValue(0, 0);
-  }
-
-  @override
-  void dispose() {
-    _currentInputController.dispose();
-    _currentValueFocusNode.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -107,19 +88,6 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                 });
               },
             ),
-            Container(width: 5),
-            GCWPasteButton(
-              iconSize: IconButtonSize.SMALL,
-              onSelected: _parseClipboard,
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              icon: Icons.content_copy,
-              onPressed: () {
-                var copyText = _currentBoard.toJson();
-                insertIntoGCWClipboard(context, copyText);
-              },
-            )
           ])
         ),
         SingleChildScrollView(
@@ -128,40 +96,21 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
               physics: const AlwaysScrollableScrollPhysics(),
               child: Container(
                 constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
-                child: NumberPyramidBoard(
-                  board: _currentBoard,
-                  onChanged: (newBoard) {
-                    setState(() {
-                      _currentBoard = newBoard;
-                      selectedBox = null;
-                      _showBoxValue(null, null);
-                    });
-                  },
-                  showBoxValue: _showBoxValue,
-                ),
+                child: Row( children: <Widget>[
+                  NumberPyramidBoard(
+                    board: _currentBoard,
+                    onChanged: (newBoard) {
+                      setState(() {
+                        _currentBoard = newBoard;
+                        _hideInputTextBox();
+                      });
+                    },
+                  ),
+                ]),
               ),
             ),
         ),
-        Container(height: 10),
-        GCWTextField(
-          title: i18n(context, 'common_value'),
-          controller: _currentInputController,
-          inputFormatters: [_integerInputFormatter],
-          keyboardType: const TextInputType.numberWithOptions(),
-          autofocus: true,
-          focusNode: _currentValueFocusNode,
-          onChanged: (value) {
-            setState(() {
-              _currentValue = int.tryParse(value);
-              var type = NumberPyramidFillType.USER_FILLED;
-              if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
-              if (_boardX != null && _boardY != null &&
-                  _currentBoard.setValue(_boardX!, _boardY!, _currentValue, type)) {
-                _currentBoard.removeCalculated();
-              }
-            });
-          },
-        ),
+
         if (_currentBoard.solutions != null && _currentBoard.solutions!.length > 1)
           Container(
             margin: const EdgeInsets.only(top: 5 * DOUBLE_DEFAULT_MARGIN),
@@ -209,6 +158,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
+                      _hideInputTextBox();
                       _currentBoard.solvePyramid(_MAX_SOLUTIONS);
                       if (_currentBoard.solutions == null) {
                         showToast(i18n(context, 'sudokusolver_error'));
@@ -228,6 +178,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearcalculated'),
                     onPressed: () {
                       setState(() {
+                        _hideInputTextBox();
                         _currentBoard.removeCalculated();
                       });
                     },
@@ -241,6 +192,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                     text: i18n(context, 'sudokusolver_clearall'),
                     onPressed: () {
                       setState(() {
+                        _hideInputTextBox();
                         _currentBoard = NumberPyramid(_rowCount);
                       });
                     },
@@ -254,39 +206,5 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
 
   void _showSolution() {
     _currentBoard.mergeSolution(_currentSolution);
-  }
-
-  void _showBoxValue(int? x, int? y) {
-    setState(() {
-      _boardX = x;
-      _boardY = y;
-      if (x != null && y != null) {
-        _currentValue = _currentBoard.getValue(x, y);
-      } else {
-        _currentValue = null;
-      }
-      _currentInputController.text = _currentValue == null ? '' : _currentValue.toString();
-
-      if (x != null && y != null && _currentBoard.validPosition(x, y)) {
-        _currentValueFocusNode.requestFocus();
-      } else {
-        _currentValueFocusNode.unfocus();
-      }
-    });
-  }
-
-  void _parseClipboard(String text) {
-    setState(() {
-      var pyramid = NumberPyramid.fromJson(text);
-      if (pyramid == null) {
-        _rowCount = 3;
-        _currentBoard = NumberPyramid(_rowCount);
-      } else {
-        _rowCount = pyramid.rowCount;
-        _currentBoard = pyramid;
-      }
-      selectedBox = null;
-      _showBoxValue(null, null);
-    });
   }
 }

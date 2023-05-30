@@ -15,10 +15,10 @@ class Beaufort extends StatefulWidget {
   const Beaufort({Key? key}) : super(key: key);
 
   @override
-  BeaufortState createState() => BeaufortState();
+ _BeaufortState createState() => _BeaufortState();
 }
 
-class BeaufortState extends State<Beaufort> {
+class _BeaufortState extends State<Beaufort> {
   var _currentMode = GCWSwitchPosition.left;
 
   var _currentVelocity = 0.0;

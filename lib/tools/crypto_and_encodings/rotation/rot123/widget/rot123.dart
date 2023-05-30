@@ -10,10 +10,10 @@ class Rot123 extends StatefulWidget {
   const Rot123({Key? key}) : super(key: key);
 
   @override
-  Rot123State createState() => Rot123State();
+ _Rot123State createState() => _Rot123State();
 }
 
-class Rot123State extends State<Rot123> {
+class _Rot123State extends State<Rot123> {
   late TextEditingController _controller;
 
   String _currentInput = '';

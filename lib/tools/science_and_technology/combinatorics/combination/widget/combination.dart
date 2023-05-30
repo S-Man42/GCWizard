@@ -11,10 +11,10 @@ class Combination extends StatefulWidget {
   const Combination({Key? key}) : super(key: key);
 
   @override
-  CombinationState createState() => CombinationState();
+ _CombinationState createState() => _CombinationState();
 }
 
-class CombinationState extends State<Combination> {
+class _CombinationState extends State<Combination> {
   var _currentInput = '';
   bool _currentShowDuplicates = false;
 

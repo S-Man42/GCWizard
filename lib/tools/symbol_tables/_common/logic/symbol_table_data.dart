@@ -251,7 +251,11 @@ class SymbolTableData {
     _config.caseSensitive = jsonConfig[SymbolTableConstants.CONFIG_CASESENSITIVE] != null;
     _config.translationPrefix = toStringOrNull(jsonConfig[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX]) ?? '';
 
-    if (jsonConfig[SymbolTableConstants.CONFIG_IGNORE] == null) {
+    if (jsonConfig[SymbolTableConstants.CONFIG_TRANSLATE] != null) {
+      _config.translate = toStringListOrNull(jsonConfig[SymbolTableConstants.CONFIG_TRANSLATE]) ?? [];
+    }
+
+    if (jsonConfig[SymbolTableConstants.CONFIG_IGNORE] != null) {
       _config.ignore = toStringListOrNull(jsonConfig[SymbolTableConstants.CONFIG_IGNORE]) ?? [];
     }
 

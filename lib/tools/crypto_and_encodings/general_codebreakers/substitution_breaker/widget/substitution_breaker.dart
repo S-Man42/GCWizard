@@ -26,10 +26,10 @@ class SubstitutionBreaker extends StatefulWidget {
   const SubstitutionBreaker({Key? key}) : super(key: key);
 
   @override
-  SubstitutionBreakerState createState() => SubstitutionBreakerState();
+ _SubstitutionBreakerState createState() => _SubstitutionBreakerState();
 }
 
-class SubstitutionBreakerState extends State<SubstitutionBreaker> {
+class _SubstitutionBreakerState extends State<SubstitutionBreaker> {
   String _currentInput = '';
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   SubstitutionBreakerResult? _currentOutput;

@@ -15,10 +15,10 @@ class RSA extends StatefulWidget {
   const RSA({Key? key}) : super(key: key);
 
   @override
-  RSAState createState() => RSAState();
+ _RSAState createState() => _RSAState();
 }
 
-class RSAState extends State<RSA> {
+class _RSAState extends State<RSA> {
   String _currentInput = '';
   String _currentED = '';
   String _currentP = '';

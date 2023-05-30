@@ -14,7 +14,7 @@ class ResistorColorCodeCalculator extends StatefulWidget {
   const ResistorColorCodeCalculator({Key? key}) : super(key: key);
 
   @override
-  ResistorColorCodeCalculatorState createState() => ResistorColorCodeCalculatorState();
+ _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
 }
 
 // TODO:
@@ -28,7 +28,7 @@ class ResistorColorCodeCalculator extends StatefulWidget {
 // hasn't rebuild all dropdownbuttons but only added/removed one from the end of the list.
 // So it was not possible to completely remove all dropdowns and their internal states and add all new
 // which kept an old state somewhere internally - no matter what I tried.
-class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator> {
+class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator> {
   var _currentNumberBands = 3;
   var _changed = false;
 

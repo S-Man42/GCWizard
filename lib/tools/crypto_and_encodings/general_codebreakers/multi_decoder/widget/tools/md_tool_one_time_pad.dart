@@ -21,12 +21,25 @@ class MultiDecoderToolOneTimePad extends AbstractMultiDecoderTool {
               return decryptOneTimePad(input, key, keyOffset: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_ONETIMEPAD, options, MDT_ONETIMEPAD_OPTION_KEY) - 1);
             },
             requiresKey: true,
-            options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ONETIMEPAD_OPTION_KEY: GCWIntegerSpinner(
-                  value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_ONETIMEPAD, options, MDT_ONETIMEPAD_OPTION_KEY),
-                  onChanged: (value) {
-                    options[MDT_ONETIMEPAD_OPTION_KEY] = value;
-                  }),
-            }));
+            options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolOneTimePadState();
+}
+
+class _MultiDecoderToolOneTimePadState extends State<MultiDecoderToolOneTimePad> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_ONETIMEPAD_OPTION_KEY: GCWIntegerSpinner(
+          value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_ONETIMEPAD, widget.options, MDT_ONETIMEPAD_OPTION_KEY),
+          onChanged: (value) {
+            setState(() {
+              widget.options[MDT_ONETIMEPAD_OPTION_KEY] = value;
+            });
+
+          }),
+    }
+    );
+  }
 }

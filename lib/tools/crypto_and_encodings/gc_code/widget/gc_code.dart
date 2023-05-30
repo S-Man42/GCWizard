@@ -10,10 +10,10 @@ class GCCode extends StatefulWidget {
   const GCCode({Key? key}) : super(key: key);
 
   @override
-  GCCodeState createState() => GCCodeState();
+ _GCCodeState createState() => _GCCodeState();
 }
 
-class GCCodeState extends State<GCCode> {
+class _GCCodeState extends State<GCCode> {
   late TextEditingController _gcCodeInputController;
 
   String _currentGCCodeInput = 'GC';

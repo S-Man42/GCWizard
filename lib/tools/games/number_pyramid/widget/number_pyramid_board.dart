@@ -1,14 +1,16 @@
 part of 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 
-Point<int>? selectedBox = Point<int>(0, 0);
+Point<int>? _selectedBox;
+Rect? _selectedBoxRect;
+FocusNode? _valueFocusNode;
+
 
 class NumberPyramidBoard extends StatefulWidget {
   final NumberPyramidFillType type;
-  final void Function(int, int) showBoxValue;
   final void Function(NumberPyramid) onChanged;
   final NumberPyramid board;
 
-  const NumberPyramidBoard({Key? key, required this.onChanged, required this.showBoxValue,
+  const NumberPyramidBoard({Key? key, required this.onChanged,
     required this.board, this.type = NumberPyramidFillType.CALCULATED})
       : super(key: key);
 
@@ -17,46 +19,129 @@ class NumberPyramidBoard extends StatefulWidget {
 }
 
 class NumberPyramidBoardState extends State<NumberPyramidBoard> {
+  int? _currentValue;
+  late TextEditingController _currentInputController;
+  late GCWIntegerTextInputFormatter _integerInputFormatter;
+  final _currentValueFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _valueFocusNode = _currentValueFocusNode;
+    _currentInputController = TextEditingController();
+    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
+  }
+
+  @override
+  void dispose() {
+    _currentInputController.dispose();
+    _currentValueFocusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
+    return
         Expanded(
-            child: AspectRatio(
-                aspectRatio: 1 / 0.5,
-                child: CanvasTouchDetector(
-                  gesturesToOverride: const [GestureType.onTapDown],
-                  builder: (context) {
-                    return CustomPaint(
-                      painter: NumberPyramidBoardPainter(context, widget.type, widget.board, (x, y, value) {
-                          setState(() {
-                            if (value == null) {
-                              widget.board.setValue(x, y, null, NumberPyramidFillType.CALCULATED);
-                            } else {
-                              widget.board.setValue(x, y, value, NumberPyramidFillType.USER_FILLED);
-                            }
-
-                            widget.onChanged(widget.board);
-                          });
+            child:
+              Stack(children:<Widget>[
+                  AspectRatio(
+                      aspectRatio: 1 / 0.5,
+                      child: CanvasTouchDetector(
+                        gesturesToOverride: const [GestureType.onTapDown],
+                        builder: (context) {
+                          return CustomPaint(
+                            painter: NumberPyramidBoardPainter(context, widget.type, widget.board, _showInputTextBox, _setState)
+                          );
                         },
-                        widget.showBoxValue)
-                    );
-                  },
-                ))
-        )
-      ],
+                      )
+                  ),
+                  _editWidget()
+              ])
     );
+  }
+
+  Widget _editWidget() {
+    const int hightOffset = 4;
+    ThemeColors colors = themeColors();
+    if (_selectedBoxRect != null && _selectedBox  != null) {
+      if (widget.board.getFillType(_selectedBox!.x, _selectedBox!.y) == NumberPyramidFillType.USER_FILLED) {
+        _currentValue = widget.board.getValue(_selectedBox!.x, _selectedBox!.y);
+      } else {
+        _currentValue = null;
+      }
+      _currentInputController.text = _currentValue?.toString() ?? '';
+      _currentInputController.selection = TextSelection.collapsed(offset: _currentInputController.text.length);
+
+      return Positioned(
+          left: _selectedBoxRect!.left,
+          top: _selectedBoxRect!.top - hightOffset,
+          width: _selectedBoxRect!.width,
+          height: _selectedBoxRect!.height + 2 * hightOffset,
+          child: GCWTextField(
+              controller: _currentInputController,
+              inputFormatters: [_integerInputFormatter],
+              keyboardType: const TextInputType.numberWithOptions(),
+              autofocus: true,
+              focusNode: _currentValueFocusNode,
+              style: TextStyle(
+                fontSize: _selectedBoxRect!.height * 0.6,
+                color: colors.secondary(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _currentValue = int.tryParse(value);
+                  var type = NumberPyramidFillType.USER_FILLED;
+                  if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
+                  if (_selectedBox != null &&
+                      widget.board.setValue(_selectedBox!.x, _selectedBox!.y, _currentValue, type)) {
+                    widget.board.removeCalculated();
+                  }
+                });
+              }
+          )
+      );
+    }
+    return Container();
+  }
+
+  void _setState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
+    setState(() {
+      if (showInputTextBox != null) {
+        _selectedBox = showInputTextBox;
+        _selectedBoxRect = selectedBoxRect;
+        _currentValueFocusNode.requestFocus();
+      } else {
+        _hideInputTextBox();
+      }
+    });
+  }
+}
+
+void _hideInputTextBox() {
+  _selectedBox = null;
+  _selectedBoxRect = null;
+  if (_valueFocusNode != null) {
+    _valueFocusNode!.unfocus();
   }
 }
 
 class NumberPyramidBoardPainter extends CustomPainter {
-  final void Function(int, int, int?) setBoxValue;
-  final void Function(int, int) showBoxValue;
-  final NumberPyramid board;
   final BuildContext context;
+  final void Function(Point<int>?, Rect?) showInputTextBox;
+  final void Function() setState;
   final NumberPyramidFillType type;
+  final NumberPyramid board;
 
-  NumberPyramidBoardPainter(this.context, this.type, this.board, this.setBoxValue, this.showBoxValue);
+  NumberPyramidBoardPainter(this.context, this.type, this.board, this.showInputTextBox, this.setState);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -65,13 +150,16 @@ class NumberPyramidBoardPainter extends CustomPainter {
 
     var paint = Paint();
     var paintBack = Paint();
-    var selectedRect = const Rect.fromLTRB(0, 0, 0, 0);
+    var paintBackground = Paint();
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
     paint.color = colors.secondary();
 
     paintBack.style = PaintingStyle.fill;
     paintBack.color = colors.gridBackground();
+
+    paintBackground.color = Colors.transparent;
+    paintBackground.style = PaintingStyle.fill;
 
     const border = 2;
     double widthOuter = size.width - 2 * border;
@@ -80,6 +168,16 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double yOuter = border.toDouble();
     double widthInner = widthOuter / board.getRowsCount();
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
+    var fontsize = heightInner * 0.8;
+    Rect rect = Rect.zero;
+
+
+    rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    _touchCanvas.drawRect(rect, paintBackground,
+        onTapDown: (tapDetail) {
+          showInputTextBox(null, null);
+        }
+    );
 
     for (int y = 0; y < board.getRowsCount(); y++) {
       double xInner = (widthOuter + xOuter - (y + 1) * widthInner) / 2;
@@ -89,23 +187,27 @@ class NumberPyramidBoardPainter extends CustomPainter {
         var boardY = y;
         var boardX = x;
 
-        _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paintBack,
+        var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        _touchCanvas.drawRect(rect, paintBack,
             onTapDown: (tapDetail) {
-              selectedBox = Point<int>(boardX, boardY);
-              showBoxValue(boardX, boardY);
-            });
+              showInputTextBox(Point<int>(boardX, boardY), rect);
+            }
+        );
 
-        if (selectedBox != null && selectedBox!.x == x && selectedBox!.y == y) {
-          selectedRect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        if ((_selectedBox != null) && (_selectedBox!.x == x) && (_selectedBox!.y == y)) {
+          if (_selectedBoxRect != rect) {
+            _selectedBoxRect = rect;
+            setState();
+          }
         }
 
-        _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint);
+        _touchCanvas.drawRect(rect, paint);
 
         if (board.getValue(boardX, boardY) != null) {
-          var textColor =
-            board.getFillType(boardX, boardY) == NumberPyramidFillType.USER_FILLED ? colors.secondary() : colors.mainFont();
+          var textColor = board.getFillType(boardX, boardY) == NumberPyramidFillType.USER_FILLED
+                                                                ? colors.secondary()
+                                                                : colors.mainFont();
 
-          var fontsize = heightInner * 0.8;
           var text = board.getValue(boardX, boardY)?.toString();
           var textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
 
@@ -121,19 +223,16 @@ class NumberPyramidBoardPainter extends CustomPainter {
             textPainter = _buildTextPainter(text ?? '', textColor, fontsize);
           }
 
-          textPainter.paint(
-              canvas,
-              Offset(xInner + (widthInner  - textPainter.width) * 0.5,
-                     yInner + (heightInner - textPainter.height) * 0.5));
+          if ((_selectedBox == null) || !((_selectedBox!.x == x) && (_selectedBox!.y == y))) {
+            textPainter.paint(
+                canvas,
+                Offset(xInner + (widthInner  - textPainter.width) * 0.5,
+                      yInner + (heightInner - textPainter.height) * 0.5));
+          }
         }
 
         xInner += widthInner;
       }
-    }
-
-    if (!selectedRect.isEmpty) {
-      paint.color = colors.focused();
-      _touchCanvas.drawRect(selectedRect, paint);
     }
   }
 
