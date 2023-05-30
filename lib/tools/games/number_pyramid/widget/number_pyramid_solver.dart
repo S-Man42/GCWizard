@@ -39,7 +39,6 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
     super.initState();
 
     _currentBoard = NumberPyramid(_rowCount);
-    _showBoxValue(0, 0);
   }
 
   @override
