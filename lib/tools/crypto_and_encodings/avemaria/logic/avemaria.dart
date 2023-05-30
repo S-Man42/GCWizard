@@ -1,4 +1,7 @@
 // https://practice.nationalcybercup.org/cryptography/avemaria
+// https://en.wikipedia.org/wiki/Polygraphia_(book)
+// https://books.google.de/books?id=fQdCAAAAcAAJ&pg=PP1&redir_esc=y#v=onepage&q&f=false
+// http://www.esotericarchives.com/tritheim/stegano.htm
 // https://www.dcode.fr/trithemius-ave-maria
 
 import 'dart:math';
