@@ -65,10 +65,13 @@ String decodeBase64(String input) {
 
   var out = '';
 
+  input = input.replaceAll(RegExp(r'\s'), '');
+
   //if there's no result, try with appended = or ==
   for (int i = 0; i <= 2; i++) {
     try {
-      out = utf8.decode(base64.decode(input + '=' * i));
+      //out = utf8.decode(base64.decode(input + '=' * i));
+      out = String.fromCharCodes(base64.decode(input + '=' * i));
 
       if (out.isNotEmpty) break;
     } on FormatException {}
