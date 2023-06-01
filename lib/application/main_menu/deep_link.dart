@@ -40,9 +40,7 @@ GCWTool? _findGCWTool(WebParameter arguments) {
 
     return registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
   } catch (e) {}
-
-
-
+  
   return null;
 }
 
