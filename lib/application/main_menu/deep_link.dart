@@ -1,9 +1,11 @@
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 
 
 class WebParameter {
@@ -14,11 +16,10 @@ class WebParameter {
   WebParameter({required this.title, required this.arguments, required this.settings});
 }
 
-// A Widget that accepts the necessary arguments via the
-// constructor.
-NoAnimationMaterialPageRoute<GCWTool>? createRoute (BuildContext context, WebParameter arguments) {
+// A Widget that accepts the necessary arguments via the constructor.
+NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, WebParameter arguments) {
 
-  var gcwTool = findGCWTool(arguments);
+  var gcwTool = _findGCWTool(arguments);
   if (gcwTool == null) return null;
 
   if (gcwTool.tool is GCWWebStatefulWidget) {
@@ -28,10 +29,10 @@ NoAnimationMaterialPageRoute<GCWTool>? createRoute (BuildContext context, WebPar
   }
 
   // arguments settings only for view the path in the url
-  return NoAnimationMaterialPageRoute(builder: (context) => gcwTool.tool, settings: arguments.settings);
+  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
 }
 
-GCWTool? findGCWTool(WebParameter arguments) {
+GCWTool? _findGCWTool(WebParameter arguments) {
   if (arguments.title.isEmpty) return null;
   var name = arguments.title.toLowerCase();
 
@@ -39,7 +40,27 @@ GCWTool? findGCWTool(WebParameter arguments) {
     return registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
   } catch (e) {}
 
+  if (name == '?') {
+    return _toolNameList();
+  }
+
   return null;
+}
+
+GCWTool _toolNameList() {
+  var toolList = registeredTools.map((_tool) => _tool.id).toList();
+  return GCWTool(
+      id: 'tool_name_list',
+      tool: Column(
+        children: [
+          GCWText(
+            text: 'Tool name list',
+            //style: ,
+          ),
+          GCWMultipleOutput(children: toolList),
+        ]
+      )
+  );
 }
 
 void sendWebResult(String json) {

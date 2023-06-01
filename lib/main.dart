@@ -65,9 +65,7 @@ class App extends StatelessWidget {
                 // type: ScreenArguments.
                 final args = parseUrl(settings);
                 if (args != null) {
-                  var route = createRoute(context, args);
-
-                  return route;
+                  return createRoute(context, args);
                 } else {
                   return null;
                 }
