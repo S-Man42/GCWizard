@@ -61,8 +61,6 @@ class App extends StatelessWidget {
                     tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
               },
               onGenerateRoute: (RouteSettings settings) {
-                // Cast the arguments to the correct
-                // type: ScreenArguments.
                 final args = parseUrl(settings);
                 if (args != null) {
                   return createRoute(context, args);
