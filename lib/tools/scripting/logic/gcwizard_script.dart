@@ -272,6 +272,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   GCWizardScriptOutput run() {
+    _resetErrors();
     if (script == '') {
       return GCWizardScriptOutput(
           STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
