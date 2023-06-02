@@ -87,6 +87,12 @@ Map<int, String> _errorMessages = {
   _FORWITHOUTNEXT : "gcwizard_script_syntax_error_for_without_next",
 };
 
+void _resetErrors() {
+  _halt = false;
+  _errorMessage = '';
+  _errorPosition = 0;
+}
+
 void _handleError(int error) {
   _halt = true;
   _errorMessage = _errorMessages[error] ?? '';
