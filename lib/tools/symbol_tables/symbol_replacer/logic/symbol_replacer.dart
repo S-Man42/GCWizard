@@ -1033,7 +1033,7 @@ class ImageHashing {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         var pixel = squeezed.getPixel(x, y); //..ToArgb();
-        int gray = (pixel.r + pixel.g +pixel.r + pixel.b).toInt();
+        int gray = (pixel.r + pixel.g + pixel.b).toInt();
         gray = gray ~/ 12;
 
         grayscale[x + (y * 8)] = gray;
