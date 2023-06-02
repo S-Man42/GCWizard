@@ -47,7 +47,16 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.TASKS);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestTask.TaskLUAName, testOutputTASK.TaskLUAName);
+        expect(_actual.cartridgeTestTask.TaskID, testOutputTASK.TaskID);
+        expect(_actual.cartridgeTestTask.TaskName, testOutputTASK.TaskName);
+        expect(_actual.cartridgeTestTask.TaskDescription, testOutputTASK.TaskDescription);
+        expect(_actual.cartridgeTestTask.TaskVisible, testOutputTASK.TaskVisible);
+        expect(_actual.cartridgeTestTask.TaskMedia, testOutputTASK.TaskMedia);
+        expect(_actual.cartridgeTestTask.TaskIcon, testOutputTASK.TaskIcon);
+        expect(_actual.cartridgeTestTask.TaskActive, testOutputTASK.TaskActive);
+        expect(_actual.cartridgeTestTask.TaskComplete, testOutputTASK.TaskComplete);
+        expect(_actual.cartridgeTestTask.TaskCorrectstate, testOutputTASK.TaskCorrectstate);
       });
     }
   });
