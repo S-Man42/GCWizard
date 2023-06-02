@@ -72,7 +72,13 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.TIMERS);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestTimer.TimerLUAName, testOutputTIMER.TimerLUAName);
+        expect(_actual.cartridgeTestTimer.TimerID, testOutputTIMER.TimerID);
+        expect(_actual.cartridgeTestTimer.TimerName, testOutputTIMER.TimerName);
+        expect(_actual.cartridgeTestTimer.TimerDescription, testOutputTIMER.TimerDescription);
+        expect(_actual.cartridgeTestTimer.TimerVisible, testOutputTIMER.TimerVisible);
+        expect(_actual.cartridgeTestTimer.TimerDuration, testOutputTIMER.TimerDuration);
+        expect(_actual.cartridgeTestTimer.TimerType, testOutputTIMER.TimerType);
       });
     }
   });

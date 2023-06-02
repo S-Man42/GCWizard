@@ -93,7 +93,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest){
       result = WherigoTest(
         cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
         cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
-        cartridgeTestTimer: WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestTimer: _analyzeAndExtractTimerSectionData((dataToTest as String).split('\n')),
         cartridgeTestZone: WHERIGO_EMPTYTESTZONE_LUA,
         cartridgeTestCharacter: WHERIGO_EMPTYTESTCHARACTER_LUA,
         cartridgeTestItem: WHERIGO_EMPTYTESTITEM_LUA,
