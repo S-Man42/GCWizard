@@ -168,7 +168,18 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.ITEMS);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestItem.ItemLUAName, testOutputITEM.ItemLUAName);
+        expect(_actual.cartridgeTestItem.ItemID, testOutputITEM.ItemID);
+        expect(_actual.cartridgeTestItem.ItemName, testOutputITEM.ItemName);
+        expect(_actual.cartridgeTestItem.ItemDescription, testOutputITEM.ItemDescription);
+        expect(_actual.cartridgeTestItem.ItemVisible, testOutputITEM.ItemVisible);
+        expect(_actual.cartridgeTestItem.ItemMedia, testOutputITEM.ItemMedia);
+        expect(_actual.cartridgeTestItem.ItemIcon, testOutputITEM.ItemIcon);
+        expect(_actual.cartridgeTestItem.ItemLocation, testOutputITEM.ItemLocation);
+        expect(_actual.cartridgeTestItem.ItemZonepoint, testOutputITEM.ItemZonepoint);
+        expect(_actual.cartridgeTestItem.ItemContainer, testOutputITEM.ItemContainer);
+        expect(_actual.cartridgeTestItem.ItemLocked, testOutputITEM.ItemLocked);
+        expect(_actual.cartridgeTestItem.ItemOpened, testOutputITEM.ItemOpened);
       });
     }
   });
