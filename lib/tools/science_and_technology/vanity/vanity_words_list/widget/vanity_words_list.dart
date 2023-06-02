@@ -10,10 +10,10 @@ class VanityWordsList extends StatefulWidget {
   const VanityWordsList({Key? key}) : super(key: key);
 
   @override
-  VanityWordsListState createState() => VanityWordsListState();
+ _VanityWordsListState createState() => _VanityWordsListState();
 }
 
-class VanityWordsListState extends State<VanityWordsList> {
+class _VanityWordsListState extends State<VanityWordsList> {
   late TextEditingController _decodeController;
 
   final _currentDecodeInput = '';

@@ -13,10 +13,10 @@ class Chao extends StatefulWidget {
   const Chao({Key? key}) : super(key: key);
 
   @override
-  ChaoState createState() => ChaoState();
+ _ChaoState createState() => _ChaoState();
 }
 
-class ChaoState extends State<Chao> {
+class _ChaoState extends State<Chao> {
   late TextEditingController _inputController;
   late TextEditingController _alphabetControllerPlain;
   late TextEditingController _alphabetControllerChiffre;

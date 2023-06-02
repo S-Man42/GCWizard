@@ -12,10 +12,10 @@ class NumeralWordsIdentifyLanguages extends StatefulWidget {
   const NumeralWordsIdentifyLanguages({Key? key}) : super(key: key);
 
   @override
-  NumeralWordsIdentifyLanguagesState createState() => NumeralWordsIdentifyLanguagesState();
+ _NumeralWordsIdentifyLanguagesState createState() => _NumeralWordsIdentifyLanguagesState();
 }
 
-class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLanguages> {
+class _NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLanguages> {
   late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';

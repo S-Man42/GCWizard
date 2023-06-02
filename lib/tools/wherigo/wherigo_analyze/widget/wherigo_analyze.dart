@@ -62,10 +62,10 @@ class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
 
   @override
-  WherigoAnalyzeState createState() => WherigoAnalyzeState();
+ _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
 }
 
-class WherigoAnalyzeState extends State<WherigoAnalyze> {
+class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes = Uint8List(0);
   Uint8List _LUAbytes = Uint8List(0);
 

@@ -14,10 +14,10 @@ class Malbolge extends StatefulWidget {
   const Malbolge({Key? key}) : super(key: key);
 
   @override
-  MalbolgeState createState() => MalbolgeState();
+ _MalbolgeState createState() => _MalbolgeState();
 }
 
-class MalbolgeState extends State<Malbolge> {
+class _MalbolgeState extends State<Malbolge> {
   late TextEditingController _programmController;
   late TextEditingController _inputController;
   late TextEditingController _outputController;

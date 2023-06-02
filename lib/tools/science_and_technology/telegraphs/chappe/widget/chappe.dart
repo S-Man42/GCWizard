@@ -21,10 +21,10 @@ class ChappeTelegraph extends StatefulWidget {
   const ChappeTelegraph({Key? key}) : super(key: key);
 
   @override
-  ChappeTelegraphState createState() => ChappeTelegraphState();
+ _ChappeTelegraphState createState() => _ChappeTelegraphState();
 }
 
-class ChappeTelegraphState extends State<ChappeTelegraph> {
+class _ChappeTelegraphState extends State<ChappeTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

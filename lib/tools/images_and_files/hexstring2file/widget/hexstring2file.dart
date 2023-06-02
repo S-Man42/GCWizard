@@ -21,10 +21,10 @@ class HexString2File extends StatefulWidget {
   const HexString2File({Key? key}) : super(key: key);
 
   @override
-  HexString2FileState createState() => HexString2FileState();
+ _HexString2FileState createState() => _HexString2FileState();
 }
 
-class HexString2FileState extends State<HexString2File> {
+class _HexString2FileState extends State<HexString2File> {
   var _currentInput = '';
   Uint8List? _outData;
 

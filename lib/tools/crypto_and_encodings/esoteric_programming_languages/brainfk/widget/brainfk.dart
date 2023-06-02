@@ -15,10 +15,10 @@ class Brainfk extends StatefulWidget {
   const Brainfk({Key? key, this.interpret, this.generate}) : super(key: key);
 
   @override
-  BrainfkState createState() => BrainfkState();
+ _BrainfkState createState() => _BrainfkState();
 }
 
-class BrainfkState extends State<Brainfk> {
+class _BrainfkState extends State<Brainfk> {
   late TextEditingController _textController;
   late TextEditingController _inputController;
   late TextEditingController _inputController_shiftRight;

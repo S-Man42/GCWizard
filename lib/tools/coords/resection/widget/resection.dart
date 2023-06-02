@@ -22,10 +22,10 @@ class Resection extends StatefulWidget {
   const Resection({Key? key}) : super(key: key);
 
   @override
-  ResectionState createState() => ResectionState();
+ _ResectionState createState() => _ResectionState();
 }
 
-class ResectionState extends State<Resection> {
+class _ResectionState extends State<Resection> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoords1 = defaultBaseCoordinate;

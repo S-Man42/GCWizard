@@ -17,10 +17,10 @@ class Teletypewriter extends StatefulWidget {
   const Teletypewriter({Key? key, required this.defaultCodebook, required this.codebook}) : super(key: key);
 
   @override
-  TeletypewriterState createState() => TeletypewriterState();
+ _TeletypewriterState createState() => _TeletypewriterState();
 }
 
-class TeletypewriterState extends State<Teletypewriter> {
+class _TeletypewriterState extends State<Teletypewriter> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

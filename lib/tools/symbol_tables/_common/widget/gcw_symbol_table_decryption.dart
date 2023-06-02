@@ -24,10 +24,10 @@ class GCWSymbolTableDecryption extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWSymbolTableDecryptionState createState() => GCWSymbolTableDecryptionState();
+ _GCWSymbolTableDecryptionState createState() => _GCWSymbolTableDecryptionState();
 }
 
-class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
+class _GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   String _decryptionOutput = '';
 
   late SymbolTableData _data;

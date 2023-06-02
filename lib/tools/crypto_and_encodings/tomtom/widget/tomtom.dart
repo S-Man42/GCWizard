@@ -15,10 +15,10 @@ class TomTom extends StatefulWidget {
   const TomTom({Key? key}) : super(key: key);
 
   @override
-  TomTomState createState() => TomTomState();
+ _TomTomState createState() => _TomTomState();
 }
 
-class TomTomState extends State<TomTom> {
+class _TomTomState extends State<TomTom> {
   late TextEditingController _inputEncryptController;
   late TextEditingController _inputDecryptController;
   late TextEditingController _aController;

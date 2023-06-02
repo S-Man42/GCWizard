@@ -21,10 +21,10 @@ class IntersectBearings extends StatefulWidget {
   const IntersectBearings({Key? key}) : super(key: key);
 
   @override
-  IntersectBearingsState createState() => IntersectBearingsState();
+ _IntersectBearingsState createState() => _IntersectBearingsState();
 }
 
-class IntersectBearingsState extends State<IntersectBearings> {
+class _IntersectBearingsState extends State<IntersectBearings> {
   LatLng? _currentIntersection;
 
   var _currentCoords1 = defaultBaseCoordinate;

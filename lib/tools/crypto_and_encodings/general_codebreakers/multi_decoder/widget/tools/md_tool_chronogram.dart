@@ -19,4 +19,13 @@ class MultiDecoderToolChronogram extends AbstractMultiDecoderTool {
               return decodeChronogram(input);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolChronogramState();
+}
+
+class _MultiDecoderToolChronogramState extends State<MultiDecoderToolChronogram> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

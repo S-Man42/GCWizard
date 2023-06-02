@@ -17,10 +17,10 @@ class EquilateralTriangle extends StatefulWidget {
   const EquilateralTriangle({Key? key}) : super(key: key);
 
   @override
-  EquilateralTriangleState createState() => EquilateralTriangleState();
+ _EquilateralTriangleState createState() => _EquilateralTriangleState();
 }
 
-class EquilateralTriangleState extends State<EquilateralTriangle> {
+class _EquilateralTriangleState extends State<EquilateralTriangle> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoords1 = defaultBaseCoordinate;

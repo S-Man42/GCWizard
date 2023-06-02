@@ -21,10 +21,10 @@ class TeletypewriterPunchTape extends StatefulWidget {
   const TeletypewriterPunchTape({Key? key}) : super(key: key);
 
   @override
-  TeletypewriterPunchTapeState createState() => TeletypewriterPunchTapeState();
+ _TeletypewriterPunchTapeState createState() => _TeletypewriterPunchTapeState();
 }
 
-class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
+class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

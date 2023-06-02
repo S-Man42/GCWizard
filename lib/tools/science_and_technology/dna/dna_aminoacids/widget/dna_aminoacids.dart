@@ -11,10 +11,10 @@ class DNAAminoAcids extends StatefulWidget {
   const DNAAminoAcids({Key? key}) : super(key: key);
 
   @override
-  DNAAminoAcidsState createState() => DNAAminoAcidsState();
+ _DNAAminoAcidsState createState() => _DNAAminoAcidsState();
 }
 
-class DNAAminoAcidsState extends State<DNAAminoAcids> {
+class _DNAAminoAcidsState extends State<DNAAminoAcids> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentInput = '';
 

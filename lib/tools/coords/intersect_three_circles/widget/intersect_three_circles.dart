@@ -20,10 +20,10 @@ class IntersectThreeCircles extends StatefulWidget {
   const IntersectThreeCircles({Key? key}) : super(key: key);
 
   @override
-  IntersectThreeCirclesState createState() => IntersectThreeCirclesState();
+ _IntersectThreeCirclesState createState() => _IntersectThreeCirclesState();
 }
 
-class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
+class _IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   List<Intersect> _currentIntersections = [];
 
   var _currentCoords1 = defaultBaseCoordinate;
