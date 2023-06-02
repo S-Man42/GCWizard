@@ -162,7 +162,7 @@ class GCWizardSCriptInterpreter {
   static const AND = '4'; // &&
   static const OR = '5'; // ||
 
-  List<dynamic> variables = List<dynamic>.filled(26, 0, growable: false);
+  List<Object> variables = List<Object>.filled(26, 0, growable: false);
 
   Map<String, int> registeredKeywords = {
     "print": PRINT,
@@ -245,7 +245,7 @@ class GCWizardSCriptInterpreter {
   };
   List<String> _graphics = [];
 
-  List<dynamic> listDATA = [];
+  List<Object> listDATA = [];
   int pointerDATA = 0;
 
   GCWizardScriptClassLabelStack labelTable = GCWizardScriptClassLabelStack();
@@ -412,7 +412,7 @@ class GCWizardSCriptInterpreter {
 
     value = evaluateExpression();
 
-    variables[variable] = value;
+    variables[variable] = value as Object;
   }
 
   void executeCommand() {
@@ -524,7 +524,7 @@ class GCWizardSCriptInterpreter {
     dynamic result;
     do {
       result = evaluateExpression();
-      listDATA.add(result);
+      listDATA.add(result as num);
 
       getToken(); // get next list item
       if (keywordToken == EOL || token == EOP) break;
@@ -888,7 +888,7 @@ class GCWizardSCriptInterpreter {
 
     value = evaluateExpression();
     if (_isDouble(value)) {
-      variables[stckvar.loopVariable] = value;
+      variables[stckvar.loopVariable] = value as Object;
     } else {
       _handleError(INVALIDTYPECAST);
     }
@@ -969,7 +969,7 @@ class GCWizardSCriptInterpreter {
     GCWizardScriptClassForLoopInfo stckvar;
     try {
       stckvar = forStack.pop();
-      variables[stckvar.loopVariable] = variables[stckvar.loopVariable] + step;
+      variables[stckvar.loopVariable] = (variables[stckvar.loopVariable] as num) + step;
       if ((variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
 
       forStack.push(stckvar);
@@ -1126,7 +1126,7 @@ class GCWizardSCriptInterpreter {
       input = STDIN[0];
       STDIN.removeAt(0);
       if (input != null) {
-        variables[variable] = input;
+        variables[variable] = input as Object;
       } else {
         _handleError(INPUTIOERROR);
       }
