@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 String _hash(Object t, Object b, Object km, Object k, Object x) {
   if (_isNotString(t) || _isNotInt(b) || _isNotString(k) || _isNotInt(km)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   switch ((t as String).toUpperCase()) {
@@ -42,7 +42,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
           case 512:
             return HASH_FUNCTIONS['hashes_sha512']!(x as String);
           default:
-            _handleError(INVALIDHASHBITRATE);
+            _handleError(_INVALIDHASHBITRATE);
         }
       } else {
         switch (b) {
@@ -55,7 +55,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
           case 512:
             return HASHKEY_FUNCTIONS['hashes_sha512hmac']!(x as String, k as String);
           default:
-            _handleError(INVALIDHASHBITRATE);
+            _handleError(_INVALIDHASHBITRATE);
         }
       }
       return '';
@@ -71,7 +71,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
           case 512:
             return HASH_FUNCTIONS['hashes_sha3.512']!(x as String);
           default:
-            _handleError(INVALIDHASHBITRATE);
+            _handleError(_INVALIDHASHBITRATE);
         }
       } else {
         switch (b) {
@@ -84,7 +84,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
           case 512:
             return HASHKEY_FUNCTIONS['hashes_sha3.512hmac']!(x as String, k as String);
           default:
-            _handleError(INVALIDHASHBITRATE);
+            _handleError(_INVALIDHASHBITRATE);
         }
       }
       return '';
@@ -101,7 +101,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
         case 512:
           return HASH_FUNCTIONS['hashes_blake2b512']!(x as String);
         default:
-          _handleError(INVALIDHASHBITRATE);
+          _handleError(_INVALIDHASHBITRATE);
       }
 
       return '';
@@ -120,7 +120,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
         case 512:
           return HASH_FUNCTIONS['hashes_keccak512']!(x as String);
         default:
-          _handleError(INVALIDHASHBITRATE);
+          _handleError(_INVALIDHASHBITRATE);
       }
 
       return '';
@@ -136,7 +136,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
           case 320:
             return HASH_FUNCTIONS['hashes_ripemd320']!(x as String);
           default:
-            _handleError(INVALIDHASHBITRATE);
+            _handleError(_INVALIDHASHBITRATE);
         }
       } else {
         switch (b) {
@@ -149,7 +149,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
           case 320:
             return HASHKEY_FUNCTIONS['hashes_ripemd320hmac']!(x as String, k as String);
           default:
-            _handleError(INVALIDHASHBITRATE);
+            _handleError(_INVALIDHASHBITRATE);
         }
       }
       return '';
@@ -166,7 +166,7 @@ String _hash(Object t, Object b, Object km, Object k, Object x) {
         return HASH_FUNCTIONS['hashes_whirlpool512']!(x as String);
       }
     default:
-      _handleError(INVALIDHASHBITRATE);
+      _handleError(_INVALIDHASHBITRATE);
   }
   return '';
 }

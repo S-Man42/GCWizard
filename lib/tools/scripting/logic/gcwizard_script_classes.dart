@@ -25,18 +25,18 @@ class GCWizardScriptOutput {
   });
 }
 
-class GCWizardScriptClassFunctionDefinition {
+class _GCWizardScriptClassFunctionDefinition {
   final Function functionName;
   final int functionParamCount;
   final bool functionReturn;
 
-  GCWizardScriptClassFunctionDefinition(this.functionName, this.functionParamCount, {this.functionReturn = true});
+  _GCWizardScriptClassFunctionDefinition(this.functionName, this.functionParamCount, {this.functionReturn = true});
 }
 
-class GCWizardScriptClassLabelStack {
+class _GCWizardScriptClassLabelStack {
   Map<String, int> _contents = {};
 
-  GCWizardScriptClassLabelStack() {
+  _GCWizardScriptClassLabelStack() {
     _contents = {};
   }
 
@@ -67,18 +67,18 @@ class GCWizardScriptClassLabelStack {
   }
 }
 
-class GCWizardScriptClassForLoopInfo {
+class _GCWizardScriptClassForLoopInfo {
   late int loopVariable; // counter variable
   late double targetValue; // target value
   late int loopStart; // index in source code to loop to
 }
 
-class GCWizardScriptVariable {
+class _GCWizardScriptVariable {
   final String variableName;
   GCWizardScriptVariableType variableType;
   Object variableValue;
 
-  GCWizardScriptVariable({
+  _GCWizardScriptVariable({
     required this.variableName,
     required this.variableType,
     required this.variableValue});
@@ -95,5 +95,4 @@ class GCWizardScriptVariable {
   int length(){
     return 0;
   }
-
 }

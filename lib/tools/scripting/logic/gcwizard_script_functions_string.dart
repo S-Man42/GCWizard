@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 String _char(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   return String.fromCharCode(x as int);
@@ -10,7 +10,7 @@ String _char(Object x) {
 
 int _asc(Object x) {
   if (_isNotString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return 0;
   }
   return (x as String).codeUnitAt(0);
@@ -18,7 +18,7 @@ int _asc(Object x) {
 
 String _left(Object x, Object count) {
   if (_isNotString(x) || _isString(count)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   return (x as String).substring(0, (count as int));
@@ -26,11 +26,11 @@ String _left(Object x, Object count) {
 
 String _right(Object x, Object count) {
   if (_isNotString(x) || _isString(count)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   if (count.runtimeType.toString() == 'String') {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   return (x as String).substring(x.length - (count as int));
@@ -38,7 +38,7 @@ String _right(Object x, Object count) {
 
 String _mid(Object x, Object start, Object len) {
   if (_isNotString(x) || _isString(start) || _isString(len)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   return (x as String).substring((start as int) - 1, start - 1 + (len as int));
@@ -46,7 +46,7 @@ String _mid(Object x, Object start, Object len) {
 
 int _len(Object x) {
   if (_isNotString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return 0;
   }
   return x.toString().length;
@@ -54,7 +54,7 @@ int _len(Object x) {
 
 String _str(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   if ((x as num).floor() == x) return x.toStringAsFixed(0);
@@ -71,7 +71,7 @@ Object _val(Object x) {
     }
   }
 
-  _handleError(INVALIDTYPECAST);
+  _handleError(_INVALIDTYPECAST);
   return 0.0;
 }
 

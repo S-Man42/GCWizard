@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 bool _isLetter(String vname) {
-  return [
+  return const [
     'A',
     'B',
     'C',
@@ -32,33 +32,37 @@ bool _isLetter(String vname) {
 }
 
 bool _isDigit(String vname) {
-  return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].contains(vname);
+  return const ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].contains(vname);
 }
 
-bool _isNotDouble(dynamic value) {
-  return (value.runtimeType.toString() != 'double');
+bool _isNotDouble(Object? value) {
+  return !_isDouble(value); //.runtimeType.toString() != 'double');
 }
 
-bool _isDouble(dynamic value) {
-  return (value.runtimeType.toString() == 'double');
+bool _isDouble(Object? value) {
+  return (value is double); //.runtimeType.toString() == 'double');
 }
 
-bool _isNotInt(dynamic value) {
-  return (value.runtimeType.toString() != 'int');
+bool _isNotInt(Object? value) {
+  return !_isInt(value); // .runtimeType.toString() != 'int');
 }
 
-bool _isInt(dynamic value) {
-  return (value.runtimeType.toString() == 'int');
+bool _isInt(Object? value) {
+  return (value is int); //.runtimeType.toString() == 'int');
 }
 
-bool _isNotString(dynamic value) {
-  return (value.runtimeType.toString() != 'String');
+bool _isNotString(Object? value) {
+  return !_isString(value); //.runtimeType.toString() != 'String');
 }
 
-bool _isString(dynamic value) {
-  return (value.runtimeType.toString() == 'String');
+bool _isString(Object? value) {
+  return (value is String); //.runtimeType.toString() == 'String');
 }
 
-bool _differentDataTypes(dynamic x, dynamic y) {
-  return (x.runtimeType.toString() != y.runtimeType.toString());
+bool _isNumber(Object? value) {
+  return _isInt(value) || _isDouble(value); //.runtimeType.toString() == 'String');
+}
+
+bool _differentDataTypes(Object? x, Object? y) {
+  return (x?.runtimeType != y?.runtimeType);
 }

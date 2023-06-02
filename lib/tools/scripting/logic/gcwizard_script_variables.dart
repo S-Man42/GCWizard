@@ -7,6 +7,13 @@ int GCWizardSCriptScreenWidth = 0;
 int GCWizardSCriptScreenHeight = 0;
 int GCWizardSCriptScreenColors = 0;
 
+const GraphicMode = 'Mode';
+const GraphicWidthT ='widthT';
+const GraphicHeightT ='heightT';
+const GraphicWidthG = 'widthG';
+const GraphicHeightG ='heightG';
+const GraphicColors ='colors';
+
 int _scriptIndex = 0;
 
 Random _random = Random();

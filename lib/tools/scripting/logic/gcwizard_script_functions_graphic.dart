@@ -1,8 +1,9 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
+
 void _circle(Object x, Object y, Object r) {
   if (_isString(x) || _isString(y) || _isString(r)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('CIRCLE ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (r as int).toString());
@@ -10,7 +11,7 @@ void _circle(Object x, Object y, Object r) {
 
 void _line(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(x2) || _isString(x2) || _isString(y2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('LINE ' +
@@ -25,7 +26,7 @@ void _line(Object x1, Object y1, Object x2, Object y2) {
 
 void _point(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('POINT ' + (x as int).toString() + ' ' + (y as int).toString());
@@ -33,7 +34,7 @@ void _point(Object x, Object y) {
 
 void _arc(Object x, Object y, Object r, Object a1, Object a2) {
   if (_isString(x) || _isString(y) || _isString(r) || _isString(a1) || _isString(a2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('ARC ' +
@@ -50,7 +51,7 @@ void _arc(Object x, Object y, Object r, Object a1, Object a2) {
 
 void _pie(Object x, Object y, Object r, Object a1, Object a2) {
   if (_isString(x) || _isString(y) || _isString(r) || _isString(a1) || _isString(a2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('ARC ' +
@@ -67,7 +68,7 @@ void _pie(Object x, Object y, Object r, Object a1, Object a2) {
 
 void _color(Object r, Object g, Object b) {
   if (_isString(r) || _isString(g) || _isString(b)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('COLOR ' + (r as int).toString() + ' ' + (g as int).toString() + ' ' + (b as int).toString());
@@ -75,7 +76,7 @@ void _color(Object r, Object g, Object b) {
 
 void _fill(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('FILL ' + (x as int).toString());
@@ -83,7 +84,7 @@ void _fill(Object x) {
 
 void _stroke(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('STROKE ' + (x as int).toString());
@@ -91,7 +92,7 @@ void _stroke(Object x) {
 
 void _box(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('BOX ' +
@@ -106,7 +107,7 @@ void _box(Object x1, Object y1, Object x2, Object y2) {
 
 void _text(Object t, Object x, Object y, Object s) {
   if (_isString(x) || _isString(y) || _isString(s)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   t = (t as String).replaceAll(' ', '⟳');
@@ -115,7 +116,7 @@ void _text(Object t, Object x, Object y, Object s) {
 
 void _oval(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   _graphics.add('LINE ' +
