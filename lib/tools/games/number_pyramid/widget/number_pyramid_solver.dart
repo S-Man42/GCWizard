@@ -7,7 +7,6 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -31,7 +30,6 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
 
   final int _MAX_SOLUTIONS = 10;
   var _rowCount = 3;
-  var _currentExpanded = true;
   double _scale = 1;
 
   @override
@@ -45,25 +43,16 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWExpandableTextDivider(
-            text: i18n(context, 'common_row_count'),
-            expanded: _currentExpanded,
-            onChanged: (value) {
-              setState(() {
-                _currentExpanded = value;
-              });
-            },
-            child: GCWIntegerSpinner(
-              title: i18n(context, 'common_row_count'),
-              value: _rowCount,
-              min: 1,
-              onChanged: (value) {
-                setState(() {
-                  _rowCount = value;
-                  _currentBoard = NumberPyramid(_rowCount, pyramid: _currentBoard);
-                });
-              },
-            ),
+        GCWIntegerSpinner(
+          title: i18n(context, 'common_row_count'),
+          value: _rowCount,
+          min: 1,
+          onChanged: (value) {
+            setState(() {
+              _rowCount = value;
+              _currentBoard = NumberPyramid(_rowCount, pyramid: _currentBoard);
+            });
+          },
         ),
         Container(height: 10),
         GCWTextDivider(
