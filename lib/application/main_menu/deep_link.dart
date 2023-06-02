@@ -1,3 +1,4 @@
+import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -5,6 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille/widget/braille.dart';
 
 
 class WebParameter {
@@ -16,8 +18,29 @@ class WebParameter {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
+  // print(settings);
+  // print(context);
   var args = _parseUrl(settings);
   return (args == null) ? null : _createRoute(context, args);
+}
+
+List<Route<GCWTool>> createRoute2(BuildContext context, String route) {
+  print('init: ' + route);
+  var settings = RouteSettings(name: route + '?init='+ route);
+  return  [MaterialPageRoute(
+      builder: (context) => MainView(webParameter: _parseUrl(settings),),
+      settings: null,
+      ),
+    // MaterialPageRoute(
+    //   builder: (context) => Braille(),
+    //   settings: null,
+    // ),
+  ];
+  //var settings = RouteSettings(name: route);
+  print(settings);
+  print(context);
+  var args = _parseUrl(settings);
+  return [NoAnimationMaterialPageRoute(builder: (context) => MainView())];
 }
 
 WebParameter? createStartParameter(BuildContext context, String? route) {
@@ -54,10 +77,11 @@ GCWTool? _findGCWTool(WebParameter arguments) {
 }
 
 WebParameter? _parseUrl(RouteSettings settings) {
-
   if (settings.name == null) return null;
   var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
   var title = uri.pathSegments[0];
+
+  return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
 
   // MultiDecoder?input=Test%20String
   //Morse?input=Test%20String&modeencode=true
@@ -75,12 +99,10 @@ WebParameter? _parseUrl(RouteSettings settings) {
   //rotation_general?input=test&parameter1=4&result=json
 
   // toolname?parameter1=xxx&parameter2=xxx
-  return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
-  // }
 }
 
 GCWTool _toolNameList() {
-  var toolList = registeredTools.map((_tool) => _tool.id + ((_tool.tool is GCWWebStatefulWidget) ? '(parameter)' : '')).toList();
+  var toolList = registeredTools.map((_tool) => _tool.id + ((_tool.tool is GCWWebStatefulWidget) ? ' -> (with parameter)' : '')).toList();
   return GCWTool(
     id: 'tool_name_list',
     toolName: 'Tool name list',

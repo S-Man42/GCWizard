@@ -289,7 +289,7 @@ class _MainViewState extends State<MainView> {
         }
       });
     });
-
+print(widget.webParameter);
     _showWhatsNewDialog() {
       const _MAX_ENTRIES = 10;
 
