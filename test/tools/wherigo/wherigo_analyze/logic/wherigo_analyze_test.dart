@@ -72,7 +72,13 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.TIMERS);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestTimer.TimerLUAName, testOutputTIMER.TimerLUAName);
+        expect(_actual.cartridgeTestTimer.TimerID, testOutputTIMER.TimerID);
+        expect(_actual.cartridgeTestTimer.TimerName, testOutputTIMER.TimerName);
+        expect(_actual.cartridgeTestTimer.TimerDescription, testOutputTIMER.TimerDescription);
+        expect(_actual.cartridgeTestTimer.TimerVisible, testOutputTIMER.TimerVisible);
+        expect(_actual.cartridgeTestTimer.TimerDuration, testOutputTIMER.TimerDuration);
+        expect(_actual.cartridgeTestTimer.TimerType, testOutputTIMER.TimerType);
       });
     }
   });
@@ -136,7 +142,13 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.MEDIAFILES);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestMedia.MediaLUAName, testOutputMEDIA.MediaLUAName);
+        expect(_actual.cartridgeTestMedia.MediaID, testOutputMEDIA.MediaID);
+        expect(_actual.cartridgeTestMedia.MediaName, testOutputMEDIA.MediaName);
+        expect(_actual.cartridgeTestMedia.MediaDescription, testOutputMEDIA.MediaDescription);
+        expect(_actual.cartridgeTestMedia.MediaAltText, testOutputMEDIA.MediaAltText);
+        expect(_actual.cartridgeTestMedia.MediaType, testOutputMEDIA.MediaType);
+        expect(_actual.cartridgeTestMedia.MediaFilename, testOutputMEDIA.MediaFilename);
       });
     }
   });
@@ -168,7 +180,18 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.ITEMS);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestItem.ItemLUAName, testOutputITEM.ItemLUAName);
+        expect(_actual.cartridgeTestItem.ItemID, testOutputITEM.ItemID);
+        expect(_actual.cartridgeTestItem.ItemName, testOutputITEM.ItemName);
+        expect(_actual.cartridgeTestItem.ItemDescription, testOutputITEM.ItemDescription);
+        expect(_actual.cartridgeTestItem.ItemVisible, testOutputITEM.ItemVisible);
+        expect(_actual.cartridgeTestItem.ItemMedia, testOutputITEM.ItemMedia);
+        expect(_actual.cartridgeTestItem.ItemIcon, testOutputITEM.ItemIcon);
+        expect(_actual.cartridgeTestItem.ItemLocation, testOutputITEM.ItemLocation);
+        expect(_actual.cartridgeTestItem.ItemZonepoint, testOutputITEM.ItemZonepoint);
+        expect(_actual.cartridgeTestItem.ItemContainer, testOutputITEM.ItemContainer);
+        expect(_actual.cartridgeTestItem.ItemLocked, testOutputITEM.ItemLocked);
+        expect(_actual.cartridgeTestItem.ItemOpened, testOutputITEM.ItemOpened);
       });
     }
   });
@@ -204,7 +227,5 @@ void main() {
       });
     }
   });
-
-
 
 }

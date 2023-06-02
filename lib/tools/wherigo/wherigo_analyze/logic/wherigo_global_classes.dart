@@ -430,6 +430,7 @@ class WherigoTest{
   final WherigoCharacterData cartridgeTestCharacter;
   final WherigoItemData cartridgeTestItem;
   final WherigoInputData cartridgeTestInput;
+  final WherigoMediaData cartridgeTestMedia;
   final WherigoObfuscationData cartridgeTestObfuscation;
   final List<WherigoVariableData> cartridgeTestVariable;
   final List<List<WherigoActionMessageElementData>> cartridgeTestMessageDialog;
@@ -442,6 +443,7 @@ class WherigoTest{
     required this.cartridgeTestCharacter,
     required this.cartridgeTestItem,
     required this.cartridgeTestInput,
+    required this.cartridgeTestMedia,
     required this.cartridgeTestObfuscation,
     required this.cartridgeTestVariable,
     required this.cartridgeTestMessageDialog,
