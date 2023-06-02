@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 String _rotx(Object text, Object rot) {
   if (_isNotString(text) || _isString(rot)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   return Rotator().rotate((text as String), (rot as int));
@@ -10,7 +10,7 @@ String _rotx(Object text, Object rot) {
 
 int _bww(Object text, Object opt_alph, Object opt_itqs) {
   if (_isNotString(text) || _isString(opt_alph) || _isString(opt_itqs)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return 0;
   }
   int wordValue = 0;
@@ -31,7 +31,7 @@ int _bww(Object text, Object opt_alph, Object opt_itqs) {
 
 String _dectoroman(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   return encodeRomanNumbers((x as int), type: RomanNumberType.USE_SUBTRACTION_RULE);
@@ -39,7 +39,7 @@ String _dectoroman(Object x) {
 
 int _romantodec(Object x) {
   if (_isInt(x) || _isDouble(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return 0;
   }
   return decodeRomanNumbers((x as String), type: RomanNumberType.USE_SUBTRACTION_RULE)!;

@@ -43,10 +43,15 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_ba
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordinates.dart';
 
+// Tiny BASIC
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff
 //  McGraw Hill has no objection according to their letter dated from 18. Januar 2023
 //  https://archive.org/details/cpowerusersguide00schi_0/page/n9/mode/2up
 //
+// convert from: https://gist.github.com/pmachapman/661f0fff9814231fde48
+// https://github.com/generalram/cpowerusers
+// https://beramodo.tistory.com/12
+
 // extended/enhanced to
 // - use Strings
 // - use math-/String-Functions
@@ -62,6 +67,7 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordina
 // - use BREAK
 
 // TODO
+// handle input like whitespace, piet
 // variablenames longer than one letter
 // variables as a map of GCWizardScriptVariable
 // array as datatype
@@ -88,11 +94,11 @@ Future<GCWizardScriptOutput> interpretScript(String script, String input, {SendP
         STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
   }
 
-  GCWizardSCriptInterpreter interpreter = GCWizardSCriptInterpreter(script, input, sendAsyncPort);
+  _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(script, input, sendAsyncPort);
   return interpreter.run();
 }
 
-class GCWizardSCriptInterpreter {
+class _GCWizardSCriptInterpreter {
   static const SCRIPT_LENGTH = 10000;
   static const MAXITERATIONS = 1000000000;
   static const PROGRESS_STEP = 10000.0;
@@ -162,9 +168,9 @@ class GCWizardSCriptInterpreter {
   static const AND = '4'; // &&
   static const OR = '5'; // ||
 
-  List<Object> variables = List<Object>.filled(26, 0, growable: false);
+  List<Object?> variables = List<Object?>.filled(26, 0, growable: false);
 
-  Map<String, int> registeredKeywords = {
+  static const Map<String, int> registeredKeywords = {
     "print": PRINT,
     "input": INPUT,
     "if": IF,
@@ -202,7 +208,7 @@ class GCWizardSCriptInterpreter {
     "continue": CONTINUE,
   };
 
-  datastack.Stack<GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<GCWizardScriptClassForLoopInfo>();
+  datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
   datastack.Stack<int> whileStack = datastack.Stack<int>();
@@ -214,7 +220,7 @@ class GCWizardSCriptInterpreter {
   String inputData;
   SendPort? sendAsyncPort;
 
-  List<dynamic> STDIN = [];
+  List<Object?> STDIN = [];
   String STDOUT = '';
   double step = 0.0;
 
@@ -227,32 +233,32 @@ class GCWizardSCriptInterpreter {
 
   bool graphic = false;
   List<int> SCREENMODES = [0, 1];
-  Map<int, Map<String, dynamic>> SCREEN_MODES = {
+  Map<int, Map<String, Object?>> SCREEN_MODES = {
     0: {
-      'Mode': GCWizardSCript_SCREENMODE.TEXT,
-      'widthT': 80,
-      'heightT': 25,
-      'colors': 256,
+      GraphicMode: GCWizardSCript_SCREENMODE.TEXT,
+      GraphicWidthT: 80,
+      GraphicHeightT: 25,
+      GraphicColors: 256,
     },
     1: {
-      'Mode': GCWizardSCript_SCREENMODE.GRAPHIC,
-      'widthT': 80,
-      'heightT': 25,
-      'widthG': 1024,
-      'heightG': 768,
-      'colors': 256,
+      GraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
+      GraphicWidthT: 80,
+      GraphicHeightT: 25,
+      GraphicWidthG: 1024,
+      GraphicHeightG: 768,
+      GraphicColors: 256,
     },
   };
   List<String> _graphics = [];
 
-  List<Object> listDATA = [];
+  List<Object?> listDATA = [];
   int pointerDATA = 0;
 
-  GCWizardScriptClassLabelStack labelTable = GCWizardScriptClassLabelStack();
+  _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
 
   List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
-  GCWizardSCriptInterpreter(this.script, this.inputData, this.sendAsyncPort) {
+  _GCWizardSCriptInterpreter(this.script, this.inputData, this.sendAsyncPort) {
     script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
     inputData.split(' ').forEach((element) {
       if (int.tryParse(element) != null) {
@@ -273,7 +279,7 @@ class GCWizardSCriptInterpreter {
 
     // Initialize for new program run.
     _scriptIndex = 0;
-    forStack = datastack.Stack<GCWizardScriptClassForLoopInfo>();
+    forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
     gosubStack = datastack.Stack<int>();
     repeatStack = datastack.Stack<int>();
     whileStack = datastack.Stack<int>();
@@ -339,10 +345,10 @@ class GCWizardSCriptInterpreter {
 
     } while (token != EOP && !_halt && iterations < MAXITERATIONS);
 
-    if (iterations == MAXITERATIONS) _handleError(INFINITELOOP);
+    if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
 
     return GCWizardScriptOutput(
-      STDOUT: STDOUT,
+      STDOUT: STDOUT.trimRight(),
       Graphic: _graphics,
       Points: _waypoints,
       ErrorMessage: _errorMessage,
@@ -354,7 +360,9 @@ class GCWizardSCriptInterpreter {
   String _variableDump() {
     String dump = '';
     for (int i = 0; i < 26; i++) {
-      dump = dump + String.fromCharCode(65 + i) + ' ' + variables[i].toString() + '\n';
+      //if (variables[i] != dynamic) {
+        dump = dump + String.fromCharCode(65 + i) + ' ' + variables[i].toString() + '\n';
+      //}
     }
     return dump;
   }
@@ -374,7 +382,7 @@ class GCWizardSCriptInterpreter {
       getToken();
       if (tokenType == NUMBER) {
         result = labelTable.push(token, _scriptIndex);
-        if (result == -1) _handleError(DUPLICATEABEL);
+        if (result == -1) _handleError(_DUPLICATEABEL);
       }
 
       if (keywordToken != EOL) findEOL();
@@ -391,14 +399,14 @@ class GCWizardSCriptInterpreter {
 
   void executeAssignment() {
     int variable;
-    dynamic value;
+    Object? value;
     String variableName;
 
     getToken();
     variableName = token[0];
 
     if (isNotAVariable(variableName[0])) {
-      _handleError(NOTAVARIABLE);
+      _handleError(_NOTAVARIABLE);
       return;
     }
 
@@ -406,13 +414,13 @@ class GCWizardSCriptInterpreter {
 
     getToken();
     if (token != "=") {
-      _handleError(EQUALEXPECTED);
+      _handleError(_EQUALEXPECTED);
       return;
     }
 
     value = evaluateExpression();
 
-    variables[variable] = value as Object;
+    variables[variable] = value;
   }
 
   void executeCommand() {
@@ -521,10 +529,10 @@ class GCWizardSCriptInterpreter {
   }
 
   void executeCommandDATA() {
-    dynamic result;
+    Object? result;
     do {
       result = evaluateExpression();
-      listDATA.add(result as num);
+      listDATA.add(result);
 
       getToken(); // get next list item
       if (keywordToken == EOL || token == EOP) break;
@@ -540,7 +548,7 @@ class GCWizardSCriptInterpreter {
       if (token != ',') {
         vname = token[0];
         if (isNotAVariable(vname[0])) {
-          _handleError(NOTAVARIABLE);
+          _handleError(_NOTAVARIABLE);
           return;
         }
         variable = vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
@@ -548,7 +556,7 @@ class GCWizardSCriptInterpreter {
           variables[variable] = listDATA[pointerDATA];
           pointerDATA++;
         } else {
-          _handleError(DATAOUTOFRANGE);
+          _handleError(_DATAOUTOFRANGE);
         }
       }
     } while (keywordToken != EOL && token != EOP);
@@ -567,7 +575,7 @@ class GCWizardSCriptInterpreter {
     getToken();
     if (token != '\n') {
       if (int.tryParse(token) == null) {
-        _handleError(SYNTAXERROR);
+        _handleError(_SYNTAXERROR);
         return;
       } else {
         maxBeep = int.parse(token);
@@ -584,7 +592,7 @@ class GCWizardSCriptInterpreter {
     getToken();
     if (token != '\n') {
       if (int.tryParse(token) == null) {
-        _handleError(SYNTAXERROR);
+        _handleError(_SYNTAXERROR);
         return;
       } else {
         maxSleep = int.parse(token);
@@ -596,8 +604,9 @@ class GCWizardSCriptInterpreter {
   void executeCommandRANDOMIZE() {}
 
   void executeCommandPRINT() {
-    dynamic result;
-    int len = 0, spaces;
+    Object? result;
+    int len = 0;
+    int spaces = 0;
     String lastDelimiter = "";
 
     do {
@@ -605,16 +614,16 @@ class GCWizardSCriptInterpreter {
       if (keywordToken == EOL || token == EOP) break;
 
       if (tokenType == QUOTEDSTR) {
-        STDOUT = STDOUT + token;
+        STDOUT += token;
         len += token.length;
         getToken();
       } else {
         putBack();
         result = evaluateExpression();
         getToken();
-        STDOUT = STDOUT + result.toString();
+        STDOUT += result.toString();
 
-        dynamic t = result;
+        var t = result;
         len += t.toString().length; // save length
       }
       lastDelimiter = token;
@@ -623,21 +632,21 @@ class GCWizardSCriptInterpreter {
         spaces = 8 - (len % 8);
         len += spaces;
         while (spaces != 0) {
-          STDOUT = STDOUT + " ";
+          STDOUT += " ";
           spaces--;
         }
       } else if (token == ";") {
-        STDOUT = STDOUT + " ";
+        STDOUT += " ";
         len++;
       } else if (keywordToken != EOL && token != EOP) {
-        _handleError(SYNTAXERROR);
+        _handleError(_SYNTAXERROR);
       }
     } while (lastDelimiter == ";" || lastDelimiter == ",");
 
     if (keywordToken == EOL || token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") STDOUT = STDOUT + LF;
     } else {
-      _handleError(SYNTAXERROR);
+      _handleError(_SYNTAXERROR);
     }
   }
 
@@ -649,7 +658,7 @@ class GCWizardSCriptInterpreter {
     location = labelTable.get(token);
 
     if (location == null) {
-      _handleError(LABELNOTDEFINED);
+      _handleError(_LABELNOTDEFINED);
     } else {
       _scriptIndex = location;
     }
@@ -665,7 +674,7 @@ class GCWizardSCriptInterpreter {
       ifStack.push(true);
       getToken();
       if (keywordToken != THEN) {
-        _handleError(THENEXPECTED);
+        _handleError(_THENEXPECTED);
         return;
       } // else, target statement will be executed
     } else {
@@ -691,7 +700,7 @@ class GCWizardSCriptInterpreter {
         ifStack.push(true);
         getToken();
         if (keywordToken != THEN) {
-          _handleError(THENEXPECTED);
+          _handleError(_THENEXPECTED);
           return;
         } // else, target statement will be executed
       } else {
@@ -740,7 +749,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(MISSINGENDIF);
+      _handleError(_MISSINGENDIF);
     } else {
       _scriptIndex = result;
       if (doElseIf) {
@@ -755,24 +764,24 @@ class GCWizardSCriptInterpreter {
     int result = 0;
     for (int pc = _scriptIndex; pc < script.length; pc++) {
       if (script.substring(pc).startsWith('ELSEIF')) {
-        pc = pc + 6;
+        pc += 6;
       }
       if (script.substring(pc).startsWith('IF')) {
         ifList.add(pc);
-        pc = pc + 2;
+        pc += 2;
       }
       if (script.substring(pc).startsWith('ENDIF')) {
         if (ifList.isEmpty) {
-          result = pc + 5;
+          result += 5;
           break;
         } else {
           ifList.removeLast();
-          pc = pc + 5;
+          pc += 5;
         }
       }
     }
     if (result == 0) {
-      _handleError(MISSINGENDIF);
+      _handleError(_MISSINGENDIF);
     }
     _scriptIndex = result;
   }
@@ -798,7 +807,7 @@ class GCWizardSCriptInterpreter {
     variableName = token[0];
 
     if (isNotAVariable(variableName[0])) {
-      _handleError(NOTAVARIABLE);
+      _handleError(_NOTAVARIABLE);
       return;
     }
 
@@ -826,7 +835,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(SWITCHWITHOUTEND);
+      _handleError(_SWITCHWITHOUTEND);
     }
     _scriptIndex = result;
   }
@@ -851,7 +860,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(SWITCHWITHOUTEND);
+      _handleError(_SWITCHWITHOUTEND);
     }
     _scriptIndex = result;
   }
@@ -865,16 +874,16 @@ class GCWizardSCriptInterpreter {
   }
 
   void executeCommandFOR() {
-    GCWizardScriptClassForLoopInfo stckvar = GCWizardScriptClassForLoopInfo();
+    _GCWizardScriptClassForLoopInfo stckvar = _GCWizardScriptClassForLoopInfo();
     controlStack.push(FORLOOP);
-    dynamic value;
+    Object? value;
     String vname;
-    dynamic stepValue;
+    Object? stepValue;
 
     getToken();
     vname = token[0];
     if (isNotAVariable(vname[0])) {
-      _handleError(NOTAVARIABLE);
+      _handleError(_NOTAVARIABLE);
       return;
     }
 
@@ -882,25 +891,25 @@ class GCWizardSCriptInterpreter {
 
     getToken();
     if (token[0] != '=') {
-      _handleError(EQUALEXPECTED);
+      _handleError(_EQUALEXPECTED);
       return;
     }
 
     value = evaluateExpression();
     if (_isDouble(value)) {
-      variables[stckvar.loopVariable] = value as Object;
+      variables[stckvar.loopVariable] = value;
     } else {
-      _handleError(INVALIDTYPECAST);
+      _handleError(_INVALIDTYPECAST);
     }
 
     getToken();
-    if (keywordToken != TO) _handleError(TOEXPECTED);
+    if (keywordToken != TO) _handleError(_TOEXPECTED);
 
     value = evaluateExpression();
     if (_isDouble(value)) {
       stckvar.targetValue = value as double;
     } else {
-      _handleError(INVALIDTYPECAST);
+      _handleError(_INVALIDTYPECAST);
     }
 
     getToken();
@@ -911,7 +920,7 @@ class GCWizardSCriptInterpreter {
       if (_isDouble(stepValue)) {
         step = stepValue as double;
       } else {
-        _handleError(INVALIDTYPECAST);
+        _handleError(_INVALIDTYPECAST);
       }
     }
 
@@ -941,7 +950,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(FORWITHOUTNEXT);
+      _handleError(_FORWITHOUTNEXT);
     }
     _scriptIndex = result;
   }
@@ -960,13 +969,13 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(FORWITHOUTNEXT);
+      _handleError(_FORWITHOUTNEXT);
     }
     _scriptIndex = result;
   }
 
   void executeCommandNEXT() {
-    GCWizardScriptClassForLoopInfo stckvar;
+    _GCWizardScriptClassForLoopInfo stckvar;
     try {
       stckvar = forStack.pop();
       variables[stckvar.loopVariable] = (variables[stckvar.loopVariable] as num) + step;
@@ -976,7 +985,7 @@ class GCWizardSCriptInterpreter {
       _scriptIndex = stckvar.loopStart;
       //loopStack.pop();
     } catch (IllegalOperationException) {
-      _handleError(NEXTWITHOUTFOR);
+      _handleError(_NEXTWITHOUTFOR);
     }
   }
 
@@ -1001,7 +1010,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(REPEATWITHOUTUNTIL);
+      _handleError(_REPEATWITHOUTUNTIL);
     }
     _scriptIndex = result;
   }
@@ -1022,7 +1031,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(REPEATWITHOUTUNTIL);
+      _handleError(_REPEATWITHOUTUNTIL);
     }
     _scriptIndex = result;
   }
@@ -1032,7 +1041,7 @@ class GCWizardSCriptInterpreter {
     try {
       repeat = repeatStack.pop();
     } catch (IllegalOperationException) {
-      _handleError(UNTILWITHOUTREPEAT);
+      _handleError(_UNTILWITHOUTREPEAT);
     }
 
     double result;
@@ -1071,7 +1080,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(WHILEWITHOUTWEND);
+      _handleError(_WHILEWITHOUTWEND);
     }
     _scriptIndex = result;
   }
@@ -1092,7 +1101,7 @@ class GCWizardSCriptInterpreter {
       }
     }
     if (result == 0) {
-      _handleError(WHILEWITHOUTWEND);
+      _handleError(_WHILEWITHOUTWEND);
     }
     _scriptIndex = result;
   }
@@ -1101,37 +1110,37 @@ class GCWizardSCriptInterpreter {
     try {
       _scriptIndex = whileStack.pop();
     } catch (IllegalOperationException) {
-      _handleError(WENDWITHOUTWHILE);
+      _handleError(_WENDWITHOUTWHILE);
     }
   }
 
   void executeCommandINPUT() {
     int variable;
-    dynamic input;
+    Object? input;
 
     getToken();
     if (tokenType == QUOTEDSTR) {
       STDOUT = STDOUT + token + '\n';
       getToken();
-      if (token != ",") _handleError(SYNTAXERROR);
+      if (token != ",") _handleError(_SYNTAXERROR);
       getToken();
     } else {
-      STDOUT = STDOUT + "? \n";
+      STDOUT += "? \n";
     }
 
     variable = token[0].toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
-    if (variable < 0 || variable > 26) _handleError(SYNTAX_VARIABLE);
+    if (variable < 0 || variable > 26) _handleError(_SYNTAX_VARIABLE);
 
     if (STDIN.isNotEmpty) {
       input = STDIN[0];
       STDIN.removeAt(0);
       if (input != null) {
-        variables[variable] = input as Object;
+        variables[variable] = input;
       } else {
-        _handleError(INPUTIOERROR);
+        _handleError(_INPUTIOERROR);
       }
     } else {
-      _handleError(INPUTMISSING);
+      _handleError(_INPUTMISSING);
     }
   }
 
@@ -1143,7 +1152,7 @@ class GCWizardSCriptInterpreter {
     location = labelTable.get(token);
 
     if (location == null) {
-      _handleError(LABELNOTDEFINED);
+      _handleError(_LABELNOTDEFINED);
     } else {
       gosubStack.push(_scriptIndex);
 
@@ -1158,7 +1167,7 @@ class GCWizardSCriptInterpreter {
       location = gosubStack.pop();
       _scriptIndex = location;
     } catch (IllegalOperationException) {
-      _handleError(RETURNWITHOUTGOSUB);
+      _handleError(_RETURNWITHOUTGOSUB);
     }
   }
 
@@ -1175,15 +1184,15 @@ class GCWizardSCriptInterpreter {
           GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.GRAPHIC;
           _graphics = [];
           graphic = true;
-          GCWizardSCriptScreenWidth = SCREEN_MODES[double.parse(token).toInt()]!['widthG'] as int;
-          GCWizardSCriptScreenHeight = SCREEN_MODES[double.parse(token).toInt()]!['heightG'] as int;
-          GCWizardSCriptScreenColors = SCREEN_MODES[double.parse(token).toInt()]!['colors'] as int;
+          GCWizardSCriptScreenWidth = SCREEN_MODES[double.parse(token).toInt()]![GraphicWidthG] as int;
+          GCWizardSCriptScreenHeight = SCREEN_MODES[double.parse(token).toInt()]![GraphicHeightG] as int;
+          GCWizardSCriptScreenColors = SCREEN_MODES[double.parse(token).toInt()]![GraphicColors] as int;
           break;
         default:
-          _handleError(INVALIDSCREEN);
+          _handleError(_INVALIDSCREEN);
       }
     } else {
-      _handleError(INVALIDSCREEN);
+      _handleError(_INVALIDSCREEN);
     }
   }
 
@@ -1219,159 +1228,159 @@ class GCWizardSCriptInterpreter {
     }
   }
 
-  dynamic executeFunction(String command, int tokType) {
-    dynamic partialResult1;
-    dynamic partialResult2;
-    dynamic partialResult3;
-    dynamic partialResult4;
-    dynamic partialResult5;
-    dynamic partialResult6;
-    dynamic result;
-    if (FUNCTIONS[command]!.functionParamCount == 0) {
+  Object? executeFunction(String command, int tokType) {
+    Object? partialResult1;
+    Object? partialResult2;
+    Object? partialResult3;
+    Object? partialResult4;
+    Object? partialResult5;
+    Object? partialResult6;
+    Object? result;
+    if (_FUNCTIONS[command]!.functionParamCount == 0) {
       partialResult1 = evaluateExpressionParantheses();
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!.functionName();
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName();
       } else {
-        FUNCTIONS[command]!.functionName();
+        _FUNCTIONS[command]!.functionName();
       }
       _scriptIndex = _scriptIndex + 2;
-    } else if (FUNCTIONS[token]!.functionParamCount == 1) {
+    } else if (_FUNCTIONS[token]!.functionParamCount == 1) {
       getToken();
       partialResult1 = evaluateExpressionParantheses();
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!.functionName(partialResult1);
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName(partialResult1);
       } else {
-        FUNCTIONS[command]!.functionName(partialResult1);
+        _FUNCTIONS[command]!.functionName(partialResult1);
       }
-    } else if (FUNCTIONS[command]!.functionParamCount == 2) {
+    } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
       getToken();
       if (token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
-        getToken();
+        if (token != ",") _handleError(_MISSINGPARAMETER);
+        getToken() ;
         partialResult2 = evaluateExpressionAddSubOperators();
-        if (token != ")") _handleError(UNBALANCEDPARENTHESES);
+        if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
-        _handleError(UNBALANCEDPARENTHESES);
+        _handleError(_UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       } else {
-        FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
+        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
-    } else if (FUNCTIONS[token]!.functionParamCount == 3) {
+    } else if (_FUNCTIONS[token]!.functionParamCount == 3) {
       getToken();
       if (token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if (token != ")") _handleError(UNBALANCEDPARENTHESES);
+        if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
-        _handleError(UNBALANCEDPARENTHESES);
+        _handleError(_UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       } else {
-        FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
+        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
-    } else if (FUNCTIONS[token]!.functionParamCount == 4) {
+    } else if (_FUNCTIONS[token]!.functionParamCount == 4) {
       getToken();
       if (token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult4 = evaluateExpressionAddSubOperators();
-        if (token != ")") _handleError(UNBALANCEDPARENTHESES);
+        if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
-        _handleError(UNBALANCEDPARENTHESES);
+        _handleError(_UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       } else {
-        FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
-    } else if (FUNCTIONS[token]!.functionParamCount == 5) {
+    } else if (_FUNCTIONS[token]!.functionParamCount == 5) {
       getToken();
       if (token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult4 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult5 = evaluateExpressionAddSubOperators();
-        if (token != ")") _handleError(UNBALANCEDPARENTHESES);
+        if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
-        _handleError(UNBALANCEDPARENTHESES);
+        _handleError(_UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       } else {
-        FUNCTIONS[command]!
+        _FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
-    } else if (FUNCTIONS[token]!.functionParamCount == 5) {
+    } else if (_FUNCTIONS[token]!.functionParamCount == 5) {
       getToken();
       if (token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult4 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult5 = evaluateExpressionAddSubOperators();
-        if (token != ",") _handleError(MISSINGPARAMETER);
+        if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult6 = evaluateExpressionAddSubOperators();
-        if (token != ")") _handleError(UNBALANCEDPARENTHESES);
+        if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
-        _handleError(UNBALANCEDPARENTHESES);
+        _handleError(_UNBALANCEDPARENTHESES);
       }
-      if (FUNCTIONS[command]!.functionReturn) {
-        result = FUNCTIONS[command]!.functionName(
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName(
             partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
       } else {
-        FUNCTIONS[command]!.functionName(
+        _FUNCTIONS[command]!.functionName(
             partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
       }
     }
     return result;
   }
 
-  dynamic evaluetLogicalExpression() {
+  Object? evaluateLogicalExpression() {
     // read line until THEN or EOL
     // split AND
     // evaluate
@@ -1379,11 +1388,11 @@ class GCWizardSCriptInterpreter {
     // evaluate
   }
 
-  dynamic evaluateExpression() {
-    dynamic result;
+  Object? evaluateExpression() {
+    Object? result;
 
     getToken();
-    if (token == EOP) _handleError(NOEXPRESSION);
+    if (token == EOP) _handleError(_NOEXPRESSION);
 
     result = evaluateExpressionRelationalOperation();
 
@@ -1392,8 +1401,8 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic evaluateExpressionRelationalOperation() {
-    dynamic l_temp, r_temp, result;
+  Object? evaluateExpressionRelationalOperation() {
+    Object? l_temp, r_temp, result;
     String op;
 
     result = evaluateExpressionAddSubOperators();
@@ -1409,7 +1418,7 @@ class GCWizardSCriptInterpreter {
       r_temp = evaluateExpressionRelationalOperation();
 
       if (_differentDataTypes(l_temp, r_temp)) {
-        _handleError(INVALIDTYPECAST);
+        _handleError(_INVALIDTYPECAST);
         result = 0.0;
       } else {
         if (_isString(l_temp)) {
@@ -1420,7 +1429,7 @@ class GCWizardSCriptInterpreter {
             case GE:
             case OR:
             case AND:
-              _handleError(INVALIDTYPECAST);
+              _handleError(_INVALIDTYPECAST);
               result = 0.0;
               break;
             case '=':
@@ -1503,29 +1512,29 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic evaluateExpressionAddSubOperators() {
+  Object? evaluateExpressionAddSubOperators() {
     String op;
-    dynamic result;
-    dynamic partialResult;
+    Object? result;
+    Object? partialResult;
 
     result = evaluateExpressionMultDivOperators();
 
     while ((op = token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (_differentDataTypes(result, partialResult)) {
-        _handleError(INVALIDTYPECAST);
+      if (_differentDataTypes(result, partialResult)) { // Todo ??
+        _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '-':
-            if (_isString(result)) {
-              _handleError(INVALIDSTRINGOPERATION);
+            if (!_isNumber(result)) { //Todo only on minus (no plus)
+              _handleError(_INVALIDSTRINGOPERATION);
             } else {
-              result = result - partialResult;
+              result = (result as num) - (partialResult as num);
             }
             break;
           case '+':
-            result = result + partialResult;
+            result = (result as num) + (partialResult as num);
             break;
         }
       }
@@ -1533,10 +1542,10 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic evaluateExpressionMultDivOperators() {
+  Object? evaluateExpressionMultDivOperators() {
     String op;
-    dynamic result;
-    dynamic partialResult;
+    Object? result;
+    Object? partialResult;
 
     result = evaluateExpressionExponentOperator();
 
@@ -1544,26 +1553,26 @@ class GCWizardSCriptInterpreter {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
       if (_isNotDouble(result) || _isNotDouble(partialResult)) {
-        _handleError(INVALIDTYPECAST);
+        _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '*':
-            result = result * partialResult;
+            result = (result as double) * (partialResult as double);
             break;
           case '/':
             if (partialResult == 0.0) {
-              _handleError(DIVISIONBYZERO);
+              _handleError(_DIVISIONBYZERO);
               result = 0;
             } else {
-              result = result / partialResult;
+              result = (result as double) / (partialResult as double);
             }
             break;
           case '%':
             if (partialResult == 0.0) {
-              _handleError(DIVISIONBYZERO);
+              _handleError(_DIVISIONBYZERO);
               result = 0;
             } else {
-              result = result % partialResult;
+              result = (result as double) % (partialResult as double);
             }
             break;
         }
@@ -1572,10 +1581,10 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic evaluateExpressionExponentOperator() {
-    dynamic result;
-    dynamic partialResult;
-    dynamic base;
+  Object? evaluateExpressionExponentOperator() {
+    Object? result;
+    Object? partialResult;
+    Object? base;
 
     //result = evaluateExpressionUnaryFunctionOperator();
     result = evaluateExpressionBitwiseOperators();
@@ -1584,12 +1593,12 @@ class GCWizardSCriptInterpreter {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
       if (_isNotDouble(result) || _isNotDouble(partialResult)) {
-        _handleError(INVALIDTYPECAST);
+        _handleError(_INVALIDTYPECAST);
         return 0.0;
       }
       base = result;
       if (result.runtimeType.toString() != partialResult.runtimeType.toString()) {
-        _handleError(INVALIDTYPECAST);
+        _handleError(_INVALIDTYPECAST);
       } else if (partialResult == 0.0) {
         result = 1.0;
       } else {
@@ -1599,31 +1608,31 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic evaluateExpressionBitwiseOperators() {
+  Object? evaluateExpressionBitwiseOperators() {
     String op;
-    dynamic result;
-    dynamic partialResult;
+    Object? result;
+    Object? partialResult;
 
     result = evaluateExpressionUnaryFunctionOperator();
 
     while ((op = token[0]) == '→' || op == '←' || op == '&' || op == '|') {
       getToken();
       partialResult = evaluateExpressionUnaryFunctionOperator();
-      if (_differentDataTypes(result, partialResult) || _isNotInt(partialResult) || _isNotInt(result)) {
-        _handleError(INVALIDTYPECAST);
+      if (_isNotInt(partialResult) || _isNotInt(result)) {
+        _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '→': // shift right
-            result = result >> partialResult;
+            result = (result as int) >> (partialResult as int);
             break;
           case '←': // shift left
-            result = result << partialResult;
+            result = (result as int) << (partialResult as int);
             break;
           case '&': // and
-            result = result & partialResult;
+            result = (result as int) & (partialResult as int);
             break;
           case '|': // or
-            result = result | partialResult;
+            result = (result as int) | (partialResult as int);
             break;
         }
       }
@@ -1632,11 +1641,10 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic evaluateExpressionUnaryFunctionOperator() {
-    dynamic result;
+  Object? evaluateExpressionUnaryFunctionOperator() {
+    Object? result;
     String op = '';
 
-    op = "";
     if ((tokenType == DELIMITER) && token == "+" || token == "-" || token == "~") {
       op = token;
       getToken();
@@ -1648,25 +1656,25 @@ class GCWizardSCriptInterpreter {
     }
 
     if (op == "-") {
-      result = -result;
+      result = -(result as dynamic);
     } else {
       if (op == "~") {
         if (_isNotInt(result)) {
-          _handleError(INVALIDTYPECAST);
+          _handleError(_INVALIDTYPECAST);
         } else {
-          result = ~result;
+          result = ~(result as dynamic);
         }
       }
     }
     return result;
   }
 
-  dynamic evaluateExpressionParantheses() {
-    dynamic result;
+  Object? evaluateExpressionParantheses() {
+    Object? result;
     if (token == "(") {
       getToken();
       result = evaluateExpressionAddSubOperators();
-      if (token != ")") _handleError(UNBALANCEDPARENTHESES);
+      if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
       getToken();
     } else {
       result = getValueOfAtomExpression();
@@ -1674,8 +1682,8 @@ class GCWizardSCriptInterpreter {
     return result;
   }
 
-  dynamic getValueOfAtomExpression() {
-    dynamic result;
+  Object? getValueOfAtomExpression() {
+    Object? result;
     switch (tokenType) {
       case QUOTEDSTR:
         result = token;
@@ -1685,7 +1693,7 @@ class GCWizardSCriptInterpreter {
         try {
           result = double.parse(token);
         } catch (NumberFormatException) {
-          _handleError(SYNTAXERROR);
+          _handleError(_SYNTAXERROR);
         }
         getToken();
         break;
@@ -1698,15 +1706,15 @@ class GCWizardSCriptInterpreter {
         getToken();
         break;
       default:
-        _handleError(SYNTAXERROR);
+        _handleError(_SYNTAXERROR);
         break;
     }
     return result;
   }
 
-  dynamic getValueOfVariable(String variableName) {
+  Object? getValueOfVariable(String variableName) {
     if (isNotAVariable(variableName[0])) {
-      _handleError(SYNTAXERROR);
+      _handleError(_SYNTAXERROR);
       return 0.0;
     }
     return variables[variableName.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0)];
@@ -1817,7 +1825,7 @@ class GCWizardSCriptInterpreter {
 
     character = script[_scriptIndex];
     if (character == '<' || character == '>' || character == '|' || character == '&' || character == '!') {
-      if (_scriptIndex + 1 == script.length) _handleError(SYNTAXERROR);
+      if (_scriptIndex + 1 == script.length) _handleError(_SYNTAXERROR);
 
       switch (character) {
         case '<':
@@ -1906,7 +1914,7 @@ class GCWizardSCriptInterpreter {
         _scriptIndex++;
         character = script[_scriptIndex];
       }
-      if (character == CR || character == LF) _handleError(MISSINGQUOTE);
+      if (character == CR || character == LF) _handleError(_MISSINGQUOTE);
       _scriptIndex++;
       tokenType = QUOTEDSTR;
     } else {

@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 String _wgs84(Object x, Object y) {
   if (_isString(x) || _isString(y)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
   var coord = LatLng(x as double, y as double);
@@ -19,10 +19,10 @@ double _getlat() {
 
 void _setlon(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
   }
   if ((x as num).abs() > 180) {
-    _handleError(INVALIDLONGITUDE);
+    _handleError(_INVALIDLONGITUDE);
     GCWizardScript_LON = x as double;
   } else {
     GCWizardScript_LON = x as double;
@@ -31,10 +31,10 @@ void _setlon(Object x) {
 
 void _setlat(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
   }
   if ((x as num).abs() > 90) {
-    _handleError(INVALIDLATITUDE);
+    _handleError(_INVALIDLATITUDE);
     GCWizardScript_LAT = 0;
   } else {
     GCWizardScript_LAT = x as double;
@@ -43,21 +43,21 @@ void _setlat(Object x) {
 
 double _distance(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)).distance;
 }
 
 double _bearing(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), defaultEllipsoid).bearingAToB;
 }
 
 void _projection(Object x1, Object y1, Object dist, Object angle) {
   if (_isString(x1) || _isString(y1) || _isString(dist) || _isString(angle)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
   }
   LatLng _currentValues = projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, defaultEllipsoid);
   GCWizardScript_LAT = _currentValues.latitude;
@@ -66,7 +66,7 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
 
 void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
   if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2) || _isString(lat3) || _isString(lon3)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
 
@@ -84,7 +84,7 @@ void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Obje
 
 void _centertwopoints(Object lat1, Object lon1, Object lat2, Object lon2) {
   if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   CenterPointDistance coord = centerPointTwoPoints(

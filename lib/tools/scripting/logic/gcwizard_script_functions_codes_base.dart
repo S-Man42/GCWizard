@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-String _base(dynamic t, Object m, Object x) {
+String _base(Object t, Object m, Object x) {
   if (_isNotInt(t) || _isNotInt(m)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return '';
   }
-  switch (t.toUpperCase()) {
+  switch (t as int) {
     case 16:
       if (m == 0) {
         return decodeBase16(x as String);
@@ -49,7 +49,7 @@ String _base(dynamic t, Object m, Object x) {
         return encodeBase122(x as String);
       }
     default:
-      _handleError(INVALIDBASETYPE);
+      _handleError(_INVALIDBASETYPE);
       return '';
   }
 }

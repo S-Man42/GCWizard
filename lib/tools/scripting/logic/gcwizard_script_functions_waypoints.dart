@@ -2,15 +2,15 @@ part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 void _wptsadd(Object lat, Object lon) {
   if (_isString(lat) || _isString(lon)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   if ((lat as num).abs() > 90) {
-    _handleError(INVALIDLATITUDE);
+    _handleError(_INVALIDLATITUDE);
     return;
   }
   if ((lon as num).abs() > 180) {
-    _handleError(INVALIDLONGITUDE);
+    _handleError(_INVALIDLONGITUDE);
     return;
   }
   _waypoints.add(GCWMapPoint(
@@ -32,11 +32,11 @@ int _wptscount() {
 
 double _wptslat(Object i) {
   if (_isString(i)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
   if ((i as int) >= _waypoints.length || i < 1) {
-    _handleError(RANGEERROR);
+    _handleError(_RANGEERROR);
     return 0.0;
   }
   return _waypoints[i - 1].point.latitude;
@@ -44,11 +44,11 @@ double _wptslat(Object i) {
 
 double _wptslon(Object i) {
   if (_isString(i)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
   if ((i as int) >= _waypoints.length || i < 1) {
-    _handleError(RANGEERROR);
+    _handleError(_RANGEERROR);
     return 0.0;
   }
   return _waypoints[i - 1].point.longitude;
@@ -56,7 +56,7 @@ double _wptslon(Object i) {
 
 void _wptscenter(Object x) {
   if (_isString(x)) {
-    _handleError(INVALIDTYPECAST);
+    _handleError(_INVALIDTYPECAST);
     return;
   }
   List<LatLng> coords = [];

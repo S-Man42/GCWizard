@@ -8,9 +8,10 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
-import 'package:intl/intl.dart';
-
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -24,8 +25,6 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/utils/collection_utils.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 
 import 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
@@ -37,7 +36,7 @@ class GCWizardScript extends StatefulWidget {
 }
 
 class GCWizardScriptState extends State<GCWizardScript> {
-  late TextEditingController _programmController;
+  late TextEditingController _programController;
   late TextEditingController _inputController;
 
   String _currentProgram = '';
@@ -56,13 +55,13 @@ class GCWizardScriptState extends State<GCWizardScript> {
   @override
   void initState() {
     super.initState();
-    _programmController = TextEditingController(text: _currentProgram);
+    _programController = TextEditingController(text: _currentProgram);
     _inputController = TextEditingController(text: _currentInput);
   }
 
   @override
   void dispose() {
-    _programmController.dispose();
+    _programController.dispose();
     _inputController.dispose();
     super.dispose();
   }
@@ -82,7 +81,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   }
 
                   _currentProgram = String.fromCharCodes(_file.bytes);
-                  _programmController.text = _currentProgram;
+                  _programController.text = _currentProgram;
                   setState(() {});
 
                   _loadFile = !_loadFile;
@@ -102,7 +101,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               ),
             GCWTextField(
               style: gcwMonotypeTextStyle(),
-              controller: _programmController,
+              controller: _programController,
               hintText: i18n(context, 'gcwizard_script_hint_program'),
               onChanged: (text) {
                 setState(() {
@@ -241,7 +240,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   }
 
   String _buildOutputText(GCWizardScriptOutput output) {
-    if (output.ErrorMessage != '') {
+    if (output.ErrorMessage.isNotEmpty) {
       return output.STDOUT +
           '\n' +
           i18n(context, output.ErrorMessage) +
@@ -312,16 +311,16 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
     switch (fileType) {
       case GCWizardScriptFileType.IMAGE:
-        filename = 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png';
+        filename = buildFileNameWithDate('img_', FileType.PNG);
         break;
       case GCWizardScriptFileType.PROGRAM:
-        filename = 'prg_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.script';
+        filename = buildFileNameWithDate('prg_', null) + '.script';
         break;
       case GCWizardScriptFileType.OUTPUT:
-        filename = 'out_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.out';
+        filename = buildFileNameWithDate('out_', null) + '.out';
         break;
       case GCWizardScriptFileType.WAYPOINT:
-        filename = 'out_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.wpt';
+        filename = buildFileNameWithDate('out_', null) + '.wpt';
         break;
     }
     value = await saveByteDataToFile(context, data, filename);
