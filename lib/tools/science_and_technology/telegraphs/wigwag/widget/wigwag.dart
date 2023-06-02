@@ -12,10 +12,10 @@ class WigWagSemaphoreTelegraph extends StatefulWidget {
   const WigWagSemaphoreTelegraph({Key? key}) : super(key: key);
 
   @override
-  WigWagSemaphoreTelegraphState createState() => WigWagSemaphoreTelegraphState();
+ _WigWagSemaphoreTelegraphState createState() => _WigWagSemaphoreTelegraphState();
 }
 
-class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
+class _WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

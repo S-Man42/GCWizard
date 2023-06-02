@@ -14,10 +14,10 @@ class Malbolge extends StatefulWidget {
   const Malbolge({Key? key}) : super(key: key);
 
   @override
-  MalbolgeState createState() => MalbolgeState();
+ _MalbolgeState createState() => _MalbolgeState();
 }
 
-class MalbolgeState extends State<Malbolge> {
+class _MalbolgeState extends State<Malbolge> {
   late TextEditingController _programmController;
   late TextEditingController _inputController;
   late TextEditingController _outputController;
@@ -145,7 +145,7 @@ class MalbolgeState extends State<Malbolge> {
             : Column(
                 children: <Widget>[
                   GCWOnOffSwitch(
-                    title: i18n(context, 'common_programming_code_debug'),
+                    title: i18n(context, 'common_programming_debug'),
                     value: _currentDebug,
                     onChanged: (value) {
                       setState(() {

@@ -11,10 +11,10 @@ class CountriesFlags extends StatefulWidget {
   const CountriesFlags({Key? key}) : super(key: key);
 
   @override
-  CountriesFlagsState createState() => CountriesFlagsState();
+ _CountriesFlagsState createState() => _CountriesFlagsState();
 }
 
-class CountriesFlagsState extends State<CountriesFlags> {
+class _CountriesFlagsState extends State<CountriesFlags> {
   final _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
   final _KEY_PREFIX = 'common_country_';
 

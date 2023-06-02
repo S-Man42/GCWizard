@@ -4,10 +4,10 @@ class MultiDecoder extends StatefulWidget {
   const MultiDecoder({Key? key}) : super(key: key);
 
   @override
-  MultiDecoderState createState() => MultiDecoderState();
+ _MultiDecoderState createState() => _MultiDecoderState();
 }
 
-class MultiDecoderState extends State<MultiDecoder> {
+class _MultiDecoderState extends State<MultiDecoder> {
   late TextEditingController _controller;
   List<AbstractMultiDecoderTool> mdtTools = [];
 
@@ -47,6 +47,10 @@ class MultiDecoderState extends State<MultiDecoder> {
 
     _refreshMDTTools();
 
+    if (_currentInput.isEmpty) {
+      _calculateOutput();
+    }
+
     return Column(
       children: <Widget>[
         Row(
@@ -59,9 +63,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                       onChanged: (text) {
                         _currentInput = text;
                         if (_currentInput.isEmpty) {
-                          setState(() {
-                            _currentOutput = Container();
-                          });
+                          setState(() {});
                         }
                       },
                     ))),
@@ -130,8 +132,9 @@ class MultiDecoderState extends State<MultiDecoder> {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        if (CoordinateFormatKey.values.contains(value)) {
-          result = coordinateFormatMetadataByKey(value as CoordinateFormatKey).name;
+        var coordFormat = coordinateFormatMetadataByPersistenceKey((value ?? '').toString());
+        if (coordFormat != null) {
+          result = coordFormat.name;
         }
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
@@ -152,9 +155,12 @@ class MultiDecoderState extends State<MultiDecoder> {
       Object? result;
 
       try {
-        if (!tool.optionalKey &&
-            ((tool.requiresKey && _currentKey.isEmpty) || !tool.requiresKey && (_currentKey.isNotEmpty))) {
-          result = null;
+        if (_currentInput.isEmpty) {
+          return GCWOutput(title: _toolTitle(tool), child: Container());
+        } else if (!tool.optionalKey &&
+            ((tool.requiresKey && _currentKey.isEmpty) ||
+            (!tool.requiresKey && _currentKey.isNotEmpty))) {
+          return Container();
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
         }
@@ -174,8 +180,7 @@ class MultiDecoderState extends State<MultiDecoder> {
         return FutureBuilder<String?>(
             future: result,
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-              if (snapshot.hasData && snapshot.data != null &&
-                  snapshot.data!.isNotEmpty) {
+              if (snapshot.hasData && snapshot.data != null && snapshot.data!.isNotEmpty) {
                 return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
               } else {
                 return Container();
@@ -210,13 +215,9 @@ class MultiDecoderState extends State<MultiDecoder> {
               }
             });
       } else if (result != null && result.toString().isNotEmpty) {
-        return GCWOutput(
-          title: _toolTitle(tool),
-          child: result.toString(),
-        );
-      } else {
-        return Container();
+        return GCWOutput(title: _toolTitle(tool), child: result.toString());
       }
+      return Container();
     }).toList();
 
     _currentOutput = Column(children: results);

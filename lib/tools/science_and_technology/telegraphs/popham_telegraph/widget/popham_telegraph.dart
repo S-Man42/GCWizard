@@ -20,10 +20,10 @@ class PophamTelegraph extends StatefulWidget {
   const PophamTelegraph({Key? key}) : super(key: key);
 
   @override
-  PophamTelegraphState createState() => PophamTelegraphState();
+ _PophamTelegraphState createState() => _PophamTelegraphState();
 }
 
-class PophamTelegraphState extends State<PophamTelegraph> {
+class _PophamTelegraphState extends State<PophamTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -27,10 +28,10 @@ class SymbolReplacerManualControl extends StatefulWidget {
   const SymbolReplacerManualControl({Key? key, required this.symbolImage}) : super(key: key);
 
   @override
-  SymbolReplacerManualControlState createState() => SymbolReplacerManualControlState();
+ _SymbolReplacerManualControlState createState() => _SymbolReplacerManualControlState();
 }
 
-class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
+class _SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
   final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   SymbolData? _selectedSymbolData;
   var _removeActiv = false;
@@ -127,6 +128,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
     }
 
     if (selected) {
+      // deselect all symbols
       for (var image in _symbolMap.values) {
         image.values.first.primarySelected = false;
       }

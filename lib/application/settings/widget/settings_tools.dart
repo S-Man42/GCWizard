@@ -10,10 +10,10 @@ class ToolSettings extends StatefulWidget {
   const ToolSettings({Key? key}) : super(key: key);
 
   @override
-  ToolSettingsState createState() => ToolSettingsState();
+ _ToolSettingsState createState() => _ToolSettingsState();
 }
 
-class ToolSettingsState extends State<ToolSettings> {
+class _ToolSettingsState extends State<ToolSettings> {
   @override
   Widget build(BuildContext context) {
     return Column(

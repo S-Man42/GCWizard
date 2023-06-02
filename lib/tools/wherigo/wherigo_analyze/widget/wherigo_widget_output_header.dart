@@ -1,10 +1,10 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 void buildHeader(BuildContext context) {
-  if (wherigoExpertMode) {
-    outputHeader = _buildHeaderExpertMode(context);
+  if (WHERIGOExpertMode) {
+    WHERIGOoutputHeader = _buildHeaderExpertMode(context);
   } else {
-    outputHeader = _buildHeaderUserMode(context);
+    WHERIGOoutputHeader = _buildHeaderUserMode(context);
   }
 }
 

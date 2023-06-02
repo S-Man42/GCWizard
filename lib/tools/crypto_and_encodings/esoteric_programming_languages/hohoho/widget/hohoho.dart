@@ -10,10 +10,10 @@ class Hohoho extends StatefulWidget {
   const Hohoho({Key? key}) : super(key: key);
 
   @override
-  HohohoState createState() => HohohoState();
+ _HohohoState createState() => _HohohoState();
 }
 
-class HohohoState extends State<Hohoho> {
+class _HohohoState extends State<Hohoho> {
   late TextEditingController _textEncodeController;
   late TextEditingController _textDecodeController;
   late TextEditingController _inputController;

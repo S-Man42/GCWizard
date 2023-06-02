@@ -17,10 +17,10 @@ class IntersectFourPoints extends StatefulWidget {
   const IntersectFourPoints({Key? key}) : super(key: key);
 
   @override
-  IntersectFourPointsState createState() => IntersectFourPointsState();
+ _IntersectFourPointsState createState() => _IntersectFourPointsState();
 }
 
-class IntersectFourPointsState extends State<IntersectFourPoints> {
+class _IntersectFourPointsState extends State<IntersectFourPoints> {
   LatLng? _currentIntersection;
 
   var _currentCoords11 = defaultBaseCoordinate;

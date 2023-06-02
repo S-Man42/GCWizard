@@ -17,10 +17,10 @@ class ColorTool extends StatefulWidget {
   const ColorTool({Key? key, this.color}) : super(key: key);
 
   @override
-  ColorToolState createState() => ColorToolState();
+ _ColorToolState createState() => _ColorToolState();
 }
 
-class ColorToolState extends State<ColorTool> {
+class _ColorToolState extends State<ColorTool> {
   late GCWColorValue _currentColor;
   var _currentOutputColorSpace = ColorSpaceKey.HEXCODE;
 

@@ -20,10 +20,10 @@ class NumeralWordsTextSearch extends StatefulWidget {
   const NumeralWordsTextSearch({Key? key}) : super(key: key);
 
   @override
-  NumeralWordsTextSearchState createState() => NumeralWordsTextSearchState();
+ _NumeralWordsTextSearchState createState() => _NumeralWordsTextSearchState();
 }
 
-class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
+class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   late TextEditingController _decodeController;
   late TextEditingController _codeControllerHighlighted;
 
@@ -109,7 +109,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     List<NumeralWordsDecodeOutput> detailedOutput;
     List<String> output = [];
     detailedOutput = decodeNumeralwords(
-        input: removeAccents(_currentDecodeInput.toLowerCase()),
+        input: _currentDecodeInput,
         language: _currentLanguage,
         decodeModeWholeWords: (_currentDecodeMode == GCWSwitchPosition.left));
     for (int i = 0; i < detailedOutput.length; i++) {
@@ -145,7 +145,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
       _codeControllerHighlighted.text =
-          removeAccents(_currentDecodeInput.toLowerCase()).replaceAll(RegExp(r'[^a-z0-9]'), '');
+          _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-zäöüß0-9]'), '');
     }
 
     return Column(
@@ -162,6 +162,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                   wrap: true,
                   controller: _codeControllerHighlighted,
                   patternMap: _numeralWordsHiglightMap(),
+                  lineNumbers: false,
                 )),
         output.isEmpty
             ? Container()
@@ -202,8 +203,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         }
       } else if (int.parse(value) < 10) {
         result[r'' + key + ''] = const TextStyle(color: Colors.red);
-      } else {
+      } else if (int.parse(value) < 100) {
         result[r'' + key + ''] = const TextStyle(color: Colors.orange);
+      } else {
+        result[r'' + key + ''] = const TextStyle(color: Colors.yellow);
       }
     });
     return result;

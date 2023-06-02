@@ -15,10 +15,10 @@ class NumeralWordsLists extends StatefulWidget {
   const NumeralWordsLists({Key? key}) : super(key: key);
 
   @override
-  NumeralWordsListsState createState() => NumeralWordsListsState();
+ _NumeralWordsListsState createState() => _NumeralWordsListsState();
 }
 
-class NumeralWordsListsState extends State<NumeralWordsLists> {
+class _NumeralWordsListsState extends State<NumeralWordsLists> {
   late TextEditingController _decodeController;
 
   final _currentDecodeInput = '';

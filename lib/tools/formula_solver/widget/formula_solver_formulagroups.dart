@@ -52,10 +52,10 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
   const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
 
   @override
-  FormulaSolverFormulaGroupsState createState() => FormulaSolverFormulaGroupsState();
+ _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
 }
 
-class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
+class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
   late TextEditingController _newGroupController;
   late TextEditingController _editGroupController;
   var _currentNewName = '';

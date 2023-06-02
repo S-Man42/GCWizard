@@ -18,10 +18,10 @@ class Bowling extends StatefulWidget {
   const Bowling({Key? key}) : super(key: key);
 
   @override
-  BowlingState createState() => BowlingState();
+ _BowlingState createState() => _BowlingState();
 }
 
-class BowlingState extends State<Bowling> {
+class _BowlingState extends State<Bowling> {
   late List<BowlingFrame> _currentBowlingScore;
   List<int> _currentFrameTotals = [10];
   int _currentFrame = 0;

@@ -18,10 +18,10 @@ class TextAnalysis extends StatefulWidget {
   const TextAnalysis({Key? key}) : super(key: key);
 
   @override
-  TextAnalysisState createState() => TextAnalysisState();
+ _TextAnalysisState createState() => _TextAnalysisState();
 }
 
-class TextAnalysisState extends State<TextAnalysis> {
+class _TextAnalysisState extends State<TextAnalysis> {
   late TextEditingController _inputController;
   String _currentInput = '';
 
