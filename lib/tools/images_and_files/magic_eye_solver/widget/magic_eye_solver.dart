@@ -22,10 +22,10 @@ class MagicEyeSolver extends StatefulWidget {
   const MagicEyeSolver({Key? key}) : super(key: key);
 
   @override
-  MagicEyeSolverState createState() => MagicEyeSolverState();
+ _MagicEyeSolverState createState() => _MagicEyeSolverState();
 }
 
-class MagicEyeSolverState extends State<MagicEyeSolver> {
+class _MagicEyeSolverState extends State<MagicEyeSolver> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   GCWFile? _decodeImage;

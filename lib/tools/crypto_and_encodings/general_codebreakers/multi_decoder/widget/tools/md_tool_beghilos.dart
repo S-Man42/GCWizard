@@ -19,4 +19,13 @@ class MultiDecoderToolBeghilos extends AbstractMultiDecoderTool {
               return decodeBeghilos(input);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolBeghilosState();
+}
+
+class _MultiDecoderToolBeghilosState extends State<MultiDecoderToolBeghilos> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

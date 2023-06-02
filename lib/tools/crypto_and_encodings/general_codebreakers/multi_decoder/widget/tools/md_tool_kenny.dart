@@ -19,4 +19,13 @@ class MultiDecoderToolKenny extends AbstractMultiDecoderTool {
               return decryptKenny(input, ['m', 'p', 'f'], true);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolKennyState();
+}
+
+class _MultiDecoderToolKennyState extends State<MultiDecoderToolKenny> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

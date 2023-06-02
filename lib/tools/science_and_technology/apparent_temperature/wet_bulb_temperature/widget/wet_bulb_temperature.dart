@@ -17,10 +17,10 @@ class WetBulbTemperature extends StatefulWidget {
   const WetBulbTemperature({Key? key}) : super(key: key);
 
   @override
-  WetBulbTemperatureState createState() => WetBulbTemperatureState();
+ _WetBulbTemperatureState createState() => _WetBulbTemperatureState();
 }
 
-class WetBulbTemperatureState extends State<WetBulbTemperature> {
+class _WetBulbTemperatureState extends State<WetBulbTemperature> {
   double _currentTemperature = 1.0;
   double _currentHumidity = 0.0;
 

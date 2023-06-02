@@ -44,10 +44,10 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWSymbolTableTextToSymbolsState createState() => GCWSymbolTableTextToSymbolsState();
+ _GCWSymbolTableTextToSymbolsState createState() => _GCWSymbolTableTextToSymbolsState();
 }
 
-class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
+class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
   final _alphabetMap = <String, int>{};
 
   var _encryptionHasImages = false;

@@ -21,10 +21,10 @@ class AlcoholMass extends StatefulWidget {
   const AlcoholMass({Key? key}) : super(key: key);
 
   @override
-  AlcoholMassState createState() => AlcoholMassState();
+ _AlcoholMassState createState() => _AlcoholMassState();
 }
 
-class AlcoholMassState extends State<AlcoholMass> {
+class _AlcoholMassState extends State<AlcoholMass> {
   static const _MODES = [_ALCOHOL_MASS, _VOLUME, _ALCOHOL_MASS_BY_VOLUME];
   var _currentMode = _ALCOHOL_MASS;
   var _currentVolume = 0.0;

@@ -14,10 +14,10 @@ class WhitespaceLanguage extends StatefulWidget {
   const WhitespaceLanguage({Key? key}) : super(key: key);
 
   @override
-  WhitespaceLanguageState createState() => WhitespaceLanguageState();
+ _WhitespaceLanguageState createState() => _WhitespaceLanguageState();
 }
 
-class WhitespaceLanguageState extends State<WhitespaceLanguage> {
+class _WhitespaceLanguageState extends State<WhitespaceLanguage> {
   WhitespaceResult? _currentOutput;
 
   String _currentCode = '';

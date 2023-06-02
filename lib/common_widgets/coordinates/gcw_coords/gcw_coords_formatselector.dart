@@ -15,7 +15,7 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   const GCWCoordsFormatSelector({Key? key, required this.onChanged, required this.format}) : super(key: key);
 
   @override
-  GCWCoordsFormatSelectorState createState() => GCWCoordsFormatSelectorState();
+ _GCWCoordsFormatSelectorState createState() => _GCWCoordsFormatSelectorState();
 
   List<GCWDropDownMenuItem<CoordinateFormatKey>> getDropDownItems(BuildContext context) {
     return allCoordinateFormatMetadata.map((entry) {
@@ -25,9 +25,9 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   }
 }
 
-class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
-    var _currentFormat = defaultCoordinateFormat.type;
-    var _currentSubtype = defaultCoordinateFormat.subtype;
+class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
+  var _currentFormat = defaultCoordinateFormat.type;
+  var _currentSubtype = defaultCoordinateFormat.subtype;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     return Column(
       children: <Widget>[
         GCWDropDown<CoordinateFormatKey>(
-          value: widget.format.type,
+          value: _currentFormat,
           onChanged: (CoordinateFormatKey newValue) {
             setState(() {
               _currentFormat = newValue;
@@ -67,7 +67,7 @@ class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   }
 
   Widget _buildSubtype() {
-    var format = widget.format.type;
+    var format = _currentFormat;
 
     if (_currentSubtype == null) {
       _currentSubtype = defaultCoordinateFormatSubtypeForFormat(format);

@@ -10,10 +10,10 @@ class DayCalculator extends StatefulWidget {
   const DayCalculator({Key? key}) : super(key: key);
 
   @override
-  DayCalculatorState createState() => DayCalculatorState();
+ _DayCalculatorState createState() => _DayCalculatorState();
 }
 
-class DayCalculatorState extends State<DayCalculator> {
+class _DayCalculatorState extends State<DayCalculator> {
   late DateTime _currentStartDate;
   late DateTime _currentEndDate;
 

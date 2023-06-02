@@ -16,10 +16,10 @@ class BrailleDotNumbers extends StatefulWidget {
   const BrailleDotNumbers({Key? key}) : super(key: key);
 
   @override
-  BrailleDotNumbersState createState() => BrailleDotNumbersState();
+ _BrailleDotNumbersState createState() => _BrailleDotNumbersState();
 }
 
-class BrailleDotNumbersState extends State<BrailleDotNumbers> {
+class _BrailleDotNumbersState extends State<BrailleDotNumbers> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
@@ -117,7 +117,6 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       if (_currentDecodeInput.isEmpty) {
         return const GCWDefaultOutput();
       }
-
       var segments = decodeBraille(
           _currentDecodeInput.split(RegExp(r'\s+')).toList(),
           _currentLanguage,

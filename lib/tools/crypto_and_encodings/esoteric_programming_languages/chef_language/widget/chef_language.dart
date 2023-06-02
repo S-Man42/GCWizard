@@ -13,10 +13,10 @@ class Chef extends StatefulWidget {
   const Chef({Key? key}) : super(key: key);
 
   @override
-  ChefState createState() => ChefState();
+ _ChefState createState() => _ChefState();
 }
 
-class ChefState extends State<Chef> {
+class _ChefState extends State<Chef> {
   late TextEditingController _recipeController;
   late TextEditingController _inputController;
   late TextEditingController _titleController;
@@ -70,6 +70,7 @@ class ChefState extends State<Chef> {
 
   @override
   Widget build(BuildContext context) {
+    _currentLanguage = _defaultLanguage(context);
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -196,9 +197,9 @@ class ChefState extends State<Chef> {
     if (_currentMode == GCWSwitchPosition.right) {
       // generate chef
       if (_currentTitle.isEmpty) {
-        output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
+        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
       } else if (_currentOutput.isEmpty) {
-        output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
+        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
       } else {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
             _currentOutput, _auxilaryRecipes);
@@ -207,16 +208,16 @@ class ChefState extends State<Chef> {
       // interpret chef
       if (isValid(_currentInput)) {
         try {
-          output = buildOutputText(interpretChef(language, _currentRecipe, _currentInput));
+          output = chefBuildOutputText(context, interpretChef(language, _currentRecipe, _currentInput));
         } catch (e) {
-          output = buildOutputText([
+          output = chefBuildOutputText(context, [
             'common_programming_error_runtime',
             'chef_error_runtime_exception',
             'chef_error_structure_recipe_missing_title'
           ]);
         }
       } else {
-        output = buildOutputText(['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
+        output = chefBuildOutputText(context, ['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
       }
     }
     return GCWOutputText(
@@ -225,15 +226,24 @@ class ChefState extends State<Chef> {
     );
   }
 
-  String buildOutputText(List<String> outputList) {
-    String output = '';
-    for (var element in outputList) {
-      if (element.startsWith('chef_') || element.startsWith('common_programming')) {
-        output = output + i18n(context, element) + '\n';
-      } else {
-        output = output + element + '\n';
-      }
+  GCWSwitchPosition _defaultLanguage(BuildContext context) {
+    final Locale appLocale = Localizations.localeOf(context);
+    if (appLocale == const Locale('de')) {
+      return GCWSwitchPosition.left;
+    } else {
+      return GCWSwitchPosition.right;
     }
-    return output;
   }
+}
+
+String chefBuildOutputText(BuildContext context, List<String> outputList) {
+  String output = '';
+  for (var element in outputList) {
+    if (element.startsWith('chef_') || element.startsWith('common_programming')) {
+      output = output + i18n(context, element) + '\n';
+    } else {
+      output = output + element + '\n';
+    }
+  }
+  return output;
 }

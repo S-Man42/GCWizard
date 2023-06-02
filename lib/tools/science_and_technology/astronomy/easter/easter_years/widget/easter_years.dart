@@ -10,10 +10,10 @@ class EasterYears extends StatefulWidget {
   const EasterYears({Key? key}) : super(key: key);
 
   @override
-  EasterYearsState createState() => EasterYearsState();
+ _EasterYearsState createState() => _EasterYearsState();
 }
 
-class EasterYearsState extends State<EasterYears> {
+class _EasterYearsState extends State<EasterYears> {
   int _currentMonth = 3;
   int _currentDay = 22;
 

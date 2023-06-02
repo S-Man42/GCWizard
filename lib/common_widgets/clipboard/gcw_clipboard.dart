@@ -10,6 +10,9 @@ import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:collection/collection.dart';
 
+String _CLIPBOARD_ITEM_FIELD_TEXT = 'text';
+String _CLIPBOARD_ITEM_FIELD_CREATED = 'created';
+
 class ClipboardItem {
   String text;
   DateTime datetime;
@@ -22,13 +25,25 @@ class ClipboardItem {
       return null;
     }
 
-    var created = toStringOrNull(decoded['created']) ?? '0';
+    var created = toStringOrNull(decoded[_CLIPBOARD_ITEM_FIELD_CREATED]) ?? '0';
 
     int createdValue = int.tryParse(created) ?? 0;
     DateTime datetime = DateTime.fromMillisecondsSinceEpoch(createdValue);
 
-    var text = toStringOrNull(decoded['text']) ?? '';
+    var text = toStringOrNull(decoded[_CLIPBOARD_ITEM_FIELD_TEXT]) ?? '';
     return ClipboardItem(text, datetime);
+  }
+
+  String toJson() {
+    return jsonEncode({
+      _CLIPBOARD_ITEM_FIELD_TEXT: text,
+      _CLIPBOARD_ITEM_FIELD_CREATED: datetime.microsecondsSinceEpoch.toString()
+    });
+  }
+
+  @override
+  String toString() {
+    return 'text ($datetime)';
   }
 }
 
@@ -43,10 +58,16 @@ void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalCl
     gcwClipboard.remove(existingText);
     gcwClipboard.insert(
         0,
-        jsonEncode(
-            {'text': jsonDecode(existingText)['text'], 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
+        jsonEncode({
+          _CLIPBOARD_ITEM_FIELD_TEXT: jsonDecode(existingText)[_CLIPBOARD_ITEM_FIELD_TEXT],
+          _CLIPBOARD_ITEM_FIELD_CREATED: DateTime.now().millisecondsSinceEpoch.toString()
+        })
+    );
   } else {
-    gcwClipboard.insert(0, jsonEncode({'text': text, 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
+    gcwClipboard.insert(0, jsonEncode({
+      _CLIPBOARD_ITEM_FIELD_TEXT: text,
+      _CLIPBOARD_ITEM_FIELD_CREATED: DateTime.now().millisecondsSinceEpoch.toString()
+    }));
     while (gcwClipboard.length > Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS)) {
       gcwClipboard.removeLast();
     }

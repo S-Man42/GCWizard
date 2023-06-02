@@ -30,4 +30,13 @@ class MultiDecoderToolEsotericLanguageKarolRobot extends AbstractMultiDecoderToo
               return null;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolEsotericLanguageKarolRobotState();
+}
+
+class _MultiDecoderToolEsotericLanguageKarolRobotState extends State<MultiDecoderToolEsotericLanguageKarolRobot> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

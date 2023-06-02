@@ -12,10 +12,10 @@ class GCWCoordsOutputFormat extends StatefulWidget {
   const GCWCoordsOutputFormat({Key? key, required this.coordFormat, required this.onChanged}) : super(key: key);
 
   @override
-  GCWCoordsOutputFormatState createState() => GCWCoordsOutputFormatState();
+ _GCWCoordsOutputFormatState createState() => _GCWCoordsOutputFormatState();
 }
 
-class GCWCoordsOutputFormatState extends State<GCWCoordsOutputFormat> {
+class _GCWCoordsOutputFormatState extends State<GCWCoordsOutputFormat> {
   var _currentFormat = defaultCoordinateFormat;
 
   @override

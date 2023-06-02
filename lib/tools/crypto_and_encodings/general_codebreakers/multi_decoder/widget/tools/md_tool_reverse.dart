@@ -19,4 +19,13 @@ class MultiDecoderToolReverse extends AbstractMultiDecoderTool {
               return reverse(input);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolReverseState();
+}
+
+class _MultiDecoderToolReverseState extends State<MultiDecoderToolReverse> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

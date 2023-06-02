@@ -18,10 +18,10 @@ class CenterTwoPoints extends StatefulWidget {
   const CenterTwoPoints({Key? key}) : super(key: key);
 
   @override
-  CenterTwoPointsState createState() => CenterTwoPointsState();
+ _CenterTwoPointsState createState() => _CenterTwoPointsState();
 }
 
-class CenterTwoPointsState extends State<CenterTwoPoints> {
+class _CenterTwoPointsState extends State<CenterTwoPoints> {
   LatLng _currentCenter = defaultCoordinate;
   double _currentDistance = 0.0;
 

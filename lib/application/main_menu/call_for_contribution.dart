@@ -14,10 +14,10 @@ class CallForContribution extends StatefulWidget {
   const CallForContribution({Key? key}) : super(key: key);
 
   @override
-  CallForContributionState createState() => CallForContributionState();
+ _CallForContributionState createState() => _CallForContributionState();
 }
 
-class CallForContributionState extends State<CallForContribution> {
+class _CallForContributionState extends State<CallForContribution> {
   @override
   Widget build(BuildContext context) {
     var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);

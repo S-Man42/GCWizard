@@ -17,10 +17,10 @@ class Trifid extends StatefulWidget {
   const Trifid({Key? key}) : super(key: key);
 
   @override
-  TrifidState createState() => TrifidState();
+ _TrifidState createState() => _TrifidState();
 }
 
-class TrifidState extends State<Trifid> {
+class _TrifidState extends State<Trifid> {
   late TextEditingController _inputController;
   late TextEditingController _alphabetController;
 
