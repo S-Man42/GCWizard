@@ -61,12 +61,7 @@ class App extends StatelessWidget {
                     tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
               },
               onGenerateRoute: (RouteSettings settings) {
-                final args = parseUrl(settings);
-                if (args != null) {
-                  return createRoute(context, args);
-                } else {
-                  return null;
-                }
+                return createRoute(context, settings);
               }
             );
           });

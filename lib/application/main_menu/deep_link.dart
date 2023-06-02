@@ -15,8 +15,17 @@ class WebParameter {
   WebParameter({required this.title, required this.arguments, required this.settings});
 }
 
+NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
+  final args = _parseUrl(settings);
+  if (args != null) {
+    return _createRoute(context, args);
+  } else {
+    return null;
+  }
+}
+
 // A Widget that accepts the necessary arguments via the constructor.
-NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, WebParameter arguments) {
+NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebParameter arguments) {
 
   var gcwTool = _findGCWTool(arguments);
   if (gcwTool == null) return null;
@@ -57,20 +66,20 @@ GCWTool _toolNameList() {
   );
 }
 
-void sendWebResult(String json) {
-  // String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
-  // try {
-  //   var uri = Uri.parse(address);
-  //   var request = http.MultipartRequest('POST', uri)
-  //     ..fields['return']=json;
-  //   request.send();
-  //
-  // } catch (exception) {
-  //   //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
-  // };
-}
+// void sendWebResult(String json) {
+//   // String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
+//   // try {
+//   //   var uri = Uri.parse(address);
+//   //   var request = http.MultipartRequest('POST', uri)
+//   //     ..fields['return']=json;
+//   //   request.send();
+//   //
+//   // } catch (exception) {
+//   //   //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
+//   // };
+// }
 
-WebParameter? parseUrl(RouteSettings settings) {
+WebParameter? _parseUrl(RouteSettings settings) {
 
     if (settings.name == null) return null;
     var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
