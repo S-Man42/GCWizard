@@ -327,7 +327,7 @@ const WherigoCartridgeGWC _WHERIGO_EMPTYCARTRIDGE_GWC = WherigoCartridgeGWC(
   ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.NONE,
   ResultsGWC: [],
 );
-const WherigoTaskData WHERIGO_EMPTYTESTTASK_LUA = WherigoTaskData(
+const WherigoTaskData _WHERIGO_EMPTYTESTTASK_LUA = WherigoTaskData(
   TaskLUAName: '',
   TaskID: '',
   TaskName: '',
@@ -339,7 +339,7 @@ const WherigoTaskData WHERIGO_EMPTYTESTTASK_LUA = WherigoTaskData(
   TaskComplete: '',
   TaskCorrectstate: '',
 );
-const WherigoZoneData WHERIGO_EMPTYTESTZONE_LUA = WherigoZoneData(
+const WherigoZoneData _WHERIGO_EMPTYTESTZONE_LUA = WherigoZoneData(
   ZoneLUAName: '',
   ZoneID: '',
   ZoneName: '',
@@ -358,7 +358,7 @@ const WherigoZoneData WHERIGO_EMPTYTESTZONE_LUA = WherigoZoneData(
   ZoneInRange: '',
   ZonePoints: [],
 );
-const WherigoItemData WHERIGO_EMPTYTESTITEM_LUA = WherigoItemData(
+const WherigoItemData _WHERIGO_EMPTYTESTITEM_LUA = WherigoItemData(
   ItemLUAName: '',
   ItemID: '',
   ItemName: '',
@@ -372,7 +372,16 @@ const WherigoItemData WHERIGO_EMPTYTESTITEM_LUA = WherigoItemData(
   ItemLocked: '',
   ItemOpened: '',
 );
-const WherigoCharacterData WHERIGO_EMPTYTESTCHARACTER_LUA = WherigoCharacterData(
+const WherigoMediaData _WHERIGO_EMPTYTESTMEDIA_LUA = WherigoMediaData(
+  MediaLUAName: '',
+  MediaID: '',
+  MediaName: '',
+  MediaDescription: '',
+  MediaAltText: '',
+  MediaType: '',
+  MediaFilename: '',
+);
+const WherigoCharacterData _WHERIGO_EMPTYTESTCHARACTER_LUA = WherigoCharacterData(
   CharacterLUAName: '',
   CharacterID: '',
   CharacterName: '',
@@ -386,7 +395,7 @@ const WherigoCharacterData WHERIGO_EMPTYTESTCHARACTER_LUA = WherigoCharacterData
   CharacterGender: '',
   CharacterType: '',
 );
-const WherigoTimerData WHERIGO_EMPTYTESTTIMER_LUA = WherigoTimerData(
+const WherigoTimerData _WHERIGO_EMPTYTESTTIMER_LUA = WherigoTimerData(
   TimerLUAName: '',
   TimerID: '',
   TimerName: '',
@@ -395,7 +404,7 @@ const WherigoTimerData WHERIGO_EMPTYTESTTIMER_LUA = WherigoTimerData(
   TimerDuration: '',
   TimerType: '',
 );
-const WherigoInputData WHERIGO_EMPTYTESTINPUT_LUA = WherigoInputData(
+const WherigoInputData _WHERIGO_EMPTYTESTINPUT_LUA = WherigoInputData(
   InputLUAName: '',
   InputID: '',
   InputVariableID: '',
@@ -409,11 +418,11 @@ const WherigoInputData WHERIGO_EMPTYTESTINPUT_LUA = WherigoInputData(
   InputChoices: [],
   InputAnswers: [],
 );
-const WherigoObfuscationData WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscationData(
+const WherigoObfuscationData _WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscationData(
   ObfuscationTable: '',
   ObfuscationName: '',
 );
-const WherigoVariableData WHERIGO_EMPTYTESTVARIABLE_LUA = WherigoVariableData(
+const WherigoVariableData _WHERIGO_EMPTYTESTVARIABLE_LUA = WherigoVariableData(
   VariableLUAName: '',
   VariableName: '',
 );

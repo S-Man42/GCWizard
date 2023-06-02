@@ -142,7 +142,13 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.MEDIAFILES);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestMedia.MediaLUAName, testOutputMEDIA.MediaLUAName);
+        expect(_actual.cartridgeTestMedia.MediaID, testOutputMEDIA.MediaID);
+        expect(_actual.cartridgeTestMedia.MediaName, testOutputMEDIA.MediaName);
+        expect(_actual.cartridgeTestMedia.MediaDescription, testOutputMEDIA.MediaDescription);
+        expect(_actual.cartridgeTestMedia.MediaAltText, testOutputMEDIA.MediaAltText);
+        expect(_actual.cartridgeTestMedia.MediaType, testOutputMEDIA.MediaType);
+        expect(_actual.cartridgeTestMedia.MediaFilename, testOutputMEDIA.MediaFilename);
       });
     }
   });
@@ -221,7 +227,5 @@ void main() {
       });
     }
   });
-
-
 
 }
