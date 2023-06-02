@@ -208,13 +208,13 @@ num _pow(Object? x, Object? y) {
 }
 
 int _qsum(Object? x) {
-  if (!_isInt(x)) {
+  if (!_isNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
   int result = 0;
-  (x as int).toString().split('').forEach((digit) {
-    result = result + int.parse(digit);
+  x.toString().split('').forEach((digit) {
+    result += _isDigit(digit) ? int.parse(digit) : 0;
   });
   return result;
 }
@@ -224,16 +224,10 @@ int _iqsum(Object? x) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
-  int result = 0;
-  String number = (x as int).toString();
-  while (number.length > 1) {
-    result = 0;
-    number.split('').forEach((digit) {
-      result = result + int.parse(digit);
-    });
-    number = result.toString();
+  int result = _qsum(x);
+  while (result.toString().length > 1) {
+    result = _qsum(result);
   }
-
   return result;
 }
 

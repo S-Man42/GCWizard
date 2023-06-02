@@ -150,7 +150,7 @@ Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'POW': _GCWizardScriptClassFunctionDefinition(_pow, 2),
   'QSUM': _GCWizardScriptClassFunctionDefinition(_qsum, 1),
   'IQSUM': _GCWizardScriptClassFunctionDefinition(_iqsum, 1),
-  'CONVERT': _GCWizardScriptClassFunctionDefinition(_convert, 4),
+  'CONVERT': _GCWizardScriptClassFunctionDefinition(_convert, 3),
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
