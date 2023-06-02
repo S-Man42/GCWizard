@@ -57,7 +57,8 @@ String decodeBase32(String input) {
 String encodeBase64(String input) {
   if (input.isEmpty) return '';
 
-  return base64.encode(utf8.encode(input));
+  return base64.encode(input.codeUnits);
+  //return base64.encode(utf8.encode(input));
 }
 
 String decodeBase64(String input) {
