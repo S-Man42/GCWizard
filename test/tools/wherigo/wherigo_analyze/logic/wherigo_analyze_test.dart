@@ -94,7 +94,33 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.ZONES);
-        expect(_actual, elem['expectedOutput']);
+        expect(_actual.cartridgeTestZone.ZoneLUAName, testOutputZONE.ZoneLUAName);
+        expect(_actual.cartridgeTestZone.ZoneID, testOutputZONE.ZoneID);
+        expect(_actual.cartridgeTestZone.ZoneName, testOutputZONE.ZoneName);
+        expect(_actual.cartridgeTestZone.ZoneDescription, testOutputZONE.ZoneDescription);
+        expect(_actual.cartridgeTestZone.ZoneVisible, testOutputZONE.ZoneVisible);
+        expect(_actual.cartridgeTestZone.ZoneMediaName, testOutputZONE.ZoneMediaName);
+        expect(_actual.cartridgeTestZone.ZoneIconName, testOutputZONE.ZoneIconName);
+        expect(_actual.cartridgeTestZone.ZoneActive, testOutputZONE.ZoneActive);
+        expect(_actual.cartridgeTestZone.ZoneDistanceRange, testOutputZONE.ZoneDistanceRange);
+        expect(_actual.cartridgeTestZone.ZoneShowObjects, testOutputZONE.ZoneShowObjects);
+        expect(_actual.cartridgeTestZone.ZoneProximityRange, testOutputZONE.ZoneProximityRange);
+        expect(_actual.cartridgeTestZone.ZoneOriginalPoint.Latitude, testOutputZONE.ZoneOriginalPoint.Latitude);
+        expect(_actual.cartridgeTestZone.ZoneOriginalPoint.Longitude, testOutputZONE.ZoneOriginalPoint.Longitude);
+        expect(_actual.cartridgeTestZone.ZoneOriginalPoint.Altitude, testOutputZONE.ZoneOriginalPoint.Altitude);
+        expect(_actual.cartridgeTestZone.ZoneDistanceRangeUOM, testOutputZONE.ZoneDistanceRangeUOM);
+        expect(_actual.cartridgeTestZone.ZoneProximityRangeUOM, testOutputZONE.ZoneProximityRangeUOM);
+        expect(_actual.cartridgeTestZone.ZoneOutOfRange, testOutputZONE.ZoneOutOfRange);
+        expect(_actual.cartridgeTestZone.ZoneInRange, testOutputZONE.ZoneInRange);
+        expect(_actual.cartridgeTestZone.ZonePoints[0].Latitude, testOutputZONE.ZonePoints[0].Latitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[0].Longitude, testOutputZONE.ZonePoints[0].Longitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[0].Altitude, testOutputZONE.ZonePoints[0].Altitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[1].Latitude, testOutputZONE.ZonePoints[1].Latitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[1].Longitude, testOutputZONE.ZonePoints[1].Longitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[1].Altitude, testOutputZONE.ZonePoints[1].Altitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[2].Latitude, testOutputZONE.ZonePoints[2].Latitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[2].Longitude, testOutputZONE.ZonePoints[2].Longitude);
+        expect(_actual.cartridgeTestZone.ZonePoints[2].Altitude, testOutputZONE.ZonePoints[2].Altitude);
       });
     }
   });
