@@ -77,6 +77,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/scrabble_sel
 import 'package:gc_wizard/application/category_views/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/slash_and_pipe_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt2_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt3_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt5_selection.dart';
@@ -230,6 +231,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_phi_calculator/widg
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_primes_calculator/widget/rsa_primes_calculator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers/widget/shadoks_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/slash_and_pipe/widget/slash_and_pipe.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/widget/straddling_checkerboard.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
@@ -1056,6 +1058,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'skytale',
     ]),
+    GCWTool(
+        tool: const SlashAndPipeSelection(),
+        id: 'slash_and_pipe_selection',
+        categories: const [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: const []),
     GCWTool(tool: const Solitaire(), id: 'solitaire', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -3055,6 +3062,11 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: const SilverRatioSearch(), id: 'irrationalnumbers_search', searchKeys: const [
       'silverratiosearch',
+    ]),
+
+    // SlashAndPipeSelection *********************************************************************************************
+    GCWTool(tool: const SlashAndPipe(), id: 'slash_and_pipe', searchKeys: const [
+      'slash_and_pipe',
     ]),
 
     //SQRT 2 Selection **********************************************************************************************
