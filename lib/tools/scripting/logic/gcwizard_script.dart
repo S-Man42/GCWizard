@@ -1553,19 +1553,19 @@ class _GCWizardSCriptInterpreter {
     while ((op = token[0]) == '*' || op == '/' || op == '%') {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (_isNotDouble(result) || _isNotDouble(partialResult)) {
+      if (!_isNumber(result) || !_isNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '*':
-            result = (result as double) * (partialResult as double);
+            result = (result as num) * (partialResult as num);
             break;
           case '/':
             if (partialResult == 0.0) {
               _handleError(_DIVISIONBYZERO);
               result = 0;
             } else {
-              result = (result as double) / (partialResult as double);
+              result = (result as num) / (partialResult as num);
             }
             break;
           case '%':
@@ -1573,7 +1573,7 @@ class _GCWizardSCriptInterpreter {
               _handleError(_DIVISIONBYZERO);
               result = 0;
             } else {
-              result = (result as double) % (partialResult as double);
+              result = (result as num) % (partialResult as num);
             }
             break;
         }
@@ -1692,7 +1692,8 @@ class _GCWizardSCriptInterpreter {
         break;
       case NUMBER:
         try {
-          result = double.parse(token);
+          result = int.tryParse(token);
+          result ??= double.parse(token);
         } catch (NumberFormatException) {
           _handleError(_SYNTAXERROR);
         }

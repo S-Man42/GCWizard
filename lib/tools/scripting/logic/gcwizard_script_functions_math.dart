@@ -34,12 +34,12 @@ double _sqrt(Object? x) {
   return sqrt(x as num);
 }
 
-double _sqr(Object? x) {
+num _sqr(Object? x) {
   if (!_isNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
-  return ((x as num) * x) as double;
+  return ((x as num) * x);
 }
 
 double _exp(Object? x) {
@@ -260,7 +260,7 @@ num _kgv(Object? x, Object? y) {
 }
 
 String _convert(Object? value, Object? startBase, Object? destinationBase) {
-  if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) {
+  if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) { //ToDo mayby convert value toString (if int or double)
     _handleError(_INVALIDTYPECAST);
     return '';
   }

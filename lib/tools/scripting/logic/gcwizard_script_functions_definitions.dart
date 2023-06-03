@@ -1,10 +1,10 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-List<String> _Functions_2 = [
+const List<String> _Functions_2 = [
   'LN(',
   'PI(',
 ];
-List<String> _Functions_3 = [
+const List<String> _Functions_3 = [
   'ABS(',
   'ARC(',
   'ASC(',
@@ -31,7 +31,7 @@ List<String> _Functions_3 = [
   'TAN(',
   'VAL(',
 ];
-List<String> _Functions_4 = [
+const List<String> _Functions_4 = [
   'ACOS(',
   'ASIN(',
   'ATAN(',
@@ -51,7 +51,7 @@ List<String> _Functions_4 = [
   'TEXT(',
   'TIME(',
 ];
-List<String> _Functions_5 = [
+const List<String> _Functions_5 = [
   'COLOR(',
   'FLOOR(',
   'IQSUM(',
@@ -60,7 +60,7 @@ List<String> _Functions_5 = [
   'TRUNC(',
   'WGS84(',
 ];
-List<String> _Functions_6 = [
+const List<String> _Functions_6 = [
   'CIRCLE(',
   'GETLAT(',
   'GETLON(',
@@ -68,34 +68,34 @@ List<String> _Functions_6 = [
   'SETLON(',
   'STROKE(',
 ];
-List<String> _Functions_7 = [
+const List<String> _Functions_7 = [
   'BEARING(',
   'CONVERT(',
   'WPTSADD(',
   'WPTSLAT(',
   'WPTSLON(',
 ];
-List<String> _Functions_8 = [
+const List<String> _Functions_8 = [
   'DISTANCE(',
 ];
-List<String> _Functions_9 = [
+const List<String> _Functions_9 = [
   'WPTSCLEAR('
   'WPTSCOUNT(',
 ];
-List<String> _Functions_10 = [
+const List<String> _Functions_10 = [
   'DECTOROMAN(',
   'PROJECTION(',
   'ROMANTODEC(',
   'WPTSCENTER(',
 ];
-List<String> _Functions_15 = [
+const List<String> _Functions_15 = [
   'CENTERTWOPINTS(',
 ];
-List<String> _Functions_17 = [
+const List<String> _Functions_17 = [
   'CENTERTHREEPOINTS(',
 ];
 
-Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
+const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // graphic
   'STROKE': _GCWizardScriptClassFunctionDefinition(_stroke, 1, functionReturn: false),
   'CIRCLE': _GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),

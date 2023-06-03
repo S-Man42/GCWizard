@@ -30,7 +30,7 @@ class _GCWizardScriptClassFunctionDefinition {
   final int functionParamCount;
   final bool functionReturn;
 
-  _GCWizardScriptClassFunctionDefinition(this.functionName, this.functionParamCount, {this.functionReturn = true});
+  const _GCWizardScriptClassFunctionDefinition(this.functionName, this.functionParamCount, {this.functionReturn = true});
 }
 
 class _GCWizardScriptClassLabelStack {
