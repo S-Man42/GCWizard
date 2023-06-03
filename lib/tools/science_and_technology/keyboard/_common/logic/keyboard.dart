@@ -139,6 +139,7 @@ const Map<String, String> _QWERTY_USNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
+const Map<String, String> _DvorakNumberToSymbol = _QWERTY_USNumberToSymbol;
 const Map<String, String> _IPhoneEnNumberToSymbol = {
   '1': '-',
   '2': '/',
@@ -167,6 +168,48 @@ const Map<String, String> _IPhoneDeNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
+const Map<String, String> _IPhone1NumberToSymbol = {
+  '1': '`',
+  '2': '|',
+  '3': '{',
+  '4': '}',
+  '5': '?',
+  '6': '%',
+  '7': '^',
+  '8': '*',
+  '9': '/',
+  '0': '’',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhone2NumberToSymbol = {
+  '1': '[',
+  '2': ']',
+  '3': '{',
+  '4': '}',
+  '5': '#',
+  '6': '%',
+  '7': '^',
+  '8': '*',
+  '9': '+',
+  '0': '=',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhone3NumberToSymbol = {
+  '1': '_',
+  '2': '\\',
+  '3': '|',
+  '4': '~',
+  '5': '<',
+  '6': '>',
+  '7': '\$',
+  '8': '£',
+  '9': '¥',
+  '0': '•',
+  ' ': ' ',
+  '.': '.'
+};
 const Map<String, String> _AndroidEnNumberToSymbol = {
   '1': '@',
   '2': '#',
@@ -184,7 +227,7 @@ const Map<String, String> _AndroidEnNumberToSymbol = {
 const Map<String, String> _AndroidDeNumberToSymbol = {
   '1': '@',
   '2': '#',
-  '3': '@',
+  '3': '€',
   '4': '_',
   '5': '&',
   '6': '-',
@@ -192,6 +235,62 @@ const Map<String, String> _AndroidDeNumberToSymbol = {
   '8': '(',
   '9': ')',
   '0': '/',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung1NumberToSymbol = {
+  '1': '!',
+  '2': '@',
+  '3': '#',
+  '4': '€',
+  '5': '%',
+  '6': '^',
+  '7': '&',
+  '8': '*',
+  '9': '(',
+  '0': ')',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung4NumberToSymbol = {
+  '1': '•',
+  '2': '∙',
+  '3': '○',
+  '4': '●',
+  '5': '□',
+  '6': '■',
+  '7': '♤',
+  '8': '♡',
+  '9': '♢',
+  '0': '♧',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung2NumberToSymbol = {
+  '1': '+',
+  '2': '×',
+  '3': '÷',
+  '4': '=',
+  '5': '/',
+  '6': '_',
+  '7': '<',
+  '8': '>',
+  '9': '[',
+  '0': ']',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung3NumberToSymbol = {
+  '1': '`',
+  '2': '~',
+  '3': '\\',
+  '4': '|',
+  '5': '{',
+  '6': '}',
+  '7': '\$',
+  '8': '£',
+  '9': '¥',
+  '0': '₩',
   ' ': ' ',
   '.': '.'
 };
@@ -322,8 +421,15 @@ final Map<String, String> _SymbolToQWERTY_USNumber = switchMapKeyValue(_QWERTY_U
 final Map<String, String> _SymbolToDvorakNumber = _SymbolToQWERTY_USNumber;
 final Map<String, String> _SymbolToIPhoneEnNumber = switchMapKeyValue(_IPhoneEnNumberToSymbol);
 final Map<String, String> _SymbolToIPhoneDeNumber = switchMapKeyValue(_IPhoneDeNumberToSymbol);
+final Map<String, String> _SymbolToIPhone1Number = switchMapKeyValue(_IPhone1NumberToSymbol);
+final Map<String, String> _SymbolToIPhone2Number = switchMapKeyValue(_IPhone2NumberToSymbol);
+final Map<String, String> _SymbolToIPhone3Number = switchMapKeyValue(_IPhone3NumberToSymbol);
 final Map<String, String> _SymbolToAndroidEnNumber = switchMapKeyValue(_AndroidEnNumberToSymbol);
 final Map<String, String> _SymbolToAndroidDeNumber = switchMapKeyValue(_AndroidDeNumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung4Number = switchMapKeyValue(_AndroidSamsung4NumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung1Number = switchMapKeyValue(_AndroidSamsung1NumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung2Number = switchMapKeyValue(_AndroidSamsung2NumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung3Number = switchMapKeyValue(_AndroidSamsung3NumberToSymbol);
 
 const Map<String, String> _QWERTZ_T1toNormal = {
   '°': '100o',
@@ -1747,24 +1853,6 @@ String _convert(String input, Map<String, String> layout) {
   }).join('');
 }
 
-List<List<String>> encodeKeyboardNumbers(String input) {
-  List<List<String>> output = <List<String>>[];
-  output.add(['keyboard_mode_qwertz_ristome_dvorak', _convert(input, _QWERTZ_T1NumberToSymbol)]);
-  output.add(['keyboard_mode_neo', _convert(input, _NeoNumberToSymbol)]);
-  output.add(['keyboard_mode_neo_3', _convert(input, _Neo3NumberToSymbol)]);
-  output.add(['keyboard_mode_neo_5', _convert(input, _Neo5NumberToSymbol)]);
-  output.add(['keyboard_mode_neo_6', _convert(input, _Neo6NumberToSymbol)]);
-  output.add(['keyboard_mode_fra_azerty', _convert(input, _AZERTYNumberToSymbol)]);
-  output.add(['keyboard_mode_fra_bepo', _convert(input, _BEPONumberToSymbol)]);
-  output.add(['keyboard_mode_qwerty_us_int_colemak_dvorak', _convert(input, _QWERTY_USNumberToSymbol)]);
-  output.add(['keyboard_mode_iphone_de', _convert(input, _IPhoneDeNumberToSymbol)]);
-  output.add(['keyboard_mode_iphone_en', _convert(input, _IPhoneEnNumberToSymbol)]);
-  output.add(['keyboard_mode_android_de', _convert(input, _AndroidDeNumberToSymbol)]);
-  output.add(['keyboard_mode_android_en', _convert(input, _AndroidEnNumberToSymbol)]);
-
-  return output;
-}
-
 final Map<String, String Function(String)> keyboardNumbersByName = {
   'keyboard_mode_qwertz_ristome_dvorak': (String input) => _convert(input, _SymbolToQWERTZ_T1Number),
   'keyboard_mode_neo': (String input) => _convert(input, _SymbolToNeoNumber),
@@ -1776,14 +1864,55 @@ final Map<String, String Function(String)> keyboardNumbersByName = {
   'keyboard_mode_qwerty_us_int_colemak_dvorak': (String input) => _convert(input, _SymbolToDvorakNumber),
   'keyboard_mode_iphone_de': (String input) => _convert(input, _SymbolToIPhoneDeNumber),
   'keyboard_mode_iphone_en': (String input) => _convert(input, _SymbolToIPhoneEnNumber),
+  'keyboard_mode_iphone_1': (String input) => _convert(input, _SymbolToIPhone1Number),
+  'keyboard_mode_iphone_2': (String input) => _convert(input, _SymbolToIPhone2Number),
+  'keyboard_mode_iphone_3': (String input) => _convert(input, _SymbolToIPhone3Number),
   'keyboard_mode_android_de': (String input) => _convert(input, _SymbolToAndroidDeNumber),
   'keyboard_mode_android_en': (String input) => _convert(input, _SymbolToAndroidEnNumber),
+  'keyboard_mode_android_samsung_1': (String input) => _convert(input, _SymbolToAndroidSamsung1Number),
+  'keyboard_mode_android_samsung_2': (String input) => _convert(input, _SymbolToAndroidSamsung2Number),
+  'keyboard_mode_android_samsung_3': (String input) => _convert(input, _SymbolToAndroidSamsung3Number),
+  'keyboard_mode_android_samsung_4': (String input) => _convert(input, _SymbolToAndroidSamsung4Number),
+};
+
+final Map<String, List<Map<String, String>>> keyboardNumberMapsByName = {
+  // name   decoding map    encoding map
+  'keyboard_mode_qwertz_ristome_dvorak': [_SymbolToQWERTZ_T1Number, _QWERTZ_T1NumberToSymbol],
+  'keyboard_mode_neo': [_SymbolToNeoNumber, _NeoNumberToSymbol],
+  'keyboard_mode_neo_3': [_SymbolToNeo3Number, _Neo3NumberToSymbol],
+  'keyboard_mode_neo_5': [_SymbolToNeo5Number, _Neo5NumberToSymbol],
+  'keyboard_mode_neo_6': [_SymbolToNeo6Number, _Neo6NumberToSymbol],
+  'keyboard_mode_fra_azerty': [_SymbolToAZERTYNumber, _AZERTYNumberToSymbol],
+  'keyboard_mode_fra_bepo': [_SymbolToBEPONumber, _BEPONumberToSymbol],
+  'keyboard_mode_qwerty_us_int_colemak_dvorak': [_SymbolToDvorakNumber, _DvorakNumberToSymbol],
+  'keyboard_mode_iphone_de': [_SymbolToIPhoneDeNumber, _IPhoneDeNumberToSymbol],
+  'keyboard_mode_iphone_en': [_SymbolToIPhoneEnNumber, _IPhoneEnNumberToSymbol],
+  'keyboard_mode_iphone_1': [_SymbolToIPhone1Number, _IPhone1NumberToSymbol],
+  'keyboard_mode_iphone_2': [_SymbolToIPhone2Number, _IPhone2NumberToSymbol],
+  'keyboard_mode_iphone_3': [_SymbolToIPhone3Number, _IPhone3NumberToSymbol],
+  'keyboard_mode_android_de': [_SymbolToAndroidDeNumber, _AndroidDeNumberToSymbol],
+  'keyboard_mode_android_en': [_SymbolToAndroidEnNumber, _AndroidEnNumberToSymbol],
+  'keyboard_mode_android_samsung_1': [_SymbolToAndroidSamsung1Number, _AndroidSamsung1NumberToSymbol],
+  'keyboard_mode_android_samsung_2': [_SymbolToAndroidSamsung2Number, _AndroidSamsung2NumberToSymbol],
+  'keyboard_mode_android_samsung_3': [_SymbolToAndroidSamsung3Number, _AndroidSamsung3NumberToSymbol],
+  'keyboard_mode_android_samsung_4': [_SymbolToAndroidSamsung4Number, _AndroidSamsung4NumberToSymbol],
 };
 
 List<List<String>> decodeKeyboardNumbers(String input) {
   List<List<String>> output = <List<String>>[];
-  keyboardNumbersByName.forEach((name, function) {
-    output.add([name, function(input)]);
+  //keyboardNumbersByName.forEach((name, function) {output.add([name, function(input)]);});
+  keyboardNumberMapsByName.forEach((name, map){
+    output.add([name, _convert(input, map[0])]);
+  });
+
+  return output;
+}
+
+List<List<String>> encodeKeyboardNumbers(String input) {
+  List<List<String>> output = <List<String>>[];
+  //keyboardNumbersByName.forEach((name, function) {output.add([name, function(input)]);});
+  keyboardNumberMapsByName.forEach((name, map){
+    output.add([name, _convert(input, map[1])]);
   });
 
   return output;
