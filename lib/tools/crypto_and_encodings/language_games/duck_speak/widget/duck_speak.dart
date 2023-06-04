@@ -9,10 +9,10 @@ class DuckSpeak extends StatefulWidget {
   const DuckSpeak({Key? key}) : super(key: key);
 
   @override
-  DuckSpeakState createState() => DuckSpeakState();
+ _DuckSpeakState createState() => _DuckSpeakState();
 }
 
-class DuckSpeakState extends State<DuckSpeak> {
+class _DuckSpeakState extends State<DuckSpeak> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.right;
   var _currentDuckSpeakMode = GCWSwitchPosition.left;

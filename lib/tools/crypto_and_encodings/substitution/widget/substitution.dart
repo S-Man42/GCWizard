@@ -15,10 +15,10 @@ class Substitution extends StatefulWidget {
   const Substitution({Key? key, this.input, this.substitutions}) : super(key: key);
 
   @override
-  SubstitutionState createState() => SubstitutionState();
+ _SubstitutionState createState() => _SubstitutionState();
 }
 
-class SubstitutionState extends State<Substitution> {
+class _SubstitutionState extends State<Substitution> {
   late TextEditingController _inputController;
 
   var _currentInput = '';

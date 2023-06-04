@@ -19,4 +19,13 @@ class MultiDecoderToolTapir extends AbstractMultiDecoderTool {
               return decryptTapir(input, key);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolTapirState();
+}
+
+class _MultiDecoderToolTapirState extends State<MultiDecoderToolTapir> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

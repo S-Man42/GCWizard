@@ -17,10 +17,10 @@ class GCWDropDownSpinner extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWDropDownSpinnerState createState() => GCWDropDownSpinnerState();
+ _GCWDropDownSpinnerState createState() => _GCWDropDownSpinnerState();
 }
 
-class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
+class _GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   late int _currentIndex;
 
   void _increaseValue() {

@@ -11,10 +11,10 @@ class Permutation extends StatefulWidget {
   const Permutation({Key? key}) : super(key: key);
 
   @override
-  PermutationState createState() => PermutationState();
+ _PermutationState createState() => _PermutationState();
 }
 
-class PermutationState extends State<Permutation> {
+class _PermutationState extends State<Permutation> {
   var _currentInput = '';
   bool _currentShowDuplicates = false;
 

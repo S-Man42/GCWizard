@@ -28,10 +28,10 @@ class SymbolReplacerManualControl extends StatefulWidget {
   const SymbolReplacerManualControl({Key? key, required this.symbolImage}) : super(key: key);
 
   @override
-  SymbolReplacerManualControlState createState() => SymbolReplacerManualControlState();
+ _SymbolReplacerManualControlState createState() => _SymbolReplacerManualControlState();
 }
 
-class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
+class _SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
   final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   SymbolData? _selectedSymbolData;
   var _removeActiv = false;
@@ -83,19 +83,21 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-      fixed: false,
-      imageData: _symbolMap.values,
-      countColumns: countColumns,
-      mediaQueryData: mediaQueryData,
-      onChanged: () => setState(() {}),
-      selectable: true,
-      overlayOn: true,
-      onSymbolTapped: (String tappedText, SymbolData imageData) {
-        setState(() {
-          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
-        });
-      },
-    ));
+          fixed: false,
+          imageData: _symbolMap.values,
+          countColumns: countColumns,
+          mediaQueryData: mediaQueryData,
+          onChanged: () => setState(() {}),
+          selectable: true,
+          overlayOn: true,
+          scale: widget.symbolImage.symbolScale,
+          onSymbolTapped: (String tappedText, SymbolData imageData) {
+            setState(() {
+              _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
+            });
+          },
+        )
+    );
   }
 
   void _selectGroupSymbols(SymbolData imageData, bool selected) {

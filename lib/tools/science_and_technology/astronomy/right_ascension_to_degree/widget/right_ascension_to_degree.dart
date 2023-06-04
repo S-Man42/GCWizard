@@ -29,10 +29,10 @@ class RightAscensionToDegree extends StatefulWidget {
   const RightAscensionToDegree({Key? key}) : super(key: key);
 
   @override
-  RightAscensionToDegreeState createState() => RightAscensionToDegreeState();
+ _RightAscensionToDegreeState createState() => _RightAscensionToDegreeState();
 }
 
-class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
+class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   late FocusNode _hoursFocusNode;
   late FocusNode _minutesFocusNode;
   late FocusNode _secondsFocusNode;

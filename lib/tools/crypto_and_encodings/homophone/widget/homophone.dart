@@ -27,10 +27,10 @@ class Homophone extends StatefulWidget {
   const Homophone({Key? key}) : super(key: key);
 
   @override
-  HomophoneState createState() => HomophoneState();
+ _HomophoneState createState() => _HomophoneState();
 }
 
-class HomophoneState extends State<Homophone> {
+class _HomophoneState extends State<Homophone> {
   var _currentMode = GCWSwitchPosition.right;
 
   late TextEditingController _currentRotationController;

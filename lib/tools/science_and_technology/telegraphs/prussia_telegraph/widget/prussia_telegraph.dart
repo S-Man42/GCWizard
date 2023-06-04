@@ -22,10 +22,10 @@ class PrussiaTelegraph extends StatefulWidget {
   const PrussiaTelegraph({Key? key}) : super(key: key);
 
   @override
-  PrussiaTelegraphState createState() => PrussiaTelegraphState();
+ _PrussiaTelegraphState createState() => _PrussiaTelegraphState();
 }
 
-class PrussiaTelegraphState extends State<PrussiaTelegraph> {
+class _PrussiaTelegraphState extends State<PrussiaTelegraph> {
   var _currentEncodeInput = '';
   late TextEditingController _encodeInputController;
 

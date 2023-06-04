@@ -10,10 +10,10 @@ class IPCodes extends StatefulWidget {
   const IPCodes({Key? key}) : super(key: key);
 
   @override
-  IPCodesState createState() => IPCodesState();
+ _IPCodesState createState() => _IPCodesState();
 }
 
-class IPCodesState extends State<IPCodes> {
+class _IPCodesState extends State<IPCodes> {
   var _currentIPClass = IP_CODES.keys.first;
 
   @override

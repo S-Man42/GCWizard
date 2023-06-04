@@ -62,10 +62,10 @@ class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
 
   @override
-  WherigoAnalyzeState createState() => WherigoAnalyzeState();
+ _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
 }
 
-class WherigoAnalyzeState extends State<WherigoAnalyze> {
+class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes = Uint8List(0);
   Uint8List _LUAbytes = Uint8List(0);
 
@@ -1474,12 +1474,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
-
     switch (WherigoCartridgeLUAData.ResultStatus) {
       case WHERIGO_ANALYSE_RESULT_STATUS.OK:
         toastMessage = i18n(context, 'wherigo_data_loaded') + ': LUA';
         toastDuration = 5;
-
         // check if GWC and LUA are from the same cartridge
         if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
                 WherigoCartridgeLUAData.CartridgeGUID != '') &&
@@ -1577,6 +1575,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       default:
         {}
     } // outData != null
+    showToast(toastMessage, duration: toastDuration);
   }
 
   void _showCartridgeOutputGWC(WherigoCartridge output) {
@@ -1686,9 +1685,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _ZonePolylines.clear();
 
     // Build data
-
     for (WherigoZoneData zone in WherigoCartridgeLUAData.Zones) {
-      if (WHERIGONameToObject[zone.ZoneLUAName] == null) return;
+
+      if (WHERIGONameToObject[zone.ZoneLUAName] == null) {
+        return;
+      }
 
       _ZonePoints.add(// add originalpoint of zone
           GCWMapPoint(

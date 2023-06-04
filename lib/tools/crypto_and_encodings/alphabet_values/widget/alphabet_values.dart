@@ -30,10 +30,10 @@ class AlphabetValues extends StatefulWidget {
   const AlphabetValues({Key? key}) : super(key: key);
 
   @override
-  AlphabetValuesState createState() => AlphabetValuesState();
+ _AlphabetValuesState createState() => _AlphabetValuesState();
 }
 
-class AlphabetValuesState extends State<AlphabetValues> {
+class _AlphabetValuesState extends State<AlphabetValues> {
   late List<Alphabet> _alphabets;
 
   late TextEditingController _encodeController;

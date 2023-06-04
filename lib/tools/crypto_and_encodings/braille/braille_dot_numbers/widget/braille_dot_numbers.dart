@@ -16,10 +16,10 @@ class BrailleDotNumbers extends StatefulWidget {
   const BrailleDotNumbers({Key? key}) : super(key: key);
 
   @override
-  BrailleDotNumbersState createState() => BrailleDotNumbersState();
+ _BrailleDotNumbersState createState() => _BrailleDotNumbersState();
 }
 
-class BrailleDotNumbersState extends State<BrailleDotNumbers> {
+class _BrailleDotNumbersState extends State<BrailleDotNumbers> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

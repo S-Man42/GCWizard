@@ -13,10 +13,10 @@ class GCWTextViewer extends StatefulWidget {
   const GCWTextViewer({Key? key, required this.text}) : super(key: key);
 
   @override
-  GCWTextViewerState createState() => GCWTextViewerState();
+ _GCWTextViewerState createState() => _GCWTextViewerState();
 }
 
-class GCWTextViewerState extends State<GCWTextViewer> {
+class _GCWTextViewerState extends State<GCWTextViewer> {
   @override
   Widget build(BuildContext context) {
     var text = widget.text;

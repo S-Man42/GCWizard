@@ -3532,6 +3532,9 @@ void initializeRegistry(BuildContext context) {
       'barcodes',
       'symbol_kartrak',
     ]),
+    GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const [
+      'symbol_kaktovik',
+    ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
     ]),

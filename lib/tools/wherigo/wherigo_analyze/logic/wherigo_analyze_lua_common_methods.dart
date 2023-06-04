@@ -4,6 +4,7 @@ String _normalizeLUAmultiLineText(String LUA) {
   return LUA
       .replaceAll('[[\n', '[[')
       .replaceAll('<BR>\n', '<BR>')
+      .replaceAll('<BR>', ' ')
       .replaceAll('&gt;', '>')
       .replaceAll('&lt;', '<')
       .replaceAll('&nbsp;', ' ')
