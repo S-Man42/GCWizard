@@ -330,6 +330,14 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             entries: _currentCustomizedAlphabet ?? [],
             editAllowed: false,
             alphabetFormat: true,
+            newEntryWidget: GCWKeyValueAlphabetNewEntry(
+                key: GlobalKey<GCWKeyValueNewEntryState>(),
+                entries: _currentCustomizedAlphabet ?? [],
+                keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
+                valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
+                valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
+                addOnDispose: false,
+            ),
         ),
         const GCWDivider()
       ],

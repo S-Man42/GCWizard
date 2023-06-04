@@ -35,10 +35,10 @@ class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
   );
 
   @override
-  _GCWKeyValueNewEntryState createState() => _GCWKeyValueAlphabetNewEntryState();
+  GCWKeyValueNewEntryState createState() => _GCWKeyValueAlphabetNewEntryState();
 }
 
-class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
+class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueNewEntryState {
 
   @override
   Widget build(BuildContext context) {

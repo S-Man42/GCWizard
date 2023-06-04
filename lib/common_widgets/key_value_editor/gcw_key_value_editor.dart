@@ -44,6 +44,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final int? valueFlex;
   final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase)? onNewEntryChanged;
+  final GCWKeyValueNewEntry? newEntryWidget;
 
   final Widget? middleWidget;
 
@@ -72,6 +73,7 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.alphabetFormat = false,
     this.addOnDispose = false,
     this.onUpdateEntry,
+    this.newEntryWidget
   }) : super(key: key);
 
   @override
@@ -81,7 +83,7 @@ class GCWKeyValueEditor extends StatefulWidget {
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   var keyValueEditorControl = _KeyValueEditorControl();
-  final GlobalKey<_GCWKeyValueNewEntryState> _newEntryState = GlobalKey<_GCWKeyValueNewEntryState>();
+  final GlobalKey<GCWKeyValueNewEntryState> _newEntryState = GlobalKey<GCWKeyValueNewEntryState>();
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +91,10 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   }
 
   Widget _buildInput() {
+    if (widget.newEntryWidget != null) {
+      return widget.newEntryWidget!;
+    }
+
     if (widget.formulaFormat) {
       return GCWKeyValueTypeNewEntry(
         key: _newEntryState,
@@ -103,25 +109,27 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         onUpdateEntry: widget.onUpdateEntry,
         valueFlex: widget.valueFlex,
         addOnDispose: widget.addOnDispose,
-        onSetState: onSetState
+        onSetState: onSetState,
       );
-    } else if (widget.alphabetFormat) {
-      return GCWKeyValueAlphabetNewEntry(
-        key: _newEntryState,
-        entries: widget.entries,
-        keyHintText: widget.keyHintText,
-        valueHintText: widget.valueHintText,
-        keyController: widget.keyController,
-        keyInputFormatters: widget.keyInputFormatters,
-        valueInputFormatters: widget.valueInputFormatters,
-        onGetNewEntry: widget.onGetNewEntry,
-        onNewEntryChanged: widget.onNewEntryChanged,
-        onUpdateEntry: widget.onUpdateEntry,
-        valueFlex: widget.valueFlex,
-        addOnDispose: widget.addOnDispose,
-        onSetState: onSetState
-      );
-    } else {
+    }
+    // else if (widget.alphabetFormat) {
+    //   return GCWKeyValueAlphabetNewEntry(
+    //     key: _newEntryState,
+    //     entries: widget.entries,
+    //     keyHintText: widget.keyHintText,
+    //     valueHintText: widget.valueHintText,
+    //     keyController: widget.keyController,
+    //     keyInputFormatters: widget.keyInputFormatters,
+    //     valueInputFormatters: widget.valueInputFormatters,
+    //     onGetNewEntry: widget.onGetNewEntry,
+    //     onNewEntryChanged: widget.onNewEntryChanged,
+    //     onUpdateEntry: widget.onUpdateEntry,
+    //     valueFlex: widget.valueFlex,
+    //     addOnDispose: widget.addOnDispose,
+    //     onSetState: onSetState
+    //   );
+    // }
+    else {
       return GCWKeyValueNewEntry(
         key: _newEntryState,
         entries: widget.entries,
@@ -161,7 +169,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             trailing: Row(children: <Widget>[
               GCWPasteButton(
                 iconSize: IconButtonSize.SMALL,
-                onSelected: (text) => _newEntryState.currentState?.pasteClipboard(text),
+                onSelected: (text) => (widget.newEntryWidget!.key as GlobalKey<GCWKeyValueNewEntryState>).currentState?.pasteClipboard(text),
               ),
               GCWIconButton(
                 size: IconButtonSize.SMALL,

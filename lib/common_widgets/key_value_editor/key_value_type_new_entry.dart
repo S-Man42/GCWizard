@@ -35,10 +35,10 @@ class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
   );
 
   @override
-  _GCWKeyValueNewEntryState createState() => _GCWKeyValueTypeNewEntryState();
+  GCWKeyValueNewEntryState createState() => _GCWKeyValueTypeNewEntryState();
 }
 
-class _GCWKeyValueTypeNewEntryState extends _GCWKeyValueNewEntryState {
+class _GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
   var _currentType = FormulaValueType.FIXED;
 
   @override
