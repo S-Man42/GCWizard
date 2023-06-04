@@ -1,44 +1,40 @@
-part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
+class GCWKeyValueAlphabetInput extends GCWKeyValueInput {
 
-class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
-
-  const GCWKeyValueAlphabetNewEntry(
+  GCWKeyValueAlphabetInput(
      {Key? key,
-       required List<KeyValueBase> entries,
-       String? keyHintText,
-       required String valueHintText,
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
        KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
-       required bool addOnDispose,
        int? valueFlex,
-       void Function()? onSetState,
      })
      : super(
         key: key,
-        entries: entries,
-        keyHintText: keyHintText,
-        valueHintText: valueHintText,
         keyController: keyController,
         keyInputFormatters: keyInputFormatters,
         valueInputFormatters: valueInputFormatters,
         onGetNewEntry: onGetNewEntry,
         onNewEntryChanged: onNewEntryChanged,
         onUpdateEntry: onUpdateEntry,
-        addOnDispose: addOnDispose,
         valueFlex: valueFlex,
-        onSetState: onSetState,
   );
 
   @override
-  _GCWKeyValueNewEntryState createState() => _GCWKeyValueAlphabetNewEntryState();
+  GCWKeyValueInputState createState() => _GCWKeyValueAlphabetNewEntryState();
 }
 
-class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
+class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueInputState {
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +42,9 @@ class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
       children: <Widget>[
         Row(
           children: <Widget>[
-            _keyWidget(),
-            _arrowIcon(),
-            _valueWidget(),
+            keyWidget(),
+            arrowIcon(),
+            valueWidget(),
             _alphabetAddLetterButton(),
             _alphabetAddAndAdjustLetterButton(),
           ],
@@ -60,7 +56,7 @@ class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
   bool _isAddAndAdjustEnabled(KeyValueBase entry) {
     if (widget.entries.firstWhereOrNull((_entry) => _entry.key == entry.key) != null) {
       return false;
-    } else if (_currentValue.contains(',')) {
+    } else if (currentValue.contains(',')) {
       return false;
     } else {
       return true;
@@ -74,7 +70,7 @@ class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
           text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
           onPressed: () {
             setState(() {
-              var entry = KeyValueBase(null, _currentKey.toUpperCase(), _currentValue);
+              var entry = KeyValueBase(null, currentKey.toUpperCase(), currentValue);
               _addNewLetter(entry, adjust: false);
              });
           },
@@ -87,7 +83,7 @@ class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
         child: GCWButton(
           text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
           onPressed: () {
-            var entry = KeyValueBase(null, _currentKey.toUpperCase(), _currentValue);
+            var entry = KeyValueBase(null, currentKey.toUpperCase(), currentValue);
             if (_isAddAndAdjustEnabled(entry)) {
               setState(() {
                 _addNewLetter(entry, adjust: true);
@@ -119,7 +115,7 @@ class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
                   existEntry.key = entry.key;
                   existEntry.value = entry.value;
 
-                  _finishAddEntry(existEntry, true);
+                  finishAddEntry(existEntry, true);
                 })
           ]);
     } else {
@@ -139,7 +135,7 @@ class _GCWKeyValueAlphabetNewEntryState extends _GCWKeyValueNewEntryState {
           }
         }
       }
-      _addEntry(entry);
+      addEntry(entry);
     }
   }
 }

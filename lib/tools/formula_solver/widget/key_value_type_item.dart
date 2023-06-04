@@ -1,44 +1,46 @@
-part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 
+class GCWKeyValueTypeItem extends GCWKeyValueItem {
 
-class GCWKeyValueTypeRow extends GCWKeyValueRow {
-
-  GCWKeyValueTypeRow(
+  GCWKeyValueTypeItem(
      {Key? key,
-       required List<KeyValueBase> entries,
        required KeyValueBase keyValueEntry,
        required KeyValueEditorControl keyValueEditorControl,
 
        required bool odd,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       bool editAllowed = true,
-       void Function(KeyValueBase)? onUpdateEntry,
-       void Function()? onSetState,
      })
      : super(
         key: key,
-        entries: entries,
         keyValueEntry: keyValueEntry,
         keyValueEditorControl: keyValueEditorControl,
         odd: odd,
         keyInputFormatters: keyInputFormatters,
         valueInputFormatters: valueInputFormatters,
-        editAllowed: editAllowed,
-        onUpdateEntry: onUpdateEntry,
-        onSetState: onSetState,
   );
 
   @override
-  _GCWKeyValueRowState createState() => _GCWKeyValueTypeRowState();
+  GCWKeyValueItemState createState() => _GCWKeyValueTypeItemState();
 }
 
-class _GCWKeyValueTypeRowState extends _GCWKeyValueRowState {
+class _GCWKeyValueTypeItemState extends GCWKeyValueItemState {
   var _currentType = FormulaValueType.FIXED;
 
   @override
-  void _initValues() {
-    super._initValues();
+  void initValues() {
+    super.initValues();
     _currentType = (widget.keyValueEntry is FormulaValue)
                     ? (widget.keyValueEntry as FormulaValue).type ?? _currentType
                     : _currentType;
@@ -50,12 +52,12 @@ class _GCWKeyValueTypeRowState extends _GCWKeyValueRowState {
 
     var row = Row(
       children: <Widget>[
-        _keyWidget(),
-        _arrowIcon(),
-        _valueWidget(),
+        keyWidget(),
+        arrowIcon(),
+        valueWidget(),
         _typeButton(),
-        _editButton(),
-        _removeButton(),
+        editButton(),
+        removeButton(),
       ],
     );
 
@@ -76,7 +78,7 @@ class _GCWKeyValueTypeRowState extends _GCWKeyValueRowState {
               ? Container(
                 padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                 child: GCWPopupMenu(
-                  iconData: _formulaValueTypeIcon(_currentType),
+                  iconData: formulaValueTypeIcon(_currentType),
                   rotateDegrees: _currentType == FormulaValueType.TEXT ? 0.0 : 90.0,
                   menuItemBuilder: (context) => [
                     GCWPopupMenuItem(
@@ -103,16 +105,16 @@ class _GCWKeyValueTypeRowState extends _GCWKeyValueRowState {
                 ))
                 : Transform.rotate(
                   angle: degreesToRadian(_currentType == FormulaValueType.TEXT ? 0.0 : 90.0),
-                  child: Icon(_formulaValueTypeIcon(_currentType), color: themeColors().mainFont()),
+                  child: Icon(formulaValueTypeIcon(_currentType), color: themeColors().mainFont()),
                 )
             )
     );
   }
 
   @override
-  void _updateEntry() {
+  void updateEntry() {
     if (_currentType == FormulaValueType.INTERPOLATED) {
-      if (!VARIABLESTRING.hasMatch(_currentValue.toLowerCase())) {
+      if (!VARIABLESTRING.hasMatch(currentValue.toLowerCase())) {
         showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
         return;
       }
@@ -121,11 +123,11 @@ class _GCWKeyValueTypeRowState extends _GCWKeyValueRowState {
       (widget.keyValueEntry as FormulaValue).type = _currentType;
     }
 
-    super._updateEntry();
+    super.updateEntry();
   }
 }
 
-IconData _formulaValueTypeIcon(FormulaValueType? formulaValueType) {
+IconData formulaValueTypeIcon(FormulaValueType? formulaValueType) {
   switch (formulaValueType) {
     case FormulaValueType.TEXT:
       return Icons.text_fields;

@@ -1,44 +1,44 @@
-part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
+import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 
+import 'key_value_type_item.dart';
 
-class GCWKeyValueTypeNewEntry extends GCWKeyValueNewEntry {
+class GCWKeyValueTypeInput extends GCWKeyValueInput {
 
-  const GCWKeyValueTypeNewEntry(
+  GCWKeyValueTypeInput(
      {Key? key,
-       required List<KeyValueBase> entries,
-       String? keyHintText,
-       required String valueHintText,
        TextEditingController? keyController,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
        KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
        void Function(KeyValueBase)? onNewEntryChanged,
        void Function(KeyValueBase)? onUpdateEntry,
-       required bool addOnDispose,
        int? valueFlex,
-       void Function()? onSetState,
      })
      : super(
         key: key,
-        entries: entries,
-        keyHintText: keyHintText,
-        valueHintText: valueHintText,
         keyController: keyController,
         keyInputFormatters: keyInputFormatters,
         valueInputFormatters: valueInputFormatters,
         onGetNewEntry: onGetNewEntry,
         onNewEntryChanged: onNewEntryChanged,
         onUpdateEntry: onUpdateEntry,
-        addOnDispose: addOnDispose,
         valueFlex: valueFlex,
-        onSetState: onSetState,
   );
 
   @override
-  GCWKeyValueNewEntryState createState() => _GCWKeyValueTypeNewEntryState();
+  GCWKeyValueInputState createState() => _GCWKeyValueTypeNewEntryState();
 }
 
-class _GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
+class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
   var _currentType = FormulaValueType.FIXED;
 
   @override
@@ -47,11 +47,11 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
       children: <Widget>[
         Row(
           children: <Widget>[
-            _keyWidget(),
-            _arrowIcon(),
-            _valueWidget(),
+            keyWidget(),
+            arrowIcon(),
+            valueWidget(),
             _typeButton(),
-            _addIcon(),
+            addIcon(),
           ],
         ),
       ],
@@ -64,7 +64,7 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
       child: Container(
       padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
       child: GCWPopupMenu(
-        iconData: _formulaValueTypeIcon(_currentType),
+        iconData: formulaValueTypeIcon(_currentType),
         rotateDegrees: _currentType == FormulaValueType.TEXT ? 0.0 : 90.0,
         menuItemBuilder: (context) => [
           GCWPopupMenuItem(
@@ -92,9 +92,9 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
   }
 
   @override
-  bool _validInput() {
+  bool validInput() {
     if (_currentType == FormulaValueType.INTERPOLATED) {
-      if (!VARIABLESTRING.hasMatch(_currentValue.toLowerCase())) {
+      if (!VARIABLESTRING.hasMatch(currentValue.toLowerCase())) {
         showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
         return false;
       }
@@ -103,13 +103,13 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueNewEntryState {
   }
 
   @override
-  void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    var _entry = _getNewEntry(entry);
+  void addEntry(KeyValueBase entry, {bool clearInput = true}) {
+    var _entry = getNewEntry(entry);
     if (_entry != null) {
       (_entry as FormulaValue).type = _currentType;
       widget.entries.add(_entry);
 
-      _finishAddEntry(_entry, clearInput);
+      finishAddEntry(_entry, clearInput);
     }
   }
 }

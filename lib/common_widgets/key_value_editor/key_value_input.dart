@@ -1,69 +1,64 @@
 part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 
 
-class GCWKeyValueNewEntry extends StatefulWidget {
+class GCWKeyValueInput extends StatefulWidget {
 
-  final List<KeyValueBase> entries;
-  final String? keyHintText;
-  final String valueHintText;
+  late List<KeyValueBase> entries;
+  late String? keyHintText;
+  late String valueHintText;
   final TextEditingController? keyController;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
   final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase)? onNewEntryChanged;
   final void Function(KeyValueBase)? onUpdateEntry;
-  final bool addOnDispose;
+  late bool addOnDispose;
   final int? valueFlex;
-  final void Function()? onSetState;
+  late void Function()? onSetState;
 
-  const GCWKeyValueNewEntry(
+  GCWKeyValueInput(
      {Key? key,
-      required this.entries,
-      this.keyHintText,
-      required this.valueHintText,
       this.keyController,
       this.keyInputFormatters,
       this.valueInputFormatters,
       this.onGetNewEntry,
       this.onNewEntryChanged,
       this.onUpdateEntry,
-      required this.addOnDispose,
-      this.valueFlex,
-      this.onSetState
+      this.valueFlex
      })
      : super(key: key);
 
  @override
- GCWKeyValueNewEntryState createState() => GCWKeyValueNewEntryState();
+ GCWKeyValueInputState createState() => GCWKeyValueInputState();
 }
 
-class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
+class GCWKeyValueInputState extends State<GCWKeyValueInput> {
   late TextEditingController _keyController;
   late TextEditingController _valueController;
   late FocusNode _focusNodeEditValue;
 
-  var _currentKey = '';
-  var _currentValue = '';
+  var currentKey = '';
+  var currentValue = '';
 
   @override
   void initState() {
     super.initState();
 
     if (widget.keyController == null) {
-      _keyController = TextEditingController(text: _currentKey);
+      _keyController = TextEditingController(text: currentKey);
     } else {
       _keyController = widget.keyController!;
-      _currentKey = _keyController.text;
+      currentKey = _keyController.text;
     }
-    _valueController = TextEditingController(text: _currentValue);
+    _valueController = TextEditingController(text: currentValue);
 
     _focusNodeEditValue = FocusNode();
   }
 
   @override
   void dispose() {
-    if (widget.addOnDispose && _currentKey.isNotEmpty  && _currentValue.isNotEmpty) {
-      _addEntry(KeyValueBase(null, _currentKey, _currentValue));
+    if (widget.addOnDispose && currentKey.isNotEmpty  && currentValue.isNotEmpty) {
+      addEntry(KeyValueBase(null, currentKey, currentValue));
     }
     if (widget.keyController == null) _keyController.dispose();
     _valueController.dispose();
@@ -79,17 +74,17 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            _keyWidget(),
-            _arrowIcon(),
-            _valueWidget(),
-            _addIcon(),
+            keyWidget(),
+            arrowIcon(),
+            valueWidget(),
+            addIcon(),
           ],
         ),
       ],
     );
   }
 
-  Widget _keyWidget() {
+  Widget keyWidget() {
     return Expanded(
         flex: 2,
         child: GCWTextField(
@@ -98,7 +93,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
           inputFormatters: widget.keyInputFormatters,
           onChanged: (text) {
             setState(() {
-              _currentKey = text;
+              currentKey = text;
               _onNewEntryChanged(false);
             });
           },
@@ -106,28 +101,28 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     );
   }
 
-  Widget _arrowIcon() {
+  Widget arrowIcon() {
     return Icon(
       Icons.arrow_forward,
       color: themeColors().mainFont(),
     );
   }
 
-  Widget _addIcon() {
+  Widget addIcon() {
     return GCWIconButton(
         icon: Icons.add,
         onPressed: () {
-          if (!_validInput()) {
+          if (!validInput()) {
             return;
           }
 
           setState(() {
-            _addEntry(KeyValueBase(null, _currentKey, _currentValue));
+            addEntry(KeyValueBase(null, currentKey, currentValue));
           });
         });
   }
 
-  Widget _valueWidget() {
+  Widget valueWidget() {
     return Expanded(
       flex: widget.valueFlex ?? 2,
       child: GCWTextField(
@@ -136,7 +131,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
         inputFormatters: widget.valueInputFormatters,
         onChanged: (text) {
           setState(() {
-            _currentValue = text;
+            currentValue = text;
             _onNewEntryChanged(false);
           });
         },
@@ -144,20 +139,20 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     );
   }
 
-  bool _validInput() {
+  bool validInput() {
     return true;
   }
 
-  void _addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    var _entry = _getNewEntry(entry);
+  void addEntry(KeyValueBase entry, {bool clearInput = true}) {
+    var _entry = getNewEntry(entry);
     if (_entry != null) {
       widget.entries.add(_entry);
 
-      _finishAddEntry(_entry, clearInput);
+      finishAddEntry(_entry, clearInput);
     }
   }
 
-  void _finishAddEntry(KeyValueBase entry, bool clearInput) {
+  void finishAddEntry(KeyValueBase entry, bool clearInput) {
     if (clearInput) _onNewEntryChanged(true);
     if (widget.onUpdateEntry != null) widget.onUpdateEntry!(entry);
 
@@ -168,20 +163,20 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
     if (resetInput) {
       if (widget.keyController == null) {
         _keyController.clear();
-        _currentKey = '';
+        currentKey = '';
       } else {
-        _currentKey = _keyController.text;
+        currentKey = _keyController.text;
       }
 
       _valueController.clear();
-      _currentValue = '';
+      currentValue = '';
     }
     if (widget.onNewEntryChanged != null) {
-      widget.onNewEntryChanged!(KeyValueBase(null, _currentKey, _currentValue));
+      widget.onNewEntryChanged!(KeyValueBase(null, currentKey, currentValue));
     }
   }
 
-  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+  KeyValueBase? getNewEntry(KeyValueBase entry) {
     if (widget.onGetNewEntry == null) {
       return entry;
     } else {
@@ -200,7 +195,7 @@ class GCWKeyValueNewEntryState extends State<GCWKeyValueNewEntry> {
 
     if (list != null) {
       for (var mapEntry in list) {
-        _addEntry(KeyValueBase(null, mapEntry.key, mapEntry.value), clearInput: false);
+        addEntry(KeyValueBase(null, mapEntry.key, mapEntry.value), clearInput: false);
       }
     }
   }

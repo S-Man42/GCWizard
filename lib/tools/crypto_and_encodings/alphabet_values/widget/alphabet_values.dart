@@ -17,6 +17,8 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_onlydigitsand
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
+import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/key_value_alphabet_input.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/key_value_alphabet_item.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
@@ -331,18 +333,11 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
             entries: _currentCustomizedAlphabet ?? [],
             editAllowed: false,
-            // alphabetFormat: true,
-            onCreateNewItem: createNewItem,
-            newEntryWidget: GCWKeyValueAlphabetNewEntry(
-                key: GlobalKey<GCWKeyValueNewEntryState>(),
-                entries: _currentCustomizedAlphabet ?? [],
-                keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
-                valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
+            addOnDispose: false,
+            onCreateNewItem: _createNewItem,
+            onCreateInput: GCWKeyValueAlphabetInput(
+                key: GlobalKey<GCWKeyValueInputState>(),
                 valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
-                addOnDispose: false,
-                onSetState: () {
-                  setState((){});
-                }
             ),
         ),
         const GCWDivider()
@@ -492,17 +487,12 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     }
   }
 
-  GCWKeyValueRow createNewItem(KeyValueBase entry, bool odd) {
-    return GCWKeyValueAlphabetRow(
-        entries: _currentCustomizedAlphabet ?? [],
+  GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
+    return GCWKeyValueAlphabetItem(
         keyValueEntry: entry,
-        keyValueEditorControl:keyValueEditorControl,
+        keyValueEditorControl: keyValueEditorControl,
         odd: odd,
         valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
-        editAllowed: false,
-        onSetState: () {
-          setState((){});
-        }
     );
   }
 }

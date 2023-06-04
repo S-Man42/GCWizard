@@ -1,58 +1,54 @@
 part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 
 
-class GCWKeyValueRow extends StatefulWidget {
+class GCWKeyValueItem extends StatefulWidget {
 
-  final List<KeyValueBase> entries;
+  late List<KeyValueBase> entries;
   KeyValueBase keyValueEntry;
   KeyValueEditorControl keyValueEditorControl;
+
   final bool odd;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;
-  final bool editAllowed;
-  final void Function(KeyValueBase)? onUpdateEntry;
-  final void Function()? onSetState;
+  bool editAllowed = true;
+  late void Function(KeyValueBase)? onUpdateEntry;
+  late void Function()? onSetState;
 
-  GCWKeyValueRow(
+  GCWKeyValueItem(
      {Key? key,
-       required this.entries,
        required this.keyValueEntry,
        required this.keyValueEditorControl,
-
        required this.odd,
        this.keyInputFormatters,
        this.valueInputFormatters,
-       this.editAllowed = true,
-       this.onUpdateEntry,
-       this.onSetState
      })
      : super(key: key);
 
  @override
- _GCWKeyValueRowState createState() => _GCWKeyValueRowState();
+ GCWKeyValueItemState createState() => GCWKeyValueItemState();
 }
 
-class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
+class GCWKeyValueItemState extends State<GCWKeyValueItem> {
   late TextEditingController _keyController;
   late TextEditingController _valueController;
   late FocusNode _focusNodeEditValue;
 
   var _currentKey = '';
-  var _currentValue = '';
+  var currentValue = '';
 
   @override
   void initState() {
     super.initState();
 
-    _initValues();
+    initValues();
 
     _focusNodeEditValue = FocusNode();
   }
 
   @override
-  void didUpdateWidget(GCWKeyValueRow oldWidget) {
+  void didUpdateWidget(GCWKeyValueItem oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _initValues();
+    initValues();
   }
 
   @override
@@ -65,12 +61,12 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
     super.dispose();
   }
 
-  void _initValues() {
+  void initValues() {
     _currentKey = widget.keyValueEntry.key;
-    _currentValue = widget.keyValueEntry.value;
+    currentValue = widget.keyValueEntry.value;
 
     _keyController = TextEditingController(text: _currentKey);
-    _valueController = TextEditingController(text: _currentValue);
+    _valueController = TextEditingController(text: currentValue);
   }
 
   @override
@@ -79,11 +75,11 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
 
     var row = Row(
       children: <Widget>[
-        _keyWidget(),
-        _arrowIcon(),
-        _valueWidget(),
-        _editButton(),
-        _removeButton(),
+        keyWidget(),
+        arrowIcon(),
+        valueWidget(),
+        editButton(),
+        removeButton(),
       ],
     );
 
@@ -96,7 +92,7 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
     return output;
   }
 
-  Widget _keyWidget() {
+  Widget keyWidget() {
     return Expanded(
       flex: 1,
       child: Container(
@@ -116,14 +112,14 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
     );
   }
 
-  Widget _arrowIcon() {
+  Widget arrowIcon() {
     return Icon(
       Icons.arrow_forward,
       color: themeColors().mainFont(),
     );
   }
 
-  Widget _valueWidget() {
+  Widget valueWidget() {
     return Expanded(
         flex: 3,
         child: Container(
@@ -135,7 +131,7 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
                   inputFormatters: widget.valueInputFormatters,
                   onChanged: (text) {
                     setState(() {
-                      _currentValue = text;
+                      currentValue = text;
                     });
                   },
                 )
@@ -144,14 +140,14 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
     );
   }
 
-  Widget _editButton() {
+  Widget editButton() {
     if (!widget.editAllowed) return Container();
 
     return widget.keyValueEditorControl.currentInProgress == widget.keyValueEntry
         ? GCWIconButton(
             icon: Icons.check,
             onPressed: () {
-              _updateEntry();
+              updateEntry();
               widget.keyValueEditorControl.currentInProgress = null;
             },
           )
@@ -163,9 +159,9 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
 
                 widget.keyValueEditorControl.currentInProgress = widget.keyValueEntry;
                 _currentKey = widget.keyValueEntry.key;
-                _currentValue = widget.keyValueEntry.value;
+                currentValue = widget.keyValueEntry.value;
                 _keyController.text = _currentKey;
-                _valueController.text = _currentValue;
+                _valueController.text = currentValue;
               });
               if (widget.onSetState != null) widget.onSetState!();
             },
@@ -173,21 +169,21 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
   }
 
 
-  Widget _removeButton() {
+  Widget removeButton() {
     return GCWIconButton(
       icon: Icons.remove,
       onPressed: () {
         setState(() {
-          _removeEntry();
+          removeEntry();
         });
         if (widget.onSetState != null) widget.onSetState!();
       },
     );
   }
 
-  void _updateEntry() {
+  void updateEntry() {
     widget.keyValueEntry.key = _currentKey;
-    widget.keyValueEntry.value = _currentValue;
+    widget.keyValueEntry.value = currentValue;
     if (widget.onUpdateEntry != null) widget.onUpdateEntry!(widget.keyValueEntry);
 
     setState(() {
@@ -197,7 +193,7 @@ class _GCWKeyValueRowState extends State<GCWKeyValueRow> {
     });
   }
 
-  void _removeEntry() {
+  void removeEntry() {
     widget.entries.remove(widget.keyValueEntry);
     _finishRemoveEntry(widget.keyValueEntry);
   }

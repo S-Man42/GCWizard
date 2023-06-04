@@ -1,49 +1,45 @@
-part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
+class GCWKeyValueAlphabetItem extends GCWKeyValueItem {
 
-class GCWKeyValueAlphabetRow extends GCWKeyValueRow {
-
-  GCWKeyValueAlphabetRow(
+  GCWKeyValueAlphabetItem(
      {Key? key,
-       required List<KeyValueBase> entries,
        required KeyValueBase keyValueEntry,
-       required _KeyValueEditorControl keyValueEditorControl,
+       required KeyValueEditorControl keyValueEditorControl,
 
        required bool odd,
        List<TextInputFormatter>? keyInputFormatters,
        List<TextInputFormatter>? valueInputFormatters,
-       bool editAllowed = true,
-       void Function(KeyValueBase)? onUpdateEntry,
-       void Function()? onSetState,
      })
      : super(
         key: key,
-        entries: entries,
         keyValueEntry: keyValueEntry,
         keyValueEditorControl: keyValueEditorControl,
         odd: odd,
         keyInputFormatters: keyInputFormatters,
         valueInputFormatters: valueInputFormatters,
-        editAllowed: editAllowed,
-        onUpdateEntry: onUpdateEntry,
-        onSetState: onSetState,
   );
 
   @override
-  _GCWKeyValueRowState createState() => _GCWKeyValueAlphabetRowState();
+  GCWKeyValueItemState createState() => _GCWKeyValueAlphabetEntryState();
 }
 
-class _GCWKeyValueAlphabetRowState extends _GCWKeyValueRowState {
+class _GCWKeyValueAlphabetEntryState extends GCWKeyValueItemState {
 
   @override
-  void _removeEntry() {
+  void removeEntry() {
     var _isList = widget.keyValueEntry.value.contains(',');
 
     var buttons = [
       GCWDialogButton(
           text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
           onPressed: () {
-            super._removeEntry();
+            super.removeEntry();
           }
       )
     ];
@@ -66,7 +62,7 @@ class _GCWKeyValueAlphabetRowState extends _GCWKeyValueRowState {
 
               entry.value = newValue;
             }
-            super._removeEntry();
+            super.removeEntry();
           }
         },
       ));

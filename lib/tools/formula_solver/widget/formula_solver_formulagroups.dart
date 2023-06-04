@@ -38,6 +38,8 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_painter.dart';
 import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/tools/formula_solver/widget/key_value_type_input.dart';
+import 'package:gc_wizard/tools/formula_solver/widget/key_value_type_item.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
