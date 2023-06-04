@@ -7,7 +7,7 @@ class GCWKeyValueTypeRow extends GCWKeyValueRow {
      {Key? key,
        required List<KeyValueBase> entries,
        required KeyValueBase keyValueEntry,
-       required _KeyValueEditorControl keyValueEditorControl,
+       required KeyValueEditorControl keyValueEditorControl,
 
        required bool odd,
        List<TextInputFormatter>? keyInputFormatters,
