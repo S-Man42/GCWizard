@@ -1,5 +1,8 @@
-part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
-
+import 'package:encrypt/encrypt.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 class GCWKeyValueAlphabetRow extends GCWKeyValueRow {
 
@@ -7,7 +10,7 @@ class GCWKeyValueAlphabetRow extends GCWKeyValueRow {
      {Key? key,
        required List<KeyValueBase> entries,
        required KeyValueBase keyValueEntry,
-       required _KeyValueEditorControl keyValueEditorControl,
+       required KeyValueEditorControl keyValueEditorControl,
 
        required bool odd,
        List<TextInputFormatter>? keyInputFormatters,

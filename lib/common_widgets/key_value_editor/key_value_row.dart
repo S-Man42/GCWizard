@@ -5,7 +5,7 @@ class GCWKeyValueRow extends StatefulWidget {
 
   final List<KeyValueBase> entries;
   KeyValueBase keyValueEntry;
-  _KeyValueEditorControl keyValueEditorControl;
+  KeyValueEditorControl keyValueEditorControl;
   final bool odd;
   final List<TextInputFormatter>? keyInputFormatters;
   final List<TextInputFormatter>? valueInputFormatters;

@@ -56,6 +56,8 @@ class _AlphabetValuesState extends State<AlphabetValues> {
 
   late List<String> _storedAlphabets;
 
+  var keyValueEditorControl = KeyValueEditorControl();
+
   @override
   void initState() {
     super.initState();
@@ -329,7 +331,8 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
             entries: _currentCustomizedAlphabet ?? [],
             editAllowed: false,
-            alphabetFormat: true,
+            // alphabetFormat: true,
+            onCreateNewItem: createNewItem,
             newEntryWidget: GCWKeyValueAlphabetNewEntry(
                 key: GlobalKey<GCWKeyValueNewEntryState>(),
                 entries: _currentCustomizedAlphabet ?? [],
@@ -337,6 +340,9 @@ class _AlphabetValuesState extends State<AlphabetValues> {
                 valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
                 valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
                 addOnDispose: false,
+                onSetState: () {
+                  setState((){});
+                }
             ),
         ),
         const GCWDivider()
@@ -484,5 +490,19 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     } else {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(_currentDecodeInput.value);
     }
+  }
+
+  GCWKeyValueRow createNewItem(KeyValueBase entry, bool odd) {
+    return GCWKeyValueAlphabetRow(
+        entries: _currentCustomizedAlphabet ?? [],
+        keyValueEntry: entry,
+        keyValueEditorControl:keyValueEditorControl,
+        odd: odd,
+        valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
+        editAllowed: false,
+        onSetState: () {
+          setState((){});
+        }
+    );
   }
 }

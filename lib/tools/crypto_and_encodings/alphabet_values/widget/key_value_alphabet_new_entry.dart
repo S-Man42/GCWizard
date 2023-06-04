@@ -1,5 +1,8 @@
-part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 class GCWKeyValueAlphabetNewEntry extends GCWKeyValueNewEntry {
 
