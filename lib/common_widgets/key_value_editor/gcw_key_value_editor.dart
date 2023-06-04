@@ -45,7 +45,6 @@ class GCWKeyValueEditor extends StatefulWidget {
   final Widget? middleWidget;
 
   final bool formulaFormat;
-  // final bool alphabetFormat;
   final bool addOnDispose;
   final String? dividerText;
   final bool editAllowed;
