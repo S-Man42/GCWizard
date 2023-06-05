@@ -24,13 +24,13 @@ NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSe
   return (args == null) ? null : _createRoute(context, args);
 }
 
-List<Route<GCWTool>> createRoute2(BuildContext context, String route) {
+List<Route<GCWTool>> createInitRoute(BuildContext context, String route) {
   print('init: ' + route);
-  var settings = RouteSettings(name: route + '?init='+ route);
-  return  [MaterialPageRoute(
-      builder: (context) => MainView(webParameter: _parseUrl(settings),),
-      settings: null,
-      ),
+  var settings = RouteSettings(name: '/braille');
+
+  return  [
+    MaterialPageRoute<GCWTool>(builder: (context) => MainView()),
+    _createRoute(context, _parseUrl(settings)!)!
     // MaterialPageRoute(
     //   builder: (context) => Braille(),
     //   settings: null,
@@ -43,7 +43,7 @@ List<Route<GCWTool>> createRoute2(BuildContext context, String route) {
   return [NoAnimationMaterialPageRoute(builder: (context) => MainView())];
 }
 
-WebParameter? createStartParameter(BuildContext context, String? route) {
+WebParameter? createInitParameter(BuildContext context, String? route) {
   var settings = RouteSettings(name: route);
   return _parseUrl(settings);
 }

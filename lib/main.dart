@@ -60,7 +60,7 @@ class App extends StatelessWidget {
                 'clipboard_editor': (BuildContext context) => GCWTool(
                     tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
               },
-              onGenerateInitialRoutes: (route) => createRoute2(context, route),
+              onGenerateInitialRoutes: (route) => createInitRoute(context, route),
               onGenerateRoute: (RouteSettings settings) {
                 return createRoute(context, settings);
               }
