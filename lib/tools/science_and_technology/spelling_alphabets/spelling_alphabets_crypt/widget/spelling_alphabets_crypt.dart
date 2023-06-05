@@ -98,7 +98,9 @@ class SpellingAlphabetsCryptState extends State<SpellingAlphabetsCrypt> {
 
   Widget _buildOutput(BuildContext context) {
     return GCWDefaultOutput(
-      child: _currentMode == GCWSwitchPosition.right ? decodeSpellingAlphabets(_currentDecode, _currentLanguage) : encodeSpellingAlphabets(_currentEncode, _currentLanguage),
+      child: _currentMode == GCWSwitchPosition.right
+          ? decodeSpellingAlphabets(_currentDecode, _currentLanguage)
+          : encodeSpellingAlphabets(_currentEncode, _currentLanguage),
     );
   }
 

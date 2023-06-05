@@ -1066,9 +1066,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: const SpellingAlphabetsSelection(), id: 'spelling_alphabets_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'spelling_alphabets',
-    ]),
+    ], searchKeys: const []),
     GCWTool(tool: const SQRT2Selection(), id: 'sqrt2_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
