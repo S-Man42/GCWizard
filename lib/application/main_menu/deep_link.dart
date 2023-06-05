@@ -6,7 +6,6 @@ import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille/widget/braille.dart';
 
 
 class WebParameter {
@@ -18,34 +17,20 @@ class WebParameter {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
-  // print(settings);
-  // print(context);
   var args = _parseUrl(settings);
   return (args == null) ? null : _createRoute(context, args);
 }
 
-List<Route<GCWTool>> createInitRoute(BuildContext context, String route) {
-  print('init: ' + route);
-  var settings = RouteSettings(name: '/braille');
-
+List<Route<GCWTool>> startMainView(BuildContext context, String route) {
   return  [
-    MaterialPageRoute<GCWTool>(builder: (context) => MainView()),
-    _createRoute(context, _parseUrl(settings)!)!
-    // MaterialPageRoute(
-    //   builder: (context) => Braille(),
-    //   settings: null,
-    // ),
+    NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => MainView(
+        fullWebParameter: _parseUrl(RouteSettings(name: route))
+    )),
   ];
-  //var settings = RouteSettings(name: route);
-  print(settings);
-  print(context);
-  var args = _parseUrl(settings);
-  return [NoAnimationMaterialPageRoute(builder: (context) => MainView())];
 }
 
-WebParameter? createInitParameter(BuildContext context, String? route) {
-  var settings = RouteSettings(name: route);
-  return _parseUrl(settings);
+NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, WebParameter arguments) {
+  return _createRoute(context, arguments);
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
@@ -79,6 +64,7 @@ GCWTool? _findGCWTool(WebParameter arguments) {
 WebParameter? _parseUrl(RouteSettings settings) {
   if (settings.name == null) return null;
   var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
+  if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
 
   return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);

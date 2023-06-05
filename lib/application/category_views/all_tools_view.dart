@@ -262,7 +262,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
-  MainView({Key? key, WebParameter? webParameter}) : super(key: key, webParameter: webParameter?.arguments);
+  final  WebParameter? fullWebParameter;
+  MainView({Key? key, this.fullWebParameter}) : super(key: key, webParameter: fullWebParameter?.arguments);
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -289,7 +290,7 @@ class _MainViewState extends State<MainView> {
         }
       });
     });
-print(widget.webParameter);
+
     _showWhatsNewDialog() {
       const _MAX_ENTRIES = 10;
 
@@ -357,6 +358,15 @@ print(widget.webParameter);
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+
+    var deepLink = checkDeepLink();
+    if (deepLink != null && widget.webParameterInitActive) {
+      widget.webParameterInitActive = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(context, deepLink);
+      });
+    }
+
     return DefaultTabController(
       length: 3,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
@@ -388,6 +398,12 @@ print(widget.webParameter);
         ),
       ),
     );
+  }
+
+  NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
+    if (widget.fullWebParameter != null) {
+      return createStartDeepLinkRoute(context, widget.fullWebParameter!);
+    }
   }
 
   IconButton _buildSearchActionButton() {

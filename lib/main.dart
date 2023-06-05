@@ -52,15 +52,15 @@ class App extends StatelessWidget {
               theme: buildTheme(),
               debugShowCheckedModeBanner: false,
               //ignore: prefer_const_constructors
-              //home: MainView(webParameter: createStartParameter(context, '/braille')), // Warning says, it must be "const", but in that case theme changes (theme color or font size) will not set properly
+              //home: MainView(webParameterX: parseUrl2( '/braille')), // Warning says, it must be "const", but in that case theme changes (theme color or font size) will not set properly
               navigatorKey: NavigationService.instance.navigationKey,
               routes: {
                 // Required extra way because normal Navigator.of(context) way
                 // crashes because of some NULL problems on TextSelectionControls menu
                 'clipboard_editor': (BuildContext context) => GCWTool(
-                    tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
+                    tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
               },
-              onGenerateInitialRoutes: (route) => createInitRoute(context, route),
+              onGenerateInitialRoutes: (route) => startMainView(context, route),
               onGenerateRoute: (RouteSettings settings) {
                 return createRoute(context, settings);
               }
