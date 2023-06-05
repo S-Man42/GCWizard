@@ -1,7 +1,7 @@
 part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsCodesToExpected = [
-  {'code' : code1, 'expectedOutput' : '0'},
+  {'code' : code1, 'expectedOutput' : '1       2.0     9.0     6.0'},
 ];
 
 var code1 = ''' 
@@ -17,9 +17,9 @@ for z = 1 to 9
     e=sqrt(u)
     f=sqrt(v)
     g=sqrt(w)
-	k = frac(e)
-	i = frac(f)
-	j = frac(g)
+    k = frac(e)
+    i = frac(f)
+    j = frac(g)
     if k=0 then c=c+1
     endif
     if i=0 then c=c+1

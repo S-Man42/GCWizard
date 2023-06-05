@@ -69,7 +69,7 @@ class _GCWizardScriptClassLabelStack {
 
 class _GCWizardScriptClassForLoopInfo {
   late int loopVariable; // counter variable
-  late double targetValue; // target value
+  late num targetValue; // target value
   late int loopStart; // index in source code to loop to
 }
 

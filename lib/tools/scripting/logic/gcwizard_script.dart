@@ -222,7 +222,7 @@ class _GCWizardSCriptInterpreter {
 
   List<Object?> STDIN = [];
   String STDOUT = '';
-  double step = 0.0;
+  num step = 0.0;
 
   String token = '';
   int tokenType = 0;
@@ -897,7 +897,7 @@ class _GCWizardSCriptInterpreter {
     }
 
     value = evaluateExpression();
-    if (_isDouble(value)) {
+    if (_isNumber(value)) {
       variables[stckvar.loopVariable] = value;
     } else {
       _handleError(_INVALIDTYPECAST);
@@ -907,8 +907,8 @@ class _GCWizardSCriptInterpreter {
     if (keywordToken != TO) _handleError(_TOEXPECTED);
 
     value = evaluateExpression();
-    if (_isDouble(value)) {
-      stckvar.targetValue = value as double;
+    if (_isNumber(value)) {
+      stckvar.targetValue = value as num;
     } else {
       _handleError(_INVALIDTYPECAST);
     }
@@ -918,8 +918,8 @@ class _GCWizardSCriptInterpreter {
       putBack();
     } else {
       stepValue = evaluateExpression();
-      if (_isDouble(stepValue)) {
-        step = stepValue as double;
+      if (_isNumber(stepValue)) {
+        step = stepValue as num;
       } else {
         _handleError(_INVALIDTYPECAST);
       }
@@ -1418,7 +1418,7 @@ class _GCWizardSCriptInterpreter {
 
       r_temp = evaluateExpressionRelationalOperation();
 
-      if (_differentDataTypes(l_temp, r_temp)) {
+      if (!_isNumber(l_temp) || !_isNumber(r_temp)) {
         _handleError(_INVALIDTYPECAST);
         result = 0.0;
       } else {
@@ -1523,7 +1523,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (_differentDataTypes(result, partialResult)) { // Todo ??
+      if (!_isNumber(result) || !_isNumber(partialResult)) { // Todo ??
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
