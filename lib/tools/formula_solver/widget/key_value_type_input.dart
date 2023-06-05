@@ -1,38 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/tools/formula_solver/widget/key_value_type_item.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 
-import 'key_value_type_item.dart';
 
 class GCWKeyValueTypeInput extends GCWKeyValueInput {
 
-  GCWKeyValueTypeInput(
-     {Key? key,
-       TextEditingController? keyController,
-       List<TextInputFormatter>? keyInputFormatters,
-       List<TextInputFormatter>? valueInputFormatters,
-       KeyValueBase? Function(KeyValueBase)? onGetNewEntry,
-       void Function(KeyValueBase)? onNewEntryChanged,
-       void Function(KeyValueBase)? onUpdateEntry,
-       int? valueFlex,
-     })
-     : super(
-        key: key,
-        keyController: keyController,
-        keyInputFormatters: keyInputFormatters,
-        valueInputFormatters: valueInputFormatters,
-        onGetNewEntry: onGetNewEntry,
-        onNewEntryChanged: onNewEntryChanged,
-        onUpdateEntry: onUpdateEntry,
-        valueFlex: valueFlex,
-  );
+  GCWKeyValueTypeInput({Key? key}) : super(key: key);
 
   @override
   GCWKeyValueInputState createState() => _GCWKeyValueTypeNewEntryState();

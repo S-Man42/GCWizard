@@ -6,27 +6,17 @@ class GCWKeyValueInput extends StatefulWidget {
   late List<KeyValueBase> entries;
   late String? keyHintText;
   late String valueHintText;
-  final TextEditingController? keyController;
-  final List<TextInputFormatter>? keyInputFormatters;
-  final List<TextInputFormatter>? valueInputFormatters;
-  final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
-  final void Function(KeyValueBase)? onNewEntryChanged;
-  final void Function(KeyValueBase)? onUpdateEntry;
+  late TextEditingController? keyController;
+  late List<TextInputFormatter>? keyInputFormatters;
+  late List<TextInputFormatter>? valueInputFormatters;
+  late KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
+  late void Function(KeyValueBase)? onNewEntryChanged;
+  late void Function(KeyValueBase)? onUpdateEntry;
   late bool addOnDispose;
-  final int? valueFlex;
+  late int? valueFlex;
   late void Function()? onSetState;
 
-  GCWKeyValueInput(
-     {Key? key,
-      this.keyController,
-      this.keyInputFormatters,
-      this.valueInputFormatters,
-      this.onGetNewEntry,
-      this.onNewEntryChanged,
-      this.onUpdateEntry,
-      this.valueFlex
-     })
-     : super(key: key);
+  GCWKeyValueInput({Key? key,}) : super(key: key);
 
  @override
  GCWKeyValueInputState createState() => GCWKeyValueInputState();

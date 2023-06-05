@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -16,19 +15,13 @@ class GCWKeyValueTypeItem extends GCWKeyValueItem {
   GCWKeyValueTypeItem(
      {Key? key,
        required KeyValueBase keyValueEntry,
-       required KeyValueEditorControl keyValueEditorControl,
 
        required bool odd,
-       List<TextInputFormatter>? keyInputFormatters,
-       List<TextInputFormatter>? valueInputFormatters,
      })
      : super(
         key: key,
         keyValueEntry: keyValueEntry,
-        keyValueEditorControl: keyValueEditorControl,
         odd: odd,
-        keyInputFormatters: keyInputFormatters,
-        valueInputFormatters: valueInputFormatters,
   );
 
   @override

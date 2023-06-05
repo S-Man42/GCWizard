@@ -5,11 +5,11 @@ class GCWKeyValueItem extends StatefulWidget {
 
   late List<KeyValueBase> entries;
   KeyValueBase keyValueEntry;
-  KeyValueEditorControl keyValueEditorControl;
+  late KeyValueEditorControl keyValueEditorControl;
 
   final bool odd;
-  final List<TextInputFormatter>? keyInputFormatters;
-  final List<TextInputFormatter>? valueInputFormatters;
+  late List<TextInputFormatter>? keyInputFormatters;
+  late List<TextInputFormatter>? valueInputFormatters;
   bool editAllowed = true;
   late void Function(KeyValueBase)? onUpdateEntry;
   late void Function()? onSetState;
@@ -17,10 +17,7 @@ class GCWKeyValueItem extends StatefulWidget {
   GCWKeyValueItem(
      {Key? key,
        required this.keyValueEntry,
-       required this.keyValueEditorControl,
-       required this.odd,
-       this.keyInputFormatters,
-       this.valueInputFormatters,
+       required this.odd
      })
      : super(key: key);
 

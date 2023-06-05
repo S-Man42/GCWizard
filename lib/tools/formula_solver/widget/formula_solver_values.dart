@@ -12,8 +12,6 @@ class _FormulaSolverFormulaValues extends StatefulWidget {
 class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues> {
   late TextEditingController _newKeyController;
 
-  var keyValueEditorControl = KeyValueEditorControl();
-
   @override
   void initState() {
     super.initState();
@@ -75,11 +73,9 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           dividerText: i18n(context, 'formulasolver_values_currentvalues'),
           entries: widget.group.values,
           onGetNewEntry: (entry) => _getNewEntry(entry),
-          onUpdateEntry: _updateEntry,
-          onCreateNewItem: _createNewItem,
-          onCreateInput: GCWKeyValueTypeInput(
-            key: GlobalKey<GCWKeyValueInputState>(),
-          ),
+          onUpdateEntry: (entry) => _updateEntry(entry),
+          onCreateInput: (Key? key) => GCWKeyValueTypeInput(key: key),
+          onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
         ),
       ],
     );
@@ -88,7 +84,6 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
   GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
     return GCWKeyValueTypeItem(
       keyValueEntry: entry,
-      keyValueEditorControl: keyValueEditorControl,
       odd: odd,
     );
   }

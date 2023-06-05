@@ -30,7 +30,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final int? valueFlex;
   final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
   final void Function(KeyValueBase)? onNewEntryChanged;
-  final GCWKeyValueInput? onCreateInput;
+  final GCWKeyValueInput Function(Key? key)? onCreateInput;
   final GCWKeyValueItem Function(KeyValueBase, bool)? onCreateNewItem;
 
   final Widget? middleWidget;
@@ -66,8 +66,8 @@ class GCWKeyValueEditor extends StatefulWidget {
 
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
-  var keyValueEditorControl = KeyValueEditorControl();
-  final GlobalKey<GCWKeyValueInputState> _newEntryState = GlobalKey<GCWKeyValueInputState>();
+  var _keyValueEditorControl = KeyValueEditorControl();
+  final GlobalKey<GCWKeyValueInputState> _InputState = GlobalKey<GCWKeyValueInputState>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,20 +78,18 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     GCWKeyValueInput input ;
 
     if (widget.onCreateInput != null) {
-      input = widget.onCreateInput!;
+      input = widget.onCreateInput!(_InputState);
     } else {
-      return GCWKeyValueInput(
-        key: _newEntryState,
-        keyController: widget.keyController,
-        keyInputFormatters: widget.keyInputFormatters,
-        valueInputFormatters: widget.valueInputFormatters,
-        onGetNewEntry: widget.onGetNewEntry,
-        onNewEntryChanged: widget.onNewEntryChanged,
-        onUpdateEntry: widget.onUpdateEntry,
-        valueFlex: widget.valueFlex,
-      );
+      input = GCWKeyValueInput(key: _InputState);
     }
 
+    input.keyController = widget.keyController;
+    input.onGetNewEntry = widget.onGetNewEntry;
+    input.onNewEntryChanged = widget.onNewEntryChanged;
+    input.onUpdateEntry = widget.onUpdateEntry;
+    input.valueFlex = widget.valueFlex;
+    input.keyInputFormatters = widget.keyInputFormatters;
+    input.valueInputFormatters = widget.valueInputFormatters;
     input.addOnDispose = widget.addOnDispose;
     input.keyHintText = widget.keyHintText;
     input.valueHintText = widget.valueHintText;
@@ -122,7 +120,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             trailing: Row(children: <Widget>[
               GCWPasteButton(
                 iconSize: IconButtonSize.SMALL,
-                onSelected: (text) => (widget.onCreateInput!.key as GlobalKey<GCWKeyValueInputState>).currentState?.pasteClipboard(text),
+                onSelected: (text) => _InputState.currentState?.pasteClipboard(text),
               ),
               GCWIconButton(
                 size: IconButtonSize.SMALL,
@@ -145,19 +143,17 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     if (widget.onCreateNewItem != null) {
       item = widget.onCreateNewItem!(entry, odd);
     } else {
-      return GCWKeyValueItem(
-        keyValueEntry: entry,
-        keyValueEditorControl: keyValueEditorControl,
-        odd: odd,
-        keyInputFormatters: widget.keyInputFormatters,
-        valueInputFormatters: widget.valueInputFormatters,
-      );
+      item = GCWKeyValueItem(keyValueEntry: entry, odd: odd);
     }
 
+    item.keyValueEditorControl = _keyValueEditorControl;
+    item.keyInputFormatters = widget.keyInputFormatters;
+    item.valueInputFormatters = widget.valueInputFormatters;
     item.onUpdateEntry = widget.onUpdateEntry;
     item.editAllowed = widget.editAllowed;
     item.entries = widget.entries;
     item.onSetState = onSetState;
+
     return item;
   }
 

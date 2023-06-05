@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
@@ -10,19 +9,12 @@ class GCWKeyValueAlphabetItem extends GCWKeyValueItem {
   GCWKeyValueAlphabetItem(
      {Key? key,
        required KeyValueBase keyValueEntry,
-       required KeyValueEditorControl keyValueEditorControl,
-
        required bool odd,
-       List<TextInputFormatter>? keyInputFormatters,
-       List<TextInputFormatter>? valueInputFormatters,
      })
      : super(
         key: key,
         keyValueEntry: keyValueEntry,
-        keyValueEditorControl: keyValueEditorControl,
         odd: odd,
-        keyInputFormatters: keyInputFormatters,
-        valueInputFormatters: valueInputFormatters,
   );
 
   @override

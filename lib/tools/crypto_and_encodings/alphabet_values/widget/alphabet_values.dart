@@ -58,8 +58,6 @@ class _AlphabetValuesState extends State<AlphabetValues> {
 
   late List<String> _storedAlphabets;
 
-  var keyValueEditorControl = KeyValueEditorControl();
-
   @override
   void initState() {
     super.initState();
@@ -334,11 +332,8 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             entries: _currentCustomizedAlphabet ?? [],
             editAllowed: false,
             addOnDispose: false,
-            onCreateNewItem: _createNewItem,
-            onCreateInput: GCWKeyValueAlphabetInput(
-                key: GlobalKey<GCWKeyValueInputState>(),
-                valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
-            ),
+            onCreateInput: (Key? key) => GCWKeyValueAlphabetInput(key: key),
+            onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
         ),
         const GCWDivider()
       ],
@@ -490,9 +485,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
   GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
     return GCWKeyValueAlphabetItem(
         keyValueEntry: entry,
-        keyValueEditorControl: keyValueEditorControl,
         odd: odd,
-        valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
     );
   }
 }
