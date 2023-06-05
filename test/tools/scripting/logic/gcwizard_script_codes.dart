@@ -1,10 +1,10 @@
 part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsCodesToExpected = [
-  {'code' : code1, 'expectedOutput' : '1       2.0     9.0     6.0'},
+  {'code' : code1c, 'expectedOutput' : '1       2.0     9.0     6.0'},
 ];
 
-var code1 = ''' 
+var code1c = ''' 
 REM https://www.geocaching.com/geocache/GC98G??
 for z = 1 to 9
  for a = 1 to 9

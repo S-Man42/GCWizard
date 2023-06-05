@@ -1796,7 +1796,7 @@ class _GCWizardSCriptInterpreter {
     token = "";
     keywordToken = UNKNOWNCOMMAND;
 
-    if (_scriptIndex == script.length) {
+    if (_scriptIndex >= script.length) {
       token = EOP;
       return;
     }
