@@ -18,7 +18,7 @@ modeencode -> decode/ encode (encode => modeencode != null)
 ''';
 
 class Morse extends GCWWebStatefulWidget {
-  Morse({Key? key}) : super(key: key);
+  Morse({Key? key}) : super(key: key, parameterInfo: info);
 
   @override
   _MorseState createState() => _MorseState();
