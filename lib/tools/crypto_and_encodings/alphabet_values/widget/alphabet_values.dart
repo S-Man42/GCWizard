@@ -80,6 +80,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             ? _currentDecodeInput
             : IntegerListText(webInput, textToIntList(webInput));
       }
+      widget.webParameter = null;
     }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);

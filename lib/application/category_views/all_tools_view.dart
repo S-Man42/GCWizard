@@ -360,11 +360,12 @@ class _MainViewState extends State<MainView> {
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
 
     var deepLink = checkDeepLink();
-    if (deepLink != null && widget.webParameterInitActive) {
+    if (deepLink != null) {
       widget.webParameterInitActive = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.push(context, deepLink);
       });
+      widget.webParameter = null;
     }
 
     return DefaultTabController(

@@ -3,8 +3,11 @@ import 'dart:ui';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -98,29 +101,33 @@ GCWTool _toolNameList(BuildContext context) {
     suppressHelpButton: true,
     id: 'tool_name_list',
     toolName: 'Tool name list',
-      tool: ScrollConfiguration(
+      tool: _buildItems(context, toolList),
+    // )
+  );
+
+}
+
+Widget _buildItems(BuildContext context, List<GCWTool> toolList) {
+  return SizedBox(
+    height: maxScreenHeight(context),
+    child: ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
         dragDevices: {
           PointerDeviceKind.touch,
           PointerDeviceKind.mouse
         },
       ),
-      child: _buildItems(context, toolList),
+      child: FutureBuilder<List<Widget>>(
+        future: _buildRows(context, toolList),
+        builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+          return ListView(
+            primary: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: snapshot.data ?? []
+          );
+        }
+      )
     )
-  );
-
-}
-
-Widget _buildItems(BuildContext context, List<GCWTool> toolList) {
-  return FutureBuilder<List<Widget>>(
-    future: _buildRows(context, toolList),
-    builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-      return ListView(
-        shrinkWrap: true,
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: snapshot.data ?? []
-      );
-    },
   );
 }
 
