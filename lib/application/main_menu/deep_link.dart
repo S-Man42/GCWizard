@@ -4,15 +4,16 @@ import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 
+const String questionmark = '?';
 
 class WebParameter {
   String title;
@@ -59,9 +60,13 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   var name = arguments.title.toLowerCase();
 
   try {
-    if (name == '?') return _toolNameList(context);
+    if (name == questionmark) return _toolNameList(context);
 
-    return registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
+    var tool = registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
+    if (arguments.arguments[questionmark] == questionmark && tool != null) {
+      return toolInfo(context, tool);
+    }
+    return tool;
   } catch (e) {}
 
   return null;
@@ -69,11 +74,16 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
 
 WebParameter? _parseUrl(RouteSettings settings) {
   if (settings.name == null) return null;
-  var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
+  var uri = settings.name == questionmark ? Uri(pathSegments: [questionmark]) : Uri.parse(settings.name!);
   if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
 
-  return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
+  var parameter = uri.queryParameters;
+  if (uri.pathSegments.length > 1 && (uri.pathSegments[1].isEmpty && settings.name!.characters.last == questionmark)) {
+    parameter = {questionmark: questionmark};
+  }
+
+  return WebParameter(title: title, arguments: parameter, settings: settings);
 
   // MultiDecoder?input=Test%20String
   //Morse?input=Test%20String&modeencode=true
@@ -104,7 +114,6 @@ GCWTool _toolNameList(BuildContext context) {
       tool: _buildItems(context, toolList),
     // )
   );
-
 }
 
 Widget _buildItems(BuildContext context, List<GCWTool> toolList) {
@@ -137,7 +146,7 @@ Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) as
 
 Widget _buildRow(BuildContext context, GCWTool tool) {
   return FutureBuilder<String>(
-      future: _toolInfo(tool),
+      future: _toolInfoText(tool),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         return GCWOutputText(
             text: snapshot.data ?? '',
@@ -147,7 +156,7 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
   );
 }
 
-Future<String> _toolInfo(GCWTool tool) async {
+Future<String> _toolInfoText(GCWTool tool) async {
   var info = tool.id;
   if (tool.tool is GCWWebStatefulWidget) {
     info += ' -> (with parameter)';
@@ -156,5 +165,40 @@ Future<String> _toolInfo(GCWTool tool) async {
     }
   }
  return info;
+}
+
+GCWTool toolInfo(BuildContext context, GCWTool tool) {
+  return GCWTool(
+    suppressHelpButton: true,
+    id: 'tool_info',
+    toolName: 'Tool info',
+    tool: _toolInfo(context, tool),
+    // )
+  );
+}
+
+Widget _toolInfo(BuildContext context, GCWTool tool) {
+  return FutureBuilder<String>(
+      future: _toolInfoText(tool),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return Column(children: [
+          GCWText(text: _toolName(context, tool)),
+          Container(height: 20),
+          GCWText(text: snapshot.data ?? ''),
+        ]);
+      }
+  );
+}
+
+Future<Widget> __toolInfo(BuildContext context, GCWTool tool) async {
+  return Column(children: [
+    GCWText(text: _toolName(context, tool)),
+    Container(height: 20),
+    GCWText(text: await _toolInfoText(tool)),
+  ]);
+}
+
+String _toolName(BuildContext context, GCWTool tool) {
+  return tool.toolName ?? i18n(context, tool.id + '_title') ?? '';
 }
 
