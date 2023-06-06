@@ -22,21 +22,12 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   }
 
   bool hasWebParameter() {
-    return webParameter == null || webParameter!.isEmpty;
+    return webParameter != null && webParameter!.isNotEmpty;
   }
 
   String? getWebParameter(WEBPARAMETER parameter) {
     return webParameter?[enumName(parameter.toString())];
   }
-
-  // bool sendJsonResultToWeb() {
-  //   return getWebParameter(WebParameter.result) == 'json';
-  // }
-  //
-  // void sendResultToWeb(String json) {
-  //   print(json);
-  //   //sendWebResult(json);
-  // }
 }
 
 

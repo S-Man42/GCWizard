@@ -63,10 +63,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
   void initState() {
     super.initState();
 
-    //print( widget.hasWebParameter() + (widget.hasWebParameter() ?  widget.webParameter.toString() : ''));
-    _currentEncodeInput = widget.hasWebParameter().toString() + (widget.hasWebParameter() ?  widget.webParameter.toString() : '');
     if (widget.hasWebParameter()) {
-      print(widget.webParameter);
       if (widget.getWebParameter(WEBPARAMETER.modeencode) != null) {
         _currentMode = GCWSwitchPosition.right;
       }

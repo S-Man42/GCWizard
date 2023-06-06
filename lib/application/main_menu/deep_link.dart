@@ -41,22 +41,11 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
   var gcwTool = _findGCWTool(context, arguments);
   if (gcwTool == null) return null;
 
-//   if (gcwTool.tool is GCWWebStatefulWidget) {
-//     try {
-//       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
-//      var tool= (gcwTool.tool as GCWWebStatefulWidget).createElement();
-// Key key = new Key();
-//
-//     } catch (e) {}
-//   }
-  //arguments.settings.arguments = arguments.arguments;
-  var route =  NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
-  if (route.currentResult is GCWWebStatefulWidget) {
+  if (gcwTool.tool is GCWWebStatefulWidget) {
     try {
-      (route.currentResult as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
+      (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
     } catch (e) {}
   }
-  return route;
 
   // arguments settings only for view the path in the url
   return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
@@ -80,7 +69,7 @@ WebParameter? _parseUrl(RouteSettings settings) {
   var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
   if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
-  print('para: ' + uri.queryParameters.toString());
+
   return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
 
   // MultiDecoder?input=Test%20String
