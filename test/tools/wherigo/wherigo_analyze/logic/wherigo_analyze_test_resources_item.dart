@@ -1,3 +1,4 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 WherigoItemData testOutputITEM = const WherigoItemData(
@@ -27,3 +28,18 @@ String testInputITEM =
     'objStrickanleitung1.ObjectLocation = Wherigo.INVALID_ZONEPOINT\n'+
     'objStrickanleitung1.Locked = false\n'+
     'objStrickanleitung1.Opened = false';
+
+void expectItem(WherigoItemData actual, WherigoItemData expected, ){
+  expect(actual.ItemLUAName, expected.ItemLUAName);
+  expect(actual.ItemID, expected.ItemID);
+  expect(actual.ItemName, expected.ItemName);
+  expect(actual.ItemDescription, expected.ItemDescription);
+  expect(actual.ItemVisible, expected.ItemVisible);
+  expect(actual.ItemMedia, expected.ItemMedia);
+  expect(actual.ItemIcon, expected.ItemIcon);
+  expect(actual.ItemLocation, expected.ItemLocation);
+  expect(actual.ItemZonepoint, expected.ItemZonepoint);
+  expect(actual.ItemContainer, expected.ItemContainer);
+  expect(actual.ItemLocked, expected.ItemLocked);
+  expect(actual.ItemOpened, expected.ItemOpened);
+}

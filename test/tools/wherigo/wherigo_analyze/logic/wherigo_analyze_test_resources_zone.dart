@@ -1,3 +1,4 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 WherigoZoneData testOutputZONE = const WherigoZoneData(
@@ -47,3 +48,33 @@ String testInputZONE = 'board = Wherigo.Zone(objKlausMastermindKlabuster)\n' +
     'board.ProximityRangeUOM = "Meters"\n' +
     'board.OutOfRangeName = ""\n' +
     'board.InRangeName = ""';
+
+void expectZone(WherigoZoneData actual, WherigoZoneData expected, ){
+  expect(actual.ZoneLUAName, expected.ZoneLUAName);
+  expect(actual.ZoneID, expected.ZoneID);
+  expect(actual.ZoneName, expected.ZoneName);
+  expect(actual.ZoneDescription, expected.ZoneDescription);
+  expect(actual.ZoneVisible, expected.ZoneVisible);
+  expect(actual.ZoneMediaName, expected.ZoneMediaName);
+  expect(actual.ZoneIconName, expected.ZoneIconName);
+  expect(actual.ZoneActive, expected.ZoneActive);
+  expect(actual.ZoneDistanceRange, expected.ZoneDistanceRange);
+  expect(actual.ZoneShowObjects, expected.ZoneShowObjects);
+  expect(actual.ZoneProximityRange, expected.ZoneProximityRange);
+  expect(actual.ZoneOriginalPoint.Latitude, expected.ZoneOriginalPoint.Latitude);
+  expect(actual.ZoneOriginalPoint.Longitude, expected.ZoneOriginalPoint.Longitude);
+  expect(actual.ZoneOriginalPoint.Altitude, expected.ZoneOriginalPoint.Altitude);
+  expect(actual.ZoneDistanceRangeUOM, expected.ZoneDistanceRangeUOM);
+  expect(actual.ZoneProximityRangeUOM, expected.ZoneProximityRangeUOM);
+  expect(actual.ZoneOutOfRange, expected.ZoneOutOfRange);
+  expect(actual.ZoneInRange, expected.ZoneInRange);
+  expect(actual.ZonePoints[0].Latitude, expected.ZonePoints[0].Latitude);
+  expect(actual.ZonePoints[0].Longitude, expected.ZonePoints[0].Longitude);
+  expect(actual.ZonePoints[0].Altitude, expected.ZonePoints[0].Altitude);
+  expect(actual.ZonePoints[1].Latitude, expected.ZonePoints[1].Latitude);
+  expect(actual.ZonePoints[1].Longitude, expected.ZonePoints[1].Longitude);
+  expect(actual.ZonePoints[1].Altitude, expected.ZonePoints[1].Altitude);
+  expect(actual.ZonePoints[2].Latitude, expected.ZonePoints[2].Latitude);
+  expect(actual.ZonePoints[2].Longitude, expected.ZonePoints[2].Longitude);
+  expect(actual.ZonePoints[2].Altitude, expected.ZonePoints[2].Altitude);
+}
