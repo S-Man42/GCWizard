@@ -5,15 +5,15 @@ WherigoCharacterData testOutputCHARACTER = const WherigoCharacterData(
   CharacterLUAName: 'objFredericVester',
   CharacterID: '1cb0425c-d5f9-4252-9f99-d2910900310e',
   CharacterName: 'Frederic Vester',
-  CharacterDescription: 'Frederic Vester (* 23. November 1925 in Saarbruecken; + 2. November 2003 in Muenchen) war ein deutscher Biochemiker, Systemforscher, Umweltexperte, Universitaetsprofessor und populaerwissenschaftlicher Autor.<BR>Unter Berufung auf die Kybernetik (bzw. Biokybernetik) hat Vester systemisches, vernetztes Denken propagiert, ein Ansatz, in dem die Eigenschaften eines Systems als ein vernetztes Wirkungsgefuege gesehen werden. ',
+  CharacterDescription: 'Frederic Vester (* 23. November 1925 in Saarbruecken; + 2. November 2003 in Muenchen) war ein deutscher Biochemiker, Systemforscher, Umweltexperte, Universitaetsprofessor und populaerwissenschaftlicher Autor.\nUnter Berufung auf die Kybernetik (bzw. Biokybernetik) hat Vester systemisches, vernetztes Denken propagiert, ein Ansatz, in dem die Eigenschaften eines Systems als ein vernetztes Wirkungsgefuege gesehen werden.',
   CharacterVisible: 'false',
   CharacterMediaName: 'objVester',
   CharacterIconName: 'objicovester',
   CharacterLocation: '',
   CharacterZonepoint: WherigoZonePoint(),
-  CharacterContainer: '',
+  CharacterContainer: 'zPortal',
   CharacterGender: 'male',
-  CharacterType: 'npc',
+  CharacterType: 'NPC',
 );
 
 String testInputCHARACTER =

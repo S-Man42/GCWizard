@@ -310,50 +310,17 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
       if (RegExp(r'(.ZVariables =)').hasMatch(lines[i])) {
         _sectionVariables = true;
         WHERIGOcurrentObjectSection = WHERIGO_OBJECT_TYPE.VARIABLES;
-        if (lines[i + 1].trim().startsWith('buildervar')) {
-          _declaration = lines[i]
-              .replaceAll(_CartridgeLUAName + '.ZVariables', '')
-              .replaceAll('{', '')
-              .replaceAll('}', '')
-              .split('=');
-          if (_declaration[1].startsWith(_obfuscatorFunction)) {
-            // content is obfuscated
-            _cartridgeVariables.add(WherigoVariableData(
-                VariableLUAName: _declaration[1].trim(),
-                VariableName: deobfuscateUrwigoText(
-                    _declaration[2].replaceAll(_obfuscatorFunction, '').replaceAll('("', '').replaceAll('")', ''),
-                    _obfuscatorTable)));
-          } else {
-            _cartridgeVariables.add(// content not obfuscated
-                WherigoVariableData(
-                    VariableLUAName: _declaration[1].trim(), VariableName: _declaration[2].replaceAll('"', '')));
-          }
-        }
-        i++;
-        lines[i] = lines[i].trim();
+
+        analyzeLines = [];
+
         do {
-          _declaration = lines[i].trim().replaceAll(',', '').replaceAll(' ', '').split('=');
-          if (_declaration.length == 2) {
-            if (_declaration[1].startsWith(_obfuscatorFunction)) {
-              // content is obfuscated
-              _cartridgeVariables.add(WherigoVariableData(
-                  VariableLUAName: _declaration[0].trim(),
-                  VariableName: deobfuscateUrwigoText(
-                      _declaration[1].replaceAll(_obfuscatorFunction, '').replaceAll('("', '').replaceAll('")', ''),
-                      _obfuscatorTable)));
-            } else {
-              _cartridgeVariables.add(// content not obfuscated
-                  WherigoVariableData(
-                      VariableLUAName: _declaration[0].trim(), VariableName: _declaration[1].replaceAll('"', '')));
-            }
-          } else {
-            _cartridgeVariables.add(WherigoVariableData(VariableLUAName: _declaration[0].trim(), VariableName: ''));
-          }
+          analyzeLines.add(lines[i].trim());
 
           i++;
-          lines[i] = lines[i].trim();
           if (lines[i].trim() == '}' || lines[i].trim().startsWith('buildervar')) _sectionVariables = false;
         } while ((i < lines.length - 1) && _sectionVariables);
+
+        _cartridgeVariables.addAll(_analyzeAndExtractVariableSectionData(analyzeLines));
       }
     } catch (exception) {
       _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;

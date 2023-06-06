@@ -35,7 +35,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.TASKS);
-        expectTask(_actual.cartridgeTestTask, testOutputTASK, );
+        expectTask(_actual.cartridgeTestTask, elem['expectedOutput'] as WherigoTaskData, );
       });
     }
   });
@@ -51,7 +51,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.TIMERS);
-        expectTimer(_actual.cartridgeTestTimer, testOutputTIMER, );
+        expectTimer(_actual.cartridgeTestTimer, elem['expectedOutput'] as WherigoTimerData, );
       });
     }
   });
@@ -67,11 +67,10 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.ZONES);
-        expectZone(_actual.cartridgeTestZone, testOutputZONE, );
+        expectZone(_actual.cartridgeTestZone, elem['expectedOutput'] as WherigoZoneData, );
       });
     }
   });
-
 
   group("Wherigo_analyze.MEDIA:", () {
     List<Map<String, Object?>> _inputsToExpected = [
@@ -84,7 +83,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.MEDIAFILES);
-        expectMedia(_actual.cartridgeTestMedia, testOutputMEDIA, );
+        expectMedia(_actual.cartridgeTestMedia, elem['expectedOutput'] as WherigoMediaData, );
       });
     }
   });
@@ -100,7 +99,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.ITEMS);
-        expectItem(_actual.cartridgeTestItem, testOutputITEM, );
+        expectItem(_actual.cartridgeTestItem, elem['expectedOutput'] as WherigoItemData, );
       });
     }
   });
@@ -116,10 +115,50 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.CHARACTER);
-        expectCharacter(_actual.cartridgeTestCharacter, testOutputCHARACTER, );
+        expectCharacter(_actual.cartridgeTestCharacter, elem['expectedOutput'] as WherigoCharacterData, );
       });
     }
   });
+
+  group("Wherigo_analyze.INPUT:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {
+        'input': testInputINPUT,
+        'expectedOutput': testOutputINPUT,
+      }
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}}', () {
+        var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.INPUTS);
+        expectInput(_actual.cartridgeTestInput, elem['expectedOutput'] as WherigoInputData);
+      });
+    }
+  });
+
+  group("Wherigo_analyze.VARIABLES:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {
+        'input': testInputVARIABLE_BUILDERVAR,
+        'expectedOutput': testOutputVARIABLE_BUILDERVAR,
+      },
+      {
+        'input': testInputVARIABLE,
+        'expectedOutput': testOutputVARIABLE,
+      }
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}}', () {
+        var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.VARIABLES);
+        expectVariable(_actual.cartridgeTestVariable, elem['expectedOutput'] as List<WherigoVariableData>);
+      });
+    }
+  });
+
+
+
+
 
   group("Wherigo_analyze.OBFUSCATION:", () {
     List<Map<String, Object?>> _inputsToExpected = [
@@ -136,39 +175,6 @@ void main() {
       });
     }
   });
-
-  group("Wherigo_analyze.VARIABLES:", () {
-    List<Map<String, Object?>> _inputsToExpected = [
-      {
-        'input': testInputVARIABLE,
-        'expectedOutput': testOutputVARIABLE,
-      }
-    ];
-
-    for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}}', () {
-        var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.VARIABLES);
-        expect(_actual, elem['expectedOutput']);
-      });
-    }
-  });
-
-  group("Wherigo_analyze.INPUT:", () {
-    List<Map<String, Object?>> _inputsToExpected = [
-      {
-        'input': testInputINPUT,
-        'expectedOutput': testOutputINPUT,
-      }
-    ];
-
-    for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}}', () {
-        var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.INPUTS);
-        expect(_actual, elem['expectedOutput']);
-      });
-    }
-  });
-
 
   group("Wherigo_analyze.GWC:", () {
     List<Map<String, Object?>> _inputsToExpected = [
