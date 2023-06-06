@@ -112,25 +112,35 @@ GCWTool _toolNameList(BuildContext context) {
 }
 
 Widget _buildItems(BuildContext context, List<GCWTool> toolList) {
-  return ListView.separated(
-    shrinkWrap: true,
-    physics: const AlwaysScrollableScrollPhysics(),
-    itemCount: toolList.length,
-    separatorBuilder: (BuildContext context, int index) => const Divider(),
-    itemBuilder: (BuildContext context, int i) {
-      return _buildRow(context, toolList.elementAt(i));
+  return FutureBuilder<List<Widget>>(
+    future: _buildRows(context, toolList),
+    builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+      return ListView(
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: snapshot.data ?? []
+      );
     },
   );
 }
 
+Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) async {
+  return Future.value(toolList.map((tool) => _buildRow(context, tool)).toList());
+}
+
 Widget _buildRow(BuildContext context, GCWTool tool) {
-  return GCWOutputText(
-      text: _toolInfo(tool),
-      copyText: 'https://test.gcwizard.net/#/' + tool.id
+  return FutureBuilder<String>(
+      future: _toolInfo(tool),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return GCWOutputText(
+            text: snapshot.data ?? '',
+            copyText: 'https://test.gcwizard.net/#/' + tool.id
+        );
+      }
   );
 }
 
-String _toolInfo(GCWTool tool) {
+Future<String> _toolInfo(GCWTool tool) async {
   var info = tool.id;
   if (tool.tool is GCWWebStatefulWidget) {
     info += ' -> (with parameter)';
