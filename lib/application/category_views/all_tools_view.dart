@@ -262,8 +262,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
-  final  WebParameter? fullWebParameter;
-  MainView({Key? key, this.fullWebParameter}) : super(key: key, webParameter: fullWebParameter?.arguments);
+  MainView({Key? key, Map<String, String>? webParameter}) : super(key: key, webParameter: webParameter);
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -361,7 +360,6 @@ class _MainViewState extends State<MainView> {
 
     var deepLink = checkDeepLink();
     if (deepLink != null) {
-      widget.webParameterInitActive = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.push(context, deepLink);
       });
@@ -402,9 +400,15 @@ class _MainViewState extends State<MainView> {
   }
 
   NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
-    if (widget.fullWebParameter != null) {
-      return createStartDeepLinkRoute(context, widget.fullWebParameter!);
+    //print('checkDeepLink: ' + (widget.fullWebParameter?.title.toString() ?? ''));
+    print('checkDeepLink ' + widget.webParameter.toString() + this.hashCode.toString());
+    if (widget.hasWebParameter()) {
+      widget.webParameterInitActive = false;
+      var route = createStartDeepLinkRoute(context, widget.webParameter!);
+      widget.webParameter = null;
+      return route;
     }
+    return null;
   }
 
   IconButton _buildSearchActionButton() {

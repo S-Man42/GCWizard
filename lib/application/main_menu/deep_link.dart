@@ -21,20 +21,24 @@ class WebParameter {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
+  print(settings);
   var args = _parseUrl(settings);
   return (args == null) ? null : _createRoute(context, args);
 }
 
 List<Route<GCWTool>> startMainView(BuildContext context, String route) {
+  print('main: ' + route);
   return  [
     NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => MainView(
-        fullWebParameter: _parseUrl(RouteSettings(name: route))
-    )),
+        webParameter: _parseUrl(RouteSettings(name: route), initRoute: true)?.arguments)
+    ),
   ];
 }
 
-NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, WebParameter arguments) {
-  return _createRoute(context, arguments);
+NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
+  print('createStartDeepLinkRoute');
+  var webparamter = WebParameter(title: arguments['initRoute'] ?? '', arguments: arguments, settings: null);
+  return _createRoute(context, webparamter);
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
@@ -47,9 +51,12 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
     } catch (e) {}
   }
+  return _buildRoute(context, gcwTool, arguments.settings);
+}
 
+NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings? settings) {
   // arguments settings only for view the path in the url , settings: arguments.settings
-  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool);
+  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: RouteSettings(name: ''));
 }
 
 GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
@@ -65,13 +72,18 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   return null;
 }
 
-WebParameter? _parseUrl(RouteSettings settings) {
+WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
   if (settings.name == null) return null;
   var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
   if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
 
-  return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
+  var parameter = uri.queryParameters;
+  if (initRoute) {
+    parameter = Map<String, String>.from(parameter);
+    parameter.addAll({'initRoute': title });
+  }
+  return WebParameter(title: title, arguments: parameter, settings: settings);
 
   // MultiDecoder?input=Test%20String
   //Morse?input=Test%20String&modeencode=true

@@ -57,6 +57,7 @@ class App extends StatelessWidget {
                 'clipboard_editor': (BuildContext context) => GCWTool(
                     tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
               },
+                initialRoute: '/morse',
               onGenerateInitialRoutes: (route) => startMainView(context, route),
               onGenerateRoute: (RouteSettings settings) {
                 return createRoute(context, settings);
