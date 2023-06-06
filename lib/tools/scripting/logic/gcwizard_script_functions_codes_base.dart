@@ -1,52 +1,52 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 String _base(Object t, Object m, Object x) {
-  if (_isNotInt(t) || _isNotInt(m)) {
+  if (_isNotInt(t) || !_isNumber(m)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
   switch (t as int) {
     case 16:
       if (m == 0) {
-        return decodeBase16(x as String);
+        return decodeBase16(x.toString());
       } else {
-        return encodeBase16(x as String);
+        return encodeBase16(x.toString());
       }
     case 32:
       if (m == 0) {
-        return decodeBase32(x as String);
+        return decodeBase32(x.toString());
       } else {
-        return encodeBase32(x as String);
+        return encodeBase32(x.toString());
       }
     case 58:
       if (m == 0) {
-        return decodeBase58(x as String);
+        return decodeBase58(x.toString());
       } else {
-        return encodeBase58(x as String);
+        return encodeBase58(x.toString());
       }
     case 64:
       if (m == 0) {
-        return decodeBase64(x as String);
+        return decodeBase64(x.toString());
       } else {
-        return encodeBase64(x as String);
+        return encodeBase64(x.toString());
       }
     case 85:
       if (m == 0) {
-        return decodeBase85(x as String);
+        return decodeBase85(x.toString());
       } else {
-        return encodeBase85(x as String);
+        return encodeBase85(x.toString());
       }
     case 91:
       if (m == 0) {
-        return decodeBase91(x as String);
+        return decodeBase91(x.toString());
       } else {
-        return encodeBase91(x as String);
+        return encodeBase91(x.toString());
       }
     case 122:
       if (m == 0) {
-        return decodeBase122(x as String);
+        return decodeBase122(x.toString());
       } else {
-        return encodeBase122(x as String);
+        return encodeBase122(x.toString());
       }
     default:
       _handleError(_INVALIDBASETYPE);

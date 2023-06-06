@@ -34,12 +34,12 @@ double _sqrt(Object? x) {
   return sqrt(x as num);
 }
 
-double _sqr(Object? x) {
+num _sqr(Object? x) {
   if (!_isNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
-  return ((x as num) * x) as double;
+  return ((x as num) * x);
 }
 
 double _exp(Object? x) {
@@ -208,13 +208,13 @@ num _pow(Object? x, Object? y) {
 }
 
 int _qsum(Object? x) {
-  if (!_isInt(x)) {
+  if (!_isNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
   int result = 0;
-  (x as int).toString().split('').forEach((digit) {
-    result = result + int.parse(digit);
+  x.toString().split('').forEach((digit) {
+    result += _isDigit(digit) ? int.parse(digit) : 0;
   });
   return result;
 }
@@ -224,16 +224,10 @@ int _iqsum(Object? x) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
-  int result = 0;
-  String number = (x as int).toString();
-  while (number.length > 1) {
-    result = 0;
-    number.split('').forEach((digit) {
-      result = result + int.parse(digit);
-    });
-    number = result.toString();
+  int result = _qsum(x);
+  while (result.toString().length > 1) {
+    result = _qsum(result);
   }
-
   return result;
 }
 
@@ -266,7 +260,7 @@ num _kgv(Object? x, Object? y) {
 }
 
 String _convert(Object? value, Object? startBase, Object? destinationBase) {
-  if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) {
+  if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) { //ToDo mayby convert value toString (if int or double)
     _handleError(_INVALIDTYPECAST);
     return '';
   }
