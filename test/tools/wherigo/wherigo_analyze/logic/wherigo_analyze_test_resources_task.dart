@@ -1,3 +1,4 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 WherigoTaskData testOutputTASK = const WherigoTaskData(
@@ -31,3 +32,17 @@ String testInputTASK =
 'objwerdeMastermind.Active = true\n'+
 'objwerdeMastermind.Complete = false\n'+
 'objwerdeMastermind.CorrectState = "None"';
+
+void expectTask(WherigoTaskData actual, WherigoTaskData expected, ){
+  expect(actual.TaskLUAName, expected.TaskLUAName);
+  expect(actual.TaskID, expected.TaskID);
+  expect(actual.TaskName, expected.TaskName);
+  expect(actual.TaskDescription, expected.TaskDescription);
+  expect(actual.TaskVisible, expected.TaskVisible);
+  expect(actual.TaskMedia, expected.TaskMedia);
+  expect(actual.TaskIcon, expected.TaskIcon);
+  expect(actual.TaskActive, expected.TaskActive);
+  expect(actual.TaskComplete, expected.TaskComplete);
+  expect(actual.TaskCorrectstate, expected.TaskCorrectstate);
+}
+

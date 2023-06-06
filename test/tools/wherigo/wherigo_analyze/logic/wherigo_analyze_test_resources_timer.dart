@@ -1,3 +1,4 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 WherigoTimerData testOutputTIMER = const WherigoTimerData(
@@ -17,3 +18,13 @@ String testInputTIMER = 'objupdate_distance = Wherigo.ZTimer(objKlausMastermindK
     'objupdate_distance.Visible = true\n' +
     'objupdate_distance.Duration = 3\n' +
     'objupdate_distance.Type = "Interval"';
+
+void expectTimer(WherigoTimerData actual, WherigoTimerData expected, ){
+  expect(actual.TimerLUAName, expected.TimerLUAName);
+  expect(actual.TimerID, expected.TimerID);
+  expect(actual.TimerName, expected.TimerName);
+  expect(actual.TimerDescription, expected.TimerDescription);
+  expect(actual.TimerVisible, expected.TimerVisible);
+  expect(actual.TimerDuration, expected.TimerDuration);
+  expect(actual.TimerType, expected.TimerType);
+}
