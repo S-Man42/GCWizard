@@ -60,7 +60,7 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   var name = arguments.title.toLowerCase();
 
   try {
-    if (name == questionmark) return _toolNameList(context);
+    if (name == '/' + questionmark) return _toolNameList(context);
 
     var tool = registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
     if (arguments.arguments[questionmark] == questionmark && tool != null) {
@@ -74,12 +74,12 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
 
 WebParameter? _parseUrl(RouteSettings settings) {
   if (settings.name == null) return null;
-  var uri = settings.name == questionmark ? Uri(pathSegments: [questionmark]) : Uri.parse(settings.name!);
+  var uri = settings.name == '/' + questionmark ? Uri(pathSegments: [questionmark]) : Uri.parse(settings.name!);
   if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
 
   var parameter = uri.queryParameters;
-  if (uri.pathSegments.length > 1 && (uri.pathSegments[1].isEmpty && settings.name!.characters.last == questionmark)) {
+  if ((uri.pathSegments.length > 1) && (uri.pathSegments[1].isEmpty && settings.name!.characters.last == questionmark)) {
     parameter = {questionmark: questionmark};
   }
 
