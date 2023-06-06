@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,9 @@ WebParameter? _parseUrl(RouteSettings settings) {
 }
 
 GCWTool _toolNameList(BuildContext context) {
-  var toolList = registeredTools.map((_tool) => _tool.id + ((_tool.tool is GCWWebStatefulWidget) ? ' -> (with parameter)' : ''));
+  var toolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is! GCWSelection));
+  toolList.sort((a, b) => a.id.compareTo(b.id));
+
   return GCWTool(
     suppressHelpButton: true,
     id: 'tool_name_list',
@@ -103,13 +105,13 @@ GCWTool _toolNameList(BuildContext context) {
           PointerDeviceKind.mouse
         },
       ),
-      child: _buildItems(context, toolList.toList()),
+      child: _buildItems(context, toolList),
     )
   );
 
 }
 
-Widget _buildItems(BuildContext context, List<String> toolList) {
+Widget _buildItems(BuildContext context, List<GCWTool> toolList) {
   return ListView.separated(
     shrinkWrap: true,
     physics: const AlwaysScrollableScrollPhysics(),
@@ -121,8 +123,21 @@ Widget _buildItems(BuildContext context, List<String> toolList) {
   );
 }
 
-Widget _buildRow(BuildContext context, String id) {
-  return GCWOutputText(text: id, copyText: 'https://test.gcwizard.net/#/' + id);
+Widget _buildRow(BuildContext context, GCWTool tool) {
+  return GCWOutputText(
+      text: _toolInfo(tool),
+      copyText: 'https://test.gcwizard.net/#/' + tool.id
+  );
 }
 
+String _toolInfo(GCWTool tool) {
+  var info = tool.id;
+  if (tool.tool is GCWWebStatefulWidget) {
+    info += ' -> (with parameter)';
+    if ((tool.tool as GCWWebStatefulWidget).parameterInfo != null) {
+      info += '\nparameter info:\n'+ (tool.tool as GCWWebStatefulWidget).parameterInfo!;
+    }
+  }
+ return info;
+}
 

@@ -29,8 +29,13 @@ import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
+const String info ='''
+input -> input value
+modeencode -> decode/ encode (encode => modeencode != null)
+''';
+
 class AlphabetValues extends GCWWebStatefulWidget {
-  AlphabetValues({Key? key}) : super(key: key);
+  AlphabetValues({Key? key}) : super(key: key, parameterInfo: info);
 
   @override
   _AlphabetValuesState createState() => _AlphabetValuesState();

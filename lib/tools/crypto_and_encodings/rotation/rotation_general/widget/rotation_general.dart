@@ -8,8 +8,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
+const String info ='''
+input -> input value
+parameter1 -> count
+''';
+
 class RotationGeneral extends GCWWebStatefulWidget {
-  RotationGeneral({Key? key}) : super(key: key);
+  RotationGeneral({Key? key}) : super(key: key, parameterInfo: info);
 
   @override
   _RotationGeneralState createState() => _RotationGeneralState();

@@ -14,8 +14,9 @@ enum WEBPARAMETER {
 abstract class GCWWebStatefulWidget extends StatefulWidget {
   Map<String, String>? webParameter;
   bool webParameterInitActive = true;
+  final String? parameterInfo;
 
-  GCWWebStatefulWidget({Key? key, this.webParameter}): super(key: key);
+  GCWWebStatefulWidget({Key? key, this.webParameter, this.parameterInfo}): super(key: key);
 
   set webQueryParameter(Map<String, String> parameter) {
     webParameter = parameter;

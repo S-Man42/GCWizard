@@ -12,6 +12,11 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
+const String info ='''
+input -> input value
+modeencode -> decode/ encode (encode => modeencode != null)
+''';
+
 class Morse extends GCWWebStatefulWidget {
   Morse({Key? key}) : super(key: key);
 
