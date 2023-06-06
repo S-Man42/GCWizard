@@ -34,6 +34,7 @@ class _RotationGeneralState extends State<RotationGeneral> {
       _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
       var key = widget.getWebParameter(WEBPARAMETER.parameter1);
       if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+      widget.webParameter = null;
     }
 
     _controller = TextEditingController(text: _currentInput);

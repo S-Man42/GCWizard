@@ -5,9 +5,7 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -50,8 +48,8 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
     } catch (e) {}
   }
 
-  // arguments settings only for view the path in the url
-  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
+  // arguments settings only for view the path in the url , settings: arguments.settings
+  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool);
 }
 
 GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
