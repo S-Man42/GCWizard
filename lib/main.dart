@@ -7,7 +7,6 @@ import 'package:gc_wizard/application/i18n/supported_locales.dart';
 import 'package:gc_wizard/application/navigation/navigation_service.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
@@ -51,8 +50,6 @@ class App extends StatelessWidget {
               ],
               theme: buildTheme(),
               debugShowCheckedModeBanner: false,
-              //ignore: prefer_const_constructors
-              //home: MainView(webParameterX: parseUrl2( '/braille')), // Warning says, it must be "const", but in that case theme changes (theme color or font size) will not set properly
               navigatorKey: NavigationService.instance.navigationKey,
               routes: {
                 // Required extra way because normal Navigator.of(context) way

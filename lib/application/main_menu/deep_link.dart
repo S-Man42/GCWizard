@@ -1,11 +1,14 @@
+import 'dart:ui';
+
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 
 
 class WebParameter {
@@ -35,25 +38,36 @@ NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext con
 
 // A Widget that accepts the necessary arguments via the constructor.
 NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebParameter arguments) {
-  var gcwTool = _findGCWTool(arguments);
+  var gcwTool = _findGCWTool(context, arguments);
   if (gcwTool == null) return null;
 
-  if (gcwTool.tool is GCWWebStatefulWidget) {
+//   if (gcwTool.tool is GCWWebStatefulWidget) {
+//     try {
+//       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
+//      var tool= (gcwTool.tool as GCWWebStatefulWidget).createElement();
+// Key key = new Key();
+//
+//     } catch (e) {}
+//   }
+  //arguments.settings.arguments = arguments.arguments;
+  var route =  NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
+  if (route.currentResult is GCWWebStatefulWidget) {
     try {
-      (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
+      (route.currentResult as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
     } catch (e) {}
   }
+  return route;
 
   // arguments settings only for view the path in the url
   return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
 }
 
-GCWTool? _findGCWTool(WebParameter arguments) {
+GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   if (arguments.title.isEmpty) return null;
   var name = arguments.title.toLowerCase();
 
   try {
-    if (name == '?') return _toolNameList();
+    if (name == '?') return _toolNameList(context);
 
     return registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
   } catch (e) {}
@@ -66,7 +80,7 @@ WebParameter? _parseUrl(RouteSettings settings) {
   var uri = settings.name == '/?' ? Uri(pathSegments: ['?']) : Uri.parse(settings.name!);
   if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
-
+  print('para: ' + uri.queryParameters.toString());
   return WebParameter(title: title, arguments: uri.queryParameters, settings: settings);
 
   // MultiDecoder?input=Test%20String
@@ -87,29 +101,39 @@ WebParameter? _parseUrl(RouteSettings settings) {
   // toolname?parameter1=xxx&parameter2=xxx
 }
 
-GCWTool _toolNameList() {
-  var toolList = registeredTools.map((_tool) => _tool.id + ((_tool.tool is GCWWebStatefulWidget) ? ' -> (with parameter)' : '')).toList();
+GCWTool _toolNameList(BuildContext context) {
+  var toolList = registeredTools.map((_tool) => _tool.id + ((_tool.tool is GCWWebStatefulWidget) ? ' -> (with parameter)' : ''));
   return GCWTool(
+    suppressHelpButton: true,
     id: 'tool_name_list',
     toolName: 'Tool name list',
-    tool: Column(
-      children: [
-        GCWMultipleOutput(children: toolList),
-      ]
+      tool: ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse
+        },
+      ),
+      child: _buildItems(context, toolList.toList()),
     )
+  );
+
+}
+
+Widget _buildItems(BuildContext context, List<String> toolList) {
+  return ListView.separated(
+    shrinkWrap: true,
+    physics: const AlwaysScrollableScrollPhysics(),
+    itemCount: toolList.length,
+    separatorBuilder: (BuildContext context, int index) => const Divider(),
+    itemBuilder: (BuildContext context, int i) {
+      return _buildRow(context, toolList.elementAt(i));
+    },
   );
 }
 
-// void sendWebResult(String json) {
-//   // String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
-//   // try {
-//   //   var uri = Uri.parse(address);
-//   //   var request = http.MultipartRequest('POST', uri)
-//   //     ..fields['return']=json;
-//   //   request.send();
-//   //
-//   // } catch (exception) {
-//   //   //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
-//   // };
-// }
+Widget _buildRow(BuildContext context, String id) {
+  return GCWOutputText(text: id, copyText: 'https://test.gcwizard.net/#/' + id);
+}
+
 
