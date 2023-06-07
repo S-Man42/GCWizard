@@ -138,7 +138,7 @@ List<WherigoVariableData> testOutputVARIABLE = [
   ),
   const WherigoVariableData(
     VariableLUAName: 'vEndeMeldung',
-    VariableName: 'Ausundvorbei!',
+    VariableName: 'Aus und vorbei!',
   ),
   const WherigoVariableData(
     VariableLUAName: 'vBilanzSan',
@@ -309,7 +309,6 @@ String testInputVARIABLE = 'objKlausdenktnach.ZVariables = {\n' +
     '}';
 
 void expectVariable(List<WherigoVariableData> actual, List<WherigoVariableData> expected) {
-  print(actual.length.toString() + ' ' + expected.length.toString());
   for (int i = 0; i < expected.length; i++) {
     expect(actual[i].VariableLUAName, expected[i].VariableLUAName);
     expect(actual[i].VariableName, expected[i].VariableName);
