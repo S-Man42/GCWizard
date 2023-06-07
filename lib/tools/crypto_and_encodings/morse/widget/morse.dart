@@ -45,6 +45,7 @@ class _MorseState extends State<Morse> {
       } else {
         _currentDecodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentDecodeInput;
       }
+      widget.webParameter = null;
     }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);

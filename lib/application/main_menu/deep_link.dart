@@ -13,7 +13,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 
-const String questionmark = '?';
+const String questionmark = '/?';
 
 class WebParameter {
   String title;
@@ -24,20 +24,24 @@ class WebParameter {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
+  print(settings);
   var args = _parseUrl(settings);
   return (args == null) ? null : _createRoute(context, args);
 }
 
 List<Route<GCWTool>> startMainView(BuildContext context, String route) {
+  print('main: ' + route);
   return  [
     NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => MainView(
-        fullWebParameter: _parseUrl(RouteSettings(name: route))
-    )),
+        webParameter: _parseUrl(RouteSettings(name: route), initRoute: true)?.arguments)
+    ),
   ];
 }
 
-NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, WebParameter arguments) {
-  return _createRoute(context, arguments);
+NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
+  print('createStartDeepLinkRoute');
+  var webparamter = WebParameter(title: arguments['initRoute'] ?? '', arguments: arguments, settings: null);
+  return _createRoute(context, webparamter);
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
@@ -50,9 +54,12 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
     } catch (e) {}
   }
+  return _buildRoute(context, gcwTool, arguments.settings);
+}
 
-  // arguments settings only for view the path in the url
-  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: arguments.settings);
+NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings? settings) {
+  // arguments settings only for view the path in the url , settings: arguments.settings
+  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: RouteSettings(name: ''));
 }
 
 GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
@@ -60,10 +67,10 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   var name = arguments.title.toLowerCase();
 
   try {
-    if (name == '/' + questionmark) return _toolNameList(context);
+    if (name == questionmark) return _toolNameList(context);
 
     var tool = registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
-    if (arguments.arguments[questionmark] == questionmark && tool != null) {
+    if ((arguments.arguments[questionmark] == questionmark) && tool != null) {
       return toolInfo(context, tool);
     }
     return tool;
@@ -72,7 +79,7 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   return null;
 }
 
-WebParameter? _parseUrl(RouteSettings settings) {
+WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
   if (settings.name == null) return null;
   var uri = settings.name == '/' + questionmark ? Uri(pathSegments: [questionmark]) : Uri.parse(settings.name!);
   if (uri.pathSegments.isEmpty) return null;
@@ -83,6 +90,10 @@ WebParameter? _parseUrl(RouteSettings settings) {
     parameter = {questionmark: questionmark};
   }
 
+  if (initRoute) {
+    parameter = Map<String, String>.from(parameter);
+    parameter.addAll({'initRoute': title });
+  }
   return WebParameter(title: title, arguments: parameter, settings: settings);
 
   // MultiDecoder?input=Test%20String
@@ -190,15 +201,7 @@ Widget _toolInfo(BuildContext context, GCWTool tool) {
   );
 }
 
-Future<Widget> __toolInfo(BuildContext context, GCWTool tool) async {
-  return Column(children: [
-    GCWText(text: _toolName(context, tool)),
-    Container(height: 20),
-    GCWText(text: await _toolInfoText(tool)),
-  ]);
-}
-
 String _toolName(BuildContext context, GCWTool tool) {
-  return tool.toolName ?? i18n(context, tool.id + '_title') ?? '';
+  return tool.toolName ?? i18n(context, tool.id + '_title');
 }
 

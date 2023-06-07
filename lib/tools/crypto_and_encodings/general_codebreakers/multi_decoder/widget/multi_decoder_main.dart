@@ -28,6 +28,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
 
     if (widget.hasWebParameter()) {
       _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+      widget.webParameter = null;
     }
 
     _controller = TextEditingController(text: _currentInput);
