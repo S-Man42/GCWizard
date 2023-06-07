@@ -7,7 +7,6 @@ List<WherigoBuilderVariableData> _analyzeAndExtractBuilderVariableSectionData(Li
   String varType = '';
   String varDescription = '';
   String varData = '';
-
   int i = 0;
   while (i < lines.length) {
     if (lines[i].trim().startsWith('buildervar.')) {
@@ -52,8 +51,9 @@ List<WherigoBuilderVariableData> _analyzeAndExtractBuilderVariableSectionData(Li
           BuilderVariableData: varData,
           BuilderVariableDescription: varDescription));
 
-      i = i + 6;
+      i = i + 5;
     }
+    i++;
   }
   return result;
 }

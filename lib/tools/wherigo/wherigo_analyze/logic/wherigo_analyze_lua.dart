@@ -315,14 +315,26 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
         analyzeLines = [];
 
-        do {
-          analyzeLines.add(lines[i].trim());
+        if (lines[i].endsWith('}')) {
+          List<String> _declaration = lines[i]
+              .replaceAll(_CartridgeLUAName + '.ZVariables', '')
+              .replaceAll('{', '')
+              .replaceAll('}', '')
+              .split(' = ');
 
+          _cartridgeVariables.add(WherigoVariableData(
+              VariableLUAName: _declaration[1].trim(), VariableName: _declaration[2].replaceAll('"', '')));
           i++;
-          if (lines[i].trim() == '}' || lines[i].trim().startsWith('buildervar')) _sectionVariables = false;
-        } while ((i < lines.length - 1) && _sectionVariables);
+        } else {
+          i++;
+          do {
+            analyzeLines.add(lines[i].trim());
 
-        _cartridgeVariables.addAll(_analyzeAndExtractVariableSectionData(analyzeLines));
+            i++;
+            if (lines[i].trim() == '}' || lines[i].trim().startsWith('buildervar')) _sectionVariables = false;
+          } while ((i < lines.length - 1) && _sectionVariables);
+          _cartridgeVariables.addAll(_analyzeAndExtractVariableSectionData(analyzeLines));
+        }
       }
     } catch (exception) {
       _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -339,20 +351,19 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
         analyzeLines = [];
 
+        i++;
         do {
-          i++;
           analyzeLines.add(lines[i].trim());
 
+          i++;
           if (!lines[i].trim().startsWith('buildervar')) _sectionBuilderVariables = false;
         } while ((i < lines.length - 1) && _sectionBuilderVariables);
-
         _cartridgeBuilderVariables.addAll(_analyzeAndExtractBuilderVariableSectionData(analyzeLines));
       }
     } catch (exception) {
       _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
       _LUAAnalyzeResults.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_builder_identifiers', exception));
     }
-
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Timer Object
     //
