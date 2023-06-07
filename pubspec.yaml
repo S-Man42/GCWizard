@@ -255,6 +255,7 @@ flutter:
     - assets/symbol_tables/notes_names_trebleclef/
     - assets/symbol_tables/notes_restvalues/
     - assets/symbol_tables/nyctography/
+    - assets/symbol_tables/oak_island_money_pit/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
     - assets/symbol_tables/optical_fiber_iec60304/

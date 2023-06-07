@@ -4694,6 +4694,8 @@
   "symboltables_nyctography_date": "DATE DDMMYY FOLLOW",
   "symboltables_nyctography_digit": "NUMERALS FOLLOW",
   "symboltables_nyctography_letter": "LETTER FOLLOW",
+  "symboltables_oak_island_money_pit_title": "Oak Island Money Pit",
+  "symboltables_oak_island_money_pit_description": "Symbols of the stone provided by oakislandmystery.com",
   "symboltables_ogham_title": "Ogham/Ogam",
   "symboltables_ogham_description": "Early Irish language",
   "symboltables_ogham_start": "START",
