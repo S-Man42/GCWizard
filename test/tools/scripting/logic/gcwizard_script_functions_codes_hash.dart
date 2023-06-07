@@ -1,0 +1,83 @@
+part of 'gcwizard_scipt_test.dart';
+
+List<Map<String, Object?>> _inputsHashToExpected = [
+  {'code' : 'print HASH(2, 0, 0, "testkey", "test")', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print HASH(2.0, 0, 0, "testkey", "test")', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print HASH("MD2", "0", 0, "testkey", "test")', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print HASH("MD2", 0, "0", "testkey", "test")', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print HASH("MD2", 0, "0", 0, "test")', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print HASH("MD2", 0, 0, 0, "test")', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print HASH("MD2", 0, 0, "testkey", "test", 0)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print HASH("MD2", 0, 0, "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
+
+  {'code' : 'print HASH("MD2", 0, 0, "testkey", "test")', 'expectedOutput' : 'a96df14f8b5ccb567eede45bdddf189f'},
+  {'code' : 'print HASH("MD2", 0, 1, "testkey", "test")', 'expectedOutput' : 'a7abd0255a576bbc78dac8aeb52224a4'},
+  {'code' : 'print HASH("MD2", 0, 0, "testkey", "0")', 'expectedOutput' : 'dbd315c8e6f342d62799fa6669249ead'},
+  {'code' : 'print HASH("MD2", 0, 0, "testkey", 0)', 'expectedOutput' : 'dbd315c8e6f342d62799fa6669249ead'},
+
+  {'code' : 'print HASH("MD4", 0, 0, "test", "testkey")', 'expectedOutput' : '7233f2ac4c39c9bdd34a87cfad855caf'},
+  {'code' : 'print HASH("MD4", 0, 1, "test", "testkey")', 'expectedOutput' : '21bc48997efc591d6ad82d3b511e1699'},
+
+  {'code' : 'print HASH("MD5", 0, 0, "test", "testkey")', 'expectedOutput' : '01a1587d867da225e5102f979b6a73c1'},
+  {'code' : 'print HASH("MD5", 0, 1, "test", "testkey")', 'expectedOutput' : '7820aa4992c9b97f3af5f2248fe9203b'},
+
+  {'code' : 'print HASH("SHA1", 0, 0, "test", "testkey")', 'expectedOutput' : '50249cb817a0ae06797751dc5d00656cad86c8ea'},
+  {'code' : 'print HASH("SHA1", 0, 1, "test", "testkey")', 'expectedOutput' : '8673df67d0f797bb8b43db6c7bc3676d448977a5'},
+
+  {'code' : 'print HASH("SHA", 0, 1, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("SHA", 0, 0, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("SHA", 224, 0, "test", "testkey")', 'expectedOutput' : 'cb0a3c7df0f260542d90f25024ada7db311e653da659dc5189e3e9c3'},
+  {'code' : 'print HASH("SHA", 256, 0, "test", "testkey")', 'expectedOutput' : '9f3b2fc5de528b8eaabcd5632bd5dea4620b71123da8b05bca77e1d6f6432545'},
+  {'code' : 'print HASH("SHA", 384, 0, "test", "testkey")', 'expectedOutput' : '11a2cd029aea3f5f7a0992df0b65960292db31ef2f0a33d7536cc6f9a8c92679c293f09bb64977eddc4091f83a773797'},
+  {'code' : 'print HASH("SHA", 512, 0, "test", "testkey")', 'expectedOutput' : '8e616af2e9be3f4de020d4ec21bf7e8549475fe7b4231b18ef6ffc8e8ca49e2c175055e8d9ef6f8eed2c0c43b6f9b06418a7b9c45b1db0ffaffcbd576c6fe098'},
+  {'code' : 'print HASH("SHA", 224, 1, "test", "testkey")', 'expectedOutput' : 'a70e58c700398d518a436ac69f8543ccc72479cb2587dcae55ba970b'},
+  {'code' : 'print HASH("SHA", 256, 1, "test", "testkey")', 'expectedOutput' : '44a766a7a78847aca806e01b123df967393bb50a839d6b6b10ac477ec638bb34'},
+  {'code' : 'print HASH("SHA", 384, 1, "test", "testkey")', 'expectedOutput' : 'a8514577ed11e42996f6097dd9230df4de8c2c9d71a3e473a95ee9617d7e213faf2eaa69575e1ad8a16ed773f678f425'},
+  {'code' : 'print HASH("SHA", 512, 1, "test", "testkey")', 'expectedOutput' : '2b029eb051a5d9049f86d2ec039925db85d40dc3c295f7879b62229058a235408fca93a0d5f70eb601fcd27052a3da334d83d336cfb6f9cf535104e207b08c2d'},
+
+  {'code' : 'print HASH("SHA3", 0, 1, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("SHA3", 0, 0, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("SHA3", 224, 0, "test", "testkey")', 'expectedOutput' : '0eca3bef488a7b0c72bbc9ef59f38a4c584f64016c8d17b53b40d547'},
+  {'code' : 'print HASH("SHA3", 256, 0, "test", "testkey")', 'expectedOutput' : '980651274247e5f99ee92384873e6245edcf0894b3b7612efedc9fdf0a7cfcd5'},
+  {'code' : 'print HASH("SHA3", 384, 0, "test", "testkey")', 'expectedOutput' : '85b54533d47f1dcd48d1216ce2e19aa47195b16d535a84a5386e6b24c8dc948443b26f2cc13c2ca346800fefa1a6da2b'},
+  {'code' : 'print HASH("SHA3", 512, 0, "test", "testkey")', 'expectedOutput' : 'c07b75a93c39488b760d913b44b855de289455633a932f1fc9dd0da8dfecbec589cdc36b2844c8aef491da30d0af5eb88fddfa36a507858ed2f7a5268e8ef370'},
+  {'code' : 'print HASH("SHA3", 224, 1, "test", "testkey")', 'expectedOutput' : '5a94864fedee29243fff4b5ff0a72d85b61be8a62ca2a295b08aef7e'},
+  {'code' : 'print HASH("SHA3", 256, 1, "test", "testkey")', 'expectedOutput' : '43d08536bee5cc98fc39a888b76a71244fa38027e8716d4d662cbc495d140fc7'},
+  {'code' : 'print HASH("SHA3", 384, 1, "test", "testkey")', 'expectedOutput' : 'dafe7d47f1d914fdcedca82b4fe8814e23562ad74ca5ecbad779048d45bec706c593dd1d69538264d80ea10c3d697d21'},
+  {'code' : 'print HASH("SHA3", 512, 1, "test", "testkey")', 'expectedOutput' : 'c0c17c572170f9aa2e17623b4bb198b069e8f50fe5ad01aaa04fda3c9381728dd4138b0c5c22561a0ec3ea7db3ab732d4805276d9044dc14dcc9de852a770084'},
+
+  {'code' : 'print HASH("BLAKE2B", 0, 1, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("BLAKE2B", 0, 0, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("BLAKE2B", 160, 1, "test", "testkey")', 'expectedOutput' : '30cd4897d4d237b3692bd17978027c73ccfa84e3'},
+  {'code' : 'print HASH("BLAKE2B", 160, 0, "test", "testkey")', 'expectedOutput' : '30cd4897d4d237b3692bd17978027c73ccfa84e3'},
+  {'code' : 'print HASH("BLAKE2B", 224, 0, "test", "testkey")', 'expectedOutput' : 'e09b4b230230836c9afc13b208f0b2d65fb572d81ae57231ccc4d111'},
+  {'code' : 'print HASH("BLAKE2B", 256, 0, "test", "testkey")', 'expectedOutput' : '10c23e208e8a26f3ace1c611d21641791e3c744abcefbfc076557faabbcbbc3f'},
+  {'code' : 'print HASH("BLAKE2B", 384, 0, "test", "testkey")', 'expectedOutput' : '8b3da4cb79b1e0c5f6a074d434cb79f2554e78440418b3a6f304d781befb6c1e4edcf1097b1d8d48d0c338ca3dcdcca4'},
+  {'code' : 'print HASH("BLAKE2B", 512, 0, "test", "testkey")', 'expectedOutput' : '9817ba4c4be377bd0b726e3c719ae51976ee8ddab41ac9938387858b7f9fe0f773b78b4eaa396a9a8a194dd9695b32febe2b5db1d1c6593b74c452109e2570ff'},
+
+  {'code' : 'print HASH("KECCAK", 0, 1, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("KECCAK", 0, 0, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("KECCAK", 128, 1, "test", "testkey")', 'expectedOutput' : '80135212dd376d9067918d0cd7e42690'},
+  {'code' : 'print HASH("KECCAK", 128, 0, "test", "testkey")', 'expectedOutput' : '80135212dd376d9067918d0cd7e42690'},
+  {'code' : 'print HASH("KECCAK", 256, 0, "test", "testkey")', 'expectedOutput' : '5e132818e261fc5228ec3f64fb7138c649832ee95611666bb0ff678246f79849'},
+  {'code' : 'print HASH("KECCAK", 288, 0, "test", "testkey")', 'expectedOutput' : '14b3abbfd56593644863d4d467429eedd0be526a276110dd3525a1c5e5c8f2eaefe7bb72'},
+  {'code' : 'print HASH("KECCAK", 384, 0, "test", "testkey")', 'expectedOutput' : 'a7deb81f054f86670242346488439213278509068c14095156ad8e9f3e9ed936ee5b9ab348068c0e16b8d723e4d247c6'},
+  {'code' : 'print HASH("KECCAK", 512, 0, "test", "testkey")', 'expectedOutput' : 'a44b4e604559cc3b1a8ead4130de0c0f9b08737d1976ed2cc4f604c5fd8534d050dc98175f3e548da999ac154ae7554f92838a98e0b74fe505ef97271f376046'},
+
+  {'code' : 'print HASH("RIPEMD", 0, 1, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("RIPEMD", 0, 0, "test", "testkey")', 'expectedOutput' : '', 'error': 'gcwizard_script_invalid_hashbitrate'},
+  {'code' : 'print HASH("RIPEMD", 128, 0, "test", "testkey")', 'expectedOutput' : 'a70958f58b8e4457cc89aee24774e1cd'},
+  {'code' : 'print HASH("RIPEMD", 160, 0, "test", "testkey")', 'expectedOutput' : 'dc86f4419fbacf0d63b223c24a693b1a054baaa3'},
+  {'code' : 'print HASH("RIPEMD", 256, 0, "test", "testkey")', 'expectedOutput' : 'ff05c76baf929e6fb037d01117a52ccd3f6986f4889fe6faee9d27e6ae04bd57'},
+  {'code' : 'print HASH("RIPEMD", 320, 0, "test", "testkey")', 'expectedOutput' : '557948c1faa3741e7b7765e2518e958aeb001e4ba0d6b3b3012b167d848d2e50d34053f12c6b0f43'},
+  {'code' : 'print HASH("RIPEMD", 128, 1, "test", "testkey")', 'expectedOutput' : '9b92fa3aa2ed2c4aad072f41120a60d7'},
+  {'code' : 'print HASH("RIPEMD", 160, 1, "test", "testkey")', 'expectedOutput' : '051788b4704d46895f1356bc0cc08c6911eb0bc0'},
+  {'code' : 'print HASH("RIPEMD", 256, 1, "test", "testkey")', 'expectedOutput' : '64acd19f90a54873b025db1a1ded25d3cfd72143de2d42e15616d3fe985100f8'},
+  {'code' : 'print HASH("RIPEMD", 320, 1, "test", "testkey")', 'expectedOutput' : '9115725beee2069d79b02aa38e007f2fc9009b8f28652974262289523c9e3699b775fdfec92c7d2f'},
+
+  {'code' : 'print HASH("TIGER", 0, 0, "test", "testkey")', 'expectedOutput' : '2051c0680b9f71ac997f86e98f05212df68614bb07c4786d'},
+  {'code' : 'print HASH("TIGER", 0, 1, "test", "testkey")', 'expectedOutput' : 'eb3fc7354520756c074003fc0c30db0b1a94e757825685f5'},
+
+  {'code' : 'print HASH("WHIRLPOOL", 0, 0, "test", "testkey")', 'expectedOutput' : '3a4c7eed2c36c322d5e606a2e52fed04d77dc307300e20f254e9f609637e69a30d75173191b5c3c4372ec937e0dbed82672d7ce0164a6268749bc0ba71d2fa2f'},
+  {'code' : 'print HASH("WHIRLPOOL", 0, 1, "test", "testkey")', 'expectedOutput' : 'b041dbb83050a856a889f6b669f1969a890fdff852f0a901a56dfe7d6c01b39217ca184a9efbd3c9ff8c04d602bb4cab91522eb59a9149e20df063f736c0119d'},
+];
