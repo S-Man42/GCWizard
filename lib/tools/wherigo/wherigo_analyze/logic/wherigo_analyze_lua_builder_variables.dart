@@ -42,8 +42,7 @@ List<WherigoBuilderVariableData> _analyzeAndExtractBuilderVariableSectionData(Li
       varDescription = lines[i + 5]
           .replaceAll('buildervar.', '')
           .replaceAll(varName + '.Description', '')
-          .replaceAll('=', '')
-          .replaceAll(' ', '')
+          .replaceAll(' = ', '')
           .replaceAll('"', '');
 
       result.add(WherigoBuilderVariableData(

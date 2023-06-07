@@ -24,7 +24,7 @@ List<WherigoBuilderVariableData> testOutputBUILDERVARIABLE = [
   BuilderVariableDescription: '',
   ),
   const WherigoBuilderVariableData(
-  BuilderVariableID: '00000000-0000-0000-0000-000000000000',
+  BuilderVariableID: '00000000-0000-0000-0000-000000000001',
   BuilderVariableName: 'EnteredFinalZone',
   BuilderVariableType: 'Flag',
   BuilderVariableData: 'False',

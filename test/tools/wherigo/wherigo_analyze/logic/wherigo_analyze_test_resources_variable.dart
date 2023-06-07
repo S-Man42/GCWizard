@@ -138,7 +138,7 @@ List<WherigoVariableData> testOutputVARIABLE = [
   ),
   const WherigoVariableData(
     VariableLUAName: 'vEndeMeldung',
-    VariableName: 'Ausundvorbei!',
+    VariableName: 'Aus und vorbei!',
   ),
   const WherigoVariableData(
     VariableLUAName: 'vBilanzSan',

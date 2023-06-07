@@ -20,7 +20,7 @@ List<WherigoVariableData> _analyzeAndExtractVariableSectionData(List<String> lin
       }
     }
     if (!lines[i].startsWith(_CartridgeLUAName + '.ZVariables')) {
-      _declaration = lines[i].trim().replaceAll(',', '').replaceAll(' ', '').split('=');
+      _declaration = lines[i].trim().replaceAll(',', '').split(' = ');
       if (_declaration.length == 2) {
         result.add( // content not obfuscated
             WherigoVariableData(

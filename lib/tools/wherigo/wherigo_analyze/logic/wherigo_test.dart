@@ -153,6 +153,23 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
       );
       break;
 
+    case WHERIGO_OBJECT.BUILDERVARIABLES:
+      result = WherigoTest(
+        cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
+        cartridgeTestTask: _WHERIGO_EMPTYTESTTASK_LUA,
+        cartridgeTestTimer: _WHERIGO_EMPTYTESTTIMER_LUA,
+        cartridgeTestZone: _WHERIGO_EMPTYTESTZONE_LUA,
+        cartridgeTestCharacter: _WHERIGO_EMPTYTESTCHARACTER_LUA,
+        cartridgeTestItem: _WHERIGO_EMPTYTESTITEM_LUA,
+        cartridgeTestInput: _WHERIGO_EMPTYTESTINPUT_LUA,
+        cartridgeTestObfuscation: _WHERIGO_EMPTYTESTOBFUSCATION_LUA,
+        cartridgeTestMedia: _WHERIGO_EMPTYTESTMEDIA_LUA,
+        cartridgeTestVariable: [],
+        cartridgeTestBuilderVariable: _analyzeAndExtractBuilderVariableSectionData((dataToTest as String).split('\n')),
+        cartridgeTestMessageDialog: [],
+      );
+      break;
+
   //TODO
     case WHERIGO_OBJECT.GWCFILE:
       break;
