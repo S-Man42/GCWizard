@@ -1,7 +1,14 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
 const String info ='''
-input -> input value
+{
+  "parameters": [
+    "inputParam": {
+      "name": "input",
+      "description": "input value",
+    }
+  ]
+}
 ''';
 
 class MultiDecoder extends GCWWebStatefulWidget {

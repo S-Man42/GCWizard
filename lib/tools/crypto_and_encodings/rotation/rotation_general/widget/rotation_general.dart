@@ -9,8 +9,18 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 import 'package:gc_wizard/utils/math_utils.dart';
 
 const String info ='''
-input -> input value
-parameter1 -> count
+{
+  "parameters": [
+    "inputParam": {
+      "name": "input",
+      "description": "input value",
+    },
+    "parameter1eParam": {
+      "name": "parameter1",
+      "description": "count",
+    },
+  ]
+}
 ''';
 
 class RotationGeneral extends GCWWebStatefulWidget {

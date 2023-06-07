@@ -30,8 +30,18 @@ import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
 const String info ='''
-input -> input value
-modeencode -> decode/ encode (encode => modeencode != null)
+{
+  "parameters": [
+    "inputParam": {
+      "name": "input",
+      "description": "input value",
+    },
+    "modeencodeParam": {
+      "name": "modeencode",
+      "description": "decode/ encode (encode => modeencode != null",
+    }
+  ]
+}
 ''';
 
 class AlphabetValues extends GCWWebStatefulWidget {

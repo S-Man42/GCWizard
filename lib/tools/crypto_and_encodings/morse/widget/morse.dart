@@ -13,8 +13,18 @@ import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 const String info ='''
-input -> input value
-modeencode -> decode/ encode (encode => modeencode != null)
+{
+  "parameters": [
+    "inputParam": {
+      "name": "input",
+      "description": "input value",
+    },
+    "modeencodeParam": {
+      "name": "modeencode",
+      "description": "decode/ encode (encode => modeencode != null",
+    }
+  ]
+}
 ''';
 
 class Morse extends GCWWebStatefulWidget {
