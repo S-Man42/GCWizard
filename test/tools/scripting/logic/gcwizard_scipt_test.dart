@@ -10,8 +10,8 @@ void main() {
   group("gcwizard_script.interpretScript:", () {
     // List<Map<String, Object?>> _inputsToExpected = _inputsMathToExpected;
     //List<Map<String, Object?>> _inputsToExpected = _inputsCodesToExpected;
-    //List<Map<String, Object?>> _inputsToExpected = _inputsBaseToExpected;
-    List<Map<String, Object?>> _inputsToExpected = _inputsLoopsToExpected;
+    List<Map<String, Object?>> _inputsToExpected = _inputsBaseToExpected;
+    //List<Map<String, Object?>> _inputsToExpected = _inputsLoopsToExpected;
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {
