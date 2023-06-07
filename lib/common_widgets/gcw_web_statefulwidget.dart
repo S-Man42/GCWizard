@@ -13,7 +13,6 @@ enum WEBPARAMETER {
 
 abstract class GCWWebStatefulWidget extends StatefulWidget {
   Map<String, String>? webParameter;
-  bool webParameterInitActive = true;
   final String? parameterInfo;
 
   GCWWebStatefulWidget({Key? key, this.webParameter, this.parameterInfo}): super(key: key);

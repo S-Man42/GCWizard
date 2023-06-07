@@ -13,7 +13,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 
-const String questionmark = '/?';
+const String _questionmark = '/?';
+const String _initRoute = 'initRoute';
 
 class WebParameter {
   String title;
@@ -24,13 +25,11 @@ class WebParameter {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
-  print(settings);
   var args = _parseUrl(settings);
   return (args == null) ? null : _createRoute(context, args);
 }
 
 List<Route<GCWTool>> startMainView(BuildContext context, String route) {
-  print('main: ' + route);
   return  [
     NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => MainView(
         webParameter: _parseUrl(RouteSettings(name: route), initRoute: true)?.arguments)
@@ -39,9 +38,9 @@ List<Route<GCWTool>> startMainView(BuildContext context, String route) {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
-  print('createStartDeepLinkRoute');
-  var webparamter = WebParameter(title: arguments['initRoute'] ?? '', arguments: arguments, settings: null);
-  return _createRoute(context, webparamter);
+
+  var webparameter = WebParameter(title: arguments[_initRoute] ?? '', arguments: arguments, settings: null);
+  return _createRoute(context, webparameter);
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
@@ -52,14 +51,14 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
   if (gcwTool.tool is GCWWebStatefulWidget) {
     try {
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
-    } catch (e) {}
+     } catch (e) {}
   }
   return _buildRoute(context, gcwTool, arguments.settings);
 }
 
 NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings? settings) {
   // arguments settings only for view the path in the url , settings: arguments.settings
-  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: RouteSettings(name: ''));
+  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool);
 }
 
 GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
@@ -67,12 +66,15 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
   var name = arguments.title.toLowerCase();
 
   try {
-    if (name == questionmark) return _toolNameList(context);
+    // if name == /? open tool overview
+    if (name == _questionmark) return _toolNameList(context);
 
     var tool = registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
-    if ((arguments.arguments[questionmark] == questionmark) && tool != null) {
+    // if name == toolname/? open tool info
+    if ((arguments.arguments[_questionmark] == _questionmark) && tool != null) {
       return toolInfo(context, tool);
     }
+
     return tool;
   } catch (e) {}
 
@@ -81,18 +83,24 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
 
 WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
   if (settings.name == null) return null;
-  var uri = settings.name == '/' + questionmark ? Uri(pathSegments: [questionmark]) : Uri.parse(settings.name!);
+  Uri? uri;
+  try {
+    uri = settings.name == _questionmark ? Uri(pathSegments: [_questionmark]) : Uri.parse(settings.name!);
+  } catch (e) {
+    return null;
+  }
   if (uri.pathSegments.isEmpty) return null;
   var title = uri.pathSegments[0];
 
   var parameter = uri.queryParameters;
-  if ((uri.pathSegments.length > 1) && (uri.pathSegments[1].isEmpty && settings.name!.characters.last == questionmark)) {
-    parameter = {questionmark: questionmark};
+  // tool info ?
+  if ((uri.pathSegments.length > 1) && (uri.pathSegments[1].isEmpty && settings.name!.endsWith(_questionmark))) {
+    parameter = {_questionmark: _questionmark};
   }
 
   if (initRoute) {
     parameter = Map<String, String>.from(parameter);
-    parameter.addAll({'initRoute': title });
+    parameter.addAll({_initRoute : title });
   }
   return WebParameter(title: title, arguments: parameter, settings: settings);
 

@@ -352,19 +352,21 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    if (registeredTools.isEmpty) initializeRegistry(context);
+    if (registeredTools.isEmpty) {
+      initializeRegistry(context);
+
+      var deepLink = checkDeepLink();
+      if (deepLink != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.push(context, deepLink);
+        });
+        widget.webParameter = null;
+      }
+    }
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
-
-    var deepLink = checkDeepLink();
-    if (deepLink != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.push(context, deepLink);
-      });
-      widget.webParameter = null;
-    }
 
     return DefaultTabController(
       length: 3,
@@ -400,13 +402,8 @@ class _MainViewState extends State<MainView> {
   }
 
   NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
-    //print('checkDeepLink: ' + (widget.fullWebParameter?.title.toString() ?? ''));
-    print('checkDeepLink ' + widget.webParameter.toString() + this.hashCode.toString());
     if (widget.hasWebParameter()) {
-      widget.webParameterInitActive = false;
-      var route = createStartDeepLinkRoute(context, widget.webParameter!);
-      widget.webParameter = null;
-      return route;
+      return createStartDeepLinkRoute(context, widget.webParameter!);
     }
     return null;
   }
