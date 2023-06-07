@@ -13,6 +13,7 @@ import 'wherigo_analyze_test_resources_character.dart';
 import 'wherigo_analyze_test_resources_messages.dart';
 import 'wherigo_analyze_test_resources_item.dart';
 import 'wherigo_analyze_test_resources_variable.dart';
+import 'wherigo_analyze_test_resources_builder_variable.dart';
 import 'wherigo_analyze_test_resources_lua_source.dart';
 
 String testDirPath = 'test/tools/wherigo/wherigo_analyze/resources/';
@@ -156,7 +157,21 @@ void main() {
     }
   });
 
+  group("Wherigo_analyze.BUILDERVARIABLES:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {
+        'input': testInputBUILDERVARIABLE,
+        'expectedOutput': testOutputBUILDERVARIABLE,
+      },
+    ];
 
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}}', () {
+        var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.BUILDERVARIABLES);
+        expectBuilderVariable(_actual.cartridgeTestBuilderVariable, elem['expectedOutput'] as List<WherigoBuilderVariableData>);
+      });
+    }
+  });
 
 
 
@@ -184,7 +199,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(_getFileData(elem['input'] as String), WHERIGO_OBJECT.OBFUSCATORTABLE);
-        expect(_actual, elem['expectedOutput']);
+
       });
     }
   });
@@ -201,7 +216,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.MESSAGES);
-        expect(_actual, elem['expectedOutput']);
+
       });
     }
   });

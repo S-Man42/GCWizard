@@ -178,6 +178,7 @@ WherigoCartridgeLUA _faultyWherigoCartridgeLUA(
       Media: [],
       Messages: [],
       Variables: [],
+      BuilderVariables: [],
       NameToObject: {},
       ResultStatus: resultStatus,
       ResultsLUA: _http_code_http,

@@ -33,6 +33,7 @@ String _answerVariable = '';
 List<WherigoInputData> _cartridgeInputs = [];
 List<List<WherigoActionMessageElementData>> _cartridgeMessages = [];
 List<WherigoVariableData> _cartridgeVariables = [];
+List<WherigoBuilderVariableData> _cartridgeBuilderVariables = [];
 Map<String, WherigoObjectData> _cartridgeNameToObject = {};
 
 List<String> _LUAAnalyzeResults = [];
@@ -116,6 +117,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   List<WherigoMediaData> _cartridgeMedia = [];
 
   bool _sectionVariables = true;
+  bool _sectionBuilderVariables = true;
 
   int index = 0;
   int progress = 0;
@@ -328,6 +330,30 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     }
 
     // ----------------------------------------------------------------------------------------------------------------
+    // search and get BuilderVariables Object
+    //
+    try {
+      if (lines[i].trim().startsWith('buildervar = ')) {
+        _sectionBuilderVariables = true;
+        WHERIGOcurrentObjectSection = WHERIGO_OBJECT_TYPE.BUILDERVARIABLES;
+
+        analyzeLines = [];
+
+        do {
+          i++;
+          analyzeLines.add(lines[i].trim());
+
+          if (!lines[i].trim().startsWith('buildervar')) _sectionBuilderVariables = false;
+        } while ((i < lines.length - 1) && _sectionBuilderVariables);
+
+        _cartridgeBuilderVariables.addAll(_analyzeAndExtractBuilderVariableSectionData(analyzeLines));
+      }
+    } catch (exception) {
+      _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _LUAAnalyzeResults.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_builder_identifiers', exception));
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
     // search and get Timer Object
     //
     late WherigoTimerData cartridgeTimerData;
@@ -457,6 +483,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         Media: _cartridgeMedia,
         Messages: _cartridgeMessages,
         Variables: _cartridgeVariables,
+        BuilderVariables: _cartridgeBuilderVariables,
         NameToObject: _cartridgeNameToObject,
         ResultStatus: _LUAAnalyzeStatus,
         ResultsLUA: _LUAAnalyzeResults,

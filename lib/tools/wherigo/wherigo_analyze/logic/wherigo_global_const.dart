@@ -114,6 +114,7 @@ const Map<WHERIGO_OBJECT, String> _WHERIGO_DATA_LUA_EXPERT = {
   WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
   WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
   WHERIGO_OBJECT.VARIABLES: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.BUILDERVARIABLES: 'wherigo_data_builder_identifier_list',
   WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
@@ -284,6 +285,7 @@ const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     Messages: [],
     //Answers: [],
     Variables: [],
+    BuilderVariables: [],
     NameToObject: {},
     ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.NONE,
     ResultsLUA: [],
