@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -17,8 +18,6 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_onlydigitsand
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
-import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/key_value_alphabet_input.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/key_value_alphabet_item.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
@@ -27,6 +26,9 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_input.dart';
+part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_item.dart';
 
 class AlphabetValues extends StatefulWidget {
   const AlphabetValues({Key? key}) : super(key: key);
@@ -332,7 +334,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
             entries: _currentCustomizedAlphabet ?? [],
             editAllowed: false,
             addOnDispose: false,
-            onCreateInput: (Key? key) => GCWKeyValueAlphabetInput(key: key),
+            onCreateInput: (Key? key) => _AlphabetValuesKeyValueInput(key: key),
             onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
         ),
         const GCWDivider()
@@ -483,7 +485,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
   }
 
   GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
-    return GCWKeyValueAlphabetItem(
+    return _AlphabetValuesKeyValueItem(
         keyValueEntry: entry,
         odd: odd,
     );

@@ -1,14 +1,8 @@
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/utils/complex_return_types.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 
-class GCWKeyValueAlphabetInput extends GCWKeyValueInput {
+class _AlphabetValuesKeyValueInput extends GCWKeyValueInput {
 
-  GCWKeyValueAlphabetInput({Key? key,}) : super(key: key);
+  _AlphabetValuesKeyValueInput({Key? key,}) : super(key: key);
 
   @override
   GCWKeyValueInputState createState() => _GCWKeyValueAlphabetNewEntryState();

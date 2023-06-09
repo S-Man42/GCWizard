@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/utils/complex_return_types.dart';
+part of 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 
-class GCWKeyValueAlphabetItem extends GCWKeyValueItem {
+class _AlphabetValuesKeyValueItem extends GCWKeyValueItem {
 
-  GCWKeyValueAlphabetItem(
+  _AlphabetValuesKeyValueItem(
      {Key? key,
        required KeyValueBase keyValueEntry,
        required bool odd,

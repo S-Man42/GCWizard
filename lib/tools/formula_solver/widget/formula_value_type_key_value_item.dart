@@ -1,18 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
-import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
-import 'package:gc_wizard/utils/complex_return_types.dart';
-import 'package:gc_wizard/utils/math_utils.dart';
-import 'package:gc_wizard/utils/variable_string_expander.dart';
+part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 
-class GCWKeyValueTypeItem extends GCWKeyValueItem {
+class _FormulaValueTypeKeyValueItem extends GCWKeyValueItem {
 
-  GCWKeyValueTypeItem(
+  _FormulaValueTypeKeyValueItem(
      {Key? key,
        required KeyValueBase keyValueEntry,
 

@@ -74,7 +74,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           entries: widget.group.values,
           onGetNewEntry: (entry) => _getNewEntry(entry),
           onUpdateEntry: (entry) => _updateEntry(entry),
-          onCreateInput: (Key? key) => GCWKeyValueTypeInput(key: key),
+          onCreateInput: (Key? key) => _FormulaValueTypeKeyInput(key: key),
           onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
         ),
       ],
@@ -82,7 +82,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
   }
 
   GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
-    return GCWKeyValueTypeItem(
+    return _FormulaValueTypeKeyValueItem(
       keyValueEntry: entry,
       odd: odd,
     );
