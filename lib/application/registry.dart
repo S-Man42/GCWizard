@@ -3213,6 +3213,7 @@ void initializeRegistry(BuildContext context) {
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_1809',
+      'zigzag'
     ]),
     GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: const [
       'telegraph',
@@ -3534,6 +3535,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const [
       'symbol_kaktovik',
+      'zigzag'
     ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
@@ -3671,6 +3673,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'oak_island_money_pit', symbolSearchStrings: const [
       'symbol_oak_island_money_pit',
+      'oak_island'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'oak_island_money_pit_extended', symbolSearchStrings: const [
+      'symbol_oak_island_money_extended',
+      'oak_island'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'oak_island_money_pit_libyan', symbolSearchStrings: const [
+      'symbol_oak_island_money_pit_libyan',
+      'oak_island'
     ]),
     GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: const [
       'symbol_ogham',
@@ -3692,6 +3703,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: const [
       'symbol_phoenician',
+      'zigzag'
     ]),
     GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: const [
       'symbol_pipeline',

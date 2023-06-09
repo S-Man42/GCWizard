@@ -289,6 +289,7 @@
   "numeralwordslists": "",
   "numeralwordsconverter": "klingonian",
   "numeralwordstextsearch": "textanalysis textsearch",
+  "oak_island": "treasures pirates knights templar dots percent triangles arrows diameter cross squares cirlewithpoint oakislandmoneypit",
   "onetimepad": "",
   "optical_fiber_swisscom": "",
   "pantonecolorcodes": "pantonecolorcodes pantonecolourcodes pmscolorcodes pmscolourcodes",
@@ -506,7 +507,8 @@
   "symbol_notes_notevalues": "music notevalues",
   "symbol_notes_restvalues": "music restvalues",
   "symbol_nyctography": "nyctography lines circle connected blackdots mastermind rightangles perpendicular",
-  "symbol_oak_island_money_pit": "treasures pirates knights templar dots percent triangles arrows diameter cross squares cirlewithpoint",
+  "symbol_oak_island_money_pit_extended": "extended enhanced additional",
+  "symbol_oak_island_money_pit_libyan": "libyan arabian arabic",
   "symbol_ogham": "eire irish irelandrunes horizontalline linesup linesdown linescrossing perpendicular tiltedtotheright crossedlines ycrossing yjunction",
   "symbol_opticalfiber": "opticalfiber",
   "symbol_optical_fiber_fotag": "",
@@ -626,5 +628,6 @@
   "weather_ww": "present current forecast",
   "window": "windows",
   "z22": "",
-  "zelda": "hylians marks goddesses races emblems forests water shadows spirits sights triangles eyes temples"
+  "zelda": "hylians marks goddesses races emblems forests water shadows spirits sights triangles eyes temples",
+  "zigzag": "zigzaglines zig-zag"
 }
