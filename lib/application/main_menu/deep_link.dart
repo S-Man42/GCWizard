@@ -12,6 +12,8 @@ import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
+import 'package:tuple/tuple.dart';
 
 const String _questionmark = '/?';
 const String _initRoute = 'initRoute';
@@ -165,7 +167,7 @@ Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) as
 
 Widget _buildRow(BuildContext context, GCWTool tool) {
   return FutureBuilder<String>(
-      future: _toolInfoText(tool),
+      future: _toolInfoTextShort(tool),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         return GCWOutputText(
             text: snapshot.data ?? '',
@@ -175,15 +177,27 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
   );
 }
 
-Future<String> _toolInfoText(GCWTool tool) async {
-  var info = tool.id;
+String _toolId(GCWTool tool) {
+  return tool.id;
+}
+
+Future<String> _toolInfoTextShort(GCWTool tool) async {
+  var info = _toolId(tool);
   if (tool.tool is GCWWebStatefulWidget) {
-    info += ' -> (with parameter)';
-    if ((tool.tool as GCWWebStatefulWidget).parameterInfo != null) {
-      info += '\nparameter info:\n'+ (tool.tool as GCWWebStatefulWidget).parameterInfo!;
+    info += ' -> (with API)';
+  }
+  return info;
+}
+
+Future<Tuple2<String, String>> _toolInfoText(GCWTool tool) async {
+  var id = _toolId(tool);
+  var apiInfo = '';
+  if (tool.tool is GCWWebStatefulWidget) {
+    if ((tool.tool as GCWWebStatefulWidget).apiSpecification != null) {
+      apiInfo = (tool.tool as GCWWebStatefulWidget).apiSpecification!;
     }
   }
- return info;
+ return Tuple2<String, String>(id, apiInfo);
 }
 
 GCWTool toolInfo(BuildContext context, GCWTool tool) {
@@ -197,13 +211,19 @@ GCWTool toolInfo(BuildContext context, GCWTool tool) {
 }
 
 Widget _toolInfo(BuildContext context, GCWTool tool) {
-  return FutureBuilder<String>(
+  return FutureBuilder<Tuple2<String, String>>(
       future: _toolInfoText(tool),
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
         return Column(children: [
           GCWText(text: _toolName(context, tool)),
           Container(height: 20),
-          GCWText(text: snapshot.data ?? ''),
+          GCWText(text: 'id: ' + (snapshot.data?.item1 ?? '')),
+          Container(height: 20),
+          const GCWText(text: 'API info:'),
+          GCWCodeTextField(
+              controller: TextEditingController(text: snapshot.data?.item2 ?? ''),
+              patternMap: _openApiHiglightMap,
+          ),
         ]);
       }
   );
@@ -212,4 +232,19 @@ Widget _toolInfo(BuildContext context, GCWTool tool) {
 String _toolName(BuildContext context, GCWTool tool) {
   return tool.toolName ?? i18n(context, tool.id + '_title');
 }
+
+const Map<String, TextStyle> _openApiHiglightMap = {
+  '"get"'  : TextStyle(color: Colors.blue),
+  '"parameters"'  : TextStyle(color: Colors.blue),
+  '"summary"'  : TextStyle(color: Colors.purple),
+  '"responses"'  : TextStyle(color: Colors.purple),
+  '"in"'  : TextStyle(color: Colors.purple),
+  '"name"'  : TextStyle(color: Colors.purple),
+  '"required"'  : TextStyle(color: Colors.purple),
+  '"description"'  : TextStyle(color: Colors.purple),
+  '"schema"'  : TextStyle(color: Colors.purple),
+  '"type"'  : TextStyle(color: Colors.green),
+  '"enum"'  : TextStyle(color: Colors.green),
+  '"default"'  : TextStyle(color: Colors.green),
+};
 

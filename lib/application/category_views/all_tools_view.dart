@@ -264,7 +264,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
-  MainView({Key? key, Map<String, String>? webParameter}) : super(key: key, webParameter: webParameter);
+  MainView({Key? key, Map<String, String>? webParameter}) : super(key: key, webParameter: webParameter, apiSpecification: null);
 
   @override
   _MainViewState createState() => _MainViewState();

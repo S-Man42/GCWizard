@@ -53,7 +53,7 @@ const String _apiSpecification = '''
 ''';
 
 class Morse extends GCWWebStatefulWidget {
-  Morse({Key? key}) : super(key: key, parameterInfo: _apiSpecification);
+  Morse({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
   _MorseState createState() => _MorseState();
