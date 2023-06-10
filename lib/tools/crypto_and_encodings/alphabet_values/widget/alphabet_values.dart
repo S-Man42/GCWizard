@@ -26,28 +26,54 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_input.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_item.dart';
 
-const String info ='''
+const String _apiSpecification = '''
 {
-  "parameters": [
-    "inputParam": {
-      "name": "input",
-      "description": "input value",
-    },
-    "modeencodeParam": {
-      "name": "modeencode",
-      "description": "decode/ encode (encode => modeencode != null",
-    }
-  ]
+	"/alphabet_values" : {
+		"get": {
+			"summary": "Alphabet Values Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding text",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "encode"
+				}
+			}
+		]
+	}
 }
+
 ''';
 
 class AlphabetValues extends GCWWebStatefulWidget {
-  AlphabetValues({Key? key}) : super(key: key, parameterInfo: info);
+  AlphabetValues({Key? key}) : super(key: key, parameterInfo: _apiSpecification);
 
   @override
   _AlphabetValuesState createState() => _AlphabetValuesState();
@@ -81,7 +107,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WEBPARAMETER.modeencode) != null) {
+      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.decode.toString())) {
         _currentMode = GCWSwitchPosition.right;
       }
       if (_currentMode == GCWSwitchPosition.left) {

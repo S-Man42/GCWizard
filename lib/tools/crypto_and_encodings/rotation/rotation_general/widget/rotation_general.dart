@@ -8,23 +8,43 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
-const String info ='''
+const String _apiSpecification = '''
 {
-  "parameters": [
-    "inputParam": {
-      "name": "input",
-      "description": "input value",
-    },
-    "parameter1eParam": {
-      "name": "parameter1",
-      "description": "count",
-    },
-  ]
+	"/rotation_general" : {
+		"get": {
+			"summary": "Rotation Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for rotate text",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "parameter1",
+				"description": "Shifts letters count",
+				"schema": {
+					"type": "string",
+					"default": "0"
+				}
+			}
+		]
+	}
 }
 ''';
 
 class RotationGeneral extends GCWWebStatefulWidget {
-  RotationGeneral({Key? key}) : super(key: key, parameterInfo: info);
+  RotationGeneral({Key? key}) : super(key: key, parameterInfo: _apiSpecification);
 
   @override
   _RotationGeneralState createState() => _RotationGeneralState();

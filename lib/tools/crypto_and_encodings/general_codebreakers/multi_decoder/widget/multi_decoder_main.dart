@@ -1,18 +1,33 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
-const String info ='''
+const String _apiSpecification = '''
 {
-  "parameters": [
-    "inputParam": {
-      "name": "input",
-      "description": "input value",
-    }
-  ]
+	"/multidecoder" : {
+		"get": {
+			"summary": "Multi Decoder Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for decoding text",
+				"schema": {
+					"type": "string"
+				}
+			}
+		]
+	}
 }
 ''';
 
 class MultiDecoder extends GCWWebStatefulWidget {
-  MultiDecoder({Key? key}) : super(key: key, parameterInfo: info);
+  MultiDecoder({Key? key}) : super(key: key, parameterInfo: _apiSpecification);
 
   @override
  _MultiDecoderState createState() => _MultiDecoderState();

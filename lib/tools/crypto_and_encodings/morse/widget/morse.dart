@@ -10,25 +10,50 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
-const String info ='''
+const String _apiSpecification = '''
 {
-  "parameters": [
-    "inputParam": {
-      "name": "input",
-      "description": "input value",
-    },
-    "modeencodeParam": {
-      "name": "modeencode",
-      "description": "decode/ encode (encode => modeencode != null",
-    }
-  ]
+	"/morse" : {
+		"get": {
+			"summary": "Morse Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding Morse",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "decode"
+				}
+			}
+		]
+	}
 }
 ''';
 
 class Morse extends GCWWebStatefulWidget {
-  Morse({Key? key}) : super(key: key, parameterInfo: info);
+  Morse({Key? key}) : super(key: key, parameterInfo: _apiSpecification);
 
   @override
   _MorseState createState() => _MorseState();
@@ -47,7 +72,7 @@ class _MorseState extends State<Morse> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WEBPARAMETER.modeencode) != null) {
+      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
         _currentMode = GCWSwitchPosition.left;
       }
       if (_currentMode == GCWSwitchPosition.left) {
