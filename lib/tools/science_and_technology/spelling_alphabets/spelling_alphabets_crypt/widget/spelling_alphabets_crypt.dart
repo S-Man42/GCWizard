@@ -52,11 +52,11 @@ class SpellingAlphabetsCryptState extends State<SpellingAlphabetsCrypt> {
 
     return Column(
       children: <Widget>[
-        GCWDropDown(
+        GCWDropDown<SPELLING>(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
-              _currentLanguage = value as SPELLING;
+              _currentLanguage = value;
             });
           },
           items: SPELLING_LIST.entries.map((mode) {
