@@ -74,7 +74,7 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
     // if name == /? open tool overview
     if (name == _questionmark) return _toolNameList(context);
 
-    var tool = registeredTools.firstWhereOrNull((_tool) => _tool.id == name);
+    var tool = registeredTools.firstWhereOrNull((_tool) => _toolId(_tool) == name);
     // if name == toolname/? open tool info
     if ((arguments.arguments[_questionmark] == _questionmark) && tool != null) {
       return toolInfo(context, tool);
@@ -129,7 +129,7 @@ WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
 
 GCWTool _toolNameList(BuildContext context) {
   var toolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is! GCWSelection));
-  toolList.sort((a, b) => a.id.compareTo(b.id));
+  toolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
 
   return GCWTool(
     suppressHelpButton: true,
