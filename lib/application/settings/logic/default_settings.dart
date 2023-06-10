@@ -6,14 +6,8 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/model.dart';
-// import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_base.dart';
-// import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_bcd.dart';
-// import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_ccitt1.dart';
-// import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/tools/md_tool_ccitt2.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
-// import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
@@ -202,28 +196,6 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
     Prefs.setStringList(PREFERENCE_MULTIDECODER_TOOLS, []);
   } else {
     refreshMultiDecoderTools();
-    for (var tool in multiDecoderTools) {
-      // ensure backward compatibility; breaking change in 2.0.1 due to a bug fix
-      // if ([MDT_INTERNALNAMES_BCD, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
-      //   var options = <MultiDecoderToolOption>[];
-      //   for (var option in tool.options) {
-      //     options.add(MultiDecoderToolOption(option.name, (toStringOrNull(option.value) ?? '').split('_title')[0]));
-      //   }
-      //   tool.options = options;
-      //   updateMultiDecoderTool(tool);
-      //   // ensure backward compatibility; breaking change in 2.2.1 due to a bug fix
-      // } else if ([MDT_INTERNALNAMES_CCITT1, MDT_INTERNALNAMES_CCITT2].contains(tool.internalToolName)) {
-      //   var options = <MultiDecoderToolOption>[];
-      //   tool.options.where((element) => element.name == 'ccitt1_numeralbase').forEach((option) {
-      //     options.add(MultiDecoderToolOption(MDT_CCITT1_OPTION_MODE, option.value));
-      //   });
-      //   tool.options.where((element) => element.name == 'ccitt2_numeralbase').forEach((option) {
-      //     options.add(MultiDecoderToolOption(MDT_CCITT2_OPTION_MODE, option.value));
-      //   });
-      //   tool.options = options;
-      //   updateMultiDecoderTool(tool);
-      // }
-    }
   }
 
   if (reinitSinglePreference == PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT ||
