@@ -182,7 +182,7 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
 }
 
 String _toolId(GCWTool tool) {
-  return tool.id;
+  return tool.id + (tool.id_extension ?? '');
 }
 
 Future<Tuple2<String, String>> _toolInfoTextShort(GCWTool tool) async {
