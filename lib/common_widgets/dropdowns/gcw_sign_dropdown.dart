@@ -18,11 +18,11 @@ class _GCWSignDropDownState extends State<GCWSignDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return GCWDropDown(
+    return GCWDropDown<int>(
       value: widget.value ?? _dropdownValue,
       onChanged: (newValue) {
         setState(() {
-          _dropdownValue = newValue is int ? newValue : _dropdownValue;
+          _dropdownValue = newValue;
           widget.onChanged(_dropdownValue);
         });
       },
