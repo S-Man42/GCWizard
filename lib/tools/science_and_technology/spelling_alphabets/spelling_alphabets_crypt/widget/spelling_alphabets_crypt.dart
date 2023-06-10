@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-
-import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_common/spelling_alphabets_data.dart';
-
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/logic/spelling_alphabets_crypt.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_common/spelling_alphabets_data.dart';
 
 class SpellingAlphabetsCrypt extends StatefulWidget {
   const SpellingAlphabetsCrypt({Key? key}) : super(key: key);
