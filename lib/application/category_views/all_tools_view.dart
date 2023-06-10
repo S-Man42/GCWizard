@@ -230,6 +230,8 @@ import 'package:gc_wizard/tools/science_and_technology/recycling/widget/recyclin
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/widget/spelling_alphabets_crypt.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
@@ -647,6 +649,8 @@ void _initStaticToolList() {
       className(const SixteenSegments()),
       className(const Skytale()),
       className(const Solitaire()),
+      className(const SpellingAlphabetsCrypt()),
+      className(const SpellingAlphabetsList()),
       className(const SpoonLanguage()),
       className(const SQRT2Selection()),
       className(const SQRT3Selection()),

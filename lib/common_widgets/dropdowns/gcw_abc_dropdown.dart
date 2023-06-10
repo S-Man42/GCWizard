@@ -21,11 +21,11 @@ class _GCWABCDropDownState extends State<GCWABCDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return GCWDropDown(
+    return GCWDropDown<int>(
       value: _currentValue ?? widget.value ?? 1,
       onChanged: (newValue) {
         setState(() {
-          _currentValue = newValue is int ? newValue : _currentValue;
+          _currentValue = newValue;
           widget.onChanged(_currentValue!);
         });
       },

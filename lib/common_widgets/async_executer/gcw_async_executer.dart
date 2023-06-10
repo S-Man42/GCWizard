@@ -92,7 +92,7 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
                 ? Expanded(
                     child: Stack(fit: StackFit.expand, children: [
                     CircularProgressIndicator(
-                      value: snapshot.data as double?,
+                      value: snapshot.data,
                       backgroundColor: Colors.white,
                       valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
                       strokeWidth: 20,
