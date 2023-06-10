@@ -28,6 +28,8 @@ import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
+part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_input.dart';
+part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_item.dart';
 
 const String info ='''
 {
