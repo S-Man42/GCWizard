@@ -5,13 +5,16 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:tuple/tuple.dart';
 
@@ -166,12 +169,13 @@ Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) as
 }
 
 Widget _buildRow(BuildContext context, GCWTool tool) {
-  return FutureBuilder<String>(
+  return FutureBuilder<Tuple2<String, String>>(
       future: _toolInfoTextShort(tool),
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return GCWOutputText(
-            text: snapshot.data ?? '',
-            copyText: 'https://test.gcwizard.net/#/' + tool.id
+      builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
+        return _buildRowWidget(context,
+            tool,
+            snapshot.data?.item2 ?? '',
+            'https://test.gcwizard.net/#/' +  (snapshot.data?.item1 ?? '')
         );
       }
   );
@@ -181,12 +185,13 @@ String _toolId(GCWTool tool) {
   return tool.id;
 }
 
-Future<String> _toolInfoTextShort(GCWTool tool) async {
-  var info = _toolId(tool);
+Future<Tuple2<String, String>> _toolInfoTextShort(GCWTool tool) async {
+  var id = _toolId(tool);
+  var info = id;
   if (tool.tool is GCWWebStatefulWidget) {
     info += ' -> (with API)';
   }
-  return info;
+  return Tuple2<String, String>(id, info);
 }
 
 Future<Tuple2<String, String>> _toolInfoText(GCWTool tool) async {
@@ -218,15 +223,23 @@ Widget _toolInfo(BuildContext context, GCWTool tool) {
           GCWText(text: _toolName(context, tool)),
           Container(height: 20),
           GCWText(text: 'id: ' + (snapshot.data?.item1 ?? '')),
-          Container(height: 20),
-          const GCWText(text: 'API info:'),
-          GCWCodeTextField(
-              controller: TextEditingController(text: snapshot.data?.item2 ?? ''),
-              patternMap: _openApiHiglightMap,
-          ),
+          ((snapshot.data?.item2 ?? '').isNotEmpty)
+            ? _buildApiInfo(snapshot.data?.item2 ?? '')
+            : Container()
         ]);
       }
   );
+}
+
+Widget _buildApiInfo(String apiInfo) {
+  return Column(children: [
+    Container(height: 20),
+    const GCWText(text: 'API info:'),
+    GCWCodeTextField(
+    controller: TextEditingController(text: apiInfo),
+    patternMap: _openApiHiglightMap,
+    ),
+  ]);
 }
 
 String _toolName(BuildContext context, GCWTool tool) {
@@ -247,4 +260,45 @@ const Map<String, TextStyle> _openApiHiglightMap = {
   '"enum"'  : TextStyle(color: Colors.green),
   '"default"'  : TextStyle(color: Colors.green),
 };
+
+Row _buildRowWidget(BuildContext context, GCWTool tool, String id, String copyText) {
+  return Row(
+    children: [
+      Expanded(
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: SelectableText(
+              id,
+              textAlign: TextAlign.left,
+              style: gcwTextStyle(),
+              selectionControls: GCWTextSelectionControls(),
+            )),
+      ),
+      copyText.isNotEmpty
+          ? GCWIconButton(
+        iconColor: themeColors().mainFont(),
+        size: IconButtonSize.SMALL,
+        icon: Icons.question_mark,
+        onPressed: () {
+          var route = _createRoute(context,
+              WebParameter(title: _toolId(tool), arguments: { _questionmark : _questionmark}, settings: null));
+          if (route != null) {
+            Navigator.push(context, route);
+          }
+        },
+      )
+      : Container(),
+      copyText.isNotEmpty
+        ? GCWIconButton(
+          iconColor: themeColors().mainFont(),
+          size: IconButtonSize.SMALL,
+          icon: Icons.content_copy,
+          onPressed: () {
+            insertIntoGCWClipboard(context, copyText);
+          },
+        )
+        : Container()
+    ],
+  );
+}
 
