@@ -1,11 +1,10 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
 String _date() {
-  DateTime now = DateTime.now();
-  return now.year.toString() + "/" + now.month.toString() + "/" + now.day.toString();
+  return DateFormat('yyyy/MM/dd').format(DateTime.now());
 }
 
 String _time() {
   DateTime now = DateTime.now();
-  return now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString();
+  return DateFormat('HH:mm:ss').format(DateTime.now());
 }
