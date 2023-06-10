@@ -103,19 +103,21 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-      fixed: false,
-      imageData: _symbolMap.values,
-      countColumns: countColumns,
-      mediaQueryData: mediaQueryData,
-      onChanged: () => setState(() {}),
-      selectable: true,
-      overlayOn: true,
-      onSymbolTapped: (String tappedText, SymbolData symbolData) {
-        setState(() {
-          _selectSymbol(symbolData);
-        });
-      },
-    ));
+          fixed: false,
+          imageData: _symbolMap.values,
+          countColumns: countColumns,
+          mediaQueryData: mediaQueryData,
+          onChanged: () => setState(() {}),
+          selectable: true,
+          overlayOn: true,
+          scale: widget.symbolImage.symbolScale,
+          onSymbolTapped: (String tappedText, SymbolData symbolData) {
+            setState(() {
+              _selectSymbol(symbolData);
+            });
+          },
+        )
+    );
   }
 
   void _selectSymbol(SymbolData symbolData) {

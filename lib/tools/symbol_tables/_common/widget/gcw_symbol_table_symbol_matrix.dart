@@ -24,6 +24,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final bool overlayOn;
   final String symbolKey;
   final bool fixed;
+  final double scale;
 
   const GCWSymbolTableSymbolMatrix(
       {Key? key,
@@ -35,7 +36,8 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       required this.onSymbolTapped,
       this.fixed = false,
       this.overlayOn = true,
-      this.symbolKey = ''})
+      this.symbolKey = '',
+      this.scale = 1.0})
       : super(key: key);
 
   @override
@@ -92,12 +94,12 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
         ],
       ),
       widget.fixed
-          ? _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
+          ? _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped, widget.scale)
           : Expanded(
               child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   primary: true,
-                  child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)))
+                  child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped, widget.scale)))
     ]);
   }
 
@@ -105,7 +107,7 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
     return text == ' ' ? String.fromCharCode(9251) : text;
   }
 
-  Widget _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped) {
+  Widget _buildDecryptionButtonMatrix(int countColumns, bool selectable, Function onSymbolTapped, double scale) {
     var rows = <Widget>[];
     var countRows = (_imageData.length / countColumns).floor();
 
@@ -132,7 +134,7 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
                   borderColor:
                       image.primarySelected ? colors.dialog() : (image.secondarySelected ? colors.focused() : null),
                   borderWidth: image.primarySelected || image.secondarySelected ? 5.0 : null,
-                  symbol: Image.memory(image.bytes),
+                  symbol: Image.memory(image.bytes, scale: scale),
                 ),
                 _currentShowOverlayedSymbols
                     ? Opacity(
