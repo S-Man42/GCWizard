@@ -24,7 +24,7 @@ class IAUConstellationsState extends State<IAUConstellations> {
   String _currentConstellationName = 'Andromeda';
   Map<String, String> _currentConstellationData = IAU_CONSTELLATION['Andromeda']!;
 
-  List<GCWDropDownMenuItem> _constellationList = [];
+  List<GCWDropDownMenuItem<String>> _constellationList = [];
 
   IAU_CONSTELLATION_SORT _currentSort = IAU_CONSTELLATION_SORT.CONSTELLATION;
 
@@ -62,7 +62,7 @@ class IAUConstellationsState extends State<IAUConstellations> {
 
     return Column(
       children: [
-        GCWDropDown(
+        GCWDropDown<IAU_CONSTELLATION_SORT>(
           title: i18n(context, 'iau_constellation_sort'),
           value: _currentSort,
           items: IAU_SORT.entries.map((mode) {
@@ -73,7 +73,7 @@ class IAUConstellationsState extends State<IAUConstellations> {
           }).toList(),
           onChanged: (newValue) {
             setState(() {
-              _currentSort = newValue as IAU_CONSTELLATION_SORT;
+              _currentSort = newValue;
               switch (_currentSort){
                 case IAU_CONSTELLATION_SORT.CONSTELLATION :
                   IAU_CONSTELLATION = Map.fromEntries(
@@ -122,12 +122,12 @@ class IAUConstellationsState extends State<IAUConstellations> {
             });
           },
         ),
-        GCWDropDown(
+        GCWDropDown<String>(
           value: _currentConstellationName,
           items: _constellationList,
           onChanged: (newValue) {
             setState(() {
-              _currentConstellationName = newValue as String;
+              _currentConstellationName = newValue;
               _currentConstellationData = IAU_CONSTELLATION[_currentConstellationName]!;
             });
           },
