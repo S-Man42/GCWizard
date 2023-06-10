@@ -3845,6 +3845,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: const [
       'symbol_spintype',
     ]),
+    GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
+      'symbol_sprykski',
+    ]),
     GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: const [
       'symbol_stippelcode',
     ]),
