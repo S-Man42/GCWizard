@@ -11,10 +11,10 @@ class Playfair extends StatefulWidget {
   const Playfair({Key? key}) : super(key: key);
 
   @override
-  PlayfairState createState() => PlayfairState();
+ _PlayfairState createState() => _PlayfairState();
 }
 
-class PlayfairState extends State<Playfair> {
+class _PlayfairState extends State<Playfair> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

@@ -20,4 +20,13 @@ class MultiDecoderToolPokemon extends AbstractMultiDecoderTool {
               return output.isEmpty || output == '<?>' ? null : output;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolPokemonState();
+}
+
+class _MultiDecoderToolPokemonState extends State<MultiDecoderToolPokemon> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

@@ -15,10 +15,10 @@ class Amsco extends StatefulWidget {
   const Amsco({Key? key}) : super(key: key);
 
   @override
-  AmscoState createState() => AmscoState();
+ _AmscoState createState() => _AmscoState();
 }
 
-class AmscoState extends State<Amsco> {
+class _AmscoState extends State<Amsco> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

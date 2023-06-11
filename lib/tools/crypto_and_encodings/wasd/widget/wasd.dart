@@ -23,10 +23,10 @@ class WASD extends StatefulWidget {
   const WASD({Key? key}) : super(key: key);
 
   @override
-  WASDState createState() => WASDState();
+ _WASDState createState() => _WASDState();
 }
 
-class WASDState extends State<WASD> {
+class _WASDState extends State<WASD> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
   late TextEditingController _upController;

@@ -23,10 +23,10 @@ class RALColorCodes extends StatefulWidget {
   const RALColorCodes({Key? key}) : super(key: key);
 
   @override
-  RALColorCodesState createState() => RALColorCodesState();
+ _RALColorCodesState createState() => _RALColorCodesState();
 }
 
-class RALColorCodesState extends State<RALColorCodes> {
+class _RALColorCodesState extends State<RALColorCodes> {
   late MapEntry<String, RalColor> _currentValue;
   List<MapEntry<String, RalColor>> _colors = [];
 

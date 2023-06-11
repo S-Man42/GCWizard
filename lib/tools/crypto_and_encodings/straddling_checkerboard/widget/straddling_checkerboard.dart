@@ -16,10 +16,10 @@ class StraddlingCheckerboard extends StatefulWidget {
   const StraddlingCheckerboard({Key? key}) : super(key: key);
 
   @override
-  StraddlingCheckerboardState createState() => StraddlingCheckerboardState();
+ _StraddlingCheckerboardState createState() => _StraddlingCheckerboardState();
 }
 
-class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
+class _StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
   late TextEditingController _plainTextController;
   late TextEditingController _chiffreTextController;
   late TextEditingController _KeyController;

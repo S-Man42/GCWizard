@@ -12,10 +12,10 @@ class Skytale extends StatefulWidget {
   const Skytale({Key? key}) : super(key: key);
 
   @override
-  SkytaleState createState() => SkytaleState();
+ _SkytaleState createState() => _SkytaleState();
 }
 
-class SkytaleState extends State<Skytale> {
+class _SkytaleState extends State<Skytale> {
   late TextEditingController _inputController;
   late TextEditingController _columnController;
 

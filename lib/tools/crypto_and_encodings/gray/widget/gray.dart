@@ -11,10 +11,10 @@ class Gray extends StatefulWidget {
   const Gray({Key? key}) : super(key: key);
 
   @override
-  GrayState createState() => GrayState();
+ _GrayState createState() => _GrayState();
 }
 
-class GrayState extends State<Gray> {
+class _GrayState extends State<Gray> {
   late TextEditingController _inputDecimalController;
   late TextEditingController _inputBinaryController;
 

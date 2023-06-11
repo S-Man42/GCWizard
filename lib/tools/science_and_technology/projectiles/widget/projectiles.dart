@@ -16,10 +16,10 @@ class Projectiles extends StatefulWidget {
   const Projectiles({Key? key}) : super(key: key);
 
   @override
-  ProjectilesState createState() => ProjectilesState();
+ _ProjectilesState createState() => _ProjectilesState();
 }
 
-class ProjectilesState extends State<Projectiles> {
+class _ProjectilesState extends State<Projectiles> {
   UnitCategory _currentMode = UNITCATEGORY_ENERGY;
 
   GCWUnitsValue<Unit> _currentOutputUnit = GCWUnitsValue<Unit>(UNITCATEGORY_ENERGY.defaultUnit, UNITPREFIX_NONE);

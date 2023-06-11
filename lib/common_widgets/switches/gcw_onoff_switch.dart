@@ -18,10 +18,10 @@ class GCWOnOffSwitch extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWOnOffSwitchState createState() => GCWOnOffSwitchState();
+ _GCWOnOffSwitchState createState() => _GCWOnOffSwitchState();
 }
 
-class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
+class _GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
   final _currentValue = false;
 
   @override

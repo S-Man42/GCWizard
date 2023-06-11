@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 List<List<String>> _buildOutputListOfInputData(BuildContext context, WherigoInputData data) {
-  if (wherigoExpertMode) {
+  if (WHERIGOExpertMode) {
     return _buildOutputListInputDataExpertMode(context, data);
   } else {
     return _buildOutputListInputDataUserMode(context, data);
@@ -18,7 +18,7 @@ List<List<String>> _buildOutputListInputDataExpertMode(BuildContext context, Whe
         i18n(context, 'wherigo_output_medianame'),
         data.InputMedia +
             (data.InputMedia != ''
-                ? (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia]!.ObjectName : '')
+                ? (WHERIGONameToObject[data.InputMedia] != null ? ' ⬌ ' + WHERIGONameToObject[data.InputMedia]!.ObjectName : '')
                 : '')
     ],
     [i18n(context, 'wherigo_output_text'), data.InputText],

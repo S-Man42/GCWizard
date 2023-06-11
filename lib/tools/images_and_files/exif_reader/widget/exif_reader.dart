@@ -93,7 +93,7 @@ class _ExifReaderState extends State<ExifReader> {
     LatLng? _point;
     Map<String, List<List<dynamic>>>? _tableTags;
     try {
-      if (tags != null) {
+      if (tags.isNotEmpty) {
         _thumbnail = completeThumbnail(tags);
         _tableTags = buildTablesExif(tags);
         var xmpTags = buildXmpTags(_file, _tableTags);
@@ -161,7 +161,7 @@ class _ExifReaderState extends State<ExifReader> {
 
     var _currentCoordsFormat = defaultCoordinateFormat;
     List<BaseCoordinate> _currentOutput = [
-      buildCoordinatesByFormat(defaultCoordinateFormat, point!, defaultEllipsoid),
+      buildCoordinate(defaultCoordinateFormat, point!, defaultEllipsoid),
     ];
 
     widgets.add(
@@ -239,6 +239,16 @@ class _ExifReaderState extends State<ExifReader> {
         _file = File(file.path!);
       }
 
+      String? lastModified;
+      try {
+        lastModified = formatDate(_file?.lastModifiedSync());
+      } catch (e) {}
+
+      String? lastAccessed;
+      try {
+        lastAccessed = formatDate(_file?.lastAccessedSync());
+      } catch (e) {}
+
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_file"),
           child: GCWColumnedMultilineOutput(
@@ -246,8 +256,8 @@ class _ExifReaderState extends State<ExifReader> {
                     [i18n(context, 'exif_filename'), file.name ?? ''],
                     [i18n(context, 'exif_filesize_bytes'), file.bytes.length],
                     [i18n(context, 'exif_filesize_kb'), (file.bytes.length / 1024).ceil()],
-                    ['lastModified', formatDate(_file?.lastModifiedSync())],
-                    ['lastAccessed', formatDate(_file?.lastAccessedSync())],
+                    lastModified != null ? ['lastModified', lastModified] : [null, null],
+                    lastAccessed != null ? ['lastAccessed', lastAccessed] : [null, null],
                     [i18n(context, 'exif_extension'), file.extension]
                   ],
           )

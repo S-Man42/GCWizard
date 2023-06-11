@@ -21,10 +21,10 @@ class SegmentLine extends StatefulWidget {
   const SegmentLine({Key? key}) : super(key: key);
 
   @override
-  SegmentLineState createState() => SegmentLineState();
+ _SegmentLineState createState() => _SegmentLineState();
 }
 
-class SegmentLineState extends State<SegmentLine> {
+class _SegmentLineState extends State<SegmentLine> {
   var _currentCoords1 = defaultBaseCoordinate;
   var _currentCoords2 = defaultBaseCoordinate;
 

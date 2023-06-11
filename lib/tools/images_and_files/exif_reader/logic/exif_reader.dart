@@ -18,8 +18,8 @@ const String _GPS_LAT_REF = 'GPS GPSLatitudeRef';
 const String _GPS_LNG_REF = 'GPS GPSLongitudeRef';
 const String _RDF_LOCATION = 'Rdf Location';
 
-Future<Map<String, IfdTag>?> parseExif(GCWFile file) async {
-  Map<String, IfdTag>? data;
+Future<Map<String, IfdTag>> parseExif(GCWFile file) async {
+  Map<String, IfdTag> data = {};
 
   try {
     data = await readExifFromBytes(file.bytes,
@@ -31,10 +31,6 @@ Future<Map<String, IfdTag>?> parseExif(GCWFile file) async {
     // silent error
   }
 
-  if (data == null || data.isEmpty) {
-    // print("No EXIF information found\n");
-    return null;
-  }
   return Future.value(data);
 }
 

@@ -30,9 +30,8 @@ CenterPointDistance centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoid
   return CenterPointDistance(segments.points.first, segments.segmentLength);
 }
 
-// TODO Mike Please check Map and dynamic for Async calculation
 Future<List<CenterPointDistance>?> centerPointThreePointsAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData is! CenterPointJobData) return null;
+  if (jobData?.parameters is! CenterPointJobData) return null;
 
   var data = jobData!.parameters as CenterPointJobData;
   var output = centerPointThreePoints(data.coord1, data.coord2, data.coord3, data.ellipsoid);

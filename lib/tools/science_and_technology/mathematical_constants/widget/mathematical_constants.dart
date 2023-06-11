@@ -20,10 +20,10 @@ class MathematicalConstants extends StatefulWidget {
   const MathematicalConstants({Key? key}) : super(key: key);
 
   @override
-  MathematicalConstantsState createState() => MathematicalConstantsState();
+ _MathematicalConstantsState createState() => _MathematicalConstantsState();
 }
 
-class MathematicalConstantsState extends State<MathematicalConstants> {
+class _MathematicalConstantsState extends State<MathematicalConstants> {
   String _currentConstant = '';
   late Map<String, MathematicalConstant> _constants;
 

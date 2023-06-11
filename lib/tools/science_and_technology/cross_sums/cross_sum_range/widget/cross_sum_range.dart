@@ -10,6 +10,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals_range.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 const _ALERT_MAX_OUTPUT = 200;
 const _ALERT_MAX_RANGE = 25000;
@@ -20,15 +21,15 @@ class CrossSumRange extends StatefulWidget {
   const CrossSumRange({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
 
   @override
-  CrossSumRangeState createState() => CrossSumRangeState();
+ _CrossSumRangeState createState() => _CrossSumRangeState();
 }
 
-class CrossSumRangeState extends State<CrossSumRange> {
+class _CrossSumRangeState extends State<CrossSumRange> {
   var _currentCrossSum = 1;
   var _currentRangeStart = 0;
   var _currentRangeEnd = 100;
 
-  var _currentOutput = [];
+  var _currentOutput = <Widget>[];
 
   late TextEditingController _endController;
 
@@ -51,8 +52,8 @@ class CrossSumRangeState extends State<CrossSumRange> {
         GCWTextDivider(text: i18n(context, 'crosssum_range_expected')),
         GCWIntegerSpinner(
           value: _currentCrossSum,
-          min: widget.type == CrossSumType.ITERATED ? -9 : null,
-          max: widget.type == CrossSumType.ITERATED ? 9 : null,
+          min: widget.type == CrossSumType.ITERATED ? -9 : MIN_INT,
+          max: widget.type == CrossSumType.ITERATED ? 9 : MAX_INT,
           onChanged: (value) {
             setState(() {
               _currentCrossSum = value;

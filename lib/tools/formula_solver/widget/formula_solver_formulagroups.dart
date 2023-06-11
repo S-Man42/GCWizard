@@ -18,16 +18,16 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart' as var_coords_provider;
@@ -39,23 +39,28 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
+import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart';
 part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
 part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
+part 'package:gc_wizard/tools/formula_solver/widget/formula_value_type_key_value_input.dart';
+part 'package:gc_wizard/tools/formula_solver/widget/formula_value_type_key_value_item.dart';
 
 class FormulaSolverFormulaGroups extends StatefulWidget {
   const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
 
   @override
-  FormulaSolverFormulaGroupsState createState() => FormulaSolverFormulaGroupsState();
+ _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
 }
 
-class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
+class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
   late TextEditingController _newGroupController;
   late TextEditingController _editGroupController;
   var _currentNewName = '';

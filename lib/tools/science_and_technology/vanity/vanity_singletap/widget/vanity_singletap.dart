@@ -10,10 +10,10 @@ class VanitySingletap extends StatefulWidget {
   const VanitySingletap({Key? key}) : super(key: key);
 
   @override
-  VanitySingletapState createState() => VanitySingletapState();
+ _VanitySingletapState createState() => _VanitySingletapState();
 }
 
-class VanitySingletapState extends State<VanitySingletap> {
+class _VanitySingletapState extends State<VanitySingletap> {
   var _currentInput = '';
 
   PhoneModel _currentModel = PHONEMODEL_SIMPLE_SPACE_0;

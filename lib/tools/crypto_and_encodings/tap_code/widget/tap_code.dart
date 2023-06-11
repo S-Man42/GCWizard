@@ -11,10 +11,10 @@ class TapCode extends StatefulWidget {
   const TapCode({Key? key}) : super(key: key);
 
   @override
-  TapCodeState createState() => TapCodeState();
+ _TapCodeState createState() => _TapCodeState();
 }
 
-class TapCodeState extends State<TapCode> {
+class _TapCodeState extends State<TapCode> {
   late TextEditingController _encryptionController;
   late TextEditingController _decryptionController;
 
