@@ -193,7 +193,7 @@ String decodeWASD(String input, List<String> controlSet) {
 
 List<String> _normalizeControlSet(List<String> controlSet) {
   var normalized = List<String?>.from(controlSet);
-  while (normalized.length < 4) {
+  while (normalized.length < 9) {
     normalized.add(null);
   }
 
@@ -201,10 +201,10 @@ List<String> _normalizeControlSet(List<String> controlSet) {
   if (normalized[1] == null || normalized[1]!.isEmpty) normalized[1] = '←';
   if (normalized[2] == null || normalized[2]!.isEmpty) normalized[2] = '↓';
   if (normalized[3] == null || normalized[3]!.isEmpty) normalized[3] = '→';
-  if (normalized[4] == null || normalized[4]!.isEmpty) normalized[3] = '↖';
-  if (normalized[5] == null || normalized[5]!.isEmpty) normalized[3] = '↗';
-  if (normalized[6] == null || normalized[6]!.isEmpty) normalized[3] = '↙';
-  if (normalized[7] == null || normalized[7]!.isEmpty) normalized[3] = '↘';
+  if (normalized[4] == null || normalized[4]!.isEmpty) normalized[4] = '↖';
+  if (normalized[5] == null || normalized[5]!.isEmpty) normalized[5] = '↗';
+  if (normalized[6] == null || normalized[6]!.isEmpty) normalized[6] = '↙';
+  if (normalized[7] == null || normalized[7]!.isEmpty) normalized[7] = '↘';
 
   return normalized.map((e) => (e ?? '').toUpperCase()).toList();
 }
