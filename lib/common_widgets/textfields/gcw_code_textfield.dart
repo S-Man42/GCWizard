@@ -6,17 +6,20 @@ import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
 import 'package:highlight/highlight_core.dart';
+import 'package:highlight/languages/basic.dart';
 import 'package:highlight/languages/lua.dart';
 import 'package:prefs/prefs.dart';
 
-enum CodeHighlightingLanguage { LUA }
+enum CodeHighlightingLanguage { LUA, BASIC }
 
 class GCWCodeTextField extends StatefulWidget {
   final TextEditingController controller;
+  final void Function(String)? onChanged;
   final Map<String, TextStyle>? patternMap; // Regexes
   final Map<String, TextStyle>? stringMap; // complete strings
   final Map<String, TextStyle>? theme;
-  final TextStyle? textStyle;
+  final String? hintText;
+  final TextStyle? style;
   final bool readOnly;
   final bool? wrap;
   final CodeHighlightingLanguage? language;
@@ -25,11 +28,13 @@ class GCWCodeTextField extends StatefulWidget {
 
   const GCWCodeTextField(
       {Key? key,
+      this.onChanged,
       required this.controller,
       this.stringMap,
       this.patternMap,
       this.theme,
-      this.textStyle,
+      this.hintText,
+      this.style,
       this.readOnly = true,
       this.wrap,
       this.language,
@@ -52,6 +57,9 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
       switch (widget.language!) {
         case CodeHighlightingLanguage.LUA:
           _language = lua;
+          break;
+        case CodeHighlightingLanguage.BASIC:
+          _language = basic;
       }
     }
   }
@@ -65,21 +73,25 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
               : atomOneLightTheme)
           ),
       child: CodeField(
-          controller: CodeController(
-            text: widget.controller.text,
-            language: _language,
-            patternMap: widget.patternMap,
-          ),
+          controller:( widget.controller is CodeController)
+              ? (widget.controller as CodeController)
+             : CodeController(
+                text: widget.controller.text,
+                language: _language,
+                stringMap: widget.stringMap,
+                patternMap: widget.patternMap,
+              ),
           readOnly: widget.readOnly,
           selectionControls: GCWTextSelectionControls(),
           wrap: widget.wrap ?? false,
-          textStyle: widget.textStyle ?? const TextStyle(fontFamily: 'SourceCode'),
+          textStyle: widget.style ?? const TextStyle(fontFamily: 'SourceCode'),
           lineNumbers: widget.lineNumbers!,
           lineNumberStyle: widget.lineNumberStyle != null
               ? LineNumberStyle(
                   width: widget.lineNumberStyle!.width,
                 )
               : const LineNumberStyle(width: 0.0, margin: 0.0, textStyle: TextStyle(fontSize: 0.1, color: Colors.black54)),
+          onChanged: widget.onChanged,
         )
     );
   }
@@ -92,4 +104,17 @@ class GCWCodeTextFieldLineNumberStyle {
   const GCWCodeTextFieldLineNumberStyle({
     this.width = 42.0,
   });
+}
+
+Mode? getLanguage(CodeHighlightingLanguage? language) {
+  if (language != null) {
+    switch (language) {
+      case CodeHighlightingLanguage.LUA:
+        return lua;
+        break;
+      case CodeHighlightingLanguage.BASIC:
+        return basic;
+    }
+  }
+  return null;
 }

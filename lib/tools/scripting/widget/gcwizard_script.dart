@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
@@ -57,6 +59,13 @@ class GCWizardScriptState extends State<GCWizardScript> {
     super.initState();
     _programController = TextEditingController(text: _currentProgram);
     _inputController = TextEditingController(text: _currentInput);
+
+    _programController = CodeController(
+        text: _currentProgram,
+        language: getLanguage(CodeHighlightingLanguage.BASIC),
+        stringMap: _buildHiglightMap(),
+        //patternMap: _buildHiglightMap()
+    );
   }
 
   @override
@@ -99,10 +108,12 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   });
                 },
               ),
-            GCWTextField(
+            GCWCodeTextField(
               style: gcwMonotypeTextStyle(),
               controller: _programController,
-              hintText: i18n(context, 'gcwizard_script_hint_program'),
+              // hintText: i18n(context, 'gcwizard_script_hint_program'),
+              language: CodeHighlightingLanguage.BASIC,
+              readOnly: false,
               onChanged: (text) {
                 setState(() {
                   _currentProgram = text;
@@ -465,5 +476,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return trimNullBytes(data!.buffer.asUint8List());
+  }
+
+  Map<String, TextStyle> _buildHiglightMap() {
+    var highlightMap = <String, TextStyle>{};
+
+    scriptFunctions().forEach((entry) {
+      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.purple)});
+    });
+    return highlightMap;
   }
 }
