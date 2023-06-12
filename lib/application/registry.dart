@@ -3315,6 +3315,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
       'symbol_devanagari_numerals',
     ]),
+    GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
+      'symbol_dinotopia',
+    ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
     ]),
@@ -3772,6 +3775,12 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
+      'symbol_ravkan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ravkan_extended', symbolSearchStrings: const [
+      'symbol_ravkan_extended',
     ]),
     GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: const [
       'symbol_reality',
