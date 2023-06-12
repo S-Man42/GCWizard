@@ -279,7 +279,7 @@ flutter:
     - assets/symbol_tables/puzzle_2/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/ravkan/
-    - assets/symbol_tables/ravkan_az09/
+    - assets/symbol_tables/ravkan_extended/
     - assets/symbol_tables/reality/
     - assets/symbol_tables/red_herring/
     - assets/symbol_tables/resistor/
