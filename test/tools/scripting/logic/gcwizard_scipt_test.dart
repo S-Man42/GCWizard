@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 part 'gcwizard_script_codes.dart';
 part 'gcwizard_script_functions_codes_base.dart';
 part 'gcwizard_script_functions_codes_hash.dart';
+part 'gcwizard_script_functions.dart';
 part 'gcwizard_script_functions_datetime.dart';
 part 'gcwizard_script_functions_math.dart';
 part 'gcwizard_script_loops.dart';
@@ -16,7 +17,8 @@ void main() {
     //List<Map<String, Object?>> _inputsToExpected = _inputsBaseToExpected;
     //List<Map<String, Object?>> _inputsToExpected = _inputsLoopsToExpected;
     //List<Map<String, Object?>> _inputsToExpected = _inputsHashToExpected;
-    List<Map<String, Object?>> _inputsToExpected = _inputsDateTimeToExpected;
+    //List<Map<String, Object?>> _inputsToExpected = _inputsDateTimeToExpected;
+    List<Map<String, Object?>> _inputsToExpected = _inputsFunctionsToExpected;
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {

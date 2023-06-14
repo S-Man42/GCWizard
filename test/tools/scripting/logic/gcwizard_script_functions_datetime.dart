@@ -1,8 +1,8 @@
 part of 'gcwizard_scipt_test.dart';
 
-DateTime now = DateTime.now();
-var date = DateFormat('yyyy/MM/dd').format(now);
-var time = DateFormat('HH:mm:ss').format(now);
+DateTime _now = DateTime.now();
+var date = DateFormat('yyyy/MM/dd').format(_now);
+var time = DateFormat('HH:mm:ss').format(_now);
 
 List<Map<String, Object?>> _inputsDateTimeToExpected = [
 
