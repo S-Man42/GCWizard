@@ -1,11 +1,30 @@
 part of 'gcwizard_scipt_test.dart';
 
-List<Map<String, Object?>> _inputsFunctionsToExpected = [
-  {'code' : 'print LN(x)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print pi(x)', 'expectedOutput' : '3.141592653589793', 'error': 'gcwizard_script_syntax_error'},
+List<Map<String, Object?>> _inputsGraphicToExpected = [
+  // graphic
+  'STROKE': _GCWizardScriptClassFunctionDefinition(_stroke, 1, functionReturn: false),
+  'CIRCLE': _GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),
+  'LINE': _GCWizardScriptClassFunctionDefinition(_line, 4, functionReturn: false),
+  'POINT': _GCWizardScriptClassFunctionDefinition(_point, 2, functionReturn: false),
+  'ARC': _GCWizardScriptClassFunctionDefinition(_arc, 5, functionReturn: false),
+  'PIE': _GCWizardScriptClassFunctionDefinition(_pie, 5, functionReturn: false),
+  'COLOR': _GCWizardScriptClassFunctionDefinition(_color, 3, functionReturn: false),
+  'FILL': _GCWizardScriptClassFunctionDefinition(_fill, 1, functionReturn: false),
+  'TEXT': _GCWizardScriptClassFunctionDefinition(_text, 4, functionReturn: false),
+  'BOX': _GCWizardScriptClassFunctionDefinition(_box, 4, functionReturn: false),
+  'OVAL': _GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
 
-  {'code' : 'print LN(10)', 'expectedOutput' : '2.302585092994046'},
-  {'code' : 'print PI()', 'expectedOutput' : '3.141592653589793'},
+  {'code' : 'print STROKE(10)', 'expectedOutput' : '10'},
+  {'code' : 'print STROKE(10.0)', 'expectedOutput' : '10'},
+  {'code' : 'print CIRCLE(10)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print CIRCLE(10, 10, 20)', 'expectedOutput' : ''},
+  {'code' : 'print CIRCLE(10.0, 10.0, 20.0)', 'expectedOutput' : ''},
+  {'code' : 'print LINE(10)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print LINE(10, 10, 20, 20)', 'expectedOutput' : ''},
+  {'code' : 'print LINE(10.0, 10.0, 20.0, 20.0)', 'expectedOutput' : ''},
+
+  {'code' : 'print BOX(10)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print BOX(10, 10, 20, 20)', 'expectedOutput' : ''},
 
   {'code' : 'print ABS(-10)', 'expectedOutput' : '10'},
   {'code' : 'print ABS(-10.0)', 'expectedOutput' : '10.0'},
@@ -14,8 +33,6 @@ List<Map<String, Object?>> _inputsFunctionsToExpected = [
   {'code' : 'print ASC(10)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print ASC("A)', 'expectedOutput' : '', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print ASC("A")', 'expectedOutput' : '65'},
-  {'code' : 'print BOX(10)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print BOX(10, 10, 20, 20)', 'expectedOutput' : ''},
   {'code' : 'print BWW(10)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print BWW("TEST", 0 , 0)', 'expectedOutput' : '64'},
   {'code' : 'print BWW("TEST", 0 , 1)', 'expectedOutput' : '10'},
