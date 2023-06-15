@@ -11,6 +11,7 @@ import 'wherigo_analyze_test_resources_input.dart';
 import 'wherigo_analyze_test_resources_media.dart';
 import 'wherigo_analyze_test_resources_character.dart';
 import 'wherigo_analyze_test_resources_messages.dart';
+import 'wherigo_analyze_test_resources_answers.dart';
 import 'wherigo_analyze_test_resources_item.dart';
 import 'wherigo_analyze_test_resources_variable.dart';
 import 'wherigo_analyze_test_resources_builder_variable.dart';
@@ -204,6 +205,21 @@ void main() {
     }
   });
 
+  group("Wherigo_analyze.ANSWERS:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {
+        'input': testInputANSWER,
+        'expectedOutput': testOutputANSWER,
+      }
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}}', () {
+        var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.MESSAGES);
+        expectANSWER(_actual.cartridgeTestAnswers, elem['expectedOutput'] as List<WherigoAnswerData>);
+      });
+    }
+  });
 
   group("Wherigo_analyze.MESSAGES:", () {
     List<Map<String, Object?>> _inputsToExpected = [
@@ -216,7 +232,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}}', () {
         var _actual = wherigoTest(elem['input'], WHERIGO_OBJECT.MESSAGES);
-
+        expectMessage(_actual.cartridgeTestMessageDialog, elem['expectedOutput'] as List<List<WherigoActionMessageElementData>>);
       });
     }
   });

@@ -459,6 +459,7 @@ class WherigoTest {
   final List<WherigoVariableData> cartridgeTestVariable;
   final List<WherigoBuilderVariableData> cartridgeTestBuilderVariable;
   final List<List<WherigoActionMessageElementData>> cartridgeTestMessageDialog;
+  final List<WherigoAnswerData> cartridgeTestAnswers;
 
   WherigoTest({
     required this.cartridgeGWC,
@@ -473,5 +474,6 @@ class WherigoTest {
     required this.cartridgeTestVariable,
     required this.cartridgeTestBuilderVariable,
     required this.cartridgeTestMessageDialog,
+    required this.cartridgeTestAnswers,
   });
 }
