@@ -39,8 +39,6 @@ Map<String, WherigoObjectData> _cartridgeNameToObject = {};
 List<String> _LUAAnalyzeResults = [];
 WHERIGO_ANALYSE_RESULT_STATUS _LUAAnalyzeStatus = WHERIGO_ANALYSE_RESULT_STATUS.OK;
 
-List<String> _declaration = [];
-
 List<WherigoActionMessageElementData> _singleMessageDialog = [];
 
 List<WherigoInputData> _resultInputs = [];
@@ -475,7 +473,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
   // ----------------------------------------------------------------------------------------------------------------
   // second parse
-  _getAllMessagesAndDialogsFromLUA(progress, lines, sendAsyncPort, progressStep);
+  _cartridgeMessages = _getAllMessagesAndDialogsFromLUA(progress, lines, sendAsyncPort, progressStep);
 
   return WherigoCartridge(
       cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,

@@ -1,8 +1,9 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 
-void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort? sendAsyncPort, int progressStep) {
+List<List<WherigoActionMessageElementData>> _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort? sendAsyncPort, int progressStep) {
   progress = lines.length;
+  List<List<WherigoActionMessageElementData>> resultCartridgeMessages = [];
   for (int i = 0; i < lines.length; i++) {
     progress++;
     if (sendAsyncPort != null && (progress % progressStep == 0)) {
@@ -100,7 +101,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
               }
             } while (_sectionMessages);
           }
-          _cartridgeMessages.add(_singleMessageDialog);
+          resultCartridgeMessages.add(_singleMessageDialog);
         } else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
             lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
           _sectionMessages = true;
@@ -173,7 +174,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
             i++;
             lines[i] = lines[i].trim();
           } while (_sectionMessages && (i < lines.length));
-          _cartridgeMessages.add(_singleMessageDialog);
+          resultCartridgeMessages.add(_singleMessageDialog);
         } else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
           i++;
           lines[i] = lines[i].trim();
@@ -245,7 +246,7 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
             i++;
             lines[i] = lines[i].trim();
           } while (_sectionMessages);
-          _cartridgeMessages.add(_singleMessageDialog);
+          resultCartridgeMessages.add(_singleMessageDialog);
         }
       }
     } catch (exception) {
@@ -253,4 +254,5 @@ void _getAllMessagesAndDialogsFromLUA(int progress, List<String> lines, SendPort
       _LUAAnalyzeResults.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_messages', exception));
     }
   } // end of second parse for i = 0 to lines.length - getting Messages/Dialogs
+  return resultCartridgeMessages;
 }
