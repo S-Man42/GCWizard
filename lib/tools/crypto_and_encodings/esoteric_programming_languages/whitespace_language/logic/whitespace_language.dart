@@ -835,6 +835,9 @@ Tuple2<int, int> _num_parameter() {
   if (index == _pos) {
     if (!_loading) const FormatException('common_programming_error_invalid_opcode');
   }
+  if (index < 0) {
+    throw const FormatException('common_programming_error_invalid_opcode');
+  }
 
   var item = _whitespaceToInt(_code.substring(_pos, index));
   return Tuple2<int, int>(index, item);
