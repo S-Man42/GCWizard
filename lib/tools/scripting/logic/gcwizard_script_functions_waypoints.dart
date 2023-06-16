@@ -31,31 +31,31 @@ int _wptscount() {
 }
 
 double _wptslat(Object i) {
-  if (_isString(i)) {
+  if (!_isNumber(i)) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
-  if ((i as int) >= _waypoints.length || i < 1) {
+  if ((i as num).toInt() >= _waypoints.length || i.toInt() < 1) {
     _handleError(_RANGEERROR);
     return 0.0;
   }
-  return _waypoints[i - 1].point.latitude;
+  return _waypoints[i.toInt() - 1].point.latitude;
 }
 
 double _wptslon(Object i) {
-  if (_isString(i)) {
+  if (!_isNumber(i)) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
-  if ((i as int) >= _waypoints.length || i < 1) {
+  if ((i as num).toInt() >= _waypoints.length || i < 1) {
     _handleError(_RANGEERROR);
     return 0.0;
   }
-  return _waypoints[i - 1].point.longitude;
+  return _waypoints[i.toInt() - 1].point.longitude;
 }
 
 void _wptscenter(Object x) {
-  if (_isString(x)) {
+  if (!_isNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -64,7 +64,7 @@ void _wptscenter(Object x) {
     coords.add(LatLng(waypoint.point.latitude, waypoint.point.longitude));
   }
   LatLng coord = centroidCenterOfGravity(coords)!;
-  if ((x as int) == 0) {
+  if ((x as num) == 0) {
     // arithmetic
     coord = centroidArithmeticMean(coords, coord)!;
     GCWizardScript_LAT = coord.latitude;
