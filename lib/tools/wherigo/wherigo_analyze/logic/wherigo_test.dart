@@ -14,7 +14,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
     cartridgeTestVariable: [],
     cartridgeTestBuilderVariable: [],
     cartridgeTestMessageDialog: [],
-    cartridgeTestAnswers: [],
+    cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
   );
 
   switch (typeOfTest) {
@@ -32,7 +32,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -50,7 +50,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -68,7 +68,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -86,7 +86,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -104,7 +104,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -122,7 +122,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -140,7 +140,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -158,7 +158,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: _analyzeAndExtractVariableSectionData((dataToTest as String).split('\n')),
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -176,7 +176,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: _analyzeAndExtractBuilderVariableSectionData((dataToTest as String).split('\n')),
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
@@ -199,7 +199,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: [],
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _analyzeAndExtractOnGetInputSectionData((dataToTest as String).split('\n')),
       );
       break;
     case WHERIGO_OBJECT.MESSAGES:
@@ -216,7 +216,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
         cartridgeTestVariable: [],
         cartridgeTestBuilderVariable: [],
         cartridgeTestMessageDialog: _getAllMessagesAndDialogsFromLUA(0, (dataToTest as String).split('\n'), null, 1),
-        cartridgeTestAnswers: [],
+        cartridgeTestAnswers: _WHERIGO_EMPTYTESTANSWER_LUA,
       );
       break;
 
