@@ -8,13 +8,27 @@
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-const Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
-  CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
-  CalendarSystem.PERSIANYAZDEGARDCALENDAR: MONTH_PERSIAN,
-  CalendarSystem.HEBREWCALENDAR: MONTH_HEBREW,
-  CalendarSystem.COPTICCALENDAR: MONTH_COPTIC,
-  CalendarSystem.POTRZEBIECALENDAR: MONTH_POTRZEBIE,
-};
+double UnixTimestampToJulianDate(int timestamp){
+  var date = DateTime(1970, 1, 1, 0, 0, 0);
+  date = date.add(Duration(seconds: timestamp));
+
+  return gregorianCalendarToJulianDate(date);
+}
+
+String JulianDateToUnixTimestamp(double jd){
+  return ((jd - JD_UNIX_START) * 86400).toStringAsFixed(0);
+}
+
+double ExcelTimestampToJulianDate(int timestamp){
+  var date = DateTime(1900, 1, 1, 0, 0, 0);
+  date = date.add(Duration(days: timestamp));
+
+  return gregorianCalendarToJulianDate(date);
+}
+
+String JulianDateToExcelTimestamp(double jd){
+  return (jd - JD_EXCEL_START + 1).toStringAsFixed(0);
+}
 
 int intPart(double floatNum) {
   if (floatNum < -0.0000001) {

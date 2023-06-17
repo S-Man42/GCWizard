@@ -5,6 +5,7 @@ import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/widget/calendar_i18n.dart';
@@ -22,6 +23,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   CalendarSystem _currentCalendarSystem = CalendarSystem.JULIANDATE;
   double _currentJulianDate = 0.0;
+  int _currentTimeStamp = 0;
   late DateTime _currentDate;
 
   @override
@@ -63,6 +65,15 @@ class _CalendarState extends State<Calendar> {
               onChanged: (value) {
                 setState(() {
                   _currentJulianDate = value;
+                });
+              }),
+        if (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP ||
+            _currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
+          GCWIntegerSpinner(
+              value: _currentTimeStamp,
+              onChanged: (value) {
+                setState(() {
+                  _currentTimeStamp = value;
                 });
               }),
         if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR ||
@@ -126,6 +137,14 @@ class _CalendarState extends State<Calendar> {
         jd = PotrzebieCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
         break;
+      case CalendarSystem.UNIXTIMESTAMP:
+        jd = UnixTimestampToJulianDate(_currentTimeStamp);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+        break;
+      case CalendarSystem.EXCELTIMESTAMP:
+        jd = ExcelTimestampToJulianDate(_currentTimeStamp);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+        break;
       default:
         return Container();
     }
@@ -166,6 +185,14 @@ class _CalendarState extends State<Calendar> {
         : MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
 
     output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
+
+    output['dates_calendar_system_exceltimestamp'] = _invalidExcelDate(jd)
+        ? i18n(context, 'dates_calendar_error')
+        : JulianDateToExcelTimestamp(jd);
+
+    output['dates_calendar_system_unixtimestamp']  = _invalidUnixDate(jd)
+        ? i18n(context, 'dates_calendar_error')
+        : JulianDateToUnixTimestamp(jd);
 
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
@@ -222,5 +249,13 @@ class _CalendarState extends State<Calendar> {
 
   bool _invalidMayaDate(double jd) {
     return (JulianDateToMayaDayCount(jd) < 0);
+  }
+
+  bool _invalidExcelDate(double jd) {
+    return (jd < JD_EXCEL_START);
+  }
+
+  bool _invalidUnixDate(double jd) {
+    return (jd < JD_UNIX_START);
   }
 }

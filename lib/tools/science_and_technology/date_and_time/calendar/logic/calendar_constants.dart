@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/datetime_utils.dart';
+
 enum CalendarSystem {
   JULIANDATE,
   JULIANCALENDAR,
@@ -9,7 +11,21 @@ enum CalendarSystem {
   COPTICCALENDAR,
   POTRZEBIECALENDAR,
   MAYACALENDAR,
+  EXCELTIMESTAMP,
+  UNIXTIMESTAMP,
 }
+
+final JD_UNIX_START = gregorianCalendarToJulianDate(DateTime(1970, 1, 1, 0, 0, 0));
+
+final JD_EXCEL_START = gregorianCalendarToJulianDate(DateTime(1900, 1, 1, 0, 0, 0));
+
+const Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
+  CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
+  CalendarSystem.PERSIANYAZDEGARDCALENDAR: MONTH_PERSIAN,
+  CalendarSystem.HEBREWCALENDAR: MONTH_HEBREW,
+  CalendarSystem.COPTICCALENDAR: MONTH_COPTIC,
+  CalendarSystem.POTRZEBIECALENDAR: MONTH_POTRZEBIE,
+};
 
 const Map<int, String> MONTH_ISLAMIC = {
   1: 'Muharram',
