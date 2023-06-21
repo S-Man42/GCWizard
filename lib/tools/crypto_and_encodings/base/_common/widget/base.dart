@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/widget/hexstring2file.dart';
-import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 
@@ -80,7 +79,7 @@ class _AbstractBaseState extends State<AbstractBase> {
       output = decode(_currentInput, widget.decode);
       outputWidget = GCWDefaultOutput(child: output);
       if (widget.searchMultimedia){
-        _outData = hexstring2file(_asciiToHexString(decode(_currentInput, widget.decode)));
+        _outData = hexstring2file(asciiToHexString(decode(_currentInput, widget.decode)));
 
         if (_outData == null) return outputWidget;
 
@@ -107,19 +106,5 @@ class _AbstractBaseState extends State<AbstractBase> {
       var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
       if (value) showExportedFileDialog(context, contentWidget: content);
     });
-  }
-
-  String _asciiToHexString(String input){
-    List<String> result = [];
-    String hex = '';
-    input.split('').forEach((char){
-      hex = convertBase(char.codeUnitAt(0).toString(), 10, 16);
-      if (hex.length == 1) {
-        result.add('0' + hex);
-      } else {
-        result.add(hex);
-      }
-    });
-    return result.join(' ');
   }
 }

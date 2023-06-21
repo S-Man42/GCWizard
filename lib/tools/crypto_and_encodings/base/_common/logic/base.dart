@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:base32/base32.dart';
+
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ascii85/logic/ascii85.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -562,4 +564,18 @@ String decodeBase122(String base122Data) {
     }
   }
   return String.fromCharCodes(outputStream);
+}
+
+String asciiToHexString(String input){
+  List<String> result = [];
+  String hex = '';
+  input.split('').forEach((char){
+    hex = convertBase(char.codeUnitAt(0).toString(), 10, 16);
+    if (hex.length == 1) {
+      result.add('0' + hex);
+    } else {
+      result.add(hex);
+    }
+  });
+  return result.join(' ');
 }
