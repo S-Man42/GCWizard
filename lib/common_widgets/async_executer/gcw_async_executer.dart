@@ -88,11 +88,11 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
             }
           }
           return Column(children: <Widget>[
-            (snapshot.hasData)
+            (snapshot.hasData && snapshot.data is double)
                 ? Expanded(
                     child: Stack(fit: StackFit.expand, children: [
                     CircularProgressIndicator(
-                      value: snapshot.data as double?,
+                      value: snapshot.data as double,
                       backgroundColor: Colors.white,
                       valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
                       strokeWidth: 20,

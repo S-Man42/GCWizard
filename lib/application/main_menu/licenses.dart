@@ -125,6 +125,7 @@ class _LicensesState extends State<Licenses> {
             i18n(context, 'symboltables_ninjargon_title'),
             'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
           ],
+          [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
           [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
           [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],

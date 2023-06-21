@@ -108,6 +108,7 @@ class SymbolReplacerImage {
   int? _blackLevel;
   double? _similarityLevel;
   int? _gap;
+  double symbolScale = 1.0;
 
   SymbolReplacerImage(Uint8List image) {
     _image = image;
@@ -238,6 +239,8 @@ class SymbolReplacerImage {
 
     // rebuild image
     _outputImageBytes = null;
+
+    symbolScale = calcSymbolScale();
   }
 
   /// <summary>
@@ -721,6 +724,17 @@ class SymbolReplacerImage {
       lines.add(lineClone);
       symbols.addAll(lineClone.symbols);
     }
+  }
+
+  double calcSymbolScale() {
+    if (symbols.isEmpty) return 1.0;
+    var maxSize = 0;
+
+    symbols.forEach((symbol) {
+      maxSize = max(maxSize, symbol.bmp.width);
+      maxSize = max(maxSize, symbol.bmp.height);
+    });
+    return (maxSize > 0) ? max(maxSize/ 150, 0.05) : 1.0;
   }
 }
 

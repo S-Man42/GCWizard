@@ -36,16 +36,6 @@ void updateFormulaGroups() {
   _saveData();
 }
 
-void deleteGroup(int? groupId) {
-  if (groupId == null) {
-    throw Exception('Formula group id not found');
-  }
-
-  formulaGroups.removeWhere((group) => group.id == groupId);
-
-  _saveData();
-}
-
 void _updateFormulaGroup(FormulaGroup group) {
   formulaGroups = formulaGroups.map((formulaGroup) {
     if (formulaGroup.id == group.id) return group;
@@ -59,8 +49,7 @@ int insertFormula(Formula formula, FormulaGroup group) {
   formula.id = id;
   group.formulas.add(formula);
 
-  _updateFormulaGroup(group);
-  _saveData();
+  updateAndSave(group);
 
   return id;
 }
@@ -76,20 +65,19 @@ void updateFormula(Formula formula, FormulaGroup group) {
     return groupFormula;
   }).toList();
 
-  _updateFormulaGroup(group);
-  _saveData();
+  updateAndSave(group);
 }
 
 int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
-  var id = newID(group.values.map((value) => value.id).toList());
+  var id = newID(group.values.map((value) => (value.id as int?)).toList());
   formulaValue.id = id;
   group.values.add(formulaValue);
 
-  _updateFormulaGroup(group);
-  _saveData();
+  updateAndSave(group);
 
   return id;
 }
+
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
   group.values = group.values.map((value) {
@@ -102,8 +90,7 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
     return value;
   }).toList();
 
-  _updateFormulaGroup(group);
-  _saveData();
+  updateAndSave(group);
 }
 
 void deleteFormula(int? formulaId, FormulaGroup group) {
@@ -117,13 +104,16 @@ void deleteFormula(int? formulaId, FormulaGroup group) {
 
   group.formulas.removeWhere((formula) => formula.id == formulaId);
 
-  _updateFormulaGroup(group);
-  _saveData();
+  updateAndSave(group);
 }
 
 void deleteFormulaValue(int formulaValueId, FormulaGroup group) {
   group.values.removeWhere((value) => value.id == formulaValueId);
 
+  updateAndSave(group);
+}
+
+void updateAndSave(FormulaGroup group) {
   _updateFormulaGroup(group);
   _saveData();
 }
