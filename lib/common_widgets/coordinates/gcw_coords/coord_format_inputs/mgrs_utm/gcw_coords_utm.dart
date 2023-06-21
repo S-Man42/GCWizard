@@ -1,32 +1,35 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsUTM extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(UTMREF) onChanged;
+  final BaseCoordinate coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsUTM({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();
 }
 
 class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
-  TextEditingController _LonZoneController;
-  TextEditingController _EastingController;
-  TextEditingController _NorthingController;
+  late TextEditingController _LonZoneController;
+  late TextEditingController _EastingController;
+  late TextEditingController _NorthingController;
 
   var _currentLatZone = 'U';
-  var _currentLonZone = {'text': '', 'value': 0};
-  var _currentEasting = {'text': '', 'value': 0.0};
-  var _currentNorthing = {'text': '', 'value': 0.0};
+  var _currentLonZone = defaultIntegerText;
+  var _currentEasting = defaultDoubleText;
+  var _currentNorthing = defaultDoubleText;
+
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-    _LonZoneController = TextEditingController(text: _currentLonZone['text']);
+    _LonZoneController = TextEditingController(text: _currentLonZone.text);
 
-    _EastingController = TextEditingController(text: _currentEasting['text']);
-    _NorthingController = TextEditingController(text: _currentNorthing['text']);
+    _EastingController = TextEditingController(text: _currentEasting.text);
+    _NorthingController = TextEditingController(text: _currentNorthing.text);
   }
 
   @override
@@ -39,18 +42,20 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
+    if (!widget.isDefault && !_initialized) {
       var utm = widget.coordinates is UTMREF
           ? widget.coordinates as UTMREF
-          : UTMREF.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
-      _currentLonZone['value'] = utm.zone.lonZone;
-      _currentEasting['value'] = utm.easting;
-      _currentNorthing['value'] = utm.northing;
+          : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      _currentLonZone.value = utm.zone.lonZone;
+      _currentEasting.value = utm.easting;
+      _currentNorthing.value = utm.northing;
       _currentLatZone = utm.zone.latZone;
 
-      _LonZoneController.text = _currentLonZone['value'].toString();
-      _EastingController.text = _currentEasting['value'].toString();
-      _NorthingController.text = _currentNorthing['value'].toString();
+      _LonZoneController.text = _currentLonZone.value.toString();
+      _EastingController.text = _currentEasting.value.toString();
+      _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -70,9 +75,10 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
           ),
           Expanded(
               child: Container(
-            child: GCWDropDown(
+            padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+            child: GCWDropDown<String>(
               value: _currentLatZone,
-              onChanged: (newValue) {
+              onChanged: (String newValue) {
                 setState(() {
                   _currentLatZone = newValue;
                   _setCurrentValueAndEmitOnChange();
@@ -85,7 +91,6 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
                 );
               }).toList(),
             ),
-            padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
           )),
         ],
       ),
@@ -112,11 +117,11 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
-    var _lonZone = _currentLonZone['value'];
+  void _setCurrentValueAndEmitOnChange() {
+    var _lonZone = _currentLonZone.value;
 
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
-    var utm = UTMREF(zone, _currentEasting['value'], _currentNorthing['value']);
+    var utm = UTMREF(zone, _currentEasting.value, _currentNorthing.value);
 
     widget.onChanged(utm);
   }

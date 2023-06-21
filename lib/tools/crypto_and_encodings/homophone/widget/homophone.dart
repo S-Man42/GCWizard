@@ -1,9 +1,10 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -18,30 +19,33 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/logic/homophone.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 enum _KeyType { CUSTOM_KEY_LIST, CUSTOM_KEY_MAP, GENERATED }
 
 class Homophone extends StatefulWidget {
+  const Homophone({Key? key}) : super(key: key);
+
   @override
-  HomophoneState createState() => HomophoneState();
+ _HomophoneState createState() => _HomophoneState();
 }
 
-class HomophoneState extends State<Homophone> {
+class _HomophoneState extends State<Homophone> {
   var _currentMode = GCWSwitchPosition.right;
 
-  var _currentRotationController;
-  TextEditingController _newKeyController;
-  WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
+  late TextEditingController _currentRotationController;
+  late TextEditingController _newKeyController;
+  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
   String _currentInput = '';
   Alphabet _currentAlphabet = alphabetGerman1;
   _KeyType _currentKeyType = _KeyType.GENERATED;
   int _currentRotation = 1;
   int _currentMultiplierIndex = 0;
   String _currentCustomKeyList = '';
-  var _currentSubstitutions = Map<String, String>();
+  final List<KeyValueBase> _currentSubstitutions = [];
 
-  var _mask = '#';
-  var _filter = {"#": RegExp(r'[^0-9]')};
+  final _mask = '#';
+  final _filter = {"#": RegExp(r'\D')};
   final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
 
   @override
@@ -64,12 +68,13 @@ class HomophoneState extends State<Homophone> {
   String _maxLetter() {
     int maxLetterIndex = 0;
     var alphabetTable = getLetterFrequenciesFromAlphabet(_currentAlphabet);
-    _currentSubstitutions.forEach((key, value) {
-      if (key.length != 1) return;
+    for (var entry in _currentSubstitutions) {
+      if (entry.key.length != 1) continue;
 
-      if (alphabetTable.containsKey(key.toUpperCase()))
-        maxLetterIndex = max(maxLetterIndex, alphabetTable.keys.toList().indexOf(key.toUpperCase()) + 1);
-    });
+      if (alphabetTable.containsKey(entry.key.toUpperCase())) {
+        maxLetterIndex = max(maxLetterIndex, alphabetTable.keys.toList().indexOf(entry.key.toUpperCase()) + 1);
+      }
+    }
 
     if (maxLetterIndex < alphabetTable.length) {
       return alphabetTable.keys.elementAt(maxLetterIndex);
@@ -78,23 +83,17 @@ class HomophoneState extends State<Homophone> {
     return '';
   }
 
-  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.length > 0)
-      _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return null;
+    entry.key = entry.key.toUpperCase();
+    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.key == entry.key) == null) {
+      return entry;
+    }
+    return null;
+  }
 
+  void _updateEntry(KeyValueBase entry) {
     _newKeyController.text = _maxLetter();
-
-    setState(() {});
-  }
-
-  _updateEntry(dynamic id, String key, String value) {
-    _currentSubstitutions[id] = value;
-    setState(() {});
-  }
-
-  _removeEntry(dynamic id, BuildContext context) {
-    _currentSubstitutions.remove(id);
-    setState(() {});
   }
 
   @override
@@ -125,9 +124,10 @@ class HomophoneState extends State<Homophone> {
           },
         ),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'homophone_keytype') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'homophone_keytype') + ':')),
           Expanded(
-              child: GCWDropDown(
+              flex: 2,
+              child: GCWDropDown<_KeyType>(
                 value: _currentKeyType,
                 onChanged: (value) {
                   setState(() {
@@ -140,15 +140,16 @@ class HomophoneState extends State<Homophone> {
                     child: Text(mode.value),
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         _currentKeyType == _KeyType.GENERATED
             ? Row(children: <Widget>[
-                Expanded(child: GCWText(text: i18n(context, 'homophone_rotation') + ':'), flex: 1),
+                Expanded(flex: 1, child: GCWText(text: i18n(context, 'homophone_rotation') + ':')),
                 Expanded(
+                    flex: 2,
                     child: GCWIntegerSpinner(
                       controller: _currentRotationController,
+                      value: _currentRotation,
                       min: 0,
                       max: 999999,
                       onChanged: (value) {
@@ -156,14 +157,14 @@ class HomophoneState extends State<Homophone> {
                           _currentRotation = value;
                         });
                       },
-                    ),
-                    flex: 2),
+                    )),
               ])
             : Container(),
         _currentKeyType == _KeyType.GENERATED
             ? Row(children: <Widget>[
-                Expanded(child: GCWText(text: i18n(context, 'homophone_multiplier') + ':'), flex: 1),
+                Expanded(flex: 1, child: GCWText(text: i18n(context, 'homophone_multiplier') + ':')),
                 Expanded(
+                    flex: 2,
                     child: GCWDropDownSpinner(
                       index: _currentMultiplierIndex,
                       items: getMultipliers().map((item) => GCWText(text: item.toString())).toList(),
@@ -172,8 +173,7 @@ class HomophoneState extends State<Homophone> {
                           _currentMultiplierIndex = value;
                         });
                       },
-                    ),
-                    flex: 2),
+                    )),
               ])
             : Container(),
         _currentKeyType == _KeyType.CUSTOM_KEY_LIST
@@ -188,9 +188,10 @@ class HomophoneState extends State<Homophone> {
             : Container(),
         _currentKeyType == _KeyType.CUSTOM_KEY_MAP ? _buildVariablesEditor() : Container(),
         Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'common_alphabet') + ':'), flex: 1),
+          Expanded(flex: 1, child: GCWText(text: i18n(context, 'common_alphabet') + ':')),
           Expanded(
-              child: GCWDropDown(
+              flex: 2,
+              child: GCWDropDown<Alphabet>(
                 value: _currentAlphabet,
                 onChanged: (value) {
                   setState(() {
@@ -205,8 +206,7 @@ class HomophoneState extends State<Homophone> {
                     subtitle: _generateItemDescription(alphabet.key),
                   );
                 }).toList(),
-              ),
-              flex: 2),
+              )),
         ]),
         GCWTwoOptionsSwitch(
           value: _currentMode,
@@ -221,8 +221,8 @@ class HomophoneState extends State<Homophone> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+  Widget _buildOutput() {
+    if (_currentInput.isEmpty) return const GCWDefaultOutput(child: '');
     int _currentMultiplier = getMultipliers()[_currentMultiplierIndex];
 
     HomophoneOutput _currentOutput;
@@ -237,8 +237,8 @@ class HomophoneState extends State<Homophone> {
               encryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
           break;
         case _KeyType.CUSTOM_KEY_MAP:
-          _currentOutput = encryptHomophoneWithKeyMap(
-              _currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
+          _currentOutput = encryptHomophoneWithKeyMap(_currentInput,
+              Map.fromEntries(_currentSubstitutions.map((entry) => MapEntry(entry.key, textToIntList(entry.value)))));
           break;
       }
     } else {
@@ -252,8 +252,8 @@ class HomophoneState extends State<Homophone> {
               decryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
           break;
         case _KeyType.CUSTOM_KEY_MAP:
-          _currentOutput = decryptHomophoneWithKeyMap(
-              _currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
+          _currentOutput = decryptHomophoneWithKeyMap(_currentInput,
+              Map.fromEntries(_currentSubstitutions.map((entry) => MapEntry(entry.key, textToIntList(entry.value)))));
           break;
       }
     }
@@ -262,10 +262,11 @@ class HomophoneState extends State<Homophone> {
       switch (_currentOutput.errorCode) {
         case HomophoneErrorCode.CUSTOM_KEY_COUNT:
           showToast(i18n(context, "homophone_error_own_key"));
-          return GCWDefaultOutput(child: '');
-          break;
+          return const GCWDefaultOutput(child: '');
         case HomophoneErrorCode.CUSTOM_KEY_DUPLICATE:
           showToast(i18n(context, "homophone_error_own_double_keys"));
+          return const GCWDefaultOutput(child: '');
+        default:
       }
     }
 
@@ -282,7 +283,7 @@ class HomophoneState extends State<Homophone> {
     );
   }
 
-  _generateItemDescription(Alphabet alphabet) {
+  String? _generateItemDescription(Alphabet alphabet) {
     if (alphabet == alphabetGreek1) return i18n(context, 'alphabet_name_greek1_description');
     if (alphabet == alphabetGreek2) return i18n(context, 'alphabet_name_greek2_description');
 
@@ -295,10 +296,9 @@ class HomophoneState extends State<Homophone> {
         keyInputFormatters: [_keyMaskInputFormatter],
         valueHintText: i18n(context, 'homophone_own_key_hint'),
         valueFlex: 4,
-        keyValueMap: _currentSubstitutions,
-        //onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
-        onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+        entries: _currentSubstitutions,
+        onGetNewEntry: (entry) => _getNewEntry(entry),
+        onUpdateEntry: (entry) => _updateEntry(entry),
+    );
   }
 }

@@ -3,15 +3,15 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 abstract class AbstractRotation extends StatefulWidget {
-  final Function rotate;
+  final String Function(String) rotate;
 
-  AbstractRotation({Key key, this.rotate}) : super(key: key);
+  const AbstractRotation({Key? key, required this.rotate}) : super(key: key);
 
   @override
-  AbstractRotationState createState() => AbstractRotationState();
+ _AbstractRotationState createState() => _AbstractRotationState();
 }
 
-class AbstractRotationState extends State<AbstractRotation> {
+class _AbstractRotationState extends State<AbstractRotation> {
   String _output = '';
 
   @override

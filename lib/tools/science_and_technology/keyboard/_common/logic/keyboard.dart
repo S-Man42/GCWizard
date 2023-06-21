@@ -1,30 +1,33 @@
+// ignore_for_file: equal_keys_in_map
+
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
 // Add keyboard layouts
-// 1. adapt enum
+// 1. adapt enum KeyboardType
 // 2. add Map xxxToNormal
 // 3. adapt List<KeyboardData> allKeyboards
 // 4. adapt buildConvertingMap
 
-enum ConvertDirection { toNormal, fromNormal }
+enum _ConvertDirection { toNormal, fromNormal }
 
-enum KeyboardType {
+enum KEYBOARD_TYPE {
   QWERTZ_T1,
   QWERTY_US_INT,
-  Dvorak,
-  Dvorak_II_DEU,
+  DVORAK,
+  DVORAK_I_DEU1,
+  DVORAK_I_DEU2,
+  DVORAK_I_DEU3,
+  DVORAK_II_DEU,
   RISTOME,
   NEO,
   BONE,
   COLEMAK,
-  Dvorak_I_DEU1,
-  Dvorak_I_DEU2,
-  Dvorak_I_DEU3,
   FRA_AZERTY,
   FRA_BEPO
 }
 
-final Map QWERTZ_T1NumberToSymbol = {
+const Map<String, String> _QWERTZ_T1NumberToSymbol = {
   '1': '!',
   '2': '"',
   '3': '§',
@@ -38,63 +41,7 @@ final Map QWERTZ_T1NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map DvorakDeuIINumberToSymbol = {
-  '1': '!',
-  '2': '"',
-  '3': '§',
-  '4': '\$',
-  '5': '%',
-  '6': '&',
-  '7': '/',
-  '8': '(',
-  '9': ')',
-  '0': '=',
-  ' ': ' ',
-  '.': '.'
-};
-final Map DvorakDeuI1NumberToSymbol = {
-  '1': '!',
-  '2': '"',
-  '3': '§',
-  '4': '\$',
-  '5': '%',
-  '6': '&',
-  '7': '/',
-  '8': '(',
-  '9': ')',
-  '0': '=',
-  ' ': ' ',
-  '.': '.'
-};
-final Map DvorakDeuI2NumberToSymbol = {
-  '1': '!',
-  '2': '"',
-  '3': '§',
-  '4': '\$',
-  '5': '%',
-  '6': '&',
-  '7': '/',
-  '8': '(',
-  '9': ')',
-  '0': '=',
-  ' ': ' ',
-  '.': '.'
-};
-final Map DvorakDeuI3NumberToSymbol = {
-  '1': '!',
-  '2': '"',
-  '3': '§',
-  '4': '\$',
-  '5': '%',
-  '6': '&',
-  '7': '/',
-  '8': '(',
-  '9': ')',
-  '0': '=',
-  ' ': ' ',
-  '.': '.'
-};
-final Map AZERTYNumberToSymbol = {
+const Map<String, String> _AZERTYNumberToSymbol = {
   '1': '&',
   '2': 'é',
   '3': '"',
@@ -108,7 +55,7 @@ final Map AZERTYNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map BEPONumberToSymbol = {
+const Map<String, String> _BEPONumberToSymbol = {
   '1': '"',
   '2': '«',
   '3': '»',
@@ -122,21 +69,7 @@ final Map BEPONumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map RistomeNumberToSymbol = {
-  '1': '!',
-  '2': '"',
-  '3': '§',
-  '4': '\$',
-  '5': '%',
-  '6': '&',
-  '7': '/',
-  '8': '(',
-  '9': ')',
-  '0': '=',
-  ' ': ' ',
-  '.': '.'
-};
-final Map NeoNumberToSymbol = {
+const Map<String, String> _NeoNumberToSymbol = {
   '1': '°',
   '2': '§',
   '3': 'ℓ',
@@ -150,7 +83,7 @@ final Map NeoNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map Neo3NumberToSymbol = {
+const Map<String, String> _Neo3NumberToSymbol = {
   '1': '¹',
   '2': '²',
   '3': '³',
@@ -164,7 +97,7 @@ final Map Neo3NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map Neo5NumberToSymbol = {
+const Map<String, String> _Neo5NumberToSymbol = {
   '1': '¹',
   '2': '²',
   '3': '³',
@@ -178,7 +111,7 @@ final Map Neo5NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map Neo6NumberToSymbol = {
+const Map<String, String> _Neo6NumberToSymbol = {
   '1': '¬',
   '2': '∨',
   '3': '∧',
@@ -192,7 +125,7 @@ final Map Neo6NumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map QWERTY_USNumberToSymbol = {
+const Map<String, String> _QWERTY_USNumberToSymbol = {
   '1': '!',
   '2': '@',
   '3': '#',
@@ -206,10 +139,162 @@ final Map QWERTY_USNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
-final Map DvorakNumberToSymbol = QWERTY_USNumberToSymbol;
-final Map ColemakNumberToSymbol = QWERTY_USNumberToSymbol;
-
-final Map SymbolToQWERTZ_T1Number = {
+const Map<String, String> _DvorakNumberToSymbol = _QWERTY_USNumberToSymbol;
+const Map<String, String> _IPhoneEnNumberToSymbol = {
+  '1': '-',
+  '2': '/',
+  '3': ':',
+  '4': ';',
+  '5': '(',
+  '6': ')',
+  '7': '\$',
+  '8': '&',
+  '9': '@',
+  '0': '"',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhoneDeNumberToSymbol = {
+  '1': '-',
+  '2': '/',
+  '3': ':',
+  '4': ';',
+  '5': '(',
+  '6': ')',
+  '7': '€',
+  '8': '&',
+  '9': '@',
+  '0': '"',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhone1NumberToSymbol = {
+  '1': '`',
+  '2': '|',
+  '3': '{',
+  '4': '}',
+  '5': '?',
+  '6': '%',
+  '7': '^',
+  '8': '*',
+  '9': '/',
+  '0': '’',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhone2NumberToSymbol = {
+  '1': '[',
+  '2': ']',
+  '3': '{',
+  '4': '}',
+  '5': '#',
+  '6': '%',
+  '7': '^',
+  '8': '*',
+  '9': '+',
+  '0': '=',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _IPhone3NumberToSymbol = {
+  '1': '_',
+  '2': '\\',
+  '3': '|',
+  '4': '~',
+  '5': '<',
+  '6': '>',
+  '7': '\$',
+  '8': '£',
+  '9': '¥',
+  '0': '•',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidEnNumberToSymbol = {
+  '1': '@',
+  '2': '#',
+  '3': '\$',
+  '4': '_',
+  '5': '&',
+  '6': '-',
+  '7': '+',
+  '8': '(',
+  '9': ')',
+  '0': '/',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidDeNumberToSymbol = {
+  '1': '@',
+  '2': '#',
+  '3': '€',
+  '4': '_',
+  '5': '&',
+  '6': '-',
+  '7': '+',
+  '8': '(',
+  '9': ')',
+  '0': '/',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung1NumberToSymbol = {
+  '1': '!',
+  '2': '@',
+  '3': '#',
+  '4': '€',
+  '5': '%',
+  '6': '^',
+  '7': '&',
+  '8': '*',
+  '9': '(',
+  '0': ')',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung4NumberToSymbol = {
+  '1': '•',
+  '2': '∙',
+  '3': '○',
+  '4': '●',
+  '5': '□',
+  '6': '■',
+  '7': '♤',
+  '8': '♡',
+  '9': '♢',
+  '0': '♧',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung2NumberToSymbol = {
+  '1': '+',
+  '2': '×',
+  '3': '÷',
+  '4': '=',
+  '5': '/',
+  '6': '_',
+  '7': '<',
+  '8': '>',
+  '9': '[',
+  '0': ']',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _AndroidSamsung3NumberToSymbol = {
+  '1': '`',
+  '2': '~',
+  '3': '\\',
+  '4': '|',
+  '5': '{',
+  '6': '}',
+  '7': '\$',
+  '8': '£',
+  '9': '¥',
+  '0': '₩',
+  ' ': ' ',
+  '.': '.'
+};
+const Map<String, String> _SymbolToQWERTZ_T1Number = {
   '!': '1',
   '"': '2',
   '§': '3',
@@ -229,65 +314,7 @@ final Map SymbolToQWERTZ_T1Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToDvorakDeuIINumber = {
-  '!': '1',
-  '"': '2',
-  '§': '3',
-  '\$': '4',
-  '%': '5',
-  '&': '6',
-  '/': '7',
-  '(': '8',
-  ')': '9',
-  '=': '0',
-  '²': '2',
-  '³': '3',
-  '|': '5',
-  '¦': '6',
-  '{': '7',
-  '[': '8',
-  ']': '9',
-  '}': '0',
-  ' ': ' ',
-  '.': '.'
-};
-final Map SymbolToDvorakDeuI1Number = {
-  '!': '1',
-  '"': '2',
-  '§': '3',
-  '\$': '4',
-  '%': '5',
-  '&': '6',
-  '/': '7',
-  '(': '8',
-  ')': '9',
-  '=': '0',
-};
-final Map SymbolToDvorakDeuI2Number = {
-  '!': '1',
-  '"': '2',
-  '§': '3',
-  '\$': '4',
-  '%': '5',
-  '&': '6',
-  '/': '7',
-  '(': '8',
-  ')': '9',
-  '=': '0',
-};
-final Map SymbolToDvorakDeuI3Number = {
-  '!': '1',
-  '"': '2',
-  '§': '3',
-  '\$': '4',
-  '%': '5',
-  '&': '6',
-  '/': '7',
-  '(': '8',
-  ')': '9',
-  '=': '0',
-};
-final Map SymbolToAZERTYNumber = {
+const Map<String, String> _SymbolToAZERTYNumber = {
   '&': '1',
   'é': '2',
   '"': '3',
@@ -310,7 +337,7 @@ final Map SymbolToAZERTYNumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToBEPONumber = {
+const Map<String, String> _SymbolToBEPONumber = {
   '"': '1',
   '«': '2',
   '»': '3',
@@ -333,19 +360,8 @@ final Map SymbolToBEPONumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToRistomeNumber = {
-  '!': '1',
-  '"': '2',
-  '§': '3',
-  '\$': '4',
-  '%': '5',
-  '&': '6',
-  '/': '7',
-  '(': '8',
-  ')': '9',
-  '=': '0',
-};
-final Map SymbolToNeoNumber = {
+
+const Map<String, String> _SymbolToNeoNumber = {
   '°': '1',
   '§': '2',
   'ℓ': '3',
@@ -359,7 +375,7 @@ final Map SymbolToNeoNumber = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToNeo3Number = {
+const Map<String, String> _SymbolToNeo3Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
@@ -373,7 +389,7 @@ final Map SymbolToNeo3Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToNeo5Number = {
+const Map<String, String> _SymbolToNeo5Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
@@ -387,7 +403,7 @@ final Map SymbolToNeo5Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToNeo6Number = {
+const Map<String, String> _SymbolToNeo6Number = {
   '¬': '1',
   '∨': '2',
   '∧': '3',
@@ -401,11 +417,21 @@ final Map SymbolToNeo6Number = {
   ' ': ' ',
   '.': '.'
 };
-final Map SymbolToQWERTY_USNumber = switchMapKeyValue(QWERTY_USNumberToSymbol);
-final Map SymbolToDvorakNumber = SymbolToQWERTY_USNumber;
-final Map SymbolToColemakNumber = SymbolToQWERTY_USNumber;
+final Map<String, String> _SymbolToQWERTY_USNumber = switchMapKeyValue(_QWERTY_USNumberToSymbol);
+final Map<String, String> _SymbolToDvorakNumber = _SymbolToQWERTY_USNumber;
+final Map<String, String> _SymbolToIPhoneEnNumber = switchMapKeyValue(_IPhoneEnNumberToSymbol);
+final Map<String, String> _SymbolToIPhoneDeNumber = switchMapKeyValue(_IPhoneDeNumberToSymbol);
+final Map<String, String> _SymbolToIPhone1Number = switchMapKeyValue(_IPhone1NumberToSymbol);
+final Map<String, String> _SymbolToIPhone2Number = switchMapKeyValue(_IPhone2NumberToSymbol);
+final Map<String, String> _SymbolToIPhone3Number = switchMapKeyValue(_IPhone3NumberToSymbol);
+final Map<String, String> _SymbolToAndroidEnNumber = switchMapKeyValue(_AndroidEnNumberToSymbol);
+final Map<String, String> _SymbolToAndroidDeNumber = switchMapKeyValue(_AndroidDeNumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung4Number = switchMapKeyValue(_AndroidSamsung4NumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung1Number = switchMapKeyValue(_AndroidSamsung1NumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung2Number = switchMapKeyValue(_AndroidSamsung2NumberToSymbol);
+final Map<String, String> _SymbolToAndroidSamsung3Number = switchMapKeyValue(_AndroidSamsung3NumberToSymbol);
 
-final Map QWERTZ_T1toNormal = {
+const Map<String, String> _QWERTZ_T1toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -512,7 +538,8 @@ final Map QWERTZ_T1toNormal = {
   'µ': '212a',
   '': '',
 };
-final Map Dvorak_II_DEUtoNormal = {
+final Map<String, String> _Dvorak_II_DEUtoNormal = {
+  // https://web.archive.org/web/20170117021436/http://www.go-dvorak.com/media/img/dvorak-tastatur-detailansicht.jpg
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -550,7 +577,7 @@ final Map Dvorak_II_DEUtoNormal = {
   'T': '209o',
   'Z': '210o',
   'ß': '211o',
-  '/': '212o',
+  '\\': '212o',
   'ü': '201u',
   ',': '202u',
   '.': '203u',
@@ -562,7 +589,7 @@ final Map Dvorak_II_DEUtoNormal = {
   't': '209u',
   'z': '210u',
   '?': '211u',
-  '\\': '212u',
+  '/': '212u',
   'A': '301o',
   'O': '302o',
   'E': '303o',
@@ -624,7 +651,7 @@ final Map Dvorak_II_DEUtoNormal = {
   '`': '112a',
   '´': '212a'
 };
-final Map Dvorak_I_DEU1toNormal = {
+final Map<String, String> _Dvorak_I_DEU1toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -632,7 +659,7 @@ final Map Dvorak_I_DEU1toNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -722,7 +749,7 @@ final Map Dvorak_I_DEU1toNormal = {
   ' ': '501',
   '': ''
 };
-final Map Dvorak_I_DEU2toNormal = {
+final Map<String, String> _Dvorak_I_DEU2toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -730,7 +757,7 @@ final Map Dvorak_I_DEU2toNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -771,7 +798,7 @@ final Map Dvorak_I_DEU2toNormal = {
   'c': '208u',
   'r': '209u',
   'l': '210u',
-  'q': '211u',
+  'q': '211u', //double entry ??
   '\\': '212u',
   'A': '301o',
   'O': '302o',
@@ -820,7 +847,7 @@ final Map Dvorak_I_DEU2toNormal = {
   ' ': '501',
   '': ''
 };
-final Map Dvorak_I_DEU3toNormal = {
+final Map<String, String> _Dvorak_I_DEU3toNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -828,7 +855,7 @@ final Map Dvorak_I_DEU3toNormal = {
   '\$': '104o',
   '%': '105o',
   '&': '106o',
-  '/': '107o',
+  '/': '107o', //double entry ??
   '(': '108o',
   ')': '109o',
   '=': '110o',
@@ -869,7 +896,7 @@ final Map Dvorak_I_DEU3toNormal = {
   'c': '208u',
   'r': '209u',
   'l': '210u',
-  'q': '211u',
+  'q': '211u', //double entry ??
   '\\': '212u',
   'A': '301o',
   'O': '302o',
@@ -918,7 +945,7 @@ final Map Dvorak_I_DEU3toNormal = {
   ' ': '501',
   '': ''
 };
-final Map NeoToNormal = {
+final Map<String, String> _NeoToNormal = {
   'ˇ': '100o',
   '°': '101o',
   '§': '102o',
@@ -943,7 +970,7 @@ final Map NeoToNormal = {
   '8': '108u',
   '9': '109u',
   '0': '110u',
-  '-': '111u',
+  '-': '111u', //double entry ??
   '`': '112u',
   'X': '201o',
   'V': '202o',
@@ -1014,7 +1041,7 @@ final Map NeoToNormal = {
   ' ': '501',
   '': ''
 };
-final Map BoneToNormal = {
+final Map<String, String> _BoneToNormal = {
   'ˇ': '100o',
   '°': '101o',
   '§': '102o',
@@ -1039,7 +1066,7 @@ final Map BoneToNormal = {
   '8': '108u',
   '9': '109u',
   '0': '110u',
-  '-': '111u',
+  '-': '111u', //double entry ??
   '`': '112u',
   'J': '201o',
   'D': '202o',
@@ -1110,7 +1137,7 @@ final Map BoneToNormal = {
   ' ': '501',
   '': ''
 };
-final Map RistomeToNormal = {
+const Map<String, String> _RistomeToNormal = {
   '°': '100o',
   '!': '101o',
   '"': '102o',
@@ -1210,7 +1237,7 @@ final Map RistomeToNormal = {
   ' ': '501',
   '': ''
 };
-final Map QWERTY_US_INTtoNormal = {
+const Map<String, String> _QWERTY_US_INTtoNormal = {
   '~': '100o',
   '!': '101o',
   '@': '102o',
@@ -1308,7 +1335,7 @@ final Map QWERTY_US_INTtoNormal = {
   ' ': '501',
   '': ''
 };
-final Map DvoraktoNormal = {
+const Map<String, String> _DvoraktoNormal = {
   '~': '101o',
   '!': '102o',
   '@': '103o',
@@ -1406,7 +1433,7 @@ final Map DvoraktoNormal = {
   ' ': '501',
   '': ''
 };
-final Map ColemakToNormal = {
+const Map<String, String> _ColemakToNormal = {
   '~': '100o',
   '!': '101o',
   '@': '102o',
@@ -1504,7 +1531,7 @@ final Map ColemakToNormal = {
   ' ': '501',
   '': ''
 };
-final Map AZERTYToNormal = {
+const Map<String, String> _AZERTYToNormal = {
   '#': '100o',
   '1': '101o',
   '2': '102o',
@@ -1525,12 +1552,12 @@ final Map AZERTYToNormal = {
   'ê': '104u',
   '(': '105u',
   ')': '106u',
-  "\u07F5": '107u',
-  "\u07F4": '108u',
-  "«": '109u',
-  "»": '110u',
+  '\u07F5': '107u',
+  '\u07F4': '108u',
+  '«': '109u',
+  '»': '110u',
   "'": '111u',
-  "^": '112u',
+  '^': '112u',
   'A': '201o',
   'Z': '202o',
   'E': '203o',
@@ -1604,7 +1631,8 @@ final Map AZERTYToNormal = {
   ' ': '501',
   '': ''
 };
-final Map BEPOToNormal = {
+const Map<String, String> _BEPOToNormal = {
+  // https://en.wikipedia.org/wiki/B%C3%89PO#/media/File:KB_French_Dvorak_b%C3%A9po_simplifi%C3%A9.svg
   '#': '100o',
   '1': '101o',
   '2': '102o',
@@ -1680,24 +1708,24 @@ final Map BEPOToNormal = {
   'm': '311u',
   'ç': '312u',
   'Ê': '401o',
-  'W': '402o',
-  'À': '403o',
-  'Y': '404o',
-  'X': '405o',
-  ':': '406o',
-  'K': '407o',
-  '?': '408o',
+  'À': '402o',
+  'Y': '403o',
+  'X': '404o',
+  ':': '405o',
+  'K': '406o',
+  '?': '407o',
+  'Q': '408o',
   'G': '409o',
   'H': '410o',
   'F': '411o',
   'ê': '401u',
-  'w': '402u',
-  'à': '403u',
-  'y': '404u',
-  'x': '405u',
-  '.': '406u',
-  'k': '407u',
-  "'": '408u',
+  'à': '402u',
+  'y': '403u',
+  'x': '404u',
+  '.': '405u',
+  'k': '406u',
+  "'": '407u',
+  "q": '408u',
   'g': '409u',
   'h': '410u',
   'f': '411u',
@@ -1706,7 +1734,7 @@ final Map BEPOToNormal = {
 };
 
 class KeyboardData {
-  final KeyboardType type;
+  final KEYBOARD_TYPE type;
   String name;
   String example;
 
@@ -1714,86 +1742,87 @@ class KeyboardData {
 }
 
 List<KeyboardData> allKeyboards = [
-  KeyboardData(KeyboardType.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
-  KeyboardData(KeyboardType.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
-  KeyboardData(KeyboardType.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
-  KeyboardData(KeyboardType.Dvorak, 'keyboard_mode_dvorak', '"<>PYF'),
-  KeyboardData(KeyboardType.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
-  KeyboardData(KeyboardType.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
-  KeyboardData(KeyboardType.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
-  KeyboardData(KeyboardType.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
-  KeyboardData(KeyboardType.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
-  KeyboardData(KeyboardType.NEO, 'keyboard_mode_neo', 'XVLCWK'),
-  KeyboardData(KeyboardType.BONE, 'keyboard_mode_bone', 'JDUAXP'),
-  KeyboardData(KeyboardType.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ'),
-  KeyboardData(KeyboardType.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
+  KeyboardData(KEYBOARD_TYPE.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
+  KeyboardData(KEYBOARD_TYPE.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
+  KeyboardData(KEYBOARD_TYPE.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK, 'keyboard_mode_dvorak', '"<>PYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
+  KeyboardData(KEYBOARD_TYPE.DVORAK_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
+  KeyboardData(KEYBOARD_TYPE.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
+  KeyboardData(KEYBOARD_TYPE.NEO, 'keyboard_mode_neo', 'XVLCWK'),
+  KeyboardData(KEYBOARD_TYPE.BONE, 'keyboard_mode_bone', 'JDUAXP'),
+  KeyboardData(KEYBOARD_TYPE.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ'),
+  KeyboardData(KEYBOARD_TYPE.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
 ];
 
-KeyboardData getKeyboardByType(KeyboardType type) {
-  return allKeyboards.firstWhere((element) => element.type == type, orElse: () => null);
+KeyboardData? getKeyboardByType(KEYBOARD_TYPE type) {
+  return allKeyboards.firstWhereOrNull((element) => element.type == type);
 }
 
-KeyboardType getKeyboardTypeByName(String name) {
-  return allKeyboards.firstWhere((element) => element.name == name, orElse: () => null).type;
+KEYBOARD_TYPE? getKeyboardTypeByName(String name) {
+  return allKeyboards.firstWhereOrNull((element) => element.name == name)?.type;
 }
 
-Map buildConvertingMap(KeyboardType type, ConvertDirection direction) {
-  Map keyboardMap;
+Map<String, String> _buildConvertingMap(KEYBOARD_TYPE type, _ConvertDirection direction) {
+  Map<String, String> keyboardMap;
   switch (type) {
-    case KeyboardType.QWERTZ_T1:
-      keyboardMap = QWERTZ_T1toNormal;
+    case KEYBOARD_TYPE.QWERTZ_T1:
+      keyboardMap = _QWERTZ_T1toNormal;
       break;
-    case KeyboardType.RISTOME:
-      keyboardMap = RistomeToNormal;
+    case KEYBOARD_TYPE.RISTOME:
+      keyboardMap = _RistomeToNormal;
       break;
-    case KeyboardType.NEO:
-      keyboardMap = NeoToNormal;
+    case KEYBOARD_TYPE.NEO:
+      keyboardMap = _NeoToNormal;
       break;
-    case KeyboardType.BONE:
-      keyboardMap = BoneToNormal;
+    case KEYBOARD_TYPE.BONE:
+      keyboardMap = _BoneToNormal;
       break;
-    case KeyboardType.Dvorak_I_DEU1:
-      keyboardMap = Dvorak_I_DEU1toNormal;
+    case KEYBOARD_TYPE.DVORAK_I_DEU1:
+      keyboardMap = _Dvorak_I_DEU1toNormal;
       break;
-    case KeyboardType.Dvorak_I_DEU2:
-      keyboardMap = Dvorak_I_DEU2toNormal;
+    case KEYBOARD_TYPE.DVORAK_I_DEU2:
+      keyboardMap = _Dvorak_I_DEU2toNormal;
       break;
-    case KeyboardType.Dvorak_I_DEU3:
-      keyboardMap = Dvorak_I_DEU3toNormal;
+    case KEYBOARD_TYPE.DVORAK_I_DEU3:
+      keyboardMap = _Dvorak_I_DEU3toNormal;
       break;
-    case KeyboardType.Dvorak_II_DEU:
-      keyboardMap = Dvorak_II_DEUtoNormal;
+    case KEYBOARD_TYPE.DVORAK_II_DEU:
+      keyboardMap = _Dvorak_II_DEUtoNormal;
       break;
-    case KeyboardType.FRA_AZERTY:
-      keyboardMap = AZERTYToNormal;
+    case KEYBOARD_TYPE.FRA_AZERTY:
+      keyboardMap = _AZERTYToNormal;
       break;
-    case KeyboardType.FRA_BEPO:
-      keyboardMap = BEPOToNormal;
+    case KEYBOARD_TYPE.FRA_BEPO:
+      keyboardMap = _BEPOToNormal;
       break;
-    case KeyboardType.QWERTY_US_INT:
-      keyboardMap = QWERTY_US_INTtoNormal;
+    case KEYBOARD_TYPE.QWERTY_US_INT:
+      keyboardMap = _QWERTY_US_INTtoNormal;
       break;
-    case KeyboardType.Dvorak:
-      keyboardMap = DvoraktoNormal;
+    case KEYBOARD_TYPE.DVORAK:
+      keyboardMap = _DvoraktoNormal;
       break;
-    case KeyboardType.COLEMAK:
-      keyboardMap = ColemakToNormal;
+    case KEYBOARD_TYPE.COLEMAK:
+      keyboardMap = _ColemakToNormal;
       break;
   }
-  if (direction == ConvertDirection.toNormal)
+  if (direction == _ConvertDirection.toNormal) {
     return keyboardMap;
-  else
+  } else {
     return switchMapKeyValue(keyboardMap);
+  }
 }
 
-String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyboardTo) {
-  Map mapSourceToNormal;
-  Map mapNormalToTarget;
+String encodeKeyboard(String input, KEYBOARD_TYPE keyboardFrom, KEYBOARD_TYPE keyboardTo) {
+  Map<String, String> mapSourceToNormal = <String, String>{};
+  Map<String, String> mapNormalToTarget = <String, String>{};
 
-  if (input == null || input == '') return '';
+  if (input.isEmpty) return '';
 
-  mapSourceToNormal = buildConvertingMap(keyboardFrom, ConvertDirection.toNormal);
-  mapNormalToTarget = buildConvertingMap(keyboardTo, ConvertDirection.fromNormal);
+  mapSourceToNormal = _buildConvertingMap(keyboardFrom, _ConvertDirection.toNormal);
+  mapNormalToTarget = _buildConvertingMap(keyboardTo, _ConvertDirection.fromNormal);
 
   return input.split('').map((character) {
     var normal = mapSourceToNormal[character];
@@ -1801,55 +1830,89 @@ String encodeKeyboard(String input, KeyboardType keyboardFrom, KeyboardType keyb
       var target = mapNormalToTarget[normal];
       if (target != null) {
         return target;
-      } else
+      } else {
         return '';
-    } else
+      }
+    } else {
       return '';
+    }
   }).join('');
 }
 
-String convert(String input, Map layout) {
+String _convert(String input, Map<String, String> layout) {
   return input.split('').map((character) {
-    if (character == ' ')
+    if (character == ' ') {
       return ' ';
-    else if (character == '.')
+    } else if (character == '.') {
       return '.';
-    else if (layout[character] == null)
+    } else if (layout[character] == null) {
       return ' ';
-    else
+    } else {
       return layout[character];
+    }
   }).join('');
 }
 
-List<List<String>> encodeKeyboardNumbers(String input) {
-  List<List<String>> output = <List<String>>[];
-  output.add(['keyboard_mode_qwertz_ristome_dvorak', convert(input, QWERTZ_T1NumberToSymbol)]);
-  output.add(['keyboard_mode_neo', convert(input, NeoNumberToSymbol)]);
-  output.add(['keyboard_mode_neo_3', convert(input, Neo3NumberToSymbol)]);
-  output.add(['keyboard_mode_neo_5', convert(input, Neo5NumberToSymbol)]);
-  output.add(['keyboard_mode_neo_6', convert(input, Neo6NumberToSymbol)]);
-  output.add(['keyboard_mode_fra_azerty', convert(input, AZERTYNumberToSymbol)]);
-  output.add(['keyboard_mode_fra_bepo', convert(input, BEPONumberToSymbol)]);
-  output.add(['keyboard_mode_qwerty_us_int_colemak_dvorak', convert(input, QWERTY_USNumberToSymbol)]);
+final Map<String, String Function(String)> keyboardNumbersByName = {
+  'keyboard_mode_qwertz_ristome_dvorak': (String input) => _convert(input, _SymbolToQWERTZ_T1Number),
+  'keyboard_mode_neo': (String input) => _convert(input, _SymbolToNeoNumber),
+  'keyboard_mode_neo_3': (String input) => _convert(input, _SymbolToNeo3Number),
+  'keyboard_mode_neo_5': (String input) => _convert(input, _SymbolToNeo5Number),
+  'keyboard_mode_neo_6': (String input) => _convert(input, _SymbolToNeo6Number),
+  'keyboard_mode_fra_azerty': (String input) => _convert(input, _SymbolToAZERTYNumber),
+  'keyboard_mode_fra_bepo': (String input) => _convert(input, _SymbolToBEPONumber),
+  'keyboard_mode_qwerty_us_int_colemak_dvorak': (String input) => _convert(input, _SymbolToDvorakNumber),
+  'keyboard_mode_iphone_de': (String input) => _convert(input, _SymbolToIPhoneDeNumber),
+  'keyboard_mode_iphone_en': (String input) => _convert(input, _SymbolToIPhoneEnNumber),
+  'keyboard_mode_iphone_1': (String input) => _convert(input, _SymbolToIPhone1Number),
+  'keyboard_mode_iphone_2': (String input) => _convert(input, _SymbolToIPhone2Number),
+  'keyboard_mode_iphone_3': (String input) => _convert(input, _SymbolToIPhone3Number),
+  'keyboard_mode_android_de': (String input) => _convert(input, _SymbolToAndroidDeNumber),
+  'keyboard_mode_android_en': (String input) => _convert(input, _SymbolToAndroidEnNumber),
+  'keyboard_mode_android_samsung_1': (String input) => _convert(input, _SymbolToAndroidSamsung1Number),
+  'keyboard_mode_android_samsung_2': (String input) => _convert(input, _SymbolToAndroidSamsung2Number),
+  'keyboard_mode_android_samsung_3': (String input) => _convert(input, _SymbolToAndroidSamsung3Number),
+  'keyboard_mode_android_samsung_4': (String input) => _convert(input, _SymbolToAndroidSamsung4Number),
+};
 
-  return output;
-}
-
-final Map<String, Function> keyboardNumbersByName = {
-  'keyboard_mode_qwertz_ristome_dvorak': (input) => convert(input, SymbolToQWERTZ_T1Number),
-  'keyboard_mode_neo': (input) => convert(input, SymbolToNeoNumber),
-  'keyboard_mode_neo_3': (input) => convert(input, SymbolToNeo3Number),
-  'keyboard_mode_neo_5': (input) => convert(input, SymbolToNeo5Number),
-  'keyboard_mode_neo_6': (input) => convert(input, SymbolToNeo6Number),
-  'keyboard_mode_fra_azerty': (input) => convert(input, SymbolToAZERTYNumber),
-  'keyboard_mode_fra_bepo': (input) => convert(input, SymbolToBEPONumber),
-  'keyboard_mode_qwerty_us_int_colemak_dvorak': (input) => convert(input, SymbolToDvorakNumber),
+final Map<String, List<Map<String, String>>> keyboardNumberMapsByName = {
+  // name   decoding map    encoding map
+  'keyboard_mode_qwertz_ristome_dvorak': [_SymbolToQWERTZ_T1Number, _QWERTZ_T1NumberToSymbol],
+  'keyboard_mode_neo': [_SymbolToNeoNumber, _NeoNumberToSymbol],
+  'keyboard_mode_neo_3': [_SymbolToNeo3Number, _Neo3NumberToSymbol],
+  'keyboard_mode_neo_5': [_SymbolToNeo5Number, _Neo5NumberToSymbol],
+  'keyboard_mode_neo_6': [_SymbolToNeo6Number, _Neo6NumberToSymbol],
+  'keyboard_mode_fra_azerty': [_SymbolToAZERTYNumber, _AZERTYNumberToSymbol],
+  'keyboard_mode_fra_bepo': [_SymbolToBEPONumber, _BEPONumberToSymbol],
+  'keyboard_mode_qwerty_us_int_colemak_dvorak': [_SymbolToDvorakNumber, _DvorakNumberToSymbol],
+  'keyboard_mode_iphone_de': [_SymbolToIPhoneDeNumber, _IPhoneDeNumberToSymbol],
+  'keyboard_mode_iphone_en': [_SymbolToIPhoneEnNumber, _IPhoneEnNumberToSymbol],
+  'keyboard_mode_iphone_1': [_SymbolToIPhone1Number, _IPhone1NumberToSymbol],
+  'keyboard_mode_iphone_2': [_SymbolToIPhone2Number, _IPhone2NumberToSymbol],
+  'keyboard_mode_iphone_3': [_SymbolToIPhone3Number, _IPhone3NumberToSymbol],
+  'keyboard_mode_android_de': [_SymbolToAndroidDeNumber, _AndroidDeNumberToSymbol],
+  'keyboard_mode_android_en': [_SymbolToAndroidEnNumber, _AndroidEnNumberToSymbol],
+  'keyboard_mode_android_samsung_1': [_SymbolToAndroidSamsung1Number, _AndroidSamsung1NumberToSymbol],
+  'keyboard_mode_android_samsung_2': [_SymbolToAndroidSamsung2Number, _AndroidSamsung2NumberToSymbol],
+  'keyboard_mode_android_samsung_3': [_SymbolToAndroidSamsung3Number, _AndroidSamsung3NumberToSymbol],
+  'keyboard_mode_android_samsung_4': [_SymbolToAndroidSamsung4Number, _AndroidSamsung4NumberToSymbol],
 };
 
 List<List<String>> decodeKeyboardNumbers(String input) {
   List<List<String>> output = <List<String>>[];
-  keyboardNumbersByName.forEach((name, function) {
-    output.add([name, function(input)]);
+  //keyboardNumbersByName.forEach((name, function) {output.add([name, function(input)]);});
+  keyboardNumberMapsByName.forEach((name, map){
+    output.add([name, _convert(input, map[0])]);
+  });
+
+  return output;
+}
+
+List<List<String>> encodeKeyboardNumbers(String input) {
+  List<List<String>> output = <List<String>>[];
+  //keyboardNumbersByName.forEach((name, function) {output.add([name, function(input)]);});
+  keyboardNumberMapsByName.forEach((name, map){
+    output.add([name, _convert(input, map[1])]);
   });
 
   return output;

@@ -5,7 +5,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 const MDT_INTERNALNAMES_ROT5 = 'multidecoder_tool_rot5_title';
 
 class MultiDecoderToolROT5 extends AbstractMultiDecoderTool {
-  MultiDecoderToolROT5({Key key, int id, String name, Map<String, dynamic> options})
+  MultiDecoderToolROT5({
+    Key? key,
+    required int id,
+    required String name,
+    required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -15,4 +19,13 @@ class MultiDecoderToolROT5 extends AbstractMultiDecoderTool {
               return Rotator().rot5(input);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolROT5State();
+}
+
+class _MultiDecoderToolROT5State extends State<MultiDecoderToolROT5> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

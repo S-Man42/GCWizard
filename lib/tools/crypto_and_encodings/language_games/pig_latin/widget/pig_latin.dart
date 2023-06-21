@@ -5,11 +5,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/logic/pig_latin.dart';
 
 class PigLatin extends StatefulWidget {
+  const PigLatin({Key? key}) : super(key: key);
+
   @override
-  PigLatinState createState() => PigLatinState();
+ _PigLatinState createState() => _PigLatinState();
 }
 
-class PigLatinState extends State<PigLatin> {
+class _PigLatinState extends State<PigLatin> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.right;
 
@@ -35,9 +37,7 @@ class PigLatinState extends State<PigLatin> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null) return '';
-
+  String _buildOutput() {
     var out = _currentMode == GCWSwitchPosition.left ? encryptPigLatin(_currentInput) : decryptPigLatin(_currentInput);
 
     return out;

@@ -4,11 +4,13 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 class NearestPrime extends StatefulWidget {
+  const NearestPrime({Key? key}) : super(key: key);
+
   @override
-  NearestPrimeState createState() => NearestPrimeState();
+ _NearestPrimeState createState() => _NearestPrimeState();
 }
 
-class NearestPrimeState extends State<NearestPrime> {
+class _NearestPrimeState extends State<NearestPrime> {
   var _currentNumber = 1;
 
   @override

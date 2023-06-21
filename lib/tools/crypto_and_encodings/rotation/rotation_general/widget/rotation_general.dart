@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -7,13 +8,50 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
-class RotationGeneral extends StatefulWidget {
+const String _apiSpecification = '''
+{
+	"/rotation_general" : {
+		"get": {
+			"summary": "Rotation Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for rotate text",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "parameter1",
+				"description": "Shifts letters count",
+				"schema": {
+					"type": "string",
+					"default": "0"
+				}
+			}
+		]
+	}
+}
+''';
+
+class RotationGeneral extends GCWWebStatefulWidget {
+  RotationGeneral({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
+
   @override
-  RotationGeneralState createState() => RotationGeneralState();
+  _RotationGeneralState createState() => _RotationGeneralState();
 }
 
-class RotationGeneralState extends State<RotationGeneral> {
-  var _controller;
+class _RotationGeneralState extends State<RotationGeneral> {
+  late TextEditingController _controller;
 
   String _currentInput = '';
   int _currentKey = 0;
@@ -21,6 +59,14 @@ class RotationGeneralState extends State<RotationGeneral> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+      var key = widget.getWebParameter(WEBPARAMETER.parameter1);
+      if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+      widget.webParameter = null;
+    }
+
     _controller = TextEditingController(text: _currentInput);
   }
 
@@ -44,6 +90,7 @@ class RotationGeneralState extends State<RotationGeneral> {
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'common_key'),
+          value: _currentKey,
           onChanged: (value) {
             setState(() {
               _currentKey = value;
@@ -55,10 +102,10 @@ class RotationGeneralState extends State<RotationGeneral> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInput == null || _currentInput.isEmpty) return GCWDefaultOutput();
+  Widget _buildOutput() {
+    if (_currentInput.isEmpty) return const GCWDefaultOutput();
 
-    var reverseKey = modulo(26 - _currentKey, 26);
+    var reverseKey = modulo(26 - _currentKey, 26).toInt();
 
     return Column(
       children: [

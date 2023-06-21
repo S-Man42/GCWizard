@@ -3,30 +3,30 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
 class GCWABCDropDown extends StatefulWidget {
-  final Function onChanged;
-  final value;
+  final void Function(int) onChanged;
+  final int? value;
 
   const GCWABCDropDown({
-    Key key,
-    this.onChanged,
+    Key? key,
+    required this.onChanged,
     this.value,
   }) : super(key: key);
 
   @override
-  GCWABCDropDownState createState() => GCWABCDropDownState();
+ _GCWABCDropDownState createState() => _GCWABCDropDownState();
 }
 
-class GCWABCDropDownState extends State<GCWABCDropDown> {
-  int _currentValue;
+class _GCWABCDropDownState extends State<GCWABCDropDown> {
+  int? _currentValue;
 
   @override
   Widget build(BuildContext context) {
-    return GCWDropDown(
+    return GCWDropDown<int>(
       value: _currentValue ?? widget.value ?? 1,
       onChanged: (newValue) {
         setState(() {
           _currentValue = newValue;
-          widget.onChanged(_currentValue);
+          widget.onChanged(_currentValue!);
         });
       },
       items: alphabet_AZ.entries.map((entry) {

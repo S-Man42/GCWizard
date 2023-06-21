@@ -1,23 +1,25 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 
 class Substitution extends StatefulWidget {
-  final String input;
-  final Map<String, String> substitutions;
+  final String? input;
+  final Map<String, String>? substitutions;
 
-  const Substitution({Key key, this.input, this.substitutions}) : super(key: key);
+  const Substitution({Key? key, this.input, this.substitutions}) : super(key: key);
 
   @override
-  SubstitutionState createState() => SubstitutionState();
+ _SubstitutionState createState() => _SubstitutionState();
 }
 
-class SubstitutionState extends State<Substitution> {
-  var _inputController;
+class _SubstitutionState extends State<Substitution> {
+  late TextEditingController _inputController;
 
   var _currentInput = '';
   var _currentFromInput = '';
@@ -25,7 +27,7 @@ class SubstitutionState extends State<Substitution> {
   var _currentCaseSensitive = false;
 
   var _currentIdCount = 0;
-  var _currentSubstitutions = <int, Map<String, String>>{};
+  final List<KeyValueBase> _currentSubstitutions = [];
 
   String _output = '';
 
@@ -34,13 +36,16 @@ class SubstitutionState extends State<Substitution> {
     super.initState();
 
     if (widget.substitutions != null) {
-      widget.substitutions.entries.forEach((element) {
-        _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {element.key: element.value});
-      });
+      for (var element in widget.substitutions!.entries) {
+        _currentIdCount++;
+        if (_currentSubstitutions.firstWhereOrNull((entry) => entry.id == _currentIdCount) == null) {
+          _currentSubstitutions.add(KeyValueBase(_currentIdCount, element.key, element.value));
+        }
+      }
     }
 
     if (widget.input != null) {
-      _currentInput = widget.input;
+      _currentInput = widget.input!;
       _calculateOutput();
     }
 
@@ -54,25 +59,23 @@ class SubstitutionState extends State<Substitution> {
     super.dispose();
   }
 
-  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.length > 0)
-      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return null;
+    _currentIdCount++;
+    if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
+      entry.id = _currentIdCount;
+      return entry;
+    }
+    return null;
+  }
+
+  void _updateNewEntry(KeyValueBase entry) {
+    _currentFromInput = entry.key;
+    _currentToInput = entry.value;
     _calculateOutput();
   }
 
-  _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    _currentFromInput = currentFromInput;
-    _currentToInput = currentToInput;
-    _calculateOutput();
-  }
-
-  _updateEntry(dynamic id, String key, String value) {
-    _currentSubstitutions[id] = {key: value};
-    _calculateOutput();
-  }
-
-  _removeEntry(dynamic id, BuildContext context) {
-    _currentSubstitutions.remove(id);
+  void _updateEntry(KeyValueBase entry) {
     _calculateOutput();
   }
 
@@ -97,8 +100,6 @@ class SubstitutionState extends State<Substitution> {
     return GCWKeyValueEditor(
         keyHintText: i18n(context, 'substitution_from'),
         valueHintText: i18n(context, 'substitution_to'),
-        onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
         middleWidget: Column(children: <Widget>[
           GCWOnOffSwitch(
             title: i18n(context, 'common_case_sensitive'),
@@ -110,18 +111,21 @@ class SubstitutionState extends State<Substitution> {
           ),
         ]),
         dividerText: i18n(context, 'substitution_current_substitutions'),
-        keyKeyValueMap: _currentSubstitutions,
-        onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+
+        entries: _currentSubstitutions,
+        onNewEntryChanged: (entry) => _updateNewEntry(entry),
+        onGetNewEntry: (entry) => _getNewEntry(entry),
+        onUpdateEntry: (entry) => _updateEntry(entry),
+    );
   }
 
-  _calculateOutput() {
+  void _calculateOutput() {
     var _substitutions = <String, String>{};
-    _currentSubstitutions.entries.forEach((entry) {
-      _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
-    });
+    for (var entry in _currentSubstitutions) {
+      _substitutions.putIfAbsent(entry.key, () => entry.value);
+    }
 
-    if (_currentFromInput != null && _currentFromInput.length > 0 && _currentToInput != null) {
+    if (_currentFromInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 

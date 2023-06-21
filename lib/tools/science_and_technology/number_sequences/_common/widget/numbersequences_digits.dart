@@ -8,13 +8,13 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 class NumberSequenceDigits extends StatefulWidget {
   final NumberSequencesMode mode;
   final int maxDigits;
-  const NumberSequenceDigits({Key key, this.mode, this.maxDigits}) : super(key: key);
+  const NumberSequenceDigits({Key? key, required this.mode, required this.maxDigits}) : super(key: key);
 
   @override
-  NumberSequenceDigitsState createState() => NumberSequenceDigitsState();
+ _NumberSequenceDigitsState createState() => _NumberSequenceDigitsState();
 }
 
-class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
+class _NumberSequenceDigitsState extends State<NumberSequenceDigits> {
   int _currentInputN = 1;
 
   @override

@@ -4,11 +4,13 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 class NthPrime extends StatefulWidget {
+  const NthPrime({Key? key}) : super(key: key);
+
   @override
-  NthPrimeState createState() => NthPrimeState();
+ _NthPrimeState createState() => _NthPrimeState();
 }
 
-class NthPrimeState extends State<NthPrime> {
+class _NthPrimeState extends State<NthPrime> {
   var _currentNumber = 1;
 
   @override

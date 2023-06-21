@@ -5,21 +5,63 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
-class Morse extends StatefulWidget {
+const String _apiSpecification = '''
+{
+	"/morse" : {
+		"get": {
+			"summary": "Morse Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding Morse",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "decode"
+				}
+			}
+		]
+	}
+}
+''';
+
+class Morse extends GCWWebStatefulWidget {
+  Morse({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
+
   @override
-  MorseState createState() => MorseState();
+  _MorseState createState() => _MorseState();
 }
 
-class MorseState extends State<Morse> {
-  TextEditingController _encodeController;
-  TextEditingController _decodeController;
+class _MorseState extends State<Morse> {
+  late TextEditingController _encodeController;
+  late TextEditingController _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
@@ -28,6 +70,18 @@ class MorseState extends State<Morse> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+        _currentMode = GCWSwitchPosition.left;
+      }
+      if (_currentMode == GCWSwitchPosition.left) {
+        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
+      } else {
+        _currentDecodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentDecodeInput;
+      }
+      widget.webParameter = null;
+    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
@@ -82,6 +136,7 @@ class MorseState extends State<Morse> {
 
     return GCWToolBar(children: [
       Container(
+        padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
         child: Row(
           children: [
             Expanded(
@@ -106,9 +161,9 @@ class MorseState extends State<Morse> {
             ),
           ],
         ),
-        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
       ),
       Container(
+        padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
         child: Row(
           children: [
             Expanded(
@@ -133,9 +188,9 @@ class MorseState extends State<Morse> {
             ),
           ],
         ),
-        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
       ),
       Container(
+        padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
         child: GCWIconButton(
           icon: Icons.backspace,
           onPressed: () {
@@ -144,12 +199,11 @@ class MorseState extends State<Morse> {
             });
           },
         ),
-        padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
       )
     ]);
   }
 
-  _addCharacter(String input) {
+  void _addCharacter(String input) {
     _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
   }
 
@@ -160,9 +214,10 @@ class MorseState extends State<Morse> {
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeMorse(_currentEncodeInput);
       textStyle =
-          TextStyle(fontSize: textStyle.fontSize + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
-    } else
+          TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
+    } else {
       output = decodeMorse(_currentDecodeInput);
+    }
 
     return GCWOutputText(text: output, style: textStyle);
   }

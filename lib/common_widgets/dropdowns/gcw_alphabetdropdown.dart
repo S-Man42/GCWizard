@@ -1,47 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
-class GCWAlphabetDropDown extends StatefulWidget {
-  final Function onChanged;
-  final Function onCustomAlphabetChanged;
-  final Map<dynamic, String> items;
-  final customModeKey;
-  final value;
-  final textFieldController;
-  final textFieldHintText;
+class GCWAlphabetDropDown<T> extends StatefulWidget {
+  final void Function(T) onChanged;
+  final void Function(String)? onCustomAlphabetChanged;
+  final Map<T, String> items;
+  final T customModeKey;
+  final T value;
+  final TextEditingController? textFieldController;
+  final String? textFieldHintText;
 
   const GCWAlphabetDropDown({
-    Key key,
-    this.value,
-    this.items,
-    this.onChanged,
+    Key? key,
+    required this.value,
+    required this.items,
+    required this.onChanged,
     this.onCustomAlphabetChanged,
-    this.customModeKey,
+    required this.customModeKey,
     this.textFieldController,
     this.textFieldHintText,
   }) : super(key: key);
 
   @override
-  _GCWAlphabetDropDownState createState() => _GCWAlphabetDropDownState();
+  _GCWAlphabetDropDownState<T> createState() => _GCWAlphabetDropDownState<T>();
 }
 
-class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
-  dynamic _currentMode;
+class _GCWAlphabetDropDownState<T> extends State<GCWAlphabetDropDown<T>> {
+  T? _currentMode;
 
   @override
   Widget build(BuildContext context) {
-    ThemeColors colors = themeColors();
 
     return Column(children: <Widget>[
-      GCWDropDown(
+      GCWDropDown<T>(
         value: widget.value,
         onChanged: (value) {
           setState(() {
             _currentMode = value;
-            widget.onChanged(_currentMode);
+            widget.onChanged(value);
           });
         },
         items: widget.items.entries.map((mode) {
@@ -50,7 +48,7 @@ class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
       ),
       if (_currentMode == widget.customModeKey)
         GCWTextField(
-          hintText: widget.textFieldHintText == null ? i18n(context, 'common_alphabet') : widget.textFieldHintText,
+          hintText: widget.textFieldHintText ?? i18n(context, 'common_alphabet'),
           controller: widget.textFieldController,
           onChanged: widget.onCustomAlphabetChanged,
         ),

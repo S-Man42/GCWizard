@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/w
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class RotationSelection extends GCWSelection {
+  const RotationSelection({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
@@ -23,6 +25,6 @@ class RotationSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    return Container(child: GCWToolList(toolList: _toolList));
+    return GCWToolList(toolList: _toolList);
   }
 }

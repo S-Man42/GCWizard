@@ -1,20 +1,23 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsQuadtree extends StatefulWidget {
-  final Function onChanged;
-  final BaseCoordinates coordinates;
+  final void Function(Quadtree?) onChanged;
+  final BaseCoordinate coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsQuadtree({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const _GCWCoordsQuadtree({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsQuadtreeState createState() => _GCWCoordsQuadtreeState();
 }
 
 class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   var _currentCoord = '';
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
+  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
+
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -30,13 +33,13 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var quadtree = widget.coordinates is Quadtree
-          ? widget.coordinates as Quadtree
-          : Quadtree.fromLatLon(widget.coordinates.toLatLng());
+    if (!widget.isDefault && !_initialized) {
+      var quadtree = widget.coordinates;
       _currentCoord = quadtree.toString();
 
       _controller.text = _currentCoord;
+
+      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -52,7 +55,7 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  void _setCurrentValueAndEmitOnChange() {
     try {
       widget.onChanged(Quadtree.parse(_currentCoord));
     } catch (e) {}

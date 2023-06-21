@@ -38,11 +38,13 @@ final CHANGELOG = {
 };
 
 class Changelog extends StatefulWidget {
+  const Changelog({Key? key}) : super(key: key);
+
   @override
-  ChangelogState createState() => ChangelogState();
+ _ChangelogState createState() => _ChangelogState();
 }
 
-class ChangelogState extends State<Changelog> {
+class _ChangelogState extends State<Changelog> {
   @override
   Widget build(BuildContext context) {
     var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());

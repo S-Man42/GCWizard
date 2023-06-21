@@ -14,19 +14,17 @@ import 'package:prefs/prefs.dart';
 class SymbolTableExamples extends StatefulWidget {
   final List<String> symbolKeys;
 
-  const SymbolTableExamples({Key key, this.symbolKeys}) : super(key: key);
+  const SymbolTableExamples({Key? key, required this.symbolKeys}) : super(key: key);
 
   @override
-  SymbolTableExamplesState createState() => SymbolTableExamplesState();
+ _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
 }
 
-class SymbolTableExamplesState extends State<SymbolTableExamples> {
-  var _controller;
+class _SymbolTableExamplesState extends State<SymbolTableExamples> {
+  late TextEditingController _controller;
   String _currentInput = 'ABC123';
 
   var symbolKeys = <String>[];
-
-  Map<String, SymbolTableData> data = {};
 
   @override
   void initState() {
@@ -36,19 +34,12 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
     _initialize();
   }
 
-  Future _initialize() async {
-    if (widget.symbolKeys == null || widget.symbolKeys.isEmpty) {
+  Future<void> _initialize() async {
+    if (widget.symbolKeys.isEmpty) {
       return;
     }
 
     symbolKeys = List.from(widget.symbolKeys);
-
-    for (String symbolKey in symbolKeys) {
-      var symbolTableData = SymbolTableData(context, symbolKey);
-      await symbolTableData.initialize();
-      data.putIfAbsent(symbolKey, () => symbolTableData);
-    }
-    setState(() {});
   }
 
   @override
@@ -61,8 +52,8 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
-        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
+        ? Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     return Column(
       children: <Widget>[
@@ -95,19 +86,8 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
     );
   }
 
-  _createSymbols(int countColumns) {
-    if (data == null || data.isEmpty) return Container();
-
+  Widget _createSymbols(int countColumns) {
     var symbols = symbolKeys.map<Widget>((symbolKey) {
-      var tableOutput = GCWSymbolTableTextToSymbols(
-          text: _currentInput,
-          ignoreUnknown: true,
-          countColumns: countColumns,
-          data: data[symbolKey],
-          showExportButton: false,
-          specialEncryption: false,
-          fixed: true);
-
       return Column(
         children: [
           GCWTextDivider(
@@ -118,23 +98,47 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute(
+                      NoAnimationMaterialPageRoute<GCWSymbolTableTool>(
                           builder: (context) => GCWSymbolTableTool(
                                 symbolKey: symbolKey,
+                                symbolSearchStrings: const [],
                               )));
                 },
               )),
-          tableOutput
+          FutureBuilder<SymbolTableData>(
+              future: _loadSymbolData(symbolKey),
+              builder: (BuildContext context, AsyncSnapshot<SymbolTableData> snapshot) {
+                if (snapshot.hasData && snapshot.data is SymbolTableData) {
+                  return GCWSymbolTableTextToSymbols(
+                      text: _currentInput,
+                      ignoreUnknown: true,
+                      countColumns: countColumns,
+                      data: snapshot.data!,
+                      showExportButton: false,
+                      specialEncryption: false,
+                      fixed: true
+                  );
+                } else {
+                  return Container();
+                }
+              })
         ],
       );
     }).toList();
 
     return SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         primary: true,
         child: Column(
             children: symbols
         )
     );
+  }
+
+  Future<SymbolTableData> _loadSymbolData(String symbolKey) async {
+    var symbolTableData = SymbolTableData(context, symbolKey);
+    await symbolTableData.initialize();
+
+    return symbolTableData;
   }
 }

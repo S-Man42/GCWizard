@@ -5,11 +5,13 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 class PrimeIndex extends StatefulWidget {
+  const PrimeIndex({Key? key}) : super(key: key);
+
   @override
-  PrimeIndexState createState() => PrimeIndexState();
+ _PrimeIndexState createState() => _PrimeIndexState();
 }
 
-class PrimeIndexState extends State<PrimeIndex> {
+class _PrimeIndexState extends State<PrimeIndex> {
   var _currentNumber = 1;
 
   @override
@@ -36,7 +38,7 @@ class PrimeIndexState extends State<PrimeIndex> {
     );
   }
 
-  _buildOutput() {
+  String _buildOutput() {
     var index = getPrimeIndex(_currentNumber);
     return index >= 1 ? index.toString() : i18n(context, 'primes_noprime');
   }

@@ -3,11 +3,13 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 
 class MapView extends StatefulWidget {
+  const MapView({Key? key}) : super(key: key);
+
   @override
-  MapViewState createState() => MapViewState();
+ _MapViewState createState() => _MapViewState();
 }
 
-class MapViewState extends State<MapView> {
+class _MapViewState extends State<MapView> {
   var points = <GCWMapPoint>[];
   var polyGeodetics = <GCWMapPolyline>[];
 

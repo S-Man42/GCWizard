@@ -11,14 +11,16 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/malbolge/logic/malbolge.dart';
 
 class Malbolge extends StatefulWidget {
+  const Malbolge({Key? key}) : super(key: key);
+
   @override
-  MalbolgeState createState() => MalbolgeState();
+ _MalbolgeState createState() => _MalbolgeState();
 }
 
-class MalbolgeState extends State<Malbolge> {
-  var _programmController;
-  var _inputController;
-  var _outputController;
+class _MalbolgeState extends State<Malbolge> {
+  late TextEditingController _programmController;
+  late TextEditingController _inputController;
+  late TextEditingController _outputController;
 
   String _currentProgramm = '';
   String _currentInput = '';
@@ -143,7 +145,7 @@ class MalbolgeState extends State<Malbolge> {
             : Column(
                 children: <Widget>[
                   GCWOnOffSwitch(
-                    title: i18n(context, 'common_programming_code_debug'),
+                    title: i18n(context, 'common_programming_debug'),
                     value: _currentDebug,
                     onChanged: (value) {
                       setState(() {
@@ -159,6 +161,7 @@ class MalbolgeState extends State<Malbolge> {
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Container(
+                                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                                 child: Column(
                                   children: <Widget>[
                                     GCWTextDivider(text: i18n(context, 'common_programming_code_assembler')),
@@ -168,7 +171,6 @@ class MalbolgeState extends State<Malbolge> {
                                     ),
                                   ],
                                 ),
-                                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
                               ),
                             )),
                         Expanded(
@@ -176,6 +178,7 @@ class MalbolgeState extends State<Malbolge> {
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Container(
+                                padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                                 child: Column(
                                   children: <Widget>[
                                     GCWTextDivider(text: i18n(context, 'common_programming_code_mnemonic')),
@@ -185,7 +188,6 @@ class MalbolgeState extends State<Malbolge> {
                                     ),
                                   ],
                                 ),
-                                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
                               ),
                             )),
                       ]),
@@ -198,12 +200,13 @@ class MalbolgeState extends State<Malbolge> {
 
   String buildOutputText(malbolgeOutput outputList) {
     String output = '';
-    outputList.output.forEach((element) {
-      if (element != null) if (element.startsWith('malbolge_') || element.startsWith('common_programming_')) {
+    for (var element in outputList.output) {
+      if (element.startsWith('malbolge_') || element.startsWith('common_programming_')) {
         output = output + i18n(context, element) + '\n';
-      } else
+      } else {
         output = output + element + '\n';
-    });
+      }
+    }
     return output;
   }
 }

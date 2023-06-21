@@ -9,11 +9,13 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rail_fence/logic/rail_fence.dart';
 
 class RailFence extends StatefulWidget {
+  const RailFence({Key? key}) : super(key: key);
+
   @override
-  RailFenceState createState() => RailFenceState();
+ _RailFenceState createState() => _RailFenceState();
 }
 
-class RailFenceState extends State<RailFence> {
+class _RailFenceState extends State<RailFence> {
   String _currentInput = '';
   var _currentKey = 2;
   String _currentPassword = '';
@@ -21,7 +23,7 @@ class RailFenceState extends State<RailFence> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
+  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +49,9 @@ class RailFenceState extends State<RailFence> {
         ),
         Row(
           children: [
-            Expanded(child: GCWText(text: i18n(context, 'railfence_optionalpassword')), flex: 1),
+            Expanded(flex: 1, child: GCWText(text: i18n(context, 'railfence_optionalpassword'))),
             Expanded(
+                flex: 3,
                 child: GCWTextField(
                   maxLength: _currentKey,
                   inputFormatters: [_maskInputFormatter],
@@ -57,8 +60,7 @@ class RailFenceState extends State<RailFence> {
                       _currentPassword = text;
                     });
                   },
-                ),
-                flex: 3)
+                ))
           ],
         ),
         GCWIntegerSpinner(
@@ -84,7 +86,7 @@ class RailFenceState extends State<RailFence> {
     );
   }
 
-  _calculateOutput() {
+  String _calculateOutput() {
     return _currentMode == GCWSwitchPosition.left
         ? encryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword)
         : decryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword);

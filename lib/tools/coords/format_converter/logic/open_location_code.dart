@@ -20,70 +20,70 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 /// A separator used to break the code into two parts to aid memorability.
-const separator = '+'; // 43 Ascii
+const _separator = '+'; // 43 Ascii
 
 /// The number of characters to place before the separator.
-const separatorPosition = 8;
+const _separatorPosition = 8;
 
 /// The character used to pad codes.
-const padding = '0'; // 48 in Ascii
+const _padding = '0'; // 48 in Ascii
 
 /// The character set used to encode the values.
-const codeAlphabet = '23456789CFGHJMPQRVWX';
+const _codeAlphabet = '23456789CFGHJMPQRVWX';
 
 /// The base to use to convert numbers to/from.
-const encodingBase = codeAlphabet.length;
+const _encodingBase = _codeAlphabet.length;
 
 /// The maximum value for latitude in degrees.
-const latitudeMax = 90;
+const _latitudeMax = 90;
 
 /// The maximum value for longitude in degrees.
-const longitudeMax = 180;
+const _longitudeMax = 180;
 
 // The max number of digits to process in a plus code.
-const maxDigitCount = 15;
+const _maxDigitCount = 15;
 
 /// Maximum code length using lat/lng pair encoding. The area of such a
 /// code is approximately 13x13 meters (at the equator), and should be suitable
 /// for identifying buildings. This excludes prefix and separator characters.
-const pairCodeLength = 10;
+const _pairCodeLength = 10;
 
 /// First place value of the pairs (if the last pair value is 1).
-final pairFirstPlaceValue = pow(encodingBase, pairCodeLength / 2 - 1).toInt();
+final _pairFirstPlaceValue = pow(_encodingBase, _pairCodeLength / 2 - 1).toInt();
 
 /// Inverse of the precision of the pair section of the code.
-final pairPrecision = pow(encodingBase, 3).toInt();
+final _pairPrecision = pow(_encodingBase, 3).toInt();
 
 /// The resolution values in degrees for each position in the lat/lng pair
 /// encoding. These give the place value of each position, and therefore the
 /// dimensions of the resulting area.
-const pairResolutions = <double>[20.0, 1.0, .05, .0025, .000125];
+//const _pairResolutions = <double>[20.0, 1.0, .05, .0025, .000125];
 
 /// Number of digits in the grid precision part of the code.
-const gridCodeLength = maxDigitCount - pairCodeLength;
+const _gridCodeLength = _maxDigitCount - _pairCodeLength;
 
 /// Number of columns in the grid refinement method.
-const gridColumns = 4;
+const _gridColumns = 4;
 
 /// Number of rows in the grid refinement method.
-const gridRows = 5;
+const _gridRows = 5;
 
 /// First place value of the latitude grid (if the last place is 1).
-final gridLatFirstPlaceValue = pow(gridRows, gridCodeLength - 1).toInt();
+final _gridLatFirstPlaceValue = pow(_gridRows, _gridCodeLength - 1).toInt();
 
 /// First place value of the longitude grid (if the last place is 1).
-final gridLngFirstPlaceValue = pow(gridColumns, gridCodeLength - 1).toInt();
+final _gridLngFirstPlaceValue = pow(_gridColumns, _gridCodeLength - 1).toInt();
 
 /// Multiply latitude by this much to make it a multiple of the finest
 /// precision.
-final finalLatPrecision = pairPrecision * pow(gridRows, gridCodeLength).toInt();
+final _finalLatPrecision = _pairPrecision * pow(_gridRows, _gridCodeLength).toInt();
 
 /// Multiply longitude by this much to make it a multiple of the finest
 /// precision.
-final finalLngPrecision = pairPrecision * pow(gridColumns, gridCodeLength).toInt();
+final _finalLngPrecision = _pairPrecision * pow(_gridColumns, _gridCodeLength).toInt();
 
 /// Minimum length of a code that can be shortened.
-const minTrimmableCodeLen = 6;
+//const _minTrimmableCodeLen = 6;
 
 /// Decoder lookup table.
 /// Position is ASCII character value, value is:
@@ -101,44 +101,44 @@ const _decode = <int>[
   14, 15, 16, -2, -2, -2, 17, 18, 19, -2, -2, -2, -2, -2, -2, -2,
 ]; //
 
-bool _matchesPattern(String string, Pattern pattern) => string.indexOf(pattern) >= 0;
+bool _matchesPattern(String string, Pattern pattern) => string.contains(pattern);
 
 bool _isValid(String code) {
-  if (code == null || code.length == 1) {
+  if (code.length == 1) {
     return false;
   }
 
-  int separatorIndex = code.indexOf(separator);
+  int separatorIndex = code.indexOf(_separator);
   // There must be a single separator at an even index and position should be < SEPARATOR_POSITION.
   if (separatorIndex == -1 ||
-      separatorIndex != code.lastIndexOf(separator) ||
-      separatorIndex > separatorPosition ||
+      separatorIndex != code.lastIndexOf(_separator) ||
+      separatorIndex > _separatorPosition ||
       separatorIndex.isOdd) {
     return false;
   }
 
   // We can have an even number of padding characters before the separator,
   // but then it must be the final character.
-  if (_matchesPattern(code, padding)) {
+  if (_matchesPattern(code, _padding)) {
     // Short codes cannot have padding.
-    if (separatorIndex < separatorPosition) {
+    if (separatorIndex < _separatorPosition) {
       return false;
     }
     // Not allowed to start with them!
-    if (code.indexOf(padding) == 0) {
+    if (code.indexOf(_padding) == 0) {
       return false;
     }
     // There can only be one group and it must have even length.
-    var padMatch = RegExp('($padding+)').allMatches(code).toList();
+    var padMatch = RegExp('($_padding+)').allMatches(code).toList();
     if (padMatch.length != 1) {
       return false;
     }
-    var matchLength = padMatch.first.group(0).length;
-    if (matchLength.isOdd || matchLength > separatorPosition - 2) {
+    var matchLength = padMatch.first.group(0)!.length;
+    if (matchLength.isOdd || matchLength > _separatorPosition - 2) {
       return false;
     }
     // If the code is long enough to end with a separator, make sure it does.
-    if (!code.endsWith(separator)) {
+    if (!code.endsWith(_separator)) {
       return false;
     }
   }
@@ -149,10 +149,11 @@ bool _isValid(String code) {
   }
 
   // Check code contains only valid characters.
-  var filterCallback = (ch) => !(ch > _decode.length || _decode[ch] < -1);
+  filterCallback(int ch) => !(ch > _decode.length || _decode[ch] < -1);
   return code.codeUnits.every(filterCallback);
 }
 
+// ignore: unused_element
 num _clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
 
 /// Compute the latitude precision value for a given code length.
@@ -160,23 +161,12 @@ num _clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
 /// Lengths <= 10 have the same precision for latitude and longitude, but
 /// lengths > 10 have different precisions due to the grid method having fewer
 /// columns than rows.
-num _computeLatitudePrecision(int codeLength) {
-  if (codeLength <= 10) {
-    return pow(encodingBase, (codeLength ~/ -2) + 2);
-  }
-  return 1 / (pow(encodingBase, 3) * pow(gridRows, codeLength - 10));
-}
-
-/// Normalize a [longitude] into the range -180 to 180, not including 180.
-num _normalizeLongitude(num longitude) {
-  while (longitude < -180) {
-    longitude += 360;
-  }
-  while (longitude >= 180) {
-    longitude -= 360;
-  }
-  return longitude;
-}
+// num _computeLatitudePrecision(int codeLength) {
+//   if (codeLength <= 10) {
+//     return pow(encodingBase, (codeLength ~/ -2) + 2);
+//   }
+//   return 1 / (pow(encodingBase, 3) * pow(gridRows, codeLength - 10));
+// }
 
 /// Determines if a [code] is a valid short code.
 ///
@@ -188,7 +178,7 @@ bool _isShort(String code) {
     return false;
   }
   // If there are less characters than expected before the SEPARATOR.
-  if (_matchesPattern(code, separator) && code.indexOf(separator) < separatorPosition) {
+  if (_matchesPattern(code, _separator) && code.indexOf(_separator) < _separatorPosition) {
     return true;
   }
   return false;
@@ -210,15 +200,15 @@ bool _isFull(String code) {
     return false;
   }
   // Work out what the first latitude character indicates for latitude.
-  var firstLatValue = _decode[code.codeUnitAt(0)] * encodingBase;
-  if (firstLatValue >= latitudeMax * 2) {
+  var firstLatValue = _decode[code.codeUnitAt(0)] * _encodingBase;
+  if (firstLatValue >= _latitudeMax * 2) {
     // The code would decode to a latitude of >= 90 degrees.
     return false;
   }
   if (code.length > 1) {
     // Work out what the first longitude character indicates for longitude.
-    var firstLngValue = _decode[code.codeUnitAt(1)] * encodingBase;
-    if (firstLngValue >= longitudeMax * 2) {
+    var firstLngValue = _decode[code.codeUnitAt(1)] * _encodingBase;
+    if (firstLngValue >= _longitudeMax * 2) {
       // The code would decode to a longitude of >= 180 degrees.
       return false;
     }
@@ -243,9 +233,7 @@ bool _isFull(String code) {
 /// to the range -180 to 180.
 /// * [codeLength]: The number of significant digits in the output code, not
 /// including any separator characters.
-OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}) {
-  if (codeLength == 0) return null;
-
+OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = _pairCodeLength}) {
   if (codeLength % 2 == 1) codeLength--;
 
   var code = '';
@@ -258,45 +246,45 @@ OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairC
   // Multiply values by their precision and convert to positive.
   // Force to integers so the division operations will have integer results.
   // Note: Dart requires rounding before truncating to ensure precision!
-  int latVal = ((coords.latitude + latitudeMax) * finalLatPrecision * 1e6).round() ~/ 1e6;
-  int lngVal = ((coords.longitude + longitudeMax) * finalLngPrecision * 1e6).round() ~/ 1e6;
+  int latVal = ((coords.latitude + _latitudeMax) * _finalLatPrecision * 1e6).round() ~/ 1e6;
+  int lngVal = ((coords.longitude + _longitudeMax) * _finalLngPrecision * 1e6).round() ~/ 1e6;
 
   // Compute the grid part of the code if necessary.
-  if (codeLength > pairCodeLength) {
-    for (var i = 0; i < maxDigitCount - pairCodeLength; i++) {
-      int lat_digit = latVal % gridRows;
-      int lng_digit = lngVal % gridColumns;
-      int ndx = lat_digit * gridColumns + lng_digit;
-      code = codeAlphabet[ndx] + code;
+  if (codeLength > _pairCodeLength) {
+    for (var i = 0; i < _maxDigitCount - _pairCodeLength; i++) {
+      int lat_digit = latVal % _gridRows;
+      int lng_digit = lngVal % _gridColumns;
+      int ndx = lat_digit * _gridColumns + lng_digit;
+      code = _codeAlphabet[ndx] + code;
       // Note! Integer division.
-      latVal ~/= gridRows;
-      lngVal ~/= gridColumns;
+      latVal ~/= _gridRows;
+      lngVal ~/= _gridColumns;
     }
   } else {
-    latVal ~/= pow(gridRows, gridCodeLength);
-    lngVal ~/= pow(gridColumns, gridCodeLength);
+    latVal ~/= pow(_gridRows, _gridCodeLength);
+    lngVal ~/= pow(_gridColumns, _gridCodeLength);
   }
   // Compute the pair section of the code.
-  for (var i = 0; i < pairCodeLength / 2; i++) {
-    code = codeAlphabet[lngVal % encodingBase] + code;
-    code = codeAlphabet[latVal % encodingBase] + code;
-    latVal ~/= encodingBase;
-    lngVal ~/= encodingBase;
+  for (var i = 0; i < _pairCodeLength / 2; i++) {
+    code = _codeAlphabet[lngVal % _encodingBase] + code;
+    code = _codeAlphabet[latVal % _encodingBase] + code;
+    latVal ~/= _encodingBase;
+    lngVal ~/= _encodingBase;
   }
 
   // Add the separator character.
-  code = code.substring(0, separatorPosition) + separator + code.substring(separatorPosition);
+  code = code.substring(0, _separatorPosition) + _separator + code.substring(_separatorPosition);
 
   // If we don't need to pad the code, return the requested section.
-  if (codeLength >= separatorPosition) {
+  if (codeLength >= _separatorPosition) {
     return OpenLocationCode(code.substring(0, codeLength + 1));
   }
 
   // Pad and return the code.
-  return OpenLocationCode(code.substring(0, codeLength) + (padding * (separatorPosition - codeLength)) + separator);
+  return OpenLocationCode(code.substring(0, codeLength) + (_padding * (_separatorPosition - codeLength)) + _separator);
 }
 
-OpenLocationCode parseOpenLocationCode(String input) {
+OpenLocationCode? parseOpenLocationCode(String input) {
   var openLocationCode = OpenLocationCode(input);
   return openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
 }
@@ -318,8 +306,8 @@ String _sanitizeOLCode(String olc) {
 }
 
 /// Decodes an Open Location Code into the location coordinates.
-LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
-  if (openLocationCode == null || openLocationCode.text == null || openLocationCode.text.isEmpty) return null;
+LatLng? openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
+  if (openLocationCode.text.isEmpty) return null;
 
   var len = openLocationCode.text.replaceAll('+', '').length;
   if (len <= 10 && len.isOdd) return null;
@@ -332,55 +320,55 @@ LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
     // Strip out separator character (we've already established the code is
     // valid so the maximum is one), padding characters and convert to upper
     // case.
-    code = code.replaceAll(separator, '');
-    code = code.replaceAll(RegExp('$padding+'), '');
+    code = code.replaceAll(_separator, '');
+    code = code.replaceAll(RegExp('$_padding+'), '');
     code = code.toUpperCase();
     // Initialise the values for each section. We work them out as integers and
     // convert them to floats at the end.
-    var normalLat = -latitudeMax * pairPrecision;
-    var normalLng = -longitudeMax * pairPrecision;
+    var normalLat = -_latitudeMax * _pairPrecision;
+    var normalLng = -_longitudeMax * _pairPrecision;
     var gridLat = 0;
     var gridLng = 0;
     // How many digits do we have to process?
-    var digits = min(code.length, pairCodeLength);
+    var digits = min(code.length, _pairCodeLength);
     // Define the place value for the most significant pair.
-    var pv = pairFirstPlaceValue;
+    var pv = _pairFirstPlaceValue;
     // Decode the paired digits.
     for (var i = 0; i < digits; i += 2) {
-      normalLat += codeAlphabet.indexOf(code[i]) * pv;
-      normalLng += codeAlphabet.indexOf(code[i + 1]) * pv;
+      normalLat += _codeAlphabet.indexOf(code[i]) * pv;
+      normalLng += _codeAlphabet.indexOf(code[i + 1]) * pv;
       if (i < digits - 2) {
-        pv = pv ~/ encodingBase;
+        pv = pv ~/ _encodingBase;
       }
     }
     // Convert the place value to a float in degrees.
-    var latPrecision = pv / pairPrecision;
-    var lngPrecision = pv / pairPrecision;
+    var latPrecision = pv / _pairPrecision;
+    var lngPrecision = pv / _pairPrecision;
     // Process any extra precision digits.
-    if (code.length > pairCodeLength) {
+    if (code.length > _pairCodeLength) {
       // Initialise the place values for the grid.
-      var rowpv = gridLatFirstPlaceValue;
-      var colpv = gridLngFirstPlaceValue;
+      var rowpv = _gridLatFirstPlaceValue;
+      var colpv = _gridLngFirstPlaceValue;
       // How many digits do we have to process?
-      digits = min(code.length, maxDigitCount);
-      for (var i = pairCodeLength; i < digits; i++) {
-        var digitVal = codeAlphabet.indexOf(code[i]);
-        var row = digitVal ~/ gridColumns;
-        var col = digitVal % gridColumns;
+      digits = min(code.length, _maxDigitCount);
+      for (var i = _pairCodeLength; i < digits; i++) {
+        var digitVal = _codeAlphabet.indexOf(code[i]);
+        var row = digitVal ~/ _gridColumns;
+        var col = digitVal % _gridColumns;
         gridLat += row * rowpv;
         gridLng += col * colpv;
         if (i < digits - 1) {
-          rowpv = rowpv ~/ gridRows;
-          colpv = colpv ~/ gridColumns;
+          rowpv = rowpv ~/ _gridRows;
+          colpv = colpv ~/ _gridColumns;
         }
       }
       // Adjust the precisions from the integer values to degrees.
-      latPrecision = rowpv / finalLatPrecision;
-      lngPrecision = colpv / finalLngPrecision;
+      latPrecision = rowpv / _finalLatPrecision;
+      lngPrecision = colpv / _finalLngPrecision;
     }
     // Merge the values from the normal and extra precision parts of the code.
-    var lat = normalLat / pairPrecision + gridLat / finalLatPrecision;
-    var lng = normalLng / pairPrecision + gridLng / finalLngPrecision;
+    var lat = normalLat / _pairPrecision + gridLat / _finalLatPrecision;
+    var lng = normalLng / _pairPrecision + gridLng / _finalLngPrecision;
 
     // Return center of code area
     return LatLng((2 * lat + latPrecision) / 2, (2 * lng + lngPrecision) / 2);
