@@ -670,7 +670,6 @@ Map<String, String> _spellingNLD = {
   "X": "Xantippe",
   "Y": "Ypsilon",
   "Z": "Zaandam",
-  "IJ": "IJmuiden",
 };
 Map<String, String> _spellingBEL = {
   "A": "Arthur",

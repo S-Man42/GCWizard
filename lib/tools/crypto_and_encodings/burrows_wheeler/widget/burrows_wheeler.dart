@@ -21,7 +21,6 @@ class BurrowsWheeler extends StatefulWidget {
 class _BurrowsWheelerState extends State<BurrowsWheeler> {
   late TextEditingController plainController;
   late TextEditingController cipherController;
-  late TextEditingController indexNumberController;
   late TextEditingController indexCharacterController;
 
   var currentMode = GCWSwitchPosition.right;
@@ -120,7 +119,6 @@ class _BurrowsWheelerState extends State<BurrowsWheeler> {
               })
           : currentMode == GCWSwitchPosition.right
               ? GCWIntegerSpinner(
-                  controller: indexNumberController,
                   min: 1,
                   max: currentInputLen,
                   value: currentIndexPosition,

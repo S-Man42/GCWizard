@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.3.1+166
+version: 3.0.0+5
 publish_to: none
 
 environment:
@@ -53,7 +53,7 @@ dependencies:
   shared_preferences: ^2.1.1
   touchable: ^1.0.2
   tuple: ^2.0.1
-  universal_html: ^2.2.1
+  universal_html: ^2.2.3
   unrar_file: ^1.1.0
   uuid: ^3.0.6
   url_launcher: ^6.1.11
@@ -256,6 +256,8 @@ flutter:
     - assets/symbol_tables/notes_restvalues/
     - assets/symbol_tables/nyctography/
     - assets/symbol_tables/oak_island_money_pit/
+    - assets/symbol_tables/oak_island_money_pit_extended/
+    - assets/symbol_tables/oak_island_money_pit_libyan/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
     - assets/symbol_tables/optical_fiber_iec60304/
