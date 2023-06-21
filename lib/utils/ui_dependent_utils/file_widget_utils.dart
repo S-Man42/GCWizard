@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:file_picker_writable/file_picker_writable.dart';
@@ -79,8 +78,4 @@ String _limitFileNameLength(String fileName) {
   if (fileName.length <= maxLength) return fileName;
   var extension = getFileExtension(fileName);
   return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength - extension.length) + extension;
-}
-
-Uint8List convertStringToBytes(String text) {
-  return Uint8List.fromList(utf8.encode(text));
 }

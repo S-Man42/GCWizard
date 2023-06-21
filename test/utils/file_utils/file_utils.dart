@@ -1,12 +1,12 @@
-import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+
 
 void main() {
 
   group("file_utils.StringExportImport:", () {
 
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
+    List<Map<String, Object>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'test', 'expectedOutput' : 'test'},
@@ -17,7 +17,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = convertBytesToString(convertStringToBytes(elem['input']));
+        var _actual = convertBytesToString(convertStringToBytes(elem['input'] as String));
         expect(_actual, elem['expectedOutput']);
       });
     });

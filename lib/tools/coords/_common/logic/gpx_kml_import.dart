@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
@@ -31,7 +33,7 @@ Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
         var file = archive.first;
         file.decompress();
 
-        var xml = convertBytesToString(file.content);
+        var xml = convertBytesToString(Uint8List.fromList(file.content as List<int>));
         return parseCoordinatesFile(xml, kmlFormat: true);
       }
       break;
