@@ -187,11 +187,11 @@ class _CalendarState extends State<Calendar> {
     output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
 
     output['dates_calendar_system_exceltimestamp'] = _invalidExcelDate(jd)
-        ? i18n(context, 'dates_calendar_error')
+        ? i18n(context, 'dates_calendar_excel_error')
         : JulianDateToExcelTimestamp(jd);
 
     output['dates_calendar_system_unixtimestamp']  = _invalidUnixDate(jd)
-        ? i18n(context, 'dates_calendar_error')
+        ? i18n(context, 'dates_calendar_unix_error')
         : JulianDateToUnixTimestamp(jd);
 
     return GCWDefaultOutput(
