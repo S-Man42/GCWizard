@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
+import 'package:gc_wizard/application/main_menu/deep_link.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
@@ -50,6 +51,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwi
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
@@ -77,6 +79,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/widget/beghilos.dart';
@@ -263,8 +266,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 
-class MainView extends StatefulWidget {
-  const MainView({Key? key}) : super(key: key);
+class MainView extends GCWWebStatefulWidget {
+  MainView({Key? key, Map<String, String>? webParameter}) : super(key: key, webParameter: webParameter, apiSpecification: null);
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -354,11 +357,22 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    if (registeredTools.isEmpty) initializeRegistry(context);
+    if (registeredTools.isEmpty) {
+      initializeRegistry(context);
+
+      var deepLink = checkDeepLink();
+      if (deepLink != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.push(context, deepLink);
+        });
+        widget.webParameter = null;
+      }
+    }
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+
     return DefaultTabController(
       length: 3,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
@@ -390,6 +404,13 @@ class _MainViewState extends State<MainView> {
         ),
       ),
     );
+  }
+
+  NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
+    if (widget.hasWebParameter()) {
+      return createStartDeepLinkRoute(context, widget.webParameter!);
+    }
+    return null;
   }
 
   IconButton _buildSearchActionButton() {
@@ -465,7 +486,7 @@ void _initStaticToolList() {
       className(const Affine()),
       className(const AlcoholMass()),
       className(const ALGOL()),
-      className(const AlphabetValues()),
+      className(AlphabetValues()),
       className(const Amsco()),
       className(const AnimatedImage()),
       className(const AnimatedImageMorseCode()),
@@ -473,6 +494,7 @@ void _initStaticToolList() {
       className(const ASCIIValues()),
       className(const Atbash()),
       className(const AtomicNumbersToText()),
+      className(const AveMaria()),
       className(const BabylonNumbersSelection()),
       className(const Bacon()),
       className(const BaseSelection()),
@@ -596,7 +618,7 @@ void _initStaticToolList() {
       className(const MusicNotes()),
       className(const Navajo()),
       className(const NumberSequenceSelection()),
-      className(const MultiDecoder()),
+      className(MultiDecoder()),
       className(const NumeralBases()),
       className(const NumeralWordsSelection()),
       className(const OhlsenTelegraph()),
@@ -640,7 +662,7 @@ void _initStaticToolList() {
       className(Rot18()),
       className(Rot5()),
       className(Rot47()),
-      className(const RotationGeneral()),
+      className(RotationGeneral()),
       className(const RSASelection()),
       className(const SchillingCanstattTelegraph()),
       className(const ScrabbleSelection()),

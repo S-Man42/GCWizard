@@ -36,16 +36,6 @@ void updateFormulaGroups() {
   _saveData();
 }
 
-void deleteGroup(int? groupId) {
-  if (groupId == null) {
-    throw Exception('Formula group id not found');
-  }
-
-  formulaGroups.removeWhere((group) => group.id == groupId);
-
-  _saveData();
-}
-
 void _updateFormulaGroup(FormulaGroup group) {
   formulaGroups = formulaGroups.map((formulaGroup) {
     if (formulaGroup.id == group.id) return group;

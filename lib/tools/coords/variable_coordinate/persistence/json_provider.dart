@@ -37,12 +37,16 @@ int insertFormula(Formula formula) {
   return id;
 }
 
+void updateFormula(Formula formula) {
+  _updateFormula(formula);
+  _saveData();
+}
+
 void deleteFormula(int formulaId) {
   formulas.removeWhere((formula) => formula.id == formulaId);
 
   _saveData();
 }
-
 
 void _updateFormula(Formula formula) {
   formulas = formulas.map((f) {
@@ -64,9 +68,4 @@ int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula)
 
 void updateFormulaValue(KeyValueBase formulaValue, Formula formula) {
   updateFormula(formula);
-}
-
-void updateFormula(Formula formula) {
-  _updateFormula(formula);
-  _saveData();
 }
