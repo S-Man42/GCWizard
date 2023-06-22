@@ -1,0 +1,27 @@
+import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/utils/math_utils.dart';
+
+void main() {
+
+  group("lcm", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input_a' : 0, 'input_b' : 0, 'expectedOutput' : 0},
+      {'input_a' : 1, 'input_b' : 0, 'expectedOutput' : 0},
+      {'input_a' : 0, 'input_b' : 1, 'expectedOutput' : 0},
+      {'input_a' : 24, 'input_b' : 36, 'expectedOutput' : 72},
+      {'input_a' : 36, 'input_b' : 24, 'expectedOutput' : 72},
+      {'input_a' : -36, 'input_b' : 24, 'expectedOutput' : -72},
+      {'input_a' : -36, 'input_b' : -24, 'expectedOutput' : -72},
+      {'input_a' : -24, 'input_b' : -36, 'expectedOutput' : -72},
+      {'input_a' : -24, 'input_b' : 36, 'expectedOutput' : -72},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input_a: ${elem['input_a']}, input_b: ${elem['input_b']}', () {
+        var _actual = lcm(elem['input_a'] as int, elem['input_b'] as int);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+}

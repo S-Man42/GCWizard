@@ -50,5 +50,11 @@ int gcd(int a, int b) {
 
 int lcm(int a, int b){
   if (gcd(a, b) == 00) return 0;
-  return (a * b).abs() ~/ gcd(a, b);
+
+  int result = (a * b).abs() ~/ gcd(a, b);
+
+  if ((a < 0) || (b < 0)) {
+    return -result;
+  }
+  return result;
 }

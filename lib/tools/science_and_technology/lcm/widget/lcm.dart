@@ -31,7 +31,6 @@ class LCMState extends State<LCM> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          min: 0,
           value: _currentInputA,
           onChanged: (value) {
             setState(() {
@@ -40,7 +39,6 @@ class LCMState extends State<LCM> {
           },
         ),
         GCWIntegerSpinner(
-          min: 0,
           value: _currentInputB,
           onChanged: (value) {
             setState(() {

@@ -31,7 +31,6 @@ class GCDState extends State<GCD> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          min: 0,
           value: _currentInputA,
           onChanged: (value) {
             setState(() {
@@ -40,7 +39,6 @@ class GCDState extends State<GCD> {
           },
         ),
         GCWIntegerSpinner(
-          min: 0,
           value: _currentInputB,
           onChanged: (value) {
             setState(() {
