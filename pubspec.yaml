@@ -141,6 +141,7 @@ flutter:
     - assets/symbol_tables/dancing_men/
     - assets/symbol_tables/deafblind/
     - assets/symbol_tables/devanagari_numerals/
+    - assets/symbol_tables/dinotopia/
     - assets/symbol_tables/dni/
     - assets/symbol_tables/dni_colors/
     - assets/symbol_tables/dni_numbers/
@@ -279,6 +280,8 @@ flutter:
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/puzzle_2/
     - assets/symbol_tables/quadoo/
+    - assets/symbol_tables/ravkan/
+    - assets/symbol_tables/ravkan_extended/
     - assets/symbol_tables/reality/
     - assets/symbol_tables/red_herring/
     - assets/symbol_tables/resistor/
@@ -303,6 +306,7 @@ flutter:
     - assets/symbol_tables/solmisation/
     - assets/symbol_tables/space_invaders/
     - assets/symbol_tables/spintype/
+    - assets/symbol_tables/sprykski/
     - assets/symbol_tables/stippelcode/
     - assets/symbol_tables/suetterlin/
     - assets/symbol_tables/sunuz/

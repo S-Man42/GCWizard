@@ -1,0 +1,14 @@
+{
+
+"special_mappings" : {
+"S_acute" : "S",
+"Z_acute" : "Z",
+"C_acute" : "C",
+"O_slash" : "Ø",
+"N_acute" : "N",
+"inverted_question" : "¿",
+"inverted_exclamation" : "¡",
+"A_tilde" : "Ã",
+"DJE" : "Ð"
+}
+}
