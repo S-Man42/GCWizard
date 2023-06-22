@@ -4,9 +4,8 @@ import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/logic/unix_time.dart';
-import 'package:gc_wizard/utils/datetime_utils.dart';
+
 
 class UnixTime extends StatefulWidget {
   const UnixTime({Key? key}) : super(key: key);
@@ -53,7 +52,7 @@ class _UnixTimeState extends State<UnixTime> {
               }),
         if (_currentMode == GCWSwitchPosition.left)
           GCWDateTimePicker(
-            config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.SECOND_AS_INT, DateTimePickerConfig.TIMEZONES},
+            config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.SECOND_AS_INT, },
             onChanged: (datetime) {
               setState(() {
                 _currentDateTime = datetime.datetime;
@@ -68,19 +67,13 @@ class _UnixTimeState extends State<UnixTime> {
   Widget _buildOutput() {
     String output = '';
     if (_currentMode == GCWSwitchPosition.left) {//Date to Unix
-      if (_invalidUnixDate(gregorianCalendarToJulianDate(_currentDateTime))) {
-        output = i18n(context, 'dates_calendar_error');
-      }
-      output = DateTimeToUnixTime(_currentDateTime);
+        output = DateTimeToUnixTime(_currentDateTime);
     } else {//UNIX to Date
       output = UnixTimeToDateTime(_currentTimeStamp);
     }
     return GCWDefaultOutput(
-      child: output,
+      child: output.startsWith('dates_') ? i18n(context, output) : output,
     );
   }
 
-  bool _invalidUnixDate(double jd) {
-    return (jd < JD_UNIX_START);
-  }
 }
