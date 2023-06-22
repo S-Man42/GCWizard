@@ -9,6 +9,9 @@ void main() {
       {'input_a' : 0, 'input_b' : 1, 'expectedOutput' : 1},
       {'input_a' : 36, 'input_b' : 24, 'expectedOutput' : 12},
       {'input_a' : 24, 'input_b' : 36, 'expectedOutput' : 12},
+      {'input_a' : -24, 'input_b' : -36, 'expectedOutput' : -12},
+      {'input_a' : -36, 'input_b' : -24, 'expectedOutput' : -12},
+      {'input_a' : -24, 'input_b' : 36, 'expectedOutput' : 0},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -26,6 +29,9 @@ void main() {
       {'input_a' : 0, 'input_b' : 1, 'expectedOutput' : 0},
       {'input_a' : 36, 'input_b' : 24, 'expectedOutput' : 72},
       {'input_a' : 24, 'input_b' : 36, 'expectedOutput' : 72},
+      {'input_a' : -36, 'input_b' : -24, 'expectedOutput' : -72},
+      {'input_a' : -24, 'input_b' : -36, 'expectedOutput' : -72},
+      {'input_a' : -24, 'input_b' : 36, 'expectedOutput' : 0},
     ];
 
     for (var elem in _inputsToExpected) {
