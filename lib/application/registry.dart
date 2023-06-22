@@ -123,6 +123,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/widget/babylon_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base122/widget/base122.dart';
@@ -489,6 +490,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'atbash',
+    ]),
+    GCWTool(tool: const AveMaria(), id: 'avemaria', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'avemaria',
     ]),
     GCWTool(
         tool: const BabylonNumbersSelection(),
@@ -3322,6 +3328,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
       'symbol_devanagari_numerals',
     ]),
+    GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
+      'symbol_dinotopia',
+    ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
     ]),
@@ -3780,6 +3789,12 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
     ]),
+    GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
+      'symbol_ravkan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ravkan_extended', symbolSearchStrings: const [
+      'symbol_ravkan_extended',
+    ]),
     GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: const [
       'symbol_reality',
     ]),
@@ -3851,6 +3866,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: const [
       'symbol_spintype',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
+      'symbol_sprykski',
     ]),
     GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: const [
       'symbol_stippelcode',
