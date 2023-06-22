@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/gcd_lcm/logic/gcd_lcm.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 void main() {
   group("gcd", () {

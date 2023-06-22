@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/science_and_technology/gcd_lcm/logic/GCD_LCM.dart';
 
-
-class GCDLCM extends StatefulWidget {
-  const GCDLCM({Key? key}) : super(key: key);
+class GCD extends StatefulWidget {
+  const GCD({Key? key}) : super(key: key);
 
   @override
-  GCDLCMState createState() => GCDLCMState();
+  GCDState createState() => GCDState();
 }
 
-class GCDLCMState extends State<GCDLCM> {
+class GCDState extends State<GCD> {
   int _currentInputA = 0;
   int _currentInputB = 0;
 
@@ -56,11 +55,9 @@ class GCDLCMState extends State<GCDLCM> {
 
   Widget _buildOutput() {
     return GCWDefaultOutput(
-      child: GCWColumnedMultilineOutput(
-        data: [
-          [i18n(context, 'gcd_lcm_gcd'), gcd(_currentInputA, _currentInputB).toString()],
-          [i18n(context, 'gcd_lcm_lcm'), lcm(_currentInputA, _currentInputB).toString()]],
-      ),
+      child: GCWColumnedMultilineOutput(data: [
+        [i18n(context, 'gcd_lcm_gcd'), gcd(_currentInputA, _currentInputB).toString()],
+      ]),
     );
   }
 }
