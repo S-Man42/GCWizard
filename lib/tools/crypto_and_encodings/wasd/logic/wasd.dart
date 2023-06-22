@@ -32,25 +32,33 @@ class Offset {
 }
 
 enum WASD_TYPE { CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE, NWSO, NUMERIC, CUSTOM }
-
 enum WASD_DIRECTION { UP, DOWN, LEFT, RIGHT, START, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT }
-
 const _SEGMENT_LENGTH = 5;
 
+const _DEFAULT_UP = '↑';
+const _DEFAULT_LEFT = '←';
+const _DEFAULT_DOWN = '↓';
+const _DEFAULT_RIGHT = '→';
+const _DEFAULT_UPLEFT = '↖';
+const _DEFAULT_UPRIGHT = '↗';
+const _DEFAULT_DOWNLEFT = '↙';
+const _DEFAULT_DOWNRIGHT = '↘';
+
+// WARNING: Only 4 or 8 characters are allowed!
 const Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.CURSORS: '↑←↓→↖↗↙↘',
-  WASD_TYPE.NWSE: 'NWSE    ',
-  WASD_TYPE.NWSO: 'NWSO    ',
-  WASD_TYPE.ARROWS: '^<v>    ',
+  WASD_TYPE.NWSE: 'NWSE',
+  WASD_TYPE.NWSO: 'NWSO',
+  WASD_TYPE.ARROWS: '^<v>',
   WASD_TYPE.WASD: 'WASDQEYX',
-  WASD_TYPE.ULDR: 'ULDR    ',
-  WASD_TYPE.OLUR: 'OLUR    ',
+  WASD_TYPE.ULDR: 'ULDR',
+  WASD_TYPE.OLUR: 'OLUR',
   WASD_TYPE.ESDF: 'ESDFWRXC',
-  WASD_TYPE.WQSE: 'WQSE    ',
-  WASD_TYPE.IJMK: 'IJMKUON;',
+  WASD_TYPE.WQSE: 'WQSE',
+  WASD_TYPE.IJMK: 'IJMK',
   WASD_TYPE.VLZR: 'VLZR',
-  WASD_TYPE.NUMERIC: 'wasd_keyboard_keypad',
-  WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
+  WASD_TYPE.NUMERIC: '84267913',
+  WASD_TYPE.CUSTOM: '',
 };
 
 const Map<String, List<String>> _WASD_ENCODE = {
@@ -123,8 +131,8 @@ String encodeWASD(String input, List<String> controlSet) {
   if (input.isEmpty) return '';
 
   controlSet = _normalizeControlSet(controlSet);
+  input = input.toUpperCase().replaceAll(RegExp(r'[^\d ]'), '');
 
-  input = input.toUpperCase();
   Random rnd = Random();
   List<String> result = [];
   input.split('').forEach((element) {
@@ -135,33 +143,47 @@ String encodeWASD(String input, List<String> controlSet) {
     }
   });
 
-  return substitution(result.join(' '), {
-    '↑': controlSet[0],
-    '←': controlSet[1],
-    '↓': controlSet[2],
-    '→': controlSet[3],
-    '↖': controlSet[4],
-    '↗': controlSet[5],
-    '↙': controlSet[6],
-    '↘': controlSet[7],
-  });
+  var substMap = {
+    _DEFAULT_UP: controlSet[0],
+    _DEFAULT_LEFT: controlSet[1],
+    _DEFAULT_DOWN: controlSet[2],
+    _DEFAULT_RIGHT: controlSet[3],
+  };
+
+  if (controlSet.length == 8) {
+    substMap.addAll({
+      _DEFAULT_UPLEFT: controlSet[4],
+      _DEFAULT_UPRIGHT: controlSet[5],
+      _DEFAULT_DOWNLEFT: controlSet[6],
+      _DEFAULT_DOWNRIGHT: controlSet[7]
+    });
+  }
+
+  return substitution(result.join(' '), substMap);
 }
 
 String _normalizeDecodingInput(String input, List<String> controlSet) {
-  var pattern = '[^' + controlSet.join().toUpperCase() + ']';
+  var pattern = '[^' + controlSet.join().toUpperCase() + ' ]';
 
-  input = input.toUpperCase().replaceAll(RegExp(pattern), ' ');
+  input = input.toUpperCase().replaceAll(RegExp(pattern), '');
 
-  return substitution(input, {
-    controlSet[0]: '↑',
-    controlSet[1]: '←',
-    controlSet[2]: '↓',
-    controlSet[3]: '→',
-    controlSet[4]: '↖',
-    controlSet[5]: '↗',
-    controlSet[6]: '↙',
-    controlSet[7]: '↘',
-  });
+  var substMap = {
+    controlSet[0]: _DEFAULT_UP,
+    controlSet[1]: _DEFAULT_LEFT,
+    controlSet[2]: _DEFAULT_DOWN,
+    controlSet[3]: _DEFAULT_RIGHT,
+  };
+
+  if (controlSet.length == 8) {
+    substMap.addAll({
+      controlSet[4]: _DEFAULT_UPLEFT,
+      controlSet[5]: _DEFAULT_UPRIGHT,
+      controlSet[6]: _DEFAULT_DOWNLEFT,
+      controlSet[7]: _DEFAULT_DOWNRIGHT,
+    });
+  }
+
+  return substitution(input, substMap);
 }
 
 String decodeWASD(String input, List<String> controlSet) {
@@ -192,21 +214,8 @@ String decodeWASD(String input, List<String> controlSet) {
 }
 
 List<String> _normalizeControlSet(List<String> controlSet) {
-  var normalized = List<String?>.from(controlSet);
-  while (normalized.length < 9) {
-    normalized.add(null);
-  }
-
-  if (normalized[0] == null || normalized[0]!.isEmpty) normalized[0] = '↑';
-  if (normalized[1] == null || normalized[1]!.isEmpty) normalized[1] = '←';
-  if (normalized[2] == null || normalized[2]!.isEmpty) normalized[2] = '↓';
-  if (normalized[3] == null || normalized[3]!.isEmpty) normalized[3] = '→';
-  if (normalized[4] == null || normalized[4]!.isEmpty) normalized[4] = '↖';
-  if (normalized[5] == null || normalized[5]!.isEmpty) normalized[5] = '↗';
-  if (normalized[6] == null || normalized[6]!.isEmpty) normalized[6] = '↙';
-  if (normalized[7] == null || normalized[7]!.isEmpty) normalized[7] = '↘';
-
-  return normalized.map((e) => (e ?? '').toUpperCase()).toList();
+  var normalized = List<String>.from(controlSet);
+  return normalized.map((e) => e.toUpperCase()).toList();
 }
 
 String decodeWASDGraphic(String input, List<String> controlSet) {
@@ -263,7 +272,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
 
     word.split('').forEach((newDirection) {
       switch (newDirection) {
-        case '↓': // back, down
+        case _DEFAULT_DOWN: // back, down
           _setXYDirection();
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++;
@@ -272,7 +281,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           comingFrom = WASD_DIRECTION.UP;
           break;
 
-        case '↑': // forward, up
+        case _DEFAULT_UP: // forward, up
           _setXYDirection();
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y--;
@@ -281,7 +290,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           comingFrom = WASD_DIRECTION.DOWN;
           break;
 
-        case '←': // left
+        case _DEFAULT_LEFT: // left
           _setXYDirection();
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x--;
@@ -290,7 +299,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           comingFrom = WASD_DIRECTION.LEFT;
           break;
 
-        case '→': // right
+        case _DEFAULT_RIGHT: // right
           _setXYDirection();
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x++;
@@ -299,7 +308,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           comingFrom = WASD_DIRECTION.RIGHT;
           break;
 
-        case '↖':
+        case _DEFAULT_UPLEFT:
           _setXYDirection();
           comingFrom = WASD_DIRECTION.UPLEFT;
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
@@ -309,7 +318,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           }
           break;
 
-        case '↗':
+        case _DEFAULT_UPRIGHT:
           _setXYDirection();
           comingFrom = WASD_DIRECTION.UPRIGHT;
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
@@ -319,7 +328,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           }
           break;
 
-        case '↙':
+        case _DEFAULT_DOWNLEFT:
           _setXYDirection();
           comingFrom = WASD_DIRECTION.DOWNLEFT;
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
@@ -329,7 +338,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
           }
           break;
 
-        case '↘':
+        case _DEFAULT_DOWNRIGHT:
           _setXYDirection();
           comingFrom = WASD_DIRECTION.DOWNRIGHT;
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {

@@ -53,9 +53,11 @@ class _WASDState extends State<WASD> {
   var _currentMode = GCWSwitchPosition.right; // decode
   var _currentOutputMode = GCWSwitchPosition.left; // only graphic
   var _currentKeyboardControls = WASD_TYPE.CURSORS;
+  int _keyboardLayout = 8;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
+  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'\S')});
 
+  //must be nullable unless finding a way to initialize growable Uint8Lists. All tested ways resulted in fixed-length lists
   Uint8List? _outDecodeData;
   Uint8List? _outEncodeData;
 
@@ -89,59 +91,68 @@ class _WASDState extends State<WASD> {
 
     super.dispose();
   }
+  
+  String _defaultCursorForWASDDirection(WASD_DIRECTION direction) {
+    String cursors = KEYBOARD_CONTROLS[WASD_TYPE.CURSORS]!;
+    
+    switch (direction) {
+      case WASD_DIRECTION.UP:
+        return cursors[0];
+      case WASD_DIRECTION.LEFT:
+        return cursors[1];
+      case WASD_DIRECTION.DOWN:
+        return cursors[2];
+      case WASD_DIRECTION.RIGHT:
+        return cursors[3];
+      case WASD_DIRECTION.UPLEFT:
+        return cursors[4];
+      case WASD_DIRECTION.UPRIGHT:
+        return cursors[5];
+      case WASD_DIRECTION.DOWNLEFT:
+        return cursors[6];
+      case WASD_DIRECTION.DOWNRIGHT:
+        return cursors[7];
+      default: return '';
+    }
+  }
 
   Widget _buildCustomInput(WASD_DIRECTION key) {
-    var title_key = 'wasd_custom_';
-
     switch (key) {
       case WASD_DIRECTION.UP:
         _currentCustomKeyController = _upController;
-        title_key += 'up';
         break;
       case WASD_DIRECTION.LEFT:
         _currentCustomKeyController = _leftController;
-        title_key += 'left';
         break;
       case WASD_DIRECTION.DOWN:
         _currentCustomKeyController = _downController;
-        title_key += 'down';
         break;
       case WASD_DIRECTION.RIGHT:
         _currentCustomKeyController = _rightController;
-        title_key += 'right';
         break;
       case WASD_DIRECTION.UPLEFT:
         _currentCustomKeyController = _upLeftController;
-        title_key += 'up';
         break;
       case WASD_DIRECTION.UPRIGHT:
         _currentCustomKeyController = _upRightController;
-        title_key += 'up';
         break;
       case WASD_DIRECTION.DOWNLEFT:
         _currentCustomKeyController = _downLeftController;
-        title_key += 'down';
         break;
       case WASD_DIRECTION.DOWNRIGHT:
         _currentCustomKeyController = _downRightController;
-        title_key += 'down';
         break;
       default:
         return Container();
     }
 
-    var title = i18n(context, title_key);
-
     return Expanded(
       child: Column(children: <Widget>[
-        GCWTextDivider(
-          text: title,
-        ),
         GCWTextField(
             inputFormatters: [_maskInputFormatter],
-            hintText: title,
+            hintText: _defaultCursorForWASDDirection(key),
             controller: _currentCustomKeyController,
-            onChanged: (text) {
+            onChanged: (String text) {
               setState(() {
                 switch (key) {
                   case WASD_DIRECTION.UP:
@@ -191,6 +202,26 @@ class _WASDState extends State<WASD> {
     );
   }
 
+  List<String> _controlSet() {
+    var controlSet = [
+      _currentUp,
+      _currentLeft,
+      _currentDown,
+      _currentRight
+    ];
+
+    if (_keyboardLayout == 8) {
+      controlSet.addAll([
+        _currentUpLeft,
+        _currentUpRight,
+        _currentDownLeft,
+        _currentDownRight
+      ]);
+    }
+
+    return controlSet;
+  }
+
   void _updateDrawing() {
     if (_currentMode == GCWSwitchPosition.left) {
       _createGraphicOutputEncodeData();
@@ -207,45 +238,76 @@ class _WASDState extends State<WASD> {
         ),
         GCWDropDown<WASD_TYPE>(
           value: _currentKeyboardControls,
-          onChanged: (value) {
+          onChanged: (WASD_TYPE value) {
             setState(() {
-              _currentKeyboardControls = value;
-              if (value == WASD_TYPE.NUMERIC) {
-                _currentUp = '8';
-                _currentLeft = '4';
-                _currentDown = '2';
-                _currentRight = '6';
-                _currentUpLeft = '7';
-                _currentUpRight = '9';
-                _currentDownLeft = '1';
-                _currentDownRight = '3';
-              } else if (value != WASD_TYPE.CUSTOM && KEYBOARD_CONTROLS[value]!.length >= 4) {
-                _currentUp = KEYBOARD_CONTROLS[value]![0];
-                _currentLeft = KEYBOARD_CONTROLS[value]![1];
-                _currentDown = KEYBOARD_CONTROLS[value]![2];
-                _currentRight = KEYBOARD_CONTROLS[value]![3];
-                _currentUpLeft = KEYBOARD_CONTROLS[value]![4];
-                _currentUpRight = KEYBOARD_CONTROLS[value]![5];
-                _currentDownLeft = KEYBOARD_CONTROLS[value]![6];
-                _currentDownRight = KEYBOARD_CONTROLS[value]![7];
-
-                _upController.text = _currentUp;
-                _leftController.text = _currentLeft;
-                _downController.text = _currentDown;
-                _rightController.text = _currentRight;
-                _downLeftController.text = _currentDownLeft;
-                _downRightController.text = _currentDownRight;
-                _upLeftController.text = _currentUpLeft;
-                _upRightController.text = _currentUpRight;
+              if (KEYBOARD_CONTROLS[value] == null) {
+                value = WASD_TYPE.CURSORS;
               }
+
+              _currentKeyboardControls = value;
+
+              if (value != WASD_TYPE.CUSTOM) {
+                var _keyboardControls = KEYBOARD_CONTROLS[value]!.replaceAll(RegExp(r'\s'), '');
+                _keyboardLayout = _keyboardControls.length;
+
+                while (_keyboardLayout!= 4 && _keyboardLayout != 8) {
+                  _keyboardControls = KEYBOARD_CONTROLS[WASD_TYPE.CURSORS]!;
+                  _keyboardLayout = 8;
+                }
+
+                _currentUp = _keyboardControls[0];
+                _currentLeft = _keyboardControls[1];
+                _currentDown = _keyboardControls[2];
+                _currentRight = _keyboardControls[3];
+
+                if (_keyboardLayout == 8) {
+                  _currentUpLeft = _keyboardControls[4];
+                  _currentUpRight = _keyboardControls[5];
+                  _currentDownLeft = _keyboardControls[6];
+                  _currentDownRight = _keyboardControls[7];
+                } else {
+                  _currentUpLeft = '';
+                  _currentUpRight = '';
+                  _currentDownLeft = '';
+                  _currentDownRight = '';
+                }
+              } else {
+                _keyboardLayout = 8;
+
+                _currentUp = '';
+                _currentLeft = '';
+                _currentDown = '';
+                _currentRight = '';
+                _currentUpLeft = '';
+                _currentUpRight = '';
+                _currentDownLeft = '';
+                _currentDownRight = '';
+              }
+
+              _upController.text = _currentUp;
+              _leftController.text = _currentLeft;
+              _downController.text = _currentDown;
+              _rightController.text = _currentRight;
+              _downLeftController.text = _currentDownLeft;
+              _downRightController.text = _currentDownRight;
+              _upLeftController.text = _currentUpLeft;
+              _upRightController.text = _currentUpRight;
 
               _updateDrawing();
             });
           },
           items: KEYBOARD_CONTROLS.entries.map((mode) {
+            String name;
+            switch (mode.key) {
+              case WASD_TYPE.CUSTOM: name = i18n(context, 'wasd_keyboard_custom'); break;
+              case WASD_TYPE.NUMERIC: name = i18n(context, 'wasd_keyboard_numpad'); break;
+              case WASD_TYPE.CURSORS: name = mode.value; break;
+              default: name = mode.value.substring(0, 4);
+            }
+
             return GCWDropDownMenuItem(
               value: mode.key,
-              child: i18n(context, mode.value, ifTranslationNotExists: mode.value),
+              child: name,
             );
           }).toList(),
         ),
@@ -278,11 +340,11 @@ class _WASDState extends State<WASD> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _currentUpLeft != ' ' ? _buildButton(_currentUpLeft) : Container(),
+                         _keyboardLayout == 8 ? _buildButton(_currentUpLeft) : Container(),
                         Container(width: 20),
                         _buildButton(_currentUp),
                         Container(width: 20),
-                        _currentUpRight != ' ' ? _buildButton(_currentUpRight) : Container(),
+                        _keyboardLayout == 8 ? _buildButton(_currentUpRight) : Container(),
                       ],
                     ),
                     Row(
@@ -297,11 +359,11 @@ class _WASDState extends State<WASD> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _currentDownLeft != ' ' ? _buildButton(_currentDownLeft) : Container(),
+                        _keyboardLayout == 8 ? _buildButton(_currentDownLeft) : Container(),
                         Container(width: 20),
                         _buildButton(_currentDown),
                         Container(width: 20),
-                        _currentDownRight != ' ' ? _buildButton(_currentDownRight) : Container(),
+                        _keyboardLayout == 8 ? _buildButton(_currentDownRight) : Container(),
                       ],
                     ),
                   ],
@@ -379,8 +441,8 @@ class _WASDState extends State<WASD> {
         ),
         if (_currentMode == GCWSwitchPosition.right) //decode
           GCWTwoOptionsSwitch(
-            leftValue: i18n(context, "wasd_output_mode_g"),
-            rightValue: i18n(context, "wasd_output_mode_t"),
+            leftValue: i18n(context, 'wasd_output_mode_g'),
+            rightValue: i18n(context, 'wasd_output_mode_t'),
             value: _currentOutputMode,
             onChanged: (value) {
               setState(() {
@@ -418,16 +480,7 @@ class _WASDState extends State<WASD> {
   }
 
   void _createGraphicOutputDecodeData() {
-    var out = decodeWASDGraphic(_currentDecodeInput, [
-      _currentUp,
-      _currentLeft,
-      _currentDown,
-      _currentRight,
-      _currentUpLeft,
-      _currentUpRight,
-      _currentDownLeft,
-      _currentDownRight
-    ]);
+    var out = decodeWASDGraphic(_currentDecodeInput, _controlSet());
 
     _outDecodeData = null;
     var input = binary2image(out, false, false);
@@ -448,27 +501,14 @@ class _WASDState extends State<WASD> {
   }
 
   void _createGraphicOutputEncodeData() {
+
+    var controlSet = _controlSet();
+    var encoded = encodeWASD(_currentEncodeInput, controlSet);
+
     var out = decodeWASDGraphic(
-        encodeWASD(_currentEncodeInput, [
-          _currentUp,
-          _currentLeft,
-          _currentDown,
-          _currentRight,
-          _currentUpLeft,
-          _currentUpRight,
-          _currentDownLeft,
-          _currentDownRight
-        ]),
-        [
-          _currentUp,
-          _currentLeft,
-          _currentDown,
-          _currentRight,
-          _currentUpLeft,
-          _currentUpRight,
-          _currentDownLeft,
-          _currentDownRight
-        ]);
+        encoded,
+        controlSet
+    );
 
     _outEncodeData = null;
     var input = binary2image(out, false, false);
@@ -495,10 +535,12 @@ class _WASDState extends State<WASD> {
   }
 
   String _buildOutput() {
+    var controlSet = _controlSet();
+
     if (_currentMode == GCWSwitchPosition.right) {
-      return decodeWASD(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
+      return decodeWASD(_currentDecodeInput, controlSet);
     } else {
-      return encodeWASD(_currentEncodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
+      return encodeWASD(_currentEncodeInput, controlSet);
     }
   }
 }
