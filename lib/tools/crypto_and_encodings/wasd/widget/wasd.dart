@@ -30,7 +30,11 @@ class _WASDState extends State<WASD> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
   late TextEditingController _upController;
+  late TextEditingController _upLeftController;
+  late TextEditingController _upRightController;
   late TextEditingController _downController;
+  late TextEditingController _downLeftController;
+  late TextEditingController _downRightController;
   late TextEditingController _leftController;
   late TextEditingController _rightController;
 
@@ -42,10 +46,13 @@ class _WASDState extends State<WASD> {
   var _currentLeft = '←';
   var _currentDown = '↓';
   var _currentRight = '→';
+  var _currentDownLeft = '↙';
+  var _currentDownRight = '↘';
+  var _currentUpLeft = '↖';
+  var _currentUpRight = '↗';
   var _currentMode = GCWSwitchPosition.right; // decode
   var _currentOutputMode = GCWSwitchPosition.left; // only graphic
   var _currentKeyboardControls = WASD_TYPE.CURSORS;
-
 
   final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
 
@@ -61,6 +68,10 @@ class _WASDState extends State<WASD> {
     _downController = TextEditingController(text: _currentDown);
     _leftController = TextEditingController(text: _currentLeft);
     _rightController = TextEditingController(text: _currentRight);
+    _downLeftController = TextEditingController(text: _currentDownLeft);
+    _downRightController = TextEditingController(text: _currentDownRight);
+    _upLeftController = TextEditingController(text: _currentUpLeft);
+    _upRightController = TextEditingController(text: _currentUpRight);
   }
 
   @override
@@ -68,7 +79,11 @@ class _WASDState extends State<WASD> {
     _encodeController.dispose();
     _decodeController.dispose();
     _upController.dispose();
+    _upLeftController.dispose();
+    _upRightController.dispose();
     _downController.dispose();
+    _downLeftController.dispose();
+    _downRightController.dispose();
     _leftController.dispose();
     _rightController.dispose();
 
@@ -94,6 +109,22 @@ class _WASDState extends State<WASD> {
       case WASD_DIRECTION.RIGHT:
         _currentCustomKeyController = _rightController;
         title_key += 'right';
+        break;
+      case WASD_DIRECTION.UPLEFT:
+        _currentCustomKeyController = _upLeftController;
+        title_key += 'up';
+        break;
+      case WASD_DIRECTION.UPRIGHT:
+        _currentCustomKeyController = _upRightController;
+        title_key += 'up';
+        break;
+      case WASD_DIRECTION.DOWNLEFT:
+        _currentCustomKeyController = _downLeftController;
+        title_key += 'down';
+        break;
+      case WASD_DIRECTION.DOWNRIGHT:
+        _currentCustomKeyController = _downRightController;
+        title_key += 'down';
         break;
       default:
         return Container();
@@ -124,6 +155,18 @@ class _WASDState extends State<WASD> {
                     break;
                   case WASD_DIRECTION.RIGHT:
                     _currentRight = text;
+                    break;
+                  case WASD_DIRECTION.UPLEFT:
+                    _currentUpLeft = text;
+                    break;
+                  case WASD_DIRECTION.UPRIGHT:
+                    _currentUpRight = text;
+                    break;
+                  case WASD_DIRECTION.DOWNLEFT:
+                    _currentDownLeft = text;
+                    break;
+                  case WASD_DIRECTION.DOWNRIGHT:
+                    _currentDownRight = text;
                     break;
                   default:
                     return;
@@ -167,16 +210,33 @@ class _WASDState extends State<WASD> {
           onChanged: (value) {
             setState(() {
               _currentKeyboardControls = value;
-              if (value != WASD_TYPE.CUSTOM && KEYBOARD_CONTROLS[value]!.length >= 4) {
+              if (value == WASD_TYPE.NUMERIC) {
+                _currentUp = '8';
+                _currentLeft = '4';
+                _currentDown = '2';
+                _currentRight = '6';
+                _currentUpLeft = '7';
+                _currentUpRight = '9';
+                _currentDownLeft = '1';
+                _currentDownRight = '3';
+              } else if (value != WASD_TYPE.CUSTOM && KEYBOARD_CONTROLS[value]!.length >= 4) {
                 _currentUp = KEYBOARD_CONTROLS[value]![0];
                 _currentLeft = KEYBOARD_CONTROLS[value]![1];
                 _currentDown = KEYBOARD_CONTROLS[value]![2];
                 _currentRight = KEYBOARD_CONTROLS[value]![3];
+                _currentUpLeft = KEYBOARD_CONTROLS[value]![4];
+                _currentUpRight = KEYBOARD_CONTROLS[value]![5];
+                _currentDownLeft = KEYBOARD_CONTROLS[value]![6];
+                _currentDownRight = KEYBOARD_CONTROLS[value]![7];
 
                 _upController.text = _currentUp;
                 _leftController.text = _currentLeft;
                 _downController.text = _currentDown;
                 _rightController.text = _currentRight;
+                _downLeftController.text = _currentDownLeft;
+                _downRightController.text = _currentDownRight;
+                _upLeftController.text = _currentUpLeft;
+                _upRightController.text = _currentUpRight;
               }
 
               _updateDrawing();
@@ -194,9 +254,17 @@ class _WASDState extends State<WASD> {
             children: <Widget>[
               _buildCustomInput(WASD_DIRECTION.UP),
               Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.UPLEFT),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.UPRIGHT),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
               _buildCustomInput(WASD_DIRECTION.LEFT),
               Container(width: DOUBLE_DEFAULT_MARGIN),
               _buildCustomInput(WASD_DIRECTION.DOWN),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.DOWNLEFT),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              _buildCustomInput(WASD_DIRECTION.DOWNRIGHT),
               Container(width: DOUBLE_DEFAULT_MARGIN),
               _buildCustomInput(WASD_DIRECTION.RIGHT)
             ],
@@ -207,15 +275,33 @@ class _WASDState extends State<WASD> {
               Expanded(
                 child: Column(
                   children: [
-                    _buildButton(_currentUp),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _currentUpLeft != ' ' ? _buildButton(_currentUpLeft) : Container(),
+                        Container(width: 20),
+                        _buildButton(_currentUp),
+                        Container(width: 20),
+                        _currentUpRight != ' ' ? _buildButton(_currentUpRight) : Container(),
+                      ],
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _buildButton(_currentLeft),
                         Container(width: 20),
-                        _buildButton(_currentDown),
                         Container(width: 20),
                         _buildButton(_currentRight),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _currentDownLeft != ' ' ? _buildButton(_currentDownLeft) : Container(),
+                        Container(width: 20),
+                        _buildButton(_currentDown),
+                        Container(width: 20),
+                        _currentDownRight != ' ' ? _buildButton(_currentDownRight) : Container(),
                       ],
                     ),
                   ],
@@ -262,7 +348,9 @@ class _WASDState extends State<WASD> {
         if (_currentMode == GCWSwitchPosition.left) // encode
           GCWTextField(
               controller: _encodeController,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'\d')),],
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'\d')),
+              ],
               hintText: '0123456789',
               onChanged: (text) {
                 setState(() {
@@ -324,13 +412,22 @@ class _WASDState extends State<WASD> {
               child: _buildGraphicEncodeOutput()),
         if (_currentMode == GCWSwitchPosition.left ||
             (_currentMode == GCWSwitchPosition.right && _currentOutputMode == GCWSwitchPosition.right)) //text & graphic
-             GCWDefaultOutput(child: _buildOutput())
+          GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   void _createGraphicOutputDecodeData() {
-    var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
+    var out = decodeWASDGraphic(_currentDecodeInput, [
+      _currentUp,
+      _currentLeft,
+      _currentDown,
+      _currentRight,
+      _currentUpLeft,
+      _currentUpRight,
+      _currentDownLeft,
+      _currentDownRight
+    ]);
 
     _outDecodeData = null;
     var input = binary2image(out, false, false);
@@ -352,8 +449,26 @@ class _WASDState extends State<WASD> {
 
   void _createGraphicOutputEncodeData() {
     var out = decodeWASDGraphic(
-        encodeWASD(_currentEncodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]),
-        [_currentUp, _currentLeft, _currentDown, _currentRight]);
+        encodeWASD(_currentEncodeInput, [
+          _currentUp,
+          _currentLeft,
+          _currentDown,
+          _currentRight,
+          _currentUpLeft,
+          _currentUpRight,
+          _currentDownLeft,
+          _currentDownRight
+        ]),
+        [
+          _currentUp,
+          _currentLeft,
+          _currentDown,
+          _currentRight,
+          _currentUpLeft,
+          _currentUpRight,
+          _currentDownLeft,
+          _currentDownRight
+        ]);
 
     _outEncodeData = null;
     var input = binary2image(out, false, false);
