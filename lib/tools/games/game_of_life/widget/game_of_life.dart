@@ -179,7 +179,7 @@ class _GameOfLifeState extends State<GameOfLife> {
           },
         ),
         Container(
-          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context))),
+          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context) * 0.8)),
           margin: const EdgeInsets.symmetric(vertical: 20.0),
           child: GameOfLifeBoard(
             state: _currentBoard,
