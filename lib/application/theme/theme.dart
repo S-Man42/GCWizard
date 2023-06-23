@@ -150,3 +150,7 @@ double defaultFontSize() {
 double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
 }
+
+double maxScreenWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}

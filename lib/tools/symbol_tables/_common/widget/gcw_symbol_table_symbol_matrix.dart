@@ -56,8 +56,8 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
 
   @override
   Widget build(BuildContext context) {
-    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40) / 3;
-    var _decryptionSwitchWidth = (MediaQuery.of(context).size.width - 40 - 57 - 20);
+    var _symbolTableSwitchPartWidth = (maxScreenWidth(context) - 40) / 3;
+    var _decryptionSwitchWidth = (maxScreenWidth(context) - 40 - 57 - 20);
     var _decryptionSwitchPartWidth = (_symbolTableSwitchPartWidth / _decryptionSwitchWidth * 100).toInt();
 
     _imageData = widget.imageData;

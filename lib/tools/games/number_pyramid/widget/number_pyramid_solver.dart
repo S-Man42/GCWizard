@@ -50,6 +50,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           onChanged: (value) {
             setState(() {
               _rowCount = value;
+              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (100.0 * _rowCount), 1.0);
               _currentBoard = NumberPyramid(_rowCount, pyramid: _currentBoard);
             });
           },

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/games/number_pyramid/logic/dennistreysa_number_pyramid_solver/pyramid.dart';
+import 'package:gc_wizard/tools/games/number_pyramid/logic/external_libs/dennistreysa/pyramid.dart';
 
 enum NumberPyramidFillType { USER_FILLED, CALCULATED }
 

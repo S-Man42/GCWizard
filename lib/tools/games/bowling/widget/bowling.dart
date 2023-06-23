@@ -45,7 +45,7 @@ class _BowlingState extends State<Bowling> {
 
   @override
   Widget build(BuildContext context) {
-    _cellWidth = (MediaQuery.of(context).size.width - 20) / 21;
+    _cellWidth = (maxScreenWidth(context) - 20) / 21;
 
     return Column(
       children: <Widget>[
