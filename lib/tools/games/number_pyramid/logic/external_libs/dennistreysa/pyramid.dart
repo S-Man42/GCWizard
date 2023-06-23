@@ -1,5 +1,13 @@
 //ported from https://github.com/dennistreysa/Py-Ramid
 
+/*
+ GNU GENERAL PUBLIC LICENSE
+ Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+*/
+
 /* Checks if a given pyramid is solved
 			Keyword arguments:
 			pyramid -- The pyramid to be checked
