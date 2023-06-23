@@ -40,7 +40,7 @@ class _SudokuSolverState extends State<SudokuSolver> {
     return Column(
       children: <Widget>[
         Container(
-          constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
+          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context))),
           child: _SudokuBoard(
             board: _currentBoard,
             onChanged: (newBoard) {
