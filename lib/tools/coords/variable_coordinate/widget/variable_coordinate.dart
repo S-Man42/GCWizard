@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
@@ -28,7 +28,9 @@ import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dar
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_base;
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -99,39 +101,23 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     super.dispose();
   }
 
-  void _updateValue(formula_base.FormulaValue value) {
-    updateFormulaValue(value, widget.formula);
+  void _updateNewEntry(KeyValueBase entry) {
+    _currentFromInput = entry.key;
+    _currentToInput = entry.value;
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      insertFormulaValue(
-          formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
-          widget.formula);
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isNotEmpty) {
+      entry = formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
+      entry.id = newID(widget.formula.values.map((value) => (value.id as int?)).toList());
+
+      return entry;
     }
+    return null;
   }
 
-  void _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    _currentFromInput = currentFromInput;
-    _currentToInput = currentToInput;
-  }
-
-  void _updateEntry(dynamic id, String key, String value, formula_base.FormulaValueType type) {
-    var entry = widget.formula.values.firstWhere((element) => element.id == id);
-    entry.key = key;
-    entry.value = value;
-    entry.type = formula_base.FormulaValueType.INTERPOLATED;
-    _updateValue(entry);
-  }
-
-  void _removeEntry(int id, BuildContext context) {
-    deleteFormulaValue(id, widget.formula);
-  }
-
-  void _disposeEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    if (currentFromInput.isNotEmpty && currentToInput.isNotEmpty) {
-      _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
-    }
+  void _updateEntry(KeyValueBase entry) {
+    updateFormulaValue(entry, widget.formula);
   }
 
   @override
@@ -229,17 +215,11 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       valueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
-      onAddEntry: _addEntry,
       onNewEntryChanged: _updateNewEntry,
-      onDispose: _disposeEntry,
-      formulaValueList: widget.formula.values,
-      varcoords: true,
-      onUpdateEntry: _updateEntry,
-      onRemoveEntry: (Object id, BuildContext context) {
-        if (id is int) {
-          _removeEntry(id, context);
-        }
-      },
+      entries: widget.formula.values,
+      onGetNewEntry: (entry) => _getNewEntry(entry),
+      onUpdateEntry: (entry) => _updateEntry(entry),
+      addOnDispose: true,
     );
   }
 

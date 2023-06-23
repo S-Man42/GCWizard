@@ -83,19 +83,21 @@ class _SymbolReplacerManualControlState extends State<SymbolReplacerManualContro
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-      fixed: false,
-      imageData: _symbolMap.values,
-      countColumns: countColumns,
-      mediaQueryData: mediaQueryData,
-      onChanged: () => setState(() {}),
-      selectable: true,
-      overlayOn: true,
-      onSymbolTapped: (String tappedText, SymbolData imageData) {
-        setState(() {
-          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
-        });
-      },
-    ));
+          fixed: false,
+          imageData: _symbolMap.values,
+          countColumns: countColumns,
+          mediaQueryData: mediaQueryData,
+          onChanged: () => setState(() {}),
+          selectable: true,
+          overlayOn: true,
+          scale: widget.symbolImage.symbolScale,
+          onSymbolTapped: (String tappedText, SymbolData imageData) {
+            setState(() {
+              _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
+            });
+          },
+        )
+    );
   }
 
   void _selectGroupSymbols(SymbolData imageData, bool selected) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
@@ -122,6 +123,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/widget/babylon_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base122/widget/base122.dart';
@@ -372,6 +374,8 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_eia96/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/widget/spelling_alphabets_crypt.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
@@ -444,7 +448,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'algol',
     ]),
-    GCWTool(tool: const AlphabetValues(), id: 'alphabetvalues', categories: const [
+    GCWTool(tool: AlphabetValues(), id: 'alphabetvalues', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'alphabetvalues',
@@ -485,6 +489,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'atbash',
+    ]),
+    GCWTool(tool: const AveMaria(), id: 'avemaria', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'avemaria',
     ]),
     GCWTool(
         tool: const BabylonNumbersSelection(),
@@ -872,7 +881,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(
         tool: const MorseSelection(), id: 'morse_selection', categories: const [ToolCategory.CRYPTOGRAPHY], searchKeys: const []),
-    GCWTool(tool: const MultiDecoder(), id: 'multidecoder', categories: const [
+    GCWTool(tool: MultiDecoder(), id: 'multidecoder', categories: const [
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
       'multidecoder',
@@ -1068,6 +1077,9 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'solitaire',
     ]),
+    GCWTool(tool: const SpellingAlphabetsSelection(), id: 'spelling_alphabets_selection', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const []),
     GCWTool(tool: const SQRT2Selection(), id: 'sqrt2_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1860,13 +1872,13 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //E Selection *************************************************************************************************
-    GCWTool(tool: const ENthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const ENthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_e', searchKeys: const [
       'enthdecimal',
     ]),
-    GCWTool(tool: const EDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const EDecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_e', searchKeys: const [
       'edecimalrange',
     ]),
-    GCWTool(tool: const ESearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const ESearch(), id: 'irrationalnumbers_search', id_extension: '_e', searchKeys: const [
       'esearch',
     ]),
 
@@ -2280,7 +2292,7 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Morse Selection ****************************************************************
-    GCWTool(tool: const Morse(), id: 'morse', searchKeys: const [
+    GCWTool(tool: Morse(), id: 'morse', searchKeys: const [
       'morse',
     ]),
 
@@ -2891,29 +2903,29 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Phi Selection **********************************************************************************************
-    GCWTool(tool: const PhiNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const PhiNthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_phi', searchKeys: const [
       'irrationalnumbers',
       'phidecimalrange',
     ]),
-    GCWTool(tool: const PhiDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const PhiDecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_phi', searchKeys: const [
       'irrationalnumbers',
       'phidecimalrange',
     ]),
-    GCWTool(tool: const PhiSearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const PhiSearch(), id: 'irrationalnumbers_search', id_extension: '_phi', searchKeys: const [
       'irrationalnumbers',
       'phisearch',
     ]),
 
     //Pi Selection **********************************************************************************************
-    GCWTool(tool: const PiNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const PiNthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_pi', searchKeys: const [
       'irrationalnumbers',
       'pinthdecimal',
     ]),
-    GCWTool(tool: const PiDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const PiDecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_pi', searchKeys: const [
       'irrationalnumbers',
       'pidecimalrange',
     ]),
-    GCWTool(tool: const PiSearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const PiSearch(), id: 'irrationalnumbers_search', id_extension: '_pi', searchKeys: const [
       'irrationalnumbers',
       'pisearch',
     ]),
@@ -2986,7 +2998,7 @@ void initializeRegistry(BuildContext context) {
       'rotation',
       'rotation_rot123',
     ]),
-    GCWTool(tool: const RotationGeneral(), id: 'rotation_general', searchKeys: const [
+    GCWTool(tool: RotationGeneral(), id: 'rotation_general', searchKeys: const [
       'rotation',
     ]),
 
@@ -3054,47 +3066,55 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Silver Ratio Selection **********************************************************************************************
-    GCWTool(tool: const SilverRatioNthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SilverRatioNthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_silver_ration', searchKeys: const [
       'silverratiodecimalrange',
     ]),
-    GCWTool(tool: const SilverRatioDecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SilverRatioDecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_silver_ration', searchKeys: const [
       'silverratiodecimalrange',
     ]),
-    GCWTool(tool: const SilverRatioSearch(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SilverRatioSearch(), id: 'irrationalnumbers_search', id_extension: '_silver_ration', searchKeys: const [
       'silverratiosearch',
     ]),
 
     //SQRT 2 Selection **********************************************************************************************
-    GCWTool(tool: const SQRT2NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SQRT2NthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_sqrt_2', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: const SQRT2DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SQRT2DecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_sqrt_2', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: const SQRT2Search(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SQRT2Search(), id: 'irrationalnumbers_search', id_extension: '_sqrt_2', searchKeys: const [
       '',
     ]),
 
     //SQRT 3 Selection **********************************************************************************************
-    GCWTool(tool: const SQRT3NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SQRT3NthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_sqrt_3', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: const SQRT3DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SQRT3DecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_sqrt_3', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: const SQRT3Search(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SQRT3Search(), id: 'irrationalnumbers_search', id_extension: '_sqrt_3', searchKeys: const [
       '',
     ]),
 
     //SQRT 5 Selection **********************************************************************************************
-    GCWTool(tool: const SQRT5NthDecimal(), id: 'irrationalnumbers_nthdecimal', searchKeys: const [
+    GCWTool(tool: const SQRT5NthDecimal(), id: 'irrationalnumbers_nthdecimal', id_extension: '_sqrt_5', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: const SQRT5DecimalRange(), id: 'irrationalnumbers_decimalrange', searchKeys: const [
+    GCWTool(tool: const SQRT5DecimalRange(), id: 'irrationalnumbers_decimalrange', id_extension: '_sqrt_5', searchKeys: const [
       '',
     ]),
-    GCWTool(tool: const SQRT5Search(), id: 'irrationalnumbers_search', searchKeys: const [
+    GCWTool(tool: const SQRT5Search(), id: 'irrationalnumbers_search', id_extension: '_sqrt_5', searchKeys: const [
       '',
+    ]),
+
+    //Spelling Alphabets Selection **********************************************************************************************
+    GCWTool(tool: const SpellingAlphabetsCrypt(), id: 'spelling_alphabets_crypt', searchKeys: const [
+      'spelling_alphabets',
+    ]),
+    GCWTool(tool: const SpellingAlphabetsList(), id: 'spelling_alphabets_list', searchKeys: const [
+      'spelling_alphabets',
     ]),
 
     //Symbol Tables **********************************************************************************************
@@ -3220,6 +3240,7 @@ void initializeRegistry(BuildContext context) {
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_1809',
+      'zigzag'
     ]),
     GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: const [
       'telegraph',
@@ -3306,6 +3327,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
       'symbol_devanagari_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
+      'symbol_dinotopia',
     ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
@@ -3539,6 +3563,10 @@ void initializeRegistry(BuildContext context) {
       'barcodes',
       'symbol_kartrak',
     ]),
+    GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const [
+      'symbol_kaktovik',
+      'zigzag'
+    ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
     ]),
@@ -3673,6 +3701,18 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
     ]),
+    GCWSymbolTableTool(symbolKey: 'oak_island_money_pit', symbolSearchStrings: const [
+      'symbol_oak_island_money_pit',
+      'oak_island'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'oak_island_money_pit_extended', symbolSearchStrings: const [
+      'symbol_oak_island_money_extended',
+      'oak_island'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'oak_island_money_pit_libyan', symbolSearchStrings: const [
+      'symbol_oak_island_money_pit_libyan',
+      'oak_island'
+    ]),
     GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: const [
       'symbol_ogham',
     ]),
@@ -3693,6 +3733,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: const [
       'symbol_phoenician',
+      'zigzag'
     ]),
     GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: const [
       'symbol_pipeline',
@@ -3747,6 +3788,12 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
+      'symbol_ravkan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ravkan_extended', symbolSearchStrings: const [
+      'symbol_ravkan_extended',
     ]),
     GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: const [
       'symbol_reality',
@@ -3819,6 +3866,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: const [
       'symbol_spintype',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
+      'symbol_sprykski',
     ]),
     GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: const [
       'symbol_stippelcode',
