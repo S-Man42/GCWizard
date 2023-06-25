@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 
@@ -53,9 +51,7 @@ class GCDState extends State<GCD> {
 
   Widget _buildOutput() {
     return GCWDefaultOutput(
-      child: GCWColumnedMultilineOutput(data: [
-        [i18n(context, 'gcd_lcm_gcd'), gcd(_currentInputA, _currentInputB).toString()],
-      ]),
+      child: gcd(_currentInputA, _currentInputB).toString(),
     );
   }
 }
