@@ -14,8 +14,10 @@
 */
 import 'dart:math';
 
-const MAX_SOLUTIONS_DEFAULT = 10;
-var _max_solutions = MAX_SOLUTIONS_DEFAULT;
+const _MAX_SOLUTIONS_DEFAULT = 10;
+var _max_solutions = _MAX_SOLUTIONS_DEFAULT;
+var _MAX_RECURSIVE_COUNTER = 100000;
+var _recursive_counter  = 0;
 var _globalMaxValue = 1000;
 List<List<List<int?>>> _solutions = [];
 
@@ -106,7 +108,8 @@ int? _getMaxValue(List<List<int?>> pyramid, int layer, int brick) {
 			brick -- Index of the brick (always bottom layer!)
 */
 void _solveGuess(List<List<int?>> pyramid, int brick) {
-  if (_solutions.length >= _max_solutions) {
+  _recursive_counter++;
+  if (_solutions.length >= _max_solutions || _recursive_counter > _MAX_RECURSIVE_COUNTER * pyramid.length) {
     return;
   }
 
@@ -183,11 +186,12 @@ List<List<int?>> _solveRepair(List<List<int?>> pyramid) {
 	Keyword arguments:
 	pyramid -- The pyramid
 */
-List<List<List<int?>>>? solve(List<List<int?>> pyramid, {int? maxSolutions = MAX_SOLUTIONS_DEFAULT}) {
+List<List<List<int?>>>? solve(List<List<int?>> pyramid, {int? maxSolutions = _MAX_SOLUTIONS_DEFAULT}) {
   if (maxSolutions != null && maxSolutions > 0) _max_solutions = maxSolutions;
 
   if (!_assertValidPyramid(pyramid)) return null;
 
+  _recursive_counter = 0;
   _solutions = [];
 
   pyramid = _solveRepair(pyramid);
