@@ -9,8 +9,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 double UnixTimestampToJulianDate(int timestamp){
-  var date = DateTime(1970, 1, 1, 0, 0, 0);
-  date = date.add(Duration(seconds: timestamp));
+  DateTime date = DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: timestamp));
 
   return gregorianCalendarToJulianDate(date);
 }
@@ -20,9 +19,7 @@ String JulianDateToUnixTimestamp(double jd){
 }
 
 double ExcelTimestampToJulianDate(int timestamp){
-  var date = DateTime(1900, 1, 1, 0, 0, 0);
-  date = date.add(Duration(days: timestamp));
-
+  DateTime date = DateTime(1900, 1, 1,).add(Duration(days: timestamp));
   return gregorianCalendarToJulianDate(date);
 }
 

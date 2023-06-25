@@ -71,6 +71,7 @@ class _CalendarState extends State<Calendar> {
             _currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
           GCWIntegerSpinner(
               value: _currentTimeStamp,
+              min: 0,
               onChanged: (value) {
                 setState(() {
                   _currentTimeStamp = value;
@@ -188,11 +189,11 @@ class _CalendarState extends State<Calendar> {
 
     output['dates_calendar_system_exceltimestamp'] = _invalidExcelDate(jd)
         ? i18n(context, 'dates_calendar_excel_error')
-        : JulianDateToExcelTimestamp(jd);
+        : (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP) ? _currentTimeStamp : JulianDateToExcelTimestamp(jd);
 
     output['dates_calendar_system_unixtimestamp']  = _invalidUnixDate(jd)
         ? i18n(context, 'dates_calendar_unix_error')
-        : JulianDateToUnixTimestamp(jd);
+        : (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP) ? _currentTimeStamp : JulianDateToUnixTimestamp(jd);
 
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
