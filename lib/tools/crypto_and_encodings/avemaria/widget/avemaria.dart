@@ -21,7 +21,6 @@ class AveMariaState extends State<AveMaria> {
   String _currentDecodeInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
-  GCWSwitchPosition _currentSource = GCWSwitchPosition.right;
 
   @override
   void initState() {
