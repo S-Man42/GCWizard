@@ -24,7 +24,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_andromeda",
     "position": "N",
     "area": "722.278",
-    "visibility": "90° N bis 37° S",
+    "visibility": "90° N - 37° S",
     "magnitudo": "2.07"
   },
   "Antlia": {
@@ -35,7 +35,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_antlia",
     "position": "S",
     "area": "238.901",
-    "visibility": "50° N bis 90° S",
+    "visibility": "50° N - 90° S",
     "magnitudo": "4.22"
   },
   "Apus": {
@@ -46,7 +46,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_apus",
     "position": "S",
     "area": "206.327",
-    "visibility": "07° N bis 90° S",
+    "visibility": "07° N - 90° S",
     "magnitudo": "3.83"
   },
   "Aquarius": {
@@ -57,7 +57,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_aquarius",
     "position": "S n",
     "area": "979.854",
-    "visibility": "65° N bis 87° S",
+    "visibility": "65° N - 87° S",
     "magnitudo": "2.9"
   },
   "Aquila": {
@@ -68,7 +68,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_aquila",
     "position": "N S",
     "area": "652.473",
-    "visibility": "78° N bis 71° S",
+    "visibility": "78° N - 71° S",
     "magnitudo": "0.76"
   },
   "Ara": {
@@ -79,7 +79,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_ara",
     "position": "S",
     "area": "237.057",
-    "visibility": "25° N bis 90° S",
+    "visibility": "25° N - 90° S",
     "magnitudo": "2.85"
   },
   "Aries": {
@@ -90,7 +90,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_aries",
     "position": "N",
     "area": "441.395",
-    "visibility": "90° N bis 59° S",
+    "visibility": "90° N - 59° S",
     "magnitudo": "2.01"
   },
   "Auriga": {
@@ -101,7 +101,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_auriga",
     "position": "N",
     "area": "657.438",
-    "visibility": "90° N bis 34° S",
+    "visibility": "90° N - 34° S",
     "magnitudo": "0.03"
   },
   "Boötes": {
@@ -112,7 +112,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_bootes",
     "position": "N",
     "area": "906.831",
-    "visibility": "90° N bis 50° S",
+    "visibility": "90° N - 50° S",
     "magnitudo": "−0,05"
   },
   "Caelum": {
@@ -123,7 +123,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_caelum",
     "position": "S",
     "area": "124.865",
-    "visibility": "41° N bis 90° S",
+    "visibility": "41° N - 90° S",
     "magnitudo": "4.45"
   },
   "Camelopardalis": {
@@ -134,7 +134,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_camelopardalis",
     "position": "N",
     "area": "756.828",
-    "visibility": "90° N bis 37° S",
+    "visibility": "90° N - 37° S",
     "magnitudo": "4.03"
   },
   "Cancer": {
@@ -145,7 +145,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_cancer",
     "position": "N",
     "area": "505.872",
-    "visibility": "90° N bis 60° S",
+    "visibility": "90° N - 60° S",
     "magnitudo": "3.52"
   },
   "Canes Venatici": {
@@ -156,7 +156,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_canes_venatici",
     "position": "N",
     "area": "465.194",
-    "visibility": "90° N bis 38° S",
+    "visibility": "90° N - 38° S",
     "magnitudo": "2.8"
   },
   "Canis Major": {
@@ -167,7 +167,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_canis_major",
     "position": "S",
     "area": "380.118",
-    "visibility": "57° N bis 90° S",
+    "visibility": "57° N - 90° S",
     "magnitudo": "−1,44"
   },
   "Canis Minor": {
@@ -178,7 +178,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_canis_minor",
     "position": "N s",
     "area": "183.367",
-    "visibility": "89° N bis 77° S",
+    "visibility": "89° N - 77° S",
     "magnitudo": "0.37"
   },
   "Capricornus": {
@@ -189,7 +189,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_capricornus",
     "position": "S",
     "area": "413.947",
-    "visibility": "62° N bis 90° S",
+    "visibility": "62° N - 90° S",
     "magnitudo": "2.73"
   },
   "Carina": {
@@ -200,7 +200,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_carina",
     "position": "S",
     "area": "494.184",
-    "visibility": "14° N bis 90° S",
+    "visibility": "14° N - 90° S",
     "magnitudo": "−0,62"
   },
   "Cassiopeia": {
@@ -211,7 +211,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_cassiopeia",
     "position": "N",
     "area": "598.407",
-    "visibility": "90° N bis 12° S",
+    "visibility": "90° N - 12° S",
     "magnitudo": "2.23"
   },
   "Centaurus": {
@@ -222,7 +222,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_centaurus",
     "position": "S",
     "area": "1,060.42",
-    "visibility": "25° N bis 90° S",
+    "visibility": "25° N - 90° S",
     "magnitudo": "−0,01"
   },
   "Cepheus": {
@@ -233,7 +233,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_cepheus",
     "position": "N",
     "area": "587.787",
-    "visibility": "90° N bis 10° S",
+    "visibility": "90° N - 10° S",
     "magnitudo": "2.45"
   },
   "Cetus": {
@@ -244,7 +244,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_cetus",
     "position": "S n",
     "area": "1,231.41",
-    "visibility": "70° N bis 90° S",
+    "visibility": "70° N - 90° S",
     "magnitudo": "2.04"
   },
   "Chamaeleon": {
@@ -255,7 +255,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_chamaeleon",
     "position": "S",
     "area": "131.592",
-    "visibility": "07° N bis 90° S",
+    "visibility": "07° N - 90° S",
     "magnitudo": "4.05"
   },
   "Circinus": {
@@ -266,7 +266,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_circinus",
     "position": "S",
     "area": "93.353",
-    "visibility": "20° N bis 90° S",
+    "visibility": "20° N - 90° S",
     "magnitudo": "3.19"
   },
   "Columba": {
@@ -277,7 +277,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_columba",
     "position": "S",
     "area": "270.184",
-    "visibility": "41° N bis 90° S",
+    "visibility": "41° N - 90° S",
     "magnitudo": "2.65"
   },
   "Coma Berenices": {
@@ -288,7 +288,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_coma_berenices",
     "position": "N",
     "area": "386.475",
-    "visibility": "90° N bis 56° S",
+    "visibility": "90° N - 56° S",
     "magnitudo": "4.26"
   },
   "Corona Australis": {
@@ -299,7 +299,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_corona_australis",
     "position": "S",
     "area": "127.696",
-    "visibility": "44° N bis 90° S",
+    "visibility": "44° N - 90° S",
     "magnitudo": "4.1"
   },
   "Corona Borealis": {
@@ -310,7 +310,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_corona_borealis",
     "position": "N",
     "area": "178.71",
-    "visibility": "90° N bis 50° S",
+    "visibility": "90° N - 50° S",
     "magnitudo": "2.21"
   },
   "Corvus": {
@@ -321,7 +321,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_corvus",
     "position": "S",
     "area": "183.801",
-    "visibility": "65° N bis 90° S",
+    "visibility": "65° N - 90° S",
     "magnitudo": "2.59"
   },
   "Crater": {
@@ -332,7 +332,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_crater",
     "position": "S",
     "area": "282.398",
-    "visibility": "65° N bis 90° S",
+    "visibility": "65° N - 90° S",
     "magnitudo": "3.56"
   },
   "Crux": {
@@ -343,7 +343,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_crux",
     "position": "S",
     "area": "68.447",
-    "visibility": "25° N bis 90° S",
+    "visibility": "25° N - 90° S",
     "magnitudo": "0.77"
   },
   "Cygnus": {
@@ -354,7 +354,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_cygnus",
     "position": "N",
     "area": "803.983",
-    "visibility": "90° N bis 29° S",
+    "visibility": "90° N - 29° S",
     "magnitudo": "1.25"
   },
   "Delphinus": {
@@ -365,7 +365,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_delphinus",
     "position": "N",
     "area": "188.549",
-    "visibility": "90° N bis 70° S",
+    "visibility": "90° N - 70° S",
     "magnitudo": "3.63"
   },
   "Dorado": {
@@ -376,7 +376,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_dorado",
     "position": "S",
     "area": "179.173",
-    "visibility": "20° N bis 90° S",
+    "visibility": "20° N - 90° S",
     "magnitudo": "3.3"
   },
   "Draco": {
@@ -387,7 +387,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_draco",
     "position": "N",
     "area": "1,082.95",
-    "visibility": "90° N bis 15° S",
+    "visibility": "90° N - 15° S",
     "magnitudo": "2.24"
   },
   "Equuleus": {
@@ -398,7 +398,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_equuleus",
     "position": "N",
     "area": "71.641",
-    "visibility": "90° N bis 77° S",
+    "visibility": "90° N - 77° S",
     "magnitudo": "3.92"
   },
   "Eridanus": {
@@ -409,7 +409,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_eridanus",
     "position": "S n",
     "area": "1,137.92",
-    "visibility": "32° N bis 89° S",
+    "visibility": "32° N - 89° S",
     "magnitudo": "0.5"
   },
   "Fornax": {
@@ -420,7 +420,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_fornax",
     "position": "S",
     "area": "397.502",
-    "visibility": "50° N bis 90° S",
+    "visibility": "50° N - 90° S",
     "magnitudo": "3.87"
   },
   "Gemini": {
@@ -431,7 +431,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_gemini",
     "position": "N",
     "area": "513.761",
-    "visibility": "90° N bis 60° S",
+    "visibility": "90° N - 60° S",
     "magnitudo": "1.16"
   },
   "Grus": {
@@ -442,7 +442,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_grus",
     "position": "S",
     "area": "365.513",
-    "visibility": "35° N bis 90° S",
+    "visibility": "35° N - 90° S",
     "magnitudo": "1.74"
   },
   "Hercules": {
@@ -453,7 +453,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_hercules",
     "position": "N",
     "area": "1,225.15",
-    "visibility": "90° N bis 39° S",
+    "visibility": "90° N - 39° S",
     "magnitudo": "2.78"
   },
   "Horologium": {
@@ -464,7 +464,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_horologium",
     "position": "S",
     "area": "248.885",
-    "visibility": "20° N bis 90° S",
+    "visibility": "20° N - 90° S",
     "magnitudo": "3.85"
   },
   "Hydra": {
@@ -475,7 +475,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_hydra",
     "position": "S n",
     "area": "1,302.84",
-    "visibility": "55° N bis 83° S",
+    "visibility": "55° N - 83° S",
     "magnitudo": "1.98"
   },
   "Hydrus": {
@@ -486,7 +486,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_hydrus",
     "position": "S",
     "area": "243.035",
-    "visibility": "08° N bis 90° S",
+    "visibility": "08° N - 90° S",
     "magnitudo": "2.8"
   },
   "Indus": {
@@ -497,7 +497,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_indus",
     "position": "S",
     "area": "294.006",
-    "visibility": "16° N bis 90° S",
+    "visibility": "16° N - 90° S",
     "magnitudo": "3.11"
   },
   "Lacerta": {
@@ -508,7 +508,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_lacerta",
     "position": "N",
     "area": "200.688",
-    "visibility": "90° N bis 40° S",
+    "visibility": "90° N - 40° S",
     "magnitudo": "3.77"
   },
   "Leo": {
@@ -519,7 +519,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_leo",
     "position": "N s",
     "area": "946.964",
-    "visibility": "83° N bis 57° S",
+    "visibility": "83° N - 57° S",
     "magnitudo": "1.36"
   },
   "Leo Minor": {
@@ -530,7 +530,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_leo_minor",
     "position": "N",
     "area": "231.956",
-    "visibility": "90° N bis 48° S",
+    "visibility": "90° N - 48° S",
     "magnitudo": "3.83"
   },
   "Lepus": {
@@ -541,7 +541,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_lepus",
     "position": "S",
     "area": "290.291",
-    "visibility": "60° N bis 90° S",
+    "visibility": "60° N - 90° S",
     "magnitudo": "2.58"
   },
   "Libra": {
@@ -552,7 +552,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_libra",
     "position": "S",
     "area": "538.052",
-    "visibility": "60° N bis 90° S",
+    "visibility": "60° N - 90° S",
     "magnitudo": "2.61"
   },
   "Lupus": {
@@ -563,7 +563,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_lupus",
     "position": "S",
     "area": "333.683",
-    "visibility": "35° N bis 90° S",
+    "visibility": "35° N - 90° S",
     "magnitudo": "2.29"
   },
   "Lynx": {
@@ -574,7 +574,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_lynx",
     "position": "N",
     "area": "545.386",
-    "visibility": "90° N bis 35° S",
+    "visibility": "90° N - 35° S",
     "magnitudo": "3.13"
   },
   "Lyra": {
@@ -585,7 +585,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_lyra",
     "position": "N",
     "area": "286.476",
-    "visibility": "90° N bis 29° S",
+    "visibility": "90° N - 29° S",
     "magnitudo": "0.03"
   },
   "Mensa": {
@@ -596,7 +596,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_mensa",
     "position": "S",
     "area": "153.484",
-    "visibility": "05° N bis 90° S",
+    "visibility": "05° N - 90° S",
     "magnitudo": "5.09"
   },
   "Microscopium": {
@@ -607,7 +607,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_microscopium",
     "position": "S",
     "area": "209.513",
-    "visibility": "45° N bis 90° S",
+    "visibility": "45° N - 90° S",
     "magnitudo": "4.67"
   },
   "Monoceros": {
@@ -618,7 +618,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_monoceros",
     "position": "S N",
     "area": "481.569",
-    "visibility": "75° N bis 85° S",
+    "visibility": "75° N - 85° S",
     "magnitudo": "3.76"
   },
   "Musca": {
@@ -629,7 +629,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_musca",
     "position": "S",
     "area": "138.355",
-    "visibility": "10° N bis 90° S",
+    "visibility": "10° N - 90° S",
     "magnitudo": "2.69"
   },
   "Norma": {
@@ -640,7 +640,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_norma",
     "position": "S",
     "area": "165.29",
-    "visibility": "30° N bis 90° S",
+    "visibility": "30° N - 90° S",
     "magnitudo": "4.02"
   },
   "Octans": {
@@ -651,7 +651,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_octans",
     "position": "S",
     "area": "291.045",
-    "visibility": "05° N bis 90° S",
+    "visibility": "05° N - 90° S",
     "magnitudo": "3.76"
   },
   "Ophiuchus": {
@@ -662,7 +662,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_ophiuchus",
     "position": "S N",
     "area": "948.34",
-    "visibility": "80° N bis 80° S",
+    "visibility": "80° N - 80° S",
     "magnitudo": "2.08"
   },
   "Orion": {
@@ -673,7 +673,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_orion",
     "position": "N S",
     "area": "594.12",
-    "visibility": "85° N bis 75° S",
+    "visibility": "85° N - 75° S",
     "magnitudo": "0.12"
   },
   "Pavo": {
@@ -684,7 +684,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_pavo",
     "position": "S",
     "area": "377.666",
-    "visibility": "15° N bis 90° S",
+    "visibility": "15° N - 90° S",
     "magnitudo": "1.94"
   },
   "Pegasus": {
@@ -695,7 +695,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_pegasus",
     "position": "N",
     "area": "1,120.79",
-    "visibility": "90° N bis 65° S",
+    "visibility": "90° N - 65° S",
     "magnitudo": "2.38"
   },
   "Perseus": {
@@ -706,7 +706,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_perseus",
     "position": "N",
     "area": "614.997",
-    "visibility": "90° N bis 35° S",
+    "visibility": "90° N - 35° S",
     "magnitudo": "1.79"
   },
   "Phoenix": {
@@ -717,7 +717,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_phoenix",
     "position": "S",
     "area": "469.319",
-    "visibility": "32° N bis 90° S",
+    "visibility": "32° N - 90° S",
     "magnitudo": "2.39"
   },
   "Pictor": {
@@ -728,7 +728,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_pictor",
     "position": "S",
     "area": "246.739",
-    "visibility": "25° N bis 90° S",
+    "visibility": "25° N - 90° S",
     "magnitudo": "3.27"
   },
   "Pisces": {
@@ -739,7 +739,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_pisces",
     "position": "N s",
     "area": "889.417",
-    "visibility": "84° N bis 56° S",
+    "visibility": "84° N - 56° S",
     "magnitudo": "3.62"
   },
   "Piscis Austrinus": {
@@ -750,7 +750,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_piscis_austrinus",
     "position": "S",
     "area": "245.375",
-    "visibility": "50° N bis 90° S",
+    "visibility": "50° N - 90° S",
     "magnitudo": "1.16"
   },
   "Puppis": {
@@ -761,7 +761,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_puppis",
     "position": "S",
     "area": "673.434",
-    "visibility": "39° N bis 90° S",
+    "visibility": "39° N - 90° S",
     "magnitudo": "2.21"
   },
   "Pyxis": {
@@ -772,7 +772,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_pyxis",
     "position": "S",
     "area": "220.833",
-    "visibility": "53° N bis 90° S",
+    "visibility": "53° N - 90° S",
     "magnitudo": "3.68"
   },
   "Reticulum": {
@@ -783,7 +783,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_reticulum",
     "position": "S",
     "area": "113.936",
-    "visibility": "23° N bis 90° S",
+    "visibility": "23° N - 90° S",
     "magnitudo": "3.33"
   },
   "Sagitta": {
@@ -794,7 +794,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_sagitta",
     "position": "N",
     "area": "79.923",
-    "visibility": "90° N bis 70° S",
+    "visibility": "90° N - 70° S",
     "magnitudo": "3.51"
   },
   "Sagittarius": {
@@ -805,7 +805,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_sagittarius",
     "position": "S",
     "area": "867.432",
-    "visibility": "55° N bis 90° S",
+    "visibility": "55° N - 90° S",
     "magnitudo": "1.85"
   },
   "Scorpius": {
@@ -816,7 +816,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_scorpius",
     "position": "S",
     "area": "496.783",
-    "visibility": "44° N bis 90° S",
+    "visibility": "44° N - 90° S",
     "magnitudo": "1.06"
   },
   "Sculptor": {
@@ -827,7 +827,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_sculptor",
     "position": "S",
     "area": "474.764",
-    "visibility": "50° N bis 90° S",
+    "visibility": "50° N - 90° S",
     "magnitudo": "4.27"
   },
   "Scutum": {
@@ -838,7 +838,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_scutum",
     "position": "S",
     "area": "109.114",
-    "visibility": "74° N bis 64° S",
+    "visibility": "74° N - 64° S",
     "magnitudo": "3.85"
   },
   "Serpens": {
@@ -849,7 +849,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_serpens",
     "position": "N S",
     "area": "636.928",
-    "visibility": "74° N bis 64° S",
+    "visibility": "74° N - 64° S",
     "magnitudo": "2.63"
   },
   "Sextans": {
@@ -860,7 +860,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_sextans",
     "position": "S N",
     "area": "313.515",
-    "visibility": "78° N bis 83° S",
+    "visibility": "78° N - 83° S",
     "magnitudo": "4.49"
   },
   "Taurus": {
@@ -871,7 +871,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_taurus",
     "position": "N s",
     "area": "797.249",
-    "visibility": "90° N bis 65° S",
+    "visibility": "90° N - 65° S",
     "magnitudo": "0.85"
   },
   "Telescopium": {
@@ -882,7 +882,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_telescopium",
     "position": "S",
     "area": "251.512",
-    "visibility": "33° N bis 90° S",
+    "visibility": "33° N - 90° S",
     "magnitudo": "3.51"
   },
   "Triangulum": {
@@ -893,7 +893,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_triangulum",
     "position": "N",
     "area": "131.847",
-    "visibility": "90° N bis 50° S",
+    "visibility": "90° N - 50° S",
     "magnitudo": "3"
   },
   "Triangulum Australe": {
@@ -904,7 +904,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_triangulum_australe",
     "position": "S",
     "area": "109.978",
-    "visibility": "20° N bis 90° S",
+    "visibility": "20° N - 90° S",
     "magnitudo": "1.91"
   },
   "Tucana": {
@@ -915,7 +915,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_tucana",
     "position": "S",
     "area": "294.557",
-    "visibility": "15° N bis 90° S",
+    "visibility": "15° N - 90° S",
     "magnitudo": "2.86"
   },
   "Ursa Major": {
@@ -926,7 +926,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_ursa_major",
     "position": "N",
     "area": "1,279.66",
-    "visibility": "90° N bis 17° S",
+    "visibility": "90° N - 17° S",
     "magnitudo": "1.76"
   },
   "Ursa Minor": {
@@ -937,7 +937,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_ursa_minor",
     "position": "N",
     "area": "255.864",
-    "visibility": "90° N bis 10° S",
+    "visibility": "90° N - 10° S",
     "magnitudo": "1.97"
   },
   "Vela": {
@@ -948,7 +948,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_vela",
     "position": "S",
     "area": "499.649",
-    "visibility": "33° N bis 90° S",
+    "visibility": "33° N - 90° S",
     "magnitudo": "1.75"
   },
   "Virgo": {
@@ -959,7 +959,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_virgo",
     "position": "S N",
     "area": "1,294.43",
-    "visibility": "67° N bis 76° S",
+    "visibility": "67° N - 76° S",
     "magnitudo": "0.92"
   },
   "Volans": {
@@ -970,7 +970,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_volans",
     "position": "S",
     "area": "141.354",
-    "visibility": "14° N bis 90° S",
+    "visibility": "14° N - 90° S",
     "magnitudo": "3.77"
   },
   "Vulpecula": {
@@ -981,7 +981,7 @@ Map<String, Map<String, String>> IAU_CONSTELLATION = {
     "name": "iau_constellation_vulpecula",
     "position": "N",
     "area": "268.165",
-    "visibility": "90° N bis 55° S",
+    "visibility": "90° N - 55° S",
     "magnitudo": "4.44"
   }
 };

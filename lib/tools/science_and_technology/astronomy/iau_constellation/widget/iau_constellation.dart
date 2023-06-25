@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/logic/iau_constellation.dart';
 
@@ -152,7 +153,9 @@ class IAUConstellationsState extends State<IAUConstellations> {
     data.add([i18n(context, 'iau_constellation_star'), _currentConstellationData['brightest_star']]);
     data.add([i18n(context, 'iau_constellation_magnitudo'), _currentConstellationData['magnitudo']]);
 
-    return Column(
+    return
+      GCWDefaultOutput(
+        child: Column(
         children: <Widget>[
           GCWColumnedMultilineOutput(
               data: data,
@@ -164,7 +167,8 @@ class IAUConstellationsState extends State<IAUConstellations> {
             Image.memory(_images.firstWhere((element) => element.keys.first.toLowerCase() == _currentConstellationData['constellation']!.replaceAll(' ', '_').toLowerCase().replaceAll('ö', 'o')).values.first.bytes),
           ),
         ]
-    );
+        )
+      );
   }
 
   void _createConstellationDropDown(){
