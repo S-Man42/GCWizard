@@ -3,10 +3,23 @@
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-String DateTimeToUnixTime(DateTime currentDateTime) {
+
+class UnixTimeOutput {
+  final int UnixTimeStamp;
+  final DateTime GregorianDateTime;
+  final String Error;
+
+  UnixTimeOutput({
+    required this.UnixTimeStamp,
+    required this.GregorianDateTime,
+    required this.Error,
+  });
+}
+
+UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
 
   if (_invalidUnixDate(gregorianCalendarToJulianDate(currentDateTime))) {
-    return 'dates_calendar_unix_error';
+    return UnixTimeOutput(Error: 'dates_calendar_unix_error', UnixTimeStamp: 0, GregorianDateTime: currentDateTime);
   }
 
   int jahr = currentDateTime.year;
@@ -29,11 +42,11 @@ String DateTimeToUnixTime(DateTime currentDateTime) {
   if ((monat > 2) && (jahr % 4 == 0 && (jahr % 100 != 0 || jahr % 400 == 0))) {
     tage_seit_1970 += 1;
   } /* +Schalttag, wenn jahr Schaltjahr ist */
-  return (sekunde + 60 * (minute + 60 * (stunde + 24 * tage_seit_1970))).toString();
+  return UnixTimeOutput(UnixTimeStamp: sekunde + 60 * (minute + 60 * (stunde + 24 * tage_seit_1970)), GregorianDateTime: currentDateTime, Error: '');
 }
 
-String UnixTimeToDateTime(int unixtime) {
-  return DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: unixtime)).toString();
+UnixTimeOutput UnixTimeToDateTime(int unixtime) {
+  return UnixTimeOutput(GregorianDateTime: DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: unixtime)), UnixTimeStamp: unixtime, Error: '');
 }
 
 bool _invalidUnixDate(double jd) {
