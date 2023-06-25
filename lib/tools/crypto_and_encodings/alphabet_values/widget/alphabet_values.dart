@@ -10,6 +10,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -25,16 +26,57 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_input.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_item.dart';
 
-class AlphabetValues extends StatefulWidget {
-  const AlphabetValues({Key? key}) : super(key: key);
+const String _apiSpecification = '''
+{
+	"/alphabet_values" : {
+		"get": {
+			"summary": "Alphabet Values Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding text",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "encode"
+				}
+			}
+		]
+	}
+}
+
+''';
+
+class AlphabetValues extends GCWWebStatefulWidget {
+  AlphabetValues({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _AlphabetValuesState createState() => _AlphabetValuesState();
+  _AlphabetValuesState createState() => _AlphabetValuesState();
 }
 
 class _AlphabetValuesState extends State<AlphabetValues> {
@@ -63,6 +105,21 @@ class _AlphabetValuesState extends State<AlphabetValues> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.decode.toString())) {
+        _currentMode = GCWSwitchPosition.right;
+      }
+      if (_currentMode == GCWSwitchPosition.left) {
+        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
+      } else {
+        var webInput = widget.getWebParameter(WEBPARAMETER.input);
+        _currentDecodeInput = webInput == null
+            ? _currentDecodeInput
+            : IntegerListText(webInput, textToIntList(webInput));
+      }
+      widget.webParameter = null;
+    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput.text);
