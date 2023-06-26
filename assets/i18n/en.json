@@ -138,6 +138,7 @@
   "animated_image_morse_code_low_signal": "Low Signal (Off)",
   "animated_image_morse_code_dot_duration": "Dot Duration",
   "animated_image_morse_code_morse_code": "Morse-Code",
+  "animated_image_select_on_image": "Select image with double click",
   "apparenttemperature_selection_title": "Apparent Temperature",
   "apparenttemperature_selection_description": "Calculates comfort due to temperature, humidity and wind",
   "asciivalues_title": "ASCII and Unicode (UTF-8)",
