@@ -186,8 +186,10 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   Widget _buildDecodeOutput() {
+    var output = _outText?.text;
+    if (output == null || output.isEmpty) output = i18n(context, 'animated_image_select_on_image');
     return Column(children: <Widget>[
-      GCWDefaultOutput(child: GCWOutputText(text: _outText == null ? '' : _outText!.text)),
+      GCWDefaultOutput(child: GCWOutputText(text: output)),
       GCWOutput(
           title: i18n(context, 'animated_image_morse_code_morse_code'),
           child: GCWOutputText(text: _outText == null ? '' : _outText!.morseCode)),
@@ -402,6 +404,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < _outData!.images.length; i++) {
         _outData!.images[i] = _outData!.images[linkList[i]];
       }
+      showToast(i18n(context, 'animated_image_select_on_image'));
     } else {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       return;
