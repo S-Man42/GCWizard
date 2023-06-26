@@ -178,7 +178,8 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humi
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_constellation.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_single_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/widget/moon_rise_set.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/widget/right_ascension_to_degree.dart';
@@ -586,7 +587,8 @@ void _initStaticToolList() {
       className(const Houdini()),
       className(const Humidex()),
       className(const IATAICAOSearch()),
-      className(const IAUConstellations()),
+      className(const IAUAllConstellations()),
+      className(const IAUSingleConstellation(ConstellationName: 'Andromeda',)),
       className(const IceCodesSelection()),
       className(const ILLIAC()),
       className(const ImageColorCorrections()),

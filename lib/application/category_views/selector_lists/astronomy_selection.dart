@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/easter_selec
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_constellation.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/widget/moon_rise_set.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/widget/right_ascension_to_degree.dart';
@@ -21,7 +21,7 @@ class AstronomySelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(const IAUConstellations()),
+        className(const IAUAllConstellations()),
         className(const SunRiseSet()),
         className(const SunPosition()),
         className(const MoonRiseSet()),
