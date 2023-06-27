@@ -57,7 +57,7 @@ final _pairPrecision = pow(_encodingBase, 3).toInt();
 /// The resolution values in degrees for each position in the lat/lng pair
 /// encoding. These give the place value of each position, and therefore the
 /// dimensions of the resulting area.
-const _pairResolutions = <double>[20.0, 1.0, .05, .0025, .000125];
+//const _pairResolutions = <double>[20.0, 1.0, .05, .0025, .000125];
 
 /// Number of digits in the grid precision part of the code.
 const _gridCodeLength = _maxDigitCount - _pairCodeLength;
@@ -83,7 +83,7 @@ final _finalLatPrecision = _pairPrecision * pow(_gridRows, _gridCodeLength).toIn
 final _finalLngPrecision = _pairPrecision * pow(_gridColumns, _gridCodeLength).toInt();
 
 /// Minimum length of a code that can be shortened.
-const _minTrimmableCodeLen = 6;
+//const _minTrimmableCodeLen = 6;
 
 /// Decoder lookup table.
 /// Position is ASCII character value, value is:

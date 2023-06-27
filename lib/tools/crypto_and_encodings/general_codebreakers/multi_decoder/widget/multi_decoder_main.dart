@@ -1,7 +1,33 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
-class MultiDecoder extends StatefulWidget {
-  const MultiDecoder({Key? key}) : super(key: key);
+const String _apiSpecification = '''
+{
+	"/multidecoder" : {
+		"get": {
+			"summary": "Multi Decoder Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for decoding text",
+				"schema": {
+					"type": "string"
+				}
+			}
+		]
+	}
+}
+''';
+
+class MultiDecoder extends GCWWebStatefulWidget {
+  MultiDecoder({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
  _MultiDecoderState createState() => _MultiDecoderState();
@@ -21,6 +47,12 @@ class _MultiDecoderState extends State<MultiDecoder> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+      widget.webParameter = null;
+    }
+
     _controller = TextEditingController(text: _currentInput);
 
     refreshMultiDecoderTools();
