@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:base32/base32.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ascii85/logic/ascii85.dart';
@@ -16,6 +18,11 @@ const Map<String, String Function(String)> BASE_FUNCTIONS = {
   'base_base91': decodeBase91,
   'base_base122': decodeBase122,
 };
+
+class Base64Output{
+  final String plainText;
+  Base64Output({required this.plainText});
+}
 
 String decodeBase16(String input) {
   if (input.isEmpty) return '';
@@ -63,24 +70,55 @@ String encodeBase64(String input) {
   //return base64.encode(utf8.encode(input));
 }
 
+Future<Base64Output?>decodeBase64Async(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! String) return null;
+
+  var data = jobData!.parameters as String;
+  var output = await decodeBase64async(data, sendAsyncPort: jobData.sendAsyncPort);
+
+  jobData.sendAsyncPort?.send(output);
+
+  return output;
+}
+
+Future<Base64Output> decodeBase64async(String input, {SendPort? sendAsyncPort}) async{
+   if (input.isEmpty) return Base64Output(plainText: '');
+
+   var out = '';
+
+   input = input.replaceAll(RegExp(r'\s'), '');
+
+   //if there's no result, try with appended = or ==
+   for (int i = 0; i <= 2; i++) {
+     try {
+       //out = utf8.decode(base64.decode(input + '=' * i));
+       out = String.fromCharCodes(base64.decode(input + '=' * i));
+
+       if (out.isNotEmpty) break;
+     } on FormatException {}
+   }
+
+   return Base64Output(plainText: out);
+}
+
 String decodeBase64(String input) {
-  if (input.isEmpty) return '';
+   if (input.isEmpty) return '';
 
-  var out = '';
+   var out = '';
 
-  input = input.replaceAll(RegExp(r'\s'), '');
+   input = input.replaceAll(RegExp(r'\s'), '');
 
-  //if there's no result, try with appended = or ==
-  for (int i = 0; i <= 2; i++) {
-    try {
-      //out = utf8.decode(base64.decode(input + '=' * i));
-      out = String.fromCharCodes(base64.decode(input + '=' * i));
+   //if there's no result, try with appended = or ==
+   for (int i = 0; i <= 2; i++) {
+     try {
+       //out = utf8.decode(base64.decode(input + '=' * i));
+       out = String.fromCharCodes(base64.decode(input + '=' * i));
 
-      if (out.isNotEmpty) break;
-    } on FormatException {}
-  }
+       if (out.isNotEmpty) break;
+     } on FormatException {}
+   }
 
-  return out;
+   return out;
 }
 
 String encodeBase85(String input) {
