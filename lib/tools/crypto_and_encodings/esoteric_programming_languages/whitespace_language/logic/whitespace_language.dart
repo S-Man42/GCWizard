@@ -879,6 +879,9 @@ Tuple2<int, String> _label_parameter() {
   *Must be unique.
   */
   var index = _code.indexOf('\n', _pos) + 1;
+  if (index < _pos) {
+    throw const FormatException('common_programming_error_invalid_opcode');
+  }
   // Empty string is a valid label
   var name = _code.substring(_pos, index);
   return Tuple2<int, String>(index, name);
