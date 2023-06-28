@@ -27,6 +27,12 @@ class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
                 var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK, options, MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE);
 
                 var _output = interpretBeatnik(option, input, key);
+                if (_output.output .isNotEmpty) {
+                  if (_output.output.first.startsWith('beatnik_') ||
+                      _output.output.first.startsWith('common_programming_')) {
+                    return null;
+                  }
+                }
                 return beatnikBuildOutputText(context, _output.output);
               } catch (e) {
                 return null;
