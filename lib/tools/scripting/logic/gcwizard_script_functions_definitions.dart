@@ -182,3 +182,10 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'CENTERTWOPOINTS': _GCWizardScriptClassFunctionDefinition(_centertwopoints, 4, functionReturn: false),
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerthreepoints, 6, functionReturn: false),
 };
+
+List<String> scriptFunctions() {
+  var functions =  _FUNCTIONS.keys.toList();
+  functions.addAll(_GCWizardSCriptInterpreter.registeredKeywords.keys);
+
+  return functions;
+}
