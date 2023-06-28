@@ -22,7 +22,7 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
                   .split(RegExp(r'\s+'))
                   .where((element) => element.isNotEmpty)
                   .map((element) => convertBase(element, checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM), 10))
-                  .join(' ');
+                  .join(' ').trim();
             },
             options: options);
   @override

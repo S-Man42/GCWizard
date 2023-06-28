@@ -6,6 +6,7 @@ import "package:flutter_test/flutter_test.dart";
 
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 void main() {
 
@@ -109,7 +110,7 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
       {'input' : '<~@prk\\AKYGnBco,c/i,=A+>>f.2`<V~>', 'expectedOutput' : 'cache bei 12.345 09.768'},
-      {'input' : "'*<%>y<p; %F'4(Ay<p;Y *4& n?y8& z<' r<!8% '4o8y?rAx4y>(?nGvB! t8z4p;' *8%7rA >nA![ F\":nE 8vA E\"Gab <&G @Ö:y<p;[ &Bq8y8Y u<rE A(A 7v8 >\"B%7vAnGrAY q<r w4 9ÜE 7nF 9vAq8! rEsB%7rEy<p; FvAqg A\"Eq -Jr<(Asü!9-<t tEn7 ^`[e_^ (Aq \"F' r?s tEn7 ][eaa[", 'expectedOutput' : '<?>'},
+      {'input' : "'*<%>y<p; %F'4(Ay<p;Y *4& n?y8& z<' r<!8% '4o8y?rAx4y>(?nGvB! t8z4p;' *8%7rA >nA![ F\":nE 8vA E\"Gab <&G @Ö:y<p;[ &Bq8y8Y u<rE A(A 7v8 >\"B%7vAnGrAY q<r w4 9ÜE 7nF 9vAq8! rEsB%7rEy<p; FvAqg A\"Eq -Jr<(Asü!9-<t tEn7 ^`[e_^ (Aq \"F' r?s tEn7 ][eaa[", 'expectedOutput' : UNKNOWN_ELEMENT},
     ];
 
     for (var elem in _inputsToExpected) {
