@@ -25,9 +25,9 @@ void main() {
 
       {'input' : 'se', 'expectedOutput' : 'S'},
       {'input' : 'sew', 'expectedOutput' : UNKNOWN_ELEMENT},
-      {'input' : 'x', 'expectedOutput' : '<?>'},
-      {'input' : 'x sa', 'expectedOutput' : '<?> E'},
-      {'input' : 'x sa y', 'expectedOutput' : '<?> E <?>'},
+      {'input' : 'x', 'expectedOutput' : UNKNOWN_ELEMENT},
+      {'input' : 'x sa', 'expectedOutput' : UNKNOWN_ELEMENT + ' E'},
+      {'input' : 'x sa y', 'expectedOutput' : UNKNOWN_ELEMENT + ' E ' + UNKNOWN_ELEMENT},
 
       {'input' : 'Piluffme luflorsasesa Florlusasa manpison sonsaflortu SesamkatuMansamsonsonpi lupi sakla arsaklatusa Regsammansasonsamtu seregflorsakarda lufftulu saflortusa Assaklamonflortululufftuar zuluffson Arsasamflapiflakasatu mosamkarkardasaReglufftumanda', 'expectedOutput' : 'AUF DIESE IDEE KAM MEIN SOHNKOMMA DA ER GERNE POKEMON SPIELT UND EINE VERBINDUNG ZUM GEOCACHEN WOLLTEPUNKT'},
     ];
