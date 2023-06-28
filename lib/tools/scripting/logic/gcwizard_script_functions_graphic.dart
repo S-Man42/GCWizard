@@ -87,7 +87,7 @@ void _stroke(Object x) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('STROKE ' + (x as int).toString());
+  _graphics.add('STROKE ' + (x as num).toString());
 }
 
 void _box(Object x1, Object y1, Object x2, Object y2) {

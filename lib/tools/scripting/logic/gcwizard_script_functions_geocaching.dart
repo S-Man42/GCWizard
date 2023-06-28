@@ -8,7 +8,7 @@ String _rotx(Object text, Object rot) {
   return Rotator().rotate((text as String), (rot as int));
 }
 
-int _bww(Object text, Object opt_alph, Object opt_itqs) {
+int _bww(Object text, Object opt_alph, Object opt_itqs) { //ToDo opt_alph ???
   if (_isNotString(text) || _isString(opt_alph) || _isString(opt_itqs)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
