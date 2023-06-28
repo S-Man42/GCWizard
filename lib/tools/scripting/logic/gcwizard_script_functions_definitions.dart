@@ -184,8 +184,13 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 };
 
 List<String> scriptFunctions() {
-  var functions =  _FUNCTIONS.keys.toList();
-  functions.addAll(_GCWizardSCriptInterpreter.registeredKeywords.keys);
+  return  _FUNCTIONS.keys.toList();
+}
 
-  return functions;
+List<String> scriptCommands() {
+  return _GCWizardSCriptInterpreter.registeredKeywordsCommands.keys.toList();
+}
+
+List<String> scriptControls() {
+  return  _GCWizardSCriptInterpreter.registeredKeywordsControls.keys.toList();
 }

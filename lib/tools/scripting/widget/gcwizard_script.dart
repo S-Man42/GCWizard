@@ -110,6 +110,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               ),
             GCWCodeTextField(
               style: gcwMonotypeTextStyle(),
+              lineNumbers: true,
+              lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 48),
               controller: _programController,
               // hintText: i18n(context, 'gcwizard_script_hint_program'),
               language: CodeHighlightingLanguage.BASIC,
@@ -483,6 +485,15 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
     scriptFunctions().forEach((entry) {
       highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.purple)});
+      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.purple)});
+    });
+    scriptCommands().forEach((entry) {
+      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.blue)});
+      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.blue)});
+    });
+    scriptControls().forEach((entry) {
+      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.red)});
+      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.red)});
     });
     return highlightMap;
   }

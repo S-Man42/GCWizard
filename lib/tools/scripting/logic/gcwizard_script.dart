@@ -171,9 +171,7 @@ class _GCWizardSCriptInterpreter {
 
   List<Object?> variables = List<Object?>.filled(26, 0, growable: false);
 
-  static const Map<String, int> registeredKeywords = {
-    "print": PRINT,
-    "input": INPUT,
+  static const Map<String, int> registeredKeywordsControls = {
     "if": IF,
     "then": THEN,
     "goto": GOTO,
@@ -185,19 +183,9 @@ class _GCWizardSCriptInterpreter {
     "end": END,
     "repeat": REPEAT,
     "until": UNTIL,
-    "cls": CLS,
-    "beep": BEEP,
-    "sleep": SLEEP,
-    "randomize": RANDOMIZE,
-    "rnd": RND,
     "while": WHILE,
     "wend": WEND,
     "step": STEP,
-    "rem": REM,
-    "data": DATA,
-    "read": READ,
-    "restore": RESTORE,
-    "screen": SCREEN,
     "elseif": ELSEIF,
     "else": ELSE,
     "endif": ENDIF,
@@ -208,8 +196,23 @@ class _GCWizardSCriptInterpreter {
     "break": BREAK,
     "continue": CONTINUE,
   };
+  static const Map<String, int> registeredKeywordsCommands = {
+    "print": PRINT,
+    "input": INPUT,
+    "cls": CLS,
+    "beep": BEEP,
+    "sleep": SLEEP,
+    "randomize": RANDOMIZE,
+    "rnd": RND,
+    "rem": REM,
+    "data": DATA,
+    "read": READ,
+    "restore": RESTORE,
+    "screen": SCREEN,
+  };
+  Map<String, int> registeredKeywords = {};
 
-  datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
+    datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
   datastack.Stack<int> whileStack = datastack.Stack<int>();
@@ -260,6 +263,10 @@ class _GCWizardSCriptInterpreter {
   List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
   _GCWizardSCriptInterpreter(this.script, this.inputData, this.sendAsyncPort) {
+
+    registeredKeywords.addAll(registeredKeywordsCommands);
+    registeredKeywords.addAll(registeredKeywordsControls);
+
     script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
     inputData.split(' ').forEach((element) {
       if (int.tryParse(element) != null) {
