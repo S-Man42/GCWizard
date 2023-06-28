@@ -22,7 +22,10 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_BASE,
             onDecode: (String input, String key) {
               var function =  BASE_FUNCTIONS[_getBaseKey(options, MDT_BASE_OPTION_BASEFUNCTION)];
-              return function == null ? null : function(input);
+              if (function == null) return null;
+              var output = function(input);
+              var _output = output.replaceAll('<?>', '');
+              return _output.trim().isEmpty ? null : output;
             },
             options: options);
   @override

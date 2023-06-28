@@ -17,7 +17,8 @@ class MultiDecoderToolPokemon extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_POKEMON,
             onDecode: (String input, String key) {
               var output = decodePokemon(input);
-              return output.isEmpty || output == '<?>' ? null : output;
+              var _output = output.replaceAll('<?>', '');
+              return _output.trim().isEmpty ? null : output;
             },
             options: options);
   @override

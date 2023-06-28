@@ -489,7 +489,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'atbash',
     ]),
-    GCWTool(tool: const AveMaria(), id: 'avemaria', categories: [
+    GCWTool(tool: const AveMaria(), id: 'avemaria', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'avemaria',
