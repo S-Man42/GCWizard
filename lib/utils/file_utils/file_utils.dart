@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'dart:math';
@@ -617,4 +618,12 @@ Future<List<GCWFile>> _extractRarArchive(GCWFile file, {String? password}) async
 Uint8List encodeTrimmedPng(Image.Image image) {
   var out = Image.encodePng(image);
   return trimNullBytes(Uint8List.fromList(out));
+}
+
+Uint8List convertStringToBytes(String text) {
+  return Uint8List.fromList(utf8.encode(text));
+}
+
+String convertBytesToString(Uint8List data) {
+  return utf8.decode(data);
 }

@@ -110,7 +110,7 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
           code: _clean(_code),
           input_expected: _input_required,
           error: true,
-          errorText: e.toString());
+          errorText: e.message);
     }
   }
 }
@@ -835,6 +835,9 @@ Tuple2<int, int> _num_parameter() {
   if (index == _pos) {
     if (!_loading) const FormatException('common_programming_error_invalid_opcode');
   }
+  if (index < 0) {
+    throw const FormatException('common_programming_error_invalid_opcode');
+  }
 
   var item = _whitespaceToInt(_code.substring(_pos, index));
   return Tuple2<int, int>(index, item);
@@ -876,6 +879,9 @@ Tuple2<int, String> _label_parameter() {
   *Must be unique.
   */
   var index = _code.indexOf('\n', _pos) + 1;
+  if (index < _pos) {
+    throw const FormatException('common_programming_error_invalid_opcode');
+  }
   // Empty string is a valid label
   var name = _code.substring(_pos, index);
   return Tuple2<int, String>(index, name);

@@ -17,7 +17,7 @@ const int _WHERIGO_MEDIATYPE_SWF = 33;
 const int _WHERIGO_MEDIATYPE_TXT = 49;
 
 const Map<int, String> WHERIGO_MEDIATYPE = {
-  _WHERIGO_MEDIATYPE_UNK: '<?>',
+  _WHERIGO_MEDIATYPE_UNK: UNKNOWN_ELEMENT,
   _WHERIGO_MEDIATYPE_BMP: 'bmp',
   _WHERIGO_MEDIATYPE_PNG: 'png',
   _WHERIGO_MEDIATYPE_JPG: 'jpg',
@@ -425,7 +425,7 @@ const WherigoObfuscationData _WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscat
   ObfuscationTable: '',
   ObfuscationName: '',
 );
-const WherigoVariableData _WHERIGO_EMPTYTESTVARIABLE_LUA = WherigoVariableData(
-  VariableLUAName: '',
-  VariableName: '',
+WherigoAnswer _WHERIGO_EMPTYTESTANSWER_LUA = WherigoAnswer(
+    InputFunction: '',
+    InputAnswers: [],
 );

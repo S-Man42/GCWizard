@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.3.1+166
+version: 3.0.0+5
 publish_to: none
 
 environment:
@@ -54,7 +54,7 @@ dependencies:
   shared_preferences: ^2.1.1
   touchable: ^1.0.2
   tuple: ^2.0.1
-  universal_html: ^2.2.1
+  universal_html: ^2.2.3
   unrar_file: ^1.1.0
   uuid: ^3.0.6
   url_launcher: ^6.1.11
@@ -142,6 +142,7 @@ flutter:
     - assets/symbol_tables/dancing_men/
     - assets/symbol_tables/deafblind/
     - assets/symbol_tables/devanagari_numerals/
+    - assets/symbol_tables/dinotopia/
     - assets/symbol_tables/dni/
     - assets/symbol_tables/dni_colors/
     - assets/symbol_tables/dni_numbers/
@@ -257,6 +258,8 @@ flutter:
     - assets/symbol_tables/notes_restvalues/
     - assets/symbol_tables/nyctography/
     - assets/symbol_tables/oak_island_money_pit/
+    - assets/symbol_tables/oak_island_money_pit_extended/
+    - assets/symbol_tables/oak_island_money_pit_libyan/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
     - assets/symbol_tables/optical_fiber_iec60304/
@@ -278,6 +281,8 @@ flutter:
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/puzzle_2/
     - assets/symbol_tables/quadoo/
+    - assets/symbol_tables/ravkan/
+    - assets/symbol_tables/ravkan_extended/
     - assets/symbol_tables/reality/
     - assets/symbol_tables/red_herring/
     - assets/symbol_tables/resistor/
@@ -302,6 +307,8 @@ flutter:
     - assets/symbol_tables/solmisation/
     - assets/symbol_tables/space_invaders/
     - assets/symbol_tables/spintype/
+    - assets/symbol_tables/sprykski/
+    - assets/symbol_tables/stenography/
     - assets/symbol_tables/stippelcode/
     - assets/symbol_tables/suetterlin/
     - assets/symbol_tables/sunuz/

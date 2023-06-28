@@ -453,7 +453,7 @@ class _GridState extends State<Grid> {
     return Column(
       children: [
         Container(
-          constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
+          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context) * 0.8)),
           margin: const EdgeInsets.symmetric(vertical: 20.0),
           child: _GridPainter(
             tapColor: _currentColor,

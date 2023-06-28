@@ -93,6 +93,7 @@ class GCWToolActionButtonsEntry {
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String id;
+  final String? id_extension;
   final List<ToolCategory> categories;
   final bool autoScroll;
   final bool suppressToolMargin;
@@ -118,6 +119,7 @@ class GCWTool extends StatefulWidget {
         this.toolName,
         this.defaultLanguageToolName,
         required this.id,
+        this.id_extension,
         this.categories = const [],
         this.autoScroll = true,
         this.suppressToolMargin = false,

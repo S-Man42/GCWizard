@@ -68,13 +68,9 @@ void expectZone(WherigoZoneData actual, WherigoZoneData expected, ){
   expect(actual.ZoneProximityRangeUOM, expected.ZoneProximityRangeUOM);
   expect(actual.ZoneOutOfRange, expected.ZoneOutOfRange);
   expect(actual.ZoneInRange, expected.ZoneInRange);
-  expect(actual.ZonePoints[0].Latitude, expected.ZonePoints[0].Latitude);
-  expect(actual.ZonePoints[0].Longitude, expected.ZonePoints[0].Longitude);
-  expect(actual.ZonePoints[0].Altitude, expected.ZonePoints[0].Altitude);
-  expect(actual.ZonePoints[1].Latitude, expected.ZonePoints[1].Latitude);
-  expect(actual.ZonePoints[1].Longitude, expected.ZonePoints[1].Longitude);
-  expect(actual.ZonePoints[1].Altitude, expected.ZonePoints[1].Altitude);
-  expect(actual.ZonePoints[2].Latitude, expected.ZonePoints[2].Latitude);
-  expect(actual.ZonePoints[2].Longitude, expected.ZonePoints[2].Longitude);
-  expect(actual.ZonePoints[2].Altitude, expected.ZonePoints[2].Altitude);
+  for (int i = 0; i < actual.ZonePoints.length; i++){
+    expect(actual.ZonePoints[i].Latitude, expected.ZonePoints[i].Latitude);
+    expect(actual.ZonePoints[i].Longitude, expected.ZonePoints[i].Longitude);
+    expect(actual.ZonePoints[i].Altitude, expected.ZonePoints[i].Altitude);
+  }
 }
