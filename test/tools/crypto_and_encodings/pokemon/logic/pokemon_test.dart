@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/logic/pokemon.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 void main() {
   group("Pokemon.encodePokemon:", () {
@@ -23,7 +24,7 @@ void main() {
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'se', 'expectedOutput' : 'S'},
-      {'input' : 'sew', 'expectedOutput' : '<?>'},
+      {'input' : 'sew', 'expectedOutput' : UNKNOWN_ELEMENT},
       {'input' : 'x', 'expectedOutput' : '<?>'},
       {'input' : 'x sa', 'expectedOutput' : '<?> E'},
       {'input' : 'x sa y', 'expectedOutput' : '<?> E <?>'},
