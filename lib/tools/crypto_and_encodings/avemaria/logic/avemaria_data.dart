@@ -6,7 +6,7 @@
 
 part of 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
 
-Map<String, List<String>> _AVE_MARIA_ENCODE = {
+const Map<String, List<String>> _AVE_MARIA_ENCODE = {
   'A': ['deus', 'clemens'],
   'B': ['creator', 'clementissimus'],
   'C': ['conditor', 'pius'],
@@ -35,7 +35,7 @@ Map<String, List<String>> _AVE_MARIA_ENCODE = {
   'Z': ['moderator', 'magnificus'],
 };
 
-Map<String, String> _AVE_MARIA_DECODE = {
+const Map<String, String> _AVE_MARIA_DECODE = {
   'deus': 'A',
   'clemens': 'A',
   'creator': 'B',
