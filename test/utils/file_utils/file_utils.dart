@@ -15,11 +15,11 @@ void main() {
       {'input' : 'test1\ntest2', 'expectedOutput' : 'test1\ntest2'},
     ];
 
-    _inputsToExpected.forEach((elem) {
+    for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = convertBytesToString(convertStringToBytes(elem['input'] as String));
         expect(_actual, elem['expectedOutput']);
       });
-    });
+    }
   });
 }

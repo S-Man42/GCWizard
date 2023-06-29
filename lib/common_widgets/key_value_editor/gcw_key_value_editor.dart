@@ -66,7 +66,7 @@ class GCWKeyValueEditor extends StatefulWidget {
 
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
-  var _keyValueEditorControl = KeyValueEditorControl();
+  final _keyValueEditorControl = KeyValueEditorControl();
   final GlobalKey<GCWKeyValueInputState> _InputState = GlobalKey<GCWKeyValueInputState>();
 
   @override
