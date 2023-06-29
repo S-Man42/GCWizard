@@ -5,6 +5,7 @@ import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -111,7 +112,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
             GCWCodeTextField(
               style: gcwMonotypeTextStyle(),
               lineNumbers: true,
-              lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 48),
+              lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
               controller: _programController,
               // hintText: i18n(context, 'gcwizard_script_hint_program'),
               language: CodeHighlightingLanguage.BASIC,
@@ -316,6 +317,39 @@ class GCWizardScriptState extends State<GCWizardScript> {
       result = result + program[i];
     }
     return result.replaceAll('\n', '↩') + '\n' + '   ^';
+  }
+
+  void _showDialogBox(BuildContext context, String text) {
+    showGCWDialog(
+        context,
+        text,
+        SizedBox(
+          width: 300,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GCWTextField(
+                autofocus: true,
+                filled: true,
+                onChanged: (text) {
+                  _currentInput = text;
+                },
+              ),
+            ],
+          ),
+        ),
+        [
+          GCWDialogButton(
+            text: i18n(context, 'common_ok'),
+            onPressed: () {
+              // _isStarted = false;
+              // if (_continueState != null) _continueState!.inp = _currentInput + '\n';
+              // _calcOutput(context);
+            },
+          )
+        ],
+        cancelButton: false);
   }
 
   void _exportFile(BuildContext context, Uint8List data, GCWizardScriptFileType fileType) async {

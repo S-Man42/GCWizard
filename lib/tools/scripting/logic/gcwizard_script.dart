@@ -212,7 +212,7 @@ class _GCWizardSCriptInterpreter {
   };
   Map<String, int> registeredKeywords = {};
 
-    datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
+  datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
   datastack.Stack<int> whileStack = datastack.Stack<int>();
@@ -236,8 +236,7 @@ class _GCWizardSCriptInterpreter {
   bool executeElse = false;
 
   bool graphic = false;
-  List<int> SCREENMODES = [0, 1];
-  Map<int, Map<String, Object?>> SCREEN_MODES = {
+  static const Map<int, Map<String, Object?>> SCREEN_MODES = {
     0: {
       GraphicMode: GCWizardSCript_SCREENMODE.TEXT,
       GraphicWidthT: 80,
