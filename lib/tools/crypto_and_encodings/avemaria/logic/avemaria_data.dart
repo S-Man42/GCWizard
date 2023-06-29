@@ -6,36 +6,7 @@
 
 part of 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
 
-const Map<String, List<String>> _AVE_MARIA_ENCODE = {
-  'A': ['deus', 'clemens'],
-  'B': ['creator', 'clementissimus'],
-  'C': ['conditor', 'pius'],
-  'D': ['opifex', 'piissimus'],
-  'E': ['dominus', 'magnus'],
-  'F': ['dominator', 'excelsus'],
-  'G': ['consolator', 'maximus'],
-  'H': ['arbiter', 'optimus'],
-  'I': ['iudex', 'sapientissimus'],
-  'J': ['iudex', 'sapientissimus'],
-  'K': ['illuminator', 'inuisibilis'],
-  'L': ['illustrator', 'immortalis'],
-  'M': ['rector', 'aeternus'],
-  'N': ['rex', 'sempiternus'],
-  'O': ['imperator', 'gloriosus'],
-  'P': ['gubernator', 'fortissimus'],
-  'Q': ['factor', 'sanctissimus'],
-  'R': ['fabricator', 'incompraehensibilis'],
-  'S': ['conseruator', 'omnipotens'],
-  'T': ['redemptor', 'pacificus'],
-  'U': ['auctor', 'misericors'],
-  'V': ['auctor', 'misericors'],
-  'W': ['auctor', 'misericors'],
-  'X': ['princeps', 'misericordissimus'],
-  'Y': ['pastor', 'conctipotens'],
-  'Z': ['moderator', 'magnificus'],
-};
-
-const Map<String, String> _AVE_MARIA_DECODE = {
+const Map<String, String> _AVE_MARIA = {
   'deus': 'A',
   'clemens': 'A',
   'creator': 'B',
@@ -83,3 +54,12 @@ const Map<String, String> _AVE_MARIA_DECODE = {
   'moderator': 'Z',
   'magnificus': 'Z',
 };
+
+const List<MapEntry<String, String>> _AVE_MARIA_ENCODE_EXTENSION = [
+  MapEntry<String, String>('iudex', 'J'),
+  MapEntry<String, String>('sapientissimus', 'J'),
+  MapEntry<String, String>('auctor', 'V'),
+  MapEntry<String, String>('misericors', 'V'),
+  MapEntry<String, String>('auctor', 'W'),
+  MapEntry<String, String>('misericors', 'W')
+];
