@@ -21,14 +21,12 @@ String decodeAveMaria(String chiffre) {
 String encodeAveMaria(String plain) {
   List<String> result = [];
   List<String> code = plain.toUpperCase().split(' ');
+  var aveMaria = _AVE_MARIA.entries.toList();
+  aveMaria.addAll(_AVE_MARIA_ENCODE_EXTENSION);
 
   for (String word in code) {
     for (String letter in word.split('')) {
-      var results = _AVE_MARIA.entries.where((entry) => entry.value == letter);
-      if (results.isEmpty) {
-        results = _AVE_MARIA_ENCODE_EXTENSION.where((entry) => entry.value == letter);
-      }
-
+      var results = aveMaria.where((entry) => entry.value == letter);
       if (results.isNotEmpty) {
         result.add(results.elementAt(Random().nextInt(results.length)).key);
       }
