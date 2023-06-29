@@ -111,7 +111,6 @@ Mode? getLanguage(CodeHighlightingLanguage? language) {
     switch (language) {
       case CodeHighlightingLanguage.LUA:
         return lua;
-        break;
       case CodeHighlightingLanguage.BASIC:
         return basic;
     }
