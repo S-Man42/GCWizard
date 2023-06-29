@@ -111,7 +111,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
             GCWCodeTextField(
               style: gcwMonotypeTextStyle(),
               lineNumbers: true,
-              lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 48),
+              lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
               controller: _programController,
               // hintText: i18n(context, 'gcwizard_script_hint_program'),
               language: CodeHighlightingLanguage.BASIC,

@@ -100,7 +100,6 @@ Future<GCWizardScriptOutput> interpretScript(String script, String input, {SendP
 }
 
 class _GCWizardSCriptInterpreter {
-  static const SCRIPT_LENGTH = 10000;
   static const MAXITERATIONS = 1000000000;
   static const PROGRESS_STEP = 10000.0;
 
@@ -118,7 +117,6 @@ class _GCWizardSCriptInterpreter {
   static const COMMAND = 4;
   static const QUOTEDSTR = 5;
   static const FUNCTION = 6;
-  static const METHOD = 7;
 
   // Internal representation of the GCWScript keywords.
   static const UNKNOWNCOMMAND = 0;
@@ -1389,14 +1387,6 @@ class _GCWizardSCriptInterpreter {
     return result;
   }
 
-  Object? evaluateLogicalExpression() {
-    // read line until THEN or EOL
-    // split AND
-    // evaluate
-    // split OR
-    // evaluate
-  }
-
   Object? evaluateExpression() {
     Object? result;
 
@@ -1679,6 +1669,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? evaluateExpressionParantheses() {
+    //TODO nested functions
     Object? result;
     if (token == "(") {
       getToken();

@@ -5,6 +5,5 @@ String _date() {
 }
 
 String _time() {
-  DateTime now = DateTime.now();
   return DateFormat('HH:mm:ss').format(DateTime.now());
 }
