@@ -6,7 +6,7 @@ void _circle(Object x, Object y, Object r) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('CIRCLE ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (r as int).toString());
+  _state.graphics.add('CIRCLE ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (r as int).toString());
 }
 
 void _line(Object x1, Object y1, Object x2, Object y2) {
@@ -14,7 +14,7 @@ void _line(Object x1, Object y1, Object x2, Object y2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('LINE ' +
+  _state.graphics.add('LINE ' +
       (x1 as int).toString() +
       ' ' +
       (y1 as int).toString() +
@@ -29,7 +29,7 @@ void _point(Object x, Object y) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('POINT ' + (x as int).toString() + ' ' + (y as int).toString());
+  _state.graphics.add('POINT ' + (x as int).toString() + ' ' + (y as int).toString());
 }
 
 void _arc(Object x, Object y, Object r, Object a1, Object a2) {
@@ -37,7 +37,7 @@ void _arc(Object x, Object y, Object r, Object a1, Object a2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('ARC ' +
+  _state.graphics.add('ARC ' +
       (x as int).toString() +
       ' ' +
       (y as int).toString() +
@@ -54,7 +54,7 @@ void _pie(Object x, Object y, Object r, Object a1, Object a2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('ARC ' +
+  _state.graphics.add('ARC ' +
       (x as int).toString() +
       ' ' +
       (y as int).toString() +
@@ -71,7 +71,7 @@ void _color(Object r, Object g, Object b) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('COLOR ' + (r as int).toString() + ' ' + (g as int).toString() + ' ' + (b as int).toString());
+  _state.graphics.add('COLOR ' + (r as int).toString() + ' ' + (g as int).toString() + ' ' + (b as int).toString());
 }
 
 void _fill(Object x) {
@@ -79,7 +79,7 @@ void _fill(Object x) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('FILL ' + (x as int).toString());
+  _state.graphics.add('FILL ' + (x as int).toString());
 }
 
 void _stroke(Object x) {
@@ -87,7 +87,7 @@ void _stroke(Object x) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('STROKE ' + (x as num).toString());
+  _state.graphics.add('STROKE ' + (x as num).toString());
 }
 
 void _box(Object x1, Object y1, Object x2, Object y2) {
@@ -95,7 +95,7 @@ void _box(Object x1, Object y1, Object x2, Object y2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('BOX ' +
+  _state.graphics.add('BOX ' +
       (x1 as int).toString() +
       ' ' +
       (y1 as int).toString() +
@@ -111,7 +111,7 @@ void _text(Object t, Object x, Object y, Object s) {
     return;
   }
   t = (t as String).replaceAll(' ', '⟳');
-  _graphics.add('TEXT ' + t + ' ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (s as int).toString());
+  _state.graphics.add('TEXT ' + t + ' ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (s as int).toString());
 }
 
 void _oval(Object x1, Object y1, Object x2, Object y2) {
@@ -119,7 +119,7 @@ void _oval(Object x1, Object y1, Object x2, Object y2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _graphics.add('LINE ' +
+  _state.graphics.add('LINE ' +
       (x1 as int).toString() +
       ' ' +
       (y1 as int).toString() +

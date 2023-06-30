@@ -47,7 +47,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   String _currentScriptOutput = '';
 
   GCWizardScriptOutput _currentOutput =
-      GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+      GCWizardScriptOutput(STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
 
   Uint8List _outGraphicData = Uint8List.fromList([]);
   bool _loadFile = false;
@@ -104,8 +104,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 onChanged: (ret) {
                   setState(() {
                     _currentCoords = ret;
-                    GCWizardScript_LAT = _currentCoords.toLatLng()!.latitude;
-                    GCWizardScript_LON = _currentCoords.toLatLng()!.longitude;
                   });
                 },
               ),
@@ -142,8 +140,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               onPressed: () {
                 _interpretGCWScriptAsync();
                 setState(() {
-                  if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-                      GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+                  if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+                      _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
                     _createImage(_currentOutput.Graphic).then((value) {
                       setState(() {
                         _outGraphicData = value;
@@ -171,7 +169,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
-                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
                   _currentScriptOutput = '';
                 });
               },
@@ -195,8 +193,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Widget _buildOutput(BuildContext context) {
     return Column(
       children: <Widget>[
-        if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-            GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
+        if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+            _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
             child: GCWImageView(
               imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
@@ -207,8 +205,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               },
             ),
           ),
-        if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
-            GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
+        if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
+            _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
             trailing: GCWIconButton(
               icon: Icons.save,
@@ -275,7 +273,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   Future<GCWAsyncExecuterParameters?> _buildInterpreterJobData() async {
     return GCWAsyncExecuterParameters(InterpreterJobData(
-        jobDataScript: _currentProgram, jobDataInput: _currentInput,));
+        jobDataScript: _currentProgram, jobDataInput: _currentInput, jobDataCoords: _currentCoords.toLatLng()!));
   }
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
@@ -405,9 +403,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return result.join('\n');
   }
 
-  Future<Uint8List> _createImage(List<String> commands) async {
-    double width = GCWizardSCriptScreenWidth.toDouble();
-    double height = GCWizardSCriptScreenHeight.toDouble();
+  Future<Uint8List> _createImage(GraphicState graphic) async {
+    double width = graphic.GCWizardSCriptScreenWidth.toDouble();
+    double height = graphic.GCWizardSCriptScreenHeight.toDouble();
     double pointsize = 1.0;
     List<String> graphicCommand = [];
 
@@ -420,7 +418,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       ..strokeWidth = pointsize.toDouble();
 
     canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-    for (String command in commands) {
+    for (String command in graphic.graphics) {
       graphicCommand = command.split(' ');
       switch (graphicCommand[0]) {
         case 'TEXT': // TEXT(T,X,Y,S)

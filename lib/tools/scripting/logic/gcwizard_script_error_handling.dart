@@ -1,9 +1,5 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-bool _halt = false;
-String _errorMessage = '';
-int _errorPosition = 0;
-
 // internal representation of the GCW Script error types
 const _SYNTAXERROR = 0;
 const _UNBALANCEDPARENTHESES = 1;
@@ -88,13 +84,13 @@ Map<int, String> _errorMessages = {
 };
 
 void _resetErrors() {
-  _halt = false;
-  _errorMessage = '';
-  _errorPosition = 0;
+  _state.halt = false;
+  _state.errorMessage = '';
+  _state.errorPosition = 0;
 }
 
 void _handleError(int error) {
-  _halt = true;
-  _errorMessage = _errorMessages[error] ?? '';
-  _errorPosition = _scriptIndex;
+  _state.halt = true;
+  _state.errorMessage = _errorMessages[error] ?? '';
+  _state.errorPosition = _state.scriptIndex;
 }

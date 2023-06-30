@@ -13,7 +13,7 @@ void _wptsadd(Object lat, Object lon) {
     _handleError(_INVALIDLONGITUDE);
     return;
   }
-  _waypoints.add(GCWMapPoint(
+  _state.waypoints.add(GCWMapPoint(
       uuid: 'wpt',
       markerText: 'wpt',
       point: LatLng((lat as double), (lon as double)),
@@ -23,11 +23,11 @@ void _wptsadd(Object lat, Object lon) {
 }
 
 void _wptsclear() {
-  _waypoints = [];
+  _state.waypoints = [];
 }
 
 int _wptscount() {
-  return _waypoints.length;
+  return _state.waypoints.length;
 }
 
 double _wptslat(Object i) {
@@ -35,11 +35,11 @@ double _wptslat(Object i) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
-  if ((i as num).toInt() >= _waypoints.length || i.toInt() < 1) {
+  if ((i as num).toInt() >= _state.waypoints.length || i.toInt() < 1) {
     _handleError(_RANGEERROR);
     return 0.0;
   }
-  return _waypoints[i.toInt() - 1].point.latitude;
+  return _state.waypoints[i.toInt() - 1].point.latitude;
 }
 
 double _wptslon(Object i) {
@@ -47,11 +47,11 @@ double _wptslon(Object i) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
-  if ((i as num).toInt() >= _waypoints.length || i < 1) {
+  if ((i as num).toInt() >= _state.waypoints.length || i < 1) {
     _handleError(_RANGEERROR);
     return 0.0;
   }
-  return _waypoints[i.toInt() - 1].point.longitude;
+  return _state.waypoints[i.toInt() - 1].point.longitude;
 }
 
 void _wptscenter(Object x) {
@@ -60,18 +60,18 @@ void _wptscenter(Object x) {
     return;
   }
   List<LatLng> coords = [];
-  for (GCWMapPoint waypoint in _waypoints) {
+  for (GCWMapPoint waypoint in _state.waypoints) {
     coords.add(LatLng(waypoint.point.latitude, waypoint.point.longitude));
   }
   LatLng coord = centroidCenterOfGravity(coords)!;
   if ((x as num) == 0) {
     // arithmetic
     coord = centroidArithmeticMean(coords, coord)!;
-    GCWizardScript_LAT = coord.latitude;
-    GCWizardScript_LON = coord.longitude;
+    _state.GCWizardScript_LAT = coord.latitude;
+    _state.GCWizardScript_LON = coord.longitude;
   } else {
     // gravity
-    GCWizardScript_LAT = coord.latitude;
-    GCWizardScript_LON = coord.longitude;
+    _state.GCWizardScript_LAT = coord.latitude;
+    _state.GCWizardScript_LON = coord.longitude;
   }
 }

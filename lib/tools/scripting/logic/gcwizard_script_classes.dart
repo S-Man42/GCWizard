@@ -3,13 +3,14 @@ part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 class InterpreterJobData {
   final String jobDataScript;
   final String jobDataInput;
+  final LatLng jobDataCoords;
 
-  InterpreterJobData({required this.jobDataScript, required this.jobDataInput});
+  InterpreterJobData({required this.jobDataScript, required this.jobDataInput, required this.jobDataCoords});
 }
 
 class GCWizardScriptOutput {
   final String STDOUT;
-  final List<String> Graphic;
+  final GraphicState Graphic;
   final List<GCWMapPoint> Points;
   final String ErrorMessage;
   final int ErrorPosition;
@@ -23,6 +24,15 @@ class GCWizardScriptOutput {
     required this.ErrorPosition,
     required this.VariableDump,
   });
+}
+
+class GraphicState {
+  List<String> graphics = [];
+  GCWizardSCript_SCREENMODE GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXT;
+  int GCWizardSCriptScreenWidth = 0;
+  int GCWizardSCriptScreenHeight = 0;
+  int GCWizardSCriptScreenColors = 0;
+  bool graphic = false;
 }
 
 class _GCWizardScriptClassFunctionDefinition {
@@ -94,5 +104,94 @@ class _GCWizardScriptVariable {
 
   int length(){
     return 0;
+  }
+}
+
+class ScriptState {
+  late String script;
+  late String inputData;
+  List<Object?> variables = List<Object?>.filled(26, 0, growable: false);
+  List<String> get graphics {return graficOutput.graphics;}
+  GraphicState graficOutput = GraphicState();
+  List<GCWMapPoint> waypoints = [];
+
+  List<Object?> STDIN = [];
+  String STDOUT = '';
+  int scriptIndex = 0;
+  num step = 0.0;
+
+  String token = '';
+  int tokenType = 0;
+
+  int keywordToken = 0;
+
+  bool executeElse = false;
+
+  List<Object?> listDATA = [];
+  int pointerDATA = 0;
+
+  datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
+  datastack.Stack<int> gosubStack = datastack.Stack<int>();
+  datastack.Stack<int> repeatStack = datastack.Stack<int>();
+  datastack.Stack<int> whileStack = datastack.Stack<int>();
+  datastack.Stack<int> switchStack = datastack.Stack<int>();
+  datastack.Stack<bool> ifStack = datastack.Stack<bool>();
+  datastack.Stack<int> controlStack = datastack.Stack<int>();
+
+  //errors
+  bool halt = false;
+  String errorMessage = '';
+  int errorPosition = 0;
+
+  double GCWizardScript_LAT = 0.0;
+  double GCWizardScript_LON = 0.0;
+
+  ScriptState({LatLng? coords}) {
+    // Initialize for new program run.
+    scriptIndex = 0;
+    forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
+    gosubStack = datastack.Stack<int>();
+    repeatStack = datastack.Stack<int>();
+    whileStack = datastack.Stack<int>();
+    variables = [
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+      dynamic,
+    ];
+    STDOUT = '';
+    // _halt = false;
+    // _randomNumber = 0.0;
+    step = 1.0;
+    listDATA = [];
+    pointerDATA = 0;
+    waypoints = [];
+
+    if (coords != null) {
+      GCWizardScript_LAT = coords.latitude;
+      GCWizardScript_LAT = coords.longitude;
+    }
   }
 }
