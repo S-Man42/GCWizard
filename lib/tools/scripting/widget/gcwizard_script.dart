@@ -273,7 +273,11 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   Future<GCWAsyncExecuterParameters?> _buildInterpreterJobData() async {
     return GCWAsyncExecuterParameters(InterpreterJobData(
-        jobDataScript: _currentProgram, jobDataInput: _currentInput, jobDataCoords: _currentCoords.toLatLng()!));
+        jobDataScript: _currentProgram,
+        jobDataInput: _currentInput,
+        jobDataCoords: _currentCoords.toLatLng()!,
+        continueState: _currentOutput.continueState
+    ));
   }
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {

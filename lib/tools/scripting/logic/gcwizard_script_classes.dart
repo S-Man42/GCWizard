@@ -4,8 +4,13 @@ class InterpreterJobData {
   final String jobDataScript;
   final String jobDataInput;
   final LatLng jobDataCoords;
+  final ScriptState? continueState;
 
-  InterpreterJobData({required this.jobDataScript, required this.jobDataInput, required this.jobDataCoords});
+  InterpreterJobData({required this.jobDataScript,
+    required this.jobDataInput,
+    required this.jobDataCoords,
+    this.continueState
+  });
 }
 
 class GCWizardScriptOutput {
@@ -15,6 +20,7 @@ class GCWizardScriptOutput {
   final String ErrorMessage;
   final int ErrorPosition;
   final String VariableDump;
+  final ScriptState? continueState;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -23,6 +29,7 @@ class GCWizardScriptOutput {
     required this.ErrorMessage,
     required this.ErrorPosition,
     required this.VariableDump,
+    this.continueState
   });
 }
 

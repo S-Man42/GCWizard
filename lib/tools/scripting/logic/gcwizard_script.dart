@@ -76,6 +76,8 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordina
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
+ScriptState? state;
+
 Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! InterpreterJobData) {
     return Future.value(GCWizardScriptOutput(
@@ -83,19 +85,25 @@ Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters?
   }
   var interpreter = jobData!.parameters as InterpreterJobData;
   var output =
-      await interpretScript(interpreter.jobDataScript, interpreter.jobDataInput, interpreter.jobDataCoords , sendAsyncPort: jobData.sendAsyncPort);
+      await interpretScript(
+          interpreter.jobDataScript, interpreter.jobDataInput,
+          interpreter.jobDataCoords, interpreter.continueState,
+          sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
   return output;
 }
 
-Future<GCWizardScriptOutput> interpretScript(String script, String input, LatLng coords, {SendPort? sendAsyncPort}) async {
+Future<GCWizardScriptOutput> interpretScript(
+    String script, String input,
+    LatLng coords, ScriptState? continueState,
+    {SendPort? sendAsyncPort}) async {
   if (script == '') {
     return GCWizardScriptOutput(
         STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
   }
 
-  _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(script, input, coords, sendAsyncPort);
+  _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(script, input, coords, continueState, sendAsyncPort);
   return interpreter.run();
 }
 
@@ -209,12 +217,6 @@ class _GCWizardSCriptInterpreter {
     "screen": SCREEN,
   };
   Map<String, int> registeredKeywords = {};
-
-  ScriptState state = ScriptState();
-  _state = state;
-
-  SendPort? sendAsyncPort;
-
   static const Map<int, Map<String, Object?>> SCREEN_MODES = {
     0: {
       GraphicMode: GCWizardSCript_SCREENMODE.TEXT,
@@ -232,26 +234,43 @@ class _GCWizardSCriptInterpreter {
     },
   };
 
+  late ScriptState state;
+
+  SendPort? sendAsyncPort;
+
+
   _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
 
   List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
-  _GCWizardSCriptInterpreter(String script, String inputData, LatLng coords, this.sendAsyncPort) {
+  _GCWizardSCriptInterpreter(
+      String script, String inputData,
+      LatLng coords, ScriptState? continueState,
+      this.sendAsyncPort) {
 
     registeredKeywords.addAll(registeredKeywordsCommands);
     registeredKeywords.addAll(registeredKeywordsControls);
 
-    state = ScriptState(coords: coords);
-    state.script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
-    state.inputData.split(' ').forEach((element) {
-      if (int.tryParse(element) != null) {
-        state.STDIN.add(int.parse(element).toDouble());
-      } else if (double.tryParse(element) != null) {
-        state.STDIN.add(double.parse(element));
-      } else {
-        state.STDIN.add(element);
-      }
-    });
+    if (continueState == null) {
+      state = ScriptState(coords: coords);
+
+      state.script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
+      state.inputData = inputData;
+
+      state.inputData.split(' ').forEach((element) {
+        if (int.tryParse(element) != null) {
+          state.STDIN.add(int.parse(element).toDouble());
+        } else if (double.tryParse(element) != null) {
+          state.STDIN.add(double.parse(element));
+        } else {
+          state.STDIN.add(element);
+        }
+      });
+    } else {
+      state = continueState;
+    }
+
+    _state = state; // for global routines
   }
 
   GCWizardScriptOutput run() {
