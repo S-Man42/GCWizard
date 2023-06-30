@@ -7,12 +7,11 @@ String decodeAveMaria(String chiffre) {
   List<String> code = chiffre.toLowerCase().split('  ');
 
   for (String word in code) {
-    List<String> letters = word.split(' ');
-    for (String letter in letters) {
-      if (_AVE_MARIA_DECODE[letter] == null) {
+    for (String letter in word.split(' ')) {
+      if (_AVE_MARIA[letter] == null) {
         result.add(' ');
       } else {
-        result.add(_AVE_MARIA_DECODE[letter]!);
+        result.add(_AVE_MARIA[letter]!);
       }
     }
   }
@@ -21,14 +20,18 @@ String decodeAveMaria(String chiffre) {
 
 String encodeAveMaria(String plain) {
   List<String> result = [];
-  List<String> code = plain.toUpperCase().split('  ');
+  List<String> code = plain.toUpperCase().split(' ');
+  var aveMaria = _AVE_MARIA.entries.toList();
+  aveMaria.addAll(_AVE_MARIA_ENCODE_EXTENSION);
 
-  for (String letter in code) {
-    if (letter == ' ') {
-      result.add(' ');
-    } else {
-      result.add(_AVE_MARIA_ENCODE[letter]![Random().nextInt(2)]);
+  for (String word in code) {
+    for (String letter in word.split('')) {
+      var results = aveMaria.where((entry) => entry.value == letter);
+      if (results.isNotEmpty) {
+        result.add(results.elementAt(Random().nextInt(results.length)).key);
+      }
     }
+    result.add(' ');
   }
-  return result.join(' ');
+  return result.join(' ').trim();
 }
