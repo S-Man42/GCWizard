@@ -210,7 +210,7 @@ class _GCWizardSCriptInterpreter {
   };
   Map<String, int> registeredKeywords = {};
 
-    datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
+  datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
   datastack.Stack<int> whileStack = datastack.Stack<int>();
@@ -261,7 +261,6 @@ class _GCWizardSCriptInterpreter {
   List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
   _GCWizardSCriptInterpreter(this.script, this.inputData, this.sendAsyncPort) {
-
     registeredKeywords.addAll(registeredKeywordsCommands);
     registeredKeywords.addAll(registeredKeywordsControls);
 
@@ -349,7 +348,6 @@ class _GCWizardSCriptInterpreter {
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
         sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
       }
-
     } while (token != EOP && !_halt && iterations < MAXITERATIONS);
 
     if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
@@ -368,7 +366,7 @@ class _GCWizardSCriptInterpreter {
     String dump = '';
     for (int i = 0; i < 26; i++) {
       //if (variables[i] != dynamic) {
-        dump = dump + String.fromCharCode(65 + i) + ' ' + variables[i].toString() + '\n';
+      dump = dump + String.fromCharCode(65 + i) + ' ' + variables[i].toString() + '\n';
       //}
     }
     return dump;
@@ -645,15 +643,20 @@ class _GCWizardSCriptInterpreter {
       } else if (token == ";") {
         STDOUT += " ";
         len++;
-      } else if (keywordToken != EOL && token != EOP) {
-        _handleError(_SYNTAXERROR);
+      } else {
+        if (token != ')') {
+          if (keywordToken != EOL && token != EOP) {
+            _handleError(_SYNTAXERROR);
+          }
+        }
       }
     } while (lastDelimiter == ";" || lastDelimiter == ",");
-
     if (keywordToken == EOL || token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") STDOUT = STDOUT + LF;
     } else {
-      _handleError(_SYNTAXERROR);
+      if (token != ')') {
+        _handleError(_SYNTAXERROR);
+      }
     }
   }
 
@@ -1263,10 +1266,20 @@ class _GCWizardSCriptInterpreter {
       getToken();
       if (token == "(") {
         getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
+        if (tokenType == FUNCTION) {
+          partialResult1 = executeFunction(token, tokenType);
+        } else {
+          partialResult1 = evaluateExpressionAddSubOperators();
+        }
+        //partialResult1 = evaluateExpressionAddSubOperators();
         if (token != ",") _handleError(_MISSINGPARAMETER);
-        getToken() ;
-        partialResult2 = evaluateExpressionAddSubOperators();
+        getToken();
+        if (tokenType == FUNCTION) {
+          partialResult2 = executeFunction(token, tokenType);
+        } else {
+          partialResult2 = evaluateExpressionAddSubOperators();
+        }
+        //partialResult2 = evaluateExpressionAddSubOperators();
         if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
@@ -1281,13 +1294,28 @@ class _GCWizardSCriptInterpreter {
       getToken();
       if (token == "(") {
         getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
+        if (tokenType == FUNCTION) {
+          partialResult1 = executeFunction(token, tokenType);
+        } else {
+          partialResult1 = evaluateExpressionAddSubOperators();
+        }
+        //partialResult1 = evaluateExpressionAddSubOperators();
         if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
+        if (tokenType == FUNCTION) {
+          partialResult2 = executeFunction(token, tokenType);
+        } else {
+          partialResult2 = evaluateExpressionAddSubOperators();
+        }
+        //partialResult2 = evaluateExpressionAddSubOperators();
         if (token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
+        if (tokenType == FUNCTION) {
+          partialResult3 = executeFunction(token, tokenType);
+        } else {
+          partialResult3 = evaluateExpressionAddSubOperators();
+        }
+        //partialResult3 = evaluateExpressionAddSubOperators();
         if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
@@ -1299,6 +1327,7 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
     } else if (_FUNCTIONS[token]!.functionParamCount == 4) {
+      //TODO nested functions
       getToken();
       if (token == "(") {
         getToken();
@@ -1323,6 +1352,7 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
     } else if (_FUNCTIONS[token]!.functionParamCount == 5) {
+      //TODO nested functions
       getToken();
       if (token == "(") {
         getToken();
@@ -1521,12 +1551,14 @@ class _GCWizardSCriptInterpreter {
     while ((op = token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (!_isNumber(result) || !_isNumber(partialResult)) { // Todo ??
+      if (!_isNumber(result) || !_isNumber(partialResult)) {
+        // Todo ??
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '-':
-            if (!_isNumber(result)) { //Todo only on minus (no plus)
+            if (!_isNumber(result)) {
+              //Todo only on minus (no plus)
               _handleError(_INVALIDSTRINGOPERATION);
             } else {
               result = (result as num) - (partialResult as num);
@@ -1669,13 +1701,17 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? evaluateExpressionParantheses() {
-    //TODO nested functions
     Object? result;
     if (token == "(") {
       getToken();
-      result = evaluateExpressionAddSubOperators();
-      if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
-      getToken();
+
+      if (tokenType == FUNCTION) {
+        result = executeFunction(token, tokenType);
+      } else {
+        result = evaluateExpressionAddSubOperators();
+        if (token != ")") _handleError(_UNBALANCEDPARENTHESES);
+        getToken();
+      }
     } else {
       result = getValueOfAtomExpression();
     }
