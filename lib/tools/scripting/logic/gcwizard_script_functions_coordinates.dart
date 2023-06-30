@@ -10,11 +10,11 @@ String _wgs84(Object x, Object y) {
 }
 
 double _getlon() {
-  return GCWizardScript_LON;
+  return _state.GCWizardScript_LON;
 }
 
 double _getlat() {
-  return GCWizardScript_LAT;
+  return _state.GCWizardScript_LAT;
 }
 
 void _setlon(Object x) {
@@ -23,9 +23,9 @@ void _setlon(Object x) {
   }
   if ((x as num).abs() > 180) {
     _handleError(_INVALIDLONGITUDE);
-    GCWizardScript_LON = x as double;
+    _state.GCWizardScript_LON = x as double;
   } else {
-    GCWizardScript_LON = x as double;
+    _state.GCWizardScript_LON = x as double;
   }
 }
 
@@ -35,9 +35,9 @@ void _setlat(Object x) {
   }
   if ((x as num).abs() > 90) {
     _handleError(_INVALIDLATITUDE);
-    GCWizardScript_LAT = 0;
+    _state.GCWizardScript_LAT = 0;
   } else {
-    GCWizardScript_LAT = x as double;
+    _state.GCWizardScript_LAT = x as double;
   }
 }
 
@@ -60,8 +60,8 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
     _handleError(_INVALIDTYPECAST);
   }
   LatLng _currentValues = projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, defaultEllipsoid);
-  GCWizardScript_LAT = _currentValues.latitude;
-  GCWizardScript_LON = _currentValues.longitude;
+  _state.GCWizardScript_LAT = _currentValues.latitude;
+  _state.GCWizardScript_LON = _currentValues.longitude;
 }
 
 void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
@@ -78,8 +78,8 @@ void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Obje
   double aSlope = yDelta_a / xDelta_a;
   double bSlope = yDelta_b / xDelta_b;
 
-  GCWizardScript_LON = (aSlope * bSlope * (lat1 - lat3) + bSlope*(lon1 + lon2) - aSlope * (lon2 + lon3) ) / (2 * (bSlope - aSlope));
-  GCWizardScript_LAT = -1 * (GCWizardScript_LON - (lon1 + lon2) / 2) / aSlope +  (lat1 + lat2)/2;
+  _state.GCWizardScript_LON = (aSlope * bSlope * (lat1 - lat3) + bSlope*(lon1 + lon2) - aSlope * (lon2 + lon3) ) / (2 * (bSlope - aSlope));
+  _state.GCWizardScript_LAT = -1 * (_state.GCWizardScript_LON - (lon1 + lon2) / 2) / aSlope +  (lat1 + lat2)/2;
 }
 
 void _centertwopoints(Object lat1, Object lon1, Object lat2, Object lon2) {
@@ -91,7 +91,7 @@ void _centertwopoints(Object lat1, Object lon1, Object lat2, Object lon2) {
       LatLng(lat1 as double, lon1 as double),
       LatLng(lat2 as double, lon2 as double),
       defaultEllipsoid);
-  GCWizardScript_LAT = coord.centerPoint.latitude;
-  GCWizardScript_LON = coord.centerPoint.longitude;
+  _state.GCWizardScript_LAT = coord.centerPoint.latitude;
+  _state.GCWizardScript_LON = coord.centerPoint.longitude;
 }
 

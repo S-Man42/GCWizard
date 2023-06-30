@@ -5,6 +5,7 @@ import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -46,7 +47,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   String _currentScriptOutput = '';
 
   GCWizardScriptOutput _currentOutput =
-      GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+      GCWizardScriptOutput(STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
 
   Uint8List _outGraphicData = Uint8List.fromList([]);
   bool _loadFile = false;
@@ -103,8 +104,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 onChanged: (ret) {
                   setState(() {
                     _currentCoords = ret;
-                    GCWizardScript_LAT = _currentCoords.toLatLng()!.latitude;
-                    GCWizardScript_LON = _currentCoords.toLatLng()!.longitude;
                   });
                 },
               ),
@@ -141,8 +140,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               onPressed: () {
                 _interpretGCWScriptAsync();
                 setState(() {
-                  if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-                      GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+                  if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+                      _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
                     _createImage(_currentOutput.Graphic).then((value) {
                       setState(() {
                         _outGraphicData = value;
@@ -170,7 +169,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
-                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
                   _currentScriptOutput = '';
                 });
               },
@@ -194,8 +193,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Widget _buildOutput(BuildContext context) {
     return Column(
       children: <Widget>[
-        if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-            GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
+        if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+            _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
             child: GCWImageView(
               imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
@@ -206,8 +205,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               },
             ),
           ),
-        if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
-            GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
+        if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
+            _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
             trailing: GCWIconButton(
               icon: Icons.save,
@@ -274,7 +273,11 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   Future<GCWAsyncExecuterParameters?> _buildInterpreterJobData() async {
     return GCWAsyncExecuterParameters(InterpreterJobData(
-        jobDataScript: _currentProgram, jobDataInput: _currentInput,));
+        jobDataScript: _currentProgram,
+        jobDataInput: _currentInput,
+        jobDataCoords: _currentCoords.toLatLng()!,
+        continueState: _currentOutput.continueState
+    ));
   }
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
@@ -316,6 +319,39 @@ class GCWizardScriptState extends State<GCWizardScript> {
       result = result + program[i];
     }
     return result.replaceAll('\n', '↩') + '\n' + '   ^';
+  }
+
+  void _showDialogBox(BuildContext context, String text) {
+    showGCWDialog(
+        context,
+        text,
+        SizedBox(
+          width: 300,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GCWTextField(
+                autofocus: true,
+                filled: true,
+                onChanged: (text) {
+                  _currentInput = text;
+                },
+              ),
+            ],
+          ),
+        ),
+        [
+          GCWDialogButton(
+            text: i18n(context, 'common_ok'),
+            onPressed: () {
+              // _isStarted = false;
+              // if (_continueState != null) _continueState!.inp = _currentInput + '\n';
+              // _calcOutput(context);
+            },
+          )
+        ],
+        cancelButton: false);
   }
 
   void _exportFile(BuildContext context, Uint8List data, GCWizardScriptFileType fileType) async {
@@ -371,9 +407,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return result.join('\n');
   }
 
-  Future<Uint8List> _createImage(List<String> commands) async {
-    double width = GCWizardSCriptScreenWidth.toDouble();
-    double height = GCWizardSCriptScreenHeight.toDouble();
+  Future<Uint8List> _createImage(GraphicState graphic) async {
+    double width = graphic.GCWizardSCriptScreenWidth.toDouble();
+    double height = graphic.GCWizardSCriptScreenHeight.toDouble();
     double pointsize = 1.0;
     List<String> graphicCommand = [];
 
@@ -386,7 +422,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       ..strokeWidth = pointsize.toDouble();
 
     canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-    for (String command in commands) {
+    for (String command in graphic.graphics) {
       graphicCommand = command.split(' ');
       switch (graphicCommand[0]) {
         case 'TEXT': // TEXT(T,X,Y,S)

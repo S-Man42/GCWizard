@@ -157,9 +157,10 @@ double _rnd(Object? x) {
   }
 
   if (x != 0) {
-    _randomNumber = _random.nextDouble();
+    return _random.nextDouble();
+  } else {
+    return 0.0;
   }
-  return _randomNumber;
 }
 
 double _fac(Object? x) {
