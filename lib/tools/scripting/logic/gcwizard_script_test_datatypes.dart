@@ -67,6 +67,3 @@ bool _isNotNumber(Object? value) {
   return _isNotInt(value) && _isNotDouble(value); //.runtimeType.toString() == 'String');
 }
 
-bool _differentDataTypes(Object? x, Object? y) {
-  return (x?.runtimeType != y?.runtimeType);
-}

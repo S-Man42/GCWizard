@@ -166,6 +166,9 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DECTOROMAN': _GCWizardScriptClassFunctionDefinition(_dectoroman, 1,),
   'ROMANTODEC': _GCWizardScriptClassFunctionDefinition(_romantodec, 1,),
   'ROTX': _GCWizardScriptClassFunctionDefinition(_rotx, 2),
+  'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
+  'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
+  'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
   'BWW': _GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': _GCWizardScriptClassFunctionDefinition(_base, 3),
   'HASH': _GCWizardScriptClassFunctionDefinition(_hash, 5),
@@ -194,3 +197,5 @@ List<String> scriptCommands() {
 List<String> scriptControls() {
   return  _GCWizardSCriptInterpreter.registeredKeywordsControls.keys.toList();
 }
+
+List<String> scriptParanthes = ['(', ')'];

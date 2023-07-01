@@ -531,6 +531,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
       highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.red)});
       highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.red)});
     });
+    for (var entry in scriptParanthes) {
+      highlightMap.addAll({entry : const TextStyle(color: Colors.orange)});
+    }
     return highlightMap;
   }
 }

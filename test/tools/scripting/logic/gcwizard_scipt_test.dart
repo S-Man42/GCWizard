@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 part 'gcwizard_script_codes.dart';
 part 'gcwizard_script_functions_codes_base.dart';
+part 'gcwizard_script_functions_codes_crypto.dart';
 part 'gcwizard_script_functions_codes_hash.dart';
 part 'gcwizard_script_functions_datetime.dart';
 part 'gcwizard_script_functions_graphic.dart';
@@ -21,6 +22,7 @@ void main() {
     _inputsToExpected.addAll(_inputsBaseToExpected);
     _inputsToExpected.addAll(_inputsLoopsToExpected);
     _inputsToExpected.addAll(_inputsHashToExpected);
+    _inputsToExpected.addAll(_inputsCryptoToExpected);
     _inputsToExpected.addAll(_inputsDateTimeToExpected);
     _inputsToExpected.addAll(_inputsStringToExpected);
     _inputsToExpected.addAll(_inputsGraphicToExpected);

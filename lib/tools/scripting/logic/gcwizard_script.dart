@@ -7,6 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
@@ -41,6 +44,7 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.d
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_waypoints.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_graphic.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_base.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_crypto.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordinates.dart';
 
@@ -108,7 +112,6 @@ Future<GCWizardScriptOutput> interpretScript(
 }
 
 class _GCWizardSCriptInterpreter {
-  static const SCRIPT_LENGTH = 10000;
   static const MAXITERATIONS = 1000000000;
   static const PROGRESS_STEP = 10000.0;
 
@@ -1340,14 +1343,6 @@ class _GCWizardSCriptInterpreter {
     return result;
   }
 
-  Object? evaluateLogicalExpression() {
-    // read line until THEN or EOL
-    // split AND
-    // evaluate
-    // split OR
-    // evaluate
-  }
-
   Object? evaluateExpression() {
     Object? result;
 
@@ -1377,7 +1372,7 @@ class _GCWizardSCriptInterpreter {
 
       r_temp = evaluateExpressionRelationalOperation();
 
-      if (!_isNumber(l_temp) || !_isNumber(r_temp)) {
+      if (_isNotNumber(l_temp) || _isNotNumber(r_temp)) {
         _handleError(_INVALIDTYPECAST);
         result = 0.0;
       } else {
