@@ -52,6 +52,7 @@ const List<String> _Functions_4 = [
   'TIME(',
 ];
 const List<String> _Functions_5 = [
+  'BACON(',
   'COLOR(',
   'FLOOR(',
   'IQSUM(',
@@ -61,6 +62,7 @@ const List<String> _Functions_5 = [
   'WGS84(',
 ];
 const List<String> _Functions_6 = [
+  'ATBASH(',
   'CIRCLE(',
   'GETLAT(',
   'GETLON(',
@@ -69,6 +71,7 @@ const List<String> _Functions_6 = [
   'STROKE(',
 ];
 const List<String> _Functions_7 = [
+  'ABADDON(',
   'BEARING(',
   'CONVERT(',
   'WPTSADD(',
@@ -76,6 +79,7 @@ const List<String> _Functions_7 = [
   'WPTSLON(',
 ];
 const List<String> _Functions_8 = [
+  'AVEMARIA(',
   'DISTANCE(',
 ];
 const List<String> _Functions_9 = [
@@ -168,6 +172,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ROTX': _GCWizardScriptClassFunctionDefinition(_rotx, 2),
   'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
   'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
+  'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
   'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
   'BWW': _GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': _GCWizardScriptClassFunctionDefinition(_base, 3),

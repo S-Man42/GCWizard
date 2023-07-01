@@ -9,9 +9,9 @@ String _bacon(Object text, Object mode) {
     return '';
   }
   String output = '';
-  switch (mode) {
-    case _DECODE: decodeBacon(text as String, false, false); break;
-    case _ENCODE: encodeBacon(text as String, false, false); break;
+  switch (mode as int) {
+    case _DECODE: output = decodeBacon(text as String, false, false); break;
+    case _ENCODE: output = encodeBacon(text as String, false, false); break;
   }
   return output;
 }
@@ -23,8 +23,8 @@ String _abaddon(Object text, Object mode) {
   }
   String output = '';
   switch (mode) {
-    case _DECODE: decryptAbaddon(text as String, null); break;
-    case _ENCODE: encryptAbaddon(text as String, null); break;
+    case _DECODE: output = decryptAbaddon(text as String, null); break;
+    case _ENCODE: output = encryptAbaddon(text as String, null); break;
   }
   return output;
 }
@@ -35,4 +35,17 @@ String _atbash(Object text) {
     return '';
   }
   return atbash(text as String);
+}
+
+String _avemaria(Object text, Object mode) {
+  if (_isNotString(text) || _isNotInt(mode)) {
+    _handleError(_INVALIDTYPECAST);
+    return '';
+  }
+  String output = '';
+  switch (mode) {
+    case _DECODE: output = decodeAveMaria(text as String); break;
+    case _ENCODE: output = encodeAveMaria(text as String); break;
+  }
+  return output;
 }
