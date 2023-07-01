@@ -1482,7 +1482,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (!_isNumber(result) || !_isNumber(partialResult)) { // Todo ??
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) { // Todo ??
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -1512,7 +1512,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '*' || op == '/' || op == '%') {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (!_isNumber(result) || !_isNumber(partialResult)) {
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -1552,12 +1552,13 @@ class _GCWizardSCriptInterpreter {
     if  (state.token == "^") {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (_isNotDouble(result) || _isNotDouble(partialResult)) {
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
         return 0.0;
       }
       base = result;
-      if (result.runtimeType.toString() != partialResult.runtimeType.toString()) {
+      //if (result.runtimeType.toString() != partialResult.runtimeType.toString()) {
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else if (partialResult == 0.0) {
         result = 1.0;
