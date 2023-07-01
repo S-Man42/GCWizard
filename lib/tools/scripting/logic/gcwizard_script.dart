@@ -1199,6 +1199,7 @@ class _GCWizardSCriptInterpreter {
     Object? partialResult5;
     Object? partialResult6;
     Object? result;
+
     if (_FUNCTIONS[command]!.functionParamCount == 0) {
       partialResult1 = evaluateExpressionParantheses();
       if (_FUNCTIONS[command]!.functionReturn) {
@@ -1207,7 +1208,9 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!.functionName();
       }
       state.scriptIndex = state.scriptIndex + 2;
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
       getToken();
       partialResult1 = evaluateExpressionParantheses();
       if (_FUNCTIONS[command]!.functionReturn) {
@@ -1215,7 +1218,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1);
       }
-    } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
+    }
+
+    else if (_FUNCTIONS[command]!.functionParamCount == 2) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1233,7 +1238,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1254,7 +1261,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1278,7 +1287,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1307,7 +1318,9 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 6) {
       getToken();
       if (state.token == "(") {
         getToken();
