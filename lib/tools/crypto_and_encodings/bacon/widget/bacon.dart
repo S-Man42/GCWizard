@@ -17,6 +17,7 @@ class _BaconState extends State<Bacon> {
   late TextEditingController _controller;
 
   var _currentInput = '';
+  GCWSwitchPosition _currentVersion = GCWSwitchPosition.left;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _binaryMode = GCWSwitchPosition.left;
   bool _inversMode = false;
@@ -56,6 +57,16 @@ class _BaconState extends State<Bacon> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentVersion,
+          leftValue: 'I=J, U=V',
+          rightValue: 'I, J, U, V',
+          onChanged: (value) {
+            setState(() {
+              _currentVersion = value;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
           title: i18n(context, 'bacon_coding'),
           leftValue: 'AB',
           rightValue: '01',
@@ -82,9 +93,9 @@ class _BaconState extends State<Bacon> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right);
+      _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
     } else {
-      _output = decodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right);
+      _output = decodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
     }
 
     return GCWDefaultOutput(child: _output);
