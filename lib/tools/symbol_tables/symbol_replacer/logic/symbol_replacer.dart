@@ -730,10 +730,10 @@ class SymbolReplacerImage {
     if (symbols.isEmpty) return 1.0;
     var maxSize = 0;
 
-    symbols.forEach((symbol) {
+    for (var symbol in symbols) {
       maxSize = max(maxSize, symbol.bmp.width);
       maxSize = max(maxSize, symbol.bmp.height);
-    });
+    }
     return (maxSize > 0) ? max(maxSize/ 150, 0.05) : 1.0;
   }
 }
