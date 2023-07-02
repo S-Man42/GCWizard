@@ -14,8 +14,10 @@ const List<String> _Functions_3 = [
   'DEG(',
   'EXP(',
   'FAC(',
+  'GCD(',
   'GGT(',
   'KGV(',
+  'LCM(',
   'LEN(',
   'LOG(',
   'MID(',
@@ -126,6 +128,8 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'TIME': _GCWizardScriptClassFunctionDefinition(_time, 0),
 
   // math
+  'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),
+  'LCM': _GCWizardScriptClassFunctionDefinition(_lcm, 2),
   'MOD': _GCWizardScriptClassFunctionDefinition(_mod, 2),
   'SGN': _GCWizardScriptClassFunctionDefinition(_sgn, 1),
   'PI': _GCWizardScriptClassFunctionDefinition(_pi, 0),
@@ -172,7 +176,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ROTX': _GCWizardScriptClassFunctionDefinition(_rotx, 2),
   'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
   'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
-  'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
+  'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
   'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
   'BWW': _GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': _GCWizardScriptClassFunctionDefinition(_base, 3),

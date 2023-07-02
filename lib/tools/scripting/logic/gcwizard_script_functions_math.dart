@@ -260,6 +260,34 @@ num _kgv(Object? x, Object? y) {
   return (((x as num) * (y as num)).abs() / _ggt(x, y));
 }
 
+int _gcd(Object? x, Object? y) {
+  if (!_isNumber(x) || !_isNumber(y)) {
+    _handleError(_INVALIDTYPECAST);
+    return 0;
+  }
+  int h;
+
+  if (x as num == 0) return (y as num).toInt().abs();
+  if (y as num == 0) return x.toInt().abs();
+
+  do {
+    h = (x as num).toInt() % (y as num).toInt();
+    x = y;
+    y = h;
+  } while (y != 0);
+
+  return x.toInt().abs();
+}
+
+num _lcm(Object? x, Object? y) {
+  if (!_isNumber(x) || !_isNumber(y)) {
+    _handleError(_INVALIDTYPECAST);
+    return 0;
+  }
+
+  return (((x as num) * (y as num)).abs() / _ggt(x, y));
+}
+
 String _convert(Object? value, Object? startBase, Object? destinationBase) {
   if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) { //ToDo mayby convert value toString (if int or double)
     _handleError(_INVALIDTYPECAST);
