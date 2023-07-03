@@ -8,7 +8,7 @@ String _rotx(Object text, Object rot) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
-  return Rotator().rotate((text as String), (rot as int));
+  return Rotator().rotate((text as String), (rot as num).round());
 }
 
 String _rot5(Object text, ) {
@@ -59,17 +59,32 @@ String _rot47(Object text, ) {
   return rot.rotate((text as String), 47, removeUnknownCharacters: false, ignoreCase: false);
 }
 
-int _bww(Object text, Object opt_alph, Object opt_itqs) { //ToDo opt_alph ???
+int _bww(Object text, Object opt_alph, Object opt_itqs) {
   if (_isNotString(text) || _isString(opt_alph) || _isString(opt_itqs)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
+  Map<String, String> alphabet = {};
+  switch ((opt_alph as num).round()){
+    case 0: alphabet = alphabetAZ.alphabet;
+      break;
+    case 1: alphabet = alphabetGerman1.alphabet;
+      break;
+    case 2: alphabet = alphabetGerman2.alphabet;
+      break;
+    case 3: alphabet = alphabetGerman3.alphabet;
+      break;
+    default: alphabet = alphabetAZ.alphabet;
+  }
   int wordValue = 0;
-  List<int> values = AlphabetValues().textToValues(text as String).cast<int>();
+  List<int> values = [];
+  AlphabetValues(alphabet: alphabet).textToValues(text as String).forEach((number) {
+    if (number != null) values.add(number);
+  });// as List<int>;//.cast<int>();
   for (int number in values ) {
     wordValue = wordValue + number;
   }
-  switch (opt_itqs as int) {
+  switch ((opt_itqs as num).round()) {
     case 0:
       return wordValue;
     case 1:

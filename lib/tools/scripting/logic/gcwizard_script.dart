@@ -31,6 +31,7 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstot
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_classes.dart';
