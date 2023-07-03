@@ -31,6 +31,11 @@ class GCWizardScriptOutput {
     required this.VariableDump,
     this.continueState
   });
+
+  static GCWizardScriptOutput empty() {
+    return GCWizardScriptOutput(
+        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+  }
 }
 
 class GraphicState {
@@ -198,7 +203,20 @@ class ScriptState {
 
     if (coords != null) {
       GCWizardScript_LAT = coords.latitude;
-      GCWizardScript_LAT = coords.longitude;
+      GCWizardScript_LON = coords.longitude;
     }
+  }
+
+  void addInput(String inputData) {
+    inputData.split(' ').forEach((element) {
+      if (element.isEmpty) {
+      } else if (int.tryParse(element) != null) {
+        STDIN.add(int.parse(element).toDouble());
+      } else if (double.tryParse(element) != null) {
+        STDIN.add(double.parse(element));
+      } else {
+        STDIN.add(element);
+      }
+    });
   }
 }

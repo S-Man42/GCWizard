@@ -46,8 +46,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   String _currentInput = '';
   String _currentScriptOutput = '';
 
-  GCWizardScriptOutput _currentOutput =
-      GCWizardScriptOutput(STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+  GCWizardScriptOutput _currentOutput = GCWizardScriptOutput.empty();
 
   Uint8List _outGraphicData = Uint8List.fromList([]);
   bool _loadFile = false;
@@ -169,7 +168,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
-                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+                  _currentOutput = GCWizardScriptOutput.empty();
                   _currentScriptOutput = '';
                 });
               },
@@ -282,7 +281,11 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
-    _currentScriptOutput = _buildOutputText(_currentOutput);
+    if (output.continueState != null) {
+      _showDialogBox(context, "");
+    } else {
+      _currentScriptOutput = _buildOutputText(_currentOutput);
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -345,9 +348,10 @@ class GCWizardScriptState extends State<GCWizardScript> {
           GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-              // _isStarted = false;
-              // if (_continueState != null) _continueState!.inp = _currentInput + '\n';
-              // _calcOutput(context);
+               if (_currentOutput.continueState != null) {
+                 _currentOutput.continueState!.addInput(_currentInput);
+                 _interpretGCWScriptAsync();
+               }
             },
           )
         ],

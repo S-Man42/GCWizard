@@ -80,8 +80,7 @@ ScriptState? state;
 
 Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! InterpreterJobData) {
-    return Future.value(GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: ''));
+    return Future.value(GCWizardScriptOutput.empty());
   }
   var interpreter = jobData!.parameters as InterpreterJobData;
   var output =
@@ -99,8 +98,7 @@ Future<GCWizardScriptOutput> interpretScript(
     LatLng coords, ScriptState? continueState,
     {SendPort? sendAsyncPort}) async {
   if (script == '') {
-    return GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+    return GCWizardScriptOutput.empty();
   }
 
   _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(script, input, coords, continueState, sendAsyncPort);
@@ -257,15 +255,8 @@ class _GCWizardSCriptInterpreter {
       state.script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
       state.inputData = inputData;
 
-      state.inputData.split(' ').forEach((element) {
-        if (int.tryParse(element) != null) {
-          state.STDIN.add(int.parse(element).toDouble());
-        } else if (double.tryParse(element) != null) {
-          state.STDIN.add(double.parse(element));
-        } else {
-          state.STDIN.add(element);
-        }
-      });
+      state.addInput(state.inputData);
+
     } else {
       state = continueState;
     }
@@ -276,8 +267,7 @@ class _GCWizardSCriptInterpreter {
   GCWizardScriptOutput run() {
     _resetErrors();
     if (state.script == '') {
-      return GCWizardScriptOutput(
-          STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+      return GCWizardScriptOutput.empty();
     }
 
     getLabels(); // find the labels in the program
@@ -315,6 +305,7 @@ class _GCWizardSCriptInterpreter {
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
+      continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
     );
   }
 
