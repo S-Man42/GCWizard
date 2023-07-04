@@ -120,15 +120,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 });
               },
             ),
-            GCWTextField(
-              controller: _inputController,
-              hintText: i18n(context, 'gcwizard_script_hint_input'),
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            ),
           ],
         ),
         Row(
@@ -137,6 +128,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
             GCWButton(
               text: i18n(context, 'gcwizard_script_interpret'),
               onPressed: () {
+                _currentInput = '';
+                _currentOutput.continueState = null;
                 _interpretGCWScriptAsync();
                 setState(() {
                   if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
@@ -281,14 +274,19 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
+    var showInput = false;
     if (output.continueState != null) {
-      _showDialogBox(context, "");
+      showInput = true;
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
+      setState(() {
+        if (showInput) {
+          _showDialogBox(context, output.continueState?.quotestr ?? '');
+        }
+      });
     });
   }
 

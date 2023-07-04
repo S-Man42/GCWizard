@@ -20,7 +20,7 @@ class GCWizardScriptOutput {
   final String ErrorMessage;
   final int ErrorPosition;
   final String VariableDump;
-  final ScriptState? continueState;
+  ScriptState? continueState;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -127,9 +127,10 @@ class ScriptState {
   GraphicState graficOutput = GraphicState();
   List<GCWMapPoint> waypoints = [];
 
+  int scriptIndex = 0;
+
   List<Object?> STDIN = [];
   String STDOUT = '';
-  int scriptIndex = 0;
   num step = 0.0;
 
   String token = '';
@@ -141,7 +142,10 @@ class ScriptState {
 
   List<Object?> listDATA = [];
   int pointerDATA = 0;
+  String quotestr = '';
+  bool continueLoop = false;
 
+  _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
   datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
