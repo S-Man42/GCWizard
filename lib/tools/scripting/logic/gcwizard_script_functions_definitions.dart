@@ -64,6 +64,7 @@ const List<String> _Functions_5 = [
   'ROT13(',
   'ROT18(',
   'ROT47(',
+  'SUBST(',
   'TRUNC(',
   'WGS84(',
 ];
@@ -166,6 +167,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
+  'SUBST': _GCWizardScriptClassFunctionDefinition(_subst, 4),
   'VAL': _GCWizardScriptClassFunctionDefinition(_val, 1),
   'LEN': _GCWizardScriptClassFunctionDefinition(_len, 1),
   'CHAR': _GCWizardScriptClassFunctionDefinition(_char, 1),

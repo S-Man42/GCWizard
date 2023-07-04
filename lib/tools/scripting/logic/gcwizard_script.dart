@@ -11,6 +11,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart'
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 

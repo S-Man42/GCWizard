@@ -75,3 +75,13 @@ Object _val(Object x) {
   return 0.0;
 }
 
+String _subst(Object text, Object x, Object y, Object caseSensitive){
+  if (_isNotString(text) || _isNotString(x) || _isNotString(y) || _isNotInt(caseSensitive)) {
+    _handleError(_INVALIDTYPECAST);
+    return '';
+  }
+  Map<String, String> substitutions = {};
+  substitutions[x as String] = y as String;
+  return substitution(text as String, substitutions, caseSensitive: ((caseSensitive as int) == 1));
+}
+
