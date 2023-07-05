@@ -308,7 +308,9 @@ class _GCWizardSCriptInterpreter {
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
-      continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
+      BreakType: state.BreakType,
+      //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
+        continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
     );
   }
 
@@ -378,6 +380,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommand() {
+    state.BreakType = GCWizardScriptBreakType.NULL;
     switch  (state.keywordToken) {
       case PRINT:
         executeCommandPRINT();
@@ -562,6 +565,7 @@ class _GCWizardSCriptInterpreter {
     int len = 0;
     int spaces = 0;
     String lastDelimiter = "";
+    state.BreakType = GCWizardScriptBreakType.PRINT;
 
     do {
       getToken();
@@ -597,10 +601,14 @@ class _GCWizardSCriptInterpreter {
       }
     } while (lastDelimiter == ";" || lastDelimiter == ",");
 
+    state.continueLoop = false;
+    int scriptIndex_save = state.scriptIndex;
+
     if  (state.keywordToken == EOL || state.token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
     } else {
       _handleError(_SYNTAXERROR);
+      state.scriptIndex = scriptIndex_save;
     }
   }
 
@@ -1072,6 +1080,7 @@ class _GCWizardSCriptInterpreter {
     int variable;
     Object? input;
     int scriptIndex_save = state.scriptIndex - "input".length;
+    state.BreakType = GCWizardScriptBreakType.INPUT;
 
     getToken();
     if  (state.tokenType == QUOTEDSTR) {

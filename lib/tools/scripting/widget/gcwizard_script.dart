@@ -276,7 +276,15 @@ class GCWizardScriptState extends State<GCWizardScript> {
     _currentOutput = output;
     var showInput = false;
     if (output.continueState != null) {
-      showInput = true;
+
+      if (output.BreakType == GCWizardScriptBreakType.INPUT) {
+        _currentScriptOutput = _currentOutput.STDOUT;
+        showInput = true;
+      }
+      else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+        _currentScriptOutput = _currentOutput.STDOUT;
+        _interpretGCWScriptAsync();
+      }
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
     }

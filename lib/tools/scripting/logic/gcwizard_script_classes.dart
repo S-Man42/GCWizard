@@ -20,6 +20,7 @@ class GCWizardScriptOutput {
   final String ErrorMessage;
   final int ErrorPosition;
   final String VariableDump;
+  final GCWizardScriptBreakType BreakType;
   ScriptState? continueState;
 
   GCWizardScriptOutput({
@@ -29,12 +30,13 @@ class GCWizardScriptOutput {
     required this.ErrorMessage,
     required this.ErrorPosition,
     required this.VariableDump,
+    required this.BreakType,
     this.continueState
   });
 
   static GCWizardScriptOutput empty() {
     return GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '', BreakType: GCWizardScriptBreakType.NULL);
   }
 }
 
@@ -122,6 +124,7 @@ class _GCWizardScriptVariable {
 class ScriptState {
   late String script;
   late String inputData;
+  GCWizardScriptBreakType BreakType = GCWizardScriptBreakType.NULL;
   List<Object?> variables = List<Object?>.filled(26, 0, growable: false);
   List<String> get graphics {return graficOutput.graphics;}
   GraphicState graficOutput = GraphicState();

@@ -9,3 +9,5 @@ enum GCWizardSCript_SCREENMODE {
 }
 
 enum GCWizardScriptVariableType {DYNAMIC, STRING, INTEGER, DOUBLE, CHARACTER, LIST}
+
+enum GCWizardScriptBreakType {INPUT, PRINT, NULL}
