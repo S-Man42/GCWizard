@@ -87,8 +87,7 @@ ScriptState? state;
 
 Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! InterpreterJobData) {
-    return Future.value(GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: ''));
+    return Future.value(GCWizardScriptOutput.empty());
   }
   var interpreter = jobData!.parameters as InterpreterJobData;
   var output =
@@ -106,8 +105,7 @@ Future<GCWizardScriptOutput> interpretScript(
     LatLng coords, ScriptState? continueState,
     {SendPort? sendAsyncPort}) async {
   if (script == '') {
-    return GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+    return GCWizardScriptOutput.empty();
   }
 
   _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(script, input, coords, continueState, sendAsyncPort);
@@ -243,10 +241,7 @@ class _GCWizardSCriptInterpreter {
 
   SendPort? sendAsyncPort;
 
-
-  _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
-
-  List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
+  static const List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
   _GCWizardSCriptInterpreter(
       String script, String inputData,
@@ -260,17 +255,8 @@ class _GCWizardSCriptInterpreter {
       state = ScriptState(coords: coords);
 
       state.script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
-      state.inputData = inputData;
 
-      state.inputData.split(' ').forEach((element) {
-        if (int.tryParse(element) != null) {
-          state.STDIN.add(int.parse(element).toDouble());
-        } else if (double.tryParse(element) != null) {
-          state.STDIN.add(double.parse(element));
-        } else {
-          state.STDIN.add(element);
-        }
-      });
+      state.addInput(inputData);
     } else {
       state = continueState;
     }
@@ -281,11 +267,12 @@ class _GCWizardSCriptInterpreter {
   GCWizardScriptOutput run() {
     _resetErrors();
     if (state.script == '') {
-      return GCWizardScriptOutput(
-          STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+      return GCWizardScriptOutput.empty();
     }
 
-    getLabels(); // find the labels in the program
+    if (!state.continueLoop) {
+      getLabels(); // find the labels in the program
+    }
     return scriptInterpreter(); // execute
   }
 
@@ -312,6 +299,7 @@ class _GCWizardSCriptInterpreter {
     } while  (state.token != EOP && !state.halt && iterations < MAXITERATIONS);
 
     if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
+    state.continueLoop = true;
 
     return GCWizardScriptOutput(
       STDOUT: state.STDOUT.trimRight(),
@@ -320,6 +308,7 @@ class _GCWizardSCriptInterpreter {
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
+      continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
     );
   }
 
@@ -338,7 +327,7 @@ class _GCWizardSCriptInterpreter {
 
     getToken();
     if  (state.tokenType == NUMBER) {
-      labelTable.push (state.token, state.scriptIndex);
+      state.labelTable.push (state.token, state.scriptIndex);
     }
 
     findEOL();
@@ -346,7 +335,7 @@ class _GCWizardSCriptInterpreter {
     do {
       getToken();
       if (state.tokenType == NUMBER) {
-        result = labelTable.push(state.token, state.scriptIndex);
+        result = state.labelTable.push(state.token, state.scriptIndex);
         if (result == -1) _handleError(_DUPLICATEABEL);
       }
 
@@ -620,7 +609,7 @@ class _GCWizardSCriptInterpreter {
 
     getToken();
 
-    location = labelTable.get (state.token);
+    location = state.labelTable.get (state.token);
 
     if (location == null) {
       _handleError(_LABELNOTDEFINED);
@@ -1082,16 +1071,22 @@ class _GCWizardSCriptInterpreter {
   void executeCommandINPUT() {
     int variable;
     Object? input;
+    int scriptIndex_save = state.scriptIndex - "input".length;
 
     getToken();
     if  (state.tokenType == QUOTEDSTR) {
-      state.STDOUT = state.STDOUT + state.token + '\n';
+      if (!state.continueLoop) {
+        state.quotestr = state.token;
+        state.STDOUT += state.quotestr + LF;
+      }
       getToken();
       if  (state.token != ",") _handleError(_SYNTAXERROR);
       getToken();
-    } else {
-      state.STDOUT += "? \n";
+    } else if (!state.continueLoop) {
+      state.quotestr = '? ';
+      state.STDOUT += state.quotestr + LF;
     }
+    state.continueLoop = false;
 
     variable = state.token[0].toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
     if (variable < 0 || variable > 26) _handleError(_SYNTAX_VARIABLE);
@@ -1106,6 +1101,7 @@ class _GCWizardSCriptInterpreter {
       }
     } else {
       _handleError(_INPUTMISSING);
+      state.scriptIndex = scriptIndex_save; // continue entry point
     }
   }
 
@@ -1114,7 +1110,7 @@ class _GCWizardSCriptInterpreter {
 
     getToken();
 
-    location = labelTable.get (state.token);
+    location = state.labelTable.get (state.token);
 
     if (location == null) {
       _handleError(_LABELNOTDEFINED);

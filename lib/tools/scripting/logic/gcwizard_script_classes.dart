@@ -20,7 +20,7 @@ class GCWizardScriptOutput {
   final String ErrorMessage;
   final int ErrorPosition;
   final String VariableDump;
-  final ScriptState? continueState;
+  ScriptState? continueState;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -31,6 +31,11 @@ class GCWizardScriptOutput {
     required this.VariableDump,
     this.continueState
   });
+
+  static GCWizardScriptOutput empty() {
+    return GCWizardScriptOutput(
+        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+  }
 }
 
 class GraphicState {
@@ -122,9 +127,10 @@ class ScriptState {
   GraphicState graficOutput = GraphicState();
   List<GCWMapPoint> waypoints = [];
 
+  int scriptIndex = 0;
+
   List<Object?> STDIN = [];
   String STDOUT = '';
-  int scriptIndex = 0;
   num step = 0.0;
 
   String token = '';
@@ -136,7 +142,10 @@ class ScriptState {
 
   List<Object?> listDATA = [];
   int pointerDATA = 0;
+  String quotestr = '';
+  bool continueLoop = false;
 
+  _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
   datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
@@ -198,7 +207,20 @@ class ScriptState {
 
     if (coords != null) {
       GCWizardScript_LAT = coords.latitude;
-      GCWizardScript_LAT = coords.longitude;
+      GCWizardScript_LON = coords.longitude;
     }
+  }
+
+  void addInput(String inputData) {
+    inputData.split(' ').forEach((element) {
+      if (element.isEmpty) {
+      } else if (int.tryParse(element) != null) {
+        STDIN.add(int.parse(element).toDouble());
+      } else if (double.tryParse(element) != null) {
+        STDIN.add(double.parse(element));
+      } else {
+        STDIN.add(element);
+      }
+    });
   }
 }
