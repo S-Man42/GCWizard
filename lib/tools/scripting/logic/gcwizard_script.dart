@@ -132,7 +132,6 @@ class _GCWizardSCriptInterpreter {
   static const COMMAND = 4;
   static const QUOTEDSTR = 5;
   static const FUNCTION = 6;
-  static const METHOD = 7;
 
   // Internal representation of the GCWScript keywords.
   static const UNKNOWNCOMMAND = 0;
