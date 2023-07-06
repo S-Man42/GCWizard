@@ -29,13 +29,15 @@ abstract class AbstractBase extends StatefulWidget {
 }
 
 class _AbstractBaseState extends State<AbstractBase> {
+  final int _MAX_LENGTH_BASE_INPUT = 1000;
+
   late TextEditingController _inputController;
 
   String _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  Base64Output? _decodeBase64Data;
-  Uint8List? _outData;
+  _AsyncBaseDecodeReturn? _decodeAsyncBaseData;
+  _AsyncBaseDecodeOutput? _outData;
 
   @override
   void initState() {
@@ -69,15 +71,19 @@ class _AbstractBaseState extends State<AbstractBase> {
             });
           },
         ),
-        if (widget.searchMultimedia && _currentMode == GCWSwitchPosition.right)
-          GCWButton(
-            text: i18n(context, 'common_start'),
-            onPressed: () {
-              setState(() {
-                _decodeBase64Async();
-              });
-            },
-          ),
+        _calcAsync() ? Column(
+          children: [
+            GCWButton(
+              text: i18n(context, 'common_start'),
+              onPressed: () {
+                setState(() {
+                  _outData == null;
+                  _decodeBaseAsync();
+                });
+              },
+            )
+          ],
+        ) : Container(),
         _buildOutput(context)
       ],
     );
@@ -92,27 +98,40 @@ class _AbstractBaseState extends State<AbstractBase> {
       output = widget.encode(_currentInput);
       outputWidget = GCWDefaultOutput(child: output);
     } else {
-      if (widget.searchMultimedia){
+      if (_calcAsync()){
         if (_outData == null) return Container();
 
-        outputWidget =
+        if (_outData!.fileData != null) {
+          outputWidget =
             GCWDefaultOutput(
                 trailing: GCWIconButton(
                   icon: Icons.save,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
-                    _outData == null ? null : _exportFile(context, _outData!);
+                    _exportFile(context, _outData!.fileData!);
                   },
                 ),
-                child:hexDataOutput(context, <Uint8List>[_outData!])
+                child: hexDataOutput(context, <Uint8List>[_outData!.fileData!])
             );
+        } else if (_outData!.plainText != null) {
+          outputWidget = GCWDefaultOutput(child: _outData!.plainText);
+        } else {
+          return Container();
+        }
       } else {
-        output = decode(_currentInput, widget.decode);
+        _outData = null;
+        output = decodeBase(_currentInput, widget.decode);
         outputWidget = GCWDefaultOutput(child: output);
       }
     }
 
     return outputWidget;
+  }
+
+  bool _calcAsync() {
+    return widget.searchMultimedia
+        && _currentMode == GCWSwitchPosition.right
+        && _currentInput.length > _MAX_LENGTH_BASE_INPUT;
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List data) async {
@@ -125,16 +144,20 @@ class _AbstractBaseState extends State<AbstractBase> {
 
   Future<GCWAsyncExecuterParameters?> _buildJobData() async {
     if (_currentInput.isEmpty) return null;
-    return GCWAsyncExecuterParameters(_currentInput);
+    return GCWAsyncExecuterParameters(_AsyncBaseDecodeParameters(widget.decode, _currentInput));
   }
 
-  void _showOutput(Base64Output? output) {
-    _decodeBase64Data = output;
+  void _showOutput(_AsyncBaseDecodeReturn? output) {
+    _decodeAsyncBaseData = output;
 
     // restore image references (problem with sendPort, lose references)
-    if (_decodeBase64Data != null) {
-      _outData = hexstring2file(asciiToHexString(_decodeBase64Data!.plainText));
-
+    if (_decodeAsyncBaseData != null) {
+      var fileData = hexstring2file(asciiToHexString(_decodeAsyncBaseData!.plainText));
+      String? textData;
+      if (fileData == null) {
+        textData = _decodeAsyncBaseData!.plainText;
+      }
+      _outData = _AsyncBaseDecodeOutput(fileData, textData);
     } else {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       return;
@@ -145,7 +168,7 @@ class _AbstractBaseState extends State<AbstractBase> {
     });
   }
 
-  void _decodeBase64Async() async {
+  void _decodeBaseAsync() async {
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -154,8 +177,8 @@ class _AbstractBaseState extends State<AbstractBase> {
           child: SizedBox(
             height: 220,
             width: 150,
-            child: GCWAsyncExecuter<Base64Output?>(
-              isolatedFunction: decodeBase64Async,
+            child: GCWAsyncExecuter<_AsyncBaseDecodeReturn?>(
+              isolatedFunction: _execAsyncBaseDecode,
               parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
               isOverlay: true,
@@ -165,4 +188,34 @@ class _AbstractBaseState extends State<AbstractBase> {
       },
     );
   }
+}
+
+Future<_AsyncBaseDecodeReturn?> _execAsyncBaseDecode(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! _AsyncBaseDecodeParameters) return null;
+
+  var data = jobData!.parameters as _AsyncBaseDecodeParameters;
+  var output = _AsyncBaseDecodeReturn(plainText: decodeBase(data.input, data.decode));
+
+  jobData.sendAsyncPort?.send(output);
+
+  return output;
+}
+
+class _AsyncBaseDecodeParameters {
+  final String Function(String) decode;
+  final String input;
+
+  _AsyncBaseDecodeParameters(this.decode, this.input);
+}
+
+class _AsyncBaseDecodeReturn{
+  final String plainText;
+  _AsyncBaseDecodeReturn({required this.plainText});
+}
+
+class _AsyncBaseDecodeOutput{
+  Uint8List? fileData;
+  String? plainText;
+
+  _AsyncBaseDecodeOutput(this.fileData, this.plainText);
 }
