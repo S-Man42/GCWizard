@@ -621,7 +621,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   void _showFormulaResultOnMap(List<GCWMapPoint> coordinates) {
     Navigator.push(
         context,
-        MaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: coordinates,
