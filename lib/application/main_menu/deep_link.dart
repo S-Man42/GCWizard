@@ -58,10 +58,10 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
      } catch (e) {}
   }
-  return _buildRoute(context, gcwTool, arguments.settings);
+  return _buildRoute(context, gcwTool);
 }
 
-NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings? settings) {
+NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool) {
   // arguments settings only for view the path in the url , settings: arguments.settings
   return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool);
 }
@@ -313,9 +313,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
           ],
     ),
     onTap: () {
-        Navigator.pop(context); //close Drawer
-        Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
-            builder: (context) => tool));
+        Navigator.of(context).push(_buildRoute(context, tool));
       }
   );
 }
