@@ -128,14 +128,20 @@ WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
 }
 
 GCWTool _toolNameList(BuildContext context) {
+  var apiToolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is GCWWebStatefulWidget));
   var toolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is! GCWSelection));
+
+  for (var element in apiToolList) {toolList.remove(element);}
+
+  apiToolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
   toolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
+  apiToolList.addAll(toolList);
 
   return GCWTool(
     suppressHelpButton: true,
     id: 'tool_name_list',
     toolName: 'Tool name list',
-      tool: _buildItems(context, toolList),
+      tool: _buildItems(context, apiToolList),
     // )
   );
 }
@@ -189,7 +195,7 @@ Future<Tuple2<String, String>> _toolInfoTextShort(GCWTool tool) async {
   var id = _toolId(tool);
   var info = id;
   if (tool.tool is GCWWebStatefulWidget) {
-    info += ' -> (with API)';
+    info += ' -> (with open API)';
   }
   return Tuple2<String, String>(id, info);
 }
