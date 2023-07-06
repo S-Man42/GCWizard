@@ -274,16 +274,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
-    var showInput = false;
+    //var showInput = false;
     if (output.continueState != null) {
-
       if (output.BreakType == GCWizardScriptBreakType.INPUT) {
         _currentScriptOutput = _currentOutput.STDOUT;
-        showInput = true;
+        //showInput = true;
       }
       else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
         _currentScriptOutput = _currentOutput.STDOUT;
-        _interpretGCWScriptAsync();
       }
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
@@ -291,9 +289,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        if (showInput) {
+        if (output.BreakType == GCWizardScriptBreakType.INPUT) {
           _showDialogBox(context, output.continueState?.quotestr ?? '');
+        } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+        _interpretGCWScriptAsync();
         }
+        //if (showInput) {
+        //  _showDialogBox(context, output.continueState?.quotestr ?? '');
+        //}
       });
     });
   }
