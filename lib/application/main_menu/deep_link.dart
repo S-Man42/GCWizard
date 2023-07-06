@@ -272,6 +272,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
       child: Row(
           children: [
             Expanded(
+              flex: 3,
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: SelectableText(
@@ -280,6 +281,10 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
                     style: gcwTextStyle(),
                     selectionControls: GCWTextSelectionControls(),
                   )),
+            ),
+            Expanded(
+              flex: 2,
+              child: GCWText(text: _toolName(context, tool)),
             ),
             copyText.isNotEmpty
                 ? GCWIconButton(
