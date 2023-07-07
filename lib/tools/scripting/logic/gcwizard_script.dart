@@ -308,9 +308,14 @@ class _GCWizardSCriptInterpreter {
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
+
+      continueState: (state.errorMessage == _errorMessages[_INPUTMISSING] ||
+                      state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null // state ans widget übergeben, damit es weis, das es noch weiter geht
+
       BreakType: state.BreakType,
       //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
         continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
+
     );
   }
 
@@ -565,8 +570,11 @@ class _GCWizardSCriptInterpreter {
     int len = 0;
     int spaces = 0;
     String lastDelimiter = "";
-    state.BreakType = GCWizardScriptBreakType.PRINT;
 
+    int scriptIndex_save = state.scriptIndex - "print".length; // Wiedereinsprungspunkt werken
+
+
+    // wenn state.continueLoop dann wenn nötig mit der Sonderbehandlung auswerten oder den Codeblock überspringen, damit er nicht doppelt ausgewertet wird
     do {
       getToken();
       if  (state.keywordToken == EOL || state.token == EOP) break;
@@ -610,6 +618,14 @@ class _GCWizardSCriptInterpreter {
       _handleError(_SYNTAXERROR);
       state.scriptIndex = scriptIndex_save;
     }
+
+    if (!state.continueLoop) {
+      _handleError(_PRINTERROR); // Ablauf unterbrechen und zum widget zurück gehen (Error extr dafür erstellt)
+      state.scriptIndex = scriptIndex_save; // continue entry point
+    } else {
+      state.continueLoop = false; // normaler Ablauf
+    }
+
   }
 
   void executeCommandGOTO() {

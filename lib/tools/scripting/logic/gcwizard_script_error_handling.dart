@@ -40,6 +40,7 @@ const _MISSINGENDIF = 35;
 const _SWITCHWITHOUTEND = 36;
 const _REPEATWITHOUTUNTIL = 37;
 const _FORWITHOUTNEXT = 38;
+const _PRINTERROR = 39;
 
 Map<int, String> _errorMessages = {
   _SYNTAXERROR : "gcwizard_script_syntax_error",
