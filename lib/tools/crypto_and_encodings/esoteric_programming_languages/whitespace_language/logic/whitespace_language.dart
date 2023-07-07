@@ -274,7 +274,7 @@ class _Interpreter {
       }
     }
     if (_loading) {
-      if (_dbg) print('Finished marking labels. Starting program sequence...');
+      // if (_dbg) print('Finished marking labels. Starting program sequence...');
       _pos = 0;
       _loading = false;
       run();
@@ -530,7 +530,7 @@ class _FlowControl {
         _dbgOutput(_command, _clean(label) + ' index:' + index.toString());
         _mark_label(label);
       } else {
-        if (_dbg) print('Ignoring label marker');
+        // if (_dbg) print('Ignoring label marker');
       }
       _pos = index;
     } else if (_command == 'jump') {
@@ -595,7 +595,7 @@ class _FlowControl {
   }
 
   void _exit() {
-    if (_dbg) print('Program terminated.');
+    // if (_dbg) print('Program terminated.');
     _pos = 9999999;
   }
 
@@ -890,7 +890,7 @@ Tuple2<int, String> _label_parameter() {
 void _dbgOutput(String command, String? label) {
   if (_dbg) {
     label = label != null ? ' (' + label + ')' : '';
-    print('[' + _dbgCounter.toString() + '] ' + 'Command: ' + command + label);
+    // print('[' + _dbgCounter.toString() + '] ' + 'Command: ' + command + label);
     _dbgCounter += 1;
   }
 }
