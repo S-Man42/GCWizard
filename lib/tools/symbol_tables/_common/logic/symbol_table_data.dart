@@ -53,7 +53,8 @@ class SymbolTableConstants {
     "Dje": "Ђ",
     "ellipse": "…",
     "equals": "=",
-    "Eth": "Ð",
+    "Eth1": "Ð",
+    "Eth2": "Ð",
     "eth1": "ð",
     "eth2": "đ",
     "euro": "€",
@@ -122,7 +123,7 @@ class SymbolTableConstants {
     "E_cedille": "Ę",
     "E_circumflex": "Ê",
     "E_grave": "È",
-    "E_eth": "Ð",
+    "E_eth": "Ð", // here for backwards compatibility; new: Eth1
     "E_trema": "Ë",
     "I_acute": "Í",
     "I_grave": "Ì",
