@@ -280,7 +280,7 @@ class _GCWToolState extends State<GCWTool> {
     var tool = widget.tool;
     if (!widget.suppressToolMargin) {
       tool = Padding(
-        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
+        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 50),
         child: tool,
       );
     }
