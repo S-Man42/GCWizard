@@ -64,8 +64,6 @@ String encodeBase64(String input) {
 
 
 String decodeBase64(String input) {
-   print('DECODE START ');
-   print(input);
 
    if (input.isEmpty) return '';
 
@@ -82,10 +80,6 @@ String decodeBase64(String input) {
        if (out.isNotEmpty) break;
      } on FormatException {}
    }
-
-   print('BLAAAAAA ');
-   print(input);
-   print(out);
 
    return out;
 }

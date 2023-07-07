@@ -310,11 +310,11 @@ class _GCWizardSCriptInterpreter {
       VariableDump: _variableDump(),
 
       continueState: (state.errorMessage == _errorMessages[_INPUTMISSING] ||
-                      state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null // state ans widget übergeben, damit es weis, das es noch weiter geht
+                      state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
 
       BreakType: state.BreakType,
       //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
-        continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
+      //  continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
 
     );
   }
@@ -572,51 +572,50 @@ class _GCWizardSCriptInterpreter {
     String lastDelimiter = "";
 
     int scriptIndex_save = state.scriptIndex - "print".length; // Wiedereinsprungspunkt werken
-
+    state.BreakType = GCWizardScriptBreakType.PRINT;
 
     // wenn state.continueLoop dann wenn nötig mit der Sonderbehandlung auswerten oder den Codeblock überspringen, damit er nicht doppelt ausgewertet wird
-    do {
-      getToken();
-      if  (state.keywordToken == EOL || state.token == EOP) break;
-
-      if  (state.tokenType == QUOTEDSTR) {
-        state.STDOUT += state.token;
-        len += state.token.length;
+    if (!state.continueLoop) {
+      do {
         getToken();
-      } else {
-        putBack();
-        result = evaluateExpression();
-        getToken();
-        state.STDOUT += result.toString();
+        if  (state.keywordToken == EOL || state.token == EOP) break;
 
-        var t = result;
-        len += t.toString().length; // save length
-      }
-      lastDelimiter = state.token;
+        if  (state.tokenType == QUOTEDSTR) {
+          state.STDOUT += state.token;
+          len += state.token.length;
+          getToken();
+        } else {
+          putBack();
+          result = evaluateExpression();
+          getToken();
+          state.STDOUT += result.toString();
 
-      if (lastDelimiter == ",") {
-        spaces = 8 - (len % 8);
-        len += spaces;
-        while (spaces != 0) {
-          state.STDOUT += " ";
-          spaces--;
+          var t = result;
+          len += t.toString().length; // save length
         }
-      } else if  (state.token == ";") {
-        state.STDOUT += " ";
-        len++;
-      } else if  (state.keywordToken != EOL && state.token != EOP) {
+        lastDelimiter = state.token;
+
+        if (lastDelimiter == ",") {
+          spaces = 8 - (len % 8);
+          len += spaces;
+          while (spaces != 0) {
+            state.STDOUT += " ";
+            spaces--;
+          }
+        } else if  (state.token == ";") {
+          state.STDOUT += " ";
+          len++;
+        } else if  (state.keywordToken != EOL && state.token != EOP) {
+          _handleError(_SYNTAXERROR);
+        }
+      } while (lastDelimiter == ";" || lastDelimiter == ",");
+
+      if  (state.keywordToken == EOL || state.token == EOP) {
+        if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
+      } else {
         _handleError(_SYNTAXERROR);
+        state.scriptIndex = scriptIndex_save;
       }
-    } while (lastDelimiter == ";" || lastDelimiter == ",");
-
-    state.continueLoop = false;
-    int scriptIndex_save = state.scriptIndex;
-
-    if  (state.keywordToken == EOL || state.token == EOP) {
-      if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
-    } else {
-      _handleError(_SYNTAXERROR);
-      state.scriptIndex = scriptIndex_save;
     }
 
     if (!state.continueLoop) {
