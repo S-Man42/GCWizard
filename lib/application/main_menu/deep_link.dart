@@ -58,10 +58,10 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
      } catch (e) {}
   }
-  return _buildRoute(context, gcwTool, arguments.settings);
+  return _buildRoute(context, gcwTool);
 }
 
-NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings? settings) {
+NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool) {
   // arguments settings only for view the path in the url , settings: arguments.settings
   return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool);
 }
@@ -128,14 +128,20 @@ WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
 }
 
 GCWTool _toolNameList(BuildContext context) {
+  var apiToolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is GCWWebStatefulWidget));
   var toolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is! GCWSelection));
+
+  for (var element in apiToolList) {toolList.remove(element);}
+
+  apiToolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
   toolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
+  apiToolList.addAll(toolList);
 
   return GCWTool(
     suppressHelpButton: true,
     id: 'tool_name_list',
     toolName: 'Tool name list',
-      tool: _buildItems(context, toolList),
+      tool: _buildItems(context, apiToolList),
     // )
   );
 }
@@ -182,14 +188,14 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
 }
 
 String _toolId(GCWTool tool) {
-  return tool.id + (tool.id_extension ?? '');
+  return (tool.id_prefix ?? '') + tool.id;
 }
 
 Future<Tuple2<String, String>> _toolInfoTextShort(GCWTool tool) async {
   var id = _toolId(tool);
   var info = id;
   if (tool.tool is GCWWebStatefulWidget) {
-    info += ' -> (with API)';
+    info += ' -> (with open API)';
   }
   return Tuple2<String, String>(id, info);
 }
@@ -261,44 +267,54 @@ const Map<String, TextStyle> _openApiHiglightMap = {
   '"default"'  : TextStyle(color: Colors.green),
 };
 
-Row _buildRowWidget(BuildContext context, GCWTool tool, String id, String copyText) {
-  return Row(
-    children: [
-      Expanded(
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: SelectableText(
-              id,
-              textAlign: TextAlign.left,
-              style: gcwTextStyle(),
-              selectionControls: GCWTextSelectionControls(),
-            )),
-      ),
-      copyText.isNotEmpty
-          ? GCWIconButton(
-        iconColor: themeColors().mainFont(),
-        size: IconButtonSize.SMALL,
-        icon: Icons.question_mark,
-        onPressed: () {
-          var route = _createRoute(context,
-              WebParameter(title: _toolId(tool), arguments: { _questionmark : _questionmark}, settings: null));
-          if (route != null) {
-            Navigator.push(context, route);
-          }
-        },
-      )
-      : Container(),
-      copyText.isNotEmpty
-        ? GCWIconButton(
-          iconColor: themeColors().mainFont(),
-          size: IconButtonSize.SMALL,
-          icon: Icons.content_copy,
-          onPressed: () {
-            insertIntoGCWClipboard(context, copyText);
-          },
-        )
-        : Container()
-    ],
+InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String copyText) {
+  return InkWell(
+      child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: SelectableText(
+                    id,
+                    textAlign: TextAlign.left,
+                    style: gcwTextStyle(),
+                    selectionControls: GCWTextSelectionControls(),
+                  )),
+            ),
+            Expanded(
+              flex: 2,
+              child: GCWText(text: _toolName(context, tool)),
+            ),
+            copyText.isNotEmpty
+                ? GCWIconButton(
+              iconColor: themeColors().mainFont(),
+              size: IconButtonSize.SMALL,
+              icon: Icons.question_mark,
+              onPressed: () {
+                var route = _createRoute(context,
+                    WebParameter(title: _toolId(tool), arguments: { _questionmark : _questionmark}, settings: null));
+                if (route != null) {
+                  Navigator.push(context, route);
+                }
+              },
+            )
+            : Container(),
+            copyText.isNotEmpty
+              ? GCWIconButton(
+                iconColor: themeColors().mainFont(),
+                size: IconButtonSize.SMALL,
+                icon: Icons.content_copy,
+                onPressed: () {
+                  insertIntoGCWClipboard(context, copyText);
+                },
+              )
+              : Container()
+          ],
+    ),
+    onTap: () {
+        Navigator.of(context).push(_buildRoute(context, tool));
+      }
   );
 }
 
