@@ -1278,6 +1278,24 @@ sudo make install
 
 
 
+## Raspberry konfigurieren
+
+Open raspi-config:
+
+```
+sudo raspi-config
+```
+
+Switch to console mode: System Options -> Boot / Auto Login and select Console or Console (Autologin).
+
+Configure the GPU memory Performance Options -> GPU Memory and enter 64.
+
+Leave raspi-config.
+
+Finish and reboot.
+
+
+
 ## App erzeugen
 
 ### One-time setup:
@@ -1325,6 +1343,16 @@ sudo make install
      ```
 
      
+
+## App ausführen
+
+Done. You can now run this app in release mode using 
+
+```
+flutter-pi --release /home/pi/<name>
+```
+
+.
 
 
 
