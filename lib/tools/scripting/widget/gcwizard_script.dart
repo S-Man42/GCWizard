@@ -274,18 +274,29 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
-    var showInput = false;
+    //var showInput = false;
     if (output.continueState != null) {
-      showInput = true;
+      if (output.BreakType == GCWizardScriptBreakType.INPUT) {
+        _currentScriptOutput = _currentOutput.STDOUT;
+        //showInput = true;
+      }
+      else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+        _currentScriptOutput = _currentOutput.STDOUT;
+      }
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        if (showInput) {
+        if (output.BreakType == GCWizardScriptBreakType.INPUT) {
           _showDialogBox(context, output.continueState?.quotestr ?? '');
+        } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+        _interpretGCWScriptAsync();
         }
+        //if (showInput) {
+        //  _showDialogBox(context, output.continueState?.quotestr ?? '');
+        //}
       });
     });
   }
@@ -533,6 +544,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
       highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.red)});
       highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.red)});
     });
+    for (var entry in scriptParanthes) {
+      highlightMap.addAll({entry : const TextStyle(color: Colors.orange)});
+    }
     return highlightMap;
   }
 }

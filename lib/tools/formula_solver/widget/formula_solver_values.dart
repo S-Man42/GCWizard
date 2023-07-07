@@ -37,7 +37,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
       maxLetterIndex = max(maxLetterIndex, alphabetIndex);
     }
 
-    if (alphabet_AZIndexes.keys.contains(maxLetterIndex)) {
+    if (alphabet_AZIndexes.keys.contains(maxLetterIndex + 1)) {
       return alphabet_AZIndexes[maxLetterIndex + 1]!;
     }
 

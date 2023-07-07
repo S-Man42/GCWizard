@@ -7,6 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +32,7 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstot
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_classes.dart';
@@ -41,6 +47,7 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.d
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_waypoints.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_graphic.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_base.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_crypto.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordinates.dart';
 
@@ -106,7 +113,6 @@ Future<GCWizardScriptOutput> interpretScript(
 }
 
 class _GCWizardSCriptInterpreter {
-  static const SCRIPT_LENGTH = 10000;
   static const MAXITERATIONS = 1000000000;
   static const PROGRESS_STEP = 10000.0;
 
@@ -124,7 +130,6 @@ class _GCWizardSCriptInterpreter {
   static const COMMAND = 4;
   static const QUOTEDSTR = 5;
   static const FUNCTION = 6;
-  static const METHOD = 7;
 
   // Internal representation of the GCWScript keywords.
   static const UNKNOWNCOMMAND = 0;
@@ -303,8 +308,14 @@ class _GCWizardSCriptInterpreter {
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
+
       continueState: (state.errorMessage == _errorMessages[_INPUTMISSING] ||
                       state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null // state ans widget übergeben, damit es weis, das es noch weiter geht
+
+      BreakType: state.BreakType,
+      //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
+        continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
+
     );
   }
 
@@ -374,6 +385,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommand() {
+    state.BreakType = GCWizardScriptBreakType.NULL;
     switch  (state.keywordToken) {
       case PRINT:
         executeCommandPRINT();
@@ -558,7 +570,9 @@ class _GCWizardSCriptInterpreter {
     int len = 0;
     int spaces = 0;
     String lastDelimiter = "";
+
     int scriptIndex_save = state.scriptIndex - "print".length; // Wiedereinsprungspunkt werken
+
 
     // wenn state.continueLoop dann wenn nötig mit der Sonderbehandlung auswerten oder den Codeblock überspringen, damit er nicht doppelt ausgewertet wird
     do {
@@ -595,10 +609,14 @@ class _GCWizardSCriptInterpreter {
       }
     } while (lastDelimiter == ";" || lastDelimiter == ",");
 
+    state.continueLoop = false;
+    int scriptIndex_save = state.scriptIndex;
+
     if  (state.keywordToken == EOL || state.token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
     } else {
       _handleError(_SYNTAXERROR);
+      state.scriptIndex = scriptIndex_save;
     }
 
     if (!state.continueLoop) {
@@ -1078,6 +1096,7 @@ class _GCWizardSCriptInterpreter {
     int variable;
     Object? input;
     int scriptIndex_save = state.scriptIndex - "input".length;
+    state.BreakType = GCWizardScriptBreakType.INPUT;
 
     getToken();
     if  (state.tokenType == QUOTEDSTR) {
@@ -1203,6 +1222,7 @@ class _GCWizardSCriptInterpreter {
     Object? partialResult5;
     Object? partialResult6;
     Object? result;
+
     if (_FUNCTIONS[command]!.functionParamCount == 0) {
       partialResult1 = evaluateExpressionParantheses();
       if (_FUNCTIONS[command]!.functionReturn) {
@@ -1211,7 +1231,9 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!.functionName();
       }
       state.scriptIndex = state.scriptIndex + 2;
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
       getToken();
       partialResult1 = evaluateExpressionParantheses();
       if (_FUNCTIONS[command]!.functionReturn) {
@@ -1219,7 +1241,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1);
       }
-    } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
+    }
+
+    else if (_FUNCTIONS[command]!.functionParamCount == 2) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1237,7 +1261,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1258,7 +1284,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1282,7 +1310,9 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
       getToken();
       if  (state.token == "(") {
         getToken();
@@ -1311,7 +1341,9 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
+    }
+
+    else if (_FUNCTIONS[state.token]!.functionParamCount == 6) {
       getToken();
       if (state.token == "(") {
         getToken();
@@ -1347,14 +1379,6 @@ class _GCWizardSCriptInterpreter {
     return result;
   }
 
-  Object? evaluateLogicalExpression() {
-    // read line until THEN or EOL
-    // split AND
-    // evaluate
-    // split OR
-    // evaluate
-  }
-
   Object? evaluateExpression() {
     Object? result;
 
@@ -1384,7 +1408,7 @@ class _GCWizardSCriptInterpreter {
 
       r_temp = evaluateExpressionRelationalOperation();
 
-      if (!_isNumber(l_temp) || !_isNumber(r_temp)) {
+      if (_isNotNumber(l_temp) || _isNotNumber(r_temp)) {
         _handleError(_INVALIDTYPECAST);
         result = 0.0;
       } else {
@@ -1489,7 +1513,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (!_isNumber(result) || !_isNumber(partialResult)) { // Todo ??
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) { // Todo ??
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -1519,7 +1543,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '*' || op == '/' || op == '%') {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (!_isNumber(result) || !_isNumber(partialResult)) {
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -1559,12 +1583,13 @@ class _GCWizardSCriptInterpreter {
     if  (state.token == "^") {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (_isNotDouble(result) || _isNotDouble(partialResult)) {
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
         return 0.0;
       }
       base = result;
-      if (result.runtimeType.toString() != partialResult.runtimeType.toString()) {
+      //if (result.runtimeType.toString() != partialResult.runtimeType.toString()) {
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else if (partialResult == 0.0) {
         result = 1.0;

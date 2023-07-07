@@ -14,8 +14,10 @@ const List<String> _Functions_3 = [
   'DEG(',
   'EXP(',
   'FAC(',
+  'GCD(',
   'GGT(',
   'KGV(',
+  'LCM(',
   'LEN(',
   'LOG(',
   'MID(',
@@ -47,20 +49,27 @@ const List<String> _Functions_4 = [
   'OVAL(',
   'QSUM(',
   'ROTX(',
+  'ROT5(',
   'SQRT(',
   'TEXT(',
   'TIME(',
 ];
 const List<String> _Functions_5 = [
+  'BACON(',
   'COLOR(',
   'FLOOR(',
   'IQSUM(',
   'POINT(',
   'RIGHT(',
+  'ROT13(',
+  'ROT18(',
+  'ROT47(',
+  'SUBST(',
   'TRUNC(',
   'WGS84(',
 ];
 const List<String> _Functions_6 = [
+  'ATBASH(',
   'CIRCLE(',
   'GETLAT(',
   'GETLON(',
@@ -69,6 +78,7 @@ const List<String> _Functions_6 = [
   'STROKE(',
 ];
 const List<String> _Functions_7 = [
+  'ABADDON(',
   'BEARING(',
   'CONVERT(',
   'WPTSADD(',
@@ -76,6 +86,7 @@ const List<String> _Functions_7 = [
   'WPTSLON(',
 ];
 const List<String> _Functions_8 = [
+  'AVEMARIA(',
   'DISTANCE(',
 ];
 const List<String> _Functions_9 = [
@@ -122,6 +133,8 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'TIME': _GCWizardScriptClassFunctionDefinition(_time, 0),
 
   // math
+  'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),
+  'LCM': _GCWizardScriptClassFunctionDefinition(_lcm, 2),
   'MOD': _GCWizardScriptClassFunctionDefinition(_mod, 2),
   'SGN': _GCWizardScriptClassFunctionDefinition(_sgn, 1),
   'PI': _GCWizardScriptClassFunctionDefinition(_pi, 0),
@@ -154,6 +167,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
+  'SUBST': _GCWizardScriptClassFunctionDefinition(_subst, 4),
   'VAL': _GCWizardScriptClassFunctionDefinition(_val, 1),
   'LEN': _GCWizardScriptClassFunctionDefinition(_len, 1),
   'CHAR': _GCWizardScriptClassFunctionDefinition(_char, 1),
@@ -166,6 +180,14 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DECTOROMAN': _GCWizardScriptClassFunctionDefinition(_dectoroman, 1,),
   'ROMANTODEC': _GCWizardScriptClassFunctionDefinition(_romantodec, 1,),
   'ROTX': _GCWizardScriptClassFunctionDefinition(_rotx, 2),
+  'ROT5': _GCWizardScriptClassFunctionDefinition(_rot5, 1),
+  'ROT13': _GCWizardScriptClassFunctionDefinition(_rot13, 1),
+  'ROT18': _GCWizardScriptClassFunctionDefinition(_rot18, 1),
+  'ROT47': _GCWizardScriptClassFunctionDefinition(_rot47, 1),
+  'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
+  'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
+  'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
+  'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
   'BWW': _GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': _GCWizardScriptClassFunctionDefinition(_base, 3),
   'HASH': _GCWizardScriptClassFunctionDefinition(_hash, 5),
@@ -194,3 +216,5 @@ List<String> scriptCommands() {
 List<String> scriptControls() {
   return  _GCWizardSCriptInterpreter.registeredKeywordsControls.keys.toList();
 }
+
+List<String> scriptParanthes = ['(', ')'];

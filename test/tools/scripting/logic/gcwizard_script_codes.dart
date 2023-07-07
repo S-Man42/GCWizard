@@ -2,7 +2,8 @@ part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsCodesToExpected = [
   {'code' : code1c, 'expectedOutput' : '1       2.0     9.0     6.0'},
-  {'code' : codeGC6GE, 'expectedOutput' : 'PUNKTE IM RADIUS        197      SIND   56151'},
+  {'code' : codeGC6GE197, 'expectedOutput' : 'PUNKTE IM RADIUS        197      SIND   56151'},
+  {'code' : codeGC6GE41, 'expectedOutput' : 'PUNKTE IM RADIUS        41      SIND   56151'},
 ];
 
 var code1c = ''' 
@@ -36,9 +37,30 @@ next
 end
 ''';
 
-var codeGC6GE = '''
+var codeGC6GE197 = '''
 REM https://coord.info/GC6GE4R
 r = 197
+a = 50.9621667
+o = 11.03585
+c = 0
+for m = 0 to 999
+  for s = 1 to 2
+    for n = 0 to 999
+      x = 50 + (57 + m/1000)/60
+      y = 11 + (s + n/1000)/60
+      d = distance(a,o,x,y)
+      if d<=r then c = c + 1
+      endif
+    next
+  next
+next
+print "Punkte im radius ",r, " sind ",c
+end 
+''';
+
+var codeGC6GE41 = '''
+REM https://coord.info/GC6GE4R
+r = 41
 a = 50.9621667
 o = 11.03585
 c = 0
