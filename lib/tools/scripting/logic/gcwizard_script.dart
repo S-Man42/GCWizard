@@ -610,7 +610,7 @@ class _GCWizardSCriptInterpreter {
     } while (lastDelimiter == ";" || lastDelimiter == ",");
 
     state.continueLoop = false;
-    
+
     if  (state.keywordToken == EOL || state.token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
     } else {
