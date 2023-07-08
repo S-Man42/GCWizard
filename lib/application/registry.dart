@@ -312,6 +312,7 @@ import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_nucleicacidsequence/widget/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
+import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
 import 'package:gc_wizard/tools/science_and_technology/guitar_strings/widget/guitar_strings.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
@@ -326,6 +327,7 @@ import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/sqrt3/
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/sqrt5/widget/sqrt5.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_layout/widget/keyboard_layout.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_numbers/widget/keyboard_numbers.dart';
+import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/widget/maya_calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
@@ -416,6 +418,7 @@ import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwig
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
+
 
 List<GCWTool> registeredTools = [];
 
@@ -725,6 +728,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'gccode',
     ]),
+    GCWTool(tool: const GCD(), id: 'gcd', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'gcd',
+    ]),
     GCWTool(tool: const GeneralCodebreakersSelection(), id: 'generalcodebreakers_selection', searchKeys: const [
       'codebreaker',
     ]),
@@ -846,6 +854,11 @@ void initializeRegistry(BuildContext context) {
         id: 'keyboard_selection',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const []),
+    GCWTool(tool: const LCM(), id: 'lcm', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'lcm',
+    ]),
     GCWTool(
         tool: const LanguageGamesSelection(),
         id: 'languagegames_selection',
