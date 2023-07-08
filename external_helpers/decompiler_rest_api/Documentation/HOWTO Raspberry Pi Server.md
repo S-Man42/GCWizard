@@ -557,7 +557,11 @@ define service{
 
 6. Add the following service definition in the host that you want to check if Tomcat is running. In our case we will use localhost. 
 
-   /usr/local/nagios/etc/objects/localhost.cfg
+   ```
+   sudo nano /usr/local/nagios/etc/objects/localhost.cfg
+   ```
+
+   
 
    ```
    # Define a service to check the state of a Tomcat service
@@ -579,159 +583,122 @@ define service{
 
    
 
+## E-Mail notification
 
+### Quellen
 
-### Anpassungen für Waveshare UPS Hat
+[How to configure email notification from nagios. - Nagios Support Forum](https://support.nagios.com/forum/viewtopic.php?t=40122)
 
-#### python-script für die Abfrage erstellen
+[Monitor and Configure Nagios Alerts on Debian 10 and Ubuntu 20.04 | Linode Docs](https://www.linode.com/docs/guides/monitor-and-configure-nagios-alerts-on-debian-10-ubuntu-2004/)
 
-```
-sudo nano /usr/local/nagios/libexec/check_ups_hat
-```
-
-
-
-#### Die Datei ausführbar machen
+### Kontaktinformationen aktualisieren
 
 ```
-sudo chmod 755 /usr/local/nagios/libexec/check_ups_hat
-```
-
-
-
-#### nagios für die Ausführung dieser Datei in der Datei `sudoers` befähigen.
-
-```
-sudo visudo
+sudo nano /usr/local/nagios/etc/objects/contacts.cfg
 ```
 
 ```
-nagios ALL=NOPASSWD: /usr/local/nagios/libexec/check_ups_hat
-```
-
-alternativ
-
-```
-sudo nano /etc/sudoers.d/020_nagios
-```
-
-die Befehlszeile hinzufügen und den Datei-Modus ändern
-
-```
-sudo chmod 0440 /etc/sudoers.d/020_nagios
+define contact{
+    contact_name  nagiosadmin ;Short name of user
+    use           generic-contact ;Inherit default values from generic-contact template (defined above)
+    alias         Nagios Admin ;Full name of user
+    pager         0045xxxxxxxx
+    email         <your email goes here>
+    host_notification_period    24x7
+    host_notification_options   d,u,r
+    host_notification_commands host-notify-by-email
+}
 ```
 
 
 
-#### Befehl in der Datei `commands.cfg` erstellen
+### Befehl für E-Mail-Kommunikation definieren
 
 ```
 sudo nano /usr/local/nagios/etc/objects/commands.cfg
 ```
 
 ```
+# 'notify-host-by-email' command definition
 define command{
-       command_name          check_ups_hat
-       command_line          sudo /usr/bin/python /usr/local/nagios/libexec/check_ups_hat
-}
-```
-
-
-
-#### Service in der Datei `localhost.cfg` erstellen
-
-```
-sudo nano /usr/local/nagios/etc/objects/localhost.cfg
+        command_name    notify-host-by-email
+        command_line    /usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$
+        }
 ```
 
 ```
-define service{
-       use                   local-service
-       host_name             localhost
-       service_description   UPS_HAT
-       check_command         check_ups_hat
-}
-```
-
-
-
-nagios erneut starten
-
-```
-sudo systemctl restart nagios.service
-```
-
-
-
-### Anpassungen für die Temperaturüberwachung
-
-#### python-script für die Abfrage erstellen
-
-```
-sudo nano /usr/local/nagios/libexec/check_temp
-```
-
-Inhalt siehe Quelldateien check_temp
-
-
-
-#### Die Datei ausführbar machen
-
-```
-sudo chmod 755 /usr/local/nagios/libexec/check_temp
-```
-
-
-
-#### nagios für die Ausführung dieser Datei in der Datei `sudoers` befähigen.
-
-```
-sudo visudo
-```
-
-```
-nagios ALL=NOPASSWD: /usr/local/nagios/libexec/check_temp
-```
-
-
-
-#### Befehl in der Datei `commands.cfg` erstellen
-
-```
-sudo nano /usr/local/nagios/etc/objects/commands.cfg
-```
-
-```
+# 'notify-service-by-email' command definition
 define command{
-       command_name          check_temp
-       command_line          sudo /usr/bin/python /usr/local/nagios/libexec/check_temp
-}
+        command_name    notify-service-by-email
+        command_line    /usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nServices: $SERVICEDESC$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$
+        }
 ```
 
 
 
-#### Service in der Datei `localhost.cfg` erstellen
+## Mail-Server installieren - postfix
 
-```
-sudo nano /usr/local/nagios/etc/objects/localhost.cfg
-```
+### Quellen
 
-```
-define service{
-       use                   local-service
-       host_name             localhost
-       service_description   Temperatur
-       check_command         check_temp
-}
-```
+[Monitor and Configure Nagios Alerts on Debian 10 and Ubuntu 20.04 | Linode Docs](https://www.linode.com/docs/guides/monitor-and-configure-nagios-alerts-on-debian-10-ubuntu-2004/)
+
+https://www.howtoforge.com/postfix_relaying_through_another_mailserver
 
 
 
-nagios erneut starten
+```
+sudo apt install mailutils postfix
+```
+
+To configure our Postfix server for relaying emails through *smtp.example.de*, we run
 
 ```
-sudo systemctl restart nagios.service
+sudo postconf -e 'relayhost = smtp.example.de'
+sudo postconf -e 'smtp_sasl_auth_enable = yes'
+sudo postconf -e 'smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd'
+sudo postconf -e 'smtp_sasl_security_options ='
 ```
+
+Our username (*USER*) and password (*PASSWORD*) for *smtp.example.com* must be stored in */etc/postfix/sasl_passwd*, therefore we do this:
+
+```
+echo "smtp.example.de   USER:PASSWORD" > /etc/postfix/sasl_passwd 
+```
+
+Alternativ:
+
+```
+sudo nano /etc/postfix/sasl_passwd
+```
+
+und manuell ergänzen
+
+```
+smtp.example.de   USER:PASSWORD
+```
+
+*/etc/postfix/sasl_passwd* must be owned by root, and noone else should have read access to that file, so we do this:
+
+```
+sudo chown root:root /etc/postfix/sasl_passwd
+sudo chmod 600 /etc/postfix/sasl_passwd
+```
+
+Now we must convert */etc/postfix/sasl_passwd* into a format that Postfix can read:
+
+```
+sudo postmap /etc/postfix/sasl_passwd
+```
+
+This will create the file */etc/postfix/sasl_passwd.db*.
+
+All that is left to do is restart Postfix:
+
+```
+/etc/init.d/postfix restart 
+```
+
+
 
 
 
@@ -851,11 +818,12 @@ sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
 
 ## Installation
 
-Wir wechseln in das Temp-Verzeichnis und laden uns die Zip-Datei des aktuellen Tomcat (Core) herunter (Stand 21.03.2020 = 8.5.53). Danach entpacken wir die ZIP-Datei. Wir stellen sicher, dass innerhalb dem "/opt" das Verzeichnis " tomcat " existiert und verschieben den entpackten Tomcat in das neu erstellte Verzeichnis. Im Anschluss löschen wir das Zip-File im /tmp-Ordner. Nun legen wir noch einen symbolischen Link "/opt/tomcat/home" an und legen tomcat als Besitzer des Verzeichnisses "/opt/tomcat" fest. Abschließend werden die Skripte innerhalb dem "bin"-Verzeichnis ausführbar gemacht.
+Wir wechseln in das Temp-Verzeichnis und laden uns die Zip-Datei des aktuellen Tomcat (Core) herunter. Danach entpacken wir die ZIP-Datei. Wir stellen sicher, dass innerhalb dem "/opt" das Verzeichnis " tomcat " existiert und verschieben den entpackten Tomcat in das neu erstellte Verzeichnis. Im Anschluss löschen wir das Zip-File im /tmp-Ordner. Nun legen wir noch einen symbolischen Link "/opt/tomcat/home" an und legen tomcat als Besitzer des Verzeichnisses "/opt/tomcat" fest. Abschließend werden die Skripte innerhalb dem "bin"-Verzeichnis ausführbar gemacht.
 
 ```
 cd /tmp
 wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.10/bin/apache-tomcat-10.1.10.zip
+
 unzip apache-tomcat-*.zip
 sudo mkdir -p /opt/tomcat
 sudo mv apache-tomcat-10.1.10 /opt/tomcat/
@@ -1073,7 +1041,7 @@ Since Tomcat 10.0.4 there is a workaround that allows deployment of Servlet 4.0 
 You just need to modify your context description in `/opt/tomcat/home/conf/Catalina/localhost/VirtualStore.xml` 
 
 ```
-sudo nano /opt/tomcat/home/conf/Catalina/localhost/VirtualStore.xml` 
+sudo nano /opt/tomcat/home/conf/Catalina/localhost/VirtualStore.xml
 ```
 
 and add:
@@ -1216,8 +1184,20 @@ sudo apt-get install python3-pip
 ## Installation des Paketes smbus
 
 ```
-sudo pip install smbus --system
+sudo pip install smbus2 --system
 ```
+
+
+
+## Installation des Paketes gpiozero
+
+```
+sudo pip install gpiozero --system
+```
+
+
+
+
 
 
 
@@ -1237,7 +1217,9 @@ sudo apt install git
 
 
 
-## Install
+## Installieren
+
+### Install
 
 ```
 sudo apt install cmake libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdrm-dev libgbm-dev ttf-mscorefonts-installer fontconfig libsystemd-dev libinput-dev libudev-dev  libxkbcommon-dev
@@ -1245,7 +1227,7 @@ sudo apt install cmake libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdrm
 
 
 
-## Update system fonts
+### Update system fonts
 
 ```
 sudo fc-cache
@@ -1253,7 +1235,7 @@ sudo fc-cache
 
 
 
-## Clone flutter-pi
+### Clone flutter-pi
 
 ```
 git clone https://github.com/ardera/flutter-pi
@@ -1262,7 +1244,7 @@ cd flutter-pi
 
 
 
-## Compile
+### Compile
 
 ```
 mkdir build && cd build
@@ -1286,9 +1268,9 @@ Open raspi-config:
 sudo raspi-config
 ```
 
-Switch to console mode: System Options -> Boot / Auto Login and select Console or Console (Autologin).
+Switch to 1 System Options -> Boot / Auto Login and select Console or Console (Autologin).
 
-Configure the GPU memory Performance Options -> GPU Memory and enter 64.
+Switch to 4 Performance Options and configure the GPU memory Performance Options -> GPU Memory and enter 64.
 
 Leave raspi-config.
 
@@ -1298,7 +1280,9 @@ Finish and reboot.
 
 ## App erzeugen
 
-### One-time setup:
+### LINUX
+
+#### One-time setup
 
 1. Make sure you've installed the flutter SDK. Only flutter SDK >= 3.10.5 is supported for the new method at the moment.
 
@@ -1308,7 +1292,7 @@ Finish and reboot.
 
    Alternatively, you can launch the tool via: flutter pub global run flutterpi_tool ...
 
-### Building the app bundle:
+#### Building the app bundle
 
 1. Open terminal or commandline and cd into your app directory.
 
@@ -1342,19 +1326,161 @@ Finish and reboot.
      scp -r ./build/flutter_assets/ pi@raspberrypi:/home/pi/my_apps_flutter_assets
      ```
 
-     
 
-## App ausführen
 
-Done. You can now run this app in release mode using 
+
+### Windows
+
+Build the asset bundle
 
 ```
-flutter-pi --release /home/pi/<name>
+flutter build bundle`
 ```
 
-.
+Build the kernel snapshot. (Replace `my_app_name` with the name of your app)
+
+```
+C:\flutter\bin\cache\dart-sdk\bin\dart.exe ^
+  C:\flutter\bin\cache\dart-sdk\bin\snapshots\frontend_server.dart.snapshot ^
+  --sdk-root C:\flutter\bin\cache\artifacts\engine\common\flutter_patched_sdk_product ^
+  --target=flutter ^
+  --aot ^
+  --tfa ^
+  -Ddart.vm.product=true ^
+  --packages .dart_tool\package_config.json ^
+  --output-dill build\kernel_snapshot.dill ^
+  --verbose ^
+  --depfile build\kernel_snapshot.d ^
+  package:my_app_name/main.dart
+```
+
+**Hint**
+
+- In versions prior to Flutter 3.3.0 the `--packages` argument should be set to `.packages`. In versions greater than or equal to 3.3.0 the `--packages` argument should be set to `.dart_tool\package_config.json`.
+
+Fetch the latest `gen_snapshot_linux_x64_release` I provide in the [engine binaries repo](https://github.com/ardera/flutter-engine-binaries-for-arm).
+
+The following steps must be executed on a linux x64 machine. If you're on windows, you can use [WSL](https://docs.microsoft.com/de-de/windows/wsl/install-win10). If you're on macOS, you can use a linux VM.
+
+Build the `app.so`. If you're building for *arm64*, you need to omit the `--sim-use-hardfp` flag.
+
+```
+gen_snapshot_linux_x64_release \
+  --deterministic \
+  --snapshot_kind=app-aot-elf \
+  --elf=build/flutter_assets/app.so \
+  --strip \
+  --sim-use-hardfp \
+  build/kernel_snapshot.dill
+```
+
+Now you can switch to your normal OS again.
+
+Deploy the bundle to the Raspberry Pi using rsync or scp:
+
+- Using rsync (available on linux and macOS or on Windows when using WSL)
+
+  ```
+  rsync -a --info=progress2 ./build/flutter_assets/ pi@raspberrypi:/home/pi/my_apps_flutter_assets
+  ```
+
+  
+
+- Using scp (available on linux, macOS and Windows) 
+
+  ```
+  scp -r ./build/flutter_assets/ pi@raspberrypi:/home/pi/my_apps_flutter_assets
+  ```
 
 
+
+Done. You can now launch the app in release mode using 
+
+```
+flutter-pi --release /home/pi/my_app
+```
+
+`
+
+
+
+## Hilfeseiten flutter-pi
+
+```
+USAGE:
+  flutter-pi [options] <bundle path> [flutter engine options]
+
+OPTIONS:
+  --release                  Run the app in release mode. The AOT snapshot
+                             of the app must be located inside the bundle directory.
+                             This also requires a libflutter_engine.so that was
+                             built with --runtime-mode=release.
+
+  --profile                  Run the app in profile mode. The AOT snapshot
+                             of the app must be located inside the bundle directory.
+                             This also requires a libflutter_engine.so that was
+                             built with --runtime-mode=profile.
+
+  --vulkan                   Use vulkan for rendering.
+
+  -o, --orientation <orientation>  Start the app in this orientation. Valid
+                             for <orientation> are: portrait_up, landscape_left,
+                             portrait_down, landscape_right.
+                             For more information about this orientation, see
+                             the flutter docs for the "DeviceOrientation"
+                             enum.
+                             Only one of the --orientation and --rotation
+                             options can be specified.
+
+  -r, --rotation <degrees>   Start the app with this rotation. This is just an
+                             alternative, more intuitive way to specify the
+                             startup orientation. The angle is in degrees and
+                             clock-wise.
+                             Valid values are 0, 90, 180 and 270.
+
+  -d, --dimensions "width_mm,height_mm" The width & height of your display in
+                             millimeters. Useful if your GPU doesn't provide
+                             valid physical dimensions for your display.
+                             The physical dimensions of your display are used
+                             to calculate the flutter device-pixel-ratio, which
+                             in turn basically "scales" the UI.
+
+  --pixelformat <format>     Selects the pixel format to use for the framebuffers.
+                             If this is not specified, a good pixel format will
+                             be selected automatically.
+                             Available pixel formats: RGB565, ARGB4444, XRGB4444, ARGB1555, XRGB1555, ARGB8888, XRGB8888, BGRA8888, BGRX8888, RGBA8888, RGBX8888, 
+  --videomode widthxheight
+  --videomode widthxheight@hz  Uses an output videomode that satisfies the argument.
+                             If no hz value is given, the highest possible refreshrate
+                             will be used.
+
+  -h, --help                 Show this help and exit.
+
+EXAMPLES:
+  flutter-pi ~/hello_world_app
+  flutter-pi --release ~/hello_world_app
+  flutter-pi -o portrait_up ./my_app
+  flutter-pi -r 90 ./my_app
+  flutter-pi -d "155, 86" ./my_app
+  flutter-pi --videomode 1920x1080 ./my_app
+  flutter-pi --videomode 1280x720@60 ./my_app
+
+SEE ALSO:
+  Author:  Hannes Winkler, a.k.a ardera
+  Source:  https://github.com/ardera/flutter-pi
+  License: MIT
+
+  For instructions on how to build an asset bundle or an AOT snapshot
+    of your app, please see the linked github repository.
+  For a list of options you can pass to the flutter engine, look here:
+    https://github.com/flutter/engine/blob/main/shell/common/switches.h
+```
+
+
+
+## discord
+
+There a `#custom-embedders` channel on the [flutter discord](https://github.com/flutter/flutter/wiki/Chat) which you can use if you have any questions regarding flutter-pi or generally, anything related to embedding the engine for which you don't want to open issue about or write an email.
 
 
 
@@ -1441,6 +1567,164 @@ Druckplan liegt als TMZ.stl vor.
 
 
 
+## Anpassungen für Waveshare UPS Hat
+
+### python-script für die Abfrage erstellen
+
+```
+sudo nano /usr/local/nagios/libexec/check_ups_hat
+```
+
+
+
+### Die Datei ausführbar machen
+
+```
+sudo chmod 755 /usr/local/nagios/libexec/check_ups_hat
+```
+
+
+
+### nagios für die Ausführung dieser Datei in der Datei `sudoers` befähigen.
+
+```
+sudo visudo
+```
+
+```
+nagios ALL=NOPASSWD: /sur/bin/python
+nagios ALL=NOPASSWD: /sur/bin/python3
+nagios ALL=NOPASSWD: /usr/local/nagios/libexec/check_ups_hat
+```
+
+alternativ
+
+```
+sudo nano /etc/sudoers.d/020_nagios
+```
+
+die Befehlszeile hinzufügen und den Datei-Modus ändern
+
+```
+sudo chmod 0440 /etc/sudoers.d/020_nagios
+```
+
+
+
+### Befehl in der Datei `commands.cfg` erstellen
+
+```
+sudo nano /usr/local/nagios/etc/objects/commands.cfg
+```
+
+```
+define command{
+       command_name          check_ups_hat
+       command_line          sudo /usr/bin/python3 /usr/local/nagios/libexec/check_ups_hat
+}
+```
+
+
+
+### Service in der Datei `localhost.cfg` erstellen
+
+```
+sudo nano /usr/local/nagios/etc/objects/localhost.cfg
+```
+
+```
+define service{
+       use                   local-service
+       host_name             localhost
+       service_description   UPS_HAT
+       check_command         check_ups_hat
+}
+```
+
+
+
+nagios erneut starten
+
+```
+sudo systemctl restart nagios.service
+```
+
+
+
+## Anpassungen für die Temperaturüberwachung
+
+### python-script für die Abfrage erstellen
+
+```
+sudo nano /usr/local/nagios/libexec/check_temp
+```
+
+Inhalt siehe Quelldateien check_temp
+
+
+
+### Die Datei ausführbar machen
+
+```
+sudo chmod 755 /usr/local/nagios/libexec/check_temp
+```
+
+
+
+### nagios für die Ausführung dieser Datei in der Datei `sudoers` befähigen.
+
+```
+sudo visudo
+```
+
+```
+nagios ALL=NOPASSWD: /usr/local/nagios/libexec/check_temp
+```
+
+
+
+### Befehl in der Datei `commands.cfg` erstellen
+
+```
+sudo nano /usr/local/nagios/etc/objects/commands.cfg
+```
+
+```
+define command{
+       command_name          check_temp
+       command_line          echo PASSWORD | sudo -S /usr/bin/python /usr/local/nagios/libexec/check_temp
+}
+```
+
+
+
+### Service in der Datei `localhost.cfg` erstellen
+
+```
+sudo nano /usr/local/nagios/etc/objects/localhost.cfg
+```
+
+```
+define service{
+       use                   local-service
+       host_name             localhost
+       service_description   Temperatur
+       check_command         check_temp
+}
+```
+
+
+
+nagios erneut starten
+
+```
+sudo systemctl restart nagios.service
+```
+
+
+
+
+
 # Konfigurationsdaten
 
 ## Raspberry
@@ -1472,19 +1756,34 @@ Druckplan liegt als TMZ.stl vor.
 | Admin Kennwort    |             |
 | Port              | 1417        |
 
+
+
 ### check Tomcat
 
-| /usr/local/nagios/libexec | check_tomcat.pl generieren                                   |
-| ------------------------- | ------------------------------------------------------------ |
-| commands.cfg              | define command{<br/>       command_name      check_tomcat<br/>       command_line          /usr/bin/perl /usr/lib/nagios/plugins/check_tomcat -H\$HOSTADDRESS\$ -p\$ARG1\$ -l\$ARG2\$ -a\$ARG3\$ -w\$ARG4\$ -c\$ARG5\$<br/>} |
-| localhost.cfg             | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  Tomcat <br />       check_command        check_tomcat!7323!tomcat_username!tomcat_password!25%,25%!10%,10%<br /> } |
+| /usr/local/nagios/libexec                         | check_tomcat.pl generieren                                   |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| /usr/local/nagios/etc/objects/<br />commands.cfg  | define command{<br/>       command_name      check_tomcat<br/>       command_line          /usr/bin/perl /usr/lib/nagios/plugins/check_tomcat -H\$HOSTADDRESS\$ -p\$ARG1\$ -l\$ARG2\$ -a\$ARG3\$ -w\$ARG4\$ -c\$ARG5\$<br/>} |
+| /usr/local/nagios/etc/objects/<br />localhost.cfg | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  Tomcat <br />       check_command        check_tomcat!7323!tomcat_username!tomcat_password!25%,25%!10%,10%<br /> } |
 
-### check UPS_hat
 
-| /usr/local/nagios/libexec | check_ups_hat.pl generieren                                  |
-| ------------------------- | ------------------------------------------------------------ |
-| commands.cfg              | define command{<br/>       command_name  check_ups_hat<br/>       command_line      echo <PASSWORD> \| sudo -S /usr/bin/python /usr/lib/nagios/plugins/check_ups_hat<br/>} |
-| localhost.cfg             | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  UPS_HAT <br />       check_command        check_ups_hat<br /> } |
+
+### check_ups_hat
+
+| /usr/local/nagios/libexec                         | check_ups_hat.pl generieren                                  |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| /usr/local/nagios/etc/objects/<br />commands.cfg  | define command{<br/>       command_name  check_ups_hat<br/>       command_line      echo <PASSWORD> \| sudo -S /usr/bin/python3 /usr/local/nagios/libexec/check_ups_hat<br/>} |
+| /usr/local/nagios/etc/objects/<br />localhost.cfg | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  UPS_HAT <br />       check_command        check_ups_hat<br /> } |
+
+
+
+### check_temp
+
+| /usr/local/nagios/libexec                         | check_temp generieren                                        |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| /usr/local/nagios/etc/objects/<br />commands.cfg  | define command{<br/>       command_name  check_ups_hat<br/>       command_line /usr/local/nagios/libexec/check_ups_hat<br/>} |
+| /usr/local/nagios/etc/objects/<br />localhost.cfg | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  Temperatur <br />       check_command        check_temp<br /> } |
+
+
 
 ## Apache 2
 
@@ -1517,6 +1816,10 @@ Druckplan liegt als TMZ.stl vor.
 # Quell-Dateien
 
 ## check_tomcat
+
+**Hinweis**:
+
+Default-Werte für `port`, `user` , `password`… anpassen
 
 ```
 #!/usr/bin/perl 
@@ -1919,6 +2222,7 @@ import smbus2
 import smbus
 import time
 import os
+import sys
 
 OK = 0
 WARNING = 1
@@ -2056,6 +2360,7 @@ if __name__=='__main__':
 #!/usr/bin/python3
 from gpiozero import CPUTemperature
 import os
+import sys
 
 OK = 0
 WARNING = 1
