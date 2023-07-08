@@ -310,11 +310,11 @@ class _GCWizardSCriptInterpreter {
       VariableDump: _variableDump(),
 
       continueState: (state.errorMessage == _errorMessages[_INPUTMISSING] ||
-                      state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null // state ans widget übergeben, damit es weis, das es noch weiter geht
+                      state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
 
       BreakType: state.BreakType,
       //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
-        continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
+      //  continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
 
     );
   }
@@ -610,8 +610,7 @@ class _GCWizardSCriptInterpreter {
     } while (lastDelimiter == ";" || lastDelimiter == ",");
 
     state.continueLoop = false;
-    int scriptIndex_save = state.scriptIndex;
-
+    
     if  (state.keywordToken == EOL || state.token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
     } else {
