@@ -921,7 +921,9 @@ class _GCWMapViewState extends State<GCWMapView> {
     return (viewData != null);
   }
 
-  Future<bool> _loadCoordinatesFile(GCWFile file) async {
+  void _loadCoordinatesFile(GCWFile? file) async {
+    if (file == null) return;
+
     try {
       await importCoordinatesFile(file).then((viewData) {
         if (viewData == null) return false;
@@ -933,11 +935,8 @@ class _GCWMapViewState extends State<GCWMapView> {
           }
           _mapController.fitBounds(_getBounds());
         });
-
-        return true;
       });
     } catch (exception) {}
-    return false;
   }
 }
 

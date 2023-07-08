@@ -20,7 +20,7 @@ void main() async {
   await Prefs.init();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
-  initDefaultSettings(PreferencesInitMode.STARTUP);
+  initializePreferences();
 
   runApp(App(
     appLanguage: appLanguage,
