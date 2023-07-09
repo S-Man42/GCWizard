@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences_utils.dart';
+import 'package:gc_wizard/application/settings/widget/settings_preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -13,6 +16,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
@@ -108,7 +112,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                 });
           },
         ),
-        GCWDivider(),
+        const GCWDivider(),
         Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -124,6 +128,33 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
               ],
             )
         ),
+
+        // always on bottom
+        Container(margin: const EdgeInsets.only(top: 50.0), child: const GCWDivider()),
+        InkWell(
+          child: const Icon(Icons.more_horiz, size: 20.0),
+          onTap: () {
+            showGCWAlertDialog(
+              context,
+              i18n(context, 'settings_preferences_warning_title'),
+              i18n(context, 'settings_preferences_warning_text'),
+                  () {
+                Navigator.of(context)
+                    .push(NoAnimationMaterialPageRoute<GCWTool>(
+                    builder: (context) => GCWTool(tool: const SettingsPreferences(), id: 'settings_preferences')))
+                    .whenComplete(() {
+                  setState(() {
+                    AppBuilder.of(context).rebuild();
+                  });
+
+                  showGCWAlertDialog(context, i18n(context, 'settings_preferences_aftermath_title'),
+                      i18n(context, 'settings_preferences_aftermath_text'), () {},
+                      cancelButton: false);
+                });
+              },
+            );
+          },
+        )
       ],
     );
   }

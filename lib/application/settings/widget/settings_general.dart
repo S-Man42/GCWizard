@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/app_builder.dart';
+import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/i18n/app_language.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/i18n/supported_locales.dart';
-import 'package:gc_wizard/application/category_views/all_tools_view.dart';
-import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/application/settings/widget/settings_preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/application/app_builder.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 
 class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
@@ -245,33 +240,6 @@ class _GeneralSettingsState extends State<GeneralSettings> {
             setState(() {
               Prefs.setInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS, value);
             });
-          },
-        ),
-
-        // always on bottom
-        Container(margin: const EdgeInsets.only(top: 25.0), child: const GCWDivider()),
-        InkWell(
-          child: const Icon(Icons.more_horiz, size: 20.0),
-          onTap: () {
-            showGCWAlertDialog(
-              context,
-              i18n(context, 'settings_preferences_warning_title'),
-              i18n(context, 'settings_preferences_warning_text'),
-              () {
-                Navigator.of(context)
-                    .push(NoAnimationMaterialPageRoute<GCWTool>(
-                        builder: (context) => GCWTool(tool: const SettingsPreferences(), id: 'settings_preferences')))
-                    .whenComplete(() {
-                  setState(() {
-                    AppBuilder.of(context).rebuild();
-                  });
-
-                  showGCWAlertDialog(context, i18n(context, 'settings_preferences_aftermath_title'),
-                      i18n(context, 'settings_preferences_aftermath_text'), () {},
-                      cancelButton: false);
-                });
-              },
-            );
           },
         )
       ],
