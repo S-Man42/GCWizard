@@ -90,25 +90,22 @@ Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters?
     return Future.value(GCWizardScriptOutput.empty());
   }
   var interpreter = jobData!.parameters as InterpreterJobData;
-  var output =
-      await interpretScript(
-          interpreter.jobDataScript, interpreter.jobDataInput,
-          interpreter.jobDataCoords, interpreter.continueState,
-          sendAsyncPort: jobData.sendAsyncPort);
+  var output = await interpretScript(
+      interpreter.jobDataScript, interpreter.jobDataInput, interpreter.jobDataCoords, interpreter.continueState,
+      sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
   return output;
 }
 
-Future<GCWizardScriptOutput> interpretScript(
-    String script, String input,
-    LatLng coords, ScriptState? continueState,
+Future<GCWizardScriptOutput> interpretScript(String script, String input, LatLng coords, ScriptState? continueState,
     {SendPort? sendAsyncPort}) async {
   if (script == '') {
     return GCWizardScriptOutput.empty();
   }
 
-  _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(script, input, coords, continueState, sendAsyncPort);
+  _GCWizardSCriptInterpreter interpreter =
+      _GCWizardSCriptInterpreter(script, input, coords, continueState, sendAsyncPort);
   return interpreter.run();
 }
 
@@ -238,16 +235,14 @@ class _GCWizardSCriptInterpreter {
   };
 
   late ScriptState state;
+  GCWizardScriptBreakType BreakType = GCWizardScriptBreakType.NULL;
 
   SendPort? sendAsyncPort;
 
   static const List<String> relationOperators = [AND, OR, GE, NE, LE, '<', '>', '=', '0'];
 
   _GCWizardSCriptInterpreter(
-      String script, String inputData,
-      LatLng coords, ScriptState? continueState,
-      this.sendAsyncPort) {
-
+      String script, String inputData, LatLng coords, ScriptState? continueState, this.sendAsyncPort) {
     registeredKeywords.addAll(registeredKeywordsCommands);
     registeredKeywords.addAll(registeredKeywordsControls);
 
@@ -282,12 +277,12 @@ class _GCWizardSCriptInterpreter {
     do {
       getToken();
 
-      if  (state.tokenType == NUMBER) {
-      } else if  (state.tokenType == VARIABLE) {
+      if (state.tokenType == NUMBER) {
+      } else if (state.tokenType == VARIABLE) {
         putBack();
         executeAssignment();
-      } else if  (state.tokenType == FUNCTION) {
-        executeFunction (state.token, state.tokenType);
+      } else if (state.tokenType == FUNCTION) {
+        executeFunction(state.token, state.tokenType);
       } else {
         executeCommand();
       }
@@ -295,11 +290,16 @@ class _GCWizardSCriptInterpreter {
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
         sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
       }
-
-    } while  (state.token != EOP && !state.halt && iterations < MAXITERATIONS);
+    } while (state.token != EOP && !state.halt && iterations < MAXITERATIONS);
 
     if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
     state.continueLoop = true;
+
+    print('ende interpreter');
+    print(state.errorMessage);
+    print(BreakType);
+    print(state.STDOUT);
+    print(state.errorMessage);
 
     return GCWizardScriptOutput(
       STDOUT: state.STDOUT.trimRight(),
@@ -309,13 +309,14 @@ class _GCWizardSCriptInterpreter {
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
 
-      continueState: (state.errorMessage == _errorMessages[_INPUTMISSING] ||
-                      state.errorMessage == _errorMessages[_PRINTERROR]) ? state : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
+      continueState:
+          (state.errorMessage == _errorMessages[_INPUTMISSING] || state.errorMessage == _errorMessages[_PRINTERROR])
+              ? state
+              : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
 
-      BreakType: state.BreakType,
+      BreakType: BreakType,
       //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
       //  continueState: state.BreakType != GCWizardScriptBreakType.NULL ? state : null
-
     );
   }
 
@@ -323,7 +324,7 @@ class _GCWizardSCriptInterpreter {
     String dump = '';
     for (int i = 0; i < 26; i++) {
       //if (variables[i] != dynamic) {
-        dump = dump + String.fromCharCode(65 + i) + ' ' + state.variables[i].toString() + '\n';
+      dump = dump + String.fromCharCode(65 + i) + ' ' + state.variables[i].toString() + '\n';
       //}
     }
     return dump;
@@ -333,8 +334,8 @@ class _GCWizardSCriptInterpreter {
     int result;
 
     getToken();
-    if  (state.tokenType == NUMBER) {
-      state.labelTable.push (state.token, state.scriptIndex);
+    if (state.tokenType == NUMBER) {
+      state.labelTable.push(state.token, state.scriptIndex);
     }
 
     findEOL();
@@ -374,7 +375,7 @@ class _GCWizardSCriptInterpreter {
     variable = variableName.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
 
     getToken();
-    if  (state.token != "=") {
+    if (state.token != "=") {
       _handleError(_EQUALEXPECTED);
       return;
     }
@@ -385,9 +386,10 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommand() {
-    state.BreakType = GCWizardScriptBreakType.NULL;
-    switch  (state.keywordToken) {
+    BreakType = GCWizardScriptBreakType.NULL;
+    switch (state.keywordToken) {
       case PRINT:
+        BreakType = GCWizardScriptBreakType.PRINT;
         executeCommandPRINT();
         break;
       case GOTO:
@@ -497,8 +499,8 @@ class _GCWizardSCriptInterpreter {
       state.listDATA.add(result);
 
       getToken(); // get next list item
-      if  (state.keywordToken == EOL || state.token == EOP) break;
-    } while  (state.keywordToken != EOL && state.token != EOP);
+      if (state.keywordToken == EOL || state.token == EOP) break;
+    } while (state.keywordToken != EOL && state.token != EOP);
   }
 
   void executeCommandREAD() {
@@ -506,8 +508,8 @@ class _GCWizardSCriptInterpreter {
     int variable = 0;
     do {
       getToken(); // get next list item
-      if  (state.keywordToken == EOL || state.token == EOP) break;
-      if  (state.token != ',') {
+      if (state.keywordToken == EOL || state.token == EOP) break;
+      if (state.token != ',') {
         vname = state.token[0];
         if (isNotAVariable(vname[0])) {
           _handleError(_NOTAVARIABLE);
@@ -521,7 +523,7 @@ class _GCWizardSCriptInterpreter {
           _handleError(_DATAOUTOFRANGE);
         }
       }
-    } while  (state.keywordToken != EOL && state.token != EOP);
+    } while (state.keywordToken != EOL && state.token != EOP);
   }
 
   void executeCommandRESTORE() {
@@ -535,12 +537,12 @@ class _GCWizardSCriptInterpreter {
   void executeCommandBEEP() {
     int maxBeep = 1;
     getToken();
-    if  (state.token != '\n') {
-      if (int.tryParse (state.token) == null) {
+    if (state.token != '\n') {
+      if (int.tryParse(state.token) == null) {
         _handleError(_SYNTAXERROR);
         return;
       } else {
-        maxBeep = int.parse (state.token);
+        maxBeep = int.parse(state.token);
       }
     }
     for (int i = 1; i < maxBeep; i++) {
@@ -552,12 +554,12 @@ class _GCWizardSCriptInterpreter {
   void executeCommandSLEEP() {
     int maxSleep = 1;
     getToken();
-    if  (state.token != '\n') {
-      if (int.tryParse (state.token) == null) {
+    if (state.token != '\n') {
+      if (int.tryParse(state.token) == null) {
         _handleError(_SYNTAXERROR);
         return;
       } else {
-        maxSleep = int.parse (state.token);
+        maxSleep = int.parse(state.token);
       }
     }
     sleep(Duration(seconds: maxSleep));
@@ -573,58 +575,59 @@ class _GCWizardSCriptInterpreter {
 
     int scriptIndex_save = state.scriptIndex - "print".length; // Wiedereinsprungspunkt werken
 
-
     // wenn state.continueLoop dann wenn nötig mit der Sonderbehandlung auswerten oder den Codeblock überspringen, damit er nicht doppelt ausgewertet wird
-    do {
-      getToken();
-      if  (state.keywordToken == EOL || state.token == EOP) break;
-
-      if  (state.tokenType == QUOTEDSTR) {
-        state.STDOUT += state.token;
-        len += state.token.length;
+    //if (!state.continueLoop) {
+      do {
         getToken();
-      } else {
-        putBack();
-        result = evaluateExpression();
-        getToken();
-        state.STDOUT += result.toString();
+        if (state.keywordToken == EOL || state.token == EOP) break;
 
-        var t = result;
-        len += t.toString().length; // save length
-      }
-      lastDelimiter = state.token;
+        if (state.tokenType == QUOTEDSTR) {
+          state.STDOUT += state.token;
+          len += state.token.length;
+          getToken();
+        } else {
+          putBack();
+          result = evaluateExpression();
+          getToken();
+          state.STDOUT += result.toString();
 
-      if (lastDelimiter == ",") {
-        spaces = 8 - (len % 8);
-        len += spaces;
-        while (spaces != 0) {
-          state.STDOUT += " ";
-          spaces--;
+          var t = result;
+          len += t.toString().length; // save length
         }
-      } else if  (state.token == ";") {
-        state.STDOUT += " ";
-        len++;
-      } else if  (state.keywordToken != EOL && state.token != EOP) {
-        _handleError(_SYNTAXERROR);
-      }
-    } while (lastDelimiter == ";" || lastDelimiter == ",");
+        lastDelimiter = state.token;
 
-    state.continueLoop = false;
+        if (lastDelimiter == ",") {
+          spaces = 8 - (len % 8);
+          len += spaces;
+          while (spaces != 0) {
+            state.STDOUT += " ";
+            spaces--;
+          }
+        } else if (state.token == ";") {
+          state.STDOUT += " ";
+          len++;
+        } else if (state.keywordToken != EOL && state.token != EOP) {
+          _handleError(_SYNTAXERROR);
+        }
+      } while (lastDelimiter == ";" || lastDelimiter == ",");
 
-    if  (state.keywordToken == EOL || state.token == EOP) {
+      state.continueLoop = false;
+    //}
+
+    if (state.keywordToken == EOL || state.token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
     } else {
       _handleError(_SYNTAXERROR);
-      state.scriptIndex = scriptIndex_save;
+      ///state.scriptIndex = scriptIndex_save;
     }
 
     if (!state.continueLoop) {
       _handleError(_PRINTERROR); // Ablauf unterbrechen und zum widget zurück gehen (Error extr dafür erstellt)
       state.scriptIndex = scriptIndex_save; // continue entry point
+      state.continueLoop = true; // normaler Ablauf
     } else {
-      state.continueLoop = false; // normaler Ablauf
+      state.continueLoop = true; // normaler Ablauf
     }
-
   }
 
   void executeCommandGOTO() {
@@ -632,7 +635,7 @@ class _GCWizardSCriptInterpreter {
 
     getToken();
 
-    location = state.labelTable.get (state.token);
+    location = state.labelTable.get(state.token);
 
     if (location == null) {
       _handleError(_LABELNOTDEFINED);
@@ -650,7 +653,7 @@ class _GCWizardSCriptInterpreter {
     if (result != 0.0) {
       state.ifStack.push(true);
       getToken();
-      if  (state.keywordToken != THEN) {
+      if (state.keywordToken != THEN) {
         _handleError(_THENEXPECTED);
         return;
       } // else, target statement will be executed
@@ -676,7 +679,7 @@ class _GCWizardSCriptInterpreter {
       if (result != 0.0) {
         state.ifStack.push(true);
         getToken();
-        if  (state.keywordToken != THEN) {
+        if (state.keywordToken != THEN) {
           _handleError(_THENEXPECTED);
           return;
         } // else, target statement will be executed
@@ -867,7 +870,7 @@ class _GCWizardSCriptInterpreter {
     stckvar.loopVariable = vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
 
     getToken();
-    if  (state.token[0] != '=') {
+    if (state.token[0] != '=') {
       _handleError(_EQUALEXPECTED);
       return;
     }
@@ -880,7 +883,7 @@ class _GCWizardSCriptInterpreter {
     }
 
     getToken();
-    if  (state.keywordToken != TO) _handleError(_TOEXPECTED);
+    if (state.keywordToken != TO) _handleError(_TOEXPECTED);
 
     value = evaluateExpression();
     if (_isNumber(value)) {
@@ -890,7 +893,7 @@ class _GCWizardSCriptInterpreter {
     }
 
     getToken();
-    if  (state.keywordToken != STEP) {
+    if (state.keywordToken != STEP) {
       putBack();
     } else {
       stepValue = evaluateExpression();
@@ -905,7 +908,7 @@ class _GCWizardSCriptInterpreter {
       stckvar.loopStart = state.scriptIndex;
       state.forStack.push(stckvar);
     } else {
-      while  (state.keywordToken != NEXT) {
+      while (state.keywordToken != NEXT) {
         getToken();
       }
     }
@@ -1095,16 +1098,16 @@ class _GCWizardSCriptInterpreter {
     int variable;
     Object? input;
     int scriptIndex_save = state.scriptIndex - "input".length;
-    state.BreakType = GCWizardScriptBreakType.INPUT;
+    BreakType = GCWizardScriptBreakType.INPUT;
 
     getToken();
-    if  (state.tokenType == QUOTEDSTR) {
+    if (state.tokenType == QUOTEDSTR) {
       if (!state.continueLoop) {
         state.quotestr = state.token;
         state.STDOUT += state.quotestr + LF;
       }
       getToken();
-      if  (state.token != ",") _handleError(_SYNTAXERROR);
+      if (state.token != ",") _handleError(_SYNTAXERROR);
       getToken();
     } else if (!state.continueLoop) {
       state.quotestr = '? ';
@@ -1134,7 +1137,7 @@ class _GCWizardSCriptInterpreter {
 
     getToken();
 
-    location = state.labelTable.get (state.token);
+    location = state.labelTable.get(state.token);
 
     if (location == null) {
       _handleError(_LABELNOTDEFINED);
@@ -1158,8 +1161,8 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandSCREEN() {
     getToken();
-    if (int.tryParse (state.token) != null) {
-      switch (double.parse (state.token).toInt()) {
+    if (int.tryParse(state.token) != null) {
+      switch (double.parse(state.token).toInt()) {
         case 0:
           state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXT;
           state.graficOutput.graphics = [];
@@ -1169,9 +1172,12 @@ class _GCWizardSCriptInterpreter {
           state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.GRAPHIC;
           state.graficOutput.graphics = [];
           state.graficOutput.graphic = true;
-          state.graficOutput.GCWizardSCriptScreenWidth = SCREEN_MODES[double.parse (state.token).toInt()]![GraphicWidthG] as int;
-          state.graficOutput.GCWizardSCriptScreenHeight = SCREEN_MODES[double.parse (state.token).toInt()]![GraphicHeightG] as int;
-          state.graficOutput.GCWizardSCriptScreenColors = SCREEN_MODES[double.parse (state.token).toInt()]![GraphicColors] as int;
+          state.graficOutput.GCWizardSCriptScreenWidth =
+              SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+          state.graficOutput.GCWizardSCriptScreenHeight =
+              SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+          state.graficOutput.GCWizardSCriptScreenColors =
+              SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
           break;
         default:
           _handleError(_INVALIDSCREEN);
@@ -1230,9 +1236,7 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!.functionName();
       }
       state.scriptIndex = state.scriptIndex + 2;
-    }
-
-    else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
+    } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
       getToken();
       partialResult1 = evaluateExpressionParantheses();
       if (_FUNCTIONS[command]!.functionReturn) {
@@ -1240,17 +1244,15 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1);
       }
-    }
-
-    else if (_FUNCTIONS[command]!.functionParamCount == 2) {
+    } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
       getToken();
-      if  (state.token == "(") {
+      if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken() ;
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
+        getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if  (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
@@ -1260,20 +1262,18 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
-    }
-
-    else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
+    } else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
       getToken();
-      if  (state.token == "(") {
+      if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if  (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
@@ -1283,23 +1283,21 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
-    }
-
-    else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
+    } else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
       getToken();
-      if  (state.token == "(") {
+      if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult4 = evaluateExpressionAddSubOperators();
-        if  (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
@@ -1309,26 +1307,24 @@ class _GCWizardSCriptInterpreter {
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
-    }
-
-    else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
+    } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
       getToken();
-      if  (state.token == "(") {
+      if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult2 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult3 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult4 = evaluateExpressionAddSubOperators();
-        if  (state.token != ",") _handleError(_MISSINGPARAMETER);
+        if (state.token != ",") _handleError(_MISSINGPARAMETER);
         getToken();
         partialResult5 = evaluateExpressionAddSubOperators();
-        if  (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
         getToken();
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
@@ -1340,9 +1336,7 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!
             .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
-    }
-
-    else if (_FUNCTIONS[state.token]!.functionParamCount == 6) {
+    } else if (_FUNCTIONS[state.token]!.functionParamCount == 6) {
       getToken();
       if (state.token == "(") {
         getToken();
@@ -1382,7 +1376,7 @@ class _GCWizardSCriptInterpreter {
     Object? result;
 
     getToken();
-    if  (state.token == EOP) _handleError(_NOEXPRESSION);
+    if (state.token == EOP) _handleError(_NOEXPRESSION);
 
     result = evaluateExpressionRelationalOperation();
 
@@ -1397,7 +1391,7 @@ class _GCWizardSCriptInterpreter {
 
     result = evaluateExpressionAddSubOperators();
 
-    if  (state.token == EOP) return result;
+    if (state.token == EOP) return result;
 
     op = state.token[0];
 
@@ -1512,12 +1506,14 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (_isNotNumber(result) || _isNotNumber(partialResult)) { // Todo ??
+      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
+        // Todo ??
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '-':
-            if (!_isNumber(result)) { //Todo only on minus (no plus)
+            if (!_isNumber(result)) {
+              //Todo only on minus (no plus)
               _handleError(_INVALIDSTRINGOPERATION);
             } else {
               result = (result as num) - (partialResult as num);
@@ -1579,7 +1575,7 @@ class _GCWizardSCriptInterpreter {
     //result = evaluateExpressionUnaryFunctionOperator();
     result = evaluateExpressionBitwiseOperators();
 
-    if  (state.token == "^") {
+    if (state.token == "^") {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
       if (_isNotNumber(result) || _isNotNumber(partialResult)) {
@@ -1640,8 +1636,8 @@ class _GCWizardSCriptInterpreter {
       op = state.token;
       getToken();
     }
-    if  (state.tokenType == FUNCTION) {
-      result = executeFunction (state.token, state.tokenType);
+    if (state.tokenType == FUNCTION) {
+      result = executeFunction(state.token, state.tokenType);
     } else {
       result = evaluateExpressionParantheses();
     }
@@ -1662,10 +1658,10 @@ class _GCWizardSCriptInterpreter {
 
   Object? evaluateExpressionParantheses() {
     Object? result;
-    if  (state.token == "(") {
+    if (state.token == "(") {
       getToken();
       result = evaluateExpressionAddSubOperators();
-      if  (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+      if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
       getToken();
     } else {
       result = getValueOfAtomExpression();
@@ -1675,22 +1671,22 @@ class _GCWizardSCriptInterpreter {
 
   Object? getValueOfAtomExpression() {
     Object? result;
-    switch  (state.tokenType) {
+    switch (state.tokenType) {
       case QUOTEDSTR:
         result = state.token;
         getToken();
         break;
       case NUMBER:
         try {
-          result = int.tryParse (state.token);
-          result ??= double.parse (state.token);
+          result = int.tryParse(state.token);
+          result ??= double.parse(state.token);
         } catch (NumberFormatException) {
           _handleError(_SYNTAXERROR);
         }
         getToken();
         break;
       case VARIABLE:
-        result = getValueOfVariable (state.token);
+        result = getValueOfVariable(state.token);
         getToken();
         break;
       case FUNCTION:
@@ -1713,65 +1709,65 @@ class _GCWizardSCriptInterpreter {
   }
 
   void putBack() {
-    if  (state.token == EOP) return;
+    if (state.token == EOP) return;
     for (int i = 0; i < state.token.length; i++) {
       state.scriptIndex--;
     }
   }
 
   bool isTokenAFunction() {
-    if (_Functions_2.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 3 < state.script.length) ? state.scriptIndex + 3 : state.scriptIndex))) {
+    if (_Functions_2.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 3 < state.script.length) ? state.scriptIndex + 3 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 2);
       state.scriptIndex += 2;
       return true;
-    } else if (_Functions_3.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 4 < state.script.length) ? state.scriptIndex + 4 : state.scriptIndex))) {
+    } else if (_Functions_3.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 4 < state.script.length) ? state.scriptIndex + 4 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 3);
       state.scriptIndex += 3;
       return true;
-    } else if (_Functions_4.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 5 < state.script.length) ? state.scriptIndex + 5 : state.scriptIndex))) {
+    } else if (_Functions_4.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 5 < state.script.length) ? state.scriptIndex + 5 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 4);
       state.scriptIndex += 4;
       return true;
-    } else if (_Functions_5.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 6 < state.script.length) ? state.scriptIndex + 6 : state.scriptIndex))) {
+    } else if (_Functions_5.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 6 < state.script.length) ? state.scriptIndex + 6 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 5);
       state.scriptIndex += 5;
       return true;
-    } else if (_Functions_6.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 7 < state.script.length) ? state.scriptIndex + 7 : state.scriptIndex))) {
+    } else if (_Functions_6.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 7 < state.script.length) ? state.scriptIndex + 7 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 6);
       state.scriptIndex += 6;
       return true;
-    } else if (_Functions_7.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 8 < state.script.length) ? state.scriptIndex + 8 : state.scriptIndex))) {
+    } else if (_Functions_7.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 8 < state.script.length) ? state.scriptIndex + 8 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 7);
       state.scriptIndex += 7;
       return true;
-    } else if (_Functions_8.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 9 < state.script.length) ? state.scriptIndex + 9 : state.scriptIndex))) {
+    } else if (_Functions_8.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 9 < state.script.length) ? state.scriptIndex + 9 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 8);
       state.scriptIndex += 8;
       return true;
-    } else if (_Functions_9.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 10 < state.script.length) ? state.scriptIndex + 10 : state.scriptIndex))) {
+    } else if (_Functions_9.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 10 < state.script.length) ? state.scriptIndex + 10 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 9);
       state.scriptIndex += 9;
       return true;
-    } else if (_Functions_10.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex))) {
+    } else if (_Functions_10.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 10);
       state.scriptIndex += 10;
       return true;
-    } else if (_Functions_15.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 16 < state.script.length) ? state.scriptIndex + 16 : state.scriptIndex))) {
+    } else if (_Functions_15.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 16 < state.script.length) ? state.scriptIndex + 16 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 15);
       state.scriptIndex += 15;
       return true;
-    } else if (_Functions_17.contains(
-        state.script.substring(state.scriptIndex, (state.scriptIndex + 18 < state.script.length) ? state.scriptIndex + 18 : state.scriptIndex))) {
+    } else if (_Functions_17.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 18 < state.script.length) ? state.scriptIndex + 18 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 17);
       state.scriptIndex += 17;
       return true;
@@ -1885,8 +1881,8 @@ class _GCWizardSCriptInterpreter {
         state.scriptIndex++;
         if (state.scriptIndex >= state.script.length) break;
       }
-      state.keywordToken = lookUpToken (state.token);
-      if  (state.keywordToken == UNKNOWNCOMMAND) {
+      state.keywordToken = lookUpToken(state.token);
+      if (state.keywordToken == UNKNOWNCOMMAND) {
         state.tokenType = VARIABLE;
       } else {
         state.tokenType = COMMAND;
