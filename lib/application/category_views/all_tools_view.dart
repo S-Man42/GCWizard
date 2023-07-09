@@ -217,6 +217,8 @@ import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_nucleicacidsequence/widget/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
+import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
+import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
@@ -571,6 +573,7 @@ void _initStaticToolList() {
       className(const Gade()),
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
+      className(const GCD()),
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
@@ -602,6 +605,7 @@ void _initStaticToolList() {
       className(const KarolRobot()),
       className(const Kenny()),
       className(const KeyboardSelection()),
+      className(const LCM()),
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),

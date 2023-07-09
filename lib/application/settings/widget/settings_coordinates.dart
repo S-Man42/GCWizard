@@ -60,7 +60,7 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
               Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
               
               if (_currentDefaultFormat.subtype == null) {
-                initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+                restoreSingleDefaultPreference(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
               } else {
                 var subtypePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.subtype!);
                 Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtypePersistenceKey);

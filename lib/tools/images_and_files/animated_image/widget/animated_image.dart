@@ -101,15 +101,17 @@ class _AnimatedImageState extends State<AnimatedImage> {
     var durations = <List<Object>>[];
     if (_outData!.durations.length > 1) {
       var counter = 0;
+      var total = 0;
+
       durations.addAll([
         [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
       ]);
       for (var value in _outData!.durations) {
         counter++;
-        durations.addAll([
-          [counter, value]
-        ]);
+        total += value;
+        durations.addAll([[counter, value]]);
       }
+      durations.addAll([[i18n(context, 'common_total'), total]]);
     }
 
     return Column(children: <Widget>[

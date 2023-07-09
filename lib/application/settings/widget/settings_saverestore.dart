@@ -1,16 +1,14 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/settings/logic/preferences_utils.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -40,16 +38,15 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
           text: i18n(context, 'settings_saverestore_save_button'),
           onPressed: () {
             var keys = Set<String>.from(Prefs.getKeys());
-            var prefsMap = <String, dynamic>{};
+            var prefsMap = <String, Object>{};
             for (var key in keys) {
-              prefsMap.putIfAbsent(key, () => Prefs.get(key));
+              var value = Prefs.get(key);
+              if (value == null) continue;
+
+              prefsMap.putIfAbsent(key, () => value);
             }
             var json = jsonEncode(prefsMap);
-
-            //Uint8 is not enough here for special some special characters or Korean characters!!!
-            var outputData = Uint8List.fromList(json.codeUnits);
-
-            _exportSettings(context, outputData);
+            _exportSettings(context, json.toString());
           },
         ),
         GCWTextDivider(
@@ -62,48 +59,77 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
               context,
               i18n(context, 'settings_saverestore_restore_warning_title'),
               i18n(context, 'settings_saverestore_restore_warning_text'), () {
+                openFileExplorer(allowedFileTypes: [FileType.GCW]).then((GCWFile? file) {
+                  if (file == null) {
+                    showToast(i18n(context, 'common_loadfile_exception_nofile'));
+                    return;
+                  }
 
-                showOpenFileDialog(context, [FileType.GCW], (GCWFile file) {
                   try {
                     var jsonString = String.fromCharCodes(file.bytes);
                     var decoded = jsonDecode(jsonString);
-                    Map<String, Object?> prefsMap = asJsonMap(decoded);
+                    Map<String, Object?>? prefsMap = asJsonMapOrNull(decoded);
+                    if (prefsMap == null || prefsMap.isEmpty) {
+                      throw Exception();
+                    }
 
-                    initDefaultSettings(PreferencesInitMode.REINIT_ALL);
+                    restoreAllDefaultPreferences();
                     for (var entry in prefsMap.entries) {
-                      if (entry.value == null) continue;
-                      
+                      if (!isValidPreference(entry.key)) continue;
+                      if (!isCorrectType(entry.key, entry.value)) continue;
+
                       setUntypedPref(entry.key, entry.value!);
                     }
 
                     setState(() {
-                      setThemeColorsByName(Prefs.getString(PREFERENCE_THEME_COLOR));
-                      AppBuilder.of(context).rebuild();
+                      afterRestorePreferences(context);
                     });
 
                     showToast(i18n(context, 'settings_saverestore_restore_success'));
                   } catch(e) {
                     showToast(i18n(context, 'settings_saverestore_restore_failed'));
                   }
-                  return false;
                 });
               },
             );
           },
         ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_preferences_resetall_button_title'),
+        ),
+        GCWButton(
+          text: i18n(context, 'settings_saverestore_reset_button'),
+          onPressed: () {
+            showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_resetall_title'),
+                i18n(context, 'settings_preferences_warning_resetall_text'), () {
+                  setState(() {
+                    restoreAllDefaultPreferencesAndRebuild(context);
+                  });
+                });
+          },
+        ),
+        GCWDivider(),
         Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: GCWText(
-                text: i18n(context, 'settings_saverestore_restore_restart'),
-                style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2)
+            child: Row(
+              children: [
+                Icon(Icons.warning_amber, color: themeColors().secondary()),
+                Container(padding: const EdgeInsets.symmetric(horizontal: DOUBLE_DEFAULT_MARGIN)),
+                Flexible(
+                  child: GCWText(
+                      text: i18n(context, 'settings_saverestore_restore_restart'),
+                      style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2)
+                  )
+                ),
+              ],
             )
         ),
       ],
     );
   }
 
-  Future<void> _exportSettings(BuildContext context, Uint8List data) async {
-    await saveByteDataToFile(context, data, buildFileNameWithDate('settings_', FileType.GCW)).then((value) {
+  Future<void> _exportSettings(BuildContext context, String data) async {
+    await saveStringToFile(context, data, buildFileNameWithDate('settings_', FileType.GCW)).then((value) {
       if (value) showToast(i18n(context, 'settings_saverestore_save_success'));
     });
   }

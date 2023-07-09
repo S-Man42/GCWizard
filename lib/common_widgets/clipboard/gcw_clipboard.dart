@@ -47,7 +47,7 @@ class ClipboardItem {
   }
 }
 
-void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalClipboard = true}) {
+void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalClipboard = true}) async {
   if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
 
   var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
