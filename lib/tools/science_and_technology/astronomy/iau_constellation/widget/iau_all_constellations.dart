@@ -120,31 +120,52 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
 
           return MapEntry(index, [
             (index + 1).toString() + '.',
-            constellation.ConstellationName,
             _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? '' : relevantValue,
+            constellation.ConstellationName,
           ]);
         })
         .values
         .toList();
   }
 
+  List<Object> _buildHeader(){
+     switch (_currentSortCategory) {
+      case IAU_CONSTELLATION_SORT.CONSTELLATION:
+        return ['', '', i18n(context, 'iau_constellation_iauname')];
+      case IAU_CONSTELLATION_SORT.NAME:
+        return ['', i18n(context, 'iau_constellation_name'), i18n(context, 'iau_constellation_iauname')];
+      case IAU_CONSTELLATION_SORT.STAR:
+        return ['', i18n(context, 'iau_constellation_star'), i18n(context, 'iau_constellation_iauname')];
+      case IAU_CONSTELLATION_SORT.AREA:
+        return ['', i18n(context, 'iau_constellation_area'), i18n(context, 'iau_constellation_iauname')];
+      case IAU_CONSTELLATION_SORT.VISIBILIY:
+        return ['', i18n(context, 'iau_constellation_visibility'), i18n(context, 'iau_constellation_iauname')];
+      case IAU_CONSTELLATION_SORT.MAGNITUDO:
+        return ['', i18n(context, 'iau_constellation_magnitudo'), i18n(context, 'iau_constellation_iauname')];
+      default:
+        return ['', '', ''];
+    }
+  }
+
   Widget _buildOutput() {
-    List<List<Object>>? outputData;
+    List<List<Object>>? outputData = [];
     var flexValues = <int>[];
     List<void Function()>? tappables;
 
-    outputData = _buildValueOutputs();
+    outputData.add(_buildHeader());
+    outputData.addAll(_buildValueOutputs());
     flexValues = [
       1,
-      2,
+      4,
       3,
     ];
     tappables = outputData.map((data) {
-      return () => _showConstellation(data[1] as String);
+      return () => _showConstellation(data[2] as String);
     }).toList();
 
     List<Widget> rows = [
       GCWColumnedMultilineOutput(
+          hasHeader: true,
           firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
           data: outputData,
           flexValues: flexValues,
