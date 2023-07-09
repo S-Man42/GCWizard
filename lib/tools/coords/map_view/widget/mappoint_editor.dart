@@ -70,7 +70,6 @@ class _MapPointEditorState extends State<MapPointEditor> {
         title: i18n(context, 'coords_openmap_pointeditor_point_coordinate'),
         coordinates: widget.mapPoint.point,
         coordsFormat: widget.mapPoint.coordinateFormat ?? defaultCoordinateFormat,
-        // restoreCoordinates: true, // TODO... somehow strange: Idea was: Changing the format but keeping the coords. What about the isDefault Setting?
         onChanged: (BaseCoordinate ret) {
           setState(() {
             if (ret.toLatLng() == null) {

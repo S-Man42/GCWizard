@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
@@ -13,9 +15,38 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }
 
-void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference = ''}) {
-  if (mode == PreferencesInitMode.REINIT_SINGLE) {
-    if (reinitSinglePreference.isEmpty) return;
+void restoreAllDefaultPreferencesAndRebuild(BuildContext context) {
+  _initDefaultSettings(PreferencesInitMode.REINIT_ALL, context: context);
+}
+
+void restoreAllDefaultPreferences() {
+  _initDefaultSettings(PreferencesInitMode.REINIT_ALL);
+}
+
+void restoreSingleDefaultPreferenceAndRebuild(String preferenceKey, BuildContext context) {
+  _initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: preferenceKey, context: context);
+}
+
+void restoreSingleDefaultPreference(String preferenceKey) {
+  _initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: preferenceKey);
+}
+
+void initializePreferences() {
+  _initDefaultSettings(PreferencesInitMode.STARTUP);
+}
+
+void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference = '', BuildContext? context}) {
+  switch (mode) {
+    case PreferencesInitMode.REINIT_ALL:
+      Prefs.clear();
+      break;
+    case PreferencesInitMode.REINIT_SINGLE:
+      if (reinitSinglePreference.isEmpty) {
+        return;
+      } else {
+        break;
+      }
+    default: break;
   }
 
   var _reinitAll = mode == PreferencesInitMode.REINIT_ALL;
@@ -270,4 +301,21 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
       Prefs.get(PREFERENCE_WHERIGOANALYZER_EXPERTMODE) == null) {
     Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, false);
   }
+
+  // AFTER /////////////////////////////////////////////////////////////
+
+  switch (mode) {
+    case PreferencesInitMode.REINIT_ALL:
+    case PreferencesInitMode.REINIT_SINGLE:
+      if (context != null) {
+        afterRestorePreferences(context);
+      }
+      break;
+    default: break;
+  }
+}
+
+void afterRestorePreferences(BuildContext context) {
+  setThemeColorsByName(Prefs.getString(PREFERENCE_THEME_COLOR));
+  AppBuilder.of(context).rebuild();
 }

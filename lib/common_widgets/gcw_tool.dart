@@ -92,7 +92,7 @@ class GCWToolActionButtonsEntry {
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String id;
-  final String? id_extension;
+  final String? id_prefix;
   final List<ToolCategory> categories;
   final bool autoScroll;
   final bool suppressToolMargin;
@@ -118,7 +118,7 @@ class GCWTool extends StatefulWidget {
         this.toolName,
         this.defaultLanguageToolName,
         required this.id,
-        this.id_extension,
+        this.id_prefix,
         this.categories = const [],
         this.autoScroll = true,
         this.suppressToolMargin = false,
@@ -280,7 +280,7 @@ class _GCWToolState extends State<GCWTool> {
     var tool = widget.tool;
     if (!widget.suppressToolMargin) {
       tool = Padding(
-        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
+        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 50),
         child: tool,
       );
     }
