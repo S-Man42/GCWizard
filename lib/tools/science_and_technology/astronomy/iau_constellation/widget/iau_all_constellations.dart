@@ -120,8 +120,8 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
 
           return MapEntry(index, [
             (index + 1).toString() + '.',
-            _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? '' : relevantValue,
-            constellation.ConstellationName,
+            _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? constellation.ConstellationName : relevantValue,
+            _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? '' : constellation.ConstellationName,
           ]);
         })
         .values
@@ -131,7 +131,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
   List<Object> _buildHeader(){
      switch (_currentSortCategory) {
       case IAU_CONSTELLATION_SORT.CONSTELLATION:
-        return ['', '', i18n(context, 'iau_constellation_iauname')];
+        return ['', i18n(context, 'iau_constellation_iauname'), ''];
       case IAU_CONSTELLATION_SORT.NAME:
         return ['', i18n(context, 'iau_constellation_name'), i18n(context, 'iau_constellation_iauname')];
       case IAU_CONSTELLATION_SORT.STAR:
@@ -160,7 +160,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
       3,
     ];
     tappables = outputData.map((data) {
-      return () => _showConstellation(data[2] as String);
+      return () => _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? _showConstellation(data[1] as String) : _showConstellation(data[2] as String);
     }).toList();
 
     List<Widget> rows = [

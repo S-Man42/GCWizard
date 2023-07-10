@@ -68,6 +68,7 @@ class IAUSingleConstellationState extends State<IAUSingleConstellation> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.ConstellationName);
     int constellationIndex =
         allConstellations.indexWhere((constellation) => constellation.ConstellationName == widget.ConstellationName);
 
