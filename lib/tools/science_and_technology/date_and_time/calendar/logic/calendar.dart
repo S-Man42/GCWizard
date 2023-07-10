@@ -8,22 +8,30 @@
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-double UnixTimestampToJulianDate(int timestamp){
+const _DATETIME_MAX_YEAR = 275760;
+const _DATETIME_MAX_MONTH = 9;
+const _DATETIME_MAX_DAY = 13;
+
+double UnixTimestampToJulianDate(int timestamp) {
   DateTime date = DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: timestamp));
 
   return gregorianCalendarToJulianDate(date);
 }
 
-String JulianDateToUnixTimestamp(double jd){
+String JulianDateToUnixTimestamp(double jd) {
   return ((jd - JD_UNIX_START) * 86400).toStringAsFixed(0);
 }
 
-double ExcelTimestampToJulianDate(int timestamp){
-  DateTime date = DateTime(1900, 1, 1,).add(Duration(days: timestamp));
+double ExcelTimestampToJulianDate(int timestamp) {
+  DateTime date = DateTime(
+    1900,
+    1,
+    1,
+  ).add(Duration(days: timestamp));
   return gregorianCalendarToJulianDate(date);
 }
 
-String JulianDateToExcelTimestamp(double jd){
+String JulianDateToExcelTimestamp(double jd) {
   return (jd - JD_EXCEL_START + 1).toStringAsFixed(0);
 }
 
@@ -55,7 +63,7 @@ int JulianDay(DateTime date) {
   return 1 + (gregorianCalendarToJulianDate(date) - gregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
 }
 
-DateTime JulianDateToIslamicCalendar(double jd) {
+DateTime? JulianDateToIslamicCalendar(double jd) {
   int l = (jd + 0.5).floor() - 1948440 + 10632;
   int n = intPart((l - 1) / 10631);
   l = l - 10631 * n + 354;
@@ -66,7 +74,13 @@ DateTime JulianDateToIslamicCalendar(double jd) {
   int d = l - intPart((709 * m) / 24);
   int y = 30 * n + j - 30;
 
-  return DateTime(y, m , d);
+  if (y > _DATETIME_MAX_YEAR ||
+      (y == _DATETIME_MAX_YEAR && m > _DATETIME_MAX_MONTH) ||
+      (y == _DATETIME_MAX_YEAR && m == _DATETIME_MAX_MONTH && d > _DATETIME_MAX_DAY)) {
+    return null;
+  } else {
+    return DateTime(y, m, d);
+  }
 }
 
 double IslamicCalendarToJulianDate(DateTime date) {
@@ -246,7 +260,7 @@ int JewishYearLength(double jd) {
   return jyearlength;
 }
 
-DateTime JulianDateToHebrewCalendar(double jd) {
+DateTime? JulianDateToHebrewCalendar(double jd) {
   int jday = 1;
   int jmonth = 1;
   DateTime GregorianDate = julianDateToGregorianCalendar(jd);
@@ -293,7 +307,13 @@ DateTime JulianDateToHebrewCalendar(double jd) {
     jday = dateArr[0];
   }
 
-  return DateTime(jy, jmonth, jday);
+  if (jy > _DATETIME_MAX_YEAR ||
+      (jy == _DATETIME_MAX_YEAR && jmonth > _DATETIME_MAX_MONTH) ||
+      (jy == _DATETIME_MAX_YEAR && jmonth == _DATETIME_MAX_MONTH && jday > _DATETIME_MAX_DAY)) {
+    return null;
+  } else {
+    return DateTime(jy, jmonth, jday);
+  }
 }
 
 double HebrewCalendarToJulianDate(DateTime date) {
@@ -350,7 +370,7 @@ double CopticCalendarToJulianDate(DateTime date) {
   return (c + d + cop_d_bar - 124).toDouble();
 }
 
-class PotrzebieCalendarOutput{
+class PotrzebieCalendarOutput {
   DateTime date;
   String suffix;
 

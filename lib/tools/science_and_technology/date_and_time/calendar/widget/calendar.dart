@@ -67,11 +67,21 @@ class _CalendarState extends State<Calendar> {
                   _currentJulianDate = value;
                 });
               }),
-        if (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP ||
-            _currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
+        if (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP)
           GCWIntegerSpinner(
               value: _currentTimeStamp,
               min: 0,
+              max: 8640000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+              onChanged: (value) {
+                setState(() {
+                  _currentTimeStamp = value;
+                });
+              }),
+        if (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
+          GCWIntegerSpinner(
+              value: _currentTimeStamp,
+              min: 0,
+              max: 100000000, //max days according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
               onChanged: (value) {
                 setState(() {
                   _currentTimeStamp = value;
@@ -161,7 +171,7 @@ class _CalendarState extends State<Calendar> {
         _DateOutputToString(context, julianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
 
     output['dates_calendar_system_islamiccalendar'] =
-        _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
+        _DateOutputToString(context, (JulianDateToIslamicCalendar(jd) == null ? null : JulianDateToIslamicCalendar(jd)), CalendarSystem.ISLAMICCALENDAR);
 
     output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
 
@@ -215,7 +225,8 @@ class _CalendarState extends State<Calendar> {
     return dateStr.replaceFirst(p.date.year.toString(), '${p.date.year} ${p.suffix}');
   }
 
-  String _HebrewDateToString(DateTime hebrewDate, double jd) {
+  String _HebrewDateToString(DateTime? hebrewDate, double jd) {
+    if (hebrewDate == null ) return i18n(context, 'dates_calendar_error_overflow');
     if (hebrewDate.year < 0) return i18n(context, 'dates_calendar_error');
 
     var hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month];
@@ -230,7 +241,9 @@ class _CalendarState extends State<Calendar> {
     return replaceMonthNameWithCustomString(hebrewDate, 'yMMMMd', locale, hebrewMonth);
   }
 
-  String? _DateOutputToString(BuildContext context, DateTime date, CalendarSystem calendar) {
+  String? _DateOutputToString(BuildContext context, DateTime? date, CalendarSystem calendar) {
+    if (date == null) return null;
+
     var locale = Localizations.localeOf(context).toString();
 
     switch (calendar) {
