@@ -7,7 +7,7 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language': SPELLING.NATO, 'expectedOutput' : ''},
 
-      {'input' : 'gc wizard ist toll', 'language': SPELLING.NATO, 'expectedOutput' : 'GOLF CHARLIE   WHISKEY INDIA ZULU ALPHA ROMEO DELTA   INDIA SIERRA TANGO   TANGO OSCAR LIMA LIMA'},
+      {'input' : 'gc wizard ist toll', 'language': SPELLING.NATO, 'expectedOutput' : 'GOLF CHARLIE WHISKEY INDIA ZULU ALPHA ROMEO DELTA INDIA SIERRA TANGO TANGO OSCAR LIMA LIMA'},
 
     ];
 
@@ -23,7 +23,7 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'language': SPELLING.NATO, 'expectedOutput' : ''},
 
-      {'expectedOutput' : 'GC  WIZARD  IST  TOLL', 'language': SPELLING.NATO, 'input' : 'GOLF CHARLIE   WHISKEY INDIA ZULU ALPHA ROMEO DELTA   INDIA SIERRA TANGO   TANGO OSCAR LIMA LIMA'},
+      {'expectedOutput' : 'GCWIZARDISTTOLL', 'language': SPELLING.NATO, 'input' : 'GOLF CHARLIE  WHISKEY INDIA ZULU ALPHA ROMEO DELTA  INDIA SIERRA TANGO TANGO OSCAR LIMA LIMA'},
 
     ];
 

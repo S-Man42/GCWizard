@@ -39,6 +39,7 @@ enum FileType {
   EXE,
   BMP,
   TXT,
+  JSON,
   GPX,
   KML,
   KMZ,
@@ -252,6 +253,12 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     magic_bytes: <List<int>>[],
     mime_types: ['text/plain'],
     file_class: FileClass.TEXT
+  ),
+  FileType.JSON: FileTypeInfo(
+      extensions: ['json'],
+      magic_bytes: <List<int>>[],
+      mime_types: ['text/plain'],
+      file_class: FileClass.TEXT
   ),
   FileType.PDF: FileTypeInfo(
     extensions: ['pdf'],
