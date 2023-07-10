@@ -75,32 +75,44 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
       _currentInputController.text = _currentValue?.toString() ?? '';
       _currentInputController.selection = TextSelection.collapsed(offset: _currentInputController.text.length);
 
+      if (_selectedBoxRect!.height < 35) {
+        var offset = (35 -_selectedBoxRect!.height) / 2;
+        _selectedBoxRect = Rect.fromLTWH(
+            _selectedBoxRect!.left - offset,
+            _selectedBoxRect!.top - offset,
+            _selectedBoxRect!.width + 2 * offset,
+            _selectedBoxRect!.height + 2 * offset);
+      }
+
       return Positioned(
           left: _selectedBoxRect!.left,
           top: _selectedBoxRect!.top - hightOffset,
           width: _selectedBoxRect!.width,
           height: _selectedBoxRect!.height + 2 * hightOffset,
-          child: GCWTextField(
-              controller: _currentInputController,
-              inputFormatters: [_integerInputFormatter],
-              keyboardType: const TextInputType.numberWithOptions(),
-              autofocus: true,
-              focusNode: _currentValueFocusNode,
-              style: TextStyle(
-                fontSize: _selectedBoxRect!.height * 0.6,
-                color: colors.secondary(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  _currentValue = int.tryParse(value);
-                  var type = NumberPyramidFillType.USER_FILLED;
-                  if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
-                  if (_selectedBox != null &&
-                      widget.board.setValue(_selectedBox!.x, _selectedBox!.y, _currentValue, type)) {
-                    widget.board.removeCalculated();
+          child: Container(
+              color: colors.gridBackground(),
+              child: GCWTextField(
+                  controller: _currentInputController,
+                  inputFormatters: [_integerInputFormatter],
+                  keyboardType: const TextInputType.numberWithOptions(),
+                  autofocus: true,
+                  focusNode: _currentValueFocusNode,
+                  style: TextStyle(
+                    fontSize: _selectedBoxRect!.height * 0.5,
+                    color: colors.secondary(),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentValue = int.tryParse(value);
+                      var type = NumberPyramidFillType.USER_FILLED;
+                      if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
+                      if (_selectedBox != null &&
+                          widget.board.setValue(_selectedBox!.x, _selectedBox!.y, _currentValue, type)) {
+                        widget.board.removeCalculated();
+                      }
+                    });
                   }
-                });
-              }
+              )
           )
       );
     }
@@ -170,7 +182,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
     var fontsize = heightInner * 0.8;
     Rect rect = Rect.zero;
-
 
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground,
