@@ -8,9 +8,29 @@
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-const _DATETIME_MAX_YEAR = 275760;
-const _DATETIME_MAX_MONTH = 9;
-const _DATETIME_MAX_DAY = 13;
+
+bool _validDateTime(int year, int month, int day){
+  // https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+  const _DATETIME_MAX_YEAR = 275760;
+  const _DATETIME_MAX_MONTH = 9;
+  const _DATETIME_MAX_DAY = 13;
+  const _DATETIME_MIN_YEAR = -271821;
+  const _DATETIME_MIN_MONTH = 4;
+  const _DATETIME_MIN_DAY = 20;
+
+  if (year > _DATETIME_MAX_YEAR ||
+      (year == _DATETIME_MAX_YEAR && month > _DATETIME_MAX_MONTH) ||
+      (year == _DATETIME_MAX_YEAR && month == _DATETIME_MAX_MONTH && day > _DATETIME_MAX_DAY)) {
+    return false;}
+
+  if (year < _DATETIME_MIN_YEAR ||
+      (year == _DATETIME_MIN_YEAR && month > _DATETIME_MIN_MONTH) ||
+      (year == _DATETIME_MIN_YEAR && month == _DATETIME_MIN_MONTH && day > _DATETIME_MIN_DAY)) {
+    return false;}
+
+  return true;
+  }
+
 
 double UnixTimestampToJulianDate(int timestamp) {
   DateTime date = DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: timestamp));
@@ -74,12 +94,10 @@ DateTime? JulianDateToIslamicCalendar(double jd) {
   int d = l - intPart((709 * m) / 24);
   int y = 30 * n + j - 30;
 
-  if (y > _DATETIME_MAX_YEAR ||
-      (y == _DATETIME_MAX_YEAR && m > _DATETIME_MAX_MONTH) ||
-      (y == _DATETIME_MAX_YEAR && m == _DATETIME_MAX_MONTH && d > _DATETIME_MAX_DAY)) {
-    return null;
-  } else {
+  if (_validDateTime(y, m, d)) {
     return DateTime(y, m, d);
+  } else {
+    return null;
   }
 }
 
@@ -90,7 +108,7 @@ double IslamicCalendarToJulianDate(DateTime date) {
   return (intPart((11 * y + 3) / 30) + 354 * y + 30 * m - intPart((m - 1) / 2) + d + 1948440 - 385).toDouble();
 }
 
-DateTime JulianDateToPersianYazdegardCalendar(double jd) {
+DateTime? JulianDateToPersianYazdegardCalendar(double jd) {
   int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
   int epag_change = 2088938;
   int d_diff = intPart(jd + 0.5) - 1952063;
@@ -102,7 +120,12 @@ DateTime JulianDateToPersianYazdegardCalendar(double jd) {
   }
   int m = intPart((y_diff - intPart(y_diff / epalim) * 5) / 30) + 1;
   int d = y_diff - (m - 1) * 30 - intPart(y_diff / (epalim + 5)) * 5 + 1;
-  return DateTime(y, m, d);
+
+  if (_validDateTime(y, m, d)) {
+    return DateTime(y, m, d);
+  } else {
+    return null;
+  }
 }
 
 double PersianYazdegardCalendarToJulianDate(DateTime date) {
@@ -307,12 +330,10 @@ DateTime? JulianDateToHebrewCalendar(double jd) {
     jday = dateArr[0];
   }
 
-  if (jy > _DATETIME_MAX_YEAR ||
-      (jy == _DATETIME_MAX_YEAR && jmonth > _DATETIME_MAX_MONTH) ||
-      (jy == _DATETIME_MAX_YEAR && jmonth == _DATETIME_MAX_MONTH && jday > _DATETIME_MAX_DAY)) {
-    return null;
-  } else {
+  if (_validDateTime(jy, jmonth, jday)) {
     return DateTime(jy, jmonth, jday);
+  } else {
+    return null;
   }
 }
 
@@ -343,7 +364,7 @@ double HebrewCalendarToJulianDate(DateTime date) {
   return (cjd).toDouble();
 }
 
-DateTime JulianDateToCopticCalendar(double jd) {
+DateTime? JulianDateToCopticCalendar(double jd) {
   int cop_j_bar = (jd + 0.5).floor() + 124;
 
   int cop_y_bar = intPart((4 * cop_j_bar + 3) / 1461);
@@ -353,7 +374,13 @@ DateTime JulianDateToCopticCalendar(double jd) {
   int cop_d = cop_d_bar + 1;
   int cop_m = (cop_m_bar + 1 - 1) % 13 + 1;
   int cop_y = cop_y_bar - 4996 + intPart((13 + 1 - 1 - cop_m) / 13);
-  return DateTime(cop_y, cop_m, cop_d);
+
+  if (_validDateTime(cop_y, cop_m, cop_d)) {
+    return DateTime(cop_y, cop_m, cop_d);
+  } else {
+    return null;
+  }
+
 }
 
 double CopticCalendarToJulianDate(DateTime date) {

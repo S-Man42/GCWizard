@@ -111,6 +111,7 @@ class _CalendarState extends State<Calendar> {
   Widget _buildOutput() {
     double jd = 0.0;
     var output = <String, Object?>{};
+
     switch (_currentCalendarSystem) {
       case CalendarSystem.MODIFIEDJULIANDATE:
         jd = ModifedJulianDateToJulianDate(_currentJulianDate);
@@ -171,7 +172,7 @@ class _CalendarState extends State<Calendar> {
         _DateOutputToString(context, julianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
 
     output['dates_calendar_system_islamiccalendar'] =
-        _DateOutputToString(context, (JulianDateToIslamicCalendar(jd) == null ? null : JulianDateToIslamicCalendar(jd)), CalendarSystem.ISLAMICCALENDAR);
+        _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
 
     output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
 
