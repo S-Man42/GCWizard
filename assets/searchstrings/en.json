@@ -127,7 +127,7 @@
   "dates_day_of_the_year": "daynumber year weekday weeknumber dayoftheyear",
   "dates_timecalculator": "times timecalculator clockcalculator minutes hours seconds",
   "dates_weekday": "weekdays",
-  "dates_calendar": "julian date gregorian date calendar",
+  "dates_calendar": "julian date gregorian date calendar timestamp",
   "decabit": "ripple control",
   "divisor": "divisor divider",
   "dna": "desoxyribonucleicacid genetics genes genomes sequence nucleotide codesun dna rna mrna",
