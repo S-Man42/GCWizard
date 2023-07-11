@@ -92,12 +92,6 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   }
 
   void _openInMap({bool freeMap = false}) {
-    if (freeMap) {
-      for (var point in widget.points) {
-        point.isEditable = true;
-      }
-    }
-
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute<GCWTool>(
