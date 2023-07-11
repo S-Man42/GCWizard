@@ -20,7 +20,11 @@ Future<bool> saveStringToFile(BuildContext context, String data, String fileName
 
 Future<bool> _saveDataToFile(BuildContext context, Uint8List data, String fileName, bool byteData) async {
   if (kIsWeb) {
-    var blob = html.Blob([data], byteData ? 'image/png' : 'text/plain', byteData ? null : 'native');
+    var fileType = fileTypeByFilename(fileName);
+    String? mimeType;
+    if (fileType != null) mimeType = mimeTypes(fileType)?.first;
+
+    var blob = html.Blob([data], mimeType);
     html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
     )
