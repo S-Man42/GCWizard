@@ -402,7 +402,7 @@ Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
   var allowedExtensions = fileExtensions(allowedFileTypes);
 
-  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
+  return files.where((element) => allowedExtensions.contains(element.extension.toString().toLowerCase())).toList();
 }
 
 bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {
