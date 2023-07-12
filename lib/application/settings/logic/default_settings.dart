@@ -8,6 +8,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
@@ -323,5 +324,6 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
 
 void afterRestorePreferences(BuildContext context) {
   setThemeColorsByName(Prefs.getString(PREFERENCE_THEME_COLOR));
+  refreshFormulas();
   AppBuilder.of(context).rebuild();
 }

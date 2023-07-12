@@ -8,7 +8,10 @@ import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
   var formulas = Prefs.getStringList(PREFERENCE_FORMULASOLVER_FORMULAS);
-  if (formulas.isEmpty) return;
+  if (formulas.isEmpty) {
+    formulaGroups = [];
+    return;
+  }
 
   formulaGroups = formulas.where((group) => group.isNotEmpty).map((group) {
     return FormulaGroup.fromJson(asJsonMap(jsonDecode(group)));

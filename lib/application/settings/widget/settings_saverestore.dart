@@ -70,7 +70,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                   }
 
                   try {
-                    var jsonString = String.fromCharCodes(file.bytes);
+                    var jsonString = convertBytesToString(file.bytes);
                     var decoded = jsonDecode(jsonString);
                     Map<String, Object?>? prefsMap = asJsonMapOrNull(decoded);
                     if (prefsMap == null || prefsMap.isEmpty) {
