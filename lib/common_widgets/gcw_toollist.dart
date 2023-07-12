@@ -52,7 +52,7 @@ class _GCWToolListState extends State<GCWToolList> {
   Widget _buildRow(BuildContext context, int index) {
     // Vertical space after the list items
     if (index == widget.toolList.length) {
-      return ListTile();
+      return const ListTile();
     }
 
     var tool = widget.toolList[index];

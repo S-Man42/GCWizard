@@ -10,19 +10,35 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:universal_html/html.dart' as html;
 
+enum _SAVE_TYPE {STRING, BYTE_DATA}
+
 Future<bool> saveByteDataToFile(BuildContext context, Uint8List data, String fileName) async {
-  return _saveDataToFile(context, data, fileName, false);
+  return _saveDataToFile(context, data, fileName, _SAVE_TYPE.BYTE_DATA);
 }
 
 Future<bool> saveStringToFile(BuildContext context, String data, String fileName) async {
-  return _saveDataToFile(context, convertStringToBytes(data), fileName, true);
+  return _saveDataToFile(context, convertStringToBytes(data), fileName, _SAVE_TYPE.STRING);
 }
 
-Future<bool> _saveDataToFile(BuildContext context, Uint8List data, String fileName, bool byteData) async {
+Future<bool> _saveDataToFile(BuildContext context, Uint8List data, String fileName, _SAVE_TYPE saveType) async {
   if (kIsWeb) {
     var fileType = fileTypeByFilename(fileName);
+
+    List<String>? _mimeTypes;
+    switch (saveType) {
+      case _SAVE_TYPE.STRING:
+        _mimeTypes = mimeTypes(FileType.TXT);
+        break;
+      case _SAVE_TYPE.BYTE_DATA:
+        if (fileType != null) {
+          _mimeTypes = mimeTypes(fileType);
+        }
+    }
+
     String? mimeType;
-    if (fileType != null) mimeType = mimeTypes(fileType)?.first;
+    if (_mimeTypes != null && _mimeTypes.isNotEmpty) {
+      mimeType = _mimeTypes.first;
+    }
 
     var blob = html.Blob([data], mimeType);
     html.AnchorElement(

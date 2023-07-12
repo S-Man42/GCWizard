@@ -143,7 +143,7 @@ class _HexViewerState extends State<HexViewer> {
       children: [
         if (_hexData!.length > _MAX_LINES)
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Row(
               children: [
                 GCWIconButton(
@@ -185,9 +185,10 @@ class _HexViewerState extends State<HexViewer> {
         Row(
           children: [
             Expanded(
+              flex: 15,
               child: NotificationListener<ScrollNotification>(
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollControllerHex,
                   scrollDirection: Axis.horizontal,
                   child: GCWText(
@@ -211,13 +212,13 @@ class _HexViewerState extends State<HexViewer> {
                   return true;
                 },
               ),
-              flex: 15,
             ),
-            Expanded(child: Container(), flex: 1),
+            Expanded(flex: 1, child: Container()),
             Expanded(
+                flex: 5,
                 child: NotificationListener<ScrollNotification>(
                   child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollControllerASCII,
                     scrollDirection: Axis.horizontal,
                     child: GCWText(
@@ -240,8 +241,7 @@ class _HexViewerState extends State<HexViewer> {
 
                     return true;
                   },
-                ),
-                flex: 5)
+                ))
           ],
         )
       ],

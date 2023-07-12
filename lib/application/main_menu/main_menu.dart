@@ -138,7 +138,7 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
       i18n(context, 'mainmenu_settings_tools_title'),
     ),
     _CategoryMetaData (
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(SaveRestoreSettings())),
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const SaveRestoreSettings())),
       Icons.save,
       i18n(context, 'mainmenu_settings_saverestore_title'),
     )
