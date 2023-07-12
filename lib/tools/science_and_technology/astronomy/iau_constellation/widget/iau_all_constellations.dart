@@ -118,11 +118,15 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
               break;
           }
 
-          return MapEntry(index, [
-            (index + 1).toString() + '.',
-            _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? constellation.ConstellationName : relevantValue,
-            _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? '' : constellation.ConstellationName,
-          ]);
+          var entry = <Object>[(index + 1).toString() + '.'];
+          if (_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION) {
+            entry.add(constellation.ConstellationName);
+          } else {
+            entry.addAll([
+              relevantValue, constellation.ConstellationName
+            ]);
+          }
+          return MapEntry<int, List<Object>>(index, entry);
         })
         .values
         .toList();
@@ -131,7 +135,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
   List<Object> _buildHeader(){
      switch (_currentSortCategory) {
       case IAU_CONSTELLATION_SORT.CONSTELLATION:
-        return ['', i18n(context, 'iau_constellation_iauname'), ''];
+        return ['', i18n(context, 'iau_constellation_iauname')];
       case IAU_CONSTELLATION_SORT.NAME:
         return ['', i18n(context, 'iau_constellation_name'), i18n(context, 'iau_constellation_iauname')];
       case IAU_CONSTELLATION_SORT.STAR:
@@ -143,12 +147,12 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
       case IAU_CONSTELLATION_SORT.MAGNITUDO:
         return ['', i18n(context, 'iau_constellation_magnitudo'), i18n(context, 'iau_constellation_iauname')];
       default:
-        return ['', '', ''];
+        return [];
     }
   }
 
   Widget _buildOutput() {
-    List<List<Object>>? outputData = [];
+    List<List<Object>> outputData = [];
     var flexValues = <int>[];
     List<void Function()>? tappables;
 
@@ -160,7 +164,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
       3,
     ];
     tappables = outputData.map((data) {
-      return () => _currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? _showConstellation(data[1] as String) : _showConstellation(data[2] as String);
+      return () => _showConstellation(data[_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? 1 : 2] as String);
     }).toList();
 
     List<Widget> rows = [
