@@ -33,11 +33,6 @@ class RightAscensionToDegree extends StatefulWidget {
 }
 
 class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
-  late FocusNode _hoursFocusNode;
-  late FocusNode _minutesFocusNode;
-  late FocusNode _secondsFocusNode;
-  late FocusNode _mSecondsFocusNode;
-
   late FocusNode _decMilliDegreesFocusNode;
 
   late TextEditingController _hoursController;
@@ -84,6 +79,9 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   @override
   void initState() {
     super.initState();
+
+    _decMilliDegreesFocusNode = FocusNode();
+
     _hoursController = TextEditingController(text: _currentRightAscension.hours.toString());
     _minutesController = TextEditingController(text: _currentRightAscension.minutes.toString());
     _secondsController = TextEditingController(text: _currentRightAscension.seconds.truncate().toString());
@@ -116,11 +114,6 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
     _decDegreesController.dispose();
     _decMilliDegreesController.dispose();
-
-    _hoursFocusNode.dispose();
-    _minutesFocusNode.dispose();
-    _secondsFocusNode.dispose();
-    _mSecondsFocusNode.dispose();
 
     _decMilliDegreesFocusNode.dispose();
 
