@@ -59,7 +59,7 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
           showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_resetall_title'),
               i18n(context, 'settings_preferences_warning_resetall_text'), () {
             setState(() {
-              initDefaultSettings(PreferencesInitMode.REINIT_ALL);
+              restoreAllDefaultPreferencesAndRebuild(context);
             });
           });
         },
@@ -251,7 +251,7 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
       onPressed: () {
         showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_resetsingle_title'),
             i18n(context, 'settings_preferences_warning_resetsingle_text'), () {
-          initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: key);
+              restoreSingleDefaultPreferenceAndRebuild(key, context);
 
           setState(() {
             _editKey = null;

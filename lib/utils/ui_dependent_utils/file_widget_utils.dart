@@ -10,42 +10,37 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:universal_html/html.dart' as html;
 
+enum _SAVE_TYPE {STRING, BYTE_DATA}
+
 Future<bool> saveByteDataToFile(BuildContext context, Uint8List data, String fileName) async {
-  if (kIsWeb) {
-    var blob = html.Blob([data], 'image/png');
-    html.AnchorElement(
-      href: html.Url.createObjectUrl(blob),
-    )
-      ..setAttribute("download", fileName)
-      ..click();
-
-    return Future.value(true);
-  } else {
-    var storagePermission = await checkStoragePermission();
-    if (!storagePermission) {
-      showToast(i18n(context, 'common_exportfile_nowritepermission'));
-      return false;
-    }
-
-    fileName = _limitFileNameLength(fileName);
-    final fileInfo = await FilePickerWritable().openFileForCreate(
-      fileName: fileName,
-      writer: (file) async {
-        await file.writeAsBytes(data);
-      },
-    );
-    if (fileInfo == null) {
-      showToast(i18n(context, 'common_exportfile_couldntwrite'));
-      return false;
-    }
-  }
-
-  return true;
+  return _saveDataToFile(context, data, fileName, _SAVE_TYPE.BYTE_DATA);
 }
 
 Future<bool> saveStringToFile(BuildContext context, String data, String fileName) async {
+  return _saveDataToFile(context, convertStringToBytes(data), fileName, _SAVE_TYPE.STRING);
+}
+
+Future<bool> _saveDataToFile(BuildContext context, Uint8List data, String fileName, _SAVE_TYPE saveType) async {
   if (kIsWeb) {
-    var blob = html.Blob([data], 'text/plain', 'native');
+    var fileType = fileTypeByFilename(fileName);
+
+    List<String>? _mimeTypes;
+    switch (saveType) {
+      case _SAVE_TYPE.STRING:
+        _mimeTypes = mimeTypes(FileType.TXT);
+        break;
+      case _SAVE_TYPE.BYTE_DATA:
+        if (fileType != null) {
+          _mimeTypes = mimeTypes(fileType);
+        }
+    }
+
+    String? mimeType;
+    if (_mimeTypes != null && _mimeTypes.isNotEmpty) {
+      mimeType = _mimeTypes.first;
+    }
+
+    var blob = html.Blob([data], mimeType);
     html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
     )
@@ -64,10 +59,13 @@ Future<bool> saveStringToFile(BuildContext context, String data, String fileName
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
       writer: (file) async {
-        await file.writeAsString(data);
+        await file.writeAsBytes(data);
       },
     );
-    if (fileInfo == null) return false;
+    if (fileInfo == null) {
+      showToast(i18n(context, 'common_exportfile_couldntwrite'));
+      return false;
+    }
   }
 
   return true;

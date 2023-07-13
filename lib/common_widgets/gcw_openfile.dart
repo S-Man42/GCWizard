@@ -79,7 +79,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
+        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
           if (file != null) {
             setState(() {
               _loadedFile = file;
@@ -187,9 +187,11 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       showToast(i18n(context, data.text));
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onLoaded(_loadedFile);
-    });
+    if (_loadedFile != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onLoaded(_loadedFile!);
+      });
+    }
   }
 
   @override
@@ -289,7 +291,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 }
 
-void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Function onLoaded) {
+void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, void Function(GCWFile?) onLoaded) {
   showGCWDialog(
       context,
       i18n(context, 'common_loadfile_showopen'),
@@ -298,7 +300,7 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
           GCWOpenFile(
             supportedFileTypes: supportedFileTypes,
             isDialog: true,
-            onLoaded: (_file) {
+            onLoaded: (GCWFile? _file) {
               onLoaded(_file);
 
               Navigator.of(context).pop();
@@ -370,7 +372,7 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
+Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
     if (allowedFileTypes == null || _hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
 
@@ -400,7 +402,7 @@ Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
   var allowedExtensions = fileExtensions(allowedFileTypes);
 
-  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
+  return files.where((element) => allowedExtensions.contains(element.extension.toString().toLowerCase())).toList();
 }
 
 bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {

@@ -1,12 +1,8 @@
 package servlet;
 
 import org.apache.commons.compress.utils.FileNameUtils;
-import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,17 +14,22 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.logging.Level;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 /**
  * Servlet implementation class UnluacServlet
  */
 @WebServlet("")
+@MultipartConfig(maxFileSize = 2500000)
 public class UnluacServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -259811092051390105L;
@@ -55,49 +56,39 @@ public class UnluacServlet extends HttpServlet {
 		logger.setLevel(Level.ALL);
 		
 		try {
-			if (ServletFileUpload.isMultipartContent(req)) {			
-				// Set paths
-				final String servletCtxPath = this.getServletContext().getRealPath("");
-				final String uploadPath = servletCtxPath + "Uploads" + File.separator;
-				final String outputPath = servletCtxPath + "Output" + File.separator;
-				
-				unluacJarPath = getUnluacJarPath(res);
-								
-				DiskFileItemFactory factory = new DiskFileItemFactory();
-				// Write all to disk
-				factory.setSizeThreshold(0);
-				// Write to temp directory
-				factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-				
-				// Create a new file upload handler
-				ServletFileUpload upload = new ServletFileUpload(factory);
-				
-				// Set overall request size constraint (2,5MB)
-				upload.setSizeMax(2500000);
-	
-				// Parse request
-				List<FileItem> fileItems = getFileItems(upload, req, res);
-				
-				// Should only be one file, so only consider first in list
-				FileItem submittedFile = fileItems.get(0);
-				
-				// Check if upload directory exists
-				checkForDir(uploadPath);
-				
-				// Set fileName
-				String uploadFileName = String.valueOf(System.currentTimeMillis()) + ".luac"; 
-				File uploadedFile = new File(uploadPath + uploadFileName);
+			// Set paths
+			final String servletCtxPath = this.getServletContext().getRealPath("");
+			final String uploadPath = servletCtxPath + "Uploads" + File.separator;
+			final String outputPath = servletCtxPath + "Output" + File.separator;
+			
+			unluacJarPath = getUnluacJarPath(res);
 							
-				// Save .luac file
-				writeFile(submittedFile, uploadedFile, res);
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			// Write all to disk
+			factory.setSizeThreshold(0);
+			// Write to temp directory
+			factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+			
+			// Parse request
+			List<Part> parts = getFileParts(req, res);
+			
+			// Should only be one file, so only consider first in list
+			Part part = parts.get(0);
+			
+			// Check if upload directory exists
+			checkForDir(uploadPath);
+			
+			// Set fileName
+			String uploadFileName = String.valueOf(System.currentTimeMillis()) + ".luac";
+			String uploadFilePath = uploadPath.concat(uploadFileName);
+			File uploadedFile = new File(uploadFilePath);
+						
+			// Save .luac file
+			writeFile(part, uploadFilePath, res);
+			
+			// Decompile .luac and send response
+			handleFile(uploadedFile, outputPath, res);
 				
-				// Decompile .luac and send response
-				handleFile(uploadedFile, outputPath, res);
-				
-			} else {
-				logger.severe("Not a multipart request");
-				buildErrorResponse("wherigo_http_code_400_detail_multipart", 400, res);
-			}
 		} catch (IOException e) {
 			logger.severe("IOException 'detail_response':: " + e);
 			throw new IOException("wherigo_http_code_500_detail_response");
@@ -139,16 +130,20 @@ public class UnluacServlet extends HttpServlet {
 	 * @return a list of files from the request
 	 * @throws IOException
 	 */
-	private List<FileItem> getFileItems(ServletFileUpload upload, HttpServletRequest req, HttpServletResponse res) throws IOException {
+	private List<Part> getFileParts(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
-			return upload.parseRequest(new ServletRequestContext(req));
-		} catch (SizeLimitExceededException e) {
+			return req.getParts().stream().collect(Collectors.toList());
+		} catch (IllegalStateException e) {
 			logger.severe("SizeLimitExceededException::" + e.getMessage());
 			buildErrorResponse("wherigo_http_code_413_detail_size", 413, res);
 			throw new AbortControlFlowException();
 		} catch (FileUploadException e) {
 			logger.severe("FileUploadException::" + e.getMessage());
 			buildErrorResponse("wherigo_http_code_400_detail_extract", 400, res);
+			throw new AbortControlFlowException();
+		} catch (ServletException e) {
+			logger.severe("Not a multipart request");
+			buildErrorResponse("wherigo_http_code_400_detail_multipart", 400, res);
 			throw new AbortControlFlowException();
 		}
 	}
@@ -160,7 +155,7 @@ public class UnluacServlet extends HttpServlet {
 	 * @param res
 	 * @throws IOException
 	 */
-	private void writeFile(FileItem item, File target, HttpServletResponse res) throws IOException {
+	private void writeFile(Part item, String target, HttpServletResponse res) throws IOException {
 		try {
 			item.write(target);
 		} catch (Exception e) {

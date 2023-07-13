@@ -213,12 +213,9 @@ class _HexViewerState extends State<HexViewer> {
                 },
               ),
             ),
+            Expanded(flex: 1, child: Container()),
             Expanded(
-                flex: 1,
-                child: Container(),
-            ),
-            Expanded(
-              flex: 5,
+                flex: 5,
                 child: NotificationListener<ScrollNotification>(
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -244,8 +241,7 @@ class _HexViewerState extends State<HexViewer> {
 
                     return true;
                   },
-                ),
-            )
+                ))
           ],
         )
       ],

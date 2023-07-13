@@ -164,6 +164,12 @@ class _LicensesState extends State<Licenses> {
           [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
         ]
       ),
+      GCWTextDivider(text: i18n(context, 'licenses_images')),
+      GCWColumnedMultilineOutput(
+          data: [
+            [i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']
+          ],
+      ),
     ]);
 
     return MainMenuEntryStub(content: content);
