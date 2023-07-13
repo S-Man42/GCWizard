@@ -149,6 +149,6 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
   }
 
   void _openClipboardEditor() {
-    NavigationService.instance.navigateTo('clipboard_editor');
+    NavigationService.instance.navigateTo(clipboard_editor);
   }
 }

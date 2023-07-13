@@ -54,7 +54,7 @@ class App extends StatelessWidget {
               routes: {
                 // Required extra way because normal Navigator.of(context) way
                 // crashes because of some NULL problems on TextSelectionControls menu
-                'clipboard_editor': (BuildContext context) => GCWTool(
+                clipboard_editor: (BuildContext context) => GCWTool(
                     tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
               },
               onGenerateInitialRoutes: (route) => startMainView(context, route),
