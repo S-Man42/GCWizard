@@ -38,7 +38,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
 
   @override
   Widget build(BuildContext context) {
-    _cellWidth = (MediaQuery.of(context).size.width - 20) / 19;
+    _cellWidth = (maxScreenWidth(context) - 20) / 19;
     _maxCellHeight = maxScreenHeight(context) / 11;
 
     return Column(children: _buildOutput());
