@@ -95,7 +95,6 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                   controller: _currentInputController,
                   inputFormatters: [_integerInputFormatter],
                   keyboardType: const TextInputType.numberWithOptions(),
-                  //autofocus: true,
                   focusNode: _currentValueFocusNode,
                   style: TextStyle(
                     fontSize: _selectedBoxRect!.height * 0.5,
