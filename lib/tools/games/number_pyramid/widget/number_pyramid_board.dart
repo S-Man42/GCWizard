@@ -30,7 +30,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
 
     _valueFocusNode = _currentValueFocusNode;
     _currentInputController = TextEditingController();
-    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 999999);
+    _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 99999);
   }
 
   @override
@@ -78,9 +78,9 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
       if (_selectedBoxRect!.height < 35) {
         var offset = (35 -_selectedBoxRect!.height) / 2;
         _selectedBoxRect = Rect.fromLTWH(
-            _selectedBoxRect!.left - offset,
+            _selectedBoxRect!.left - 2 * offset,
             _selectedBoxRect!.top - offset,
-            _selectedBoxRect!.width + 2 * offset,
+            _selectedBoxRect!.width + 4 * offset,
             _selectedBoxRect!.height + 2 * offset);
       }
 
@@ -95,7 +95,7 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                   controller: _currentInputController,
                   inputFormatters: [_integerInputFormatter],
                   keyboardType: const TextInputType.numberWithOptions(),
-                  autofocus: true,
+                  //autofocus: true,
                   focusNode: _currentValueFocusNode,
                   style: TextStyle(
                     fontSize: _selectedBoxRect!.height * 0.5,
@@ -173,11 +173,11 @@ class NumberPyramidBoardPainter extends CustomPainter {
     paintBackground.color = Colors.transparent;
     paintBackground.style = PaintingStyle.fill;
 
-    const border = 2;
-    double widthOuter = size.width - 2 * border;
-    double heightOuter = size.height - 2 * border;
-    double xOuter = border.toDouble();
-    double yOuter = border.toDouble();
+    const border = 10;
+    double widthOuter = size.width - 8 * border;
+    double heightOuter = size.height - 4 * border;
+    double xOuter = 4 * border.toDouble();
+    double yOuter = 2 * border.toDouble();
     double widthInner = widthOuter / board.getRowsCount();
     double heightInner = min(heightOuter /  board.getRowsCount(), widthInner / 2);
     var fontsize = heightInner * 0.8;
