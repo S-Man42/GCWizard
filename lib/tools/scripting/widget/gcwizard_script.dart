@@ -297,7 +297,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
         if (output.BreakType == GCWizardScriptBreakType.INPUT) {
           _showDialogBox(context, output.continueState?.quotestr ?? '');
         } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-        _interpretGCWScriptAsync();
+          _currentScriptOutput = _currentOutput.STDOUT;
+          _interpretGCWScriptAsync();
         }
         //if (showInput) {
         //  _showDialogBox(context, output.continueState?.quotestr ?? '');

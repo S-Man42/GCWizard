@@ -73,9 +73,9 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordina
 // - use DATA, RESTORE, READ
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, PIE, COLOR, FILL, TEXT, BOX, OVAL
 // - use BREAK
+// handle input like whitespace, piet
 
 // TODO
-// handle input like whitespace, piet
 // variablenames longer than one letter
 // variables as a map of GCWizardScriptVariable
 // array as datatype
@@ -294,12 +294,6 @@ class _GCWizardSCriptInterpreter {
 
     if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
     state.continueLoop = true;
-
-    print('ende interpreter');
-    print(state.errorMessage);
-    print(BreakType);
-    print(state.STDOUT);
-    print(state.errorMessage);
 
     return GCWizardScriptOutput(
       STDOUT: state.STDOUT.trimRight(),
@@ -573,8 +567,6 @@ class _GCWizardSCriptInterpreter {
     int spaces = 0;
     String lastDelimiter = "";
 
-    int scriptIndex_save = state.scriptIndex - "print".length; // Wiedereinsprungspunkt werken
-
     // wenn state.continueLoop dann wenn nötig mit der Sonderbehandlung auswerten oder den Codeblock überspringen, damit er nicht doppelt ausgewertet wird
     //if (!state.continueLoop) {
       do {
@@ -611,23 +603,24 @@ class _GCWizardSCriptInterpreter {
         }
       } while (lastDelimiter == ";" || lastDelimiter == ",");
 
-      state.continueLoop = false;
+      //state.continueLoop = true;
     //}
 
     if (state.keywordToken == EOL || state.token == EOP) {
       if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
     } else {
       _handleError(_SYNTAXERROR);
-      ///state.scriptIndex = scriptIndex_save;
     }
 
-    if (!state.continueLoop) {
-      _handleError(_PRINTERROR); // Ablauf unterbrechen und zum widget zurück gehen (Error extr dafür erstellt)
-      state.scriptIndex = scriptIndex_save; // continue entry point
-      state.continueLoop = true; // normaler Ablauf
-    } else {
-      state.continueLoop = true; // normaler Ablauf
-    }
+    //if (state.continueLoop) {
+    //  _handleError(_PRINTERROR); // Ablauf unterbrechen und zum widget zurück gehen (Error extr dafür erstellt)
+    //  int scriptIndex_save = state.scriptIndex; // - "print".length; // Wiedereinsprungspunkt werken
+
+    //  state.scriptIndex = scriptIndex_save; // continue entry point
+    //  state.continueLoop = false; // normaler Ablauf
+    //} else {
+    //  state.continueLoop = false; // normaler Ablauf
+    //}
   }
 
   void executeCommandGOTO() {
