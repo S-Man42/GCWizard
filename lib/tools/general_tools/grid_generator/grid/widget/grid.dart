@@ -486,11 +486,12 @@ class _GridState extends State<Grid> {
     return Column(
       children: [
         SingleChildScrollView(
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const AlwaysScrollableScrollPhysics(),
             child: Container(
-              constraints: BoxConstraints(maxWidth: min(500, min(maxScreenWidth(context) * 0.95, maxScreenHeight(context) * 0.8)) * _scale),
+              constraints: BoxConstraints(maxWidth: min(500,
+                  min(maxScreenWidth(context) * 0.95, maxScreenHeight(context) * 0.8)) * _scale),
               margin: const EdgeInsets.symmetric(vertical: 20.0),
               child: _GridPainter(
                 tapColor: _currentColor,
