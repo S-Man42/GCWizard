@@ -120,6 +120,7 @@ class _GridState extends State<Grid> {
   var _currentGridConfiguration = 'grid_boxes_10x10';
 
   var _isConfiguration = false;
+  double _scale = 1;
   late _GridType _currentConfigType;
   late int _currentConfigColumns;
   late int _currentConfigRows;
@@ -248,6 +249,29 @@ class _GridState extends State<Grid> {
               },
             )
           ],
+        ),
+        GCWTextDivider(
+            text: '',
+            trailing: Row(children: <Widget>[
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                icon: Icons.zoom_in,
+                onPressed: () {
+                  setState(() {
+                    _scale += 0.1;
+                  });
+                },
+              ),
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                icon: Icons.zoom_out,
+                onPressed: () {
+                  setState(() {
+                    _scale = max(0.1, _scale - 0.1);
+                  });
+                },
+              ),
+            ])
         ),
         if (_isConfiguration) _buildConfiguration() else _buildGrid()
       ],
@@ -461,20 +485,26 @@ class _GridState extends State<Grid> {
   Widget _buildGrid() {
     return Column(
       children: [
-        Container(
-          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context) * 0.8)),
-          margin: const EdgeInsets.symmetric(vertical: 20.0),
-          child: _GridPainter(
-            tapColor: _currentColor,
-            type: _currentConfigType,
-            countColumns: _currentConfigColumns,
-            countRows: _currentConfigRows,
-            boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration ?? ''),
-            columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration ?? ''),
-            rowEnumeration: _getEnumeration(_currentConfigRowEnumeration ?? ''),
-            boxEnumerationStart: _currentConfigBoxEnumerationStart,
-            boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
-            boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,
+        SingleChildScrollView(
+            child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Container(
+              constraints: BoxConstraints(maxWidth: min(500, min(maxScreenWidth(context) * 0.95, maxScreenHeight(context) * 0.8)) * _scale),
+              margin: const EdgeInsets.symmetric(vertical: 20.0),
+              child: _GridPainter(
+                tapColor: _currentColor,
+                type: _currentConfigType,
+                countColumns: _currentConfigColumns,
+                countRows: _currentConfigRows,
+                boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration ?? ''),
+                columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration ?? ''),
+                rowEnumeration: _getEnumeration(_currentConfigRowEnumeration ?? ''),
+                boxEnumerationStart: _currentConfigBoxEnumerationStart,
+                boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
+                boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,
+              ),
+            ),
           ),
         ),
         Row(children: _GridPaintColor.values.map((color) => _buildColorField(color)).toList()),
