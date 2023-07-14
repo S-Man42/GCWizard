@@ -1,8 +1,10 @@
 import 'dart:core';
 
+import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM }
+enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM, SEVEN12345678 }
+enum Variants7Segment { STANDARD, V12345678 }
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
@@ -25,6 +27,10 @@ const _baseSegments16Segment = [
   'm',
   'dp'
 ];
+
+//variants
+const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'dp' };
+
 
 const Map<String, List<String>> _AZTo16Segment = {
   '1': ['b', 'c', 'j'],
@@ -611,6 +617,9 @@ Segments encodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SEVEN:
       AZToSegment = _AZTo7Segment;
       break;
+    case SegmentDisplayType.SEVEN12345678:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _7SegmentTo12345678);
+      break;
     case SegmentDisplayType.FOURTEEN:
       AZToSegment = _AZTo14Segment;
       break;
@@ -643,17 +652,20 @@ Segments encodeSegment(String input, SegmentDisplayType segmentType) {
 
 SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
   if (input.isEmpty) return SegmentsText(displays: [], text: '');
-  List<String> baseSegments = [];
+  Map<String, String> baseSegments = {};
 
   switch (segmentType) {
     case SegmentDisplayType.SEVEN:
-      baseSegments = _baseSegments7Segment;
+      baseSegments = _createBaseVariant(_baseSegments7Segment);
+      break;
+    case SegmentDisplayType.SEVEN12345678:
+      baseSegments = _7SegmentTo12345678;
       break;
     case SegmentDisplayType.FOURTEEN:
-      baseSegments = _baseSegments14Segment;
+       baseSegments = _createBaseVariant(_baseSegments14Segment);
       break;
     case SegmentDisplayType.SIXTEEN:
-      baseSegments = _baseSegments16Segment;
+      baseSegments = _createBaseVariant(_baseSegments16Segment);
       break;
     default:
   }
@@ -664,12 +676,14 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
 
   for (int i = 0; i < input.length; i++) {
     var segment = input[i];
-    if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
+    if (baseSegments.containsKey(segment)) {
+      segment = baseSegments[segment]!;
+    } else if (i + 1 < input.length && baseSegments.containsKey(segment + input[i + 1])) {
       i++;
-      segment += input[i];
+      segment = baseSegments[segment + input[i + 1]]!;
     }
 
-    if (!baseSegments.contains(segment)) {
+    if (!baseSegments.containsValue(segment)) {
       if (currentDisplay != null) {
         currentDisplay.sort();
         displays.add(currentDisplay.toSet().toList());
@@ -730,4 +744,18 @@ String? _characterFromSegmentList(SegmentDisplayType type, List<String> segments
 
 bool segmentActive(Map<String, bool> segments, String segment) {
   return segments[segment] ?? false;
+}
+
+Map<String, List<String>> _convertCharacterMap(Map<String, List<String>> characterMap, Map<String, String> variant) {
+  Map<String, List<String>> _characterMap = {};
+  var variantMap = switchMapKeyValue(variant);
+
+  characterMap.forEach((character, segments) {
+    _characterMap.addAll({character: segments.map((segment) => variantMap[segment]!).toList()});
+  });
+  return _characterMap;
+}
+
+Map<String, String> _createBaseVariant(List<String> baseSegments) {
+  return Map<String, String>.fromIterables(baseSegments, baseSegments);
 }
