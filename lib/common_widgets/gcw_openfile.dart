@@ -245,6 +245,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
+    if (widget.supportedFileTypes == null || widget.supportedFileTypes!.isEmpty) return true;
     for (FileType fileType in widget.supportedFileTypes ?? []) {
       var mimeTypeList = mimeTypes(fileType);
       if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
