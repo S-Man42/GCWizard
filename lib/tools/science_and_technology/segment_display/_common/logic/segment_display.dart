@@ -12,14 +12,17 @@ enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
   FOURTEEN_KMN_G1G2_RST,
   FOURTEEN_GHJ_PK_NMI,
   FOURTEEN_HJK_G1G2_NML,
+  FOURTEEN_HJK_GM_QPN,
   SIXTEENAUTO,
+  SIXTEEN_KMN_UP_QPN
 }
 const Variants7Segment = { SegmentDisplayType.SEVEN, SegmentDisplayType.SEVENAUTO, SegmentDisplayType.SEVEN12345678};
 const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOURTEENAUTO,
   SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, SegmentDisplayType.FOURTEEN_FGH_NJ_MLK,
   SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, SegmentDisplayType.FOURTEEN_GHJ_PK_NMI,
-  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML};
-const Variants16Segment = { SegmentDisplayType.SIXTEEN, SegmentDisplayType.SIXTEENAUTO };
+  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, SegmentDisplayType.FOURTEEN_HJK_GM_QPN};
+const Variants16Segment = { SegmentDisplayType.SIXTEEN, SegmentDisplayType.SIXTEENAUTO,
+  SegmentDisplayType.SIXTEEN_KMN_UP_QPN};
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
@@ -51,6 +54,10 @@ const _14SegmentTo_fgh_nj_mlk   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 
 const _14SegmentTo_kmn_g1g2_rst = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'm', 's': 'l', 'r': 'k', 'dp': 'dp' };
 const _14SegmentTo_ghj_pk_nmi   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'p': 'g1', 'k': 'g2', 'g': 'h', 'h': 'i', 'j': 'j', 'i': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
 const _14SegmentTo_hjk_g1g2_nml = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'l': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
+const _14SegmentTo_hjk_gm_qpn   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g': 'g1', 'm': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'n': 'm', 'p': 'l', 'q': 'k', 'dp': 'dp' };
+
+const _16SegmentTo_kmn_up_tsr = {'a': 'a1', 'b': 'a2', 'c': 'b', 'd': 'c', 'e': 'd1', 'f': 'd2', 'g': 'e', 'h': 'f', 'u': 'g1', 'p': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'k', 's': 'l', 'r': 'm', 'dp': 'dp' };
+
 
 final _7SegmentVariants = {
   SegmentDisplayType.SEVEN : _createBaseVariant(_baseSegments7Segment),
@@ -62,10 +69,12 @@ final _14SegmentVariants = {
   SegmentDisplayType.FOURTEEN_FGH_NJ_MLK : _14SegmentTo_fgh_nj_mlk,
   SegmentDisplayType.FOURTEEN_KMN_G1G2_RST : _14SegmentTo_kmn_g1g2_rst,
   SegmentDisplayType.FOURTEEN_GHJ_PK_NMI :_14SegmentTo_ghj_pk_nmi,
-  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML : _14SegmentTo_hjk_g1g2_nml};
+  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML : _14SegmentTo_hjk_g1g2_nml,
+  SegmentDisplayType.FOURTEEN_HJK_GM_QPN : _14SegmentTo_hjk_gm_qpn};
 
 final _16SegmentVariants = {
-  SegmentDisplayType.SIXTEEN : _createBaseVariant(_baseSegments16Segment)};
+  SegmentDisplayType.SIXTEEN : _createBaseVariant(_baseSegments16Segment),
+  SegmentDisplayType.SIXTEEN_KMN_UP_QPN : _16SegmentTo_kmn_up_tsr};
 
 const Map<String, List<String>> _AZTo16Segment = {
   '1': ['b', 'c', 'j'],
