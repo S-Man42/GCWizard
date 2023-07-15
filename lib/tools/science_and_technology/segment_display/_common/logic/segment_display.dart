@@ -14,10 +14,11 @@ enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
   FOURTEEN_HJK_G1G2_NML,
   SIXTEENAUTO,
 }
-enum Variants7Segment { STANDARD, V12345678 }
-enum Variants14Segment { STANDARD, FOURTEEN_HIJ_G1G2_MLK,  FOURTEEN_FGH_NJ_MLK,
-  FOURTEEN_KMN_G1G2_RST, FOURTEEN_GHJ_PK_NMI, FOURTEEN_HJK_G1G2_NML}
-enum Variants16Segment { STANDARD }
+const Variants7Segment = { SegmentDisplayType.SEVEN, SegmentDisplayType.SEVEN12345678};
+const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK,
+  SegmentDisplayType.FOURTEEN_FGH_NJ_MLK, SegmentDisplayType.FOURTEEN_KMN_G1G2_RST,
+  SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, SegmentDisplayType.FOURTEEN_HJK_G1G2_NML};
+const Variants16Segment = { SegmentDisplayType.SIXTEEN };
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];

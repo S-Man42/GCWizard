@@ -36,6 +36,9 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
   var _currentEncryptMode = GCWSwitchPosition.left;
   var _currentType = SegmentDisplayType.SEVEN;
 
+  List<GCWDropDownMenuItem<SegmentDisplayType>> _dropDownList = [];
+  List<Widget> _selectedItemList = [];
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +53,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
       default:
         _currentType = SegmentDisplayType.SEVEN;
     }
+    _initDropDownList();
 
     _inputEncodeController = TextEditingController(text: _currentEncodeInput);
     _inputDecodeController = TextEditingController(text: _currentDecodeInput);
@@ -83,6 +87,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
               rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
               onChanged: (value) {
                 setState(() {
+                  _initDropDownList();
                   _currentEncryptMode = value;
                   if (_currentEncryptMode == GCWSwitchPosition.right) {
                     _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
@@ -147,18 +152,21 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
       case SegmentDisplayType.SEVEN:
         displayWidget = SevenSegmentDisplay(
           segments: currentDisplay,
+          type: _currentType,
           onChanged: onChanged,
         );
         break;
       case SegmentDisplayType.FOURTEEN:
         displayWidget = FourteenSegmentDisplay(
           segments: currentDisplay,
+          type: _currentType,
           onChanged: onChanged,
         );
         break;
       case SegmentDisplayType.SIXTEEN:
         displayWidget = SixteenSegmentDisplay(
           segments: currentDisplay,
+          type: _currentType,
           onChanged: onChanged,
         );
         break;
@@ -223,16 +231,19 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
             case SegmentDisplayType.SEVEN:
               return SevenSegmentDisplay(
                 segments: displayedSegments,
+                type: _currentType,
                 readOnly: true,
               );
             case SegmentDisplayType.FOURTEEN:
               return FourteenSegmentDisplay(
                 segments: displayedSegments,
+                type: _currentType,
                 readOnly: true,
               );
             case SegmentDisplayType.SIXTEEN:
               return SixteenSegmentDisplay(
                 segments: displayedSegments,
+                type: _currentType,
                 readOnly: true,
               );
             default:
@@ -276,42 +287,45 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
           _currentType = value;
         });
       },
-      items: _buildDropDownList(),
+      items: _dropDownList,
       selectedItemBuilder: (BuildContext context) {
-        return _buildDropDownList().map((item) {
-          return Align(
-              alignment: Alignment.centerLeft,
-              child: GCWText(
-                text: item.subtitle ?? 'STANDARD',
-              )
-          );
-        }).toList();
+        return _selectedItemList;
       },
     );
   }
 
-  List<GCWDropDownMenuItem<SegmentDisplayType>> _buildDropDownList() {
-    List<GCWDropDownMenuItem<SegmentDisplayType>> dp = [];
+  void _initDropDownList() {
+    _dropDownList = [];
+    _selectedItemList = [];
     switch (widget.type) {
       case SegmentDisplayType.FOURTEEN:
-        dp.add(GCWDropDownMenuItem(
-            value: SegmentDisplayType.FOURTEEN,
-            child: _buildDropDownMenuItem(null, 'STANDARD', null)));
+        _addDropDownEntry('14segment_default.png', 'STANDARD', null, SegmentDisplayType.FOURTEEN);
+        _addDropDownEntry('14segment_hij_g1g2_mlk.png', 'HIJ_G1G2_MLK', null, SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK);
+        _addDropDownEntry('14segment_pgh_nj_mlk.png', 'FGH_NJ_MLK', null, SegmentDisplayType.FOURTEEN_FGH_NJ_MLK);
+        _addDropDownEntry('14segment_kmn_g1g2_rst.png', 'KMN_G1G2_RST', null, SegmentDisplayType.FOURTEEN_KMN_G1G2_RST);
+        _addDropDownEntry('14segment_ghj_pk_nmi.png', 'KMN_G1G2_RST', null, SegmentDisplayType.FOURTEEN_GHJ_PK_NMI);
+        _addDropDownEntry('14segment_hjk_g1g2_nml.png', 'HJK_G1G2_NML', null, SegmentDisplayType.FOURTEEN_HJK_G1G2_NML);
+        break;
+      case SegmentDisplayType.SIXTEEN:
+        _addDropDownEntry('16segment_default.png', 'STANDARD', null, SegmentDisplayType.SIXTEEN);
         break;
       default:
-        dp.add(GCWDropDownMenuItem(
-            value: SegmentDisplayType.SEVEN,
-            child: _buildDropDownMenuItem(null, 'STANDARD', null)));
-        dp.add(GCWDropDownMenuItem(
-            value: SegmentDisplayType.SEVEN12345678,
-            child: _buildDropDownMenuItem(null, '12345678', null)));
+        _addDropDownEntry('7segment_default.png', 'STANDARD', null, SegmentDisplayType.SEVEN);
+        _addDropDownEntry('7segment_12345678.png', '12345678', null, SegmentDisplayType.SEVEN12345678);
     }
-    return dp;
   }
 
-  Widget _buildDropDownMenuItem(GCWSymbolContainer? icon, String? toolName, String? description) {
+  void _addDropDownEntry(String iconName, String label, String? description, SegmentDisplayType type) {
+    _dropDownList.add(GCWDropDownMenuItem(
+        value: type,
+        child: _buildDropDownMenuItem(iconName, label, description)));
+
+    _selectedItemList.add(_buildDropDownSelectedItem(iconName, label, description));
+  }
+
+  Widget _buildDropDownMenuItem(String iconName, String label, String? description) {
     var icon = GCWSymbolContainer(
-      symbol: Image.asset('assets/icons/science_and_technology/icon_7segment_display.png', width: DEFAULT_LISTITEM_SIZE),
+      symbol: Image.asset('assets/icons/science_and_technology/' + iconName, width: DEFAULT_LISTITEM_SIZE),
     );
     return Row(children: [
       Container(
@@ -323,8 +337,18 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(toolName ?? '', style: gcwTextStyle()),
+                Text(label, style: gcwTextStyle()),
+                (description != null) ? Text(description, style: gcwDescriptionTextStyle()) : Container(),
               ]))
     ]);
+  }
+
+  Widget _buildDropDownSelectedItem(String iconName, String label, String? description) {
+    return Align(
+        alignment: Alignment.centerLeft,
+        child: GCWText(
+          text: label,
+        )
+    );
   }
 }
