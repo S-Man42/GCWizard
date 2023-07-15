@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
-import 'package:gc_wizard/application/main_menu/deep_link.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
@@ -48,6 +47,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/teletypewrit
 import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
@@ -364,7 +364,7 @@ class _MainViewState extends State<MainView> {
     if (registeredTools.isEmpty) {
       initializeRegistry(context);
 
-      var deepLink = checkDeepLink();
+      var deepLink = _checkDeepLink();
       if (deepLink != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.push(context, deepLink);
@@ -410,7 +410,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
+  NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
     if (widget.hasWebParameter()) {
       return createStartDeepLinkRoute(context, widget.webParameter!);
     }

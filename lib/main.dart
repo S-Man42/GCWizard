@@ -12,7 +12,7 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
-import 'application/main_menu/deep_link.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,6 +8,7 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
@@ -15,8 +16,12 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:tuple/tuple.dart';
+
+part 'package:gc_wizard/application/webapi/deeplinks/deeplinks_toolinfo.dart';
+part 'package:gc_wizard/application/webapi/deeplinks/deeplinks_toolinfo_codecolorscheme.dart';
 
 const String _questionmark = '/?';
 const String _initRoute = 'initRoute';
@@ -77,7 +82,7 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
     var tool = registeredTools.firstWhereOrNull((_tool) => _toolId(_tool) == name);
     // if name == toolname/? open tool info
     if ((arguments.arguments[_questionmark] == _questionmark) && tool != null) {
-      return toolInfo(context, tool);
+      return _infoTool(context, tool);
     }
 
     return tool;
@@ -139,10 +144,9 @@ GCWTool _toolNameList(BuildContext context) {
 
   return GCWTool(
     suppressHelpButton: true,
-    id: 'tool_name_list',
-    toolName: 'Tool name list',
-      tool: _buildItems(context, apiToolList),
-    // )
+    id: 'webapi_deeplink_toolsapi_title',
+    toolName: i18n(context, 'webapi_deeplink_toolsapi_title') + ': ' + i18n(context, 'webapi_deeplink_toolsapi_toolpaths'),
+    tool: _buildItems(context, apiToolList),
   );
 }
 
@@ -176,7 +180,7 @@ Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) as
 
 Widget _buildRow(BuildContext context, GCWTool tool) {
   return FutureBuilder<Tuple2<String, String>>(
-      future: _toolInfoTextShort(tool),
+      future: _toolInfoTextShort(context, tool),
       builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
         return _buildRowWidget(context,
             tool,
@@ -191,81 +195,15 @@ String _toolId(GCWTool tool) {
   return (tool.id_prefix ?? '') + tool.id;
 }
 
-Future<Tuple2<String, String>> _toolInfoTextShort(GCWTool tool) async {
+Future<Tuple2<String, String>> _toolInfoTextShort(BuildContext context, GCWTool tool) async {
   var id = _toolId(tool);
   var info = id;
-  if (tool.tool is GCWWebStatefulWidget) {
-    info += ' -> (with open API)';
-  }
   return Tuple2<String, String>(id, info);
 }
 
-Future<Tuple2<String, String>> _toolInfoText(GCWTool tool) async {
-  var id = _toolId(tool);
-  var apiInfo = '';
-  if (tool.tool is GCWWebStatefulWidget) {
-    if ((tool.tool as GCWWebStatefulWidget).apiSpecification != null) {
-      apiInfo = (tool.tool as GCWWebStatefulWidget).apiSpecification!;
-    }
-  }
- return Tuple2<String, String>(id, apiInfo);
+bool _hasAPISpecification(GCWTool tool) {
+  return  (tool.tool is GCWWebStatefulWidget) && (tool.tool as GCWWebStatefulWidget).apiSpecification != null;
 }
-
-GCWTool toolInfo(BuildContext context, GCWTool tool) {
-  return GCWTool(
-    suppressHelpButton: true,
-    id: 'tool_info',
-    toolName: 'Tool info',
-    tool: _toolInfo(context, tool),
-    // )
-  );
-}
-
-Widget _toolInfo(BuildContext context, GCWTool tool) {
-  return FutureBuilder<Tuple2<String, String>>(
-      future: _toolInfoText(tool),
-      builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
-        return Column(children: [
-          GCWText(text: _toolName(context, tool)),
-          Container(height: 20),
-          GCWText(text: 'id: ' + (snapshot.data?.item1 ?? '')),
-          ((snapshot.data?.item2 ?? '').isNotEmpty)
-            ? _buildApiInfo(snapshot.data?.item2 ?? '')
-            : Container()
-        ]);
-      }
-  );
-}
-
-Widget _buildApiInfo(String apiInfo) {
-  return Column(children: [
-    Container(height: 20),
-    const GCWText(text: 'API info:'),
-    GCWCodeTextField(
-    controller: TextEditingController(text: apiInfo),
-    patternMap: _openApiHiglightMap,
-    ),
-  ]);
-}
-
-String _toolName(BuildContext context, GCWTool tool) {
-  return tool.toolName ?? i18n(context, tool.id + '_title');
-}
-
-const Map<String, TextStyle> _openApiHiglightMap = {
-  '"get"'  : TextStyle(color: Colors.blue),
-  '"parameters"'  : TextStyle(color: Colors.blue),
-  '"summary"'  : TextStyle(color: Colors.purple),
-  '"responses"'  : TextStyle(color: Colors.purple),
-  '"in"'  : TextStyle(color: Colors.purple),
-  '"name"'  : TextStyle(color: Colors.purple),
-  '"required"'  : TextStyle(color: Colors.purple),
-  '"description"'  : TextStyle(color: Colors.purple),
-  '"schema"'  : TextStyle(color: Colors.purple),
-  '"type"'  : TextStyle(color: Colors.green),
-  '"enum"'  : TextStyle(color: Colors.green),
-  '"default"'  : TextStyle(color: Colors.green),
-};
 
 InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String copyText) {
   return InkWell(
@@ -275,18 +213,26 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
               flex: 3,
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: SelectableText(
-                    id,
-                    textAlign: TextAlign.left,
-                    style: gcwTextStyle(),
-                    selectionControls: GCWTextSelectionControls(),
-                  )),
+                  child: Row (
+                    children: [
+                      if (_hasAPISpecification(tool))
+                        Icon(Icons.check, color: themeColors().secondary()),
+                      Container(width: DOUBLE_DEFAULT_MARGIN),
+                      SelectableText(
+                        '/' + id,
+                        textAlign: TextAlign.left,
+                        style: gcwTextStyle(),
+                        selectionControls: GCWTextSelectionControls(),
+                      )
+                    ],
+                  )
+                ),
             ),
             Expanded(
               flex: 2,
-              child: GCWText(text: _toolName(context, tool)),
+              child: GCWText(text: toolName(context, tool)),
             ),
-            copyText.isNotEmpty
+            _hasAPISpecification(tool)
                 ? GCWIconButton(
               iconColor: themeColors().mainFont(),
               size: IconButtonSize.SMALL,
@@ -299,7 +245,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
                 }
               },
             )
-            : Container(),
+            : Container(width: 40.0,),
             copyText.isNotEmpty
               ? GCWIconButton(
                 iconColor: themeColors().mainFont(),

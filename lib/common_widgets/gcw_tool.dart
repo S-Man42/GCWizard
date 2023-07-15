@@ -146,6 +146,10 @@ class GCWTool extends StatefulWidget {
   _GCWToolState createState() => _GCWToolState();
 }
 
+String toolName(BuildContext context, GCWTool tool) {
+  return tool.toolName ?? i18n(context, tool.id + '_title');
+}
+
 class _GCWToolState extends State<GCWTool> {
   late String _toolName;
   late String _defaultLanguageToolName;
@@ -160,7 +164,7 @@ class _GCWToolState extends State<GCWTool> {
   @override
   Widget build(BuildContext context) {
     // this is the case when tool is not called by Registry but as subpage of another tool
-    _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
+    _toolName = toolName(context, widget);
 
     _defaultLanguageToolName =
         widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
