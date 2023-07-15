@@ -49,7 +49,7 @@ const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '
 const _14SegmentTo_hij_g1g2_mlk = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'm', 'l': 'l', 'm': 'k', 'dp': 'dp' };
 const _14SegmentTo_fgh_nj_mlk   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'n': 'g1', 'j': 'g2', 'p': 'h', 'g': 'i', 'h': 'j', 'm': 'k', 'l': 'l', 'k': 'm', 'dp1': 'dp' };
 const _14SegmentTo_kmn_g1g2_rst = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'm', 's': 'l', 'r': 'k', 'dp': 'dp' };
-const _14SegmentTo_ghj_pk_nmi   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'p': 'g1', 'k': 'g2', 'g': 'h', 'h': 'i', 'j': 'j', 'n': 'm', 'm': 'l', 'i': 'k', 'dp': 'dp' };
+const _14SegmentTo_ghj_pk_nmi   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'p': 'g1', 'k': 'g2', 'g': 'h', 'h': 'i', 'j': 'j', 'i': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
 const _14SegmentTo_hjk_g1g2_nml = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'l': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
 
 final _7SegmentVariants = {
