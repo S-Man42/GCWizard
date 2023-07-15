@@ -34,7 +34,8 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
   var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
-  var _currentType = SegmentDisplayType.SEVEN;
+  var _currentDecryptType = SegmentDisplayType.SEVENAUTO;
+  var _currentEncryptType = SegmentDisplayType.SEVEN;
 
   List<GCWDropDownMenuItem<SegmentDisplayType>> _dropDownList = [];
   List<Widget> _selectedItemList = [];
@@ -45,13 +46,16 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
 
     switch (widget.type) {
       case SegmentDisplayType.FOURTEEN:
-        _currentType = SegmentDisplayType.FOURTEEN;
+        _currentDecryptType = SegmentDisplayType.FOURTEENAUTO;
+        _currentEncryptType = SegmentDisplayType.FOURTEEN;
         break;
       case SegmentDisplayType.SIXTEEN:
-        _currentType = SegmentDisplayType.SIXTEEN;
+        _currentDecryptType = SegmentDisplayType.SIXTEEN;
+        _currentEncryptType = SegmentDisplayType.SIXTEEN;
         break;
       default:
-        _currentType = SegmentDisplayType.SEVEN;
+        _currentDecryptType = SegmentDisplayType.SEVENAUTO;
+        _currentEncryptType = SegmentDisplayType.SEVEN;
     }
     _initDropDownList();
 
@@ -76,6 +80,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         onChanged: (value) {
           setState(() {
             _currentMode = value;
+            _initDropDownList();
           });
         },
       ),
@@ -87,7 +92,6 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
               rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
               onChanged: (value) {
                 setState(() {
-                  _initDropDownList();
                   _currentEncryptMode = value;
                   if (_currentEncryptMode == GCWSwitchPosition.right) {
                     _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
@@ -98,21 +102,29 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
           : Container(),
       _currentMode == GCWSwitchPosition.left // encrypt
           ? (_currentEncryptMode == GCWSwitchPosition.left
-              ? GCWTextField(
-                  controller: _inputEncodeController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentEncodeInput = text;
-                    });
-                  },
-                )
+              ? _buildEncrypt()
               : _buildVisualEncryption())
-          : _buildDectrypt(),
+          : _buildDecrypt(),
       _buildOutput(),
     ]);
   }
 
-  Widget _buildDectrypt() {
+  Widget _buildEncrypt() {
+    return Column(
+        children: <Widget>[
+          GCWTextField(
+            controller: _inputEncodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentEncodeInput = text;
+              });
+            },
+          ),
+          _buildDropDown()
+        ]);
+  }
+
+  Widget _buildDecrypt() {
     return Column(
         children: <Widget>[
           GCWTextField(
@@ -152,21 +164,21 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
       case SegmentDisplayType.SEVEN:
         displayWidget = SevenSegmentDisplay(
           segments: currentDisplay,
-          type: _currentType,
+          //type: widget.type,
           onChanged: onChanged,
         );
         break;
       case SegmentDisplayType.FOURTEEN:
         displayWidget = FourteenSegmentDisplay(
           segments: currentDisplay,
-          type: _currentType,
+          //type: _currentDecryptType,
           onChanged: onChanged,
         );
         break;
       case SegmentDisplayType.SIXTEEN:
         displayWidget = SixteenSegmentDisplay(
           segments: currentDisplay,
-          type: _currentType,
+         // type: _currentDecryptType,
           onChanged: onChanged,
         );
         break;
@@ -176,6 +188,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
 
     return Column(
       children: <Widget>[
+        _buildDropDown(),
         Container(
           width: 180,
           padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
@@ -219,7 +232,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
                 _currentDisplays.displays.map((character) {
                   return character.join();
                 }).join(' '),
-                widget.type).text)
+                _currentDecryptType).text)
       ],
     );
   }
@@ -231,19 +244,19 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
             case SegmentDisplayType.SEVEN:
               return SevenSegmentDisplay(
                 segments: displayedSegments,
-                type: _currentType,
+                type: baseSegmentType(_currentDecryptType),
                 readOnly: true,
               );
             case SegmentDisplayType.FOURTEEN:
               return FourteenSegmentDisplay(
                 segments: displayedSegments,
-                type: _currentType,
+                type: baseSegmentType(_currentDecryptType),
                 readOnly: true,
               );
             case SegmentDisplayType.SIXTEEN:
               return SixteenSegmentDisplay(
                 segments: displayedSegments,
-                type: _currentType,
+                type: baseSegmentType(_currentDecryptType),
                 readOnly: true,
               );
             default:
@@ -263,7 +276,8 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         segments = _currentDisplays;
       }
 
-      var output = segments.displays.map((character) {
+      var mappedsegments = mapFromVariant(segments, _currentEncryptType);
+      var output = mappedsegments.displays.map((character) {
         return character.join();
       }).join(' ');
 
@@ -271,7 +285,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         children: <Widget>[_buildDigitalOutput(segments), GCWDefaultOutput(child: output)],
       );
     } else {
-      var segments = decodeSegment(_currentDecodeInput, widget.type);
+      var segments = decodeSegment(_currentDecodeInput, _currentDecryptType);
 
       return Column(
         children: <Widget>[_buildDigitalOutput(segments), GCWDefaultOutput(child: segments.text)],
@@ -281,10 +295,14 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
 
   Widget _buildDropDown() {
     return GCWDropDown<SegmentDisplayType>(
-      value: _currentType,
+      value: (_currentMode == GCWSwitchPosition.right) ? _currentDecryptType : _currentEncryptType,
       onChanged: (value) {
         setState(() {
-          _currentType = value;
+          if (_currentMode == GCWSwitchPosition.right) {
+            _currentDecryptType = value;
+          } else {
+            _currentEncryptType = value;
+          }
         });
       },
       items: _dropDownList,
@@ -299,6 +317,9 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
     _selectedItemList = [];
     switch (widget.type) {
       case SegmentDisplayType.FOURTEEN:
+        if (_currentMode == GCWSwitchPosition.right) {
+          _addDropDownEntry('14segment_default.png', 'AUTO', null, SegmentDisplayType.FOURTEENAUTO);
+        }
         _addDropDownEntry('14segment_default.png', 'STANDARD', null, SegmentDisplayType.FOURTEEN);
         _addDropDownEntry('14segment_hij_g1g2_mlk.png', 'HIJ_G1G2_MLK', null, SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK);
         _addDropDownEntry('14segment_pgh_nj_mlk.png', 'FGH_NJ_MLK', null, SegmentDisplayType.FOURTEEN_FGH_NJ_MLK);
@@ -310,6 +331,9 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         _addDropDownEntry('16segment_default.png', 'STANDARD', null, SegmentDisplayType.SIXTEEN);
         break;
       default:
+        if (_currentMode == GCWSwitchPosition.right) {
+          _addDropDownEntry('7segment_default.png', 'AUTO', null, SegmentDisplayType.SEVENAUTO);
+        }
         _addDropDownEntry('7segment_default.png', 'STANDARD', null, SegmentDisplayType.SEVEN);
         _addDropDownEntry('7segment_12345678.png', '12345678', null, SegmentDisplayType.SEVEN12345678);
     }
