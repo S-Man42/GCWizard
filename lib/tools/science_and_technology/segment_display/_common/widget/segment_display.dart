@@ -318,7 +318,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
     switch (widget.type) {
       case SegmentDisplayType.FOURTEEN:
         if (_currentMode == GCWSwitchPosition.right) {
-          _addDropDownEntry('14segment_default.png', 'AUTO', null, SegmentDisplayType.FOURTEENAUTO);
+          _addDropDownEntry('14segment_auto.png', 'AUTO', null, SegmentDisplayType.FOURTEENAUTO);
         }
         _addDropDownEntry('14segment_default.png', 'STANDARD', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN);
         _addDropDownEntry('14segment_hij_g1g2_mlk.png', 'HIJ G1G2 MLK', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK);
@@ -328,11 +328,13 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         _addDropDownEntry('14segment_hjk_g1g2_nml.png', 'HJK G1G2 NML', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_HJK_G1G2_NML);
         break;
       case SegmentDisplayType.SIXTEEN:
+        _addDropDownEntry('16segment_auto.png', 'AUTO', null, SegmentDisplayType.SIXTEENAUTO);
         _addDropDownEntry('16segment_default.png', 'STANDARD', '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN);
+        _addDropDownEntry('16segment_kmn_up_qpn.png', 'KMN UP QPN', '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN_KMN_UP_QPN);
         break;
       default:
         if (_currentMode == GCWSwitchPosition.right) {
-          _addDropDownEntry('7segment_default.png', 'AUTO', null, SegmentDisplayType.SEVENAUTO);
+          _addDropDownEntry('7segment_auto.png', 'AUTO', null, SegmentDisplayType.SEVENAUTO);
         }
         _addDropDownEntry('7segment_default.png', 'STANDARD', '2 → abdeg', SegmentDisplayType.SEVEN);
         _addDropDownEntry('7segment_12345678.png', '12345678', '2 → 12457', SegmentDisplayType.SEVEN12345678);
@@ -373,9 +375,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
   Widget _buildDropDownSelectedItem(String iconName, String label, String? description) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: GCWText(
-          text: label,
-        )
+        child: Text(label, style: gcwTextStyle())
     );
   }
 }
