@@ -14,7 +14,7 @@ enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
   FOURTEEN_HJK_G1G2_NML,
   FOURTEEN_HJK_GM_QPN,
   SIXTEENAUTO,
-  SIXTEEN_KMN_UP_QPN
+  SIXTEEN_KMN_UP_TSR
 }
 const Variants7Segment = { SegmentDisplayType.SEVEN, SegmentDisplayType.SEVENAUTO, SegmentDisplayType.SEVEN12345678};
 const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOURTEENAUTO,
@@ -22,7 +22,7 @@ const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOUR
   SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, SegmentDisplayType.FOURTEEN_GHJ_PK_NMI,
   SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, SegmentDisplayType.FOURTEEN_HJK_GM_QPN};
 const Variants16Segment = { SegmentDisplayType.SIXTEEN, SegmentDisplayType.SIXTEENAUTO,
-  SegmentDisplayType.SIXTEEN_KMN_UP_QPN};
+  SegmentDisplayType.SIXTEEN_KMN_UP_TSR};
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
@@ -74,7 +74,7 @@ final _14SegmentVariants = {
 
 final _16SegmentVariants = {
   SegmentDisplayType.SIXTEEN : _createBaseVariant(_baseSegments16Segment),
-  SegmentDisplayType.SIXTEEN_KMN_UP_QPN : _16SegmentTo_kmn_up_tsr};
+  SegmentDisplayType.SIXTEEN_KMN_UP_TSR : _16SegmentTo_kmn_up_tsr};
 
 const Map<String, List<String>> _AZTo16Segment = {
   '1': ['b', 'c', 'j'],

@@ -57,7 +57,6 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         _currentDecryptType = SegmentDisplayType.SEVENAUTO;
         _currentEncryptType = SegmentDisplayType.SEVEN;
     }
-    _initDropDownList();
 
     _inputEncodeController = TextEditingController(text: _currentEncodeInput);
     _inputDecodeController = TextEditingController(text: _currentDecodeInput);
@@ -73,6 +72,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    if (_dropDownList.isEmpty) _initDropDownList();
 
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
@@ -318,25 +318,29 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
     switch (widget.type) {
       case SegmentDisplayType.FOURTEEN:
         if (_currentMode == GCWSwitchPosition.right) {
-          _addDropDownEntry('14segment_auto.png', 'AUTO', null, SegmentDisplayType.FOURTEENAUTO);
+          _addDropDownEntry('14segment_auto.png', i18n(context, 'segmentdisplay_automatic'),
+              i18n(context, 'segmentdisplay_automatic_description'), SegmentDisplayType.FOURTEENAUTO);
         }
-        _addDropDownEntry('14segment_default.png', 'STANDARD', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN);
+        _addDropDownEntry('14segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → abdeg1g2', SegmentDisplayType.FOURTEEN);
         _addDropDownEntry('14segment_hij_g1g2_mlk.png', 'HIJ G1G2 MLK', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK);
         _addDropDownEntry('14segment_pgh_nj_mlk.png', 'FGH NJ MLK', '2 → abdenj', SegmentDisplayType.FOURTEEN_FGH_NJ_MLK);
         _addDropDownEntry('14segment_kmn_g1g2_rst.png', 'KMN G1G2 RST', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_KMN_G1G2_RST);
         _addDropDownEntry('14segment_ghj_pk_nmi.png', 'GHJ PK NMI', '2 → abdepk', SegmentDisplayType.FOURTEEN_GHJ_PK_NMI);
         _addDropDownEntry('14segment_hjk_g1g2_nml.png', 'HJK G1G2 NML', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_HJK_G1G2_NML);
+        _addDropDownEntry('14segment_hjk_gm_qpn.png', 'HJK GM QPN', '2 → abdegm', SegmentDisplayType.FOURTEEN_HJK_GM_QPN);
         break;
       case SegmentDisplayType.SIXTEEN:
-        _addDropDownEntry('16segment_auto.png', 'AUTO', null, SegmentDisplayType.SIXTEENAUTO);
-        _addDropDownEntry('16segment_default.png', 'STANDARD', '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN);
-        _addDropDownEntry('16segment_kmn_up_qpn.png', 'KMN UP QPN', '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN_KMN_UP_QPN);
+        _addDropDownEntry('16segment_auto.png', i18n(context, 'segmentdisplay_automatic'),
+            i18n(context, 'segmentdisplay_automatic_description'), SegmentDisplayType.SIXTEENAUTO);
+        _addDropDownEntry('16segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN);
+        _addDropDownEntry('16segment_kmn_up_tsr.png', 'KMN UP TSR', '2 → abcefgup', SegmentDisplayType.SIXTEEN_KMN_UP_TSR);
         break;
       default:
         if (_currentMode == GCWSwitchPosition.right) {
-          _addDropDownEntry('7segment_auto.png', 'AUTO', null, SegmentDisplayType.SEVENAUTO);
+          _addDropDownEntry('7segment_auto.png', i18n(context, 'segmentdisplay_automatic'),
+              i18n(context, 'segmentdisplay_automatic_description'), SegmentDisplayType.SEVENAUTO);
         }
-        _addDropDownEntry('7segment_default.png', 'STANDARD', '2 → abdeg', SegmentDisplayType.SEVEN);
+        _addDropDownEntry('7segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → abdeg', SegmentDisplayType.SEVEN);
         _addDropDownEntry('7segment_12345678.png', '12345678', '2 → 12457', SegmentDisplayType.SEVEN12345678);
     }
   }
