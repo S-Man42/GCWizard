@@ -15,7 +15,7 @@ class CountriesFlags extends StatefulWidget {
 }
 
 class _CountriesFlagsState extends State<CountriesFlags> {
-  final _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
+  final _ASSET_PATH = 'lib/tools/symbol_tables/_common/assets/country_flags/country_flags.zip';
   final _KEY_PREFIX = 'common_country_';
 
   List<Map<String, SymbolData>> _images = [];

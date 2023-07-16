@@ -89,6 +89,7 @@ flutter:
     - lib/application/searchstrings/assets/
     - lib/tools/coords/_common/assets/icons/
     - lib/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/assets/quadgrams/
+    - lib/tools/science_and_technology/astronomy/iau_constellation/assets/
     - lib/tools/science_and_technology/segment_display/7_segment_display/assets/
     - lib/tools/science_and_technology/segment_display/14_segment_display/assets/
     - lib/tools/science_and_technology/segment_display/16_segment_display/assets/
@@ -209,7 +210,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/hylian_twilight_princess_wii/
     - lib/tools/symbol_tables/_common/assets/hylian_wind_waker/
     - lib/tools/symbol_tables/_common/assets/hymmnos/
-    - lib/tools/symbol_tables/_common/assets/iau_constellation/
     - lib/tools/symbol_tables/_common/assets/icecodes/
     - lib/tools/symbol_tables/_common/assets/iching/
     - lib/tools/symbol_tables/_common/assets/illuminati_v1/

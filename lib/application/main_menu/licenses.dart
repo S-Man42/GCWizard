@@ -61,7 +61,10 @@ class _LicensesState extends State<Licenses> {
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_fonts')),
       const GCWColumnedMultilineOutput(
-        data: [['Roboto', 'Google Fonts', 'Apache License, Version 2.0']]
+        data: [
+          ['Courier Prime', 'Google Fonts', 'SIL OPEN FONT LICENSE Version 1.1'],
+          ['Roboto', 'Google Fonts', 'Apache License, Version 2.0']
+        ]
       ),
       GCWTextDivider(text: i18n(context, 'licenses_additionalcode')),
       const GCWColumnedMultilineOutput(

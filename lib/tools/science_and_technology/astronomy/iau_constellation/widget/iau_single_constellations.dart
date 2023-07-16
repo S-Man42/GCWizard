@@ -19,7 +19,7 @@ class IAUSingleConstellation extends StatefulWidget {
 }
 
 class IAUSingleConstellationState extends State<IAUSingleConstellation> {
-  final String _ASSET_PATH = 'assets/symbol_tables/iau_constellation/iau_constellation.zip';
+  final String _ASSET_PATH = 'lib/tools/science_and_technology/astronomy/iau_constellation/assets/iau_constellation.zip';
 
   List<Map<String, SymbolData>> _images = [];
 
