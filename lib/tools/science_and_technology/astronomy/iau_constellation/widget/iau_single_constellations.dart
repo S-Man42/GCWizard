@@ -68,11 +68,10 @@ class IAUSingleConstellationState extends State<IAUSingleConstellation> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.ConstellationName);
     int constellationIndex =
         allConstellations.indexWhere((constellation) => constellation.ConstellationName == widget.ConstellationName);
 
-    List<List<dynamic>> data = [];
+    List<List<Object>> data = [];
 
     data.add([i18n(context, 'iau_constellation_iauname'), allConstellations[constellationIndex].ConstellationName]);
     data.add([i18n(context, 'iau_constellation_name'), i18n(context, allConstellations[constellationIndex].name)]);

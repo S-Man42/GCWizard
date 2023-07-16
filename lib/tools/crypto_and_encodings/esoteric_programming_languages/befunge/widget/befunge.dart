@@ -176,7 +176,6 @@ class _BefungeState extends State<Befunge> {
         ),
         child: GCWCodeTextField(
           controller: _codeGenerateController,
-          textStyle: gcwMonotypeTextStyle(),
         ),
       );
     }
