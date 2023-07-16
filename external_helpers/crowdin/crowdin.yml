@@ -17,12 +17,12 @@
 #
 files: [
     {
-        "source": "/assets/i18n/en.json",                                       #source files filter
-        "translation": "/assets/i18n/%two_letters_code%.json"        #where translations are stored
+        "source": "lib/application/i18n/assets/en.json",                                       #source files filter
+        "translation": "lib/application/i18n/assets/%two_letters_code%.json"        #where translations are stored
     },
     {
-        "source": "/assets/searchstrings/en.json",                                       #source files filter
-        "translation": "/assets/searchstrings/%two_letters_code%.json"        #where translations are stored
+        "source": "lib/application/searchstrings/assets/en.json",                                       #source files filter
+        "translation": "lib/application/searchstrings/assets/%two_letters_code%.json"        #where translations are stored
     },
     {
         "source": "/doc/gold/en/store_long_description.txt",                                       #source files filter

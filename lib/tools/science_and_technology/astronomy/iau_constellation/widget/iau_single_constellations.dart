@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/logic/iau_constellation.dart';
@@ -19,7 +19,7 @@ class IAUSingleConstellation extends StatefulWidget {
 }
 
 class IAUSingleConstellationState extends State<IAUSingleConstellation> {
-  final String _ASSET_PATH = 'assets/symbol_tables/iau_constellation/iau_constellation.zip';
+  final String _ASSET_PATH = 'lib/tools/science_and_technology/astronomy/iau_constellation/assets/iau_constellation.zip';
 
   List<Map<String, SymbolData>> _images = [];
 
@@ -68,11 +68,10 @@ class IAUSingleConstellationState extends State<IAUSingleConstellation> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.ConstellationName);
     int constellationIndex =
         allConstellations.indexWhere((constellation) => constellation.ConstellationName == widget.ConstellationName);
 
-    List<List<dynamic>> data = [];
+    List<List<Object>> data = [];
 
     data.add([i18n(context, 'iau_constellation_iauname'), allConstellations[constellationIndex].ConstellationName]);
     data.add([i18n(context, 'iau_constellation_name'), i18n(context, allConstellations[constellationIndex].name)]);

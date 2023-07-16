@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -154,7 +154,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
   Widget _buildOutput() {
     List<List<Object>> outputData = [];
     var flexValues = <int>[];
-    List<void Function()>? tappables;
+    List<void Function()> tappables;
 
     outputData.add(_buildHeader());
     outputData.addAll(_buildValueOutputs());
@@ -163,9 +163,17 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
       4,
       3,
     ];
-    tappables = outputData.map((data) {
-      return () => _showConstellation(data[_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? 1 : 2] as String);
-    }).toList();
+    tappables = outputData.asMap().map((index, data) {
+      if (index == 0) {
+        return MapEntry<int, void Function()>(index,
+          () => {}
+        );
+      }
+
+      return MapEntry<int, void Function()>(index,
+        () => _showConstellation(data[_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? 1 : 2] as String)
+      );
+    }).values.toList();
 
     List<Widget> rows = [
       GCWColumnedMultilineOutput(

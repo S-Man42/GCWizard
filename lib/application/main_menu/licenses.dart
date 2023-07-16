@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -61,7 +61,10 @@ class _LicensesState extends State<Licenses> {
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_fonts')),
       const GCWColumnedMultilineOutput(
-        data: [['Roboto', 'Google Fonts', 'Apache License, Version 2.0']]
+        data: [
+          ['Courier Prime', 'Google Fonts', 'SIL OPEN FONT LICENSE Version 1.1'],
+          ['Roboto', 'Google Fonts', 'Apache License, Version 2.0']
+        ]
       ),
       GCWTextDivider(text: i18n(context, 'licenses_additionalcode')),
       const GCWColumnedMultilineOutput(
