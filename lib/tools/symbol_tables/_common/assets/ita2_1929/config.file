@@ -1,0 +1,14 @@
+{
+	"translate" : [
+		"shift_to_sign_table", 
+		"shift_to_letter_table", 
+		"bell",
+		"national_1",
+		"national_2",
+		"national_3",
+		"national_4",
+		"rest",
+		"crlf",
+		"linefeed"
+		]
+}
