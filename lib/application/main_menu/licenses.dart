@@ -104,6 +104,7 @@ class _LicensesState extends State<Licenses> {
           const ['several', 'myGeoTools'],
           const ['several', 'Wikipedia'],
           [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_blue_monday_title'), 'adopted from https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/; (Personal Use)'],
           [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],

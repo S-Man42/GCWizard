@@ -3266,6 +3266,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
     ]),
+    GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
+      'symbol_blue_monday',
+    ]),
     GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: const [
       'symbol_brahmi_numerals',
     ]),

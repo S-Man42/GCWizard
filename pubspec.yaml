@@ -108,6 +108,7 @@ flutter:
     - assets/symbol_tables/baudot_54123/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
+    - assets/symbol_tables/blue_monday/
     - assets/symbol_tables/brahmi_numerals/
     - assets/symbol_tables/braille_de/
     - assets/symbol_tables/braille_en/
