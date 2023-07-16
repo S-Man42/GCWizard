@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 
 class GCWUnitPrefixDropDown extends StatefulWidget {
@@ -41,10 +41,11 @@ class _GCWUnitPrefixDropDownState extends State<GCWUnitPrefixDropDown> {
           return unitPrefixes.map((UnitPrefix prefix) {
             return Align(
               alignment: Alignment.centerLeft,
-              child: GCWText(
-                  text: widget.onlyShowSymbols
+              child: Text(
+                  widget.onlyShowSymbols
                       ? prefix.symbol
                       : _longText(prefix),
+                  style: gcwTextStyle()
               )
             );
           }).toList();

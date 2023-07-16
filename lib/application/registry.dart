@@ -413,6 +413,7 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/wi
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_list/widget/vanity_words_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_search/widget/vanity_words_search.dart';
+import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/weather_symbols.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
@@ -1224,6 +1225,13 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'unitconverter',
     ]),
+    GCWTool(
+        tool: const VelocityAcceleration(),
+        id: 'velocity_acceleration',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: const [
+          'velocity_acceleration'
+        ]),
     GCWTool(
         tool: const VanitySelection(),
         id: 'vanity_selection',

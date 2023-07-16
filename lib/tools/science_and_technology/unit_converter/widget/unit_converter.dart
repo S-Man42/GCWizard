@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/acceleration.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/angle.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/area.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/density.dart';
@@ -38,6 +39,7 @@ class UnitCategoryConfig {
 }
 
 final List<UnitCategoryConfig> _categories = [
+  UnitCategoryConfig(category: UNITCATEGORY_ACCELERATION, default_from_unit: ACCELERATION_METERSPERSQUARESECONDS, default_to_unit: ACCELERATION_FEETPERSQUARESECOND),
   UnitCategoryConfig(category: UNITCATEGORY_ANGLE, default_from_unit: ANGLE_DEGREE, default_to_unit: ANGLE_RADIAN),
   UnitCategoryConfig(category: UNITCATEGORY_AREA, default_from_unit: AREA_SQUAREMETER, default_to_unit: AREA_SQUAREKILOMETER),
   UnitCategoryConfig(

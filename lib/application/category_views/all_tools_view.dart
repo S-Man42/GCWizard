@@ -259,6 +259,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
+import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
@@ -713,6 +714,7 @@ void _initStaticToolList() {
       className(const UrwigoTextDeobfuscation()),
       className(const VanitySelection()),
       className(const VariableCoordinateFormulas()),
+      className(const VelocityAcceleration()),
       className(const Vigenere()),
       className(const VigenereBreaker()),
       className(const VisualCryptography()),
