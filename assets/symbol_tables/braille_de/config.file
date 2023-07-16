@@ -1,7 +1,0 @@
-{
-	"case_sensitive" : false,
-	"special_mappings" : {
-		"article" : "Art."
-    },
-	"translate" : ["capital_follows", "number_follows"]
-}

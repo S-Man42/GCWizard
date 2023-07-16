@@ -10,7 +10,7 @@ import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_sp
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
-const SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
+const SYMBOLTABLES_ASSETPATH = 'lib/tools/symbol_tables/_common/assets/';
 
 class SymbolTableConstants {
   static final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
