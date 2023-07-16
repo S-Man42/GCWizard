@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';

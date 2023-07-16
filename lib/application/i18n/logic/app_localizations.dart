@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/application/search_strings.dart';
+import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
@@ -49,7 +49,7 @@ class AppLocalizations {
 
   Future<Map<String, String>> loadLang(String langCode) async {
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString('assets/i18n/$langCode.json');
+    String jsonString = await rootBundle.loadString('lib/application/i18n/assets/$langCode.json');
     var decoded = json.decode(jsonString);
     if (!(isJsonMap(decoded))) return <String, String>{};
 

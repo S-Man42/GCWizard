@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_common/spelling_alphabets_data.dart';
 
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';

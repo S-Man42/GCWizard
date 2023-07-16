@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_specialsorts.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';

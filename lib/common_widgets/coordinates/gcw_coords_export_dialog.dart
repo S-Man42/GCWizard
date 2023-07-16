@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_export.dart';

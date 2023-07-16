@@ -69,21 +69,26 @@ dev_dependencies:
 
 flutter:
   fonts:
+    - family: Courier
+      fonts:
+        - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-Bold.ttf
+        - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-BoldItalic.ttf
+        - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-Italic.ttf
+        - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-Regular.ttf
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
-        - asset: assets/fonts/Roboto/Roboto-BoldItalic.ttf
-        - asset: assets/fonts/Roboto/Roboto-Italic.ttf
-        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+        - asset: lib/application/_common/assets/fonts/Roboto/Roboto-Bold.ttf
+        - asset: lib/application/_common/assets/fonts/Roboto/Roboto-BoldItalic.ttf
+        - asset: lib/application/_common/assets/fonts/Roboto/Roboto-Italic.ttf
+        - asset: lib/application/_common/assets/fonts/Roboto/Roboto-Regular.ttf
   uses-material-design: true
   assets:
-    - assets/i18n/
     - assets/logo/
-    - assets/icons/coords/
-    - assets/icons/science_and_technology/
-    - assets/quadgrams/
     - assets/tokens/
-    - assets/searchstrings/
+    - lib/application/i18n/assets/
+    - lib/application/searchstrings/assets/
+    - lib/tools/coords/_common/assets/icons/
+    - lib/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/assets/quadgrams/
     - lib/tools/science_and_technology/segment_display/7_segment_display/assets/
     - lib/tools/science_and_technology/segment_display/14_segment_display/assets/
     - lib/tools/science_and_technology/segment_display/16_segment_display/assets/

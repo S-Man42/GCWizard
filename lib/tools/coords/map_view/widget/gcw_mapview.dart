@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';

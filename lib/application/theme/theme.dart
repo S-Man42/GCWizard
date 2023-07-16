@@ -34,7 +34,7 @@ TextStyle gcwBetaStyle() {
 }
 
 TextStyle gcwMonotypeTextStyle() {
-  return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier', fontWeight: FontWeight.bold);
+  return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier');
 }
 
 TextStyle gcwHyperlinkTextStyle() {

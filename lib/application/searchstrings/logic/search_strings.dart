@@ -33,7 +33,7 @@ Future<void> _loadLocaleSearchStrings(String languageCode) async {
 Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
   String file;
   try {
-    file = await rootBundle.loadString('assets/searchstrings/$locale.json');
+    file = await rootBundle.loadString('lib/application/searchstrings/assets/$locale.json');
   } catch (e) {
     file = '{}';
   }

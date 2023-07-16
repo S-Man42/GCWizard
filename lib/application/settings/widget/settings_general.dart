@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
-import 'package:gc_wizard/application/i18n/app_language.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/logic/app_language.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
