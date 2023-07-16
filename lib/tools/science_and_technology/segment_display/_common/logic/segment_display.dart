@@ -8,7 +8,7 @@ enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
   SEVENAUTO, SEVEN12345678,
   FOURTEENAUTO,
   FOURTEEN_HIJ_G1G2_MLK,
-  FOURTEEN_FGH_NJ_MLK,
+  FOURTEEN_PGH_NJ_MLK,
   FOURTEEN_KMN_G1G2_RST,
   FOURTEEN_GHJ_PK_NMI,
   FOURTEEN_HJK_G1G2_NML,
@@ -18,7 +18,7 @@ enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
 }
 const Variants7Segment = { SegmentDisplayType.SEVEN, SegmentDisplayType.SEVENAUTO, SegmentDisplayType.SEVEN12345678};
 const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOURTEENAUTO,
-  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, SegmentDisplayType.FOURTEEN_FGH_NJ_MLK,
+  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, SegmentDisplayType.FOURTEEN_PGH_NJ_MLK,
   SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, SegmentDisplayType.FOURTEEN_GHJ_PK_NMI,
   SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, SegmentDisplayType.FOURTEEN_HJK_GM_QPN};
 const Variants16Segment = { SegmentDisplayType.SIXTEEN, SegmentDisplayType.SIXTEENAUTO,
@@ -50,7 +50,7 @@ const _baseSegments16Segment = [
 const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'dp' };
 
 const _14SegmentTo_hij_g1g2_mlk = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'm', 'l': 'l', 'm': 'k', 'dp': 'dp' };
-const _14SegmentTo_fgh_nj_mlk   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'n': 'g1', 'j': 'g2', 'p': 'h', 'g': 'i', 'h': 'j', 'm': 'k', 'l': 'l', 'k': 'm', 'dp1': 'dp' };
+const _14SegmentTo_pgh_nj_mlk   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'n': 'g1', 'j': 'g2', 'p': 'h', 'g': 'i', 'h': 'j', 'm': 'k', 'l': 'l', 'k': 'm', 'dp1': 'dp' };
 const _14SegmentTo_kmn_g1g2_rst = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'm', 's': 'l', 'r': 'k', 'dp': 'dp' };
 const _14SegmentTo_ghj_pk_nmi   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'p': 'g1', 'k': 'g2', 'g': 'h', 'h': 'i', 'j': 'j', 'i': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
 const _14SegmentTo_hjk_g1g2_nml = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'l': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
@@ -66,7 +66,7 @@ final _7SegmentVariants = {
 final _14SegmentVariants = {
   SegmentDisplayType.FOURTEEN : _createBaseVariant(_baseSegments14Segment),
   SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK : _14SegmentTo_hij_g1g2_mlk,
-  SegmentDisplayType.FOURTEEN_FGH_NJ_MLK : _14SegmentTo_fgh_nj_mlk,
+  SegmentDisplayType.FOURTEEN_PGH_NJ_MLK : _14SegmentTo_pgh_nj_mlk,
   SegmentDisplayType.FOURTEEN_KMN_G1G2_RST : _14SegmentTo_kmn_g1g2_rst,
   SegmentDisplayType.FOURTEEN_GHJ_PK_NMI :_14SegmentTo_ghj_pk_nmi,
   SegmentDisplayType.FOURTEEN_HJK_G1G2_NML : _14SegmentTo_hjk_g1g2_nml,
@@ -670,8 +670,8 @@ Segments encodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK:
       AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_hij_g1g2_mlk);
       break;
-    case SegmentDisplayType.FOURTEEN_FGH_NJ_MLK:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_fgh_nj_mlk);
+    case SegmentDisplayType.FOURTEEN_PGH_NJ_MLK:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_pgh_nj_mlk);
       break;
     case SegmentDisplayType.FOURTEEN_KMN_G1G2_RST:
       AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_kmn_g1g2_rst);
@@ -732,8 +732,8 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK:
       baseSegments = _14SegmentTo_hij_g1g2_mlk;
       break;
-    case SegmentDisplayType.FOURTEEN_FGH_NJ_MLK:
-      baseSegments = _14SegmentTo_fgh_nj_mlk;
+    case SegmentDisplayType.FOURTEEN_PGH_NJ_MLK:
+      baseSegments = _14SegmentTo_pgh_nj_mlk;
       break;
     case SegmentDisplayType.FOURTEEN_KMN_G1G2_RST:
       baseSegments = _14SegmentTo_kmn_g1g2_rst;
@@ -824,7 +824,7 @@ bool segmentActive(Map<String, bool> segments, String segment) {
   return segments[segment] ?? false;
 }
 
-Segments mapFromVariant(Segments segments, SegmentDisplayType segmentType) {
+Segments mapToVariant(Segments segments, SegmentDisplayType segmentType) {
   var baseType = baseSegmentType(segmentType);
   Map<String, String> mapList = {};
   var mappedSegment = Segments(displays: []);
