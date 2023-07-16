@@ -81,6 +81,9 @@ flutter:
     - assets/logo/
     - assets/icons/coords/
     - assets/icons/science_and_technology/
+    - lib/tools/science_and_technology/segment_display/7_segment_display/assets/
+    - lib/tools/science_and_technology/segment_display/14_segment_display/assets/
+    - lib/tools/science_and_technology/segment_display/16_segment_display/assets/
     - assets/quadgrams/
     - assets/tokens/
     - assets/searchstrings/
