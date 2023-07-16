@@ -1,3 +1,4 @@
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
@@ -29,6 +30,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
 
 abstract class BaseCoordFormatKey{}
 
@@ -214,7 +216,7 @@ class DMM extends BaseCoordinate {
 
   @override
   String toString([int? precision]) {
-    precision = precision ?? 6;
+    precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }
