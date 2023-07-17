@@ -1,0 +1,13 @@
+{
+	"translate" : [
+		"d_dot", 
+		"epsilon", 
+		"gamma", 
+		"gw", 
+		"h_dot", 
+		"kw", 
+		"r_dot", 
+		"s_dot", 
+		"t_dot",
+		"z_dot"]
+}
