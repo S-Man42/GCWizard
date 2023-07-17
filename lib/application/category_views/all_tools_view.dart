@@ -250,6 +250,7 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/popham_telegra
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/schilling_canstatt_telegraph/widget/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widget/semaphore.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/steinheil/widget/steinheil.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/widget/wigwag.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/algol/widget/algol.dart';
@@ -689,6 +690,7 @@ void _initStaticToolList() {
       className(const SQRT3Selection()),
       className(const SQRT5Selection()),
       className(const Stegano()),
+      className(const SteinheilTelegraph()),
       className(const StraddlingCheckerboard()),
       className(const Substitution()),
       className(const SubstitutionBreaker()),

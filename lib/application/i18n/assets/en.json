@@ -5320,6 +5320,8 @@
   "telegraph_schillingcanstatt_stop": "STOP",
   "telegraph_schillingcanstatt_goon": "Go ON",
   "telegraph_schillingcanstatt_finish": "FINISH",
+  "telegraph_steinheil_title": "Steinheil Telegraph (Germany)",
+  "telegraph_steinheil_description": "Electricl Telegraph with 2 pins invented by Carl August von Steinheil, 1837",
   "telegraph_wheatstonecooke_needle_title": "Wheatstone Cooke Telegraph Code",
   "telegraph_wheatstonecooke_needle_description": "Electrical Telegraph with 1,2 or 5 needles, Code based on the deflection of telegraph needles",
   "telegraph_wheatstonecooke_needle_example": "HELLO → /\\||| /|\\|| |||/\\ |||/\\ ||\\/|",
