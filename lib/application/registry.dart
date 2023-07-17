@@ -4005,6 +4005,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: const [
       'symbol_three_squares',
     ]),
+    GCWSymbolTableTool(symbolKey: 'tifinagh', symbolSearchStrings: const [
+      'symbol_tifinagh',
+    ]),
     GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: const [
       'symbol_tines',
     ]),
