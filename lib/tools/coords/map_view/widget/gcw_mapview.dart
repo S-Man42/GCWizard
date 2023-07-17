@@ -771,8 +771,9 @@ class _GCWMapViewState extends State<GCWMapView> {
     ThemeColors colors = themeColors();
     _GCWMarker gcwMarker = marker as _GCWMarker;
 
-    var height = 150.0;
-    if (gcwMarker.mapPoint.isEditable) height += 50;
+    var height = 100.0;
+    if (widget.isEditable) height += 50;  // for FROM/TO Line Buttons
+    if (gcwMarker.mapPoint.isEditable) height += 50; // for Edit Buttons
 
     var containerHeightMultiplier = 2;
     if (gcwMarker.mapPoint.hasCircle()) containerHeightMultiplier += 1;
@@ -873,7 +874,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     ]
                 )
                 : Container(),
-            _isOwnPosition(gcwMarker.mapPoint) ? Container() :
+            _isOwnPosition(gcwMarker.mapPoint) || !widget.isEditable ? Container() :
                 _isPolylineDrawing
                     ? GCWDialogButton(
                     text: i18n(context, 'coords_openmap_linetohere'),
