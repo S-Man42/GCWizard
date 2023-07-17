@@ -85,7 +85,6 @@ flutter:
   assets:
     - assets/logo/
     - assets/tokens/
-    - assets/searchstrings/
     - lib/application/i18n/assets/
     - lib/application/searchstrings/assets/
     - lib/tools/coords/_common/assets/icons/
@@ -116,6 +115,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/barcode39/
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
+    - lib/tools/symbol_tables/_common/assets/berber/
     - lib/tools/symbol_tables/_common/assets/birds_on_a_wire/
     - lib/tools/symbol_tables/_common/assets/blox/
     - lib/tools/symbol_tables/_common/assets/blue_monday/
@@ -319,6 +319,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/spintype/
     - lib/tools/symbol_tables/_common/assets/sprykski/
     - lib/tools/symbol_tables/_common/assets/stenography/
+    - lib/tools/symbol_tables/_common/assets/steinheil/
     - lib/tools/symbol_tables/_common/assets/stippelcode/
     - lib/tools/symbol_tables/_common/assets/suetterlin/
     - lib/tools/symbol_tables/_common/assets/sunuz/
