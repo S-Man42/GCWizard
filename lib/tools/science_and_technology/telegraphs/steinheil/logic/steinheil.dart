@@ -2,56 +2,69 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-
-
-final Map<String, List<String>> _CODEBOOK_STEINHEIL = {
-  'A': ['b', 'e', 'g', ],
+Map<String, List<String>> _CODEBOOK_STEINHEIL_V3 = {
+  'E': ['h'],
+  'I': ['d'],
+  'J': ['d'],
+};
+Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
+  'D': ['c', 'h', ],
+  'E': ['g'],
+  'I': ['c'],
+  'J': ['c'],
+  'N': ['c', 'd'],
+  'R': ['g', 'h'],
+  'T': ['d', 'g'],
+};
+Map<String, List<String>> _CODEBOOK_STEINHEIL_V1 = {
   'A': ['c', 'f', 'h', ],
+  'C': ['d', 'f', 'g'],
+  'D': ['b', 'g', ],
+  'E': ['f'],
+  'F': ['c', 'd', 'f',],
+  'G': ['b', 'c', 'h'],
+  'I': ['b'],
+  'J': ['b'],
+  'K': ['d', 'f', 'g'],
+  'L': ['b', 'g', 'h'],
+  'M': ['b', 'c', 'd'],
+  'N': ['b', 'c'],
+  'O': ['f', 'g', 'h'],
+  'R': ['f', 'g'],
+  'T': ['c', 'f'],
+  'U': ['b', 'd', 'g'],
+  'V': ['b', 'd', 'g'],
+  '0': ['f', 'g', 'h'],
+  '9': ['b', 'c', 'h'],
+};
+
+Map<String, List<String>> _CODEBOOK_STEINHEIL = {
+  'A': ['b', 'e', 'g', ],
   'B': ['b', 'c', 'e', 'h'],
   'C': ['c', 'e', 'f'],
-  'C': ['d', 'f', 'g'],
   'CH': ['e', 'f', 'g', 'h'],
   'D': ['a', 'f', ],
-  'D': ['b', 'g', ],
-  'D': ['c', 'h', ],
   'E': ['e'],
-  'E': ['f'],
-  'E': ['g'],
-  'E': ['h'],
   'F': ['b', 'c', 'e',],
-  'F': ['c', 'd', 'f',],
   'G': ['a', 'b', 'g'],
-  'G': ['b', 'c', 'h'],
   'H': ['a', 'b', 'c', 'd'],
   'I': ['a'],
-  'I': ['b'],
-  'I': ['c'],
-  'I': ['d'],
   'J': ['a'],
-  'J': ['b'],
-  'J': ['c'],
-  'J': ['d'],
   'K': ['c', 'e', 'f'],
-  'K': ['d', 'f', 'g'],
   'L': ['a', 'f', 'g'],
-  'L': ['b', 'g', 'h'],
   'M': ['a', 'b', 'c'],
-  'M': ['b', 'c', 'd'],
-  'N': ['', '', '', ''],
-  'O': ['', ''],
-  'P': ['', '', '', ''],
-  'Q': ['', ''],
-  'R': ['', '', '', ''],
-  'S': ['', ''],
+  'N': ['a', 'b',],
+  'O': ['e', 'f', 'g'],
+  'P': ['a', 'd', 'f', 'g'],
+  'R': ['e', 'f',],
+  'S': ['c', 'd', 'e', 'f'],
   'SCH': ['b', 'd', 'e', 'g'],
-  'T': ['', ''],
-  'V': ['', '', '', ''],
-  'W': ['', ''],
-  'X': ['', '', '', ''],
-  'Y': ['', ''],
-  'Z': ['', '', '', ''],
+  'T': ['b', 'e'],
+  'U': ['a', 'c', 'f'],
+  'V': ['a', 'c', 'f'],
+  'W': ['a', 'c', 'f', 'h'],
+  'Z': ['a', 'b', 'g', 'h'],
   '0': ['e', 'f', 'g'],
-  '0': ['f', 'g', 'h'],
   '1': ['b', 'c', 'd', 'e'],
   '2': ['a', 'c', 'd', 'f'],
   '3': ['a', 'b', 'd', 'g'],
@@ -61,7 +74,6 @@ final Map<String, List<String>> _CODEBOOK_STEINHEIL = {
   '7': ['c', 'd', 'e', 'f'],
   '8': ['d', 'e', 'f', 'g'],
   '9': ['a', 'b', 'g'],
-  '9': ['b', 'c', 'h'],
 };
 
 Segments encodeSteinheil(String input) {
@@ -81,12 +93,14 @@ SegmentsChars decodeSteinheil(List<String> inputs) {
   var displays = <List<String>>[];
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(_CODEBOOK_STEINHEIL);
+  CODEBOOK.addAll(switchMapKeyValue(_CODEBOOK_STEINHEIL_V1));
+  CODEBOOK.addAll(switchMapKeyValue(_CODEBOOK_STEINHEIL_V2));
+  CODEBOOK.addAll(switchMapKeyValue(_CODEBOOK_STEINHEIL_V3));
 
   List<String> text = inputs.map((input) {
     var char = '';
     var charH = '';
     var display = <String>[];
-
     input.split('').forEach((element) {
       display.add(element);
     });

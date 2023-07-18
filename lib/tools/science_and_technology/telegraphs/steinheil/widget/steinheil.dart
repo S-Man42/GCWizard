@@ -88,8 +88,8 @@ class _SteinheilTelegraphState extends State<SteinheilTelegraph> {
     return Column(
       children: <Widget>[
         Container(
-          width: 150,
-          height: 220,
+          width: 220,
+          height: 180,
           padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
