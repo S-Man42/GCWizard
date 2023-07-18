@@ -104,13 +104,11 @@ class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbol
       String chunk;
       for (i = min(_data.maxSymbolTextLength, _text.length); i > 0; i--) {
         chunk = _text.substring(0, i);
-
-        if (isCaseSensitive) {
-          if (_alphabetMap.containsKey(chunk)) {
+        
+        if (_alphabetMap.containsKey(chunk)) {
             imageIndex = _alphabetMap[chunk];
             break;
-          }
-        } else {
+        } else if (!isCaseSensitive) {
           if (_alphabetMap.containsKey(chunk.toUpperCase())) {
             imageIndex = _alphabetMap[chunk.toUpperCase()];
             break;
