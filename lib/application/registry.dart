@@ -3611,6 +3611,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: const [
       'symbol_intergalactic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'interlac', symbolSearchStrings: const [
+      'symbol_interlac',
+    ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
     ]),
