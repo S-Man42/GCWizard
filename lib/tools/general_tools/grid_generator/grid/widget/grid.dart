@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -485,27 +486,19 @@ class _GridState extends State<Grid> {
   Widget _buildGrid() {
     return Column(
       children: [
-        SingleChildScrollView(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Container(
-              constraints: BoxConstraints(maxWidth: min(500,
-                  min(maxScreenWidth(context) * 0.95, maxScreenHeight(context) * 0.8)) * _scale),
-              margin: const EdgeInsets.symmetric(vertical: 20.0),
-              child: _GridPainter(
-                tapColor: _currentColor,
-                type: _currentConfigType,
-                countColumns: _currentConfigColumns,
-                countRows: _currentConfigRows,
-                boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration ?? ''),
-                columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration ?? ''),
-                rowEnumeration: _getEnumeration(_currentConfigRowEnumeration ?? ''),
-                boxEnumerationStart: _currentConfigBoxEnumerationStart,
-                boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
-                boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,
-              ),
-            ),
+        GCWPainterContainer(
+          onChanged: (value) {_scale = value;},
+          child: _GridPainter(
+            tapColor: _currentColor,
+            type: _currentConfigType,
+            countColumns: _currentConfigColumns,
+            countRows: _currentConfigRows,
+            boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration ?? ''),
+            columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration ?? ''),
+            rowEnumeration: _getEnumeration(_currentConfigRowEnumeration ?? ''),
+            boxEnumerationStart: _currentConfigBoxEnumerationStart,
+            boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
+            boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,
           ),
         ),
         Row(children: _GridPaintColor.values.map((color) => _buildColorField(color)).toList()),
