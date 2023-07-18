@@ -339,6 +339,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/thai_numerals/
     - lib/tools/symbol_tables/_common/assets/theban/
     - lib/tools/symbol_tables/_common/assets/three_squares/
+    - lib/tools/symbol_tables/_common/assets/tifinagh/
     - lib/tools/symbol_tables/_common/assets/tines/
     - lib/tools/symbol_tables/_common/assets/tomtom/
     - lib/tools/symbol_tables/_common/assets/trafficsigns_germany/
