@@ -3268,8 +3268,6 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'baudot_1888', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(
         symbolKey: 'baudot_54123', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
-    GCWSymbolTableTool(
-        symbolKey: 'berber', symbolSearchStrings: const ['symbol_berber']),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: const [
       'symbol_birds_on_a_wire',
     ]),
