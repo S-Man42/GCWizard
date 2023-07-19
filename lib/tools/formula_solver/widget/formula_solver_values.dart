@@ -48,6 +48,7 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
     if (entry.key.isNotEmpty) {
       entry = FormulaValue(entry.key, entry.value);
       entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
+      entry.key = _newKeyController.text;
 
       return entry;
     }
