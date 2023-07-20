@@ -35,8 +35,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
     _editNameController = TextEditingController(text: _currentEditedName);
-
-    refreshFormulas();
   }
 
   @override

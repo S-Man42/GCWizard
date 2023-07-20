@@ -71,16 +71,6 @@ void updateFormula(Formula formula, FormulaGroup group) {
   updateAndSave(group);
 }
 
-int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
-  var id = newID(group.values.map((value) => (value.id as int?)).toList());
-  formulaValue.id = id;
-  group.values.add(formulaValue);
-
-  updateAndSave(group);
-
-  return id;
-}
-
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
   group.values = group.values.map((value) {
@@ -106,12 +96,6 @@ void deleteFormula(int? formulaId, FormulaGroup group) {
   }
 
   group.formulas.removeWhere((formula) => formula.id == formulaId);
-
-  updateAndSave(group);
-}
-
-void deleteFormulaValue(int formulaValueId, FormulaGroup group) {
-  group.values.removeWhere((value) => value.id == formulaValueId);
 
   updateAndSave(group);
 }

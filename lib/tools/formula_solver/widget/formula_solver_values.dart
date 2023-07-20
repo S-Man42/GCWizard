@@ -16,8 +16,6 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
   void initState() {
     super.initState();
     _newKeyController = TextEditingController(text: _maxLetter());
-
-    refreshFormulas();
   }
 
   @override
