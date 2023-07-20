@@ -11,7 +11,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'h': false
 };
 
-const _STEINHEIL_RELATIVE_DISPLAY_WIDTH = 110;
+const _STEINHEIL_RELATIVE_DISPLAY_WIDTH = 100;
 const _STEINHEIL_RELATIVE_DISPLAY_HEIGHT = 100;
 const _STEINHEIL_RADIUS = 12;
 
@@ -38,13 +38,13 @@ class _SteinheilSegmentDisplay extends NSegmentDisplay {
 
         var circles = {
           'a': [15, 20],
-          'b': [45, 20],
-          'c': [75, 20],
-          'd': [105, 20],
-          'e': [15, 50],
-          'f': [45, 50],
-          'g': [75, 50],
-          'h': [105, 50]
+          'b': [40, 20],
+          'c': [65, 20],
+          'd': [90, 20],
+          'e': [15, 60],
+          'f': [40, 60],
+          'g': [65, 60],
+          'h': [90, 60]
         };
 
         circles.forEach((key, value) {
