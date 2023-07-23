@@ -4032,6 +4032,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: const [
       'symbol_visitor_2009',
     ]),
+    GCWSymbolTableTool(symbolKey: 'voynich', symbolSearchStrings: const [
+      'symbol_voynich',
+    ]),
     GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: const [
       'symbol_vulcanian',
     ]),

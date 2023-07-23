@@ -345,6 +345,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/utopian/
     - lib/tools/symbol_tables/_common/assets/visitor_1984/
     - lib/tools/symbol_tables/_common/assets/visitor_2009/
+    - lib/tools/symbol_tables/_common/assets/voynich/
     - lib/tools/symbol_tables/_common/assets/vulcanian/
     - lib/tools/symbol_tables/_common/assets/wakandan/
     - lib/tools/symbol_tables/_common/assets/weather_a/
