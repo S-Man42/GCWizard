@@ -858,7 +858,7 @@ class Geohashing extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
   }
 }
