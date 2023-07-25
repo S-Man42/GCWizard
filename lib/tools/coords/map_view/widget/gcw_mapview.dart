@@ -203,8 +203,6 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                absorbPanEventsOnScrollables: false,
-
                 /// IMPORTANT for dragging
                 bounds: _getBounds(),
                 boundsOptions: const FitBoundsOptions(padding: EdgeInsets.all(30.0)),
@@ -301,14 +299,16 @@ class _GCWMapViewState extends State<GCWMapView> {
             _showPolylineDialog(polylines.first as _GCWTappablePolyline);
           },
         ),
-      PopupMarkerLayerWidget(
+      PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
               markers: _markers,
-              popupSnap: PopupSnap.markerTop,
               popupController: _popupLayerController.popupController,
-              popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
               markerCenterAnimation: const MarkerCenterAnimation(
                 duration: Duration.zero
+              ),
+              popupDisplayOptions: PopupDisplayOptions(
+                builder: (BuildContext _, Marker marker) => _buildPopup(marker),
+                snap: PopupSnap.markerTop,
               ),
           )
       ),
@@ -538,7 +538,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
         CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
         Offset delta = details.delta;
-        LatLng pointToLatLng = const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom)!;
+        LatLng pointToLatLng = const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
 
         point.point = pointToLatLng;
 
