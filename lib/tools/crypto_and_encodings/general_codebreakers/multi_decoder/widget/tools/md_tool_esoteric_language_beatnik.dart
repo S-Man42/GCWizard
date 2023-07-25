@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language/logic/beatnik_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language/widget/beatnik_language.dart';
@@ -27,6 +27,12 @@ class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
                 var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK, options, MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE);
 
                 var _output = interpretBeatnik(option, input, key);
+                if (_output.output.isNotEmpty) {
+                  if (_output.output.first.startsWith('beatnik_') ||
+                      _output.output.first.startsWith('common_programming_')) {
+                    return null;
+                  }
+                }
                 return beatnikBuildOutputText(context, _output.output);
               } catch (e) {
                 return null;

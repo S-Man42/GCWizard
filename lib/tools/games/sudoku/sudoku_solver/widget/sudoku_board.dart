@@ -96,7 +96,7 @@ class SudokuBoardPainter extends CustomPainter {
 
             if (board.getValue(boardX, boardY) != null) {
               var textColor =
-              board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.secondary() : colors.mainFont();
+                board.getFillType(boardX, boardY) == SudokuFillType.USER_FILLED ? colors.secondary() : colors.mainFont();
 
               TextSpan span = TextSpan(
                   style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),

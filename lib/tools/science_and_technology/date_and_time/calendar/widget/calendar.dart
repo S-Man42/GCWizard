@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/widget/calendar_i18n.dart';
@@ -22,6 +23,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   CalendarSystem _currentCalendarSystem = CalendarSystem.JULIANDATE;
   double _currentJulianDate = 0.0;
+  int _currentTimeStamp = 0;
   late DateTime _currentDate;
 
   @override
@@ -65,6 +67,26 @@ class _CalendarState extends State<Calendar> {
                   _currentJulianDate = value;
                 });
               }),
+        if (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP)
+          GCWIntegerSpinner(
+              value: _currentTimeStamp,
+              min: 0,
+              max: 8640000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+              onChanged: (value) {
+                setState(() {
+                  _currentTimeStamp = value;
+                });
+              }),
+        if (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
+          GCWIntegerSpinner(
+              value: _currentTimeStamp,
+              min: 0,
+              max: 100000000, //max days according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+              onChanged: (value) {
+                setState(() {
+                  _currentTimeStamp = value;
+                });
+              }),
         if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR ||
             _currentCalendarSystem == CalendarSystem.GREGORIANCALENDAR ||
             _currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR ||
@@ -89,6 +111,7 @@ class _CalendarState extends State<Calendar> {
   Widget _buildOutput() {
     double jd = 0.0;
     var output = <String, Object?>{};
+
     switch (_currentCalendarSystem) {
       case CalendarSystem.MODIFIEDJULIANDATE:
         jd = ModifedJulianDateToJulianDate(_currentJulianDate);
@@ -124,6 +147,14 @@ class _CalendarState extends State<Calendar> {
         break;
       case CalendarSystem.POTRZEBIECALENDAR:
         jd = PotrzebieCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+        break;
+      case CalendarSystem.UNIXTIMESTAMP:
+        jd = UnixTimestampToJulianDate(_currentTimeStamp);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+        break;
+      case CalendarSystem.EXCELTIMESTAMP:
+        jd = ExcelTimestampToJulianDate(_currentTimeStamp);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
         break;
       default:
@@ -167,6 +198,14 @@ class _CalendarState extends State<Calendar> {
 
     output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
 
+    output['dates_calendar_system_exceltimestamp'] = _invalidExcelDate(jd)
+        ? i18n(context, 'dates_calendar_excel_error')
+        : (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP) ? _currentTimeStamp : JulianDateToExcelTimestamp(jd);
+
+    output['dates_calendar_system_unixtimestamp']  = _invalidUnixDate(jd)
+        ? i18n(context, 'dates_calendar_unix_error')
+        : (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP) ? _currentTimeStamp : JulianDateToUnixTimestamp(jd);
+
     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: output.entries.map((entry) {
@@ -187,7 +226,8 @@ class _CalendarState extends State<Calendar> {
     return dateStr.replaceFirst(p.date.year.toString(), '${p.date.year} ${p.suffix}');
   }
 
-  String _HebrewDateToString(DateTime hebrewDate, double jd) {
+  String _HebrewDateToString(DateTime? hebrewDate, double jd) {
+    if (hebrewDate == null ) return i18n(context, 'dates_calendar_error_overflow');
     if (hebrewDate.year < 0) return i18n(context, 'dates_calendar_error');
 
     var hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month];
@@ -202,7 +242,9 @@ class _CalendarState extends State<Calendar> {
     return replaceMonthNameWithCustomString(hebrewDate, 'yMMMMd', locale, hebrewMonth);
   }
 
-  String? _DateOutputToString(BuildContext context, DateTime date, CalendarSystem calendar) {
+  String? _DateOutputToString(BuildContext context, DateTime? date, CalendarSystem calendar) {
+    if (date == null) return null;
+
     var locale = Localizations.localeOf(context).toString();
 
     switch (calendar) {
@@ -222,5 +264,13 @@ class _CalendarState extends State<Calendar> {
 
   bool _invalidMayaDate(double jd) {
     return (JulianDateToMayaDayCount(jd) < 0);
+  }
+
+  bool _invalidExcelDate(double jd) {
+    return (jd < JD_EXCEL_START);
+  }
+
+  bool _invalidUnixDate(double jd) {
+    return (jd < JD_UNIX_START);
   }
 }

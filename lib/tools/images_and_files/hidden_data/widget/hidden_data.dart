@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
@@ -19,7 +19,6 @@ import 'package:gc_wizard/tools/images_and_files/hidden_data/logic/hidden_data.d
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class HiddenData extends StatefulWidget {
   final GCWFile? file;
@@ -147,7 +146,7 @@ class _HiddenDataState extends State<HiddenData> {
             }
             _exportFile(
                 context,
-                data == null ? null : GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
+                data == null ? null : GCWFile(name: buildFileNameWithDate('hidden_', null), bytes: data));
           },
         )
       ],

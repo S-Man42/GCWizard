@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/logic/countries.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 class Countries extends StatefulWidget {
   final List<CountryProperties> fields;
@@ -18,13 +19,14 @@ class Countries extends StatefulWidget {
 class _CountriesState extends State<Countries> {
   var _currentSwitchSort = GCWSwitchPosition.left;
   var _currentSort = 0;
-  final List<String> _currentSortList = ['common_countries'];
+  // ignore: prefer_final_fields
+  var _currentSortList = ['common_countries'];
 
   @override
   void initState() {
     super.initState();
 
-    _currentSortList.addAll(widget.fields.map((e) => 'countries_${e}_sort'));
+    _currentSortList.addAll(widget.fields.map((e) => 'countries_${enumName(e.toString())}_sort'));
   }
 
   @override
@@ -71,7 +73,7 @@ class _CountriesState extends State<Countries> {
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
 
-    var data = COUNTRIES.values.map((e) {
+    var data = COUNTRIES.values.where((e) => e.getProperty(field).isNotEmpty).map((e) {
       if (_currentSort == 0) {
         var dataList = [i18n(context, e.name)];
         dataList.addAll(widget.fields.map((field) => e.getProperty(field)));

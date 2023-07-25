@@ -14,7 +14,7 @@ class CoordinateFormatMetadata {
 const List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
   CoordinateFormatMetadata(CoordinateFormatKey.DEC, 'coords_dec', 'DEC: DD.DDD°', '45.29100, -122.41333'),
   CoordinateFormatMetadata(CoordinateFormatKey.DMM, 'coords_dmm', 'DMM: DD° MM.MMM\'', 'N 45° 17.460\' W 122° 24.800\''),
-  CoordinateFormatMetadata(CoordinateFormatKey.DMS, 'coords_dms', 'DMS: DD° MM\' SS.SSS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
+  CoordinateFormatMetadata(CoordinateFormatKey.DMS, 'coords_dms', 'DMS: DD° MM\' SS.SS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
   CoordinateFormatMetadata(CoordinateFormatKey.UTM, 'coords_utm', 'UTM', '10 N 546003.6 5015445.0'),
   CoordinateFormatMetadata(CoordinateFormatKey.MGRS, 'coords_mgrs', 'MGRS', '10T ER 46003.6 15445.0'),
   CoordinateFormatMetadata(CoordinateFormatKey.XYZ, 'coords_xyz', 'XYZ (ECEF)', 'X: -2409244, Y: -3794410, Z: 4510158'),

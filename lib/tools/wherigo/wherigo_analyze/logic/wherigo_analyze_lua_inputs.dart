@@ -85,7 +85,11 @@ WherigoInputData _analyzeAndExtractInputSectionData(List<String> lines) {
     if (lines[i].startsWith(LUAname + '.Text')) {
       if (lines[i].endsWith('"')) {
         text = getLineData(lines[i], LUAname, 'Text', _obfuscatorFunction, _obfuscatorTable);
-      } else {
+      }
+      else if (lines[i].contains('[[') && lines[i].endsWith(']]')) {
+        text = getLineData(lines[i].replaceAll('[[', '"').replaceAll(']]', '"'), LUAname, 'Text', _obfuscatorFunction, _obfuscatorTable);
+      }
+      else {
         // multi Lines of Text
         text = '';
         do {

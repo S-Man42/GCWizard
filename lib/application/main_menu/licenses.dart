@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -61,7 +61,10 @@ class _LicensesState extends State<Licenses> {
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_fonts')),
       const GCWColumnedMultilineOutput(
-        data: [['Roboto', 'Google Fonts', 'Apache License, Version 2.0']]
+        data: [
+          ['Courier Prime', 'Google Fonts', 'SIL OPEN FONT LICENSE Version 1.1'],
+          ['Roboto', 'Google Fonts', 'Apache License, Version 2.0']
+        ]
       ),
       GCWTextDivider(text: i18n(context, 'licenses_additionalcode')),
       const GCWColumnedMultilineOutput(
@@ -125,11 +128,13 @@ class _LicensesState extends State<Licenses> {
             i18n(context, 'symboltables_ninjargon_title'),
             'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
           ],
+          [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
           [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
           [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
           [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
           [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
+          [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
         ],
         flexValues: const [1, 2]
@@ -160,6 +165,12 @@ class _LicensesState extends State<Licenses> {
           ],
           [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
         ]
+      ),
+      GCWTextDivider(text: i18n(context, 'licenses_images')),
+      GCWColumnedMultilineOutput(
+          data: [
+            [i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']
+          ],
       ),
     ]);
 

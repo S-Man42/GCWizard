@@ -37,38 +37,29 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
       maxLetterIndex = max(maxLetterIndex, alphabetIndex);
     }
 
-    if (alphabet_AZIndexes.keys.contains(maxLetterIndex)) {
+    if (alphabet_AZIndexes.keys.contains(maxLetterIndex + 1)) {
       return alphabet_AZIndexes[maxLetterIndex + 1]!;
     }
 
     return '';
   }
 
-  void _updateValue(FormulaValue value) {
-    updateFormulaValue(value, widget.group);
-  }
+  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+    if (entry.key.isNotEmpty) {
+      entry = FormulaValue(entry.key, entry.value);
+      entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
+      entry.key = _newKeyController.text;
 
-  void _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
-    if (currentFromInput.isNotEmpty) {
-      var newValue = FormulaValue(currentFromInput, currentToInput, type: type);
-      insertFormulaValue(newValue, widget.group);
-
-      _newKeyController.text = _maxLetter();
+      return entry;
     }
+    return null;
   }
 
-  void _updateEntry(Object id, String key, String value, FormulaValueType type) {
-    var entry = widget.group.values.firstWhere((element) => element.id == id);
-    entry.key = key;
-    entry.value = value;
-    entry.type = type;
-    setState(() {
-      _updateValue(entry);
-    });
-  }
 
-  void _removeEntry(Object id, BuildContext context) {
-    deleteFormulaValue(id as int, widget.group);
+  void _updateEntry(KeyValueBase entry) {
+    updateAndSave(widget.group);
+
+    _newKeyController.text = _maxLetter();
   }
 
   @override
@@ -80,13 +71,21 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           keyHintText: i18n(context, 'formulasolver_values_key'),
           keyController: _newKeyController,
           valueHintText: i18n(context, 'formulasolver_values_value'),
-          onAddEntry: _addEntry,
           dividerText: i18n(context, 'formulasolver_values_currentvalues'),
-          formulaValueList: widget.group.values,
-          onUpdateEntry: _updateEntry,
-          onRemoveEntry: _removeEntry,
+          entries: widget.group.values,
+          onGetNewEntry: (entry) => _getNewEntry(entry),
+          onUpdateEntry: (entry) => _updateEntry(entry),
+          onCreateInput: (Key? key) => _FormulaValueTypeKeyInput(key: key),
+          onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
         ),
       ],
+    );
+  }
+
+  GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
+    return _FormulaValueTypeKeyValueItem(
+      keyValueEntry: entry,
+      odd: odd,
     );
   }
 }
