@@ -52,7 +52,7 @@ const _OSM_URL = 'coords_mapview_osm_url';
 const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
-final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
+final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
 const _BUTTONGROUP_MARGIN = 30.0;
 
@@ -70,7 +70,7 @@ class GCWMapView extends StatefulWidget {
 }
 
 class _GCWMapViewState extends State<GCWMapView> {
-  final MapController _mapController = MapControllerImpl();
+  final MapController _mapController = MapController();
   final _GCWMapPopupController _popupLayerController = _GCWMapPopupController();
 
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
@@ -92,8 +92,8 @@ class _GCWMapViewState extends State<GCWMapView> {
   LatLngBounds _getBounds() {
     if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
 
-    var _bounds = LatLngBounds();
-    for (var point in widget.points) {
+    var _bounds = LatLngBounds(widget.points.first.point, widget.points.first.point);
+    for (var point in widget.points.skip(1)) {
       _bounds.extend(point.point);
     }
 
@@ -1034,7 +1034,7 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
 
 class CachedNetworkTileProvider extends TileProvider {
   @override
-  ImageProvider getImage(Coords<num> coords, TileLayer layer) {
+  ImageProvider getImage(TileCoordinates coords, TileLayer layer) {
     return CachedNetworkImageProvider(getTileUrl(coords, layer));
   }
 }
