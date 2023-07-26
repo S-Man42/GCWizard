@@ -121,7 +121,6 @@ class _GridState extends State<Grid> {
   var _currentGridConfiguration = 'grid_boxes_10x10';
 
   var _isConfiguration = false;
-  double _scale = 1;
   late _GridType _currentConfigType;
   late int _currentConfigColumns;
   late int _currentConfigRows;
@@ -250,29 +249,6 @@ class _GridState extends State<Grid> {
               },
             )
           ],
-        ),
-        GCWTextDivider(
-            text: '',
-            trailing: Row(children: <Widget>[
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                icon: Icons.zoom_in,
-                onPressed: () {
-                  setState(() {
-                    _scale += 0.1;
-                  });
-                },
-              ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                icon: Icons.zoom_out,
-                onPressed: () {
-                  setState(() {
-                    _scale = max(0.1, _scale - 0.1);
-                  });
-                },
-              ),
-            ])
         ),
         if (_isConfiguration) _buildConfiguration() else _buildGrid()
       ],
@@ -487,7 +463,6 @@ class _GridState extends State<Grid> {
     return Column(
       children: [
         GCWPainterContainer(
-          onChanged: (value) {_scale = value;},
           child: _GridPainter(
             tapColor: _currentColor,
             type: _currentConfigType,

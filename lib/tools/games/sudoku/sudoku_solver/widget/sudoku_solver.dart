@@ -24,7 +24,6 @@ class SudokuSolver extends StatefulWidget {
 class _SudokuSolverState extends State<SudokuSolver> {
   late SudokuBoard _currentBoard;
   int _currentSolution = 0;
-  double _scale = 1;
 
   final int _MAX_SOLUTIONS = 1000;
 
@@ -40,7 +39,6 @@ class _SudokuSolverState extends State<SudokuSolver> {
     return Column(
       children: <Widget>[
         GCWPainterContainer(
-            onChanged: (value) {_scale = value;},
             child: _SudokuBoard(
               board: _currentBoard,
               onChanged: (newBoard) {

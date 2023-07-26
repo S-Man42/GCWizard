@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 
 
 class GCWPainterContainer extends StatefulWidget {
-  final void Function(double) onChanged;
+  final void Function(double)? onChanged;
   final Widget child;
   final double scale;
 
@@ -15,7 +15,7 @@ class GCWPainterContainer extends StatefulWidget {
       {Key? key,
         required this.child,
         this.scale = 1,
-        required this.onChanged})
+        this.onChanged})
       : super(key: key);
 
   @override
@@ -45,7 +45,7 @@ class _GCWPainterContainerState extends State<GCWPainterContainer> {
               onPressed: () {
                 setState(() {
                   _currentScale += 0.1;
-                  widget.onChanged(_currentScale);
+                  if (widget.onChanged != null) widget.onChanged!(_currentScale);
                 });
               },
             ),
@@ -55,7 +55,7 @@ class _GCWPainterContainerState extends State<GCWPainterContainer> {
               onPressed: () {
                 setState(() {
                   _currentScale = max(0.1, _currentScale - 0.1);
-                  widget.onChanged(_currentScale);
+                  if (widget.onChanged != null) widget.onChanged!(_currentScale);
                 });
               },
             ),

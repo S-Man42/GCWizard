@@ -57,6 +57,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         ),
         Container(height: 10),
         GCWPainterContainer(
+          scale: _scale,
           onChanged: (value) {_scale = value;},
           child: NumberPyramidBoard(
             board: _currentBoard,

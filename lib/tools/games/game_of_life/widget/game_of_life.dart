@@ -37,7 +37,6 @@ class _GameOfLifeState extends State<GameOfLife> {
   var _currentCustomBirth = '';
   late TextEditingController _currentCustomBirthController;
   var _currentCustomInverse = false;
-  double _scale = 1;
 
   final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
 
@@ -180,7 +179,6 @@ class _GameOfLifeState extends State<GameOfLife> {
           },
         ),
         GCWPainterContainer(
-          onChanged: (value) {_scale = value;},
           child: GameOfLifeBoard(
             state: _currentBoard,
             size: _currentSize,
