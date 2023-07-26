@@ -121,6 +121,7 @@ class _GridState extends State<Grid> {
   var _currentGridConfiguration = 'grid_boxes_10x10';
 
   var _isConfiguration = false;
+  double _scale = 1;
   late _GridType _currentConfigType;
   late int _currentConfigColumns;
   late int _currentConfigRows;
@@ -463,6 +464,8 @@ class _GridState extends State<Grid> {
     return Column(
       children: [
         GCWPainterContainer(
+          scale: _scale,
+          onChanged: (value) {_scale = value;},
           child: _GridPainter(
             tapColor: _currentColor,
             type: _currentConfigType,
