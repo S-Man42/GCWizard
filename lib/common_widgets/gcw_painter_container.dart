@@ -9,12 +9,12 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 class GCWPainterContainer extends StatefulWidget {
   final void Function(double) onChanged;
   final Widget child;
-  final double zoomValue;
+  final double scale;
 
   const GCWPainterContainer(
       {Key? key,
         required this.child,
-        this.zoomValue = 1,
+        this.scale = 1,
         required this.onChanged})
       : super(key: key);
 
@@ -24,6 +24,13 @@ class GCWPainterContainer extends StatefulWidget {
 
 class _GCWPainterContainerState extends State<GCWPainterContainer> {
   late double _currentScale;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentScale = widget.scale;
+  }
 
   @override
   Widget build(BuildContext context) {

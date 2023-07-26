@@ -6,7 +6,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -56,48 +56,17 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
           },
         ),
         Container(height: 10),
-        GCWTextDivider(
-          text: '',
-          trailing: Row(children: <Widget>[
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              icon: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  _scale += 0.1;
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              icon: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  _scale = max(0.1, _scale - 0.1);
-                });
-              },
-            ),
-          ])
-        ),
-        SingleChildScrollView(
-          child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Container(
-                constraints: BoxConstraints(maxWidth: 100.0 * _rowCount * _scale),
-                child: Row( children: <Widget>[
-                  NumberPyramidBoard(
-                    board: _currentBoard,
-                    onChanged: (newBoard) {
-                      setState(() {
-                        _currentBoard = newBoard;
-                        _hideInputTextBox();
-                      });
-                    },
-                  ),
-                ]),
-              ),
-            ),
+        GCWPainterContainer(
+          onChanged: (value) {_scale = value;},
+          child: NumberPyramidBoard(
+            board: _currentBoard,
+            onChanged: (newBoard) {
+              setState(() {
+                _currentBoard = newBoard;
+                _hideInputTextBox();
+              });
+            },
+          ),
         ),
 
         if (_currentBoard.solutions != null && _currentBoard.solutions!.length > 1)

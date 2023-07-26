@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -8,7 +6,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/tools/games/sudoku/logic/sudoku_solver.dart';
@@ -41,47 +39,17 @@ class _SudokuSolverState extends State<SudokuSolver> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-            text: '',
-            trailing: Row(children: <Widget>[
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                icon: Icons.zoom_in,
-                onPressed: () {
-                  setState(() {
-                    _scale += 0.1;
-                  });
-                },
-              ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                icon: Icons.zoom_out,
-                onPressed: () {
-                  setState(() {
-                    _scale = max(0.1, _scale - 0.1);
-                  });
-                },
-              ),
-            ])
-        ),
-        SingleChildScrollView(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Container(
-              constraints: BoxConstraints(maxWidth: min(500, 
-                  min(maxScreenWidth(context) * 0.95, maxScreenHeight(context) * 0.8)) * _scale),
-              child: _SudokuBoard(
-                board: _currentBoard,
-                onChanged: (newBoard) {
-                  setState(() {
-                    _currentBoard = newBoard;
-                  });
-                },
-              ),
+        GCWPainterContainer(
+            onChanged: (value) {_scale = value;},
+            child: _SudokuBoard(
+              board: _currentBoard,
+              onChanged: (newBoard) {
+                setState(() {
+                  _currentBoard = newBoard;
+                });
+              },
             ),
           ),
-        ),
         Container(
             height: 8 * DOUBLE_DEFAULT_MARGIN
         ),
