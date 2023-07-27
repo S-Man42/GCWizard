@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -5,8 +6,10 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:collection/collection.dart';
+import 'package:http/http.dart' as http;
 
 const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const _domain = 'http://geo.crox.net/djia';
 
 Geohashing latLonToGeohashing(LatLng coords, int geohashLength) {
   return Geohashing(DateTime.now(), LatLng(0, 0));
@@ -41,6 +44,22 @@ Geohashing? parseGeohashing(String input) {
     }
   }
   return null;
+}
+
+Future<double?> dowJonesIndex(DateTime date) async {
+  if (DateTime.now().difference(date).isNegative) return null;
+
+  var uri = Uri.parse(_domain + '/' + DateFormat('yyyy-MM-dd').format(date));
+  var encoding = Encoding.getByName('utf-8');
+
+  http.Response response = await http.post(
+    uri,
+    encoding: encoding,
+  );
+
+  if (response.statusCode != 200) return null;
+
+  return double.parse(response.body);
 }
 
 double _hexToDec(String input) {
