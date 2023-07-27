@@ -30,7 +30,7 @@ void main() {
 
   group("geohashing.dowJonesIndex:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'date': DateTime.now().add(Duration(days: 1)), 'expectedOutput': null},
+      {'date': DateTime.now().add(const Duration(days: 1)), 'expectedOutput': null},
       {'date': DateTime.parse('1800-03-27'), 'expectedOutput': null},
 
       {'date': DateTime.parse('2022-03-27'), 'expectedOutput': 34702.39},
