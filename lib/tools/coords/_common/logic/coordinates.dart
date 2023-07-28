@@ -1021,6 +1021,8 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
       return ReverseWherigoWaldmeister(0,0,0);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('00000','00000');
+    case CoordinateFormatKey.GEOHASHING:
+      return Geohashing(DateTime.now(), LatLng(0,0));
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

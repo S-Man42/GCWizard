@@ -61,27 +61,27 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
           });
         },
       ),
-      Row(
-        children: <Widget>[
-          GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_northing'),
-              controller: _NorthingController,
-              onChanged: (ret) {
-                setState(() {
-                  _currentNorthing = ret;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              }),
-          GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_easting'),
-              controller: _EastingController,
-              onChanged: (ret) {
-                setState(() {
-                  _currentEasting = ret;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              }),
-      ])
+      // Row(
+      //   children: <Widget>[
+      //     GCWDoubleTextField(
+      //         hintText: i18n(context, 'coords_formatconverter_northing'),
+      //         controller: _NorthingController,
+      //         onChanged: (ret) {
+      //           setState(() {
+      //             _currentNorthing = ret;
+      //             _setCurrentValueAndEmitOnChange();
+      //           });
+      //         }),
+      //     GCWDoubleTextField(
+      //         hintText: i18n(context, 'coords_formatconverter_easting'),
+      //         controller: _EastingController,
+      //         onChanged: (ret) {
+      //           setState(() {
+      //             _currentEasting = ret;
+      //             _setCurrentValueAndEmitOnChange();
+      //           });
+      //         }),
+      // ])
     ]);
   }
 
