@@ -837,10 +837,11 @@ class Geohash extends BaseCoordinate {
 
 class Geohashing extends BaseCoordinate {
   DateTime date;
-  LatLng location;
+  int latitude;
+  int longitude;
+  LatLng location = LatLng(0, 0);
 
-
-  Geohashing(this.date, this.location) {
+  Geohashing(this.date, this.latitude, this.longitude) {
     _format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
   }
 
@@ -1022,7 +1023,7 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('00000','00000');
     case CoordinateFormatKey.GEOHASHING:
-      return Geohashing(DateTime.now(), LatLng(0,0));
+      return Geohashing(DateTime.now(), 0, 0);
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

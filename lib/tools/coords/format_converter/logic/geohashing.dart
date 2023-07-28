@@ -12,7 +12,7 @@ const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
 
 Geohashing latLonToGeohashing(LatLng coords, int geohashLength) {
-  return Geohashing(DateTime.now(), LatLng(0, 0));
+  return Geohashing(DateTime.now(), 0, 0);
 }
 
 LatLng? geohashingToLatLon(Geohashing geohashing) {
@@ -40,7 +40,8 @@ Geohashing? parseGeohashing(String input) {
             int.parse(match.group(1)!),
             int.parse(match.group(2)!),
             int.parse(match.group(3)!)),
-            dec.toLatLng());
+            dec.latitude.truncate(),
+            dec.longitude.truncate());
     }
   }
   return null;

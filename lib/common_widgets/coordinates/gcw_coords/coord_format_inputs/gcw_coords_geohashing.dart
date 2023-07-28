@@ -12,12 +12,12 @@ class _GCWCoordsGeohashing extends StatefulWidget {
 }
 
 class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
-  late TextEditingController _EastingController;
-  late TextEditingController _NorthingController;
+  late TextEditingController _LongitudeController;
+  late TextEditingController _LatitudeController;
   late DateTime _currentDate;
 
-  var _currentEasting = defaultDoubleText;
-  var _currentNorthing = defaultDoubleText;
+  var _currentLongitude = defaultIntegerText;
+  var _currentLatitude = defaultIntegerText;
 
   bool _initialized = false;
 
@@ -28,14 +28,14 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
     DateTime now = DateTime.now();
     _currentDate = DateTime(now.year, now.month, now.day);
 
-    _EastingController = TextEditingController(text: _currentEasting.text);
-    _NorthingController = TextEditingController(text: _currentNorthing.text);
+    _LongitudeController = TextEditingController(text: _currentLongitude.text);
+    _LatitudeController = TextEditingController(text: _currentLatitude.text);
   }
 
   @override
   void dispose() {
-    _EastingController.dispose();
-    _NorthingController.dispose();
+    _LongitudeController.dispose();
+    _LatitudeController.dispose();
     super.dispose();
   }
 
@@ -43,11 +43,11 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
   Widget build(BuildContext context) {
     if (!widget.isDefault && !_initialized) {
       var geohashing = widget.coordinates;
-      _currentEasting.value = geohashing.location.latitude;
-      _currentNorthing.value = geohashing.location.longitude;
+      _currentLatitude.value = geohashing.latitude;
+      _currentLongitude.value = geohashing.longitude;
 
-      _EastingController.text = _currentEasting.value.toString();
-      _NorthingController.text = _currentNorthing.value.toString();
+      _LatitudeController.text = _currentLatitude.value.toString();
+      _LongitudeController.text = _currentLongitude.value.toString();
 
       _initialized = true;
     }
@@ -61,32 +61,42 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
           });
         },
       ),
-      // Row(
-      //   children: <Widget>[
-      //     GCWDoubleTextField(
-      //         hintText: i18n(context, 'coords_formatconverter_northing'),
-      //         controller: _NorthingController,
-      //         onChanged: (ret) {
-      //           setState(() {
-      //             _currentNorthing = ret;
-      //             _setCurrentValueAndEmitOnChange();
-      //           });
-      //         }),
-      //     GCWDoubleTextField(
-      //         hintText: i18n(context, 'coords_formatconverter_easting'),
-      //         controller: _EastingController,
-      //         onChanged: (ret) {
-      //           setState(() {
-      //             _currentEasting = ret;
-      //             _setCurrentValueAndEmitOnChange();
-      //           });
-      //         }),
-      // ])
+      Row(
+        children: [
+          Expanded(
+            child:
+              GCWIntegerTextField(
+                hintText: i18n(context, 'coords_common_latitude'),
+                controller: _LatitudeController,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentLatitude = ret;
+                    _setCurrentValueAndEmitOnChange();
+                  });
+                }
+              ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child:
+            GCWIntegerTextField(
+                hintText: i18n(context, 'coords_common_longitude'),
+                controller: _LongitudeController,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentLongitude = ret;
+                    _setCurrentValueAndEmitOnChange();
+                  });
+                }
+              ),
+
+          )
+      ])
     ]);
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    var geohashing = Geohashing(_currentDate, LatLng(_currentEasting.value, _currentNorthing.value));
+    var geohashing = Geohashing(_currentDate, _currentLatitude.value, _currentLongitude.value);
 
     widget.onChanged(geohashing);
   }
