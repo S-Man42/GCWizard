@@ -442,6 +442,20 @@ class _GCWCoordsState extends State<GCWCoords> {
           },
         ),
       ),
+      _GCWCoordWidget(
+        CoordinateFormatKey.GEOHASHING,
+        _GCWCoordsGeohashing(
+          isDefault: !_hasSetCoords,
+          coordinates: _currentCoords is Geohashing
+              ? _currentCoords as Geohashing
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEOHASHING)) as Geohashing,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      ),
     ];
 
     Column _widget;

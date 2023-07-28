@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGeohashing extends StatefulWidget {
-  final void Function(Mercator) onChanged;
-  final Mercator coordinates;
+  final void Function(Geohashing) onChanged;
+  final Geohashing coordinates;
   final bool isDefault;
 
   const _GCWCoordsGeohashing({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
@@ -42,9 +42,9 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
   @override
   Widget build(BuildContext context) {
     if (!widget.isDefault && !_initialized) {
-      var mercator = widget.coordinates;
-      _currentEasting.value = mercator.easting;
-      _currentNorthing.value = mercator.northing;
+      var geohashing = widget.coordinates;
+      _currentEasting.value = geohashing.location.latitude;
+      _currentNorthing.value = geohashing.location.longitude;
 
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
@@ -61,21 +61,33 @@ class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
           });
         },
       ),
-      GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_northing'),
-          controller: _NorthingController,
-          onChanged: (ret) {
-            setState(() {
-              _currentNorthing = ret;
-              _setCurrentValueAndEmitOnChange();
-            });
-          }),
+      Row(
+        children: <Widget>[
+          GCWDoubleTextField(
+              hintText: i18n(context, 'coords_formatconverter_northing'),
+              controller: _NorthingController,
+              onChanged: (ret) {
+                setState(() {
+                  _currentNorthing = ret;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              }),
+          GCWDoubleTextField(
+              hintText: i18n(context, 'coords_formatconverter_easting'),
+              controller: _EastingController,
+              onChanged: (ret) {
+                setState(() {
+                  _currentEasting = ret;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              }),
+      ])
     ]);
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    var mercator = Mercator(_currentEasting.value, _currentNorthing.value);
+    var geohashing = Geohashing(_currentDate, LatLng(_currentEasting.value, _currentNorthing.value));
 
-    widget.onChanged(mercator);
+    widget.onChanged(geohashing);
   }
 }
