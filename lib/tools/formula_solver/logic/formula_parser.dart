@@ -27,6 +27,9 @@ const RECURSIVE_FORMULA_REPLACEMENT_END = '\u0000}';
 const SAFED_FUNCTION_MARKER = '\x01';
 const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 const SAFED_TEXTS_MARKER = '\x03';
+const STRING_MARKER = '\x04';
+const STRING_MARKER_APOSTROPHE = '\x04\'\x04';
+const STRING_MARKER_QUOTE = '\x04"\x04';
 
 const _PHI = 1.6180339887498948482045868343656381177;
 const _SQRT3 = 1.73205080756887729352744634150587236;
@@ -122,14 +125,26 @@ class FormulaParser {
   };
 
   static String _contentFromString(String value) {
-    var RegExp1 = RegExp(r'^\s*"(.*)"\s*$');
-    var RegExp2 = RegExp(r"^\s*\'(.*)\'\s*$");
-    var str = '';
-    if (RegExp1.hasMatch(value)) {
-      str = RegExp1.firstMatch(value)!.group(1)!;
-    } else if (RegExp(r"^\s*\'.*\'\s*$").hasMatch(value)) {
-      str = RegExp2.firstMatch(value)!.group(1)!;
+    var RegExpApostrophe = RegExp(r'\s*' + STRING_MARKER_APOSTROPHE + r'(.*?)' + STRING_MARKER_APOSTROPHE + r'\s*');
+    var RegExpQuote = RegExp(r'\s*' + STRING_MARKER_QUOTE + r'(.*?)' + STRING_MARKER_QUOTE + r'\s*');
+
+    RegExp regExp;
+    if (RegExpApostrophe.hasMatch(value)) {
+      regExp = RegExpApostrophe;
+    } else if (RegExpQuote.hasMatch(value)) {
+      regExp = RegExpQuote;
     } else {
+      throw Exception();
+    }
+
+    var str = '';
+    var _value = value;
+    while (regExp.hasMatch(_value)) {
+      str += regExp.firstMatch(_value)!.group(1)!;
+      _value = _value.replaceFirstMapped(regExp, (match) => '');
+    }
+
+    if (_value.isNotEmpty) {
       throw Exception();
     }
 
@@ -137,8 +152,7 @@ class FormulaParser {
   }
 
   static int _bww(String value) {
-    var x = sum(AlphabetValues().textToValues(_contentFromString(value), keepNumbers: true).whereType<int>().toList()).toInt();
-    return x;//sum(AlphabetValues().textToValues(_contentFromString(arg), keepNumbers: true).whereType<int>().toList()).toInt();
+    return sum(AlphabetValues().textToValues(_contentFromString(value), keepNumbers: true).whereType<int>().toList()).toInt();
   }
 
   static final Map<String, int Function(String)> _CUSTOM_TEXT_FUNCTIONS = {
@@ -176,6 +190,10 @@ class FormulaParser {
     return result;
   }
 
+  String _markedStringChar (String stringChar) {
+    return STRING_MARKER + stringChar + STRING_MARKER;
+  }
+
   String _safeTexts(String formula) {
     var safedTextsFormula = '';
 
@@ -183,14 +201,14 @@ class FormulaParser {
     String currentString = '';
     for (int i = 0; i < formula.length; i++) {
       var char = formula[i];
-      if (["'", '"'].contains(formula[i])) {
+      if (["'", '"'].contains(char)) {
         if (stringChar == null) {
           stringChar = char;
           currentString = '';
         } else {
           if (stringChar == char) {
             var marker = '$SAFED_TEXTS_MARKER${safedTextsMap.length}$SAFED_TEXTS_MARKER';
-            safedTextsMap.putIfAbsent(marker, () => stringChar! + currentString + stringChar);
+            safedTextsMap.putIfAbsent(marker, () => _markedStringChar(stringChar!) + currentString + _markedStringChar(stringChar));
             safedTextsFormula += marker;
 
             currentString = '';
@@ -208,7 +226,7 @@ class FormulaParser {
         }
       }
     }
-    safedTextsFormula += (stringChar ?? '') + currentString;
+    safedTextsFormula += (stringChar == null ? '' : _markedStringChar(stringChar)) + currentString;
 
     return safedTextsFormula;
   }
@@ -381,10 +399,10 @@ class FormulaParser {
 
   bool _isString(String formula) {
     var _formula = formula.trim();
-    if (formula.startsWith('"') && formula.endsWith('"')) {
+    if (_formula.startsWith('"') && _formula.endsWith('"')) {
       return true;
     }
-    if (formula.startsWith("'") && formula.endsWith("'")) {
+    if (_formula.startsWith("'") && _formula.endsWith("'")) {
       return true;
     }
     return false;
@@ -452,7 +470,13 @@ class FormulaParser {
       if (value.isEmpty) {
         value = key;
       } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
-        value = '($value)';
+        var _value = value.trim();
+        if (
+          (_value.startsWith('(') && _value.endsWith(")"))
+          || !_isString(value)
+        ) {
+          value = '($value)';
+        }
       }
 
       String safedTexts;
@@ -556,7 +580,7 @@ class FormulaParser {
 
               var out = FormulaSolverSingleResult(result.state, formatted, variables: result.variables);
 
-              var variables = result.variables.toString();  // TODO: Does this make sense here? variables is a map, why casting to String?
+              var variables = result.variables.toString();
               if (matchedVariables.containsKey(variables)) {
                 matchedVariables[variables]!.putIfAbsent(matchString, () => out);
               } else {
