@@ -39,14 +39,6 @@ void updateFormulaGroups() {
   _saveData();
 }
 
-void _updateFormulaGroup(FormulaGroup group) {
-  formulaGroups = formulaGroups.map((formulaGroup) {
-    if (formulaGroup.id == group.id) return group;
-
-    return formulaGroup;
-  }).toList();
-}
-
 int insertFormula(Formula formula, FormulaGroup group) {
   var id = newID(group.formulas.map((formula) => formula.id).toList());
   formula.id = id;
@@ -58,7 +50,7 @@ int insertFormula(Formula formula, FormulaGroup group) {
 }
 
 void updateFormula(Formula formula, FormulaGroup group) {
-  group.formulas = group.formulas.map((groupFormula) {
+  var copy = group.formulas.map((groupFormula) {
     if (formula.id == null || groupFormula.id == null) {
       throw Exception('Formula id not found');
     }
@@ -66,14 +58,24 @@ void updateFormula(Formula formula, FormulaGroup group) {
     if (groupFormula.id == formula.id) return formula;
 
     return groupFormula;
-  }).toList();
+  });
+
+  group.formulas.clear();
+  group.formulas.addAll(copy);
 
   updateAndSave(group);
 }
 
+int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
+  var id = newID(group.values.map((value) => (value.id as int?)).toList());
+  formulaValue.id = id;
+  group.values.add(formulaValue);
+  updateAndSave(group);
+  return id;
+}
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
-  group.values = group.values.map((value) {
+  var copy = group.values.map((value) {
     if (value.id == null || formulaValue.id == null) {
       throw Exception('Formula value id not found');
     }
@@ -82,6 +84,9 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
 
     return value;
   }).toList();
+
+  group.values.clear();
+  group.values.addAll(copy);
 
   updateAndSave(group);
 }
@@ -101,6 +106,5 @@ void deleteFormula(int? formulaId, FormulaGroup group) {
 }
 
 void updateAndSave(FormulaGroup group) {
-  _updateFormulaGroup(group);
   _saveData();
 }
