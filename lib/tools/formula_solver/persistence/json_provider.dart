@@ -83,7 +83,7 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
     if (value.id == formulaValue.id) return formulaValue;
 
     return value;
-  }).toList();
+  });
 
   group.values.clear();
   group.values.addAll(copy);
