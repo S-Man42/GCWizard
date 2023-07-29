@@ -68,13 +68,13 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
 
   @override
   void addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    var _entry = getNewEntry(entry);
-    if (_entry != null) {
-      (_entry as FormulaValue).type = _currentType;
-      widget.entries.add(_entry);
-
-      finishAddEntry(_entry, clearInput);
+    var newEntry = FormulaValue(entry.key, entry.value, type: _currentType);
+    if (widget.onAddEntry == null ) {
+      widget.entries.add(newEntry);
+    } else {
+      widget.onAddEntry!(newEntry);
     }
+    finishAddEntry(newEntry, clearInput);
   }
 }
 
