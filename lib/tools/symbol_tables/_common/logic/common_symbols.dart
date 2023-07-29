@@ -101,7 +101,7 @@ const Map<String, String> _COMMON_SYMBOLS = {
   "E_cedille": "Ę",
   "E_circumflex": "Ê",
   "E_grave": "È",
-  "E_eth": "Ð", // here for backwards compatibility; new: Eth1
+  "E_eth": "Ð", // deprecated, use Eth1
   "E_trema": "Ë",
   "H_dot_below": "Ḥ",
   "I_acute": "Í",
@@ -153,7 +153,7 @@ const Map<String, String> _COMMON_SYMBOLS = {
   "e_cedille": "ę",
   "e_circumflex": "ê",
   "e_grave": "è",
-  "e_eth": "ð", // here for backwards compatibility; new: eth1
+  "e_eth": "ð", // deprecated, use eth1
   "e_trema": "ë",
   "h_dot_below": "ḥ",
   "i_acute": "í",
