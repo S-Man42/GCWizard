@@ -8,6 +8,9 @@
      - https://github.com/S-Man42/GCWizard/tree/master/lib/application/_common/assets/fonts/Roboto/*
      - Apache License, Version 2.0
 
+ - Sounds
+   - for licenses see /assets/videos/LICENSE
+
  - Symbol Tables
   - Alien Mushrooms
     - https://github.com/S-Man42/GCWizard/tree/master/lib/tools/symbol_tables/_common/assets/alien_mushrooms
@@ -67,6 +70,10 @@
     - https://github.com/S-Man42/GCWizard/tree/master/lib/tools/symbol_tables/_common/assets/voynich
     - https://commons.wikimedia.org/wiki/File:Voynich_EVA.svg?uselang=de
     - VonHaarberg, WikiCommons, CC BY-SA 4.0
+  - Tifinagh
+    - https://github.com/S-Man42/GCWizard/tree/master/lib/tools/symbol_tables/_common/assets/tifingah
+    - https://en.wikipedia.org/wiki/Tifinagh#/media/File:Tifinagh_alphabet.png
+    - CC BY 2.0 Spain
   - Vulcan
     - https://github.com/S-Man42/GCWizard/tree/master/lib/tools/symbol_tables/_common/assets/vulcan
     - Personal Use, Non-Commercial

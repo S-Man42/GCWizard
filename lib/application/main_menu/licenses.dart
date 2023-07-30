@@ -107,6 +107,8 @@ class _LicensesState extends State<Licenses> {
           const ['several', 'myGeoTools'],
           const ['several', 'Wikipedia'],
           [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
+          [i18n(context, 'symboltables_blue_monday_title'), 'adopted from https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/; (Personal Use)'],
           [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
@@ -136,6 +138,7 @@ class _LicensesState extends State<Licenses> {
           [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
           [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
+          [i18n(context, 'symboltables_steinheil_title'), 'hhttps://de.wikipedia.org/wiki/Steinheilschrift (Wiki Commons)'],
           [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
         ],
         flexValues: const [1, 2]

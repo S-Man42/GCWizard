@@ -3274,6 +3274,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
     ]),
+    GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
+      'symbol_blue_monday',
+    ]),
     GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: const [
       'symbol_brahmi_numerals',
     ]),
@@ -3938,6 +3941,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
       'symbol_sprykski',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
+      'symbol_steinheil', 'telegraph',
     ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
