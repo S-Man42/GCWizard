@@ -3660,6 +3660,9 @@ void initializeRegistry(BuildContext context) {
       'symbol_freemason',
       'symbol_la_buse',
     ]),
+    GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
+      'symbol_linear_b',
+    ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_lorm',
