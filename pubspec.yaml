@@ -117,6 +117,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
     - lib/tools/symbol_tables/_common/assets/birds_on_a_wire/
     - lib/tools/symbol_tables/_common/assets/blox/
+    - lib/tools/symbol_tables/_common/assets/blue_monday/
     - lib/tools/symbol_tables/_common/assets/brahmi_numerals/
     - lib/tools/symbol_tables/_common/assets/braille_de/
     - lib/tools/symbol_tables/_common/assets/braille_en/
@@ -317,6 +318,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/spintype/
     - lib/tools/symbol_tables/_common/assets/sprykski/
     - lib/tools/symbol_tables/_common/assets/stenography/
+    - lib/tools/symbol_tables/_common/assets/steinheil/
     - lib/tools/symbol_tables/_common/assets/stippelcode/
     - lib/tools/symbol_tables/_common/assets/suetterlin/
     - lib/tools/symbol_tables/_common/assets/sunuz/
