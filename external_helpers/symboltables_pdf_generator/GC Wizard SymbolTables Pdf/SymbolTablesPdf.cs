@@ -861,7 +861,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                         var match2 = regex2.Match(line);
                         if (match2.Success)
                         {
-                            list.Add(match2.Groups[1].Value, match2.Groups[3].Value);
+                            list[match2.Groups[1].Value] = match2.Groups[3].Value;
                         }
                     }
                 }
@@ -894,13 +894,13 @@ namespace GC_Wizard_SymbolTables_Pdf
             {
                 CONFIG_SPECIAL_CHARS = new Dictionary<String, String>();
 
-                var path = Path.Combine(ProjectPath, @"lib\widgets\tools\symbol_tables\symbol_table_data.dart");
+                var path = Path.Combine(ProjectPath, @"lib/tools/symbol_tables/_common/logic/common_symbols.dart");
                 if (File.Exists(path))
                 {
                     try
                     {
                         var fileContent = File.ReadAllText(path);
-                        var regex = new Regex(@"(CONFIG_SPECIAL_CHARS)(.*?)(\{)(.*?)(\};)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+                        var regex = new Regex(@"(_COMMON_SYMBOLS)(.*?)(\{)(.*?)(\};)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
                         var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
                         var regex3 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""{2}");
 
@@ -1055,7 +1055,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 //{
                 //    start = true;
                 //}
-                else if (start && !startChildren && line.Contains(@"children"))
+                else if (start && !startChildren && line.Contains(@"GCWColumnedMultilineOutput"))
                 {
                     startChildren = true;
                 }
@@ -1144,7 +1144,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         public static String languageFileDirectory(String path)
         {
-            return Path.Combine(path, @"assets\i18n");
+            return Path.Combine(path, @"lib\application\i18n\assets");
         }
 
         private String languageFileName(String path)
@@ -1160,12 +1160,12 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private static String licenseFileName(String path)
         {
-            return Path.Combine(path, @"lib\widgets\main_menu\licenses.dart");
+            return Path.Combine(path, @"lib\application\main_menu\licenses.dart");
         }
 
         private static String symbolTablesDirectory(String path)
         {
-            return Path.Combine(path, @"assets\symbol_tables");
+            return Path.Combine(path, @"lib\tools\symbol_tables\_common\assets");
         }
 
         #endregion
@@ -1197,9 +1197,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             else if (translateList != null && translateList.Contains(overlay))
             {
                 if (String.IsNullOrEmpty(translationPrefix))
-                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay) ?? overlay;
                 else
-                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
+                    overlay = getEntryValue(languagefile, translationPrefix + overlay) ?? overlay;
                 translateables.Add(overlay);
             }
 

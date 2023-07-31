@@ -49,11 +49,14 @@ void deleteFormula(int formulaId) {
 }
 
 void _updateFormula(Formula formula) {
-  formulas = formulas.map((f) {
+  var copy = formulas.map((f) {
     if (f.id == formula.id) return formula;
 
     return f;
-  }).toList();
+  });
+
+  formulas.clear();
+  formulas.addAll(copy);
 }
 
 int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula) {
