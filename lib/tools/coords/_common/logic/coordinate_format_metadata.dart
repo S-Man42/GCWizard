@@ -90,7 +90,6 @@ const List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
   CoordinateFormatMetadata(CoordinateFormatKey.MAKANEY, 'coords_makaney', 'Makaney (MKC)', 'M97F-BBOOI'),
   CoordinateFormatMetadata(CoordinateFormatKey.GEOHEX, 'coords_geohex', 'GeoHex', 'RU568425483853568'),
   CoordinateFormatMetadata(CoordinateFormatKey.GEO3X3, 'coords_geo3x3', 'Geo3x3', 'W7392967941169'),
-  CoordinateFormatMetadata(CoordinateFormatKey.GEOHASHING, 'coords_geohashing', 'Geohashing', '2023-09-10 34.1,-111.4'),
 ];
 
 const CoordinateFormatMetadataALL = CoordinateFormatMetadata(CoordinateFormatKey.ALL, '', '', '');

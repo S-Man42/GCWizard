@@ -11,6 +11,35 @@ import 'package:http/http.dart' as http;
 const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
 
+class Geohashing extends BaseCoordinate {
+  DateTime date;
+  int latitude;
+  int longitude;
+  LatLng location = LatLng(0, 0);
+
+  Geohashing(this.date, this.latitude, this.longitude) {
+    _format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
+  }
+
+  @override
+  LatLng? toLatLng() {
+    return geohashingToLatLon(this);
+  }
+
+  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
+    return latLonToGeohash(coord, geohashLength);
+  }
+
+  static Geohashing? parse(String input) {
+    return parseGeohashing(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
+  }
+}
+
 Geohashing latLonToGeohashing(LatLng coords, int geohashLength) {
   return Geohashing(DateTime.now(), 0, 0);
 }

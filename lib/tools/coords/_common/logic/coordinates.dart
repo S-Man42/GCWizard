@@ -8,7 +8,6 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/dutchgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/gauss_krueger.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/geo3x3.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/geohash.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/geohashing.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/geohex.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/lambert.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/maidenhead.dart';
@@ -835,35 +834,6 @@ class Geohash extends BaseCoordinate {
   }
 }
 
-class Geohashing extends BaseCoordinate {
-  DateTime date;
-  int latitude;
-  int longitude;
-  LatLng location = LatLng(0, 0);
-
-  Geohashing(this.date, this.latitude, this.longitude) {
-    _format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
-  }
-
-  @override
-  LatLng? toLatLng() {
-    return geohashingToLatLon(this);
-  }
-
-  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
-    return latLonToGeohash(coord, geohashLength);
-  }
-
-  static Geohashing? parse(String input) {
-    return parseGeohashing(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
-  }
-}
-
 class GeoHex extends BaseCoordinate {
   String text;
 
@@ -1022,8 +992,6 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
       return ReverseWherigoWaldmeister(0,0,0);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976('00000','00000');
-    case CoordinateFormatKey.GEOHASHING:
-      return Geohashing(DateTime.now(), 0, 0);
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

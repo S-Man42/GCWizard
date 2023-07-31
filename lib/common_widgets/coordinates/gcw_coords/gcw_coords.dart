@@ -6,7 +6,6 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -42,7 +41,6 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/gcw_coords_dms.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_dutchgrid.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_gausskrueger.dart';
-part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_geohashing.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_lambert.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_mercator.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_openlocationcode.dart';
@@ -435,20 +433,6 @@ class _GCWCoordsState extends State<GCWCoords> {
           coordinates: _currentCoords is ReverseWherigoDay1976
               ? _currentCoords as ReverseWherigoDay1976
               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976)) as ReverseWherigoDay1976,
-          onChanged: (newValue) {
-            setState(() {
-              _setCurrentValueAndEmitOnChange(newValue);
-            });
-          },
-        ),
-      ),
-      _GCWCoordWidget(
-        CoordinateFormatKey.GEOHASHING,
-        _GCWCoordsGeohashing(
-          isDefault: !_hasSetCoords,
-          coordinates: _currentCoords is Geohashing
-              ? _currentCoords as Geohashing
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEOHASHING)) as Geohashing,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);

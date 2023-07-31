@@ -1,17 +1,14 @@
-part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
-class _GCWCoordsGeohashing extends StatefulWidget {
-  final void Function(Geohashing) onChanged;
-  final Geohashing coordinates;
-  final bool isDefault;
+import 'package:flutter/material.dart';
 
-  const _GCWCoordsGeohashing({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+class Geohashing extends StatefulWidget {
+  const Geohashing({Key? key}) : super(key: key);
 
   @override
-  _GCWCoordsGeohashingState createState() => _GCWCoordsGeohashingState();
+  _GeohashingState createState() => _GeohashingState();
 }
 
-class _GCWCoordsGeohashingState extends State<_GCWCoordsGeohashing> {
+class _GeohashingState extends State<Geohashing> {
   late TextEditingController _LongitudeController;
   late TextEditingController _LatitudeController;
   late DateTime _currentDate;
