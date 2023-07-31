@@ -45,8 +45,8 @@ LatLng? geohashingToLatLon(Geohashing geohashing) {
   var lat = _hexToDec(md5.substring(0, 15));
   var lng = _hexToDec(md5.substring(16));
 
-  return LatLng(geohashing.location.latitude.truncateToDouble() + lat,
-                geohashing.location.longitude.truncateToDouble() + lng);
+  return LatLng(geohashing.latitude.truncateToDouble() + lat,
+                geohashing.longitude.truncateToDouble() + lng);
 }
 
 Geohashing? parseGeohashing(String input) {

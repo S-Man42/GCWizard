@@ -2183,6 +2183,7 @@
   "generalcodebreakers_selection_description": "Tools, which try to identify or break codes without any further information (Multi Decoder, Hash Search, ...)",
   "geohashing_title": "Geohashing",
   "geohashing_description": "2023-09-10 34.1,-111.4",
+  "geohashing_dow_jones_index": "Dow Jones Index",
   "gray_title": "Gray Code",
   "gray_description": "Encodes a binary/decimal number to a Gray encoded decimal/binary number",
   "gray_example": "4 | 100 → 6 | 110",
