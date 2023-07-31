@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -15,7 +16,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -107,7 +107,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 },
               ),
             GCWCodeTextField(
-              style: gcwMonotypeTextStyle(),
               lineNumbers: true,
               lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
               controller: _programController,
