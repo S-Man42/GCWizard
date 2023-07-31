@@ -12,22 +12,20 @@ const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
 
 class Geohashing extends BaseCoordinate {
-  DateTime date;
   int latitude;
   int longitude;
-  LatLng location = LatLng(0, 0);
+  DateTime date;
+  double dowJonesIndex = 0;
+  LatLng? location;
 
-  Geohashing(this.date, this.latitude, this.longitude) {
-    _format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
+  Geohashing(this.date, this.latitude, this.longitude, {this.dowJonesIndex = 0}) {
+    //_format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
   }
 
   @override
   LatLng? toLatLng() {
-    return geohashingToLatLon(this);
-  }
-
-  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
-    return latLonToGeohash(coord, geohashLength);
+    location = geohashingToLatLon(this);
+    return location;
   }
 
   static Geohashing? parse(String input) {
@@ -40,9 +38,6 @@ class Geohashing extends BaseCoordinate {
   }
 }
 
-Geohashing latLonToGeohashing(LatLng coords, int geohashLength) {
-  return Geohashing(DateTime.now(), 0, 0);
-}
 
 LatLng? geohashingToLatLon(Geohashing geohashing) {
   var date = DateFormat('yyyy-dd-MM').format(geohashing.date);
@@ -50,8 +45,8 @@ LatLng? geohashingToLatLon(Geohashing geohashing) {
   var lat = _hexToDec(md5.substring(0, 15));
   var lng = _hexToDec(md5.substring(16));
 
-  return LatLng(geohashing.location.latitude.truncateToDouble() +  lat,
-                geohashing.location.longitude.truncateToDouble() +  lng);
+  return LatLng(geohashing.location.latitude.truncateToDouble() + lat,
+                geohashing.location.longitude.truncateToDouble() + lng);
 }
 
 Geohashing? parseGeohashing(String input) {
