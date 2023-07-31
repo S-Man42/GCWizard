@@ -296,6 +296,109 @@ void main() {
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
 
 
+     {'formula' : '\'\'', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '""', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '"\'"', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '\'"\'', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '"\'', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '\'"', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'ABCD', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '\'ABCD\'', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '"ABCD"', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '"ABCD\'"', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '\'ABCD"\'', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '\'ABCD"', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : '"ABCD\'', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(\'\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(ABCD)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(\'ABCD\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("ABCD")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("ABCD\'")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(\'ABCD"\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(\'ABCD")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("ABCD\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(AB,CD)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("AB",\'CD\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("AB, CD")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("AB, CD)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("AB, \'CD\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(123)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(\'123\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     // unfortunately, parenthesis' are problems even in texts because the internal solver does not know about the text concept and therefore reads the
+     // parenthesis character as normal formular character and closes the function here.
+     {'formula' : 'bww("AB)C")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(AB)C)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww("AB")"C")', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(1-3#2,7)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'bww(\'1-3#2,7\')', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : ''},
+     {'formula' : 'bww(A)', 'values': {'A': 'ABC'}, 'expectedOutput' : ''},
+     {'formula' : 'bww(A)', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
+     {'formula' : 'bww(A)', 'values': {'A': '\'ABC\''}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(A) + bww(A)', 'values': {'A': 'ABC'}, 'expectedOutput' : ''},
+     {'formula' : 'bww(A) + bww(A)', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
+
+     {'formula' : '1+ BWW(A) + cs(12) + bww(A) * 2', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
+
+     {'formula' : 'bWw(c)', 'values': {
+     'A': '"1-3"',
+     'B': '"1-3"',
+     'C': '"1-3"'}, 'expectedOutput' : ''},
+     {'formula' : 'bWw(c)', 'values': {
+      'A': '"1-3"',
+      'B': '"1-3"',
+      'C': '"1-3"'}, 'expectedOutput' : ''},
+
+     {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': {'A': 'ABC'}, 'expectedOutput' : ''},
+     {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
+     {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': {'A': '"ABC'}, 'expectedOutput' : ''},
+     {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': {'A': 'ABC"'}, 'expectedOutput' : ''},
+
+     {'formula' : 'len(ABC)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'len("ABC")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'len(ABC)', 'values': {'A': 'ABC'}, 'expectedOutput' : ''},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
+     {'formula' : 'len(ABC)', 'values': {'ABC': '"ABC"'}, 'expectedOutput' : ''},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'BC': '"BC"'}, 'expectedOutput' : ''},
+
+     {'formula' : 'len(A,B,C)', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
+     {'formula' : 'len(A,B,C")', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'len(A,B,C")', 'values': {'A': '"ABC'}, 'expectedOutput' : ''},
+     {'formula' : 'len(A,B,C)', 'values': [
+      {'A': '"ABC'},
+      {'C': 'C"'},
+     ], 'expectedOutput' : ''},
+
+     {'formula' : 'len("ABC") * bww(55)', 'values': <String, String>{}, 'expectedOutput' : ''},
+     {'formula' : 'cs(bww(\'ABCDE\')) * len(55)', 'values': <String, String>{}, 'expectedOutput' : ''},
+
+     {'formula' : 'bww(AB)', 'values': {
+     'A': '',
+     'B': 'C',
+     }, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(C)', 'state': 'error'}]}
+     },
+     {'formula' : 'bww(AB)', 'values': {
+      'A': '',
+      'B': '"C"',
+     }, 'expectedOutput' : ''},
+     {'formula' : 'bww(AB)', 'values': {
+     'A': '',
+     'B': 'C',
+     'C': '"A"',
+     }, 'expectedOutput' : ''
+     },
+
+     {'formula' : 'len(A)', 'values':  {'A': ''}, 'expectedOutput' : ''},
+     {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : ''},
 
     ];
 
