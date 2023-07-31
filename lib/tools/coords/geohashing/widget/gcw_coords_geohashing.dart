@@ -20,7 +20,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 class Geohashing extends StatefulWidget {
@@ -41,8 +40,8 @@ class _GeohashingState extends State<Geohashing> {
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   bool _hasSetCoords = false;
 
-  var _currentLongitude = defaultIntegerText;
   var _currentLatitude = defaultIntegerText;
+  var _currentLongitude = defaultIntegerText;
   var _currentOnline = false;
   var _currentDowJonesIndex = 0.0;
 
@@ -58,8 +57,8 @@ class _GeohashingState extends State<Geohashing> {
     DateTime now = DateTime.now();
     _currentDate = DateTime(now.year, now.month, now.day);
 
-    _LongitudeController = TextEditingController(text: _currentLongitude.text);
     _LatitudeController = TextEditingController(text: _currentLatitude.text);
+    _LongitudeController = TextEditingController(text: _currentLongitude.text);
     _DowJonesIndexController = TextEditingController(text: _currentDowJonesIndex.toString());
   }
 
@@ -163,7 +162,7 @@ class _GeohashingState extends State<Geohashing> {
             icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
             size: size,
             onPressed: () {
-              //_setUserLocationCoords();
+              _setUserLocationCoords();
             },
           ),
         ),
@@ -246,6 +245,9 @@ class _GeohashingState extends State<Geohashing> {
     // var geohashing = Geohashing(_currentDate, _currentLatitude.value, _currentLongitude.value);
     //
     // widget.onChanged(geohashing);
+    setState(() {
+
+    });
   }
 
   void _setUserLocationCoords() {
@@ -266,18 +268,23 @@ class _GeohashingState extends State<Geohashing> {
       }
 
       _location.getLocation().then((LocationData locationData) {
-
-        LatLng _coords;
         if (locationData.latitude == null || locationData.longitude == null) {
-          _coords = defaultCoordinate;
-        } else {
-          _coords = LatLng(locationData.latitude!, locationData.longitude!);
+          _currentLatitude.value = defaultCoordinate.latitude.truncate();
+          _currentLongitude.value = defaultCoordinate.longitude.truncate();
         }
-        _currentCoords = buildCoordinate(_currentCoords.format, _coords);
+        _currentLatitude.value = locationData.latitude!.truncate();
+        _currentLongitude.value = locationData.longitude!.truncate();
+
+        _LongitudeController = TextEditingController(text: _currentLongitude.value.toString());
+        _LatitudeController = TextEditingController(text: _currentLatitude.value.toString());
         _hasSetCoords = true;
 
         _isOnLocationAccess = false;
         _setCurrentValueAndEmitOnChange();
+
+        setState(() {
+
+        });
       });
     });
   }
