@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gc_wizard/application/app_builder.dart';
-import 'package:gc_wizard/application/i18n/app_language.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/logic/app_language.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/navigation/navigation_service.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -12,7 +12,7 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
-import 'application/main_menu/deep_link.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +54,7 @@ class App extends StatelessWidget {
               routes: {
                 // Required extra way because normal Navigator.of(context) way
                 // crashes because of some NULL problems on TextSelectionControls menu
-                'clipboard_editor': (BuildContext context) => GCWTool(
+                clipboard_editor: (BuildContext context) => GCWTool(
                     tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
               },
               onGenerateInitialRoutes: (route) => startMainView(context, route),

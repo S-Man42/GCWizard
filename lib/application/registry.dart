@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/scripting_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
-import 'package:gc_wizard/application/search_strings.dart';
+import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -249,6 +249,7 @@ import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagrou
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
 import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life.dart';
+import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
@@ -413,6 +414,7 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/wi
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_list/widget/vanity_words_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_search/widget/vanity_words_search.dart';
+import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/weather_symbols.dart';
 import 'package:gc_wizard/tools/scripting/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
@@ -922,6 +924,12 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'navajo',
     ]),
+    GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'games',
+      'games_numberpyramidsolver',
+    ]),
     GCWTool(
         tool: const NumberSequenceSelection(),
         id: 'numbersequence',
@@ -1223,6 +1231,13 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'unitconverter',
     ]),
+    GCWTool(
+        tool: const VelocityAcceleration(),
+        id: 'velocity_acceleration',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: const [
+          'velocity_acceleration'
+        ]),
     GCWTool(
         tool: const VanitySelection(),
         id: 'vanity_selection',
@@ -1551,7 +1566,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const WaypointProjection(),
         id: 'coords_waypointprojection',
-        iconPath: 'assets/icons/coords/icon_waypoint_projection.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_waypoint_projection.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1563,7 +1578,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const DistanceBearing(),
         id: 'coords_distancebearing',
-        iconPath: 'assets/icons/coords/icon_distance_and_bearing.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_distance_and_bearing.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1574,7 +1589,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const FormatConverter(),
         id: 'coords_formatconverter',
-        iconPath: 'assets/icons/coords/icon_format_converter.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_format_converter.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1587,7 +1602,7 @@ void initializeRegistry(BuildContext context) {
         autoScroll: false,
         suppressToolMargin: true,
         id: 'coords_openmap',
-        iconPath: 'assets/icons/coords/icon_free_map.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_free_map.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1598,7 +1613,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const VariableCoordinateFormulas(),
         id: 'coords_variablecoordinate',
-        iconPath: 'assets/icons/coords/icon_variable_coordinate.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_variable_coordinate.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1610,7 +1625,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const DMMOffset(),
         id: 'coords_dmmoffset',
-        iconPath: 'assets/icons/coords/icon_dmm_offset.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_dmm_offset.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1621,7 +1636,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CoordinateAveraging(),
         id: 'coords_averaging',
-        iconPath: 'assets/icons/coords/icon_coordinate_measurement.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_coordinate_measurement.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1632,7 +1647,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CenterTwoPoints(),
         id: 'coords_centertwopoints',
-        iconPath: 'assets/icons/coords/icon_center_two_points.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_center_two_points.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1643,7 +1658,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CentroidArithmeticMean(),
         id: 'coords_centroid',
-        iconPath: 'assets/icons/coords/icon_centroid.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_centroid.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1655,7 +1670,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CentroidCenterOfGravity(),
         id: 'coords_centroid_centerofgravity',
-        iconPath: 'assets/icons/coords/icon_centroid.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_centroid.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1667,7 +1682,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CenterThreePoints(),
         id: 'coords_centerthreepoints',
-        iconPath: 'assets/icons/coords/icon_center_three_points.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_center_three_points.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1678,7 +1693,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const SegmentLine(),
         id: 'coords_segmentline',
-        iconPath: 'assets/icons/coords/icon_segment_line.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_segment_line.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1689,7 +1704,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const SegmentBearings(),
         id: 'coords_segmentbearings',
-        iconPath: 'assets/icons/coords/icon_segment_bearings.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_segment_bearings.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1700,7 +1715,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CrossBearing(),
         id: 'coords_crossbearing',
-        iconPath: 'assets/icons/coords/icon_cross_bearing.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_cross_bearing.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1711,7 +1726,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const IntersectBearings(),
         id: 'coords_intersectbearings',
-        iconPath: 'assets/icons/coords/icon_intersect_bearings.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_intersect_bearings.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1723,7 +1738,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const IntersectFourPoints(),
         id: 'coords_intersectfourpoints',
-        iconPath: 'assets/icons/coords/icon_intersect_four_points.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_intersect_four_points.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1734,7 +1749,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const IntersectGeodeticAndCircle(),
         id: 'coords_intersectbearingcircle',
-        iconPath: 'assets/icons/coords/icon_intersect_bearing_and_circle.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_intersect_bearing_and_circle.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1746,7 +1761,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const IntersectTwoCircles(),
         id: 'coords_intersecttwocircles',
-        iconPath: 'assets/icons/coords/icon_intersect_two_circles.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_intersect_two_circles.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1757,7 +1772,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const IntersectThreeCircles(),
         id: 'coords_intersectthreecircles',
-        iconPath: 'assets/icons/coords/icon_intersect_three_circles.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_intersect_three_circles.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1768,7 +1783,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Antipodes(),
         id: 'coords_antipodes',
-        iconPath: 'assets/icons/coords/icon_antipodes.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_antipodes.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1779,7 +1794,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Intersection(),
         id: 'coords_intersection',
-        iconPath: 'assets/icons/coords/icon_intersection.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_intersection.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1790,7 +1805,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Resection(),
         id: 'coords_resection',
-        iconPath: 'assets/icons/coords/icon_resection.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_resection.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1801,7 +1816,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const EquilateralTriangle(),
         id: 'coords_equilateraltriangle',
-        iconPath: 'assets/icons/coords/icon_equilateral_triangle.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_equilateral_triangle.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -1812,7 +1827,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const EllipsoidTransform(),
         id: 'coords_ellipsoidtransform',
-        iconPath: 'assets/icons/coords/icon_ellipsoid_transform.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_ellipsoid_transform.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
@@ -3104,7 +3119,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const SevenSegments(),
         id: 'segmentdisplay_7segments',
-        iconPath: 'assets/icons/science_and_technology/icon_7segment_display.png',
+        iconPath: 'lib/tools/science_and_technology/segment_display/7_segment_display/assets/icon_7segment_display.png',
         searchKeys: const [
           'segments',
           'segments_seven',
@@ -3112,7 +3127,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const FourteenSegments(),
         id: 'segmentdisplay_14segments',
-        iconPath: 'assets/icons/science_and_technology/icon_14segment_display.png',
+        iconPath: 'lib/tools/science_and_technology/segment_display/14_segment_display/assets/icon_14segment_display.png',
         searchKeys: const [
           'segments',
           'segments_fourteen',
@@ -3120,7 +3135,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const SixteenSegments(),
         id: 'segmentdisplay_16segments',
-        iconPath: 'assets/icons/science_and_technology/icon_16segment_display.png',
+        iconPath: 'lib/tools/science_and_technology/segment_display/16_segment_display/assets/icon_16segment_display.png',
         searchKeys: const [
           'segments',
           'segments_sixteen',
@@ -3272,6 +3287,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
+      'symbol_blue_monday',
     ]),
     GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: const [
       'symbol_brahmi_numerals',
@@ -3656,6 +3674,9 @@ void initializeRegistry(BuildContext context) {
       'symbol_freemason',
       'symbol_la_buse',
     ]),
+    GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
+      'symbol_linear_b',
+    ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_lorm',
@@ -3938,6 +3959,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
       'symbol_sprykski',
     ]),
+    GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
+      'symbol_steinheil', 'telegraph',
+    ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
     ]),
@@ -4004,6 +4028,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: const [
       'symbol_three_squares',
     ]),
+    GCWSymbolTableTool(symbolKey: 'tifinagh', symbolSearchStrings: const [
+      'symbol_tifinagh',
+    ]),
     GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: const [
       'symbol_tines',
     ]),
@@ -4027,6 +4054,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: const [
       'symbol_visitor_2009',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'voynich', symbolSearchStrings: const [
+      'symbol_voynich',
     ]),
     GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: const [
       'symbol_vulcanian',

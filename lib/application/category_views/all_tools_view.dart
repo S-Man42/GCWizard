@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
-import 'package:gc_wizard/application/main_menu/deep_link.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/application/search_strings.dart';
+import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
@@ -48,6 +47,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/teletypewrit
 import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
@@ -259,6 +259,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
+import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/scripting/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
@@ -366,7 +367,7 @@ class _MainViewState extends State<MainView> {
     if (registeredTools.isEmpty) {
       initializeRegistry(context);
 
-      var deepLink = checkDeepLink();
+      var deepLink = _checkDeepLink();
       if (deepLink != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.push(context, deepLink);
@@ -412,7 +413,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
+  NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
     if (widget.hasWebParameter()) {
       return createStartDeepLinkRoute(context, widget.webParameter!);
     }
@@ -716,6 +717,7 @@ void _initStaticToolList() {
       className(const UrwigoTextDeobfuscation()),
       className(const VanitySelection()),
       className(const VariableCoordinateFormulas()),
+      className(const VelocityAcceleration()),
       className(const Vigenere()),
       className(const VigenereBreaker()),
       className(const VisualCryptography()),

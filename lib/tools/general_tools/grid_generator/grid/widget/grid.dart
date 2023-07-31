@@ -1,13 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -120,6 +121,7 @@ class _GridState extends State<Grid> {
   var _currentGridConfiguration = 'grid_boxes_10x10';
 
   var _isConfiguration = false;
+  double _scale = 1;
   late _GridType _currentConfigType;
   late int _currentConfigColumns;
   late int _currentConfigRows;
@@ -461,9 +463,9 @@ class _GridState extends State<Grid> {
   Widget _buildGrid() {
     return Column(
       children: [
-        Container(
-          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context) * 0.8)),
-          margin: const EdgeInsets.symmetric(vertical: 20.0),
+        GCWPainterContainer(
+          scale: _scale,
+          onChanged: (value) {_scale = value;},
           child: _GridPainter(
             tapColor: _currentColor,
             type: _currentConfigType,

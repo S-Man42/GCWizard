@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -59,14 +59,13 @@ class _SubstitutionState extends State<Substitution> {
     super.dispose();
   }
 
-  KeyValueBase? _getNewEntry(KeyValueBase entry) {
-    if (entry.key.isEmpty) return null;
+  void _addEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return;
     _currentIdCount++;
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
       entry.id = _currentIdCount;
-      return entry;
+      return _currentSubstitutions.add(entry);
     }
-    return null;
   }
 
   void _updateNewEntry(KeyValueBase entry) {
@@ -114,7 +113,7 @@ class _SubstitutionState extends State<Substitution> {
 
         entries: _currentSubstitutions,
         onNewEntryChanged: (entry) => _updateNewEntry(entry),
-        onGetNewEntry: (entry) => _getNewEntry(entry),
+        onAddEntry: (entry) => _addEntry(entry),
         onUpdateEntry: (entry) => _updateEntry(entry),
     );
   }

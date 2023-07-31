@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-String formatCoordOutput(LatLng _coords, CoordinateFormat _outputFormat, Ellipsoid ells) {
+String formatCoordOutput(LatLng _coords, CoordinateFormat _outputFormat, [Ellipsoid? ells]) {
   int? precision;
   switch (_outputFormat.type) {
     case CoordinateFormatKey.DMM:
