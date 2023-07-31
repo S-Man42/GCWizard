@@ -28,7 +28,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final List<TextInputFormatter>? valueInputFormatters;
   final String valueHintText;
   final int? valueFlex;
-  final KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
+  final void Function(KeyValueBase)? onAddEntry;
   final void Function(KeyValueBase)? onNewEntryChanged;
   final GCWKeyValueInput Function(Key? key)? onCreateInput;
   final GCWKeyValueItem Function(KeyValueBase, bool)? onCreateNewItem;
@@ -50,7 +50,7 @@ class GCWKeyValueEditor extends StatefulWidget {
     required this.valueHintText,
     this.valueInputFormatters,
     this.valueFlex,
-    this.onGetNewEntry,
+    this.onAddEntry,
     this.middleWidget,
     this.dividerText,
     this.editAllowed = true,
@@ -84,7 +84,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     }
 
     input.keyController = widget.keyController;
-    input.onGetNewEntry = widget.onGetNewEntry;
+    input.onAddEntry = widget.onAddEntry;
     input.onNewEntryChanged = widget.onNewEntryChanged;
     input.onUpdateEntry = widget.onUpdateEntry;
     input.valueFlex = widget.valueFlex;

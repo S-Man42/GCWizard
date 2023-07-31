@@ -3274,6 +3274,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
     ]),
+    GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
+      'symbol_blue_monday',
+    ]),
     GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: const [
       'symbol_brahmi_numerals',
     ]),
@@ -3660,6 +3663,9 @@ void initializeRegistry(BuildContext context) {
       'symbol_freemason',
       'symbol_la_buse',
     ]),
+    GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
+      'symbol_linear_b',
+    ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_lorm',
@@ -3942,6 +3948,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
       'symbol_sprykski',
     ]),
+    GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
+      'symbol_steinheil', 'telegraph',
+    ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
     ]),
@@ -4034,6 +4043,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: const [
       'symbol_visitor_2009',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'voynich', symbolSearchStrings: const [
+      'symbol_voynich',
     ]),
     GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: const [
       'symbol_vulcanian',
