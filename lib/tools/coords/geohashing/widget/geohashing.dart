@@ -16,10 +16,14 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/geohashing/logic/geohashing.dart' as geohashing;
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 class Geohashing extends StatefulWidget {
@@ -38,7 +42,6 @@ class _GeohashingState extends State<Geohashing> {
   final _location = Location();
   bool _isOnLocationAccess = false;
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
-  bool _hasSetCoords = false;
 
   var _currentLatitude = defaultIntegerText;
   var _currentLongitude = defaultIntegerText;
@@ -91,7 +94,6 @@ class _GeohashingState extends State<Geohashing> {
                 onChanged: (ret) {
                   setState(() {
                     _currentLatitude = ret;
-                    _setCurrentValueAndEmitOnChange();
                   });
                 }
               ),
@@ -105,7 +107,6 @@ class _GeohashingState extends State<Geohashing> {
                 onChanged: (ret) {
                   setState(() {
                     _currentLongitude = ret;
-                    _setCurrentValueAndEmitOnChange();
                   });
                 }
               ),
@@ -181,72 +182,28 @@ class _GeohashingState extends State<Geohashing> {
     }
 
     _currentCoords = _coordsForCurrentFormat;
-    _hasSetCoords = true;
-
-    _setCurrentValueAndEmitOnChange();
   }
 
   void _calculateOutput() {
-    // var _startCoords = _currentInputCoords.toLatLng() ?? defaultCoordinate;
-    //
-    // var shadowLen = shadowLength(
-    //     _currentHeight, _startCoords, defaultEllipsoid, _currentDateTime);
-    //
-    // String lengthOutput = '';
-    // double _currentLength = shadowLen.length;
-    //
-    // NumberFormat format = NumberFormat('0.000');
-    // double? _currentFormattedLength;
-    // if (_currentLength < 0) {
-    //   lengthOutput = i18n(context, 'shadowlength_no_shadow');
-    // } else {
-    //   _currentFormattedLength = _currentOutputFormat.lengthUnit.fromMeter(_currentLength);
-    //   lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutputFormat.lengthUnit.symbol;
-    // }
-    //
-    // Widget outputShadow = GCWOutput(
-    //   title: i18n(context, 'shadowlength_length'),
-    //   child: lengthOutput,
-    //   copyText: _currentFormattedLength == null ? null : _currentLength.toString(),
-    // );
+    _currentMapPoints.clear();
 
-    // var _currentMapPoints = [
-    //   GCWMapPoint(
-    //       point: _startCoords,
-    //       markerText: i18n(context, 'coords_waypointprojection_start'),
-    //       coordinateFormat: _currentOutputFormat),
-    //   // GCWMapPoint(
-    //   //     point: shadowLen.shadowEndPosition,
-    //   //     color: COLOR_MAP_CALCULATEDPOINT,
-    //   //     markerText: i18n(context, 'coords_waypointprojection_end'),
-    //   //     coordinateFormat: _currentOutputFormat.format)
-    // ];
-    //
-    // Widget outputLocation = GCWCoordsOutput(
-    //   title: i18n(context, 'shadowlength_location'),
-    //   outputs: [
-    //     buildCoordinate(_currentOutputFormat.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()
-    //   ],
-    //   points: _currentMapPoints,
-    // );
-    //
-    // var outputsSun = [
-    //   [i18n(context, 'astronomy_position_azimuth'), format.format(shadowLen.sunPosition.azimuth) + '°'],
-    //   [i18n(context, 'astronomy_position_altitude'), format.format(shadowLen.sunPosition.altitude) + '°'],
-    // ];
-    //
-    // Widget rowsSunData = GCWColumnedMultilineOutput(
-    //     firstRows: [GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title'))], data: outputsSun);
-    //
-    // return Column(children: [outputShadow, outputLocation, rowsSunData]);
-  }
+    geohashing.Geohashing(
+        _currentDate, _currentLatitude.value, _currentLongitude.value,
+        dowJonesIndex: _currentDowJonesIndex
+    ).toLatLng().then((value) {
+      if (value != null) {
+        var point = GCWMapPoint(
+            point: value,
+            markerText: i18n(context, 'coords_common_coordinate'),
+            coordinateFormat: _currentOutputFormat);
 
-  void _setCurrentValueAndEmitOnChange() {
-    // var geohashing = Geohashing(_currentDate, _currentLatitude.value, _currentLongitude.value);
-    //
-    // widget.onChanged(geohashing);
-    setState(() {
+        _currentMapPoints.add(point);
 
+        _currentOutput =  [value].map((LatLng coord) {
+          return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid);
+        }).toList();
+      }
+      setState(() {});
     });
   }
 
@@ -277,14 +234,8 @@ class _GeohashingState extends State<Geohashing> {
 
         _LongitudeController = TextEditingController(text: _currentLongitude.value.toString());
         _LatitudeController = TextEditingController(text: _currentLatitude.value.toString());
-        _hasSetCoords = true;
 
         _isOnLocationAccess = false;
-        _setCurrentValueAndEmitOnChange();
-
-        setState(() {
-
-        });
       });
     });
   }
