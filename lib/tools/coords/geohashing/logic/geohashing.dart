@@ -11,20 +11,19 @@ import 'package:http/http.dart' as http;
 const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
 
-class Geohashing extends BaseCoordinate {
+class Geohashing {
   int latitude;
   int longitude;
   DateTime date;
-  double dowJonesIndex = 0;
+  double dowJonesIndex;
   LatLng? location;
 
   Geohashing(this.date, this.latitude, this.longitude, {this.dowJonesIndex = 0}) {
     //_format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
   }
 
-  @override
-  LatLng? toLatLng() {
-    location = geohashingToLatLon(this);
+  Future<LatLng?> toLatLng() async {
+    location = await geohashingToLatLon(this);
     return location;
   }
 
@@ -32,16 +31,28 @@ class Geohashing extends BaseCoordinate {
     return parseGeohashing(input);
   }
 
-  @override
   String toString([int? precision]) {
-    return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
+    var format = NumberFormat('0.0000000000');
+    return (format.format(location?.latitude ?? 0) ) + ',, ' + (format.format(location?.longitude ?? 0) ) + ' ' + DateFormat('yyyy-dd-MM').format(date);
+    //return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
   }
 }
 
 
-LatLng? geohashingToLatLon(Geohashing geohashing) {
-  var date = DateFormat('yyyy-dd-MM').format(geohashing.date);
-  var md5 = md5Digest(date);
+Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
+  if (geohashing.dowJonesIndex == 0) {
+    geohashing.dowJonesIndex = await dowJonesIndex(geohashing.date) ?? 0;
+  }
+  if (geohashing.dowJonesIndex == 0) return null;
+
+  var _date = geohashing.date;
+  if (_W30RuleNecessary(geohashing)) {
+    _date = _date.add(const Duration (days: -1));
+  }
+
+  var date = DateFormat('yyyy-dd-MM').format(_date);
+  var format = NumberFormat('0.00');
+  var md5 = md5Digest(date + '-' + format.format(geohashing.dowJonesIndex));
   var lat = _hexToDec(md5.substring(0, 15));
   var lng = _hexToDec(md5.substring(16));
 
@@ -55,6 +66,7 @@ Geohashing? parseGeohashing(String input) {
     var match = regExp.firstMatch(input);
     var decString = input.substring(0, match!.start);
     var dec = DEC.parse(decString, wholeString: false); // test before date
+
     if (dec == null) {
       decString = input.substring(match.end);
       dec = DEC.parse(decString, wholeString: false); // test after date
@@ -87,12 +99,19 @@ Future<double?> dowJonesIndex(DateTime date) async {
   return double.parse(response.body);
 }
 
-double _hexToDec(String input) {
-  var memo = 0.0;
-  var t = _toValidChars(input).split('').toList().mapIndexed((index, char) => memo += _charToValue(char, index));
+/// For every location east of Longitude -30
+/// (Europe, Africa, Asia, and Australia), use the Dow opening from
+/// the previous day — even if a new one becomes available
+bool _W30RuleNecessary(Geohashing geohashing) {
+  return geohashing.longitude > -30;
+}
 
-  print(t);
-  return memo;
+double _hexToDec(String input) {
+  var t = _toValidChars(input).split('').toList()
+      .mapIndexed((index, char) => _charToValue(char, index))
+      .reduce((memo, element) => memo + element);
+
+  return t;
 }
 
 String _toValidChars(String input) {
