@@ -216,6 +216,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/illuminati_v1/
     - lib/tools/symbol_tables/_common/assets/illuminati_v2/
     - lib/tools/symbol_tables/_common/assets/intergalactic/
+    - lib/tools/symbol_tables/_common/assets/interlac/
     - lib/tools/symbol_tables/_common/assets/iokharic/
     - lib/tools/symbol_tables/_common/assets/ita1_1926/
     - lib/tools/symbol_tables/_common/assets/ita1_1929/
