@@ -2187,6 +2187,8 @@
   "geohashing_title": "Geohashing",
   "geohashing_description": "Coordinate format from xkcd-Comic. Format: 2023-09-10 34 -111",
   "geohashing_dow_jones_index": "Dow Jones Index",
+  "geohashing_dow_jones_index_online": "Load Dow Jones Index from website http://geo.crox.net",
+  "geohashing_dow_jones_index_w30_rule": "from the previous day (W30 rule)",
   "gray_title": "Gray Code",
   "gray_description": "Encodes a binary/decimal number to a Gray encoded decimal/binary number",
   "gray_example": "4 | 100 → 6 | 110",

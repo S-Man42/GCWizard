@@ -6,6 +6,8 @@ import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
@@ -49,7 +51,7 @@ class _GeohashingState extends State<Geohashing> {
   var _currentDowJonesIndex = 0.0;
 
   var _currentOutputFormat = defaultCoordinateFormat;
-  var _currentMapPoints = <GCWMapPoint>[];
+  final _currentMapPoints = <GCWMapPoint>[];
   var _currentOutput = <String>[];
 
 
@@ -62,7 +64,7 @@ class _GeohashingState extends State<Geohashing> {
 
     _LatitudeController = TextEditingController(text: _currentLatitude.text);
     _LongitudeController = TextEditingController(text: _currentLongitude.text);
-    _DowJonesIndexController = TextEditingController(text: _currentDowJonesIndex.toString());
+    _DowJonesIndexController = TextEditingController();
   }
 
   @override
@@ -90,6 +92,7 @@ class _GeohashingState extends State<Geohashing> {
             child:
               GCWIntegerTextField(
                 hintText: i18n(context, 'coords_common_latitude'),
+                textInputFormatter: DegreesLatTextInputFormatter(allowNegativeValues: true),
                 controller: _LatitudeController,
                 onChanged: (ret) {
                   setState(() {
@@ -103,6 +106,7 @@ class _GeohashingState extends State<Geohashing> {
             child:
             GCWIntegerTextField(
                 hintText: i18n(context, 'coords_common_longitude'),
+                textInputFormatter: DegreesLonTextInputFormatter(allowNegativeValues: true),
                 controller: _LongitudeController,
                 onChanged: (ret) {
                   setState(() {
@@ -120,13 +124,17 @@ class _GeohashingState extends State<Geohashing> {
         onChanged: (value) {
           setState(() {
             _currentOnline = value;
+            if (_currentOnline) {
+              _showOnlineToast();
+            }
           });
         }
       ),
       if (!_currentOnline) GCWDoubleTextField(
         min: 0,
         controller: _DowJonesIndexController,
-        hintText: i18n(context, 'geohashing_dow_jones_index'),
+        hintText: i18n(context, 'geohashing_dow_jones_index') +
+            (_W30RuleNecessary() ? ' (' + i18n(context, 'geohashing_dow_jones_index_w30_rule') + ')': ''),
         onChanged: (value) {
         setState(() {
           _currentDowJonesIndex = value.value;
@@ -188,10 +196,7 @@ class _GeohashingState extends State<Geohashing> {
     _currentMapPoints.clear();
     _currentOutput.clear();
 
-    var _geohashing = geohashing.Geohashing(
-        _currentDate, _currentLatitude.value, _currentLongitude.value,
-        dowJonesIndex: _currentDowJonesIndex
-    );
+    var _geohashing = _buildGeohashing();
     _geohashing.toLatLng().then((value) {
       if (value != null) {
         var point = GCWMapPoint(
@@ -212,6 +217,21 @@ class _GeohashingState extends State<Geohashing> {
         setState(() {});
       }
     });
+  }
+
+  void _showOnlineToast() {
+    showToast(i18n(context, 'geohashing_dow_jones_index_online'));
+  }
+
+  bool _W30RuleNecessary() {
+    return geohashing.w30RuleNecessary(_buildGeohashing());
+  }
+
+  geohashing.Geohashing _buildGeohashing() {
+    return geohashing.Geohashing(
+        _currentDate, _currentLatitude.value, _currentLongitude.value,
+        dowJonesIndex: _currentDowJonesIndex
+    );
   }
 
   void _setUserLocationCoords() {

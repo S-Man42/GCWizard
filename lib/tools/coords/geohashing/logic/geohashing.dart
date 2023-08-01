@@ -41,7 +41,7 @@ class Geohashing {
 Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
   if (geohashing.dowJonesIndex <= 0) {
     var _date = geohashing.date;
-    if (_W30RuleNecessary(geohashing)) {
+    if (w30RuleNecessary(geohashing)) {
       _date = _date.add(const Duration (days: -1));
     }
     geohashing.dowJonesIndex = await dowJonesIndex(_date) ?? 0;
@@ -101,7 +101,7 @@ Future<double?> dowJonesIndex(DateTime date) async {
 /// For every location east of Longitude -30
 /// (Europe, Africa, Asia, and Australia), use the Dow opening from
 /// the previous day — even if a new one becomes available
-bool _W30RuleNecessary(Geohashing geohashing) {
+bool w30RuleNecessary(Geohashing geohashing) {
   return geohashing.longitude > -30;
 }
 
