@@ -41,16 +41,15 @@ class Geohashing {
 
 Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
   if (geohashing.dowJonesIndex == 0) {
-    geohashing.dowJonesIndex = await dowJonesIndex(geohashing.date) ?? 0;
+    var _date = geohashing.date;
+    if (_W30RuleNecessary(geohashing)) {
+      _date = _date.add(const Duration (days: -1));
+    }
+    geohashing.dowJonesIndex = await dowJonesIndex(_date) ?? 0;
   }
   if (geohashing.dowJonesIndex == 0) return null;
 
-  var _date = geohashing.date;
-  if (_W30RuleNecessary(geohashing)) {
-    _date = _date.add(const Duration (days: -1));
-  }
-
-  var date = DateFormat('yyyy-dd-MM').format(_date);
+  var date = DateFormat('yyyy-dd-MM').format(geohashing.date);
   var format = NumberFormat('0.00');
   var md5 = md5Digest(date + '-' + format.format(geohashing.dowJonesIndex));
   var lat = _hexToDec(md5.substring(0, 15));

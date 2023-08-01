@@ -32,6 +32,7 @@ void main() {
       {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111), 'expectedOutput': const LatLng(34.77404831931672, -110.00927092789482)},
       {'input': Geohashing(DateTime.parse('2008-09-10'), 34,-111), 'expectedOutput': const LatLng(34.252676119260464, -110.52885673731781)},
       {'input': Geohashing(DateTime.parse('2015-05-05'), 34,-111), 'expectedOutput': const LatLng(34.89779651276887, -110.45188023531117)},
+      {'input': Geohashing(DateTime.parse('2023-08-01'), 9, 48), 'expectedOutput': const LatLng(34.89779651276887, -110.45188023531117)},
 
       {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111, dowJonesIndex: 17673.63), 'expectedOutput': const LatLng(34.77404831931672, -110.00927092789482)},
       {'input': Geohashing(DateTime.parse('2008-09-10'), 34,-111, dowJonesIndex: 11233.91), 'expectedOutput': const LatLng(34.252676119260464, -110.52885673731781)},
