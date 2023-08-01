@@ -29,14 +29,15 @@ void main() {
 
   group("Parser.geohashing.toLatLon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111), 'expectedOutput': const LatLng(34.77404831931672, -110.00927092789482)},
-      {'input': Geohashing(DateTime.parse('2008-09-10'), 34,-111), 'expectedOutput': const LatLng(34.252676119260464, -110.52885673731781)},
-      {'input': Geohashing(DateTime.parse('2015-05-05'), 34,-111), 'expectedOutput': const LatLng(34.89779651276887, -110.45188023531117)},
-      {'input': Geohashing(DateTime.parse('2023-08-01'), 9, 48), 'expectedOutput': const LatLng(34.89779651276887, -110.45188023531117)},
+      {'input': Geohashing(DateTime.parse('2005-05-26'), 34, -111), 'expectedOutput': const LatLng(34.857713267707005, -111.54454306955928)},
+      {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111), 'expectedOutput': const LatLng(34.520364031734495, -111.75641517793687)},
+      {'input': Geohashing(DateTime.parse('2008-09-10'), 34,-111), 'expectedOutput': const LatLng(34.380395695429435, -111.6951528305385)},
+      {'input': Geohashing(DateTime.parse('2015-05-05'), 34,-111), 'expectedOutput': const LatLng(34.89779651276887, -111.54811976468883)},
+      {'input': Geohashing(DateTime.parse('2023-08-01'), 9, 48), 'expectedOutput': const LatLng(9.835349726655165, 48.50603874005688)},
 
-      {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111, dowJonesIndex: 17673.63), 'expectedOutput': const LatLng(34.77404831931672, -110.00927092789482)},
-      {'input': Geohashing(DateTime.parse('2008-09-10'), 34,-111, dowJonesIndex: 11233.91), 'expectedOutput': const LatLng(34.252676119260464, -110.52885673731781)},
-      {'input': Geohashing(DateTime.parse('2015-05-05'), 34,-111, dowJonesIndex: 18062.53), 'expectedOutput': const LatLng(34.89779651276887, -110.45188023531117)},
+      {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111, dowJonesIndex: 17673.63), 'expectedOutput': const LatLng(34.520364031734495, -111.75641517793687)},
+      {'input': Geohashing(DateTime.parse('2008-09-10'), 34,-111, dowJonesIndex: 11233.91), 'expectedOutput': const LatLng(34.380395695429435, -111.6951528305385)},
+      {'input': Geohashing(DateTime.parse('2015-05-05'), 34,-111, dowJonesIndex: 18062.53), 'expectedOutput': const LatLng(34.89779651276887, -111.54811976468883)},
     ];
 
     for (var elem in _inputsToExpected) {

@@ -49,14 +49,15 @@ Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
   }
   if (geohashing.dowJonesIndex == 0) return null;
 
-  var date = DateFormat('yyyy-dd-MM').format(geohashing.date);
+  var date = DateFormat('yyyy-MM-dd').format(geohashing.date);
   var format = NumberFormat('0.00');
   var md5 = md5Digest(date + '-' + format.format(geohashing.dowJonesIndex));
+  print(date + '-' + format.format(geohashing.dowJonesIndex));
   var lat = _hexToDec(md5.substring(0, 15));
   var lng = _hexToDec(md5.substring(16));
 
-  return LatLng(geohashing.latitude.truncateToDouble() + lat,
-                geohashing.longitude.truncateToDouble() + lng);
+  return LatLng((geohashing.latitude.abs() + lat) * (geohashing.latitude < 0 ? -1 : 1),
+                (geohashing.longitude.abs() + lng) * (geohashing.longitude < 0 ? -1 : 1));
 }
 
 Geohashing? parseGeohashing(String input) {
