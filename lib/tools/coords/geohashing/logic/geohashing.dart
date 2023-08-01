@@ -32,9 +32,8 @@ class Geohashing {
   }
 
   String toString([int? precision]) {
-    var format = NumberFormat('0.0000000000');
-    return (format.format(location?.latitude ?? 0) ) + ',, ' + (format.format(location?.longitude ?? 0) ) + ' ' + DateFormat('yyyy-dd-MM').format(date);
-    //return location.toString() + ' ' + DateFormat('yyyy-dd-MM').format(date);
+    return DateFormat('yyyy-MM-dd').format(date) + ' ' +
+            latitude.toString() + ' ' + longitude.toString();
   }
 }
 
@@ -52,7 +51,7 @@ Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
   var date = DateFormat('yyyy-MM-dd').format(geohashing.date);
   var format = NumberFormat('0.00');
   var md5 = md5Digest(date + '-' + format.format(geohashing.dowJonesIndex));
-  print(date + '-' + format.format(geohashing.dowJonesIndex));
+
   var lat = _hexToDec(md5.substring(0, 15));
   var lng = _hexToDec(md5.substring(16));
 
