@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/coords/geohashing/logic/geohashing.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
-  group("Parser.geohashing.parse:", () {
+  group("Geohashing.parse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'text': '2015-03-27 34.123,-111.456', 'expectedOutput': const LatLng(34.520364031734495, -111.75641517793687)},
       {'text': '34.123,-111.456 2015-03-27', 'expectedOutput': const LatLng(34.520364031734495, -111.75641517793687)},
@@ -12,6 +12,7 @@ void main() {
       {'text': '2015-05-05 34.123, -111.456', 'expectedOutput': const LatLng(34.89779651276887, -111.54811976468883)},
       {'text': '2015-05-05 34.123, 111.456', 'expectedOutput': const LatLng(34.072375550841855, 111.14132830888099)},
       {'text': '2015-05-05 -34.123, 111.456', 'expectedOutput': const LatLng(-34.072375550841855, 111.14132830888099)},
+      {'text': '2015-05-05 -34 111', 'expectedOutput': const LatLng(-34.072375550841855, 111.14132830888099)},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -27,7 +28,7 @@ void main() {
     }
   });
 
-  group("Parser.geohashing.toLatLon:", () {
+  group("Geohashing.toLatLon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': Geohashing(DateTime.parse('2005-05-26'), 34, -111), 'expectedOutput': const LatLng(34.857713267707005, -111.54454306955928)},
       {'input': Geohashing(DateTime.parse('2015-03-27'), 34, -111), 'expectedOutput': const LatLng(34.520364031734495, -111.75641517793687)},
@@ -53,7 +54,7 @@ void main() {
     }
   });
 
-  group("geohashing.dowJonesIndex:", () {
+  group("Geohashing.dowJonesIndex:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'date': DateTime.now().add(const Duration(days: 1)), 'expectedOutput': null},
       {'date': DateTime.parse('1800-03-27'), 'expectedOutput': null},

@@ -39,7 +39,7 @@ class Geohashing {
 
 
 Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
-  if (geohashing.dowJonesIndex == 0) {
+  if (geohashing.dowJonesIndex <= 0) {
     var _date = geohashing.date;
     if (_W30RuleNecessary(geohashing)) {
       _date = _date.add(const Duration (days: -1));

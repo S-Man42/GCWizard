@@ -50,7 +50,7 @@ class _GeohashingState extends State<Geohashing> {
 
   var _currentOutputFormat = defaultCoordinateFormat;
   var _currentMapPoints = <GCWMapPoint>[];
-  List<String> _currentOutput = <String>[];
+  var _currentOutput = <String>[];
 
 
   @override
@@ -186,11 +186,13 @@ class _GeohashingState extends State<Geohashing> {
 
   void _calculateOutput() {
     _currentMapPoints.clear();
+    _currentOutput.clear();
 
-    geohashing.Geohashing(
+    var _geohashing = geohashing.Geohashing(
         _currentDate, _currentLatitude.value, _currentLongitude.value,
         dowJonesIndex: _currentDowJonesIndex
-    ).toLatLng().then((value) {
+    );
+    _geohashing.toLatLng().then((value) {
       if (value != null) {
         var point = GCWMapPoint(
             point: value,
@@ -202,8 +204,13 @@ class _GeohashingState extends State<Geohashing> {
         _currentOutput =  [value].map((LatLng coord) {
           return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid);
         }).toList();
+
+        if (_currentOnline) {
+          _currentDowJonesIndex = _geohashing.dowJonesIndex;
+          _DowJonesIndexController.text = _currentDowJonesIndex.toString();
+        }
+        setState(() {});
       }
-      setState(() {});
     });
   }
 
