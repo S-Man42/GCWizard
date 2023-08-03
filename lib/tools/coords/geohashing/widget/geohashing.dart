@@ -230,7 +230,7 @@ class _GeohashingState extends State<Geohashing> {
   geohashing.Geohashing _buildGeohashing() {
     return geohashing.Geohashing(
         _currentDate, _currentLatitude.value, _currentLongitude.value,
-        dowJonesIndex: _currentDowJonesIndex
+        dowJonesIndex: _currentOnline ? 0 : _currentDowJonesIndex
     );
   }
 
