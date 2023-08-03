@@ -14,6 +14,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
@@ -53,6 +54,7 @@ class _GeohashingState extends State<Geohashing> {
   var _currentOutputFormat = defaultCoordinateFormat;
   final _currentMapPoints = <GCWMapPoint>[];
   var _currentOutput = <String>[];
+  geohashing.Geohashing? _geohashing;
 
 
   @override
@@ -155,11 +157,27 @@ class _GeohashingState extends State<Geohashing> {
           });
         },
       ),
-      GCWCoordsOutput(
-        outputs: _currentOutput,
-        points: _currentMapPoints,
-      ),
+      _buidOutput()
     ]);
+  }
+
+  Widget _buidOutput() {
+    var outputLocation = GCWCoordsOutput(
+      outputs: _currentOutput,
+      points: _currentMapPoints,
+    );
+    Widget? extendedOutput;
+
+    if (_geohashing != null) {
+      var rows = [
+        [i18n(context, 'geohashing_dow_jones_index'),
+          (_geohashing!.dowJonesIndex > 0) ? _geohashing!.dowJonesIndex.toString() : ''],
+        [i18n(context, 'geohashing_title'), _geohashing.toString()],
+      ];
+
+      extendedOutput = GCWColumnedMultilineOutput(data: rows);
+    }
+    return Column(children: [outputLocation, extendedOutput ?? Container()]);
   }
 
   Row _buildTrailingButtons(IconButtonSize size) {
@@ -196,8 +214,8 @@ class _GeohashingState extends State<Geohashing> {
     _currentMapPoints.clear();
     _currentOutput.clear();
 
-    var _geohashing = _buildGeohashing();
-    _geohashing.toLatLng().then((value) {
+    _geohashing = _buildGeohashing();
+    _geohashing!.toLatLng().then((value) {
       if (value != null) {
         var point = GCWMapPoint(
             point: value,
@@ -211,7 +229,7 @@ class _GeohashingState extends State<Geohashing> {
         }).toList();
 
         if (_currentOnline) {
-          _currentDowJonesIndex = _geohashing.dowJonesIndex;
+          _currentDowJonesIndex = _geohashing!.dowJonesIndex;
           _DowJonesIndexController.text = _currentDowJonesIndex.toString();
         }
         setState(() {});
