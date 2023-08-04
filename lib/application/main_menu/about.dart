@@ -86,7 +86,7 @@ class _AboutState extends State<About> {
         _buildUrl('manual'),
         _buildUrl('faq'),
         _buildUrl('blog'),
-        _buildUrl('twitter'),
+        //_buildUrl('twitter'),
         _buildUrl('mastodon'),
         _buildUrl('facebook'),
         _buildUrl('webversion'),
