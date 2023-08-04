@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -57,7 +59,12 @@ class SpellingAlphabetsCryptState extends State<SpellingAlphabetsCrypt> {
               _currentLanguage = value;
             });
           },
-          items: SPELLING_LIST.entries.map((mode) {
+          items: SplayTreeMap<SPELLING, String>.from(
+                  SPELLING_LIST,
+                  (keys1, keys2) =>
+                      i18n(context, SPELLING_LIST[keys1]!).compareTo(i18n(context, SPELLING_LIST[keys2]!)))
+              .entries
+              .map((mode) {
             return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value),
