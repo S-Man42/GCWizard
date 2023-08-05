@@ -31,7 +31,7 @@ void main() {
         ]},
       {'coord1': const LatLng(-0.384776 ,-62.428145), 'angle12': 0.2, 'coord2': const LatLng(21.532052, 24.793687), 'angle23': 6.2, 'coord3': const LatLng(-0.969755 ,- 63.887953),
         'expectedOutput': [
-          const  LatLng(-0.970677, -63.891305)
+          const LatLng(-0.970677, -63.891305)
         ]},
       {'coord1': const LatLng(84.898956, 102.341728), 'angle12': 55.5, 'coord2': const LatLng(79.532344 ,-143.927803), 'angle23': 31.8, 'coord3': const LatLng(83.361472, -83.213752),
         'expectedOutput': [

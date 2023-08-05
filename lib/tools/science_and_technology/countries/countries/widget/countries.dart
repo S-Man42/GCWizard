@@ -70,13 +70,10 @@ class _CountriesState extends State<Countries> {
 
   Widget _buildOutput() {
 
-    print(_currentSort);
-    print(widget.fields);
 
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
 
-    print(field);
 
     var data = COUNTRIES.values
         .where((e) => e.getProperty(field) != null)
