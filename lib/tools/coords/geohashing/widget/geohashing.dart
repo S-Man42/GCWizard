@@ -1,14 +1,12 @@
-
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -157,11 +155,11 @@ class _GeohashingState extends State<Geohashing> {
           });
         },
       ),
-      _buidOutput()
+      _buildOutput()
     ]);
   }
 
-  Widget _buidOutput() {
+  Widget _buildOutput() {
     var outputLocation = GCWCoordsOutput(
       outputs: _currentOutput,
       points: _currentMapPoints,
@@ -193,21 +191,22 @@ class _GeohashingState extends State<Geohashing> {
             },
           ),
         ),
-        GCWCoordsPasteButton(size: size, onPasted: _setCoords)
+        GCWPasteButton(iconSize: size, onSelected: _setCoords)
       ],
     );
   }
 
-  void _setCoords(List<BaseCoordinate> pastedCoords) {
-    if (pastedCoords.isEmpty) return;
+  void _setCoords(String pastedValue) {
+    if (pastedValue.isEmpty) return;
 
-    var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoords.format.type);
-    _coordsForCurrentFormat ??= pastedCoords.first;
-    if (isCoordinateFormatWithSubtype(_coordsForCurrentFormat.format.type)) {
-      _coordsForCurrentFormat.format.subtype = defaultCoordinateFormatSubtypeForFormat(_coordsForCurrentFormat.format.type);
-    }
+    var _coords = geohashing.Geohashing.parse(pastedValue);
+    if (_coords == null) return;
 
-    _currentCoords = _coordsForCurrentFormat;
+    _currentDate = _coords.date;
+    _LongitudeController.text = _coords.longitude.toString();
+    _LatitudeController.text = _coords.latitude.toString();
+
+    setState(() {});
   }
 
   void _calculateOutput() {
