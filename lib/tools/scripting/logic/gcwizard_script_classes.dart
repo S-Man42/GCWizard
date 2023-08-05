@@ -134,7 +134,7 @@ class ScriptState {
 
   List<Object?> STDIN = [];
   String STDOUT = '';
-  num step = 0.0;
+  num step = 1;
 
   String token = '';
   int tokenType = 0;
@@ -203,7 +203,7 @@ class ScriptState {
     STDOUT = '';
     // _halt = false;
     // _randomNumber = 0.0;
-    step = 1.0;
+    step = 1;
     listDATA = [];
     pointerDATA = 0;
     waypoints = [];

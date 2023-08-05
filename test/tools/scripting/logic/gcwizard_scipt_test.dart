@@ -31,6 +31,7 @@ void main() {
     _inputsToExpected.addAll(_inputsGraphicToExpected);
     _inputsToExpected.addAll(_inputsWaypoinsToExpected);
     _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected);
+    _inputsToExpected.addAll(_inputsNestedLoopsToExpected);
 
 
     for (var elem in _inputsToExpected) {
