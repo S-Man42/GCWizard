@@ -64,7 +64,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
         text: _currentProgram,
         language: getLanguage(CodeHighlightingLanguage.BASIC),
         stringMap: _buildHiglightMap(),
-        //patternMap: _buildHiglightMap()
     );
   }
 
@@ -160,8 +159,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
-                  _currentOutput = GCWizardScriptOutput.empty();
-                  _currentScriptOutput = '';
+                  _programController.text = '';
+                  _currentProgram = '';
                 });
               },
             ),
@@ -199,12 +198,26 @@ class GCWizardScriptState extends State<GCWizardScript> {
         if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
             _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
-            trailing: GCWIconButton(
-              icon: Icons.save,
-              size: IconButtonSize.SMALL,
-              onPressed: () {
-                _exportFile(context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
-              },
+            trailing: Row(
+              children: <Widget>[
+                GCWIconButton(
+                  icon: Icons.clear,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _currentOutput = GCWizardScriptOutput.empty();
+                      _currentScriptOutput = '';
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    _exportFile(context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
+                  },
+                )
+              ],
             ),
             child: GCWOutputText(
               style: gcwMonotypeTextStyle(),
