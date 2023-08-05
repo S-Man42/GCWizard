@@ -1,11 +1,12 @@
 part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsLoopsToExpected = [
-  {'code' : code1l, 'expectedOutput' : '1\n2.0\n3.0'},
-  {'code' : code2l, 'expectedOutput' : '1\n2.0\n3.0'},
+  {'code' : code1l, 'expectedOutput' : '1\n2\n3'},
+  {'code' : code2l, 'expectedOutput' : '1\n2\n3'},
   {'code' : code3l, 'expectedOutput' : '1\n3\n5'},
-  {'code' : code4l, 'expectedOutput' : '1\n2.0\n3.0'},
-  {'code' : code5l, 'expectedOutput' : '1\n2.0\n3.0'},
+  {'code' : code4l, 'expectedOutput' : '1\n2\n3'},
+  {'code' : code5l, 'expectedOutput' : '1\n2\n3'},
+  {'code' : code6l, 'expectedOutput' : '1\n1.5\n2.0\n2.5\n3.0\n3.5\n4.0\n4.5\n5.0\n5.5\n6.0'},
 ];
 
 var code1l = ''' 
@@ -46,5 +47,12 @@ do
   b = b + 1
   if b = 3 exit
 loop
+end
+''';
+
+var code6l = ''' 
+for b = 1 to 6 step 0.5
+  print b
+next
 end
 ''';
