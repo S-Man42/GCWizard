@@ -61,9 +61,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     _inputController = TextEditingController(text: _currentInput);
 
     _programController = CodeController(
-        text: _currentProgram,
-        language: getLanguage(CodeHighlightingLanguage.BASIC),
-        stringMap: _buildHiglightMap(),
+      text: _currentProgram,
+      language: getLanguage(CodeHighlightingLanguage.BASIC),
+      stringMap: _buildHiglightMap(),
     );
   }
 
@@ -175,7 +175,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
           ],
         ),
         _buildOutput(context),
-
       ],
     );
   }
@@ -214,7 +213,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   icon: Icons.save,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
-                    _exportFile(context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
+                    _exportFile(
+                        context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
                   },
                 )
               ],
@@ -280,33 +280,52 @@ class GCWizardScriptState extends State<GCWizardScript> {
         jobDataScript: _currentProgram,
         jobDataInput: _currentInput,
         jobDataCoords: _currentCoords.toLatLng()!,
-        continueState: _currentOutput.continueState
-    ));
+        continueState: _currentOutput.continueState));
   }
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
     //var showInput = false;
     if (output.continueState != null) {
-      if (output.BreakType == GCWizardScriptBreakType.INPUT) {
-        _currentScriptOutput = _currentOutput.STDOUT;
-        //showInput = true;
+      switch (output.BreakType) {
+        case GCWizardScriptBreakType.INPUT:
+          _currentScriptOutput = _currentOutput.STDOUT;
+          break;
+        case GCWizardScriptBreakType.PRINT:
+          _currentScriptOutput = _currentOutput.STDOUT;
+          break;
       }
-      else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-        _currentScriptOutput = _currentOutput.STDOUT;
-      }
+      // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
+      //   _currentScriptOutput = _currentOutput.STDOUT;
+      //   //showInput = true;
+      // } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+      //   _currentScriptOutput = _currentOutput.STDOUT;
+      // }
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        if (output.BreakType == GCWizardScriptBreakType.INPUT) {
-          _showDialogBox(context, output.continueState?.quotestr ?? '');
-        } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-          _currentScriptOutput = _currentOutput.STDOUT;
-          _interpretGCWScriptAsync();
+        switch (output.BreakType) {
+          case GCWizardScriptBreakType.INPUT:
+            _showDialogBox(context, output.continueState?.quotestr ?? '');
+            break;
+          case GCWizardScriptBreakType.PRINT:
+            if (_currentOutput.continueState != null) {
+              _currentScriptOutput = _currentOutput.STDOUT;
+              _interpretGCWScriptAsync();
+            }
+            break;
         }
+        // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
+        //   _showDialogBox(context, output.continueState?.quotestr ?? '');
+        // } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+        //   if (_currentOutput.continueState != null) {
+        //     _currentScriptOutput = _currentOutput.STDOUT;
+        //     _interpretGCWScriptAsync();
+        //   }
+        // }
         //if (showInput) {
         //  _showDialogBox(context, output.continueState?.quotestr ?? '');
         //}
@@ -370,10 +389,10 @@ class GCWizardScriptState extends State<GCWizardScript> {
           GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-               if (_currentOutput.continueState != null) {
-                 _currentOutput.continueState!.addInput(_currentInput);
-                 _interpretGCWScriptAsync();
-               }
+              if (_currentOutput.continueState != null) {
+                _currentOutput.continueState!.addInput(_currentInput);
+                _interpretGCWScriptAsync();
+              }
             },
           )
         ],
@@ -409,7 +428,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return false;
   }
 
-  void _openInMap(List<GCWMapPoint> points,) {
+  void _openInMap(
+    List<GCWMapPoint> points,
+  ) {
     Navigator.push(
         context,
         MaterialPageRoute<GCWTool>(
@@ -546,19 +567,19 @@ class GCWizardScriptState extends State<GCWizardScript> {
     var highlightMap = <String, TextStyle>{};
 
     scriptFunctions().forEach((entry) {
-      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.purple)});
-      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.purple)});
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.purple)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.purple)});
     });
     scriptCommands().forEach((entry) {
-      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.blue)});
-      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.blue)});
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.blue)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.blue)});
     });
     scriptControls().forEach((entry) {
-      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.red)});
-      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.red)});
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.red)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.red)});
     });
     for (var entry in scriptParanthes) {
-      highlightMap.addAll({entry : const TextStyle(color: Colors.orange)});
+      highlightMap.addAll({entry: const TextStyle(color: Colors.orange)});
     }
     return highlightMap;
   }
