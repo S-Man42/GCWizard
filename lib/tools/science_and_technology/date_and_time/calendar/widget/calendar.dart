@@ -17,7 +17,7 @@ class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
 
   @override
- _CalendarState createState() => _CalendarState();
+  _CalendarState createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
@@ -25,6 +25,7 @@ class _CalendarState extends State<Calendar> {
   double _currentJulianDate = 0.0;
   int _currentTimeStamp = 0;
   late DateTime _currentDate;
+  bool excelBug = false;
 
   @override
   void initState() {
@@ -71,7 +72,8 @@ class _CalendarState extends State<Calendar> {
           GCWIntegerSpinner(
               value: _currentTimeStamp,
               min: 0,
-              max: 8640000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+              max:
+                  8640000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
               onChanged: (value) {
                 setState(() {
                   _currentTimeStamp = value;
@@ -81,10 +83,12 @@ class _CalendarState extends State<Calendar> {
           GCWIntegerSpinner(
               value: _currentTimeStamp,
               min: 0,
-              max: 100000000, //max days according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+              max:
+                  100000000, //max days according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
               onChanged: (value) {
                 setState(() {
                   _currentTimeStamp = value;
+                  excelBug = (_currentTimeStamp == 60);
                 });
               }),
         if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR ||
@@ -109,111 +113,122 @@ class _CalendarState extends State<Calendar> {
   }
 
   Widget _buildOutput() {
-    double jd = 0.0;
-    var output = <String, Object?>{};
+    Widget outputWidget;
+    if (excelBug) {
+      outputWidget = GCWDefaultOutput(
+        child: i18n(context, 'excel_time_bug')
+      );
+    } else {
+      double jd = 0.0;
+      var output = <String, Object?>{};
 
-    switch (_currentCalendarSystem) {
-      case CalendarSystem.MODIFIEDJULIANDATE:
-        jd = ModifedJulianDateToJulianDate(_currentJulianDate);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.JULIANDATE:
-        jd = _currentJulianDate;
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.GREGORIANCALENDAR:
-        jd = gregorianCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.JULIANCALENDAR:
-        jd = julianCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.ISLAMICCALENDAR:
-        jd = IslamicCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = WEEKDAY_ISLAMIC[Weekday(jd)];
-        break;
-      case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
-        jd = PersianYazdegardCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = WEEKDAY_PERSIAN[Weekday(jd)];
-        break;
-      case CalendarSystem.HEBREWCALENDAR:
-        jd = HebrewCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = WEEKDAY_HEBREW[Weekday(jd)];
-        break;
-      case CalendarSystem.COPTICCALENDAR:
-        jd = CopticCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.POTRZEBIECALENDAR:
-        jd = PotrzebieCalendarToJulianDate(_currentDate);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.UNIXTIMESTAMP:
-        jd = UnixTimestampToJulianDate(_currentTimeStamp);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      case CalendarSystem.EXCELTIMESTAMP:
-        jd = ExcelTimestampToJulianDate(_currentTimeStamp);
-        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
-        break;
-      default:
-        return Container();
-    }
+      switch (_currentCalendarSystem) {
+        case CalendarSystem.MODIFIEDJULIANDATE:
+          jd = ModifedJulianDateToJulianDate(_currentJulianDate);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.JULIANDATE:
+          jd = _currentJulianDate;
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.GREGORIANCALENDAR:
+          jd = gregorianCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.JULIANCALENDAR:
+          jd = julianCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.ISLAMICCALENDAR:
+          jd = IslamicCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = WEEKDAY_ISLAMIC[Weekday(jd)];
+          break;
+        case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
+          jd = PersianYazdegardCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = WEEKDAY_PERSIAN[Weekday(jd)];
+          break;
+        case CalendarSystem.HEBREWCALENDAR:
+          jd = HebrewCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = WEEKDAY_HEBREW[Weekday(jd)];
+          break;
+        case CalendarSystem.COPTICCALENDAR:
+          jd = CopticCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.POTRZEBIECALENDAR:
+          jd = PotrzebieCalendarToJulianDate(_currentDate);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.UNIXTIMESTAMP:
+          jd = UnixTimestampToJulianDate(_currentTimeStamp);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        case CalendarSystem.EXCELTIMESTAMP:
+          jd = ExcelTimestampToJulianDate(_currentTimeStamp);
+          output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
+          break;
+        default:
+          return Container();
+      }
 
-    output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
+      output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
 
-    output['dates_calendar_system_juliancalendar'] =
-        _DateOutputToString(context, julianDateToJulianCalendar(jd), CalendarSystem.JULIANCALENDAR);
+      output['dates_calendar_system_juliancalendar'] =
+          _DateOutputToString(context, julianDateToJulianCalendar(jd), CalendarSystem.JULIANCALENDAR);
 
-    output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
+      output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
 
-    output['dates_calendar_system_gregoriancalendar'] =
-        _DateOutputToString(context, julianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
+      output['dates_calendar_system_gregoriancalendar'] =
+          _DateOutputToString(context, julianDateToGregorianCalendar(jd), CalendarSystem.GREGORIANCALENDAR);
 
-    output['dates_calendar_system_islamiccalendar'] =
-        _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
+      output['dates_calendar_system_islamiccalendar'] =
+          _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
 
-    output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
+      output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
 
-    output['dates_calendar_system_persiancalendar'] =
-        _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
+      output['dates_calendar_system_persiancalendar'] = _DateOutputToString(
+          context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
 
-    output['dates_calendar_system_copticcalendar'] =
-        _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
+      output['dates_calendar_system_copticcalendar'] =
+          _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
 
-    output['dates_calendar_system_mayacalendar_daycount'] =
-        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaDayCount(jd).toString();
+      output['dates_calendar_system_mayacalendar_daycount'] =
+          _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaDayCount(jd).toString();
 
-    output['dates_calendar_system_mayacalendar_longcount'] =
-        _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaLongCount(jd).join('.');
+      output['dates_calendar_system_mayacalendar_longcount'] =
+          _invalidMayaDate(jd) ? i18n(context, 'dates_calendar_error') : JulianDateToMayaLongCount(jd).join('.');
 
-    output['dates_calendar_system_mayacalendar_haab'] = _invalidMayaDate(jd)
-        ? i18n(context, 'dates_calendar_error')
-        : MayaLongCountToHaab(JulianDateToMayaLongCount(jd));
+      output['dates_calendar_system_mayacalendar_haab'] = _invalidMayaDate(jd)
+          ? i18n(context, 'dates_calendar_error')
+          : MayaLongCountToHaab(JulianDateToMayaLongCount(jd));
 
-    output['dates_calendar_system_mayacalendar_tzolkin'] = _invalidMayaDate(jd)
-        ? i18n(context, 'dates_calendar_error')
-        : MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
+      output['dates_calendar_system_mayacalendar_tzolkin'] = _invalidMayaDate(jd)
+          ? i18n(context, 'dates_calendar_error')
+          : MayaLongCountToTzolkin(JulianDateToMayaLongCount(jd));
 
-    output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
+      output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
 
-    output['dates_calendar_system_exceltimestamp'] = _invalidExcelDate(jd)
-        ? i18n(context, 'dates_calendar_excel_error')
-        : (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP) ? _currentTimeStamp : JulianDateToExcelTimestamp(jd);
+      output['dates_calendar_system_exceltimestamp'] = _invalidExcelDate(jd)
+          ? i18n(context, 'dates_calendar_excel_error')
+          : (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
+              ? _currentTimeStamp
+              : JulianDateToExcelTimestamp(jd);
 
-    output['dates_calendar_system_unixtimestamp']  = _invalidUnixDate(jd)
-        ? i18n(context, 'dates_calendar_unix_error')
-        : (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP) ? _currentTimeStamp : JulianDateToUnixTimestamp(jd);
+      output['dates_calendar_system_unixtimestamp'] = _invalidUnixDate(jd)
+          ? i18n(context, 'dates_calendar_unix_error')
+          : (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP)
+              ? _currentTimeStamp
+              : JulianDateToUnixTimestamp(jd);
 
-    return GCWDefaultOutput(
+      outputWidget = GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: output.entries.map((entry) {
-                    return [i18n(context, entry.key), entry.value];
-                  }).toList(),
-            flexValues: const [1, 1]
-          ),
-    );
+              return [i18n(context, entry.key), entry.value];
+            }).toList(),
+            flexValues: const [1, 1]),
+      );
+    }
+    return outputWidget;
   }
 
   String _PotrzebieToString(double jd) {
@@ -227,14 +242,14 @@ class _CalendarState extends State<Calendar> {
   }
 
   String _HebrewDateToString(DateTime? hebrewDate, double jd) {
-    if (hebrewDate == null ) return i18n(context, 'dates_calendar_error_overflow');
+    if (hebrewDate == null) return i18n(context, 'dates_calendar_error_overflow');
     if (hebrewDate.year < 0) return i18n(context, 'dates_calendar_error');
 
-    var hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month];
+    var hebrewMonth = MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month];
 
-    if (! typeOfJewYear(JewishYearLength(jd)).contains('embolistic')) {
+    if (!typeOfJewYear(JewishYearLength(jd)).contains('embolistic')) {
       if (hebrewDate.month > 6) {
-        hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month + 1];
+        hebrewMonth = MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month + 1];
       }
     }
 
