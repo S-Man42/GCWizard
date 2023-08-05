@@ -270,7 +270,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
-import 'selector_lists/scripting_selection.dart';
+import 'selector_lists/miscellaneous_selection.dart';
 
 
 class MainView extends GCWWebStatefulWidget {
@@ -748,7 +748,7 @@ void _initStaticToolList() {
       className(const ImagesAndFilesSelection()),
       className(const ScienceAndTechnologySelection()),
       className(const SymbolTableSelection()),
-      className(const ScriptingSelection()),
+      className(const MiscellaneousSelection()),
     ].contains(className(element.tool));
   }).toList();
 

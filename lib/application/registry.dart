@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/scripting_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
@@ -1081,7 +1081,7 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.GAMES],
         searchKeys: const ['games']),
     GCWTool(
-        tool: const ScriptingSelection(),
+        tool: const MiscellaneousSelection(),
         id: 'scripting_selection',
         searchKeys: const []),
     GCWTool(
@@ -3112,10 +3112,10 @@ void initializeRegistry(BuildContext context) {
       'games_scrabble',
     ]),
 
-    //Scripting Selection *****************************************************************************************
+    //Miscellaneous Selection *****************************************************************************************
 
     GCWTool(tool: const GCWizardScript(), id: 'gcwizard_script',
-        categories: const [ToolCategory.SCRIPTING],
+        categories: const [ToolCategory.MISCELLANEOUS],
         searchKeys: const [
       'gcwizard_script',
     ]),

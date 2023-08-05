@@ -4,13 +4,13 @@ import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 
-class ScriptingSelection extends GCWSelection {
-  const ScriptingSelection({Key? key}) : super(key: key);
+class MiscellaneousSelection extends GCWSelection {
+  const MiscellaneousSelection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools
-        .where((element) => element.categories.contains(ToolCategory.SCRIPTING))
+        .where((element) => element.categories.contains(ToolCategory.MISCELLANEOUS))
         .toList();
     _toolList.sort((a, b) => sortToolList(a, b));
 
