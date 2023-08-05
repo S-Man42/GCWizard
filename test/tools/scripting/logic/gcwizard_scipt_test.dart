@@ -15,6 +15,7 @@ part 'gcwizard_script_functions_math_nested.dart';
 part 'gcwizard_script_functions_string.dart';
 part 'gcwizard_script_functions_waypoints.dart';
 part 'gcwizard_script_loops.dart';
+part 'gcwizard_script_nested_loops.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {

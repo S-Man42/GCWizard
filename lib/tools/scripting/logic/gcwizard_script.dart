@@ -561,6 +561,7 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandRANDOMIZE() {}
 
+
   void executeCommandPRINT() {
     Object? result;
     int len = 0;
@@ -1030,27 +1031,34 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandWHILE() {
     state.whileStack.push(state.scriptIndex - 5);
+    state.controlStack.push(WHILELOOP);
     double result = evaluateExpression() as double;
     if (result == 0.0) {
+      //print('   poppe '+state.whileStack.pop().toString());
       state.controlStack.pop();
-      exitLoopWEND();
+      findCorrespondingWEND();
+      //exitLoopWEND();
     }
   }
 
   void exitLoopWEND() {
-    List<int> wendList = [];
+    List<int> whileList = [];
     int result = 0;
+    bool foundWend = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
       if (state.script.substring(pc).startsWith('WHILE')) {
-        wendList.add(pc);
-      }
-      if (state.script.substring(pc).startsWith('WEND')) {
-        if (wendList.isEmpty) {
-          result = pc + 4;
-        } else {
-          wendList.removeLast();
+        whileList.add(pc);
+      } else {
+        if (state.script.substring(pc).startsWith('WEND')) {
+          if (whileList.isEmpty) {
+            result = pc + 4;
+            foundWend = true;
+          } else {
+            whileList.removeLast();
+          }
         }
       }
+      if (foundWend) break;
     }
     if (result == 0) {
       _handleError(_WHILEWITHOUTWEND);
@@ -1061,17 +1069,22 @@ class _GCWizardSCriptInterpreter {
   void findCorrespondingWEND() {
     List<int> wendList = [];
     int result = 0;
+    bool foundWend = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
       if (state.script.substring(pc).startsWith('WHILE')) {
         wendList.add(pc);
-      }
-      if (state.script.substring(pc).startsWith('WEND')) {
-        if (wendList.isEmpty) {
-          result = pc;
-        } else {
-          wendList.removeLast();
+      } else {
+        if (state.script.substring(pc).startsWith('WEND')) {
+          if (wendList.isEmpty) {
+            result = pc + 4;
+            foundWend = true;
+            state.whileStack.pop();
+          } else {
+            wendList.removeLast();
+          }
         }
       }
+      if (foundWend) break;
     }
     if (result == 0) {
       _handleError(_WHILEWITHOUTWEND);
