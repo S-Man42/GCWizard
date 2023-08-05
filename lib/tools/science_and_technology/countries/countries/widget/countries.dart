@@ -70,22 +70,30 @@ class _CountriesState extends State<Countries> {
 
   Widget _buildOutput() {
 
+    print(_currentSort);
+    print(widget.fields);
+
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
 
-    var data = COUNTRIES.values.where((e) => e.getProperty(field).isNotEmpty).map((e) {
-      if (_currentSort == 0) {
-        var dataList = [i18n(context, e.name)];
-        dataList.addAll(widget.fields.map((field) => e.getProperty(field)));
+    print(field);
 
-        return dataList;
-      } else {
-        var dataList = [e.getProperty(field), i18n(context, e.name)];
-        dataList.addAll(widget.fields.where((f) => f != field).map((f) => e.getProperty(f)));
+    var data = COUNTRIES.values
+        .where((e) => e.getProperty(field) != null)
+        .where((e) => (e.getProperty(field) is String) ? (e.getProperty(field) as String).isNotEmpty : true)
+        .map((e) {
+          if (_currentSort == 0) {
+            List<Object> dataList = [i18n(context, e.name)];
+            dataList.addAll(widget.fields.map((field) => e.getProperty(field)!));
 
-        return dataList;
-      }
-    }).toList();
+            return dataList;
+          } else {
+            var dataList = [e.getProperty(field)!, i18n(context, e.name)];
+            dataList.addAll(widget.fields.where((f) => f != field).map((f) => e.getProperty(f)!));
+
+            return dataList;
+          }
+        }).toList();
 
     if (_currentSort == 0) {
       flexValues.insert(0, widget.fields.length + 1);
@@ -93,11 +101,14 @@ class _CountriesState extends State<Countries> {
       flexValues.insert(1, widget.fields.length + 1);
     }
 
-    data.sort((a, b) {
-      var result = a[0].compareTo(b[0]);
-      if (result != 0) return result;
-
-      return a[1].compareTo(b[1]);
+    data.sort((List<Object> a, List<Object> b) {
+      if (a[0] is String) {
+        return _compareAsString(a, b);
+      } else if (a[0] is int) {
+        return _compareAsInt(a, b);
+      } else {
+        return 0;
+      }
     });
 
     return GCWColumnedMultilineOutput(
@@ -105,5 +116,19 @@ class _CountriesState extends State<Countries> {
       flexValues: flexValues,
       copyColumn: 1
     );
+  }
+
+  int _compareAsString(List<Object> a, List<Object> b) {
+    var result = (a[0] as String).compareTo(b[0] as String);
+    if (result != 0) return result;
+
+    return (a[1] as String).compareTo(b[1] as String);
+  }
+
+  int _compareAsInt(List<Object> a, List<Object> b) {
+    var result = (a[0] as int).compareTo(b[0] as int);
+    if (result != 0) return result;
+
+    return (a[1] as int).compareTo(b[1] as int);
   }
 }
