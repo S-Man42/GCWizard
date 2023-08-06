@@ -30,7 +30,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 import 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
-import 'package:prefs/prefs.dart';
 
 class GCWizardScript extends StatefulWidget {
   const GCWizardScript({Key? key}) : super(key: key);
@@ -58,7 +57,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
   @override
   void initState() {
     super.initState();
-    Prefs.init();
     _programController = TextEditingController(text: _currentProgram);
     _inputController = TextEditingController(text: _currentInput);
 
