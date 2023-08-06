@@ -6,6 +6,9 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
@@ -36,6 +39,7 @@ import 'package:gc_wizard/utils/alphabets.dart';
 
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_classes.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_consts.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_enums.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_variables.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_error_handling.dart';
@@ -276,7 +280,6 @@ class _GCWizardSCriptInterpreter {
 
     do {
       getToken();
-
       if (state.tokenType == NUMBER) {
       } else if (state.tokenType == VARIABLE) {
         putBack();
@@ -1766,6 +1769,11 @@ class _GCWizardSCriptInterpreter {
         (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 10);
       state.scriptIndex += 10;
+      return true;
+    } else if (_Functions_11.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 12 < state.script.length) ? state.scriptIndex + 12 : state.scriptIndex))) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 11);
+      state.scriptIndex += 11;
       return true;
     } else if (_Functions_15.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 16 < state.script.length) ? state.scriptIndex + 16 : state.scriptIndex))) {

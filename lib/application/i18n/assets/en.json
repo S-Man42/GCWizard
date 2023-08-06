@@ -2223,6 +2223,7 @@
   "gcwizard_script_syntax_error_missing_endswitch": "ERROR: SWITCH WITHOUT END",
   "gcwizard_script_syntax_error_repeat_without_until": "ERROR: REPEAT WITHOUT UNTIL",
   "gcwizard_script_syntax_error_for_without_next": "ERROR: FOR WITHOUT NEXT",
+  "gcwizard_script_syntax_error_invalid_coordinate_format" : "ERROR: INVALID COORDINATE FORMAT FOR CONVERSION",
   "gcd_title": "Greatest Common Divisor",
   "gcd_description": "Calculates the GCD of two Numbers",
   "gcd_example": "24, 36 → 12",
