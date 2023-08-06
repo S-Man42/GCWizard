@@ -80,7 +80,6 @@ const List<String> _Functions_6 = [
 const List<String> _Functions_7 = [
   'ABADDON(',
   'BEARING(',
-  'CONVERT(',
   'WPTSADD(',
   'WPTSLAT(',
   'WPTSLON(',
@@ -107,6 +106,7 @@ const List<String> _Functions_10 = [
   'WPTSCENTER(',
 ];
 const List<String> _Functions_11 = [
+  'CONVERTBASE(',
   'CONVERTFROM('
 ];
 const List<String> _Functions_15 = [
@@ -173,7 +173,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'POW': _GCWizardScriptClassFunctionDefinition(_pow, 2),
   'QSUM': _GCWizardScriptClassFunctionDefinition(_qsum, 1),
   'IQSUM': _GCWizardScriptClassFunctionDefinition(_iqsum, 1),
-  'CONVERT': _GCWizardScriptClassFunctionDefinition(_convert, 3),
+  'CONVERTBASE': _GCWizardScriptClassFunctionDefinition(_convertbase, 3),
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
