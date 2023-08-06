@@ -1037,10 +1037,8 @@ class _GCWizardSCriptInterpreter {
     state.controlStack.push(WHILELOOP);
     double result = evaluateExpression() as double;
     if (result == 0.0) {
-      //print('   poppe '+state.whileStack.pop().toString());
       state.controlStack.pop();
       findCorrespondingWEND();
-      //exitLoopWEND();
     }
   }
 
@@ -1730,57 +1728,68 @@ class _GCWizardSCriptInterpreter {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 17);
       state.scriptIndex += 17;
       return true;
-    } else if (_Functions_15.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_15.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 16 < state.script.length) ? state.scriptIndex + 16 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 15);
       state.scriptIndex += 15;
       return true;
-    } else if (_Functions_11.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_11.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 12 < state.script.length) ? state.scriptIndex + 12 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 11);
       state.scriptIndex += 11;
       return true;
-    } else if (_Functions_10.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_10.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 10);
       state.scriptIndex += 10;
       return true;
-    } else if (_Functions_9.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_9.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 10 < state.script.length) ? state.scriptIndex + 10 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 9);
       state.scriptIndex += 9;
       return true;
-    } else if (_Functions_8.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_8.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 9 < state.script.length) ? state.scriptIndex + 9 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 8);
       state.scriptIndex += 8;
       return true;
-    } else if (_Functions_7.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_7.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 8 < state.script.length) ? state.scriptIndex + 8 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 7);
       state.scriptIndex += 7;
       return true;
-    } else if (_Functions_6.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_6.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 7 < state.script.length) ? state.scriptIndex + 7 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 6);
       state.scriptIndex += 6;
       return true;
-    } else if (_Functions_5.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_5.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 6 < state.script.length) ? state.scriptIndex + 6 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 5);
       state.scriptIndex += 5;
       return true;
-    } else if (_Functions_4.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_4.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 5 < state.script.length) ? state.scriptIndex + 5 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 4);
       state.scriptIndex += 4;
       return true;
-    } else if (_Functions_3.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_3.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 4 < state.script.length) ? state.scriptIndex + 4 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 3);
       state.scriptIndex += 3;
       return true;
-    }  else if (_Functions_2.contains(state.script.substring(state.scriptIndex,
+    }
+    if (_Functions_2.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 3 < state.script.length) ? state.scriptIndex + 3 : state.scriptIndex))) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 2);
       state.scriptIndex += 2;

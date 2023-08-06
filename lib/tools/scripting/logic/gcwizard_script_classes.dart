@@ -168,6 +168,7 @@ class ScriptState {
   String GCWizardScript_COORD_1 = '';
   String GCWizardScript_COORD_2 = '';
   String GCWizardScript_COORD_3 = '';
+  String GCWizardScript_COORD_4 = '';
 
   ScriptState({LatLng? coords}) {
     // Initialize for new program run.

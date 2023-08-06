@@ -29,6 +29,9 @@ String _getcoord3() {
   return _state.GCWizardScript_COORD_3;
 }
 
+String _getcoord4() {
+  return _state.GCWizardScript_COORD_4;
+}
 
 void _setlon(Object x) {
   if (_isString(x)) {
@@ -66,6 +69,10 @@ void _setcoord3(Object x) {
   _state.GCWizardScript_COORD_3 = x as String;
 }
 
+void _setcoord4(Object x) {
+  _state.GCWizardScript_COORD_4 = x as String;
+}
+
 String _convertto(Object target){
   if (_isNotNumber(target)) {
     _handleError(_INVALIDTYPECAST);
@@ -75,25 +82,9 @@ String _convertto(Object target){
   String targetCoord = '';
 
   if (_GCW_SCRIPT_COORD_CONVERTER[target] != null) {
-    targetCoord = formatCoordOutput(coord, CoordinateFormat(_GCW_SCRIPT_COORD_CONVERTER[target]!));
+    targetCoord = formatCoordOutput(coord, CoordinateFormat(_GCW_SCRIPT_COORD_CONVERTER[target]!), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
   } else {
     _handleError(_INVALIDCOORDINATEFORMAT);
-  }
-  List<String> splitTarget = targetCoord.split('\n');
-  if (splitTarget[0].contains(': ')) {
-    _setcoord1(splitTarget[0].split(': ')[1]);
-  } else {
-    _setcoord1(splitTarget[0]);
-  }
-  if (splitTarget[1].contains(': ')) {
-    _setcoord2(splitTarget[1].split(': ')[1]);
-  } else {
-    _setcoord2(splitTarget[1]);
-  }
-  if (splitTarget[2].contains(': ')) {
-    _setcoord3(splitTarget[2].split(': ')[1]);
-  } else {
-    _setcoord3(splitTarget[2]);
   }
 
   return targetCoord;
@@ -108,6 +99,7 @@ void _convertfrom(Object source){
   Object coord_1 = _getcoord1();
   Object coord_2 = _getcoord2();
   Object coord_3 = _getcoord3();
+  Object coord_4 = _getcoord4();
   // TODO
   switch (source as num) {
     case _COORD_DEC:
