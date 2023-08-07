@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -11,6 +12,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/widget/calendar_i18n.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
@@ -71,7 +73,7 @@ class _CalendarState extends State<Calendar> {
         if (_currentCalendarSystem == CalendarSystem.UNIXTIMESTAMP)
           GCWIntegerSpinner(
               value: _currentTimeStamp,
-              min: 0,
+              min: 1,
               max:
                   8640000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
               onChanged: (value) {
@@ -82,7 +84,7 @@ class _CalendarState extends State<Calendar> {
         if (_currentCalendarSystem == CalendarSystem.EXCELTIMESTAMP)
           GCWIntegerSpinner(
               value: _currentTimeStamp,
-              min: 0,
+              min: 1,
               max:
                   100000000, //max days according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
               onChanged: (value) {
@@ -115,9 +117,11 @@ class _CalendarState extends State<Calendar> {
   Widget _buildOutput() {
     Widget outputWidget;
     if (excelBug) {
-      outputWidget = GCWDefaultOutput(
-        child: i18n(context, 'excel_time_bug')
-      );
+      outputWidget = Column(
+          children: <Widget>[GCWDefaultOutput(
+              child: i18n(context, 'excel_time_bug')
+          ),
+            _buildUrl('excel_time_bug_url')]);
     } else {
       double jd = 0.0;
       var output = <String, Object?>{};
@@ -287,5 +291,23 @@ class _CalendarState extends State<Calendar> {
 
   bool _invalidUnixDate(double jd) {
     return (jd < JD_UNIX_START);
+  }
+
+  Container _buildUrl(String key) {
+    return Container(
+        padding: const EdgeInsets.only(top: 15, bottom: 10),
+        child: Row(children: <Widget>[
+          Expanded(
+              flex: 3,
+              child: InkWell(
+                child: Text(
+                  i18n(context, key),
+                  style: gcwHyperlinkTextStyle(),
+                ),
+                onTap: () {
+                  launchUrl(Uri.parse(i18n(context, key)));
+                },
+              ))
+        ]));
   }
 }
