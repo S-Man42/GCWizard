@@ -36,6 +36,9 @@ class _GeohashingState extends State<Geohashing> {
   late TextEditingController _LongitudeController;
   late TextEditingController _LatitudeController;
   late TextEditingController _DowJonesIndexController;
+  late TextEditingController _yearController;
+  late TextEditingController _monthController;
+  late TextEditingController _dayController;
   late DateTime _currentDate;
 
   final _location = Location();
@@ -62,12 +65,21 @@ class _GeohashingState extends State<Geohashing> {
     _LatitudeController = TextEditingController(text: _currentLatitude.text);
     _LongitudeController = TextEditingController(text: _currentLongitude.text);
     _DowJonesIndexController = TextEditingController();
+
+    _yearController = TextEditingController(text: _currentDate.year.toString());
+    _monthController = TextEditingController(text: _currentDate.month.toString());
+    _dayController = TextEditingController(text: _currentDate.day.toString());
   }
 
   @override
   void dispose() {
     _LongitudeController.dispose();
     _LatitudeController.dispose();
+
+    _yearController.dispose();
+    _monthController.dispose();
+    _dayController.dispose();
+
     super.dispose();
   }
 
@@ -77,6 +89,9 @@ class _GeohashingState extends State<Geohashing> {
       GCWTextDivider(text: '', trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
       GCWDatePicker(
           date: _currentDate,
+          yearController: _yearController,
+          monthController: _monthController,
+          dayController: _dayController,
           onChanged: (value) {
           setState(() {
             _currentDate = value;
@@ -199,11 +214,15 @@ class _GeohashingState extends State<Geohashing> {
     var _coords = geohashing.Geohashing.parse(pastedValue);
     if (_coords == null) return;
 
-    _currentDate = _coords.date;
-    _LongitudeController.text = _coords.longitude.toString();
-    _LatitudeController.text = _coords.latitude.toString();
+    setState(() {
+      _currentDate = _coords.date;
+      _LongitudeController.text = _coords.longitude.toString();
+      _LatitudeController.text = _coords.latitude.toString();
 
-    setState(() {});
+      _yearController.text = _currentDate.year.toString();
+      _monthController.text = _currentDate.month.toString();
+      _dayController.text = _currentDate.day.toString();
+    });
   }
 
   void _calculateOutput() {

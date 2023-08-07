@@ -10,7 +10,19 @@ class GCWDatePicker extends StatefulWidget {
   final DateTime date;
   final CalendarSystem type;
 
-  const GCWDatePicker({Key? key, required this.onChanged, required this.date, this.type = CalendarSystem.GREGORIANCALENDAR})
+  final TextEditingController? yearController;
+  final TextEditingController? monthController;
+  final TextEditingController? dayController;
+
+  const GCWDatePicker({
+    Key? key,
+    required this.onChanged,
+    required this.date,
+    this.type = CalendarSystem.GREGORIANCALENDAR,
+    this.yearController,
+    this.monthController,
+    this.dayController,
+  })
       : super(key: key);
 
   @override
@@ -53,6 +65,7 @@ class _GCWDatePickerState extends State<GCWDatePicker> {
               padding: const EdgeInsets.only(right: 2),
               child: GCWIntegerSpinner(
                 layout: SpinnerLayout.VERTICAL,
+                controller: widget.yearController,
                 value: _currentYear,
                 min: -5000,
                 max: 5000,
@@ -71,9 +84,10 @@ class _GCWDatePickerState extends State<GCWDatePicker> {
         Expanded(child: Padding(padding: const EdgeInsets.only(left: 2, right: 2), child: _buildMonthSpinner(widget.type))),
         Expanded(
             child: Padding(
-          padding: const EdgeInsets.only(left: 2),
-          child: _buildDaySpinner(widget.type),
-        ))
+              padding: const EdgeInsets.only(left: 2),
+              child: _buildDaySpinner(widget.type),
+            )
+        )
       ],
     );
   }
@@ -85,6 +99,7 @@ class _GCWDatePickerState extends State<GCWDatePicker> {
     return GCWIntegerSpinner(
       focusNode: _dayFocusNode,
       layout: SpinnerLayout.VERTICAL,
+      controller: widget.dayController,
       value: _currentDay,
       min: 1,
       max: maxDays,
@@ -123,6 +138,7 @@ class _GCWDatePickerState extends State<GCWDatePicker> {
       return GCWIntegerSpinner(
         focusNode: _monthFocusNode,
         layout: SpinnerLayout.VERTICAL,
+        controller: widget.monthController,
         value: _currentMonth,
         min: 1,
         max: 12,

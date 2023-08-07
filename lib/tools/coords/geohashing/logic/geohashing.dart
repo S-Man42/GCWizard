@@ -19,7 +19,6 @@ class Geohashing {
   LatLng? location;
 
   Geohashing(this.date, this.latitude, this.longitude, {this.dowJonesIndex = 0}) {
-    //_format = CoordinateFormat(CoordinateFormatKey.GEOHASHING);
   }
 
   Future<LatLng?> toLatLng() async {
@@ -31,6 +30,7 @@ class Geohashing {
     return parseGeohashing(input);
   }
 
+  @override
   String toString([int? precision]) {
     return DateFormat('yyyy-MM-dd').format(date) + ' ' +
             latitude.toString() + ' ' + longitude.toString();
