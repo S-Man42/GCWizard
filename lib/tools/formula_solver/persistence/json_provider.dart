@@ -50,7 +50,7 @@ int insertFormula(Formula formula, FormulaGroup group) {
 }
 
 void updateFormula(Formula formula, FormulaGroup group) {
-  var copy = group.formulas.map((groupFormula) {
+  group.formulas = group.formulas.map((groupFormula) {
     if (formula.id == null || groupFormula.id == null) {
       throw Exception('Formula id not found');
     }
@@ -58,10 +58,7 @@ void updateFormula(Formula formula, FormulaGroup group) {
     if (groupFormula.id == formula.id) return formula;
 
     return groupFormula;
-  });
-
-  group.formulas.clear();
-  group.formulas.addAll(copy);
+  }).toList();
 
   updateAndSave(group);
 }
@@ -75,7 +72,7 @@ int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
 }
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
-  var copy = group.values.map((value) {
+  group.values = group.values.map((value) {
     if (value.id == null || formulaValue.id == null) {
       throw Exception('Formula value id not found');
     }
@@ -83,10 +80,7 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
     if (value.id == formulaValue.id) return formulaValue;
 
     return value;
-  });
-
-  group.values.clear();
-  group.values.addAll(copy);
+  }).toList();
 
   updateAndSave(group);
 }
