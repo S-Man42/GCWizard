@@ -17,7 +17,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/geohashing/logic/geohashing.dart' as geohashing;
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -41,7 +40,6 @@ class _GeohashingState extends State<Geohashing> {
 
   final _location = Location();
   bool _isOnLocationAccess = false;
-  BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   var _currentLatitude = defaultIntegerText;
   var _currentLongitude = defaultIntegerText;
