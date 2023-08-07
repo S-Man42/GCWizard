@@ -26,7 +26,6 @@ const RECURSIVE_FORMULA_REPLACEMENT_START = '{\u0000';
 const RECURSIVE_FORMULA_REPLACEMENT_END = '\u0000}';
 const SAFED_FUNCTION_MARKER = '\x01';
 const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
-const SAFED_TEXTS_MARKER = '\x03';
 
 const _PHI = 1.6180339887498948482045868343656381177;
 const _SQRT3 = 1.73205080756887729352744634150587236;
@@ -39,7 +38,6 @@ class FormulaParser {
   bool unlimitedExpanded = false;
   Map<String, String> safedFormulasMap = {};
   Map<String, String> safedFormulaReplacementMap = {};
-  Map<String, String> safedTextsMap = {};
 
   static const Map<String, double> CONSTANTS = {
     'ln10': ln10,
@@ -121,30 +119,10 @@ class FormulaParser {
     },
   };
 
-  static String _contentFromString(String value) {
-    var RegExp1 = RegExp(r'^\s*"(.*)"\s*$');
-    var RegExp2 = RegExp(r"^\s*\'(.*)\'\s*$");
-    var str = '';
-    if (RegExp1.hasMatch(value)) {
-      str = RegExp1.firstMatch(value)!.group(1)!;
-    } else if (RegExp(r"^\s*\'.*\'\s*$").hasMatch(value)) {
-      str = RegExp2.firstMatch(value)!.group(1)!;
-    } else {
-      throw Exception();
-    }
-
-    return str;
-  }
-
-  static int _bww(String value) {
-    var x = sum(AlphabetValues().textToValues(_contentFromString(value), keepNumbers: true).whereType<int>().toList()).toInt();
-    return x;//sum(AlphabetValues().textToValues(_contentFromString(arg), keepNumbers: true).whereType<int>().toList()).toInt();
-  }
-
   static final Map<String, int Function(String)> _CUSTOM_TEXT_FUNCTIONS = {
-    'bww': (String arg) => _bww(arg),
-    'av': (String arg) => _bww(arg),
-    'len': (String arg) => _contentFromString(arg).length,
+    'bww': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true).whereType<int>().toList()).toInt(),
+    'av': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true).whereType<int>().toList()).toInt(),
+    'len': (String arg) => arg.length,
   };
 
   // different minus/hyphens/dashes
@@ -176,48 +154,11 @@ class FormulaParser {
     return result;
   }
 
-  String _safeTexts(String formula) {
-    var safedTextsFormula = '';
-
-    String? stringChar;
-    String currentString = '';
-    for (int i = 0; i < formula.length; i++) {
-      var char = formula[i];
-      if (["'", '"'].contains(formula[i])) {
-        if (stringChar == null) {
-          stringChar = char;
-          currentString = '';
-        } else {
-          if (stringChar == char) {
-            var marker = '$SAFED_TEXTS_MARKER${safedTextsMap.length}$SAFED_TEXTS_MARKER';
-            safedTextsMap.putIfAbsent(marker, () => stringChar! + currentString + stringChar);
-            safedTextsFormula += marker;
-
-            currentString = '';
-            stringChar = null;
-            continue;
-          } else {
-            currentString += char;
-          }
-        }
-      } else {
-        if (stringChar != null) {
-          currentString += char;
-        } else {
-          safedTextsFormula += char;
-        }
-      }
-    }
-    safedTextsFormula += (stringChar ?? '') + currentString;
-
-    return safedTextsFormula;
-  }
-
   // If, for example, the sin() function is used, but there's a variable i, you have to avoid
-  // replacing the i from sin with the variable value
+  // replace the i from sin with the variable value
   String _safeFunctionsAndConstants(String formula) {
     var list = CONSTANTS.keys
-        .where((constant) => constant != 'e') //special case: If you removed e, you could never use this as variable name
+        .where((constant) => constant != 'e') //special case: If you remove e, you could never use this as variable name
         .toList();
 
     list.addAll(availableParserFunctions().map((functionName) => functionName + '\\s*\\(').toList());
@@ -277,6 +218,7 @@ class FormulaParser {
     List<FormulaValue> preparedValues = _prepareValues(values);
 
     var fixedValues = <String, String>{};
+    var textValues = <String, String>{};
     var interpolatedValues = <String, String>{};
     for (var value in preparedValues) {
       if (expandValues == false || value.type == null) {
@@ -291,14 +233,15 @@ class FormulaParser {
         case FormulaValueType.INTERPOLATED:
           interpolatedValues.putIfAbsent(value.key, () => value.value);
           break;
+        case FormulaValueType.TEXT:
+          textValues.putIfAbsent(value.key, () => value.value);
+          break;
         default: continue;
       }
     }
 
-    var safedTexts = _safeTexts(formula);
-
     //replace formula replacements
-    var safedFormulaReplacements = _safeFormulaReplacements(safedTexts);
+    var safedFormulaReplacements = _safeFormulaReplacements(formula);
 
     //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(safedFormulaReplacements);
@@ -314,10 +257,9 @@ class FormulaParser {
       substitutedFormula = tempSubstitutedFormula;
       i--;
     }
-    //TODO
     // replace text values non-recursively afterwards
     // because C = FLOWER, the letters F,L,O,W,E,R should not be treated as new variables
-    // substitutedFormula = substitution(substitutedFormula,  switchMapKeyValue(safedTextsMap), caseSensitive: false);
+    substitutedFormula = substitution(substitutedFormula, textValues, caseSensitive: false);
 
     //expand formulas with interpolation values if exist
     // --> evaluate each interpolated result
@@ -342,7 +284,7 @@ class FormulaParser {
       for (var expandedFormula in expandedFormulas) {
         if (expandedFormula.text == null) continue;
 
-        substitutedFormula = _reSubstituteSavings(expandedFormula.text!);
+        substitutedFormula = _reSubstituteFormula(expandedFormula.text!);
 
         try {
           var result = _evaluateFormula(substitutedFormula);
@@ -363,42 +305,23 @@ class FormulaParser {
         results
       );
     } else {
-      substitutedFormula = _reSubstituteSavings(substitutedFormula);
+      substitutedFormula = _reSubstituteFormula(substitutedFormula);
 
       try {
-        String result;
-        if (_isString(formula)) {
-          return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, _contentFromString(formula));
-        } else {
-          result = _evaluateFormula(substitutedFormula);
-          return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, result);
-        }
+        var result = _evaluateFormula(substitutedFormula);
+        return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, result);
       } catch (e) {
         return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_ERROR, substitutedFormula);
       }
     }
   }
 
-  bool _isString(String formula) {
-    var _formula = formula.trim();
-    if (formula.startsWith('"') && formula.endsWith('"')) {
-      return true;
-    }
-    if (formula.startsWith("'") && formula.endsWith("'")) {
-      return true;
-    }
-    return false;
-  }
-
-  String _reSubstituteSavings(String formula) {
+  String _reSubstituteFormula(String formula) {
     var substitutedFormula = substitution(formula, switchMapKeyValue(safedFormulasMap));
     substitutedFormula = substitution(substitutedFormula, switchMapKeyValue(safedFormulaReplacementMap));
-    substitutedFormula = substitutedFormula
+    return substitutedFormula
         .replaceAll(RECURSIVE_FORMULA_REPLACEMENT_START, '')
         .replaceAll(RECURSIVE_FORMULA_REPLACEMENT_END, '');
-    substitutedFormula = substitution(substitutedFormula, safedTextsMap);
-
-    return substitutedFormula;
   }
 
   bool _isFullySubstituted(String tempSubstitutedFormula, String substitutedFormula) {
@@ -450,17 +373,17 @@ class FormulaParser {
       var value = element.value;
 
       if (value.isEmpty) {
-        value = key;
+        if (element.type == FormulaValueType.TEXT) {
+          value = '';
+        } else {
+          value = key;
+        }
       } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
         value = '($value)';
       }
 
-      String safedTexts;
       String safedFormulas;
       if (element.type == FormulaValueType.FIXED) {
-        safedTexts = _safeTexts(value);
-        value = safedTexts;
-
         safedFormulas = _safeFunctionsAndConstants(value);
         value = safedFormulas;
       }

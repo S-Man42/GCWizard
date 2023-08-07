@@ -309,6 +309,7 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/iterated_cross
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/widget/calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/widget/day_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_year/widget/day_of_the_year.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/excel_time/widget/excel_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calculator/widget/time_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/widget/unix_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
@@ -1909,6 +1910,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',
       'dates_calendar',
+    ]),
+    GCWTool(tool: const ExcelTime(), id: 'excel_time', searchKeys: const [
+      'dates',
+      'excel_time',
     ]),
     GCWTool(tool: const UnixTime(), id: 'unix_time', searchKeys: const [
       'dates',
