@@ -275,11 +275,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
     //var showInput = false;
-    print('_showInterpreterOutputGWC');
-    print(output.continueState);
-    print(output.BreakType);
-    print(output.STDOUT);
-    print('');
     if (output.continueState != null) {
       if (output.BreakType == GCWizardScriptBreakType.INPUT) {
         _currentScriptOutput = _currentOutput.STDOUT;

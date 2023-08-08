@@ -1154,26 +1154,32 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandSCREEN() {
     getToken();
-    if (int.tryParse(state.token) != null) {
-      switch (double.parse(state.token).toInt()) {
-        case 0:
-          state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXT;
-          state.graficOutput.graphics = [];
-          state.graficOutput.graphic = false;
-          break;
-        case 1:
-          state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.GRAPHIC;
-          state.graficOutput.graphics = [];
-          state.graficOutput.graphic = true;
-          state.graficOutput.GCWizardSCriptScreenWidth =
-              SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
-          state.graficOutput.GCWizardSCriptScreenHeight =
-              SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
-          state.graficOutput.GCWizardSCriptScreenColors =
-              SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
-          break;
-        default:
-          _handleError(_INVALIDSCREEN);
+    if (state.token.toString() == '(') {
+      getToken();
+      if (int.tryParse(state.token) != null) {
+
+        switch (double.parse(state.token).toInt()) {
+          case 0:
+            state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXT;
+            state.graficOutput.graphics = [];
+            state.graficOutput.graphic = false;
+            break;
+          case 1:
+            state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.GRAPHIC;
+            state.graficOutput.graphics = [];
+            state.graficOutput.graphic = true;
+            state.graficOutput.GCWizardSCriptScreenWidth =
+            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+            state.graficOutput.GCWizardSCriptScreenHeight =
+            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+            state.graficOutput.GCWizardSCriptScreenColors =
+            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
+            break;
+          default:
+            _handleError(_INVALIDSCREEN);
+        }
+      } else {
+        _handleError(_INVALIDSCREEN);
       }
     } else {
       _handleError(_INVALIDSCREEN);
