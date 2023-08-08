@@ -41,6 +41,16 @@ class _GCWDatePickerState extends State<GCWDatePicker> {
   void initState() {
     super.initState();
 
+    initValues();
+  }
+
+  @override
+  void didUpdateWidget(GCWDatePicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    initValues();
+  }
+
+  void initValues() {
     DateTime date = widget.date;
     _currentYear = date.year;
     _currentMonth = date.month;
