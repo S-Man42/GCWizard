@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -86,7 +86,6 @@ class _AboutState extends State<About> {
         _buildUrl('manual'),
         _buildUrl('faq'),
         _buildUrl('blog'),
-        _buildUrl('twitter'),
         _buildUrl('mastodon'),
         _buildUrl('facebook'),
         _buildUrl('webversion'),

@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -15,7 +16,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -61,10 +61,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     _inputController = TextEditingController(text: _currentInput);
 
     _programController = CodeController(
-        text: _currentProgram,
-        language: getLanguage(CodeHighlightingLanguage.BASIC),
-        stringMap: _buildHiglightMap(),
-        //patternMap: _buildHiglightMap()
+      text: _currentProgram,
+      language: getLanguage(CodeHighlightingLanguage.BASIC),
+      stringMap: _buildHiglightMap(),
     );
   }
 
@@ -107,7 +106,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 },
               ),
             GCWCodeTextField(
-              style: gcwMonotypeTextStyle(),
               lineNumbers: true,
               lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
               controller: _programController,
@@ -161,8 +159,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
-                  _currentOutput = GCWizardScriptOutput.empty();
-                  _currentScriptOutput = '';
+                  _programController.text = '';
+                  _currentProgram = '';
                 });
               },
             ),
@@ -177,7 +175,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
           ],
         ),
         _buildOutput(context),
-
       ],
     );
   }
@@ -200,12 +197,27 @@ class GCWizardScriptState extends State<GCWizardScript> {
         if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
             _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
-            trailing: GCWIconButton(
-              icon: Icons.save,
-              size: IconButtonSize.SMALL,
-              onPressed: () {
-                _exportFile(context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
-              },
+            trailing: Row(
+              children: <Widget>[
+                GCWIconButton(
+                  icon: Icons.clear,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _currentOutput = GCWizardScriptOutput.empty();
+                      _currentScriptOutput = '';
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    _exportFile(
+                        context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
+                  },
+                )
+              ],
             ),
             child: GCWOutputText(
               style: gcwMonotypeTextStyle(),
@@ -268,33 +280,52 @@ class GCWizardScriptState extends State<GCWizardScript> {
         jobDataScript: _currentProgram,
         jobDataInput: _currentInput,
         jobDataCoords: _currentCoords.toLatLng()!,
-        continueState: _currentOutput.continueState
-    ));
+        continueState: _currentOutput.continueState));
   }
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
     _currentOutput = output;
     //var showInput = false;
     if (output.continueState != null) {
-      if (output.BreakType == GCWizardScriptBreakType.INPUT) {
-        _currentScriptOutput = _currentOutput.STDOUT;
-        //showInput = true;
+      switch (output.BreakType) {
+        case GCWizardScriptBreakType.INPUT:
+          _currentScriptOutput = _currentOutput.STDOUT;
+          break;
+        case GCWizardScriptBreakType.PRINT:
+          _currentScriptOutput = _currentOutput.STDOUT;
+          break;
       }
-      else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-        _currentScriptOutput = _currentOutput.STDOUT;
-      }
+      // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
+      //   _currentScriptOutput = _currentOutput.STDOUT;
+      //   //showInput = true;
+      // } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+      //   _currentScriptOutput = _currentOutput.STDOUT;
+      // }
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        if (output.BreakType == GCWizardScriptBreakType.INPUT) {
-          _showDialogBox(context, output.continueState?.quotestr ?? '');
-        } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-          _currentScriptOutput = _currentOutput.STDOUT;
-          _interpretGCWScriptAsync();
+        switch (output.BreakType) {
+          case GCWizardScriptBreakType.INPUT:
+            _showDialogBox(context, output.continueState?.quotestr ?? '');
+            break;
+          case GCWizardScriptBreakType.PRINT:
+            if (_currentOutput.continueState != null) {
+              _currentScriptOutput = _currentOutput.STDOUT;
+              _interpretGCWScriptAsync();
+            }
+            break;
         }
+        // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
+        //   _showDialogBox(context, output.continueState?.quotestr ?? '');
+        // } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
+        //   if (_currentOutput.continueState != null) {
+        //     _currentScriptOutput = _currentOutput.STDOUT;
+        //     _interpretGCWScriptAsync();
+        //   }
+        // }
         //if (showInput) {
         //  _showDialogBox(context, output.continueState?.quotestr ?? '');
         //}
@@ -358,10 +389,10 @@ class GCWizardScriptState extends State<GCWizardScript> {
           GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-               if (_currentOutput.continueState != null) {
-                 _currentOutput.continueState!.addInput(_currentInput);
-                 _interpretGCWScriptAsync();
-               }
+              if (_currentOutput.continueState != null) {
+                _currentOutput.continueState!.addInput(_currentInput);
+                _interpretGCWScriptAsync();
+              }
             },
           )
         ],
@@ -397,7 +428,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return false;
   }
 
-  void _openInMap(List<GCWMapPoint> points,) {
+  void _openInMap(
+    List<GCWMapPoint> points,
+  ) {
     Navigator.push(
         context,
         MaterialPageRoute<GCWTool>(
@@ -534,19 +567,19 @@ class GCWizardScriptState extends State<GCWizardScript> {
     var highlightMap = <String, TextStyle>{};
 
     scriptFunctions().forEach((entry) {
-      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.purple)});
-      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.purple)});
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.purple)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.purple)});
     });
     scriptCommands().forEach((entry) {
-      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.blue)});
-      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.blue)});
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.blue)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.blue)});
     });
     scriptControls().forEach((entry) {
-      highlightMap.addAll({ entry.toLowerCase() : const TextStyle(color: Colors.red)});
-      highlightMap.addAll({ entry.toUpperCase() : const TextStyle(color: Colors.red)});
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.red)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.red)});
     });
     for (var entry in scriptParanthes) {
-      highlightMap.addAll({entry : const TextStyle(color: Colors.orange)});
+      highlightMap.addAll({entry: const TextStyle(color: Colors.orange)});
     }
     return highlightMap;
   }

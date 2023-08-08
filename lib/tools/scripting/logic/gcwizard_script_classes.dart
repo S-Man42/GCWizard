@@ -134,7 +134,7 @@ class ScriptState {
 
   List<Object?> STDIN = [];
   String STDOUT = '';
-  num step = 0.0;
+  num step = 1;
 
   String token = '';
   int tokenType = 0;
@@ -164,6 +164,11 @@ class ScriptState {
 
   double GCWizardScript_LAT = 0.0;
   double GCWizardScript_LON = 0.0;
+
+  String GCWizardScript_COORD_1 = '';
+  String GCWizardScript_COORD_2 = '';
+  String GCWizardScript_COORD_3 = '';
+  String GCWizardScript_COORD_4 = '';
 
   ScriptState({LatLng? coords}) {
     // Initialize for new program run.
@@ -203,7 +208,7 @@ class ScriptState {
     STDOUT = '';
     // _halt = false;
     // _randomNumber = 0.0;
-    step = 1.0;
+    step = 1;
     listDATA = [];
     pointerDATA = 0;
     waypoints = [];

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -30,7 +30,6 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/defa
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -106,14 +105,11 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     _currentToInput = entry.value;
   }
 
-  KeyValueBase? _getNewEntry(KeyValueBase entry) {
+  void _addEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
-      entry = formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
-      entry.id = newID(widget.formula.values.map((value) => (value.id as int?)).toList());
-
-      return entry;
+      var newEntry = formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
+      insertFormulaValue(newEntry, widget.formula);
     }
-    return null;
   }
 
   void _updateEntry(KeyValueBase entry) {
@@ -217,7 +213,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
       valueFlex: 4,
       onNewEntryChanged: _updateNewEntry,
       entries: widget.formula.values,
-      onGetNewEntry: (entry) => _getNewEntry(entry),
+      onAddEntry: (entry) => _addEntry(entry),
       onUpdateEntry: (entry) => _updateEntry(entry),
       addOnDispose: true,
     );

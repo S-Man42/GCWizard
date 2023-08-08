@@ -4,7 +4,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
@@ -103,13 +104,11 @@ class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbol
       String chunk;
       for (i = min(_data.maxSymbolTextLength, _text.length); i > 0; i--) {
         chunk = _text.substring(0, i);
-
-        if (isCaseSensitive) {
-          if (_alphabetMap.containsKey(chunk)) {
+        
+        if (_alphabetMap.containsKey(chunk)) {
             imageIndex = _alphabetMap[chunk];
             break;
-          }
-        } else {
+        } else if (!isCaseSensitive) {
           if (_alphabetMap.containsKey(chunk.toUpperCase())) {
             imageIndex = _alphabetMap[chunk.toUpperCase()];
             break;
@@ -143,7 +142,7 @@ class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbol
       symbolWidth: _data.imageSize()?.width ?? 0,
       symbolHeight: _data.imageSize()?.height ?? 0,
       relativeBorderWidth: widget.borderWidth,
-      canvasWidth: MediaQuery.of(context).size.width * 0.95,
+      canvasWidth: maxScreenWidth(context) * 0.95,
     ));
 
     return SizedBox(

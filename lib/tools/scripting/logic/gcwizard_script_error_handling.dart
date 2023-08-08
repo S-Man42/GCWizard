@@ -41,6 +41,7 @@ const _SWITCHWITHOUTEND = 36;
 const _REPEATWITHOUTUNTIL = 37;
 const _FORWITHOUTNEXT = 38;
 const _PRINTERROR = 39;
+const _INVALIDCOORDINATEFORMAT = 40;
 
 Map<int, String> _errorMessages = {
   _SYNTAXERROR : "gcwizard_script_syntax_error",
@@ -82,6 +83,7 @@ Map<int, String> _errorMessages = {
   _SWITCHWITHOUTEND : "gcwizard_script_syntax_error_missing_endswitch",
   _REPEATWITHOUTUNTIL : "gcwizard_script_syntax_error_repeat_without_until",
   _FORWITHOUTNEXT : "gcwizard_script_syntax_error_for_without_next",
+  _INVALIDCOORDINATEFORMAT : "gcwizard_script_syntax_error_invalid_coordinate_format",
 };
 
 void _resetErrors() {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/atom-one-light.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_textselectioncontrols.dart';
 import 'package:highlight/highlight_core.dart';
@@ -18,29 +19,28 @@ class GCWCodeTextField extends StatefulWidget {
   final Map<String, TextStyle>? patternMap; // Regexes
   final Map<String, TextStyle>? stringMap; // complete strings
   final Map<String, TextStyle>? theme;
-  final String? hintText;
-  final TextStyle? style;
+  TextStyle? textStyle;
   final bool readOnly;
   final bool? wrap;
   final CodeHighlightingLanguage? language;
   final bool? lineNumbers;
   final GCWCodeTextFieldLineNumberStyle? lineNumberStyle;
 
-  const GCWCodeTextField(
+  GCWCodeTextField(
       {Key? key,
       this.onChanged,
       required this.controller,
       this.stringMap,
       this.patternMap,
       this.theme,
-      this.hintText,
-      this.style,
       this.readOnly = true,
       this.wrap,
       this.language,
       this.lineNumbers = false,
       this.lineNumberStyle})
-      : super(key: key);
+      : super(key: key) {
+    textStyle ??= gcwMonotypeTextStyle();
+  }
 
   @override
   _GCWCodeTextFieldState createState() => _GCWCodeTextFieldState();
@@ -84,7 +84,7 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
           readOnly: widget.readOnly,
           selectionControls: GCWTextSelectionControls(),
           wrap: widget.wrap ?? false,
-          textStyle: widget.style ?? const TextStyle(fontFamily: 'SourceCode'),
+          textStyle: widget.textStyle ?? const TextStyle(fontFamily: 'SourceCode'),
           lineNumbers: widget.lineNumbers!,
           lineNumberStyle: widget.lineNumberStyle != null
               ? LineNumberStyle(

@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -52,7 +52,7 @@ const _OSM_URL = 'coords_mapview_osm_url';
 const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
-final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
+final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
 const _BUTTONGROUP_MARGIN = 30.0;
 
@@ -70,7 +70,7 @@ class GCWMapView extends StatefulWidget {
 }
 
 class _GCWMapViewState extends State<GCWMapView> {
-  final MapController _mapController = MapControllerImpl();
+  final MapController _mapController = MapController();
   final _GCWMapPopupController _popupLayerController = _GCWMapPopupController();
 
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
@@ -92,8 +92,8 @@ class _GCWMapViewState extends State<GCWMapView> {
   LatLngBounds _getBounds() {
     if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
 
-    var _bounds = LatLngBounds();
-    for (var point in widget.points) {
+    var _bounds = LatLngBounds(widget.points.first.point, widget.points.first.point);
+    for (var point in widget.points.skip(1)) {
       _bounds.extend(point.point);
     }
 
@@ -203,8 +203,6 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                absorbPanEventsOnScrollables: false,
-
                 /// IMPORTANT for dragging
                 bounds: _getBounds(),
                 boundsOptions: const FitBoundsOptions(padding: EdgeInsets.all(30.0)),
@@ -301,14 +299,16 @@ class _GCWMapViewState extends State<GCWMapView> {
             _showPolylineDialog(polylines.first as _GCWTappablePolyline);
           },
         ),
-      PopupMarkerLayerWidget(
+      PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
               markers: _markers,
-              popupSnap: PopupSnap.markerTop,
               popupController: _popupLayerController.popupController,
-              popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
               markerCenterAnimation: const MarkerCenterAnimation(
                 duration: Duration.zero
+              ),
+              popupDisplayOptions: PopupDisplayOptions(
+                builder: (BuildContext _, Marker marker) => _buildPopup(marker),
+                snap: PopupSnap.markerTop,
               ),
           )
       ),
@@ -538,7 +538,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
         CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
         Offset delta = details.delta;
-        LatLng pointToLatLng = const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom)!;
+        LatLng pointToLatLng = const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
 
         point.point = pointToLatLng;
 
@@ -771,8 +771,9 @@ class _GCWMapViewState extends State<GCWMapView> {
     ThemeColors colors = themeColors();
     _GCWMarker gcwMarker = marker as _GCWMarker;
 
-    var height = 150.0;
-    if (gcwMarker.mapPoint.isEditable) height += 50;
+    var height = 100.0;
+    if (widget.isEditable) height += 50;  // for FROM/TO Line Buttons
+    if (gcwMarker.mapPoint.isEditable) height += 50; // for Edit Buttons
 
     var containerHeightMultiplier = 2;
     if (gcwMarker.mapPoint.hasCircle()) containerHeightMultiplier += 1;
@@ -873,7 +874,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     ]
                 )
                 : Container(),
-            _isOwnPosition(gcwMarker.mapPoint) ? Container() :
+            _isOwnPosition(gcwMarker.mapPoint) || !widget.isEditable ? Container() :
                 _isPolylineDrawing
                     ? GCWDialogButton(
                     text: i18n(context, 'coords_openmap_linetohere'),
@@ -1033,7 +1034,7 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
 
 class CachedNetworkTileProvider extends TileProvider {
   @override
-  ImageProvider getImage(Coords<num> coords, TileLayer layer) {
+  ImageProvider getImage(TileCoordinates coords, TileLayer layer) {
     return CachedNetworkImageProvider(getTileUrl(coords, layer));
   }
 }

@@ -80,7 +80,6 @@ const List<String> _Functions_6 = [
 const List<String> _Functions_7 = [
   'ABADDON(',
   'BEARING(',
-  'CONVERT(',
   'WPTSADD(',
   'WPTSLAT(',
   'WPTSLON(',
@@ -90,7 +89,16 @@ const List<String> _Functions_8 = [
   'DISTANCE(',
 ];
 const List<String> _Functions_9 = [
-  'WPTSCLEAR('
+  'CONVERTTO(',
+  'GETCOORD1(',
+  'GETCOORD2(',
+  'GETCOORD3(',
+  'GETCOORD4(',
+  'SETCOORD1(',
+  'SETCOORD2(',
+  'SETCOORD3(',
+  'SETCOORD4(',
+  'WPTSCLEAR(',
   'WPTSCOUNT(',
 ];
 const List<String> _Functions_10 = [
@@ -98,6 +106,10 @@ const List<String> _Functions_10 = [
   'PROJECTION(',
   'ROMANTODEC(',
   'WPTSCENTER(',
+];
+const List<String> _Functions_11 = [
+  'CONVERTBASE(',
+  'CONVERTFROM(',
 ];
 const List<String> _Functions_15 = [
   'CENTERTWOPINTS(',
@@ -163,7 +175,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'POW': _GCWizardScriptClassFunctionDefinition(_pow, 2),
   'QSUM': _GCWizardScriptClassFunctionDefinition(_qsum, 1),
   'IQSUM': _GCWizardScriptClassFunctionDefinition(_iqsum, 1),
-  'CONVERT': _GCWizardScriptClassFunctionDefinition(_convert, 3),
+  'CONVERTBASE': _GCWizardScriptClassFunctionDefinition(_convertbase, 3),
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
@@ -195,12 +207,22 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // coordinates
   'GETLAT': _GCWizardScriptClassFunctionDefinition(_getlat, 0),
   'GETLON': _GCWizardScriptClassFunctionDefinition(_getlon, 0),
-  'SETLAT': _GCWizardScriptClassFunctionDefinition(_setlat, 1),
-  'SETLON': _GCWizardScriptClassFunctionDefinition(_setlon, 1),
+  'GETCOORD1': _GCWizardScriptClassFunctionDefinition(_getcoord1, 0),
+  'GETCOORD2': _GCWizardScriptClassFunctionDefinition(_getcoord2, 0),
+  'GETCOORD3': _GCWizardScriptClassFunctionDefinition(_getcoord3, 0),
+  'GETCOORD4': _GCWizardScriptClassFunctionDefinition(_getcoord4, 0),
+  'SETLAT': _GCWizardScriptClassFunctionDefinition(_setlat, 1, functionReturn: false),
+  'SETLON': _GCWizardScriptClassFunctionDefinition(_setlon, 1, functionReturn: false),
+  'SETCOORD1': _GCWizardScriptClassFunctionDefinition(_setcoord1, 1, functionReturn: false),
+  'SETCOORD2': _GCWizardScriptClassFunctionDefinition(_setcoord2, 1, functionReturn: false),
+  'SETCOORD3': _GCWizardScriptClassFunctionDefinition(_setcoord3, 1, functionReturn: false),
+  'SETCOORD4': _GCWizardScriptClassFunctionDefinition(_setcoord4, 1, functionReturn: false),
   'WGS84': _GCWizardScriptClassFunctionDefinition(_wgs84, 2),
+  'CONVERTTO': _GCWizardScriptClassFunctionDefinition(_convertto, 1),
+  'CONVERTFROM': _GCWizardScriptClassFunctionDefinition(_convertfrom, 1, functionReturn: false),
   'DISTANCE': _GCWizardScriptClassFunctionDefinition(_distance, 4),
   'BEARING': _GCWizardScriptClassFunctionDefinition(_bearing, 3),
-  'PROJECTION': _GCWizardScriptClassFunctionDefinition(_projection, 2),
+  'PROJECTION': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
   'CENTERTWOPOINTS': _GCWizardScriptClassFunctionDefinition(_centertwopoints, 4, functionReturn: false),
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerthreepoints, 6, functionReturn: false),
 };

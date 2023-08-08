@@ -7,7 +7,7 @@ import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -245,6 +245,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
+    if (widget.supportedFileTypes == null || widget.supportedFileTypes!.isEmpty) return true;
     for (FileType fileType in widget.supportedFileTypes ?? []) {
       var mimeTypeList = mimeTypes(fileType);
       if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
