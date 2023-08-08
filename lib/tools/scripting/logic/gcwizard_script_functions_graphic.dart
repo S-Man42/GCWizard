@@ -119,7 +119,7 @@ void _oval(Object x1, Object y1, Object x2, Object y2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  _state.graphics.add('LINE ' +
+  _state.graphics.add('OVAL ' +
       (x1 as int).toString() +
       ' ' +
       (y1 as int).toString() +

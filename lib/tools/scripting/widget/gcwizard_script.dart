@@ -129,16 +129,16 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 _currentInput = '';
                 _currentOutput.continueState = null;
                 _interpretGCWScriptAsync();
-                setState(() {
-                  if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-                      _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
-                    _createImage(_currentOutput.Graphic).then((value) {
-                      setState(() {
-                        _outGraphicData = value;
-                      });
-                    });
-                  }
-                });
+                // setState(() {
+                //   if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+                //       _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+                //     _createImage(_currentOutput.Graphic).then((value) {
+                //       setState(() {
+                //         _outGraphicData = value;
+                //       });
+                //     });
+                //   }
+                // });
               },
             ),
             GCWButton(
@@ -185,14 +185,16 @@ class GCWizardScriptState extends State<GCWizardScript> {
         if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
             _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
-            child: GCWImageView(
-              imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
-              suppressOpenInTool: const {
-                GCWImageViewOpenInTools.METADATA,
-                GCWImageViewOpenInTools.HIDDENDATA,
-                GCWImageViewOpenInTools.HEXVIEW
-              },
-            ),
+            child: (_outGraphicData.isNotEmpty)
+                ? GCWImageView(
+                    imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
+                    suppressOpenInTool: const {
+                      GCWImageViewOpenInTools.METADATA,
+                      GCWImageViewOpenInTools.HIDDENDATA,
+                      GCWImageViewOpenInTools.HEXVIEW
+                    },
+                  )
+                : Container(),
           ),
         if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
             _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
@@ -283,7 +285,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
         continueState: _currentOutput.continueState));
   }
 
-  void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
+  void _showInterpreterOutput(GCWizardScriptOutput output) {
     _currentOutput = output;
     //var showInput = false;
     if (output.continueState != null) {
@@ -303,6 +305,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
       // }
     } else {
       _currentScriptOutput = _buildOutputText(_currentOutput);
+      if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+          _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+        _createImage(_currentOutput.Graphic).then((value) {
+          setState(() {
+            _outGraphicData = value;
+          });
+        });
+      }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -345,7 +355,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
             child: GCWAsyncExecuter<GCWizardScriptOutput>(
               isolatedFunction: interpretGCWScriptAsync,
               parameter: _buildInterpreterJobData,
-              onReady: (data) => _showInterpreterOutputGWC(data),
+              onReady: (data) => _showInterpreterOutput(data),
               isOverlay: true,
             ),
           ),
@@ -455,20 +465,20 @@ class GCWizardScriptState extends State<GCWizardScript> {
   }
 
   Future<Uint8List> _createImage(GraphicState graphic) async {
-    double width = graphic.GCWizardSCriptScreenWidth.toDouble();
-    double height = graphic.GCWizardSCriptScreenHeight.toDouble();
+    double imageWidth = graphic.GCWizardSCriptScreenWidth.toDouble();
+    double imageHeight = graphic.GCWizardSCriptScreenHeight.toDouble();
     double pointsize = 1.0;
     List<String> graphicCommand = [];
 
     final canvasRecorder = ui.PictureRecorder();
-    final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
+    final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, imageWidth, imageHeight));
 
     final paint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill
       ..strokeWidth = pointsize.toDouble();
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+    canvas.drawRect(Rect.fromLTWH(0, 0, imageWidth, imageHeight), paint);
     for (String command in graphic.graphics) {
       graphicCommand = command.split(' ');
       switch (graphicCommand[0]) {
@@ -557,10 +567,12 @@ class GCWizardScriptState extends State<GCWizardScript> {
       }
     }
 
-    final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
+    final img = await canvasRecorder.endRecording().toImage(imageWidth.floor(), imageHeight.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
-
-    return trimNullBytes(data!.buffer.asUint8List());
+    if (data == null) {
+      throw Exception('Image data not created.');
+    }
+    return trimNullBytes(data.buffer.asUint8List());
   }
 
   Map<String, TextStyle> _buildHiglightMap() {

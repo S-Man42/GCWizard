@@ -280,15 +280,28 @@ class _GCWizardSCriptInterpreter {
 
     do {
       getToken();
-      if (state.tokenType == NUMBER) {
-      } else if (state.tokenType == VARIABLE) {
-        putBack();
-        executeAssignment();
-      } else if (state.tokenType == FUNCTION) {
-        executeFunction(state.token, state.tokenType);
-      } else {
-        executeCommand();
+      switch (state.tokenType) {
+        case NUMBER:
+          break;
+        case VARIABLE:
+          putBack();
+          executeAssignment();
+          break;
+        case FUNCTION:
+          executeFunction(state.token, state.tokenType);
+          break;
+        default: executeCommand();
       }
+      // if (state.tokenType == NUMBER) {
+      // } else if (state.tokenType == VARIABLE) {
+      //   putBack();
+      //   executeAssignment();
+      // } else if (state.tokenType == FUNCTION) {
+      //   print('FUNCTION'+state.token);
+      //   executeFunction(state.token, state.tokenType);
+      // } else {
+      //   executeCommand();
+      // }
       iterations++;
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
         sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
@@ -1171,7 +1184,7 @@ class _GCWizardSCriptInterpreter {
     if (state.token.toString() == '(') {
       getToken();
       if (int.tryParse(state.token) != null) {
-
+        findEOL();
         switch (double.parse(state.token).toInt()) {
           case 0:
             state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXT;
@@ -1246,6 +1259,7 @@ class _GCWizardSCriptInterpreter {
       if (_FUNCTIONS[command]!.functionReturn) {
         result = _FUNCTIONS[command]!.functionName();
       } else {
+
         _FUNCTIONS[command]!.functionName();
       }
       state.scriptIndex = state.scriptIndex + 2;
