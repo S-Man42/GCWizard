@@ -53,10 +53,12 @@ const List<String> _Functions_4 = [
   'SQRT(',
   'TEXT(',
   'TIME(',
+  'ZEIT(',
 ];
 const List<String> _Functions_5 = [
   'BACON(',
   'COLOR(',
+  'DATUM(',
   'FLOOR(',
   'IQSUM(',
   'POINT(',
@@ -80,6 +82,8 @@ const List<String> _Functions_6 = [
 const List<String> _Functions_7 = [
   'ABADDON(',
   'BEARING(',
+  'DISTANZ(',
+  'PEILUNG(',
   'WPTSADD(',
   'WPTSLAT(',
   'WPTSLON(',
@@ -87,6 +91,7 @@ const List<String> _Functions_7 = [
 const List<String> _Functions_8 = [
   'AVEMARIA(',
   'DISTANCE(',
+  'RICHTUNG(',
 ];
 const List<String> _Functions_9 = [
   'CONVERTTO(',
@@ -142,7 +147,9 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 
   // date, time
   'DATE': _GCWizardScriptClassFunctionDefinition(_date, 0),
+  'DATUM': _GCWizardScriptClassFunctionDefinition(_date, 0),
   'TIME': _GCWizardScriptClassFunctionDefinition(_time, 0),
+  'ZEIT': _GCWizardScriptClassFunctionDefinition(_time, 0),
 
   // math
   'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),
@@ -221,8 +228,11 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'CONVERTTO': _GCWizardScriptClassFunctionDefinition(_convertto, 1),
   'CONVERTFROM': _GCWizardScriptClassFunctionDefinition(_convertfrom, 1, functionReturn: false),
   'DISTANCE': _GCWizardScriptClassFunctionDefinition(_distance, 4),
+  'DISTANZ': _GCWizardScriptClassFunctionDefinition(_distance, 4),
   'BEARING': _GCWizardScriptClassFunctionDefinition(_bearing, 3),
+  'RICHTUNG': _GCWizardScriptClassFunctionDefinition(_bearing, 3),
   'PROJECTION': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
+  'PEILUNG': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
   'CENTERTWOPOINTS': _GCWizardScriptClassFunctionDefinition(_centertwopoints, 4, functionReturn: false),
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerthreepoints, 6, functionReturn: false),
 };
