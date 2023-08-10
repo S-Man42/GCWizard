@@ -57,16 +57,20 @@ const List<String> _Functions_4 = [
 ];
 const List<String> _Functions_5 = [
   'BACON(',
+  'BOGEN(',
   'COLOR(',
   'DATUM(',
   'FLOOR(',
   'IQSUM(',
+  'KREIS('
   'POINT(',
+  'PUNKT(',
   'RIGHT(',
   'ROT13(',
   'ROT18(',
   'ROT47(',
   'SUBST(',
+  'TORTE(',
   'TRUNC(',
   'WGS84(',
 ];
@@ -83,6 +87,7 @@ const List<String> _Functions_7 = [
   'ABADDON(',
   'BEARING(',
   'DISTANZ(',
+  'ELLIPSE(',
   'PEILUNG(',
   'WPTSADD(',
   'WPTSLAT(',
@@ -127,15 +132,19 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // graphic
   'STROKE': _GCWizardScriptClassFunctionDefinition(_stroke, 1, functionReturn: false),
   'CIRCLE': _GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),
+  'KREIS': _GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),
   'LINE': _GCWizardScriptClassFunctionDefinition(_line, 4, functionReturn: false),
   'POINT': _GCWizardScriptClassFunctionDefinition(_point, 2, functionReturn: false),
+  'PUNKT': _GCWizardScriptClassFunctionDefinition(_point, 2, functionReturn: false),
   'ARC': _GCWizardScriptClassFunctionDefinition(_arc, 5, functionReturn: false),
   'PIE': _GCWizardScriptClassFunctionDefinition(_pie, 5, functionReturn: false),
+  'TORTE': _GCWizardScriptClassFunctionDefinition(_pie, 5, functionReturn: false),
   'COLOR': _GCWizardScriptClassFunctionDefinition(_color, 3, functionReturn: false),
   'FILL': _GCWizardScriptClassFunctionDefinition(_fill, 1, functionReturn: false),
   'TEXT': _GCWizardScriptClassFunctionDefinition(_text, 4, functionReturn: false),
   'BOX': _GCWizardScriptClassFunctionDefinition(_box, 4, functionReturn: false),
   'OVAL': _GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
+  'ELLIPSE': _GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
 
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsadd, 2, functionReturn: false),
