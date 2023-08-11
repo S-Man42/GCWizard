@@ -1,6 +1,6 @@
-const assert = require("assert");
-
-const Puzzle = require('./Puzzle');
+// const assert = require("assert");
+//
+// const Puzzle = require('./Puzzle');
 
 const { recursionDepth: maxRecursionLevel, debugMode } = require('commander');
 
@@ -19,18 +19,18 @@ let recurse = (strategy, currentRecursionLevel, snapshot, index, trial) => {
     return;
   }
   // try recursion
-  let anotherTry = new Puzzle({
+  var anotherTry = Puzzle({
     rows: trial.rowHints,
     columns: trial.columnHints,
     content: snapshot
   });
-  if (debugMode) {
-    console.log(`>>> Recursing to level ${currentRecursionLevel + 1}`);
-  }
+  // if (debugMode) {
+  //   console.log(`>>> Recursing to level ${currentRecursionLevel + 1}`);
+  // }
   let result = guessAndConquer(strategy, anotherTry, currentRecursionLevel + 1);
-  if (debugMode) {
-    console.log(`<<< Done recursing level ${currentRecursionLevel + 1}`);
-  }
+  // if (debugMode) {
+  //   console.log(`<<< Done recursing level ${currentRecursionLevel + 1}`);
+  // }
   return result;
 };
 
@@ -48,7 +48,7 @@ let guessAndConquer = (strategy, puzzle, currentRecursionLevel = 0) => {
   let snapshot = puzzle.snapshot;
   // find unsolved cells
   let zeroIndexes = snapshot.reduce((result, x, i) => {
-    if (x === 0) {
+    if (x == 0) {
       result.push(i);
     }
     return result;
@@ -65,11 +65,11 @@ let guessAndConquer = (strategy, puzzle, currentRecursionLevel = 0) => {
       columns: puzzle.columnHints.slice(),
       content: snapshot
     });
-    if (debugMode) {
-      console.log(`*********************************************************`);
-      console.log(`Using trialAndError method on ${i}. zero (index ${index})`);
-      console.log(`*********************************************************`);
-    }
+    // if (debugMode) {
+    //   console.log(`*********************************************************`);
+    //   console.log(`Using trialAndError method on ${i}. zero (index ${index})`);
+    //   console.log(`*********************************************************`);
+    // }
     // solve the trial puzzle
     try {
       strategy.solve(trial, false); // may throw an exception on contradiction
