@@ -45,6 +45,7 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_variables.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_error_handling.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_definitions.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_datetime.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_list.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_geocaching.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_math.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.dart';
@@ -170,6 +171,7 @@ class _GCWizardSCriptInterpreter {
   static const ENDSWITCH = 34;
   static const BREAK = 35;
   static const CONTINUE = 36;
+  static const DIM = 37;
 
   static const EOP = 'EOP';
   static const LF = '\n';
@@ -219,6 +221,7 @@ class _GCWizardSCriptInterpreter {
     "read": READ,
     "restore": RESTORE,
     "screen": SCREEN,
+    "dim": DIM,
   };
   Map<String, int> registeredKeywords = {};
   static const Map<int, Map<String, Object?>> SCREEN_MODES = {
@@ -232,8 +235,8 @@ class _GCWizardSCriptInterpreter {
       GraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
       GraphicWidthT: 80,
       GraphicHeightT: 25,
-      GraphicWidthG: 1024,
-      GraphicHeightG: 768,
+      GraphicWidthG: 1920,
+      GraphicHeightG: 1040,
       GraphicColors: 256,
     },
   };
@@ -492,6 +495,9 @@ class _GCWizardSCriptInterpreter {
       case CONTINUE:
         executeCommandCONTINUE();
         break;
+      case DIM:
+        executeCommandDIM();
+        break;
       case END:
       case UNKNOWNCOMMAND:
         state.halt = true;
@@ -577,6 +583,15 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandRANDOMIZE() {}
 
+  void executeCommandDIM(){
+    getToken();
+    String vname = state.token[0];
+    if (isNotAVariable(vname[0])) {
+      _handleError(_NOTAVARIABLE);
+      return;
+    }
+    state.variables[vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0)] = _listclear();
+  }
 
   void executeCommandPRINT() {
     Object? result;
@@ -1202,6 +1217,17 @@ class _GCWizardSCriptInterpreter {
             state.graficOutput.GCWizardSCriptScreenColors =
             SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
             break;
+          case 2:
+            state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXTGRAPHIC;
+            state.graficOutput.graphics = [];
+            state.graficOutput.graphic = true;
+            state.graficOutput.GCWizardSCriptScreenWidth =
+            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+            state.graficOutput.GCWizardSCriptScreenHeight =
+            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+            state.graficOutput.GCWizardSCriptScreenColors =
+            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
+            break;
           default:
             _handleError(_INVALIDSCREEN);
         }
@@ -1264,6 +1290,7 @@ class _GCWizardSCriptInterpreter {
       }
       state.scriptIndex = state.scriptIndex + 2;
     } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
+      print(state.token);
       getToken();
       partialResult1 = evaluateExpressionParantheses();
       if (_FUNCTIONS[command]!.functionReturn) {
@@ -1272,6 +1299,7 @@ class _GCWizardSCriptInterpreter {
         _FUNCTIONS[command]!.functionName(partialResult1);
       }
     } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
+      print(state.token);
       getToken();
       if (state.token == "(") {
         getToken();
@@ -1749,10 +1777,16 @@ class _GCWizardSCriptInterpreter {
       state.scriptIndex += 17;
       return true;
     }
-    if (_Functions_15.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 16 < state.script.length) ? state.scriptIndex + 16 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 15);
-      state.scriptIndex += 15;
+    if (_Functions_14.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 15 < state.script.length) ? state.scriptIndex + 15 : state.scriptIndex))) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 14);
+      state.scriptIndex += 14;
+      return true;
+    }
+    if (_Functions_12.contains(state.script.substring(state.scriptIndex,
+        (state.scriptIndex + 13 < state.script.length) ? state.scriptIndex + 13 : state.scriptIndex))) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 12);
+      state.scriptIndex += 12;
       return true;
     }
     if (_Functions_11.contains(state.script.substring(state.scriptIndex,

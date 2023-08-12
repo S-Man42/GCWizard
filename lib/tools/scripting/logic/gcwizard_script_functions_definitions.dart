@@ -88,6 +88,8 @@ const List<String> _Functions_7 = [
   'BEARING(',
   'DISTANZ(',
   'ELLIPSE(',
+  'LISTADD(',
+  'LISTNEW(',
   'PEILUNG(',
   'WPTSADD(',
   'WPTSLAT(',
@@ -96,6 +98,7 @@ const List<String> _Functions_7 = [
 const List<String> _Functions_8 = [
   'AVEMARIA(',
   'DISTANCE(',
+  'LISTSORT(',
   'RICHTUNG(',
 ];
 const List<String> _Functions_9 = [
@@ -108,11 +111,16 @@ const List<String> _Functions_9 = [
   'SETCOORD2(',
   'SETCOORD3(',
   'SETCOORD4(',
+  'LISTCLEAR(',
   'WPTSCLEAR(',
   'WPTSCOUNT(',
 ];
 const List<String> _Functions_10 = [
   'DECTOROMAN(',
+  'LISTADDALL(',
+  'LISTINSERT(',
+  'LISTLENGTH(',
+  'LISTREMOVE(',
   'PROJECTION(',
   'ROMANTODEC(',
   'WPTSCENTER(',
@@ -120,9 +128,15 @@ const List<String> _Functions_10 = [
 const List<String> _Functions_11 = [
   'CONVERTBASE(',
   'CONVERTFROM(',
+  'LISTSHUFFLE(',
+  'LISTISEMPTY(',
 ];
-const List<String> _Functions_15 = [
+const List<String> _Functions_12 = [
+  'LISTTOSTRING(',
+];
+const List<String> _Functions_14 = [
   'CENTERTWOPINTS(',
+  'LISTISNOTEMPTY(',
 ];
 const List<String> _Functions_17 = [
   'CENTERTHREEPOINTS(',
@@ -159,6 +173,20 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DATUM': _GCWizardScriptClassFunctionDefinition(_date, 0),
   'TIME': _GCWizardScriptClassFunctionDefinition(_time, 0),
   'ZEIT': _GCWizardScriptClassFunctionDefinition(_time, 0),
+
+  // lists
+  'LISTNEW': _GCWizardScriptClassFunctionDefinition(_listnew, 0),
+  'LISTCLEAR': _GCWizardScriptClassFunctionDefinition(_listclear, 0),
+  'LISTADD': _GCWizardScriptClassFunctionDefinition(_listadd, 2),
+  'LISTADDALL': _GCWizardScriptClassFunctionDefinition(_listaddall, 2),
+  'LISTINSERT': _GCWizardScriptClassFunctionDefinition(_listinsert, 3),
+  'LISTREMOVE': _GCWizardScriptClassFunctionDefinition(_listremove, 2),
+  'LISTSHUFFLE': _GCWizardScriptClassFunctionDefinition(_listshuffle, 1),
+  'LISTSORT': _GCWizardScriptClassFunctionDefinition(_listsort, 1),
+  'LISTOSTRING': _GCWizardScriptClassFunctionDefinition(_listtostring, 1),
+  'LISTLENGTH': _GCWizardScriptClassFunctionDefinition(_listlength, 1),
+  'LISTISEMPTY': _GCWizardScriptClassFunctionDefinition(_listisempty, 1),
+  'LISTISNOTEMPTY': _GCWizardScriptClassFunctionDefinition(_listisnotempty, 1),
 
   // math
   'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),

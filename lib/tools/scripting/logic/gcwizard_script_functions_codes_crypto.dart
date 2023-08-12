@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-const _DECODE = -1;
+const _DECODE = 0;
 const _ENCODE = 1;
 
 String _bacon(Object text, Object mode) {

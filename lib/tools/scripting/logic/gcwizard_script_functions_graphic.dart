@@ -44,9 +44,9 @@ void _arc(Object x, Object y, Object r, Object a1, Object a2) {
       ' ' +
       (r as int).toString() +
       ' ' +
-      (a1 as int).toString() +
+      (a1 as double).toString() +
       ' ' +
-      (a2 as int).toString());
+      (a2 as double).toString());
 }
 
 void _pie(Object x, Object y, Object r, Object a1, Object a2) {
@@ -61,9 +61,9 @@ void _pie(Object x, Object y, Object r, Object a1, Object a2) {
       ' ' +
       (r as int).toString() +
       ' ' +
-      (a1 as int).toString() +
+      (a1 as double).toString() +
       ' ' +
-      (a2 as int).toString());
+      (a2 as double).toString());
 }
 
 void _color(Object r, Object g, Object b) {

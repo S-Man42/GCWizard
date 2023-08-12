@@ -155,7 +155,6 @@ String encodeBase58(String input) {
     num = div;
   }
   if (num > 0) encoded = encoded + alphabet[num];
-
   return encoded.split('').reversed.join('');
 }
 

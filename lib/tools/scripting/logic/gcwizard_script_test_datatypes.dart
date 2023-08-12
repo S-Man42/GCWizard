@@ -67,3 +67,11 @@ bool _isNotNumber(Object? value) {
   return _isNotInt(value) && _isNotDouble(value); //.runtimeType.toString() == 'String');
 }
 
+bool _isList(Object? value){
+  return (value.runtimeType.toString() == '_GCWList');
+}
+
+bool _isNotList(Object? value){
+  return !_isList(value);
+}
+
