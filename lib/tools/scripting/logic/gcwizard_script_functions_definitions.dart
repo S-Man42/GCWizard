@@ -89,6 +89,7 @@ const List<String> _Functions_7 = [
   'DISTANZ(',
   'ELLIPSE(',
   'LISTADD(',
+  'LISTGET(',
   'LISTNEW(',
   'PEILUNG(',
   'WPTSADD(',
@@ -182,11 +183,13 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LISTINSERT': _GCWizardScriptClassFunctionDefinition(_listinsert, 3),
   'LISTREMOVE': _GCWizardScriptClassFunctionDefinition(_listremove, 2),
   'LISTSHUFFLE': _GCWizardScriptClassFunctionDefinition(_listshuffle, 1),
-  'LISTSORT': _GCWizardScriptClassFunctionDefinition(_listsort, 1),
+  'LISTSORT': _GCWizardScriptClassFunctionDefinition(_listsort, 2),
   'LISTOSTRING': _GCWizardScriptClassFunctionDefinition(_listtostring, 1),
   'LISTLENGTH': _GCWizardScriptClassFunctionDefinition(_listlength, 1),
   'LISTISEMPTY': _GCWizardScriptClassFunctionDefinition(_listisempty, 1),
   'LISTISNOTEMPTY': _GCWizardScriptClassFunctionDefinition(_listisnotempty, 1),
+  'LISTTOSTRING': _GCWizardScriptClassFunctionDefinition(_listtostring, 1),
+  'LISTGET': _GCWizardScriptClassFunctionDefinition(_listget, 2),
 
   // math
   'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),
