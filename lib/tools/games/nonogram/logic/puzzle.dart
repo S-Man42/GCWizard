@@ -8,7 +8,8 @@ class Puzzle {
   var columnHints = <List<int>>[];
   int height = 0;
   int width = 0;
-  var lines = <List<int>>[];
+  var rows = <List<int>>[];
+  var columns = <List<int>>[];
 
   Puzzle(this.rowHints, this.columnHints) {}
   // constructor(data) {
@@ -23,7 +24,8 @@ class Puzzle {
     columnHints = cleanClone(data.columnHints);
     height = rowHints.length;
     width = columnHints.length;
-    lines = List<List<int>>.filled(height, List<int>.filled(width, 0));
+    rows = List<List<int>>.filled(height, List<int>.filled(width, 0));
+    columns = List<List<int>>.filled(width, List<int>.filled(height, 0));
     return checkConsistency(data);
     // if (data.content) {
     //   this.originalContent = clone(data.content);

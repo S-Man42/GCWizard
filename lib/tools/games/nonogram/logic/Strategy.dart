@@ -3,16 +3,23 @@
 //
 // const debugMode = require('commander').debug;
 
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/pushSolver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
  */
 class Strategy {
+  late VisitedG visited;
+  List<int> solvers = List<int>.filled(2, 0);
   /**
    * @param {Array} solvers List of line solvers sorted by speed
-   * @param {boolean} randomize `false` to run trial and error in order. Defaults to `true`.
+   * @param {boolean} randomize 'false' to run trial and error in order. Defaults to 'true'.
    *     In practice, using random guessing mostly yields faster results.
    */
   // constructor(solvers, randomize = true) {
@@ -23,55 +30,52 @@ class Strategy {
   /**
    * Solve the puzzle.
    * @param {Puzzle} puzzle The puzzle to solve
-   * @param {boolean} withTrialAndError `false` to stop without trial and error. Defaults to `true`.
+   * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
    */
-  void solve(puzzle, withTrialAndError = true) {
-    // if (debugMode) {
-    //   var start = Date.now();
-    //   var statistics = Array(this.solvers.length).fill(0);
-    //   var solutionSequence = [];
-    // }
-
+  void solve (Puzzle puzzle, {bool withTrialAndError = true}) {
+    var solvers = [pushSolver()];
     // keep tracks of visited lines
-    this.visited = {
-      rows: Array(puzzle.height).fill(0).map(() =>  Uint8Array(this.solvers.length)),
-      columns: Array(puzzle.width).fill(0).map(() =>  Uint8Array(this.solvers.length))
-    };
+    visited = VisitedG(
+      rows: List<Uint8List>.filled(puzzle.height,  Uint8List(solvers.length)),
+      columns: List<Uint8List>.filled(puzzle.width,  Uint8List(solvers.length))
+    );
 
     // repeatedly run all solvers on puzzle
-    double progress = 0;
+    bool progress = false;
     do {
-      var snapshot = puzzle.snapshot;
+      //var snapshot = puzzle.snapshot;
       progress = false;
-      this.solvers.forEach((solver, i) => {
-        if (progress) {
+      solvers.forEachIndexed((i, solver) {
+        if (!progress) {
           return;
         }
-        // run one line solver on the whole puzzle
-        this.solveOnce(puzzle, solver, i, solutionSequence);
-        progress = puzzle.snapshot.toString() !== snapshot.toString();
-        // if (debugMode) {
-        //   statistics[i]++;
-        // }
+
+      // run one line solver on the whole puzzle
+      solveOnce(puzzle, solver, i); //, solutionSequence
+      progress = puzzle.snapshot.toString() != snapshot.toString();
+      // if (debugMode) {
+      //   statistics[i]++;
+      // }
       });
+
     } while(progress);
 
     // no solution found… trial and error now
     if (withTrialAndError && !puzzle.isFinished) {
-      if (debugMode) {
-        console.log('must start guessing');
-      }
-      let deepResult = guessAndConquer(this, puzzle);
-      if (deepResult) {
-        puzzle.import(deepResult);
-      }
+    // if (debugMode) {
+    // console.log('must start guessing');
+    // }
+    var deepResult = guessAndConquer(this, puzzle);
+    if (deepResult) {
+      puzzle.import(deepResult);
+    }
     }
 
-    if (debugMode) {
-      console.log(`Solution sequence: [${solutionSequence.join(',')}]`);
-      console.log(`Time elapsed: ${Date.now() - start}ms`);
-      console.log(`Runs (on puzzle) per solver: ${JSON.stringify(statistics)}`);
-    }
+  // if (debugMode) {
+  // console.log('Solution sequence: [${solutionSequence.join(',')}]');
+  // console.log('Time elapsed: ${Date.now() - start}ms');
+  // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
+  // }
   }
 
   /**
@@ -79,178 +83,91 @@ class Strategy {
    * Run one solver on the puzzle
    * @param {Puzzle} puzzle The puzzle to solve
    * @param {Solver} solver The solver to use
-   * @param {number} solverIndex The solver's index in `this.solvers`
+   * @param {number} solverIndex The solver's index in 'this.solvers'
    * @param {Array} solutionSequence Array of strings for statistics in debug mode
    */
-  void solveOnce(Puzzle puzzle) { //, solver, solverIndex, solutionSequence
+  void solveOnce(Puzzle puzzle, Solver solver, int solverIndex) { //, solver, solutionSequence
     // If we're dealing with a slow solver, we want to skip as soon as one line is partially solved
     var skipEarly = false; //solver.speed == 'slow';
     var skip = false;
 
-    // Optimize iteration order
-    // var optimizeOrder = (lines, hints) => {
-    //   // remove already solved lines
-    //   let unsolvedLines = lines.reduce((result, line, index) => {
-    //     let zeros = line.reduce((count, x) => count + (x === 0 ? 1 : 0), 0);
-    //     if (!zeros) {
-    //       return result;
-    //     }
-    //     result.push({line, index, zeros});
-    //     return result;
-    //   }, []);
-    //
-    //   // sort by estimated computation effort
-    //   if (skipEarly) {
-    //     unsolvedLines.forEach(lineMeta => {
-    //       let {index, zeros} = lineMeta;
-    //       let hintSum = util.hintSum(hints[index]);
-    //       let estimate = zeros < hintSum ? 0 : Math.pow(zeros - hintSum, hints[index].length);
-    //       lineMeta.estimate = estimate;
-    //     });
-    //     unsolvedLines.sort(({estimate: left}, {estimate: right}) => left - right);
-    //   }
-    //   return unsolvedLines;
-    // };
-    // Optimize iteration order
-     var optimizeOrder = _optimizeOrder(puzzle.lines, puzzle.rowHints);
-
-    // the actual execution
-    let run = (lines, hints, onRow) => {
-      let visited = onRow ?
-        {current: this.visited.rows, other: this.visited.columns} :
-        {current: this.visited.columns, other: this.visited.rows};
-      let rearrangedLines = optimizeOrder(lines, hints);
-      rearrangedLines.forEach(({line, index: i, estimate}) => {
-        if (skip || visited.current[i][solverIndex]) {
-          return;
-        }
-        if (debugMode) {
-          console.log(`Running solver ${solverIndex} on ${onRow ? 'row' : 'column'} ${i}`, JSON.stringify(line.slice()), hints[i]);
-          if (estimate) {
-            console.log(`Estimated effort: ${estimate}`);
-          }
-        }
-        visited.current[i][solverIndex] = 1;
-        // First, trim unnecessary information from the line
-        let [trimmedLine, trimmedHints, trimInfo] = util.trimLine(line, hints[i]);
-        if (debugMode) {
-          var start = Date.now();
-        }
-        // solver run
-        let newLine = solver(trimmedLine, trimmedHints);
-
-        if (debugMode) {
-          let end = Date.now();
-          if (end - start > 100) {
-            console.log(`Long run: ${end - start}ms`);
-          }
-        }
-
-        // now, restore the trimmed line and analyze the result
-        let hasChanged = false;
-        let changedLines = [];
-        if (newLine) { // the solver may return null to indicate no progress
-          newLine = util.restoreLine(newLine, trimInfo);
-          line.forEach((el, i) => {
-            // What has changed?
-            if (el !== newLine[i]) {
-              line[i] = newLine[i];
-              // These perpendicular lines must be revisited
-              visited.other[i].fill(0);
-              if (debugMode) {
-                changedLines.push(i);
-              }
-            }
-          });
-          hasChanged = changedLines.length > 0;
-          skip = hasChanged && skipEarly;
-        }
-
-        if (!debugMode) {
-          util.spinner.spin();
-        } else if (hasChanged) {
-          console.log(`found ${newLine}`);
-          console.log(puzzle);
-          console.log(`Must revisit ${onRow ? 'column' : 'row'}${changedLines.length > 1 ? 's' : ''} ${changedLines.join(',')}`);
-          solutionSequence.push(`(${solverIndex})${onRow ? 'r' : 'c'}${i}[${changedLines.join(',')}]`);
-        }
-      });
-    };
-
     // run on rows
-    run(puzzle.rows, puzzle.rowHints, true);
+    run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
     if (skip) {
       return;
     }
     // …and then on columns
-    run(puzzle.columns, puzzle.columnHints);
+    run(puzzle.columns, puzzle.columnHints, true, solver, solverIndex, skip, skipEarly);
   }
 
   // the actual execution
-  void run (lines, hints, onRow) => {
-  let visited = onRow ?
-  {current: this.visited.rows, other: this.visited.columns} :
-  {current: this.visited.columns, other: this.visited.rows};
-  let rearrangedLines = optimizeOrder(lines, hints);
-  rearrangedLines.forEach(({line, index: i, estimate}) => {
-  if (skip || visited.current[i][solverIndex]) {
-  return;
-  }
-  if (debugMode) {
-  console.log(`Running solver ${solverIndex} on ${onRow ? 'row' : 'column'} ${i}`, JSON.stringify(line.slice()), hints[i]);
-  if (estimate) {
-  console.log(`Estimated effort: ${estimate}`);
-  }
-  }
-  visited.current[i][solverIndex] = 1;
-  // First, trim unnecessary information from the line
-  let [trimmedLine, trimmedHints, trimInfo] = util.trimLine(line, hints[i]);
-  if (debugMode) {
-  var start = Date.now();
-  }
-  // solver run
-  let newLine = solver(trimmedLine, trimmedHints);
+  void run(List<List<int>> lines, List<List<int>> hints, bool onRow, Solver solver, int solverIndex, bool skip, bool skipEarly) {
+    var visited = onRow ?
+      VisitedL(current: this.visited.rows, other: this.visited.columns) :
+      VisitedL(current: this.visited.columns, other: this.visited.rows);
+    var rearrangedLines = _optimizeOrder(lines, hints, skipEarly);
+    rearrangedLines.forEachIndexed((i, line)  { //estimate
+      if (skip || visited.current[i][solverIndex] != 0) {
+        return;
+      }
+      // if (debugMode) {
+      //   console.log('Running solver ${solverIndex} on ${onRow ? 'row' : 'column'} ${i}', JSON.stringify(line.slice()), hints[i]);
+      //   if (estimate) {
+      //     console.log('Estimated effort: ${estimate}');
+      //   }
+      // }
+      visited.current[i][solverIndex] = 1;
+      // First, trim unnecessary information from the line
+      var trimresult = trimLine(line.line, hints[i]); //[trimmedLine, trimmedHints, trimInfo]
+      if (trimresult.error.isNotEmpty) {
+        return;
+      }
+  // if (debugMode) {
+      // var start = Date.now();
+      // }
+      // solver run
+      var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
-  if (debugMode) {
-  let end = Date.now();
-  if (end - start > 100) {
-  console.log(`Long run: ${end - start}ms`);
-  }
-  }
+      // if (debugMode) {
+      //   var end = Date.now();
+      //   if (end - start > 100) {
+      //     console.log('Long run: ${end - start}ms');
+      //   }
+      // }
 
-  // now, restore the trimmed line and analyze the result
-  let hasChanged = false;
-  let changedLines = [];
-  if (newLine) { // the solver may return null to indicate no progress
-  newLine = util.restoreLine(newLine, trimInfo);
-  line.forEach((el, i) => {
-  // What has changed?
-  if (el !== newLine[i]) {
-  line[i] = newLine[i];
-  // These perpendicular lines must be revisited
-  visited.other[i].fill(0);
-  if (debugMode) {
-  changedLines.push(i);
-  }
-  }
-  });
-  hasChanged = changedLines.length > 0;
-  skip = hasChanged && skipEarly;
-  }
+      // now, restore the trimmed line and analyze the result
+      var hasChanged = false;
+      var changedLines = <int>[];
+      if (newLine != null) { // the solver may return null to indicate no progress
+        newLine = restoreLine(newLine, trimresult.trimInfo!);
+        line.line.forEachIndexed((i, el) {
+          // What has changed?
+          if (el != newLine![i]) {
+            line.line[i] = newLine[i];
+            // These perpendicular lines must be revisited
+            visited.other[i].setAll(0, List<int>.filled(visited.other[i].length, 0));
+            // if (debugMode) {
+            //   changedLines.push(i);
+            // }
+          }
+        });
+        hasChanged = changedLines.isNotEmpty;
+        skip = hasChanged && skipEarly;
+      }
 
-  if (!debugMode) {
-  util.spinner.spin();
-  } else if (hasChanged) {
-  console.log(`found ${newLine}`);
-  console.log(puzzle);
-  console.log(`Must revisit ${onRow ? 'column' : 'row'}${changedLines.length > 1 ? 's' : ''} ${changedLines.join(',')}`);
-  solutionSequence.push(`(${solverIndex})${onRow ? 'r' : 'c'}${i}[${changedLines.join(',')}]`);
+      // if (!debugMode) {
+      //   util.spinner.spin();
+      // } else if (hasChanged) {
+      //   console.log('found ${newLine}');
+      //   console.log(puzzle);
+      //   console.log('Must revisit ${onRow ? 'column' : 'row'}${changedLines.length > 1 ? 's' : ''} ${changedLines.join(',')}');
+      //   solutionSequence.push('(${solverIndex})${onRow ? 'r' : 'c'}${i}[${changedLines.join(',')}]');
+      // }
+    });
   }
-  });
-};
 
   // Optimize iteration order
-  List<List<int>> _optimizeOrder(List<List<int>> lines, List<int> hints, bool skipEarly) {
+  List<LineMetaData> _optimizeOrder(List<List<int>> lines, List<List<int>> hints, bool skipEarly) {
 
     //List<LineMetaData> result = [];
     // remove already solved lines
@@ -261,30 +178,37 @@ class Strategy {
       }
       //result.add(LineMetaData(line, index, zeros));
       return LineMetaData(line, index, zeros);
-    });
+    }).whereNotNull();
 
     // sort by estimated computation effort
     if (skipEarly) {
       unsolvedLines.forEachIndexed((index, lineMeta) {
-        'var {index, zeros} = lineMeta;
-          var hintSum = hintSum(hints[index]);
-          var estimate = (lineMeta.zeros < hintSum) ? 0 : pow(zeros - hintSum, hints[index].length);
+        //var {index, zeros} = lineMeta;
+        var _hintSum = hintSum(hints[index]);
+        var estimate = (lineMeta.zeros < _hintSum) ? 0 : pow(lineMeta.zeros - _hintSum, hints[index].length).toInt();
         lineMeta.estimate = estimate;
-        });
-        unsolvedLines.sort(({estimate: left}, {estimate: right}) => left - right);
-        }
-        return unsolvedLines;
-    };
-
-  return unsolvedLines;
+      });
+      unsolvedLines.sorted((left, right) => left.estimate - right.estimate);
+    }
+  return unsolvedLines.toList();
+  }
 }
-
 // module.exports = Strategy;
 
-class LineMetaData {
-  var index = 0;
-  var zeros = 0;
-  List<int> line = [];
 
-  LineMetaData(this.line, this.index, this.zeros);
+
+class VisitedG {
+  List<Uint8List> rows = [];
+  List<Uint8List> columns = [];
+
+  VisitedG({required this.rows, required this.columns});
 }
+
+class VisitedL {
+  List<Uint8List> current = [];
+  List<Uint8List> other = [];
+
+  VisitedL({required this.current, required this.other});
+}
+
+
