@@ -95,7 +95,7 @@ int _bww(Object text, Object opt_alph, Object opt_itqs) {
   return 0;
 }
 
-String _dectoroman(Object x) {
+String _decToRoman(Object x) {
   if (_isString(x)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -103,7 +103,7 @@ String _dectoroman(Object x) {
   return encodeRomanNumbers((x as int), type: RomanNumberType.USE_SUBTRACTION_RULE);
 }
 
-int _romantodec(Object x) {
+int _romanToDec(Object x) {
   if (_isInt(x) || _isDouble(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;

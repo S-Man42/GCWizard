@@ -288,11 +288,15 @@ num _lcm(Object? x, Object? y) {
   return (((x as num) * (y as num)).abs() / _ggt(x, y));
 }
 
-String _convertbase(Object? value, Object? startBase, Object? destinationBase) {
+String _convertBase(Object? value, Object? startBase, Object? destinationBase) {
   if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) { //ToDo mayby convert value toString (if int or double)
     _handleError(_INVALIDTYPECAST);
     return '';
   }
   return convertBase(value as String, startBase as int, destinationBase as int);
+}
+
+int _isPrime(Object x){
+  return 0;
 }
 

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
 
-void _wptsadd(Object lat, Object lon) {
+void _wptsAdd(Object lat, Object lon) {
   if (_isString(lat) || _isString(lon)) {
     _handleError(_INVALIDTYPECAST);
     return;
@@ -22,15 +22,15 @@ void _wptsadd(Object lat, Object lon) {
       isVisible: true));
 }
 
-void _wptsclear() {
+void _wptsClear() {
   _state.waypoints = [];
 }
 
-int _wptscount() {
+int _wptsCount() {
   return _state.waypoints.length;
 }
 
-double _wptslat(Object i) {
+double _wptsLat(Object i) {
   if (!_isNumber(i)) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
@@ -42,7 +42,7 @@ double _wptslat(Object i) {
   return _state.waypoints[i.toInt() - 1].point.latitude;
 }
 
-double _wptslon(Object i) {
+double _wptsLon(Object i) {
   if (!_isNumber(i)) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
@@ -54,7 +54,7 @@ double _wptslon(Object i) {
   return _state.waypoints[i.toInt() - 1].point.longitude;
 }
 
-void _wptscenter(Object x) {
+void _wptsCenter(Object x) {
   if (!_isNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return;

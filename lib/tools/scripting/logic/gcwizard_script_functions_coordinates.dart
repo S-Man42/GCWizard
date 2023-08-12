@@ -9,31 +9,31 @@ String _wgs84(Object x, Object y) {
   return coord.latitude.toString() + ' ' + coord.longitude.toString();
 }
 
-double _getlon() {
+double _getLon() {
   return _state.GCWizardScript_LON;
 }
 
-double _getlat() {
+double _getLat() {
   return _state.GCWizardScript_LAT;
 }
 
-String _getcoord1() {
+String _getCoord1() {
   return _state.GCWizardScript_COORD_1;
 }
 
-String _getcoord2() {
+String _getCoord2() {
   return _state.GCWizardScript_COORD_2;
 }
 
-String _getcoord3() {
+String _getCoord3() {
   return _state.GCWizardScript_COORD_3;
 }
 
-String _getcoord4() {
+String _getCoord4() {
   return _state.GCWizardScript_COORD_4;
 }
 
-void _setlon(Object x) {
+void _setLon(Object x) {
   if (_isString(x)) {
     _handleError(_INVALIDTYPECAST);
   }
@@ -45,7 +45,7 @@ void _setlon(Object x) {
   }
 }
 
-void _setlat(Object x) {
+void _setLat(Object x) {
   if (_isString(x)) {
     _handleError(_INVALIDTYPECAST);
   }
@@ -57,28 +57,28 @@ void _setlat(Object x) {
   }
 }
 
-void _setcoord1(Object x) {
+void _setCoord1(Object x) {
   _state.GCWizardScript_COORD_1 = x as String;
 }
 
-void _setcoord2(Object x) {
+void _setCoord2(Object x) {
   _state.GCWizardScript_COORD_2 = x as String;
 }
 
-void _setcoord3(Object x) {
+void _setCoord3(Object x) {
   _state.GCWizardScript_COORD_3 = x as String;
 }
 
-void _setcoord4(Object x) {
+void _setCoord4(Object x) {
   _state.GCWizardScript_COORD_4 = x as String;
 }
 
-String _convertto(Object target) {
+String _convertTo(Object target) {
   if (_isNotNumber(target)) {
     _handleError(_INVALIDTYPECAST);
   }
 
-  LatLng coord = LatLng(_getlat(), _getlon());
+  LatLng coord = LatLng(_getLat(), _getLon());
   String targetCoord = '';
 
   if (_GCW_SCRIPT_COORD_CONVERTER[target] != null) {
@@ -89,10 +89,10 @@ String _convertto(Object target) {
   }
 
   List<String> targetCoordData = [];
-  _setcoord1('');
-  _setcoord2('');
-  _setcoord3('');
-  _setcoord4('');
+  _setCoord1('');
+  _setCoord2('');
+  _setCoord3('');
+  _setCoord4('');
   switch (target as num) {
     //TODO 'package:prefs/prefs.dart': Failed assertion: line 244 pos 12: '_initCalled': Prefs.init() must be called first in an initState() preferably!
     case _COORD_DMM: //= 1;
@@ -155,24 +155,24 @@ String _convertto(Object target) {
     case _COORD_DEC: //= 0;
     case _COORD_DMS: //= 2;
       targetCoordData = targetCoord.split('\n');
-      _setcoord1(targetCoordData[0]);
-      _setcoord2(targetCoordData[1]);
+      _setCoord1(targetCoordData[0]);
+      _setCoord2(targetCoordData[1]);
       break;
 
     case _COORD_UTM: //= 3;
     case _COORD_MGRS: //= 4;
       targetCoordData = targetCoord.split(' ');
-      _setcoord1(targetCoordData[0]);
-      _setcoord2(targetCoordData[1]);
-      _setcoord3(targetCoordData[2]);
-      _setcoord4(targetCoordData[3]);
+      _setCoord1(targetCoordData[0]);
+      _setCoord2(targetCoordData[1]);
+      _setCoord3(targetCoordData[2]);
+      _setCoord4(targetCoordData[3]);
       break;
 
     case _COORD_XYZ: //= 5;
       targetCoordData = targetCoord.split('\n');
-      _setcoord1(targetCoordData[0].split(': ')[1]);
-      _setcoord2(targetCoordData[1].split(': ')[1]);
-      _setcoord3(targetCoordData[2].split(': ')[1]);
+      _setCoord1(targetCoordData[0].split(': ')[1]);
+      _setCoord2(targetCoordData[1].split(': ')[1]);
+      _setCoord3(targetCoordData[2].split(': ')[1]);
       break;
 
     case _COORD_SWISS_GRID: //= 6;
@@ -180,8 +180,8 @@ String _convertto(Object target) {
     case _COORD_MERCATOR: //= 12;
     case _COORD_NATURAL_AREA_CODE: //= 13;
       targetCoordData = targetCoord.split('\n');
-      _setcoord1(targetCoordData[0].split(': ')[1]);
-      _setcoord2(targetCoordData[1].split(': ')[1]);
+      _setCoord1(targetCoordData[0].split(': ')[1]);
+      _setCoord2(targetCoordData[1].split(': ')[1]);
       break;
 
     case _COORD_MAIDENHEAD: //= 11;
@@ -191,20 +191,20 @@ String _convertto(Object target) {
     case _COORD_OPEN_LOCATION_CODE: //= 18;
     case _COORD_MAKANEY: //= 19;
     case _COORD_QUADTREE: //= 20;
-      _setcoord1(targetCoord);
+      _setCoord1(targetCoord);
       break;
 
     case _COORD_REVERSE_WIG_WALDMEISTER: //= 21;
       targetCoordData = targetCoord.split('\n');
-      _setcoord1(targetCoordData[0]);
-      _setcoord2(targetCoordData[1]);
-      _setcoord3(targetCoordData[2]);
+      _setCoord1(targetCoordData[0]);
+      _setCoord2(targetCoordData[1]);
+      _setCoord3(targetCoordData[2]);
       break;
 
     case _COORD_REVERSE_WIG_DAY1976: //= 22;
       targetCoordData = targetCoord.split('\n');
-      _setcoord1(targetCoordData[0]);
-      _setcoord2(targetCoordData[1]);
+      _setCoord1(targetCoordData[0]);
+      _setCoord2(targetCoordData[1]);
       break;
 
     default:
@@ -214,16 +214,16 @@ String _convertto(Object target) {
   return targetCoord;
 }
 
-void _convertfrom(Object source) {
+void _convertFrom(Object source) {
   if (_isNotNumber(source)) {
     _handleError(_INVALIDTYPECAST);
   }
 
   late LatLng coord;
-  Object coord_1 = _getcoord1();
-  Object coord_2 = _getcoord2();
-  Object coord_3 = _getcoord3();
-  Object coord_4 = _getcoord4();
+  Object coord_1 = _getCoord1();
+  Object coord_2 = _getCoord2();
+  Object coord_3 = _getCoord3();
+  Object coord_4 = _getCoord4();
   // TODO
   switch (source as num) {
     case _COORD_DEC:
@@ -309,8 +309,8 @@ void _convertfrom(Object source) {
 
   List<String> targetCoord =
       formatCoordOutput(coord, CoordinateFormat(_GCW_SCRIPT_COORD_CONVERTER[source]!)).split('\n');
-  _setlat(targetCoord[0] as double);
-  _setlon(targetCoord[1] as double);
+  _setLat(targetCoord[0] as double);
+  _setLon(targetCoord[1] as double);
 }
 
 double _distance(Object x1, Object y1, Object x2, Object y2) {
@@ -340,7 +340,7 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
   _state.GCWizardScript_LON = _currentValues.longitude;
 }
 
-void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
+void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
   if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2) || _isString(lat3) || _isString(lon3)) {
     _handleError(_INVALIDTYPECAST);
     return;
@@ -359,7 +359,7 @@ void _centerthreepoints(Object lat1, Object lon1, Object lat2, Object lon2, Obje
   _state.GCWizardScript_LAT = -1 * (_state.GCWizardScript_LON - (lon1 + lon2) / 2) / aSlope + (lat1 + lat2) / 2;
 }
 
-void _centertwopoints(Object lat1, Object lon1, Object lat2, Object lon2) {
+void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
   if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2)) {
     _handleError(_INVALIDTYPECAST);
     return;

@@ -590,7 +590,7 @@ class _GCWizardSCriptInterpreter {
       _handleError(_NOTAVARIABLE);
       return;
     }
-    state.variables[vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0)] = _listclear();
+    state.variables[vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0)] = _GCWList();
   }
 
   void executeCommandPRINT() {
@@ -1280,151 +1280,157 @@ class _GCWizardSCriptInterpreter {
     Object? partialResult6;
     Object? result;
 
-    if (_FUNCTIONS[command]!.functionParamCount == 0) {
-      partialResult1 = evaluateExpressionParantheses();
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName();
-      } else {
-
-        _FUNCTIONS[command]!.functionName();
+    try {
+      if (_FUNCTIONS[command]!.functionParamCount == 0) {
+        partialResult1 = evaluateExpressionParantheses();
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!.functionName();
+        } else {
+          _FUNCTIONS[command]!.functionName();
+        }
+        state.scriptIndex = state.scriptIndex + 2;
+      } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
+        print(state.token);
+        getToken();
+        partialResult1 = evaluateExpressionParantheses();
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!.functionName(partialResult1);
+        } else {
+          _FUNCTIONS[command]!.functionName(partialResult1);
+        }
+      } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
+        print(state.token);
+        getToken();
+        if (state.token == "(") {
+          getToken();
+          partialResult1 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+          getToken();
+        } else {
+          _handleError(_UNBALANCEDPARENTHESES);
+        }
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
+        } else {
+          _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
+        }
+      } else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
+        getToken();
+        if (state.token == "(") {
+          getToken();
+          partialResult1 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult3 = evaluateExpressionAddSubOperators();
+          if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+          getToken();
+        } else {
+          _handleError(_UNBALANCEDPARENTHESES);
+        }
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
+        } else {
+          _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
+        }
+      } else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
+        getToken();
+        if (state.token == "(") {
+          getToken();
+          partialResult1 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult3 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult4 = evaluateExpressionAddSubOperators();
+          if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+          getToken();
+        } else {
+          _handleError(_UNBALANCEDPARENTHESES);
+        }
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+        } else {
+          _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+        }
+      } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
+        getToken();
+        if (state.token == "(") {
+          getToken();
+          partialResult1 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult3 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult4 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult5 = evaluateExpressionAddSubOperators();
+          if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+          getToken();
+        } else {
+          _handleError(_UNBALANCEDPARENTHESES);
+        }
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!
+              .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
+        } else {
+          _FUNCTIONS[command]!
+              .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
+        }
+      } else if (_FUNCTIONS[state.token]!.functionParamCount == 6) {
+        getToken();
+        if (state.token == "(") {
+          getToken();
+          partialResult1 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult3 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult4 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult5 = evaluateExpressionAddSubOperators();
+          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          getToken();
+          partialResult6 = evaluateExpressionAddSubOperators();
+          if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+          getToken();
+        } else {
+          _handleError(_UNBALANCEDPARENTHESES);
+        }
+        if (_FUNCTIONS[command]!.functionReturn) {
+          result = _FUNCTIONS[command]!.functionName(
+              partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+        } else {
+          _FUNCTIONS[command]!.functionName(
+              partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+        }
       }
-      state.scriptIndex = state.scriptIndex + 2;
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
-      print(state.token);
-      getToken();
-      partialResult1 = evaluateExpressionParantheses();
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1);
-      }
-    } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
-      print(state.token);
-      getToken();
-      if (state.token == "(") {
-        getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
-      } else {
-        _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
-      }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 3) {
-      getToken();
-      if (state.token == "(") {
-        getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
-      } else {
-        _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
-      }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 4) {
-      getToken();
-      if (state.token == "(") {
-        getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult4 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
-      } else {
-        _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
-      }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 5) {
-      getToken();
-      if (state.token == "(") {
-        getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult4 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult5 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
-      } else {
-        _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!
-            .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
-      } else {
-        _FUNCTIONS[command]!
-            .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
-      }
-    } else if (_FUNCTIONS[state.token]!.functionParamCount == 6) {
-      getToken();
-      if (state.token == "(") {
-        getToken();
-        partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult4 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult5 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult6 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
-      } else {
-        _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(
-            partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
-      } else {
-        _FUNCTIONS[command]!.functionName(
-            partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+      return result;
+    } catch (exception){
+      if (exception.toString().split(' ').contains("'_GCWList?'")) {
+        _handleError(_LISTNOTDEFINED);
       }
     }
-    return result;
+
   }
 
   Object? evaluateExpression() {

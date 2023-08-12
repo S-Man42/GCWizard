@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -221,11 +222,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 )
               ],
             ),
-            child: GCWOutputText(
-              style: gcwMonotypeTextStyle(),
-              text: _currentScriptOutput,
-              isMonotype: true,
-            ),
+            child: _buildOutputText(_currentOutput),
           ),
         if (_currentOutput.Points.isNotEmpty)
           GCWDefaultOutput(
@@ -257,7 +254,38 @@ class GCWizardScriptState extends State<GCWizardScript> {
     );
   }
 
-  String _buildOutputText(GCWizardScriptOutput output) {
+  Widget _buildOutputText(GCWizardScriptOutput output){
+    if (output.ErrorMessage.isEmpty) {
+      return GCWOutputText(
+        style: gcwMonotypeTextStyle(),
+        text: output.STDOUT, //_currentScriptOutput,
+        isMonotype: true,
+      );
+    } else {
+      return Column(
+        children: <Widget>[
+          GCWOutputText(
+            style: gcwMonotypeTextStyle(),
+            text: output.STDOUT + '\n' +
+                i18n(context, output.ErrorMessage) + '\n' +
+                i18n(context, 'gcwizard_script_error_position') + ' ' + output.ErrorPosition.toString() + '\n' +
+                '=> ' + _printFaultyProgram(_currentProgram, output.ErrorPosition), //_currentScriptOutput,
+            isMonotype: true,
+          ),
+          GCWExpandableTextDivider(
+            expanded: false,
+            text: i18n(context, 'gcwizard_script_dump'),
+            child: GCWOutputText(
+                style: gcwMonotypeTextStyle(),
+                text: output.VariableDump,
+            ),
+          ),
+        ],
+      );
+    }
+  }
+
+  String _buildTextOutput(GCWizardScriptOutput output) {
     if (output.ErrorMessage.isNotEmpty) {
       return output.STDOUT +
           '\n' +
@@ -304,7 +332,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       //   _currentScriptOutput = _currentOutput.STDOUT;
       // }
     } else {
-      _currentScriptOutput = _buildOutputText(_currentOutput);
+      _currentScriptOutput = _buildTextOutput(_currentOutput);
       if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
           _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
         _createImage(_currentOutput.Graphic).then((value) {

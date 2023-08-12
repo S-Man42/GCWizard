@@ -57,50 +57,39 @@ class _GCWList {
 
 
 
-_GCWList _listclear() {
-  return _GCWList();
-
-}_GCWList _listnew() {
-  return _GCWList();
+void _listClear(_GCWList? list) {
+   if (list != null) {
+     list.clear();
+   }
 }
 
-_GCWList _listadd(_GCWList? list, Object? value){
-  if (list == null) {
-    return _GCWList();
-  } else {
+void _listAdd(_GCWList? list, Object? value){
+  if (list != null) {
     if (_isNotList(list)) {
       _handleError(_INVALIDTYPECAST);
-      return _GCWList();
     }
     if (value != null) {
       list.add(value);
     }
-    return list;
   }
 }
 
-_GCWList _listsort(_GCWList? list, int mode){
-  if (list == null) {
-    return _GCWList();
-  } else {
+void _listSort(_GCWList? list, int mode){
+  if (list != null) {
     list.sort();
     if (mode == 0) {
       list.reverse();
     }
-    return list;
   }
 }
 
-_GCWList _listshuffle(_GCWList? list){
-  if (list == null) {
-    return _GCWList();
-  } else {
+void _listShuffle(_GCWList? list){
+  if (list != null) {
     list.shuffle();
-    return list;
   }
 }
 
-String _listtostring(_GCWList? list){
+String _listToString(_GCWList? list){
   if (list == null) {
     return '';
   } else {
@@ -108,34 +97,25 @@ String _listtostring(_GCWList? list){
   }
 }
 
-_GCWList _listaddall(_GCWList? listto, _GCWList? listfrom){
-  if (listto == null) {
-    return _GCWList();
-  } else  {
+void _listAddAll(_GCWList? listto, _GCWList? listfrom){
+  if (listto != null) {
     listto.addall(listfrom);
-    return  listto;
   }
 }
 
-_GCWList _listinsert(_GCWList? list, int index, Object? value){
-  if (list == null) {
-    return _GCWList();
-  } else {
+void _listInsert(_GCWList? list, int index, Object? value){
+  if (list != null) {
     list.insert(index, value);
-    return  list;
   }
 }
 
-_GCWList _listremove(_GCWList? list, int index){
-  if (list == null) {
-    return _GCWList();
-  } else {
+void _listRemove(_GCWList? list, int index){
+  if (list != null) {
     list.remove(index);
-    return  list;
   }
 }
 
-int _listlength(_GCWList? list){
+int _listLength(_GCWList? list){
   if (list == null) {
     return 0;
   } else {
@@ -143,15 +123,15 @@ int _listlength(_GCWList? list){
   }
 }
 
-bool _listisempty(_GCWList? list){
-  return (_listlength(list) == 0);
+bool _listIsEmpty(_GCWList? list){
+  return (_listLength(list) == 0);
 }
 
-bool _listisnotempty(_GCWList? list){
-  return (_listlength(list) != 0);
+bool _listIsNotEmpty(_GCWList? list){
+  return (_listLength(list) != 0);
 }
 
-Object? _listget(_GCWList? list, int index){
+Object? _listGet(_GCWList? list, int index){
   if (list == null) {
     return 'NIL';
   } else {
