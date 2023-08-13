@@ -162,6 +162,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 setState(() {
                   _programController.text = '';
                   _currentProgram = '';
+                  _currentOutput = GCWizardScriptOutput.empty();
+                  _currentScriptOutput = '';
                 });
               },
             ),
@@ -394,11 +396,13 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   String _printFaultyProgram(String program, int position) {
     String result = '';
-    if (position > 0) {
-      result = (position < program.length) ? program[position - 1] : program[program.length - 1];
-    }
-    for (int i = position; (i < program.length && i < position + 6); i++) {
-      result = result + program[i];
+    if (program.isNotEmpty){
+      if (position > 0) {
+        result = (position < program.length) ? program[position - 1] : program[program.length - 1];
+      }
+      for (int i = position; (i < program.length && i < position + 6); i++) {
+        result = result + program[i];
+      }
     }
     return result.replaceAll('\n', '↩') + '\n' + '   ^';
   }

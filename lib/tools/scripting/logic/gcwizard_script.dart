@@ -78,12 +78,13 @@ part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordina
 // - use DATA, RESTORE, READ
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, PIE, COLOR, FILL, TEXT, BOX, OVAL
 // - use BREAK
-// handle input like whitespace, piet
+// - use DIM, implement List as Datatype
+// - handle input like whitespace, piet
 
 // TODO
+// Enhance Performance
 // variablenames longer than one letter
 // variables as a map of GCWizardScriptVariable
-// array as datatype
 // OPEN, CLOSE, WRITE#, INPUT#, EOF, LOF, LOC, LINE INPUT#
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
@@ -1967,6 +1968,7 @@ class _GCWizardSCriptInterpreter {
       state.keywordToken = lookUpToken(state.token);
       if (state.keywordToken == UNKNOWNCOMMAND) {
         state.tokenType = VARIABLE;
+        print(state.token);
       } else {
         state.tokenType = COMMAND;
       }

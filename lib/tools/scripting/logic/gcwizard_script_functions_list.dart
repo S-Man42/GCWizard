@@ -65,9 +65,6 @@ void _listClear(_GCWList? list) {
 
 void _listAdd(_GCWList? list, Object? value){
   if (list != null) {
-    if (_isNotList(list)) {
-      _handleError(_INVALIDTYPECAST);
-    }
     if (value != null) {
       list.add(value);
     }
@@ -105,12 +102,14 @@ void _listAddAll(_GCWList? listto, _GCWList? listfrom){
 
 void _listInsert(_GCWList? list, int index, Object? value){
   if (list != null) {
+    //TODO range check => ERROR
     list.insert(index, value);
   }
 }
 
 void _listRemove(_GCWList? list, int index){
   if (list != null) {
+    //TODO range check => ERROR
     list.remove(index);
   }
 }
@@ -123,12 +122,14 @@ int _listLength(_GCWList? list){
   }
 }
 
-bool _listIsEmpty(_GCWList? list){
-  return (_listLength(list) == 0);
+int _listIsEmpty(_GCWList? list){
+  if (_listLength(list) == 0) return 1;
+  return 0;
 }
 
-bool _listIsNotEmpty(_GCWList? list){
-  return (_listLength(list) != 0);
+int _listIsNotEmpty(_GCWList? list){
+  if (_listLength(list) == 0) return 0;
+  return 1;
 }
 
 Object? _listGet(_GCWList? list, int index){
