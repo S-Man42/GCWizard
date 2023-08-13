@@ -10,6 +10,7 @@ class Puzzle {
   int width = 0;
   var rows = <List<int>>[];
   var columns = <List<int>>[];
+  var state = <int>[];
 
   Puzzle(this.rowHints, this.columnHints) {}
   // constructor(data) {
@@ -26,6 +27,8 @@ class Puzzle {
     width = columnHints.length;
     rows = List<List<int>>.filled(height, List<int>.filled(width, 0));
     columns = List<List<int>>.filled(width, List<int>.filled(height, 0));
+    state = List<int>.filled(width * height, 0);
+
     return checkConsistency(data);
     // if (data.content) {
     //   this.originalContent = clone(data.content);
@@ -43,6 +46,22 @@ class Puzzle {
     }).toList();
 
   }
+
+  bool get isFinished {
+    return state.every((item) => item != 0);
+  }
+
+  // bool get isSolved {
+  //   var isOk = (line, hints) {
+  //     var actual = line.join('').split(/(?:-1)+/g).map(x => x.length).filter(x => x);
+  //     return actual.length === hints.length && actual.every((x, i) => x === hints[i]);
+  //   };
+  //   return (
+  //     isFinished &&
+  //     columns.every((col, i) => isOk(col, columnHints[i])) &&
+  //     rows.every((row, i) => isOk(row, rowHints[i]))
+  //   );
+  // }
 
   // void initAccessors(state) {
   //
@@ -180,6 +199,7 @@ class Puzzle {
   }
 
   int _sum(Iterable<int> list) {
+    if (list.isEmpty) return 0;
     return list.reduce((x, y) => x + y);
   }
 

@@ -102,6 +102,14 @@ List<int> restoreLine(List<int> line, TrimInfo trimInfo) {
 //   hintSum
 // };
 
+int createHash(List<List<int>> list) {
+  var text = '';
+  for (var row in list) {
+    text += row.toString();
+  }
+  return text.hashCode;
+}
+
 class ShiftResult {
   List<int>? trimmedLine;
   List<int>? trimmedHints;

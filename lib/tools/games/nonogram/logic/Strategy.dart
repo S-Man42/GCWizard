@@ -11,6 +11,8 @@ import 'package:gc_wizard/tools/games/nonogram/logic/pushSolver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
+import 'guessAndConquer.dart';
+
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
  */
@@ -32,7 +34,7 @@ class Strategy {
    * @param {Puzzle} puzzle The puzzle to solve
    * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
    */
-  void solve (Puzzle puzzle, {bool withTrialAndError = true}) {
+  void solve(Puzzle puzzle, {bool withTrialAndError = true}) {
     var solvers = [pushSolver()];
     // keep tracks of visited lines
     visited = VisitedG(
@@ -42,34 +44,36 @@ class Strategy {
 
     // repeatedly run all solvers on puzzle
     bool progress = false;
+    //solveOnce(puzzle, solvers[0], 0);
     do {
-      //var snapshot = puzzle.snapshot;
+      var snapshotRows = createHash(puzzle.rows);
+      var snapshotColumns = createHash(puzzle.columns);
       progress = false;
       solvers.forEachIndexed((i, solver) {
-        if (!progress) {
+        if (progress) {
           return;
         }
 
-      // run one line solver on the whole puzzle
-      solveOnce(puzzle, solver, i); //, solutionSequence
-      progress = puzzle.snapshot.toString() != snapshot.toString();
-      // if (debugMode) {
-      //   statistics[i]++;
-      // }
+        // run one line solver on the whole puzzle
+        solveOnce(puzzle, solver, i); //, solutionSequence
+        progress = snapshotRows != createHash(puzzle.rows) || snapshotColumns != createHash(puzzle.columns);
+        // if (debugMode) {
+        //   statistics[i]++;
+        // }
       });
 
     } while(progress);
 
-    // no solution found… trial and error now
-    if (withTrialAndError && !puzzle.isFinished) {
-    // if (debugMode) {
-    // console.log('must start guessing');
+    // // no solution found… trial and error now
+    // if (withTrialAndError && !puzzle.isFinished) {
+    //   // if (debugMode) {
+    //   // console.log('must start guessing');
+    //   // }
+    //   var deepResult = guessAndConquer(this, puzzle);
+    //   if (deepResult) {
+    //     //puzzle.import(deepResult);
+    //   }
     // }
-    var deepResult = guessAndConquer(this, puzzle);
-    if (deepResult) {
-      puzzle.import(deepResult);
-    }
-    }
 
   // if (debugMode) {
   // console.log('Solution sequence: [${solutionSequence.join(',')}]');
