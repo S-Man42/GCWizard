@@ -47,9 +47,10 @@ void main() {
       test('rows: ${elem['rows']}, columns: ${elem['columns']}', () {
         var puzzle = Puzzle(elem['rows'] as List<List<int>>, elem['columns'] as List<List<int>>);
         puzzle.mapData(puzzle);
+var s = Strategy();
+        var _actual = s.solveQ(puzzle, withTrialAndError : false);
 
-        var _actual = Strategy().solve(puzzle);
-        print(puzzle.state);
+        print(_actual.state.toString());
         // _actual.solveNonogram(10);
         // expect(_actual.solutions?[0].solution, elem['expectedOutput']);
         // expect(_actual.solutions?.length, elem['solutionCount']);

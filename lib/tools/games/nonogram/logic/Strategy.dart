@@ -11,33 +11,33 @@ import 'package:gc_wizard/tools/games/nonogram/logic/pushSolver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
-import 'guessAndConquer.dart';
+//import 'guessAndConquer.dart';
 
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
  */
 class Strategy {
-  late VisitedG visited;
-  List<int> solvers = List<int>.filled(2, 0);
-  /**
-   * @param {Array} solvers List of line solvers sorted by speed
-   * @param {boolean} randomize 'false' to run trial and error in order. Defaults to 'true'.
-   *     In practice, using random guessing mostly yields faster results.
-   */
+  late VisitedG _visited;
+  // List<int> _solvers = List<int>.filled(2, 0);
+  // /**
+  //  * @param {Array} solvers List of line solvers sorted by speed
+  //  * @param {boolean} randomize 'false' to run trial and error in order. Defaults to 'true'.
+  //  *     In practice, using random guessing mostly yields faster results.
+  //  */
   // constructor(solvers, randomize = true) {
   //   this.solvers = solvers;
   //   this.randomize = randomize;
   // }
 
-  /**
-   * Solve the puzzle.
-   * @param {Puzzle} puzzle The puzzle to solve
-   * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
-   */
-  void solve(Puzzle puzzle, {bool withTrialAndError = true}) {
+  // /**
+  //  * Solve the puzzle.
+  //  * @param {Puzzle} puzzle The puzzle to solve
+  //  * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
+  //  */
+  Puzzle solveQ(Puzzle puzzle, {bool withTrialAndError = true}) {
     var solvers = [pushSolver()];
     // keep tracks of visited lines
-    visited = VisitedG(
+    _visited = VisitedG(
       rows: List<Uint8List>.filled(puzzle.height,  Uint8List(solvers.length)),
       columns: List<Uint8List>.filled(puzzle.width,  Uint8List(solvers.length))
     );
@@ -49,13 +49,16 @@ class Strategy {
       var snapshotRows = createHash(puzzle.rows);
       var snapshotColumns = createHash(puzzle.columns);
       progress = false;
-      solvers.forEachIndexed((i, solver) {
+      var i  = 0;
+      solvers.forEachIndexed((i, solver) { //.forEachIndexed((i, solver)
+        print(i);
         if (progress) {
           return;
         }
 
         // run one line solver on the whole puzzle
-        solveOnce(puzzle, solver, i); //, solutionSequence
+        _solveOnce(puzzle, solver, i); //, solutionSequence
+        print(puzzle.state);
         progress = snapshotRows != createHash(puzzle.rows) || snapshotColumns != createHash(puzzle.columns);
         // if (debugMode) {
         //   statistics[i]++;
@@ -75,11 +78,12 @@ class Strategy {
     //   }
     // }
 
-  // if (debugMode) {
-  // console.log('Solution sequence: [${solutionSequence.join(',')}]');
-  // console.log('Time elapsed: ${Date.now() - start}ms');
-  // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
-  // }
+    // if (debugMode) {
+    // console.log('Solution sequence: [${solutionSequence.join(',')}]');
+    // console.log('Time elapsed: ${Date.now() - start}ms');
+    // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
+    // }
+    return puzzle;
   }
 
   /**
@@ -90,29 +94,31 @@ class Strategy {
    * @param {number} solverIndex The solver's index in 'this.solvers'
    * @param {Array} solutionSequence Array of strings for statistics in debug mode
    */
-  void solveOnce(Puzzle puzzle, Solver solver, int solverIndex) { //, solver, solutionSequence
+  void _solveOnce(Puzzle puzzle, Solver solver, int solverIndex) { //, solver, solutionSequence
     // If we're dealing with a slow solver, we want to skip as soon as one line is partially solved
-    var skipEarly = false; //solver.speed == 'slow';
+    var skipEarly = true; //solver.speed == 'slow';
     var skip = false;
 
     // run on rows
-    run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
+    var rows = run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
+    puzzle.rows = rows;
     if (skip) {
       return;
     }
     // …and then on columns
-    run(puzzle.columns, puzzle.columnHints, true, solver, solverIndex, skip, skipEarly);
+    var columns = run(puzzle.columns, puzzle.columnHints, false, solver, solverIndex, skip, skipEarly);
+    puzzle.columns = columns;
   }
 
   // the actual execution
-  void run(List<List<int>> lines, List<List<int>> hints, bool onRow, Solver solver, int solverIndex, bool skip, bool skipEarly) {
+  List<List<int>> run(List<List<int>> lines, List<List<int>> hints, bool onRow, Solver solver, int solverIndex, bool skip, bool skipEarly) {
     var visited = onRow ?
-      VisitedL(current: this.visited.rows, other: this.visited.columns) :
-      VisitedL(current: this.visited.columns, other: this.visited.rows);
+      VisitedL(current: _visited.rows, other: _visited.columns) :
+      VisitedL(current: _visited.columns, other: _visited.rows);
     var rearrangedLines = _optimizeOrder(lines, hints, skipEarly);
-    rearrangedLines.forEachIndexed((i, line)  { //estimate
-      if (skip || visited.current[i][solverIndex] != 0) {
-        return;
+    for (var line in rearrangedLines) { //estimate
+      if (skip || visited.current[line.index][solverIndex] != 0) {
+        continue;
       }
       // if (debugMode) {
       //   console.log('Running solver ${solverIndex} on ${onRow ? 'row' : 'column'} ${i}', JSON.stringify(line.slice()), hints[i]);
@@ -120,11 +126,11 @@ class Strategy {
       //     console.log('Estimated effort: ${estimate}');
       //   }
       // }
-      visited.current[i][solverIndex] = 1;
+      visited.current[line.index][solverIndex] = 1;
       // First, trim unnecessary information from the line
-      var trimresult = trimLine(line.line, hints[i]); //[trimmedLine, trimmedHints, trimInfo]
+      var trimresult = trimLine(line.line, hints[line.index]); //[trimmedLine, trimmedHints, trimInfo]
       if (trimresult.error.isNotEmpty) {
-        return;
+        continue;
       }
   // if (debugMode) {
       // var start = Date.now();
@@ -167,7 +173,9 @@ class Strategy {
       //   console.log('Must revisit ${onRow ? 'column' : 'row'}${changedLines.length > 1 ? 's' : ''} ${changedLines.join(',')}');
       //   solutionSequence.push('(${solverIndex})${onRow ? 'r' : 'c'}${i}[${changedLines.join(',')}]');
       // }
-    });
+
+    }
+    return lines;
   }
 
   // Optimize iteration order
@@ -176,8 +184,8 @@ class Strategy {
     //List<LineMetaData> result = [];
     // remove already solved lines
     var unsolvedLines = lines.mapIndexed((index, line) {
-      var zeros = line.reduce((count, x) => count + (x == 0 ? 1 : 0));
-      if (zeros != 0) {
+      var zeros = line.where((element) => element == 0).length; //.reduce((count, x) => count + (x == 0 ? 1 : 0));
+      if (zeros == 0) {
         return null;
       }
       //result.add(LineMetaData(line, index, zeros));
@@ -186,13 +194,14 @@ class Strategy {
 
     // sort by estimated computation effort
     if (skipEarly) {
-      unsolvedLines.forEachIndexed((index, lineMeta) {
+      unsolvedLines = unsolvedLines.map((lineMeta) {
         //var {index, zeros} = lineMeta;
-        var _hintSum = hintSum(hints[index]);
-        var estimate = (lineMeta.zeros < _hintSum) ? 0 : pow(lineMeta.zeros - _hintSum, hints[index].length).toInt();
+        var _hintSum = hintSum(hints[lineMeta.index]);
+        var estimate = (lineMeta.zeros < _hintSum) ? 0 : pow(lineMeta.zeros - _hintSum, hints[lineMeta.index].length).toInt();
         lineMeta.estimate = estimate;
+        return lineMeta;
       });
-      unsolvedLines.sorted((left, right) => left.estimate - right.estimate);
+      unsolvedLines = unsolvedLines.sorted((left, right) => left.estimate - right.estimate);
     }
   return unsolvedLines.toList();
   }

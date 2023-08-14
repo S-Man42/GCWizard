@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:utility/utility.dart';
 
 int hintSum (List<int> hints) {
+  if (hints.isEmpty) return 0;
   return hints.reduceIndexed((i, x, y) => x + y + (i != 0 ? 1 : 0));
 }
 
@@ -13,10 +14,10 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
   if (minIndex == -1) {
     return ShiftResult(null, null, null, error: 'Cannot trim solved line');
   }
-  if (line[minIndex - 1] == 1) {
+  if (minIndex > 0 && line[minIndex - 1] == 1) {
     minIndex--;
   }
-  var clonedHints = List<int>.from(hints);
+  var clonedHints = hints.sublist(0);
   for (var i = 0; i < minIndex; i++) {
     if (line[i] == 1) {
       var start = i;
@@ -36,10 +37,10 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
     }
   }
   var maxIndex = line.lastIndexOf(0);
-  if (line[maxIndex + 1] == 1) {
+  if (maxIndex < (line.length - 1) && line[maxIndex + 1] == 1) {
     maxIndex++;
   }
-  for (var i = line.length; i > maxIndex; i--) {
+  for (var i = line.length - 1; i > maxIndex; i--) {
     if (line[i] == 1) {
       var start = i;
       while (i > maxIndex && line[i] == 1) {
@@ -57,12 +58,12 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
       }
     }
   }
-  if (clonedHints.every((x) => x < 0)) {
+  if (clonedHints.any((x) => x < 0)) {
     return ShiftResult(null, null, null, error: 'Impossible line $line, $hints');
   }
 
-  return ShiftResult(line.slice(minIndex, maxIndex + 1), clonedHints,
-      TrimInfo( line.slice(0, minIndex),  line.slice(maxIndex + 1)));
+  return ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
+      TrimInfo( line.sublist(0, minIndex),  line.sublist(maxIndex + 1)));
 }
 
 List<int> restoreLine(List<int> line, TrimInfo trimInfo) {
