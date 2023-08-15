@@ -19,7 +19,7 @@ class GCWizardScriptOutput {
   final List<GCWMapPoint> Points;
   final String ErrorMessage;
   final int ErrorPosition;
-  final String VariableDump;
+  final List<List<String>> VariableDump;
   final GCWizardScriptBreakType BreakType;
   ScriptState? continueState;
 
@@ -36,7 +36,7 @@ class GCWizardScriptOutput {
 
   static GCWizardScriptOutput empty() {
     return GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '', BreakType: GCWizardScriptBreakType.NULL);
+        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: [], BreakType: GCWizardScriptBreakType.NULL);
   }
 }
 
@@ -92,40 +92,16 @@ class _GCWizardScriptClassLabelStack {
 }
 
 class _GCWizardScriptClassForLoopInfo {
-  late int loopVariable; // counter variable
+  late String loopVariable; // counter variable
   late num targetValue; // target value
   late int loopStart; // index in source code to loop to
-}
-
-class _GCWizardScriptVariable {
-  final String variableName;
-  GCWizardScriptVariableType variableType;
-  Object variableValue;
-
-  _GCWizardScriptVariable({
-    required this.variableName,
-    required this.variableType,
-    required this.variableValue});
-
-  void toInt(){}
-
-  void toDouble(){}
-
-  @override
-  String toString(){
-    return variableValue.toString();
-  }
-
-  int length(){
-    return 0;
-  }
 }
 
 class ScriptState {
   late String script;
   late String inputData;
   GCWizardScriptBreakType BreakType = GCWizardScriptBreakType.NULL;
-  List<Object?> variables = List<Object?>.filled(26, 0, growable: false);
+  Map<String, Object?> variables = {};
   List<String> get graphics {return graficOutput.graphics;}
   GraphicState graficOutput = GraphicState();
   List<GCWMapPoint> waypoints = [];
@@ -172,7 +148,8 @@ class ScriptState {
     gosubStack = datastack.Stack<int>();
     repeatStack = datastack.Stack<int>();
     whileStack = datastack.Stack<int>();
-    variables = [
+    variables = {};
+    /*variables = [
       dynamic,
       dynamic,
       dynamic,
@@ -199,7 +176,7 @@ class ScriptState {
       dynamic,
       dynamic,
       dynamic,
-    ];
+    ];*/
     STDOUT = '';
     // _halt = false;
     // _randomNumber = 0.0;

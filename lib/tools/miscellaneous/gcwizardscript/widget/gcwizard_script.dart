@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -264,6 +265,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
         isMonotype: true,
       );
     } else {
+      List<List<String>> memoryDump = [[i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]];
+      memoryDump.addAll(output.VariableDump);
       return Column(
         children: <Widget>[
           GCWOutputText(
@@ -277,33 +280,13 @@ class GCWizardScriptState extends State<GCWizardScript> {
           GCWExpandableTextDivider(
             expanded: false,
             text: i18n(context, 'gcwizard_script_dump'),
-            child: GCWOutputText(
-                style: gcwMonotypeTextStyle(),
-                text: output.VariableDump,
+            child: GCWColumnedMultilineOutput(
+              data: memoryDump,
+              hasHeader: true,
             ),
           ),
         ],
       );
-    }
-  }
-
-  String _buildTextOutput(GCWizardScriptOutput output) {
-    if (output.ErrorMessage.isNotEmpty) {
-      return output.STDOUT +
-          '\n' +
-          i18n(context, output.ErrorMessage) +
-          '\n' +
-          i18n(context, 'gcwizard_script_error_position') +
-          ' ' +
-          output.ErrorPosition.toString() +
-          '\n' +
-          '=> ' +
-          _printFaultyProgram(_currentProgram, output.ErrorPosition) +
-          '\n' +
-          '\n' +
-          output.VariableDump;
-    } else {
-      return output.STDOUT;
     }
   }
 
@@ -334,7 +317,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       //   _currentScriptOutput = _currentOutput.STDOUT;
       // }
     } else {
-      _currentScriptOutput = _buildTextOutput(_currentOutput);
+      _currentScriptOutput = output.STDOUT;
       if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
           _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
         _createImage(_currentOutput.Graphic).then((value) {

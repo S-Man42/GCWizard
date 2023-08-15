@@ -81,12 +81,11 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, PIE, COLOR, FILL, TEXT, BOX, OVAL
 // - use BREAK
 // - use DIM, implement List as Datatype
-// - handle input like whitespace, piet
+// - handle input async like whitespace, piet
 
 // TODO
 // Enhance Performance
 // variablenames longer than one letter
-// variables as a map of GCWizardScriptVariable
 // OPEN, CLOSE, WRITE#, INPUT#, EOF, LOF, LOC, LINE INPUT#
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
@@ -298,16 +297,7 @@ class _GCWizardSCriptInterpreter {
           break;
         default: executeCommand();
       }
-      // if (state.tokenType == NUMBER) {
-      // } else if (state.tokenType == VARIABLE) {
-      //   putBack();
-      //   executeAssignment();
-      // } else if (state.tokenType == FUNCTION) {
-      //   print('FUNCTION'+state.token);
-      //   executeFunction(state.token, state.tokenType);
-      // } else {
-      //   executeCommand();
-      // }
+
       iterations++;
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
         sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
@@ -336,13 +326,11 @@ class _GCWizardSCriptInterpreter {
     );
   }
 
-  String _variableDump() {
-    String dump = '';
-    for (int i = 0; i < 26; i++) {
-      //if (variables[i] != dynamic) {
-      dump = dump + String.fromCharCode(65 + i) + ' ' + state.variables[i].toString() + '\n';
-      //}
-    }
+  List<List<String>> _variableDump() {
+    List<List<String>> dump = [];
+    state.variables.forEach((key, value) {
+      dump.add([key, value.toString()]);
+    });
     return dump;
   }
 
@@ -381,14 +369,11 @@ class _GCWizardSCriptInterpreter {
     String variableName;
 
     getToken();
-    variableName = state.token[0];
+    variableName = state.token;
 
-    if (isNotAVariable(variableName[0])) {
-      _handleError(_NOTAVARIABLE);
-      return;
+    if (isNotAVariable(variableName)) {
+      state.variables[variableName] = '';
     }
-
-    variable = variableName.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
 
     getToken();
     if (state.token != "=") {
@@ -398,7 +383,7 @@ class _GCWizardSCriptInterpreter {
 
     value = evaluateExpression();
 
-    state.variables[variable] = value;
+    state.variables[variableName] = value;
   }
 
   void executeCommand() {
@@ -524,19 +509,17 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandREAD() {
     String vname = '';
-    int variable = 0;
+
     do {
       getToken(); // get next list item
       if (state.keywordToken == EOL || state.token == EOP) break;
       if (state.token != ',') {
         vname = state.token[0];
-        if (isNotAVariable(vname[0])) {
-          _handleError(_NOTAVARIABLE);
-          return;
+        if (isNotAVariable(vname)) {
+          state.variables[vname] = '';
         }
-        variable = vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
         if (state.pointerDATA < state.listDATA.length) {
-          state.variables[variable] = state.listDATA[state.pointerDATA];
+          state.variables[vname] = state.listDATA[state.pointerDATA];
           state.pointerDATA++;
         } else {
           _handleError(_DATAOUTOFRANGE);
@@ -588,12 +571,12 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandDIM(){
     getToken();
-    String vname = state.token[0];
+    String vname = state.token;
     if (isNotAVariable(vname[0])) {
       _handleError(_NOTAVARIABLE);
       return;
     }
-    state.variables[vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0)] = _GCWList();
+    state.variables[vname] = _GCWList();
   }
 
   void executeCommandPRINT() {
@@ -889,13 +872,12 @@ class _GCWizardSCriptInterpreter {
     Object? stepValue;
 
     getToken();
-    vname = state.token[0];
-    if (isNotAVariable(vname[0])) {
-      _handleError(_NOTAVARIABLE);
-      return;
+    vname = state.token;
+    if (isNotAVariable(vname)) {
+      state.variables[vname] = 0;
     }
 
-    stckvar.loopVariable = vname.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
+    stckvar.loopVariable = vname;
 
     getToken();
     if (state.token[0] != '=') {
@@ -986,12 +968,13 @@ class _GCWizardSCriptInterpreter {
     _GCWizardScriptClassForLoopInfo stckvar;
     try {
       stckvar = state.forStack.pop();
+
       state.variables[stckvar.loopVariable] = (state.variables[stckvar.loopVariable] as num) + state.step;
       if ((state.variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
 
       state.forStack.push(stckvar);
       state.scriptIndex = stckvar.loopStart;
-      //loopStack.pop();
+
     } catch (IllegalOperationException) {
       _handleError(_NEXTWITHOUTFOR);
     }
@@ -1133,7 +1116,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandINPUT() {
-    int variable;
+    String variable;
     Object? input;
     int scriptIndex_save = state.scriptIndex - "input".length;
     BreakType = GCWizardScriptBreakType.INPUT;
@@ -1153,8 +1136,10 @@ class _GCWizardSCriptInterpreter {
     }
     state.continueLoop = false;
 
-    variable = state.token[0].toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
-    if (variable < 0 || variable > 26) _handleError(_SYNTAX_VARIABLE);
+    variable = state.token;
+    if (isNotAVariable(variable)) {
+      state.variables[variable] = '';
+    }
 
     if (state.STDIN.isNotEmpty) {
       input = state.STDIN[0];
@@ -1646,7 +1631,6 @@ class _GCWizardSCriptInterpreter {
         return 0.0;
       }
       base = result;
-      //if (result.runtimeType.toString() != partialResult.runtimeType.toString()) {
       if (_isNotNumber(result) || _isNotNumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else if (partialResult == 0.0) {
@@ -1764,11 +1748,11 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? getValueOfVariable(String variableName) {
-    if (isNotAVariable(variableName[0])) {
+    if (isNotAVariable(variableName)) {
       _handleError(_SYNTAXERROR);
       return 0.0;
     }
-    return state.variables[variableName.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0)];
+    return state.variables[variableName];
   }
 
   void putBack() {
@@ -2022,7 +2006,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   bool isNotAVariable(String vname) {
-    if (_isLetter(vname)) return false;
-    return true;
+    if (state.variables[vname] == null) return true;
+    return false;
   }
 }

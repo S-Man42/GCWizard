@@ -43,6 +43,7 @@ class _GCWList {
     _contents.reversed.toList();
   }
 
+  @override
   String toString(){
     return _contents.toString();
   }
@@ -54,8 +55,6 @@ class _GCWList {
   }
 
 }
-
-
 
 void _listClear(_GCWList? list) {
    if (list != null) {
