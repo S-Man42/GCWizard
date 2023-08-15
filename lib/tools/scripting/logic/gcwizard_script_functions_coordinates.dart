@@ -17,22 +17,6 @@ double _getLat() {
   return _state.GCWizardScript_LAT;
 }
 
-String _getCoord1() {
-  return _state.GCWizardScript_COORD_1;
-}
-
-String _getCoord2() {
-  return _state.GCWizardScript_COORD_2;
-}
-
-String _getCoord3() {
-  return _state.GCWizardScript_COORD_3;
-}
-
-String _getCoord4() {
-  return _state.GCWizardScript_COORD_4;
-}
-
 void _setLon(Object x) {
   if (_isString(x)) {
     _handleError(_INVALIDTYPECAST);
@@ -57,23 +41,7 @@ void _setLat(Object x) {
   }
 }
 
-void _setCoord1(Object x) {
-  _state.GCWizardScript_COORD_1 = x as String;
-}
-
-void _setCoord2(Object x) {
-  _state.GCWizardScript_COORD_2 = x as String;
-}
-
-void _setCoord3(Object x) {
-  _state.GCWizardScript_COORD_3 = x as String;
-}
-
-void _setCoord4(Object x) {
-  _state.GCWizardScript_COORD_4 = x as String;
-}
-
-String _convertTo(Object target) {
+_GCWList _convertTo(Object target) {
   if (_isNotNumber(target)) {
     _handleError(_INVALIDTYPECAST);
   }
@@ -89,10 +57,9 @@ String _convertTo(Object target) {
   }
 
   List<String> targetCoordData = [];
-  _setCoord1('');
-  _setCoord2('');
-  _setCoord3('');
-  _setCoord4('');
+  _GCWList targetData = _GCWList();
+
+  _listAdd(targetData, targetCoord);
   switch (target as num) {
     //TODO 'package:prefs/prefs.dart': Failed assertion: line 244 pos 12: '_initCalled': Prefs.init() must be called first in an initState() preferably!
     case _COORD_DMM: //= 1;
@@ -155,24 +122,24 @@ String _convertTo(Object target) {
     case _COORD_DEC: //= 0;
     case _COORD_DMS: //= 2;
       targetCoordData = targetCoord.split('\n');
-      _setCoord1(targetCoordData[0]);
-      _setCoord2(targetCoordData[1]);
+      _listAdd(targetData, targetCoordData[0]);
+      _listAdd(targetData, targetCoordData[1]);
       break;
 
     case _COORD_UTM: //= 3;
     case _COORD_MGRS: //= 4;
       targetCoordData = targetCoord.split(' ');
-      _setCoord1(targetCoordData[0]);
-      _setCoord2(targetCoordData[1]);
-      _setCoord3(targetCoordData[2]);
-      _setCoord4(targetCoordData[3]);
+      _listAdd(targetData, targetCoordData[0]);
+      _listAdd(targetData, targetCoordData[1]);
+      _listAdd(targetData, targetCoordData[2]);
+      _listAdd(targetData, targetCoordData[3]);
       break;
 
     case _COORD_XYZ: //= 5;
       targetCoordData = targetCoord.split('\n');
-      _setCoord1(targetCoordData[0].split(': ')[1]);
-      _setCoord2(targetCoordData[1].split(': ')[1]);
-      _setCoord3(targetCoordData[2].split(': ')[1]);
+      _listAdd(targetData, targetCoordData[0].split(': ')[1]);
+      _listAdd(targetData, targetCoordData[1].split(': ')[1]);
+      _listAdd(targetData, targetCoordData[2].split(': ')[1]);
       break;
 
     case _COORD_SWISS_GRID: //= 6;
@@ -180,8 +147,8 @@ String _convertTo(Object target) {
     case _COORD_MERCATOR: //= 12;
     case _COORD_NATURAL_AREA_CODE: //= 13;
       targetCoordData = targetCoord.split('\n');
-      _setCoord1(targetCoordData[0].split(': ')[1]);
-      _setCoord2(targetCoordData[1].split(': ')[1]);
+      _listAdd(targetData, targetCoordData[0].split(': ')[1]);
+      _listAdd(targetData, targetCoordData[1].split(': ')[1]);
       break;
 
     case _COORD_MAIDENHEAD: //= 11;
@@ -191,45 +158,48 @@ String _convertTo(Object target) {
     case _COORD_OPEN_LOCATION_CODE: //= 18;
     case _COORD_MAKANEY: //= 19;
     case _COORD_QUADTREE: //= 20;
-      _setCoord1(targetCoord);
+    _listAdd(targetData, targetCoord);
       break;
 
     case _COORD_REVERSE_WIG_WALDMEISTER: //= 21;
       targetCoordData = targetCoord.split('\n');
-      _setCoord1(targetCoordData[0]);
-      _setCoord2(targetCoordData[1]);
-      _setCoord3(targetCoordData[2]);
+      _listAdd(targetData, targetCoordData[0]);
+      _listAdd(targetData, targetCoordData[1]);
+      _listAdd(targetData, targetCoordData[2]);
       break;
 
     case _COORD_REVERSE_WIG_DAY1976: //= 22;
       targetCoordData = targetCoord.split('\n');
-      _setCoord1(targetCoordData[0]);
-      _setCoord2(targetCoordData[1]);
+      _listAdd(targetData, targetCoordData[0]);
+      _listAdd(targetData, targetCoordData[1]);
       break;
 
     default:
       _handleError(_INVALIDCOORDINATEFORMAT);
   }
 
-  return targetCoord;
+  return targetData;
 }
 
-void _convertFrom(Object source) {
+void _convertFrom(Object source, _GCWList parameter) {
   if (_isNotNumber(source)) {
     _handleError(_INVALIDTYPECAST);
   }
 
   late LatLng coord;
-  Object coord_1 = _getCoord1();
-  Object coord_2 = _getCoord2();
-  Object coord_3 = _getCoord3();
-  Object coord_4 = _getCoord4();
+  late Object parameter_1;
+  late Object parameter_2;
+  late Object parameter_3;
+  late Object parameter_4;
   // TODO
   switch (source as num) {
     case _COORD_DEC:
-      if (_isNotNumber(coord_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(coord_2)) _handleError(_INVALIDTYPECAST);
-      coord = LatLng(coord_1 as double, coord_2 as double);
+      if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
+      parameter_1 = _listGet(parameter, 0)!;
+      parameter_2 = _listGet(parameter, 1)!;
+      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      coord = LatLng(parameter_1 as double, parameter_2 as double);
       break;
     case _COORD_DMM: //= 1;
     case _COORD_DMS: //= 2;

@@ -2226,6 +2226,7 @@
   "gcwizard_script_syntax_error_for_without_next": "ERROR: FOR WITHOUT NEXT",
   "gcwizard_script_syntax_error_invalid_coordinate_format" : "ERROR: INVALID COORDINATE FORMAT FOR CONVERSION",
   "gcwizard_script_syntax_error_list_not_defined": "ERROR: LIST NOT DEFINED - DIM STATEMENT IS PROBABLY MISSING",
+  "gcwizard_script_syntax_error_invalid_number_of_parameters": "ERROR: INVALID NUMBER OF PARAMETERS",
   "gcd_title": "Greatest Common Divisor",
   "gcd_description": "Calculates the GCD of two Numbers",
   "gcd_example": "24, 36 → 12",

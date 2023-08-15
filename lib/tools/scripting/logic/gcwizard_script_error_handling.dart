@@ -43,6 +43,7 @@ const _FORWITHOUTNEXT = 38;
 const _PRINTERROR = 39;
 const _INVALIDCOORDINATEFORMAT = 40;
 const _LISTNOTDEFINED = 41;
+const _INVALIDNUMBEROFPARAMETER = 42;
 
 Map<int, String> _errorMessages = {
   _SYNTAXERROR : "gcwizard_script_syntax_error",
@@ -86,6 +87,7 @@ Map<int, String> _errorMessages = {
   _FORWITHOUTNEXT : "gcwizard_script_syntax_error_for_without_next",
   _INVALIDCOORDINATEFORMAT : "gcwizard_script_syntax_error_invalid_coordinate_format",
   _LISTNOTDEFINED: "gcwizard_script_syntax_error_list_not_defined",
+  _INVALIDNUMBEROFPARAMETER: "gcwizard_script_syntax_error_invalid_number_of_parameters",
 };
 
 void _resetErrors() {
