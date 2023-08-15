@@ -57,6 +57,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_crypto.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_coordinates.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_files.dart';
 
 // Tiny BASIC
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff
@@ -89,7 +90,8 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // async print
 // async openfile
 // async savefile
-// NEWFILE, OPENFILE, SAVEFILE, WRITEFILE, READFILE, EOF, LOF, LOC,
+// commands NEWFILE, OPENFILE, SAVEFILE
+// methods/functions WRITEFILE, READFILE, EOF
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
@@ -177,6 +179,9 @@ class _GCWizardSCriptInterpreter {
   static const BREAK = 35;
   static const CONTINUE = 36;
   static const DIM = 37;
+  static const NEWFILE = 38;
+  static const OPENFILE = 39;
+  static const SAVEFILE = 40;
 
   static const EOP = 'EOP';
   static const LF = '\n';
@@ -227,6 +232,9 @@ class _GCWizardSCriptInterpreter {
     "restore": RESTORE,
     "screen": SCREEN,
     "dim": DIM,
+    "newfile": NEWFILE,
+    "openfile": OPENFILE,
+    "savefile": SAVEFILE,
   };
   Map<String, int> registeredKeywords = {};
   static const Map<int, Map<String, Object?>> SCREEN_MODES = {
@@ -485,13 +493,34 @@ class _GCWizardSCriptInterpreter {
       case CONTINUE:
         executeCommandCONTINUE();
         break;
-      case DIM:
-        executeCommandDIM();
+      case NEWFILE:
+        executeCommandNEWFILE();
+        break;
+      case OPENFILE:
+        BreakType = GCWizardScriptBreakType.OPENFILE;
+        executeCommandOPENFILE();
+        break;
+      case SAVEFILE:
+        BreakType = GCWizardScriptBreakType.SAVEFILE;
+        executeCommandSAVEFILE();
         break;
       case END:
       case UNKNOWNCOMMAND:
         state.halt = true;
     }
+  }
+
+  void executeCommandNEWFILE(){
+    state.FILE = Uint8List.fromList([]);
+    state.FILEINDEX = 0;
+  }
+
+  void executeCommandOPENFILE(){
+    // TODO async
+  }
+
+  void executeCommandSAVEFILE(){
+    // TODO async
   }
 
   void executeCommandREM() {

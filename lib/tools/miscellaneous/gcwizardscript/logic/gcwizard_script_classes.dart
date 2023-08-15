@@ -124,6 +124,9 @@ class ScriptState {
   String quotestr = '';
   bool continueLoop = false;
 
+  Uint8List FILE = Uint8List.fromList([]);
+  int FILEINDEX = 0;
+
   _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
   datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
@@ -149,39 +152,13 @@ class ScriptState {
     repeatStack = datastack.Stack<int>();
     whileStack = datastack.Stack<int>();
     variables = {};
-    /*variables = [
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-      dynamic,
-    ];*/
     STDOUT = '';
-    // _halt = false;
+
     // _randomNumber = 0.0;
     step = 1;
     listDATA = [];
+    FILE = Uint8List.fromList([]);
+    FILEINDEX = 0;
     pointerDATA = 0;
     waypoints = [];
 

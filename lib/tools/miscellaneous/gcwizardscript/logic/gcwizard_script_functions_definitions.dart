@@ -105,6 +105,7 @@ const List<String> _Functions_8 = [
   'DMSTODEC(',
   'DMSTODMM(',
   'LISTSORT(',
+  'READFILE(',
   'RICHTUNG(',
 ];
 const List<String> _Functions_9 = [
@@ -112,6 +113,7 @@ const List<String> _Functions_9 = [
   'LISTCLEAR(',
   'WPTSCLEAR(',
   'WPTSCOUNT(',
+  'WRITEFILE(',
 ];
 const List<String> _Functions_10 = [
   'DECTOROMAN(',
@@ -269,6 +271,10 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'PEILUNG': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
   'CENTERTWOPOINTS': _GCWizardScriptClassFunctionDefinition(_centerTwoPoints, 4, functionReturn: false),
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerThreePoints, 6, functionReturn: false),
+
+  // files
+  'READFILE': _GCWizardScriptClassFunctionDefinition(_readfile, 0),
+  'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writefile, 1,  functionReturn: false),
 };
 
 List<String> scriptFunctions() {

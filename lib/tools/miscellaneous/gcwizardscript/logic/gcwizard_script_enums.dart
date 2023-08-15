@@ -8,6 +8,4 @@ enum GCWizardSCript_SCREENMODE {
   TEXTGRAPHIC,
 }
 
-enum GCWizardScriptVariableType {DYNAMIC, STRING, INTEGER, DOUBLE, CHARACTER, LIST}
-
-enum GCWizardScriptBreakType {INPUT, PRINT, NULL}
+enum GCWizardScriptBreakType {INPUT, PRINT, OPENFILE, SAVEFILE, NULL}
