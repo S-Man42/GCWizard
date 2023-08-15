@@ -201,9 +201,22 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       coord = LatLng(parameter_1 as double, parameter_2 as double);
       break;
+    case _COORD_UTM: //= 3;
+      if (_listLength(parameter) != 4) _handleError(_INVALIDNUMBEROFPARAMETER);
+      parameter_1 = _listGet(parameter, 0)!;
+      parameter_2 = _listGet(parameter, 1)!;
+      parameter_3 = _listGet(parameter, 2)!;
+      parameter_4 = _listGet(parameter, 3)!;
+      if (_isNotInt(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotString(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotNumber(parameter_4)) _handleError(_INVALIDTYPECAST);
+      UTMREF utm = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as double, parameter_4 as double);
+      coord = UTMREFtoLatLon(utm, defaultEllipsoid);
+      break;
     case _COORD_DMM: //= 1;
     case _COORD_DMS: //= 2;
-    case _COORD_UTM: //= 3;
+
     case _COORD_MGRS: //= 4;
     case _COORD_XYZ: //= 5;
     case _COORD_SWISS_GRID: //= 6;

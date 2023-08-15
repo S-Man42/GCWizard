@@ -9,7 +9,9 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
