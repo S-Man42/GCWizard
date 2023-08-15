@@ -54,7 +54,7 @@ void main() {
 var s = Strategy();
         var _actual = s.solveQ(puzzle, withTrialAndError : false);
 
-        print(_actual.state.toString());
+        print(_actual.rows.toString());
         // _actual.solveNonogram(10);
         // expect(_actual.solutions?[0].solution, elem['expectedOutput']);
         // expect(_actual.solutions?.length, elem['solutionCount']);

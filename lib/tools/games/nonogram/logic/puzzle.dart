@@ -8,9 +8,9 @@ class Puzzle {
   var columnHints = <List<int>>[];
   int height = 0;
   int width = 0;
-  // var rows = <List<int>>[];
+  var _rows = <List<int>>[];
   // var columns = <List<int>>[];
-  var state = <int>[];
+  //var state = <int>[];
 
   Puzzle(this.rowHints, this.columnHints) {}
   // constructor(data) {
@@ -25,9 +25,9 @@ class Puzzle {
     columnHints = cleanClone(data.columnHints);
     height = rowHints.length;
     width = columnHints.length;
-    // rows = List<List<int>>.filled(height, List<int>.filled(width, 0));
+    _rows = List<List<int>>.generate(height, (index) => List<int>.filled(width, 0));
     // columns = List<List<int>>.filled(width, List<int>.filled(height, 0));
-    state = List<int>.filled(width * height, 0);
+    //state = List<int>.filled(width * height, 0);
 
     return checkConsistency(data);
     // if (data.content) {
@@ -48,10 +48,10 @@ class Puzzle {
   }
 
   List<List<int>> get rows {
-    var _rows = <List<int>>[];
-    for(var index = 0; index < height; index++) {
-      _rows.add(state.sublist(index * width, (index + 1) * width));
-    }
+    // var _rows = <List<int>>[];
+    // for(var index = 0; index < height; index++) {
+    //   _rows.add(state.sublist(index * width, (index + 1) * width));
+    // }
     return _rows;
   }
 
@@ -60,17 +60,17 @@ class Puzzle {
   // }
 
    set rows (List<List<int>> newRows) {
-    for(var index = 0; index < height; index++) {
-      state.setRange(index * width, (index + 1) * width, newRows[index]);
-    }
+    _rows = newRows;
+    // for(var index = 0; index < height; index++) {
+    //   state.setRange(index * width, (index + 1) * width, newRows[index]);
+    // }
   }
 
   List<List<int>> get columns {
-    var _columns = <List<int>>[];
+    var _columns = List<List<int>>.generate(width, (index) => List<int>.filled(height, 0));
     for(var x = 0; x < width; x++) {
-      _columns.add([]);
       for(var y = 0; y < height; y++) {
-        _columns[x].add(state[y * width + x]);
+        _columns[x][y] = rows[y][x];
       }
     }
     return _columns;
@@ -79,17 +79,20 @@ class Puzzle {
   set columns (List<List<int>> newColumns) {
     for(var x = 0; x < width; x++) {
       for(var y = 0; y < height; y++) {
-        state[y * width + x] = newColumns[x][y];
+        _rows[y][x] = newColumns[x][y];
       }
     }
   }
 
-  void setRow (List<int> newRow, int index) {
-    state.setRange(index * width, (index + width) * width, newRow);
-  }
+  // void setRow (List<int> newRow, int index) {
+  //   state.setRange(index * width, (index + width) * width, newRow);
+  // }
 
   bool get isFinished {
-    return state.every((item) => item != 0);
+    for (var row in _rows) {
+      if (row.any((item) => item == 0)) return false;
+    }
+    return true;
   }
 
   // bool get isSolved {
