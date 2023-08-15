@@ -129,7 +129,7 @@ class ScriptState {
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
   datastack.Stack<int> repeatStack = datastack.Stack<int>();
   datastack.Stack<int> whileStack = datastack.Stack<int>();
-  datastack.Stack<int> switchStack = datastack.Stack<int>();
+  datastack.Stack<String> switchStack = datastack.Stack<String>();
   datastack.Stack<bool> ifStack = datastack.Stack<bool>();
   datastack.Stack<int> controlStack = datastack.Stack<int>();
 

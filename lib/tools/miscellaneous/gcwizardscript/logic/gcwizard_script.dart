@@ -367,7 +367,6 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeAssignment() {
-    int variable;
     Object? value;
     String variableName;
 
@@ -517,7 +516,7 @@ class _GCWizardSCriptInterpreter {
       getToken(); // get next list item
       if (state.keywordToken == EOL || state.token == EOP) break;
       if (state.token != ',') {
-        vname = state.token[0];
+        vname = state.token;
         if (isNotAVariable(vname)) {
           state.variables[vname] = '';
         }
@@ -795,24 +794,21 @@ class _GCWizardSCriptInterpreter {
   void executeCommandSWITCH() {
     state.controlStack.push(SWITCHSTATEMENT);
     String variableName;
-    int variable;
 
     getToken();
-    variableName = state.token[0];
+    variableName = state.token;
 
-    if (isNotAVariable(variableName[0])) {
-      _handleError(_NOTAVARIABLE);
-      return;
+    if (isNotAVariable(variableName)) {
+      state.variables[variableName] = '';
     }
 
-    variable = variableName.toUpperCase().codeUnitAt(0) - ('A').codeUnitAt(0);
-    state.switchStack.push(variable);
+    state.switchStack.push(variableName);
     findEOL();
   }
 
   void executeCommandCASE() {
     double result;
-    int variable = state.switchStack.top();
+    String variable = state.switchStack.top();
 
     result = evaluateExpression() as double;
     if (state.variables[variable] != result) {
