@@ -353,18 +353,17 @@ void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
   _state.GCWizardScript_LON = coord.centerPoint.longitude;
 }
 
-double _dmmtodec(Object? dec, Object? min, Object? sec){
-  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+double _dmmtodec(Object? dec, Object? min){
+  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
   if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
-  if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
-  return (dec as double) + (min as double) / 60 + (sec as double) * 60 / 1000;
+  return (dec as int) + (min as double) / 60;
 }
 
 double _dmstodec(Object? dec, Object? min, Object? sec){
-  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotInt(min)) _handleError(_INVALIDTYPECAST);
   if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
-  return (dec as double) + (min as double) / 60 + (sec as double) / 3600;
+  return (dec as int) + (min as int) / 60 + (sec as double) / 3600;
 }
 
 String _dectodmm(Object? dec){
@@ -374,7 +373,7 @@ String _dectodmm(Object? dec){
 
   result = ((dec as double).truncate()).toString()+ '° ';
   ms = (dec - dec.truncate()) * 60;
-  result = result  + ms.toString() + "' ";
+  result = result  + ms.toStringAsFixed(3) + "' ";
 
   return result;
 }
@@ -389,7 +388,21 @@ String _dectodms(Object? dec){
   result = result  + ms.truncate().toString() + "' ";
 
   ms = (ms - ms.truncate()) * 60;
-  result = result + ms.truncate().toString() + '"';
+  result = result + ms.toStringAsFixed(3) + '"';
 
   return result;
+}
+
+String _dmmtodms(Object? dec, Object? min){
+  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
+  return(_dectodms(_dmmtodec(dec as int, min as double)));
+}
+
+String _dmstodmm(Object? dec, Object? min, Object? sec){
+  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotInt(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
+
+  return(_dectodmm(_dmstodec(dec as int, min as int, sec as double)));
 }

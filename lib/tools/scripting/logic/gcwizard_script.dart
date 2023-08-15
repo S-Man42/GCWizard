@@ -1293,7 +1293,6 @@ class _GCWizardSCriptInterpreter {
         }
         state.scriptIndex = state.scriptIndex + 2;
       } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
-        print(state.token);
         getToken();
         partialResult1 = evaluateExpressionParantheses();
         if (_FUNCTIONS[command]!.functionReturn) {
@@ -1302,7 +1301,6 @@ class _GCWizardSCriptInterpreter {
           _FUNCTIONS[command]!.functionName(partialResult1);
         }
       } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
-        print(state.token);
         getToken();
         if (state.token == "(") {
           getToken();
@@ -1970,7 +1968,6 @@ class _GCWizardSCriptInterpreter {
       state.keywordToken = lookUpToken(state.token);
       if (state.keywordToken == UNKNOWNCOMMAND) {
         state.tokenType = VARIABLE;
-        print(state.token);
       } else {
         state.tokenType = COMMAND;
       }
