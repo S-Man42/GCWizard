@@ -81,12 +81,15 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, PIE, COLOR, FILL, TEXT, BOX, OVAL
 // - use BREAK
 // - use DIM, implement List as Datatype
+// - variable names longer than one letter
 // - handle input async like whitespace, piet
 
 // TODO
 // Enhance Performance
-// variablenames longer than one letter
-// OPEN, CLOSE, WRITE#, INPUT#, EOF, LOF, LOC, LINE INPUT#
+// async print
+// async openfile
+// async savefile
+// NEWFILE, OPENFILE, SAVEFILE, WRITEFILE, READFILE, EOF, LOF, LOC,
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
