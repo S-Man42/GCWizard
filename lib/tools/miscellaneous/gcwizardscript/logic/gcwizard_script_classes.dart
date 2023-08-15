@@ -22,6 +22,7 @@ class GCWizardScriptOutput {
   final List<List<String>> VariableDump;
   final GCWizardScriptBreakType BreakType;
   ScriptState? continueState;
+  final Uint8List FILE;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -31,12 +32,13 @@ class GCWizardScriptOutput {
     required this.ErrorPosition,
     required this.VariableDump,
     required this.BreakType,
+    required this.FILE,
     this.continueState
   });
 
   static GCWizardScriptOutput empty() {
     return GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: [], BreakType: GCWizardScriptBreakType.NULL);
+        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: [], FILE: Uint8List.fromList([]), BreakType: GCWizardScriptBreakType.NULL);
   }
 }
 
@@ -179,5 +181,9 @@ class ScriptState {
         STDIN.add(element);
       }
     });
+  }
+
+  void addFile(Uint8List inputFile){
+    FILE = inputFile;
   }
 }

@@ -15,3 +15,7 @@ void _writefile(Object? byte) {
   if (_isNotInt(byte)) _handleError(_INVALIDTYPECAST);
   state?.FILE.add((byte as int) % 256);
 }
+
+bool _eof(){
+  return state!.FILEINDEX < state!.FILE.length;
+}

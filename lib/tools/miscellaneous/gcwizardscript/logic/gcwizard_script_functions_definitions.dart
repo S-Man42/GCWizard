@@ -12,6 +12,7 @@ const List<String> _Functions_3 = [
   'BWW(',
   'COS(',
   'DEG(',
+  'EOF(',
   'EXP(',
   'FAC(',
   'GCD(',
@@ -275,6 +276,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // files
   'READFILE': _GCWizardScriptClassFunctionDefinition(_readfile, 0),
   'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writefile, 1,  functionReturn: false),
+  'EOF': _GCWizardScriptClassFunctionDefinition(_eof, 0),
 };
 
 List<String> scriptFunctions() {

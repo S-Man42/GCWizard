@@ -84,14 +84,15 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use DIM, implement List as Datatype
 // - variable names longer than one letter
 // - handle input async like whitespace, piet
+// - methods/functions WRITEFILE, READFILE, EOF
+// - use NEWFILE
 
 // TODO
 // Enhance Performance
 // async print
 // async openfile
 // async savefile
-// commands NEWFILE, OPENFILE, SAVEFILE
-// methods/functions WRITEFILE, READFILE, EOF
+// commands OPENFILE, SAVEFILE
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
@@ -322,6 +323,7 @@ class _GCWizardSCriptInterpreter {
       STDOUT: state.STDOUT.trimRight(),
       Graphic: state.graficOutput,
       Points: state.waypoints,
+      FILE: state.FILE,
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),

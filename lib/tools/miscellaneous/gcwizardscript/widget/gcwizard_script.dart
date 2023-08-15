@@ -87,14 +87,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 onLoaded: (_file) {
                   if (_file == null) {
                     showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                    _loadFile = !_loadFile;
                     return;
                   }
 
                   _currentProgram = String.fromCharCodes(_file.bytes);
                   _programController.text = _currentProgram;
-                  setState(() {});
-
                   _loadFile = !_loadFile;
+                  setState(() {});
                 },
               ),
             if (_loadCoords)
@@ -309,6 +309,12 @@ class GCWizardScriptState extends State<GCWizardScript> {
         case GCWizardScriptBreakType.PRINT:
           _currentScriptOutput = _currentOutput.STDOUT;
           break;
+        case GCWizardScriptBreakType.OPENFILE:
+          break;
+        case GCWizardScriptBreakType.SAVEFILE:
+          break;
+        case GCWizardScriptBreakType.NULL:
+          break;
       }
       // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
       //   _currentScriptOutput = _currentOutput.STDOUT;
@@ -339,6 +345,15 @@ class GCWizardScriptState extends State<GCWizardScript> {
               _currentScriptOutput = _currentOutput.STDOUT;
               _interpretGCWScriptAsync();
             }
+            break;
+          case GCWizardScriptBreakType.OPENFILE:
+            _openFile();
+            break;
+          case GCWizardScriptBreakType.SAVEFILE:
+            _exportFile(context, _currentOutput.FILE, GCWizardScriptFileType.FILE);
+            _interpretGCWScriptAsync();
+            break;
+          case GCWizardScriptBreakType.NULL:
             break;
         }
         // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
@@ -441,9 +456,25 @@ class GCWizardScriptState extends State<GCWizardScript> {
       case GCWizardScriptFileType.WAYPOINT:
         filename = buildFileNameWithDate('out_', null) + '.wpt';
         break;
+      case GCWizardScriptFileType.FILE:
+        filename = buildFileNameWithDate('out_', null) + '.dat';
+        break;
     }
     value = await saveByteDataToFile(context, data, filename);
     if (value) showExportedFileDialog(context);
+  }
+
+  void _openFile() async {
+    openFileExplorer(allowedFileTypes: []).then((GCWFile? file) {
+      if (file != null) {
+        if (_currentOutput.continueState != null) {
+          _currentOutput.continueState!.addFile(file.bytes);
+          _interpretGCWScriptAsync();
+        }
+      } else {
+        showToast(i18n(context, 'common_loadfile_exception_nofile'));
+      }
+    });
   }
 
   Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points) async {
