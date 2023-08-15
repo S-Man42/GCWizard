@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 // internal representation of the GCW Script error types
 const _SYNTAXERROR = 0;

@@ -267,6 +267,7 @@ import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_e
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
+import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
@@ -417,7 +418,6 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_list/
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_search/widget/vanity_words_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/weather_symbols.dart';
-import 'package:gc_wizard/tools/scripting/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
@@ -1082,7 +1082,7 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const ['games']),
     GCWTool(
         tool: const MiscellaneousSelection(),
-        id: 'scripting_selection',
+        id: 'miscellaneous_selection',
         searchKeys: const []),
     GCWTool(
         tool: const SegmentDisplaySelection(),
@@ -3115,6 +3115,7 @@ void initializeRegistry(BuildContext context) {
     //Miscellaneous Selection *****************************************************************************************
 
     GCWTool(tool: const GCWizardScript(), id: 'gcwizard_script',
+        isBeta: true,
         categories: const [ToolCategory.MISCELLANEOUS],
         searchKeys: const [
       'gcwizard_script',

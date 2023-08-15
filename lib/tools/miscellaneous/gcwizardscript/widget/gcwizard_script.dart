@@ -30,7 +30,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
-import 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
+import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 class GCWizardScript extends StatefulWidget {
   const GCWizardScript({Key? key}) : super(key: key);

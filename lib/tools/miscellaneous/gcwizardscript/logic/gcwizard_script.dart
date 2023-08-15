@@ -39,24 +39,24 @@ import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dar
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_classes.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_consts.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_enums.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_variables.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_error_handling.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_definitions.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_datetime.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_list.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_geocaching.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_math.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_waypoints.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_graphic.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_base.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_crypto.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_hash.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordinates.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_test_datatypes.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_classes.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_consts.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_enums.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_variables.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_error_handling.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_definitions.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_datetime.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_list.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_geocaching.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_math.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_string.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_waypoints.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_graphic.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_base.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_crypto.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_hash.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_coordinates.dart';
 
 // Tiny BASIC
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff
@@ -1429,9 +1429,10 @@ class _GCWizardSCriptInterpreter {
     } catch (exception){
       if (exception.toString().split(' ').contains("'_GCWList?'")) {
         _handleError(_LISTNOTDEFINED);
+        return null;
       }
     }
-
+    return null;
   }
 
   Object? evaluateExpression() {

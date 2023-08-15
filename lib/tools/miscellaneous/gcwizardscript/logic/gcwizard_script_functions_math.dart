@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 int _sgn(Object? x) {
   if (!_isNumber(x)) {
