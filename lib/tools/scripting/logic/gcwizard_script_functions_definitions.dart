@@ -97,7 +97,11 @@ const List<String> _Functions_7 = [
 ];
 const List<String> _Functions_8 = [
   'AVEMARIA(',
+  'DECTODMM(',
+  'DECTODMS(',
   'DISTANCE(',
+  'DMMTODEC(',
+  'DMSTODEC(',
   'LISTSORT(',
   'RICHTUNG(',
 ];
@@ -249,6 +253,10 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'WGS84': _GCWizardScriptClassFunctionDefinition(_wgs84, 2),
   'CONVERTTO': _GCWizardScriptClassFunctionDefinition(_convertTo, 1),
   'CONVERTFROM': _GCWizardScriptClassFunctionDefinition(_convertFrom, 1, functionReturn: false),
+  'DMMTODEC': _GCWizardScriptClassFunctionDefinition(_distance, 3),
+  'DMSTODEC': _GCWizardScriptClassFunctionDefinition(_distance, 3),
+  'DECTODMM': _GCWizardScriptClassFunctionDefinition(_distance, 1),
+  'DECTODMS': _GCWizardScriptClassFunctionDefinition(_distance, 1),
   'DISTANCE': _GCWizardScriptClassFunctionDefinition(_distance, 4),
   'DISTANZ': _GCWizardScriptClassFunctionDefinition(_distance, 4),
   'BEARING': _GCWizardScriptClassFunctionDefinition(_bearing, 3),

@@ -352,3 +352,44 @@ void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
   _state.GCWizardScript_LAT = coord.centerPoint.latitude;
   _state.GCWizardScript_LON = coord.centerPoint.longitude;
 }
+
+double _dmmtodec(Object? dec, Object? min, Object? sec){
+  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
+  return (dec as double) + (min as double) / 60 + (sec as double) * 60 / 1000;
+}
+
+double _dmstodec(Object? dec, Object? min, Object? sec){
+  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
+  return (dec as double) + (min as double) / 60 + (sec as double) / 3600;
+}
+
+String _dectodmm(Object? dec){
+  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+  String result = '';
+  double ms = 0.0;
+
+  result = ((dec as double).truncate()).toString()+ '° ';
+  ms = (dec - dec.truncate()) * 60;
+  result = result  + ms.toString() + "' ";
+
+  return result;
+}
+
+String _dectodms(Object? dec){
+  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+  String result = '';
+  double ms = 0.0;
+
+  result = ((dec as double).truncate()).toString()+ '° ';
+  ms = (dec - dec.truncate()) * 60;
+  result = result  + ms.truncate().toString() + "' ";
+
+  ms = (ms - ms.truncate()) * 60;
+  result = result + ms.truncate().toString() + '"';
+
+  return result;
+}
