@@ -3,6 +3,8 @@
 // const ascii = require('./serializers/ascii');
 // const svg = require('./serializers/svg');
 
+import 'package:collection/collection.dart';
+
 class Puzzle {
   var rowHints = <List<int>>[];
   var columnHints = <List<int>>[];
@@ -100,11 +102,18 @@ class Puzzle {
     //   var actual = line.join('').split(/(?:-1)+/g).map(x => x.length).filter(x => x);
     //   return actual.length === hints.length && actual.every((x, i) => x === hints[i]);
     // };
-    return (
-      isFinished &&
-      columns.every((col, i) => _isOk(col, columnHints[i])) &&
-      rows.every((row, i) => _isOk(row, rowHints[i]))
-    );
+    var ok = true;
+    columns.forEachIndexed((i, column) {
+      ok = _isOk(column, columnHints[i])
+    };
+    // var _colums = Map.fromIterables(columns, columnHints);
+    // _colums.a
+    // return (
+    //
+    //   isFinished &&
+    //       _colums..every((col, i) => _isOk(col, columnHints[i])) &&
+    //   rows.every((row, i) => _isOk(row, rowHints[i]))
+    // );
   }
 
   bool _isOK(List<int> line, List<int> hints) {
