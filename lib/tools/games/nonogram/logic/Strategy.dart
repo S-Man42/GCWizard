@@ -35,53 +35,58 @@ class Strategy {
   //  * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
   //  */
   Puzzle solveQ(Puzzle puzzle, {bool withTrialAndError = true}) {
-    var solvers = [pushSolver()];
-    // keep tracks of visited lines
-    _visited = VisitedG(
-      rows: List<Uint8List>.generate(puzzle.height, (index) => Uint8List(solvers.length)),
-      columns: List<Uint8List>.generate(puzzle.width, (index) => Uint8List(solvers.length))
-    );
+    try {
 
-    // repeatedly run all solvers on puzzle
-    bool progress = false;
-    //solveOnce(puzzle, solvers[0], 0);
-    do {
-      var snapshotRows = createHash(puzzle.rows);
-      var snapshotColumns = createHash(puzzle.columns);
-      progress = false;
-      var i  = 0;
-      solvers.forEachIndexed((i, solver) { //.forEachIndexed((i, solver)
-        if (progress) {
-          return;
-        }
+      var solvers = [pushSolver()];
+      // keep tracks of visited lines
+      _visited = VisitedG(
+        rows: List<Uint8List>.generate(puzzle.height, (index) => Uint8List(solvers.length)),
+        columns: List<Uint8List>.generate(puzzle.width, (index) => Uint8List(solvers.length))
+      );
 
-        // run one line solver on the whole puzzle
-        _solveOnce(puzzle, solver, i); //, solutionSequence
-        //print(puzzle.state);
-        progress = snapshotRows != createHash(puzzle.rows) || snapshotColumns != createHash(puzzle.columns);
-        // if (debugMode) {
-        //   statistics[i]++;
-        // }
-      });
+      // repeatedly run all solvers on puzzle
+      bool progress = false;
+      //solveOnce(puzzle, solvers[0], 0);
+      do {
+        var snapshotRows = createHash(puzzle.rows);
+        var snapshotColumns = createHash(puzzle.columns);
+        progress = false;
+        var i  = 0;
+        solvers.forEachIndexed((i, solver) { //.forEachIndexed((i, solver)
+          if (progress) {
+            return;
+          }
 
-    } while(progress);
+          // run one line solver on the whole puzzle
+          _solveOnce(puzzle, solver, i); //, solutionSequence
+          //print(puzzle.state);
+          progress = snapshotRows != createHash(puzzle.rows) || snapshotColumns != createHash(puzzle.columns);
+          // if (debugMode) {
+          //   statistics[i]++;
+          // }
+        });
 
-    // // no solution found… trial and error now
-    // if (withTrialAndError && !puzzle.isFinished) {
-    //   // if (debugMode) {
-    //   // console.log('must start guessing');
-    //   // }
-    //   var deepResult = guessAndConquer(this, puzzle);
-    //   if (deepResult) {
-    //     //puzzle.import(deepResult);
-    //   }
-    // }
+      } while(progress);
 
-    // if (debugMode) {
-    // console.log('Solution sequence: [${solutionSequence.join(',')}]');
-    // console.log('Time elapsed: ${Date.now() - start}ms');
-    // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
-    // }
+      // // no solution found… trial and error now
+      // if (withTrialAndError && !puzzle.isFinished) {
+      //   // if (debugMode) {
+      //   // console.log('must start guessing');
+      //   // }
+      //   var deepResult = guessAndConquer(this, puzzle);
+      //   if (deepResult) {
+      //     //puzzle.import(deepResult);
+      //   }
+      // }
+
+      // if (debugMode) {
+      // console.log('Solution sequence: [${solutionSequence.join(',')}]');
+      // console.log('Time elapsed: ${Date.now() - start}ms');
+      // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
+      // }
+    } on FormatException catch (e) {
+      return puzzle;//printErrorMessage(context, e.message);
+    }
     return puzzle;
   }
 
@@ -126,14 +131,12 @@ class Strategy {
       visited.current[line.index][solverIndex] = 1;
       // First, trim unnecessary information from the line
       var trimresult = trimLine(line.line, hints[line.index]); //[trimmedLine, trimmedHints, trimInfo]
-      if (trimresult.error.isNotEmpty) {
-        continue;
-      }
+
   // if (debugMode) {
       // var start = Date.now();
       // }
       // solver run
-      print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
+      // print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // if (debugMode) {
@@ -147,7 +150,7 @@ class Strategy {
       var hasChanged = false;
       var changedLines = <int>[];
       if (newLine != null) { // the solver may return null to indicate no progress
-        print('newLine ' + newLine.toString());
+        // print('newLine ' + newLine.toString());
         newLine = restoreLine(newLine, trimresult.trimInfo!);
         line.line.forEachIndexed((i, el) {
           // What has changed?
@@ -202,7 +205,7 @@ class Strategy {
       });
       unsolvedLines = unsolvedLines.sorted((left, right) => left.estimate - right.estimate);
     }
-  return unsolvedLines.toList();
+    return unsolvedLines.toList();
   }
 }
 // module.exports = Strategy;

@@ -12,7 +12,7 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
 
   var minIndex = line.indexOf(0);
   if (minIndex == -1) {
-    return ShiftResult(null, null, null, error: 'Cannot trim solved line');
+    throw const FormatException('Cannot trim solved line');
   }
   if (minIndex > 0 && line[minIndex - 1] == 1) {
     minIndex--;
@@ -59,7 +59,7 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
     }
   }
   if (clonedHints.any((x) => x < 0)) {
-    return ShiftResult(null, null, null, error: 'Impossible line $line, $hints');
+    throw FormatException('Impossible line $line, $hints');
   }
 
   return ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
@@ -115,9 +115,8 @@ class ShiftResult {
   List<int>? trimmedLine;
   List<int>? trimmedHints;
   TrimInfo? trimInfo;
-  String error;
 
-  ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo, {this.error = ''});
+  ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo);
 }
 
 class TrimInfo {

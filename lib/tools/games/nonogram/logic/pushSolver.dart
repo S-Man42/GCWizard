@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:collection/collection.dart';
 
 class pushSolver extends Solver {
@@ -31,16 +29,18 @@ class pushSolver extends Solver {
       if (_shouldSkip(line, hint, i)) {
         continue;
       }
-      var rest = pushLeft(line.sublist(i + hint + 1), hints.sublist(1));
-      if (rest != null) {
-        line = line.sublist(0);
-        for (var x = i; x < i + hint; x++) {
-          line[x] = 1;
+      if ((line.length >= i + hint + 1) && hints.isNotEmpty) {
+        var rest = pushLeft(line.sublist(i + hint + 1), hints.sublist(1));
+        if (rest != null) {
+          line = line.sublist(0);
+          for (var x = i; x < i + hint; x++) {
+            line[x] = 1;
+          }
+          for (var x = 0; x < rest.length; x++) {
+            line[x + i + hint + 1] = rest[x];
+          }
+          return line;
         }
-        for (var x = 0; x < rest.length; x++) {
-          line[x + i + hint + 1] = rest[x];
-        }
-        return line;
       }
     }
     return null;
@@ -48,6 +48,7 @@ class pushSolver extends Solver {
 
 
   void _enumerate(List<int> array) {
+    if (array.isEmpty) return;
     for (var i = 0, j = array[0] % 2; i < array.length; i++) {
       if (array[i] == -1) {
         array[i] = 0;
@@ -67,13 +68,13 @@ class pushSolver extends Solver {
 
     var reverseLine = line.sublist(0).reversed.toList();
     var reverseHints = hints.sublist(0).reversed.toList();
-    var rightmost = pushLeft(reverseLine, reverseHints)!.reversed.toList();
+    var rightmost = pushLeft(reverseLine, reverseHints)?.reversed.toList() ?? [];
 
     _enumerate(leftmost);
     _enumerate(rightmost);
 
     return leftmost.mapIndexed((i, el) {
-      if (el == rightmost[i]) {
+      if ((i < rightmost.length) && (el == rightmost[i])) {
         return (el % 2 != 0) ? 1 : -1;
       }
       return line[i];
