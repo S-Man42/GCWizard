@@ -38,8 +38,8 @@ class Strategy {
     var solvers = [pushSolver()];
     // keep tracks of visited lines
     _visited = VisitedG(
-      rows: List<Uint8List>.filled(puzzle.height,  Uint8List(solvers.length)),
-      columns: List<Uint8List>.filled(puzzle.width,  Uint8List(solvers.length))
+      rows: List<Uint8List>.generate(puzzle.height, (index) => Uint8List(solvers.length)),
+      columns: List<Uint8List>.generate(puzzle.width, (index) => Uint8List(solvers.length))
     );
 
     // repeatedly run all solvers on puzzle
@@ -133,7 +133,7 @@ class Strategy {
       // var start = Date.now();
       // }
       // solver run
-      print('trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
+      print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // if (debugMode) {
