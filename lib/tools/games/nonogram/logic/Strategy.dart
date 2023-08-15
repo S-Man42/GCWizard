@@ -51,14 +51,13 @@ class Strategy {
       progress = false;
       var i  = 0;
       solvers.forEachIndexed((i, solver) { //.forEachIndexed((i, solver)
-        print(i);
         if (progress) {
           return;
         }
 
         // run one line solver on the whole puzzle
         _solveOnce(puzzle, solver, i); //, solutionSequence
-        print(puzzle.state);
+        //print(puzzle.state);
         progress = snapshotRows != createHash(puzzle.rows) || snapshotColumns != createHash(puzzle.columns);
         // if (debugMode) {
         //   statistics[i]++;
@@ -136,6 +135,7 @@ class Strategy {
       // var start = Date.now();
       // }
       // solver run
+      print('trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // if (debugMode) {
@@ -149,6 +149,7 @@ class Strategy {
       var hasChanged = false;
       var changedLines = <int>[];
       if (newLine != null) { // the solver may return null to indicate no progress
+        print('newLine ' + newLine.toString());
         newLine = restoreLine(newLine, trimresult.trimInfo!);
         line.line.forEachIndexed((i, el) {
           // What has changed?
