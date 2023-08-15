@@ -95,17 +95,22 @@ class Puzzle {
     return true;
   }
 
-  // bool get isSolved {
-  //   var isOk = (line, hints) {
-  //     var actual = line.join('').split(/(?:-1)+/g).map(x => x.length).filter(x => x);
-  //     return actual.length === hints.length && actual.every((x, i) => x === hints[i]);
-  //   };
-  //   return (
-  //     isFinished &&
-  //     columns.every((col, i) => isOk(col, columnHints[i])) &&
-  //     rows.every((row, i) => isOk(row, rowHints[i]))
-  //   );
-  // }
+  bool get isSolved {
+    // var isOk = (line, hints) {
+    //   var actual = line.join('').split(/(?:-1)+/g).map(x => x.length).filter(x => x);
+    //   return actual.length === hints.length && actual.every((x, i) => x === hints[i]);
+    // };
+    return (
+      isFinished &&
+      columns.every((col, i) => _isOk(col, columnHints[i])) &&
+      rows.every((row, i) => _isOk(row, rowHints[i]))
+    );
+  }
+
+  bool _isOK(List<int> line, List<int> hints) {
+    var actual = line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).filter(x => x);
+    return actual.length == hints.length && actual.every((x, i) => x == hints[i]);
+  }
 
   // void initAccessors(state) {
   //

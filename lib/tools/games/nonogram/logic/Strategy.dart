@@ -136,7 +136,7 @@ class Strategy {
       // var start = Date.now();
       // }
       // solver run
-      // print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
+       print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // if (debugMode) {
@@ -150,7 +150,7 @@ class Strategy {
       var hasChanged = false;
       var changedLines = <int>[];
       if (newLine != null) { // the solver may return null to indicate no progress
-        // print('newLine ' + newLine.toString());
+         print('newLine ' + newLine.toString());
         newLine = restoreLine(newLine, trimresult.trimInfo!);
         line.line.forEachIndexed((i, el) {
           // What has changed?

@@ -29,10 +29,12 @@ class pushSolver extends Solver {
       if (_shouldSkip(line, hint, i)) {
         continue;
       }
-      if ((line.length >= i + hint + 1) && hints.isNotEmpty) {
-        var rest = pushLeft(line.sublist(i + hint + 1), hints.sublist(1));
+      //if ((line.length >= i + hint + 1) && hints.isNotEmpty) {
+      var _line = (line.length >= i + hint + 1) ? line.sublist(i + hint + 1) : <int>[];
+      var _hints = hints.isNotEmpty ? hints.sublist(1) : <int>[];
+        var rest = pushLeft(_line, _hints);
         if (rest != null) {
-          line = line.sublist(0);
+          line = line.isNotEmpty ? line.sublist(0) : <int>[];
           for (var x = i; x < i + hint; x++) {
             line[x] = 1;
           }
@@ -41,7 +43,7 @@ class pushSolver extends Solver {
           }
           return line;
         }
-      }
+      //}
     }
     return null;
   }
