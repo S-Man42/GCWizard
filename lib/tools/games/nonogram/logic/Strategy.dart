@@ -100,14 +100,12 @@ class Strategy {
     var skip = false;
 
     // run on rows
-    var rows = run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
-    puzzle.rows = rows;
+    puzzle.rows = run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
     if (skip) {
       return;
     }
     // …and then on columns
-    var columns = run(puzzle.columns, puzzle.columnHints, false, solver, solverIndex, skip, skipEarly);
-    puzzle.columns = columns;
+    puzzle.columns = run(puzzle.columns, puzzle.columnHints, false, solver, solverIndex, skip, skipEarly);
   }
 
   // the actual execution
