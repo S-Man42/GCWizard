@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -96,24 +99,39 @@ class _GadeState extends State<Gade> {
           }).toList()),
         ),
         GCWTextDivider(text: i18n(context, 'gade_formula_editor')),
-        GCWTwoOptionsSwitch(
-          leftValue: 'GC Wizard',
-          rightValue: 'c:geo',
-          value: _currentFormulaMode,
-          onChanged: (value) {
-            setState(() {
-              _currentFormulaMode = value;
-            });
-          },
-        ),
-        GCWOutputText(
-          text: _buildFormula(_currentFormulaMode, outputGade),
+        Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GCWTwoOptionsSwitch(
+                  title: i18n(context, 'gade_formula_editor_type'),
+                  leftValue: 'GC Wizard',
+                  rightValue: 'c:geo',
+                  value: _currentFormulaMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentFormulaMode = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            GCWIconButton(
+                    iconColor: themeColors().mainFont(),
+                    size: IconButtonSize.SMALL,
+                    icon: Icons.content_copy,
+                    onPressed: () {
+                      insertIntoGCWClipboard(context, _buildFormula(_currentFormulaMode, outputGade));
+                    },
+                  )
+                          ],
         ),
       ],
     );
   }
 
-  String _buildFormula(GCWSwitchPosition _currentFormulaMode, Map<String, String> outputGade){
+  String _buildFormula(GCWSwitchPosition _currentFormulaMode, Map<String, String> outputGade) {
     String result = '';
     List<String> formula = [];
 
