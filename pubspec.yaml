@@ -313,6 +313,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/shoes/
     - lib/tools/symbol_tables/_common/assets/sign/
     - lib/tools/symbol_tables/_common/assets/siemens/
+    - lib/tools/symbol_tables/_common/assets/sith/
     - lib/tools/symbol_tables/_common/assets/skullz/
     - lib/tools/symbol_tables/_common/assets/slash_and_pipe/
     - lib/tools/symbol_tables/_common/assets/solmisation/
