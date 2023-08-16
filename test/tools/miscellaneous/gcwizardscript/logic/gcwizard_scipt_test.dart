@@ -1,7 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 part 'gcwizard_script_codes.dart';
 part 'gcwizard_script_functions_codes_base.dart';
@@ -36,7 +36,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {
-        var _actual = await interpretScript(elem['code'] as String, (elem['input'] as String?) ?? '', defaultBaseCoordinate.toLatLng()!, null);
+        var _actual = await interpretScript(elem['code'] as String, (elem['input'] as String?) ?? '', LatLng(0.0, 0.0), null);
 
         expect(_actual.STDOUT, (elem['expectedOutput'] as String));
         expect(_actual.ErrorMessage, elem['error'] ?? '');

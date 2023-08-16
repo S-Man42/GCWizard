@@ -212,7 +212,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
       if (_isNotNumber(parameter_4)) _handleError(_INVALIDTYPECAST);
       UTMREF utm = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as double, parameter_4 as double);
-      coord = UTMREFtoLatLon(utm, defaultEllipsoid);
+      coord = UTMREFtoLatLon(utm, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
     case _COORD_DMM: //= 1;
     case _COORD_DMS: //= 2;
@@ -309,7 +309,7 @@ double _bearing(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(_INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), defaultEllipsoid)
+  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!)
       .bearingAToB;
 }
 
@@ -318,7 +318,7 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
     _handleError(_INVALIDTYPECAST);
   }
   LatLng _currentValues =
-      projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, defaultEllipsoid);
+      projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
   _state.GCWizardScript_LAT = _currentValues.latitude;
   _state.GCWizardScript_LON = _currentValues.longitude;
 }
@@ -348,7 +348,7 @@ void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
     return;
   }
   CenterPointDistance coord = centerPointTwoPoints(
-      LatLng(lat1 as double, lon1 as double), LatLng(lat2 as double, lon2 as double), defaultEllipsoid);
+      LatLng(lat1 as double, lon1 as double), LatLng(lat2 as double, lon2 as double), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
   _state.GCWizardScript_LAT = coord.centerPoint.latitude;
   _state.GCWizardScript_LON = coord.centerPoint.longitude;
 }

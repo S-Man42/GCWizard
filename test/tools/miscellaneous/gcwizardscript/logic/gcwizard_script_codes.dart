@@ -1,7 +1,7 @@
 part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsCodesToExpected = [
-  {'code' : code1c, 'expectedOutput' : '1       2.0     9.0     6.0'},
+  {'code' : code1c, 'expectedOutput' : '1       2     9     6'},
   {'code' : codeGC6GE197, 'expectedOutput' : 'PUNKTE IM RADIUS        197      SIND   56151'},
   {'code' : codeGC6GE41, 'expectedOutput' : 'PUNKTE IM RADIUS        41      SIND   56151'},
 ];
