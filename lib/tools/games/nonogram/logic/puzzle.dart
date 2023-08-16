@@ -86,9 +86,6 @@ class Puzzle {
     }
   }
 
-  // void setRow (List<int> newRow, int index) {
-  //   state.setRange(index * width, (index + width) * width, newRow);
-  // }
 
   bool get isFinished {
     for (var row in _rows) {
@@ -97,29 +94,24 @@ class Puzzle {
     return true;
   }
 
-  // bool get isSolved {
-  //   // var isOk = (line, hints) {
-  //   //   var actual = line.join('').split(/(?:-1)+/g).map(x => x.length).filter(x => x);
-  //   //   return actual.length === hints.length && actual.every((x, i) => x === hints[i]);
-  //   // };
-  //   var ok = true;
-  //   columns.forEachIndexed((i, column) {
-  //     ok = _isOk(column, columnHints[i])
-  //   };
-  //   // var _colums = Map.fromIterables(columns, columnHints);
-  //   // _colums.a
-  //   // return (
-  //   //
-  //   //   isFinished &&
-  //   //       _colums..every((col, i) => _isOk(col, columnHints[i])) &&
-  //   //   rows.every((row, i) => _isOk(row, rowHints[i]))
-  //   // );
-  // }
+  bool get isSolved {
+    if (!isFinished) return false;
+    var ok = true;
+    rows.forEachIndexed((i, column) => ok = _isOk(column, rowHints[i]));
+    if (!ok) return false;
+    columns.forEachIndexed((i, column) => ok = ok && _isOk(column, columnHints[i]));
+    return ok;
+  }
 
-  // bool _isOK(List<int> line, List<int> hints) {
-  //   var actual = line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).filter(x => x);
-  //   return actual.length == hints.length && actual.every((x, i) => x == hints[i]);
-  // }
+  bool _isOk(List<int> line, List<int> hints) {
+    var actual = line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
+    if (actual.length == hints.length) {
+      var ok = true;
+      actual.forEachIndexed((i, x) => ok = ok && x == hints[i]);
+      return ok;
+    }
+    return false;
+  }
 
   // void initAccessors(state) {
   //
