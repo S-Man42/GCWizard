@@ -45,6 +45,9 @@ const _INVALIDCOORDINATEFORMAT = 40;
 const _LISTNOTDEFINED = 41;
 const _INVALIDNUMBEROFPARAMETER = 42;
 const _RUNTIMEERROREOFEXCEEDED = 43;
+const _IOERRORFILENOTOPEN = 44;
+const _FILEMISSING = 45;
+const _FILESAVING = 46;
 
 Map<int, String> _errorMessages = {
   _SYNTAXERROR : "gcwizard_script_syntax_error",
@@ -90,6 +93,9 @@ Map<int, String> _errorMessages = {
   _LISTNOTDEFINED: "gcwizard_script_syntax_error_list_not_defined",
   _INVALIDNUMBEROFPARAMETER: "gcwizard_script_syntax_error_invalid_number_of_parameters",
   _RUNTIMEERROREOFEXCEEDED: "gcwizard_script_runtime_error_eof_exceeded",
+  _IOERRORFILENOTOPEN: "gcwizard_script_io_error_on_openfile_statement",
+  _FILEMISSING : "gcwizard_script_io_error_file_missing",
+  _FILESAVING : "gcwizard_script_io_error_file_saving",
 };
 
 void _resetErrors() {

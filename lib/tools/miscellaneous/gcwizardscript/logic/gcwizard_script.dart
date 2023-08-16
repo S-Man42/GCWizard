@@ -6,9 +6,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
@@ -103,15 +101,12 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use DIM, implement List as Datatype
 // - variable names longer than one letter
 // - handle input async like whitespace, piet
-// - methods/functions WRITEFILE, READFILE, EOF
-// - use NEWFILE
+// - use WRITEFILE, READFILE, EOF
+// - use NEWFILE, async OPENFILE, async SAVEFILE
 
 // TODO
 // Enhance Performance
 // async print
-// async openfile
-// async savefile
-// commands OPENFILE, SAVEFILE
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
@@ -342,12 +337,16 @@ class _GCWizardSCriptInterpreter {
       Graphic: state.graficOutput,
       Points: state.waypoints,
       FILE: state.FILE,
+      fileSaved: state.fileSaved,
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
 
       continueState:
-          (state.errorMessage == _errorMessages[_INPUTMISSING] || state.errorMessage == _errorMessages[_PRINTERROR])
+          (state.errorMessage == _errorMessages[_INPUTMISSING] ||
+              state.errorMessage == _errorMessages[_FILEMISSING] ||
+              state.errorMessage == _errorMessages[_FILESAVING] ||
+              state.errorMessage == _errorMessages[_PRINTERROR])
               ? state
               : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
 
@@ -459,6 +458,7 @@ class _GCWizardSCriptInterpreter {
         executeCommandNEXT();
         break;
       case INPUT:
+        BreakType = GCWizardScriptBreakType.INPUT;
         executeCommandINPUT();
         break;
       case GOSUB:
@@ -533,16 +533,36 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandNEWFILE(){
-    state.FILE = Uint8List.fromList([]);
+    state.FILE = [];
     state.FILEINDEX = 0;
   }
 
   void executeCommandOPENFILE(){
-    // TODO async
+    state.FILE = [];
+    state.FILEINDEX = 0;
+    int scriptIndex_save = state.scriptIndex;
+
+    state.continueLoop = false;
+
+    if (state.FILE.isNotEmpty) {
+      state.continueLoop = false;
+    } else {
+      _handleError(_FILEMISSING);
+      state.scriptIndex = scriptIndex_save; // continue entry point
+    }
   }
 
   void executeCommandSAVEFILE(){
-    // TODO async
+    int scriptIndex_save = state.scriptIndex;
+
+    state.continueLoop = false;
+
+    if (state.fileSaved) {
+      state.continueLoop = false;
+    } else {
+      _handleError(_FILESAVING);
+      state.scriptIndex = scriptIndex_save; // continue entry point
+    }
   }
 
   void executeCommandREM() {
@@ -1164,7 +1184,6 @@ class _GCWizardSCriptInterpreter {
     String variable;
     Object? input;
     int scriptIndex_save = state.scriptIndex - "input".length;
-    BreakType = GCWizardScriptBreakType.INPUT;
 
     getToken();
     if (state.tokenType == QUOTEDSTR) {

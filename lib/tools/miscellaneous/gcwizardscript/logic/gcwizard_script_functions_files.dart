@@ -2,9 +2,9 @@ part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_scr
 
 int _readfile() {
   int result = 0;
-  if (state!.FILEINDEX < state!.FILE.length) {
-    result = state!.FILE[state!.FILEINDEX];
-    state!.FILEINDEX++;
+  if (_state.FILEINDEX < _state.FILE.length) {
+    result = state!.FILE[_state.FILEINDEX];
+    _state.FILEINDEX++;
   } else {
     _handleError(_RUNTIMEERROREOFEXCEEDED);
   }
@@ -13,9 +13,11 @@ int _readfile() {
 
 void _writefile(Object? byte) {
   if (_isNotInt(byte)) _handleError(_INVALIDTYPECAST);
-  state?.FILE.add((byte as int) % 256);
+  byte = (byte as int) % 256;
+  _state.FILE.add(byte);
+  _state.fileSaved = false;
 }
 
 bool _eof(){
-  return state!.FILEINDEX < state!.FILE.length;
+  return _state.FILEINDEX < _state.FILE.length;
 }

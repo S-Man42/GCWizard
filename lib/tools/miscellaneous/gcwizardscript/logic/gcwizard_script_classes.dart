@@ -22,7 +22,8 @@ class GCWizardScriptOutput {
   final List<List<String>> VariableDump;
   final GCWizardScriptBreakType BreakType;
   ScriptState? continueState;
-  final Uint8List FILE;
+  final List<int> FILE;
+  final bool fileSaved;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -33,12 +34,20 @@ class GCWizardScriptOutput {
     required this.VariableDump,
     required this.BreakType,
     required this.FILE,
-    this.continueState
+    required this.fileSaved,
+    this.continueState,
   });
 
   static GCWizardScriptOutput empty() {
     return GCWizardScriptOutput(
-        STDOUT: '', Graphic: GraphicState(), Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: [], FILE: Uint8List.fromList([]), BreakType: GCWizardScriptBreakType.NULL);
+        STDOUT: '',
+        Graphic: GraphicState(),
+        Points: [], ErrorMessage: '',
+        ErrorPosition: 0,
+        VariableDump: [],
+        FILE: Uint8List.fromList([]),
+        fileSaved: false,
+        BreakType: GCWizardScriptBreakType.NULL);
   }
 }
 
@@ -126,8 +135,9 @@ class ScriptState {
   String quotestr = '';
   bool continueLoop = false;
 
-  Uint8List FILE = Uint8List.fromList([]);
+  List<int> FILE = [];
   int FILEINDEX = 0;
+  bool fileSaved = false;
 
   _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
   datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
@@ -159,8 +169,10 @@ class ScriptState {
     // _randomNumber = 0.0;
     step = 1;
     listDATA = [];
-    FILE = Uint8List.fromList([]);
+    FILE = [];
     FILEINDEX = 0;
+    fileSaved = false;
+
     pointerDATA = 0;
     waypoints = [];
 

@@ -350,7 +350,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
             _openFile();
             break;
           case GCWizardScriptBreakType.SAVEFILE:
-            _exportFile(context, _currentOutput.FILE, GCWizardScriptFileType.FILE);
+            _currentOutput.continueState!.fileSaved = true;
+            _exportFile(context, Uint8List.fromList(_currentOutput.FILE), GCWizardScriptFileType.FILE);
             _interpretGCWScriptAsync();
             break;
           case GCWizardScriptBreakType.NULL:
