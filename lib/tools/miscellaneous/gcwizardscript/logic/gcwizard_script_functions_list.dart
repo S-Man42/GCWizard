@@ -54,6 +54,9 @@ class _GCWList {
     return _contents[index];
   }
 
+  List<Object> getContent(){
+    return _contents;
+  }
 }
 
 void _listClear(_GCWList? list) {

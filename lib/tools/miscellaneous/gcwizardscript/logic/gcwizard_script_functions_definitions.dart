@@ -274,8 +274,8 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerThreePoints, 6, functionReturn: false),
 
   // files
-  'READFILE': _GCWizardScriptClassFunctionDefinition(_readfile, 0),
-  'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writefile, 1,  functionReturn: false),
+  'READFILE': _GCWizardScriptClassFunctionDefinition(_readFile, 2),
+  'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writeFile, 1,  functionReturn: false),
   'EOF': _GCWizardScriptClassFunctionDefinition(_eof, 0),
 };
 
