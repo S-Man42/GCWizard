@@ -68,16 +68,16 @@ class Strategy {
 
       } while(progress);
 
-      // // no solution found… trial and error now
-      // if (withTrialAndError && !puzzle.isFinished) {
-      //   // if (debugMode) {
-      //   // console.log('must start guessing');
-      //   // }
-      //   var deepResult = guessAndConquer(this, puzzle);
-      //   if (deepResult) {
-      //     //puzzle.import(deepResult);
-      //   }
-      // }
+      // no solution found… trial and error now
+      if (withTrialAndError && !puzzle.isFinished) {
+        // if (debugMode) {
+        // console.log('must start guessing');
+        // }
+        var deepResult = guessAndConquer(this, puzzle);
+        if (deepResult) {
+          //puzzle.import(deepResult);
+        }
+      }
 
       // if (debugMode) {
       // console.log('Solution sequence: [${solutionSequence.join(',')}]');

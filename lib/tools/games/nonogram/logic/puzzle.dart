@@ -14,6 +14,8 @@ class Puzzle {
   // var columns = <List<int>>[];
   //var state = <int>[];
 
+
+
   Puzzle(this.rowHints, this.columnHints) {}
   // constructor(data) {
   //   if (typeof data === 'string') {
@@ -111,6 +113,19 @@ class Puzzle {
       return ok;
     }
     return false;
+  }
+  List<int> snapshot() {
+    // var _clone = Puzzle(rowHints, columnHints);
+    // _clone.height = height;
+    // _clone.width = width;
+    // _clone.rows = _rows.map((row) => List<int>.from(row)).toList();
+    var state = <int>[];
+
+    for (var row in _rows) {
+      state.addAll(row);
+    }
+
+    return state;
   }
 
   // void initAccessors(state) {
