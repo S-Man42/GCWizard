@@ -194,7 +194,7 @@ _GCWList _convertTo(Object target) {
     case _COORD_SWISS_GRID: //= 6;
     case _COORD_SWISS_GRID_PLUS: //= 7;
       SwissGrid result = latLonToSwissGrid(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
-      _listAdd(targetData, result.easting.toString() + result.northing.toString());
+      _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
       break;
@@ -204,6 +204,36 @@ _GCWList _convertTo(Object target) {
       _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
+      break;
+
+    case _COORD_GAUSS_KRUEGER_GK1: //= 901;
+    case _COORD_GAUSS_KRUEGER_GK2: //= 902;
+    case _COORD_GAUSS_KRUEGER_GK3: //= 903;
+    case _COORD_GAUSS_KRUEGER_GK4: //= 904;
+    case _COORD_GAUSS_KRUEGER_GK5: //= 905;
+      GaussKrueger result = latLonToGaussKrueger(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
+      _listAdd(targetData, result.easting);
+      _listAdd(targetData, result.northing);
+    break;
+
+    case _COORD_LAMBERT2008: //= 1008;
+    case _COORD_LAMBERT93: //= 1093;
+    case _COORD_ETRS89LCC: //= 1089;
+    case _COORD_LAMBERT72: //= 1072;
+    case _COORD_LAMBERT93_CC42: //= 1042;
+    case _COORD_LAMBERT93_CC43: //= 1043;
+    case _COORD_LAMBERT93_CC44: //= 1044;
+    case _COORD_LAMBERT93_CC45: //= 1045;
+    case _COORD_LAMBERT93_CC46: //= 1046;
+    case _COORD_LAMBERT93_CC47: //= 1047;
+    case _COORD_LAMBERT93_CC48: //= 1048;
+    case _COORD_LAMBERT93_CC49: //= 1049;
+    case _COORD_LAMBERT93_CC50: //= 1050;
+      Lambert result = latLonToLambert(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
+      _listAdd(targetData, result.easting);
+      _listAdd(targetData, result.northing);
       break;
 
     case _COORD_MAIDENHEAD: //= 11;
@@ -221,6 +251,43 @@ _GCWList _convertTo(Object target) {
     case _COORD_NATURAL_AREA_CODE: //= 13;
       NaturalAreaCode result = latLonToNaturalAreaCode(coord);
       _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString());
+      _listAdd(targetData, result.x);
+      _listAdd(targetData, result.y);
+      break;
+
+    case _COORD_SLIPPYMAP_0: //= 1400;
+    case _COORD_SLIPPYMAP_1: //= 1401;
+    case _COORD_SLIPPYMAP_2: //= 1402;
+    case _COORD_SLIPPYMAP_3: //= 1403;
+    case _COORD_SLIPPYMAP_4: //= 1404;
+    case _COORD_SLIPPYMAP_5: //= 1405;
+    case _COORD_SLIPPYMAP_6: //= 1406;
+    case _COORD_SLIPPYMAP_7: //= 1407;
+    case _COORD_SLIPPYMAP_8: //= 1408;
+    case _COORD_SLIPPYMAP_9: //= 1409;
+    case _COORD_SLIPPYMAP_10: //= 1410;
+    case _COORD_SLIPPYMAP_11: //= 1411;
+    case _COORD_SLIPPYMAP_12: //= 1412;
+    case _COORD_SLIPPYMAP_13: //= 1413;
+    case _COORD_SLIPPYMAP_14: //= 1414;
+    case _COORD_SLIPPYMAP_15: //= 1415;
+    case _COORD_SLIPPYMAP_16: //= 1416;
+    case _COORD_SLIPPYMAP_17: //= 1417;
+    case _COORD_SLIPPYMAP_18: //= 1418;
+    case _COORD_SLIPPYMAP_19: //= 1419;
+    case _COORD_SLIPPYMAP_20: //= 1420;
+    case _COORD_SLIPPYMAP_21: //= 1421;
+    case _COORD_SLIPPYMAP_22: //= 1422;
+    case _COORD_SLIPPYMAP_23: //= 1423;
+    case _COORD_SLIPPYMAP_24: //= 1424;
+    case _COORD_SLIPPYMAP_25: //= 1425;
+    case _COORD_SLIPPYMAP_26: //= 1426;
+    case _COORD_SLIPPYMAP_27: //= 1427;
+    case _COORD_SLIPPYMAP_28: //= 1428;
+    case _COORD_SLIPPYMAP_29: //= 1429;
+    case _COORD_SLIPPYMAP_30: //= 1430;
+    SlippyMap result = latLonToSlippyMap(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!);
+      _listAdd(targetData, result.x.toString() + ' ' + result.y.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
       break;
@@ -268,61 +335,6 @@ _GCWList _convertTo(Object target) {
       _listAdd(targetData, result.s.toString() + ' ' + result.t.toString());
       _listAdd(targetData, result.s);
       _listAdd(targetData, result.t);
-      break;
-
-
-
-    case _COORD_GAUSS_KRUEGER_GK1: //= 901;
-    case _COORD_GAUSS_KRUEGER_GK2: //= 902;
-    case _COORD_GAUSS_KRUEGER_GK3: //= 903;
-    case _COORD_GAUSS_KRUEGER_GK4: //= 904;
-    case _COORD_GAUSS_KRUEGER_GK5: //= 905;
-
-    case _COORD_LAMBERT93: //= 1093;
-    case _COORD_LAMBERT2008: //= 1008;
-    case _COORD_ETRS89LCC: //= 1089;
-    case _COORD_LAMBERT72: //= 1072;
-    case _COORD_LAMBERT93_CC42: //= 1042;
-    case _COORD_LAMBERT93_CC43: //= 1043;
-    case _COORD_LAMBERT93_CC44: //= 1044;
-    case _COORD_LAMBERT93_CC45: //= 1045;
-    case _COORD_LAMBERT93_CC46: //= 1046;
-    case _COORD_LAMBERT93_CC47: //= 1047;
-    case _COORD_LAMBERT93_CC48: //= 1048;
-    case _COORD_LAMBERT93_CC49: //= 1049;
-    case _COORD_LAMBERT93_CC50: //= 1050;
-
-    case _COORD_SLIPPYMAP_0: //= 1400;
-    case _COORD_SLIPPYMAP_1: //= 1401;
-    case _COORD_SLIPPYMAP_2: //= 1402;
-    case _COORD_SLIPPYMAP_3: //= 1403;
-    case _COORD_SLIPPYMAP_4: //= 1404;
-    case _COORD_SLIPPYMAP_5: //= 1405;
-    case _COORD_SLIPPYMAP_6: //= 1406;
-    case _COORD_SLIPPYMAP_7: //= 1407;
-    case _COORD_SLIPPYMAP_8: //= 1408;
-    case _COORD_SLIPPYMAP_9: //= 1409;
-    case _COORD_SLIPPYMAP_10: //= 1410;
-    case _COORD_SLIPPYMAP_11: //= 1411;
-    case _COORD_SLIPPYMAP_12: //= 1412;
-    case _COORD_SLIPPYMAP_13: //= 1413;
-    case _COORD_SLIPPYMAP_14: //= 1414;
-    case _COORD_SLIPPYMAP_15: //= 1415;
-    case _COORD_SLIPPYMAP_16: //= 1416;
-    case _COORD_SLIPPYMAP_17: //= 1417;
-    case _COORD_SLIPPYMAP_18: //= 1418;
-    case _COORD_SLIPPYMAP_19: //= 1419;
-    case _COORD_SLIPPYMAP_20: //= 1420;
-    case _COORD_SLIPPYMAP_21: //= 1421;
-    case _COORD_SLIPPYMAP_22: //= 1422;
-    case _COORD_SLIPPYMAP_23: //= 1423;
-    case _COORD_SLIPPYMAP_24: //= 1424;
-    case _COORD_SLIPPYMAP_25: //= 1425;
-    case _COORD_SLIPPYMAP_26: //= 1426;
-    case _COORD_SLIPPYMAP_27: //= 1427;
-    case _COORD_SLIPPYMAP_28: //= 1428;
-    case _COORD_SLIPPYMAP_29: //= 1429;
-    case _COORD_SLIPPYMAP_30: //= 1430;
       break;
 
     default:
