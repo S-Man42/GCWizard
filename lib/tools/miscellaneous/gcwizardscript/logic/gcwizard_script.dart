@@ -11,7 +11,24 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dutchgrid.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/geo3x3.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/geohash.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/geohex.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/maidenhead.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/makaney.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/mercator.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/natural_area_code.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/open_location_code.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/quadtree.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/reverse_wherigo_day1976.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/reverse_wherigo_waldmeister.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
@@ -293,7 +310,6 @@ class _GCWizardSCriptInterpreter {
 
   GCWizardScriptOutput scriptInterpreter() {
     int iterations = 0;
-
     do {
       getToken();
       switch (state.tokenType) {
@@ -385,7 +401,6 @@ class _GCWizardSCriptInterpreter {
     if (isNotAVariable(variableName)) {
       state.variables[variableName] = '';
     }
-
     getToken();
     if (state.token != "=") {
       _handleError(_EQUALEXPECTED);
@@ -493,6 +508,9 @@ class _GCWizardSCriptInterpreter {
         break;
       case CONTINUE:
         executeCommandCONTINUE();
+        break;
+      case DIM:
+        executeCommandDIM();
         break;
       case NEWFILE:
         executeCommandNEWFILE();
@@ -603,12 +621,7 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandDIM(){
     getToken();
-    String vname = state.token;
-    if (isNotAVariable(vname[0])) {
-      _handleError(_NOTAVARIABLE);
-      return;
-    }
-    state.variables[vname] = _GCWList();
+    state.variables[state.token] = _GCWList();
   }
 
   void executeCommandPRINT() {

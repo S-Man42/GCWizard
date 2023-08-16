@@ -42,29 +42,235 @@ void _setLat(Object x) {
 }
 
 _GCWList _convertTo(Object target) {
-  if (_isNotNumber(target)) {
+  if (_isNotInt(target)) {
     _handleError(_INVALIDTYPECAST);
   }
 
   LatLng coord = LatLng(_getLat(), _getLon());
   String targetCoord = '';
 
-  if (_GCW_SCRIPT_COORD_CONVERTER[target] != null) {
-    targetCoord = formatCoordOutput(
-        coord, CoordinateFormat(_GCW_SCRIPT_COORD_CONVERTER[target]!), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
-  } else {
+  if (_GCW_SCRIPT_COORD_CONVERTER[target as int] == null) {
     _handleError(_INVALIDCOORDINATEFORMAT);
   }
 
   List<String> targetCoordData = [];
   _GCWList targetData = _GCWList();
 
-  _listAdd(targetData, targetCoord);
-  switch (target as num) {
-    //TODO 'package:prefs/prefs.dart': Failed assertion: line 244 pos 12: '_initCalled': Prefs.init() must be called first in an initState() preferably!
+  switch (target) {
     case _COORD_DMM: //= 1;
+      DMM result = latLonToDMM(coord);
+
+      _listAdd(
+          targetData,
+          latSign(result.latitude.sign) +
+              ' ' +
+              result.latitude.degrees.toString() +
+              '° ' +
+              result.latitude.minutes.toStringAsFixed(3) +
+              "' " +
+              latSign(result.longitude.sign) +
+              ' ' +
+              result.longitude.degrees.toString() +
+              '° ' +
+              result.latitude.minutes.toStringAsFixed(3) +
+              "'");
+      _listAdd(
+          targetData,
+          latSign(result.latitude.sign) +
+              ' ' +
+              result.latitude.degrees.toString() +
+              '° ' +
+              result.latitude.minutes.toStringAsFixed(3) +
+              "'");
+      _listAdd(targetData, latSign(result.latitude.sign));
+      _listAdd(targetData, result.latitude.degrees);
+      _listAdd(targetData, result.latitude.minutes);
+      _listAdd(
+          targetData,
+          lonSign(result.longitude.sign) +
+              ' ' +
+              result.longitude.degrees.toString() +
+              '° ' +
+              result.longitude.minutes.toStringAsFixed(3) +
+              "'");
+      _listAdd(targetData, lonSign(result.longitude.sign));
+      _listAdd(targetData, result.longitude.degrees);
+      _listAdd(targetData, result.longitude.minutes);
+      break;
+
+    case _COORD_DMS: //= 2;
+      DMS result = latLonToDMS(coord);
+
+      _listAdd(
+          targetData,
+          latSign(result.latitude.sign) +
+              ' ' +
+              result.latitude.degrees.toString() +
+              '° ' +
+              result.latitude.minutes.toStringAsFixed(3) +
+              "' " +
+              result.latitude.seconds.toStringAsFixed(3) +
+              latSign(result.longitude.sign) +
+              ' ' +
+              result.longitude.degrees.toString() +
+              '° ' +
+              result.latitude.minutes.toStringAsFixed(3) +
+              "' " +
+              result.longitude.seconds.toStringAsFixed(3) +
+              '"');
+      _listAdd(
+          targetData,
+          latSign(result.latitude.sign) +
+              ' ' +
+              result.latitude.degrees.toString() +
+              '° ' +
+              result.latitude.minutes.toStringAsFixed(3) +
+              "' " +
+              result.latitude.seconds.toStringAsFixed(3) +
+              '"');
+      _listAdd(targetData, latSign(result.latitude.sign));
+      _listAdd(targetData, result.latitude.degrees);
+      _listAdd(targetData, result.latitude.minutes);
+      _listAdd(targetData, result.latitude.seconds);
+      _listAdd(
+          targetData,
+          lonSign(result.longitude.sign) +
+              ' ' +
+              result.longitude.degrees.toString() +
+              '° ' +
+              result.longitude.minutes.toStringAsFixed(3) +
+              "' " +
+              result.longitude.seconds.toStringAsFixed(3) +
+              '"');
+      _listAdd(targetData, lonSign(result.longitude.sign));
+      _listAdd(targetData, result.longitude.degrees);
+      _listAdd(targetData, result.longitude.minutes);
+      _listAdd(targetData, result.longitude.seconds);
+      break;
+
+    case _COORD_UTM: //= 3;
+      UTMREF result = latLonToUTM(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(
+          targetData,
+          result.zone.lonZoneRegular.toString() +
+              result.zone.latZone +
+              ' ' +
+              result.easting.toString() +
+              ' ' +
+              result.northing.toString());
+      _listAdd(targetData, result.zone.lonZoneRegular);
+      _listAdd(targetData, result.zone.latZone);
+      _listAdd(targetData, result.easting);
+      _listAdd(targetData, result.northing);
+      break;
+
+    case _COORD_MGRS: //= 4;
+      MGRS result = latLonToMGRS(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(
+          targetData,
+          result.utmZone.lonZoneRegular.toString() +
+              result.utmZone.latZone +
+              ' ' +
+              result.digraph +
+              ' ' +
+              result.easting.toString() +
+              ' ' +
+              result.northing.toString());
+      _listAdd(targetData, result.utmZone.lonZoneRegular);
+      _listAdd(targetData, result.utmZone.latZone);
+      _listAdd(targetData, result.digraph);
+      _listAdd(targetData, result.easting);
+      _listAdd(targetData, result.northing);
+      break;
+
+    case _COORD_XYZ: //= 5;
+      XYZ result = latLonToXYZ(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString() + '\nZ: ' + result.z.toString());
+      _listAdd(targetData, result.x);
+      _listAdd(targetData, result.y);
+      _listAdd(targetData, result.z);
+      break;
+
+    case _COORD_SWISS_GRID: //= 6;
+    case _COORD_SWISS_GRID_PLUS: //= 7;
+      SwissGrid result = latLonToSwissGrid(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(targetData, result.easting.toString() + result.northing.toString());
+      _listAdd(targetData, result.easting);
+      _listAdd(targetData, result.northing);
+      break;
 
     case _COORD_DUTCH_GRID: //= 8;
+      DutchGrid result = latLonToDutchGrid(coord);
+      _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString());
+      _listAdd(targetData, result.x);
+      _listAdd(targetData, result.y);
+      break;
+
+    case _COORD_MAIDENHEAD: //= 11;
+      Maidenhead result = latLonToMaidenhead(coord);
+      _listAdd(targetData, result.text);
+      break;
+
+    case _COORD_MERCATOR: //= 12;
+      Mercator result = latLonToMercator(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      _listAdd(targetData, result.easting.toString() + result.northing.toString());
+      _listAdd(targetData, result.easting);
+      _listAdd(targetData, result.northing);
+      break;
+
+    case _COORD_NATURAL_AREA_CODE: //= 13;
+      NaturalAreaCode result = latLonToNaturalAreaCode(coord);
+      _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString());
+      _listAdd(targetData, result.x);
+      _listAdd(targetData, result.y);
+      break;
+
+    case _COORD_GEOHASH: //= 15;
+      Geohash result = latLonToGeohash(coord, 14);
+      _listAdd(targetData, result.text);
+      break;
+
+    case _COORD_GEO3X3: //= 16;
+      Geo3x3 result = latLonToGeo3x3(coord, 20);
+      _listAdd(targetData, result.text);
+      break;
+
+    case _COORD_GEOHEX: //= 17;
+      GeoHex result = latLonToGeoHex(coord, 20);
+      _listAdd(targetData, result.text);
+      break;
+
+    case _COORD_OPEN_LOCATION_CODE: //= 18;
+      OpenLocationCode result = latLonToOpenLocationCode(coord);
+      _listAdd(targetData, result.text);
+      break;
+
+    case _COORD_MAKANEY: //= 19;
+      Makaney result = latLonToMakaney(coord);
+      _listAdd(targetData, result.text);
+      break;
+
+    case _COORD_QUADTREE: //= 20;
+      Quadtree result = latLonToQuadtree(coord);
+      _listAdd(targetData, result.coords.join(' '));
+      break;
+
+    case _COORD_REVERSE_WIG_WALDMEISTER: //= 21;
+      ReverseWherigoWaldmeister result = latLonToReverseWIGWaldmeister(coord);
+      _listAdd(targetData, result.a.toString() + ' ' + result.b.toString() + ' ' + result.c.toString());
+      _listAdd(targetData, result.a);
+      _listAdd(targetData, result.b);
+      _listAdd(targetData, result.c);
+     break;
+
+    case _COORD_REVERSE_WIG_DAY1976: //= 22;
+      ReverseWherigoDay1976 result = latLonToReverseWIGDay1976(coord);
+      _listAdd(targetData, result.s.toString() + ' ' + result.t.toString());
+      _listAdd(targetData, result.s);
+      _listAdd(targetData, result.t);
+      break;
+
+
 
     case _COORD_GAUSS_KRUEGER_GK1: //= 901;
     case _COORD_GAUSS_KRUEGER_GK2: //= 902;
@@ -119,61 +325,6 @@ _GCWList _convertTo(Object target) {
     case _COORD_SLIPPYMAP_30: //= 1430;
       break;
 
-    case _COORD_DEC: //= 0;
-    case _COORD_DMS: //= 2;
-      targetCoordData = targetCoord.split('\n');
-      _listAdd(targetData, targetCoordData[0]);
-      _listAdd(targetData, targetCoordData[1]);
-      break;
-
-    case _COORD_UTM: //= 3;
-    case _COORD_MGRS: //= 4;
-      targetCoordData = targetCoord.split(' ');
-      _listAdd(targetData, targetCoordData[0]);
-      _listAdd(targetData, targetCoordData[1]);
-      _listAdd(targetData, targetCoordData[2]);
-      _listAdd(targetData, targetCoordData[3]);
-      break;
-
-    case _COORD_XYZ: //= 5;
-      targetCoordData = targetCoord.split('\n');
-      _listAdd(targetData, targetCoordData[0].split(': ')[1]);
-      _listAdd(targetData, targetCoordData[1].split(': ')[1]);
-      _listAdd(targetData, targetCoordData[2].split(': ')[1]);
-      break;
-
-    case _COORD_SWISS_GRID: //= 6;
-    case _COORD_SWISS_GRID_PLUS: //= 7;
-    case _COORD_MERCATOR: //= 12;
-    case _COORD_NATURAL_AREA_CODE: //= 13;
-      targetCoordData = targetCoord.split('\n');
-      _listAdd(targetData, targetCoordData[0].split(': ')[1]);
-      _listAdd(targetData, targetCoordData[1].split(': ')[1]);
-      break;
-
-    case _COORD_MAIDENHEAD: //= 11;
-    case _COORD_GEOHASH: //= 15;
-    case _COORD_GEO3X3: //= 16;
-    case _COORD_GEOHEX: //= 17;
-    case _COORD_OPEN_LOCATION_CODE: //= 18;
-    case _COORD_MAKANEY: //= 19;
-    case _COORD_QUADTREE: //= 20;
-    _listAdd(targetData, targetCoord);
-      break;
-
-    case _COORD_REVERSE_WIG_WALDMEISTER: //= 21;
-      targetCoordData = targetCoord.split('\n');
-      _listAdd(targetData, targetCoordData[0]);
-      _listAdd(targetData, targetCoordData[1]);
-      _listAdd(targetData, targetCoordData[2]);
-      break;
-
-    case _COORD_REVERSE_WIG_DAY1976: //= 22;
-      targetCoordData = targetCoord.split('\n');
-      _listAdd(targetData, targetCoordData[0]);
-      _listAdd(targetData, targetCoordData[1]);
-      break;
-
     default:
       _handleError(_INVALIDCOORDINATEFORMAT);
   }
@@ -211,7 +362,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotString(parameter_2)) _handleError(_INVALIDTYPECAST);
       if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
       if (_isNotNumber(parameter_4)) _handleError(_INVALIDTYPECAST);
-      UTMREF utm = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as double, parameter_4 as double);
+      UTMREF utm = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as double,
+          parameter_4 as double);
       coord = UTMREFtoLatLon(utm, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
     case _COORD_DMM: //= 1;
@@ -309,7 +461,8 @@ double _bearing(Object x1, Object y1, Object x2, Object y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(_INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!)
+  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
+          getEllipsoidByName(ELLIPSOID_NAME_WGS84)!)
       .bearingAToB;
 }
 
@@ -317,8 +470,8 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
   if (_isString(x1) || _isString(y1) || _isString(dist) || _isString(angle)) {
     _handleError(_INVALIDTYPECAST);
   }
-  LatLng _currentValues =
-      projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+  LatLng _currentValues = projection(
+      LatLng(x1 as double, y1 as double), angle as double, dist as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
   _state.GCWizardScript_LAT = _currentValues.latitude;
   _state.GCWizardScript_LON = _currentValues.longitude;
 }
@@ -347,45 +500,45 @@ void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  CenterPointDistance coord = centerPointTwoPoints(
-      LatLng(lat1 as double, lon1 as double), LatLng(lat2 as double, lon2 as double), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+  CenterPointDistance coord = centerPointTwoPoints(LatLng(lat1 as double, lon1 as double),
+      LatLng(lat2 as double, lon2 as double), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
   _state.GCWizardScript_LAT = coord.centerPoint.latitude;
   _state.GCWizardScript_LON = coord.centerPoint.longitude;
 }
 
-double _dmmtodec(Object? dec, Object? min){
+double _dmmtodec(Object? dec, Object? min) {
   if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
   if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
   return (dec as int) + (min as double) / 60;
 }
 
-double _dmstodec(Object? dec, Object? min, Object? sec){
+double _dmstodec(Object? dec, Object? min, Object? sec) {
   if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
   if (_isNotInt(min)) _handleError(_INVALIDTYPECAST);
   if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
   return (dec as int) + (min as int) / 60 + (sec as double) / 3600;
 }
 
-String _dectodmm(Object? dec){
+String _dectodmm(Object? dec) {
   if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
   String result = '';
   double ms = 0.0;
 
-  result = ((dec as double).truncate()).toString()+ '° ';
+  result = ((dec as double).truncate()).toString() + '° ';
   ms = (dec - dec.truncate()) * 60;
-  result = result  + ms.toStringAsFixed(3) + "' ";
+  result = result + ms.toStringAsFixed(3) + "' ";
 
   return result;
 }
 
-String _dectodms(Object? dec){
+String _dectodms(Object? dec) {
   if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
   String result = '';
   double ms = 0.0;
 
-  result = ((dec as double).truncate()).toString()+ '° ';
+  result = ((dec as double).truncate()).toString() + '° ';
   ms = (dec - dec.truncate()) * 60;
-  result = result  + ms.truncate().toString() + "' ";
+  result = result + ms.truncate().toString() + "' ";
 
   ms = (ms - ms.truncate()) * 60;
   result = result + ms.toStringAsFixed(3) + '"';
@@ -393,16 +546,30 @@ String _dectodms(Object? dec){
   return result;
 }
 
-String _dmmtodms(Object? dec, Object? min){
+String _dmmtodms(Object? dec, Object? min) {
   if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
   if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
-  return(_dectodms(_dmmtodec(dec as int, min as double)));
+  return (_dectodms(_dmmtodec(dec as int, min as double)));
 }
 
-String _dmstodmm(Object? dec, Object? min, Object? sec){
+String _dmstodmm(Object? dec, Object? min, Object? sec) {
   if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
   if (_isNotInt(min)) _handleError(_INVALIDTYPECAST);
   if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
 
-  return(_dectodmm(_dmstodec(dec as int, min as int, sec as double)));
+  return (_dectodmm(_dmstodec(dec as int, min as int, sec as double)));
+}
+
+String latSign(int sign) {
+  if (sign == 1) {
+    return 'N';
+  }
+  return 'S';
+}
+
+String lonSign(int sign) {
+  if (sign == 1) {
+    return 'E';
+  }
+  return 'W';
 }
