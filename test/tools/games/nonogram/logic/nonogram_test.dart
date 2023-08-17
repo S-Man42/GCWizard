@@ -52,7 +52,7 @@ void main() {
         var puzzle = Puzzle(elem['rows'] as List<List<int>>,elem['columns'] as List<List<int>>);
         puzzle.mapData(puzzle);
 var s = Strategy();
-        var _actual = s.solveQ(puzzle,withTrialAndError : false);
+        var _actual = s.solve(puzzle,withTrialAndError : false);
 
         print(_actual.rows.toString());
         // _actual.solveNonogram(10);

@@ -16,7 +16,11 @@ class Puzzle {
 
 
 
-  Puzzle(this.rowHints, this.columnHints) {}
+  Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
+    if (content != null) {
+      import(content);
+    }
+  }
   // constructor(data) {
   //   if (typeof data === 'string') {
   //     data = JSON.parse(data);
@@ -114,7 +118,7 @@ class Puzzle {
     }
     return false;
   }
-  List<int> snapshot() {
+  List<int> get snapshot {
     // var _clone = Puzzle(rowHints, columnHints);
     // _clone.height = height;
     // _clone.width = width;
@@ -126,6 +130,13 @@ class Puzzle {
     }
 
     return state;
+  }
+
+  void import(List<int> state) {
+    _rows.clear();
+    for (int i = 0; i < height; i++) {
+      _rows.add(state.sublist(i * width, (i + 1) * width));
+    }
   }
 
   // void initAccessors(state) {

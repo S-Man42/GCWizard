@@ -7,9 +7,11 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/guessAndConquer.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/pushSolver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
+
 
 //import 'guessAndConquer.dart';
 
@@ -34,7 +36,7 @@ class Strategy {
   //  * @param {Puzzle} puzzle The puzzle to solve
   //  * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
   //  */
-  Puzzle solveQ(Puzzle puzzle, {bool withTrialAndError = true}) {
+  Puzzle solve(Puzzle puzzle, {bool withTrialAndError = true}) {
     try {
 
       var solvers = [pushSolver()];
@@ -74,8 +76,8 @@ class Strategy {
         // console.log('must start guessing');
         // }
         var deepResult = guessAndConquer(this, puzzle);
-        if (deepResult) {
-          //puzzle.import(deepResult);
+        if (deepResult != null) {
+          puzzle.rows = deepResult.rows;
         }
       }
 
