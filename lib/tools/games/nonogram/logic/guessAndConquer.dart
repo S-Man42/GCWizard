@@ -7,17 +7,20 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/Strategy.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
+import 'package:utility/utility.dart';
 
 
 // const { recursionDepth: maxRecursionLevel, debugMode } = require('commander');
-//
-// void getNextIndex(zeroIndexes, bool randomize) {
-//   if (randomize) {
-//     var random = Math.floor(random() * zeroIndexes.length);
-//     return zeroIndexes.splice(random, 1)[0];
-//   }
-//   return zeroIndexes.shift();
-// }
+
+int getNextIndex(List<int> zeroIndexes, bool randomize) {
+  if (zeroIndexes.isEmpty) return 0;
+  if (randomize) {
+    var random = (Random().nextDouble() * zeroIndexes.length).floor();
+     zeroIndexes.removeAt(random);
+    return zeroIndexes.first;
+  }
+  return zeroIndexes.removeFirst()!;
+}
 //
 // void recurse(Strategy strategy, int currentRecursionLevel, snapshot, int index, trial) {
 //   if (currentRecursionLevel >= maxRecursionLevel) {
@@ -69,9 +72,9 @@ Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionL
     var index = getNextIndex(zeroIndexes, strategy.randomize);
     // try and set the 'index'th cell to 1, and create a new Puzzle from that
     snapshot[index] = 1;
-    var trial = Puzzle({
-      rows: puzzle.rowHints.slice(),
-      columns: puzzle.columnHints.slice(),
+    var trial = Puzzle(
+      puzzle.rowHints.sublist(0),
+      puzzle.columnHints.sublist(0),
       content: snapshot
     });
     // if (debugMode) {

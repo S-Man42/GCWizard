@@ -18,16 +18,16 @@ import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
  */
 class Strategy {
   late VisitedG _visited;
+  bool randomize = true;
   // List<int> _solvers = List<int>.filled(2, 0);
   // /**
   //  * @param {Array} solvers List of line solvers sorted by speed
   //  * @param {boolean} randomize 'false' to run trial and error in order. Defaults to 'true'.
   //  *     In practice, using random guessing mostly yields faster results.
   //  */
-  // constructor(solvers, randomize = true) {
-  //   this.solvers = solvers;
-  //   this.randomize = randomize;
-  // }
+  Strategy({this.randomize = true}) { //solvers,
+    //this.solvers = solvers;
+  }
 
   // /**
   //  * Solve the puzzle.
