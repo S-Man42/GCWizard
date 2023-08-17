@@ -109,6 +109,8 @@ class _GCWizardScriptClassLabelStack {
 class _GCWizardScriptClassForLoopInfo {
   late String loopVariable; // counter variable
   late num targetValue; // target value
+  late bool descending;
+  late double stepValue;
   late int loopStart; // index in source code to loop to
 }
 

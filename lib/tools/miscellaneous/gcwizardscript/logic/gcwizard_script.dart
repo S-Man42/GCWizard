@@ -942,7 +942,8 @@ class _GCWizardSCriptInterpreter {
   void executeCommandFOR() {
     _GCWizardScriptClassForLoopInfo stckvar = _GCWizardScriptClassForLoopInfo();
     state.controlStack.push(FORLOOP);
-    Object? value;
+    Object? valueStart;
+    Object? valueTarget;
     String vname;
     Object? stepValue;
 
@@ -960,9 +961,9 @@ class _GCWizardSCriptInterpreter {
       return;
     }
 
-    value = evaluateExpression();
-    if (_isNumber(value)) {
-      state.variables[stckvar.loopVariable] = value;
+    valueStart = evaluateExpression();
+    if (_isNumber(valueStart)) {
+      state.variables[stckvar.loopVariable] = valueStart;
     } else {
       _handleError(_INVALIDTYPECAST);
     }
@@ -970,31 +971,45 @@ class _GCWizardSCriptInterpreter {
     getToken();
     if (state.keywordToken != TO) _handleError(_TOEXPECTED);
 
-    value = evaluateExpression();
-    if (_isNumber(value)) {
-      stckvar.targetValue = value as num;
+    valueTarget = evaluateExpression();
+    if (_isNumber(valueTarget)) {
+      stckvar.targetValue = valueTarget as num;
     } else {
       _handleError(_INVALIDTYPECAST);
     }
 
+    stckvar.descending = ((valueStart as num) > (valueTarget as num));
+
     getToken();
     if (state.keywordToken != STEP) {
       putBack();
+      stckvar.stepValue = 1.0;
     } else {
       stepValue = evaluateExpression();
       if (_isNumber(stepValue)) {
-        state.step = stepValue as num;
+        stckvar.stepValue = (stepValue as num).toDouble();
       } else {
         _handleError(_INVALIDTYPECAST);
       }
     }
 
-    if ((value as num) >= (state.variables[stckvar.loopVariable] as num)) {
-      stckvar.loopStart = state.scriptIndex;
-      state.forStack.push(stckvar);
+    if (stckvar.descending) {
+      if (valueTarget <= (state.variables[stckvar.loopVariable] as num)) {
+        stckvar.loopStart = state.scriptIndex;
+        state.forStack.push(stckvar);
+      } else {
+        while (state.keywordToken != NEXT) {
+          getToken();
+        }
+      }
     } else {
-      while (state.keywordToken != NEXT) {
-        getToken();
+      if (valueTarget >= (state.variables[stckvar.loopVariable] as num)) {
+        stckvar.loopStart = state.scriptIndex;
+        state.forStack.push(stckvar);
+      } else {
+        while (state.keywordToken != NEXT) {
+          getToken();
+        }
       }
     }
   }
@@ -1044,9 +1059,12 @@ class _GCWizardSCriptInterpreter {
     try {
       stckvar = state.forStack.pop();
 
-      state.variables[stckvar.loopVariable] = (state.variables[stckvar.loopVariable] as num) + state.step;
-      if ((state.variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
-
+      state.variables[stckvar.loopVariable] = (state.variables[stckvar.loopVariable] as num) + stckvar.stepValue;
+      if (stckvar.descending) {
+        if ((state.variables[stckvar.loopVariable] as num) < stckvar.targetValue) return;
+      } else {
+        if ((state.variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
+      }
       state.forStack.push(stckvar);
       state.scriptIndex = stckvar.loopStart;
 
