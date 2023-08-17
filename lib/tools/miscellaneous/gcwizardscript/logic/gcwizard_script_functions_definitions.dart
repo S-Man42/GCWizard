@@ -11,6 +11,7 @@ const List<String> _Functions_3 = [
   'BOX(',
   'BWW(',
   'COS(',
+  'DOT(',
   'DEG(',
   'EOF(',
   'EXP(',
@@ -63,15 +64,11 @@ const List<String> _Functions_5 = [
   'DATUM(',
   'FLOOR(',
   'IQSUM(',
-  'KREIS('
-  'POINT(',
-  'PUNKT(',
   'RIGHT(',
   'ROT13(',
   'ROT18(',
   'ROT47(',
   'SUBST(',
-  'TORTE(',
   'TRUNC(',
   'WGS84(',
 ];
@@ -87,11 +84,9 @@ const List<String> _Functions_6 = [
 const List<String> _Functions_7 = [
   'ABADDON(',
   'BEARING(',
-  'DISTANZ(',
   'ELLIPSE(',
   'LISTADD(',
   'LISTGET(',
-  'PEILUNG(',
   'WPTSADD(',
   'WPTSLAT(',
   'WPTSLON(',
@@ -107,7 +102,6 @@ const List<String> _Functions_8 = [
   'DMSTODMM(',
   'LISTSORT(',
   'READFILE(',
-  'RICHTUNG(',
 ];
 const List<String> _Functions_9 = [
   'CONVERTTO(',
@@ -147,19 +141,15 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // graphic
   'STROKE': _GCWizardScriptClassFunctionDefinition(_stroke, 1, functionReturn: false),
   'CIRCLE': _GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),
-  'KREIS': _GCWizardScriptClassFunctionDefinition(_circle, 3, functionReturn: false),
   'LINE': _GCWizardScriptClassFunctionDefinition(_line, 4, functionReturn: false),
-  'POINT': _GCWizardScriptClassFunctionDefinition(_point, 2, functionReturn: false),
-  'PUNKT': _GCWizardScriptClassFunctionDefinition(_point, 2, functionReturn: false),
+  'DOT': _GCWizardScriptClassFunctionDefinition(_dot, 2, functionReturn: false),
   'ARC': _GCWizardScriptClassFunctionDefinition(_arc, 5, functionReturn: false),
   'PIE': _GCWizardScriptClassFunctionDefinition(_pie, 5, functionReturn: false),
-  'TORTE': _GCWizardScriptClassFunctionDefinition(_pie, 5, functionReturn: false),
   'COLOR': _GCWizardScriptClassFunctionDefinition(_color, 3, functionReturn: false),
   'FILL': _GCWizardScriptClassFunctionDefinition(_fill, 1, functionReturn: false),
   'TEXT': _GCWizardScriptClassFunctionDefinition(_text, 4, functionReturn: false),
   'BOX': _GCWizardScriptClassFunctionDefinition(_box, 4, functionReturn: false),
   'OVAL': _GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
-  'ELLIPSE': _GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
 
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),
@@ -171,9 +161,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 
   // date, time
   'DATE': _GCWizardScriptClassFunctionDefinition(_date, 0),
-  'DATUM': _GCWizardScriptClassFunctionDefinition(_date, 0),
   'TIME': _GCWizardScriptClassFunctionDefinition(_time, 0),
-  'ZEIT': _GCWizardScriptClassFunctionDefinition(_time, 0),
 
   // lists
   'LISTCLEAR': _GCWizardScriptClassFunctionDefinition(_listClear, 1, functionReturn: false),
@@ -263,13 +251,10 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DECTODMM': _GCWizardScriptClassFunctionDefinition(_dectodmm, 1),
   'DECTODMS': _GCWizardScriptClassFunctionDefinition(_dectodms, 1),
   'DISTANCE': _GCWizardScriptClassFunctionDefinition(_distance, 4),
-  'DISTANZ': _GCWizardScriptClassFunctionDefinition(_distance, 4),
   'DMSTODMM': _GCWizardScriptClassFunctionDefinition(_dmstodmm, 3),
   'DMMTODMS': _GCWizardScriptClassFunctionDefinition(_dmmtodms, 2),
   'BEARING': _GCWizardScriptClassFunctionDefinition(_bearing, 3),
-  'RICHTUNG': _GCWizardScriptClassFunctionDefinition(_bearing, 3),
   'PROJECTION': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
-  'PEILUNG': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
   'CENTERTWOPOINTS': _GCWizardScriptClassFunctionDefinition(_centerTwoPoints, 4, functionReturn: false),
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerThreePoints, 6, functionReturn: false),
 

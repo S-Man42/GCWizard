@@ -566,8 +566,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               Offset(double.parse(graphicCommand[3]), double.parse(graphicCommand[4])), paint);
           break;
         case 'POINT':
-          canvas.drawLine(Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])),
-              Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), paint);
+          canvas.drawCircle(Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), 2.0, paint);
+          //canvas.drawLine(Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), paint);
           break;
         case 'COLOR':
           paint.color = Color.fromARGB(

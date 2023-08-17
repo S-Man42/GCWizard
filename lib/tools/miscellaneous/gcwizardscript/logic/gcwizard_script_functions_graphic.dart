@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_scr
 
 
 void _circle(Object x, Object y, Object r) {
-  if (_isString(x) || _isString(y) || _isString(r)) {
+  if (_isNotInt(x) || _isNotInt(y) || _isNotInt(r)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -10,7 +10,7 @@ void _circle(Object x, Object y, Object r) {
 }
 
 void _line(Object x1, Object y1, Object x2, Object y2) {
-  if (_isString(x1) || _isString(x2) || _isString(x2) || _isString(y2)) {
+  if (_isNotInt(x1) || _isNotInt(x2) || _isNotInt(x2) || _isNotInt(y2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -24,8 +24,8 @@ void _line(Object x1, Object y1, Object x2, Object y2) {
       (y2 as int).toString());
 }
 
-void _point(Object x, Object y) {
-  if (_isString(x) || _isString(y)) {
+void _dot(Object x, Object y) {
+  if (_isNotInt(x) || _isNotInt(y)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -33,7 +33,7 @@ void _point(Object x, Object y) {
 }
 
 void _arc(Object x, Object y, Object r, Object a1, Object a2) {
-  if (_isString(x) || _isString(y) || _isString(r) || _isString(a1) || _isString(a2)) {
+  if (_isNotInt(x) || _isNotInt(y) || _isNotInt(r) || _isNotInt(a1) || _isNotInt(a2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -50,7 +50,7 @@ void _arc(Object x, Object y, Object r, Object a1, Object a2) {
 }
 
 void _pie(Object x, Object y, Object r, Object a1, Object a2) {
-  if (_isString(x) || _isString(y) || _isString(r) || _isString(a1) || _isString(a2)) {
+  if (_isNotInt(x) || _isNotInt(y) || _isNotInt(r) || _isNotInt(a1) || _isNotInt(a2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -67,7 +67,7 @@ void _pie(Object x, Object y, Object r, Object a1, Object a2) {
 }
 
 void _color(Object r, Object g, Object b) {
-  if (_isString(r) || _isString(g) || _isString(b)) {
+  if (_isNotInt(r) || _isNotInt(g) || _isNotInt(b)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -75,7 +75,7 @@ void _color(Object r, Object g, Object b) {
 }
 
 void _fill(Object x) {
-  if (_isString(x)) {
+  if (_isNotInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -83,7 +83,7 @@ void _fill(Object x) {
 }
 
 void _stroke(Object x) {
-  if (_isString(x)) {
+  if (_isNotInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -91,7 +91,7 @@ void _stroke(Object x) {
 }
 
 void _box(Object x1, Object y1, Object x2, Object y2) {
-  if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
+  if (_isNotInt(x1) || _isNotInt(y1) || _isNotInt(x2) || _isNotInt(y2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -106,7 +106,7 @@ void _box(Object x1, Object y1, Object x2, Object y2) {
 }
 
 void _text(Object t, Object x, Object y, Object s) {
-  if (_isString(x) || _isString(y) || _isString(s)) {
+  if (_isNotInt(x) || _isNotInt(y) || _isNotInt(s)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -115,7 +115,7 @@ void _text(Object t, Object x, Object y, Object s) {
 }
 
 void _oval(Object x1, Object y1, Object x2, Object y2) {
-  if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
+  if (_isNotInt(x1) || _isNotInt(y1) || _isNotInt(x2) || _isNotInt(y2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
