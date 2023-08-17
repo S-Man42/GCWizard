@@ -258,8 +258,8 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DISTANCE': _GCWizardScriptClassFunctionDefinition(_distance, 4),
   'DMSTODMM': _GCWizardScriptClassFunctionDefinition(_dmstodmm, 3),
   'DMMTODMS': _GCWizardScriptClassFunctionDefinition(_dmmtodms, 2),
-  'BEARING': _GCWizardScriptClassFunctionDefinition(_bearing, 3),
-  'PROJECTION': _GCWizardScriptClassFunctionDefinition(_projection, 2, functionReturn: false),
+  'BEARING': _GCWizardScriptClassFunctionDefinition(_bearing, 4),
+  'PROJECTION': _GCWizardScriptClassFunctionDefinition(_projection, 4, functionReturn: false),
   'CENTERTWOPOINTS': _GCWizardScriptClassFunctionDefinition(_centerTwoPoints, 4, functionReturn: false),
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerThreePoints, 6, functionReturn: false),
 

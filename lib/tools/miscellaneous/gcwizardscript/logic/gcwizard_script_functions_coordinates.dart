@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 String _wgs84(Object x, Object y) {
-  if (_isString(x) || _isString(y)) {
+  if (_isNotNumber(x) || _isNotNumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -18,7 +18,7 @@ double _getLat() {
 }
 
 void _setLon(Object x) {
-  if (_isString(x)) {
+  if (_isNotNumber(x)) {
     _handleError(_INVALIDTYPECAST);
   }
   if ((x as num).abs() > 180) {
@@ -30,7 +30,7 @@ void _setLon(Object x) {
 }
 
 void _setLat(Object x) {
-  if (_isString(x)) {
+  if (_isNotNumber(x)) {
     _handleError(_INVALIDTYPECAST);
   }
   if ((x as num).abs() > 90) {
@@ -60,13 +60,13 @@ _GCWList _convertTo(Object target) {
 
       _listAdd(
           targetData,
-          latSign(result.latitude.sign) +
+          _latSign(result.latitude.sign) +
               ' ' +
               result.latitude.degrees.toString() +
               '° ' +
               result.latitude.minutes.toStringAsFixed(3) +
               "' " +
-              latSign(result.longitude.sign) +
+              _latSign(result.longitude.sign) +
               ' ' +
               result.longitude.degrees.toString() +
               '° ' +
@@ -74,24 +74,24 @@ _GCWList _convertTo(Object target) {
               "'");
       _listAdd(
           targetData,
-          latSign(result.latitude.sign) +
+          _latSign(result.latitude.sign) +
               ' ' +
               result.latitude.degrees.toString() +
               '° ' +
               result.latitude.minutes.toStringAsFixed(3) +
               "'");
-      _listAdd(targetData, latSign(result.latitude.sign));
+      _listAdd(targetData, _latSign(result.latitude.sign));
       _listAdd(targetData, result.latitude.degrees);
       _listAdd(targetData, result.latitude.minutes);
       _listAdd(
           targetData,
-          lonSign(result.longitude.sign) +
+          _lonSign(result.longitude.sign) +
               ' ' +
               result.longitude.degrees.toString() +
               '° ' +
               result.longitude.minutes.toStringAsFixed(3) +
               "'");
-      _listAdd(targetData, lonSign(result.longitude.sign));
+      _listAdd(targetData, _lonSign(result.longitude.sign));
       _listAdd(targetData, result.longitude.degrees);
       _listAdd(targetData, result.longitude.minutes);
       break;
@@ -101,14 +101,14 @@ _GCWList _convertTo(Object target) {
 
       _listAdd(
           targetData,
-          latSign(result.latitude.sign) +
+          _latSign(result.latitude.sign) +
               ' ' +
               result.latitude.degrees.toString() +
               '° ' +
               result.latitude.minutes.toStringAsFixed(3) +
               "' " +
               result.latitude.seconds.toStringAsFixed(3) +
-              latSign(result.longitude.sign) +
+              _latSign(result.longitude.sign) +
               ' ' +
               result.longitude.degrees.toString() +
               '° ' +
@@ -118,7 +118,7 @@ _GCWList _convertTo(Object target) {
               '"');
       _listAdd(
           targetData,
-          latSign(result.latitude.sign) +
+          _latSign(result.latitude.sign) +
               ' ' +
               result.latitude.degrees.toString() +
               '° ' +
@@ -126,13 +126,13 @@ _GCWList _convertTo(Object target) {
               "' " +
               result.latitude.seconds.toStringAsFixed(3) +
               '"');
-      _listAdd(targetData, latSign(result.latitude.sign));
+      _listAdd(targetData, _latSign(result.latitude.sign));
       _listAdd(targetData, result.latitude.degrees);
       _listAdd(targetData, result.latitude.minutes);
       _listAdd(targetData, result.latitude.seconds);
       _listAdd(
           targetData,
-          lonSign(result.longitude.sign) +
+          _lonSign(result.longitude.sign) +
               ' ' +
               result.longitude.degrees.toString() +
               '° ' +
@@ -140,7 +140,7 @@ _GCWList _convertTo(Object target) {
               "' " +
               result.longitude.seconds.toStringAsFixed(3) +
               '"');
-      _listAdd(targetData, lonSign(result.longitude.sign));
+      _listAdd(targetData, _lonSign(result.longitude.sign));
       _listAdd(targetData, result.longitude.degrees);
       _listAdd(targetData, result.longitude.minutes);
       _listAdd(targetData, result.longitude.seconds);
@@ -663,7 +663,7 @@ void _convertFrom(Object source, _GCWList parameter) {
 }
 
 double _distance(Object x1, Object y1, Object x2, Object y2) {
-  if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
+  if (_isNotNumber(x1) || _isNotNumber(y1) || _isNotNumber(x2) || _isNotNumber(y2)) {
     _handleError(_INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
@@ -672,7 +672,7 @@ double _distance(Object x1, Object y1, Object x2, Object y2) {
 }
 
 double _bearing(Object x1, Object y1, Object x2, Object y2) {
-  if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
+  if (_isNotNumber(x1) || _isNotNumber(y1) || _isNotNumber(x2) || _isNotNumber(y2)) {
     _handleError(_INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
@@ -681,7 +681,7 @@ double _bearing(Object x1, Object y1, Object x2, Object y2) {
 }
 
 void _projection(Object x1, Object y1, Object dist, Object angle) {
-  if (_isString(x1) || _isString(y1) || _isString(dist) || _isString(angle)) {
+  if (_isNotNumber(x1) || _isNotNumber(y1) || _isNotNumber(dist) || _isNotNumber(angle)) {
     _handleError(_INVALIDTYPECAST);
   }
   LatLng _currentValues = projection(
@@ -691,7 +691,7 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
 }
 
 void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
-  if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2) || _isString(lat3) || _isString(lon3)) {
+  if (_isNotNumber(lat1) || _isNotNumber(lon1) || _isNotNumber(lat2) || _isNotNumber(lon2) || _isNotNumber(lat3) || _isNotNumber(lon3)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -710,7 +710,7 @@ void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Obje
 }
 
 void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
-  if (_isString(lat1) || _isString(lon1) || _isString(lat2) || _isString(lon2)) {
+  if (_isNotNumber(lat1) || _isNotNumber(lon1) || _isNotNumber(lat2) || _isNotNumber(lon2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -774,14 +774,14 @@ String _dmstodmm(Object? dec, Object? min, Object? sec) {
   return (_dectodmm(_dmstodec(dec as int, min as int, sec as double)));
 }
 
-String latSign(int sign) {
+String _latSign(int sign) {
   if (sign == 1) {
     return 'N';
   }
   return 'S';
 }
 
-String lonSign(int sign) {
+String _lonSign(int sign) {
   if (sign == 1) {
     return 'E';
   }
