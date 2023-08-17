@@ -265,7 +265,15 @@ class _GCWizardSCriptInterpreter {
       GraphicWidthT: 80,
       GraphicHeightT: 25,
       GraphicWidthG: 1920,
-      GraphicHeightG: 1040,
+      GraphicHeightG: 1080,
+      GraphicColors: 256,
+    },
+    2: {
+      GraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
+      GraphicWidthT: 80,
+      GraphicHeightT: 25,
+      GraphicWidthG: 1920,
+      GraphicHeightG: 1080,
       GraphicColors: 256,
     },
   };
