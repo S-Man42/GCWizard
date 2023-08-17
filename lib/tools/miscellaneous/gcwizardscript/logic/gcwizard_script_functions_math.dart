@@ -14,8 +14,8 @@ int _sgn(Object? x) {
   }
 }
 
-num _mod(Object? x, Object? y) {
-  if (!_isNumber(x) || !_isNumber(y)) {
+int _mod(Object? x, Object? y) {
+  if (_isNotNumber(x) || _isNotNumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -23,7 +23,7 @@ num _mod(Object? x, Object? y) {
     _handleError(_DIVISIONBYZERO);
     return 0;
   }
-  return ((x as num) % (y as num));
+  return ((x as num) % (y as num)) as int;
 }
 
 double _sqrt(Object? x) {
@@ -157,19 +157,20 @@ double _rnd(Object? x) {
   }
 
   if (x != 0) {
-    return _random.nextDouble();
+    _state.randomNumber = _random.nextDouble();
+    return _state.randomNumber;
   } else {
-    return 0.0;
+    return _state.randomNumber;
   }
 }
 
-double _fac(Object? x) {
-  if (!_isNumber(x)) {
+int _fac(Object? x) {
+  if (_isNotInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
 
-  double result = 1.0;
+  int result = 1;
   for (int i = 1; i <= (x as num).toInt(); i++) {
     result *= i;
   }
@@ -252,7 +253,7 @@ int _ggt(Object? x, Object? y) {
 }
 
 num _kgv(Object? x, Object? y) {
-  if (!_isNumber(x) || !_isNumber(y)) {
+  if (_isNotNumber(x) || _isNotNumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -289,7 +290,10 @@ num _lcm(Object? x, Object? y) {
 }
 
 String _convertBase(Object? value, Object? startBase, Object? destinationBase) {
-  if (!_isString(value) || !_isInt(startBase) || !_isInt(destinationBase)) { //ToDo mayby convert value toString (if int or double)
+  if (_isNumber(value)) {
+    value = value.toString();
+  }
+  if (_isNotInt(startBase) || _isNotInt(destinationBase)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -297,6 +301,44 @@ String _convertBase(Object? value, Object? startBase, Object? destinationBase) {
 }
 
 int _isPrime(Object x){
+  if (_isNotInt(x)) {
+    _handleError(_INVALIDTYPECAST);
+    return -1;
+  }
+  if (isPrime(BigInt.from(x as int))) {
+    return 1;
+  }
   return 0;
+}
+
+double _round(Object? x, Object? y){
+  if (_isNotNumber(x) || _isNotInt(y)) {
+    _handleError(_INVALIDTYPECAST);
+    return 0;
+  }
+  return double.parse((x as double).toStringAsFixed(y as int));
+}
+
+int _isSqr(Object? x){
+  if (_isNotInt(x)) {
+    _handleError(_INVALIDTYPECAST);
+    return -1;
+  }
+  if (_frac(sqrt(x as num)) == 0) {
+    return 1;
+  }
+  return 0;
+}
+
+int _div(Object? x, Object? y) {
+  if (_isNotNumber(x) || _isNotNumber(y)) {
+    _handleError(_INVALIDTYPECAST);
+    return 0;
+  }
+  if (y == 0) {
+    _handleError(_DIVISIONBYZERO);
+    return 0;
+  }
+  return ((x as num) ~/ (y as num));
 }
 

@@ -37,6 +37,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
+import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 import 'package:stack/stack.dart' as datastack;
 import 'package:latlong2/latlong.dart';
@@ -341,6 +342,7 @@ class _GCWizardSCriptInterpreter {
       ErrorMessage: state.errorMessage,
       ErrorPosition: state.errorPosition,
       VariableDump: _variableDump(),
+      randomNumber: state.randomNumber,
 
       continueState:
           (state.errorMessage == _errorMessages[_INPUTMISSING] ||

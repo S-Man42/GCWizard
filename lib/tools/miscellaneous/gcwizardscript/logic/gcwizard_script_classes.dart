@@ -24,6 +24,7 @@ class GCWizardScriptOutput {
   ScriptState? continueState;
   final List<int> FILE;
   final bool fileSaved;
+  final double randomNumber;
 
   GCWizardScriptOutput({
     required this.STDOUT,
@@ -35,6 +36,7 @@ class GCWizardScriptOutput {
     required this.BreakType,
     required this.FILE,
     required this.fileSaved,
+    required this.randomNumber,
     this.continueState,
   });
 
@@ -47,7 +49,9 @@ class GCWizardScriptOutput {
         VariableDump: [],
         FILE: Uint8List.fromList([]),
         fileSaved: false,
-        BreakType: GCWizardScriptBreakType.NULL);
+        randomNumber: 0.0,
+        BreakType: GCWizardScriptBreakType.NULL,
+    );
   }
 }
 
@@ -139,6 +143,8 @@ class ScriptState {
   int FILEINDEX = 0;
   bool fileSaved = false;
 
+  double randomNumber = 0.0;
+
   _GCWizardScriptClassLabelStack labelTable = _GCWizardScriptClassLabelStack();
   datastack.Stack<_GCWizardScriptClassForLoopInfo> forStack = datastack.Stack<_GCWizardScriptClassForLoopInfo>();
   datastack.Stack<int> gosubStack = datastack.Stack<int>();
@@ -166,7 +172,7 @@ class ScriptState {
     variables = {};
     STDOUT = '';
 
-    // _randomNumber = 0.0;
+    randomNumber = 0.0;
     step = 1;
     listDATA = [];
     FILE = [];
