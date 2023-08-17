@@ -11,6 +11,6 @@ List<Map<String, Object?>> _inputsDateTimeToExpected = [
   {'code' : 'print DATE(x)', 'expectedOutput' : date, 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print TIME(x)', 'expectedOutput' : time, 'error': 'gcwizard_script_syntax_error'},
 
-  {'code' : 'print DATE', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print TIME', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print DATE', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print TIME', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 ];

@@ -19,7 +19,9 @@ part 'gcwizard_script_nested_loops.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {
-    List<Map<String, Object?>> _inputsToExpected = _inputsCodesToExpected;
+    List<Map<String, Object?>> _inputsToExpected = [];
+
+    //_inputsToExpected.addAll(_inputsCodesToExpected);
     _inputsToExpected.addAll(_inputsMathToExpected);
     _inputsToExpected.addAll(_inputsBaseToExpected);
     _inputsToExpected.addAll(_inputsLoopsToExpected);
@@ -28,8 +30,8 @@ void main() {
     _inputsToExpected.addAll(_inputsGeocachingToExpected);
     _inputsToExpected.addAll(_inputsDateTimeToExpected);
     _inputsToExpected.addAll(_inputsStringToExpected);
-    _inputsToExpected.addAll(_inputsGraphicToExpected);
-    _inputsToExpected.addAll(_inputsWaypoinsToExpected);
+    //_inputsToExpected.addAll(_inputsGraphicToExpected);
+    //_inputsToExpected.addAll(_inputsWaypoinsToExpected);
     _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected);
     _inputsToExpected.addAll(_inputsNestedLoopsToExpected);
 

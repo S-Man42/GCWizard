@@ -1,11 +1,10 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 int _sgn(Object? x) {
-  if (!_isNumber(x)) {
+  if (_isNotNumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
-  }
-  if (x as num == 0) {
+  } else if (x as num == 0) {
     return 0;
   } else if (x > 0) {
     return 1;
@@ -14,16 +13,17 @@ int _sgn(Object? x) {
   }
 }
 
-int _mod(Object? x, Object? y) {
+num _mod(Object? x, Object? y) {
+  num result = 0;
   if (_isNotNumber(x) || _isNotNumber(y)) {
     _handleError(_INVALIDTYPECAST);
-    return 0;
-  }
+  } else
   if (y == 0) {
     _handleError(_DIVISIONBYZERO);
-    return 0;
+  } else {
+    result = ((x as num) % (y as num));
   }
-  return ((x as num) % (y as num)) as int;
+  return result;
 }
 
 double _sqrt(Object? x) {
@@ -234,22 +234,23 @@ int _iqsum(Object? x) {
 }
 
 int _ggt(Object? x, Object? y) {
-  if (!_isNumber(x) || !_isNumber(y)) {
+  if (_isNotNumber(x) || _isNotNumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
+  } else {
+    int h;
+
+    if (x as num == 0) return (y as num).toInt().abs();
+    if (y as num == 0) return x.toInt().abs();
+
+    do {
+      h = (x as num).toInt() % (y as num).toInt();
+      x = y;
+      y = h;
+    } while (y != 0);
+
+    return x.toInt().abs();
   }
-  int h;
-
-  if (x as num == 0) return (y as num).toInt().abs();
-  if (y as num == 0) return x.toInt().abs();
-
-  do {
-    h = (x as num).toInt() % (y as num).toInt();
-    x = y;
-    y = h;
-  } while (y != 0);
-
-  return x.toInt().abs();
 }
 
 num _kgv(Object? x, Object? y) {

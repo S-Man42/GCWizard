@@ -983,7 +983,7 @@ class _GCWizardSCriptInterpreter {
     getToken();
     if (state.keywordToken != STEP) {
       putBack();
-      stckvar.stepValue = 1.0;
+      stckvar.stepValue = 1;
     } else {
       stepValue = evaluateExpression();
       if (_isNumber(stepValue)) {
@@ -1378,15 +1378,25 @@ class _GCWizardSCriptInterpreter {
           _FUNCTIONS[command]!.functionName(partialResult1);
         }
       } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
+        print('function param 2');
         getToken();
+        print(state.token);
         if (state.token == "(") {
           getToken();
+          print(state.token);
           partialResult1 = evaluateExpressionAddSubOperators();
-          if (state.token != ",") _handleError(_MISSINGPARAMETER);
+          print(state.token);
+          if (state.token != ",") {
+            _handleError(_MISSINGPARAMETER);
+          }
           getToken();
+          print(state.token);
           partialResult2 = evaluateExpressionAddSubOperators();
-          if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
+          if (state.token != ")") {
+            _handleError(_UNBALANCEDPARENTHESES);
+          }
           getToken();
+          print(state.token);
         } else {
           _handleError(_UNBALANCEDPARENTHESES);
         }

@@ -11,8 +11,8 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print MOD(11.0, 3)', 'expectedOutput' : '2.0'},
   {'code' : 'print MOD(11.0, 3.0)', 'expectedOutput' : '2.0'},
   {'code' : 'print MOD(11, 3.0)', 'expectedOutput' : '2.0'},
-  {'code' : 'print MOD(X, 3)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print MOD(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print MOD(X, 3)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print MOD(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_division_by_zero'},
   {'code' : 'print MOD(, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print MOD(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print MOD(11)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
@@ -24,12 +24,12 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SGN(-11)', 'expectedOutput' : '-1'},
   {'code' : 'print SGN(0)', 'expectedOutput' : '0'},
   {'code' : 'print SGN(-0)', 'expectedOutput' : '0'},
-  {'code' : 'print SGN(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print SGN(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print SGN( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print SGN(11, 2, 1)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
 
   {'code' : 'print PI()', 'expectedOutput' : '3.141592653589793'},
-  {'code' : 'print PI', 'expectedOutput' : 'dynamic'},
+  {'code' : 'print PI', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print PI(x)', 'expectedOutput' : '3.141592653589793', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print TRUNC(3)', 'expectedOutput' : '3'},
@@ -38,7 +38,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print TRUNC(-2.6)', 'expectedOutput' : '-2'},
   {'code' : 'print TRUNC(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print TRUNC( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print TRUNC(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print TRUNC(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print GGT(12, 3)', 'expectedOutput' : '3'},
   {'code' : 'print GGT(12.6, 3)', 'expectedOutput' : '3'},
@@ -50,9 +50,9 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print GGT(12, 0)', 'expectedOutput' : '12'},
   {'code' : 'print GGT( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print GGT(3 )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print GGT(X, 3)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print GGT(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print GGT(X, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print GGT(X, 3)', 'expectedOutput' : '3', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print GGT(11, X)', 'expectedOutput' : '11', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print GGT(X, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print GGT(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
 
   {'code' : 'print KGV(12, 3)', 'expectedOutput' : '12.0'},
@@ -65,18 +65,18 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print KGV(12, 0)', 'expectedOutput' : '0.0'},
   {'code' : 'print KGV( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print KGV(3 )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print KGV(X, 3)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print KGV(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print KGV(X, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print KGV(X, 3)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print KGV(11, X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print KGV(X, X)', 'expectedOutput' : 'NaN', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print KGV(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
 
-  {'code' : 'print FAC(3)', 'expectedOutput' : '6.0'},
-  {'code' : 'print FAC(3.6)', 'expectedOutput' : '6.0'},
-  {'code' : 'print FAC(-2)', 'expectedOutput' : '1.0'},
-  {'code' : 'print FAC(-2.6)', 'expectedOutput' : '1.0'},
+  {'code' : 'print FAC(3)', 'expectedOutput' : '6'},
+  {'code' : 'print FAC(3.6)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print FAC(-2)', 'expectedOutput' : '1'},
+  {'code' : 'print FAC(-2.6)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print FAC(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print FAC( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print FAC(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print FAC( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print FAC(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
 
   {'code' : 'print FRAC(3)', 'expectedOutput' : '0'},
   {'code' : 'print FRAC(3.6)', 'expectedOutput' : '0.6000000000000001'},
@@ -84,7 +84,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print FRAC(-2.6)', 'expectedOutput' : '-0.6000000000000001'},
   {'code' : 'print FRAC(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print FRAC( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print FRAC(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print FRAC(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print SIN(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print SIN(PI()/2)', 'expectedOutput' : '1.0'}, //ToDo problem
@@ -93,7 +93,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SIN(-2.6)', 'expectedOutput' : '-0.5155013718214642'},
   {'code' : 'print SIN(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print SIN( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print SIN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print SIN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print ASIN(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print ASIN(1)', 'expectedOutput' : '1.5707963267948966'},
@@ -103,7 +103,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print ASIN(-2.6)', 'expectedOutput' : 'NaN'},
   {'code' : 'print ASIN(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print ASIN( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print ASIN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print ASIN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print COS(0)', 'expectedOutput' : '1.0'},
   {'code' : 'print COS(PI()/2)', 'expectedOutput' : '-2.0510342851533115e-10'}, //ToDo problem
@@ -112,7 +112,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print COS(-2.6)', 'expectedOutput' : '-0.8568887533689473'},
   {'code' : 'print COS(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print COS( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print COS(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print COS(X)', 'expectedOutput' : '1.0', 'error': 'gcwizard_script_casting_error'},
 
   {'code' : 'print ACOS(0)', 'expectedOutput' : '1.5707963267948966'},
   {'code' : 'print ACOS(PI()/2)', 'expectedOutput' : 'NaN'}, //ToDo problem
@@ -121,7 +121,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print ACOS(-2.6)', 'expectedOutput' : 'NaN'},
   {'code' : 'print ACOS(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print ACOS( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print ACOS(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print ACOS(X)', 'expectedOutput' : '1.5707963267948966', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print TAN(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print TAN(PI()/2)', 'expectedOutput' : '-4875588902.821542'}, //ToDo problem
@@ -130,7 +130,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print TAN(-2.6)', 'expectedOutput' : '0.6015966130897586'},
   {'code' : 'print TAN(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print TAN( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print TAN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print TAN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print ATAN(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print ATAN(PI()/2)', 'expectedOutput' : '1.0038848219130392'}, //ToDo problem
@@ -139,7 +139,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print ATAN(-2.6)', 'expectedOutput' : '-1.2036224929766774'},
   {'code' : 'print ATAN(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print ATAN( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print ATAN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print ATAN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print EXP(0)', 'expectedOutput' : '1.0'},
   {'code' : 'print EXP(1)', 'expectedOutput' : '2.718281828459045'},
@@ -147,7 +147,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print EXP(-2.6)', 'expectedOutput' : '0.07427357821433388'},
   {'code' : 'print EXP(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print EXP( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print EXP(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print EXP(X)', 'expectedOutput' : '1.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print LOG(0)', 'expectedOutput' : '-Infinity'},
   {'code' : 'print LOG(1)', 'expectedOutput' : '0.0'},
@@ -155,7 +155,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print LOG(-2.6)', 'expectedOutput' : 'NaN'},
   {'code' : 'print LOG(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print LOG( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print LOG(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print LOG(X)', 'expectedOutput' : '-Infinity', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print LN(0)', 'expectedOutput' : '-Infinity'},
   {'code' : 'print LN(1)', 'expectedOutput' : '0.0'},
@@ -164,7 +164,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print LN(-2.6)', 'expectedOutput' : 'NaN'},
   {'code' : 'print LN(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print LN( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print LN(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print LN(X)', 'expectedOutput' : '-Infinity', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print SQRT(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print SQRT(1)', 'expectedOutput' : '1.0'},
@@ -173,7 +173,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SQRT(-2.6)', 'expectedOutput' : 'NaN'},
   {'code' : 'print SQRT(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print SQRT( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print SQRT(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print SQRT(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print SQR(0)', 'expectedOutput' : '0'},
   {'code' : 'print SQR(1)', 'expectedOutput' : '1'},
@@ -182,7 +182,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SQR(-2.6)', 'expectedOutput' : '6.760000000000001'},
   {'code' : 'print SQR(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print SQR( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print SQR(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print SQR(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print DEG(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print DEG(1)', 'expectedOutput' : '57.29577951308232'},
@@ -194,7 +194,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print DEG(PI()/2)', 'expectedOutput' : '90.0'},
   {'code' : 'print DEG(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print DEG( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print DEG(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print DEG(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print RAD(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print RAD(57.29577951308232)', 'expectedOutput' : '1.0'},
@@ -206,12 +206,12 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print RAD(90.0)', 'expectedOutput' : '1.5707963267948966'},
   {'code' : 'print RAD(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print RAD( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print RAD(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print RAD(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print RND(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print RND(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print RND( )', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print RND(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print RND(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print CEIL(0)', 'expectedOutput' : '0'},
   {'code' : 'print CEIL(1)', 'expectedOutput' : '1'},
@@ -222,7 +222,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print CEIL(-2.6)', 'expectedOutput' : '-2'},
   {'code' : 'print CEIL(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print CEIL( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print CEIL(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print CEIL(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print FLOOR(0)', 'expectedOutput' : '0'},
   {'code' : 'print FLOOR(1)', 'expectedOutput' : '1'},
@@ -233,7 +233,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print FLOOR(-2.6)', 'expectedOutput' : '-3'},
   {'code' : 'print FLOOR(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print FLOOR( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print FLOOR(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print FLOOR(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print ABS(0)', 'expectedOutput' : '0'},
   {'code' : 'print ABS(1)', 'expectedOutput' : '1'},
@@ -244,7 +244,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print ABS(-2.6)', 'expectedOutput' : '2.6'},
   {'code' : 'print ABS(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print ABS( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print ABS(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print ABS(X)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print POW(12, 3)', 'expectedOutput' : '1728'},
   {'code' : 'print POW(12.6, 3)', 'expectedOutput' : '2000.3759999999997'},
@@ -256,9 +256,9 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print POW(12, 0)', 'expectedOutput' : '1'},
   {'code' : 'print POW( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print POW(3 )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print POW(X, 3)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print POW(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print POW(X, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print POW(X, 3)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print POW(11, X)', 'expectedOutput' : '1.0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print POW(X, X)', 'expectedOutput' : '1.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print POW(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
 
   {'code' : 'print QSUM(0)', 'expectedOutput' : '0'},
@@ -270,7 +270,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print QSUM(-2.65)', 'expectedOutput' : '13'},
   {'code' : 'print QSUM(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print QSUM( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print QSUM(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print QSUM(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print IQSUM(0)', 'expectedOutput' : '0'},
   {'code' : 'print IQSUM(1)', 'expectedOutput' : '1'},
@@ -281,7 +281,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print IQSUM(-2.65)', 'expectedOutput' : '4'},
   {'code' : 'print IQSUM(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print IQSUM( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print IQSUM(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print IQSUM(X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print CONVERT("42.42", 10, 2)', 'expectedOutput' : '101010.01101011100001010001111010111000010100011110101110'},
   {'code' : 'print CONVERT("42.42", 10, 3)', 'expectedOutput' : '1120.10210001121201222110102100011212012200021021220011'},

@@ -11,37 +11,38 @@ String _char(Object x) {
 int _asc(Object x) {
   if (_isNotString(x)) {
     _handleError(_INVALIDTYPECAST);
-    return 0;
+    return -1;
   }
   return (x as String).codeUnitAt(0);
 }
 
 String _left(Object x, Object count) {
-  if (_isNotString(x) || _isString(count)) {
+  print(x.runtimeType);
+  if (_isNotString(x) || _isNotInt(count)) {
     _handleError(_INVALIDTYPECAST);
     return '';
+  } else {
+    return (x as String).substring(0, (count as int));
   }
-  return (x as String).substring(0, (count as int));
 }
 
 String _right(Object x, Object count) {
-  if (_isNotString(x) || _isString(count)) {
+  print(x.runtimeType);
+  if (_isNotString(x) || _isNotInt(count)) {
     _handleError(_INVALIDTYPECAST);
     return '';
+  } else {
+    return (x as String).substring(x.length - (count as int));
   }
-  if (count.runtimeType.toString() == 'String') {
-    _handleError(_INVALIDTYPECAST);
-    return '';
-  }
-  return (x as String).substring(x.length - (count as int));
 }
 
 String _mid(Object x, Object start, Object len) {
-  if (_isNotString(x) || _isString(start) || _isString(len)) {
+  if (_isNotString(x) || _isNotInt(start) || _isNotInt(len)) {
     _handleError(_INVALIDTYPECAST);
     return '';
+  } else {
+    return (x as String).substring((start as int) - 1, start - 1 + (len as int));
   }
-  return (x as String).substring((start as int) - 1, start - 1 + (len as int));
 }
 
 int _len(Object x) {
@@ -63,7 +64,12 @@ String _str(Object x) {
 }
 
 Object _val(Object x) {
-  if (int.tryParse(x as String) != null) {
+  if (_isList(x)) {
+    _handleError(_INVALIDTYPECAST);
+    return '';
+  } else if (_isNumber(x)) {
+    return x;
+  } else if (int.tryParse(x as String) != null) {
     return int.parse(x).toDouble();
   } else {
     if (double.tryParse(x) != null) {
