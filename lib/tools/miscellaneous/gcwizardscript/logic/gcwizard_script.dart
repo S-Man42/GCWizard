@@ -792,16 +792,16 @@ class _GCWizardSCriptInterpreter {
     int result = 0;
     bool doElseIf = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('ENDIF')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('ENDIF')) {
         if (ifList.isEmpty) {
           result = pc + 5;
           break;
         } else {
           ifList.removeLast();
         }
-      } else if (state.script.substring(pc).startsWith('IF ')) {
+      } else if (state.script.substring(pc).toUpperCase().startsWith('IF ')) {
         ifList.add(pc);
-      } else if (state.script.substring(pc).startsWith('ELSEIF')) {
+      } else if (state.script.substring(pc).toUpperCase().startsWith('ELSEIF')) {
         if (ifList.isEmpty) {
           result = pc;
           doElseIf = true;
@@ -810,7 +810,7 @@ class _GCWizardSCriptInterpreter {
           //ifList.removeLast();
         }
       } else {
-        if (state.script.substring(pc).startsWith('ELSE')) {
+        if (state.script.substring(pc).toUpperCase().startsWith('ELSE')) {
           if (ifList.isEmpty) {
             result = pc + 4;
             break;
@@ -835,14 +835,14 @@ class _GCWizardSCriptInterpreter {
     List<int> ifList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('ELSEIF')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('ELSEIF')) {
         pc += 6;
       }
-      if (state.script.substring(pc).startsWith('IF')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('IF')) {
         ifList.add(pc);
         pc += 2;
       }
-      if (state.script.substring(pc).startsWith('ENDIF')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('ENDIF')) {
         if (ifList.isEmpty) {
           result += 5;
           break;
@@ -898,7 +898,7 @@ class _GCWizardSCriptInterpreter {
   void findNextCASE() {
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('CASE') || state.script.substring(pc).startsWith('DEFAULT')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('CASE') || state.script.substring(pc).toUpperCase().startsWith('DEFAULT')) {
         result = pc;
         break;
       }
@@ -917,8 +917,8 @@ class _GCWizardSCriptInterpreter {
     List<int> switchList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('SWITCH')) switchList.add(pc);
-      if (state.script.substring(pc).startsWith('ENDSWITCH')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('SWITCH')) switchList.add(pc);
+      if (state.script.substring(pc).toUpperCase().startsWith('ENDSWITCH')) {
         if (switchList.isEmpty) {
           {
             result = pc + 9;
@@ -989,9 +989,11 @@ class _GCWizardSCriptInterpreter {
       stckvar.stepValue = 1;
     } else {
       stepValue = evaluateExpression();
-      if (_isANumber(stepValue)) {
+      if (_isAInt(stepValue)) {
+        stckvar.stepValue = (stepValue as int).toInt();
+      } else if (_isADouble(stepValue)) {
         stckvar.stepValue = (stepValue as num).toDouble();
-      } else {
+      } else{
         _handleError(_INVALIDTYPECAST);
       }
     }
@@ -1021,10 +1023,10 @@ class _GCWizardSCriptInterpreter {
     List<int> forList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('FOR')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('FOR')) {
         forList.add(pc);
       }
-      if (state.script.substring(pc).startsWith('NEXT')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('NEXT')) {
         if (forList.isEmpty) {
           result = pc + 4;
         } else {
@@ -1042,8 +1044,8 @@ class _GCWizardSCriptInterpreter {
     List<int> forList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('FOR')) forList.add(pc);
-      if (state.script.substring(pc).startsWith('NEXT')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('FOR')) forList.add(pc);
+      if (state.script.substring(pc).toUpperCase().startsWith('NEXT')) {
         if (forList.isEmpty) {
           result = pc - 1;
         } else {
@@ -1085,10 +1087,10 @@ class _GCWizardSCriptInterpreter {
     List<int> repeatList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('REPEAT')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('REPEAT')) {
         repeatList.add(pc);
       }
-      if (state.script.substring(pc).startsWith('UNTIL')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('UNTIL')) {
         if (repeatList.isEmpty) {
           result = pc + 5;
         } else {
@@ -1106,10 +1108,10 @@ class _GCWizardSCriptInterpreter {
     List<int> repeatList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('REPEAT')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('REPEAT')) {
         repeatList.add(pc);
       }
-      if (state.script.substring(pc).startsWith('UNTIL')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('UNTIL')) {
         if (repeatList.isEmpty) {
           result = pc;
         } else {
@@ -1157,10 +1159,10 @@ class _GCWizardSCriptInterpreter {
     int result = 0;
     bool foundWend = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('WHILE')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('WHILE')) {
         whileList.add(pc);
       } else {
-        if (state.script.substring(pc).startsWith('WEND')) {
+        if (state.script.substring(pc).toUpperCase().startsWith('WEND')) {
           if (whileList.isEmpty) {
             result = pc + 4;
             foundWend = true;
@@ -1182,10 +1184,10 @@ class _GCWizardSCriptInterpreter {
     int result = 0;
     bool foundWend = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).startsWith('WHILE')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('WHILE')) {
         wendList.add(pc);
       } else {
-        if (state.script.substring(pc).startsWith('WEND')) {
+        if (state.script.substring(pc).toUpperCase().startsWith('WEND')) {
           if (wendList.isEmpty) {
             result = pc + 4;
             foundWend = true;
