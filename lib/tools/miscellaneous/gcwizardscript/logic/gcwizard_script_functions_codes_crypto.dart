@@ -4,7 +4,7 @@ const _DECODE = 0;
 const _ENCODE = 1;
 
 String _bacon(Object text, Object mode) {
-  if (_isNotString(text) || _isNotInt(mode)) {
+  if (_isNotAString(text) || _isNotAInt(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -17,20 +17,20 @@ String _bacon(Object text, Object mode) {
 }
 
 String _abaddon(Object text, Object mode) {
-  if (_isNotString(text) || _isNotInt(mode)) {
+  if (_isNotAString(text) || _isNotAInt(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
   String output = '';
   switch (mode) {
-    case _DECODE: output = decryptAbaddon(text as String, null); break;
-    case _ENCODE: output = encryptAbaddon(text as String, null); break;
+    case _DECODE: output = decryptAbaddon(text as String, {'¥': '¥', 'µ': 'µ', 'þ': 'þ'}); break;
+    case _ENCODE: output = encryptAbaddon(text as String, {'¥': '¥', 'µ': 'µ', 'þ': 'þ'}); break;
   }
   return output;
 }
 
 String _atbash(Object text) {
-  if (_isNotString(text)) {
+  if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -38,7 +38,7 @@ String _atbash(Object text) {
 }
 
 String _avemaria(Object text, Object mode) {
-  if (_isNotString(text) || _isNotInt(mode)) {
+  if (_isNotAString(text) || _isNotAInt(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }

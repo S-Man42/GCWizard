@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 String _base(Object t, Object m, Object x) {
-  if (_isNotInt(t) || !_isNumber(m)) {
+  if (_isNotAInt(t) || !_isANumber(m)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -32,6 +32,7 @@ String _base(Object t, Object m, Object x) {
       }
     case 85:
       if (m == 0) {
+        print(x.toString());
         return decodeBase85(x.toString());
       } else {
         return encodeBase85(x.toString());

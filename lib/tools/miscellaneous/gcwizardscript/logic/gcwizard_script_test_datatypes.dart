@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-bool _isLetter(String vname) {
+bool _isALetter(String vname) {
   return const [
     'A',
     'B',
@@ -31,47 +31,47 @@ bool _isLetter(String vname) {
   ].contains(vname.toUpperCase());
 }
 
-bool _isDigit(String vname) {
+bool _isADigit(String vname) {
   return const ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].contains(vname);
 }
 
-bool _isNotDouble(Object? value) {
-  return !_isDouble(value); //.runtimeType.toString() != 'double');
+bool _isNotADouble(Object? value) {
+  return !_isADouble(value); //.runtimeType.toString() != 'double');
 }
 
-bool _isDouble(Object? value) {
+bool _isADouble(Object? value) {
   return (value is double); //.runtimeType.toString() == 'double');
 }
 
-bool _isNotInt(Object? value) {
-  return !_isInt(value); // .runtimeType.toString() != 'int');
+bool _isNotAInt(Object? value) {
+  return !_isAInt(value); // .runtimeType.toString() != 'int');
 }
 
-bool _isInt(Object? value) {
+bool _isAInt(Object? value) {
   return (value is int); //.runtimeType.toString() == 'int');
 }
 
-bool _isNotString(Object? value) {
-  return !_isString(value); //.runtimeType.toString() != 'String');
+bool _isNotAString(Object? value) {
+  return !_isAString(value); //.runtimeType.toString() != 'String');
 }
 
-bool _isString(Object? value) {
+bool _isAString(Object? value) {
   return (value is String); //.runtimeType.toString() == 'String');
 }
 
-bool _isNumber(Object? value) {
-  return _isInt(value) || _isDouble(value); //.runtimeType.toString() == 'String');
+bool _isANumber(Object? value) {
+  return _isAInt(value) || _isADouble(value); //.runtimeType.toString() == 'String');
 }
 
-bool _isNotNumber(Object? value) {
-  return _isNotInt(value) && _isNotDouble(value); //.runtimeType.toString() == 'String');
+bool _isNotANumber(Object? value) {
+  return _isNotAInt(value) && _isNotADouble(value); //.runtimeType.toString() == 'String');
 }
 
-bool _isList(Object? value){
+bool _isAList(Object? value){
   return (value.runtimeType.toString() == '_GCWList');
 }
 
-bool _isNotList(Object? value){
-  return !_isList(value);
+bool _isNotAList(Object? value){
+  return !_isAList(value);
 }
 

@@ -76,6 +76,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_coordinates.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_files.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_typetests.dart';
 
 // Tiny BASIC
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff
@@ -100,7 +101,8 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, PIE, COLOR, FILL, TEXT, BOX, OVAL
 // - use BREAK
 // - use DIM, implement List as Datatype
-// - variable names longer than one letter
+// - use variable names longer than one letter
+// - handle case sensitiveness
 // - handle input async like whitespace, piet
 // - use WRITEFILE, READFILE, EOF
 // - use NEWFILE, async OPENFILE, async SAVEFILE
@@ -253,6 +255,7 @@ class _GCWizardSCriptInterpreter {
     "savefile": SAVEFILE,
   };
   Map<String, int> registeredKeywords = {};
+
   static const Map<int, Map<String, Object?>> SCREEN_MODES = {
     0: {
       GraphicMode: GCWizardSCript_SCREENMODE.TEXT,
@@ -293,7 +296,7 @@ class _GCWizardSCriptInterpreter {
     if (continueState == null) {
       state = ScriptState(coords: coords);
 
-      state.script = script.toUpperCase().replaceAll('RND()', 'RND(1)') + '\n';
+      state.script = script.replaceAll('RND()', 'RND(1)') + '\n';
 
       state.addInput(inputData);
     } else {
@@ -962,7 +965,7 @@ class _GCWizardSCriptInterpreter {
     }
 
     valueStart = evaluateExpression();
-    if (_isNumber(valueStart)) {
+    if (_isANumber(valueStart)) {
       state.variables[stckvar.loopVariable] = valueStart;
     } else {
       _handleError(_INVALIDTYPECAST);
@@ -972,7 +975,7 @@ class _GCWizardSCriptInterpreter {
     if (state.keywordToken != TO) _handleError(_TOEXPECTED);
 
     valueTarget = evaluateExpression();
-    if (_isNumber(valueTarget)) {
+    if (_isANumber(valueTarget)) {
       stckvar.targetValue = valueTarget as num;
     } else {
       _handleError(_INVALIDTYPECAST);
@@ -986,7 +989,7 @@ class _GCWizardSCriptInterpreter {
       stckvar.stepValue = 1;
     } else {
       stepValue = evaluateExpression();
-      if (_isNumber(stepValue)) {
+      if (_isANumber(stepValue)) {
         stckvar.stepValue = (stepValue as num).toDouble();
       } else {
         _handleError(_INVALIDTYPECAST);
@@ -1551,11 +1554,11 @@ class _GCWizardSCriptInterpreter {
 
       r_temp = evaluateExpressionRelationalOperation();
 
-      if (_isNotNumber(l_temp) || _isNotNumber(r_temp)) {
+      if (_isNotANumber(l_temp) || _isNotANumber(r_temp)) {
         _handleError(_INVALIDTYPECAST);
         result = 0.0;
       } else {
-        if (_isString(l_temp)) {
+        if (_isAString(l_temp)) {
           switch (op) {
             case '<':
             case LE:
@@ -1656,13 +1659,13 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
+      if (_isNotANumber(result) || _isNotANumber(partialResult)) {
         // Todo ??
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '-':
-            if (!_isNumber(result)) {
+            if (!_isANumber(result)) {
               //Todo only on minus (no plus)
               _handleError(_INVALIDSTRINGOPERATION);
             } else {
@@ -1688,7 +1691,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '*' || op == '/' || op == '%') {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
+      if (_isNotANumber(result) || _isNotANumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -1728,12 +1731,12 @@ class _GCWizardSCriptInterpreter {
     if (state.token == "^") {
       getToken();
       partialResult = evaluateExpressionExponentOperator();
-      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
+      if (_isNotANumber(result) || _isNotANumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
         return 0.0;
       }
       base = result;
-      if (_isNotNumber(result) || _isNotNumber(partialResult)) {
+      if (_isNotANumber(result) || _isNotANumber(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else if (partialResult == 0.0) {
         result = 1.0;
@@ -1754,7 +1757,7 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '→' || op == '←' || op == '&' || op == '|') {
       getToken();
       partialResult = evaluateExpressionUnaryFunctionOperator();
-      if (_isNotInt(partialResult) || _isNotInt(result)) {
+      if (_isNotAInt(partialResult) || _isNotAInt(result)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -1795,7 +1798,7 @@ class _GCWizardSCriptInterpreter {
       result = -(result as dynamic);
     } else {
       if (op == "~") {
-        if (_isNotInt(result)) {
+        if (_isNotAInt(result)) {
           _handleError(_INVALIDTYPECAST);
         } else {
           result = ~(result as dynamic);
@@ -1866,80 +1869,80 @@ class _GCWizardSCriptInterpreter {
 
   bool isTokenAFunction() {
     if (_Functions_17.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 18 < state.script.length) ? state.scriptIndex + 18 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 17);
+        (state.scriptIndex + 18 < state.script.length) ? state.scriptIndex + 18 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 17).toUpperCase();
       state.scriptIndex += 17;
       return true;
     }
     if (_Functions_14.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 15 < state.script.length) ? state.scriptIndex + 15 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 14);
+        (state.scriptIndex + 15 < state.script.length) ? state.scriptIndex + 15 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 14).toUpperCase();
       state.scriptIndex += 14;
       return true;
     }
     if (_Functions_12.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 13 < state.script.length) ? state.scriptIndex + 13 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 12);
+        (state.scriptIndex + 13 < state.script.length) ? state.scriptIndex + 13 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 12).toUpperCase();
       state.scriptIndex += 12;
       return true;
     }
     if (_Functions_11.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 12 < state.script.length) ? state.scriptIndex + 12 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 11);
+        (state.scriptIndex + 12 < state.script.length) ? state.scriptIndex + 12 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 11).toUpperCase();
       state.scriptIndex += 11;
       return true;
     }
     if (_Functions_10.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 10);
+        (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 10).toUpperCase();
       state.scriptIndex += 10;
       return true;
     }
     if (_Functions_9.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 10 < state.script.length) ? state.scriptIndex + 10 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 9);
+        (state.scriptIndex + 10 < state.script.length) ? state.scriptIndex + 10 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 9).toUpperCase();
       state.scriptIndex += 9;
       return true;
     }
     if (_Functions_8.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 9 < state.script.length) ? state.scriptIndex + 9 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 8);
+        (state.scriptIndex + 9 < state.script.length) ? state.scriptIndex + 9 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 8).toUpperCase();
       state.scriptIndex += 8;
       return true;
     }
     if (_Functions_7.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 8 < state.script.length) ? state.scriptIndex + 8 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 7);
+        (state.scriptIndex + 8 < state.script.length) ? state.scriptIndex + 8 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 7).toUpperCase();
       state.scriptIndex += 7;
       return true;
     }
     if (_Functions_6.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 7 < state.script.length) ? state.scriptIndex + 7 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 6);
+        (state.scriptIndex + 7 < state.script.length) ? state.scriptIndex + 7 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 6).toUpperCase();
       state.scriptIndex += 6;
       return true;
     }
     if (_Functions_5.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 6 < state.script.length) ? state.scriptIndex + 6 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 5);
+        (state.scriptIndex + 6 < state.script.length) ? state.scriptIndex + 6 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 5).toUpperCase();
       state.scriptIndex += 5;
       return true;
     }
     if (_Functions_4.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 5 < state.script.length) ? state.scriptIndex + 5 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 4);
+        (state.scriptIndex + 5 < state.script.length) ? state.scriptIndex + 5 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 4).toUpperCase();
       state.scriptIndex += 4;
       return true;
     }
     if (_Functions_3.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 4 < state.script.length) ? state.scriptIndex + 4 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 3);
+        (state.scriptIndex + 4 < state.script.length) ? state.scriptIndex + 4 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 3).toUpperCase();
       state.scriptIndex += 3;
       return true;
     }
     if (_Functions_2.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 3 < state.script.length) ? state.scriptIndex + 3 : state.scriptIndex))) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 2);
+        (state.scriptIndex + 3 < state.script.length) ? state.scriptIndex + 3 : state.scriptIndex).toUpperCase())) {
+      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 2).toUpperCase();
       state.scriptIndex += 2;
       return true;
     }
@@ -2046,7 +2049,7 @@ class _GCWizardSCriptInterpreter {
       state.token += state.script[state.scriptIndex];
       state.scriptIndex++;
       state.tokenType = DELIMITER;
-    } else if (_isLetter(state.script[state.scriptIndex])) {
+    } else if (_isALetter(state.script[state.scriptIndex])) {
       while (!isDelimiter(state.script[state.scriptIndex])) {
         state.token += state.script[state.scriptIndex];
         state.scriptIndex++;
@@ -2058,7 +2061,7 @@ class _GCWizardSCriptInterpreter {
       } else {
         state.tokenType = COMMAND;
       }
-    } else if (_isDigit(state.script[state.scriptIndex])) {
+    } else if (_isADigit(state.script[state.scriptIndex])) {
       while (!isDelimiter(state.script[state.scriptIndex])) {
         state.token += state.script[state.scriptIndex];
         state.scriptIndex++;

@@ -4,7 +4,7 @@ const _defaultAlphabetAlpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _defaultAlphabetDigits = '0123456789';
 
 String _rotx(Object text, Object rot) {
-  if (_isNotString(text) || _isString(rot)) {
+  if (_isNotAString(text) || _isAString(rot)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -12,7 +12,7 @@ String _rotx(Object text, Object rot) {
 }
 
 String _rot5(Object text, ) {
-  if (_isNotString(text)) {
+  if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -22,7 +22,7 @@ String _rot5(Object text, ) {
 }
 
 String _rot13(Object text, ) {
-  if (_isNotString(text)) {
+  if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -32,7 +32,7 @@ String _rot13(Object text, ) {
 }
 
 String _rot18(Object text, ) {
-  if (_isNotString(text)) {
+  if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -49,7 +49,7 @@ String _rot18(Object text, ) {
 }
 
 String _rot47(Object text, ) {
-  if (_isNotString(text)) {
+  if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -60,7 +60,7 @@ String _rot47(Object text, ) {
 }
 
 int _bww(Object text, Object opt_alph, Object opt_itqs) {
-  if (_isNotString(text) || _isString(opt_alph) || _isString(opt_itqs)) {
+  if (_isNotAString(text) || _isAString(opt_alph) || _isAString(opt_itqs)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -96,7 +96,7 @@ int _bww(Object text, Object opt_alph, Object opt_itqs) {
 }
 
 String _decToRoman(Object x) {
-  if (_isString(x)) {
+  if (_isAString(x)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -104,7 +104,7 @@ String _decToRoman(Object x) {
 }
 
 int _romanToDec(Object x) {
-  if (_isInt(x) || _isDouble(x)) {
+  if (_isAInt(x) || _isADouble(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }

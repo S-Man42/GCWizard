@@ -64,6 +64,7 @@ const List<String> _Functions_5 = [
   'DATUM(',
   'FLOOR(',
   'IQSUM(',
+  'ISINT(',
   'ISSQR(',
   'RIGHT(',
   'ROT13(',
@@ -79,6 +80,8 @@ const List<String> _Functions_6 = [
   'CIRCLE(',
   'GETLAT(',
   'GETLON(',
+  'ISCHAR(',
+  'ISLIST(',
   'SETLAT(',
   'SETLON(',
   'STROKE(',
@@ -103,6 +106,9 @@ const List<String> _Functions_8 = [
   'DMMTODMS(',
   'DMSTODEC(',
   'DMSTODMM(',
+  'ISDOUBLE(',
+  'ISNUMBER(',
+  'ISSTRING(',
   'LISTSORT(',
   'READFILE(',
 ];
@@ -267,6 +273,14 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'READFILE': _GCWizardScriptClassFunctionDefinition(_readFile, 2),
   'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writeFile, 1,  functionReturn: false),
   'EOF': _GCWizardScriptClassFunctionDefinition(_eof, 0),
+
+  // datatypes
+  'ISNUMBER': _GCWizardScriptClassFunctionDefinition(_isNumber, 1),
+  'ISINT': _GCWizardScriptClassFunctionDefinition(_isInt, 1),
+  'ISDOUBLE': _GCWizardScriptClassFunctionDefinition(_isDouble, 1),
+  'ISCHAR': _GCWizardScriptClassFunctionDefinition(_isChar, 1),
+  'ISSTRING': _GCWizardScriptClassFunctionDefinition(_isString, 1),
+  'ISLIST': _GCWizardScriptClassFunctionDefinition(_isList, 1),
 };
 
 List<String> scriptFunctions() {

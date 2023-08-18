@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 String _hash(Object t, Object b, Object km, Object k, Object x) {
-  if (_isNotString(t) || _isNotInt(b) || _isNotInt(km) || _isNotString(k)) {
+  if (_isNotAString(t) || _isNotAInt(b) || _isNotAInt(km) || _isNotAString(k)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }

@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 void _wptsAdd(Object lat, Object lon) {
-  if (_isString(lat) || _isString(lon)) {
+  if (_isAString(lat) || _isAString(lon)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -31,7 +31,7 @@ int _wptsCount() {
 }
 
 double _wptsLat(Object i) {
-  if (!_isNumber(i)) {
+  if (!_isANumber(i)) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
@@ -43,7 +43,7 @@ double _wptsLat(Object i) {
 }
 
 double _wptsLon(Object i) {
-  if (!_isNumber(i)) {
+  if (!_isANumber(i)) {
     _handleError(_INVALIDTYPECAST);
     return 0.0;
   }
@@ -55,7 +55,7 @@ double _wptsLon(Object i) {
 }
 
 void _wptsCenter(Object x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }

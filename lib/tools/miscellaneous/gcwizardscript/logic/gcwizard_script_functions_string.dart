@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 String _char(Object x) {
-  if (_isString(x)) {
+  if (_isAString(x)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -9,7 +9,7 @@ String _char(Object x) {
 }
 
 int _asc(Object x) {
-  if (_isNotString(x)) {
+  if (_isNotAString(x)) {
     _handleError(_INVALIDTYPECAST);
     return -1;
   }
@@ -18,7 +18,7 @@ int _asc(Object x) {
 
 String _left(Object x, Object count) {
   print(x.runtimeType);
-  if (_isNotString(x) || _isNotInt(count)) {
+  if (_isNotAString(x) || _isNotAInt(count)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   } else {
@@ -28,7 +28,7 @@ String _left(Object x, Object count) {
 
 String _right(Object x, Object count) {
   print(x.runtimeType);
-  if (_isNotString(x) || _isNotInt(count)) {
+  if (_isNotAString(x) || _isNotAInt(count)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   } else {
@@ -37,7 +37,7 @@ String _right(Object x, Object count) {
 }
 
 String _mid(Object x, Object start, Object len) {
-  if (_isNotString(x) || _isNotInt(start) || _isNotInt(len)) {
+  if (_isNotAString(x) || _isNotAInt(start) || _isNotAInt(len)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   } else {
@@ -46,7 +46,7 @@ String _mid(Object x, Object start, Object len) {
 }
 
 int _len(Object x) {
-  if (_isNotString(x)) {
+  if (_isNotAString(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -54,7 +54,7 @@ int _len(Object x) {
 }
 
 String _str(Object x) {
-  if (_isString(x)) {
+  if (_isAString(x)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -64,10 +64,10 @@ String _str(Object x) {
 }
 
 Object _val(Object x) {
-  if (_isList(x)) {
+  if (_isAList(x)) {
     _handleError(_INVALIDTYPECAST);
     return '';
-  } else if (_isNumber(x)) {
+  } else if (_isANumber(x)) {
     return x;
   } else if (int.tryParse(x as String) != null) {
     return int.parse(x).toDouble();
@@ -82,7 +82,7 @@ Object _val(Object x) {
 }
 
 String _subst(Object text, Object x, Object y, Object caseSensitive){
-  if (_isNotString(text) || _isNotString(x) || _isNotString(y) || _isNotInt(caseSensitive)) {
+  if (_isNotAString(text) || _isNotAString(x) || _isNotAString(y) || _isNotAInt(caseSensitive)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }

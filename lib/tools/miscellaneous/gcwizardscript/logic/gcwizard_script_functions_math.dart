@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 int _sgn(Object? x) {
-  if (_isNotNumber(x)) {
+  if (_isNotANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   } else if (x as num == 0) {
@@ -15,7 +15,7 @@ int _sgn(Object? x) {
 
 num _mod(Object? x, Object? y) {
   num result = 0;
-  if (_isNotNumber(x) || _isNotNumber(y)) {
+  if (_isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
   } else
   if (y == 0) {
@@ -27,7 +27,7 @@ num _mod(Object? x, Object? y) {
 }
 
 double _sqrt(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -35,7 +35,7 @@ double _sqrt(Object? x) {
 }
 
 num _sqr(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -43,7 +43,7 @@ num _sqr(Object? x) {
 }
 
 double _exp(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -51,7 +51,7 @@ double _exp(Object? x) {
 }
 
 double _sin(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -59,7 +59,7 @@ double _sin(Object? x) {
 }
 
 double _cos(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -67,7 +67,7 @@ double _cos(Object? x) {
 }
 
 double _tan(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -75,7 +75,7 @@ double _tan(Object? x) {
 }
 
 double _asin(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -83,7 +83,7 @@ double _asin(Object? x) {
 }
 
 double _acos(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -91,7 +91,7 @@ double _acos(Object? x) {
 }
 
 double _atan(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -99,7 +99,7 @@ double _atan(Object? x) {
 }
 
 double _deg(Object? radian) {
-  if (!_isNumber(radian)) {
+  if (!_isANumber(radian)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -107,7 +107,7 @@ double _deg(Object? radian) {
 }
 
 double _rad(Object? degree) {
-  if (!_isNumber(degree)) {
+  if (!_isANumber(degree)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -115,7 +115,7 @@ double _rad(Object? degree) {
 }
 
 int _ceil(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -123,7 +123,7 @@ int _ceil(Object? x) {
 }
 
 int _floor(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -131,7 +131,7 @@ int _floor(Object? x) {
 }
 
 double _ln(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -139,7 +139,7 @@ double _ln(Object? x) {
 }
 
 double _log10(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -151,7 +151,7 @@ double _pi() {
 }
 
 double _rnd(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -165,7 +165,7 @@ double _rnd(Object? x) {
 }
 
 int _fac(Object? x) {
-  if (_isNotInt(x)) {
+  if (_isNotAInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -178,7 +178,7 @@ int _fac(Object? x) {
 }
 
 num _frac(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -186,7 +186,7 @@ num _frac(Object? x) {
 }
 
 int _trunc(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -194,7 +194,7 @@ int _trunc(Object? x) {
 }
 
 num _abs(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -202,7 +202,7 @@ num _abs(Object? x) {
 }
 
 num _pow(Object? x, Object? y) {
-  if (!_isNumber(x) || !_isNumber(y)) {
+  if (!_isANumber(x) || !_isANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -210,19 +210,19 @@ num _pow(Object? x, Object? y) {
 }
 
 int _qsum(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
   int result = 0;
   x.toString().split('').forEach((digit) {
-    result += _isDigit(digit) ? int.parse(digit) : 0;
+    result += _isADigit(digit) ? int.parse(digit) : 0;
   });
   return result;
 }
 
 int _iqsum(Object? x) {
-  if (!_isNumber(x)) {
+  if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -234,7 +234,7 @@ int _iqsum(Object? x) {
 }
 
 int _ggt(Object? x, Object? y) {
-  if (_isNotNumber(x) || _isNotNumber(y)) {
+  if (_isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   } else {
@@ -254,7 +254,7 @@ int _ggt(Object? x, Object? y) {
 }
 
 num _kgv(Object? x, Object? y) {
-  if (_isNotNumber(x) || _isNotNumber(y)) {
+  if (_isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -263,7 +263,7 @@ num _kgv(Object? x, Object? y) {
 }
 
 int _gcd(Object? x, Object? y) {
-  if (!_isNumber(x) || !_isNumber(y)) {
+  if (!_isANumber(x) || !_isANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -282,7 +282,7 @@ int _gcd(Object? x, Object? y) {
 }
 
 num _lcm(Object? x, Object? y) {
-  if (!_isNumber(x) || !_isNumber(y)) {
+  if (!_isANumber(x) || !_isANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -291,10 +291,10 @@ num _lcm(Object? x, Object? y) {
 }
 
 String _convertBase(Object? value, Object? startBase, Object? destinationBase) {
-  if (_isNumber(value)) {
+  if (_isANumber(value)) {
     value = value.toString();
   }
-  if (_isNotInt(startBase) || _isNotInt(destinationBase)) {
+  if (_isNotAInt(startBase) || _isNotAInt(destinationBase)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -302,7 +302,7 @@ String _convertBase(Object? value, Object? startBase, Object? destinationBase) {
 }
 
 int _isPrime(Object x){
-  if (_isNotInt(x)) {
+  if (_isNotAInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return -1;
   }
@@ -313,7 +313,7 @@ int _isPrime(Object x){
 }
 
 double _round(Object? x, Object? y){
-  if (_isNotNumber(x) || _isNotInt(y)) {
+  if (_isNotANumber(x) || _isNotAInt(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
@@ -321,7 +321,7 @@ double _round(Object? x, Object? y){
 }
 
 int _isSqr(Object? x){
-  if (_isNotInt(x)) {
+  if (_isNotAInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return -1;
   }
@@ -332,7 +332,7 @@ int _isSqr(Object? x){
 }
 
 int _div(Object? x, Object? y) {
-  if (_isNotNumber(x) || _isNotNumber(y)) {
+  if (_isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }

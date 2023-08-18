@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 String _wgs84(Object x, Object y) {
-  if (_isNotNumber(x) || _isNotNumber(y)) {
+  if (_isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -18,7 +18,7 @@ double _getLat() {
 }
 
 void _setLon(Object x) {
-  if (_isNotNumber(x)) {
+  if (_isNotANumber(x)) {
     _handleError(_INVALIDTYPECAST);
   }
   if ((x as num).abs() > 180) {
@@ -30,7 +30,7 @@ void _setLon(Object x) {
 }
 
 void _setLat(Object x) {
-  if (_isNotNumber(x)) {
+  if (_isNotANumber(x)) {
     _handleError(_INVALIDTYPECAST);
   }
   if ((x as num).abs() > 90) {
@@ -42,7 +42,7 @@ void _setLat(Object x) {
 }
 
 _GCWList _convertTo(Object target) {
-  if (_isNotInt(target)) {
+  if (_isNotAInt(target)) {
     _handleError(_INVALIDTYPECAST);
   }
 
@@ -343,7 +343,7 @@ _GCWList _convertTo(Object target) {
 }
 
 void _convertFrom(Object source, _GCWList parameter) {
-  if (_isNotNumber(source)) {
+  if (_isNotANumber(source)) {
     _handleError(_INVALIDTYPECAST);
   }
 
@@ -374,12 +374,12 @@ void _convertFrom(Object source, _GCWList parameter) {
       }
       parameter_5 = _listGet(parameter, 4)!;
       parameter_6 = _listGet(parameter, 5)!;
-      if (_isNotString(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotInt(parameter_2)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
-      if (_isNotString(parameter_4)) _handleError(_INVALIDTYPECAST);
-      if (_isNotInt(parameter_5)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_6)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_4)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_5)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_6)) _handleError(_INVALIDTYPECAST);
       DMM result = DMM(DMMLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as double),
         DMMLongitude(parameter_4 as int, parameter_5 as int, parameter_6 as double),);
       coord = dmmToLatLon(result);
@@ -403,12 +403,12 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_6 = _listGet(parameter, 5)!;
       parameter_7 = _listGet(parameter, 6)!;
       parameter_8 = _listGet(parameter, 7)!;
-      if (_isNotString(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotInt(parameter_2)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
-      if (_isNotString(parameter_4)) _handleError(_INVALIDTYPECAST);
-      if (_isNotInt(parameter_5)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_6)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_4)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_5)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_6)) _handleError(_INVALIDTYPECAST);
       DMS result = DMS(DMSLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as int, parameter_7 as double),
         DMSLongitude(parameter_5 as int, parameter_6 as int, parameter_7 as int, parameter_8 as double),);
       coord = dmsToLatLon(result);
@@ -420,10 +420,10 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       parameter_3 = _listGet(parameter, 2)!;
       parameter_4 = _listGet(parameter, 3)!;
-      if (_isNotInt(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotString(parameter_2)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_4)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_4)) _handleError(_INVALIDTYPECAST);
       UTMREF result = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as double,
           parameter_4 as double);
       coord = UTMREFtoLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
@@ -436,11 +436,11 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_3 = _listGet(parameter, 2)!;
       parameter_4 = _listGet(parameter, 3)!;
       parameter_5 = _listGet(parameter, 4)!;
-      if (_isNotInt(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotString(parameter_2)) _handleError(_INVALIDTYPECAST);
-      if (_isNotString(parameter_3)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_4)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_5)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAString(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_4)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_5)) _handleError(_INVALIDTYPECAST);
       MGRS result = MGRS(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as String, parameter_4 as double,
           parameter_5 as double);
       coord = mgrsToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
@@ -451,9 +451,9 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
       parameter_3 = _listGet(parameter, 2)!;
-      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_3)) _handleError(_INVALIDTYPECAST);
       XYZ result = XYZ(parameter_1 as double, parameter_2 as double, parameter_3 as double,);
       coord = xyzToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
@@ -463,8 +463,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       SwissGrid result = SwissGrid(parameter_1 as double, parameter_2 as double, );
       coord = swissGridToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
     break;
@@ -473,8 +473,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       DutchGrid result = DutchGrid(parameter_1 as double, parameter_2 as double, );
       coord = dutchGridToLatLon(result);
       break;
@@ -487,8 +487,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       GaussKrueger result = GaussKrueger(_GCW_SCRIPT_COORD_CONVERTER[source]!, parameter_1 as double, parameter_2 as double, );
       coord = gaussKruegerToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
     break;
@@ -509,8 +509,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       Lambert result = Lambert(_GCW_SCRIPT_COORD_CONVERTER[source]!, parameter_1 as double, parameter_2 as double, );
       coord = lambertToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
@@ -518,7 +518,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_MAIDENHEAD: //= 11;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Maidenhead result = Maidenhead(parameter_1 as String);
       coord = maidenheadToLatLon(result);
       break;
@@ -527,8 +527,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       Mercator result = Mercator(parameter_1 as double, parameter_2 as double, );
       coord = mercatorToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
@@ -537,8 +537,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isList(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_2)) _handleError(_INVALIDTYPECAST);
       NaturalAreaCode result = NaturalAreaCode(parameter_1 as String, parameter_2 as String, );
       coord = naturalAreaCodeToLatLon(result);
       break;
@@ -577,8 +577,8 @@ void _convertFrom(Object source, _GCWList parameter) {
     if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
     parameter_1 = _listGet(parameter, 0)!;
     parameter_2 = _listGet(parameter, 1)!;
-    if (_isNotNumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-    if (_isNotNumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+    if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+    if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
     SlippyMap result = SlippyMap(parameter_1 as double, parameter_2 as double, _GCW_SCRIPT_COORD_CONVERTER[source]!);
     coord = slippyMapToLatLon(result);
       break;
@@ -586,7 +586,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_GEOHASH: //= 15;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Geohash result = Geohash(parameter_1 as String);
       coord = geohashToLatLon(result);
       break;
@@ -594,7 +594,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_GEO3X3: //= 16;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Geo3x3 result = Geo3x3(parameter_1 as String);
       coord = geo3x3ToLatLon(result);
       break;
@@ -602,7 +602,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_GEOHEX: //= 17;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       GeoHex result = GeoHex(parameter_1 as String);
       coord = geoHexToLatLon(result);
       break;
@@ -610,7 +610,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_OPEN_LOCATION_CODE: //= 18;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       OpenLocationCode result = OpenLocationCode(parameter_1 as String);
       coord = openLocationCodeToLatLon(result);
       break;
@@ -618,7 +618,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_MAKANEY: //= 19;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Makaney result = Makaney(parameter_1 as String);
       coord = makaneyToLatLon(result);
       break;
@@ -626,7 +626,7 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_QUADTREE: //= 20;
       if (_listLength(parameter) != 1) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
-      if (_isNotList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Quadtree result = Quadtree(parameter_1 as List<int>);
       coord = quadtreeToLatLon(result);
       break;
@@ -636,9 +636,9 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
       parameter_3 = _listGet(parameter, 2)!;
-      if (_isNotInt(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isNotInt(parameter_2)) _handleError(_INVALIDTYPECAST);
-      if (_isNotInt(parameter_3)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isNotAInt(parameter_3)) _handleError(_INVALIDTYPECAST);
       ReverseWherigoWaldmeister result = ReverseWherigoWaldmeister(parameter_1 as int, parameter_2 as int, parameter_3 as int);
       coord = reverseWIGWaldmeisterToLatLon(result);
       break;
@@ -647,8 +647,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
       parameter_1 = _listGet(parameter, 0)!;
       parameter_2 = _listGet(parameter, 1)!;
-      if (_isList(parameter_1)) _handleError(_INVALIDTYPECAST);
-      if (_isList(parameter_2)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isAList(parameter_2)) _handleError(_INVALIDTYPECAST);
       ReverseWherigoDay1976 result = ReverseWherigoDay1976(parameter_1 as String, parameter_2 as String);
       coord = reverseWIGDay1976ToLatLon(result);
       break;
@@ -663,7 +663,7 @@ void _convertFrom(Object source, _GCWList parameter) {
 }
 
 double _distance(Object x1, Object y1, Object x2, Object y2) {
-  if (_isNotNumber(x1) || _isNotNumber(y1) || _isNotNumber(x2) || _isNotNumber(y2)) {
+  if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(x2) || _isNotANumber(y2)) {
     _handleError(_INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
@@ -672,7 +672,7 @@ double _distance(Object x1, Object y1, Object x2, Object y2) {
 }
 
 double _bearing(Object x1, Object y1, Object x2, Object y2) {
-  if (_isNotNumber(x1) || _isNotNumber(y1) || _isNotNumber(x2) || _isNotNumber(y2)) {
+  if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(x2) || _isNotANumber(y2)) {
     _handleError(_INVALIDTYPECAST);
   }
   return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
@@ -681,7 +681,7 @@ double _bearing(Object x1, Object y1, Object x2, Object y2) {
 }
 
 void _projection(Object x1, Object y1, Object dist, Object angle) {
-  if (_isNotNumber(x1) || _isNotNumber(y1) || _isNotNumber(dist) || _isNotNumber(angle)) {
+  if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(dist) || _isNotANumber(angle)) {
     _handleError(_INVALIDTYPECAST);
   }
   LatLng _currentValues = projection(
@@ -691,7 +691,7 @@ void _projection(Object x1, Object y1, Object dist, Object angle) {
 }
 
 void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
-  if (_isNotNumber(lat1) || _isNotNumber(lon1) || _isNotNumber(lat2) || _isNotNumber(lon2) || _isNotNumber(lat3) || _isNotNumber(lon3)) {
+  if (_isNotANumber(lat1) || _isNotANumber(lon1) || _isNotANumber(lat2) || _isNotANumber(lon2) || _isNotANumber(lat3) || _isNotANumber(lon3)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -710,7 +710,7 @@ void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Obje
 }
 
 void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
-  if (_isNotNumber(lat1) || _isNotNumber(lon1) || _isNotNumber(lat2) || _isNotNumber(lon2)) {
+  if (_isNotANumber(lat1) || _isNotANumber(lon1) || _isNotANumber(lat2) || _isNotANumber(lon2)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
@@ -721,20 +721,20 @@ void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
 }
 
 double _dmmtodec(Object? dec, Object? min) {
-  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotAInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotANumber(min)) _handleError(_INVALIDTYPECAST);
   return (dec as int) + (min as double) / 60;
 }
 
 double _dmstodec(Object? dec, Object? min, Object? sec) {
-  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotInt(min)) _handleError(_INVALIDTYPECAST);
-  if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotAInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotAInt(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotANumber(sec)) _handleError(_INVALIDTYPECAST);
   return (dec as int) + (min as int) / 60 + (sec as double) / 3600;
 }
 
 String _dectodmm(Object? dec) {
-  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotANumber(dec)) _handleError(_INVALIDTYPECAST);
   String result = '';
   double ms = 0.0;
 
@@ -746,7 +746,7 @@ String _dectodmm(Object? dec) {
 }
 
 String _dectodms(Object? dec) {
-  if (_isNotNumber(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotANumber(dec)) _handleError(_INVALIDTYPECAST);
   String result = '';
   double ms = 0.0;
 
@@ -761,15 +761,15 @@ String _dectodms(Object? dec) {
 }
 
 String _dmmtodms(Object? dec, Object? min) {
-  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotNumber(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotAInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotANumber(min)) _handleError(_INVALIDTYPECAST);
   return (_dectodms(_dmmtodec(dec as int, min as double)));
 }
 
 String _dmstodmm(Object? dec, Object? min, Object? sec) {
-  if (_isNotInt(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotInt(min)) _handleError(_INVALIDTYPECAST);
-  if (_isNotNumber(sec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotAInt(dec)) _handleError(_INVALIDTYPECAST);
+  if (_isNotAInt(min)) _handleError(_INVALIDTYPECAST);
+  if (_isNotANumber(sec)) _handleError(_INVALIDTYPECAST);
 
   return (_dectodmm(_dmstodec(dec as int, min as int, sec as double)));
 }

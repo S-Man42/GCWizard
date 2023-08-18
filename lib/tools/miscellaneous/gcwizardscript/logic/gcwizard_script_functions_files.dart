@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_scr
 
 Object? _readFile(Object mode, Object index) {
   Object? result;
-  if (_isNotInt(mode) || _isNotInt(index)) {
+  if (_isNotAInt(mode) || _isNotAInt(index)) {
     _handleError(_INVALIDTYPECAST);
     return null;
   }
@@ -121,11 +121,11 @@ int _readInt16(List<int> byteList, int offset) {
 }
 
 void _writeFile(Object? value) {
-  if (_isList(value)) {
+  if (_isAList(value)) {
     _writeFileList(value as _GCWList);
-  } else if (_isString(value)) {
+  } else if (_isAString(value)) {
     _writeFileString(value as String);
-  } else if (_isInt(value)) {
+  } else if (_isAInt(value)) {
     _writeFileInt(value as int);
   } else {
     _writeFileDouble(value as double);
@@ -135,11 +135,11 @@ void _writeFile(Object? value) {
 
 void _writeFileList(_GCWList value){
   value.getContent().forEach((element) {
-    if (_isList(element)) {
+    if (_isAList(element)) {
       _writeFileList(element as _GCWList);
-    } else if (_isString(element)) {
+    } else if (_isAString(element)) {
       _writeFileString(element as String);
-    } else if (_isInt(element)) {
+    } else if (_isAInt(element)) {
       _writeFileInt(element as int);
     } else {
       _writeFileDouble(element as double);
