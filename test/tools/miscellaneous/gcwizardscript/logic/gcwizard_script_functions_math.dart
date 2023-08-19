@@ -76,7 +76,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print FAC(-2.6)', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
   {'code' : 'print FAC(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print FAC( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print FAC(X)', 'expectedOutput' : '0'},
+  {'code' : 'print FAC(X)', 'expectedOutput' : '1'},
 
   {'code' : 'print FRAC(3)', 'expectedOutput' : '0'},
   {'code' : 'print FRAC(3.6)', 'expectedOutput' : '0.6000000000000001'},
@@ -182,7 +182,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SQR(-2.6)', 'expectedOutput' : '6.760000000000001'},
   {'code' : 'print SQR(-2.6, 5)', 'expectedOutput' : '0.0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print SQR( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
-  {'code' : 'print SQR(X)', 'expectedOutput' : '0.0'},
+  {'code' : 'print SQR(X)', 'expectedOutput' : '0'},
 
   {'code' : 'print DEG(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print DEG(1)', 'expectedOutput' : '57.29577951308232'},
