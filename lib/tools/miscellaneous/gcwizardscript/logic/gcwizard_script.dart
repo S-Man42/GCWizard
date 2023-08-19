@@ -332,7 +332,8 @@ class _GCWizardSCriptInterpreter {
         case FUNCTION:
           executeFunction(state.token, state.tokenType);
           break;
-        default: executeCommand();
+        default:
+          executeCommand();
       }
 
       iterations++;
@@ -355,13 +356,12 @@ class _GCWizardSCriptInterpreter {
       VariableDump: _variableDump(),
       randomNumber: state.randomNumber,
 
-      continueState:
-          (state.errorMessage == _errorMessages[_INPUTMISSING] ||
+      continueState: (state.errorMessage == _errorMessages[_INPUTMISSING] ||
               state.errorMessage == _errorMessages[_FILEMISSING] ||
               state.errorMessage == _errorMessages[_FILESAVING] ||
               state.errorMessage == _errorMessages[_PRINTERROR])
-              ? state
-              : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
+          ? state
+          : null, // state ans widget übergeben, damit es weis, das es noch weiter geht
 
       BreakType: BreakType,
       //  continueState: state.errorMessage == _errorMessages[_INPUTMISSING] ? state : null
@@ -545,12 +545,12 @@ class _GCWizardSCriptInterpreter {
     }
   }
 
-  void executeCommandNEWFILE(){
+  void executeCommandNEWFILE() {
     state.FILE = [];
     state.FILEINDEX = 0;
   }
 
-  void executeCommandOPENFILE(){
+  void executeCommandOPENFILE() {
     state.FILE = [];
     state.FILEINDEX = 0;
     int scriptIndex_save = state.scriptIndex;
@@ -565,7 +565,7 @@ class _GCWizardSCriptInterpreter {
     }
   }
 
-  void executeCommandSAVEFILE(){
+  void executeCommandSAVEFILE() {
     int scriptIndex_save = state.scriptIndex;
 
     state.continueLoop = false;
@@ -655,7 +655,7 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandRANDOMIZE() {}
 
-  void executeCommandDIM(){
+  void executeCommandDIM() {
     getToken();
     state.variables[state.token] = _GCWList();
   }
@@ -668,41 +668,41 @@ class _GCWizardSCriptInterpreter {
 
     // wenn state.continueLoop dann wenn nötig mit der Sonderbehandlung auswerten oder den Codeblock überspringen, damit er nicht doppelt ausgewertet wird
     //if (!state.continueLoop) {
-      do {
+    do {
+      getToken();
+      if (state.keywordToken == EOL || state.token == EOP) break;
+
+      if (state.tokenType == QUOTEDSTR) {
+        state.STDOUT += state.token;
+        len += state.token.length;
         getToken();
-        if (state.keywordToken == EOL || state.token == EOP) break;
+      } else {
+        putBack();
+        result = evaluateExpression();
+        getToken();
+        state.STDOUT += result.toString();
 
-        if (state.tokenType == QUOTEDSTR) {
-          state.STDOUT += state.token;
-          len += state.token.length;
-          getToken();
-        } else {
-          putBack();
-          result = evaluateExpression();
-          getToken();
-          state.STDOUT += result.toString();
+        var t = result;
+        len += t.toString().length; // save length
+      }
+      lastDelimiter = state.token;
 
-          var t = result;
-          len += t.toString().length; // save length
-        }
-        lastDelimiter = state.token;
-
-        if (lastDelimiter == ",") {
-          spaces = 8 - (len % 8);
-          len += spaces;
-          while (spaces != 0) {
-            state.STDOUT += " ";
-            spaces--;
-          }
-        } else if (state.token == ";") {
+      if (lastDelimiter == ",") {
+        spaces = 8 - (len % 8);
+        len += spaces;
+        while (spaces != 0) {
           state.STDOUT += " ";
-          len++;
-        } else if (state.keywordToken != EOL && state.token != EOP) {
-          _handleError(_SYNTAXERROR);
+          spaces--;
         }
-      } while (lastDelimiter == ";" || lastDelimiter == ",");
+      } else if (state.token == ";") {
+        state.STDOUT += " ";
+        len++;
+      } else if (state.keywordToken != EOL && state.token != EOP) {
+        _handleError(_SYNTAXERROR);
+      }
+    } while (lastDelimiter == ";" || lastDelimiter == ",");
 
-      //state.continueLoop = true;
+    //state.continueLoop = true;
     //}
 
     if (state.keywordToken == EOL || state.token == EOP) {
@@ -898,7 +898,8 @@ class _GCWizardSCriptInterpreter {
   void findNextCASE() {
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('CASE') || state.script.substring(pc).toUpperCase().startsWith('DEFAULT')) {
+      if (state.script.substring(pc).toUpperCase().startsWith('CASE') ||
+          state.script.substring(pc).toUpperCase().startsWith('DEFAULT')) {
         result = pc;
         break;
       }
@@ -993,7 +994,7 @@ class _GCWizardSCriptInterpreter {
         stckvar.stepValue = (stepValue as int).toInt();
       } else if (_isADouble(stepValue)) {
         stckvar.stepValue = (stepValue as num).toDouble();
-      } else{
+      } else {
         _handleError(_INVALIDTYPECAST);
       }
     }
@@ -1072,7 +1073,6 @@ class _GCWizardSCriptInterpreter {
       }
       state.forStack.push(stckvar);
       state.scriptIndex = stckvar.loopStart;
-
     } catch (IllegalOperationException) {
       _handleError(_NEXTWITHOUTFOR);
     }
@@ -1296,22 +1296,22 @@ class _GCWizardSCriptInterpreter {
             state.graficOutput.graphics = [];
             state.graficOutput.graphic = true;
             state.graficOutput.GCWizardSCriptScreenWidth =
-            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
             state.graficOutput.GCWizardSCriptScreenHeight =
-            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
             state.graficOutput.GCWizardSCriptScreenColors =
-            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
             break;
           case 2:
             state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXTGRAPHIC;
             state.graficOutput.graphics = [];
             state.graficOutput.graphic = true;
             state.graficOutput.GCWizardSCriptScreenWidth =
-            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
             state.graficOutput.GCWizardSCriptScreenHeight =
-            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
             state.graficOutput.GCWizardSCriptScreenColors =
-            SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
             break;
           default:
             _handleError(_INVALIDSCREEN);
@@ -1363,7 +1363,7 @@ class _GCWizardSCriptInterpreter {
     Object? partialResult4;
     Object? partialResult5;
     Object? partialResult6;
-    Object? result;
+    Object? result = '';
 
     void executeFunction_0_parameter() {
       getToken();
@@ -1385,6 +1385,7 @@ class _GCWizardSCriptInterpreter {
         result = '';
       }
     }
+
     void executeFunction_1_parameter() {
       getToken();
       partialResult1 = evaluateExpressionParantheses();
@@ -1392,35 +1393,34 @@ class _GCWizardSCriptInterpreter {
         result = _FUNCTIONS[command]!.functionName(partialResult1);
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1);
-      }    }
+      }
+    }
 
     void executeFunction_2_parameter() {
-      print('function param 2');
       getToken();
-      print(state.token);
       if (state.token == "(") {
         getToken();
-        print(state.token);
         partialResult1 = evaluateExpressionAddSubOperators();
-        print(state.token);
-        if (state.token != ",") {
+        if (state.token == ')') {
+          _handleError(_INVALIDNUMBEROFPARAMETER);
+        } else if (state.token != ",") {
           _handleError(_MISSINGPARAMETER);
+        } else {
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token != ")") {
+            _handleError(_UNBALANCEDPARENTHESES);
+          } else {
+            if (_FUNCTIONS[command]!.functionReturn) {
+              result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
+            } else {
+              _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
+            }
+            getToken();
+          }
         }
-        getToken();
-        print(state.token);
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") {
-          _handleError(_UNBALANCEDPARENTHESES);
-        }
-        getToken();
-        print(state.token);
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2);
       }
     }
 
@@ -1470,7 +1470,8 @@ class _GCWizardSCriptInterpreter {
         result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       } else {
         _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
-      }    }
+      }
+    }
 
     void executeFunction_5_parameter() {
       getToken();
@@ -1539,22 +1540,38 @@ class _GCWizardSCriptInterpreter {
 
     try {
       switch (_FUNCTIONS[command]!.functionParamCount) {
-        case 0: executeFunction_0_parameter(); break;
-        case 1: executeFunction_1_parameter();break;
-        case 2: executeFunction_2_parameter();break;
-        case 3: executeFunction_3_parameter();break;
-        case 4: executeFunction_4_parameter();break;
-        case 5: executeFunction_5_parameter();break;
-        case 6: executeFunction_6_parameter();break;
-        default: _handleError(_INVALIDNUMBEROFPARAMETER);
-                 result = '';
+        case 0:
+          executeFunction_0_parameter();
+          break;
+        case 1:
+          executeFunction_1_parameter();
+          break;
+        case 2:
+          executeFunction_2_parameter();
+          break;
+        case 3:
+          executeFunction_3_parameter();
+          break;
+        case 4:
+          executeFunction_4_parameter();
+          break;
+        case 5:
+          executeFunction_5_parameter();
+          break;
+        case 6:
+          executeFunction_6_parameter();
+          break;
+        default:
+          _handleError(_INVALIDNUMBEROFPARAMETER);
+          result = '';
       }
 
       return result;
-    } catch (exception){
+    } catch (exception) {
+      print('EXCEPTION - '+ exception.toString());
       if (exception.toString().split(' ').contains("'_GCWList?'")) {
         _handleError(_LISTNOTDEFINED);
-        return null;
+        return '';
       }
     }
     return '';
@@ -1903,8 +1920,10 @@ class _GCWizardSCriptInterpreter {
 
   bool isTokenAFunction() {
     for (int i = 17; i > 1; i--) {
-      if (_IMPLEMENTED_FUNCTIONS[i]!.contains(state.script.substring(state.scriptIndex,
-          (state.scriptIndex + (i + 1) < state.script.length) ? state.scriptIndex + (i + 1) : state.scriptIndex).toUpperCase())) {
+      if (_IMPLEMENTED_FUNCTIONS[i]!.contains(state.script
+          .substring(state.scriptIndex,
+              (state.scriptIndex + (i + 1) < state.script.length) ? state.scriptIndex + (i + 1) : state.scriptIndex)
+          .toUpperCase())) {
         state.token = state.script.substring(state.scriptIndex, state.scriptIndex + i).toUpperCase();
         state.scriptIndex += i;
         return true;
