@@ -334,6 +334,7 @@ class _GCWizardSCriptInterpreter {
           break;
         default: executeCommand();
       }
+      print(state.halt.toString()+' '+state.errorMessage);
 
       iterations++;
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
@@ -1365,23 +1366,54 @@ class _GCWizardSCriptInterpreter {
     Object? partialResult6;
     Object? result;
 
+    void executeFunction_0_parameter() {
+      getToken();
+      if (state.token == "(") {
+        getToken();
+        if (state.token == ")") {
+          if (_FUNCTIONS[command]!.functionReturn) {
+            result = _FUNCTIONS[command]!.functionName();
+          } else {
+            _FUNCTIONS[command]!.functionName();
+          }
+          state.scriptIndex = state.scriptIndex + 2;
+        } else {
+          _handleError(_INVALIDNUMBEROFPARAMETER);
+          result = '';
+        }
+      } else {
+        _handleError(_SYNTAXERROR);
+        result = '';
+      }
+    }
+    void executeFunction_1_parameter() {
+      getToken();
+      partialResult1 = evaluateExpressionParantheses();
+      if (_FUNCTIONS[command]!.functionReturn) {
+        result = _FUNCTIONS[command]!.functionName(partialResult1);
+      } else {
+        _FUNCTIONS[command]!.functionName(partialResult1);
+      }    }
+
+    void executeFunction_2_parameter() {}
+
+    void executeFunction_3_parameter() {}
+
+    void executeFunction_4_parameter() {}
+
+    void executeFunction_5_parameter() {}
+
+    void executeFunction_6_parameter() {}
+
+    void executeFunction_7_parameter() {}
+
+    void executeFunction_8_parameter() {}
+
     try {
       if (_FUNCTIONS[command]!.functionParamCount == 0) {
-        partialResult1 = evaluateExpressionParantheses();
-        if (_FUNCTIONS[command]!.functionReturn) {
-          result = _FUNCTIONS[command]!.functionName();
-        } else {
-          _FUNCTIONS[command]!.functionName();
-        }
-        state.scriptIndex = state.scriptIndex + 2;
+        executeFunction_0_parameter();
       } else if (_FUNCTIONS[state.token]!.functionParamCount == 1) {
-        getToken();
-        partialResult1 = evaluateExpressionParantheses();
-        if (_FUNCTIONS[command]!.functionReturn) {
-          result = _FUNCTIONS[command]!.functionName(partialResult1);
-        } else {
-          _FUNCTIONS[command]!.functionName(partialResult1);
-        }
+        executeFunction_1_parameter();
       } else if (_FUNCTIONS[command]!.functionParamCount == 2) {
         print('function param 2');
         getToken();
@@ -1524,7 +1556,7 @@ class _GCWizardSCriptInterpreter {
         return null;
       }
     }
-    return null;
+    return 0;
   }
 
   Object? evaluateExpression() {
@@ -1856,8 +1888,7 @@ class _GCWizardSCriptInterpreter {
 
   Object? getValueOfVariable(String variableName) {
     if (isNotAVariable(variableName)) {
-      _handleError(_SYNTAXERROR);
-      return 0.0;
+      state.variables[variableName] = 0;
     }
     return state.variables[variableName];
   }
@@ -1870,7 +1901,15 @@ class _GCWizardSCriptInterpreter {
   }
 
   bool isTokenAFunction() {
-    if (_Functions_17.contains(state.script.substring(state.scriptIndex,
+    for (int i = 17; i > 1; i--) {
+      if (_IMPLEMENTED_FUNCTIONS[i]!.contains(state.script.substring(state.scriptIndex,
+          (state.scriptIndex + (i + 1) < state.script.length) ? state.scriptIndex + (i + 1) : state.scriptIndex).toUpperCase())) {
+        state.token = state.script.substring(state.scriptIndex, state.scriptIndex + i).toUpperCase();
+        state.scriptIndex += i;
+        return true;
+      }
+    }
+    /*if (_Functions_17.contains(state.script.substring(state.scriptIndex,
         (state.scriptIndex + 18 < state.script.length) ? state.scriptIndex + 18 : state.scriptIndex).toUpperCase())) {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 17).toUpperCase();
       state.scriptIndex += 17;
@@ -1947,7 +1986,7 @@ class _GCWizardSCriptInterpreter {
       state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 2).toUpperCase();
       state.scriptIndex += 2;
       return true;
-    }
+    }*/
     return false;
   }
 

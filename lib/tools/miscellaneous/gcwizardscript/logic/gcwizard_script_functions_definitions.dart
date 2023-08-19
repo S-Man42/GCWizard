@@ -1,5 +1,24 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
+const Map<int, List<String>> _IMPLEMENTED_FUNCTIONS = {
+  17: _Functions_17,
+  16: _Functions_16,
+  15: _Functions_15,
+  14: _Functions_14,
+  13: _Functions_13,
+  12: _Functions_12,
+  11: _Functions_11,
+  10: _Functions_10,
+  9: _Functions_9,
+  8: _Functions_8,
+  7: _Functions_7,
+  6: _Functions_6,
+  5: _Functions_5,
+  4: _Functions_4,
+  3: _Functions_3,
+  2: _Functions_2,
+};
+
 const List<String> _Functions_2 = [
   'LN(',
   'PI(',
@@ -138,10 +157,13 @@ const List<String> _Functions_11 = [
 const List<String> _Functions_12 = [
   'LISTTOSTRING(',
 ];
+const List<String> _Functions_13 = [];
 const List<String> _Functions_14 = [
   'CENTERTWOPINTS(',
   'LISTISNOTEMPTY(',
 ];
+const List<String> _Functions_15 = [];
+const List<String> _Functions_16 = [];
 const List<String> _Functions_17 = [
   'CENTERTHREEPOINTS(',
 ];
@@ -163,8 +185,14 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),
   'WPTSCLEAR': _GCWizardScriptClassFunctionDefinition(_wptsClear, 0, functionReturn: false),
   'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, functionReturn: false),
-  'WPTSLON': _GCWizardScriptClassFunctionDefinition(_wptsLon, 1,),
-  'WPTSLAT': _GCWizardScriptClassFunctionDefinition(_wptsLat, 1,),
+  'WPTSLON': _GCWizardScriptClassFunctionDefinition(
+    _wptsLon,
+    1,
+  ),
+  'WPTSLAT': _GCWizardScriptClassFunctionDefinition(
+    _wptsLat,
+    1,
+  ),
   'WPTSCENTER': _GCWizardScriptClassFunctionDefinition(_wptsCenter, 1, functionReturn: false),
 
   // date, time
@@ -234,8 +262,14 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'MID': _GCWizardScriptClassFunctionDefinition(_mid, 3),
 
   // geocaching
-  'DECTOROMAN': _GCWizardScriptClassFunctionDefinition(_decToRoman, 1,),
-  'ROMANTODEC': _GCWizardScriptClassFunctionDefinition(_romanToDec, 1,),
+  'DECTOROMAN': _GCWizardScriptClassFunctionDefinition(
+    _decToRoman,
+    1,
+  ),
+  'ROMANTODEC': _GCWizardScriptClassFunctionDefinition(
+    _romanToDec,
+    1,
+  ),
   'ROTX': _GCWizardScriptClassFunctionDefinition(_rotx, 2),
   'ROT5': _GCWizardScriptClassFunctionDefinition(_rot5, 1),
   'ROT13': _GCWizardScriptClassFunctionDefinition(_rot13, 1),
@@ -271,7 +305,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 
   // files
   'READFILE': _GCWizardScriptClassFunctionDefinition(_readFile, 2),
-  'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writeFile, 1,  functionReturn: false),
+  'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writeFile, 1, functionReturn: false),
   'EOF': _GCWizardScriptClassFunctionDefinition(_eof, 0),
 
   // datatypes
@@ -284,7 +318,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
 };
 
 List<String> scriptFunctions() {
-  return  _FUNCTIONS.keys.toList();
+  return _FUNCTIONS.keys.toList();
 }
 
 List<String> scriptCommands() {
@@ -292,7 +326,7 @@ List<String> scriptCommands() {
 }
 
 List<String> scriptControls() {
-  return  _GCWizardSCriptInterpreter.registeredKeywordsControls.keys.toList();
+  return _GCWizardSCriptInterpreter.registeredKeywordsControls.keys.toList();
 }
 
 List<String> scriptParantheses = ['(', ')'];
