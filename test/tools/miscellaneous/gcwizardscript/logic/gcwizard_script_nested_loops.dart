@@ -4,12 +4,14 @@ List<Map<String, Object?>> _inputsNestedLoopsToExpected = [
   {'code' : code_3_nested_repeat, 'expectedOutput' :output_1},
   {'code' : code_3_nested_while, 'expectedOutput' : output_1},
   {'code' : code_3_nested_for, 'expectedOutput' : output_1},
+
   {'code' : code_nested_for_while_repeat, 'expectedOutput' : output_1},
+
   {'code' : code_nested_for_repeat_while, 'expectedOutput' : output_1},
 
-  {'code' : code_nested_for_repeatwhile, 'expectedOutput' : output_2},
+  {'code' : code_nested_for_repeat_1while, 'expectedOutput' : output_3},
 
-  {'code' : code_nested_for_repeatwhilewhile, 'expectedOutput' : output_3},
+  {'code' : code_nested_for_repeat_2while, 'expectedOutput' : output_3},
 ];
 
 var output_1 =  '''1       1       1
@@ -112,11 +114,11 @@ end
 ''';
 var code_3_nested_while = ''' 
 a= 1
-while a < 3
+while a < 4
   b = 1
-  while b < 3
+  while b < 4
     c = 1
-    while c < 3
+    while c < 4
        print a, b, c
        c = c + 1
     wend   
@@ -165,7 +167,7 @@ next
 end
 ''';
 
-var code_nested_for_repeatwhile = ''' 
+var code_nested_for_repeat_1while = ''' 
 for a = 1 to 3
   b = 1
   c = 1
@@ -185,7 +187,7 @@ next
 end
 ''';
 
-var code_nested_for_repeatwhilewhile = ''' 
+var code_nested_for_repeat_2while = ''' 
 for a = 1 to 3
   b = 1
   c = 1
