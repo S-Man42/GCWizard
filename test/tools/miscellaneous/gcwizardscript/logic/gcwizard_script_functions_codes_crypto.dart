@@ -7,7 +7,9 @@ List<Map<String, Object?>> _inputsCryptoToExpected = [
   {'code' : 'a="HALLO"\nprint ATBASH(a)', 'expectedOutput' : 'SZOOL'},
   {'code' : 'a="SZOOL"\nprint ATBASH(a)', 'expectedOutput' : 'HALLO'},
 
-  {'code' : 'a="HALLO"\nprint AVEMARIA(a, 1)', 'expectedOutput' : 'arbiter clemens immortalis immortalis gloriosus'},
+  // It does not mak sense to test a function which is based on a random function
+  // {'code' : 'a="HALLO"\nprint AVEMARIA(a, 1)', 'expectedOutput' : 'arbiter clemens immortalis immortalis gloriosus'},
+  {'code' : 'a="arbiter clemens immortalis immortalis gloriosus"\nprint AVEMARIA(a, 0)', 'expectedOutput' : 'HALLO'},
 
   {'code' : 'a="HALLO"\nprint BACON(a, 1)', 'expectedOutput' : 'AABBBAAAAAABABAABABAABBAB'},
   {'code' : 'a="AABBBAAAAAABABAABABAABBAB"\nprint BACON(a, 0)', 'expectedOutput' : 'HALLO'},

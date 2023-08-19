@@ -1376,6 +1376,7 @@ class _GCWizardSCriptInterpreter {
             _FUNCTIONS[command]!.functionName();
           }
           state.scriptIndex = state.scriptIndex + 2;
+          getToken();
         } else {
           _handleError(_INVALIDNUMBEROFPARAMETER);
           result = '';
@@ -1429,21 +1430,34 @@ class _GCWizardSCriptInterpreter {
       if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
+        if (state.token == ')') {
+          _handleError(_INVALIDNUMBEROFPARAMETER);
+        } else if (state.token != ",") {
+          _handleError(_MISSINGPARAMETER);
+        } else {
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token == ')') {
+            _handleError(_INVALIDNUMBEROFPARAMETER);
+          } else if (state.token != ",") {
+            _handleError(_MISSINGPARAMETER);
+          } else {
+            getToken();
+            partialResult3 = evaluateExpressionAddSubOperators();
+            if (state.token != ")") {
+              _handleError(_UNBALANCEDPARENTHESES);
+            } else {
+              getToken();
+              if (_FUNCTIONS[command]!.functionReturn) {
+                result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
+              } else {
+                _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
+              }
+            }
+          }
+        }
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3);
       }
     }
 
@@ -1568,7 +1582,6 @@ class _GCWizardSCriptInterpreter {
 
       return result;
     } catch (exception) {
-      print('EXCEPTION - '+ exception.toString());
       if (exception.toString().split(' ').contains("'_GCWList?'")) {
         _handleError(_LISTNOTDEFINED);
         return '';
@@ -1739,7 +1752,6 @@ class _GCWizardSCriptInterpreter {
     Object? partialResult;
 
     result = evaluateExpressionExponentOperator();
-
     while ((op = state.token[0]) == '*' || op == '/' || op == '%') {
       getToken();
       partialResult = evaluateExpressionExponentOperator();

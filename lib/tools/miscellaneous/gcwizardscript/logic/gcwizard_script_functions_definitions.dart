@@ -21,7 +21,6 @@ const Map<int, List<String>> _IMPLEMENTED_FUNCTIONS = {
 
 const List<String> _Functions_2 = [
   'LN(',
-  'PI(',
 ];
 const List<String> _Functions_3 = [
   'ABS(',
@@ -237,7 +236,6 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LN': _GCWizardScriptClassFunctionDefinition(_ln, 1),
   'LOG': _GCWizardScriptClassFunctionDefinition(_log10, 1),
   'MOD': _GCWizardScriptClassFunctionDefinition(_mod, 2),
-  'PI': _GCWizardScriptClassFunctionDefinition(_pi, 0),
   'POW': _GCWizardScriptClassFunctionDefinition(_pow, 2),
   'QSUM': _GCWizardScriptClassFunctionDefinition(_qsum, 1),
   'RAD': _GCWizardScriptClassFunctionDefinition(_rad, 1),
@@ -330,3 +328,4 @@ List<String> scriptControls() {
 }
 
 List<String> scriptParantheses = ['(', ')'];
+

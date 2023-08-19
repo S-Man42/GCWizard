@@ -108,4 +108,5 @@ void _handleError(int error) {
   _state.halt = true;
   _state.errorMessage = _errorMessages[error] ?? '';
   _state.errorPosition = _state.scriptIndex;
+  _state.scriptIndex = _state.script.length - 1;
 }

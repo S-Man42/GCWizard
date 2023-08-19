@@ -118,7 +118,7 @@ class ScriptState {
   late String script;
   late String inputData;
   GCWizardScriptBreakType BreakType = GCWizardScriptBreakType.NULL;
-  Map<String, Object?> variables = {};
+  Map<String, Object?> variables = SCIENCE_CONST;
   List<String> get graphics {return graficOutput.graphics;}
   GraphicState graficOutput = GraphicState();
   List<GCWMapPoint> waypoints = [];
@@ -171,7 +171,7 @@ class ScriptState {
     gosubStack = datastack.Stack<int>();
     repeatStack = datastack.Stack<int>();
     whileStack = datastack.Stack<int>();
-    variables = {};
+    variables = SCIENCE_CONST;
     STDOUT = '';
 
     randomNumber = 0.0;

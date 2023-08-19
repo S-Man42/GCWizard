@@ -1,5 +1,15 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
+const Map<String, double> SCIENCE_CONST = {
+  'PI' : pi,
+  'EULER' : e,
+  'PHI' : 1.61803398874989484820,
+  'RHO' : 2.41421356237309504880168872420969807,
+  'STEFANBOLTZMANN' : 5.670374419e-8,
+  'BOLTZMANN': 1.380649e-23,
+  'AVOGADRO' : 6.02214076e23,
+};
+
 int _sgn(Object? x) {
   if (_isNotANumber(x)) {
     _handleError(_INVALIDTYPECAST);
@@ -144,10 +154,6 @@ double _log10(Object? x) {
     return 0;
   }
   return log(x as num) / log(10);
-}
-
-double _pi() {
-  return pi;
 }
 
 double _rnd(Object? x) {
