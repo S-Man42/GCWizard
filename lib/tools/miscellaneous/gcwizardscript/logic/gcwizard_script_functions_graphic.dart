@@ -49,23 +49,6 @@ void _arc(Object x, Object y, Object r, Object a1, Object a2) {
       (a2 as double).toString());
 }
 
-void _pie(Object x, Object y, Object r, Object a1, Object a2) {
-  if (_isNotAInt(x) || _isNotAInt(y) || _isNotAInt(r) || _isNotAInt(a1) || _isNotAInt(a2)) {
-    _handleError(_INVALIDTYPECAST);
-    return;
-  }
-  _state.graphics.add('ARC ' +
-      (x as int).toString() +
-      ' ' +
-      (y as int).toString() +
-      ' ' +
-      (r as int).toString() +
-      ' ' +
-      (a1 as double).toString() +
-      ' ' +
-      (a2 as double).toString());
-}
-
 void _color(Object r, Object g, Object b) {
   if (_isNotAInt(r) || _isNotAInt(g) || _isNotAInt(b)) {
     _handleError(_INVALIDTYPECAST);

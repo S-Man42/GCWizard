@@ -17,7 +17,6 @@ int _asc(Object x) {
 }
 
 String _left(Object x, Object count) {
-  print(x.runtimeType);
   if (_isNotAString(x) || _isNotAInt(count)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -27,7 +26,6 @@ String _left(Object x, Object count) {
 }
 
 String _right(Object x, Object count) {
-  print(x.runtimeType);
   if (_isNotAString(x) || _isNotAInt(count)) {
     _handleError(_INVALIDTYPECAST);
     return '';
