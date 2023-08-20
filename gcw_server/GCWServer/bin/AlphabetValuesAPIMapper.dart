@@ -13,18 +13,16 @@ class AlphabetValuesAPIMapper extends APIMapper {
       return '';
     }
     var parameter1 = getWebParameter(WEBPARAMETER.parameter1);
-    var key = 0;
+    var key = '';
     if (parameter1 != null && parameter1.isNotEmpty) {
-      key = int.parse(parameter1);
+      key = parameter1;
     }
 
-    final _currentAlphabetKey = ALL_ALPHABETS.alphabetAZ.;
-    var _currentAlphabet = _getAlphabetByKey(_currentAlphabetKey).alphabet;
+    var alphabet = _getAlphabetByKey(key).alphabet;
 
     return intListToString(
-        logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true),
+        logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
         delimiter: ' ');
-    return Rotator().rotate(input, key);
   }
 
   /// convert doLogic output to map
@@ -36,5 +34,15 @@ class AlphabetValuesAPIMapper extends APIMapper {
 
 Alphabet _getAlphabetByKey(String key) {
   var _alphabets = List<Alphabet>.from(ALL_ALPHABETS);
-  return _alphabets.firstWhere((alphabet) => alphabet.key == key);
+  Alphabet? alphabet;
+  if (key.isNotEmpty) {
+    try {
+      alphabet = _alphabets.firstWhere((alphabet) => alphabet.key == key);
+    } catch (e) {}
+  }
+  if (alphabet == null) {
+    alphabet = alphabetAZ;
+  }
+
+  return alphabet;
 }
