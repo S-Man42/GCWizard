@@ -106,6 +106,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - handle INPUT async like whitespace, piet
 // - use WRITETOFILE, READFROMFILE, DUMPFILE, EOF
 // - use NEWFILE, async OPENFILE, async SAVEFILE
+// - use VERSION
 
 // TODO
 // Enhance Performance
@@ -200,6 +201,7 @@ class _GCWizardSCriptInterpreter {
   static const NEWFILE = 38;
   static const OPENFILE = 39;
   static const SAVEFILE = 40;
+  static const VERSION = 41;
 
   static const EOP = 'EOP';
   static const LF = '\n';
@@ -253,6 +255,7 @@ class _GCWizardSCriptInterpreter {
     "newfile": NEWFILE,
     "openfile": OPENFILE,
     "savefile": SAVEFILE,
+    "version": VERSION,
   };
   Map<String, int> registeredKeywords = {};
 
@@ -536,10 +539,22 @@ class _GCWizardSCriptInterpreter {
         BreakType = GCWizardScriptBreakType.SAVEFILE;
         executeCommandSAVEFILE();
         break;
+      case VERSION:
+        executeCommandVERSION();
+        break;
       case END:
       case UNKNOWNCOMMAND:
         state.halt = true;
     }
+  }
+
+  void executeCommandVERSION() {
+    state.STDOUT = state.STDOUT
+        + '********* GC Wizard Skript **********\n'
+        + '*     basierend auf SMALL BASIC     *\n'
+        + '* Herb Schildt, the Art of C,  1991 *\n'
+        + '*     genehmigt von  McGraw Hill    *\n'
+        + '*************************************';
   }
 
   void executeCommandNEWFILE() {
