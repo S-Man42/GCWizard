@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-const Map<String, double> SCIENCE_CONST = {
+Map<String, double> SCIENCE_CONST = {
   'PI' : pi,
   'EULER' : e,
   'PHI' : 1.61803398874989484820,
@@ -171,13 +171,13 @@ double _rnd(Object? x) {
 }
 
 int _fac(Object? x) {
-  if (_isNotAInt(x)) {
+  if (!(((x as num) - x.truncate()) == 0)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
 
   int result = 1;
-  for (int i = 1; i <= (x as num).toInt(); i++) {
+  for (int i = 1; i <= x.toInt(); i++) {
     result *= i;
   }
   return result;

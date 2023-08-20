@@ -127,7 +127,7 @@ class ScriptState {
 
   List<Object?> STDIN = [];
   String STDOUT = '';
-  num step = 1;
+  num step = 1.0;
 
   String token = '';
   int tokenType = 0;
@@ -171,11 +171,11 @@ class ScriptState {
     gosubStack = datastack.Stack<int>();
     repeatStack = datastack.Stack<int>();
     whileStack = datastack.Stack<int>();
-    variables = SCIENCE_CONST;
+    variables = {}; //SCIENCE_CONST;
     STDOUT = '';
 
     randomNumber = 0.0;
-    step = 1;
+    step = 1.0;
     listDATA = [];
     FILE = [];
     FILEINDEX = 0;

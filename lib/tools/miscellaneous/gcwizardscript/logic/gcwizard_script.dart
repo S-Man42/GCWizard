@@ -413,9 +413,6 @@ class _GCWizardSCriptInterpreter {
     getToken();
     variableName = state.token;
 
-    if (isNotAVariable(variableName)) {
-      state.variables[variableName] = '';
-    }
     getToken();
     if (state.token != "=") {
       _handleError(_EQUALEXPECTED);
@@ -601,9 +598,9 @@ class _GCWizardSCriptInterpreter {
       if (state.keywordToken == EOL || state.token == EOP) break;
       if (state.token != ',') {
         vname = state.token;
-        if (isNotAVariable(vname)) {
-          state.variables[vname] = '';
-        }
+        //if (isNotAVariable(vname)) {
+        //  state.variables[vname] = 0;
+        //}
         if (state.pointerDATA < state.listDATA.length) {
           state.variables[vname] = state.listDATA[state.pointerDATA];
           state.pointerDATA++;
@@ -878,7 +875,7 @@ class _GCWizardSCriptInterpreter {
     variableName = state.token;
 
     if (isNotAVariable(variableName)) {
-      state.variables[variableName] = '';
+      state.variables[variableName] = 0.0;
     }
 
     state.switchStack.push(variableName);
@@ -954,7 +951,7 @@ class _GCWizardSCriptInterpreter {
     getToken();
     vname = state.token;
     if (isNotAVariable(vname)) {
-      state.variables[vname] = 0;
+      state.variables[vname] = 0.0;
     }
 
     stckvar.loopVariable = vname;
@@ -967,7 +964,7 @@ class _GCWizardSCriptInterpreter {
 
     valueStart = evaluateExpression();
     if (_isANumber(valueStart)) {
-      state.variables[stckvar.loopVariable] = valueStart;
+      state.variables[stckvar.loopVariable] = (valueStart as int).toDouble();
     } else {
       _handleError(_INVALIDTYPECAST);
     }
@@ -1234,9 +1231,9 @@ class _GCWizardSCriptInterpreter {
     state.continueLoop = false;
 
     variable = state.token;
-    if (isNotAVariable(variable)) {
-      state.variables[variable] = '';
-    }
+    //if (isNotAVariable(variable)) {
+    //  state.variables[variable] = 0;
+    //}
 
     if (state.STDIN.isNotEmpty) {
       input = state.STDIN[0];
@@ -1466,24 +1463,43 @@ class _GCWizardSCriptInterpreter {
       if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult4 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
+        if (state.token == ')') {
+          _handleError(_INVALIDNUMBEROFPARAMETER);
+        } else if (state.token != ",") {
+          _handleError(_MISSINGPARAMETER);
+        } else {
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token == ')') {
+            _handleError(_INVALIDNUMBEROFPARAMETER);
+          } else if (state.token != ",") {
+            _handleError(_MISSINGPARAMETER);
+          } else {
+            getToken();
+            partialResult3 = evaluateExpressionAddSubOperators();
+            if (state.token == ')') {
+              _handleError(_INVALIDNUMBEROFPARAMETER);
+            } else if (state.token != ",") {
+              _handleError(_MISSINGPARAMETER);
+            } else {
+              getToken();
+              partialResult4 = evaluateExpressionAddSubOperators();
+              if (state.token != ")") {
+                _handleError(_UNBALANCEDPARENTHESES);
+              } else {
+                if (_FUNCTIONS[command]!.functionReturn) {
+                  result =
+                      _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+                } else {
+                  _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
+                }
+                getToken();
+              }
+            }
+          }
+        }
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
-      } else {
-        _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4);
       }
     }
 
@@ -1492,29 +1508,52 @@ class _GCWizardSCriptInterpreter {
       if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult4 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult5 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
+        if (state.token == ")") {
+          _handleError(_UNBALANCEDPARENTHESES);
+        } else if (state.token != ",") {
+          _handleError(_MISSINGPARAMETER);
+        } else {
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token == ")") {
+            _handleError(_UNBALANCEDPARENTHESES);
+          } else if (state.token != ",") {
+            _handleError(_MISSINGPARAMETER);
+          } else {
+            getToken();
+            partialResult3 = evaluateExpressionAddSubOperators();
+            if (state.token == ")") {
+              _handleError(_UNBALANCEDPARENTHESES);
+            } else if (state.token != ",") {
+              _handleError(_MISSINGPARAMETER);
+            } else {
+              getToken();
+              partialResult4 = evaluateExpressionAddSubOperators();
+              if (state.token == ")") {
+                _handleError(_UNBALANCEDPARENTHESES);
+              } else if (state.token != ",") {
+                _handleError(_MISSINGPARAMETER);
+              } else {
+                getToken();
+                partialResult5 = evaluateExpressionAddSubOperators();
+                if (state.token != ")") {
+                  _handleError(_UNBALANCEDPARENTHESES);
+                } else {
+                  if (_FUNCTIONS[command]!.functionReturn) {
+                    result = _FUNCTIONS[command]!
+                        .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
+                  } else {
+                    _FUNCTIONS[command]!
+                        .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
+                  }
+                  getToken();
+                }
+              }
+            }
+          }
+        }
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!
-            .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
-      } else {
-        _FUNCTIONS[command]!
-            .functionName(partialResult1, partialResult2, partialResult3, partialResult4, partialResult5);
       }
     }
 
@@ -1523,32 +1562,60 @@ class _GCWizardSCriptInterpreter {
       if (state.token == "(") {
         getToken();
         partialResult1 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult2 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult3 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult4 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult5 = evaluateExpressionAddSubOperators();
-        if (state.token != ",") _handleError(_MISSINGPARAMETER);
-        getToken();
-        partialResult6 = evaluateExpressionAddSubOperators();
-        if (state.token != ")") _handleError(_UNBALANCEDPARENTHESES);
-        getToken();
+        if (state.token == ')') {
+          _handleError(_INVALIDNUMBEROFPARAMETER);
+        } else if (state.token != ",") {
+          _handleError(_MISSINGPARAMETER);
+        } else {
+          getToken();
+          partialResult2 = evaluateExpressionAddSubOperators();
+          if (state.token == ')') {
+            _handleError(_INVALIDNUMBEROFPARAMETER);
+          } else if (state.token != ",") {
+            _handleError(_MISSINGPARAMETER);
+          } else {
+            getToken();
+            partialResult3 = evaluateExpressionAddSubOperators();
+            if (state.token == ')') {
+              _handleError(_INVALIDNUMBEROFPARAMETER);
+            } else if (state.token != ",") {
+              _handleError(_MISSINGPARAMETER);
+            } else {
+              getToken();
+              partialResult4 = evaluateExpressionAddSubOperators();
+              if (state.token == ')') {
+                _handleError(_INVALIDNUMBEROFPARAMETER);
+              } else if (state.token != ",") {
+                _handleError(_MISSINGPARAMETER);
+              } else {
+                getToken();
+                partialResult5 = evaluateExpressionAddSubOperators();
+                if (state.token == ')') {
+                  _handleError(_INVALIDNUMBEROFPARAMETER);
+                } else if (state.token != ",") {
+                  _handleError(_MISSINGPARAMETER);
+                } else {
+                  getToken();
+                  partialResult6 = evaluateExpressionAddSubOperators();
+                  if (state.token != ")") {
+                    _handleError(_UNBALANCEDPARENTHESES);
+                  } else {
+                    if (_FUNCTIONS[command]!.functionReturn) {
+                      result = _FUNCTIONS[command]!.functionName(
+                          partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+                    } else {
+                      _FUNCTIONS[command]!.functionName(
+                          partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+                    }
+                    getToken();
+                  }
+                }
+              }
+            }
+          }
+        }
       } else {
         _handleError(_UNBALANCEDPARENTHESES);
-      }
-      if (_FUNCTIONS[command]!.functionReturn) {
-        result = _FUNCTIONS[command]!.functionName(
-            partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
-      } else {
-        _FUNCTIONS[command]!.functionName(
-            partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
       }
     }
 
@@ -1917,10 +1984,14 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? getValueOfVariable(String variableName) {
-    if (isNotAVariable(variableName)) {
-      state.variables[variableName] = 0;
+    if (SCIENCE_CONST[variableName] != null) {
+      return SCIENCE_CONST[variableName];
+    } else {
+      if (isNotAVariable(variableName)) {
+        state.variables[variableName] = 0.0;
+      }
+      return state.variables[variableName];
     }
-    return state.variables[variableName];
   }
 
   void putBack() {

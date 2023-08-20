@@ -11,7 +11,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print MOD(11.0, 3)', 'expectedOutput' : '2.0'},
   {'code' : 'print MOD(11.0, 3.0)', 'expectedOutput' : '2.0'},
   {'code' : 'print MOD(11, 3.0)', 'expectedOutput' : '2.0'},
-  {'code' : 'print MOD(X, 3)', 'expectedOutput' : '0'},
+  {'code' : 'print MOD(X, 3)', 'expectedOutput' : '0.0'},
   {'code' : 'print MOD(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_division_by_zero'},
   {'code' : 'print MOD(, X)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print MOD(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
@@ -74,7 +74,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print FAC(-2)', 'expectedOutput' : '1'},
   {'code' : 'print FAC(-2.6)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print FAC(-2.6, 5)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print FAC( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print FAC( )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print FAC(X)', 'expectedOutput' : '1'},
 
   {'code' : 'print FRAC(3)', 'expectedOutput' : '0'},
@@ -83,7 +83,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print FRAC(-2.6)', 'expectedOutput' : '-0.6000000000000001'},
   {'code' : 'print FRAC(-2.6, 5)', 'expectedOutput' : '-0.6000000000000001', 'error': 'gcwizard_script_unbalanced_parentheses'},
   {'code' : 'print FRAC( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print FRAC(X)', 'expectedOutput' : '0'},
+  {'code' : 'print FRAC(X)', 'expectedOutput' : '0.0'},
 
   {'code' : 'print SIN(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print SIN(PI/2)', 'expectedOutput' : '1.0'},
@@ -181,7 +181,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SQR(-2.6)', 'expectedOutput' : '6.760000000000001'},
   {'code' : 'print SQR(-2.6, 5)', 'expectedOutput' : '6.760000000000001', 'error': 'gcwizard_script_unbalanced_parentheses'},
   {'code' : 'print SQR( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print SQR(X)', 'expectedOutput' : '0'},
+  {'code' : 'print SQR(X)', 'expectedOutput' : '0.0'},
 
   {'code' : 'print DEG(0)', 'expectedOutput' : '0.0'},
   {'code' : 'print DEG(1)', 'expectedOutput' : '57.29577951308232'},
@@ -244,7 +244,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print ABS(-2.6)', 'expectedOutput' : '2.6'},
   {'code' : 'print ABS(-2.6, 5)', 'expectedOutput' : '2.6', 'error': 'gcwizard_script_unbalanced_parentheses'},
   {'code' : 'print ABS( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print ABS(X)', 'expectedOutput' : '0'},
+  {'code' : 'print ABS(X)', 'expectedOutput' : '0.0'},
 
   {'code' : 'print POW(12, 3)', 'expectedOutput' : '1728'},
   {'code' : 'print POW(12.6, 3)', 'expectedOutput' : '2000.3759999999997'},
@@ -256,9 +256,9 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print POW(12, 0)', 'expectedOutput' : '1'},
   {'code' : 'print POW( )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print POW(3 )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print POW(X, 3)', 'expectedOutput' : '0'},
-  {'code' : 'print POW(11, X)', 'expectedOutput' : '1'},
-  {'code' : 'print POW(X, X)', 'expectedOutput' : '1'},
+  {'code' : 'print POW(X, 3)', 'expectedOutput' : '0.0'},
+  {'code' : 'print POW(11, X)', 'expectedOutput' : '1.0'},
+  {'code' : 'print POW(X, X)', 'expectedOutput' : '1.0'},
   {'code' : 'print POW(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
 
   {'code' : 'print QSUM(0)', 'expectedOutput' : '0'},

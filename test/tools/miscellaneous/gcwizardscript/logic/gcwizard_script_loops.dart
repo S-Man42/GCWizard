@@ -1,13 +1,13 @@
 part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsLoopsToExpected = [
-  {'code' : code1l, 'expectedOutput' : '1\n2\n3'},
+  {'code' : code1l, 'expectedOutput' : '1.0\n2.0\n3.0'},
   {'code' : code2l, 'expectedOutput' : '1\n2\n3'},
-  {'code' : code3l, 'expectedOutput' : '1\n3\n5'},
-  {'code' : code4l, 'expectedOutput' : '1\n2\n3'},
+  {'code' : code3l, 'expectedOutput' : '1.0\n3.0\n5.0'},
+  {'code' : code4l, 'expectedOutput' : '1.0\n2.0\n3.0'},
   {'code' : code5l, 'expectedOutput' : '1\n2'},
-  {'code' : code6l, 'expectedOutput' : '1\n1.5\n2.0\n2.5\n3.0\n3.5\n4.0\n4.5\n5.0\n5.5\n6.0'},
-  {'code' : code7l, 'expectedOutput' : '3\n2\n1'},
+  {'code' : code6l, 'expectedOutput' : '1.0\n1.5\n2.0\n2.5\n3.0\n3.5\n4.0\n4.5\n5.0\n5.5\n6.0'},
+  {'code' : code7l, 'expectedOutput' : '3.0\n2.0\n1.0'},
 ];
 
 var code1l = ''' 

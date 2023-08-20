@@ -1,20 +1,20 @@
 part of 'gcwizard_scipt_test.dart';
 
 List<Map<String, Object?>> _inputsNestedLoopsToExpected = [
-  {'code' : code_3_nested_repeat, 'expectedOutput' :output_1},
-  {'code' : code_3_nested_while, 'expectedOutput' : output_1},
-  {'code' : code_3_nested_for, 'expectedOutput' : output_1},
+  {'code' : code_3_nested_repeat, 'expectedOutput' :output_1_iii},
+  {'code' : code_3_nested_while, 'expectedOutput' : output_1_iii},
+  {'code' : code_3_nested_for, 'expectedOutput' : output_1_ddd},
 
-  {'code' : code_nested_for_while_repeat, 'expectedOutput' : output_1},
+  {'code' : code_nested_for_while_repeat, 'expectedOutput' : output_1_dii},
 
-  {'code' : code_nested_for_repeat_while, 'expectedOutput' : output_1},
+  {'code' : code_nested_for_repeat_while, 'expectedOutput' : output_1_dii},
 
-  {'code' : code_nested_for_repeat_1while, 'expectedOutput' : output_3},
+  {'code' : code_nested_for_repeat_1while, 'expectedOutput' : output_3_diii},
 
-  {'code' : code_nested_for_repeat_2while, 'expectedOutput' : output_3},
+  {'code' : code_nested_for_repeat_2while, 'expectedOutput' : output_3_diii},
 ];
 
-var output_1 =  '''1       1       1
+var output_1_iii =  '''1       1       1
 1       1       2
 1       1       3
 1       2       1
@@ -41,60 +41,96 @@ var output_1 =  '''1       1       1
 3       3       1
 3       3       2
 3       3       3''';
-var output_2 =  '''1       2       1
-1       3       1
-1       4       1
-1       4       1
-1       4       2
-1       4       3
-2       2       1
-2       3       1
-2       4       1
-2       4       1
-2       4       2
-2       4       3
-3       2       1
-3       3       1
-3       4       1
-3       4       1
-3       4       2
-3       4       3''';
-var output_3 =  '''1       2       1       1
-1       2       1       2
-1       2       1       3
-1       3       1       1
-1       3       1       2
-1       3       1       3
-1       4       1       1
-1       4       1       2
-1       4       1       3
-1       4       1       4
-1       4       2       4
-1       4       3       4
-2       2       1       1
-2       2       1       2
-2       2       1       3
-2       3       1       1
-2       3       1       2
-2       3       1       3
-2       4       1       1
-2       4       1       2
-2       4       1       3
-2       4       1       4
-2       4       2       4
-2       4       3       4
-3       2       1       1
-3       2       1       2
-3       2       1       3
-3       3       1       1
-3       3       1       2
-3       3       1       3
-3       4       1       1
-3       4       1       2
-3       4       1       3
-3       4       1       4
-3       4       2       4
-3       4       3       4''';
+var output_1_ddd =  '''1.0     1.0     1.0
+1.0     1.0     2.0
+1.0     1.0     3.0
+1.0     2.0     1.0
+1.0     2.0     2.0
+1.0     2.0     3.0
+1.0     3.0     1.0
+1.0     3.0     2.0
+1.0     3.0     3.0
+2.0     1.0     1.0
+2.0     1.0     2.0
+2.0     1.0     3.0
+2.0     2.0     1.0
+2.0     2.0     2.0
+2.0     2.0     3.0
+2.0     3.0     1.0
+2.0     3.0     2.0
+2.0     3.0     3.0
+3.0     1.0     1.0
+3.0     1.0     2.0
+3.0     1.0     3.0
+3.0     2.0     1.0
+3.0     2.0     2.0
+3.0     2.0     3.0
+3.0     3.0     1.0
+3.0     3.0     2.0
+3.0     3.0     3.0''';
+var output_1_dii =  '''1.0     1       1
+1.0     1       2
+1.0     1       3
+1.0     2       1
+1.0     2       2
+1.0     2       3
+1.0     3       1
+1.0     3       2
+1.0     3       3
+2.0     1       1
+2.0     1       2
+2.0     1       3
+2.0     2       1
+2.0     2       2
+2.0     2       3
+2.0     3       1
+2.0     3       2
+2.0     3       3
+3.0     1       1
+3.0     1       2
+3.0     1       3
+3.0     2       1
+3.0     2       2
+3.0     2       3
+3.0     3       1
+3.0     3       2
+3.0     3       3''';
+var output_3_diii =  '''1.0     2       1       1
+1.0     2       1       2
+1.0     2       1       3
+1.0     3       1       1
+1.0     3       1       2
+1.0     3       1       3
+1.0     4       1       1
+1.0     4       1       2
+1.0     4       1       3
+1.0     4       1       4
+1.0     4       2       4
+1.0     4       3       4
+2.0     2       1       1
+2.0     2       1       2
+2.0     2       1       3
+2.0     3       1       1
+2.0     3       1       2
+2.0     3       1       3
+2.0     4       1       1
+2.0     4       1       2
+2.0     4       1       3
+2.0     4       1       4
+2.0     4       2       4
+2.0     4       3       4
+3.0     2       1       1
+3.0     2       1       2
+3.0     2       1       3
+3.0     3       1       1
+3.0     3       1       2
+3.0     3       1       3
+3.0     4       1       1
+3.0     4       1       2
+3.0     4       1       3
+3.0     4       1       4
+3.0     4       2       4
+3.0     4       3       4''';
 
 var code_3_nested_repeat = ''' 
 a=1
@@ -138,6 +174,7 @@ for a = 1 to 3
 next    
 end
 ''';
+
 var code_nested_for_while_repeat = ''' 
 for a = 1 to 3
   b=1
