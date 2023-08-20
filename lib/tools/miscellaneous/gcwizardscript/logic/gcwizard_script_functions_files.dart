@@ -192,21 +192,21 @@ String _dumpFile(Object? mode){
     List<String> dump = [];
     switch (mode as int){
       case 0: // integer
-        _state.FILE.forEach((byte) {
+        for (int byte in _state.FILE) {
           dump.add(byte.toString().padLeft(3, ' '));
-        });
+        }
         result = dump.join(' ');
         break;
       case 2: // string
-        _state.FILE.forEach((byte) {
+    for (int byte in _state.FILE) {
           dump.add(_byteToString(byte));
-        });
+        }
         result = dump.join('');
         break;
       default : // hex
-        _state.FILE.forEach((byte) {
+        for (int byte in _state.FILE) {
           dump.add(_byteToHex(byte));
-        });
+        }
         result = dump.join(' ');
     }
   }
