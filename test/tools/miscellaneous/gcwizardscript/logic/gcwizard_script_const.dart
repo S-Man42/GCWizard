@@ -1,16 +1,13 @@
 part of 'gcwizard_scipt_test.dart';
 
-DateTime _now = DateTime.now();
-var date = DateFormat('yyyy/MM/dd').format(_now);
-var time = DateFormat('HH:mm:ss').format(_now);
+List<Map<String, Object?>> _inputsConstToExpected = [
 
-List<Map<String, Object?>> _inputsDateTimeToExpected = [
+  {'code' : 'print PI', 'expectedOutput' : '3.141592653589793'},
+  {'code' : 'print PHI', 'expectedOutput' : '1.618033988749895'},
+  {'code' : 'print RHO', 'expectedOutput' : '2.414213562373095'},
+  {'code' : 'print EULER', 'expectedOutput' : '2.718281828459045'},
 
-  {'code' : 'print DATE()', 'expectedOutput' : date},
-  // {'code' : 'print TIME()', 'expectedOutput' : time}, will not work due to delay of 2 sec while interpreting
-  {'code' : 'print DATE(x)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print TIME(x)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-
-  {'code' : 'print DATE', 'expectedOutput' : '0.0'},
-  {'code' : 'print TIME', 'expectedOutput' : '0.0'},
+  {'code' : 'print AVOGADRO', 'expectedOutput' : '6.02214076e+23'},
+  {'code' : 'print BOLTZMANN', 'expectedOutput' : '1.380649e-23'},
+  {'code' : 'print STEFANBOLTZMANN', 'expectedOutput' : '5.670374419e-8'},
 ];

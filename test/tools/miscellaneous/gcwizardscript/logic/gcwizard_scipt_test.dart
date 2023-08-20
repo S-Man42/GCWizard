@@ -16,6 +16,7 @@ part 'gcwizard_script_functions_string.dart';
 part 'gcwizard_script_functions_waypoints.dart';
 part 'gcwizard_script_loops.dart';
 part 'gcwizard_script_nested_loops.dart';
+part 'gcwizard_script_const.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {
@@ -34,7 +35,7 @@ void main() {
     //_inputsToExpected.addAll(_inputsWaypoinsToExpected);
     _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected);
     _inputsToExpected.addAll(_inputsNestedLoopsToExpected);
-
+    _inputsToExpected.addAll(_inputsConstToExpected);
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {
