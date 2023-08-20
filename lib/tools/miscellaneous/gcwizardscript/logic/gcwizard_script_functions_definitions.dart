@@ -124,18 +124,17 @@ const List<String> _Functions_8 = [
   'DMMTODMS(',
   'DMSTODEC(',
   'DMSTODMM(',
+  'DUMPFILE(',
   'ISDOUBLE(',
   'ISNUMBER(',
   'ISSTRING(',
   'LISTSORT(',
-  'READFILE(',
 ];
 const List<String> _Functions_9 = [
   'CONVERTTO(',
   'LISTCLEAR(',
   'WPTSCLEAR(',
   'WPTSCOUNT(',
-  'WRITEFILE(',
 ];
 const List<String> _Functions_10 = [
   'DECTOROMAN(',
@@ -152,9 +151,11 @@ const List<String> _Functions_11 = [
   'CONVERTFROM(',
   'LISTSHUFFLE(',
   'LISTISEMPTY(',
+  'WRITETOFILE(',
 ];
 const List<String> _Functions_12 = [
   'LISTTOSTRING(',
+  'READFROMFILE(',
 ];
 const List<String> _Functions_13 = [];
 const List<String> _Functions_14 = [
@@ -302,8 +303,9 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'CENTERTHREEPOINTS': _GCWizardScriptClassFunctionDefinition(_centerThreePoints, 6, functionReturn: false),
 
   // files
-  'READFILE': _GCWizardScriptClassFunctionDefinition(_readFile, 2),
-  'WRITEFILE': _GCWizardScriptClassFunctionDefinition(_writeFile, 1, functionReturn: false),
+  'READFROMFILE': _GCWizardScriptClassFunctionDefinition(_readFromFile, 2),
+  'WRITETOFILE': _GCWizardScriptClassFunctionDefinition(_writeToFile, 1, functionReturn: false),
+  'DUMPFILE':  _GCWizardScriptClassFunctionDefinition(_dumpFile, 1),
   'EOF': _GCWizardScriptClassFunctionDefinition(_eof, 0),
 
   // datatypes

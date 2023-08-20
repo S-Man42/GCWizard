@@ -1,10 +1,10 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-Object? _readFile(Object mode, Object index) {
+Object? _readFromFile(Object mode, Object index) {
   Object? result;
   if (_isNotAInt(mode) || _isNotAInt(index)) {
     _handleError(_INVALIDTYPECAST);
-    return null;
+    return '';
   }
   int start = _state.FILEINDEX;
   if (index as int == -1) start = index;
@@ -120,7 +120,7 @@ int _readInt16(List<int> byteList, int offset) {
   return ByteData.sublistView(bytes).getInt16(0);
 }
 
-void _writeFile(Object? value) {
+void _writeToFile(Object? value) {
   if (_isAList(value)) {
     _writeFileList(value as _GCWList);
   } else if (_isAString(value)) {
@@ -171,7 +171,44 @@ void _writeFileDouble(double value){
   });
 }
 
-
 bool _eof(){
   return _state.FILEINDEX < _state.FILE.length;
+}
+
+String _dumpFile(Object? mode){
+
+  String _byteToString(int byte){
+    return String.fromCharCode(byte);
+  }
+
+  String _byteToHex(int byte){
+    return convertBase(byte.toString(), 10, 16);
+  }
+
+  String result = '';
+  if (_isNotAInt(mode)) {
+    _handleError(_INVALIDTYPECAST);
+  } else {
+    List<String> dump = [];
+    switch (mode as int){
+      case 0: // integer
+        _state.FILE.forEach((byte) {
+          dump.add(byte.toString().padLeft(3, ' '));
+        });
+        result = dump.join(' ');
+        break;
+      case 2: // string
+        _state.FILE.forEach((byte) {
+          dump.add(_byteToString(byte));
+        });
+        result = dump.join('');
+        break;
+      default : // hex
+        _state.FILE.forEach((byte) {
+          dump.add(_byteToHex(byte));
+        });
+        result = dump.join(' ');
+    }
+  }
+  return result;
 }

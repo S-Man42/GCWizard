@@ -98,18 +98,18 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use BEEP, SLEEP, RANDOMIZE, RND
 // - use REM
 // - use DATA, RESTORE, READ
-// - use SCREEN, CIRCLE, LINE, POINT, ARC, PIE, COLOR, FILL, TEXT, BOX, OVAL
+// - use SCREEN, CIRCLE, LINE, POINT, ARC, COLOR, FILL, TEXT, BOX, OVAL
 // - use BREAK
 // - use DIM, implement List as Datatype
 // - use variable names longer than one letter
 // - handle case sensitiveness
-// - handle input async like whitespace, piet
-// - use WRITEFILE, READFILE, EOF
+// - handle INPUT async like whitespace, piet
+// - use WRITETOFILE, READFROMFILE, DUMPFILE, EOF
 // - use NEWFILE, async OPENFILE, async SAVEFILE
 
 // TODO
 // Enhance Performance
-// async print
+// async PRINT
 // FIELD, GET, PUT
 // http://www.mopsos.net/Script.html
 
