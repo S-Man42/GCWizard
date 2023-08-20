@@ -108,6 +108,7 @@ class _GCWList {
   }
 
   Object getIndex(int index) {
+    print('getindex');
     if (_contents.isEmpty) return 'NIL';
     if (index > _contents.length - 1) return 'NIL';
     return _contents[index];
@@ -217,13 +218,18 @@ int _listIsNotEmpty(_GCWList? list) {
 
 Object? _listGet(_GCWList? list, Object? index) {
   if (list != null) {
-    if (_isNotAInt(index)) {
+    if (_isNotANumber(index)) {
       _handleError(_INVALIDTYPECAST);
     } else {
-      if (index as int >= list.length()) {
-        _handleError(_RANGEERROR);
+      if (_isADouble(index) && ((index as double) - (index).truncate() == 0)) {
+        index = index.toInt();
+        if (index as int >= list.length()) {
+          _handleError(_RANGEERROR);
+        } else {
+          return list.getIndex(index);
+        }
       } else {
-        return list.getIndex(index);
+        _handleError(_INVALIDTYPECAST);
       }
     }
   }
