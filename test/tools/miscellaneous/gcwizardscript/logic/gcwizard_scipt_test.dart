@@ -14,6 +14,7 @@ part 'gcwizard_script_functions_math.dart';
 part 'gcwizard_script_functions_math_nested.dart';
 part 'gcwizard_script_functions_string.dart';
 part 'gcwizard_script_functions_waypoints.dart';
+part 'gcwizard_script_functions_coordinates.dart';
 part 'gcwizard_script_loops.dart';
 part 'gcwizard_script_nested_loops.dart';
 part 'gcwizard_script_const.dart';
@@ -22,7 +23,7 @@ void main() {
   group("gcwizard_script.interpretScript:", () {
     List<Map<String, Object?>> _inputsToExpected = [];
 
-    //_inputsToExpected.addAll(_inputsCodesToExpected);
+    //_inputsToExpected.addAll(_inputsCodesToExpected); // take a lot of time!
     _inputsToExpected.addAll(_inputsMathToExpected);
     _inputsToExpected.addAll(_inputsBaseToExpected);
     _inputsToExpected.addAll(_inputsLoopsToExpected);
@@ -31,11 +32,14 @@ void main() {
     _inputsToExpected.addAll(_inputsGeocachingToExpected);
     _inputsToExpected.addAll(_inputsDateTimeToExpected);
     _inputsToExpected.addAll(_inputsStringToExpected);
-    //_inputsToExpected.addAll(_inputsGraphicToExpected);
-    //_inputsToExpected.addAll(_inputsWaypoinsToExpected);
+/*
+    _inputsToExpected.addAll(_inputsGraphicToExpected);
+    _inputsToExpected.addAll(_inputsWaypoinsToExpected);
+*/
     _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected);
     _inputsToExpected.addAll(_inputsNestedLoopsToExpected);
     _inputsToExpected.addAll(_inputsConstToExpected);
+    _inputsToExpected.addAll(_inputsCoordinatesToExpected);
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {

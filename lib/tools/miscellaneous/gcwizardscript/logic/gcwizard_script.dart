@@ -1372,8 +1372,8 @@ class _GCWizardSCriptInterpreter {
           } else {
             _FUNCTIONS[command]!.functionName();
           }
-          state.scriptIndex = state.scriptIndex + 2;
-          getToken();
+          state.scriptIndex = state.scriptIndex + 1;
+          //getToken();
         } else {
           _handleError(_INVALIDNUMBEROFPARAMETER);
           result = '';
@@ -1646,7 +1646,6 @@ class _GCWizardSCriptInterpreter {
           _handleError(_INVALIDNUMBEROFPARAMETER);
           result = '';
       }
-
       return result;
     } catch (exception) {
       if (exception.toString().split(' ').contains("'_GCWList?'")) {

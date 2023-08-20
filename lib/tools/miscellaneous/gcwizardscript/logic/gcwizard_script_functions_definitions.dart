@@ -289,7 +289,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'SETLON': _GCWizardScriptClassFunctionDefinition(_setLon, 1, functionReturn: false),
   'WGS84': _GCWizardScriptClassFunctionDefinition(_wgs84, 2),
   'CONVERTTO': _GCWizardScriptClassFunctionDefinition(_convertTo, 1),
-  'CONVERTFROM': _GCWizardScriptClassFunctionDefinition(_convertFrom, 1, functionReturn: false),
+  'CONVERTFROM': _GCWizardScriptClassFunctionDefinition(_convertFrom, 2, functionReturn: false),
   'DMMTODEC': _GCWizardScriptClassFunctionDefinition(_dmmtodec, 2),
   'DMSTODEC': _GCWizardScriptClassFunctionDefinition(_dmstodec, 3),
   'DECTODMM': _GCWizardScriptClassFunctionDefinition(_dectodmm, 1),

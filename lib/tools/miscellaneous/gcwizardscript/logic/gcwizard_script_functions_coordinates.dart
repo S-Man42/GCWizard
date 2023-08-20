@@ -346,7 +346,6 @@ void _convertFrom(Object source, _GCWList parameter) {
   if (_isNotANumber(source)) {
     _handleError(_INVALIDTYPECAST);
   }
-
   late LatLng? coord;
   late Object parameter_1;
   late Object parameter_2;
@@ -721,16 +720,26 @@ void _centerTwoPoints(Object lat1, Object lon1, Object lat2, Object lon2) {
 }
 
 double _dmmtodec(Object? dec, Object? min) {
-  if (_isNotAInt(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotANumber(min)) _handleError(_INVALIDTYPECAST);
-  return (dec as int) + (min as double) / 60;
+  if (_isNotAInt(dec)) {
+    _handleError(_INVALIDTYPECAST);
+  }
+  if (_isNotANumber(min)) {
+    _handleError(_INVALIDTYPECAST);
+  }
+  return (dec as int) + (min as num).toDouble() / 60;
 }
 
 double _dmstodec(Object? dec, Object? min, Object? sec) {
-  if (_isNotAInt(dec)) _handleError(_INVALIDTYPECAST);
-  if (_isNotAInt(min)) _handleError(_INVALIDTYPECAST);
-  if (_isNotANumber(sec)) _handleError(_INVALIDTYPECAST);
-  return (dec as int) + (min as int) / 60 + (sec as double) / 3600;
+  if (_isNotAInt(dec)) {
+    _handleError(_INVALIDTYPECAST);
+  }
+  if (_isNotAInt(min)) {
+    _handleError(_INVALIDTYPECAST);
+  }
+  if (_isNotANumber(sec)) {
+    _handleError(_INVALIDTYPECAST);
+  }
+  return (dec as int) + (min as int) / 60 + (sec as num).toDouble() / 3600;
 }
 
 String _dectodmm(Object? dec) {
