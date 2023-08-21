@@ -661,30 +661,37 @@ void _convertFrom(Object source, _GCWList parameter) {
   _setLon(coord.longitude);
 }
 
-double _distance(Object x1, Object y1, Object x2, Object y2) {
-  if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(x2) || _isNotANumber(y2)) {
+double _distance(Object lat1, Object lon1, Object lat2, Object lon2) {
+  if (_isNotANumber(lat1) || _isNotANumber(lon1) || _isNotANumber(lat2) || _isNotANumber(lon2)) {
     _handleError(_INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
+  return distanceBearing(LatLng(lat1 as double, lon1 as double), LatLng(lat2 as double, lon2 as double),
           const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563))
       .distance;
 }
 
-double _bearing(Object x1, Object y1, Object x2, Object y2) {
-  if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(x2) || _isNotANumber(y2)) {
+double _bearing(Object lat1, Object lon1, Object lat2, Object lon2) {
+  if (_isNotANumber(lat1) || _isNotANumber(lon1) || _isNotANumber(lat2) || _isNotANumber(lon2)) {
     _handleError(_INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
+  return distanceBearing(LatLng(lat1 as double, lon1 as double), LatLng(lat2 as double, lon2 as double),
           getEllipsoidByName(ELLIPSOID_NAME_WGS84)!)
       .bearingAToB;
 }
 
-void _projection(Object x1, Object y1, Object dist, Object angle) {
-  if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(dist) || _isNotANumber(angle)) {
+void _projection(Object lat, Object lon, Object distance, Object bearing) {
+  if (_isNotANumber(lat) || _isNotANumber(lon) || _isNotANumber(distance) || _isNotANumber(bearing)) {
     _handleError(_INVALIDTYPECAST);
   } else {
+    lat = lat as double;
+    lon = lon as double;
+    if (_isAInt(bearing)) bearing = (bearing as int).toDouble();
+    bearing = bearing as double;
+    if (_isAInt(distance)) distance = (distance as int).toDouble();
+    distance = distance as double;
+    distanceBearing(LatLng(lat, lon), LatLng(lat, lon), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
     LatLng _currentValues = projection(
-        LatLng(x1 as double, y1 as double), angle as double, dist as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+        LatLng(lat, lon), bearing, distance, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
     _state.GCWizardScript_LAT = _currentValues.latitude;
     _state.GCWizardScript_LON = _currentValues.longitude;
   }
