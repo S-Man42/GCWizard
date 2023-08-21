@@ -125,7 +125,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             GCWIconButton(
               icon: Icons.run_circle_outlined,
@@ -180,7 +180,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 });
               },
             ),
-/*            GCWButton(
+
+    /*
+            GCWButton(
               text: i18n(context, 'gcwizard_script_interpret'),
               onPressed: () {
                 _currentInput = '';
@@ -238,7 +240,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   _loadCoords = !_loadCoords;
                 });
               },
-            ),*/
+            ),
+
+     */
           ],
         ),
         _buildOutput(context),
@@ -513,18 +517,19 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   Container _buildUrl(int key) {
     return Container(
-        padding: const EdgeInsets.only(top: 15, bottom: 10),
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Row(children: <Widget>[
-          Expanded(flex: 2, child: GCWText(text: _HELP_URLS[key][0])),
+          Expanded(flex: 1, child: GCWText(text: HELP_URLS[key]![0])),
           Expanded(
-              flex: 3,
+              flex: 1,
               child: InkWell(
                 child: Text(
-                  _HELP_URLS[key][1],
+                  HELP_URLS[key]![0],
                   style: gcwHyperlinkTextStyle(),
                 ),
                 onTap: () {
-                  launchUrl(Uri.parse(i18n(context, 'about_${key}_url')));
+                  print('tap '+HELP_URLS[key]![1]);
+                  launchUrl(Uri.parse(HELP_URLS[key]![1]));
                 },
               ))
         ]));
@@ -536,23 +541,36 @@ class GCWizardScriptState extends State<GCWizardScript> {
         i18n(context, 'gcwizard_script_help'),
         SizedBox(
           width: 300,
-          height: 100,
+          height: 500,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildUrl(_HELP_VARIABLE),
-              _buildUrl(_HELP_DATATYPES),
-              _buildUrl(_HELP_OPERATORS),
-              _buildUrl(_HELP_COMMANDS),
-              _buildUrl(_HELP_CONTROLS),
-              _buildUrl(_HELP_MATH),
-              _buildUrl(_HELP_STRINGS),
-              _buildUrl(_HELP_LISTS),
-              _buildUrl(_HELP_FILES),
-              _buildUrl(_HELP_DATE),
-              _buildUrl(_HELP_GRAPHIC),
-              _buildUrl(_HELP_WPTS),
-              _buildUrl(_HELP_COORD),
+              _buildUrl(0),
+              _buildUrl(1),
+              _buildUrl(2),
+              _buildUrl(3),
+              _buildUrl(4),
+              _buildUrl(5),
+              _buildUrl(6),
+              _buildUrl(7),
+              _buildUrl(8),
+              _buildUrl(9),
+              _buildUrl(10),
+              _buildUrl(11),
+              _buildUrl(12),
+              // _buildUrl(_HELP_VARIABLE),
+              // _buildUrl(_HELP_DATATYPES),
+              // _buildUrl(_HELP_OPERATORS),
+              // _buildUrl(_HELP_COMMANDS),
+              // _buildUrl(_HELP_CONTROLS),
+              // _buildUrl(_HELP_MATH),
+              // _buildUrl(_HELP_STRINGS),
+              // _buildUrl(_HELP_LISTS),
+              // _buildUrl(_HELP_FILES),
+              // _buildUrl(_HELP_DATE),
+              // _buildUrl(_HELP_GRAPHIC),
+              // _buildUrl(_HELP_WPTS),
+              // _buildUrl(_HELP_COORD),
             ],
           ),
         ),

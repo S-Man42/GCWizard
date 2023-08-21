@@ -14,7 +14,7 @@ const _HELP_GRAPHIC = 10;
 const _HELP_WPTS = 11;
 const _HELP_COORD = 12;
 
-Map<int, List<String>> _HELP_URLS = {
+Map<int, List<String>> HELP_URLS = {
   _HELP_VARIABLE: ['Variablen', 'https://blog.gcwizard.net/manual/de/variablen-und-datentypen/variablen/'],
   _HELP_DATATYPES: ['Datentypen', 'https://blog.gcwizard.net/manual/de/variablen-und-datentypen/01-variablen-und-datentypen/'],
   _HELP_OPERATORS: ['Operatoren', 'https://blog.gcwizard.net/manual/de/2-operatoren-und-funktionen/operatoren-und-funktionen/'],
