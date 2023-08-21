@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
@@ -22,10 +22,10 @@ class MagicEyeSolver extends StatefulWidget {
   const MagicEyeSolver({Key? key}) : super(key: key);
 
   @override
-  MagicEyeSolverState createState() => MagicEyeSolverState();
+ _MagicEyeSolverState createState() => _MagicEyeSolverState();
 }
 
-class MagicEyeSolverState extends State<MagicEyeSolver> {
+class _MagicEyeSolverState extends State<MagicEyeSolver> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   GCWFile? _decodeImage;

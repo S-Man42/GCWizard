@@ -289,6 +289,7 @@ void main() {
       {'formula' : 'csi(log(bww(A),2), log(2,bww(A)), log(bww(A)))', 'expectedOutput' : 'bbbbbbbbbbbbgbbgbbbbbbbgbbbbbgbbbbbbbbRRRRRRbb'},
       {'formula' : 'log(2, 2, round(12, 3))', 'expectedOutput' : 'bbbbgbggBBBBBBBBGGBGGBb'},
       {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23,23), csi(123,1,2,3))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbgggbbbbttbbbbbbbbggbggbbbbbbbgggbgbgbgbbbtttbbbbbbbbbbbbbgbbggbbbt'},
+      {'formula' : 'N 51° 09.[315- ( (A+1)! - A! + 2 )] E 013° 01.[056 + ( 2*A! - A² + 3 )]', 'expectedOutput' : 'tttttttttbgggbbbbbRbgbbbbbRbbbbggbbtttttttttttbggggbbbbgbRbbbbRbggbbggb'},
 
       //empty variables are always hint for forgotten values, so always R
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},

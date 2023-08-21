@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -17,10 +17,10 @@ class NumeralWordsConverter extends StatefulWidget {
   const NumeralWordsConverter({Key? key}) : super(key: key);
 
   @override
-  NumeralWordsConverterState createState() => NumeralWordsConverterState();
+ _NumeralWordsConverterState createState() => _NumeralWordsConverterState();
 }
 
-class NumeralWordsConverterState extends State<NumeralWordsConverter> {
+class _NumeralWordsConverterState extends State<NumeralWordsConverter> {
   late TextEditingController _decodeController;
 
   var _currentDecodeInput = '';

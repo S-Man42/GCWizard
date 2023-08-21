@@ -52,6 +52,11 @@ class VariableCoordinateSingleResult {
   Map<String, String>? variables;
 
   VariableCoordinateSingleResult(this.coordinate, [this.variables]);
+
+  @override
+  String toString() {
+    return coordinate.toString() + '\n' + variables.toString();
+  }
 }
 
 VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, String> substitutions, {ProjectionData? projectionData}) {

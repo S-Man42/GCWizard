@@ -22,15 +22,27 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
                   .split(RegExp(r'\s+'))
                   .where((element) => element.isNotEmpty)
                   .map((element) => convertBase(element, checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM), 10))
-                  .join(' ');
+                  .join(' ').trim();
             },
-            options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_NUMERALBASES_OPTION_FROM: NumeralBaseSpinner(
-                value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM),
-                onChanged: (value) {
-                  options[MDT_NUMERALBASES_OPTION_FROM] = value;
-                },
-              )
-            }));
+            options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolNumeralBasesState();
+}
+
+class _MultiDecoderToolNumeralBasesState extends State<MultiDecoderToolNumeralBases> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_NUMERALBASES_OPTION_FROM: NumeralBaseSpinner(
+        value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, widget.options, MDT_NUMERALBASES_OPTION_FROM),
+        onChanged: (value) {
+          setState(() {
+            widget.options[MDT_NUMERALBASES_OPTION_FROM] = value;
+          });
+        },
+      )
+    }
+    );
+  }
 }

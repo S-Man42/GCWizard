@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
@@ -23,10 +23,10 @@ class QrCode extends StatefulWidget {
   const QrCode({Key? key, this.file}) : super(key: key);
 
   @override
-  QrCodeState createState() => QrCodeState();
+ _QrCodeState createState() => _QrCodeState();
 }
 
-class QrCodeState extends State<QrCode> {
+class _QrCodeState extends State<QrCode> {
   var _currentInput = '';
   var _currentModulSize = 5;
   Uint8List? _outData;

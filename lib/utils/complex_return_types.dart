@@ -60,3 +60,11 @@ class DateTimeDouble {
 
   DateTimeDouble({required this.datetime, required this.value});
 }
+
+class KeyValueBase {
+  Object? id;
+  String key;
+  String value;
+
+  KeyValueBase(this.id, this.key, this.value);
+}

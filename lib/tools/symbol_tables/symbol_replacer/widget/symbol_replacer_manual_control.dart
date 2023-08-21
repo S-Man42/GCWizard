@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -28,10 +28,10 @@ class SymbolReplacerManualControl extends StatefulWidget {
   const SymbolReplacerManualControl({Key? key, required this.symbolImage}) : super(key: key);
 
   @override
-  SymbolReplacerManualControlState createState() => SymbolReplacerManualControlState();
+ _SymbolReplacerManualControlState createState() => _SymbolReplacerManualControlState();
 }
 
-class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
+class _SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
   final _symbolMap = <Symbol, Map<String, SymbolData>>{};
   SymbolData? _selectedSymbolData;
   var _removeActiv = false;
@@ -83,19 +83,21 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-      fixed: false,
-      imageData: _symbolMap.values,
-      countColumns: countColumns,
-      mediaQueryData: mediaQueryData,
-      onChanged: () => setState(() {}),
-      selectable: true,
-      overlayOn: true,
-      onSymbolTapped: (String tappedText, SymbolData imageData) {
-        setState(() {
-          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
-        });
-      },
-    ));
+          fixed: false,
+          imageData: _symbolMap.values,
+          countColumns: countColumns,
+          mediaQueryData: mediaQueryData,
+          onChanged: () => setState(() {}),
+          selectable: true,
+          overlayOn: true,
+          scale: widget.symbolImage.symbolScale,
+          onSymbolTapped: (String tappedText, SymbolData imageData) {
+            setState(() {
+              _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
+            });
+          },
+        )
+    );
   }
 
   void _selectGroupSymbols(SymbolData imageData, bool selected) {

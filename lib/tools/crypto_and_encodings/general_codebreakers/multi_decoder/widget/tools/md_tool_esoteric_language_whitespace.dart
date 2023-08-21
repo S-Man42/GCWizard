@@ -24,4 +24,14 @@ class MultiDecoderToolEsotericLanguageWhitespace extends AbstractMultiDecoderToo
               return null;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolEsotericLanguageWhitespaceState();
 }
+
+class _MultiDecoderToolEsotericLanguageWhitespaceState extends State<MultiDecoderToolEsotericLanguageWhitespace> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+

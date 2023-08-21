@@ -213,7 +213,8 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                                 ))
                           ],
                         ),
-                        tool.configurationWidget ?? Container()
+                        tool
+                        // tool.configurationWidget ?? Container()
                       ]))
                   : Column(
                       children: [
@@ -319,4 +320,16 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
       children: rows,
     );
   }
+}
+
+Column createMultiDecoderToolConfiguration(BuildContext context, Map<String, Widget> widgets) {
+  return Column(
+      children: widgets.entries.map((entry) {
+        return Row(
+          children: [
+            Expanded(flex: 1, child: GCWText(text: i18n(context, entry.key))),
+            Expanded(flex: 3, child: entry.value),
+          ],
+        );
+      }).toList());
 }

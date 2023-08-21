@@ -24,4 +24,13 @@ class MultiDecoderToolEsotericLanguageCow extends AbstractMultiDecoderTool {
               return null;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolEsotericLanguageCowState();
+}
+
+class _MultiDecoderToolEsotericLanguageCowState extends State<MultiDecoderToolEsotericLanguageCow> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

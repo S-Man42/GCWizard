@@ -41,15 +41,22 @@ class _GCWToolListState extends State<GCWToolList> {
   Widget _buildItems() {
     return ListView.separated(
       physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: widget.toolList.length,
+      itemCount: widget.toolList.length + 1,
       separatorBuilder: (BuildContext context, int index) => const Divider(),
       itemBuilder: (BuildContext context, int i) {
-        return _buildRow(context, widget.toolList[i]);
+        return _buildRow(context, i);
       },
     );
   }
 
-  Widget _buildRow(BuildContext context, GCWTool tool) {
+  Widget _buildRow(BuildContext context, int index) {
+    // Vertical space after the list items
+    if (index == widget.toolList.length) {
+      return const ListTile();
+    }
+
+    var tool = widget.toolList[index];
+
     Future<void> _navigateToSubPage(BuildContext context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => tool));
     }

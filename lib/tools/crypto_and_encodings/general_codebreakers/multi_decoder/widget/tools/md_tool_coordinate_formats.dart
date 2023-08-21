@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
@@ -28,7 +28,7 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
               input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
               BaseCoordinate? coords;
               try {
-                var coordinateFormatKey = getCoordinateFormatKey(options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
+                var coordinateFormatKey = _getCoordinateFormatKey(options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
                 switch (coordinateFormatKey) {
                   case CoordinateFormatKey.DEC:
                     coords = DEC.parse(input, wholeString: true);
@@ -102,29 +102,44 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                   default:
                     coords = null;
                 }
+                var latlng = coords?.toLatLng();
+                if (latlng == null) return null;
 
-                return (coords == null) ? null : coords.toString();
-
+                return formatCoordOutput(latlng, defaultCoordinateFormat, defaultEllipsoid);
               } catch (e) {}
+              return null;
             },
-            options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDown<CoordinateFormatKey>(
-                value: getCoordinateFormatKey(options, MDT_COORDINATEFORMATS_OPTION_FORMAT),
-                onChanged: (newValue) {
-                  options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = coordinateFormatMetadataByKey(newValue).persistenceKey;
-                },
-                items: allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
-                  return GCWDropDownMenuItem<CoordinateFormatKey>(
-                    value: format.type,
-                    child: i18n(context, format.name, ifTranslationNotExists: format.name),
-                  );
-                }).toList(),
-              ),
-            }));
+            options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolCoordinateFormatsState();
 }
 
-CoordinateFormatKey getCoordinateFormatKey(Map<String, Object?> options, String option) {
+class _MultiDecoderToolCoordinateFormatsState extends State<MultiDecoderToolCoordinateFormats> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWDropDown<CoordinateFormatKey>(
+        value: _getCoordinateFormatKey(widget.options, MDT_COORDINATEFORMATS_OPTION_FORMAT),
+        onChanged: (newValue) {
+          setState(() {
+            widget.options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = coordinateFormatMetadataByKey(newValue).persistenceKey;
+          });
+
+        },
+        items: allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
+          return GCWDropDownMenuItem<CoordinateFormatKey>(
+            value: format.type,
+            child: i18n(context, format.name, ifTranslationNotExists: format.name),
+          );
+        }).toList(),
+      ),
+    }
+    );
+  }
+}
+
+CoordinateFormatKey _getCoordinateFormatKey(Map<String, Object?> options, String option) {
   var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
   var formatKey = coordinateFormatMetadataByPersistenceKey(key)?.type;
   if (formatKey != null) return formatKey;
