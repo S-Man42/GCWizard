@@ -5,6 +5,7 @@ import 'AlphabetValuesAPIMapper.dart';
 import 'CoordsAPIMapper.dart';
 import 'MorseAPIMapper.dart';
 import 'ReverseAPIMapper.dart';
+import 'RomanNumbersAPIMapper.dart';
 import 'RotatorAPIMapper.dart';
 import 'gcw_server.dart';
 
@@ -15,9 +16,8 @@ String? request(WebParameter parameter) {
     case 'coords_formatconverter': apiMapper = CoordsFormatconverterAPIMapper(); break;
     case 'morse': apiMapper = MorseAPIMapper(); break;
     case 'reverse': apiMapper = ReverseAPIMapper(); break;
+    case 'roman_numbers': apiMapper = RomanNumbersAPIMapper(); break;
     case 'rotate': apiMapper = RotatorAPIMapper(); break;
-
-
   }
 
   if (apiMapper == null) return null;
