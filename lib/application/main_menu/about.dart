@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -18,10 +18,10 @@ class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
 
   @override
-  AboutState createState() => AboutState();
+ _AboutState createState() => _AboutState();
 }
 
-class AboutState extends State<About> {
+class _AboutState extends State<About> {
   PackageInfo _packageInfo = PackageInfo(
     appName: _ABOUT_PACKAGE_INFO_UNKNOWN,
     packageName: _ABOUT_PACKAGE_INFO_UNKNOWN,
@@ -86,7 +86,6 @@ class AboutState extends State<About> {
         _buildUrl('manual'),
         _buildUrl('faq'),
         _buildUrl('blog'),
-        _buildUrl('twitter'),
         _buildUrl('mastodon'),
         _buildUrl('facebook'),
         _buildUrl('webversion'),

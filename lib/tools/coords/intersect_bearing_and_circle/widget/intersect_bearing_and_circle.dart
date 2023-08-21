@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -24,10 +24,10 @@ class IntersectGeodeticAndCircle extends StatefulWidget {
   const IntersectGeodeticAndCircle({Key? key}) : super(key: key);
 
   @override
-  IntersectBearingAndCircleState createState() => IntersectBearingAndCircleState();
+ _IntersectBearingAndCircleState createState() => _IntersectBearingAndCircleState();
 }
 
-class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
+class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoordsStart = defaultBaseCoordinate;

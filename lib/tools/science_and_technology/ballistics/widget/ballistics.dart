@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/drag.dart';
 import 'package:intl/intl.dart';
 
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -101,7 +101,7 @@ class BallisticsState extends State<Ballistics> {
           value: _currentAirResistanceMode,
           onChanged: (value) {
             setState(() {
-              _currentAirResistanceMode = value as AIR_RESISTANCE;
+              _currentAirResistanceMode = value;
             });
           },
           items: AIR_RESISTANCE_LIST.entries.map((mode) {

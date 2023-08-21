@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -84,10 +84,10 @@ class GCWCoords extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWCoordsState createState() => GCWCoordsState();
+ _GCWCoordsState createState() => _GCWCoordsState();
 }
 
-class GCWCoordsState extends State<GCWCoords> {  
+class _GCWCoordsState extends State<GCWCoords> {  
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   bool _hasSetCoords = false;
 

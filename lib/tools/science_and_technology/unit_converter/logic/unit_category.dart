@@ -16,7 +16,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/volume.dart';
 
-final UNITCATEGORY_ACCELERATION = UnitCategory<Acceleration>('unitconverter_category_acceleration', accelerations, ACCELERATION_METERPERSQUARESECOND, true);
+final UNITCATEGORY_ACCELERATION = UnitCategory<Acceleration>('unitconverter_category_acceleration', accelerations, ACCELERATION_METERSPERSQUARESECONDS, false);
 final UNITCATEGORY_ANGLE = UnitCategory<Angle>('unitconverter_category_angle', angles, ANGLE_DEGREE, true);
 final UNITCATEGORY_AREA = UnitCategory<Area>('unitconverter_category_area', areas, AREA_SQUAREMETER, false);
 final UNITCATEGORY_DENSITY =

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -20,10 +20,10 @@ class CoordinateAveraging extends StatefulWidget {
   const CoordinateAveraging({Key? key}) : super(key: key);
 
   @override
-  CoordinateAveragingState createState() => CoordinateAveragingState();
+ _CoordinateAveragingState createState() => _CoordinateAveragingState();
 }
 
-class CoordinateAveragingState extends State<CoordinateAveraging> {
+class _CoordinateAveragingState extends State<CoordinateAveraging> {
   bool? _currentLocationPermissionGranted;
   StreamSubscription<LocationData>? _locationSubscription;
   final Location _currentLocation = Location();
