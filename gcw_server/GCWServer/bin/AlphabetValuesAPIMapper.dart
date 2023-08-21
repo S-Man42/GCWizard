@@ -17,12 +17,19 @@ class AlphabetValuesAPIMapper extends APIMapper {
     if (parameter1 != null && parameter1.isNotEmpty) {
       key = parameter1;
     }
-
     var alphabet = _getAlphabetByKey(key).alphabet;
 
-    return intListToString(
-        logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
-        delimiter: ' ');
+    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+      var values = textToIntList(input);
+      return logic.AlphabetValues(alphabet: alphabet).valuesToText(values);
+    } else {
+      return intListToString(
+          logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
+          delimiter: ' ');
+    }
+
+
+
   }
 
   /// convert doLogic output to map
