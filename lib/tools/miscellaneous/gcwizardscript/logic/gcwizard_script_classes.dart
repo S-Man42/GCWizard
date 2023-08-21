@@ -44,7 +44,8 @@ class GCWizardScriptOutput {
     return GCWizardScriptOutput(
         STDOUT: '',
         Graphic: GraphicState(),
-        Points: [], ErrorMessage: '',
+        Points: [],
+        ErrorMessage: '',
         ErrorPosition: 0,
         VariableDump: [],
         FILE: Uint8List.fromList([]),

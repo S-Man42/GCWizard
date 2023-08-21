@@ -27,7 +27,6 @@ class _GCWList {
     _contents.shuffle();
   }
 
-  @override
   void sort() {
     //https://stackoverflow.com/questions/67847956/can-i-sort-listdynamic-in-dart
     _contents.sort(
@@ -108,7 +107,6 @@ class _GCWList {
   }
 
   Object getIndex(int index) {
-    print('getindex');
     if (_contents.isEmpty) return 'NIL';
     if (index > _contents.length - 1) return 'NIL';
     return _contents[index];
@@ -233,4 +231,5 @@ Object? _listGet(_GCWList? list, Object? index) {
       }
     }
   }
+  return null;
 }

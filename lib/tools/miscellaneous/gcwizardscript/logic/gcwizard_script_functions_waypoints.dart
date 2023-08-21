@@ -1,25 +1,30 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
 void _wptsAdd(Object lat, Object lon) {
-  if (_isAString(lat) || _isAString(lon)) {
+  if (_isNotANumber(lat) || _isNotANumber(lon)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }
-  if ((lat as num).abs() > 90) {
+  if ((lat as num).abs() > 90.0) {
     _handleError(_INVALIDLATITUDE);
     return;
   }
-  if ((lon as num).abs() > 180) {
+  if ((lon as num).abs() > 180.0) {
     _handleError(_INVALIDLONGITUDE);
     return;
   }
-  _state.waypoints.add(GCWMapPoint(
+  lat = lat as double;
+  lon = lon as double;
+
+  GCWMapPoint wpt = GCWMapPoint(
       uuid: 'wpt',
       markerText: 'wpt',
-      point: LatLng((lat as double), (lon as double)),
+      point: LatLng(lat, lon),
       color: Colors.black,
       isEditable: false,
-      isVisible: true));
+      isVisible: true);
+
+  _state.waypoints.add(wpt);
 }
 
 void _wptsClear() {
