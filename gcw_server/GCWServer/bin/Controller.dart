@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'APIMapper.dart';
 import 'AlphabetValuesAPIMapper.dart';
-import 'CoordsAPIMapper.dart';
+//import 'CoordsAPIMapper.dart';
 import 'MorseAPIMapper.dart';
 import 'ReverseAPIMapper.dart';
 import 'RomanNumbersAPIMapper.dart';
@@ -11,7 +11,7 @@ import 'gcw_server.dart';
 
 final Set<APIMapper> _apiList = {
   AlphabetValuesAPIMapper(),
-  CoordsFormatconverterAPIMapper(),
+  //CoordsFormatconverterAPIMapper(), //problem: dart.ui used
   MorseAPIMapper(),
   ReverseAPIMapper(),
   RomanNumbersAPIMapper(),
