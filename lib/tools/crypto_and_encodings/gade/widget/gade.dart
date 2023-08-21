@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -13,10 +13,10 @@ class Gade extends StatefulWidget {
   const Gade({Key? key}) : super(key: key);
 
   @override
-  GadeState createState() => GadeState();
+ _GadeState createState() => _GadeState();
 }
 
-class GadeState extends State<Gade> {
+class _GadeState extends State<Gade> {
   late TextEditingController _GadeInputController;
   String _currentGadeInput = '';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -17,10 +17,10 @@ class WetBulbTemperature extends StatefulWidget {
   const WetBulbTemperature({Key? key}) : super(key: key);
 
   @override
-  WetBulbTemperatureState createState() => WetBulbTemperatureState();
+ _WetBulbTemperatureState createState() => _WetBulbTemperatureState();
 }
 
-class WetBulbTemperatureState extends State<WetBulbTemperature> {
+class _WetBulbTemperatureState extends State<WetBulbTemperature> {
   double _currentTemperature = 1.0;
   double _currentHumidity = 0.0;
 

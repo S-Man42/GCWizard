@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -24,10 +24,10 @@ class GCWSymbolTableDecryption extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWSymbolTableDecryptionState createState() => GCWSymbolTableDecryptionState();
+ _GCWSymbolTableDecryptionState createState() => _GCWSymbolTableDecryptionState();
 }
 
-class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
+class _GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   String _decryptionOutput = '';
 
   late SymbolTableData _data;

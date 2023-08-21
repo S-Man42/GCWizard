@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsMGRS extends StatefulWidget {
   final void Function(MGRS) onChanged;
   final MGRS coordinates;
+  final bool isDefault;
 
-  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();
@@ -23,19 +24,11 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
-
-    var mgrs = widget.coordinates;
-    _currentEasting.value = mgrs.easting;
-    _currentNorthing.value = mgrs.northing;
-
-    _currentLonZone.value = mgrs.utmZone.lonZone;
-    _currentLatZone = mgrs.utmZone.latZone;
-    _currentDigraphEasting = mgrs.digraph[0];
-    _currentDigraphNorthing = mgrs.digraph[1];
-
     _LonZoneController = TextEditingController(text: _currentLonZone.text);
 
     _EastingController = TextEditingController(text: _currentEasting.text);
@@ -52,6 +45,22 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.isDefault && !_initialized) {
+      var mgrs = widget.coordinates;
+      _currentEasting.value = mgrs.easting;
+      _currentNorthing.value = mgrs.northing;
+
+      _currentLonZone.value = mgrs.utmZone.lonZone;
+      _currentLatZone = mgrs.utmZone.latZone;
+      _currentDigraphEasting = mgrs.digraph[0];
+      _currentDigraphNorthing = mgrs.digraph[1];
+
+      _LonZoneController.text = _currentLonZone.value.toString();
+      _EastingController.text = _currentEasting.value.toString();
+      _NorthingController.text = _currentNorthing.value.toString();
+
+      _initialized = true;
+    }
 
     return Column(children: <Widget>[
       Row(

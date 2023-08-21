@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -45,10 +45,10 @@ class SymbolReplacer extends StatefulWidget {
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
 
   @override
-  SymbolReplacerState createState() => SymbolReplacerState();
+ _SymbolReplacerState createState() => _SymbolReplacerState();
 }
 
-class SymbolReplacerState extends State<SymbolReplacer> {
+class _SymbolReplacerState extends State<SymbolReplacer> {
   static String no_symbol_table_key = 'no_symbol_table';
   final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
   SymbolReplacerImage? _symbolImage;
@@ -443,11 +443,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   void _selectSymbolTableDataItem(String? symbolKey) {
     if ((symbolKey != null)) {
-      for (GCWDropDownMenuItem item in _compareSymbolItems) {
-        if ((item.value is SymbolReplacerSymbolTableViewData) &&
-            ((item.value as SymbolReplacerSymbolTableViewData).symbolKey == symbolKey)) {
+      for (var item in _compareSymbolItems) {
+        if (item.value.symbolKey == symbolKey) {
 
-          _currentSymbolTableViewData = item.value as SymbolReplacerSymbolTableViewData;
+          _currentSymbolTableViewData = item.value;
           break;
         }
       }
@@ -540,21 +539,19 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   void _selectSymbolDataItem1(List<Map<String, SymbolReplacerSymbolData>>? imageData) {
     if (imageData == null) return;
-    for (GCWDropDownMenuItem item in _compareSymbolItems) {
+    for (var item in _compareSymbolItems) {
       var found = true;
-      if (item.value is SymbolReplacerSymbolTableViewData) {
-        var images = (item.value as SymbolReplacerSymbolTableViewData).data?.images;
-        if (images?.length == imageData.length) {
-          for (var i = 0; i < imageData.length; i++) {
-            if (!const ListEquality<int>().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
-              found = false;
-              break;
-            }
-          }
-          if (found) {
-            _currentSymbolTableViewData = item.value as SymbolReplacerSymbolTableViewData;
+      var images = item.value.data?.images;
+      if (images?.length == imageData.length) {
+        for (var i = 0; i < imageData.length; i++) {
+          if (!const ListEquality<int>().equals(imageData[i].values.first.bytes, images?[i].values.first.bytes)) {
+            found = false;
             break;
           }
+        }
+        if (found) {
+          _currentSymbolTableViewData = item.value;
+          break;
         }
       }
     }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -8,10 +8,10 @@ class Licenses extends StatefulWidget {
   const Licenses({Key? key}) : super(key: key);
 
   @override
-  LicensesState createState() => LicensesState();
+ _LicensesState createState() => _LicensesState();
 }
 
-class LicensesState extends State<Licenses> {
+class _LicensesState extends State<Licenses> {
   @override
   Widget build(BuildContext context) {
     var content = Column(children: [
@@ -61,7 +61,10 @@ class LicensesState extends State<Licenses> {
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_fonts')),
       const GCWColumnedMultilineOutput(
-        data: [['Roboto', 'Google Fonts', 'Apache License, Version 2.0']]
+        data: [
+          ['Courier Prime', 'Google Fonts', 'SIL OPEN FONT LICENSE Version 1.1'],
+          ['Roboto', 'Google Fonts', 'Apache License, Version 2.0']
+        ]
       ),
       GCWTextDivider(text: i18n(context, 'licenses_additionalcode')),
       const GCWColumnedMultilineOutput(
@@ -104,6 +107,8 @@ class LicensesState extends State<Licenses> {
           const ['several', 'myGeoTools'],
           const ['several', 'Wikipedia'],
           [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
+          [i18n(context, 'symboltables_blue_monday_title'), 'adopted from https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/; (Personal Use)'],
           [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
@@ -125,11 +130,15 @@ class LicensesState extends State<Licenses> {
             i18n(context, 'symboltables_ninjargon_title'),
             'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
           ],
+          [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
           [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
           [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
           [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
           [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
+          [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
+          [i18n(context, 'symboltables_steinheil_title'), 'hhttps://de.wikipedia.org/wiki/Steinheilschrift (Wiki Commons)'],
           [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
         ],
         flexValues: const [1, 2]
@@ -160,6 +169,12 @@ class LicensesState extends State<Licenses> {
           ],
           [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
         ]
+      ),
+      GCWTextDivider(text: i18n(context, 'licenses_images')),
+      GCWColumnedMultilineOutput(
+          data: [
+            [i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']
+          ],
       ),
     ]);
 

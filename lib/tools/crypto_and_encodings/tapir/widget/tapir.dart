@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,10 +11,10 @@ class Tapir extends StatefulWidget {
   const Tapir({Key? key}) : super(key: key);
 
   @override
-  TapirState createState() => TapirState();
+ _TapirState createState() => _TapirState();
 }
 
-class TapirState extends State<Tapir> {
+class _TapirState extends State<Tapir> {
   late TextEditingController _inputController;
   late TextEditingController _otpController;
 

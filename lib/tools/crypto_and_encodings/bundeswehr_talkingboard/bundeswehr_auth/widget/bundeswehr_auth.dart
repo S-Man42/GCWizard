@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -19,10 +19,10 @@ class BundeswehrTalkingBoardAuthentification extends StatefulWidget {
   const BundeswehrTalkingBoardAuthentification({Key? key}) : super(key: key);
 
   @override
-  BundeswehrTalkingBoardAuthentificationState createState() => BundeswehrTalkingBoardAuthentificationState();
+ _BundeswehrTalkingBoardAuthentificationState createState() => _BundeswehrTalkingBoardAuthentificationState();
 }
 
-class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkingBoardAuthentification> {
+class _BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkingBoardAuthentification> {
   late TextEditingController _inputAuthController;
   late TextEditingController _callSignController;
   late TextEditingController _letterControllerAuth;

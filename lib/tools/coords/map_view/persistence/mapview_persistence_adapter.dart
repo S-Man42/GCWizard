@@ -36,6 +36,7 @@ class MapViewPersistenceAdapter {
       gcwMapPoint.hasCircle() ? gcwMapPoint.circle!.radius : null,
       gcwMapPoint.circleColorSameAsPointColor,
       gcwMapPoint.hasCircle() ? colorToHexString(gcwMapPoint.circle!.color) : null,
+      gcwMapPoint.isEditable
     );
   }
 
@@ -57,7 +58,7 @@ class MapViewPersistenceAdapter {
               )
             : null,
         circleColorSameAsPointColor: mapPointDAO.circleColorSameAsColor,
-        isEditable: true);
+        isEditable: mapPointDAO.isEditable ?? false);
   }
 
   static MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
@@ -158,6 +159,7 @@ class MapViewPersistenceAdapter {
     mapPointDAO.radius = mapPoint.hasCircle() ? mapPoint.circle!.radius : null;
     mapPointDAO.circleColorSameAsColor = mapPoint.circleColorSameAsPointColor;
     mapPointDAO.circleColor = mapPoint.hasCircle() ? colorToHexString(mapPoint.circle!.color) : null;
+    mapPointDAO.isEditable = mapPoint.isEditable;
 
     updateMapPointDAO(mapPointDAO, _mapViewDAO);
 

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -20,6 +20,7 @@ import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/logic/im
 import 'package:gc_wizard/tools/images_and_files/_common/logic/rgb_pixel.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
@@ -30,10 +31,10 @@ class ImageColorCorrections extends StatefulWidget {
   const ImageColorCorrections({Key? key, this.file}) : super(key: key);
 
   @override
-  ImageColorCorrectionsState createState() => ImageColorCorrectionsState();
+ _ImageColorCorrectionsState createState() => _ImageColorCorrectionsState();
 }
 
-class ImageColorCorrectionsState extends State<ImageColorCorrections> {
+class _ImageColorCorrectionsState extends State<ImageColorCorrections> {
   GCWFile? _originalData;
   Uint8List? _convertedOutputImage;
 
@@ -81,7 +82,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   Image.Image? _currentDataInit({int? previewSize}) {
     var previewHeight = previewSize ?? Prefs.getInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT);
 
-    _originalImage = _decodeImage(_originalData?.bytes);
+    _originalImage = _originalData?.bytes == null ? null: decodeImage4ChannelFormat(_originalData!.bytes);
     if(_originalImage == null) return null;
 
     if (_originalImage!.height > previewHeight) {
@@ -360,16 +361,6 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     return GCWFile(bytes: _convertedOutputImage!);
   }
 
-  Image.Image? _decodeImage(Uint8List? bytes) {
-    if (bytes == null) return null;
-    var image = Image.decodeImage(_originalData!.bytes);
-    if (image == null) return null;
-
-    if (image.numChannels != 4 || image.format != Image.Format.uint8) {
-      image = image.convert(format: Image.Format.uint8, numChannels: 4);
-    }
-    return image;
-  }
 
   Future<GCWAsyncExecuterParameters?> _buildJobDataAdjustColor() async {
     if (_originalImage == null) return null;

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -22,10 +22,10 @@ class Piet extends StatefulWidget {
   const Piet({Key? key, this.file}) : super(key: key);
 
   @override
-  PietState createState() => PietState();
+ _PietState createState() => _PietState();
 }
 
-class PietState extends State<Piet> {
+class _PietState extends State<Piet> {
   GCWFile? _originalData;
   String? _currentInterpreterInput;
   String? _currentGeneratorInput;

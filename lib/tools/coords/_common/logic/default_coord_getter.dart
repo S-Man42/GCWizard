@@ -11,7 +11,7 @@ const defaultLambertType = CoordinateFormatKey.LAMBERT93;
 const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
 
-final defaultCoordinate = LatLng(0.0, 0.0);
+const defaultCoordinate = LatLng(0.0, 0.0);
 
 CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   switch (format) {
@@ -26,7 +26,7 @@ CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
 }
 
 BaseCoordinate get defaultBaseCoordinate {
-  return buildCoordinatesByFormat(defaultCoordinateFormat, defaultCoordinate, defaultEllipsoid);
+  return buildCoordinate(defaultCoordinateFormat, defaultCoordinate, defaultEllipsoid);
 }
 
 const CoordinateFormatKey _fallbackDefaultCoordFormatKey = CoordinateFormatKey.DMM;
