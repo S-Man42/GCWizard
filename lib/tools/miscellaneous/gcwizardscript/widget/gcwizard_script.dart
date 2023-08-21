@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart'
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
@@ -17,6 +18,7 @@ import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -125,7 +127,60 @@ class GCWizardScriptState extends State<GCWizardScript> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            GCWButton(
+            GCWIconButton(
+              icon: Icons.run_circle_outlined,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                _currentInput = '';
+                _currentOutput.continueState = null;
+                _interpretGCWScriptAsync();
+              },
+            ),
+            GCWIconButton(
+              icon: Icons.download,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                setState(() {
+                  _loadFile = !_loadFile;
+                });
+              },
+            ),
+            GCWIconButton(
+              icon: Icons.save,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                _exportFile(context, Uint8List.fromList(_currentProgram.codeUnits), GCWizardScriptFileType.PROGRAM);
+              },
+            ),
+            GCWIconButton(
+              icon: Icons.clear,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                setState(() {
+                  _programController.text = '';
+                  _currentProgram = '';
+                  _currentOutput = GCWizardScriptOutput.empty();
+                  _currentScriptOutput = '';
+                });
+              },
+            ),
+            GCWIconButton(
+              icon: Icons.help_outline,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                _showDialogBoxHelp(context);
+              },
+            ),
+            GCWIconButton(
+              icon: Icons.location_on,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                setState(() {
+                  _loadCoords = !_loadCoords;
+                });
+              },
+            ),
+/*            GCWButton(
               text: i18n(context, 'gcwizard_script_interpret'),
               onPressed: () {
                 _currentInput = '';
@@ -169,13 +224,21 @@ class GCWizardScriptState extends State<GCWizardScript> {
               },
             ),
             GCWButton(
+              text: i18n(context, 'gcwizard_script_help'),
+              onPressed: () {
+                setState(() {
+                  _showDialogBoxHelp(context);
+                });
+              },
+            ),
+            GCWButton(
               text: i18n(context, 'gcwizard_script_coords'),
               onPressed: () {
                 setState(() {
                   _loadCoords = !_loadCoords;
                 });
               },
-            ),
+            ),*/
           ],
         ),
         _buildOutput(context),
@@ -257,7 +320,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     );
   }
 
-  Widget _buildOutputText(GCWizardScriptOutput output){
+  Widget _buildOutputText(GCWizardScriptOutput output) {
     if (output.ErrorMessage.isEmpty) {
       return GCWOutputText(
         style: gcwMonotypeTextStyle(),
@@ -265,16 +328,24 @@ class GCWizardScriptState extends State<GCWizardScript> {
         isMonotype: true,
       );
     } else {
-      List<List<String>> memoryDump = [[i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]];
+      List<List<String>> memoryDump = [
+        [i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]
+      ];
       memoryDump.addAll(output.VariableDump);
       return Column(
         children: <Widget>[
           GCWOutputText(
             style: gcwMonotypeTextStyle(),
-            text: output.STDOUT + '\n' +
-                i18n(context, output.ErrorMessage) + '\n' +
-                i18n(context, 'gcwizard_script_error_position') + ' ' + output.ErrorPosition.toString() + '\n' +
-                '=> ' + _printFaultyProgram(_currentProgram, output.ErrorPosition), //_currentScriptOutput,
+            text: output.STDOUT +
+                '\n' +
+                i18n(context, output.ErrorMessage) +
+                '\n' +
+                i18n(context, 'gcwizard_script_error_position') +
+                ' ' +
+                output.ErrorPosition.toString() +
+                '\n' +
+                '=> ' +
+                _printFaultyProgram(_currentProgram, output.ErrorPosition), //_currentScriptOutput,
             isMonotype: true,
           ),
           GCWExpandableTextDivider(
@@ -395,7 +466,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   String _printFaultyProgram(String program, int position) {
     String result = '';
-    if (program.isNotEmpty){
+    if (program.isNotEmpty) {
       if (position > 0) {
         result = (position < program.length) ? program[position - 1] : program[program.length - 1];
       }
@@ -423,6 +494,65 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   _currentInput = text;
                 },
               ),
+            ],
+          ),
+        ),
+        [
+          GCWDialogButton(
+            text: i18n(context, 'common_ok'),
+            onPressed: () {
+              if (_currentOutput.continueState != null) {
+                _currentOutput.continueState!.addInput(_currentInput);
+                _interpretGCWScriptAsync();
+              }
+            },
+          )
+        ],
+        cancelButton: false);
+  }
+
+  Container _buildUrl(int key) {
+    return Container(
+        padding: const EdgeInsets.only(top: 15, bottom: 10),
+        child: Row(children: <Widget>[
+          Expanded(flex: 2, child: GCWText(text: _HELP_URLS[key][0])),
+          Expanded(
+              flex: 3,
+              child: InkWell(
+                child: Text(
+                  _HELP_URLS[key][1],
+                  style: gcwHyperlinkTextStyle(),
+                ),
+                onTap: () {
+                  launchUrl(Uri.parse(i18n(context, 'about_${key}_url')));
+                },
+              ))
+        ]));
+  }
+
+  void _showDialogBoxHelp(BuildContext context) {
+    showGCWDialog(
+        context,
+        i18n(context, 'gcwizard_script_help'),
+        SizedBox(
+          width: 300,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildUrl(_HELP_VARIABLE),
+              _buildUrl(_HELP_DATATYPES),
+              _buildUrl(_HELP_OPERATORS),
+              _buildUrl(_HELP_COMMANDS),
+              _buildUrl(_HELP_CONTROLS),
+              _buildUrl(_HELP_MATH),
+              _buildUrl(_HELP_STRINGS),
+              _buildUrl(_HELP_LISTS),
+              _buildUrl(_HELP_FILES),
+              _buildUrl(_HELP_DATE),
+              _buildUrl(_HELP_GRAPHIC),
+              _buildUrl(_HELP_WPTS),
+              _buildUrl(_HELP_COORD),
             ],
           ),
         ),

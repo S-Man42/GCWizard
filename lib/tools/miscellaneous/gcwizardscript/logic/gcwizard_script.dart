@@ -61,6 +61,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_classes.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_consts.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_enums.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_help.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_variables.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_error_handling.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_definitions.dart';

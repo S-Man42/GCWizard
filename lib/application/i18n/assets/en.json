@@ -2183,6 +2183,7 @@
   "gcwizard_script_load": "Load",
   "gcwizard_script_clear": "Clear",
   "gcwizard_script_save": "Save",
+  "gcwizard_script_help": "Help",
   "gcwizard_script_coords": "Lat/Lon",
   "gcwizard_script_dump": "Memory dump",
   "gcwizard_script_dump_variable": "Variable",
