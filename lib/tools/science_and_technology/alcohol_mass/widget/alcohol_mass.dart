@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -21,10 +21,10 @@ class AlcoholMass extends StatefulWidget {
   const AlcoholMass({Key? key}) : super(key: key);
 
   @override
-  AlcoholMassState createState() => AlcoholMassState();
+ _AlcoholMassState createState() => _AlcoholMassState();
 }
 
-class AlcoholMassState extends State<AlcoholMass> {
+class _AlcoholMassState extends State<AlcoholMass> {
   static const _MODES = [_ALCOHOL_MASS, _VOLUME, _ALCOHOL_MASS_BY_VOLUME];
   var _currentMode = _ALCOHOL_MASS;
   var _currentVolume = 0.0;

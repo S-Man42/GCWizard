@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -18,10 +18,10 @@ class DTMF extends StatefulWidget {
   const DTMF({Key? key}) : super(key: key);
 
   @override
-  DTMFState createState() => DTMFState();
+ _DTMFState createState() => _DTMFState();
 }
 
-class DTMFState extends State<DTMF> {
+class _DTMFState extends State<DTMF> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

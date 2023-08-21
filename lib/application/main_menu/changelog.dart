@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -41,10 +41,10 @@ class Changelog extends StatefulWidget {
   const Changelog({Key? key}) : super(key: key);
 
   @override
-  ChangelogState createState() => ChangelogState();
+ _ChangelogState createState() => _ChangelogState();
 }
 
-class ChangelogState extends State<Changelog> {
+class _ChangelogState extends State<Changelog> {
   @override
   Widget build(BuildContext context) {
     var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());

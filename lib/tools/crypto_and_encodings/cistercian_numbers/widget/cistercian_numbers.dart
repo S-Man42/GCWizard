@@ -21,10 +21,10 @@ class CistercianNumbers extends StatefulWidget {
   const CistercianNumbers({Key? key}) : super(key: key);
 
   @override
-  CistercianNumbersState createState() => CistercianNumbersState();
+ _CistercianNumbersState createState() => _CistercianNumbersState();
 }
 
-class CistercianNumbersState extends State<CistercianNumbers> {
+class _CistercianNumbersState extends State<CistercianNumbers> {
   final _DEFAULT_SEGMENT = ['k'];
 
   late TextEditingController _inputEncodeController;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
@@ -22,7 +22,7 @@ void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points,
                   context,
                   'JSON ' + i18n(context, 'common_text'),
                   GCWTextExport(text: json, initMode: TextExportMode.TEXT, possibileExportMode: possibileExportMode),
-                  [const GCWDialogButton(text: 'OK')],
+                  [GCWDialogButton(text: i18n(context, 'common_ok'))],
                   cancelButton: false);
             },
           )

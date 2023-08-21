@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
@@ -28,20 +27,12 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
 
 abstract class BaseCoordFormatKey{}
-
-String _dmmAndDMSNumberFormat([int precision = 6]) {
-  var formatString = '00.';
-  if (precision < 0) precision = 0;
-
-  if (precision <= 3) formatString += '0' * precision;
-  if (precision > 3) formatString += '000' + '#' * (precision - 3);
-
-  return formatString;
-}
 
 String _getCoordinateSignString(int sign, bool isLatitude) {
   var _sign = '';
@@ -70,7 +61,9 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
 abstract class BaseCoordinate {
   late double _latitude;
   late double _longitude;
-  late CoordinateFormat format;
+  late CoordinateFormat _format;
+
+  CoordinateFormat get format => _format;
 
   BaseCoordinate ([double? latitude, double? longitude]) {
     _latitude = latitude ?? defaultCoordinate.latitude;
@@ -83,7 +76,7 @@ abstract class BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return LatLng(_latitude, _longitude).toString();
   }
 }
@@ -95,7 +88,7 @@ class DEC extends BaseCoordinate {
   double longitude;
 
   DEC(this.latitude, this.longitude) {
-    format = CoordinateFormat(CoordinateFormatKey.DEC);
+    _format = CoordinateFormat(CoordinateFormatKey.DEC);
   }
 
   @override
@@ -112,13 +105,11 @@ class DEC extends BaseCoordinate {
   }
 
   @override
-  String toString([int precision = 10]) {
-    if (precision < 1) precision = 1;
-
-    String fixedDigits = '0' * min(precision, 3);
-    String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
-
-    return '${NumberFormat('00.' + fixedDigits + variableDigits).format(latitude)}\n${NumberFormat('000.' + fixedDigits + variableDigits).format(longitude)}';
+  String toString([int? precision]) {
+    precision = precision ?? 10;
+    var latFormatStr = formatStringForDecimals(decimalPrecision: precision);
+    var lonFormatStr = formatStringForDecimals(integerPrecision: 3, decimalPrecision: precision);
+    return '${NumberFormat(latFormatStr).format(latitude)}\n${NumberFormat(lonFormatStr).format(longitude)}';
   }
 }
 
@@ -142,7 +133,7 @@ class DMMPart {
   DMMPart(this.sign, this.degrees, this.minutes);
 
   FormattedDMMPart _formatParts(bool isLatitude, [int precision = 10]) {
-    var _minutesStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(minutes);
+    var _minutesStr = NumberFormat(formatStringForDecimals(decimalPrecision: precision)).format(minutes);
     var _degrees = degrees;
     var _sign = _getCoordinateSignString(sign, isLatitude);
 
@@ -203,11 +194,11 @@ class DMMLongitude extends DMMPart {
 }
 
 class DMM extends BaseCoordinate {
-  DMMLatitude latitude;
-  DMMLongitude longitude;
+  late DMMLatitude latitude;
+  late DMMLongitude longitude;
 
-  DMM(this.latitude, this.longitude) {
-    format = CoordinateFormat(CoordinateFormatKey.DMM);
+  DMM(this.latitude, this. longitude) {
+    _format = CoordinateFormat(CoordinateFormatKey.DMM);
   }
 
   @override
@@ -224,7 +215,8 @@ class DMM extends BaseCoordinate {
   }
 
   @override
-  String toString([int precision = 10]) {
+  String toString([int? precision]) {
+    precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }
@@ -251,13 +243,13 @@ class DMSPart {
 
   FormattedDMSPart _formatParts(bool isLatitude, [int precision = 10]) {
     var _sign = _getCoordinateSignString(sign, isLatitude);
-    var _secondsStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(seconds);
+    var _secondsStr = NumberFormat(formatStringForDecimals(decimalPrecision: precision, minDecimalPrecision: 2)).format(seconds);
     var _minutes = minutes;
 
     //Values like 59.999999999 may be rounded to 60.0. So in that case,
     //the greater unit (minutes or degrees) has to be increased instead
     if (_secondsStr.startsWith('60')) {
-      _secondsStr = '00.000';
+      _secondsStr = '00.00';
       _minutes += 1;
     }
 
@@ -323,7 +315,7 @@ class DMS extends BaseCoordinate {
   DMSLongitude longitude;
 
   DMS(this.latitude, this.longitude) {
-    format = CoordinateFormat(CoordinateFormatKey.DMS);
+    _format = CoordinateFormat(CoordinateFormatKey.DMS);
   }
 
   @override
@@ -340,7 +332,8 @@ class DMS extends BaseCoordinate {
   }
 
   @override
-  String toString([int precision = 10]) {
+  String toString([int? precision]) {
+    precision = precision ?? 6;
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }
@@ -357,7 +350,7 @@ class UTMREF extends BaseCoordinate {
   double northing;
 
   UTMREF(this.zone, this.easting, this.northing) {
-    format = CoordinateFormat(CoordinateFormatKey.UTM);
+    _format = CoordinateFormat(CoordinateFormatKey.UTM);
   }
 
   HemisphereLatitude get hemisphere {
@@ -379,7 +372,7 @@ class UTMREF extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return '${zone.lonZone} ${zone.latZone} ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
   }
 }
@@ -400,7 +393,7 @@ class MGRS extends BaseCoordinate {
   double northing;
 
   MGRS(this.utmZone, this.digraph, this.easting, this.northing) {
-    format = CoordinateFormat(CoordinateFormatKey.MGRS);
+    _format = CoordinateFormat(CoordinateFormatKey.MGRS);
   }
 
   @override
@@ -418,7 +411,7 @@ class MGRS extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return '${utmZone.lonZone}${utmZone.latZone} $digraph ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
   }
 }
@@ -428,7 +421,7 @@ class SwissGrid extends BaseCoordinate {
   double northing;
 
   SwissGrid(this.easting, this.northing) {
-    format = CoordinateFormat(CoordinateFormatKey.SWISS_GRID);
+    _format = CoordinateFormat(CoordinateFormatKey.SWISS_GRID);
   }
 
   @override
@@ -446,7 +439,7 @@ class SwissGrid extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return 'Y: $easting\nX: $northing';
   }
 }
@@ -454,7 +447,7 @@ class SwissGrid extends BaseCoordinate {
 class SwissGridPlus extends SwissGrid {
 
   SwissGridPlus(double easting, double northing) : super(easting, northing) {
-    format = CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS);
+    _format = CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS);
   }
 
   @override
@@ -477,7 +470,7 @@ class DutchGrid extends BaseCoordinate {
   double y;
 
   DutchGrid(this.x, this.y) {
-    format = CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
+    _format = CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
   }
 
   @override
@@ -494,7 +487,7 @@ class DutchGrid extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return 'X: $x\nY: $y';
   }
 }
@@ -510,7 +503,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 
-    format = CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey);
+    _format = CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey);
   }
 
   @override
@@ -536,7 +529,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return 'R: $easting\nH: $northing';
   }
 }
@@ -552,7 +545,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 
-    format = CoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey);
+    _format = CoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey);
   }
 
   @override
@@ -578,7 +571,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return 'X: $easting\nY: $northing';
   }
 }
@@ -588,7 +581,7 @@ class Mercator extends BaseCoordinate {
   double northing;
 
   Mercator(this.easting, this.northing) {
-    format = CoordinateFormat(CoordinateFormatKey.MERCATOR);
+    _format = CoordinateFormat(CoordinateFormatKey.MERCATOR);
   }
 
   @override
@@ -606,7 +599,7 @@ class Mercator extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return 'Y: $easting\nX: $northing';
   }
 }
@@ -616,7 +609,7 @@ class NaturalAreaCode extends BaseCoordinate {
   String y; //north
 
   NaturalAreaCode(this.x, this.y) {
-    format = CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE);
+    _format = CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE);
   }
 
   @override
@@ -633,7 +626,7 @@ class NaturalAreaCode extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return 'X: $x\nY: $y';
   }
 }
@@ -649,7 +642,7 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 
-    format = CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey);
+    _format = CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey);
   }
 
   @override
@@ -674,8 +667,8 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  String toString() {
-    return 'X: $x\nY: $y\nZoom: ${format.subtype}';
+  String toString([int? precision]) {
+    return 'X: $x\nY: $y\nZoom: ${_format.subtype}';
   }
 }
 
@@ -683,7 +676,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   int a, b, c;
 
   ReverseWherigoWaldmeister(this.a, this.b, this.c) {
-    format = CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);
+    _format = CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);
   }
 
   @override
@@ -704,7 +697,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
   }
 }
@@ -713,7 +706,7 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
   String s, t;
 
   ReverseWherigoDay1976(this.s, this.t) {
-    format = CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976);
+    _format = CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976);
   }
 
   @override
@@ -730,7 +723,7 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return '$s\n$t';
   }
 }
@@ -739,7 +732,7 @@ class XYZ extends BaseCoordinate {
   double x, y, z;
 
   XYZ(this.x, this.y, this.z) {
-    format = CoordinateFormat(CoordinateFormatKey.XYZ);
+    _format = CoordinateFormat(CoordinateFormatKey.XYZ);
   }
 
   @override
@@ -757,7 +750,7 @@ class XYZ extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     var numberFormat = NumberFormat('0.######');
     return 'X: ${numberFormat.format(x)}\nY: ${numberFormat.format(y)}\nZ: ${numberFormat.format(z)}';
   }
@@ -767,7 +760,7 @@ class Maidenhead extends BaseCoordinate {
   String text;
 
   Maidenhead(this.text) {
-    format = CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);
+    _format = CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);
   }
 
   @override
@@ -784,7 +777,7 @@ class Maidenhead extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return text;
   }
 }
@@ -793,7 +786,7 @@ class Makaney extends BaseCoordinate {
   String text;
 
   Makaney(this.text) {
-    format = CoordinateFormat(CoordinateFormatKey.MAKANEY);
+    _format = CoordinateFormat(CoordinateFormatKey.MAKANEY);
   }
 
   @override
@@ -810,7 +803,7 @@ class Makaney extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return text;
   }
 }
@@ -819,7 +812,7 @@ class Geohash extends BaseCoordinate {
   String text;
 
   Geohash(this.text) {
-    format = CoordinateFormat(CoordinateFormatKey.GEOHASH);
+    _format = CoordinateFormat(CoordinateFormatKey.GEOHASH);
   }
 
   @override
@@ -836,7 +829,7 @@ class Geohash extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return text;
   }
 }
@@ -845,7 +838,7 @@ class GeoHex extends BaseCoordinate {
   String text;
 
   GeoHex(this.text) {
-    format = CoordinateFormat(CoordinateFormatKey.GEOHEX);
+    _format = CoordinateFormat(CoordinateFormatKey.GEOHEX);
   }
 
   @override
@@ -862,7 +855,7 @@ class GeoHex extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return text;
   }
 }
@@ -871,7 +864,7 @@ class Geo3x3 extends BaseCoordinate {
   String text;
 
   Geo3x3(this.text) {
-    format = CoordinateFormat(CoordinateFormatKey.GEO3X3);
+    _format = CoordinateFormat(CoordinateFormatKey.GEO3X3);
   }
 
   @override
@@ -888,7 +881,7 @@ class Geo3x3 extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return text.toUpperCase();
   }
 }
@@ -897,7 +890,7 @@ class OpenLocationCode extends BaseCoordinate {
   String text;
 
   OpenLocationCode(this.text) {
-    format = CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);
+    _format = CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);
   }
 
   @override
@@ -914,7 +907,7 @@ class OpenLocationCode extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return text;
   }
 }
@@ -923,7 +916,7 @@ class Quadtree extends BaseCoordinate {
   List<int> coords;
 
   Quadtree(this.coords) {
-    format = CoordinateFormat(CoordinateFormatKey.QUADTREE);
+    _format = CoordinateFormat(CoordinateFormatKey.QUADTREE);
   }
 
   @override
@@ -940,16 +933,75 @@ class Quadtree extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return coords.join();
   }
 }
 
-BaseCoordinate buildDefaultCoordinatesByFormat(LatLng coords) {
-  return buildCoordinatesByFormat(defaultCoordinateFormat, coords, defaultEllipsoid);
+BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
+  if (isCoordinateFormatWithSubtype(format.type)) {
+    if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
+      format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
+    }
+  }
+
+  switch (format.type) {
+    case CoordinateFormatKey.DEC:
+      return DEC(0.0, 0.0);
+    case CoordinateFormatKey.DMM:
+      return DMM(DMMLatitude(0,0,0), DMMLongitude(0,0,0));
+    case CoordinateFormatKey.DMS:
+      return DMS(DMSLatitude(0,0,0,0), DMSLongitude(0,0,0,0));
+    case CoordinateFormatKey.UTM:
+      return UTMREF(UTMZone(0,0,'U'), 0,0);
+    case CoordinateFormatKey.MGRS:
+      return MGRS(UTMZone(0,0,'A'), 'AA', 0,0);
+    case CoordinateFormatKey.XYZ:
+      return XYZ(0,0,0);
+    case CoordinateFormatKey.SWISS_GRID:
+      return SwissGrid(0,0);
+    case CoordinateFormatKey.SWISS_GRID_PLUS:
+      return SwissGridPlus(0,0);
+    case CoordinateFormatKey.DUTCH_GRID:
+      return DutchGrid(0,0);
+    case CoordinateFormatKey.GAUSS_KRUEGER:
+      return GaussKrueger(defaultGaussKruegerType, 0,0);
+    case CoordinateFormatKey.LAMBERT:
+      return Lambert(defaultLambertType, 0,0);
+    case CoordinateFormatKey.MAIDENHEAD:
+      return Maidenhead('');
+    case CoordinateFormatKey.MERCATOR:
+      return Mercator(0,0);
+    case CoordinateFormatKey.NATURAL_AREA_CODE:
+      return NaturalAreaCode('','');
+    case CoordinateFormatKey.SLIPPY_MAP:
+      return SlippyMap(0,0,defaultSlippyMapType);
+    case CoordinateFormatKey.GEOHASH:
+      return Geohash('');
+    case CoordinateFormatKey.GEO3X3:
+      return Geo3x3('');
+    case CoordinateFormatKey.GEOHEX:
+      return GeoHex('');
+    case CoordinateFormatKey.OPEN_LOCATION_CODE:
+      return OpenLocationCode('');
+    case CoordinateFormatKey.MAKANEY:
+      return Makaney('');
+    case CoordinateFormatKey.QUADTREE:
+      return Quadtree([]);
+    case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
+      return ReverseWherigoWaldmeister(0,0,0);
+    case CoordinateFormatKey.REVERSE_WIG_DAY1976:
+      return ReverseWherigoDay1976('00000','00000');
+    default:
+      return buildDefaultCoordinateByCoordinates(defaultCoordinate);
+  }
 }
 
-BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
+BaseCoordinate buildDefaultCoordinateByCoordinates(LatLng coords) {
+  return buildCoordinate(defaultCoordinateFormat, coords, defaultEllipsoid);
+}
+
+BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
       format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
@@ -1006,6 +1058,6 @@ BaseCoordinate buildCoordinatesByFormat(CoordinateFormat format, LatLng coords, 
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976.fromLatLon(coords);
     default:
-      return buildDefaultCoordinatesByFormat(coords);
+      return buildDefaultCoordinateByCoordinates(coords);
   }
 }
