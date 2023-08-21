@@ -46,7 +46,10 @@ class SudokuBoard {
 
   void solveSudoku(int maxSolutions) {
     var solutions = solve(_solveableBoard(), maxSolutions: maxSolutions);
-    if (solutions == null) return;
+    if (solutions == null) {
+      this.solutions = null;
+      return;
+    }
 
     this.solutions = solutions.map((solution) => _SudokuSolution(solution)).toList();
   }
@@ -87,6 +90,7 @@ class _SudokuSolution {
   _SudokuSolution(this.solution);
 
   int? getValue (int i, int j) {
+    if (i < 0 || i >= solution.length || j < 0 || j >= solution[i].length) return null;
     return solution[i][j];
   }
 }

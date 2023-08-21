@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
@@ -19,10 +19,10 @@ class DistanceBearing extends StatefulWidget {
   const DistanceBearing({Key? key}) : super(key: key);
 
   @override
-  DistanceBearingState createState() => DistanceBearingState();
+ _DistanceBearingState createState() => _DistanceBearingState();
 }
 
-class DistanceBearingState extends State<DistanceBearing> {
+class _DistanceBearingState extends State<DistanceBearing> {
   var _currentCoords1 = defaultBaseCoordinate;
   var _currentCoords2 = defaultBaseCoordinate;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,10 +11,10 @@ class OneTimePad extends StatefulWidget {
   const OneTimePad({Key? key}) : super(key: key);
 
   @override
-  OneTimePadState createState() => OneTimePadState();
+ _OneTimePadState createState() => _OneTimePadState();
 }
 
-class OneTimePadState extends State<OneTimePad> {
+class _OneTimePadState extends State<OneTimePad> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

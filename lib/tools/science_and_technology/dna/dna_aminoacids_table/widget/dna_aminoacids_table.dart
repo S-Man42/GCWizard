@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/logic/dna.dart';
 
@@ -7,10 +7,10 @@ class DNAAminoAcidsTable extends StatefulWidget {
   const DNAAminoAcidsTable({Key? key}) : super(key: key);
 
   @override
-  DNAAminoAcidsTableState createState() => DNAAminoAcidsTableState();
+ _DNAAminoAcidsTableState createState() => _DNAAminoAcidsTableState();
 }
 
-class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
+class _DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
   @override
   Widget build(BuildContext context) {
     List<List<Object>> acids = aminoAcids.map((acid) {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'dart:math';
@@ -38,6 +39,7 @@ enum FileType {
   EXE,
   BMP,
   TXT,
+  JSON,
   GPX,
   KML,
   KMZ,
@@ -251,6 +253,12 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     magic_bytes: <List<int>>[],
     mime_types: ['text/plain'],
     file_class: FileClass.TEXT
+  ),
+  FileType.JSON: FileTypeInfo(
+      extensions: ['json'],
+      magic_bytes: <List<int>>[],
+      mime_types: ['text/plain'],
+      file_class: FileClass.TEXT
   ),
   FileType.PDF: FileTypeInfo(
     extensions: ['pdf'],
@@ -617,4 +625,12 @@ Future<List<GCWFile>> _extractRarArchive(GCWFile file, {String? password}) async
 Uint8List encodeTrimmedPng(Image.Image image) {
   var out = Image.encodePng(image);
   return trimNullBytes(Uint8List.fromList(out));
+}
+
+Uint8List convertStringToBytes(String text) {
+  return Uint8List.fromList(utf8.encode(text));
+}
+
+String convertBytesToString(Uint8List data) {
+  return utf8.decode(data);
 }

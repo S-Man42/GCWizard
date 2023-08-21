@@ -174,7 +174,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
   var hasKeyImage = keyImage != null;
   Image.Image? _keyImage;
   if (hasKeyImage) {
-    _keyImage = decodeImage4ChannelFormat(keyImage!);
+    _keyImage = decodeImage4ChannelFormat(keyImage);
     if (_keyImage == null) return Future.value(null);
 
     scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();

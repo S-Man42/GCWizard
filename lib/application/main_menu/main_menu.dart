@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 import 'package:gc_wizard/application/settings/widget/settings_general.dart';
+import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
 import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -135,13 +136,12 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
       registeredTools.firstWhere((tool) => className(tool.tool) == className(const ToolSettings())),
       Icons.category,
       i18n(context, 'mainmenu_settings_tools_title'),
+    ),
+    _CategoryMetaData (
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const SaveRestoreSettings())),
+      Icons.save,
+      i18n(context, 'mainmenu_settings_saverestore_title'),
     )
-    // TODO ML 12/2022: Postponed to 3.0.0 because of encoding issues
-    // {
-    //   'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(SaveRestoreSettings())),
-    //   'toolName': i18n(context, 'mainmenu_settings_saverestore_title'),
-    //   'icon': Icons.save
-    // },
   ];
 
   return ExpansionTile(

@@ -1,13 +1,14 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -50,6 +51,7 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_outp
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_items.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_messages.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_builder_variables.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_tasks.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_timers.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_inputs.dart';
@@ -62,10 +64,10 @@ class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
 
   @override
-  WherigoAnalyzeState createState() => WherigoAnalyzeState();
+ _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
 }
 
-class WherigoAnalyzeState extends State<WherigoAnalyze> {
+class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes = Uint8List(0);
   Uint8List _LUAbytes = Uint8List(0);
 
@@ -102,6 +104,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _messageIndex = 1;
   int _answerIndex = 1;
   int _identifierIndex = 1;
+  int _builderIdentifierIndex = 1;
 
   @override
   void initState() {
@@ -289,6 +292,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   _displayedCartridgeData == WHERIGO_OBJECT.TASKS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.TIMERS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.VARIABLES ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.BUILDERVARIABLES ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_GWC ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_LUA) {
                 _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
@@ -403,6 +407,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _messageIndex = 1;
     _answerIndex = 1;
     _identifierIndex = 1;
+    _builderIdentifierIndex = 1;
   }
 
   Widget _buildOutput(BuildContext context) {
@@ -462,6 +467,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO_OBJECT.VARIABLES:
         return _buildWidgetToDisplayIdentifierData(context);
+
+      case WHERIGO_OBJECT.BUILDERVARIABLES:
+        return _buildWidgetToDisplayBuilderIdentifierData(context);
 
       default:
         return Container();
@@ -1369,6 +1377,49 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     ]);
   }
 
+  Widget _buildWidgetToDisplayBuilderIdentifierData(BuildContext context) {
+    if (WherigoCartridgeLUAData.BuilderVariables.isEmpty) {
+      return GCWDefaultOutput(
+        child: i18n(context, 'wherigo_data_nodata'),
+        suppressCopyButton: true,
+      );
+    }
+
+    return Column(children: <Widget>[
+      const GCWDefaultOutput(),
+      Row(
+        children: <Widget>[
+          GCWIconButton(
+            icon: Icons.arrow_back_ios,
+            onPressed: () {
+              setState(() {
+                _builderIdentifierIndex--;
+                if (_builderIdentifierIndex < 1) _builderIdentifierIndex = WherigoCartridgeLUAData.BuilderVariables.length;
+              });
+            },
+          ),
+          Expanded(
+            child: GCWText(
+              align: Alignment.center,
+              text: _builderIdentifierIndex.toString() + ' / ' + (WherigoCartridgeLUAData.BuilderVariables.length).toString(),
+            ),
+          ),
+          GCWIconButton(
+            icon: Icons.arrow_forward_ios,
+            onPressed: () {
+              setState(() {
+                _builderIdentifierIndex++;
+                if (_builderIdentifierIndex > WherigoCartridgeLUAData.BuilderVariables.length) _builderIdentifierIndex = 1;
+              });
+            },
+          ),
+        ],
+      ),
+      GCWColumnedMultilineOutput(
+          data: _buildOutputListOfBuilderVariables(context, WherigoCartridgeLUAData.BuilderVariables[_builderIdentifierIndex - 1])),
+    ]);
+  }
+
   Future<void> _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType)).then((value) {
       var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
@@ -1384,7 +1435,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   void _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     Navigator.push(
         context,
-        MaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(points),
@@ -1474,12 +1525,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
-
     switch (WherigoCartridgeLUAData.ResultStatus) {
       case WHERIGO_ANALYSE_RESULT_STATUS.OK:
         toastMessage = i18n(context, 'wherigo_data_loaded') + ': LUA';
         toastDuration = 5;
-
         // check if GWC and LUA are from the same cartridge
         if ((WherigoCartridgeGWCData.CartridgeGUID != WherigoCartridgeLUAData.CartridgeGUID &&
                 WherigoCartridgeLUAData.CartridgeGUID != '') &&
@@ -1544,6 +1593,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           Media: [],
           Messages: [],
           Variables: [],
+          BuilderVariables: [],
           NameToObject: {},
           Builder: WHERIGO_BUILDER.UNKNOWN,
           BuilderVersion: '',
@@ -1577,6 +1627,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       default:
         {}
     } // outData != null
+    showToast(toastMessage, duration: toastDuration);
   }
 
   void _showCartridgeOutputGWC(WherigoCartridge output) {
@@ -1686,9 +1737,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _ZonePolylines.clear();
 
     // Build data
-
     for (WherigoZoneData zone in WherigoCartridgeLUAData.Zones) {
-      if (WHERIGONameToObject[zone.ZoneLUAName] == null) return;
+
+      if (WHERIGONameToObject[zone.ZoneLUAName] == null) {
+        return;
+      }
 
       _ZonePoints.add(// add originalpoint of zone
           GCWMapPoint(

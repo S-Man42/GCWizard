@@ -235,7 +235,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
           context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE:
-      gcwTool = MultiDecoderToolEsotericLanguageBrainfkDerivate(
+      gcwTool = MultiDecoderToolEsotericLanguageBrainfkDerivative(
           id: mdtTool.id,
           name: mdtTool.name,
           options: options,

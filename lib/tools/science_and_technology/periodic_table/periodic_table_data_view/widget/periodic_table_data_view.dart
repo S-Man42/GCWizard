@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -20,10 +20,10 @@ class PeriodicTableDataView extends StatefulWidget {
   const PeriodicTableDataView({Key? key, required this.atomicNumber}) : super(key: key);
 
   @override
-  PeriodicTableDataViewState createState() => PeriodicTableDataViewState();
+ _PeriodicTableDataViewState createState() => _PeriodicTableDataViewState();
 }
 
-class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
+class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _newCategory = true;
   var _currentCategory = PeriodicTableCategory.ELEMENT_NAME;
   late Object _currentValueCategoryValue;

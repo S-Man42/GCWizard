@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
@@ -14,10 +14,10 @@ class MoonRiseSet extends StatefulWidget {
   const MoonRiseSet({Key? key}) : super(key: key);
 
   @override
-  MoonRiseSetState createState() => MoonRiseSetState();
+ _MoonRiseSetState createState() => _MoonRiseSetState();
 }
 
-class MoonRiseSetState extends State<MoonRiseSet> {
+class _MoonRiseSetState extends State<MoonRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultBaseCoordinate;
 

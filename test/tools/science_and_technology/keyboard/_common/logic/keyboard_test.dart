@@ -327,7 +327,18 @@ void main() {
         ['keyboard_mode_neo_6', '¬∨∧⊥∡∥→∞∝∅'],
         ['keyboard_mode_fra_azerty', '&é"\'(-è_çà'],
         ['keyboard_mode_fra_bepo', '"«»()@+-/*'],
-        ['keyboard_mode_qwerty_us_int_colemak_dvorak', '!@#\$%^&*()']
+        ['keyboard_mode_qwerty_us_int_colemak_dvorak', '!@#\$%^&*()'],
+        ['keyboard_mode_iphone_de', '-/:;()€&@"'],
+        ['keyboard_mode_iphone_en', r'-/:;()$&@"'],
+        ['keyboard_mode_iphone_1', '`|{}?%^*/’'],
+        ['keyboard_mode_iphone_2', '[]{}#%^*+='],
+        ['keyboard_mode_iphone_3', r'_\|~<>$£¥•'],
+        ['keyboard_mode_android_de', '@#€_&-+()/'],
+        ['keyboard_mode_android_en', r'@#$_&-+()/'],
+        ['keyboard_mode_android_samsung_1', '!@#€%^&*()'],
+        ['keyboard_mode_android_samsung_2', '+×÷=/_<>[]'],
+        ['keyboard_mode_android_samsung_3', r'`~\|{}$£¥₩'],
+        ['keyboard_mode_android_samsung_4', '•∙○●□■♤♡♢♧']
       ]},
     ];
 
@@ -358,6 +369,28 @@ void main() {
           ' 1    945    32                                   1234567890'],
         ['keyboard_mode_qwerty_us_int_colemak_dvorak',
           '1  457 90      4                                     902   8'],
+        ['keyboard_mode_iphone_de',
+          ' 0   8256       7                                 0  569 12 '],
+        ['keyboard_mode_iphone_en',
+          ' 0 7 8256      7                                  0  569 12 '],
+        ['keyboard_mode_iphone_1',
+          '    6 9                      0                            98'],
+        ['keyboard_mode_iphone_2',
+          '    6    0                                              9  8'],
+        ['keyboard_mode_iphone_3',
+          '   7           7          9                                 '],
+        ['keyboard_mode_android_de',
+          '     5089       3                                    891760 '],
+        ['keyboard_mode_android_en',
+          '   3 5089      3                                     891760 '],
+        ['keyboard_mode_android_samsung_1',
+          '1   57 90       4                                    902   8'],
+        ['keyboard_mode_android_samsung_2',
+          '      5  4                                              1 5 '],
+        ['keyboard_mode_android_samsung_3',
+          '   7           7          9                                 '],
+        ['keyboard_mode_android_samsung_4',
+          '                                                            ']
       ]},
     ];
 
