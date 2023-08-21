@@ -9,19 +9,43 @@ import 'RomanNumbersAPIMapper.dart';
 import 'RotatorAPIMapper.dart';
 import 'gcw_server.dart';
 
+final Set<APIMapper> _apiList = {
+  AlphabetValuesAPIMapper(),
+  CoordsFormatconverterAPIMapper(),
+  MorseAPIMapper(),
+  ReverseAPIMapper(),
+  RomanNumbersAPIMapper(),
+  RotatorAPIMapper(),
+};
+
 String? request(WebParameter parameter) {
   APIMapper? apiMapper;
-  switch  (parameter.title.toLowerCase()) {
-    case 'alphabetvalues': apiMapper = AlphabetValuesAPIMapper(); break;
-    case 'coords_formatconverter': apiMapper = CoordsFormatconverterAPIMapper(); break;
-    case 'morse': apiMapper = MorseAPIMapper(); break;
-    case 'reverse': apiMapper = ReverseAPIMapper(); break;
-    case 'roman_numbers': apiMapper = RomanNumbersAPIMapper(); break;
-    case 'rotate': apiMapper = RotatorAPIMapper(); break;
-  }
+
+  try {
+    var title = parameter.title.toLowerCase();
+    if (title != '?') {
+      apiMapper = _apiList.firstWhere((entry) => title == entry.Key);
+    } else {
+      apiMapper = APIInfo();
+    }
+  } catch (e) {};
 
   if (apiMapper == null) return null;
   apiMapper.setParams(parameter.arguments);
 
   return jsonEncode(apiMapper.calculate());
 }
+
+class APIInfo extends APIMapper {
+  @override
+  String doLogic() {
+    return _apiList.map((entry) => entry.apiSpecification()).join('\n\n');
+  }
+
+  /// convert doLogic output to map
+  @override
+  Map<String, String> toMap(Object result) {
+    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+  }
+}
+

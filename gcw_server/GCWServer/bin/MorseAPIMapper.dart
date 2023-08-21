@@ -2,7 +2,46 @@ import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 
 import 'APIMapper.dart';
 
+const String _apiSpecification = '''
+{
+	"/key_label" : {
+		"get": {
+			"summary": "Morse Tool",
+			"responses": {
+        "description": "Encoded or decoded text."
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding Morse",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "decode"
+				}
+			}
+		]
+	}
+}
+''';
+
 class MorseAPIMapper extends APIMapper {
+  @override
+  String get Key => 'morse';
 
   @override
   String doLogic() {
@@ -22,6 +61,11 @@ class MorseAPIMapper extends APIMapper {
   @override
   Map<String, String> toMap(Object result) {
     return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+  }
+
+  @override
+  String apiSpecification() {
+    return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
 

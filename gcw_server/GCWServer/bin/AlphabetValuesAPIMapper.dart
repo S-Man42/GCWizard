@@ -4,7 +4,47 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 import 'APIMapper.dart';
 
+const String _apiSpecification = '''
+{
+	"/key_label" : {
+		"get": {
+			"summary": "Alphabet Values Tool",
+			"responses": {
+        "description": "Encoded or decoded text."
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding text",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "encode"
+				}
+			}
+		]
+	}
+}
+
+''';
+
 class AlphabetValuesAPIMapper extends APIMapper {
+  @override
+  String get Key => 'alphabet_values';
 
   @override
   String doLogic() {
@@ -19,7 +59,7 @@ class AlphabetValuesAPIMapper extends APIMapper {
     }
     var alphabet = _getAlphabetByKey(key).alphabet;
 
-    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.decode.toString())) {
       var values = textToIntList(input);
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(values);
     } else {
@@ -33,6 +73,11 @@ class AlphabetValuesAPIMapper extends APIMapper {
   @override
   Map<String, String> toMap(Object result) {
     return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+  }
+
+  @override
+  String apiSpecification() {
+    return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
 
