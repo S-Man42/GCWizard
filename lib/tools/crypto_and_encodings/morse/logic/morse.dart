@@ -9,7 +9,7 @@ final Map<String, AssetSource> MORSE_TONE = {
   '|' : AssetSource('audio/morseSpaceWord.mp3'),  // 7 dit Pause zwischen Wörter
 };
 
-const Map<String, String> AZToMorse = {
+const Map<String, String> _AZToMorse = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
   'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--',
   'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-',
@@ -31,7 +31,7 @@ const Map<String, String> AZToMorse = {
 };
 
 // Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
-final MorseToAZ = switchMapKeyValue(AZToMorse);
+final _MorseToAZ = switchMapKeyValue(_AZToMorse);
 
 String encodeMorse(String input) {
   if (input.isEmpty) return '';
@@ -39,7 +39,7 @@ String encodeMorse(String input) {
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return '|';
 
-    var morse = AZToMorse[character];
+    var morse = _AZToMorse[character];
     return morse ?? '';
   }).join(String.fromCharCode(8195)); // using wide space
 }
@@ -50,7 +50,7 @@ String decodeMorse(String input) {
   return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';
 
-    var character = MorseToAZ[morse];
+    var character = _MorseToAZ[morse];
     return character ?? '';
   }).join();
 }

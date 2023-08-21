@@ -28,6 +28,7 @@ class SixteenSegmentDisplay extends NSegmentDisplay {
   SixteenSegmentDisplay({
     Key? key,
     required Map<String, bool> segments,
+    SegmentDisplayType? type,
     bool readOnly = false,
     void Function(Map<String, bool>)? onChanged})
       : super(
@@ -36,5 +37,5 @@ class SixteenSegmentDisplay extends NSegmentDisplay {
             segments: segments,
             readOnly: readOnly,
             onChanged: onChanged,
-            type: SegmentDisplayType.SIXTEEN);
+            type: (Variants16Segment.contains(type) ? type : null)  ?? SegmentDisplayType.SIXTEEN);
 }

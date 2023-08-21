@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -22,10 +22,10 @@ class ImageFlipRotate extends StatefulWidget {
   const ImageFlipRotate({Key? key, this.file}) : super(key: key);
 
   @override
-  ImageFlipRotateState createState() => ImageFlipRotateState();
+ _ImageFlipRotateState createState() => _ImageFlipRotateState();
 }
 
-class ImageFlipRotateState extends State<ImageFlipRotate> {
+class _ImageFlipRotateState extends State<ImageFlipRotate> {
   GCWFile? _originalData;
 
   Image.Image? _currentImage;

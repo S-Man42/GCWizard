@@ -1,28 +1,71 @@
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:uuid/uuid.dart';
+import 'package:flutter/material.dart';
+
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
-class Morse extends StatefulWidget {
-  const Morse({Key? key}) : super(key: key);
+
+const String _apiSpecification = '''
+{
+	"/morse" : {
+		"get": {
+			"summary": "Morse Tool",
+			"responses": {
+				"204": {
+					"description": "Tool loaded. No response data."
+				}
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for encoding or decoding Morse",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "decode"
+				}
+			}
+		]
+	}
+}
+''';
+
+class Morse extends GCWWebStatefulWidget {
+  Morse({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
-  MorseState createState() => MorseState();
+  _MorseState createState() => _MorseState();
 }
 
-class MorseState extends State<Morse> {
+class _MorseState extends State<Morse> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
@@ -52,6 +95,18 @@ class MorseState extends State<Morse> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+        _currentMode = GCWSwitchPosition.left;
+      }
+      if (_currentMode == GCWSwitchPosition.left) {
+        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
+      } else {
+        _currentDecodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentDecodeInput;
+      }
+      widget.webParameter = null;
+    }
 
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);

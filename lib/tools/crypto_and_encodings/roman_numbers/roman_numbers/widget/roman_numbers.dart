@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -11,10 +11,10 @@ class RomanNumbers extends StatefulWidget {
   const RomanNumbers({Key? key}) : super(key: key);
 
   @override
-  RomanNumbersState createState() => RomanNumbersState();
+ _RomanNumbersState createState() => _RomanNumbersState();
 }
 
-class RomanNumbersState extends State<RomanNumbers> {
+class _RomanNumbersState extends State<RomanNumbers> {
   late TextEditingController _decodeController;
 
   var _currentEncodeInput = 1;

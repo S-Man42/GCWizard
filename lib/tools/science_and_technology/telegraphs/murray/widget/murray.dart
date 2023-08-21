@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -20,10 +20,10 @@ class MurrayTelegraph extends StatefulWidget {
   const MurrayTelegraph({Key? key}) : super(key: key);
 
   @override
-  MurrayTelegraphState createState() => MurrayTelegraphState();
+ _MurrayTelegraphState createState() => _MurrayTelegraphState();
 }
 
-class MurrayTelegraphState extends State<MurrayTelegraph> {
+class _MurrayTelegraphState extends State<MurrayTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 

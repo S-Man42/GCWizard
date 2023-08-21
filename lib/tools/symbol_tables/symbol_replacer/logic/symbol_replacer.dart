@@ -108,6 +108,7 @@ class SymbolReplacerImage {
   int? _blackLevel;
   double? _similarityLevel;
   int? _gap;
+  double symbolScale = 1.0;
 
   SymbolReplacerImage(Uint8List image) {
     _image = image;
@@ -238,6 +239,8 @@ class SymbolReplacerImage {
 
     // rebuild image
     _outputImageBytes = null;
+
+    symbolScale = calcSymbolScale();
   }
 
   /// <summary>
@@ -424,7 +427,7 @@ class SymbolReplacerImage {
         symbol.bmp.height,
       );
 
-      var color = Image.ColorRgb8(Colors.blue.red, Colors.blue.green, Colors.blue.blue);
+      var color = Image.ColorRgb8(Colors.orangeAccent.red, Colors.orangeAccent.green, Colors.orangeAccent.blue);
       Image.drawRect(bmp, x1: rect.left, y1: rect.top, x2: rect.right, y2: rect.bottom, color: color);
       Image.drawRect(bmp, x1: rect.left - 1, y1: rect.top - 1, x2: rect.right + 1,y2:  rect.bottom + 1, color: color);
     }
@@ -722,6 +725,17 @@ class SymbolReplacerImage {
       symbols.addAll(lineClone.symbols);
     }
   }
+
+  double calcSymbolScale() {
+    if (symbols.isEmpty) return 1.0;
+    var maxSize = 0;
+
+    for (var symbol in symbols) {
+      maxSize = max(maxSize, symbol.bmp.width);
+      maxSize = max(maxSize, symbol.bmp.height);
+    }
+    return (maxSize > 0) ? max(maxSize/ 150, 0.05) : 1.0;
+  }
 }
 
 class _SymbolRow {
@@ -953,7 +967,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
   imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
-  sendAsyncPort?.send(DoubleText('progress', 0.0));
+  sendAsyncPort?.send(DoubleText(PROGRESS, 0.0));
 
   for (var symbolTable in compareSymbols) {
     imageTmp.resetGroupText();
@@ -966,7 +980,7 @@ Future<List<Map<String, SymbolReplacerSymbolData>>?> searchSymbolTable(
       }
     }
     progress++;
-    sendAsyncPort?.send(DoubleText('progress', progress / compareSymbols.length));
+    sendAsyncPort?.send(DoubleText(PROGRESS, progress / compareSymbols.length));
   }
   return Future.value(maxPercentSymbolTable);
 }
@@ -1033,7 +1047,7 @@ class ImageHashing {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         var pixel = squeezed.getPixel(x, y); //..ToArgb();
-        int gray = (pixel.r + pixel.g +pixel.r + pixel.b).toInt();
+        int gray = (pixel.r + pixel.g + pixel.b).toInt();
         gray = gray ~/ 12;
 
         grayscale[x + (y * 8)] = gray;

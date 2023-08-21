@@ -37,10 +37,10 @@ class GCWDoubleSpinner extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWDoubleSpinnerState createState() => GCWDoubleSpinnerState();
+ _GCWDoubleSpinnerState createState() => _GCWDoubleSpinnerState();
 }
 
-class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
+class _GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   late TextEditingController _controller;
 
   bool _externalChange = true;

@@ -11,10 +11,10 @@ abstract class AbstractBCD extends StatefulWidget {
   const AbstractBCD({Key? key, required this.type}) : super(key: key);
 
   @override
-  AbstractBCDState createState() => AbstractBCDState();
+ _AbstractBCDState createState() => _AbstractBCDState();
 }
 
-class AbstractBCDState extends State<AbstractBCD> {
+class _AbstractBCDState extends State<AbstractBCD> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
