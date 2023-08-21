@@ -347,7 +347,6 @@ class _GCWizardSCriptInterpreter {
 
     if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
     state.continueLoop = true;
-
     return GCWizardScriptOutput(
       STDOUT: state.STDOUT.trimRight(),
       Graphic: state.graficOutput,
@@ -551,6 +550,7 @@ class _GCWizardSCriptInterpreter {
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT
         + '********* GC Wizard Skript **********\n'
+        + '*      Version vom 21.08.2023       *'
         + '*     basierend auf SMALL BASIC     *\n'
         + '* Herb Schildt, the Art of C,  1991 *\n'
         + '*     genehmigt von  McGraw Hill    *\n'
@@ -1387,8 +1387,7 @@ class _GCWizardSCriptInterpreter {
           } else {
             _FUNCTIONS[command]!.functionName();
           }
-          state.scriptIndex = state.scriptIndex + 1;
-          //getToken();
+          getToken();
         } else {
           _handleError(_INVALIDNUMBEROFPARAMETER);
           result = '';

@@ -682,11 +682,12 @@ double _bearing(Object x1, Object y1, Object x2, Object y2) {
 void _projection(Object x1, Object y1, Object dist, Object angle) {
   if (_isNotANumber(x1) || _isNotANumber(y1) || _isNotANumber(dist) || _isNotANumber(angle)) {
     _handleError(_INVALIDTYPECAST);
+  } else {
+    LatLng _currentValues = projection(
+        LatLng(x1 as double, y1 as double), angle as double, dist as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+    _state.GCWizardScript_LAT = _currentValues.latitude;
+    _state.GCWizardScript_LON = _currentValues.longitude;
   }
-  LatLng _currentValues = projection(
-      LatLng(x1 as double, y1 as double), angle as double, dist as double, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
-  _state.GCWizardScript_LAT = _currentValues.latitude;
-  _state.GCWizardScript_LON = _currentValues.longitude;
 }
 
 void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
