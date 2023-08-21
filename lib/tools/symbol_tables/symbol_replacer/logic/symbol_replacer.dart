@@ -108,6 +108,7 @@ class SymbolReplacerImage {
   int? _blackLevel;
   double? _similarityLevel;
   int? _gap;
+  double symbolScale = 1.0;
 
   SymbolReplacerImage(Uint8List image) {
     _image = image;
@@ -238,6 +239,8 @@ class SymbolReplacerImage {
 
     // rebuild image
     _outputImageBytes = null;
+
+    symbolScale = calcSymbolScale();
   }
 
   /// <summary>
@@ -722,6 +725,17 @@ class SymbolReplacerImage {
       symbols.addAll(lineClone.symbols);
     }
   }
+
+  double calcSymbolScale() {
+    if (symbols.isEmpty) return 1.0;
+    var maxSize = 0;
+
+    for (var symbol in symbols) {
+      maxSize = max(maxSize, symbol.bmp.width);
+      maxSize = max(maxSize, symbol.bmp.height);
+    }
+    return (maxSize > 0) ? max(maxSize/ 150, 0.05) : 1.0;
+  }
 }
 
 class _SymbolRow {
@@ -1033,7 +1047,7 @@ class ImageHashing {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         var pixel = squeezed.getPixel(x, y); //..ToArgb();
-        int gray = (pixel.r + pixel.g +pixel.r + pixel.b).toInt();
+        int gray = (pixel.r + pixel.g + pixel.b).toInt();
         gray = gray ~/ 12;
 
         grayscale[x + (y * 8)] = gray;

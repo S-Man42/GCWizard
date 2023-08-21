@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -26,8 +26,6 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
 
   var symbolKeys = <String>[];
 
-  Map<String, SymbolTableData> data = {};
-
   @override
   void initState() {
     super.initState();
@@ -42,13 +40,6 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
     }
 
     symbolKeys = List.from(widget.symbolKeys);
-
-    for (String symbolKey in symbolKeys) {
-      var symbolTableData = SymbolTableData(context, symbolKey);
-      await symbolTableData.initialize();
-      data.putIfAbsent(symbolKey, () => symbolTableData);
-    }
-    setState(() {});
   }
 
   @override
@@ -96,18 +87,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
   }
 
   Widget _createSymbols(int countColumns) {
-    if (data.isEmpty) return Container();
-
     var symbols = symbolKeys.map<Widget>((symbolKey) {
-      var tableOutput = GCWSymbolTableTextToSymbols(
-          text: _currentInput,
-          ignoreUnknown: true,
-          countColumns: countColumns,
-          data: data[symbolKey]!,
-          showExportButton: false,
-          specialEncryption: false,
-          fixed: true);
-
       return Column(
         children: [
           GCWTextDivider(
@@ -125,7 +105,23 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
                               )));
                 },
               )),
-          tableOutput
+          FutureBuilder<SymbolTableData>(
+              future: _loadSymbolData(symbolKey),
+              builder: (BuildContext context, AsyncSnapshot<SymbolTableData> snapshot) {
+                if (snapshot.hasData && snapshot.data is SymbolTableData) {
+                  return GCWSymbolTableTextToSymbols(
+                      text: _currentInput,
+                      ignoreUnknown: true,
+                      countColumns: countColumns,
+                      data: snapshot.data!,
+                      showExportButton: false,
+                      specialEncryption: false,
+                      fixed: true
+                  );
+                } else {
+                  return Container();
+                }
+              })
         ],
       );
     }).toList();
@@ -137,5 +133,12 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
             children: symbols
         )
     );
+  }
+
+  Future<SymbolTableData> _loadSymbolData(String symbolKey) async {
+    var symbolTableData = SymbolTableData(context, symbolKey);
+    await symbolTableData.initialize();
+
+    return symbolTableData;
   }
 }

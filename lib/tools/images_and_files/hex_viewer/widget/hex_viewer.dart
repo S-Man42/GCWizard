@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -141,22 +141,60 @@ class _HexViewerState extends State<HexViewer> {
 
     return Column(
       children: [
+        if (_hexData!.length > _MAX_LINES)
+          Container(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: [
+                GCWIconButton(
+                  icon: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _currentLines -= _MAX_LINES;
+                      if (_currentLines < 0) {
+                        _currentLines = (_hexDataLines!.floor() ~/ _MAX_LINES) * _MAX_LINES;
+                      }
 
+                      _resetScrollViews();
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                    text:
+                    '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines?.ceil() as int)} / ${_hexDataLines?.ceil()}',
+                    align: Alignment.center,
+                  ),
+                ),
+                GCWIconButton(
+                  icon: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _currentLines += _MAX_LINES;
+                      if (_currentLines > _hexDataLines!) {
+                        _currentLines = 0;
+                      }
+
+                      _resetScrollViews();
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 15,
               child: NotificationListener<ScrollNotification>(
-                  child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      controller: _scrollControllerHex,
-                      scrollDirection: Axis.horizontal,
-                      child: GCWText(
-                        text: hexText,
-                        style: gcwMonotypeTextStyle(),
-                      ),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: _scrollControllerHex,
+                  scrollDirection: Axis.horizontal,
+                  child: GCWText(
+                    text: hexText,
+                    style: gcwMonotypeTextStyle(),
+                  ),
                 ),
                 onNotification: (ScrollNotification scrollNotification) {
                   if (_isASCIIScrolling) return false;

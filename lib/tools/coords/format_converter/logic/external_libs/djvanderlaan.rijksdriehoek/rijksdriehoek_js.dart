@@ -16,7 +16,7 @@ const _LAT0 = 52.15517440;
 const _LON0 = 5.38720621;
 
 List<double> _rijksdriehoek(double lon, double lat) {
-  final R = [
+  const R = [
     {"p": 0, "q": 1, "R": 190094.945},
     {"p": 1, "q": 1, "R": -11832.228},
     {"p": 2, "q": 1, "R": -114.221},
@@ -28,7 +28,7 @@ List<double> _rijksdriehoek(double lon, double lat) {
     {"p": 2, "q": 3, "R": 0.148}
   ];
 
-  final S = [
+  const S = [
     {"p": 1, "q": 0, "S": 309056.544},
     {"p": 0, "q": 2, "S": 3638.893},
     {"p": 2, "q": 0, "S": 73.077},
@@ -64,7 +64,7 @@ List<double> _rijksdriehoek(double lon, double lat) {
 }
 
 List<double> _rijksdriehoekInverse(double x, double y) {
-  final K = [
+  const K = [
     {"p": 0, "q": 1, "K": 3235.65389},
     {"p": 2, "q": 0, "K": -32.58297},
     {"p": 0, "q": 2, "K": -0.24750},
@@ -78,7 +78,7 @@ List<double> _rijksdriehoekInverse(double x, double y) {
     {"p": 1, "q": 1, "K": -0.00012}
   ];
 
-  final L = [
+  const L = [
     {"p": 1, "q": 0, "L": 5260.52916},
     {"p": 1, "q": 1, "L": 105.94684},
     {"p": 1, "q": 2, "L": 2.45656},
