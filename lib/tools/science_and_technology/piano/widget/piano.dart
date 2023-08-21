@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -11,10 +11,10 @@ class Piano extends StatefulWidget {
   const Piano({Key? key}) : super(key: key);
 
   @override
-  PianoState createState() => PianoState();
+ _PianoState createState() => _PianoState();
 }
 
-class PianoState extends State<Piano> {
+class _PianoState extends State<Piano> {
   var _currentSort = 0;
   var _currentIndex = 9; // Key number 1
   final List<String> _currentSortList = [

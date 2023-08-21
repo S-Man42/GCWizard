@@ -7,10 +7,10 @@ class Atbash extends StatefulWidget {
   const Atbash({Key? key}) : super(key: key);
 
   @override
-  AtbashState createState() => AtbashState();
+ _AtbashState createState() => _AtbashState();
 }
 
-class AtbashState extends State<Atbash> {
+class _AtbashState extends State<Atbash> {
   String _output = '';
 
   @override

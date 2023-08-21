@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 
@@ -24,18 +23,31 @@ class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
               return decodeBacon(input, false, checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE) == MDT_BACON_OPTION_MODE_01);
             },
             options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_BACON_OPTION_MODE: GCWStatefulDropDown<String>(
-                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE),
-                onChanged: (newValue) {
-                  options[MDT_BACON_OPTION_MODE] = newValue;
-                },
-                items: [MDT_BACON_OPTION_MODE_01, MDT_BACON_OPTION_MODE_AB].map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode,
-                    child: mode,
-                  );
-                }).toList(),
-              )
-            }));
+           );
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolBaconState();
+}
+
+class _MultiDecoderToolBaconState extends State<MultiDecoderToolBacon> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_BACON_OPTION_MODE: GCWDropDown<String>(
+        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, widget.options, MDT_BACON_OPTION_MODE),
+        onChanged: (newValue) {
+          setState(() {
+            widget.options[MDT_BACON_OPTION_MODE] = newValue;
+          });
+        },
+        items: [MDT_BACON_OPTION_MODE_01, MDT_BACON_OPTION_MODE_AB].map((mode) {
+          return GCWDropDownMenuItem(
+            value: mode,
+            child: mode,
+          );
+        }).toList(),
+      )
+    }
+    );
+  }
 }

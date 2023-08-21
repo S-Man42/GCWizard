@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:base32/base32.dart';
+
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ascii85/logic/ascii85.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 const Map<String, String Function(String)> BASE_FUNCTIONS = {
   'base_base16': decodeBase16,
@@ -56,24 +59,28 @@ String decodeBase32(String input) {
 String encodeBase64(String input) {
   if (input.isEmpty) return '';
 
-  return base64.encode(utf8.encode(input));
+  return base64.encode(input.codeUnits);
 }
 
+
 String decodeBase64(String input) {
-  if (input.isEmpty) return '';
+   if (input.isEmpty) return '';
 
-  var out = '';
+   var out = '';
 
-  //if there's no result, try with appended = or ==
-  for (int i = 0; i <= 2; i++) {
-    try {
-      out = utf8.decode(base64.decode(input + '=' * i));
+   input = input.replaceAll(RegExp(r'\s'), '');
 
-      if (out.isNotEmpty) break;
-    } on FormatException {}
-  }
+   //if there's no result, try with appended = or ==
+   for (int i = 0; i <= 2; i++) {
+     try {
+       //out = utf8.decode(base64.decode(input + '=' * i));
+       out = String.fromCharCodes(base64.decode(input + '=' * i));
 
-  return out;
+       if (out.isNotEmpty) break;
+     } on FormatException {}
+   }
+
+   return out;
 }
 
 String encodeBase85(String input) {
@@ -87,6 +94,8 @@ String encodeBase85(String input) {
 String decodeBase85(String input) {
   if (input.isEmpty) return '';
 
+  if (_invalidBase85(input)) return UNKNOWN_ELEMENT;
+
   if (input.startsWith('<~')) input = input.substring(2);
 
   if (input.endsWith('~>')) input = input.substring(0, input.length - 2);
@@ -95,7 +104,15 @@ String decodeBase85(String input) {
   return decoded == null ? '' : utf8.decode(decoded);
 }
 
-String decode(String input, String Function(String) function) {
+bool _invalidBase85(String base85){
+  bool result = false;
+  base85.split('').forEach((letter) {
+    if (letter.codeUnitAt(0) > 127 || letter.codeUnitAt(0) < 32) result = true;
+  });
+  return result;
+}
+
+String decodeBase(String input, String Function(String) function) {
   var output = '';
   if (input.isEmpty) return output;
 
@@ -107,9 +124,9 @@ String decode(String input, String Function(String) function) {
 
       break;
     } on FormatException {
-      return decode(input.substring(0, input.length - 1), function);
+      return decodeBase(input.substring(0, input.length - 1), function);
     } on RangeError {
-      return decode(input.substring(0, input.length - 1), function);
+      return decodeBase(input.substring(0, input.length - 1), function);
     }
   }
 
@@ -547,4 +564,18 @@ String decodeBase122(String base122Data) {
     }
   }
   return String.fromCharCodes(outputStream);
+}
+
+String asciiToHexString(String input){
+  List<String> result = [];
+  String hex = '';
+  input.split('').forEach((char){
+    hex = convertBase(char.codeUnitAt(0).toString(), 10, 16);
+    if (hex.length == 1) {
+      result.add('0' + hex);
+    } else {
+      result.add(hex);
+    }
+  });
+  return result.join(' ');
 }

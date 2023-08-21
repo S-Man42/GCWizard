@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
@@ -93,6 +92,7 @@ class GCWToolActionButtonsEntry {
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String id;
+  final String? id_prefix;
   final List<ToolCategory> categories;
   final bool autoScroll;
   final bool suppressToolMargin;
@@ -118,6 +118,7 @@ class GCWTool extends StatefulWidget {
         this.toolName,
         this.defaultLanguageToolName,
         required this.id,
+        this.id_prefix,
         this.categories = const [],
         this.autoScroll = true,
         this.suppressToolMargin = false,
@@ -145,6 +146,10 @@ class GCWTool extends StatefulWidget {
   _GCWToolState createState() => _GCWToolState();
 }
 
+String toolName(BuildContext context, GCWTool tool) {
+  return tool.toolName ?? i18n(context, tool.id + '_title');
+}
+
 class _GCWToolState extends State<GCWTool> {
   late String _toolName;
   late String _defaultLanguageToolName;
@@ -158,10 +163,8 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeColors colors = themeColors();
-
     // this is the case when tool is not called by Registry but as subpage of another tool
-    _toolName = widget.toolName ?? i18n(context, widget.id + '_title');
+    _toolName = toolName(context, widget);
 
     _defaultLanguageToolName =
         widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
@@ -169,8 +172,6 @@ class _GCWToolState extends State<GCWTool> {
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(
-          backgroundColor: colors.primaryBackground(),
-          foregroundColor: colors.mainFont(),
           title: Text(_toolName),
           actions: _buildButtons(),
         ),
@@ -283,7 +284,7 @@ class _GCWToolState extends State<GCWTool> {
     var tool = widget.tool;
     if (!widget.suppressToolMargin) {
       tool = Padding(
-        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
+        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 50),
         child: tool,
       );
     }

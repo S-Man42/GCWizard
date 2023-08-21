@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
@@ -19,10 +19,10 @@ class ShadoksNumbers extends StatefulWidget {
   const ShadoksNumbers({Key? key}) : super(key: key);
 
   @override
-  ShadoksNumbersState createState() => ShadoksNumbersState();
+ _ShadoksNumbersState createState() => _ShadoksNumbersState();
 }
 
-class ShadoksNumbersState extends State<ShadoksNumbers> {
+class _ShadoksNumbersState extends State<ShadoksNumbers> {
   static const Map<String, String> _segmentToWord = {
     'a': 'GA',
     'b': 'BU',

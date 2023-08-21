@@ -595,10 +595,14 @@ class FormulaPainter {
   }
 
   String _replaceRange(String string, int start, int? length, String replacement) {
-    if (length == null) {
-      return string.replaceRange(start, start + replacement.length, replacement);
-    } else {
-      return string.replaceRange(start, start + length, replacement * length);
+    try  {
+      if (length == null) {
+        return string.replaceRange(start, start + replacement.length, replacement);
+      } else {
+        return string.replaceRange(start, start + length, replacement * length);
+      }
+    } catch (e) {
+      return string;
     }
   }
 
