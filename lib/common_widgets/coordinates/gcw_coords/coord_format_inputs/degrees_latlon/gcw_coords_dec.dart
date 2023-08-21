@@ -3,8 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsDEC extends StatefulWidget {
   final void Function(DEC) onChanged;
   DEC coordinates;
+  final bool isDefault;
 
-  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates}) : super(key: key);
+  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();
@@ -27,18 +28,11 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   String _currentLonDegrees = '';
   String _currentLonMilliDegrees = '';
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
-
-    var dec = widget.coordinates;
-    _currentLatDegrees = dec.latitude.abs().floor().toString();
-    _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
-    _currentLatSign = sign(dec.latitude);
-
-    _currentLonDegrees = dec.longitude.abs().floor().toString();
-    _currentLonMilliDegrees = dec.longitude.toString().split('.')[1];
-    _currentLonSign = sign(dec.longitude);
 
     _LatDegreesController = TextEditingController(text: _currentLatDegrees);
     _LatMilliDegreesController = TextEditingController(text: _currentLatMilliDegrees);
@@ -62,6 +56,24 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.isDefault && !_initialized) {
+      var dec = widget.coordinates;
+      _currentLatDegrees = dec.latitude.abs().floor().toString();
+      _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
+      _currentLatSign = sign(dec.latitude);
+
+      _currentLonDegrees = dec.longitude.abs().floor().toString();
+      _currentLonMilliDegrees = dec.longitude.toString().split('.')[1];
+      _currentLonSign = sign(dec.longitude);
+
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMilliDegreesController.text = _currentLatMilliDegrees;
+
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMilliDegreesController.text = _currentLonMilliDegrees;
+
+      _initialized = true;
+    }
 
     return Column(children: <Widget>[
       Row(

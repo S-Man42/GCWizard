@@ -19,4 +19,14 @@ class MultiDecoderToolAtbash extends AbstractMultiDecoderTool {
               return atbash(input);
             },
             options: options);
+
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolAtbashState();
+}
+
+class _MultiDecoderToolAtbashState extends State<MultiDecoderToolAtbash> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

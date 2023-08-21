@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetdropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
@@ -18,10 +18,10 @@ class Bifid extends StatefulWidget {
   const Bifid({Key? key}) : super(key: key);
 
   @override
-  BifidState createState() => BifidState();
+ _BifidState createState() => _BifidState();
 }
 
-class BifidState extends State<Bifid> {
+class _BifidState extends State<Bifid> {
   late TextEditingController _inputController;
   late TextEditingController _alphabetController;
 

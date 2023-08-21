@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,10 +11,10 @@ class Gray extends StatefulWidget {
   const Gray({Key? key}) : super(key: key);
 
   @override
-  GrayState createState() => GrayState();
+ _GrayState createState() => _GrayState();
 }
 
-class GrayState extends State<Gray> {
+class _GrayState extends State<Gray> {
   late TextEditingController _inputDecimalController;
   late TextEditingController _inputBinaryController;
 

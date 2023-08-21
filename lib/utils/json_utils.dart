@@ -43,3 +43,19 @@ bool isJsonArray(Object? decodedJson) {
 
   return decodedJson is List<Object?>;
 }
+
+List<Object?>? asJsonArrayOrNull(Object? decoded) {
+  if (decoded == null || !(isJsonArray(decoded))) {
+    return null;
+  }
+
+  return decoded as List<Object?>;
+}
+
+List<Object?> asJsonArray(Object? decoded) {
+  if (decoded == null || !(isJsonArray(decoded))) {
+    return <Object?>[];
+  }
+
+  return decoded as List<Object?>;
+}

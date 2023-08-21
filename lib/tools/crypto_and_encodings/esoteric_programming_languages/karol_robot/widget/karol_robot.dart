@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
@@ -23,10 +23,10 @@ class KarolRobot extends StatefulWidget {
   const KarolRobot({Key? key}) : super(key: key);
 
   @override
-  KarolRobotState createState() => KarolRobotState();
+ _KarolRobotState createState() => _KarolRobotState();
 }
 
-class KarolRobotState extends State<KarolRobot> {
+class _KarolRobotState extends State<KarolRobot> {
   late TextEditingController _decodeController;
   late TextEditingController _encodeController;
 
