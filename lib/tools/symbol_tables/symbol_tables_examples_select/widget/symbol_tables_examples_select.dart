@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -22,10 +22,10 @@ class SymbolTableExamplesSelect extends StatefulWidget {
   const SymbolTableExamplesSelect({Key? key}) : super(key: key);
 
   @override
-  SymbolTableExamplesSelectState createState() => SymbolTableExamplesSelectState();
+ _SymbolTableExamplesSelectState createState() => _SymbolTableExamplesSelectState();
 }
 
-class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
+class _SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
   List<Map<String, SymbolData>> images = [];
   List<String> selectedSymbolTables = [];
 

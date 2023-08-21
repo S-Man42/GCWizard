@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -12,10 +12,10 @@ class WigWagSemaphoreTelegraph extends StatefulWidget {
   const WigWagSemaphoreTelegraph({Key? key}) : super(key: key);
 
   @override
-  WigWagSemaphoreTelegraphState createState() => WigWagSemaphoreTelegraphState();
+ _WigWagSemaphoreTelegraphState createState() => _WigWagSemaphoreTelegraphState();
 }
 
-class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
+class _WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 

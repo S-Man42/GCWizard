@@ -21,7 +21,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   var _currentNewFormula = '';
   var _currentEditedFormula = '';
   int? _currentEditId;
-  String? _currentEditedName = '';
+  String _currentEditedName = '';
   int? _currentEditNameId;
 
   Map<int, Map<int, _ParsedCoordinate>> _foundCoordinates = {};
@@ -35,8 +35,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
     _editNameController = TextEditingController(text: _currentEditedName);
-
-    refreshFormulas();
   }
 
   @override
@@ -140,8 +138,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   }
 
   var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
-    var_coords_provider.refreshFormulas();
-
     var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
     varCoordsFormula.formula = formula.formula;
     var_coords_provider.insertFormula(varCoordsFormula);
@@ -233,7 +229,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
             _foundCoordinates.putIfAbsent(index + 1, () => _foundFormulaCoordinates);
           }
 
-          var hasName = formula.name != null && formula.name!.isNotEmpty;
+          var hasName = formula.name.isNotEmpty;
 
           Widget row = Container(
             padding: const EdgeInsets.only(top: DEFAULT_MARGIN),
@@ -284,7 +280,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                     children: [
                                       Container(height: 2 * DOUBLE_DEFAULT_MARGIN),
                                       GCWTextDivider(
-                                        text: formula.name ?? '',
+                                        text: formula.name,
                                         suppressTopSpace: true,
                                       ),
                                     ],
@@ -376,7 +372,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                   action: (index) => setState(() {
                                         _currentEditNameId = formula.id;
                                         _currentEditedName = formula.name;
-                                        _editNameController.text = formula.name ?? '';
+                                        _editNameController.text = formula.name;
                                         FocusScope.of(context).requestFocus(_editFocusNode);
                                       })),
                               GCWPopupMenuItem(
@@ -621,7 +617,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   void _showFormulaResultOnMap(List<GCWMapPoint> coordinates) {
     Navigator.push(
         context,
-        MaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: coordinates,

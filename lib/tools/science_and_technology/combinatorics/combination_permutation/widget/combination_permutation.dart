@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -13,10 +13,10 @@ class CombinationPermutation extends StatefulWidget {
   const CombinationPermutation({Key? key}) : super(key: key);
 
   @override
-  CombinationPermutationState createState() => CombinationPermutationState();
+ _CombinationPermutationState createState() => _CombinationPermutationState();
 }
 
-class CombinationPermutationState extends State<CombinationPermutation> {
+class _CombinationPermutationState extends State<CombinationPermutation> {
   var _currentInput = '';
   bool _currentShowDuplicates = false;
 

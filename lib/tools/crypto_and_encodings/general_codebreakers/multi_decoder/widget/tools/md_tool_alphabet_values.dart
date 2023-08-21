@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_stateful_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
@@ -32,17 +31,31 @@ class MultiDecoderToolAlphabetValues extends AbstractMultiDecoderTool {
                   .replaceAll(UNKNOWN_ELEMENT, '');
             },
             options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDown<String>(
-                value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ALPHABETVALUES, options, MDT_ALPHABETVALUES_OPTION_ALPHABET),
-                items: ALL_ALPHABETS.map((alphabet) {
-                  return GCWDropDownMenuItem(
-                      value: alphabet.key,
-                      child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name ?? '');
-                }).toList(),
-                onChanged: (value) {
-                  options[MDT_ALPHABETVALUES_OPTION_ALPHABET] = value;
-                },
-              )
-            }));
+  );
+
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolAlphabetValuesState();
+}
+
+class _MultiDecoderToolAlphabetValuesState extends State<MultiDecoderToolAlphabetValues> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWDropDown<String>(
+        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ALPHABETVALUES, widget.options, MDT_ALPHABETVALUES_OPTION_ALPHABET),
+        items: ALL_ALPHABETS.map((alphabet) {
+          return GCWDropDownMenuItem(
+              value: alphabet.key,
+              child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name ?? '');
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            widget.options[MDT_ALPHABETVALUES_OPTION_ALPHABET] = value;
+          });
+        },
+      )
+    }
+    );
+  }
 }

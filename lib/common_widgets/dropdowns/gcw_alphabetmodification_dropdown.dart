@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
@@ -15,10 +15,10 @@ class GCWAlphabetModificationDropDown extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWAlphabetModificationDropDownState createState() => GCWAlphabetModificationDropDownState();
+ _GCWAlphabetModificationDropDownState createState() => _GCWAlphabetModificationDropDownState();
 }
 
-class GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
+class _GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificationDropDown> {
   AlphabetModificationMode? _currentValue;
   late Map<AlphabetModificationMode, String> modifications;
 

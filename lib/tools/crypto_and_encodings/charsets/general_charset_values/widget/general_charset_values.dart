@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -18,10 +18,10 @@ class GeneralCharsetValues extends StatefulWidget {
   const GeneralCharsetValues({Key? key, required this.encode, required this.decode, required this.charsetName}) : super(key: key);
 
   @override
-  GeneralCharsetValuesState createState() => GeneralCharsetValuesState();
+ _GeneralCharsetValuesState createState() => _GeneralCharsetValuesState();
 }
 
-class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
+class _GeneralCharsetValuesState extends State<GeneralCharsetValues> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
@@ -193,18 +193,17 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
       default:
         return IntegerListText('', []);
     }
-
     if (blockSize != null) {
       decodeInput = insertSpaceEveryNthCharacter(decodeInput.replaceAll(RegExp(r'[\s]+'), ''), blockSize);
     }
     var decodeInputList = <int>[];
-    decodeInput.split(' ').map((block) {
+    decodeInput.split(' ').forEach((block) {
       String? blockValue = block;
-        if (radix != 10) blockValue = convertBase(blockValue, radix, 10);
-        var value = int.tryParse(blockValue);
-        if (value != null) {
-          decodeInputList.add(value);
-        }
+      if (radix != 10) blockValue = convertBase(blockValue, radix, 10);
+      var value = int.tryParse(blockValue);
+      if (value != null) {
+        decodeInputList.add(value);
+      }
     });
 
     _currentDecoded = IntegerListText(widget.decode(decodeInputList), decodeInputList);

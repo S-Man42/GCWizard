@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -23,10 +23,10 @@ class EdelcrantzTelegraph extends StatefulWidget {
   const EdelcrantzTelegraph({Key? key}) : super(key: key);
 
   @override
-  EdelcrantzTelegraphState createState() => EdelcrantzTelegraphState();
+ _EdelcrantzTelegraphState createState() => _EdelcrantzTelegraphState();
 }
 
-class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
+class _EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   var _currentEncodeInput = '';
   late TextEditingController _encodeInputController;
 
