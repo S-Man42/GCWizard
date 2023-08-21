@@ -21,7 +21,6 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_export_dialog.dart';
@@ -180,69 +179,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 });
               },
             ),
-
-    /*
-            GCWButton(
-              text: i18n(context, 'gcwizard_script_interpret'),
-              onPressed: () {
-                _currentInput = '';
-                _currentOutput.continueState = null;
-                _interpretGCWScriptAsync();
-                // setState(() {
-                //   if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-                //       _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
-                //     _createImage(_currentOutput.Graphic).then((value) {
-                //       setState(() {
-                //         _outGraphicData = value;
-                //       });
-                //     });
-                //   }
-                // });
-              },
-            ),
-            GCWButton(
-              text: i18n(context, 'gcwizard_script_load'),
-              onPressed: () {
-                setState(() {
-                  _loadFile = !_loadFile;
-                });
-              },
-            ),
-            GCWButton(
-              text: i18n(context, 'gcwizard_script_save'),
-              onPressed: () {
-                _exportFile(context, Uint8List.fromList(_currentProgram.codeUnits), GCWizardScriptFileType.PROGRAM);
-              },
-            ),
-            GCWButton(
-              text: i18n(context, 'gcwizard_script_clear'),
-              onPressed: () {
-                setState(() {
-                  _programController.text = '';
-                  _currentProgram = '';
-                  _currentOutput = GCWizardScriptOutput.empty();
-                  _currentScriptOutput = '';
-                });
-              },
-            ),
-            GCWButton(
-              text: i18n(context, 'gcwizard_script_help'),
-              onPressed: () {
-                setState(() {
-                  _showDialogBoxHelp(context);
-                });
-              },
-            ),
-            GCWButton(
-              text: i18n(context, 'gcwizard_script_coords'),
-              onPressed: () {
-                setState(() {
-                  _loadCoords = !_loadCoords;
-                });
-              },
-            ),
-
-     */
           ],
         ),
         _buildOutput(context),
@@ -519,17 +455,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return Container(
         padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Row(children: <Widget>[
-          Expanded(flex: 1, child: GCWText(text: HELP_URLS[key]![0])),
           Expanded(
               flex: 1,
               child: InkWell(
-                child: Text(
-                  HELP_URLS[key]![0],
-                  style: gcwHyperlinkTextStyle(),
-                ),
+                child: Text(GCW_SKRIPT_HELP_URLS[key]![0],
+                    style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),
+                    ),
                 onTap: () {
-                  print('tap '+HELP_URLS[key]![1]);
-                  launchUrl(Uri.parse(HELP_URLS[key]![1]));
+                  launchUrl(Uri.parse(GCW_SKRIPT_HELP_URLS[key]![1]));
                 },
               ))
         ]));
@@ -545,32 +478,19 @@ class GCWizardScriptState extends State<GCWizardScript> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildUrl(0),
-              _buildUrl(1),
-              _buildUrl(2),
-              _buildUrl(3),
-              _buildUrl(4),
-              _buildUrl(5),
-              _buildUrl(6),
-              _buildUrl(7),
-              _buildUrl(8),
-              _buildUrl(9),
-              _buildUrl(10),
-              _buildUrl(11),
-              _buildUrl(12),
-              // _buildUrl(_HELP_VARIABLE),
-              // _buildUrl(_HELP_DATATYPES),
-              // _buildUrl(_HELP_OPERATORS),
-              // _buildUrl(_HELP_COMMANDS),
-              // _buildUrl(_HELP_CONTROLS),
-              // _buildUrl(_HELP_MATH),
-              // _buildUrl(_HELP_STRINGS),
-              // _buildUrl(_HELP_LISTS),
-              // _buildUrl(_HELP_FILES),
-              // _buildUrl(_HELP_DATE),
-              // _buildUrl(_HELP_GRAPHIC),
-              // _buildUrl(_HELP_WPTS),
-              // _buildUrl(_HELP_COORD),
+              _buildUrl(GCW_SKRIPT_HELP_VARIABLE),
+              _buildUrl(GCW_SKRIPT_HELP_DATATYPES),
+              _buildUrl(GCW_SKRIPT_HELP_OPERATORS),
+              _buildUrl(GCW_SKRIPT_HELP_COMMANDS),
+              _buildUrl(GCW_SKRIPT_HELP_CONTROLS),
+              _buildUrl(GCW_SKRIPT_HELP_MATH),
+              _buildUrl(GCW_SKRIPT_HELP_STRINGS),
+              _buildUrl(GCW_SKRIPT_HELP_LISTS),
+              _buildUrl(GCW_SKRIPT_HELP_FILES),
+              _buildUrl(GCW_SKRIPT_HELP_DATE),
+              _buildUrl(GCW_SKRIPT_HELP_GRAPHIC),
+              _buildUrl(GCW_SKRIPT_HELP_WPTS),
+              _buildUrl(GCW_SKRIPT_HELP_COORD),
             ],
           ),
         ),
