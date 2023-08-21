@@ -27,9 +27,6 @@ class AlphabetValuesAPIMapper extends APIMapper {
           logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
           delimiter: ' ');
     }
-
-
-
   }
 
   /// convert doLogic output to map
