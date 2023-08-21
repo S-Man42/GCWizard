@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -12,10 +12,10 @@ class SummerSimmerIndex extends StatefulWidget {
   const SummerSimmerIndex({Key? key}) : super(key: key);
 
   @override
-  SummerSimmerIndexState createState() => SummerSimmerIndexState();
+ _SummerSimmerIndexState createState() => _SummerSimmerIndexState();
 }
 
-class SummerSimmerIndexState extends State<SummerSimmerIndex> {
+class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
 

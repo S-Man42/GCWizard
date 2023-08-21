@@ -22,4 +22,13 @@ class MultiDecoderBinary2Image extends AbstractMultiDecoderTool {
               return input2Image(output);
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderBinary2ImageState();
+}
+
+class _MultiDecoderBinary2ImageState extends State<MultiDecoderBinary2Image> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

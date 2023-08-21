@@ -7,7 +7,7 @@ import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -79,7 +79,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
+        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
           if (file != null) {
             setState(() {
               _loadedFile = file;
@@ -106,7 +106,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 child: SizedBox(
                   height: 220,
                   width: 150,
-                  child: GCWAsyncExecuter<Object?>(
+                  child: GCWAsyncExecuter<Uint8ListText?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,
                     onReady: (data) => _saveDownload(data),
@@ -178,18 +178,20 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     }
   }
 
-  void _saveDownload(Object? data) {
+  void _saveDownload(Uint8ListText? data) {
     _loadedFile = null;
-    if (data is Uint8List && _currentUrl != null) {
+    if (data != null && data.value.isNotEmpty && _currentUrl != null) {
       _loadedFile =
-          GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data);
-    } else if (data is String) {
-      showToast(i18n(context, data));
+          GCWFile(name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data.value);
+    } else if (data != null && data.text.isNotEmpty) {
+      showToast(i18n(context, data.text));
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onLoaded(_loadedFile);
-    });
+    if (_loadedFile != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onLoaded(_loadedFile!);
+      });
+    }
   }
 
   @override
@@ -243,6 +245,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
+    if (widget.supportedFileTypes == null || widget.supportedFileTypes!.isEmpty) return true;
     for (FileType fileType in widget.supportedFileTypes ?? []) {
       var mimeTypeList = mimeTypes(fileType);
       if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
@@ -289,7 +292,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 }
 
-void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Function onLoaded) {
+void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, void Function(GCWFile?) onLoaded) {
   showGCWDialog(
       context,
       i18n(context, 'common_loadfile_showopen'),
@@ -298,7 +301,7 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
           GCWOpenFile(
             supportedFileTypes: supportedFileTypes,
             isDialog: true,
-            onLoaded: (_file) {
+            onLoaded: (GCWFile? _file) {
               onLoaded(_file);
 
               Navigator.of(context).pop();
@@ -309,56 +312,60 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
       []);
 }
 
-Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! Uri) return null;
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  Future<Uint8List>? result;
   SendPort? sendAsyncPort = jobData?.sendAsyncPort;
-  Uri? uri = jobData?.parameters is Uri ? jobData!.parameters as Uri : null;
-  String? outString;
+  Uri? uri = jobData!.parameters as Uri;
+  var result = Uint8ListText('', Uint8List.fromList(_bytes));
 
-  if (uri == null) return null;
   var request = http.Request("GET", uri);
   var client = http.Client();
-  await client.send(request).timeout(const Duration(seconds: 10), onTimeout: () {
-    //sendAsyncPort?.send(null);
-    return http.StreamedResponse(Stream.fromIterable([]), 500); //http.Response('Error', 500);
-  }).then((http.StreamedResponse response) async {
-    if (response.statusCode != 200) {
-      sendAsyncPort?.send('common_loadfile_exception_responsestatus');
-      return 'common_loadfile_exception_responsestatus';
-    }
-    _total = response.contentLength ?? 0;
-    int progressStep = max(_total ~/ 100, 1);
 
-    response.stream.listen((value) {
-      _bytes.addAll(value);
+  try {
+    await client.send(request).timeout(const Duration(seconds: 10))
+      .then<http.StreamedResponse?>((http.StreamedResponse response) async {
+        if (response.statusCode != 200) {
+          result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+        } else {
+          _total = response.contentLength ?? 0;
+          int progressStep = max(_total ~/ 100, 1);
 
-      if (_total != 0 &&
-          sendAsyncPort != null &&
-          (_received % progressStep > (_received + value.length) % progressStep)) {
-        sendAsyncPort.send(DoubleText('progress', (_received + value.length) / _total));
-      }
-      _received += value.length;
-    },
-        onDone: () {
-          if (_bytes.isEmpty) {
-            outString = 'common_loadfile_exception_nofile';
-            sendAsyncPort?.send(outString);
-          } else {
-            var uint8List = Uint8List.fromList(_bytes);
-            sendAsyncPort?.send(uint8List);
-            result = Future.value(uint8List);
-          }
+          response.stream.listen((value) async {
+            _bytes.addAll(value);
+
+            if (_total != 0 &&
+                sendAsyncPort != null &&
+                (_received % progressStep > (_received + value.length) % progressStep)) {
+              sendAsyncPort.send(DoubleText(PROGRESS, (_received + value.length) / _total));
+            }
+            _received += value.length;
+          },
+              onDone: () {
+                if (_bytes.isEmpty) {
+                  result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
+                } else {
+                  sendAsyncPort?.send(Uint8ListText('', Uint8List.fromList(_bytes)));
+                  result = Uint8ListText('', Uint8List.fromList(_bytes));
+                }
+              },
+          );
         }
-    );
-  });
+        return response;
+    });
+  } on TimeoutException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+  } on SocketException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
+  }
 
-  if (outString != null) return outString!;
-
-  await result;
-  return result;
+// ToDo only working with AsncPort (await not working)
+  if (result.text.isNotEmpty) {
+    sendAsyncPort?.send(result);
+  }
+  return  Future.value(result);
 }
 
 /// Open File Picker dialog
@@ -366,7 +373,7 @@ Future<Object?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
+Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
     if (allowedFileTypes == null || _hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
 
@@ -396,7 +403,7 @@ Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
   var allowedExtensions = fileExtensions(allowedFileTypes);
 
-  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
+  return files.where((element) => allowedExtensions.contains(element.extension.toString().toLowerCase())).toList();
 }
 
 bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {

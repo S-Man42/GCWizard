@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -91,15 +92,9 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   }
 
   void _openInMap({bool freeMap = false}) {
-    if (freeMap) {
-      for (var point in widget.points) {
-        point.isEditable = true;
-      }
-    }
-
     Navigator.push(
         context,
-        MaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(widget.points),

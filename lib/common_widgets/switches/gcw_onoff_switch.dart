@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_switch.dart';
@@ -18,10 +18,10 @@ class GCWOnOffSwitch extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWOnOffSwitchState createState() => GCWOnOffSwitchState();
+ _GCWOnOffSwitchState createState() => _GCWOnOffSwitchState();
 }
 
-class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
+class _GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
   final _currentValue = false;
 
   @override

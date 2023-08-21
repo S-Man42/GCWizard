@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -12,10 +12,10 @@ class Humidex extends StatefulWidget {
   const Humidex({Key? key}) : super(key: key);
 
   @override
-  HumidexState createState() => HumidexState();
+ _HumidexState createState() => _HumidexState();
 }
 
-class HumidexState extends State<Humidex> {
+class _HumidexState extends State<Humidex> {
   double _currentTemperature = 0.0;
   double _currentDewPoint = 0.0;
 
