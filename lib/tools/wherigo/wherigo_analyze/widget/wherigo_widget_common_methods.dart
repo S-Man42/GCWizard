@@ -1,6 +1,9 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
 // TODO Thomas: Does not return anything in some cases. For example if filedata == null but Contents.length > 1 (else case of "if" in line 17)
+// Although media objects are defined for both devices - garmin and pc - the content of a GWC Cartridge is defined at download time.
+// Hence the GWC contains either sound files for Garmin or pc.
+// Hence there could be a conflict in number of media files and media objects
 GCWFile? _getFileFrom(BuildContext context, String resourceName) {
   Uint8List? filedata;
   String? filename;
@@ -23,14 +26,14 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
       result = null;
     }
   } catch (exception) {
-    errorMsg_MediaFiles = [];
-    errorMsg_MediaFiles.add('');
-    errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime_widget'));
-    errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime'));
-    errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime_exception'));
-    errorMsg_MediaFiles.add(exception.toString());
-    errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_gwc_mediafiles'));
-    errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_hint_2'));
+    WHERIGOerrorMsg_MediaFiles = [];
+    WHERIGOerrorMsg_MediaFiles.add('');
+    WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime_widget'));
+    WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime'));
+    WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime_exception'));
+    WHERIGOerrorMsg_MediaFiles.add(exception.toString());
+    WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_gwc_mediafiles'));
+    WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_hint_2'));
     showToast(
         i18n(context, 'wherigo_error_runtime') +
             '\n' +
@@ -48,14 +51,14 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
 
 String _resolveLUAName(String chiffre) {
   String resolve(List<String> chiffreList, String joinPattern) {
-    if (NameToObject[chiffreList[0]] == null) {
+    if (WHERIGONameToObject[chiffreList[0]] == null) {
       return '';
     }
 
     List<String> result = [];
-    result.add(NameToObject[chiffreList[0]]!.ObjectType.toString().split('.')[1] +
+    result.add(WHERIGONameToObject[chiffreList[0]]!.ObjectType.toString().split('.')[1] +
         ' ' +
-        NameToObject[chiffreList[0]]!.ObjectName);
+        WHERIGONameToObject[chiffreList[0]]!.ObjectName);
     for (int i = 1; i < chiffreList.length; i++) {
       result.add(chiffreList[i]);
     }
@@ -64,14 +67,14 @@ String _resolveLUAName(String chiffre) {
 
   if (chiffre.split('.').length > 1) {
     List<String> listChiffre = chiffre.split('.');
-    if (NameToObject[listChiffre[0]] != null) {
+    if (WHERIGONameToObject[listChiffre[0]] != null) {
       return resolve(listChiffre, '.');
     } else {
       return chiffre;
     }
   } else if (chiffre.split(':').length > 1) {
     List<String> listChiffre = chiffre.split(':');
-    if (NameToObject[listChiffre[0]] != null) {
+    if (WHERIGONameToObject[listChiffre[0]] != null) {
       return resolve(listChiffre, ':');
     } else {
       return chiffre;

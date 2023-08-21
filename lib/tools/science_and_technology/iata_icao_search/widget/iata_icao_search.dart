@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -11,10 +11,10 @@ class IATAICAOSearch extends StatefulWidget {
   const IATAICAOSearch({Key? key}) : super(key: key);
 
   @override
-  IATAICAOSearchState createState() => IATAICAOSearchState();
+ _IATAICAOSearchState createState() => _IATAICAOSearchState();
 }
 
-class IATAICAOSearchState extends State<IATAICAOSearch> {
+class _IATAICAOSearchState extends State<IATAICAOSearch> {
   late TextEditingController _inputControllerCode;
   late TextEditingController _inputControllerName;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
@@ -15,10 +15,10 @@ class EllipsoidTransform extends StatefulWidget {
   const EllipsoidTransform({Key? key}) : super(key: key);
 
   @override
-  EllipsoidTransformState createState() => EllipsoidTransformState();
+ _EllipsoidTransformState createState() => _EllipsoidTransformState();
 }
 
-class EllipsoidTransformState extends State<EllipsoidTransform> {
+class _EllipsoidTransformState extends State<EllipsoidTransform> {
   var _currentCoords = defaultBaseCoordinate;
 
   var _currentOutputFormat = defaultCoordinateFormat;

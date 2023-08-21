@@ -27,6 +27,16 @@ List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputDat
           ? [i18n(context, 'wherigo_output_hash'), hash, '']
           : [i18n(context, 'wherigo_output_answer'), hash],
       if (answerAlphabetical != null)
+          [i18n(context, 'wherigo_output_answerdecrypted'), answerAlphabetical, i18n(context, 'common_letters')],
+      if (answerNumeric != null)
+          [i18n(context, 'wherigo_output_answerdecrypted'), answerNumeric, i18n(context, 'common_numbers')],
+    ];
+
+    result = [
+      answers.length > 1
+          ? [i18n(context, 'wherigo_output_hash'), hash, '']
+          : [i18n(context, 'wherigo_output_answer'), hash],
+      if (answerAlphabetical != null)
         [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical],
       if (answerNumeric != null)
         [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric],
@@ -68,7 +78,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.CASE:
-          wherigoExpertMode
+          WHERIGOExpertMode
               ? resultWidget.add(Text(
                 '\n' + (element.ActionMessageContent.toUpperCase()) + '\n',
                 textAlign: TextAlign.center,
@@ -79,7 +89,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
         case WHERIGO_ACTIONMESSAGETYPE.COMMAND:
           if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
             String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
-            if (NameToObject[LUAName] == null || NameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length) {
+            if (WHERIGONameToObject[LUAName] == null || WHERIGONameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length) {
               break;
             }
 
@@ -91,13 +101,13 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
                   GCWFile(
                     //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
                       bytes:
-                      WherigoCartridgeGWCData.MediaFilesContents[NameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
-                      name: NameToObject[LUAName]!.ObjectMedia),
+                      WherigoCartridgeGWCData.MediaFilesContents[WHERIGONameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
+                      name: WHERIGONameToObject[LUAName]!.ObjectMedia),
                 ],
               ));
             }
           } else {
-            wherigoExpertMode
+            WHERIGOExpertMode
                 ? resultWidget.add(GCWOutput(
               child: '\n' + _resolveLUAName(element.ActionMessageContent) + '\n',
               suppressCopyButton: true,

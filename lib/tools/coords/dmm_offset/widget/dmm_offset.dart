@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
@@ -15,10 +15,10 @@ class DMMOffset extends StatefulWidget {
   const DMMOffset({Key? key}) : super(key: key);
 
   @override
-  DMMOffsetState createState() => DMMOffsetState();
+ _DMMOffsetState createState() => _DMMOffsetState();
 }
 
-class DMMOffsetState extends State<DMMOffset> {
+class _DMMOffsetState extends State<DMMOffset> {
   var _currentCoords = defaultBaseCoordinate;
 
   var _currentValues = [defaultCoordinate];

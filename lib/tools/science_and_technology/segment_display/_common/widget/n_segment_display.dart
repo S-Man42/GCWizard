@@ -16,7 +16,7 @@ class NSegmentDisplay extends StatefulWidget {
   final void Function(Map<String, bool>)? onChanged;
 
   final void Function(GCWTouchCanvas, Size, Map<String, bool>, void Function(String, bool), Color, Color)? customPaint;
-  late NSegmentDisplayState nSegmentDisplayState;
+  late _NSegmentDisplayState nSegmentDisplayState;
 
   NSegmentDisplay(
       {Key? key,
@@ -30,14 +30,14 @@ class NSegmentDisplay extends StatefulWidget {
       : super(key: key);
 
   @override
-  NSegmentDisplayState createState() => NSegmentDisplayState();
+ _NSegmentDisplayState createState() => _NSegmentDisplayState();
 
   Future<ui.Image> get renderedImage async {
     return nSegmentDisplayState.renderedImage;
   }
 }
 
-class NSegmentDisplayState extends State<NSegmentDisplay> {
+class _NSegmentDisplayState extends State<NSegmentDisplay> {
   late Map<String, bool> _segments;
 
   @override

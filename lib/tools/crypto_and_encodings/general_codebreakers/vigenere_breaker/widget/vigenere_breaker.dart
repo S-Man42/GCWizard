@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -21,10 +21,10 @@ class VigenereBreaker extends StatefulWidget {
   const VigenereBreaker({Key? key}) : super(key: key);
 
   @override
-  VigenereBreakerState createState() => VigenereBreakerState();
+ _VigenereBreakerState createState() => _VigenereBreakerState();
 }
 
-class VigenereBreakerState extends State<VigenereBreaker> {
+class _VigenereBreakerState extends State<VigenereBreaker> {
   String _currentInput = '';
   VigenereBreakerAlphabet _currentAlphabet = VigenereBreakerAlphabet.GERMAN;
   VigenereBreakerResult? _currentOutput;

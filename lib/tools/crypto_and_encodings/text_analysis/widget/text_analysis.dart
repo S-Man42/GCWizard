@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -18,10 +18,10 @@ class TextAnalysis extends StatefulWidget {
   const TextAnalysis({Key? key}) : super(key: key);
 
   @override
-  TextAnalysisState createState() => TextAnalysisState();
+ _TextAnalysisState createState() => _TextAnalysisState();
 }
 
-class TextAnalysisState extends State<TextAnalysis> {
+class _TextAnalysisState extends State<TextAnalysis> {
   late TextEditingController _inputController;
   String _currentInput = '';
 

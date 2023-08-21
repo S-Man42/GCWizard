@@ -34,4 +34,14 @@ class MultiDecoderToolEsotericLanguageMalbolge extends AbstractMultiDecoderTool 
               return null;
             },
             options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolEsotericLanguageMalbolgeState();
 }
+
+class _MultiDecoderToolEsotericLanguageMalbolgeState extends State<MultiDecoderToolEsotericLanguageMalbolge> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+

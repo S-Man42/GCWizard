@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -35,10 +35,10 @@ class GCWPopupMenu extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  GCWPopupMenuState createState() => GCWPopupMenuState();
+ _GCWPopupMenuState createState() => _GCWPopupMenuState();
 }
 
-class GCWPopupMenuState extends State<GCWPopupMenu> {
+class _GCWPopupMenuState extends State<GCWPopupMenu> {
   List<PopupMenuEntry<int>>? _menuItems;
   List<void Function(int)>? _menuAction;
 
