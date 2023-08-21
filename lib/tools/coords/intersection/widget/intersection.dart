@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -24,10 +24,10 @@ class Intersection extends StatefulWidget {
   const Intersection({Key? key}) : super(key: key);
 
   @override
-  IntersectionState createState() => IntersectionState();
+ _IntersectionState createState() => _IntersectionState();
 }
 
-class IntersectionState extends State<Intersection> {
+class _IntersectionState extends State<Intersection> {
   var _currentIntersections = <LatLng?>[];
 
   var _currentCoords1 = defaultBaseCoordinate;

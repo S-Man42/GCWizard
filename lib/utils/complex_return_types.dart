@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class DoubleText {
   String text;
   double value;
@@ -31,6 +33,13 @@ class IntegerListText {
   IntegerListText(this.text, this.value);
 }
 
+class Uint8ListText {
+  String text;
+  Uint8List value;
+
+  Uint8ListText(this.text, this.value);
+}
+
 class DateTimeDuration extends DateTimeTimezone{
   Duration duration;
 
@@ -50,4 +59,12 @@ class DateTimeDouble {
   double value;
 
   DateTimeDouble({required this.datetime, required this.value});
+}
+
+class KeyValueBase {
+  Object? id;
+  String key;
+  String value;
+
+  KeyValueBase(this.id, this.key, this.value);
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
@@ -22,10 +22,10 @@ class ShadowLength extends StatefulWidget {
   const ShadowLength({Key? key}) : super(key: key);
 
   @override
-  ShadowLengthState createState() => ShadowLengthState();
+ _ShadowLengthState createState() => _ShadowLengthState();
 }
 
-class ShadowLengthState extends State<ShadowLength> {
+class _ShadowLengthState extends State<ShadowLength> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentInputCoords = defaultBaseCoordinate;
   var _currentHeight = 0.0;

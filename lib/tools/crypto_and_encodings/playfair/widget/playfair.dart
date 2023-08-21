@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,10 +11,10 @@ class Playfair extends StatefulWidget {
   const Playfair({Key? key}) : super(key: key);
 
   @override
-  PlayfairState createState() => PlayfairState();
+ _PlayfairState createState() => _PlayfairState();
 }
 
-class PlayfairState extends State<Playfair> {
+class _PlayfairState extends State<Playfair> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 

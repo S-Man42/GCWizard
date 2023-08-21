@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_abc_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -10,10 +10,10 @@ class Caesar extends StatefulWidget {
   const Caesar({Key? key}) : super(key: key);
 
   @override
-  CaesarState createState() => CaesarState();
+ _CaesarState createState() => _CaesarState();
 }
 
-class CaesarState extends State<Caesar> {
+class _CaesarState extends State<Caesar> {
   late TextEditingController _controller;
 
   String _currentInput = '';

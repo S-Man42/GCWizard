@@ -23,21 +23,34 @@ class MultiDecoderToolPlayfair extends AbstractMultiDecoderTool {
               return decryptPlayfair(input, key, mode: _parseStringToEnum(stringNullableTypeCheck(options[MDT_PLAYFAIR_OPTION_MODE], null)));
             },
             requiresKey: true,
-            options: options,
-            configurationWidget: MultiDecoderToolConfiguration(widgets: {
-              MDT_PLAYFAIR_OPTION_MODE: GCWAlphabetModificationDropDown(
-                suppressTitle: true,
-                value: _parseStringToEnum(stringNullableTypeCheck(options[MDT_PLAYFAIR_OPTION_MODE], null)),
-                allowedModifications: const [
-                  AlphabetModificationMode.J_TO_I,
-                  AlphabetModificationMode.W_TO_VV,
-                  AlphabetModificationMode.C_TO_K
-                ],
-                onChanged: (newValue) {
-                  options[MDT_PLAYFAIR_OPTION_MODE] = alphabetModeName(newValue);
-                },
-              )
-            }));
+            options: options);
+  @override
+  State<StatefulWidget> createState() => _MultiDecoderToolPlayfairState();
+}
+
+class _MultiDecoderToolPlayfairState extends State<MultiDecoderToolPlayfair> {
+  @override
+  Widget build(BuildContext context) {
+    return createMultiDecoderToolConfiguration(
+        context, {
+      MDT_PLAYFAIR_OPTION_MODE: GCWAlphabetModificationDropDown(
+        suppressTitle: true,
+        value: _parseStringToEnum(stringNullableTypeCheck(widget.options[MDT_PLAYFAIR_OPTION_MODE], null)),
+        allowedModifications: const [
+          AlphabetModificationMode.J_TO_I,
+          AlphabetModificationMode.W_TO_VV,
+          AlphabetModificationMode.C_TO_K
+        ],
+        onChanged: (newValue) {
+          setState(() {
+            widget.options[MDT_PLAYFAIR_OPTION_MODE] = alphabetModeName(newValue);
+          });
+
+        },
+      )
+    }
+    );
+  }
 }
 
 AlphabetModificationMode _parseStringToEnum(String? item) {

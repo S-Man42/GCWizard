@@ -86,8 +86,8 @@ final _initialOptions = <String, Map<String, Object>>{
   },
   MDT_INTERNALNAMES_KEYBOARDLAYOUT: {
     MDT_KEYBOARDLAYOUT_OPTION_FROM:
-        getKeyboardByType(KeyboardType.QWERTY_US_INT)?.name ?? '',
-    MDT_KEYBOARDLAYOUT_OPTION_TO: getKeyboardByType(KeyboardType.QWERTZ_T1)?.name ?? ''
+        getKeyboardByType(KEYBOARD_TYPE.QWERTY_US_INT)?.name ?? '',
+    MDT_KEYBOARDLAYOUT_OPTION_TO: getKeyboardByType(KEYBOARD_TYPE.QWERTZ_T1)?.name ?? ''
   },
   MDT_INTERNALNAMES_KEYBOARDNUMBERS: {
     MDT_KEYBOARDNUMBERS_OPTION_TYPE: 'keyboard_mode_qwertz_ristome_dvorak'
@@ -235,7 +235,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
           context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE:
-      gcwTool = MultiDecoderToolEsotericLanguageBrainfkDerivate(
+      gcwTool = MultiDecoderToolEsotericLanguageBrainfkDerivative(
           id: mdtTool.id,
           name: mdtTool.name,
           options: options,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -21,10 +21,10 @@ class IntersectBearings extends StatefulWidget {
   const IntersectBearings({Key? key}) : super(key: key);
 
   @override
-  IntersectBearingsState createState() => IntersectBearingsState();
+ _IntersectBearingsState createState() => _IntersectBearingsState();
 }
 
-class IntersectBearingsState extends State<IntersectBearings> {
+class _IntersectBearingsState extends State<IntersectBearings> {
   LatLng? _currentIntersection;
 
   var _currentCoords1 = defaultBaseCoordinate;
