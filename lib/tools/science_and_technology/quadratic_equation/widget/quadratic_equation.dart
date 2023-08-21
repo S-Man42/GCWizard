@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -14,10 +14,10 @@ class QuadraticEquation extends StatefulWidget {
   const QuadraticEquation({Key? key}) : super(key: key);
 
   @override
-  QuadraticEquationState createState() => QuadraticEquationState();
+ _QuadraticEquationState createState() => _QuadraticEquationState();
 }
 
-class QuadraticEquationState extends State<QuadraticEquation> {
+class _QuadraticEquationState extends State<QuadraticEquation> {
   var _currentA = '0.0';
   var _currentB = '0.0';
   var _currentC = '0.0';

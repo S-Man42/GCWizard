@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -15,10 +15,10 @@ class RSA extends StatefulWidget {
   const RSA({Key? key}) : super(key: key);
 
   @override
-  RSAState createState() => RSAState();
+ _RSAState createState() => _RSAState();
 }
 
-class RSAState extends State<RSA> {
+class _RSAState extends State<RSA> {
   String _currentInput = '';
   String _currentED = '';
   String _currentP = '';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
@@ -20,10 +20,10 @@ class WaypointProjection extends StatefulWidget {
   const WaypointProjection({Key? key}) : super(key: key);
 
   @override
-  WaypointProjectionState createState() => WaypointProjectionState();
+ _WaypointProjectionState createState() => _WaypointProjectionState();
 }
 
-class WaypointProjectionState extends State<WaypointProjection> {
+class _WaypointProjectionState extends State<WaypointProjection> {
   var _currentCoords = defaultBaseCoordinate;
   var _currentDistance = 0.0;
   var _currentBearing = defaultDoubleText;

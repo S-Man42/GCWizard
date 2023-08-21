@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/e_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/phi_selection.dart';
@@ -20,10 +20,10 @@ class MathematicalConstants extends StatefulWidget {
   const MathematicalConstants({Key? key}) : super(key: key);
 
   @override
-  MathematicalConstantsState createState() => MathematicalConstantsState();
+ _MathematicalConstantsState createState() => _MathematicalConstantsState();
 }
 
-class MathematicalConstantsState extends State<MathematicalConstants> {
+class _MathematicalConstantsState extends State<MathematicalConstants> {
   String _currentConstant = '';
   late Map<String, MathematicalConstant> _constants;
 
