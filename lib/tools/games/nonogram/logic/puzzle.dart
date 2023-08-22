@@ -3,6 +3,8 @@
 // const ascii = require('./serializers/ascii');
 // const svg = require('./serializers/svg');
 
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 
 class Puzzle {
@@ -16,14 +18,15 @@ class Puzzle {
 
 
 
-  Puzzle(this.rowHints, this.columnHints, {List<int>? content) {
+  Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
     if (content != null) {
       import(content);
     }
   }
 
   static Puzzle generate(int height, int width) {
-   return Puzzle(List<int>.generate(height, (index) => []), List<int>.generate(width, (index) => []));
+   return Puzzle(List<List<int>>.generate(height, (index) => []),
+                 List<List<int>>.generate(width, (index) => []));
   }
   // constructor(data) {
   //   if (typeof data === 'string') {

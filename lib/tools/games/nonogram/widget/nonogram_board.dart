@@ -160,7 +160,7 @@ class NonogramBoardPainter extends CustomPainter {
 
       for (int y = 0; y < board.height; y++) {
         xInner = xOuter + x * widthInner;
-        var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+        var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner, widthInner, heightInner);
 
 
         var value = board.rows[y][x];

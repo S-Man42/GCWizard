@@ -5,7 +5,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -29,6 +29,7 @@ class NonogramSolver extends StatefulWidget {
 class NonogramSolverState extends State<NonogramSolver> {
   late Puzzle _currentBoard;
   var _currentSizeExpanded = true;
+  var _currentRowHintsExpanded = false;
   var _currentColumnHintsExpanded = false;
   var _rowController = <TextEditingController>[];
   var _columnController = <TextEditingController>[];
@@ -46,8 +47,8 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   @override
   void dispose() {
-    _rowController.forEach((controller) {controller.dispose();});
-    _columnController.forEach((controller) {controller.dispose();});
+    for (var controller in _rowController) {controller.dispose();}
+    for (var controller in _columnController) {controller.dispose();}
 
     super.dispose();
   }
@@ -82,10 +83,11 @@ class NonogramSolverState extends State<NonogramSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      _currentBoard.solve(_currentBoard);
+                      var strategy  = Strategy();
+                      strategy.solve(_currentBoard);
                       if (!_currentBoard.isSolved) {
                         showToast(i18n(context, 'sudokusolver_error'));
-                      // } else {
+                      } //else {
                       //   _showSolution();
                       // }
                     });
@@ -190,7 +192,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _rowCount; i++ ) {
       var controller = _getRowController(i);
-      controller.text = board.rowHints[i].toString();
+      controller.text = _currentBoard.rowHints[i].toString();
       var row =  Row(
         children: <Widget>[
           Expanded(
@@ -201,7 +203,7 @@ class NonogramSolverState extends State<NonogramSolver> {
               controller: controller,
               onChanged: (text) {
                 setState(() {
-                  board.rowHints[i] = textToIntList(text);
+                  _currentBoard.rowHints[i] = textToIntList(text);
                 });
               }
             )
@@ -234,7 +236,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _columnCount; i++ ) {
       var controller = _getColumnController(i);
-      controller.text = board.columnHints[i].toString();
+      controller.text = _currentBoard.columnHints[i].toString();
       var row =  Row(
           children: <Widget>[
             Expanded(
@@ -245,7 +247,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                     controller: controller,
                     onChanged: (text) {
                       setState(() {
-                        board.columnHints[i] = textToIntList(text);
+                        _currentBoard.columnHints[i] = textToIntList(text);
                       });
                     }
                 )
@@ -272,9 +274,5 @@ class NonogramSolverState extends State<NonogramSolver> {
       _columnController.add(TextEditingController());
     }
     return _columnController[index];
-  }
-
-  void _showSolution() {
-    _currentBoard.mergeSolution(_currentSolution);
   }
 }
