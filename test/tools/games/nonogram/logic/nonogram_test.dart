@@ -50,7 +50,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('rows: ${elem['rows']},columns: ${elem['columns']}',() {
         var puzzle = Puzzle(elem['rows'] as List<List<int>>,elem['columns'] as List<List<int>>);
-        puzzle.mapData(puzzle);
+        Puzzle.mapData(puzzle);
 var s = Strategy();
         var _actual = s.solve(puzzle,withTrialAndError : false);
 

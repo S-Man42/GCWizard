@@ -33,8 +33,8 @@ class NonogramBoardState extends State<NonogramBoard> {
 
   @override
   void dispose() {
-    _currentInputController.dispose();
-    _currentValueFocusNode.dispose();
+    // _currentInputController.dispose();
+    // _currentValueFocusNode.dispose();
 
     super.dispose();
   }
@@ -111,7 +111,7 @@ class NonogramBoardPainter extends CustomPainter {
 
     paintGray.strokeWidth = 1;
     paintGray.style = PaintingStyle.stroke;
-    paintGray.color = colors.switchThumb1();
+    paintGray.color = Colors.black; //switchThumb1
 
     paintFull.style = PaintingStyle.fill;
     paintFull.color = colors.secondary();
@@ -135,62 +135,81 @@ class NonogramBoardPainter extends CustomPainter {
     var rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground);
 
-    var xInnerStart = (xOuter + maxRowHints) * widthInner;
-    var xInnerEnd = xOuter + widthOuter;
-    for (int y = 0; y < board.height; y++) {
-      var yInner = yOuter + y * heightInner;
-      _touchCanvas.drawLine(
-          Offset(xOuter + (maxRowHints - board.rowHints[y].length) * widthInner, yInner),
-          Offset(xInnerStart, yInner), paintGray);
+    var xInnerStart = xOuter + (maxRowHints * widthInner);
+    var xInnerEnd = xInnerStart + (board.width * widthInner);
+    var yInnerStart = yOuter + (maxColumnHints * heightInner);
+    var yInnerEnd = yInnerStart + (board.height * heightInner);
+
+    for (int y = 0; y <= board.height; y++) {
+      var yInner = yInnerStart + y * heightInner;
+      if (y < board.height) {
+        for (int i = board.rowHints[y].length - 1; i >= 0; i--) {
+          rect = Rect.fromLTWH(xInnerStart - widthInner - i * widthInner, yInner, widthInner, heightInner);
+          _touchCanvas.drawRect(rect, paintGray);
+          _paintText(canvas, rect, board.rowHints[y][i].toString(), colors, fontsize);
+        }
+      }
+
+
       _touchCanvas.drawLine(
           Offset(xInnerStart, yInner),
           Offset(xInnerEnd, yInner), paint);
     }
 
-    var yInnerStart = (yOuter + maxColumnHints) * widthInner;
-    var yInnerEnd = yOuter + heightOuter;
-    for (int x = 0; x < board.width; x++) {
-      var xInner = xOuter + widthOuter;
-      _touchCanvas.drawLine(
-          Offset(xInner, yOuter + (maxColumnHints - board.rowHints[x].length) * heightInner),
-          Offset(xInner, yInnerStart), paintGray);
+    for (int x = 0; x <= board.width; x++) {
+      var xInner = xInnerStart + x * widthInner;
+      if (x < board.width) {
+        for (int i = board.columnHints[x].length - 1; i >= 0; i--) {
+          rect = Rect.fromLTWH(xInner, yInnerStart- heightInner - i * heightInner, widthInner, heightInner);
+          _touchCanvas.drawRect(rect, paintGray);
+          _paintText(canvas, rect, board.columnHints[x][i].toString(), colors, fontsize);
+        }
+      }
+
       _touchCanvas.drawLine(
           Offset(xInner, yInnerStart),
           Offset(xInner, yInnerEnd), paint);
 
-      for (int y = 0; y < board.height; y++) {
-        xInner = xOuter + x * widthInner;
-        var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner, widthInner, heightInner);
+      if (x < board.width) {
+        xInner = xInnerStart + x * widthInner;
+        for (int y = 0; y < board.height; y++) {
+          var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner, widthInner, heightInner);
 
 
-        var value = board.rows[y][x];
-        if (value == 1) {
-          rect = Rect.fromLTWH(rect.left + 2, rect.top + 2, rect.width - 4, rect.height - 4);
-          _touchCanvas.drawRect(rect, paintFull);
-        } else if (value == 0) {
-          rect = Rect.fromLTWH(rect.left + 3, rect.top + 3, rect.width - 6, rect.height - 6);
-          _touchCanvas.drawLine(
-              Offset(rect.left, rect.top),
-              Offset(rect.right, rect.bottom), paintGray);
-          _touchCanvas.drawLine(
-              Offset(rect.right, rect.top),
-              Offset(rect.left, rect.bottom), paintGray);
+          var value = board.rows[y][x];
+          if (value == 1) {
+            rect = Rect.fromLTWH(rect.left + 2, rect.top + 2, rect.width - 4, rect.height - 4);
+            _touchCanvas.drawRect(rect, paintFull);
+          } else if (value == 0) {
+            rect = Rect.fromLTWH(rect.left + 3, rect.top + 3, rect.width - 6, rect.height - 6);
+            _touchCanvas.drawLine(
+                Offset(rect.left, rect.top),
+                Offset(rect.right, rect.bottom), paintGray);
+            _touchCanvas.drawLine(
+                Offset(rect.right, rect.top),
+                Offset(rect.left, rect.bottom), paintGray);
+          }
         }
       }
     }
   }
 
-  // TextPainter _buildTextPainter(String text, Color color, double fontsize) {
-  //   TextSpan span = TextSpan(
-  //       style: gcwTextStyle().copyWith(color: color, fontSize: fontsize),
-  //       text: text);
-  //   TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-  //   textPainter.layout();
-  //
-  //   return textPainter;
-  // }
 
+  void _paintText(Canvas canvas, Rect rect, String text, ThemeColors colors, double fontsize) {
+    var textPainter = _buildTextPainter(text, colors.mainFont(), fontsize);
+    textPainter.paint(canvas, Offset(rect.topCenter.dx - textPainter.width * 0.5,
+                                     rect.centerLeft.dy - textPainter.height * 0.5));
+}
 
+  TextPainter _buildTextPainter(String text, Color color, double fontsize) {
+    TextSpan span = TextSpan(
+        style: gcwTextStyle().copyWith(color: color, fontSize: fontsize),
+        text: text);
+    TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+    textPainter.layout();
+
+    return textPainter;
+  }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
@@ -199,9 +218,9 @@ class NonogramBoardPainter extends CustomPainter {
 }
 
 int _fullRowCount(Puzzle board) {
-  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.width;
+  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.height + 4;
 }
 
 int _fullColumnCount(Puzzle board) {
-  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.height;
+  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.width + 3;
 }

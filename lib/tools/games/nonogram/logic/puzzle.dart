@@ -25,8 +25,10 @@ class Puzzle {
   }
 
   static Puzzle generate(int height, int width) {
-   return Puzzle(List<List<int>>.generate(height, (index) => []),
+   var puzzle = Puzzle(List<List<int>>.generate(height, (index) => []),
                  List<List<int>>.generate(width, (index) => []));
+   mapData(puzzle);
+   return puzzle;
   }
   // constructor(data) {
   //   if (typeof data === 'string') {
@@ -35,11 +37,11 @@ class Puzzle {
   //   let initialState = this.mapData(data);
   //   this.initAccessors(initialState);
   // }
-  int mapData(Puzzle data) {
+  static int mapData(Puzzle data) {
     data.rowHints = cleanClone(data.rowHints);
     data.columnHints = cleanClone(data.columnHints);
-    data.height = rowHints.length;
-    data.width = columnHints.length;
+    data.height = data.rowHints.length;
+    data.width = data.columnHints.length;
     data.rows = generateRows(data);
     // columns = List<List<int>>.filled(width, List<int>.filled(height, 0));
     //state = List<int>.filled(width * height, 0);
@@ -56,7 +58,7 @@ class Puzzle {
     return List<List<int>>.generate(data.height, (index) => List<int>.filled(data.width, 0));
   }
 
-  List<List<int>> cleanClone(List<List<int>> hints) {
+  static List<List<int>> cleanClone(List<List<int>> hints) {
     return hints.map((h) {
       if (h.length == 1 && h[0] == 0) {
         return <int>[];
@@ -279,7 +281,7 @@ class Puzzle {
   //
   // }
 
-  int checkConsistency(Puzzle data) {
+  static int checkConsistency(Puzzle data) {
     // if (content) {
     //   var invalid = !content || !Array.isArray(content);
     //   invalid = invalid || (content.length != this.height * this.width);
@@ -298,7 +300,7 @@ class Puzzle {
     return (rowSum == columnSum) ? 0 : -2; //'Invalid hint data'
   }
 
-  int _sum(Iterable<int> list) {
+  static int _sum(Iterable<int> list) {
     if (list.isEmpty) return 0;
     return list.reduce((x, y) => x + y);
   }
