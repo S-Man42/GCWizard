@@ -18,7 +18,6 @@ class NonogramBoard extends StatefulWidget {
 }
 
 class NonogramBoardState extends State<NonogramBoard> {
-  int? _currentValue;
   late TextEditingController _currentInputController;
   late GCWIntegerTextInputFormatter _integerInputFormatter;
   final _currentValueFocusNode = FocusNode();
@@ -48,7 +47,7 @@ class NonogramBoardState extends State<NonogramBoard> {
           child:
             Stack(children:<Widget>[
                 AspectRatio(
-                    aspectRatio: 1 / 0.5,
+                    aspectRatio: _fullColumnCount(widget.board) / _fullRowCount(widget.board),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
@@ -120,15 +119,15 @@ class NonogramBoardPainter extends CustomPainter {
     paintBackground.color = Colors.transparent;
     paintBackground.style = PaintingStyle.fill;
 
-    var maxColumnHints = board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length;
-    var maxRowHints = board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length;
-
     const border = 5;
+    var maxRowHints = _fullRowCount(board) - board.height;
+    var maxColumnHints = _fullColumnCount(board) - board.width;
+
     double widthOuter = size.width - 2 * border;
     double heightOuter = size.height - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
-    double widthInner = widthOuter / max(board.width + maxRowHints, board.height + maxColumnHints);
+    double widthInner = widthOuter / max(maxRowHints + board.height, maxColumnHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.8;
     // Rect rect = Rect.zero;
@@ -136,10 +135,10 @@ class NonogramBoardPainter extends CustomPainter {
     var rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground);
 
-    double xInnerStart = (xOuter + maxRowHints) * widthInner;
-    double xInnerEnd = xOuter + widthOuter;
+    var xInnerStart = (xOuter + maxRowHints) * widthInner;
+    var xInnerEnd = xOuter + widthOuter;
     for (int y = 0; y < board.height; y++) {
-      double yInner = yOuter + y * heightInner;
+      var yInner = yOuter + y * heightInner;
       _touchCanvas.drawLine(
           Offset(xOuter + (maxRowHints - board.rowHints[y].length) * widthInner, yInner),
           Offset(xInnerStart, yInner), paintGray);
@@ -147,10 +146,11 @@ class NonogramBoardPainter extends CustomPainter {
           Offset(xInnerStart, yInner),
           Offset(xInnerEnd, yInner), paint);
     }
-    double yInnerStart = (yOuter + maxColumnHints) * widthInner;
-    double yInnerEnd = yOuter + heightOuter;
+
+    var yInnerStart = (yOuter + maxColumnHints) * widthInner;
+    var yInnerEnd = yOuter + heightOuter;
     for (int x = 0; x < board.width; x++) {
-      double xInner = xOuter + widthOuter;
+      var xInner = xOuter + widthOuter;
       _touchCanvas.drawLine(
           Offset(xInner, yOuter + (maxColumnHints - board.rowHints[x].length) * heightInner),
           Offset(xInner, yInnerStart), paintGray);
@@ -190,8 +190,18 @@ class NonogramBoardPainter extends CustomPainter {
   //   return textPainter;
   // }
 
+
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
+}
+
+int _fullRowCount(Puzzle board) {
+  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.width;
+}
+
+int _fullColumnCount(Puzzle board) {
+  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.height;
 }

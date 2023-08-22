@@ -16,10 +16,14 @@ class Puzzle {
 
 
 
-  Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
+  Puzzle(this.rowHints, this.columnHints, {List<int>? content) {
     if (content != null) {
       import(content);
     }
+  }
+
+  static Puzzle generate(int height, int width) {
+   return Puzzle(List<int>.generate(height, (index) => []), List<int>.generate(width, (index) => []));
   }
   // constructor(data) {
   //   if (typeof data === 'string') {
@@ -136,6 +140,15 @@ class Puzzle {
     _rows.clear();
     for (int i = 0; i < height; i++) {
       _rows.add(state.sublist(i * width, (i + 1) * width));
+    }
+  }
+
+  void importHints(Puzzle puzzle) {
+    for (var y = 0; y < min(puzzle.height, height); y++) {
+      rowHints[y] =puzzle.rowHints[y];
+    }
+    for (var x = 0; x < min(puzzle.width, width); x++) {
+      columnHints[x] =puzzle.columnHints[x];
     }
   }
 

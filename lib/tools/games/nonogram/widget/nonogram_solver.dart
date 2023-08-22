@@ -28,140 +28,65 @@ class NonogramSolver extends StatefulWidget {
 
 class NonogramSolverState extends State<NonogramSolver> {
   late Puzzle _currentBoard;
-  int _currentSolution = 0;
+  var _currentSizeExpanded = true;
+  var _currentColumnHintsExpanded = false;
+  var _rowController = <TextEditingController>[];
+  var _columnController = <TextEditingController>[];
 
-  final int _MAX_SOLUTIONS = 10;
-  var _rowCount = 3;
+  var _rowCount = 10;
+  var _columnCount = 10;
   double _scale = 1;
 
   @override
   void initState() {
     super.initState();
 
-    _currentBoard = Puzzle([], []);
+    _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+  }
+
+  @override
+  void dispose() {
+    _rowController.forEach((controller) {controller.dispose();});
+    _columnController.forEach((controller) {controller.dispose();});
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWIntegerSpinner(
-          title: i18n(context, 'common_row_count'),
-          value: _rowCount,
-          min: 1,
-          onChanged: (value) {
-            setState(() {
-              _rowCount = value;
-              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (100.0 * _rowCount), 1.0);
-              _currentBoard = NumberPyramid(_rowCount, pyramid: _currentBoard);
-            });
-          },
-        ),
+        _puzzleSize(),
+        _rowHints(),
+        _columnwHints(),
+
         Container(height: 10),
         GCWPainterContainer(
           scale: _scale,
           onChanged: (value) {_scale = value;},
-          child: NumberPyramidBoard(
+          child: NonogramBoard(
             board: _currentBoard,
             onChanged: (newBoard) {
               setState(() {
                 _currentBoard = newBoard;
-                _hideInputTextBox();
               });
             },
           ),
         ),
-
-        if (_currentBoard.solutions != null && _currentBoard.solutions!.length > 1)
-          Container(
-            margin: const EdgeInsets.only(top: 5 * DOUBLE_DEFAULT_MARGIN),
-            child: Row(
-              children: [
-                GCWIconButton(
-                  icon: Icons.arrow_back_ios,
-                  onPressed: () {
-                    setState(() {
-                      _currentSolution = (_currentSolution - 1 + _currentBoard.solutions!.length) % _currentBoard.solutions!.length;
-                      _showSolution();
-                    });
-                  },
-                ),
-                Expanded(
-                  child: GCWText(
-                    align: Alignment.center,
-                    text: '${_currentSolution + 1}/${_currentBoard.solutions!.length}' +
-                        (_currentBoard.solutions!.length >= _MAX_SOLUTIONS ? ' *' : ''),
-                  ),
-                ),
-                GCWIconButton(
-                  icon: Icons.arrow_forward_ios,
-                  onPressed: () {
-                    setState(() {
-                      _currentSolution = (_currentSolution + 1) % _currentBoard.solutions!.length;
-                      _showSolution();
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-        if (_currentBoard.solutions != null && _currentBoard.solutions!.length >= _MAX_SOLUTIONS)
-          Container(
-            padding: const EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN),
-            child: GCWText(text: '*) ' + i18n(context, 'sudokusolver_maximumsolutions')),
-          ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                child: GCWButton(
-                  text: i18n(context, 'sudokusolver_solve'),
-                  onPressed: () {
-                    setState(() {
-                      _hideInputTextBox();
-                      _currentBoard.solvePyramid(_MAX_SOLUTIONS);
-                      if (_currentBoard.solutions == null) {
-                        showToast(i18n(context, 'sudokusolver_error'));
-                      } else {
-                        _currentSolution = 0;
-                        _showSolution();
-                      }
-                    });
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                  child: GCWButton(
-                    text: i18n(context, 'sudokusolver_clearcalculated'),
-                    onPressed: () {
-                      setState(() {
-                        _hideInputTextBox();
-                        _currentBoard.removeCalculated();
-                      });
-                    },
-                  ),
-                )
-            ),
-            Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                  child: GCWButton(
-                    text: i18n(context, 'sudokusolver_clearall'),
-                    onPressed: () {
-                      setState(() {
-                        _hideInputTextBox();
-                        _currentBoard = NumberPyramid(_rowCount);
-                      });
-                    },
-                  ),
-            ))
-          ],
-        )
       ],
+    );
+  }
+
+  Widget _puzzleSize() {
+    return GCWExpandableTextDivider(
+        text: i18n(context, 'common_loadfile_showopen'),
+        expanded: _currentSizeExpanded,
+        onChanged: (value) {
+          setState(() {
+            _currentRowHintsExpanded = value;
+          });
+        },
+        child: _buildSizeSelection()
     );
   }
 
@@ -175,6 +100,10 @@ class NonogramSolverState extends State<NonogramSolver> {
             onChanged: (value) {
               setState(() {
                 _rowCount = value;
+                _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
+                var tmpPuzzle = _currentBoard;
+                _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+                _currentBoard.importHints(tmpPuzzle);
               });
             }
         ),
@@ -185,10 +114,27 @@ class NonogramSolverState extends State<NonogramSolver> {
             onChanged: (value) {
               setState(() {
                 _columnCount = value;
+                _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
+                var tmpPuzzle = _currentBoard;
+                _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+                _currentBoard.importHints(tmpPuzzle);
               });
             }
         )
       ]
+    );
+  }
+
+  Widget _rowHints() {
+    return GCWExpandableTextDivider(
+        text: i18n(context, 'common_loadfile_showopen'),
+        expanded: _currentRowHintsExpanded,
+        onChanged: (value) {
+          setState(() {
+            _currentRowHintsExpanded = value;
+          });
+        },
+        child: _buildRowHints()
     );
   }
 
@@ -215,22 +161,70 @@ class NonogramSolverState extends State<NonogramSolver> {
           )
         ]
       );
+      list.add(row);
     }
 
-    list.add(row);
     return Column(
       children: list,
     );
   }
 
+  Widget _columnwHints() {
+    return GCWExpandableTextDivider(
+        text: i18n(context, 'common_loadfile_showopen'),
+        expanded: _currentColumnHintsExpanded,
+        onChanged: (value) {
+          setState(() {
+            _currentColumnHintsExpanded = value;
+          });
+        },
+        child: _buildColumnHints()
+    );
+  }
 
+  Widget _buildColumnHints() {
+    var list = <Widget>[];
 
-  var _rowController = <TextEditingController>[];
+    for (var i = 0; i < _columnCount; i++ ) {
+      var controller = _getColumnController(i);
+      controller.text = board.columnHints[i].toString();
+      var row =  Row(
+          children: <Widget>[
+            Expanded(
+                child: GCWText(text: i18n(context, 'common_column') + ' ' + (i + 1).toString())
+            ),
+            Expanded(
+                child: GCWTextField(
+                    controller: controller,
+                    onChanged: (text) {
+                      setState(() {
+                        board.columnHints[i] = textToIntList(text);
+                      });
+                    }
+                )
+            )
+          ]
+      );
+      list.add(row);
+    }
+
+    return Column(
+      children: list,
+    );
+  }
+
   TextEditingController _getRowController(int index) {
     while (index >= _rowController.length) {
       _rowController.add(TextEditingController());
     }
     return _rowController[index];
+  }
+
+  TextEditingController _getColumnController(int index) {
+    while (index >= _columnController.length) {
+      _columnController.add(TextEditingController());
+    }
+    return _columnController[index];
   }
 
   void _showSolution() {
