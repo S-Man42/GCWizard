@@ -12,20 +12,22 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/nonogram/widget/nonogram_board.dart';
 
-class NumberPyramidSolver extends StatefulWidget {
-  const NumberPyramidSolver({Key? key}) : super(key: key);
+class NonogramSolver extends StatefulWidget {
+  const NonogramSolver({Key? key}) : super(key: key);
 
   @override
-  NumberPyramidSolverState createState() => NumberPyramidSolverState();
+  NonogramSolverState createState() => NonogramSolverState();
 }
 
-class NumberPyramidSolverState extends State<NumberPyramidSolver> {
-  late NumberPyramid _currentBoard;
+class NonogramSolverState extends State<NonogramSolver> {
+  late Puzzle _currentBoard;
   int _currentSolution = 0;
 
   final int _MAX_SOLUTIONS = 10;
@@ -36,7 +38,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
   void initState() {
     super.initState();
 
-    _currentBoard = NumberPyramid(_rowCount);
+    _currentBoard = Puzzle([], []);
   }
 
   @override
@@ -161,6 +163,74 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
         )
       ],
     );
+  }
+
+  Widget _buildSizeSelection() {
+    return Column(
+      children: <Widget>[
+        GCWIntegerSpinner(
+            title: i18n(context, 'common_row_count'),
+            value: _rowCount,
+            min: 1,
+            onChanged: (value) {
+              setState(() {
+                _rowCount = value;
+              });
+            }
+        ),
+        GCWIntegerSpinner(
+            title: i18n(context, 'common_column_count'),
+            value: _columnCount,
+            min: 1,
+            onChanged: (value) {
+              setState(() {
+                _columnCount = value;
+              });
+            }
+        )
+      ]
+    );
+  }
+
+  Widget _buildRowHints() {
+    var list = <Widget>[];
+
+    for (var i = 0; i < _rowCount; i++ ) {
+      var controller = _getRowController(i);
+      controller.text = board.rowHints[i].toString();
+      var row =  Row(
+        children: <Widget>[
+          Expanded(
+            child: GCWText(text: i18n(context, 'common_row') + ' ' + (i + 1).toString())
+          ),
+          Expanded(
+            child: GCWTextField(
+              controller: controller,
+              onChanged: (text) {
+                setState(() {
+                  board.rowHints[i] = textToIntList(text);
+                });
+              }
+            )
+          )
+        ]
+      );
+    }
+
+    list.add(row);
+    return Column(
+      children: list,
+    );
+  }
+
+
+
+  var _rowController = <TextEditingController>[];
+  TextEditingController _getRowController(int index) {
+    while (index >= _rowController.length) {
+      _rowController.add(TextEditingController());
+    }
+    return _rowController[index];
   }
 
   void _showSolution() {

@@ -59,7 +59,7 @@ class NonogramBoardState extends State<NonogramBoard> {
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
                         return CustomPaint(
-                          painter: NumberPyramidBoardPainter(context, widget.type, widget.board, _showInputTextBox, _setState)
+                          painter: Nonogram(context, widget.type, widget.board, _setState)
                         );
                       },
                     )
@@ -152,14 +152,13 @@ class NonogramBoardState extends State<NonogramBoard> {
 //   }
 // }
 
-class NumberPyramidBoardPainter extends CustomPainter {
+class NonogramBoardPainter extends CustomPainter {
   final BuildContext context;
-  final void Function(Point<int>?, Rect?) showInputTextBox;
   final void Function() setState;
   final NumberPyramidFillType type;
   final Puzzle board;
 
-  NumberPyramidBoardPainter(this.context, this.type, this.board, this.showInputTextBox, this.setState);
+  NumberPyramidBoardPainter(this.context, this.type, this.board, this.setState);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -179,36 +178,37 @@ class NumberPyramidBoardPainter extends CustomPainter {
     paintBackground.color = Colors.transparent;
     paintBackground.style = PaintingStyle.fill;
 
-    const border = 10;
-    double widthOuter = size.width - 8 * border;
-    double heightOuter = size.height - 4 * border;
-    double xOuter = 4 * border.toDouble();
-    double yOuter = 2 * border.toDouble();
-    double widthInner = widthOuter / max(board.width, board.height);
+    var maxColumnHints = board.columnHints.reduce((value, hints) => max(value.length, hints.length)).length;
+    var maxRowHints = board.rowHints.reduce((value, hints) => max(value.length, hints.length)).length;
+
+    const border = 5;
+    double widthOuter = size.width - 2 * border;
+    double heightOuter = size.height - 2 * border;
+    double xOuter = 1 * border.toDouble();
+    double yOuter = 1 * border.toDouble();
+    double widthInner = widthOuter / max(board.width + maxRowHints, board.height + maxColumnHints);
     double heightInner = widthInner;
-    // var fontsize = heightInner * 0.8;
+    var fontsize = heightInner * 0.8;
     // Rect rect = Rect.zero;
 
-    rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    _touchCanvas.drawRect(rect, paintBackground,
-        onTapDown: (tapDetail) {
-          showInputTextBox(null, null);
-        }
-    );
+    var rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    _touchCanvas.drawRect(rect, paintBackground);
 
     double xInner = xOuter + widthOuter;
     for (int y = 0; y < board.height; y++) {
       double yInner = yOuter + y * heightInner;
-      _touchCanvas.drawLine(xOuter, yInner, xInner, yInner );
+      _touchCanvas.drawLine(xOuter + (maxRowHints - board.rowHints[y].length) * widthInner, yInner, xInner, yInner);
     }
+
     double yInner = yOuter + heightOuter;
     for (int x = 0; x < board.width; x++) {
       double xInner = xOuter + widthOuter;
-      _touchCanvas.drawLine(xInner, yOuter, xInner, yInner );
+      _touchCanvas.drawLine(xInner, yOuter + (maxColumnHints - board.rowHints[x].length) * heightInner, xInner, yInner);
 
       for (int y = 0; y < board.height; y++) {
         xInner = xOuter + x * widthInner;
         var rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
+
 
         var value = board.rows[y][x];
         if (value == 1) {
@@ -220,7 +220,6 @@ class NumberPyramidBoardPainter extends CustomPainter {
           _touchCanvas.drawLine(rect.right, rect.y, rect.x, rect.bottom);
         }
       }
-
     }
   }
 
