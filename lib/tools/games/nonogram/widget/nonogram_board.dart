@@ -130,7 +130,6 @@ class NonogramBoardPainter extends CustomPainter {
     double widthInner = widthOuter / max(maxRowHints + board.height, maxColumnHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.8;
-    // Rect rect = Rect.zero;
 
     var rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground);
@@ -149,7 +148,7 @@ class NonogramBoardPainter extends CustomPainter {
           _paintText(canvas, rect, board.rowHints[y][i].toString(), colors, fontsize);
         }
       }
-      
+
       _touchCanvas.drawLine(
           Offset(xInnerStart, yInner),
           Offset(xInnerEnd, yInner), paint);
@@ -217,9 +216,9 @@ class NonogramBoardPainter extends CustomPainter {
 }
 
 int _fullRowCount(Puzzle board) {
-  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.height + 4;
+  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.height;
 }
 
 int _fullColumnCount(Puzzle board) {
-  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.width + 3;
+  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.width;
 }
