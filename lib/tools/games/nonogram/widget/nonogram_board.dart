@@ -1,9 +1,4 @@
-//part of 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
-
-import 'dart:math';
-
-import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
-import 'package:gc_wizard/tools/games/number_pyramid/logic/number_pyramid_solver.dart';
+part of 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 
 Point<int>? _selectedBox;
 Rect? _selectedBoxRect;
@@ -11,12 +6,11 @@ FocusNode? _valueFocusNode;
 
 
 class NonogramBoard extends StatefulWidget {
-  final NumberPyramidFillType type;
   final void Function(Puzzle) onChanged;
   final Puzzle board;
 
   const NonogramBoard({Key? key, required this.onChanged,
-    required this.board, this.type = NumberPyramidFillType.CALCULATED})
+    required this.board})
       : super(key: key);
 
   @override
@@ -59,70 +53,14 @@ class NonogramBoardState extends State<NonogramBoard> {
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
                         return CustomPaint(
-                          painter: Nonogram(context, widget.type, widget.board, _setState)
+                          painter: NonogramBoardPainter(context, widget.board, _setState)
                         );
                       },
                     )
                 ),
-              _editWidget()
           ])
       )
     ]);
-  }
-
-  Widget _editWidget() {
-    const int hightOffset = 4;
-    ThemeColors colors = themeColors();
-    if (_selectedBoxRect != null && _selectedBox  != null) {
-      if (widget.board.getFillType(_selectedBox!.x, _selectedBox!.y) == NumberPyramidFillType.USER_FILLED) {
-        _currentValue = widget.board.getValue(_selectedBox!.x, _selectedBox!.y);
-      } else {
-        _currentValue = null;
-      }
-      _currentInputController.text = _currentValue?.toString() ?? '';
-      _currentInputController.selection = TextSelection.collapsed(offset: _currentInputController.text.length);
-
-      if (_selectedBoxRect!.height < 35) {
-        var offset = (35 -_selectedBoxRect!.height) / 2;
-        _selectedBoxRect = Rect.fromLTWH(
-            _selectedBoxRect!.left - 2 * offset,
-            _selectedBoxRect!.top - offset,
-            _selectedBoxRect!.width + 4 * offset,
-            _selectedBoxRect!.height + 2 * offset);
-      }
-
-      return Positioned(
-          left: _selectedBoxRect!.left,
-          top: _selectedBoxRect!.top - hightOffset,
-          width: _selectedBoxRect!.width,
-          height: _selectedBoxRect!.height + 2 * hightOffset,
-          child: Container(
-              color: colors.gridBackground(),
-              child: GCWTextField(
-                  controller: _currentInputController,
-                  inputFormatters: [_integerInputFormatter],
-                  keyboardType: const TextInputType.numberWithOptions(),
-                  focusNode: _currentValueFocusNode,
-                  style: TextStyle(
-                    fontSize: _selectedBoxRect!.height * 0.5,
-                    color: colors.secondary(),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentValue = int.tryParse(value);
-                      var type = NumberPyramidFillType.USER_FILLED;
-                      if (_currentValue == null) type = NumberPyramidFillType.CALCULATED;
-                      if (_selectedBox != null &&
-                          widget.board.setValue(_selectedBox!.x, _selectedBox!.y, _currentValue, type)) {
-                        widget.board.removeCalculated();
-                      }
-                    });
-                  }
-              )
-          )
-      );
-    }
-    return Container();
   }
 
   void _setState() {
@@ -155,10 +93,9 @@ class NonogramBoardState extends State<NonogramBoard> {
 class NonogramBoardPainter extends CustomPainter {
   final BuildContext context;
   final void Function() setState;
-  final NumberPyramidFillType type;
   final Puzzle board;
 
-  NumberPyramidBoardPainter(this.context, this.type, this.board, this.setState);
+  NonogramBoardPainter(this.context, this.board, this.setState);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -166,11 +103,16 @@ class NonogramBoardPainter extends CustomPainter {
     ThemeColors colors = themeColors();
 
     var paint = Paint();
+    var paintGray = Paint();
     var paintFull = Paint();
     var paintBackground = Paint();
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
     paint.color = colors.secondary();
+
+    paintGray.strokeWidth = 1;
+    paintGray.style = PaintingStyle.stroke;
+    paintGray.color = colors.switchThumb1();
 
     paintFull.style = PaintingStyle.fill;
     paintFull.color = colors.secondary();
@@ -178,8 +120,8 @@ class NonogramBoardPainter extends CustomPainter {
     paintBackground.color = Colors.transparent;
     paintBackground.style = PaintingStyle.fill;
 
-    var maxColumnHints = board.columnHints.reduce((value, hints) => max(value.length, hints.length)).length;
-    var maxRowHints = board.rowHints.reduce((value, hints) => max(value.length, hints.length)).length;
+    var maxColumnHints = board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length;
+    var maxRowHints = board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length;
 
     const border = 5;
     double widthOuter = size.width - 2 * border;
@@ -194,16 +136,27 @@ class NonogramBoardPainter extends CustomPainter {
     var rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintBackground);
 
-    double xInner = xOuter + widthOuter;
+    double xInnerStart = (xOuter + maxRowHints) * widthInner;
+    double xInnerEnd = xOuter + widthOuter;
     for (int y = 0; y < board.height; y++) {
       double yInner = yOuter + y * heightInner;
-      _touchCanvas.drawLine(xOuter + (maxRowHints - board.rowHints[y].length) * widthInner, yInner, xInner, yInner);
+      _touchCanvas.drawLine(
+          Offset(xOuter + (maxRowHints - board.rowHints[y].length) * widthInner, yInner),
+          Offset(xInnerStart, yInner), paintGray);
+      _touchCanvas.drawLine(
+          Offset(xInnerStart, yInner),
+          Offset(xInnerEnd, yInner), paint);
     }
-
-    double yInner = yOuter + heightOuter;
+    double yInnerStart = (yOuter + maxColumnHints) * widthInner;
+    double yInnerEnd = yOuter + heightOuter;
     for (int x = 0; x < board.width; x++) {
       double xInner = xOuter + widthOuter;
-      _touchCanvas.drawLine(xInner, yOuter + (maxColumnHints - board.rowHints[x].length) * heightInner, xInner, yInner);
+      _touchCanvas.drawLine(
+          Offset(xInner, yOuter + (maxColumnHints - board.rowHints[x].length) * heightInner),
+          Offset(xInner, yInnerStart), paintGray);
+      _touchCanvas.drawLine(
+          Offset(xInner, yInnerStart),
+          Offset(xInner, yInnerEnd), paint);
 
       for (int y = 0; y < board.height; y++) {
         xInner = xOuter + x * widthInner;
@@ -212,12 +165,16 @@ class NonogramBoardPainter extends CustomPainter {
 
         var value = board.rows[y][x];
         if (value == 1) {
-          rect = Rect.fromLTWH(rect.x + 2, rect.y + 2, rect.width - 4, rect.height - 4);
-          _touchCanvas.drawRect(rect, paint);
+          rect = Rect.fromLTWH(rect.left + 2, rect.top + 2, rect.width - 4, rect.height - 4);
+          _touchCanvas.drawRect(rect, paintFull);
         } else if (value == 0) {
-          rect = Rect.fromLTWH(rect.x + 3, rect.y + 3, rect.width - 6, rect.height - 6);
-          _touchCanvas.drawLine(rect.x, rect.y, rect.right, rect.bottom);
-          _touchCanvas.drawLine(rect.right, rect.y, rect.x, rect.bottom);
+          rect = Rect.fromLTWH(rect.left + 3, rect.top + 3, rect.width - 6, rect.height - 6);
+          _touchCanvas.drawLine(
+              Offset(rect.left, rect.top),
+              Offset(rect.right, rect.bottom), paintGray);
+          _touchCanvas.drawLine(
+              Offset(rect.right, rect.top),
+              Offset(rect.left, rect.bottom), paintGray);
         }
       }
     }
