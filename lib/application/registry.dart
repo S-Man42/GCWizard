@@ -924,6 +924,12 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'navajo',
     ]),
+    GCWTool(tool: const NonogramSolver(), id: 'nonogramsolver', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'games',
+      'games_nonogramsolver',
+    ]),
     GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [

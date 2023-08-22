@@ -3001,6 +3001,8 @@
   "navajo_source": "Using",
   "navajo_source_dictionary": "whole Dictionary",
   "navajo_source_alphabet": "only Alphabet",
+  "nonogramsolver_title": "Nonogram Solver",
+  "nonogramsolver_description": "Creates a solution for a given Nonogram",
   "numberpyramidsolver_title": "Number Pyramid Solver",
   "numberpyramidsolver_description": "Creates a solution for a given Number Pyramid",
   "numbersequence_title": "Number Sequences",

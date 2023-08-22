@@ -33,11 +33,11 @@ class Puzzle {
   //   this.initAccessors(initialState);
   // }
   int mapData(Puzzle data) {
-    rowHints = cleanClone(data.rowHints);
-    columnHints = cleanClone(data.columnHints);
-    height = rowHints.length;
-    width = columnHints.length;
-    _rows = List<List<int>>.generate(height, (index) => List<int>.filled(width, 0));
+    data.rowHints = cleanClone(data.rowHints);
+    data.columnHints = cleanClone(data.columnHints);
+    data.height = rowHints.length;
+    data.width = columnHints.length;
+    data.rows = generateRows(data);
     // columns = List<List<int>>.filled(width, List<int>.filled(height, 0));
     //state = List<int>.filled(width * height, 0);
 
@@ -47,6 +47,10 @@ class Puzzle {
     //   return clone(data.content);
     // }
     // return List<int>.filled(width * height, 0);
+  }
+
+  static List<List<int>> generateRows(Puzzle data) {
+    return List<List<int>>.generate(data.height, (index) => List<int>.filled(data.width, 0));
   }
 
   List<List<int>> cleanClone(List<List<int>> hints) {
@@ -150,6 +154,10 @@ class Puzzle {
     for (var x = 0; x < min(puzzle.width, width); x++) {
       columnHints[x] =puzzle.columnHints[x];
     }
+  }
+
+  void removeCalculated() {
+    rows = generateRows(this);
   }
 
   // void initAccessors(state) {

@@ -73,6 +73,53 @@ class NonogramSolverState extends State<NonogramSolver> {
             },
           ),
         ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: GCWButton(
+                  text: i18n(context, 'sudokusolver_solve'),
+                  onPressed: () {
+                    setState(() {
+                      _currentBoard.solve(_currentBoard);
+                      if (!_currentBoard.isSolved) {
+                        showToast(i18n(context, 'sudokusolver_error'));
+                      // } else {
+                      //   _showSolution();
+                      // }
+                    });
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                  child: GCWButton(
+                    text: i18n(context, 'sudokusolver_clearcalculated'),
+                    onPressed: () {
+                      setState(() {
+                        _currentBoard.removeCalculated();
+                      });
+                    },
+                  ),
+                )
+            ),
+            Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                  child: GCWButton(
+                    text: i18n(context, 'sudokusolver_clearall'),
+                    onPressed: () {
+                      setState(() {
+                        _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+                      });
+                    },
+                  ),
+                ))
+          ],
+        )
       ],
     );
   }
