@@ -248,6 +248,7 @@ import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagrou
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
 import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life.dart';
+import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
@@ -425,8 +426,6 @@ import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwig
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
-
-import '../tools/games/nonogram/widget/nonogram_solver.dart';
 
 
 List<GCWTool> registeredTools = [];
