@@ -1,8 +1,9 @@
+//ported from https://github.com/ThomasR/nonogram-solver
+
 // const util = require("./util");
 // const guessAndConquer = require('./guessAndConquer');
 //
 // const debugMode = require('commander').debug;
-
 import 'dart:math';
 import 'dart:typed_data';
 
