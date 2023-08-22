@@ -164,7 +164,7 @@
   "gade": "street",
   "gameoflife": "cells boxes grid cellularautomatons bacteria bacterium pixels",
   "games": "games",
-  "games_nonogramsolver": "nonogram picross grid image picture blocks",
+  "games_nonogramsolver": "nonogram picross grid image picture cells blocks",
   "games_numberpyramidsolver": "number pyramid",
   "games_scrabble": "germany english spanish french klingon dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers",
   "games_sudokusolver": "grid sudokusolver",
