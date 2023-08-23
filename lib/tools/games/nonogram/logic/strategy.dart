@@ -54,7 +54,7 @@ class Strategy {
         var snapshotRows = createHash(puzzle.rows);
         var snapshotColumns = createHash(puzzle.columns);
         progress = false;
-        var i  = 0;
+
         solvers.forEachIndexed((i, solver) { //.forEachIndexed((i, solver)
           if (progress) {
             return;

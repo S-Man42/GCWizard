@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
 enum PuzzleState {
@@ -162,17 +163,33 @@ class Puzzle {
     var jsonMap = asJsonMap(json.decode(jsonString));
 
     var data = asJsonArrayOrNull(jsonMap[jsonRows]);
-    if (data != null && data is List<List<int>>) {
-      puzzle.rowHints = data; // as List<List<int>>;
+    if (data != null) {
+      puzzle.rowHints = _jsonArrayToList(data);
     }
 
     data = asJsonArrayOrNull(jsonMap[jsonColumns]);
-    if (data != null && data is List<List<int>>) {
-      puzzle.columnHints = data; // as List<List<int>>;
+    if (data != null) {
+      puzzle.columnHints = _jsonArrayToList(data);
     }
     Puzzle.mapData(puzzle);
 
     return puzzle;
+  }
+
+  static List<List<int>> _jsonArrayToList(List<Object?> jsonList) {
+    var list = <List<int>>[];
+    for (var entrys in jsonList) {
+      var sl = asJsonArrayOrNull(entrys);
+      if (sl != null) {
+        var subList = <int>[];
+        for (var element in sl) {
+          var value = toIntOrNull(element);
+          if (value != null) subList.add(value);
+        }
+        list.add(subList);
+      }
+    }
+    return list;
   }
 
   // void initAccessors(state) {
