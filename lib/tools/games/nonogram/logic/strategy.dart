@@ -160,7 +160,7 @@ class Strategy {
           if (el != newLine![i]) {
             line.line[i] = newLine[i];
             // These perpendicular lines must be revisited
-            visited.other[i].setAll(0, List<int>.filled(visited.other[i].length, 0));
+            visited.other[i].fillRange(0, visited.other[i].length, 0);
             // if (debugMode) {
             //   changedLines.push(i);
             // }

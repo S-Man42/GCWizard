@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 
 class pushSolver extends Solver {
-  bool _shouldSkip(List<int> line, int hint, int i) {
+  static bool _shouldSkip(List<int> line, int hint, int i) {
     var allZeros = i > 0 && line[i - 1] == 0;
     var collision = (i + hint) < line.length && line[i + hint] == 1;
     for (var x = i; x < i + hint; x++) {
@@ -16,7 +16,7 @@ class pushSolver extends Solver {
     return allZeros || collision;
   }
 
-  List<int>? pushLeft(List<int> line, List<int> hints) {
+  static List<int>? pushLeft(List<int> line, List<int> hints) {
     if (hints.isEmpty) {
       return line.contains(1) ? null : line;
     }
