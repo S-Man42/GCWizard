@@ -37,7 +37,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
     return _GCWTextSelectionToolbar(
       anchorAbove: anchorAbove,
       anchorBelow: anchorBelow,
-      clipboardStatus: null, //clipboardStatus,
+      clipboardStatus: null,
       delegate: delegate,
       handleCopy: canCopy(delegate)
           ? () {
@@ -76,9 +76,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
               handleCut(delegate, clipboardStatus);
             }
           :  () {},
-      // handlePaste: canPaste(delegate) && handlePaste != null
-      //     ? () => handlePaste(delegate)
-      //     : null,
+
       handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll1(delegate) : () => {},
     );
   }
