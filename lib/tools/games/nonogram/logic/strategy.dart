@@ -8,8 +8,8 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
-import 'package:gc_wizard/tools/games/nonogram/logic/guessAndConquer.dart';
-import 'package:gc_wizard/tools/games/nonogram/logic/pushSolver.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/guess_and_conquer.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
