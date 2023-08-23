@@ -94,8 +94,8 @@ class _IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: intersectTwoCirclesAsync,
                 parameter: _buildJobData,

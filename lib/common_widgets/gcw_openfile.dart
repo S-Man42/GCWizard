@@ -104,8 +104,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             builder: (context) {
               return Center(
                 child: SizedBox(
-                  height: 220,
-                  width: 150,
+                  height: executerHeight,
+                  width: executerWidth,
                   child: GCWAsyncExecuter<Uint8ListText?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,

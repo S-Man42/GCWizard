@@ -117,8 +117,8 @@ class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> 
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: intersectGeodeticAndCircleAsync,
                 parameter: _buildJobData,
