@@ -99,7 +99,7 @@ class NonogramBoardPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var _touchCanvas = TouchyCanvas(context, canvas);
-    ThemeColors colors = themeColors();
+    ThemeColors themeColors = themeColors();
 
     var paint = Paint();
     var paintGray = Paint();
@@ -107,17 +107,17 @@ class NonogramBoardPainter extends CustomPainter {
     var paintBackground = Paint();
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
-    paint.color = colors.secondary();
+    paint.color = themeColors.secondary();
 
     paintGray.strokeWidth = 1;
     paintGray.style = PaintingStyle.stroke;
-    paintGray.color = Colors.black; //switchThumb1
+    paintGray.color = themeColors.switchThumb1;
 
     paintFull.style = PaintingStyle.fill;
-    paintFull.color = colors.secondary();
+    paintFull.color = themeColors.secondary();
 
-    paintBackground.color = Colors.transparent;
     paintBackground.style = PaintingStyle.fill;
+    paintBackground.color = Colors.transparent;
 
     const border = 5;
     var maxRowHints = _fullRowCount(board) - board.height;
@@ -145,7 +145,7 @@ class NonogramBoardPainter extends CustomPainter {
         for (int i = board.rowHints[y].length - 1; i >= 0; i--) {
           rect = Rect.fromLTWH(xInnerStart - widthInner - i * widthInner, yInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
-          _paintText(canvas, rect, board.rowHints[y][i].toString(), colors, fontsize);
+          _paintText(canvas, rect, board.rowHints[y][i].toString(), themeColors, fontsize);
         }
       }
 
@@ -160,7 +160,7 @@ class NonogramBoardPainter extends CustomPainter {
         for (int i = board.columnHints[x].length - 1; i >= 0; i--) {
           rect = Rect.fromLTWH(xInner, yInnerStart- heightInner - i * heightInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
-          _paintText(canvas, rect, board.columnHints[x][i].toString(), colors, fontsize);
+          _paintText(canvas, rect, board.columnHints[x][i].toString(), themeColors, fontsize);
         }
       }
 

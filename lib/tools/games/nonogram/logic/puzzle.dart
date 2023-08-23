@@ -2,10 +2,19 @@
 // const clone = require('./util').clone;
 // const ascii = require('./serializers/ascii');
 // const svg = require('./serializers/svg');
-
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
+
+enum State {
+  Ok, // no data errors
+  Finished, // has errors
+  Solved,
+  InvalidContentData, // data errors (no row or column hints)
+  InvalidHintData // hint data errors
+}
 
 class Puzzle {
   var rowHints = <List<int>>[];
@@ -13,10 +22,7 @@ class Puzzle {
   int height = 0;
   int width = 0;
   var _rows = <List<int>>[];
-  // var columns = <List<int>>[];
-  //var state = <int>[];
-
-
+  State state = State.Ok;
 
   Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
     if (content != null) {
@@ -30,6 +36,11 @@ class Puzzle {
    mapData(puzzle);
    return puzzle;
   }
+
+  static List<List<int>> generateRows(Puzzle data) {
+    return List<List<int>>.generate(data.height, (index) => List<int>.filled(data.width, 0));
+  }
+
   // constructor(data) {
   //   if (typeof data === 'string') {
   //     data = JSON.parse(data);
@@ -37,25 +48,14 @@ class Puzzle {
   //   let initialState = this.mapData(data);
   //   this.initAccessors(initialState);
   // }
-  static int mapData(Puzzle data) {
+  static void mapData(Puzzle data) {
     data.rowHints = cleanClone(data.rowHints);
     data.columnHints = cleanClone(data.columnHints);
     data.height = data.rowHints.length;
     data.width = data.columnHints.length;
     data.rows = generateRows(data);
-    // columns = List<List<int>>.filled(width, List<int>.filled(height, 0));
-    //state = List<int>.filled(width * height, 0);
 
-    return checkConsistency(data);
-    // if (data.content) {
-    //   this.originalContent = clone(data.content);
-    //   return clone(data.content);
-    // }
-    // return List<int>.filled(width * height, 0);
-  }
-
-  static List<List<int>> generateRows(Puzzle data) {
-    return List<List<int>>.generate(data.height, (index) => List<int>.filled(data.width, 0));
+    _checkConsistency(data);
   }
 
   static List<List<int>> cleanClone(List<List<int>> hints) {
@@ -63,28 +63,17 @@ class Puzzle {
       if (h.length == 1 && h[0] == 0) {
         return <int>[];
       }
-      return h; //clone(h)
+      return h;
     }).toList();
 
   }
 
   List<List<int>> get rows {
-    // var _rows = <List<int>>[];
-    // for(var index = 0; index < height; index++) {
-    //   _rows.add(state.sublist(index * width, (index + 1) * width));
-    // }
     return _rows;
   }
 
-  // List<int> get rows {
-  //   return state;
-  // }
-
    set rows (List<List<int>> newRows) {
     _rows = newRows;
-    // for(var index = 0; index < height; index++) {
-    //   state.setRange(index * width, (index + 1) * width, newRows[index]);
-    // }
   }
 
   List<List<int>> get columns {
@@ -110,6 +99,7 @@ class Puzzle {
     for (var row in _rows) {
       if (row.any((item) => item == 0)) return false;
     }
+    state = State.Finished;
     return true;
   }
 
@@ -119,6 +109,8 @@ class Puzzle {
     rows.forEachIndexed((i, column) => ok = _isOk(column, rowHints[i]));
     if (!ok) return false;
     columns.forEachIndexed((i, column) => ok = ok && _isOk(column, columnHints[i]));
+
+    if (ok) State.Solved;
     return ok;
   }
 
@@ -131,11 +123,8 @@ class Puzzle {
     }
     return false;
   }
+
   List<int> get snapshot {
-    // var _clone = Puzzle(rowHints, columnHints);
-    // _clone.height = height;
-    // _clone.width = width;
-    // _clone.rows = _rows.map((row) => List<int>.from(row)).toList();
     var state = <int>[];
 
     for (var row in _rows) {
@@ -154,15 +143,36 @@ class Puzzle {
 
   void importHints(Puzzle puzzle) {
     for (var y = 0; y < min(puzzle.height, height); y++) {
-      rowHints[y] =puzzle.rowHints[y];
+      rowHints[y] = puzzle.rowHints[y];
     }
     for (var x = 0; x < min(puzzle.width, width); x++) {
-      columnHints[x] =puzzle.columnHints[x];
+      columnHints[x] = puzzle.columnHints[x];
     }
   }
 
   void removeCalculated() {
     rows = generateRows(this);
+  }
+
+  static Puzzle parseJson(String jsonString) {
+    const String jsonRows = 'rows';
+    const String jsonColumns = 'columns';
+
+    var puzzle = Puzzle.generate(0, 0);
+    var jsonMap = asJsonMap(json.decode(jsonString));
+
+    var data = asJsonArrayOrNull(jsonMap[jsonRows]);
+    if (data != null && data is List<List<int>>) {
+      puzzle.rowHints = data; // as List<List<int>>;
+    }
+
+    data = asJsonArrayOrNull(jsonMap[jsonColumns]);
+    if (data != null && data is List<List<int>>) {
+      puzzle.columnHints = data; // as List<List<int>>;
+    }
+    Puzzle.mapData(puzzle);
+
+    return puzzle;
   }
 
   // void initAccessors(state) {
@@ -281,7 +291,7 @@ class Puzzle {
   //
   // }
 
-  static int checkConsistency(Puzzle data) {
+  static void _checkConsistency(Puzzle data) {
     // if (content) {
     //   var invalid = !content || !Array.isArray(content);
     //   invalid = invalid || (content.length != this.height * this.width);
@@ -291,28 +301,18 @@ class Puzzle {
 
     if (data.rowHints.isEmpty || data.columnHints.isEmpty ||
         data.height == 0 || data.width == 0) {
-      return -1; //'Invalid content data'
+      data.state = State.InvalidContentData;
+      return;
     }
 
-    //var sum = a => a.reduce((x, y) => x + y, 0);
     var rowSum = _sum(data.rowHints.map((l) => _sum(l)));
     var columnSum = _sum(data.columnHints.map((l) => _sum(l)));
-    return (rowSum == columnSum) ? 0 : -2; //'Invalid hint data'
+    data.state = (rowSum == columnSum) ? State.Ok : State.InvalidHintData;
+    return;
   }
 
   static int _sum(Iterable<int> list) {
     if (list.isEmpty) return 0;
     return list.reduce((x, y) => x + y);
   }
-
-  // inspect() { // called by console.log
-  //   return ascii(this);
-  // }
-
-
-  // get svg() {
-  //   return svg(this);
-  // }
 }
-
-// module.exports = Puzzle;

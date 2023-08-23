@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -15,6 +16,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/nonogram/widget/nonogram_board.dart';
@@ -62,6 +64,19 @@ class NonogramSolverState extends State<NonogramSolver> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWOpenFile(
+          onLoaded: (GCWFile? value) {
+            _currentLines = 0;
+            if (value == null) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
+
+            _importJsonFile(value.bytes);
+
+            setState(() {});
+          },
+        ),
         _puzzleSize(),
         _rowHints(),
         _columnwHints(),
@@ -133,11 +148,11 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   Widget _puzzleSize() {
     return GCWExpandableTextDivider(
-        text: i18n(context, 'common_loadfile_showopen'),
+        text: i18n(context, 'gameoflife_size'),
         expanded: _currentSizeExpanded,
         onChanged: (value) {
           setState(() {
-            _currentRowHintsExpanded = value;
+            _currentSizeExpanded = value;
           });
         },
         child: _buildSizeSelection()
@@ -181,7 +196,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   Widget _rowHints() {
     return GCWExpandableTextDivider(
-        text: i18n(context, 'common_loadfile_showopen'),
+        text: i18n(context, 'grid_rows'),
         expanded: _currentRowHintsExpanded,
         onChanged: (value) {
           setState(() {
@@ -197,7 +212,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _rowCount; i++ ) {
       var controller = _getRowController(i);
-      controller.text = _currentBoard.rowHints[i].toString();
+      'controller.text = _currentBoard.rowHints[i].toString();
       var row =  Row(
         children: <Widget>[
           Expanded(
@@ -225,7 +240,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   Widget _columnwHints() {
     return GCWExpandableTextDivider(
-        text: i18n(context, 'common_loadfile_showopen'),
+        text: i18n(context, 'grid_columns'),
         expanded: _currentColumnHintsExpanded,
         onChanged: (value) {
           setState(() {
@@ -241,7 +256,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _columnCount; i++ ) {
       var controller = _getColumnController(i);
-      controller.text = _currentBoard.columnHints[i].toString();
+      'controller.text = _currentBoard.columnHints[i].toString();
       var row =  Row(
           children: <Widget>[
             Expanded(
@@ -279,5 +294,30 @@ class NonogramSolverState extends State<NonogramSolver> {
       _columnController.add(TextEditingController());
     }
     return _columnController[index];
+  }
+
+  void _importJsonFile(Uint8List bytes) {
+    _currentBoard = Puzzle.parseJson(convertBytesToString(bytes));
+    _setControllerData();
+  }
+
+  void _setControllerData() {
+    for (var i = 0; i < _currentBoard.height; i++) {
+      var controller = _getRowController(i);
+      controller.text = _currentBoard.rowHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');
+    }
+    for (var i = _currentBoard.height; i < _rowController.length; i++) {
+      var controller = _getRowController(i);
+      controller.text = '';
+    }
+
+    for (var i = 0; i < _currentBoard.width; i++) {
+      var controller = _getColumnController(i);
+      controller.text = _currentBoard.columnHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');
+    }
+    for (var i = _currentBoard.width; i < _columnController.length; i++) {
+      var controller = _getColumnController(i);
+      controller.text = '';
+    }
   }
 }
