@@ -8,7 +8,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
-enum State {
+enum PuzzleState {
   Ok, // no data errors
   Finished, // has errors
   Solved,
@@ -22,7 +22,7 @@ class Puzzle {
   int height = 0;
   int width = 0;
   var _rows = <List<int>>[];
-  State state = State.Ok;
+  PuzzleState state = PuzzleState.Ok;
 
   Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
     if (content != null) {
@@ -99,7 +99,7 @@ class Puzzle {
     for (var row in _rows) {
       if (row.any((item) => item == 0)) return false;
     }
-    state = State.Finished;
+    state = PuzzleState.Finished;
     return true;
   }
 
@@ -110,7 +110,7 @@ class Puzzle {
     if (!ok) return false;
     columns.forEachIndexed((i, column) => ok = ok && _isOk(column, columnHints[i]));
 
-    if (ok) State.Solved;
+    if (ok) PuzzleState.Solved;
     return ok;
   }
 
@@ -301,13 +301,13 @@ class Puzzle {
 
     if (data.rowHints.isEmpty || data.columnHints.isEmpty ||
         data.height == 0 || data.width == 0) {
-      data.state = State.InvalidContentData;
+      data.state = PuzzleState.InvalidContentData;
       return;
     }
 
     var rowSum = _sum(data.rowHints.map((l) => _sum(l)));
     var columnSum = _sum(data.columnHints.map((l) => _sum(l)));
-    data.state = (rowSum == columnSum) ? State.Ok : State.InvalidHintData;
+    data.state = (rowSum == columnSum) ? PuzzleState.Ok : PuzzleState.InvalidHintData;
     return;
   }
 

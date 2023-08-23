@@ -6,36 +6,35 @@
 //
 // const debugMode = require('commander').debug;
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/gap_distributor.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
-import 'package:tuple/tuple.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
 const cacheLimits = [2, 20];
 
 class bruteForce extends Solver {
-  var solveGapCache = <List<int>>[];
+  Map<String, GapResult> solveGapCache = {};
 
   /// @returns {{zeros: Uint8List, ones: Uint8List}}
   GapResult? solveGap(List<int> gap, List<int> hints) {
-    var zeros = List<bool>.filled(gap.length, false);
-    var ones = List<bool>.filled(gap.length, false);
+    var zeros = List<int>.filled(gap.length, 0);
+    var ones = List<int>.filled(gap.length, 0);
     if (hints.isEmpty) {
       if (gap.contains(1)) {
         return null;
       }
-      zeros.fillRange(0, zeros.length, false);
+      zeros.fillRange(0, zeros.length, 0);
       return GapResult(zeros, ones);
     }
     // if (solveGap.cache == null) {
     //   solveGap.cache = [];
     // }
     if (cacheLimits[0] <= hints.length && hints.length <= cacheLimits[1]) {
-      var candidate = solveGap.cache[JSON.stringify([gap, hints])];
-      if (candidate) {
-        return candidate;
+      var key = [gap, hints].toString();
+      if (solveGapCache.containsKey(key)) {
+        return solveGapCache[key];
       }
     }
     var hint = hints[0];
@@ -43,11 +42,11 @@ class bruteForce extends Solver {
     if (maxIndex == -1) {
       maxIndex = gap.length;
     }
-    var hintSum = hintSum(hints);
-    maxIndex = min(maxIndex, gap.length - hintSum);
-    if (maxIndex > hintSum && !gap.contains(1)) {
-      zeros.fillRange(0, zeros.length, true);
-      ones.fillRange(0, ones.length, true);
+    var _hintSum = hintSum(hints);
+    maxIndex = min(maxIndex, gap.length - _hintSum);
+    if (maxIndex > _hintSum && !gap.contains(1)) {
+      zeros.fillRange(0, zeros.length, 1);
+      ones.fillRange(0, ones.length, 1);
       return GapResult(zeros, ones);
     }
     for (var hintStart = 0; hintStart <= maxIndex; hintStart++) {
@@ -60,41 +59,41 @@ class bruteForce extends Solver {
       }
       for (var k = 0; k < gap.length; k++) {
         if (k < hintStart || k == hintStart + hint) {
-          zeros[k] = true;
+          zeros[k] = 1;
         } else if (k < hintStart + hint) {
-          ones[k] = true;
+          ones[k] = 1;
         } else {
-          zeros[k] = (zeros[k] || rest!.zeros[k - (hintStart + hint + 1)]);
-          ones[k]  = (ones[k] || rest!.ones[k - (hintStart + hint + 1)]);
+          zeros[k] = ((zeros[k] != 0) || (rest!.zeros[k - (hintStart + hint + 1)]) != 0 ? 1 : 0);
+          ones[k]  = ((ones[k] != 0) || (rest!.ones[k - (hintStart + hint + 1)]) != 0 ? 1 : 0);
         }
       }
     }
     var result = GapResult(zeros, ones);
-    solveGap.cache[JSON.stringify([gap, hints])] = result;
+    solveGapCache.addAll({[gap, hints].toString() : result});
     return result;
   }
 
-  List<bool> solveGapWithHintList(List<int> gap, List<List<int>> hintList) {
+  List<int> solveGapWithHintList(List<int> gap, List<List<int>> hintList) {
     if (gap.contains(-1)) {
       throw const FormatException('solveGapWithHintList called with a non-gap');
     }
-    var zeros = List<bool>.filled(gap.length, false);
-    var ones = List<bool>.filled(gap.length, false);
+    var zeros = List<int>.filled(gap.length, 0);
+    var ones = List<int>.filled(gap.length, 0);
     for (var hints in hintList) {
       var item = solveGap(gap, hints);
-      zeros.forEachIndexed((i, zero) => zeros[i] = (zero || (item?.zeros[i] ?? false));
-      ones.forEachIndexed((i, one) => ones[i] = (one || item?.ones[i]));
+      zeros.forEachIndexed((i, zero) => zeros[i] = (zero != 0 || ((item?.zeros[i] ?? 0) != 0) ? 1 : 0));
+      ones.forEachIndexed((i, one) => ones[i] = (one != 0 || ((item?.ones[i] ?? 0) != 0) ? 1 : 0));
     }
     var result = zeros.mapIndexed((i, zero) {
       var one = ones[i];
-      if (zero) {
-        return one;
+      if (zero != 0) {
+        return one != 0 ? 0 : -1;
       }
-      if (one) {
-        return true;
+      if (one != 0) {
+        return 1;
       }
       throw FormatException('Cannot fill gap ($gap, $hintList)');
-    });
+    }).toList();
     // if (debugMode) {
     //   if (gap.some((x, i) => x !== result[i])) {
     //     console.log(`Gap solved: [${gap}], ${JSON.stringify(hintList)} -> ${result}`);
@@ -102,7 +101,7 @@ class bruteForce extends Solver {
     //     console.log(`No progress on gap: [${gap}], ${JSON.stringify(hintList)}`);
     //   }
     // }
-    return result.toList();
+    return result;
   }
 
   List<int>? solve(List<int> line, List<int> hints) {
@@ -118,14 +117,18 @@ class bruteForce extends Solver {
     }
 
     var distributionsPerGap = gapResult.gaps.mapIndexed((i, gap) {
-      Set<int> set = {};
-      gapResult.distributions.forEach((dist) {
-        set.add(JSON.stringify(dist[i]));
-      });
-      return set.map((x) => JSON.parse(x));
-    });
+      Map<String, List<int>> set = {};
+      for (var dist in gapResult.distributions) {
+        var key = dist.toString();
+        if (!set.containsKey(key)) {
+          set.addAll({key : dist});
+        }
+      }
+      return set.values.toList();
+    }).toList();
+
     var result = line.sublist(0);
-    Set<bool> changed = {};
+    Set<int> changed = {};
     gapResult.gaps.forEachIndexed((i, gap) {
     var gapResult = solveGapWithHintList(line.sublist(gap[0], gap[1]), distributionsPerGap[i]);
       gapResult.forEachIndexed((i, item) {
@@ -136,20 +139,20 @@ class bruteForce extends Solver {
         }
       });
     });
-    if (changed.contains(false)) {
+    if (changed.contains(0)) {
       throw FormatException('Contradiction in line $line | $hints');
     }
 
     if (changed.contains(-1)) {
-      return solve(result, hints) || result;
+      return solve(result, hints) ?? result;
     }
     return changed.contains(1) ? result : null;
   }
 }
 
 class GapResult {
-  List<bool> zeros = [];
-  List<bool> ones = [];
+  List<int> zeros = [];
+  List<int> ones = [];
 
   GapResult(this.zeros, this.ones);
 }

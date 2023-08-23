@@ -1,10 +1,5 @@
 part of 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 
-Point<int>? _selectedBox;
-Rect? _selectedBoxRect;
-FocusNode? _valueFocusNode;
-
-
 class NonogramBoard extends StatefulWidget {
   final void Function(Puzzle) onChanged;
   final Puzzle board;
@@ -42,24 +37,24 @@ class NonogramBoardState extends State<NonogramBoard> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
-        Expanded(
-          child:
-            Stack(children:<Widget>[
+        children: <Widget>[
+          Expanded(
+              child:
+              Stack(children: <Widget>[
                 AspectRatio(
                     aspectRatio: _fullColumnCount(widget.board) / _fullRowCount(widget.board),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
                         return CustomPaint(
-                          painter: NonogramBoardPainter(context, widget.board, _setState)
+                            painter: NonogramBoardPainter(context, widget.board, _setState)
                         );
                       },
                     )
                 ),
-          ])
-      )
-    ]);
+              ])
+          )
+        ]);
   }
 
   void _setState() {
@@ -67,27 +62,7 @@ class NonogramBoardState extends State<NonogramBoard> {
       setState(() {});
     });
   }
-
-  // void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
-  //   setState(() {
-  //     if (showInputTextBox != null) {
-  //       _selectedBox = showInputTextBox;
-  //       _selectedBoxRect = selectedBoxRect;
-  //       _currentValueFocusNode.requestFocus();
-  //     } else {
-  //       _hideInputTextBox();
-  //     }
-  //   });
-  // }
 }
-
-// void _hideInputTextBox() {
-//   _selectedBox = null;
-//   _selectedBoxRect = null;
-//   if (_valueFocusNode != null) {
-//     _valueFocusNode!.unfocus();
-//   }
-// }
 
 class NonogramBoardPainter extends CustomPainter {
   final BuildContext context;
@@ -99,7 +74,6 @@ class NonogramBoardPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var _touchCanvas = TouchyCanvas(context, canvas);
-    ThemeColors themeColors = themeColors();
 
     var paint = Paint();
     var paintGray = Paint();
@@ -107,14 +81,14 @@ class NonogramBoardPainter extends CustomPainter {
     var paintBackground = Paint();
     paint.strokeWidth = 1;
     paint.style = PaintingStyle.stroke;
-    paint.color = themeColors.secondary();
+    paint.color = themeColors().secondary();
 
     paintGray.strokeWidth = 1;
     paintGray.style = PaintingStyle.stroke;
-    paintGray.color = themeColors.switchThumb1;
+    paintGray.color = themeColors().switchThumb1();
 
     paintFull.style = PaintingStyle.fill;
-    paintFull.color = themeColors.secondary();
+    paintFull.color = themeColors().secondary();
 
     paintBackground.style = PaintingStyle.fill;
     paintBackground.color = themeColors().gridBackground();
@@ -127,7 +101,7 @@ class NonogramBoardPainter extends CustomPainter {
     //double heightOuter = size.height - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
-    double widthInner = (widthOuter - _lineOffset(max(board.height, board.width))
+    double widthInner = (widthOuter - _lineOffset(max(board.height, board.width)))
         / max(maxRowHints + board.height, maxColumnHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.8;
@@ -147,7 +121,7 @@ class NonogramBoardPainter extends CustomPainter {
         for (int i = board.rowHints[y].length - 1; i >= 0; i--) {
           rect = Rect.fromLTWH(xInnerStart - widthInner - i * widthInner, yInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
-          _paintText(canvas, rect, board.rowHints[y][i].toString(), themeColors, fontsize);
+          _paintText(canvas, rect, board.rowHints[y][i].toString(), fontsize);
         }
       }
 
@@ -164,11 +138,11 @@ class NonogramBoardPainter extends CustomPainter {
         for (int i = board.columnHints[x].length - 1; i >= 0; i--) {
           rect = Rect.fromLTWH(xInner, yInnerStart- heightInner - i * heightInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
-          _paintText(canvas, rect, board.columnHints[x][i].toString(), themeColors, fontsize);
+          _paintText(canvas, rect, board.columnHints[x][i].toString(), fontsize);
         }
       }
 
-      // verical lines
+      // vertical lines
       _touchCanvas.drawLine(
           Offset(xInner, yInnerStart),
           Offset(xInner, yInnerEnd), paint);
@@ -201,8 +175,8 @@ class NonogramBoardPainter extends CustomPainter {
     return (value % 5).floor();
   }
 
-  void _paintText(Canvas canvas, Rect rect, String text, ThemeColors colors, double fontsize) {
-    var textPainter = _buildTextPainter(text, colors.mainFont(), fontsize);
+  void _paintText(Canvas canvas, Rect rect, String text, double fontsize) {
+    var textPainter = _buildTextPainter(text, themeColors().mainFont(), fontsize);
     textPainter.paint(canvas, Offset(rect.topCenter.dx - textPainter.width * 0.5,
                                      rect.centerLeft.dy - textPainter.height * 0.5));
 }

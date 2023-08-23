@@ -3,7 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:utility/utility.dart';
 
-int hintSum (List<int> hints) {
+int hintSum(List<int> hints) {
   if (hints.isEmpty) return 0;
   return hints.reduceIndexed((i, x, y) => x + y + (i != 0 ? 1 : 0));
 }

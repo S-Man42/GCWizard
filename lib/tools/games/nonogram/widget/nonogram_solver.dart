@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -17,6 +18,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/nonogram/widget/nonogram_board.dart';
@@ -66,7 +68,6 @@ class NonogramSolverState extends State<NonogramSolver> {
       children: <Widget>[
         GCWOpenFile(
           onLoaded: (GCWFile? value) {
-            _currentLines = 0;
             if (value == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
@@ -212,7 +213,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _rowCount; i++ ) {
       var controller = _getRowController(i);
-      'controller.text = _currentBoard.rowHints[i].toString();
+      //controller.text = _currentBoard.rowHints[i].toString();
       var row =  Row(
         children: <Widget>[
           Expanded(
@@ -256,7 +257,7 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _columnCount; i++ ) {
       var controller = _getColumnController(i);
-      'controller.text = _currentBoard.columnHints[i].toString();
+      //controller.text = _currentBoard.columnHints[i].toString();
       var row =  Row(
           children: <Widget>[
             Expanded(
