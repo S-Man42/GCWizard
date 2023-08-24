@@ -551,7 +551,7 @@ class _GCWizardSCriptInterpreter {
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT
         + '********* GC Wizard Skript **********\n'
-        + '*      Version vom 21.08.2023       *'
+        + _VERSION_DATE
         + '*     basierend auf SMALL BASIC     *\n'
         + '* Herb Schildt, the Art of C,  1991 *\n'
         + '*     genehmigt von  McGraw Hill    *\n'
@@ -980,7 +980,7 @@ class _GCWizardSCriptInterpreter {
 
     valueStart = evaluateExpression();
     if (_isANumber(valueStart)) {
-      state.variables[stckvar.loopVariable] = (valueStart as int).toDouble();
+      state.variables[stckvar.loopVariable] = (valueStart as num);
     } else {
       _handleError(_INVALIDTYPECAST);
     }
@@ -1796,6 +1796,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? evaluateExpressionAddSubOperators() {
+    print('ADD');
     String op;
     Object? result;
     Object? partialResult;
@@ -1805,13 +1806,12 @@ class _GCWizardSCriptInterpreter {
     while ((op = state.token[0]) == '+' || op == '-') {
       getToken();
       partialResult = evaluateExpressionMultDivOperators();
-      if (_isNotANumber(result) || _isNotANumber(partialResult)) {
-        // Todo ??
+      if (_isAList(result) || _isAList(partialResult)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
           case '-':
-            if (!_isANumber(result)) {
+            if (_isNotANumber(result)) {
               //Todo only on minus (no plus)
               _handleError(_INVALIDSTRINGOPERATION);
             } else {
@@ -1819,7 +1819,13 @@ class _GCWizardSCriptInterpreter {
             }
             break;
           case '+':
-            result = (result as num) + (partialResult as num);
+            if (_isAString(result) && _isAString(partialResult)) {
+              result = (result as String) + (partialResult as String);
+            } else if (_isANumber(result) && _isANumber(partialResult)) {
+              result = (result as num) + (partialResult as num);
+            } else {
+              _handleError(_INVALIDSTRINGOPERATION);
+            }
             break;
         }
       }
