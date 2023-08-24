@@ -22,7 +22,8 @@ class NonogramBoardState extends State<NonogramBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: max(_fullColumnCount(widget.board), 1) / max(_fullRowCount(widget.board), 1),
+                    aspectRatio: max(_maxRowHintCount(widget.board) + widget.board.width, 1) /
+                                max(_maxColumnHintCount(widget.board) + widget.board.height, 1),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
@@ -74,15 +75,14 @@ class NonogramBoardPainter extends CustomPainter {
     paintBackground.color = themeColors().gridBackground();
 
     const border = 5;
-    var maxRowHints = _fullRowCount(board) - board.height;
-    var maxColumnHints = _fullColumnCount(board) - board.width;
+    var maxRowHints = _maxRowHintCount(board);
+    var maxColumnHints = _maxColumnHintCount(board);
 
     double widthOuter = size.width - 2 * border;
-    //double heightOuter = size.height - 2 * border;
+    double heightOuter = size.height - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
-    double widthInner = (widthOuter - _lineOffset(board.width + maxRowHints))
-        / (maxRowHints + board.width);
+    double widthInner = (widthOuter - _lineOffset(maxRowHints + board.width)) / (maxRowHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.8;
 
@@ -91,8 +91,10 @@ class NonogramBoardPainter extends CustomPainter {
     var yInnerStart = yOuter + (maxColumnHints * heightInner);
     var yInnerEnd = yInnerStart + (board.height * heightInner) + _lineOffset(board.height);
 
-    var rect = Rect.fromLTRB(xInnerStart, xInnerEnd, xInnerEnd, yInnerEnd);
+    var rect = Rect.fromLTRB(xInnerStart, yInnerStart, xInnerEnd, yInnerEnd);
     _touchCanvas.drawRect(rect, paintBackground);
+    rect = Rect.fromLTWH(xOuter, yOuter, widthOuter, heightOuter);
+    _touchCanvas.drawRect(rect, paintGray);
 
     for (int y = 0; y <= board.height; y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
@@ -204,10 +206,10 @@ class NonogramBoardPainter extends CustomPainter {
   }
 }
 
-int _fullRowCount(Puzzle board) {
-  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.height;
+int _maxRowHintCount(Puzzle board) {
+  return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints : value)).length;
 }
 
-int _fullColumnCount(Puzzle board) {
-  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints :value)).length + board.width;
+int _maxColumnHintCount(Puzzle board) {
+  return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints : value)).length;
 }
