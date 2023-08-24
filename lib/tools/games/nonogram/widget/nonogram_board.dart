@@ -93,8 +93,6 @@ class NonogramBoardPainter extends CustomPainter {
 
     var rect = Rect.fromLTRB(xInnerStart, yInnerStart, xInnerEnd, yInnerEnd);
     _touchCanvas.drawRect(rect, paintBackground);
-    rect = Rect.fromLTWH(xOuter, yOuter, widthOuter, heightOuter);
-    _touchCanvas.drawRect(rect, paintGray);
 
     for (int y = 0; y <= board.height; y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
