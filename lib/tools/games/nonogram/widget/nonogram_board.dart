@@ -22,7 +22,7 @@ class NonogramBoardState extends State<NonogramBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: max(_fullColumnCount(widget.board), 1) / max()_fullRowCount(widget.board), 1),
+                    aspectRatio: max(_fullColumnCount(widget.board), 1) / max(_fullRowCount(widget.board), 1),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
@@ -35,6 +35,12 @@ class NonogramBoardState extends State<NonogramBoard> {
               ])
           )
         ]);
+  }
+
+  void _setState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }
 

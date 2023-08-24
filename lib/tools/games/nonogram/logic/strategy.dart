@@ -87,7 +87,7 @@ class Strategy {
       // console.log('Time elapsed: ${Date.now() - start}ms');
       // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
       // }
-    } on FormatException catch (e) {
+    } on FormatException {
       return puzzle;//printErrorMessage(context, e.message);
     }
     return puzzle;

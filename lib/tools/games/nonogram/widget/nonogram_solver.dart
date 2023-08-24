@@ -12,7 +12,6 @@ import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
@@ -37,8 +36,8 @@ class NonogramSolverState extends State<NonogramSolver> {
   var _currentColumnHintsExpanded = false;
   late TextEditingController _rowCountController;
   late TextEditingController _columnCountController;
-  var _rowController = <TextEditingController>[];
-  var _columnController = <TextEditingController>[];
+  final _rowController = <TextEditingController>[];
+  final _columnController = <TextEditingController>[];
 
   var _rowCount = 10;
   var _columnCount = 10;
@@ -71,7 +70,7 @@ class NonogramSolverState extends State<NonogramSolver> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          supportedFileTypes: [FileType.TXT, FileType.JSON],
+          supportedFileTypes: const [FileType.TXT, FileType.JSON],
           onLoaded: (GCWFile? value) {
             if (value == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));

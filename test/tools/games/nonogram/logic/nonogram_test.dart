@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
@@ -5,9 +7,9 @@ import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/tools/games/nonogram//resources/';
 
-Uint8List _getFileData(String name) {
+String _getFileData(String name) {
   io.File file = io.File(path.join(testDirPath, name));
-  return file.readAsBytesSync();
+  return file.readAsStringSync();
 }
 
 void main() {
@@ -59,7 +61,7 @@ void main() {
       test('rows: ${elem['rows']},columns: ${elem['columns']}',() {
         var puzzle = Puzzle(elem['rows'] as List<List<int>>,elem['columns'] as List<List<int>>);
         Puzzle.mapData(puzzle);
-var s = Strategy();
+        var s = Strategy();
         var _actual = s.solve(puzzle,withTrialAndError : false);
 
         print(_actual.rows.toString());

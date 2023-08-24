@@ -62,6 +62,7 @@ class pushSolver extends Solver {
     }
   }
 
+  @override
   List<int>? solve(List<int> line, List<int> hints) {
     var leftmost = pushLeft(line, hints);
     if (leftmost == null) {

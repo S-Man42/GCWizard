@@ -104,6 +104,7 @@ class bruteForce extends Solver {
     return result;
   }
 
+  @override
   List<int>? solve(List<int> line, List<int> hints) {
     if (line.every((el) => el == 0)) {
       return pushSolver().solve(line, hints);

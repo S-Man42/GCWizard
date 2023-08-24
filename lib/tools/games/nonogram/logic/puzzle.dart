@@ -22,7 +22,7 @@ class Puzzle {
   var columnHints = <List<int>>[];
   int height = 0;
   int width = 0;
-  var _rows = <List<int>>[];
+  var rows = <List<int>>[];
   PuzzleState state = PuzzleState.Ok;
 
   Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
@@ -69,14 +69,6 @@ class Puzzle {
 
   }
 
-  List<List<int>> get rows {
-    return _rows;
-  }
-
-   set rows (List<List<int>> newRows) {
-    _rows = newRows;
-  }
-
   List<List<int>> get columns {
     var _columns = List<List<int>>.generate(width, (index) => List<int>.filled(height, 0));
     for(var x = 0; x < width; x++) {
@@ -90,14 +82,14 @@ class Puzzle {
   set columns (List<List<int>> newColumns) {
     for(var x = 0; x < width; x++) {
       for(var y = 0; y < height; y++) {
-        _rows[y][x] = newColumns[x][y];
+        rows[y][x] = newColumns[x][y];
       }
     }
   }
 
 
   bool get isFinished {
-    for (var row in _rows) {
+    for (var row in rows) {
       if (row.any((item) => item == 0)) return false;
     }
     state = PuzzleState.Finished;
@@ -128,7 +120,7 @@ class Puzzle {
   List<int> get snapshot {
     var state = <int>[];
 
-    for (var row in _rows) {
+    for (var row in rows) {
       state.addAll(row);
     }
 
@@ -136,9 +128,9 @@ class Puzzle {
   }
 
   void import(List<int> state) {
-    _rows.clear();
+    rows.clear();
     for (int i = 0; i < height; i++) {
-      _rows.add(state.sublist(i * width, (i + 1) * width));
+      rows.add(state.sublist(i * width, (i + 1) * width));
     }
   }
 
