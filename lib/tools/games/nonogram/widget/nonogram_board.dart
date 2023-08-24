@@ -13,26 +13,6 @@ class NonogramBoard extends StatefulWidget {
 }
 
 class NonogramBoardState extends State<NonogramBoard> {
-  late TextEditingController _currentInputController;
-  late GCWIntegerTextInputFormatter _integerInputFormatter;
-  final _currentValueFocusNode = FocusNode();
-
-//   @override
-//   void initState() {
-//     super.initState();
-//
-//     _valueFocusNode = _currentValueFocusNode;
-// //    _currentInputController = TextEditingController();
-//     _integerInputFormatter = GCWIntegerTextInputFormatter(min: 0, max: 99999);
-//   }
-
-  @override
-  void dispose() {
-    // _currentInputController.dispose();
-    // _currentValueFocusNode.dispose();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +22,7 @@ class NonogramBoardState extends State<NonogramBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: _fullColumnCount(widget.board) / _fullRowCount(widget.board),
+                    aspectRatio: max(_fullColumnCount(widget.board), 1) / max()_fullRowCount(widget.board), 1),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
@@ -55,12 +35,6 @@ class NonogramBoardState extends State<NonogramBoard> {
               ])
           )
         ]);
-  }
-
-  void _setState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
   }
 }
 
@@ -123,12 +97,25 @@ class NonogramBoardPainter extends CustomPainter {
           _touchCanvas.drawRect(rect, paintGray);
           _paintText(canvas, rect, board.rowHints[y][i].toString(), fontsize);
         }
+        if ((y % 5) == 0) {
+          var xOffset = board.rowHints[y].length * widthInner;
+          _touchCanvas.drawLine(
+              Offset(xInnerStart - xOffset, yInner-1),
+              Offset(xInnerStart, yInner-1), paintGray);
+        }
       }
 
       // horizontal lines
       _touchCanvas.drawLine(
           Offset(xInnerStart, yInner),
           Offset(xInnerEnd, yInner), paint);
+
+      if ((y % 5) == 0) {
+        yInner -= 1;
+        _touchCanvas.drawLine(
+            Offset(xInnerStart, yInner),
+            Offset(xInnerEnd, yInner), paint);
+      }
     }
 
     for (int x = 0; x <= board.width; x++) {
@@ -140,12 +127,26 @@ class NonogramBoardPainter extends CustomPainter {
           _touchCanvas.drawRect(rect, paintGray);
           _paintText(canvas, rect, board.columnHints[x][i].toString(), fontsize);
         }
+
+        if ((x % 5) == 0) {
+          var yOffset = board.columnHints[x].length * heightInner;
+          _touchCanvas.drawLine(
+              Offset(xInner-1, yInnerStart - yOffset),
+              Offset(xInner-1, yInnerStart), paintGray);
+        }
       }
 
       // vertical lines
       _touchCanvas.drawLine(
           Offset(xInner, yInnerStart),
           Offset(xInner, yInnerEnd), paint);
+
+      if ((x % 5) == 0) {
+        xInner -= 1;
+        _touchCanvas.drawLine(
+            Offset(xInner, yInnerStart),
+            Offset(xInner, yInnerEnd), paint);
+      }
 
       // fields
       if (x < board.width) {

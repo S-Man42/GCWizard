@@ -32,9 +32,11 @@ class NonogramSolver extends StatefulWidget {
 
 class NonogramSolverState extends State<NonogramSolver> {
   late Puzzle _currentBoard;
-  var _currentSizeExpanded = true;
+  var _currentSizeExpanded = false;
   var _currentRowHintsExpanded = false;
   var _currentColumnHintsExpanded = false;
+  late TextEditingController _rowCountController;
+  late TextEditingController _columnCountController;
   var _rowController = <TextEditingController>[];
   var _columnController = <TextEditingController>[];
 
@@ -48,14 +50,16 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     _currentBoard = Puzzle.generate(_rowCount, _columnCount);
 
-    var columns = [[7,1,1,5,7],[1,1,3,1,1,1],[1,3,1,6,2,1,3,1],[1,3,1,1,2,1,1,3,1],[1,3,1,1,2,1,1,3,1],[1,1,1,1,1,1,1],[7,1,1,1,1,1,7],[2,1,2],[1,1,2,3,1,2,5],[3,2,2,2,3,3],[2,1,2,2,1,2,1,2],[1,2,3,3],[1,2,2,1,2,1,1,2,1,1],[1,3,2,1,1,1,1,1],[1,2,4,1,3,1,4],[2,1,1,3,1,1,1,1],[3,3,2,1,6,1],[1,3,1,1,2,2],[7,1,1,1,2],[1,1,2,1,4,1],[1,3,1,3,8,1],[1,3,1,1,1,2,1],[1,3,1,2,2,1,1,1],[1,1,1,1,1,6,1],[7,2,5,5]];
-    var   rows = [[7,1,1,1,1,7],[1,1,1,1,1,2,1,1],[1,3,1,1,3,1,3,1],[1,3,1,3,3,1,3,1],[1,3,1,1,1,1,3,1],[1,1,2,6,1,1],[7,1,1,1,1,1,7],[3,3],[5,4,1,2,1,1,1,1],[2,1,2,1,2,1,1,1],[4,1,1,1,4,1,3],[4,1,1,1,2,1],[3,1,2,2,4,2,3],[1,1,1,1,1,1,1,1],[1,1,1,1,5,1,2,2],[1,1,1,1,1,2,1],[1,1,1,2,3,12],[1,1,1,1,2,2],[7,2,1,1,1,1,2],[1,1,2,1,1,1,1,1],[1,3,1,2,9,3],[1,3,1,1,1,3,2,2],[1,3,1,2,3,1,1],[1,1,4,3,1,1],[7,5,1,2]];
-    _currentBoard = Puzzle(rows, columns);
+    _rowCountController = TextEditingController(text : _rowCount.toString());
+    _columnCountController = TextEditingController(text : _columnCount.toString());
+
     Puzzle.mapData(_currentBoard);
   }
 
   @override
   void dispose() {
+    _rowCountController.dispose();
+    _columnCountController.dispose();
     for (var controller in _rowController) {controller.dispose();}
     for (var controller in _columnController) {controller.dispose();}
 
@@ -67,6 +71,7 @@ class NonogramSolverState extends State<NonogramSolver> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
+          supportedFileTypes: [FileType.TXT, FileType.JSON],
           onLoaded: (GCWFile? value) {
             if (value == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -117,30 +122,31 @@ class NonogramSolverState extends State<NonogramSolver> {
               ),
             ),
             Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                  child: GCWButton(
-                    text: i18n(context, 'sudokusolver_clearcalculated'),
-                    onPressed: () {
-                      setState(() {
-                        _currentBoard.removeCalculated();
-                      });
-                    },
-                  ),
-                )
+              child: Container(
+                padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                child: GCWButton(
+                  text: i18n(context, 'sudokusolver_clearcalculated'),
+                  onPressed: () {
+                    setState(() {
+                      _currentBoard.removeCalculated();
+                    });
+                  },
+                ),
+              )
             ),
             Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                  child: GCWButton(
-                    text: i18n(context, 'sudokusolver_clearall'),
-                    onPressed: () {
-                      setState(() {
-                        _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-                      });
-                    },
-                  ),
-                ))
+              child: Container(
+                padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                child: GCWButton(
+                  text: i18n(context, 'sudokusolver_clearall'),
+                  onPressed: () {
+                    setState(() {
+                      _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+                    });
+                  },
+                ),
+              )
+            )
           ],
         )
       ],
@@ -164,32 +170,34 @@ class NonogramSolverState extends State<NonogramSolver> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-            title: i18n(context, 'common_row_count'),
-            value: _rowCount,
-            min: 1,
-            onChanged: (value) {
-              setState(() {
-                _rowCount = value;
-                _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
-                var tmpPuzzle = _currentBoard;
-                _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-                _currentBoard.importHints(tmpPuzzle);
-              });
-            }
+          title: i18n(context, 'common_row_count'),
+          controller: _rowCountController,
+          value: _rowCount,
+          min: 1,
+          onChanged: (value) {
+            setState(() {
+              _rowCount = value;
+              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
+              var tmpPuzzle = _currentBoard;
+              _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+              _currentBoard.importHints(tmpPuzzle);
+            });
+          }
         ),
         GCWIntegerSpinner(
-            title: i18n(context, 'common_column_count'),
-            value: _columnCount,
-            min: 1,
-            onChanged: (value) {
-              setState(() {
-                _columnCount = value;
-                _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
-                var tmpPuzzle = _currentBoard;
-                _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-                _currentBoard.importHints(tmpPuzzle);
-              });
-            }
+          title: i18n(context, 'common_column_count'),
+          controller: _columnCountController,
+          value: _columnCount,
+          min: 1,
+          onChanged: (value) {
+            setState(() {
+              _columnCount = value;
+              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
+              var tmpPuzzle = _currentBoard;
+              _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+              _currentBoard.importHints(tmpPuzzle);
+            });
+          }
         )
       ]
     );
@@ -303,6 +311,11 @@ class NonogramSolverState extends State<NonogramSolver> {
   }
 
   void _setControllerData() {
+    _rowCount = _currentBoard.width;
+    _columnCount = _currentBoard.height;
+    _rowCountController.text = _rowCount.toString();
+    _columnCountController.text = _columnCount.toString();
+
     for (var i = 0; i < _currentBoard.height; i++) {
       var controller = _getRowController(i);
       controller.text = _currentBoard.rowHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');

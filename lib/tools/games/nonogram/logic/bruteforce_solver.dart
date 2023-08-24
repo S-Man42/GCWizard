@@ -148,6 +148,11 @@ class bruteForce extends Solver {
     }
     return changed.contains(1) ? result : null;
   }
+
+  @override
+  set slowSolveSpeed(bool _slowSpeed) {
+    super.slowSolveSpeed = true;
+  }
 }
 
 class GapResult {

@@ -155,6 +155,7 @@ class Puzzle {
     rows = generateRows(this);
   }
 
+  /// nonogram.org format (with 'rows' for row hints and 'columns' for column hints)
   static Puzzle parseJson(String jsonString) {
     const String jsonRows = 'rows';
     const String jsonColumns = 'columns';

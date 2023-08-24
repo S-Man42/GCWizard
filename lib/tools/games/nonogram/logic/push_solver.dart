@@ -83,6 +83,10 @@ class pushSolver extends Solver {
     }).toList();
   }
 
+  @override
+  set slowSolveSpeed(bool _slowSpeed) {
+    super.slowSolveSpeed = false;
+  }
 }
 // solve.speed = 'fast';
 //
@@ -90,4 +94,5 @@ class pushSolver extends Solver {
 
 abstract class Solver {
   List<int>? solve(List<int> line, List<int> hints);
+  bool slowSolveSpeed = false;
 }

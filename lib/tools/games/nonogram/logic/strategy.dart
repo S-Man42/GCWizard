@@ -103,7 +103,7 @@ class Strategy {
    */
   void _solveOnce(Puzzle puzzle, Solver solver, int solverIndex) { //, solver, solutionSequence
     // If we're dealing with a slow solver, we want to skip as soon as one line is partially solved
-    var skipEarly = true; //solver.speed == 'slow';
+    var skipEarly = solver.slowSolveSpeed;
     var skip = false;
 
     // run on rows
