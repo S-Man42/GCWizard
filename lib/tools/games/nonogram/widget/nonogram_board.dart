@@ -81,21 +81,21 @@ class NonogramBoardPainter extends CustomPainter {
     //double heightOuter = size.height - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
-    double widthInner = (widthOuter - _lineOffset(max(board.height, board.width)))
-        / max(maxRowHints + board.height, maxColumnHints + board.width);
+    double widthInner = (widthOuter - _lineOffset(board.width + maxRowHints))
+        / (maxRowHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.8;
 
     var xInnerStart = xOuter + (maxRowHints * widthInner);
-    var xInnerEnd = xInnerStart + (board.width * widthInner);
+    var xInnerEnd = xInnerStart + (board.width * widthInner) + _lineOffset(board.width);
     var yInnerStart = yOuter + (maxColumnHints * heightInner);
-    var yInnerEnd = yInnerStart + (board.height * heightInner);
+    var yInnerEnd = yInnerStart + (board.height * heightInner) + _lineOffset(board.height);
 
     var rect = Rect.fromLTRB(xInnerStart, xInnerEnd, xInnerEnd, yInnerEnd);
     _touchCanvas.drawRect(rect, paintBackground);
 
     for (int y = 0; y <= board.height; y++) {
-      var yInner = yInnerStart + y * heightInner - _lineOffset(y);
+      var yInner = yInnerStart + y * heightInner + _lineOffset(y);
       if (y < board.height) {
         // row hints
         for (int i = board.rowHints[y].length - 1; i >= 0; i--) {
@@ -125,11 +125,11 @@ class NonogramBoardPainter extends CustomPainter {
     }
 
     for (int x = 0; x <= board.width; x++) {
-      var xInner = xInnerStart + x * widthInner - _lineOffset(x);
+      var xInner = xInnerStart + x * widthInner + _lineOffset(x);
       if (x < board.width) {
         // column hints
         for (int i = board.columnHints[x].length - 1; i >= 0; i--) {
-          rect = Rect.fromLTWH(xInner, yInnerStart- heightInner - i * heightInner, widthInner, heightInner);
+          rect = Rect.fromLTWH(xInner, yInnerStart - heightInner - i * heightInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
           _paintText(canvas, rect, board.columnHints[x][i].toString(), fontsize);
         }
@@ -156,9 +156,9 @@ class NonogramBoardPainter extends CustomPainter {
 
       // fields
       if (x < board.width) {
-        xInner = xInnerStart + x * widthInner - _lineOffset(x);
+        xInner = xInnerStart + x * widthInner + _lineOffset(x);
         for (int y = 0; y < board.height; y++) {
-          var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner - _lineOffset(y), widthInner, heightInner);
+          var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner + _lineOffset(y), widthInner, heightInner);
 
           var value = board.rows[y][x];
           if (value == 1) {
@@ -179,7 +179,7 @@ class NonogramBoardPainter extends CustomPainter {
   }
 
   static int _lineOffset(int value) {
-    return (value % 5).floor();
+    return (value / 5).floor();
   }
 
   void _paintText(Canvas canvas, Rect rect, String text, double fontsize) {
