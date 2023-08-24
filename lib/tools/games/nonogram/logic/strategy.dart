@@ -55,7 +55,7 @@ class Strategy {
         var snapshotColumns = createHash(puzzle.columns);
         progress = false;
 
-        solvers.forEachIndexed((i, solver) { //.forEachIndexed((i, solver)
+        solvers.forEachIndexed((i, solver) {
           if (progress) {
             return;
           }
@@ -121,6 +121,7 @@ class Strategy {
       VisitedL(current: _visited.rows, other: _visited.columns) :
       VisitedL(current: _visited.columns, other: _visited.rows);
     var rearrangedLines = _optimizeOrder(lines, hints, skipEarly);
+    print(rearrangedLines.length);
     for (var line in rearrangedLines) { //estimate
       if (skip || visited.current[line.index][solverIndex] != 0) {
         continue;
@@ -139,7 +140,7 @@ class Strategy {
       // var start = Date.now();
       // }
       // solver run
-       print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
+       //print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // if (debugMode) {
@@ -153,7 +154,7 @@ class Strategy {
       var hasChanged = false;
       var changedLines = <int>[];
       if (newLine != null) { // the solver may return null to indicate no progress
-         print('newLine ' + newLine.toString());
+        print('newLine ' + newLine.toString());
         newLine = restoreLine(newLine, trimresult.trimInfo!);
         line.line.forEachIndexed((i, el) {
           // What has changed?
@@ -168,6 +169,9 @@ class Strategy {
         });
         hasChanged = changedLines.isNotEmpty;
         skip = hasChanged && skipEarly;
+      } else {
+        //ToDo wieder aus
+        skip = skip ;
       }
 
       // if (!debugMode) {

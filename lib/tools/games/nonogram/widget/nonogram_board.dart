@@ -96,6 +96,7 @@ class NonogramBoardPainter extends CustomPainter {
 
     for (int y = 0; y <= board.height; y++) {
       var yInner = yInnerStart + y * heightInner - _lineOffset(y);
+      print(y.toString() + " " + yInner.toString());
       if (y < board.height) {
         // row hints
         for (int i = board.rowHints[y].length - 1; i >= 0; i--) {
