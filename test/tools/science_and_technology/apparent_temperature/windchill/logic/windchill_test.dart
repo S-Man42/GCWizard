@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/logic/windchill.dart';
+import "package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/logic/windchill.dart";
 
 void main() {
   group("Windchill.calculate:", () {
@@ -15,11 +15,8 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
         double? _actual;
-        if (elem['isMetric'] as bool) {
-          _actual = calcWindchillMetric(elem['temperature'] as double, elem['windspeed'] as double);
-        } else {
-          _actual = calcWindchillImperial(elem['temperature'] as double, elem['windspeed'] as double);
-        }
+
+          _actual = calcWindchill(elem['temperature'] as double, elem['windspeed'] as double);
 
         expect(_actual, elem['expectedOutput']);
       });

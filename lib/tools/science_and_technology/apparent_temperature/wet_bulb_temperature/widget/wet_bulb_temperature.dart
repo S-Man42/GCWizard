@@ -12,6 +12,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humi
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:intl/intl.dart';
 
 class WetBulbTemperature extends StatefulWidget {
   const WetBulbTemperature({Key? key}) : super(key: key);
@@ -89,7 +90,24 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
 
     return Column(
       children: [
-        GCWDefaultOutput(child: WBT.toStringAsFixed(2) + ' ' + unit, copyText: WBT.toString()),
+        GCWDefaultOutput(
+            child: Row(children: <Widget>[
+              Expanded(
+                flex: 4,
+                child: Text(i18n(context, 'wet_bulb_temperature_title')),
+              ),
+              Expanded(
+                flex: 1,
+                child: Text(_currentOutputUnit.symbol),
+              ),
+              Expanded(
+                flex: 2,
+                child: GCWOutput(
+                    child: NumberFormat('#.###').format(WBT)),
+              ),
+            ]
+            )
+        ),
         Row(
           children: [
             Container(

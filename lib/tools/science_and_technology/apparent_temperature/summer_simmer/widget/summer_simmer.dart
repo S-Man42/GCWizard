@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/logic/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
+import 'package:intl/intl.dart';
 
 class SummerSimmerIndex extends StatefulWidget {
   const SummerSimmerIndex({Key? key}) : super(key: key);
@@ -72,7 +73,24 @@ class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
 
     return Column(
       children: [
-        GCWDefaultOutput(child: summersimmer.toStringAsFixed(2), copyText: summersimmer.toString()),
+        GCWDefaultOutput(
+            child: Row(children: <Widget>[
+              Expanded(
+                flex: 4,
+                child: Text(i18n(context, 'summersimmerindex_title')),
+              ),
+              Expanded(
+                flex: 1,
+                child: Text(''),
+              ),
+              Expanded(
+                flex: 2,
+                child: GCWOutput(
+                    child: NumberFormat('#.###').format(summersimmer)),
+              ),
+            ]
+            )
+        ),
         Row(
           children: [
             Container(
