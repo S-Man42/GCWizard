@@ -5,8 +5,8 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
 
-  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime(2022, 07, 01, 12, 00, 00), timezone: Duration(hours: 5));
-  LatLng _currentCoords = LatLng(35.9, -78.8);
+  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime(2022, 07, 01, 12, 00, 00), timezone: const Duration(hours: 5));
+  LatLng _currentCoords = const LatLng(35.9, -78.8);
   double _currentWindSpeed = 1;
   double _currentWindSpeedHeight = 10;
   double _currentAirPressure = 1013.25;

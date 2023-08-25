@@ -309,6 +309,8 @@ liljegrenOutputWBGT calc_wbgt({
   Tdew = dew_point(rh * esat(tk, 0), 0) - 273.15;
 
   if (Tg == -9999 || Tnwb == -9999) {
+    print(Tg);
+    print(Tnwb);
     Twbg = -9999;
     return liljegrenOutputWBGT(
       Status: -1,

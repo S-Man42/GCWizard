@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
@@ -130,7 +130,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
           value: _currentCloudCover,
           onChanged: (value) {
             setState(() {
-              _currentCloudCover = value as CLOUD_COVER;
+              _currentCloudCover = value;
             });
           },
         items: CLOUD_COVER_LIST.entries.map((entry) {
@@ -179,6 +179,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         _currentAreaUrban,
         _currentCloudCover);
     if (output.Status == -1) {
+      print('-1');
       return Container();
     }
 
@@ -195,13 +196,27 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         i18n(context, 'common_measure_dewpoint'),
         _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew)).toStringAsFixed(2) + ' ' + unit
       ],
+      [i18n(context, 'astronomy_sunposition_title'), ''],
       [i18n(context, 'astronomy_position_altitude'), output.SunPos.altitude.toStringAsFixed(2) + ' °'],
       [i18n(context, 'astronomy_position_azimuth'), output.SunPos.azimuth.toStringAsFixed(2) + ' °'],
     ];
 
     return Column(
       children: [
-        GCWDefaultOutput(child: WBGT.toStringAsFixed(2) + ' ' + unit, copyText: WBGT.toString()),
+        GCWDefaultOutput(
+            child: GCWColumnedMultilineOutput(
+              flexValues: [4, 2, 1],
+                copyColumn: 1,
+                data: [
+                  ['WBGT', WBGT.toStringAsFixed(2), unit],
+                  //[i18n(context, 'heatindex_title'), calculateHeatIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT).toStringAsFixed(2), ''],
+                  //[i18n(context, 'humidex_title'), '', ''],
+                  //[i18n(context, 'summersimmerindex_title'), '', ''],
+                  //[i18n(context, 'windchill_title'), '', ''],
+                ]
+            )
+        ),
+        //WBGT.toStringAsFixed(2) + ' ' + unit, copyText: WBGT.toString()),
         Row(
           children: [
             Container(
@@ -223,7 +238,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         ),
         GCWExpandableTextDivider(
           expanded: false,
-          text: i18n(context, 'common_further'),
+          text: i18n(context, 'common_further_information'),
           //child: Column(children: columnedMultiLineOutput(context, _outputFurtherInformation)),
           child: GCWColumnedMultilineOutput(data: _outputFurtherInformation),
         )

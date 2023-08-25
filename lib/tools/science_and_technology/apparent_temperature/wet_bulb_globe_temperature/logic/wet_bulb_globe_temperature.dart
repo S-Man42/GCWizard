@@ -79,7 +79,7 @@ WBGTOutput calculateWetBulbGlobeTemperature(DateTimeTimezone dateTime, LatLng co
   var sunPosition = sunposition.SunPosition(
       LatLng(coords.latitude, coords.longitude),
       JulianDate(dateTime),
-      Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
+      const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
   );
 
   double solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover
