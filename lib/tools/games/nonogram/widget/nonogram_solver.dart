@@ -310,8 +310,8 @@ class NonogramSolverState extends State<NonogramSolver> {
   }
 
   void _setControllerData() {
-    _rowCount = _currentBoard.width;
-    _columnCount = _currentBoard.height;
+    _rowCount = _currentBoard.height;
+    _columnCount = _currentBoard.width;
     _rowCountController.text = _rowCount.toString();
     _columnCountController.text = _columnCount.toString();
 
