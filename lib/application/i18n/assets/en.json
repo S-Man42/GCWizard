@@ -3005,6 +3005,8 @@
   "navajo_source_alphabet": "only Alphabet",
   "nonogramsolver_title": "Nonogram Solver",
   "nonogramsolver_description": "Creates a solution for a given Nonogram",
+  "nonogramsolver_dataerror": "Error in the data",
+  "nonogramsolver_hinterror": "Error in the hint data",
   "numberpyramidsolver_title": "Number Pyramid Solver",
   "numberpyramidsolver_description": "Creates a solution for a given Number Pyramid",
   "numbersequence_title": "Number Sequences",

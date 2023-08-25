@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:path/path.dart' as path;
 
-var testDirPath = 'test/tools/games/nonogram//resources/';
+var testDirPath = 'test/tools/games/nonogram/resources/';
 
 String _getFileData(String name) {
   io.File file = io.File(path.join(testDirPath, name));
@@ -62,8 +62,9 @@ void main() {
         var puzzle = Puzzle(elem['rows'] as List<List<int>>,elem['columns'] as List<List<int>>);
         Puzzle.mapData(puzzle);
         var s = Strategy();
-        var _actual = s.solve(puzzle,withTrialAndError : false);
-
+          s.solve(puzzle, withTrialAndError : false);
+        var _actual = puzzle;
+        
         print(_actual.rows.toString());
         // _actual.solveNonogram(10);
         // expect(_actual.solutions?[0].solution,elem['expectedOutput']);

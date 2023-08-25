@@ -66,7 +66,17 @@ class Puzzle {
       }
       return h;
     }).toList();
+  }
 
+  static List<int> cleanHints(List<int> hints, int size) {
+    for (var h in hints) {
+      if (h <= 0) {
+        hints.remove(h);
+      } else if (h > size) {
+        h = size;
+      }
+    }
+    return hints;
   }
 
   List<List<int>> get columns {

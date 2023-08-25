@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -109,12 +109,10 @@ class NonogramSolverState extends State<NonogramSolver> {
                   onPressed: () {
                     setState(() {
                       var strategy  = Strategy();
-                      strategy.solve(_currentBoard);
-                      if (!_currentBoard.isSolved) {
+                      _currentBoard = strategy.solve(_currentBoard);
+                      if (_currentBoard.state != PuzzleState.Solved) {
                         showToast(i18n(context, 'sudokusolver_error'));
-                      } //else {
-                      //   _showSolution();
-                      // }
+                      }
                     });
                   },
                 ),
@@ -220,7 +218,6 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _rowCount; i++ ) {
       var controller = _getRowController(i);
-      //controller.text = _currentBoard.rowHints[i].toString();
       var row =  Row(
         children: <Widget>[
           Expanded(
@@ -231,7 +228,13 @@ class NonogramSolverState extends State<NonogramSolver> {
               controller: controller,
               onChanged: (text) {
                 setState(() {
-                  _currentBoard.rowHints[i] = textToIntList(text);
+                  var data = textToIntList(text);
+                  var dataBackup = data.sublist(0);
+                  data = Puzzle.cleanHints(data, _currentBoard.width);
+                  _currentBoard.rowHints[i] = data;
+                  if (listEquals(data, dataBackup)) {
+                    showToast(i18n(context, 'nonogramsolver_hinterror'));
+                  }
                 });
               }
             )
@@ -264,7 +267,6 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     for (var i = 0; i < _columnCount; i++ ) {
       var controller = _getColumnController(i);
-      //controller.text = _currentBoard.columnHints[i].toString();
       var row =  Row(
           children: <Widget>[
             Expanded(
@@ -275,7 +277,13 @@ class NonogramSolverState extends State<NonogramSolver> {
                     controller: controller,
                     onChanged: (text) {
                       setState(() {
-                        _currentBoard.columnHints[i] = textToIntList(text);
+                        var data = textToIntList(text);
+                        var dataBackup = data.sublist(0);
+                        data = Puzzle.cleanHints(data, _currentBoard.height);
+                        _currentBoard.columnHints[i] = data;
+                        if (listEquals(data, dataBackup)) {
+                          showToast(i18n(context, 'nonogramsolver_hinterror'));
+                        }
                       });
                     }
                 )
@@ -306,6 +314,11 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   void _importJsonFile(Uint8List bytes) {
     _currentBoard = Puzzle.parseJson(convertBytesToString(bytes));
+    if (_currentBoard.state == PuzzleState.InvalidHintData) {
+      showToast(i18n(context, 'nonogramsolver_hinterror'));
+    } else if (_currentBoard.state != PuzzleState.Ok) {
+      showToast(i18n(context, 'nonogramsolver_dataerror'));
+    }
     _setControllerData();
   }
 
