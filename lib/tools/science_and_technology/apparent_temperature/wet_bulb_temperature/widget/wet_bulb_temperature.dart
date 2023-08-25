@@ -75,7 +75,6 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String unit = '';
     String hintWBT = '';
     double WBT_C = 0.0;
     double WBT = 0.0;
@@ -85,8 +84,6 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
 
     WBT = TEMPERATURE_CELSIUS.toKelvin(WBT_C);
     WBT = _currentOutputUnit.fromReference(WBT);
-
-    unit = _currentOutputUnit.symbol;
 
     return Column(
       children: [

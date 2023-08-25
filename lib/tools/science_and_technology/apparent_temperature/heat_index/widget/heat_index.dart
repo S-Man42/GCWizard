@@ -76,7 +76,6 @@ class _HeatIndexState extends State<HeatIndex> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String unit = '';
     String hintHeatIndex = '';
     double HeatIndex_C = 0.0;
     double HeatIndex = 0.0;
@@ -86,8 +85,6 @@ class _HeatIndexState extends State<HeatIndex> {
 
     HeatIndex = TEMPERATURE_CELSIUS.toKelvin(HeatIndex_C);
     HeatIndex = _currentOutputUnit.fromReference(HeatIndex);
-
-    unit = _currentOutputUnit.symbol;
 
     String hintT = '';
     if (_currentTemperature < 27) {

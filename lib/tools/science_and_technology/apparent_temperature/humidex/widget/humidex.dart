@@ -79,7 +79,7 @@ class _HumidexState extends State<Humidex> {
                 flex: 4,
                 child: Text(i18n(context, 'humidex_title')),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Text(''),
               ),
