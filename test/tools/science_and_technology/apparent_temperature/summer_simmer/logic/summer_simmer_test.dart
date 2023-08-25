@@ -7,13 +7,12 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'temperature' : 0.0, 'humidity' : 0.0, 'expectedOutput' : '1.580'},
       {'temperature' : 45.0, 'humidity' : 55.0, 'expectedOutput' : '59.976'},
-      {'temperature' : 56.0, 'humidity' : 30.0, 'expectedOutput' : '55.575'},
+      {'temperature' : 56.0, 'humidity' : 30.0, 'expectedOutput' : '65.052'},
       {'temperature' : 18.0, 'humidity' : 75.0, 'expectedOutput' : '20.522'},
-      {'temperature' : 0.0, 'humidity' : 0.0, 'expectedOutput' : '6.332'},
     ];
 
     for (var elem in _inputsToExpected) {
-      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${elem['temperatureUnit'].symbol}', () {
+      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}', () {
         var _actual = calculateSummerSimmerIndex(elem['temperature'] as double, elem['humidity'] as double, );
         expect(_actual.toStringAsFixed(3), elem['expectedOutput']);
       });

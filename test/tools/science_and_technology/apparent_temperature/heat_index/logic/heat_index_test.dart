@@ -9,7 +9,7 @@ void main() {
     ];
 
     for (var elem in _inputsToExpected) {
-      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${elem['temperatureUnit'].symbol}', () {
+      test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}', () {
         var _actual = calculateHeatIndex(elem['temperature'] as double, elem['humidity'] as double);
         expect(_actual.toStringAsFixed(3), elem['expectedOutput']);
       });
