@@ -174,7 +174,7 @@ class NonogramSolverState extends State<NonogramSolver> {
           onChanged: (value) {
             setState(() {
               _rowCount = value;
-              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
+              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * _rowCount), 1.0);
               var tmpPuzzle = _currentBoard;
               _currentBoard = Puzzle.generate(_rowCount, _columnCount);
               _currentBoard.importHints(tmpPuzzle);
@@ -189,7 +189,7 @@ class NonogramSolverState extends State<NonogramSolver> {
           onChanged: (value) {
             setState(() {
               _columnCount = value;
-              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (20.0 * _rowCount), 1.0);
+              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * _rowCount), 1.0);
               var tmpPuzzle = _currentBoard;
               _currentBoard = Puzzle.generate(_rowCount, _columnCount);
               _currentBoard.importHints(tmpPuzzle);

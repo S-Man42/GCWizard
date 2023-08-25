@@ -26,6 +26,8 @@ class Puzzle {
   PuzzleState state = PuzzleState.Ok;
 
   Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
+    height = rowHints.length;
+    width = columnHints.length;
     if (content != null) {
       import(content);
     }

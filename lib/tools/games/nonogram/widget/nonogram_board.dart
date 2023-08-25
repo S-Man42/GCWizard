@@ -1,5 +1,8 @@
 part of 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 
+const double _fieldSize = 20.0;
+const int _boldLineIntvervall = 5;
+
 class NonogramBoard extends StatefulWidget {
   final void Function(Puzzle) onChanged;
   final Puzzle board;
@@ -85,6 +88,8 @@ class NonogramBoardPainter extends CustomPainter {
     double widthInner = (widthOuter - _lineOffset(maxRowHints + board.width)) / (maxRowHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.8;
+    var fieldBorderOn = widthInner / 10;
+    var fieldBorderOff = widthInner / 4;
 
     var xInnerStart = xOuter + (maxRowHints * widthInner);
     var xInnerEnd = xInnerStart + (board.width * widthInner) + _lineOffset(board.width);
@@ -116,7 +121,8 @@ class NonogramBoardPainter extends CustomPainter {
           Offset(xInnerStart, yInner),
           Offset(xInnerEnd, yInner), paint);
 
-      if ((y % 5) == 0) {
+      if ((y % _boldLineIntvervall) == 0) {
+        // double line
         yInner -= 1;
         _touchCanvas.drawLine(
             Offset(xInnerStart, yInner),
@@ -134,7 +140,8 @@ class NonogramBoardPainter extends CustomPainter {
           _paintText(canvas, rect, board.columnHints[x][i].toString(), fontsize);
         }
 
-        if ((x % 5) == 0) {
+        if ((x % _boldLineIntvervall) == 0) {
+          // double line
           var yOffset = board.columnHints[x].length * heightInner;
           _touchCanvas.drawLine(
               Offset(xInner-1, yInnerStart - yOffset),
@@ -147,7 +154,8 @@ class NonogramBoardPainter extends CustomPainter {
           Offset(xInner, yInnerStart),
           Offset(xInner, yInnerEnd), paint);
 
-      if ((x % 5) == 0) {
+      if ((x % _boldLineIntvervall) == 0) {
+        // double line
         xInner -= 1;
         _touchCanvas.drawLine(
             Offset(xInner, yInnerStart),
@@ -162,10 +170,10 @@ class NonogramBoardPainter extends CustomPainter {
 
           var value = board.rows[y][x];
           if (value == 1) {
-            rect = Rect.fromLTWH(rect.left + 2, rect.top + 2, rect.width - 4, rect.height - 4);
+            rect = Rect.fromLTWH(rect.left + fieldBorderOn, rect.top + fieldBorderOn, rect.width - 2*fieldBorderOn, rect.height - 2*fieldBorderOn);
             _touchCanvas.drawRect(rect, paintFull);
-          } else if (value == 0) {
-            rect = Rect.fromLTWH(rect.left + 3, rect.top + 3, rect.width - 6, rect.height - 6);
+          } else if (value == -1) {
+            rect = Rect.fromLTWH(rect.left + fieldBorderOff, rect.top + fieldBorderOff, rect.width - 2*fieldBorderOff, rect.height - 2*fieldBorderOff);
             _touchCanvas.drawLine(
                 Offset(rect.left, rect.top),
                 Offset(rect.right, rect.bottom), paintGray);
@@ -179,7 +187,7 @@ class NonogramBoardPainter extends CustomPainter {
   }
 
   static int _lineOffset(int value) {
-    return (value / 5).floor();
+    return (value / _boldLineIntvervall).floor();
   }
 
   void _paintText(Canvas canvas, Rect rect, String text, double fontsize) {
