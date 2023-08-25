@@ -75,6 +75,7 @@ class _WindchillState extends State<Windchill> {
   }
 
   Widget _buildOutput() {
+    const _validWindSpeed = 50/36;
     double windchill = 0.0;
     double windchill_c = 0.0;
 
@@ -83,7 +84,9 @@ class _WindchillState extends State<Windchill> {
     windchill = TEMPERATURE_CELSIUS.toKelvin(windchill_c);
     windchill = _currentOutputUnit.fromReference(windchill);
 
-    String hintWindchill = _calculateHintWindchill(windchill);
+    String hintWindSpeed = '';
+    if (_currentWindSpeed < _validWindSpeed) hintWindSpeed = i18n(context, 'windchill_hint_windspeed');
+    String hintWindchill = hintWindSpeed + '\n' + i18n(context, _calculateHintWindchill(windchill));
 
     return Column(
         children: <Widget>[
@@ -119,7 +122,7 @@ class _WindchillState extends State<Windchill> {
               ),
               Expanded(
                 child: GCWOutput(
-                  child: i18n(context, hintWindchill),
+                  child: hintWindchill,
                 ),
               )
             ],

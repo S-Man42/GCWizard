@@ -5990,6 +5990,7 @@
   "windchill_title": "Windchill",
   "windchill_description": "Apparent temperature from temperature and wind speed",
   "windchill_example": "5°C (41°F) / 20km/h (12.4mph) → 1°C (34°F)",
+  "windchill_hint_windspeed": "To get valid values the wind speed should be above 1.34 m/s",
   "windchill_index_index_white": "No Frostbite to be expected",
   "windchill_index_index_lightblue": "Frostbite within 30 min to be expected",
   "windchill_index_index_blue": "Frostbite within 10 min to be expected",

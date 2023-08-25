@@ -12,5 +12,6 @@ final Map<WINDCHILL_HEATSTRESS_CONDITION, double> WINDCHILL_HEAT_STRESS = {
 };
 
 double calcWindchill(double tempInCelsius, double vInMS) {
+  // https://www.weather.gov/epz/wxcalc_windchill
   return 13.12 + 0.6215 * tempInCelsius + (0.3965 * tempInCelsius - 11.37) * pow(VELOCITY_KMH.fromMS(vInMS), 0.16);
 }
