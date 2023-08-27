@@ -78,7 +78,7 @@ double calculateUTCI(double Ta, double RH, double va) {
   //
 
   double Tdew = _calcTDewpoint(RH, Ta);
-  double Tg = _calcGT(Ta, va, Tdew);
+  double Tg = _calcTg(Ta, va, Tdew);
   double Tmrt = _calcTmrt(Ta, va, Tg);
   double UTCI = _calcUTCI(Ta, va, Tmrt, RH);
 
@@ -99,12 +99,34 @@ double _calcTmrt(double Ta, double va, double Tg){
   //     V: air current cm/sec
   //     ta: temperature of the air outside of the globe
   //     tg: globe thermometer temperature
-  return Tg + 2.42 * va / 100 * (Tg - Ta);
+  print('calc Tmrt ');
+  print('- Ta '+Ta.toString());
+  print('- Tg '+Tg.toString());
+  print('- va '+va.toString());
+  print((Tg + 2.42 * va * 100 * (Tg - Ta)).toString());
+  return Tg + 2.42 * va * 100 * (Tg - Ta);
 }
 
-double _calcGT(double Ta, double va, double Tdew){
+double _calcTg(
+    double Ta, // deg C°
+    double va, // m/s
+    double Tdew, // deg C°
+    ){
+  print('calc Tg ');
+  print('- Ta '+Ta.toString());
+  print('- Td '+Tdew.toString());
+  print('- va '+va.toString());
   // Estimation of Black Globe Temperature for Calculation of the WBGT Index
   // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
+  // The values to be entered are
+  // wind speed (u in meters per hour),
+  // ambient temperature (Ta in degrees Celsius),
+  // dew point temperature (Td in degrees Celsius),
+  // solar irradiance (S in Watts per meter squared),
+  // direct beam radiation from the sun (𝑓𝑑𝑏) and
+  // diffuse radiation from the sun (𝑓𝑑𝑖𝑓).
+  va = va * 3600.0; // convert m/s to m/hour
+
   double P = 1013.0; // Barometric pressure
   double S = 1049.7859; // Solar irradiance in Watts per meter squared solpos etr global 1049.7859
   double fdb = 1355.9448; // direct beam radiation from the sun solpos etr dir 1355.9448
