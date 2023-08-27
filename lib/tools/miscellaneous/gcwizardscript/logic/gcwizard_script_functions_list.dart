@@ -233,3 +233,12 @@ Object? _listGet(_GCWList? list, Object? index) {
   }
   return null;
 }
+
+void _listFrom(Object? listName, Object? value){
+  if (_isNotAString(listName)) {
+      _handleError(_INVALIDTYPECAST);
+    } else {
+    _state.variables[listName as String] = _GCWList();
+    _listAdd(_state.variables[listName] as _GCWList, value);
+  }
+}

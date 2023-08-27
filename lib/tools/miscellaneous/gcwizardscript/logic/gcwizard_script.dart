@@ -1796,7 +1796,6 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? evaluateExpressionAddSubOperators() {
-    print('ADD');
     String op;
     Object? result;
     Object? partialResult;

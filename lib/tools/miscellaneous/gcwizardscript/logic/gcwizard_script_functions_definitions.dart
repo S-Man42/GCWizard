@@ -129,6 +129,7 @@ const List<String> _Functions_8 = [
   'ISNUMBER(',
   'ISSTRING(',
   'LISTSORT(',
+  'LISTFROM(',
 ];
 const List<String> _Functions_9 = [
   'CONVERTTO(',
@@ -212,6 +213,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LISTISNOTEMPTY': _GCWizardScriptClassFunctionDefinition(_listIsNotEmpty, 1),
   'LISTTOSTRING': _GCWizardScriptClassFunctionDefinition(_listToString, 1),
   'LISTGET': _GCWizardScriptClassFunctionDefinition(_listGet, 2),
+  'LISTFROM': _GCWizardScriptClassFunctionDefinition(_listFrom, 1, functionReturn: false),
 
   // math
   'ABS': _GCWizardScriptClassFunctionDefinition(_abs, 1),

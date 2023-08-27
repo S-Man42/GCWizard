@@ -458,7 +458,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               flex: 1,
               child: InkWell(
                 child: Text(GCW_SKRIPT_HELP_URLS[key]![0],
-                    style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),
+                    style: const TextStyle(color: Colors.black, decoration: TextDecoration.underline),
                     ),
                 onTap: () {
                   launchUrl(Uri.parse(GCW_SKRIPT_HELP_URLS[key]![1]));
