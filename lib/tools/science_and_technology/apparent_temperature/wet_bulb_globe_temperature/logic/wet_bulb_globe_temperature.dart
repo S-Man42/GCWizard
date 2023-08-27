@@ -13,7 +13,7 @@ import 'dart:math';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/liljegren.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 

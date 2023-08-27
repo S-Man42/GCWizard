@@ -144,29 +144,29 @@ const TRUE = true;
 const FALSE = false;
 
 // define functions
-double max(double a, double b) {
+double _max(double a, double b) {
   if (a > b) return a;
   return b;
 }
 
-double min(double a, double b) {
+double _min(double a, double b) {
   if (a < b) return a;
   return b;
 }
 
-double fabs(double x) {
+double _fabs(double x) {
   return x.abs();
 }
 
-double modf(double x, double y) {
+double _modf(double x, double y) {
   return (x - x.floorToDouble());
 }
 
 // define mathematical constants
-const PI = pi; // 3.1415926535897932
-const TWOPI = 2 * pi; // 6.2831853071795864
-const DEG_RAD = pi / 180; // 0.017453292519943295
-const RAD_DEG = 180 / pi; // 57.295779513082323
+const _PI = pi; // 3.1415926535897932
+const _TWOPI = 2 * pi; // 6.2831853071795864
+const _DEG_RAD = pi / 180; // 0.017453292519943295
+const _RAD_DEG = 180 / pi; // 57.295779513082323
 
 // define physical constants
 const SOLAR_CONST = 1367.0;
@@ -253,8 +253,8 @@ liljegrenOutputWBGT calc_wbgt({
     } else {
       daytime = 0;
     }
-    stability_class = stab_srdt(daytime, speed, solar, dT);
-    est_speed = est_wind_speed(speed, zspeed, stability_class, urban);
+    stability_class = _stab_srdt(daytime, speed, solar, dT);
+    est_speed = _est_wind_speed(speed, zspeed, stability_class, urban);
     speed = est_speed;
   }
 
@@ -264,10 +264,10 @@ liljegrenOutputWBGT calc_wbgt({
 
   // calculate the globe, natural wet bulb, psychrometric wet bulb and outdoor wet bulb globe temperatures
   Tg = Tglobe(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza);
-  Tnwb = Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 1) - 273.15;
-  Tpsy = Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 0) - 273.15;
+  Tnwb = _Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 1) - 273.15;
+  Tpsy = _Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 0) - 273.15;
   Twbg = 0.1 * Tair + 0.2 * Tg + 0.7 * Tnwb;
-  Tdew = dew_point(rh * esat(tk, 0), 0) - 273.15;
+  Tdew = _dew_point(rh * _esat(tk, 0), 0) - 273.15;
 
   if (Tg == -9999 || Tnwb == -9999) {
     Twbg = -9999;
@@ -296,27 +296,28 @@ liljegrenOutputSolarParameter calc_solar_parameters(
   double lat, // north latitude
   double lon, // east latitude (negative in USA)
 ) {
-  double cza, // cosine of solar zenith angle
-      fdir; // fraction of solar irradiance due to direct beam
+  double cza; // cosine of solar zenith angle
+  double fdir; // fraction of solar irradiance due to direct beam
 
-  double toasolar, normsolar;
+  double toasolar;
+  double normsolar;
 
   double days_1900 = 0.0;
 
-  liljegrenOutputSolarPosition solpos = solarposition(year, month, day, days_1900, lat, lon);
-  cza = cos((90.0 - solpos.altitude) * DEG_RAD);
-  toasolar = SOLAR_CONST * max(0.0, cza) / (solpos.distance * solpos.distance);
+  liljegrenOutputSolarPosition solpos = _solarposition(year, month, day, days_1900, lat, lon);
+  cza = cos((90.0 - solpos.altitude) * _DEG_RAD);
+  toasolar = SOLAR_CONST * _max(0.0, cza) / (solpos.distance * solpos.distance);
 
   //  if the sun is not fully above the horizon set the maximum (top of atmosphere) solar = 0
   if (cza < CZA_MIN) toasolar = 0.0;
   if (toasolar > 0.0) {
     // account for any solar sensor calibration errors and make the solar irradiance consistent with normsolar
-    normsolar = min(solar / toasolar, NORMSOLAR_MAX);
+    normsolar = _min(solar / toasolar, NORMSOLAR_MAX);
     solar = normsolar * toasolar;
     // calculate the fraction of the solar irradiance due to the direct beam
     if (normsolar > 0.0) {
       fdir = exp(3.0 - 1.34 * normsolar - 1.65 / normsolar);
-      fdir = max(min(fdir, 0.9), 0.0);
+      fdir = _max(_min(fdir, 0.9), 0.0);
     } else {
       fdir = 0.0;
     }
@@ -334,7 +335,7 @@ liljegrenOutputSolarParameter calc_solar_parameters(
  *		 Decision and Information Sciences Division
  *		 Argonne National Laboratory
  */
-double Twb(
+double _Twb(
   double Tair, // air (dry bulb) temperature, degC
   double rh, // relative humidity
   double Pair, // barometric pressure, mb
@@ -364,28 +365,28 @@ double Twb(
 
   Tsfc = Tair;
   sza = acos(cza); //* solar zenith angle, radians
-  eair = rh * esat(Tair, 0);
-  Tdew = dew_point(eair, 0);
+  eair = rh * _esat(Tair, 0);
+  Tdew = _dew_point(eair, 0);
   Twb_prev = Tdew; //* first guess is the dew point temperature
   converged = FALSE;
   iter = 0;
   do {
     iter++;
     Tref = 0.5 * (Twb_prev + Tair); // evaluate properties at the average temperature
-    h = h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
+    h = _h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
     Fatm = STEFANB *
             EMIS_WICK *
-            (0.5 * (emis_atm(Tair, rh) * pow(Tair, 4.0) + EMIS_SFC * pow(Tsfc, 4.0)) - pow(Twb_prev, 4.0)) +
+            (0.5 * (_emis_atm(Tair, rh) * pow(Tair, 4.0) + EMIS_SFC * pow(Tsfc, 4.0)) - pow(Twb_prev, 4.0)) +
         (1.0 - ALB_WICK) *
             solar *
             ((1.0 - fdir) * (1.0 + 0.25 * D_WICK / L_WICK) +
-                fdir * ((tan(sza) / PI) + 0.25 * D_WICK / L_WICK) +
+                fdir * ((tan(sza) / _PI) + 0.25 * D_WICK / L_WICK) +
                 ALB_SFC);
-    ewick = esat(Twb_prev, 0);
+    ewick = _esat(Twb_prev, 0);
     density = Pair * 100.0 / (R_AIR * Tref);
-    Sc = viscosity(Tref) / (density * diffusivity(Tref, Pair));
-    Twb_new = Tair - evap(Tref) / RATIO * (ewick - eair) / (Pair - ewick) * pow(Pr / Sc, a) + (Fatm / h * rad);
-    if (fabs(Twb_new - Twb_prev) < CONVERGENCE) converged = TRUE;
+    Sc = _viscosity(Tref) / (density * _diffusivity(Tref, Pair));
+    Twb_new = Tair - _evap(Tref) / RATIO * (ewick - eair) / (Pair - ewick) * pow(Pr / Sc, a) + (Fatm / h * rad);
+    if (_fabs(Twb_new - Twb_prev) < CONVERGENCE) converged = TRUE;
     Twb_prev = 0.9 * Twb_prev + 0.1 * Twb_new;
   } while (!converged && iter < MAX_ITER);
   if (converged) {
@@ -403,7 +404,7 @@ double Twb(
  * Reference: Bedingfield and Drew, eqn 32
  *
  */
-double h_cylinder_in_air(
+double _h_cylinder_in_air(
   double diameter, // cylinder diameter, m
   double length, // cylinder length, m
   double Tair, // air temperature, K
@@ -418,9 +419,9 @@ double h_cylinder_in_air(
   double Nu = 0.0; // Nusselt number
 
   density = Pair * 100.0 / (R_AIR * Tair);
-  Re = max(speed, MIN_SPEED) * density * diameter / viscosity(Tair);
+  Re = _max(speed, MIN_SPEED) * density * diameter / _viscosity(Tair);
   Nu = b * pow(Re, (1.0 - c)) * pow(Pr, (1.0 - a));
-  return (Nu * thermal_cond(Tair) / diameter);
+  return (Nu * _thermal_cond(Tair) / diameter);
 }
 
 /* ============================================================================
@@ -450,16 +451,16 @@ double Tglobe(
   do {
     iter++;
     Tref = 0.5 * (Tglobe_prev + Tair); // evaluate properties at the average temperature
-    h = h_sphere_in_air(D_GLOBE, Tref, Pair, speed);
+    h = _h_sphere_in_air(D_GLOBE, Tref, Pair, speed);
     Tglobe_new = pow(
-        0.5 * (emis_atm(Tair, rh) * pow(Tair, 4.0) + EMIS_SFC * pow(Tsfc, 4.0)) -
+        0.5 * (_emis_atm(Tair, rh) * pow(Tair, 4.0) + EMIS_SFC * pow(Tsfc, 4.0)) -
             h / (STEFANB * EMIS_GLOBE) * (Tglobe_prev - Tair) +
             solar /
                 (2.0 * STEFANB * EMIS_GLOBE) *
                 (1.0 - ALB_GLOBE) *
                 (fdir * (1.0 / (2.0 * cza) - 1.0) + 1.0 + ALB_SFC),
         0.25) as double;
-    if (fabs(Tglobe_new - Tglobe_prev) < CONVERGENCE) converged = TRUE;
+    if (_fabs(Tglobe_new - Tglobe_prev) < CONVERGENCE) converged = TRUE;
     Tglobe_prev = 0.9 * Tglobe_prev + 0.1 * Tglobe_new;
   } while (!converged && iter < MAX_ITER);
 
@@ -477,7 +478,7 @@ double Tglobe(
  * Reference: Bird, Stewart, and Lightfoot (BSL), page 409.
  *
  */
-double h_sphere_in_air(
+double _h_sphere_in_air(
   double diameter, // sphere diameter, m
   double Tair, // air temperature, K
   double Pair, // barometric pressure, mb
@@ -488,9 +489,9 @@ double h_sphere_in_air(
       Nu; // Nusselt number
 
   density = Pair * 100.0 / (R_AIR * Tair);
-  Re = max(speed, MIN_SPEED) * density * diameter / viscosity(Tair);
+  Re = _max(speed, MIN_SPEED) * density * diameter / _viscosity(Tair);
   Nu = 2.0 + 0.6 * sqrt(Re) * pow(Pr, 0.3333);
-  return (Nu * thermal_cond(Tair) / diameter);
+  return (Nu * _thermal_cond(Tair) / diameter);
 }
 
 /* ============================================================================
@@ -499,7 +500,7 @@ double h_sphere_in_air(
  *
  *  Reference: Buck's (1981) approximation (eqn 3) of Wexler's (1976) formulae.
  */
-double esat(
+double _esat(
     double tk, // air temperature, K
     int phase) {
   // 0 = over liquid water; 1 = over ice
@@ -527,7 +528,7 @@ double esat(
  *  Purpose: calculate the dew point (phase=0) or frost point (phase=1)
  *           temperature, K.
  */
-double dew_point(
+double _dew_point(
     double e, // vapor pressure, mb
     int phase) {
   // 0 = dewpoint; 1 = frostpoint
@@ -552,7 +553,7 @@ double dew_point(
  *
  *  Reference: BSL, page 23.
  */
-double viscosity(double Tair) {
+double _viscosity(double Tair) {
   /* air temperature, K */
   double sigma = 3.617, eps_kappa = 97.0;
 
@@ -568,9 +569,9 @@ double viscosity(double Tair) {
  *
  *  Reference: BSL, page 257.
  */
-double thermal_cond(double Tair) {
+double _thermal_cond(double Tair) {
   /* air temperature, K */
-  return ((Cp + 1.25 * R_AIR) * viscosity(Tair));
+  return ((Cp + 1.25 * R_AIR) * _viscosity(Tair));
 }
 
 /* ============================================================================
@@ -578,7 +579,7 @@ double thermal_cond(double Tair) {
  *
  *  Reference: BSL, page 505.
  */
-double diffusivity(
+double _diffusivity(
     double Tair,
     /* Air temperature, K */
     double Pair) {
@@ -608,7 +609,7 @@ double diffusivity(
  *
  *  Reference: Van Wylen and Sonntag, Table A.1.1
  */
-double evap(double Tair) {
+double _evap(double Tair) {
   /* air temperature, K */
   return ((313.15 - Tair) / 30.0 * (-71100.0) + 2.4073E6);
 }
@@ -618,13 +619,13 @@ double evap(double Tair) {
  *
  *  Reference: Oke (2nd edition), page 373.
  */
-double emis_atm(
+double _emis_atm(
     double Tair,
     /* air temperature, K */
     double rh) {
   /* relative humidity, fraction between 0 and 1 */
 
-  double e = rh * esat(Tair, 0);
+  double e = rh * _esat(Tair, 0);
   return (0.575 * pow(e, 0.143));
 }
 
@@ -682,7 +683,7 @@ double emis_atm(
  *          Richland, WA 99352
  *          U.S.A.
  */
-liljegrenOutputSolarPosition solarposition(
+liljegrenOutputSolarPosition _solarposition(
   int year,
   // Four digit year (Gregorian calendar).  [1950 through 2049; 0 o.k. if using days_1900]
   int month,
@@ -756,7 +757,7 @@ liljegrenOutputSolarPosition solarposition(
         return liljegrenOutputSolarPosition(Status: -1);
       }
 
-      daynumber = daynum(year, month, day.toInt());
+      daynumber = _daynum(year, month, day.toInt());
     } else {
       if (day < 0.0 || day > 368.0) {
         return liljegrenOutputSolarPosition(Status: -1);
@@ -779,7 +780,7 @@ liljegrenOutputSolarPosition solarposition(
 
     cent_J2000 = days_J2000 / 36525.0;
 
-    ut = modf(day, integral);
+    ut = _modf(day, integral);
     days_J2000 += ut;
     ut *= 24.0;
   } else
@@ -797,7 +798,7 @@ liljegrenOutputSolarPosition solarposition(
     /* days_1900 is 36524 for 2000/01/00. J2000 is 2000/01/01.5 */
     days_J2000 = days_1900 - 36525.5;
 
-    ut = modf(days_1900, integral) * 24.0;
+    ut = _modf(days_1900, integral) * 24.0;
 
     cent_J2000 = (integral - 36525.5) / 36525.0;
   }
@@ -809,11 +810,11 @@ liljegrenOutputSolarPosition solarposition(
   mean_longitude = (280.460 + 0.9856474 * days_J2000);
 
   /* Put mean_anomaly and mean_longitude in the range 0 -> 2 pi. */
-  mean_anomaly = modf(mean_anomaly / 360.0, integral) * TWOPI;
-  mean_longitude = modf(mean_longitude / 360.0, integral) * TWOPI;
+  mean_anomaly = _modf(mean_anomaly / 360.0, integral) * _TWOPI;
+  mean_longitude = _modf(mean_longitude / 360.0, integral) * _TWOPI;
 
-  mean_obliquity = (23.439 - 4.0e-7 * days_J2000) * DEG_RAD;
-  ecliptic_long = ((1.915 * sin(mean_anomaly)) + (0.020 * sin(2.0 * mean_anomaly))) * DEG_RAD + mean_longitude;
+  mean_obliquity = (23.439 - 4.0e-7 * days_J2000) * _DEG_RAD;
+  ecliptic_long = ((1.915 * sin(mean_anomaly)) + (0.020 * sin(2.0 * mean_anomaly))) * _DEG_RAD + mean_longitude;
 
   distance = 1.00014 - 0.01671 * cos(mean_anomaly) - 0.00014 * cos(2.0 * mean_anomaly);
 
@@ -822,10 +823,10 @@ liljegrenOutputSolarPosition solarposition(
 
   /* Change range of ap_ra from -pi -> pi to 0 -> 2 pi. */
   if (ap_ra < 0.0) {
-    ap_ra += TWOPI;
+    ap_ra += _TWOPI;
   }
   /* Put ap_ra in the range 0 -> 24 hours. */
-  ap_ra = modf(ap_ra / TWOPI, integral) * 24.0;
+  ap_ra = _modf(ap_ra / _TWOPI, integral) * 24.0;
 
   ap_dec = asin(sin(mean_obliquity) * sin(ecliptic_long));
 
@@ -836,7 +837,7 @@ liljegrenOutputSolarPosition solarposition(
   /* Horner's method of polynomial exponent expansion used for gmst0h. */
   gmst0h = 24110.54841 + cent_J2000 * (8640184.812866 + cent_J2000 * (0.093104 - cent_J2000 * 6.2e-6));
   /* Convert gmst0h from seconds to hours and put in the range 0 -> 24. */
-  gmst0h = modf(gmst0h / 3600.0 / 24.0, integral) * 24.0;
+  gmst0h = _modf(gmst0h / 3600.0 / 24.0, integral) * 24.0;
   if (gmst0h < 0.0) {
     gmst0h += 24.0;
   }
@@ -847,7 +848,7 @@ liljegrenOutputSolarPosition solarposition(
    */
   lmst = gmst0h + (ut * 1.00273790934) + longitude / 15.0;
   /* Put lmst in the range 0 -> 24 hours. */
-  lmst = modf(lmst / 24.0, integral) * 24.0;
+  lmst = _modf(lmst / 24.0, integral) * 24.0;
   if (lmst < 0.0) {
     lmst += 24.0;
   }
@@ -865,8 +866,8 @@ liljegrenOutputSolarPosition solarposition(
   }
 
   /* Convert latitude and local_ha to radians. */
-  latitude *= DEG_RAD;
-  local_ha = local_ha / 24.0 * TWOPI;
+  latitude *= _DEG_RAD;
+  local_ha = local_ha / 24.0 * _TWOPI;
 
   cos_apdec = cos(ap_dec);
   sin_apdec = sin(ap_dec);
@@ -880,7 +881,7 @@ liljegrenOutputSolarPosition solarposition(
   /* Avoid tangent overflow at altitudes of +-90 degrees.
    * 1.57079615 radians is equal to 89.99999 degrees.
    */
-  if (fabs(altitude) < 1.57079615) {
+  if (_fabs(altitude) < 1.57079615) {
     tan_alt = tan(altitude);
   } else {
     tan_alt = 6.0e6;
@@ -892,13 +893,13 @@ liljegrenOutputSolarPosition solarposition(
 
   /* Change range of azimuth from 0 -> pi to 0 -> 2 pi. */
   if (atan2(sin_az, cos_az) < 0.0) {
-    azimuth = TWOPI - azimuth;
+    azimuth = _TWOPI - azimuth;
   }
 
   /* Convert ap_dec, altitude, and azimuth to degrees. */
-  ap_dec *= RAD_DEG;
-  altitude *= RAD_DEG;
-  azimuth *= RAD_DEG;
+  ap_dec *= _RAD_DEG;
+  altitude *= _RAD_DEG;
+  azimuth *= _RAD_DEG;
 
   /* Compute refraction correction to be added to altitude to obtain actual
    * position.
@@ -952,7 +953,7 @@ liljegrenOutputSolarPosition solarposition(
  *         Richland, WA 99352
  *         U.S.A.
  */
-int daynum(int year, int month, int day) {
+int _daynum(int year, int month, int day) {
   List<int> begmonth = [0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
   int dnum;
   bool leapyr = FALSE;
@@ -984,7 +985,7 @@ int daynum(int year, int month, int day) {
  *
  *  Reference: EPA-454/5-99-005, 2000, section 6.2.5
  */
-double est_wind_speed(double speed, double zspeed, int stability_class, int urban) {
+double _est_wind_speed(double speed, double zspeed, int stability_class, int urban) {
   List<double> urban_exp = [0.15, 0.15, 0.20, 0.25, 0.30, 0.30];
   List<double> rural_exp = [0.07, 0.07, 0.10, 0.15, 0.35, 0.55];
   double exponent, est_speed;
@@ -996,7 +997,7 @@ double est_wind_speed(double speed, double zspeed, int stability_class, int urba
   }
 
   est_speed = speed * pow(REF_HEIGHT / zspeed, exponent);
-  est_speed = max(est_speed, MIN_SPEED);
+  est_speed = _max(est_speed, MIN_SPEED);
   return (est_speed);
 }
 
@@ -1005,7 +1006,7 @@ double est_wind_speed(double speed, double zspeed, int stability_class, int urba
  *
  *  Reference: EPA-454/5-99-005, 2000, section 6.2.5
  */
-int stab_srdt(int daytime, double speed, double solar, double dT) {
+int _stab_srdt(int daytime, double speed, double solar, double dT) {
   List<List<int>> lsrdt = [
     [1, 1, 2, 4, 0, 5, 6, 0],
     [1, 2, 3, 4, 0, 5, 6, 0],
