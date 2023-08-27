@@ -349,3 +349,13 @@ int _div(Object? x, Object? y) {
   return ((x as num) ~/ (y as num));
 }
 
+void _divisors(Object? list, Object? number){
+  if (_isNotAList(list) || _isNotAInt(number)) {
+    _handleError(_INVALIDTYPECAST);
+  } else {
+    divisors(number as int).forEach ((element) {
+      _listAdd(list as _GCWList?, element);
+    });
+  }
+}
+

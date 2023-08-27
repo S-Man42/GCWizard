@@ -120,6 +120,7 @@ const List<String> _Functions_8 = [
   'DECTODMM(',
   'DECTODMS(',
   'DISTANCE(',
+  'DIVISORS(',
   'DMMTODEC(',
   'DMMTODMS(',
   'DMSTODEC(',
@@ -250,6 +251,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'SQR': _GCWizardScriptClassFunctionDefinition(_sqr, 1),
   'TAN': _GCWizardScriptClassFunctionDefinition(_tan, 1),
   'TRUNC': _GCWizardScriptClassFunctionDefinition(_trunc, 1),
+  'DIVISORS': _GCWizardScriptClassFunctionDefinition(_divisors, 2),
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
