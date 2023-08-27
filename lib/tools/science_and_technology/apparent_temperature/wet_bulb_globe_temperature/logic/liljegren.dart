@@ -120,6 +120,7 @@ PROCESS DISCLOSED, OR REPRESENTS THAT ITS USE WOULD NOT INFRINGE PRIVATELY OWNED
  *  Purpose: to calculate the outdoor wet bulb-globe temperature, which is
  *           the weighted sum of the air temperature (dry bulb), the globe temperature,
  *           and the natural wet bulb temperature: Twbg = 0.1 * Tair + 0.7 * Tnwb + 0.2 * Tg.
+ *
  *           The program predicts Tnwb and Tg using meteorological input data then combines
  *           the results to produce Twbg.
  *
@@ -142,9 +143,7 @@ PROCESS DISCLOSED, OR REPRESENTS THAT ITS USE WOULD NOT INFRINGE PRIVATELY OWNED
 const TRUE = true;
 const FALSE = false;
 
-/*
-  *  define functions
-  */
+// define functions
 double max(double a, double b) {
   if (a > b) return a;
   return b;
@@ -163,18 +162,13 @@ double modf(double x, double y) {
   return (x - x.floorToDouble());
 }
 
-/*
- *  define mathematical constants
- */
-
+// define mathematical constants
 const PI = pi; // 3.1415926535897932
 const TWOPI = 2 * pi; // 6.2831853071795864
 const DEG_RAD = pi / 180; // 0.017453292519943295
 const RAD_DEG = 180 / pi; // 57.295779513082323
 
-/*
- *  define physical constants
- */
+// define physical constants
 const SOLAR_CONST = 1367.0;
 const GRAVITY = 9.807;
 const STEFANB = 5.6696E-8;
@@ -186,30 +180,22 @@ const R_GAS = 8314.34;
 const R_AIR = (R_GAS / M_AIR);
 const Pr = (Cp / (Cp + 1.25 * R_AIR));
 
-/*
- *  define wick constants
- */
+// define wick constants
 const EMIS_WICK = 0.95;
 const ALB_WICK = 0.4;
 const D_WICK = 0.007;
 const L_WICK = 0.0254;
 
-/*
- *  define globe constants
- */
+// define globe constants
 const EMIS_GLOBE = 0.95;
 const ALB_GLOBE = 0.05;
 const D_GLOBE = 0.0508;
 
-/*
- *  define surface constants
- */
+// define surface constants
 const EMIS_SFC = 0.999;
 const ALB_SFC = 0.45;
 
-/*
- *  define computational and physical limits
- */
+// define computational and physical limits
 const CZA_MIN = 0.00873;
 const NORMSOLAR_MAX = 0.85;
 const REF_HEIGHT = 2.0;
@@ -218,71 +204,49 @@ const CONVERGENCE = 0.02;
 const MAX_ITER = 50;
 
 liljegrenOutputWBGT calc_wbgt({
-  required int year,
-  /* 4-digit, e.g. 2007								                                */
-  required int month,
-  /* month (1-12) or month = 0 implies iday is day of year		        */
-  required int day,
-  /* day of month or day of year (1-366)					                    */
-  required int hour,
-  /* hour in local standard time (LST)					                      */
-  required int minute,
-  /* minutes past the hour							                              */
-  required int gmt,
-  /* LST-GMT difference, hours (negative in USA)				              */
-  required int avg,
-  /* averaging time of meteorological inputs, minutes			            */
-  required int urban,
-  /* select "urban" (1) or "rural" (0) wind speed power law exponent  */
+  required int year, // 4-digit, e.g. 2007
+  required int month, // month (1-12) or month = 0 implies iday is day of year
+  required int day, // day of month or day of year (1-366)
+  required int hour, // hour in local standard time (LST)
+  required int minute, // minutes past the hour
+  required int gmt, // LST-GMT difference, hours (negative in USA)
+  required int avg, // averaging time of meteorological inputs, minutes
+  required int urban, // select "urban" (1) or "rural" (0) wind speed power law exponent
 
-  required double lat,
-  /* north latitude, decimal							                            */
-  required double lon,
-  /* east longitude, decimal (negative in USA)				                */
-  required double solar,
-  /* solar irradiance, W/m2							                              */
-  required double pres,
-  /* barometric pressure, mb							                            */
-  required double Tair,
-  /* air (dry bulb) temperature, degC						                      */
-  required double relhum,
-  /* relative humidity, %								                              */
-  required double speed,
-  /* wind speed, m/s								                                  */
-  required double zspeed,
-  /* height of wind speed measurement, m					                    */
-  required double dT,
+  required double lat, // north latitude, decimal
+  required double lon, // east longitude, decimal (negative in USA)
+  required double solar, // solar irradiance, W/m2
+  required double pres, // barometric pressure, mb
+  required double Tair, // air (dry bulb) temperature, degC	*/
+  required double relhum, // relative humidity, %
+  required double speed, // wind speed, m/s
+  required double zspeed, // height of wind speed measurement, m
+  required double dT, // vertical temperature difference (upper minus lower), degC
 }) {
-  /* vertical temperature difference (upper minus lower), degC	      */
-
-  double Tg = 0.0; /* globe temperature, degC							                            */
-  double Tnwb = 0.0; /* natural wet bulb temperature, degC					                      */
-  double Tpsy = 0.0; /* psychrometric wet bulb temperature, degC				                  */
-  double Twbg = 0.0; /* wet bulb globe temperature, degC						                      */
-  double Tdew = 0.0; /* dew point temperAture                                            */
-  double est_speed = 0.0; /* estimated speed at reference height, m/s				                  */
-
-  //double cza,	              /* cosine of solar zenith angle						                          */
-  //       fdir,	            /* fraction of solar irradiance due to direct beam			            */
-  double tk = 0.0; /* temperature converted to kelvin						                      */
-  double rh = 0.0; /* relative humidity, fraction between 0 and 1				              */
+  double Tg = 0.0; // globe temperature, degC
+  double Tnwb = 0.0; // natural wet bulb temperature, degC
+  double Tpsy = 0.0; // psychrometric wet bulb temperature, degC
+  double Twbg = 0.0; // wet bulb globe temperature, degC
+  double Tdew = 0.0; // dew point temperAture
+  double est_speed = 0.0; // estimated speed at reference height, m/s
+  // double cza,	      // cosine of solar zenith angle
+  // fdir,	            // fraction of solar irradiance due to direct beam
+  double tk = 0.0; // temperature converted to kelvin
+  double rh = 0.0; // relative humidity, fraction between 0 and 1
   double hour_gmt = 0.0;
   double dday = 0.0;
 
-  int daytime, stability_class;
-  /*
-   *  convert time to GMT and center in avg period;
-   */
+  // convert time to GMT and center in avg period;
+  int daytime;
+  int stability_class;
   hour_gmt = hour - gmt + (minute - 0.5 * avg) / 60.0;
   dday = day + hour_gmt / 24.0;
-  /*
-   *  calculate the cosine of the solar zenith angle and fraction of solar irradiance
-   *  due to the direct beam; adjust the solar irradiance if it is out of bounds
-   */
+
+  // calculate the cosine of the solar zenith angle and fraction of solar irradiance
+  // due to the direct beam; adjust the solar irradiance if it is out of bounds
   liljegrenOutputSolarParameter solpar = calc_solar_parameters(year, month, dday, solar, lat, lon);
-  /*
-   *  estimate the wind speed, if necessary
-   */
+
+  // estimate the wind speed, if necessary
   if (zspeed != REF_HEIGHT) {
     if (solpar.cza > 0.0) {
       daytime = 1;
@@ -293,24 +257,19 @@ liljegrenOutputWBGT calc_wbgt({
     est_speed = est_wind_speed(speed, zspeed, stability_class, urban);
     speed = est_speed;
   }
-  /*
-   *  unit conversions
-   */
-  tk = Tair + 273.15; /* degC to kelvin */
-  rh = 0.01 * relhum; /* % to fraction  */
-  /*
-   *  calculate the globe, natural wet bulb, psychrometric wet bulb, and
-   *  outdoor wet bulb globe temperatures
-   */
+
+  // unit conversions
+  tk = Tair + 273.15; // degC to kelvin
+  rh = 0.01 * relhum; // % to fraction
+
+  // calculate the globe, natural wet bulb, psychrometric wet bulb and outdoor wet bulb globe temperatures
   Tg = Tglobe(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza);
-  Tnwb = Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 1);
-  Tpsy = Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 0);
+  Tnwb = Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 1) - 273.15;
+  Tpsy = Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 0) - 273.15;
   Twbg = 0.1 * Tair + 0.2 * Tg + 0.7 * Tnwb;
   Tdew = dew_point(rh * esat(tk, 0), 0) - 273.15;
 
   if (Tg == -9999 || Tnwb == -9999) {
-    print(Tg);
-    print(Tnwb);
     Twbg = -9999;
     return liljegrenOutputWBGT(
       Status: -1,
@@ -328,7 +287,6 @@ liljegrenOutputWBGT calc_wbgt({
  *		 Decision and Information Sciences Division
  *		 Argonne National Laboratory
  */
-
 liljegrenOutputSolarParameter calc_solar_parameters(
   int year, // 4-digit year, e.g., 2007
   int month, // 2-digit month; month = 0 implies day = day of year
@@ -336,12 +294,10 @@ liljegrenOutputSolarParameter calc_solar_parameters(
   // else day.fraction of year if month = 0 (GMT)
   double solar, // solar irradiance (W/m2)
   double lat, // north latitude
-  double lon,
+  double lon, // east latitude (negative in USA)
 ) {
-  // east latitude (negative in USA)
-  double cza,
-      /* cosine of solar zenith angle						*/
-      fdir; /* fraction of solar irradiance due to direct beam			*/
+  double cza, // cosine of solar zenith angle
+      fdir; // fraction of solar irradiance due to direct beam
 
   double toasolar, normsolar;
 
@@ -350,21 +306,14 @@ liljegrenOutputSolarParameter calc_solar_parameters(
   liljegrenOutputSolarPosition solpos = solarposition(year, month, day, days_1900, lat, lon);
   cza = cos((90.0 - solpos.altitude) * DEG_RAD);
   toasolar = SOLAR_CONST * max(0.0, cza) / (solpos.distance * solpos.distance);
-  /*
-   *  if the sun is not fully above the horizon
-   *  set the maximum (top of atmosphere) solar = 0
-   */
+
+  //  if the sun is not fully above the horizon set the maximum (top of atmosphere) solar = 0
   if (cza < CZA_MIN) toasolar = 0.0;
   if (toasolar > 0.0) {
-    /*
-     *  account for any solar sensor calibration errors and
-     *  make the solar irradiance consistent with normsolar
-     */
+    // account for any solar sensor calibration errors and make the solar irradiance consistent with normsolar
     normsolar = min(solar / toasolar, NORMSOLAR_MAX);
     solar = normsolar * toasolar;
-    /*
-     *  calculate the fraction of the solar irradiance due to the direct beam
-     */
+    // calculate the fraction of the solar irradiance due to the direct beam
     if (normsolar > 0.0) {
       fdir = exp(3.0 - 1.34 * normsolar - 1.65 / normsolar);
       fdir = max(min(fdir, 0.9), 0.0);
@@ -386,26 +335,17 @@ liljegrenOutputSolarParameter calc_solar_parameters(
  *		 Argonne National Laboratory
  */
 double Twb(
-    double Tair,
-    /* air (dry bulb) temperature, degC						          */
-    double rh,
-    /* relative humidity                                    */
-    double Pair,
-    /* barometric pressure, mb							                */
-    double speed,
-    /* wind speed, m/s								                      */
-    double solar,
-    /* solar irradiance, W/m2							                  */
-    double fdir,
-    /* fraction of solar irradiance due to direct beam			*/
-    double cza,
-    /* cosine of solar zenith angle						              */
-    int rad) {
-  /* switch to enable/disable radiative heating;
-                           * no radiative heating --> pyschrometric wet bulb temp		*/
-
-  double a = 0.56; /* from Bedingfield and Drew */
-
+  double Tair, // air (dry bulb) temperature, degC
+  double rh, // relative humidity
+  double Pair, // barometric pressure, mb
+  double speed, // wind speed, m/s
+  double solar, // solar irradiance, W/m2
+  double fdir, // fraction of solar irradiance due to direct beam
+  double cza, // cosine of solar zenith angle
+  int rad, // switch to enable/disable radiative heating;
+  //  no radiative heating --> pyschrometric wet bulb temp
+) {
+  double a = 0.56; // from Bedingfield and Drew
   double sza = 0.0;
   double Tsfc = 0.0;
   double Tdew = 0.0;
@@ -415,23 +355,23 @@ double Twb(
   double eair = 0.0;
   double ewick = 0.0;
   double density = 0.0;
-  double Sc = 0.0; /* Schmidt number */
-  double h = 0.0; /* convective heat transfer coefficient */
-  double Fatm = 0.0; /* radiative heating term */
+  double Sc = 0.0; // Schmidt number
+  double h = 0.0; // convective heat transfer coefficient
+  double Fatm = 0.0; // radiative heating term
 
   bool converged;
   int iter;
 
   Tsfc = Tair;
-  sza = acos(cza); /* solar zenith angle, radians */
+  sza = acos(cza); //* solar zenith angle, radians
   eair = rh * esat(Tair, 0);
   Tdew = dew_point(eair, 0);
-  Twb_prev = Tdew; /* first guess is the dew point temperature */
+  Twb_prev = Tdew; //* first guess is the dew point temperature
   converged = FALSE;
   iter = 0;
   do {
     iter++;
-    Tref = 0.5 * (Twb_prev + Tair); /* evaluate properties at the average temperature */
+    Tref = 0.5 * (Twb_prev + Tair); // evaluate properties at the average temperature
     h = h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
     Fatm = STEFANB *
             EMIS_WICK *
@@ -449,7 +389,8 @@ double Twb(
     Twb_prev = 0.9 * Twb_prev + 0.1 * Twb_new;
   } while (!converged && iter < MAX_ITER);
   if (converged) {
-    return (Twb_new - 273.15);
+    //return (Twb_new - 273.15);
+    return (Twb_new);
   } else {
     return (-9999.0);
   }
@@ -463,23 +404,18 @@ double Twb(
  *
  */
 double h_cylinder_in_air(
-    double diameter,
-    /* cylinder diameter, m								  */
-    double length,
-    /* cylinder length, m								    */
-    double Tair,
-    /* air temperature, K								    */
-    double Pair,
-    /* barometric pressure, mb							*/
-    double speed) {
-  /* fluid (wind) speed, m/s							*/
-
-  double a = 0.56; /* parameters from Bedingfield and Drew */
+  double diameter, // cylinder diameter, m
+  double length, // cylinder length, m
+  double Tair, // air temperature, K
+  double Pair, // barometric pressure, mb
+  double speed, // fluid (wind) speed, m/s
+) {
+  double a = 0.56; // parameters from Bedingfield and Drew
   double b = 0.281;
   double c = 0.4;
   double density = 0.0;
-  double Re = 0.0; /* Reynolds number								*/
-  double Nu = 0.0; /* Nusselt number									*/
+  double Re = 0.0; // Reynolds number
+  double Nu = 0.0; // Nusselt number
 
   density = Pair * 100.0 / (R_AIR * Tair);
   Re = max(speed, MIN_SPEED) * density * diameter / viscosity(Tair);
@@ -495,32 +431,25 @@ double h_cylinder_in_air(
  *		 Argonne National Laboratory
  */
 double Tglobe(
-    double Tair,
-    /* air (dry bulb) temperature, degC						      */
-    double rh,
-    /* relative humidity, fraction between 0 and 1			*/
-    double Pair,
-    /* barometric pressure, mb							            */
-    double speed,
-    /* wind speed, m/s								                  */
-    double solar,
-    /* solar irradiance, W/m2							              */
-    double fdir,
-    /* fraction of solar irradiance due to direct beam	*/
-    double cza) {
-  /* cosine of solar zenith angle						*/
-
+  double Tair, // air (dry bulb) temperature, degC
+  double rh, // relative humidity, fraction between 0 and 1
+  double Pair, // barometric pressure, mb
+  double speed, // wind speed, m/s
+  double solar, // solar irradiance, W/m2
+  double fdir, // fraction of solar irradiance due to direct beam
+  double cza, // cosine of solar zenith angle
+) {
   double Tsfc, Tref, Tglobe_prev, Tglobe_new, h;
   bool converged;
   int iter;
 
   Tsfc = Tair;
-  Tglobe_prev = Tair; /* first guess is the air temperature */
+  Tglobe_prev = Tair; // first guess is the air temperature
   converged = FALSE;
   iter = 0;
   do {
     iter++;
-    Tref = 0.5 * (Tglobe_prev + Tair); /* evaluate properties at the average temperature */
+    Tref = 0.5 * (Tglobe_prev + Tair); // evaluate properties at the average temperature
     h = h_sphere_in_air(D_GLOBE, Tref, Pair, speed);
     Tglobe_new = pow(
         0.5 * (emis_atm(Tair, rh) * pow(Tair, 4.0) + EMIS_SFC * pow(Tsfc, 4.0)) -
@@ -549,18 +478,14 @@ double Tglobe(
  *
  */
 double h_sphere_in_air(
-    double diameter,
-    /* sphere diameter, m							*/
-    double Tair,
-    /* air temperature, K							*/
-    double Pair,
-    /* barometric pressure, mb				*/
-    double speed) {
-  /* fluid (air) speed, m/s						*/
+  double diameter, // sphere diameter, m
+  double Tair, // air temperature, K
+  double Pair, // barometric pressure, mb
+  double speed, // fluid (air) speed, m/s
+) {
   double density,
-      Re,
-      /* Reynolds number							*/
-      Nu; /* Nusselt number								*/
+      Re, // Reynolds number
+      Nu; // Nusselt number
 
   density = Pair * 100.0 / (R_AIR * Tair);
   Re = max(speed, MIN_SPEED) * density * diameter / viscosity(Tair);
@@ -759,11 +684,9 @@ double emis_atm(
  */
 liljegrenOutputSolarPosition solarposition(
   int year,
-  /* Four digit year (Gregorian calendar).
-                       *   [1950 through 2049; 0 o.k. if using days_1900] */
+  // Four digit year (Gregorian calendar).  [1950 through 2049; 0 o.k. if using days_1900]
   int month,
-  /* Month number.
-                       *   [1 through 12; 0 o.k. if using daynumber for day] */
+  // Month number.   [1 through 12; 0 o.k. if using daynumber for day]
   double day,
   /* Calendar day.fraction, or daynumber.fraction.
                        *   [If month is NOT 0:
@@ -776,78 +699,42 @@ liljegrenOutputSolarPosition solarposition(
                        *    1990/01/01 @ 18:10:00 UT = 32873.75694;
                        *    0.0 o.k. if using {year, month, day} or
                        *    {year, daynumber}] */
-  double latitude,
-  /* Observation site geographic latitude.
-                       *   [degrees.fraction, North positive] */
-  double longitude,
+  double latitude, // Observation site geographic latitude.  [degrees.fraction, North positive]
+  double longitude, // Observation site geographic longitude. [degrees.fraction, East positive]
 ) {
-  /* Observation site geographic longitude.
-                       *   [degrees.fraction, East positive] */
-  double ap_ra = 0.0; /* Apparent solar right ascension.
-                        *   [hours; 0.0 <= *ap_ra < 24.0] */
-  double ap_dec = 0.0; /* Apparent solar declination.
-                        *   [degrees; -90.0 <= *ap_dec <= 90.0] */
-  double altitude =
-      0.0; /* Solar altitude, uncorrected for refraction.
-                          *   [degrees; -90.0 <= *altitude <= 90.0] */
+  double ap_ra = 0.0; /* Apparent solar right ascension. [hours; 0.0 <= *ap_ra < 24.0] */
+  double ap_dec = 0.0; /* Apparent solar declination. [degrees; -90.0 <= *ap_dec <= 90.0] */
+  double altitude = 0.0; // Solar altitude, uncorrected for refraction. [degrees; -90.0 <= *altitude <= 90.0]
   double refraction =
-      0.0; /* Refraction correction for solar altitude.
-                        * Add this to altitude to compensate for refraction.
-                        *   [degrees; 0.0 <= *refraction] */
-  double azimuth =
-      0.0; /* Solar azimuth.
-                        *   [degrees; 0.0 <= *azimuth < 360.0, East is 90.0] */
+      0.0; // Refraction correction for solar altitude. Add this to altitude to compensate for refraction. [degrees; 0.0 <= *refraction]
+  double azimuth = 0.0; // Solar azimuth. [degrees; 0.0 <= *azimuth < 360.0, East is 90.0]
   double distance =
-      0.0; /* Distance of Sun from Earth (heliocentric-geocentric).
-                        *   [astronomical units; 1 a.u. is mean distance] */
-  int daynumber = 0; /* Sequential daynumber during a year.                                                  */
-  int delta_days = 0; /* Whole days since 2000 January 0.                                                     */
-  int delta_years = 0; /* Whole years since 2000.                                                              */
-  double cent_J2000 = 0.0;
-  /* Julian centuries since epoch J2000.0 at 0h UT.                                       */
-  double cos_alt = 0.0;
-  /* Cosine of the altitude of Sun.                                                       */
-  double cos_apdec = 0.0;
-  /* Cosine of the apparent declination of Sun.                                           */
-  double cos_az = 0.0;
-  /* Cosine of the azimuth of Sun.                                                        */
-  double cos_lat = 0.0;
-  /* Cosine of the site latitude.                                                         */
-  double cos_lha = 0.0;
-  /* Cosine of the local apparent hour angle of Sun.                                      */
-  double days_J2000 = 0.0;
-  /* Days since epoch J2000.0.                                                            */
-  double ecliptic_long = 0.0;
-  /* Solar ecliptic longitude.                                                            */
-  double lmst = 0.0;
-  /* Local mean sidereal time.                                                            */
-  double local_ha = 0.0;
-  /* Local mean hour angle of Sun.                                                        */
-  double gmst0h = 0.0;
-  /* Greenwich mean sidereal time at 0 hours UT.                                          */
-  double integral = 0.0;
-  /* Integral portion of double precision number.                                         */
-  double mean_anomaly = 0.0;
-  /* Earth mean anomaly.                                                                  */
-  double mean_longitude = 0.0;
-  /* Solar mean longitude.                                                                */
-  double mean_obliquity = 0.0;
-  /* Mean obliquity of the ecliptic.                                                      */
-  double pressure = 1013.25;
-  /* Earth mean atmospheric pressure at sea level                                         */
-  /*   in millibars.                                                                      */
-  double sin_apdec = 0.0;
-  /* Sine of the apparent declination of Sun.                                             */
-  double sin_az = 0.0;
-  /* Sine of the azimuth of Sun.                                                          */
-  double sin_lat = 0.0;
-  /* Sine of the site latitude.                                                           */
-  double tan_alt = 0.0;
-  /* Tangent of the altitude of Sun.                                                      */
-  double temp = 15.0;
-  /* Earth mean atmospheric temperature at sea level                                      */
-  /*   in degrees Celsius.                                                                */
-  double ut = 0.0; /* UT hours since midnight.                                                             */
+      0.0; // Distance of Sun from Earth (heliocentric-geocentric). [astronomical units; 1 a.u. is mean distance]
+  int daynumber = 0; // Sequential daynumber during a year.
+  int delta_days = 0; // Whole days since 2000 January 0.
+  int delta_years = 0; // Whole years since 2000./
+  double cent_J2000 = 0.0; // Julian centuries since epoch J2000.0 at 0h UT.
+  double cos_alt = 0.0; // Cosine of the altitude of Sun.
+  double cos_apdec = 0.0; // Cosine of the apparent declination of Sun.
+  double cos_az = 0.0; // Cosine of the azimuth of Sun.
+  double cos_lat = 0.0; // Cosine of the site latitude.
+  double cos_lha = 0.0; // Cosine of the local apparent hour angle of Sun.
+  double days_J2000 = 0.0; // Days since epoch J2000.0.
+  double ecliptic_long = 0.0; // Solar ecliptic longitude.
+  double lmst = 0.0; // Local mean sidereal time.
+  double local_ha = 0.0; // Local mean hour angle of Sun.
+  double gmst0h = 0.0; // Greenwich mean sidereal time at 0 hours UT.
+  double integral = 0.0; // Integral portion of double precision number.
+  double mean_anomaly = 0.0; // Earth mean anomaly.
+  double mean_longitude = 0.0; // Solar mean longitude.
+  double mean_obliquity = 0.0; // Mean obliquity of the ecliptic.
+  double pressure = 1013.25; // Earth mean atmospheric pressure at sea level in millibars.
+  double sin_apdec = 0.0; // Sine of the apparent declination of Sun.
+  double sin_az = 0.0; // Sine of the azimuth of Sun.
+  double sin_lat = 0.0; // Sine of the site latitude.
+  double tan_alt = 0.0; // Tangent of the altitude of Sun.
+  double temp = 15.0; // Earth mean atmospheric temperature at sea level in degrees Celsius.
+  double ut = 0.0; // UT hours since midnight.
 
   /* Check latitude and longitude for proper range before calculating dates.
    */
@@ -918,7 +805,6 @@ liljegrenOutputSolarPosition solarposition(
   /* Compute solar position parameters.
    * A. A. 1990, C24.
    */
-
   mean_anomaly = (357.528 + 0.9856003 * days_J2000);
   mean_longitude = (280.460 + 0.9856474 * days_J2000);
 
@@ -1099,7 +985,8 @@ int daynum(int year, int month, int day) {
  *  Reference: EPA-454/5-99-005, 2000, section 6.2.5
  */
 double est_wind_speed(double speed, double zspeed, int stability_class, int urban) {
-  List<double> urban_exp = [0.15, 0.15, 0.20, 0.25, 0.30, 0.30], rural_exp = [0.07, 0.07, 0.10, 0.15, 0.35, 0.55];
+  List<double> urban_exp = [0.15, 0.15, 0.20, 0.25, 0.30, 0.30];
+  List<double> rural_exp = [0.07, 0.07, 0.10, 0.15, 0.35, 0.55];
   double exponent, est_speed;
 
   if (urban == 1) {

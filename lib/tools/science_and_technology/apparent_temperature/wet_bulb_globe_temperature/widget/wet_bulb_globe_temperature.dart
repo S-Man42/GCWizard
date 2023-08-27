@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
@@ -24,6 +24,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:intl/intl.dart';
 
 class WetBulbGlobeTemperature extends StatefulWidget {
   const WetBulbGlobeTemperature({Key? key}) : super(key: key);
@@ -110,7 +111,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
           unitList: allPressures(),
           onChanged: (value) {
             setState(() {
-              _currentAirPressure = value;
+              _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
             });
           },
         ),
@@ -151,17 +152,6 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_outputunit')),
-        GCWUnitDropDown<Unit>(
-          value: _currentOutputUnit,
-          unitList: temperatures,
-          unitCategory: UNITCATEGORY_TEMPERATURE,
-          onChanged: (value) {
-            setState(() {
-              _currentOutputUnit = value;
-            });
-          },
-        ),
         _buildOutput(context)
       ],
     );
@@ -179,7 +169,6 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         _currentAreaUrban,
         _currentCloudCover);
     if (output.Status == -1) {
-      print('-1');
       return Container();
     }
 
@@ -204,19 +193,36 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
     return Column(
       children: [
         GCWDefaultOutput(
-            child: GCWColumnedMultilineOutput(
-              flexValues: [4, 2, 1],
-                copyColumn: 1,
-                data: [
-                  ['WBGT', WBGT.toStringAsFixed(2), unit],
-                  //[i18n(context, 'heatindex_title'), calculateHeatIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT).toStringAsFixed(2), ''],
-                  //[i18n(context, 'humidex_title'), '', ''],
-                  //[i18n(context, 'summersimmerindex_title'), '', ''],
-                  //[i18n(context, 'windchill_title'), '', ''],
-                ]
-            )
-        ),
-        //WBGT.toStringAsFixed(2) + ' ' + unit, copyText: WBGT.toString()),
+            child: Row(children: <Widget>[
+              Expanded(
+                flex: 4,
+                child: Text(i18n(context, 'wet_bulb_globe_temperature_title')),
+              ),
+              Expanded(
+                flex: 2,
+                //child: Text(_currentOutputUnit.symbol),
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                    child: GCWUnitDropDown(
+                      value: _currentOutputUnit,
+                      onlyShowSymbols: true,
+                      unitList: temperatures,
+                      unitCategory: UNITCATEGORY_TEMPERATURE,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentOutputUnit = value;
+                        });
+                      },
+                    )),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                    child: GCWOutput(child: NumberFormat('#.##').format(WBGT))),
+              ),
+            ])),
+        const GCWDivider(),
         Row(
           children: [
             Container(
