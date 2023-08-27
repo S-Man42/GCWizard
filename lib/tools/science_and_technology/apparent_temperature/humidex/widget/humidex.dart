@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/logic/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
@@ -65,7 +66,7 @@ class _HumidexState extends State<Humidex> {
   Widget _buildOutput(BuildContext context) {
     double humidex = calculateHumidex(_currentTemperature, _currentHumidity);
 
-    double dewpoint = caluculateDewpoint(_currentTemperature, _currentHumidity);
+    double dewpoint = calculateDewpoint(_currentTemperature, _currentHumidity);
     dewpoint = TEMPERATURE_CELSIUS.toKelvin(dewpoint);
     dewpoint = _currentOutputUnit.fromReference(dewpoint);
 
