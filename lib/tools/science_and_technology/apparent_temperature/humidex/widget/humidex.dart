@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/logic/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:intl/intl.dart';
 
 class Humidex extends StatefulWidget {
@@ -21,6 +25,8 @@ class Humidex extends StatefulWidget {
 class _HumidexState extends State<Humidex> {
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
+
+  Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _HumidexState extends State<Humidex> {
           value: _currentHumidity,
           title: i18n(context, 'common_measure_humidity'),
           initialUnit: HUMIDITY,
-          min: 0.1,
+          min: 0.0,
           max: 100.0,
           unitList: humidity,
           onChanged: (value) {
@@ -58,6 +64,10 @@ class _HumidexState extends State<Humidex> {
 
   Widget _buildOutput(BuildContext context) {
     double humidex = calculateHumidex(_currentTemperature, _currentHumidity);
+
+    double dewpoint = caluculateDewpoint(_currentTemperature, _currentHumidity);
+    dewpoint = TEMPERATURE_CELSIUS.toKelvin(dewpoint);
+    dewpoint = _currentOutputUnit.fromReference(dewpoint);
 
     String hintT = '';
     if (_currentTemperature < 21) {
@@ -75,22 +85,54 @@ class _HumidexState extends State<Humidex> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
+          Expanded(
+            flex: 4,
+            child: Text(i18n(context, 'humidex_title')),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN), child: const Text('')),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                child: GCWOutput(child: NumberFormat('#.###').format(humidex))),
+          ),
+        ])),
+        GCWOutput(
+            suppressCopyButton: true,
+            child: Row(children: <Widget>[
               Expanded(
                 flex: 4,
-                child: Text(i18n(context, 'humidex_title')),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text(''),
+                child: Text(i18n(context, 'common_measure_dewpoint')),
               ),
               Expanded(
                 flex: 2,
-                child: GCWOutput(
-                    child: NumberFormat('#.###').format(humidex)),
+                //child: Text(_currentOutputUnit.symbol),
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                    child: GCWUnitDropDown(
+                      value: _currentOutputUnit,
+                      onlyShowSymbols: true,
+                      unitList: temperatures,
+                      unitCategory: UNITCATEGORY_TEMPERATURE,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentOutputUnit = value;
+                        });
+                      },
+                    )),
               ),
-            ]
-            )
-        ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                    child: GCWOutput(child: NumberFormat('#.###').format(dewpoint))),
+              ),
+            ])),
+        const GCWDivider(),
         Row(
           children: [
             Container(

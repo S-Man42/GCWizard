@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
@@ -75,33 +76,31 @@ class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'summersimmerindex_title')),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text(''),
-              ),
-              Expanded(
-                flex: 2,
-                child: GCWOutput(
-                    child: NumberFormat('#.###').format(summersimmer)),
-              ),
-            ]
-            )
-        ),
+          Expanded(
+            flex: 4,
+            child: Text(i18n(context, 'summersimmerindex_title')),
+          ),
+          const Expanded(
+            flex: 1,
+            child: Text(''),
+          ),
+          Expanded(
+            flex: 2,
+            child: GCWOutput(child: NumberFormat('#.###').format(summersimmer)),
+          ),
+        ])),
+        const GCWDivider(),
         Row(
           children: [
             Container(
-                width: 50,
-                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                child: GCWIconButton(
-                  icon: Icons.wb_sunny,
-                  iconColor: _colorSummerSimmer(summersimmer),
-                  backgroundColor: const Color(0xFF4d4d4d),
-                  onPressed: () {},
-                ),
+              width: 50,
+              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+              child: GCWIconButton(
+                icon: Icons.wb_sunny,
+                iconColor: _colorSummerSimmer(summersimmer),
+                backgroundColor: const Color(0xFF4d4d4d),
+                onPressed: () {},
+              ),
             ),
             Expanded(
               child: GCWOutput(
