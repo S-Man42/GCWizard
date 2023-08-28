@@ -349,14 +349,8 @@ void main() {
 
      {'formula' : '1+ BWW(A) + cs(12) + bww(A) * 2', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
 
-     {'formula' : 'bWw(c)', 'values': {
-     'A': '"1-3"',
-     'B': '"1-3"',
-     'C': '"1-3"'}, 'expectedOutput' : ''},
-     {'formula' : 'bWw(c)', 'values': {
-      'A': '"1-3"',
-      'B': '"1-3"',
-      'C': '"1-3"'}, 'expectedOutput' : ''},
+     {'formula' : 'bWw(c)', 'values': {'A': '"1-3"', 'B': '"1-3"', 'C': '"1-3"'}, 'expectedOutput' : ''},
+     {'formula' : 'bWw(c)', 'values': {'A': '"1-3"', 'B': '"1-3"', 'C': '"1-3"'}, 'expectedOutput' : ''},
 
      {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': {'A': 'ABC'}, 'expectedOutput' : ''},
      {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
@@ -373,29 +367,14 @@ void main() {
      {'formula' : 'len(A,B,C)', 'values': {'A': '"ABC"'}, 'expectedOutput' : ''},
      {'formula' : 'len(A,B,C")', 'values': <String, String>{}, 'expectedOutput' : ''},
      {'formula' : 'len(A,B,C")', 'values': {'A': '"ABC'}, 'expectedOutput' : ''},
-     {'formula' : 'len(A,B,C)', 'values': [
-      {'A': '"ABC'},
-      {'C': 'C"'},
-     ], 'expectedOutput' : ''},
+     {'formula' : 'len(A,B,C)', 'values': {'A': '"ABC', 'C': 'C"'}, 'expectedOutput' : ''},
 
      {'formula' : 'len("ABC") * bww(55)', 'values': <String, String>{}, 'expectedOutput' : ''},
      {'formula' : 'cs(bww(\'ABCDE\')) * len(55)', 'values': <String, String>{}, 'expectedOutput' : ''},
 
-     {'formula' : 'bww(AB)', 'values': {
-     'A': '',
-     'B': 'C',
-     }, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(C)', 'state': 'error'}]}
-     },
-     {'formula' : 'bww(AB)', 'values': {
-      'A': '',
-      'B': '"C"',
-     }, 'expectedOutput' : ''},
-     {'formula' : 'bww(AB)', 'values': {
-     'A': '',
-     'B': 'C',
-     'C': '"A"',
-     }, 'expectedOutput' : ''
-     },
+     {'formula' : 'bww(AB)', 'values': {'A': '', 'B': 'C',}, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(C)', 'state': 'error'}]}},
+     {'formula' : 'bww(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : ''},
+     {'formula' : 'bww(AB)', 'values': {'A': '', 'B': 'C', 'C': '"A"'}, 'expectedOutput' : ''},
 
      {'formula' : 'len(A)', 'values':  {'A': ''}, 'expectedOutput' : ''},
      {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : ''},
