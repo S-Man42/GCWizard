@@ -3,16 +3,24 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/logic/utci.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
 
@@ -25,10 +33,18 @@ class UTCI extends StatefulWidget {
 
 class UTCIState extends State<UTCI> {
   double _currentTemperature = 0.0;
+  double _currentTemperatureMRT = 0.0;
   double _currentHumidity = 0.0;
   double _currentWindSpeed = 0.5;
 
+  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  BaseCoordinate _currentCoords = defaultBaseCoordinate;
+  double _currentAirPressure = 1013.25;
+  bool _currentAreaUrban = true;
+  CLOUD_COVER _currentCloudCover = CLOUD_COVER.CLEAR_0;
+
   Temperature _currentOutputUnit = TEMPERATURE_CELSIUS;
+  GCWSwitchPosition _currentTMRTmode = GCWSwitchPosition.left;
 
   @override
   Widget build(BuildContext context) {
@@ -73,20 +89,111 @@ class UTCIState extends State<UTCI> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+            title: i18n(context, 'utci_tmrt'),
+            leftValue: i18n(context, 'utci_tmrt_known'),
+            rightValue: i18n(context, 'utci_tmrt_calculate'),
+            onChanged: (value) {
+              setState(() {
+                _currentTMRTmode = value;
+              });
+            },
+            value: _currentTMRTmode),
+        _currentTMRTmode == GCWSwitchPosition.left
+        ? GCWUnitInput(
+          value: _currentTemperatureMRT,
+          title: i18n(context, 'common_measure_temperature'),
+          initialUnit: TEMPERATURE_CELSIUS,
+          min: -50.0,
+          max: 50.0,
+          unitList: temperatures,
+          onChanged: (value) {
+            setState(() {
+              _currentTemperatureMRT = TEMPERATURE_CELSIUS.fromKelvin(value);
+            });
+          },
+        )
+        : Column(
+          children: <Widget>[
+            GCWExpandableTextDivider(
+              text: i18n(context, 'common_location'),
+              child: GCWCoords(
+                title: i18n(context, 'common_location'),
+                coordsFormat: _currentCoords.format,
+                onChanged: (BaseCoordinate ret) {
+                  setState(() {
+                    _currentCoords = ret;
+                  });
+                },
+              ),
+            ),
+            GCWExpandableTextDivider(
+              text: i18n(context, 'astronomy_postion_datetime'),
+              child: GCWDateTimePicker(
+                config: const {
+                  DateTimePickerConfig.DATE,
+                  DateTimePickerConfig.TIME,
+                  DateTimePickerConfig.TIMEZONES,
+                  DateTimePickerConfig.SECOND_AS_INT
+                },
+                onChanged: (datetime) {
+                  setState(() {
+                    _currentDateTime = datetime;
+                  });
+                },
+              ),
+            ),
+            GCWUnitInput(
+              value: _currentAirPressure,
+              title: i18n(context, 'common_measure_airpressure'),
+              initialUnit: PRESSURE_MBAR,
+              unitList: allPressures(),
+              onChanged: (value) {
+                setState(() {
+                  _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
+                });
+              },
+            ),
+            GCWDropDown(
+              title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
+              value: _currentCloudCover,
+              onChanged: (value) {
+                setState(() {
+                  _currentCloudCover = value;
+                });
+              },
+              items: CLOUD_COVER_LIST.entries.map((entry) {
+                return GCWDropDownMenuItem(
+                  value: entry.key,
+                  child: i18n(context, entry.value),
+                );
+              }).toList(),
+            ),
+            GCWTwoOptionsSwitch(
+              title: i18n(context, 'wet_bulb_globe_temperature_area'),
+              leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
+              rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
+              value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+              onChanged: (value) {
+                setState(() {
+                  _currentAreaUrban = value == GCWSwitchPosition.left;
+                });
+              },
+            ),
+          ],
+        ),
         _buildOutput(context)
       ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
-    String unit = '';
     String hintUTCI = '';
 
-    double UTCI_c = calculateUTCI(_currentTemperature, _currentHumidity, _currentWindSpeed);
+    double UTCI_c = calculateUTCI(_currentTemperature, _currentHumidity, _currentWindSpeed, _currentTemperatureMRT, _currentTMRTmode == GCWSwitchPosition.left);
     double UTCI = TEMPERATURE_CELSIUS.toKelvin(UTCI_c);
     UTCI = _currentOutputUnit.fromReference(UTCI);
 
-    unit = _currentOutputUnit.symbol;
     hintUTCI = _calculateHintUTCI(UTCI_c);
 
     return Column(

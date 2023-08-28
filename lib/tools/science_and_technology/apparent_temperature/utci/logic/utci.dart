@@ -29,7 +29,7 @@ final Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
 
 
 
-double calculateUTCI(double Ta, double RH, double va) {
+double calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculateTmrt) {
   // http://james-ramsden.com/calculate-utci-c-code/
   // http://www.utci.org/utci_doku.php
   // http://www.utci.org/public/UTCI%20Program%20Code/UTCI_a002.f90
@@ -77,37 +77,37 @@ double calculateUTCI(double Ta, double RH, double va) {
   //     -----------------------------------------------
   //
 
-  double Tdew = _calcTDewpoint(RH, Ta);
-  double Tg = _calcTg(Ta, va, Tdew);
-  double Tmrt = _calcTmrt(Ta, va, Tg);
+  double Tdew = _calculateTDewpoint(RH, Ta);
+  double Tg = _calculateTglobe(Ta, va, Tdew);
+  if (calculateTmrt) Tmrt = _calculateTmrt(Ta, va, Tg);
   double UTCI = _calcUTCI(Ta, va, Tmrt, RH);
 
   return UTCI;
 }
 
-double _calcTDewpoint(double HR, double Ta){
+double _calculateTDewpoint(double relativeHumidity, double ambientTemperature){
   // https://www.vcalc.com/wiki/rklarsen/Calculating+Dew+Point+Temperature+from+Relative+Humidity
   double B1 = 243.04;
   double A1 = 17.625;
 
-  return (HR != 0.0) ? (B1 * (log(HR / 100) / log(e) + (A1 * Ta) / (B1 + Ta)))/(A1 - log(HR/100) / log(e) - A1 * Ta / (B1 + Ta)) : 0.0;
+  return (relativeHumidity != 0.0) ? (B1 * (log(relativeHumidity / 100) / log(e) + (A1 * ambientTemperature) / (B1 + ambientTemperature)))/(A1 - log(relativeHumidity/100) / log(e) - A1 * ambientTemperature / (B1 + ambientTemperature)) : 0.0;
 }
 
-double _calcTmrt(double Ta, double va, double Tg){
+double _calculateTmrt(double Tair, double va, double Tglobe){
   // https://www.novalynx.com/manuals/210-4417-manual.pdf
   //   mrt (°C) = tg + 2.42V (tg - ta)
   //     V: air current cm/sec
   //     ta: temperature of the air outside of the globe
   //     tg: globe thermometer temperature
   print('calc Tmrt ');
-  print('- Ta '+Ta.toString());
-  print('- Tg '+Tg.toString());
+  print('- Ta '+Tair.toString());
+  print('- Tg '+Tglobe.toString());
   print('- va '+va.toString());
-  print((Tg + 2.42 * va * 100 * (Tg - Ta)).toString());
-  return Tg + 2.42 * va * 100 * (Tg - Ta);
+  print((Tglobe + 2.42 * va * 100 * (Tglobe - Tair)).toString());
+  return Tglobe + 2.42 * va * 100 * (Tglobe - Tair);
 }
 
-double _calcTg(
+double _calculateTglobe(
     double Ta, // deg C°
     double va, // m/s
     double Tdew, // deg C°
