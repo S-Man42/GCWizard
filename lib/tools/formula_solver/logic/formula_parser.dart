@@ -25,16 +25,17 @@ const _MAX_EXPANDED = 100;
 
 const RECURSIVE_FORMULA_REPLACEMENT_START = '{\u0000';
 const RECURSIVE_FORMULA_REPLACEMENT_END = '\u0000}';
-const SAFED_FUNCTION_MARKER = '\x01';
-const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
-const SAFED_TEXTS_MARKER = '\x03';
-const STRING_MARKER = ''; // \x04
-const STRING_MARKER_APOSTROPHE = STRING_MARKER + "'" + STRING_MARKER;
-const STRING_MARKER_QUOTE = STRING_MARKER + '"' + STRING_MARKER;
+const _SAFED_FUNCTION_MARKER = '\x01';
+const _SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
+const _SAFED_TEXTS_MARKER = '\x03';
+const _STRING_MARKER_APOSTROPHE = "'";
+const _STRING_MARKER_QUOTE = '"';
 
 const _PHI = 1.6180339887498948482045868343656381177;
 const _SQRT3 = 1.73205080756887729352744634150587236;
 const _SQRT5 = 2.23606797749978969640917366873127623;
+
+var _SUPPORTED_OPERATION_CHARACTERS = RegExp(r'[+\-*!^%/]');
 
 class FormulaParser {
   final ContextModel _context = ContextModel();
@@ -126,8 +127,8 @@ class FormulaParser {
   };
 
   static RegExp _contentStringRegExp(String value) {
-    var RegExpApostrophe = RegExp(r'\s*\' + STRING_MARKER_APOSTROPHE + r'(.*?)\' + STRING_MARKER_APOSTROPHE + r'\s*');
-    var RegExpQuote = RegExp(r'\s*\' + STRING_MARKER_QUOTE + r'(.*?)\' + STRING_MARKER_QUOTE + r'\s*');
+    var RegExpApostrophe = RegExp(r'^\s*\(?\s*\' + _STRING_MARKER_APOSTROPHE + r'(.*?)\' + _STRING_MARKER_APOSTROPHE + r'\)?\s*\s*');
+    var RegExpQuote = RegExp(r'^\s*\(?\s*\' + _STRING_MARKER_QUOTE + r'(.*?)\' + _STRING_MARKER_QUOTE + r'\)?\s*\s*');
 
     var regexes = SplayTreeMap<int, RegExp>();
 
@@ -152,11 +153,8 @@ class FormulaParser {
 
     do {
       var regExp = _contentStringRegExp(_value);
-
-      while (regExp.hasMatch(_value)) {
-        str += regExp.firstMatch(_value)!.group(1)!;
-        _value = _value.replaceFirstMapped(regExp, (match) => '');
-      }
+      str += regExp.firstMatch(_value)!.group(1)!;
+      _value = _value.replaceFirstMapped(regExp, (match) => '');
     } while (_value.isNotEmpty);
 
     return str;
@@ -201,10 +199,6 @@ class FormulaParser {
     return result;
   }
 
-  String _markedStringChar (String stringChar) {
-    return STRING_MARKER + stringChar + STRING_MARKER;
-  }
-
   String _safeTexts(String formula) {
     var safedTextsFormula = '';
 
@@ -218,8 +212,8 @@ class FormulaParser {
           currentString = '';
         } else {
           if (stringChar == char) {
-            var marker = '$SAFED_TEXTS_MARKER${safedTextsMap.length}$SAFED_TEXTS_MARKER';
-            safedTextsMap.putIfAbsent(marker, () => _markedStringChar(stringChar!) + currentString + _markedStringChar(stringChar));
+            var marker = '$_SAFED_TEXTS_MARKER${safedTextsMap.length}$_SAFED_TEXTS_MARKER';
+            safedTextsMap.putIfAbsent(marker, () => stringChar! + currentString + stringChar);
             safedTextsFormula += marker;
 
             currentString = '';
@@ -237,7 +231,7 @@ class FormulaParser {
         }
       }
     }
-    safedTextsFormula += (stringChar == null ? '' : _markedStringChar(stringChar)) + currentString;
+    safedTextsFormula += (stringChar ?? '') + currentString;
 
     return safedTextsFormula;
   }
@@ -256,7 +250,7 @@ class FormulaParser {
         var group = m.group(0);
         if (group == null) continue;
         safedFormulasMap.putIfAbsent(
-            group, () => '$SAFED_FUNCTION_MARKER${safedFormulasMap.length}$SAFED_FUNCTION_MARKER');
+            group, () => '$_SAFED_FUNCTION_MARKER${safedFormulasMap.length}$_SAFED_FUNCTION_MARKER');
       }
       formula = substitution(formula, safedFormulasMap);
     }
@@ -276,7 +270,7 @@ class FormulaParser {
       var group = m.group(0);
       if (group == null) continue;
       safedFormulaReplacementMap.putIfAbsent(group,
-          () => '$SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$SAFED_RECURSIVE_FORMULA_MARKER');
+          () => '$_SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$_SAFED_RECURSIVE_FORMULA_MARKER');
       formula = substitution(formula, safedFormulaReplacementMap);
     }
 
@@ -339,14 +333,9 @@ class FormulaParser {
     while (i > 0 && !fullySubstituted) {
       var tempSubstitutedFormula = substitution(substitutedFormula, fixedValues, caseSensitive: false);
       fullySubstituted = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
-
       substitutedFormula = tempSubstitutedFormula;
       i--;
     }
-    //TODO
-    // replace text values non-recursively afterwards
-    // because C = FLOWER, the letters F,L,O,W,E,R should not be treated as new variables
-    // substitutedFormula = substitution(substitutedFormula,  switchMapKeyValue(safedTextsMap), caseSensitive: false);
 
     //expand formulas with interpolation values if exist
     // --> evaluate each interpolated result
@@ -410,6 +399,10 @@ class FormulaParser {
 
   bool _isString(String formula) {
     var _formula = formula.trim();
+    if (_formula.startsWith('(') && _formula.endsWith(')')) {
+      _formula = _formula.substring(1, _formula.length - 1).trim();
+    }
+
     if (_formula.startsWith('"') && _formula.endsWith('"')) {
       return true;
     }
@@ -459,13 +452,24 @@ class FormulaParser {
     return out;
   }
 
+  String tryGetOnlyStrings(String formula) {
+    try {
+      return _contentFromString(formula);
+    } catch(e) {
+      throw Exception();
+    }
+  }
+
   String _evaluateFormula(String formula) {
     // Remove Brackets; the formula evaluation only needs the internal content
     var hasBrackets = formula.startsWith('[') && formula.endsWith(']');
     formula = hasBrackets ? formula.substring(1, formula.length - 1) : formula;
 
-    formula = _evaluateTextFunctions(formula);
+    try {
+      return tryGetOnlyStrings(formula);
+    } catch(e) {}
 
+    formula = _evaluateTextFunctions(formula);
     Expression expression = parser.parse(formula.toLowerCase());
     var result = expression.evaluate(EvaluationType.REAL, _context);
     if (result == null) throw Exception();
@@ -481,12 +485,9 @@ class FormulaParser {
 
       if (value.isEmpty) {
         value = key;
-      } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
-        var _value = value.trim();
-        if (
-          (_value.startsWith('(') && _value.endsWith(")"))
-          || !_isString(value)
-        ) {
+      } else if (element.type == null || element.type == FormulaValueType.FIXED) {
+        value = value.trim();
+        if (value.contains(_SUPPORTED_OPERATION_CHARACTERS) && !_isString(value)) {
           value = '($value)';
         }
       }
@@ -501,7 +502,7 @@ class FormulaParser {
         value = safedFormulas;
       }
 
-      val.add(FormulaValue(key, value, type: element.type));
+      val.add(FormulaValue(key, value, type: element.type ?? FormulaValueType.FIXED));
     }
     return val;
   }
