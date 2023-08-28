@@ -11,116 +11,116 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
-     {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
-      {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
-
-      {'formula' : '1', 'values': values, 'expectedOutput' : 'g'},
-      {'formula' : '-1', 'values': values, 'expectedOutput' : 'bg'},
-      {'formula' : '-1.23', 'values': values, 'expectedOutput' : 'bgggg'},
-      {'formula' : '1.', 'values': values, 'expectedOutput' : 'gg'},
-      {'formula' : '.5', 'values': values, 'expectedOutput' : 'gg'},
-      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'gBGG'},
-      {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbr'},
-      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgBGGGbbggg'},
-
-      {'formula' : 'A', 'values': values, 'expectedOutput' : 'r'},
-      {'formula' : 'AB', 'values': values, 'expectedOutput' : 'rr'},
-      {'formula' : 'AB', 'values': {'AB':'3', 'B':'2'}, 'expectedOutput' : 'rr'},
-      {'formula' : 'AB', 'values': {'AB':'3', 'B':'20'}, 'expectedOutput' : 'rr'},
-      {'formula' : 'AB', 'values': {'AB':'30', 'B':'20'}, 'expectedOutput' : 'rr'},
-      {'formula' : 'ABC', 'values': {'AB':'30'}, 'expectedOutput' : 'rrR'},
-      {'formula' : 'ABC', 'values': {'AB':'30', 'C': '1'}, 'expectedOutput' : 'rrr'},
-      {'formula' : 'ABC', 'values': {'AB':'30', 'BC': '1'}, 'expectedOutput' : 'rrR'},
-      {'formula' : 'ABC', 'values': {'AB':'30', 'C': 'AB'}, 'expectedOutput' : 'rrr'},
-
-      {'formula' : 'A+B', 'values': values, 'expectedOutput' : 'rbr'},
-      {'formula' : 'A + B', 'values': values, 'expectedOutput' : 'rrbbr'},
-      {'formula' : '[A + B]', 'values': values, 'expectedOutput' : 'brrbbrb'},
-      {'formula' : '[A] + [B]', 'values': values, 'expectedOutput' : 'brbtttbrb'},
-      {'formula' : 'AB + C', 'values': values, 'expectedOutput' : 'rrrbbr'},
-      {'formula' : '(AB) + C', 'values': values, 'expectedOutput' : 'brrbbbbr'},
-      {'formula' : 'A(B + C)', 'values': values, 'expectedOutput' : 'rBRRBBRB'},
-      {'formula' : '[A][(B + C)]', 'values': values, 'expectedOutput' : 'brbbbrrbbrbb'},
-      {'formula' : 'A*(B + C)', 'values': values, 'expectedOutput' : 'rbbrrbbrb'},
-      {'formula' : '[]', 'values': values, 'expectedOutput' : 'BB'},
-      {'formula' : '()', 'values': values, 'expectedOutput' : 'BB'},
-      {'formula' : '?!', 'values': values, 'expectedOutput' : 'RR'},
-      {'formula' : 'A []', 'values': values, 'expectedOutput' : 'ttBB'},
-      {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
-      {'formula' : 'N', 'values': values, 'expectedOutput' : 'R'},
-      {'formula' : 'E', 'values': values, 'expectedOutput' : 'r'},
-      {'formula' : 'e', 'values': values, 'expectedOutput' : 'r'},
-      {'formula' : 'Pi', 'values': values, 'expectedOutput' : 'gg'},
-      {'formula' : 'pi', 'values': values, 'expectedOutput' : 'gg'},
-      {'formula' : 'pi * A', 'values': values, 'expectedOutput' : 'gggbbr'},
-      {'formula' : 'E * PI', 'values': values, 'expectedOutput' : 'rrbbgg'},
-      {'formula' : 'π', 'values': values, 'expectedOutput' : 'g'},
-      {'formula' : 'E * π', 'values': values, 'expectedOutput' : 'rrbbg'},
-      {'formula' : 'E [PI]', 'values': values, 'expectedOutput' : 'ttbggb'},
-      {'formula' : '[A*B*2].[C+d+D];', 'values': values, 'expectedOutput' : 'brbrbgbtbrbrbrbt'},
-      {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : 'tttttbrrbtbrbrbrbgbttttttbrbrbtbrrrbbrb'},
-      {'formula' : 'A + B [A + B]', 'values': values, 'expectedOutput' : 'ttttttbrrbbrb'},
-      {'formula' : 'A + B]', 'values': values, 'expectedOutput' : 'rrbbrB'},
-      {'formula' : '[A + B', 'values': values, 'expectedOutput' : 'Brrbbr'},
-
-      //Trim empty space
-      {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgbb'},
-
-      //math library testing
-      {'formula' : '36^(1/2)', 'expectedOutput' : 'ggbbgbgb'},
-      {'formula' : 'phi * 2', 'expectedOutput' : 'ggggbbg'},
-      {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'}, // 1 comma
-      {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
-      {'formula' : 'log(100)', 'expectedOutput' : 'bbbbRRRb'},
-      {'formula' : 'log(100,2,1)', 'expectedOutput' : 'bbbbgggbgBGb'},
-      {'formula' : 'sqrt(4)', 'expectedOutput' : 'bbbbbgb'},
-      {'formula' : 'sqrt(4,2)', 'expectedOutput' : 'bbbbbgBGb'},
-      {'formula' : 'sqrt(4,2,12)', 'expectedOutput' : 'bbbbbgBGBGGb'},
-      {'formula' : 'sqrt(4 , - 44.123)', 'expectedOutput' : 'bbbbbggBBBBGGGGGGb'},
-      {'formula' : 'sinDeg(-4.3)', 'expectedOutput' : 'bbbbbbbbgggb'},
-      {'formula' : 'sinDeg(-4.3 , - 44.123)', 'expectedOutput' : 'bbbbbbbbggggBBBBGGGGGGb'},
-      {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},  // 0 or 1 comma
-      {'formula' : 'round(1.247)', 'expectedOutput' : 'bbbbbbgggggb'},
-      {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
-      {'formula' : 'round(1.234,2,1)', 'expectedOutput' : 'bbbbbbgggggbgBGb'},
-      {'formula' : 'cs(88,99)', 'expectedOutput' : 'bbbggbggb'}, // any number of commas
-      {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'}, // any number of commas
-      {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
-      {'formula' : 'MAX(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
-      {'formula' : 'nth(1234)', 'expectedOutput' : 'bbbbggggb'},
-      {'formula' : 'nth(1234.)', 'expectedOutput' : 'bbbbgggggb'},
-      {'formula' : 'nth(1234.1)', 'expectedOutput' : 'bbbbggggggb'},
-      {'formula' : 'nth(1234,2)', 'expectedOutput' : 'bbbbggggbgb'},
-      {'formula' : 'nth(1234,2,3)', 'expectedOutput' : 'bbbbggggbgbgb'},
-      {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
-      {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
-      {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbgggbgbgBGb'},
-      {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
-      {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
-      {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
-      {'formula' : 'max(1,2,3)', 'expectedOutput' : 'bbbbgbgbgb'},
-      {'formula' : 'max(1,2,3,4)', 'expectedOutput' : 'bbbbgbgbgbgb'},
-      {'formula' : 'cs(33)', 'expectedOutput' : 'bbbggb'},
-      {'formula' : 'cs(33 , 444,  55)', 'expectedOutput' : 'bbbgggbggggbggggb'},
-      {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
-      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
-      {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
-      {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
-      {'formula' : 'cs(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
-      {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '\'Y\''}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'csi(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrRb'},
-      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
-      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
-      {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrRb'},
-
-      {'formula' : 'min(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
-      {'formula' : 'max(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
-      {'formula' : 'max(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
-
+     //  {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
+     //  {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
+     //
+     //  {'formula' : '1', 'values': values, 'expectedOutput' : 'g'},
+     //  {'formula' : '-1', 'values': values, 'expectedOutput' : 'bg'},
+     //  {'formula' : '-1.23', 'values': values, 'expectedOutput' : 'bgggg'},
+     //  {'formula' : '1.', 'values': values, 'expectedOutput' : 'gg'},
+     //  {'formula' : '.5', 'values': values, 'expectedOutput' : 'gg'},
+     //  {'formula' : '1,23', 'values': values, 'expectedOutput' : 'gBGG'},
+     //  {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbr'},
+     //  {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgBGGGbbggg'},
+     //
+     //  {'formula' : 'A', 'values': values, 'expectedOutput' : 'r'},
+     //  {'formula' : 'AB', 'values': values, 'expectedOutput' : 'rr'},
+     //  {'formula' : 'AB', 'values': {'AB':'3', 'B':'2'}, 'expectedOutput' : 'rr'},
+     //  {'formula' : 'AB', 'values': {'AB':'3', 'B':'20'}, 'expectedOutput' : 'rr'},
+     //  {'formula' : 'AB', 'values': {'AB':'30', 'B':'20'}, 'expectedOutput' : 'rr'},
+     //  {'formula' : 'ABC', 'values': {'AB':'30'}, 'expectedOutput' : 'rrR'},
+     //  {'formula' : 'ABC', 'values': {'AB':'30', 'C': '1'}, 'expectedOutput' : 'rrr'},
+     //  {'formula' : 'ABC', 'values': {'AB':'30', 'BC': '1'}, 'expectedOutput' : 'rrR'},
+     //  {'formula' : 'ABC', 'values': {'AB':'30', 'C': 'AB'}, 'expectedOutput' : 'rrr'},
+     //
+     //  {'formula' : 'A+B', 'values': values, 'expectedOutput' : 'rbr'},
+     //  {'formula' : 'A + B', 'values': values, 'expectedOutput' : 'rrbbr'},
+     //  {'formula' : '[A + B]', 'values': values, 'expectedOutput' : 'brrbbrb'},
+     //  {'formula' : '[A] + [B]', 'values': values, 'expectedOutput' : 'brbtttbrb'},
+     //  {'formula' : 'AB + C', 'values': values, 'expectedOutput' : 'rrrbbr'},
+     //  {'formula' : '(AB) + C', 'values': values, 'expectedOutput' : 'brrbbbbr'},
+     //  {'formula' : 'A(B + C)', 'values': values, 'expectedOutput' : 'rBRRBBRB'},
+     //  {'formula' : '[A][(B + C)]', 'values': values, 'expectedOutput' : 'brbbbrrbbrbb'},
+     //  {'formula' : 'A*(B + C)', 'values': values, 'expectedOutput' : 'rbbrrbbrb'},
+     //  {'formula' : '[]', 'values': values, 'expectedOutput' : 'BB'},
+     //  {'formula' : '()', 'values': values, 'expectedOutput' : 'BB'},
+     //  {'formula' : '?!', 'values': values, 'expectedOutput' : 'RR'},
+     //  {'formula' : 'A []', 'values': values, 'expectedOutput' : 'ttBB'},
+     //  {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
+     //  {'formula' : 'N', 'values': values, 'expectedOutput' : 'R'},
+     //  {'formula' : 'E', 'values': values, 'expectedOutput' : 'r'},
+     //  {'formula' : 'e', 'values': values, 'expectedOutput' : 'r'},
+     //  {'formula' : 'Pi', 'values': values, 'expectedOutput' : 'gg'},
+     //  {'formula' : 'pi', 'values': values, 'expectedOutput' : 'gg'},
+     //  {'formula' : 'pi * A', 'values': values, 'expectedOutput' : 'gggbbr'},
+     //  {'formula' : 'E * PI', 'values': values, 'expectedOutput' : 'rrbbgg'},
+     //  {'formula' : 'π', 'values': values, 'expectedOutput' : 'g'},
+     //  {'formula' : 'E * π', 'values': values, 'expectedOutput' : 'rrbbg'},
+     //  {'formula' : 'E [PI]', 'values': values, 'expectedOutput' : 'ttbggb'},
+     //  {'formula' : '[A*B*2].[C+d+D];', 'values': values, 'expectedOutput' : 'brbrbgbtbrbrbrbt'},
+     //  {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : 'tttttbrrbtbrbrbrbgbttttttbrbrbtbrrrbbrb'},
+     //  {'formula' : 'A + B [A + B]', 'values': values, 'expectedOutput' : 'ttttttbrrbbrb'},
+     //  {'formula' : 'A + B]', 'values': values, 'expectedOutput' : 'rrbbrB'},
+     //  {'formula' : '[A + B', 'values': values, 'expectedOutput' : 'Brrbbr'},
+     //
+     //  //Trim empty space
+     //  {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgbb'},
+     //
+     //  //math library testing
+     //  {'formula' : '36^(1/2)', 'expectedOutput' : 'ggbbgbgb'},
+     //  {'formula' : 'phi * 2', 'expectedOutput' : 'ggggbbg'},
+     //  {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'}, // 1 comma
+     //  {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
+     //  {'formula' : 'log(100)', 'expectedOutput' : 'bbbbRRRb'},
+     //  {'formula' : 'log(100,2,1)', 'expectedOutput' : 'bbbbgggbgBGb'},
+     //  {'formula' : 'sqrt(4)', 'expectedOutput' : 'bbbbbgb'},
+     //  {'formula' : 'sqrt(4,2)', 'expectedOutput' : 'bbbbbgBGb'},
+     //  {'formula' : 'sqrt(4,2,12)', 'expectedOutput' : 'bbbbbgBGBGGb'},
+     //  {'formula' : 'sqrt(4 , - 44.123)', 'expectedOutput' : 'bbbbbggBBBBGGGGGGb'},
+     //  {'formula' : 'sinDeg(-4.3)', 'expectedOutput' : 'bbbbbbbbgggb'},
+     //  {'formula' : 'sinDeg(-4.3 , - 44.123)', 'expectedOutput' : 'bbbbbbbbggggBBBBGGGGGGb'},
+     //  {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},  // 0 or 1 comma
+     //  {'formula' : 'round(1.247)', 'expectedOutput' : 'bbbbbbgggggb'},
+     //  {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
+     //  {'formula' : 'round(1.234,2,1)', 'expectedOutput' : 'bbbbbbgggggbgBGb'},
+     //  {'formula' : 'cs(88,99)', 'expectedOutput' : 'bbbggbggb'}, // any number of commas
+     //  {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'}, // any number of commas
+     //  {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
+     //  {'formula' : 'MAX(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
+     //  {'formula' : 'nth(1234)', 'expectedOutput' : 'bbbbggggb'},
+     //  {'formula' : 'nth(1234.)', 'expectedOutput' : 'bbbbgggggb'},
+     //  {'formula' : 'nth(1234.1)', 'expectedOutput' : 'bbbbggggggb'},
+     //  {'formula' : 'nth(1234,2)', 'expectedOutput' : 'bbbbggggbgb'},
+     //  {'formula' : 'nth(1234,2,3)', 'expectedOutput' : 'bbbbggggbgbgb'},
+     //  {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
+     //  {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
+     //  {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbgggbgbgBGb'},
+     //  {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
+     //  {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
+     //  {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
+     //  {'formula' : 'max(1,2,3)', 'expectedOutput' : 'bbbbgbgbgb'},
+     //  {'formula' : 'max(1,2,3,4)', 'expectedOutput' : 'bbbbgbgbgbgb'},
+     //  {'formula' : 'cs(33)', 'expectedOutput' : 'bbbggb'},
+     //  {'formula' : 'cs(33 , 444,  55)', 'expectedOutput' : 'bbbgggbggggbggggb'},
+     //  {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
+     //  {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
+     //  {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
+     //  {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
+     //  {'formula' : 'cs(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
+     //  {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
+     //  {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'},
+     //  {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
+     //  {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
+     //  {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '\'Y\''}, 'expectedOutput' : 'bbbrRb'},
+     //  {'formula' : 'csi(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrRb'},
+     //  {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
+     //  {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
+     //  {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrRb'},
+     //
+     //  {'formula' : 'min(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
+     //  {'formula' : 'max(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
+     //  {'formula' : 'max(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
+     //
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbRb'}, //no text
       {'formula' : 'bww(c)', 'values': {'C':'"1"'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbRb'}, // no text

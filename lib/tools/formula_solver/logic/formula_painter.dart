@@ -571,9 +571,9 @@ class FormulaPainter {
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
     var char = hasError ? VariableError : Variable;
-    print(_parentFunctionName! + ' ' + parts[0]  + ' ' + hasError.toString());
+    //print(_parentFunctionName! + ' ' + parts[0]  + ' ' + hasError.toString());
     if (hasError && _wordFunction(_parentFunctionName)) {
-      print(_parentFunctionName! + ' ' + parts[0]);
+      //print(_parentFunctionName! + ' ' + parts[0]);
       char = _coloredWordFunctionVariable(parts[0]);
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
