@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
@@ -27,9 +28,9 @@ const RECURSIVE_FORMULA_REPLACEMENT_END = '\u0000}';
 const SAFED_FUNCTION_MARKER = '\x01';
 const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
 const SAFED_TEXTS_MARKER = '\x03';
-const STRING_MARKER = '\x04';
-const STRING_MARKER_APOSTROPHE = '\x04\'\x04';
-const STRING_MARKER_QUOTE = '\x04"\x04';
+const STRING_MARKER = ''; // \x04
+const STRING_MARKER_APOSTROPHE = STRING_MARKER + "'" + STRING_MARKER;
+const STRING_MARKER_QUOTE = STRING_MARKER + '"' + STRING_MARKER;
 
 const _PHI = 1.6180339887498948482045868343656381177;
 const _SQRT3 = 1.73205080756887729352744634150587236;
@@ -124,29 +125,39 @@ class FormulaParser {
     },
   };
 
-  static String _contentFromString(String value) {
-    var RegExpApostrophe = RegExp(r'\s*' + STRING_MARKER_APOSTROPHE + r'(.*?)' + STRING_MARKER_APOSTROPHE + r'\s*');
-    var RegExpQuote = RegExp(r'\s*' + STRING_MARKER_QUOTE + r'(.*?)' + STRING_MARKER_QUOTE + r'\s*');
+  static RegExp _contentStringRegExp(String value) {
+    var RegExpApostrophe = RegExp(r'\s*\' + STRING_MARKER_APOSTROPHE + r'(.*?)\' + STRING_MARKER_APOSTROPHE + r'\s*');
+    var RegExpQuote = RegExp(r'\s*\' + STRING_MARKER_QUOTE + r'(.*?)\' + STRING_MARKER_QUOTE + r'\s*');
 
-    RegExp regExp;
+    var regexes = SplayTreeMap<int, RegExp>();
+
     if (RegExpApostrophe.hasMatch(value)) {
-      regExp = RegExpApostrophe;
-    } else if (RegExpQuote.hasMatch(value)) {
-      regExp = RegExpQuote;
-    } else {
-      throw Exception();
+      regexes.addEntries({MapEntry(RegExpApostrophe.firstMatch(value)!.start, RegExpApostrophe)});
     }
 
-    var str = '';
+    if (RegExpQuote.hasMatch(value)) {
+      regexes.addEntries({MapEntry(RegExpQuote.firstMatch(value)!.start, RegExpQuote)});
+    }
+
+    try {
+      return regexes.entries.first.value;
+    } catch(e) {
+      throw Exception();
+    }
+  }
+
+  static String _contentFromString(String value) {
     var _value = value;
-    while (regExp.hasMatch(_value)) {
-      str += regExp.firstMatch(_value)!.group(1)!;
-      _value = _value.replaceFirstMapped(regExp, (match) => '');
-    }
+    var str = '';
 
-    if (_value.isNotEmpty) {
-      throw Exception();
-    }
+    do {
+      var regExp = _contentStringRegExp(_value);
+
+      while (regExp.hasMatch(_value)) {
+        str += regExp.firstMatch(_value)!.group(1)!;
+        _value = _value.replaceFirstMapped(regExp, (match) => '');
+      }
+    } while (_value.isNotEmpty);
 
     return str;
   }
@@ -421,6 +432,7 @@ class FormulaParser {
 
   bool _isFullySubstituted(String tempSubstitutedFormula, String substitutedFormula) {
     return double.tryParse(tempSubstitutedFormula.replaceAll(RegExp(r'[()]'), '')) != null ||
+        substitutedFormula == tempSubstitutedFormula ||
         substitutedFormula == tempSubstitutedFormula.replaceAll(RegExp(r'[()]'), '');
   }
 
