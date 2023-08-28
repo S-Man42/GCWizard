@@ -193,7 +193,8 @@ class Strategy {
     //List<LineMetaData> result = [];
     // remove already solved lines
     var unsolvedLines = lines.mapIndexed((index, line) {
-      var zeros = line.where((element) => element == 0).length; //.reduce((count, x) => count + (x == 0 ? 1 : 0));
+      //var zeros = line.where((element) => element == 0).length; //.reduce((count, x) => count + (x == 0 ? 1 : 0));
+      var zeros = line.reduce((count, x) => count + (x == 0 ? 1 : 0));
       if (zeros == 0) {
         return null;
       }
@@ -215,8 +216,6 @@ class Strategy {
     return unsolvedLines.toList();
   }
 }
-// module.exports = Strategy;
-
 
 
 class VisitedG {
