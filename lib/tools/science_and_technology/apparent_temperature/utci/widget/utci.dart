@@ -15,14 +15,15 @@ import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/pressure.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/logic/utci.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
-
 
 class UTCI extends StatefulWidget {
   const UTCI({Key? key}) : super(key: key);
@@ -37,7 +38,8 @@ class UTCIState extends State<UTCI> {
   double _currentHumidity = 0.0;
   double _currentWindSpeed = 0.5;
 
-  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTimezone _currentDateTime =
+      DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   double _currentAirPressure = 1013.25;
   bool _currentAreaUrban = true;
@@ -100,88 +102,88 @@ class UTCIState extends State<UTCI> {
             },
             value: _currentTMRTmode),
         _currentTMRTmode == GCWSwitchPosition.left
-        ? GCWUnitInput(
-          value: _currentTemperatureMRT,
-          title: i18n(context, 'common_measure_temperature'),
-          initialUnit: TEMPERATURE_CELSIUS,
-          min: -50.0,
-          max: 50.0,
-          unitList: temperatures,
-          onChanged: (value) {
-            setState(() {
-              _currentTemperatureMRT = TEMPERATURE_CELSIUS.fromKelvin(value);
-            });
-          },
-        )
-        : Column(
-          children: <Widget>[
-            GCWExpandableTextDivider(
-              text: i18n(context, 'common_location'),
-              child: GCWCoords(
-                title: i18n(context, 'common_location'),
-                coordsFormat: _currentCoords.format,
-                onChanged: (BaseCoordinate ret) {
+            ? GCWUnitInput(
+                value: _currentTemperatureMRT,
+                title: i18n(context, 'common_measure_temperature'),
+                initialUnit: TEMPERATURE_CELSIUS,
+                min: -50.0,
+                max: 50.0,
+                unitList: temperatures,
+                onChanged: (value) {
                   setState(() {
-                    _currentCoords = ret;
+                    _currentTemperatureMRT = TEMPERATURE_CELSIUS.fromKelvin(value);
                   });
                 },
+              )
+            : Column(
+                children: <Widget>[
+                  GCWExpandableTextDivider(
+                    text: i18n(context, 'common_location'),
+                    child: GCWCoords(
+                      title: i18n(context, 'common_location'),
+                      coordsFormat: _currentCoords.format,
+                      onChanged: (BaseCoordinate ret) {
+                        setState(() {
+                          _currentCoords = ret;
+                        });
+                      },
+                    ),
+                  ),
+                  GCWExpandableTextDivider(
+                    text: i18n(context, 'astronomy_postion_datetime'),
+                    child: GCWDateTimePicker(
+                      config: const {
+                        DateTimePickerConfig.DATE,
+                        DateTimePickerConfig.TIME,
+                        DateTimePickerConfig.TIMEZONES,
+                        DateTimePickerConfig.SECOND_AS_INT
+                      },
+                      onChanged: (datetime) {
+                        setState(() {
+                          _currentDateTime = datetime;
+                        });
+                      },
+                    ),
+                  ),
+                  GCWUnitInput(
+                    value: _currentAirPressure,
+                    title: i18n(context, 'common_measure_airpressure'),
+                    initialUnit: PRESSURE_MBAR,
+                    unitList: allPressures(),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
+                      });
+                    },
+                  ),
+                  GCWDropDown(
+                    title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
+                    value: _currentCloudCover,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentCloudCover = value;
+                      });
+                    },
+                    items: CLOUD_COVER_LIST.entries.map((entry) {
+                      return GCWDropDownMenuItem(
+                        value: entry.key,
+                        child: i18n(context, entry.value),
+                      );
+                    }).toList(),
+                  ),
+                  GCWTwoOptionsSwitch(
+                    title: i18n(context, 'wet_bulb_globe_temperature_area'),
+                    leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
+                    rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
+                    value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentAreaUrban = value == GCWSwitchPosition.left;
+                      });
+                    },
+                  ),
+                ],
               ),
-            ),
-            GCWExpandableTextDivider(
-              text: i18n(context, 'astronomy_postion_datetime'),
-              child: GCWDateTimePicker(
-                config: const {
-                  DateTimePickerConfig.DATE,
-                  DateTimePickerConfig.TIME,
-                  DateTimePickerConfig.TIMEZONES,
-                  DateTimePickerConfig.SECOND_AS_INT
-                },
-                onChanged: (datetime) {
-                  setState(() {
-                    _currentDateTime = datetime;
-                  });
-                },
-              ),
-            ),
-            GCWUnitInput(
-              value: _currentAirPressure,
-              title: i18n(context, 'common_measure_airpressure'),
-              initialUnit: PRESSURE_MBAR,
-              unitList: allPressures(),
-              onChanged: (value) {
-                setState(() {
-                  _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
-                });
-              },
-            ),
-            GCWDropDown(
-              title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
-              value: _currentCloudCover,
-              onChanged: (value) {
-                setState(() {
-                  _currentCloudCover = value;
-                });
-              },
-              items: CLOUD_COVER_LIST.entries.map((entry) {
-                return GCWDropDownMenuItem(
-                  value: entry.key,
-                  child: i18n(context, entry.value),
-                );
-              }).toList(),
-            ),
-            GCWTwoOptionsSwitch(
-              title: i18n(context, 'wet_bulb_globe_temperature_area'),
-              leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
-              rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
-              value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-              onChanged: (value) {
-                setState(() {
-                  _currentAreaUrban = value == GCWSwitchPosition.left;
-                });
-              },
-            ),
-          ],
-        ),
         _buildOutput(context)
       ],
     );
@@ -189,8 +191,27 @@ class UTCIState extends State<UTCI> {
 
   Widget _buildOutput(BuildContext context) {
     String hintUTCI = '';
+    late UTCIOutput calculatedUTCI;
 
-    double UTCI_c = calculateUTCI(_currentTemperature, _currentHumidity, _currentWindSpeed, _currentTemperatureMRT, _currentTMRTmode == GCWSwitchPosition.left);
+    if (_currentTMRTmode == GCWSwitchPosition.left) {
+      calculatedUTCI = calculateUTCI(_currentTemperature, _currentHumidity, _currentWindSpeed, _currentTemperatureMRT,
+          false,);
+    } else {
+      calculatedUTCI = calculateUTCI(
+        _currentTemperature,
+        _currentHumidity,
+        _currentWindSpeed,
+        _currentTemperatureMRT,
+        true,
+        dateTime: _currentDateTime,
+        coords: _currentCoords.toLatLng()!,
+        airPressure: _currentAirPressure,
+        urban: _currentAreaUrban,
+        cloudcover: _currentCloudCover,
+      );
+    }
+
+    double UTCI_c = calculatedUTCI.UTCI;
     double UTCI = TEMPERATURE_CELSIUS.toKelvin(UTCI_c);
     UTCI = _currentOutputUnit.fromReference(UTCI);
 
@@ -200,45 +221,46 @@ class UTCIState extends State<UTCI> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'utci_title')),
-              ),
-              Expanded(
-                flex: 2,
-                //child: Text(_currentOutputUnit.symbol),
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWUnitDropDown(
-                      value: _currentOutputUnit,
-                      onlyShowSymbols: true,
-                      unitList: temperatures,
-                      unitCategory: UNITCATEGORY_TEMPERATURE,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentOutputUnit = value;
-                        });
-                      },
-                    )),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWOutput(child: NumberFormat('#.##').format(UTCI))),
-              ),
-            ])),
+          Expanded(
+            flex: 4,
+            child: Text(i18n(context, 'utci_title')),
+          ),
+          Expanded(
+            flex: 2,
+            //child: Text(_currentOutputUnit.symbol),
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                child: GCWUnitDropDown(
+                  value: _currentOutputUnit,
+                  onlyShowSymbols: true,
+                  unitList: temperatures,
+                  unitCategory: UNITCATEGORY_TEMPERATURE,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputUnit = value;
+                    });
+                  },
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                child: GCWOutput(child: NumberFormat('#.##').format(UTCI))),
+          ),
+        ])),
         const GCWDivider(),
         Row(
           children: [
             Container(
-                width: 50,
-                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                child: GCWIconButton(
-                    icon: Icons.wb_sunny,
-                    iconColor: _colorUTCI(UTCI),
-                    backgroundColor: const Color(0xFF4d4d4d), onPressed: () {  },
-                ),
+              width: 50,
+              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+              child: GCWIconButton(
+                icon: Icons.wb_sunny,
+                iconColor: _colorUTCI(UTCI),
+                backgroundColor: const Color(0xFF4d4d4d),
+                onPressed: () {},
+              ),
             ),
             Expanded(
               child: GCWOutput(
@@ -247,12 +269,11 @@ class UTCIState extends State<UTCI> {
             )
           ],
         )
-
       ],
     );
   }
 
-  String _calculateHintUTCI(double UTCI){
+  String _calculateHintUTCI(double UTCI) {
     if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.BLUE_ACCENT]!) {
       if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.BLUE]!) {
         if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.LIGHT_BLUE]!) {
@@ -303,44 +324,32 @@ class UTCIState extends State<UTCI> {
                   if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.RED_ACCENT]!) {
                     if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.DARK_RED]!) {
                       return Colors.red.shade900;
-                    }
-                    else {
+                    } else {
                       return Colors.red.shade600;
                     }
-                  }
-                  else {
+                  } else {
                     return Colors.red;
                   }
-                }
-                else {
+                } else {
                   return Colors.orange;
                 }
-              }
-              else {
+              } else {
                 return Colors.green;
               }
-            }
-            else {
+            } else {
               return Colors.lightBlue.shade200;
             }
-          }
-          else {
+          } else {
             return Colors.lightBlue.shade400;
           }
-        }
-        else {
+        } else {
           return Colors.blue;
         }
-      }
-      else {
+      } else {
         return Colors.blue.shade700;
       }
-    }
-    else {
+    } else {
       return Colors.blue.shade900;
     }
   }
-
-
-
 }

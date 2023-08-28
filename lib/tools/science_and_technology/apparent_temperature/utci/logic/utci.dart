@@ -10,6 +10,15 @@
 //
 
 import 'dart:math';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/liljegren.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
+import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:latlong2/latlong.dart';
 
 final sigma = 5.670374419 * pow(10, -8); // Stefan-Boltzmann const
 
@@ -27,9 +36,18 @@ final Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
   UTCI_HEATSTRESS_CONDITION.DARK_RED: 46.0,
 };
 
+class UTCIOutput {
+  final double Solar;
+  final double Tg;
+  final double Tdew;
+  final double Tmrt;
+  final double UTCI;
+  final sunposition.SunPosition SunPos;
 
+  UTCIOutput({this.Solar = 0.0, this.Tg = 0.0, this.Tmrt = 0.0, this.Tdew = 0.0, required this.UTCI, required this.SunPos});
+}
 
-double calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculateTmrt) {
+UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculateTmrt, {DateTimeTimezone? dateTime, LatLng? coords, double? airPressure, bool? urban, CLOUD_COVER? cloudcover}) {
   // http://james-ramsden.com/calculate-utci-c-code/
   // http://www.utci.org/utci_doku.php
   // http://www.utci.org/public/UTCI%20Program%20Code/UTCI_a002.f90
@@ -77,12 +95,31 @@ double calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculat
   //     -----------------------------------------------
   //
 
+  double Tg = 0.0;
   double Tdew = _calculateTDewpoint(RH, Ta);
-  double Tg = _calculateTglobe(Ta, va, Tdew);
-  if (calculateTmrt) Tmrt = _calculateTmrt(Ta, va, Tg);
+
+  if (calculateTmrt) {
+    var sunPosition = sunposition.SunPosition(
+        LatLng(coords!.latitude, coords.longitude),
+        JulianDate(dateTime!),
+        const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
+    );
+    double solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover!);
+    double hour_gmt = dateTime.datetime.hour - dateTime.timezone.inHours + (dateTime.datetime.minute) / 60.0;
+    double dday = dateTime.datetime.day + hour_gmt / 24.0;
+    liljegrenOutputSolarParameter solpar = calc_solar_parameters(dateTime.datetime.year, dateTime.datetime.month, dday, solar, coords.latitude, coords.longitude);
+    Tg = _calculateTglobe(Ta, va, Tdew);
+    Tg = Tglobe(Ta + 273.15, RH, airPressure!, va, solar, solpar.fdir, solpar.cza);
+    Tmrt = _calculateTmrt(Ta, va, Tg);
+  }
+  print('calc UTCI --------------------------------------------------------------------------------------------------');
+  print('Ta   '+ Ta.toString());
+  print('RH   '+ RH.toString());
+  print('Tmrt '+ Tmrt.toString());
+  print('va   '+ va.toString());
   double UTCI = _calcUTCI(Ta, va, Tmrt, RH);
 
-  return UTCI;
+  return UTCIOutput(UTCI: UTCI, Solar: 0.0, Tg: Tg, Tmrt: Tmrt, Tdew: Tdew, SunPos: SunPosition(LatLng(0.0, 0.0), JulianDate(DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset)), defaultEllipsoid));
 }
 
 double _calculateTDewpoint(double relativeHumidity, double ambientTemperature){
@@ -143,7 +180,7 @@ double _calculateTglobe(
 }
 
 double _calcUTCI(double Ta, double va, double Tmrt, double RH){
-  double ehPa = es(Ta) * (RH / 100.0);
+  double ehPa = es(Ta) * RH / 100.0;
   double D_Tmrt = Tmrt - Ta;
   double Pa = ehPa / 10.0;//  convert vapour pressure to kPa
 

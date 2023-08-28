@@ -30,6 +30,8 @@ void main() {
           elem['temperature'] as double,
           elem['humidity'] as double,
           _currentWindSpeed,
+          elem['temperature'] as double,
+          false,
         );
         expect(_actual, elem['expectedOutput']);
       });
