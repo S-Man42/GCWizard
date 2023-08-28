@@ -71,11 +71,11 @@ class Puzzle {
   }
 
   static List<int> cleanHints(List<int> hints, int size) {
-    for (var h in hints) {
-      if (h <= 0) {
-        hints.remove(h);
-      } else if (h > size) {
-        h = size;
+    for (var i = hints.length -1; i >= 0; i--) {
+      if (hints[i] <= 0) {
+        hints.removeAt(i);
+      } else if (hints[i] > size) {
+        hints[i] = size;
       }
     }
     return hints;
@@ -115,7 +115,7 @@ class Puzzle {
     if (!ok) return false;
     columns.forEachIndexed((i, column) => ok = ok && _isOk(column, columnHints[i]));
 
-    if (ok) PuzzleState.Solved;
+    if (ok) state = PuzzleState.Solved;
     return ok;
   }
 
@@ -135,7 +135,6 @@ class Puzzle {
     for (var row in rows) {
       state.addAll(row);
     }
-
     return state;
   }
 

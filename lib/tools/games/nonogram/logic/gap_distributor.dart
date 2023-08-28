@@ -7,14 +7,13 @@ List<List<int>> findGaps(List<int> line) {
   var result = <List<int>>[];
   line.forEachIndexed((i, el) {
     if (el > -1) {
-      if (line[i - 1] > -1) {
+      if (i > 0 && line[i - 1] > -1) {
         result[result.length - 1][1]++;
+      } else {
+        result.add([i, i + 1]);
       }
-    } else {
-      result.add([i, i + 1]);
     }
   });
-
   return result;
 }
 
@@ -47,7 +46,7 @@ GapInfo? gapDistributor(List<int> line, List<int> hints) {
       for (var e in x) {
         for (var y in second.distributions) {
           var item = y.sublist(0);
-          item.sublist(e);
+          item.insert(0, e);
           distributions.add(item);
         }
       }

@@ -228,11 +228,11 @@ class NonogramSolverState extends State<NonogramSolver> {
               controller: controller,
               onChanged: (text) {
                 setState(() {
-                  var data = textToIntList(text);
+                  var data = textToIntList(text, allowNegativeValues: true);
                   var dataBackup = data.sublist(0);
                   data = Puzzle.cleanHints(data, _currentBoard.width);
                   _currentBoard.rowHints[i] = data;
-                  if (listEquals(data, dataBackup)) {
+                  if (!listEquals(data, dataBackup)) {
                     showToast(i18n(context, 'nonogramsolver_hinterror'));
                   }
                 });
@@ -277,11 +277,11 @@ class NonogramSolverState extends State<NonogramSolver> {
                     controller: controller,
                     onChanged: (text) {
                       setState(() {
-                        var data = textToIntList(text);
+                        var data = textToIntList(text, allowNegativeValues: true);
                         var dataBackup = data.sublist(0);
                         data = Puzzle.cleanHints(data, _currentBoard.height);
                         _currentBoard.columnHints[i] = data;
-                        if (listEquals(data, dataBackup)) {
+                        if (!listEquals(data, dataBackup)) {
                           showToast(i18n(context, 'nonogramsolver_hinterror'));
                         }
                       });

@@ -114,6 +114,7 @@ class bruteForce extends Solver {
     //   console.log(`Gap distributions: ${distributions.length}`);
     // }
     if (gapResult == null || gapResult.distributions.isEmpty) {
+      print('Contradiction in line $line | $hints');
       throw FormatException('Contradiction in line $line | $hints');
     }
 
