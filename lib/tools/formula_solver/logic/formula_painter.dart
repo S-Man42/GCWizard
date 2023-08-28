@@ -223,6 +223,22 @@ class FormulaPainter {
         isOperator = true;
       }
     }
+    // string
+    if (offset == 0) {
+      _parserResult = _isString(formula);
+      if (_parserResult != null) {
+        result = _coloredNumber(result, _parserResult, false);
+        offset = _calcOffset(_parserResult);
+      }
+    }
+    // invalid string
+    if (offset == 0) {
+      _parserResult = _isInvalidString(formula);
+      if (_parserResult != null) {
+        result = _coloredNumber(result, _parserResult, true);
+        offset = _calcOffset(_parserResult);
+      }
+    }
     // faculty
     if (offset == 0) {
       _parserResult = _isFaculty(formula);
@@ -388,7 +404,7 @@ class FormulaPainter {
       } else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
-        if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll(VariableError, Number);
+        //if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll(VariableError, Number);
         result.add(subresult);
       }
     }
@@ -455,6 +471,23 @@ class FormulaPainter {
 
     if (result == null) return null;
     return [result[1], result[2], result[3]];
+  }
+
+  List<String>? _isString(String formula) {
+    RegExp regex = RegExp(r"^['](.*)[']");
+    var match = regex.firstMatch(formula);
+
+    if (match != null) return [match.group(0)!];
+
+    regex = RegExp(r'^["](.*)["]');
+    match = regex.firstMatch(formula);
+
+    return (match == null) ? null : [match.group(0)!];
+  }
+
+  List<String>? _isInvalidString(String formula) {
+    if (formula.startsWith("'") || formula.startsWith('"')) return [formula];
+    return null;
   }
 
   String _coloredLiteral(String result, List<String> parts, bool hasError) {
@@ -538,7 +571,9 @@ class FormulaPainter {
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
     var char = hasError ? VariableError : Variable;
+    print(_parentFunctionName! + ' ' + parts[0]  + ' ' + hasError.toString());
     if (hasError && _wordFunction(_parentFunctionName)) {
+      print(_parentFunctionName! + ' ' + parts[0]);
       char = _coloredWordFunctionVariable(parts[0]);
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
@@ -548,7 +583,7 @@ class FormulaPainter {
   }
 
   String _coloredWordFunctionVariable(String variable) {
-    return (_isVariable(variable) == null || !_isEmptyVariable(variable)) ? Number : VariableError;
+    return (_isVariable(variable) == null || _isEmptyVariable(variable)) ? VariableError : Number;
   }
 
   String _coloredNumberFunctionVariable(String variable) {
