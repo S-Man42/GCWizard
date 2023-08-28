@@ -138,11 +138,13 @@ class Puzzle {
     return state;
   }
 
-  void import(List<int> state) {
+  bool import(List<int> snapshot) {
+    if (snapshot.length != width * height) return false;
     rows.clear();
     for (int i = 0; i < height; i++) {
-      rows.add(state.sublist(i * width, (i + 1) * width));
+      rows.add(snapshot.sublist(i * width, (i + 1) * width));
     }
+    return true;
   }
 
   void importHints(Puzzle puzzle) {
@@ -162,39 +164,50 @@ class Puzzle {
   static Puzzle parseJson(String jsonString) {
     const String jsonRows = 'rows';
     const String jsonColumns = 'columns';
+    const String jsonContent = 'content'; //optional
 
     var puzzle = Puzzle.generate(0, 0);
     var jsonMap = asJsonMap(json.decode(jsonString));
 
     var data = asJsonArrayOrNull(jsonMap[jsonRows]);
     if (data != null) {
-      puzzle.rowHints = _jsonArrayToList(data);
+      puzzle.rowHints = _jsonArrayToArrayList(data);
     }
 
     data = asJsonArrayOrNull(jsonMap[jsonColumns]);
     if (data != null) {
-      puzzle.columnHints = _jsonArrayToList(data);
+      puzzle.columnHints = _jsonArrayToArrayList(data);
     }
     Puzzle.mapData(puzzle);
+
+    data = asJsonArrayOrNull(jsonMap[jsonContent]);
+    if (data != null) {
+      puzzle.import(_jsonArrayToList(data));
+    }
 
     return puzzle;
   }
 
-  static List<List<int>> _jsonArrayToList(List<Object?> jsonList) {
+  static List<List<int>> _jsonArrayToArrayList(List<Object?> jsonList) {
     var list = <List<int>>[];
     for (var entrys in jsonList) {
-      var sl = asJsonArrayOrNull(entrys);
-      if (sl != null) {
-        var subList = <int>[];
-        for (var element in sl) {
-          var value = toIntOrNull(element);
-          if (value != null) subList.add(value);
-        }
-        list.add(subList);
+      var subList = asJsonArrayOrNull(entrys);
+      if (subList != null) {
+        list.add(_jsonArrayToList(subList));
       }
     }
     return list;
   }
+
+  static List<int> _jsonArrayToList(List<Object?> jsonList) {
+    var list = <int>[];
+    for (var entry in jsonList) {
+       var value = toIntOrNull(entry);
+      if (value != null) list.add(value);
+    }
+    return list;
+  }
+
 
   // void initAccessors(state) {
   //
