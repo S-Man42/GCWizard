@@ -106,10 +106,12 @@ void main() {
       {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
       {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
+      {'formula' : 'cs(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
       {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '\'Y\''}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
@@ -117,31 +119,44 @@ void main() {
 
       {'formula' : 'min(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
       {'formula' : 'max(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
+      {'formula' : 'max(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
 
-      {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
-      {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
+      {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbRb'}, //no text
+      {'formula' : 'bww(c)', 'values': {'C':'"1"'}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbRb'}, // no text
+      {'formula' : 'bww("c")', 'expectedOutput' : 'bbbbgggb'}, // no text
       {'formula' : 'bww()', 'expectedOutput' : 'BBBBB'},
-      {'formula' : 'bww(xyz)', 'expectedOutput' : 'bbbbgggb'},
-      {'formula' : 'bww(xyz,xyz,xyz)', 'expectedOutput' : 'bbbbgggggggggggb'},
-      {'formula' : 'bww(xyz)', 'expectedOutput' : 'bbbbgggb'},
-      {'formula' : 'bww(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgb'},
-      {'formula' : 'bww(xcz, abc)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgggggrb'},
-      {'formula' : 'bww(223)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgggb'},
-      {'formula' : 'bww(223)', 'expectedOutput' : 'bbbbgggb'},
-      {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgb'},  // no set variable makes any text inside a text function to pure text input (= green)
+      {'formula' : 'bww(\'\')', 'expectedOutput' : 'bbbbggb'},
+      {'formula' : 'bww(xyz)', 'expectedOutput' : 'bbbbRRRb'},
+      {'formula' : 'bww("xyz")', 'expectedOutput' : 'bbbbGGGGGb'},
+      {'formula' : 'bww(xyz,xyz,xyz)', 'expectedOutput' : 'bbbbRRRGRRRGRRRb'},
+      {'formula' : 'bww(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbRrRb'},
+      {'formula' : 'bww(xcz, abc)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbRrRBBRRrb'},
+      {'formula' : 'bww(223)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbGGGb'},
+      {'formula' : 'bww("223")', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgggggb'},
+      {'formula' : 'bww(223)', 'expectedOutput' : 'bbbbGGGb'},
+      {'formula' : 'bww("223")', 'expectedOutput' : 'bbbbgggggb'},
+      {'formula' : 'bww("223\')', 'expectedOutput' : 'bbbbGGGGGb'},
+      {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbRb'},  // no set variable makes any text inside a text function to pure text input (= green)
       {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
-      {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrb'},
-      {'formula' : 'bww(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbrb'},
-      {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrgb'},  // no set variable makes any text inside a text function to pure text input (= green)
-      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
-      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
-      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrrb'},
-      {'formula' : 'av(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbrb'},
-      {'formula' : 'av(c)', 'expectedOutput' : 'bbbgb'},
-      {'formula' : 'av(xyz)', 'expectedOutput' : 'bbbgggb'},
-      {'formula' : 'av(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbgrgb'},
-      {'formula' : 'len(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgb'},
-      {'formula' : 'len(xcz, 123)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrggggggb'},
+      {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(A)', 'values': {'A': '"1"'}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbRGb'},  // no set variable makes any text inside a text function to pure text input (= green)
+      {'formula' : 'bww(AB)', 'values': {'A': '"1"'}, 'expectedOutput' : 'bbbbrGb'},
+      {'formula' : 'bww(A\'B\')', 'values': {'A': '"1"'}, 'expectedOutput' : 'bbbbrgb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbRRb'}, // set variable is not text
+      {'formula' : 'bww(AB)', 'values': {'A': '"1"', 'B': '""'}, 'expectedOutput' : 'bbbbrrb'},
+      {'formula' : 'av(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'av(c)', 'values': {'C':'"1"'}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'av(c)', 'expectedOutput' : 'bbbGb'},
+      {'formula' : 'av("c")', 'expectedOutput' : 'bbbgggb'},
+      {'formula' : 'av(xyz)', 'expectedOutput' : 'bbbGGGb'},
+      {'formula' : 'av(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbGRGb'},
+      {'formula' : 'av(\'x\'c"z")', 'values': {'C':'"1"'}, 'expectedOutput' : 'bbbgggrgggb'},
+      {'formula' : 'len(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbGRGb'},
+      {'formula' : 'len(xcz, 123)', 'values': {'C':'"1"'}, 'expectedOutput' : 'bbbbGrGGGGGGb'},
 
       {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'RRBG'},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
@@ -294,9 +309,72 @@ void main() {
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': '"1"'}, 'expectedOutput' : 'r'},
 
+      //recursive values
+      {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': '12'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F', 'F': '2'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F'}, 'expectedOutput' : 'R'},
 
+      //text
+      {'formula' : '\'\'', 'expectedOutput' : 'gg'},
+      {'formula' : '""', 'expectedOutput' : 'gg'},
+      {'formula' : '"\'"', 'expectedOutput' : 'ggg'},
+      {'formula' : '\'"\'', 'expectedOutput' : 'ggg'},
+      {'formula' : '"\'', 'expectedOutput' : 'GG'},
+      {'formula' : '\'"', 'expectedOutput' : 'GG'},
+      {'formula' : '\'', 'expectedOutput' : 'G'},
+      {'formula' : '"', 'expectedOutput' : 'G'},
 
+     {'formula' : 'ABCD', 'expectedOutput' : 'RRRR'},
+     {'formula' : '\'ABCD\'', 'expectedOutput' : 'gggggg'},
+     {'formula' : '"ABCD"', 'expectedOutput' : 'gggggg'},
+     {'formula' : '"ABCD\'"', 'expectedOutput' : 'ggggggg'},
+     {'formula' : '\'ABCD"\'', 'expectedOutput' : 'ggggggg'},
+     {'formula' : '\'ABCD"', 'expectedOutput' : 'GGGGGG'},
+     {'formula' : '"ABCD\'', 'expectedOutput' : 'GGGGGG'},
+     {'formula' : '"ABCD', 'expectedOutput' : 'GGGGG'},
+     {'formula' : '\'ABCD', 'expectedOutput' : 'GGGGG'},
+     {'formula' : 'ABCD\'', 'expectedOutput' : 'GGGGG'},
+     {'formula' : '"AB"\'CD\'', 'expectedOutput' : 'gggggggg'},
+
+     {'formula' : 'A', 'values': {'A': '"ABC"'}, 'expectedOutput' : 'r'},
+     {'formula' : 'AB', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rr'},
+     {'formula' : 'A B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrr'},
+     {'formula' : 'A "C" B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrggggr'},
+     {'formula' : 'A C B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrRRr'},
+
+     {'formula' : 'len(ABC)', 'expectedOutput' : 'bbbbRRRb'},
+     {'formula' : 'len("ABC")', 'expectedOutput' : 'bbbbgggggb'},
+     {'formula' : 'len(ABC)', 'values': {'A': 'ABC'}, 'expectedOutput' : 'bbbbRRRb'},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"'}, 'expectedOutput' : 'bbbbrRRb'},
+     {'formula' : 'len(ABC)', 'values': {'ABC': '"ABC"'}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'BC': '"BC"'}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'B': '\'BC\'', 'C': '"AB"'}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(A BC)', 'values': {'A': '"ABC"', 'BC': '"BC"'}, 'expectedOutput' : 'bbbbrrrrb'},
+     {'formula' : 'len(A"  "BC)', 'values': {'A': '"ABC"', 'BC': '"BC"'}, 'expectedOutput' : 'bbbbrggggrrb'},
+     {'formula' : 'len("ABC")', 'values': {'A': '"ABC"', 'BC': '"BC"'}, 'expectedOutput' : 'bbbbgggggb'},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'C': '"BC"'}, 'expectedOutput' : 'bbbbrRrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'BC': '\'BC\''}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'BC': "''BC'"}, 'expectedOutput' : 'bbbbrRRb'}, // BC -> ''BC' --> first both apostrophes mark separate string, therefore B is not in the string.
+     {'formula' : 'len(ABC)', 'values': {'A': '"ABC\'"', 'BC': "'\"BC'"}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': "'\"BC'", 'BC': '"ABC\'"'}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': "'BC'", 'BC': '"\'ABC\'"'}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(ABC)', 'values': {'A': "'\"BC\"'", 'BC': '"\'ABC\'"'}, 'expectedOutput' : 'bbbbrrrb'},
+     {'formula' : 'len(A,B,C)', 'values': {'A': '"ABC"'}, 'expectedOutput' : 'bbbbrGRGRb'},
+     {'formula' : 'len(A,B,C)', 'expectedOutput' : 'bbbbRGRGRb'},
+     {'formula' : 'len(A,B,C")', 'values': {'A': '"ABC'}, 'expectedOutput' : 'bbbbRGRGRGb'},
+     {'formula' : 'cs(bww(\'ABCDE\')) * len("55")', 'expectedOutput' : 'bbbbbbgggggggbbbbbbbbbggggb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': 'C'}, 'expectedOutput' : 'bbbbrRb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': 'C', 'C': "'A'"}, 'expectedOutput' : 'bbbbrrb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '', 'B': 'C'}, 'expectedOutput' : 'bbbbRRb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': '"C"'}, 'expectedOutput' : 'bbbbrrb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : 'bbbbRrb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': 'C', 'C': 'DE', 'D': "'A'", 'E': 'F', 'F': '"A"'}, 'expectedOutput' : 'bbbbrrb'},
+     {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': 'C', 'C': 'DE', 'D': "'A'", 'E': 'F', 'F': 'X'}, 'expectedOutput' : 'bbbbrRb'},
+     {'formula' : 'len(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
+     {'formula' : 'len(AB)', 'values': {'A': '', 'B': "C"}, 'expectedOutput' : 'bbbbRrb'},
+     {'formula' : 'len(AB)', 'values': {'A': '""', 'B': "C"}, 'expectedOutput' : 'bbbbRRb'},
     ];
 
     for (var elem in _inputsToExpected) {
