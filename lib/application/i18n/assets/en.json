@@ -1283,6 +1283,8 @@
   "common_measure_dewpoint": "Dew Point",
   "common_measure_solar_irradiance": "Solar irradiance",
   "common_measure_temperature": "Temperature",
+  "common_measure_tglobe": "Globe Temperature",
+  "common_measure_tmrt": "Mean Radiant Temperature",
   "common_measure_humidity": "Humidity",
   "common_month_january": "January",
   "common_month_february": "February",

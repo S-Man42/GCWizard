@@ -29,6 +29,7 @@ Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
 };
 
 double calc_solar_irradiance({double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
+  // https://scool.larc.nasa.gov/lesson_plans/CloudCoverSolarRadiation.pdf#:~:text=There%20is%20a%20simple%20formula%20to%20predict%20how,%280%25%20no%20clouds%29%20to%201.0%20%28100%25%20complete%20coverage%29.
   double R0 = 990 * sin(solarElevationAngle * pi / 180) - 30;
   double cloudCoverFraction = CLOUD_COVER_VALUE[cloudcover]!;
   return R0 * (1.0 - 0.75 * pow(cloudCoverFraction, 3.4));

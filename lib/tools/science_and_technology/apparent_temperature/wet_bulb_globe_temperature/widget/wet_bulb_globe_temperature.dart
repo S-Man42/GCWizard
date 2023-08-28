@@ -246,7 +246,6 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         GCWExpandableTextDivider(
           expanded: false,
           text: i18n(context, 'common_further_information'),
-          //child: Column(children: columnedMultiLineOutput(context, _outputFurtherInformation)),
           child: GCWColumnedMultilineOutput(data: _outputFurtherInformation),
         )
       ],

@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -104,10 +105,10 @@ class UTCIState extends State<UTCI> {
         _currentTMRTmode == GCWSwitchPosition.left
             ? GCWUnitInput(
                 value: _currentTemperatureMRT,
-                title: i18n(context, 'common_measure_temperature'),
+                title: i18n(context, 'common_measure_tmrt'),
                 initialUnit: TEMPERATURE_CELSIUS,
-                min: -50.0,
-                max: 50.0,
+                min: _currentTemperature - 30.0,
+                max: _currentTemperature + 70.0,
                 unitList: temperatures,
                 onChanged: (value) {
                   setState(() {
@@ -221,33 +222,33 @@ class UTCIState extends State<UTCI> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-          Expanded(
-            flex: 4,
-            child: Text(i18n(context, 'utci_title')),
-          ),
-          Expanded(
-            flex: 2,
-            //child: Text(_currentOutputUnit.symbol),
-            child: Container(
-                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                child: GCWUnitDropDown(
-                  value: _currentOutputUnit,
-                  onlyShowSymbols: true,
-                  unitList: temperatures,
-                  unitCategory: UNITCATEGORY_TEMPERATURE,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentOutputUnit = value;
-                    });
-                  },
-                )),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-                margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                child: GCWOutput(child: NumberFormat('#.##').format(UTCI))),
-          ),
+              Expanded(
+                flex: 4,
+                child: Text(i18n(context, 'utci_title')),
+              ),
+              Expanded(
+                flex: 2,
+                //child: Text(_currentOutputUnit.symbol),
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                    child: GCWUnitDropDown(
+                      value: _currentOutputUnit,
+                      onlyShowSymbols: true,
+                      unitList: temperatures,
+                      unitCategory: UNITCATEGORY_TEMPERATURE,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentOutputUnit = value;
+                        });
+                      },
+                    )),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                    child: GCWOutput(child: NumberFormat('#.##').format(UTCI))),
+              ),
         ])),
         const GCWDivider(),
         Row(
@@ -268,7 +269,32 @@ class UTCIState extends State<UTCI> {
               ),
             )
           ],
+        ),
+        _currentTMRTmode == GCWSwitchPosition.right
+        ? GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'common_further_information'),
+          child: GCWColumnedMultilineOutput(
+              flexValues: const [4, 2],
+              data: [
+            [i18n(context, 'common_measure_solar_irradiance'),calculatedUTCI.Solar.toStringAsFixed(2) + ' W/m²',],
+            [
+              i18n(context, 'common_measure_dewpoint'),
+              _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(calculatedUTCI.Tdew)).toStringAsFixed(2) + ' ' + _currentOutputUnit.symbol
+            ],
+            [i18n(context, 'common_measure_tglobe'),
+              _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(calculatedUTCI.Tg)).toStringAsFixed(2) + ' ' + _currentOutputUnit.symbol
+              ],
+            [i18n(context, 'common_measure_tmrt'),
+              _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(calculatedUTCI.Tmrt)).toStringAsFixed(2) + ' ' + _currentOutputUnit.symbol
+              ],
+            [i18n(context, 'astronomy_sunposition_title'), ''],
+            [i18n(context, 'astronomy_position_altitude'), calculatedUTCI.SunPos.altitude.toStringAsFixed(2) + ' °'],
+            [i18n(context, 'astronomy_position_azimuth'), calculatedUTCI.SunPos.azimuth.toStringAsFixed(2) + ' °'],
+
+          ]),
         )
+            : Container(),
       ],
     );
   }

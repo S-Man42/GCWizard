@@ -20,8 +20,6 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/lo
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:latlong2/latlong.dart';
 
-final sigma = 5.670374419 * pow(10, -8); // Stefan-Boltzmann const
-
 enum UTCI_HEATSTRESS_CONDITION { DARK_BLUE, BLUE_ACCENT, BLUE, LIGHT_BLUE, LIGHT_BLUE_ACCENT, GREEN, ORANGE, RED, RED_ACCENT, DARK_RED }
 
 final Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
@@ -97,6 +95,7 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
 
   double Tg = 0.0;
   double Tdew = _calculateTDewpoint(RH, Ta);
+  double solar = 0.0;
 
   if (calculateTmrt) {
     var sunPosition = sunposition.SunPosition(
@@ -104,22 +103,23 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
         JulianDate(dateTime!),
         const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
     );
-    double solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover!);
+    solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover!);
     double hour_gmt = dateTime.datetime.hour - dateTime.timezone.inHours + (dateTime.datetime.minute) / 60.0;
     double dday = dateTime.datetime.day + hour_gmt / 24.0;
     liljegrenOutputSolarParameter solpar = calc_solar_parameters(dateTime.datetime.year, dateTime.datetime.month, dday, solar, coords.latitude, coords.longitude);
-    Tg = _calculateTglobe(Ta, va, Tdew);
-    Tg = Tglobe(Ta + 273.15, RH, airPressure!, va, solar, solpar.fdir, solpar.cza);
+    Tg = Tglobe(Ta + 273.15, RH / 100, airPressure!, va, solar, solpar.fdir, solpar.cza);
     Tmrt = _calculateTmrt(Ta, va, Tg);
+    if (Ta - 30.0 > Tmrt) Tmrt = Ta - 30.0;
+    if (Tmrt - 70.0 > Ta) Tmrt = Ta + 70.0;
   }
-  print('calc UTCI --------------------------------------------------------------------------------------------------');
-  print('Ta   '+ Ta.toString());
-  print('RH   '+ RH.toString());
-  print('Tmrt '+ Tmrt.toString());
-  print('va   '+ va.toString());
+
   double UTCI = _calcUTCI(Ta, va, Tmrt, RH);
 
-  return UTCIOutput(UTCI: UTCI, Solar: 0.0, Tg: Tg, Tmrt: Tmrt, Tdew: Tdew, SunPos: SunPosition(LatLng(0.0, 0.0), JulianDate(DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset)), defaultEllipsoid));
+  if (calculateTmrt) {
+    return UTCIOutput(UTCI: UTCI, Solar: solar, Tg: Tg, Tmrt: Tmrt, Tdew: Tdew, SunPos: SunPosition(coords!, JulianDate(dateTime!), defaultEllipsoid));  }
+  else {
+    return UTCIOutput(UTCI: UTCI, Solar: solar, Tg: Tg, Tmrt: Tmrt, Tdew: Tdew, SunPos: SunPosition(const LatLng(0.0, 0.0), JulianDate(DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset)), defaultEllipsoid));
+  }
 }
 
 double _calculateTDewpoint(double relativeHumidity, double ambientTemperature){
@@ -131,56 +131,12 @@ double _calculateTDewpoint(double relativeHumidity, double ambientTemperature){
 }
 
 double _calculateTmrt(double Tair, double va, double Tglobe){
-  // https://www.novalynx.com/manuals/210-4417-manual.pdf
-  //   mrt (°C) = tg + 2.42V (tg - ta)
-  //     V: air current cm/sec
-  //     ta: temperature of the air outside of the globe
-  //     tg: globe thermometer temperature
-  print('calc Tmrt ');
-  print('- Ta '+Tair.toString());
-  print('- Tg '+Tglobe.toString());
-  print('- va '+va.toString());
-  print((Tglobe + 2.42 * va * 100 * (Tglobe - Tair)).toString());
-  return Tglobe + 2.42 * va * 100 * (Tglobe - Tair);
-}
-
-double _calculateTglobe(
-    double Ta, // deg C°
-    double va, // m/s
-    double Tdew, // deg C°
-    ){
-  print('calc Tg ');
-  print('- Ta '+Ta.toString());
-  print('- Td '+Tdew.toString());
-  print('- va '+va.toString());
-  // Estimation of Black Globe Temperature for Calculation of the WBGT Index
-  // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
-  // The values to be entered are
-  // wind speed (u in meters per hour),
-  // ambient temperature (Ta in degrees Celsius),
-  // dew point temperature (Td in degrees Celsius),
-  // solar irradiance (S in Watts per meter squared),
-  // direct beam radiation from the sun (𝑓𝑑𝑏) and
-  // diffuse radiation from the sun (𝑓𝑑𝑖𝑓).
-  va = va * 3600.0; // convert m/s to m/hour
-
-  double P = 1013.0; // Barometric pressure
-  double S = 1049.7859; // Solar irradiance in Watts per meter squared solpos etr global 1049.7859
-  double fdb = 1355.9448; // direct beam radiation from the sun solpos etr dir 1355.9448
-  double fdif = 1049.7859; // diffuse  radiation from the sun solpos etr tilt 1049.7859
-  double z = 39.2665 * pi / 180; // zenith angle in radian - 89°
-
-  double ea = exp(17.67 * (Tdew - Ta) / (Tdew + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * Ta / (240.97 + Ta));
-  double epsilona = 0.575 * pow(ea, 1/7);
-
-  double B = S * (fdb / 4 / sigma / cos(z) + 1.2 / sigma * fdif) + epsilona * pow(Ta, 4);
-  double C = 0.315 * pow(va, 0.58) / (5.3865 * pow(10, -8));
-
-  return (B + C * Ta + 7680000) / (C + 256000);
+  // https://en.wikipedia.org/wiki/Mean_radiant_temperature
+  return  pow(pow(Tglobe + 273.15, 4) + 2.5 * pow(10, 8) * pow(va, 0.6) * (Tglobe - Tair), 0.25) - 273.15;
 }
 
 double _calcUTCI(double Ta, double va, double Tmrt, double RH){
-  double ehPa = es(Ta) * RH / 100.0;
+  double ehPa = _es(Ta) * RH / 100.0;
   double D_Tmrt = Tmrt - Ta;
   double Pa = ehPa / 10.0;//  convert vapour pressure to kPa
 
@@ -399,7 +355,7 @@ double _calcUTCI(double Ta, double va, double Tmrt, double RH){
   return UTCI_approx;
 }
 
-double es(double ta){
+double _es(double ta){
   // calculates saturation vapour pressure over water in hPa for input air temperature (ta) in celsius according to:
   // Hardy, R.; ITS-90 Formulations for Vapor Pressure, Frostpoint Temperature, Dewpoint Temperature and Enhancement Factors in the Range -100 to 100 °C;
   // Proceedings of Third International Symposium on Humidity and Moisture; edited by National Physical Laboratory (NPL), London, 1998, pp. 214-221
