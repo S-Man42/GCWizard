@@ -566,10 +566,6 @@ class FormulaPainter {
     return regex.firstMatch(formula);
   }
 
-  bool _emptyValues() {
-    return (_values.isEmpty);
-  }
-
   List<String>? _isInvalidVariable(String formula) {
     RegExp regex = RegExp(r'^(\S)');
     var match = regex.firstMatch(formula);
@@ -594,7 +590,7 @@ class FormulaPainter {
 
   String _coloredWordFunctionVariable(String variable) {
     if (_isVariable(variable) == null) return NumberError;
-    if (_isEmptyVariable(variable, true)) return VariableError;
+    //if (_isEmptyVariable(variable, true)) return VariableError;
     return (_isStringVariable(variable)) ? Variable : VariableError;
   }
 
