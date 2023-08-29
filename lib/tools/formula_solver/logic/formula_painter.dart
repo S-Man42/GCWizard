@@ -21,8 +21,8 @@ class FormulaPainter {
   late String _variablesRegEx;
 
   static const String Text ='t'; //Text
-  static const String Number = 'g';
-  static const String NumberError = 'G';
+  static const String Number = 'g'; // or Character or ' "
+  static const String NumberError = 'G'; //or Character in word function
   static const String Variable = 'r';
   static const String VariableError = 'R';
   static const String OFRB = 'b'; //Operator, Function, Reference, Bracket
@@ -177,7 +177,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isVariable(formula);
       if (_parserResult != null) {
-        result = _coloredVariable(result, _parserResult, _isEmptyVariable(formula));
+        result = _coloredVariable(result, _parserResult, _isEmptyVariable(formula, false));
         offset = _calcOffset(_parserResult);
       }
     }
@@ -193,7 +193,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isNumberWithPoint(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false);
+        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName));
         offset = _calcOffset(_parserResult);
       }
     }
@@ -201,7 +201,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isNumber(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false);
+        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName));
         offset = _calcOffset(_parserResult);
       }
     }
@@ -534,12 +534,24 @@ class FormulaPainter {
     return (match == null) ? null : [match.group(0)!];
   }
 
-  bool _isEmptyVariable(String formula) {
+  bool _isEmptyVariable(String formula, bool stringVariable) {
     var match = _variableMatch(formula);
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
-    return variableValue == null || variableValue.isEmpty;
+    var result = variableValue == null || variableValue.isEmpty;
+    if (!stringVariable || result) return result;
+    var stringResult = _isString(variableValue);
+    return stringResult == null || stringResult.first.length <= 2;
+  }
+
+  bool _isStringVariable(String formula) {
+    var match = _variableMatch(formula);
+    if (match == null) return true;
+
+    var variableValue = _variableValue(match.group(1)!);
+    if (variableValue == null) return false;
+    return _isString(variableValue) != null;
   }
 
   String? _variableValue(String variable) {
@@ -571,9 +583,7 @@ class FormulaPainter {
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
     var char = hasError ? VariableError : Variable;
-    //print(_parentFunctionName! + ' ' + parts[0]  + ' ' + hasError.toString());
-    if (hasError && _wordFunction(_parentFunctionName)) {
-      //print(_parentFunctionName! + ' ' + parts[0]);
+    if (_wordFunction(_parentFunctionName)) {
       char = _coloredWordFunctionVariable(parts[0]);
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
@@ -583,7 +593,9 @@ class FormulaPainter {
   }
 
   String _coloredWordFunctionVariable(String variable) {
-    return (_isVariable(variable) == null || _isEmptyVariable(variable)) ? VariableError : Number;
+    if (_isVariable(variable) == null) return NumberError;
+    if (_isEmptyVariable(variable, true)) return VariableError;
+    return (_isStringVariable(variable)) ? Variable : VariableError;
   }
 
   String _coloredNumberFunctionVariable(String variable) {
@@ -611,7 +623,7 @@ class FormulaPainter {
   }
 
   String _coloredNumber(String result, List<String> parts, bool hasError) {
-    hasError |= !_operatorBevor;
+    hasError |= !_operatorBevor && !_wordFunction(_parentFunctionName);
     return _replaceRange(result, 0, parts[0].length, hasError ? NumberError : Number);
   }
 
