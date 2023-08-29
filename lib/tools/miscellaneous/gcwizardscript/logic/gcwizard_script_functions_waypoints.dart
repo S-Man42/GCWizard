@@ -16,14 +16,14 @@ void _wptsAdd(Object lat, Object lon) {
   lat = lat as double;
   lon = lon as double;
 
-  GCWMapPoint wpt = GCWMapPoint(
-      uuid: 'wpt',
-      markerText: 'wpt',
-      point: LatLng(lat, lon),
-      color: Colors.black,
-      isEditable: false,
-      isVisible: true);
-
+   var wpt = GCWMapPoint(
+       uuid: 'wpt',
+       markerText: 'wpt',
+       point: LatLng(lat, lon),
+       coordinateFormat: CoordinateFormat(CoordinateFormatKey.DEC),
+       color: Colors.black,
+       isEditable: false,
+       isVisible: true);
   _state.waypoints.add(wpt);
 }
 
