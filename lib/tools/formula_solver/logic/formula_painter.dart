@@ -474,12 +474,12 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp(r"^['](.*)[']");
+    RegExp regex = RegExp(r"^'(.*)'");
     var match = regex.firstMatch(formula);
 
     if (match != null) return [match.group(0)!];
 
-    regex = RegExp(r'^["](.*)["]');
+    regex = RegExp(r'^"(.*)"');
     match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
@@ -590,7 +590,6 @@ class FormulaPainter {
 
   String _coloredWordFunctionVariable(String variable) {
     if (_isVariable(variable) == null) return NumberError;
-    //if (_isEmptyVariable(variable, true)) return VariableError;
     return (_isStringVariable(variable)) ? Variable : VariableError;
   }
 
