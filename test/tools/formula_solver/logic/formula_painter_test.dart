@@ -11,6 +11,12 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
+      {'formula' : '"AB"\'CD\'', 'expectedOutput' : 'gggggggg'},
+      {'formula' : 'A "C" B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrggggr'},
+      {'formula' : 'len(ABC)', 'values': {'A': '"ABC"', 'BC': "''BC'"}, 'expectedOutput' : 'bbbbrRRb'}, // BC -> ''BC' --> first both apostrophes mark separate string, therefore B is not in the string.
+
+
+
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
