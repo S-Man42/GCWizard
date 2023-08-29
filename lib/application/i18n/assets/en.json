@@ -2188,6 +2188,7 @@
   "gcwizard_script_dump": "Memory dump",
   "gcwizard_script_dump_variable": "Variable",
   "gcwizard_script_dump_value": "Value",
+  "gcwizard_script_waypoints": "Waypoints",
   "gcwizard_script_error_position" :  "at position ",
   "gcwizard_script_syntax_error" :  "SYNTAX ERROR",
   "gcwizard_script_unbalanced_parentheses" :  "PARANTHESES MISSING",

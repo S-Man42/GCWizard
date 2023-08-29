@@ -7,9 +7,11 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -230,31 +232,38 @@ class GCWizardScriptState extends State<GCWizardScript> {
             child: _buildOutputText(_currentOutput),
           ),
         if (_currentOutput.Points.isNotEmpty)
-          GCWDefaultOutput(
-            trailing: Row(
-              children: <Widget>[
-                GCWIconButton(
-                  icon: Icons.my_location,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    _openInMap(_currentOutput.Points);
-                  },
+          Column(
+            children: <Widget>[
+              GCWTextDivider(
+                trailing: Row(
+                  children: <Widget>[
+                    GCWIconButton(
+                      icon: Icons.my_location,
+                      size: IconButtonSize.SMALL,
+                      onPressed: () {
+                        _openInMap(_currentOutput.Points);
+                      },
+                    ),
+                    GCWIconButton(
+                      icon: Icons.save,
+                      size: IconButtonSize.SMALL,
+                      onPressed: () {
+                        _exportCoordinates(context, _currentOutput.Points);
+                      },
+                    ),
+                  ],
                 ),
-                GCWIconButton(
-                  icon: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    _exportCoordinates(context, _currentOutput.Points);
-                  },
+                text: i18n(context, 'gcwizard_script_waypoints'),),
+              GCWOutput(
+                child: GCWOutputText(
+                  style: gcwMonotypeTextStyle(),
+                  text: _buildWayPointList(_currentOutput.Points),
+                  isMonotype: true,
                 ),
-              ],
-            ),
-            child: GCWOutputText(
-              style: gcwMonotypeTextStyle(),
-              text: _buildWayPointList(_currentOutput.Points),
-              isMonotype: true,
-            ),
+              ),
+            ]
           ),
+
       ],
     );
   }
