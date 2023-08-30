@@ -382,7 +382,6 @@ class FormulaPainter {
       case 'CS':
       case 'CSI':
         break;
-      case 'BWW':
       case 'AV':
       case 'LEN':
         maxCommaCount = null;
