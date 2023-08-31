@@ -628,9 +628,7 @@ class FormulaPainter {
     if ((match != null) && (offset == 0) && (match.group(0)![0] != '-')) return null;
     return (match == null)
         ? null
-        : [
-            _combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])
-          ];
+        : [_combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])];
   }
 
   List<String>? _isInvalidOperator(String formula) {
