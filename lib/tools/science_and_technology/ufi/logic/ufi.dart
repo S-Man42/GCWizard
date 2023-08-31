@@ -27,9 +27,9 @@ class UFI {
 const int UFI_MAX_FORMULATIONNUMBER = 268435455;
 
 final List<UFI> UFI_CODES = [
-  const UFI(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: null, countryCodeC: null),
-  const UFI(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A- Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: null, countryCodeC: null),
-  const UFI(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A- Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: null, countryCodeC: null),
+  const UFI(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: null, countryCodeC: null, specialConversion: _vConversionFR),
+  const UFI(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: null, countryCodeC: null, specialConversion: _vConversionGB),
+  const UFI(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: null, countryCodeC: null, specialConversion: _vConversionGB),
   const UFI(countryCode: 'LT', countryName: 'common_country_Lithuania', ufiRegExp: r'([0-9]{9}|[0-9]{12})', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 0),
   const UFI(countryCode: 'SE', countryName: 'common_country_Sweden', ufiRegExp: r'[0-9]{12}', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 1),
   const UFI(countryCode: 'HR', countryName: 'common_country_Croatia', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 0),
@@ -44,7 +44,7 @@ final List<UFI> UFI_CODES = [
   const UFI(countryCode: 'RO', countryName: 'common_country_Romania', ufiRegExp: r'[0-9]{2,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 5),
   const UFI(countryCode: 'SK', countryName: 'common_country_Slovakia', ufiRegExp: r'[0-9]{10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 6),
   const UFI(countryCode: 'CY', countryName: 'common_country_Cyprus', ufiRegExp: r'[0-9]{8}[A-Z]', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 7, specialConversion: _vConversionCY),
-  const UFI(countryCode: 'IS', countryName: 'common_country_Iceland', ufiRegExp: r'[A-Z0-9]{6}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 8),
+  const UFI(countryCode: 'IS', countryName: 'common_country_Iceland', ufiRegExp: r'[A-Z0-9]{6}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 8, specialConversion: _vConversionIS),
   const UFI(countryCode: 'BE', countryName: 'common_country_Belgium', ufiRegExp: r'0[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 9),
   const UFI(countryCode: 'DE', countryName: 'common_country_Germany', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 10),
   const UFI(countryCode: 'EE', countryName: 'common_country_Estonia', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 11),
@@ -74,6 +74,29 @@ int _alphaNumValue(String char) {
 
 BigInt _vConversionRegular(String vatNumber) {
   return BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
+}
+
+BigInt _vConversionCY(String vatNumber) {
+  var d = BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
+  var l = _alphabetValue(vatNumber[vatNumber.length - 1]);
+
+  return BigInt.from(l) * BigInt.from(10).pow(8) + d;
+}
+
+BigInt _vConversionES(String vatNumber) {
+  var d = BigInt.parse(vatNumber.substring(1, vatNumber.length - 1));
+  var c1 = _alphaNumValue(vatNumber[0]);
+  var c2 = _alphaNumValue(vatNumber[vatNumber.length - 1]);
+
+  return BigInt.from(36 * c1 + c2) * BigInt.from(10).pow(7) + d;
+}
+
+BigInt _vConversionFR(String vatNumber) {
+
+}
+
+BigInt _vConversionGB(String vatNumber) {
+
 }
 
 BigInt _vConversionIE(String vatNumber) {
@@ -107,19 +130,13 @@ BigInt _vConversionIE(String vatNumber) {
   throw Exception('Invalid VAT Number for IE');
 }
 
-BigInt _vConversionCY(String vatNumber) {
-  var d = BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
-  var l = _alphabetValue(vatNumber[vatNumber.length - 1]);
+BigInt _vConversionIS(String vatNumber) {
+  BigInt V = BigInt.zero;
+  for (int i = 0; i < 6; i++) {
+    V += BigInt.from(_alphabetValue(vatNumber[i])) * BigInt.from(36).pow(i);
+  }
 
-  return BigInt.from(l) * BigInt.from(10).pow(8) + d;
-}
-
-BigInt _vConversionES(String vatNumber) {
-  var d = BigInt.parse(vatNumber.substring(1, vatNumber.length - 1));
-  var c1 = _alphaNumValue(vatNumber[0]);
-  var c2 = _alphaNumValue(vatNumber[vatNumber.length - 1]);
-
-  return BigInt.from(36 * c1 + c2) * BigInt.from(10).pow(7) + d;
+  return V;
 }
 
 UFI _ufiByCountryCode(String countryCode) {
