@@ -2,8 +2,16 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class FormulaPainter {
-  static final _operators = {'+', '-', '*', '/', '^', '%'};
-  static final _bracket = {'[': ']', '(': ')', '{': '}'};
+  static const String _Text ='t'; //text
+  static const String _Space = 'S'; //space
+  static const String Number = 'g'; // or character in word function or ' "
+  static const String NumberError = 'G'; //or character in word function error
+  static const String Variable = 'r'; //varibale
+  static const String VariableError = 'R'; //varibale error
+  static const String OFRB = 'b'; //operator, function, reference, bracket
+  static const String OFRBError = 'B'; //operator, function, reference, bracket error
+  static const _operators = {'+', '-', '*', '/', '^', '%'};
+  static const _bracket = {'[': ']', '(': ')', '{': '}'};
   static const numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
   static final _allCharacters = allCharacters();
   Map<String, String> _values = {};
@@ -20,15 +28,6 @@ class FormulaPainter {
   late String _constantsRegEx;
   late String _variablesRegEx;
 
-  static const String Text ='t'; //Text
-  static const String Number = 'g'; // or Character or ' "
-  static const String NumberError = 'G'; //or Character in word function
-  static const String Variable = 'r';
-  static const String VariableError = 'R';
-  static const String OFRB = 'b'; //Operator, Function, Reference, Bracket
-  static const String OFRBError = 'B';
-  static const String Space = 'S';
-
   FormulaPainter() {
     _functions = _toUpperCaseAndSort(FormulaParser.availableParserFunctions());
     _constants = _toUpperCaseAndSort(FormulaParser.CONSTANTS.keys.toList());
@@ -39,7 +38,7 @@ class FormulaPainter {
   }
 
   String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
-    var result = _buildResultString(Text, formula.length);
+    var result = _buildResultString(_Text, formula.length);
     if (!coloredFormulas) return result;
 
     var subResult = '';
@@ -113,7 +112,7 @@ class FormulaPainter {
   String _paintSubFormula(String formula, int literalOffset, {bool onlyFormulaReference = false}) {
     var offset = 0;
     if (formula.isEmpty) return '';
-    var result = _buildResultString(Text, formula.length);
+    var result = _buildResultString(_Text, formula.length);
     var isOperator = false;
     String subResult;
     List<String>? _parserResult;
@@ -305,7 +304,7 @@ class FormulaPainter {
   }
 
   String _coloredSpaces(String result, List<String> parts) {
-    return _replaceRange(result, 0, parts[0].length, Space);
+    return _replaceRange(result, 0, parts[0].length, _Space);
   }
 
   List<String>? _isFormulaReference(String formula) {
@@ -738,11 +737,11 @@ class FormulaPainter {
 
   String _replaceSpaces(String result) {
     for (var i = 1; i < result.length; i++) {
-      if (result[i] == Space) result = _replaceRange(result, i, 1, result[i - 1]);
+      if (result[i] == _Space) result = _replaceRange(result, i, 1, result[i - 1]);
     }
 
     for (var i = result.length - 2; i > 0; i--) {
-      if (result[i] == Space) result = _replaceRange(result, i, 1, result[i + 1]);
+      if (result[i] == _Space) result = _replaceRange(result, i, 1, result[i + 1]);
     }
 
     return result;
