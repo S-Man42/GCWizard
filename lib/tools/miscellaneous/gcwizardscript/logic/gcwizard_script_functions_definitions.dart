@@ -26,6 +26,7 @@ const List<String> _Functions_3 = [
   'ABS(',
   'ARC(',
   'ASC(',
+  'BCD(',
   'BOX(',
   'BWW(',
   'COS(',
@@ -84,6 +85,7 @@ const List<String> _Functions_5 = [
   'IQSUM(',
   'ISINT(',
   'ISSQR(',
+  'MORSE(',
   'RIGHT(',
   'ROT13(',
   'ROT18(',
@@ -96,6 +98,7 @@ const List<String> _Functions_5 = [
 const List<String> _Functions_6 = [
   'ATBASH(',
   'CIRCLE(',
+  'GCCODE(',
   'GETLAT(',
   'GETLON(',
   'ISCHAR(',
@@ -159,7 +162,9 @@ const List<String> _Functions_12 = [
   'LISTTOSTRING(',
   'READFROMFILE(',
 ];
-const List<String> _Functions_13 = [];
+const List<String> _Functions_13 = [
+  'ENCLOSEDAREAS(',
+];
 const List<String> _Functions_14 = [
   'CENTERTWOPINTS(',
   'LISTISNOTEMPTY(',
@@ -282,9 +287,13 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
   'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
   'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
+  'BCD': _GCWizardScriptClassFunctionDefinition(_bcd, 3),
   'BWW': _GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': _GCWizardScriptClassFunctionDefinition(_base, 3),
+  'ENCLOSEDAREAS': _GCWizardScriptClassFunctionDefinition(_enclosedAreas, 3),
+  'GCCODE': _GCWizardScriptClassFunctionDefinition(_GCCode, 2),
   'HASH': _GCWizardScriptClassFunctionDefinition(_hash, 5),
+  'MORSE': _GCWizardScriptClassFunctionDefinition(_morse, 2),
 
   // coordinates
   'GETLAT': _GCWizardScriptClassFunctionDefinition(_getLat, 0),

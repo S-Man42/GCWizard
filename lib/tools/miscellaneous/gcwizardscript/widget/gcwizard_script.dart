@@ -263,7 +263,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
               ),
             ]
           ),
-
       ],
     );
   }

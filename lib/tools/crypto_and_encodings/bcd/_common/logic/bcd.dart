@@ -301,6 +301,7 @@ String encodeBCD(String input, BCDType type) {
 }
 
 String decodeBCD(String input, BCDType type) {
+  print(input);
   if (input.isEmpty) return '';
 
   Map<String, String> bcdMap;

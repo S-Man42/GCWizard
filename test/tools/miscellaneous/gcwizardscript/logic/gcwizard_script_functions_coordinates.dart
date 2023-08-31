@@ -3,6 +3,7 @@ part of 'gcwizard_scipt_test.dart';
   String _convertTo_3 = '''SETLAT(52.345678)
 SETLON(13.456789)
 PRINT CONVERTTO(3)''';
+
 String _convertTo_11 = '''SETLAT(52.345678)
 SETLON(13.456789)
 PRINT CONVERTTO(11)''';
@@ -12,6 +13,7 @@ LISTADD(C, "JO62RI42TX51MB52")
 CONVERTFROM(3, C)
 PRINT GETLAT()
 PRINT GETLON()''';
+
 String _convertFrom_11 = '''DIM C
 LISTADD(C, "JO62RI42TX51MB52")
 CONVERTFROM(11, C)

@@ -52,7 +52,7 @@ int _len(Object x) {
 }
 
 String _str(Object x) {
-  if (_isAString(x)) {
+  if (_isNotANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }

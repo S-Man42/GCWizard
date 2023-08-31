@@ -35,6 +35,10 @@ import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart'
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/bcd/_common/logic/bcd.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/enclosed_areas/logic/enclosed_areas.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/logic/gc_code.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
