@@ -1,7 +1,5 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-const _VERSION_DATE = '*      Version vom 24.08.2023       *';
-
 const _COORD_DEC = 0;
 const _COORD_DMM = 1;
 const _COORD_DMS = 2;

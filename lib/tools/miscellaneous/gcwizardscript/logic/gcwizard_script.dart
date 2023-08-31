@@ -119,7 +119,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // Enhance Performance
 // async PRINT
 // FIELD, GET, PUT
-// http://www.mopsos.net/Script.html
+// http://www.mopsos.net/Script.html => Dreiecke
 
 ScriptState? state;
 
@@ -557,11 +557,11 @@ class _GCWizardSCriptInterpreter {
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT
         + '********* GC Wizard Skript **********\n'
-        + _VERSION_DATE
-        + '*     basierend auf SMALL BASIC     *\n'
-        + '* Herb Schildt, the Art of C,  1991 *\n'
-        + '*     genehmigt von  McGraw Hill    *\n'
-        + '*************************************';
+        + '*      Version vom 31.08.2023       *\n'
+        + '*  nach einer Idee von Herb Schildt *\n'
+        + '* The Art of C, 1991, © McGraw Hill *\n'
+        + '*  GCW-Weiterentwicklung genehmigt  *\n'
+        + '*************************************\n';
   }
 
   void executeCommandNEWFILE() {
