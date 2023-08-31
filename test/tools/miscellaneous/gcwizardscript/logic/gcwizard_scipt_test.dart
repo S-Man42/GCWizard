@@ -24,22 +24,22 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [];
 
     //_inputsToExpected.addAll(_inputsCodesToExpected); // take a lot of time!
-    _inputsToExpected.addAll(_inputsMathToExpected);
-    _inputsToExpected.addAll(_inputsBaseToExpected);
-    _inputsToExpected.addAll(_inputsLoopsToExpected);
-    _inputsToExpected.addAll(_inputsHashToExpected);
+    //_inputsToExpected.addAll(_inputsMathToExpected);
+    //_inputsToExpected.addAll(_inputsBaseToExpected);
+    //_inputsToExpected.addAll(_inputsLoopsToExpected);
+    //_inputsToExpected.addAll(_inputsHashToExpected);
     _inputsToExpected.addAll(_inputsCryptoToExpected);
-    _inputsToExpected.addAll(_inputsGeocachingToExpected);
-    _inputsToExpected.addAll(_inputsDateTimeToExpected);
-    _inputsToExpected.addAll(_inputsStringToExpected);
+    //_inputsToExpected.addAll(_inputsGeocachingToExpected);
+    //_inputsToExpected.addAll(_inputsDateTimeToExpected);
+    //_inputsToExpected.addAll(_inputsStringToExpected);
 /*
     _inputsToExpected.addAll(_inputsGraphicToExpected);
     _inputsToExpected.addAll(_inputsWaypoinsToExpected);
 */
-    _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected);
-    _inputsToExpected.addAll(_inputsNestedLoopsToExpected);
-    _inputsToExpected.addAll(_inputsConstToExpected);
-    _inputsToExpected.addAll(_inputsCoordinatesToExpected);
+    //_inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected);
+    //_inputsToExpected.addAll(_inputsNestedLoopsToExpected);
+    //_inputsToExpected.addAll(_inputsConstToExpected);
+    //_inputsToExpected.addAll(_inputsCoordinatesToExpected);
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {

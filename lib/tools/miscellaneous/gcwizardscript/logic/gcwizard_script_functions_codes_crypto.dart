@@ -84,21 +84,11 @@ String _enclosedAreas(Object text, Object modeOnlyNumbers, Object modeWith4) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
-  String output = '';
-  if (modeOnlyNumbers == 0) {
-    output = decodeEnclosedAreas(text as String);
-  } else {
-    if (modeWith4 == 1) {
-      output = decodeEnclosedAreas(text as String, onlyNumbers: true, with4: true);
-    } else {
-      output = decodeEnclosedAreas(text as String, onlyNumbers: true, with4: false);
-    }
-  }
-  return output;
+  return decodeEnclosedAreas(text as String, onlyNumbers: (modeOnlyNumbers == 1), with4: (modeWith4 == 1));
 }
 
 String _bcd(Object text, Object mode, Object type) {
-  if (_isNotAString(text) || _isNotAInt(mode) || _isNotAInt(type)) {
+  if (_isNotAInt(mode) || _isNotAInt(type)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
@@ -112,10 +102,14 @@ String _bcd(Object text, Object mode, Object type) {
       output = decodeBCD(text, _intToBCDType(type as int));
       break;
     case _ENCODE:
-      if (int.tryParse(text as String) == null) {
+      if (_isAInt(text)) {
+        output = encodeBCD((text as int).toString(), _intToBCDType(type as int));
+      } else if (int.tryParse(text as String) == null) {
         _handleError(_INVALIDTYPECAST);
         return '';
-      }output = encodeBCD(text, _intToBCDType(type as int));
+      } else {
+        output = encodeBCD(text, _intToBCDType(type as int));
+      }
       break;
   }
   return output;
