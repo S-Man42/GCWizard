@@ -192,7 +192,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isNumberWithPoint(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName));
+        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName), false);
         offset = _calcOffset(_parserResult);
       }
     }
@@ -200,7 +200,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isNumber(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName));
+        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName), false);
         offset = _calcOffset(_parserResult);
       }
     }
@@ -226,7 +226,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isString(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false);
+        result = _coloredNumber(result, _parserResult, false, true);
         offset = _calcOffset(_parserResult);
       }
     }
@@ -234,7 +234,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isInvalidString(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, true);
+        result = _coloredNumber(result, _parserResult, true, false);
         offset = _calcOffset(_parserResult);
       }
     }
@@ -472,13 +472,8 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp(r"^'(.*)'");
+    RegExp regex = RegExp('^(["\'])(?:(?=(\\\\?))\\2.)*?\\1'); //RegExp("^(['\"])(?:(?=(\\\\?))\\2.)*?\\1")
     var match = regex.firstMatch(formula);
-
-    if (match != null) return [match.group(0)!];
-
-    regex = RegExp(r'^"(.*)"');
-    match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
   }
@@ -579,6 +574,7 @@ class FormulaPainter {
     var char = hasError ? VariableError : Variable;
     if (_wordFunction(_parentFunctionName)) {
       char = _coloredWordFunctionVariable(parts[0]);
+      _operatorBevor = true;
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
     }
@@ -615,8 +611,8 @@ class FormulaPainter {
     return (match == null) ? null : [match.group(0)!];
   }
 
-  String _coloredNumber(String result, List<String> parts, bool hasError) {
-    hasError |= !_operatorBevor && !_wordFunction(_parentFunctionName);
+  String _coloredNumber(String result, List<String> parts, bool hasError, bool stringValue) {
+    hasError |= !_operatorBevor && !_wordFunction(_parentFunctionName) && !stringValue;
     return _replaceRange(result, 0, parts[0].length, hasError ? NumberError : Number);
   }
 
