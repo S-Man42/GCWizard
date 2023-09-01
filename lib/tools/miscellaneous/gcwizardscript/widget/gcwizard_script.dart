@@ -268,17 +268,30 @@ class GCWizardScriptState extends State<GCWizardScript> {
   }
 
   Widget _buildOutputText(GCWizardScriptOutput output) {
+    List<List<String>> memoryDump = [
+      [i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]
+    ];
+    memoryDump.addAll(output.VariableDump);
+    Widget memoryDumpWidget = GCWExpandableTextDivider(
+                                expanded: false,
+                                text: i18n(context, 'gcwizard_script_dump'),
+                                child: GCWColumnedMultilineOutput(
+                                  data: memoryDump,
+                                  hasHeader: true,
+                                ),
+                              );
     if (output.ErrorMessage.isEmpty) {
-      return GCWOutputText(
-        style: gcwMonotypeTextStyle(),
-        text: output.STDOUT, //_currentScriptOutput,
-        isMonotype: true,
+      return Column(
+          children: <Widget>[
+            GCWOutputText(
+              style: gcwMonotypeTextStyle(),
+              text: output.STDOUT, //_currentScriptOutput,
+              isMonotype: true,
+            ),
+            memoryDumpWidget,
+          ]
       );
     } else {
-      List<List<String>> memoryDump = [
-        [i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]
-      ];
-      memoryDump.addAll(output.VariableDump);
       return Column(
         children: <Widget>[
           GCWOutputText(
@@ -295,14 +308,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 _printFaultyProgram(_currentProgram, output.ErrorPosition), //_currentScriptOutput,
             isMonotype: true,
           ),
-          GCWExpandableTextDivider(
-            expanded: false,
-            text: i18n(context, 'gcwizard_script_dump'),
-            child: GCWColumnedMultilineOutput(
-              data: memoryDump,
-              hasHeader: true,
-            ),
-          ),
+          memoryDumpWidget,
         ],
       );
     }

@@ -676,7 +676,18 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandDIM() {
     getToken();
-    state.variables[state.token] = _GCWList();
+    if (state.tokenType == VARIABLE) {
+      state.variables[state.token] = _GCWList();
+      do {
+        getToken();
+        if (state.tokenType == VARIABLE) {
+          state.variables[state.token] = _GCWList();
+        }
+        if (state.keywordToken == EOL || state.token == EOP || state.token == '\r\n' || state.token == '\n') break;
+      } while (state.keywordToken != EOL || state.token != EOP || state.token != '\r\n' || state.token != '\n');
+    } else {
+      _handleError(_SYNTAXERROR);
+    }
   }
 
   void executeCommandPRINT() {
@@ -2037,84 +2048,6 @@ class _GCWizardSCriptInterpreter {
         return true;
       }
     }
-    /*if (_Functions_17.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 18 < state.script.length) ? state.scriptIndex + 18 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 17).toUpperCase();
-      state.scriptIndex += 17;
-      return true;
-    }
-    if (_Functions_14.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 15 < state.script.length) ? state.scriptIndex + 15 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 14).toUpperCase();
-      state.scriptIndex += 14;
-      return true;
-    }
-    if (_Functions_12.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 13 < state.script.length) ? state.scriptIndex + 13 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 12).toUpperCase();
-      state.scriptIndex += 12;
-      return true;
-    }
-    if (_Functions_11.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 12 < state.script.length) ? state.scriptIndex + 12 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 11).toUpperCase();
-      state.scriptIndex += 11;
-      return true;
-    }
-    if (_Functions_10.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 11 < state.script.length) ? state.scriptIndex + 11 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 10).toUpperCase();
-      state.scriptIndex += 10;
-      return true;
-    }
-    if (_Functions_9.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 10 < state.script.length) ? state.scriptIndex + 10 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 9).toUpperCase();
-      state.scriptIndex += 9;
-      return true;
-    }
-    if (_Functions_8.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 9 < state.script.length) ? state.scriptIndex + 9 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 8).toUpperCase();
-      state.scriptIndex += 8;
-      return true;
-    }
-    if (_Functions_7.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 8 < state.script.length) ? state.scriptIndex + 8 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 7).toUpperCase();
-      state.scriptIndex += 7;
-      return true;
-    }
-    if (_Functions_6.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 7 < state.script.length) ? state.scriptIndex + 7 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 6).toUpperCase();
-      state.scriptIndex += 6;
-      return true;
-    }
-    if (_Functions_5.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 6 < state.script.length) ? state.scriptIndex + 6 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 5).toUpperCase();
-      state.scriptIndex += 5;
-      return true;
-    }
-    if (_Functions_4.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 5 < state.script.length) ? state.scriptIndex + 5 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 4).toUpperCase();
-      state.scriptIndex += 4;
-      return true;
-    }
-    if (_Functions_3.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 4 < state.script.length) ? state.scriptIndex + 4 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 3).toUpperCase();
-      state.scriptIndex += 3;
-      return true;
-    }
-    if (_Functions_2.contains(state.script.substring(state.scriptIndex,
-        (state.scriptIndex + 3 < state.script.length) ? state.scriptIndex + 3 : state.scriptIndex).toUpperCase())) {
-      state.token = state.script.substring(state.scriptIndex, state.scriptIndex + 2).toUpperCase();
-      state.scriptIndex += 2;
-      return true;
-    }*/
     return false;
   }
 
