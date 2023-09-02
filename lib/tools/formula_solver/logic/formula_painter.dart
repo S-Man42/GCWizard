@@ -472,7 +472,7 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp('^(["\'])(?:(?=(\\\\?))\\2.)*?\\1'); //RegExp("^(['\"])(?:(?=(\\\\?))\\2.)*?\\1")
+    RegExp regex = RegExp('^(["\'])(?:(?=(\\\\?))\\2.)*?\\1');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
@@ -544,7 +544,8 @@ class FormulaPainter {
 
     var variableValue = _variableValue(match.group(1)!);
     if (variableValue == null) return false;
-    return _isString(variableValue) != null;
+    var result = _isString(variableValue);
+    return (result != null && result[0].length == variableValue.length);
   }
 
   String? _variableValue(String variable) {
