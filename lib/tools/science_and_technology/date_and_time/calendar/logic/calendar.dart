@@ -43,11 +43,13 @@ String JulianDateToUnixTimestamp(double jd) {
 }
 
 double ExcelTimestampToJulianDate(int timestamp) {
+  Duration days = Duration(days: timestamp);
+  if (timestamp > 60) days = days - const Duration(days: 1); // correct Excel Bug - 1900 is a leap year
   DateTime date = DateTime(
     1900,
     1,
-    1,
-  ).add(Duration(days: timestamp));
+    0,
+  ).add(days);
   return gregorianCalendarToJulianDate(date);
 }
 

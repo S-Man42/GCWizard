@@ -9,6 +9,9 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 
 Isolate? _isolate;
 
+const double GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT = 230;
+const double GCW_ASYNC_EXECUTER_INDICATOR_WIDTH = 150;
+
 class GCWAsyncExecuter<T> extends StatefulWidget {
   final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;
   final Future<GCWAsyncExecuterParameters?> Function() parameter;

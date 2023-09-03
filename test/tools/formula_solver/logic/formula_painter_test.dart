@@ -117,6 +117,7 @@ void main() {
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
       {'formula' : 'csi(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrRb'},
 
+
       {'formula' : 'min(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
       {'formula' : 'max(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
       {'formula' : 'max(A)', 'values': {'A': '"X"'}, 'expectedOutput' : 'bbbbRb'}, // no number in number function
