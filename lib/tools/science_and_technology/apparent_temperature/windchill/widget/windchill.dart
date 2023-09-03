@@ -11,7 +11,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wind
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart' as velocity;
 import 'package:intl/intl.dart';
 
 class Windchill extends StatefulWidget {
@@ -31,7 +31,7 @@ class _WindchillState extends State<Windchill> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWUnitInput(
+        GCWUnitInput<Temperature>(
           value: _currentTemperature,
           title: i18n(context, 'common_measure_temperature'),
           initialUnit: TEMPERATURE_CELSIUS,
@@ -44,16 +44,16 @@ class _WindchillState extends State<Windchill> {
             });
           },
         ),
-        GCWUnitInput(
+        GCWUnitInput<velocity.Velocity>(
           value: _currentWindSpeed,
           title: i18n(context, 'common_measure_windspeed'),
-          initialUnit: VELOCITY_MS,
+          initialUnit: velocity.VELOCITY_MS,
           min: 0.0,
           max: 100.0,
-          unitList: velocities,
+          unitList: velocity.velocities,
           onChanged: (value) {
             setState(() {
-              _currentWindSpeed = VELOCITY_MS.fromReference(value);
+              _currentWindSpeed = velocity.VELOCITY_MS.fromReference(value);
             });
           },
         ),

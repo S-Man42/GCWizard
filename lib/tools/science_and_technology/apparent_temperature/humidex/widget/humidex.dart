@@ -33,7 +33,7 @@ class _HumidexState extends State<Humidex> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWUnitInput(
+        GCWUnitInput<Temperature>(
           value: _currentTemperature,
           title: i18n(context, 'common_measure_temperature'),
           initialUnit: TEMPERATURE_CELSIUS,
@@ -45,7 +45,7 @@ class _HumidexState extends State<Humidex> {
             });
           },
         ),
-        GCWUnitInput(
+        GCWUnitInput<Humidity>(
           value: _currentHumidity,
           title: i18n(context, 'common_measure_humidity'),
           initialUnit: HUMIDITY,
