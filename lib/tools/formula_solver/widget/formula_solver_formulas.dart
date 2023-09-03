@@ -35,8 +35,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
     _editNameController = TextEditingController(text: _currentEditedName);
-
-    refreshFormulas();
   }
 
   @override
@@ -140,8 +138,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   }
 
   var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
-    var_coords_provider.refreshFormulas();
-
     var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
     varCoordsFormula.formula = formula.formula;
     var_coords_provider.insertFormula(varCoordsFormula);
@@ -653,18 +649,18 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
       if ((i == formula.length - 1) || (formulaColors[i + 1] != formulaColors[i])) {
         TextStyle textStyle;
         switch (formulaColors[i]) {
-          case FormulaPainter.Number:
+          case 'g':
             textStyle = TextStyle(color: themeColors().formulaNumber());
             break;
-          case FormulaPainter.Variable:
+          case 'r':
             textStyle = TextStyle(color: themeColors().formulaVariable());
             break;
-          case FormulaPainter.OFRB:
+          case 'b':
             textStyle = TextStyle(color: themeColors().formulaMath());
             break;
-          case FormulaPainter.VariableError:
-          case FormulaPainter.NumberError:
-          case FormulaPainter.OFRBError:
+          case 'R':
+          case 'G':
+          case 'B':
             textStyle = TextStyle(color: themeColors().formulaError(), fontWeight: FontWeight.bold);
             break;
           default:
