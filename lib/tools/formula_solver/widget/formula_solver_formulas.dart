@@ -137,8 +137,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return name;
   }
 
-  var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
-    var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
+  var_coords_model.VariableCoordinateFormula _exportToVariableCoordinate(Formula formula) {
+    var_coords_model.VariableCoordinateFormula varCoordsFormula = var_coords_model.VariableCoordinateFormula(_createVariableCoordinateName());
     varCoordsFormula.formula = formula.formula;
     var_coords_provider.insertFormula(varCoordsFormula);
 
@@ -150,7 +150,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return varCoordsFormula;
   }
 
-  void _openInVariableCoordinate(var_coords_model.Formula formula) {
+  void _openInVariableCoordinate(var_coords_model.VariableCoordinateFormula formula) {
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute<GCWTool>(
