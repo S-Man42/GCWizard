@@ -62,7 +62,7 @@ class _GCWKeyValueTypeItemState extends GCWKeyValueItemState {
                 padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                 child: GCWPopupMenu(
                   iconData: formulaValueTypeIcon(_currentType),
-                  rotateDegrees: 90.0,
+                  rotateDegrees: _currentType == FormulaValueType.TEXT ? 0.0 : 90.0,
                   menuItemBuilder: (context) => [
                     GCWPopupMenuItem(
                         child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
@@ -77,11 +77,17 @@ class _GCWKeyValueTypeItemState extends GCWKeyValueItemState {
                             rotateDegrees: 90.0),
                         action: (index) => setState(() {
                           _currentType = FormulaValueType.INTERPOLATED;
-                        }))
+                        })),
+                    GCWPopupMenuItem(
+                        child: iconedGCWPopupMenuItem(
+                            context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
+                        action: (index) => setState(() {
+                          _currentType = FormulaValueType.TEXT;
+                        })),
                   ],
                 ))
                 : Transform.rotate(
-                  angle: degreesToRadian(90.0),
+                  angle: degreesToRadian(_currentType == FormulaValueType.TEXT ? 0.0 : 90.0),
                   child: Icon(formulaValueTypeIcon(_currentType), color: themeColors().mainFont()),
                 )
             )
@@ -106,6 +112,8 @@ class _GCWKeyValueTypeItemState extends GCWKeyValueItemState {
 
 IconData formulaValueTypeIcon(FormulaValueType? formulaValueType) {
   switch (formulaValueType) {
+    case FormulaValueType.TEXT:
+      return Icons.text_fields;
     case FormulaValueType.INTERPOLATED:
       return Icons.expand;
     default: // case FormulaValueType.FIXED:
