@@ -44,9 +44,16 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
 
   void _addEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
-      var newEntry = FormulaValue(entry.key, entry.value);
-      insertFormulaValue(newEntry, widget.group);
-      _newKeyController.text = _maxLetter();
+      if (int.tryParse(entry.key) != null) {
+        showGCWAlertDialog(context, i18n(context, 'formulasolver_values_alerts_keynumbers_title'), i18n(context, 'formulasolver_values_alerts_keynumbers_text'), () { });
+        return null;
+      }
+
+      entry = FormulaValue(entry.key, entry.value);
+      entry.id = newID(widget.group.values.map((value) => (value.id as int?)).toList());
+      entry.key = _newKeyController.text;
+
+      return entry;
     }
   }
 
