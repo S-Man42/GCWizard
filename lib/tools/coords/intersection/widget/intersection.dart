@@ -102,8 +102,8 @@ class _IntersectionState extends State<Intersection> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: executerHeight,
-              width: executerWidth,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<List<LatLng?>>(
                 isolatedFunction: intersectionAsync,
                 parameter: _buildJobData,

@@ -139,8 +139,8 @@ class _IntersectBearingsState extends State<IntersectBearings> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: executerHeight,
-              width: executerWidth,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<LatLng?>(
                 isolatedFunction: intersectBearingsAsync,
                 parameter: _buildJobData,
