@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 
 import 'APIMapper.dart';
 
@@ -6,9 +6,9 @@ const String _apiSpecification = '''
 {
 	"/key_label" : {
 		"get": {
-			"summary": "Reverse Text Tool",
+			"summary": "Morse Tool",
 			"responses": {
-        "description": "Reversed text."
+        "description": "Encoded or decoded text."
 			}
 		},
 		"parameters" : [
@@ -16,19 +16,32 @@ const String _apiSpecification = '''
 				"in": "query",
 				"name": "input",
 				"required": true,
-				"description": "Input data for reverse text",
+				"description": "Input data for encoding or decoding Morse",
 				"schema": {
 					"type": "string"
 				}
 			},
+			{
+				"in": "query",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
+				"schema": {
+					"type": "string",
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "decode"
+				}
+			}
 		]
 	}
 }
 ''';
 
-class ReverseAPIMapper extends APIMapper {
+class MorseAPIMapper extends APIMapper {
   @override
-  String get Key => 'reverse';
+  String get Key => 'morse';
 
   @override
   String doLogic() {
@@ -36,7 +49,12 @@ class ReverseAPIMapper extends APIMapper {
     if (input == null) {
       return '';
     }
-    return reverse(input);
+
+    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+      return encodeMorse(input);
+    } else {
+      return decodeMorse(input);
+    }
   }
 
   /// convert doLogic output to map
@@ -50,3 +68,4 @@ class ReverseAPIMapper extends APIMapper {
     return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
+
