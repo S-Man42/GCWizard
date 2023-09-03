@@ -35,7 +35,7 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
       padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
       child: GCWPopupMenu(
         iconData: formulaValueTypeIcon(_currentType),
-        rotateDegrees: 90.0,
+        rotateDegrees: _currentType == FormulaValueType.TEXT ? 0.0 : 90.0,
         menuItemBuilder: (context) => [
           GCWPopupMenuItem(
               child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
@@ -50,7 +50,13 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
                   rotateDegrees: 90.0),
               action: (index) => setState(() {
                 _currentType = FormulaValueType.INTERPOLATED;
-              }))
+              })),
+          GCWPopupMenuItem(
+              child: iconedGCWPopupMenuItem(
+                  context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
+              action: (index) => setState(() {
+                _currentType = FormulaValueType.TEXT;
+              })),
         ],
       )));
   }
@@ -68,13 +74,13 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
 
   @override
   void addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    var _entry = getNewEntry(entry);
-    if (_entry != null) {
-      (_entry as FormulaValue).type = _currentType;
-      widget.entries.add(_entry);
-
-      finishAddEntry(_entry, clearInput);
+    var newEntry = FormulaValue(entry.key, entry.value, type: _currentType);
+    if (widget.onAddEntry == null ) {
+      widget.entries.add(newEntry);
+    } else {
+      widget.onAddEntry!(newEntry);
     }
+    finishAddEntry(newEntry, clearInput);
   }
 }
 

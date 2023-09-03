@@ -35,8 +35,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
     _editNameController = TextEditingController(text: _currentEditedName);
-
-    refreshFormulas();
   }
 
   @override
@@ -140,8 +138,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   }
 
   var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
-    var_coords_provider.refreshFormulas();
-
     var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
     varCoordsFormula.formula = formula.formula;
     var_coords_provider.insertFormula(varCoordsFormula);

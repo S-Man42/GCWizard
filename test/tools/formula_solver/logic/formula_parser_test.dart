@@ -232,7 +232,7 @@ void main() {
         FormulaValue('D', 'sqrt(cs(A))', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.414213562373', 'state': 'ok'}]}},
       {'formula' : 'sqrt(D)', 'values': [
-        FormulaValue('A', '"ABC"', type: FormulaValueType.FIXED),
+        FormulaValue('A', 'ABC', type: FormulaValueType.TEXT),
         FormulaValue('D', 'cs(bww(A))', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2.449489742783', 'state': 'ok'}]}},
       {'formula' : 'sqrt(D)', 'values': [

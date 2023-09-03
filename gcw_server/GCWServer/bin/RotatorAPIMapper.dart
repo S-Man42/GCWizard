@@ -2,7 +2,42 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart
 
 import 'APIMapper.dart';
 
+const String _apiSpecification = '''
+{
+	"/key_label" : {
+		"get": {
+			"summary": "Rotation Tool",
+			"responses": {
+        "description": "Encoded or decoded text."
+			}
+		},
+		"parameters" : [
+			{
+				"in": "query",
+				"name": "input",
+				"required": true,
+				"description": "Input data for rotate text",
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"in": "query",
+				"name": "parameter1",
+				"description": "Shifts letters count",
+				"schema": {
+					"type": "string",
+					"default": "0"
+				}
+			}
+		]
+	}
+}
+''';
+
 class RotatorAPIMapper extends APIMapper {
+  @override
+  String get Key => 'rotation_general';
 
   @override
   String doLogic() {
@@ -23,5 +58,10 @@ class RotatorAPIMapper extends APIMapper {
   @override
   Map<String, String> toMap(Object result) {
     return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+  }
+
+  @override
+  String apiSpecification() {
+    return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
