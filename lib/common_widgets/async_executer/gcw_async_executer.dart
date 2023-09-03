@@ -2,12 +2,15 @@ import 'dart:isolate';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 
 Isolate? _isolate;
+
+const double GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT = 230;
+const double GCW_ASYNC_EXECUTER_INDICATOR_WIDTH = 150;
 
 class GCWAsyncExecuter<T> extends StatefulWidget {
   final Future<T> Function(GCWAsyncExecuterParameters) isolatedFunction;

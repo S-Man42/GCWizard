@@ -7,7 +7,7 @@ import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -79,7 +79,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        _openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
+        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
           if (file != null) {
             setState(() {
               _loadedFile = file;
@@ -104,8 +104,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             builder: (context) {
               return Center(
                 child: SizedBox(
-                  height: 220,
-                  width: 150,
+                  height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+                  width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
                   child: GCWAsyncExecuter<Uint8ListText?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,
@@ -187,9 +187,11 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       showToast(i18n(context, data.text));
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onLoaded(_loadedFile);
-    });
+    if (_loadedFile != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onLoaded(_loadedFile!);
+      });
+    }
   }
 
   @override
@@ -243,6 +245,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   bool _validateContentType(String contentType) {
+    if (widget.supportedFileTypes == null || widget.supportedFileTypes!.isEmpty) return true;
     for (FileType fileType in widget.supportedFileTypes ?? []) {
       var mimeTypeList = mimeTypes(fileType);
       if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
@@ -289,7 +292,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 }
 
-void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Function onLoaded) {
+void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, void Function(GCWFile?) onLoaded) {
   showGCWDialog(
       context,
       i18n(context, 'common_loadfile_showopen'),
@@ -298,7 +301,7 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
           GCWOpenFile(
             supportedFileTypes: supportedFileTypes,
             isDialog: true,
-            onLoaded: (_file) {
+            onLoaded: (GCWFile? _file) {
               onLoaded(_file);
 
               Navigator.of(context).pop();
@@ -370,7 +373,7 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<GCWFile?> _openFileExplorer({List<FileType>? allowedFileTypes}) async {
+Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
     if (allowedFileTypes == null || _hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
 
@@ -400,7 +403,7 @@ Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
   var allowedExtensions = fileExtensions(allowedFileTypes);
 
-  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
+  return files.where((element) => allowedExtensions.contains(element.extension.toString().toLowerCase())).toList();
 }
 
 bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {

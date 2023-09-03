@@ -34,7 +34,7 @@ TextStyle gcwBetaStyle() {
 }
 
 TextStyle gcwMonotypeTextStyle() {
-  return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier', fontWeight: FontWeight.bold);
+  return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier');
 }
 
 TextStyle gcwHyperlinkTextStyle() {
@@ -149,4 +149,8 @@ double defaultFontSize() {
 
 double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
+}
+
+double maxScreenWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
 }

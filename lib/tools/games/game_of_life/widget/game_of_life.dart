@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -178,9 +178,7 @@ class _GameOfLifeState extends State<GameOfLife> {
             });
           },
         ),
-        Container(
-          constraints: BoxConstraints(maxWidth: min(500, maxScreenHeight(context) * 0.8)),
-          margin: const EdgeInsets.symmetric(vertical: 20.0),
+        GCWPainterContainer(
           child: GameOfLifeBoard(
             state: _currentBoard,
             size: _currentSize,

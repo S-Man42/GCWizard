@@ -1,8 +1,28 @@
 import 'dart:core';
 
+import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:tuple/tuple.dart';
 
-enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM }
+enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
+  SEVENAUTO, SEVEN12345678,
+  FOURTEENAUTO,
+  FOURTEEN_HIJ_G1G2_MLK,
+  FOURTEEN_PGH_NJ_MLK,
+  FOURTEEN_KMN_G1G2_RST,
+  FOURTEEN_GHJ_PK_NMI,
+  FOURTEEN_HJK_G1G2_NML,
+  FOURTEEN_HJK_GM_QPN,
+  SIXTEENAUTO,
+  SIXTEEN_KMN_UP_TSR
+}
+const Variants7Segment = { SegmentDisplayType.SEVEN, SegmentDisplayType.SEVENAUTO, SegmentDisplayType.SEVEN12345678};
+const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOURTEENAUTO,
+  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, SegmentDisplayType.FOURTEEN_PGH_NJ_MLK,
+  SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, SegmentDisplayType.FOURTEEN_GHJ_PK_NMI,
+  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, SegmentDisplayType.FOURTEEN_HJK_GM_QPN};
+const Variants16Segment = { SegmentDisplayType.SIXTEEN, SegmentDisplayType.SIXTEENAUTO,
+  SegmentDisplayType.SIXTEEN_KMN_UP_TSR};
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
@@ -25,6 +45,36 @@ const _baseSegments16Segment = [
   'm',
   'dp'
 ];
+
+//variants
+const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'dp' };
+
+const _14SegmentTo_hij_g1g2_mlk = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'm', 'l': 'l', 'm': 'k', 'dp': 'dp' };
+const _14SegmentTo_pgh_nj_mlk   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'n': 'g1', 'j': 'g2', 'p': 'h', 'g': 'i', 'h': 'j', 'm': 'k', 'l': 'l', 'k': 'm', 'dp1': 'dp' };
+const _14SegmentTo_kmn_g1g2_rst = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'm', 's': 'l', 'r': 'k', 'dp': 'dp' };
+const _14SegmentTo_ghj_pk_nmi   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'p': 'g1', 'k': 'g2', 'g': 'h', 'h': 'i', 'j': 'j', 'i': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
+const _14SegmentTo_hjk_g1g2_nml = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'l': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
+const _14SegmentTo_hjk_gm_qpn   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g': 'g1', 'm': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'n': 'm', 'p': 'l', 'q': 'k', 'dp': 'dp' };
+
+const _16SegmentTo_kmn_up_tsr = {'a': 'a1', 'b': 'a2', 'c': 'b', 'd': 'c', 'e': 'd1', 'f': 'd2', 'g': 'e', 'h': 'f', 'u': 'g1', 'p': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'k', 's': 'l', 'r': 'm', 'dp': 'dp' };
+
+
+final _7SegmentVariants = {
+  SegmentDisplayType.SEVEN : _createBaseVariant(_baseSegments7Segment),
+  SegmentDisplayType.SEVEN12345678 : _7SegmentTo12345678};
+
+final _14SegmentVariants = {
+  SegmentDisplayType.FOURTEEN : _createBaseVariant(_baseSegments14Segment),
+  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK : _14SegmentTo_hij_g1g2_mlk,
+  SegmentDisplayType.FOURTEEN_PGH_NJ_MLK : _14SegmentTo_pgh_nj_mlk,
+  SegmentDisplayType.FOURTEEN_KMN_G1G2_RST : _14SegmentTo_kmn_g1g2_rst,
+  SegmentDisplayType.FOURTEEN_GHJ_PK_NMI :_14SegmentTo_ghj_pk_nmi,
+  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML : _14SegmentTo_hjk_g1g2_nml,
+  SegmentDisplayType.FOURTEEN_HJK_GM_QPN : _14SegmentTo_hjk_gm_qpn};
+
+final _16SegmentVariants = {
+  SegmentDisplayType.SIXTEEN : _createBaseVariant(_baseSegments16Segment),
+  SegmentDisplayType.SIXTEEN_KMN_UP_TSR : _16SegmentTo_kmn_up_tsr};
 
 const Map<String, List<String>> _AZTo16Segment = {
   '1': ['b', 'c', 'j'],
@@ -611,8 +661,26 @@ Segments encodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SEVEN:
       AZToSegment = _AZTo7Segment;
       break;
+    case SegmentDisplayType.SEVEN12345678:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _7SegmentTo12345678);
+      break;
     case SegmentDisplayType.FOURTEEN:
       AZToSegment = _AZTo14Segment;
+      break;
+    case SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_hij_g1g2_mlk);
+      break;
+    case SegmentDisplayType.FOURTEEN_PGH_NJ_MLK:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_pgh_nj_mlk);
+      break;
+    case SegmentDisplayType.FOURTEEN_KMN_G1G2_RST:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_kmn_g1g2_rst);
+      break;
+    case SegmentDisplayType.FOURTEEN_GHJ_PK_NMI:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_ghj_pk_nmi);
+      break;
+    case SegmentDisplayType.FOURTEEN_HJK_G1G2_NML:
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_hjk_g1g2_nml);
       break;
     case SegmentDisplayType.SIXTEEN:
       AZToSegment = _AZTo16Segment;
@@ -643,17 +711,44 @@ Segments encodeSegment(String input, SegmentDisplayType segmentType) {
 
 SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
   if (input.isEmpty) return SegmentsText(displays: [], text: '');
-  List<String> baseSegments = [];
+  Map<String, String> baseSegments = {};
 
   switch (segmentType) {
     case SegmentDisplayType.SEVEN:
-      baseSegments = _baseSegments7Segment;
+      baseSegments = _createBaseVariant(_baseSegments7Segment);
+      break;
+    case SegmentDisplayType.SEVENAUTO:
+      baseSegments = _detectVariant(input, _7SegmentVariants.values);
+      break;
+    case SegmentDisplayType.SEVEN12345678:
+      baseSegments = _7SegmentTo12345678;
       break;
     case SegmentDisplayType.FOURTEEN:
-      baseSegments = _baseSegments14Segment;
+       baseSegments = _createBaseVariant(_baseSegments14Segment);
+      break;
+    case SegmentDisplayType.FOURTEENAUTO:
+      baseSegments = _detectVariant(input, _14SegmentVariants.values);
+      break;
+    case SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK:
+      baseSegments = _14SegmentTo_hij_g1g2_mlk;
+      break;
+    case SegmentDisplayType.FOURTEEN_PGH_NJ_MLK:
+      baseSegments = _14SegmentTo_pgh_nj_mlk;
+      break;
+    case SegmentDisplayType.FOURTEEN_KMN_G1G2_RST:
+      baseSegments = _14SegmentTo_kmn_g1g2_rst;
+      break;
+    case SegmentDisplayType.FOURTEEN_GHJ_PK_NMI:
+      baseSegments = _14SegmentTo_ghj_pk_nmi;
+      break;
+    case SegmentDisplayType.FOURTEEN_HJK_G1G2_NML:
+      baseSegments = _14SegmentTo_hjk_g1g2_nml;
       break;
     case SegmentDisplayType.SIXTEEN:
-      baseSegments = _baseSegments16Segment;
+      baseSegments = _createBaseVariant(_baseSegments16Segment);
+      break;
+    case SegmentDisplayType.SIXTEENAUTO:
+      baseSegments = _detectVariant(input, _16SegmentVariants.values);
       break;
     default:
   }
@@ -663,13 +758,10 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
   List<String>? currentDisplay;
 
   for (int i = 0; i < input.length; i++) {
-    var segment = input[i];
-    if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
-      i++;
-      segment += input[i];
-    }
+    var splitResult = _splitSegment(input, i, baseSegments);
+    i = splitResult.item2;
 
-    if (!baseSegments.contains(segment)) {
+    if (!baseSegments.containsValue(splitResult.item1)) {
       if (currentDisplay != null) {
         currentDisplay.sort();
         displays.add(currentDisplay.toSet().toList());
@@ -681,7 +773,7 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
 
     currentDisplay ??= [];
 
-    currentDisplay.add(segment);
+    currentDisplay.add(splitResult.item1);
   }
 
   if (currentDisplay != null) {
@@ -698,7 +790,7 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
     var segments = List<String>.from(display);
     if (containsDot) segments.remove('dp');
 
-    var character = _characterFromSegmentList(segmentType, segments);
+    var character = _characterFromSegmentList(baseSegmentType(segmentType), segments); //segmentType
     if (character == null) {
       return UNKNOWN_ELEMENT;
     }
@@ -730,4 +822,98 @@ String? _characterFromSegmentList(SegmentDisplayType type, List<String> segments
 
 bool segmentActive(Map<String, bool> segments, String segment) {
   return segments[segment] ?? false;
+}
+
+Segments mapToVariant(Segments segments, SegmentDisplayType segmentType) {
+  var baseType = baseSegmentType(segmentType);
+  Map<String, String> mapList = {};
+  var mappedSegment = Segments(displays: []);
+
+  if (baseType == segmentType) return segments;
+
+  switch (baseType) {
+    case SegmentDisplayType.SIXTEEN:
+      if (segmentType == SegmentDisplayType.SIXTEENAUTO) return segments;
+      mapList = _16SegmentVariants[segmentType]!;
+      break;
+    case SegmentDisplayType.FOURTEEN:
+      if (segmentType == SegmentDisplayType.FOURTEENAUTO) return segments;
+      mapList = _14SegmentVariants[segmentType]!;
+      break;
+    case SegmentDisplayType.SEVEN:
+      if (segmentType == SegmentDisplayType.SEVENAUTO) return segments;
+      mapList = _7SegmentVariants[segmentType]!;
+      break;
+    default:
+  }
+  mapList = switchMapKeyValue(mapList);
+
+  for (var segment in segments.displays) {
+    List<String> newSegment = [];
+    for (var segment in segment) {
+      newSegment.add(mapList[segment] ?? '');
+    }
+    mappedSegment.addSegment(newSegment);
+  }
+  return mappedSegment;
+}
+
+SegmentDisplayType baseSegmentType(SegmentDisplayType segmentType) {
+  if (Variants14Segment.contains(segmentType)) return SegmentDisplayType.FOURTEEN;
+  if (Variants16Segment.contains(segmentType)) return SegmentDisplayType.SIXTEEN;
+  return SegmentDisplayType.SEVEN;
+}
+
+Map<String, List<String>> _convertCharacterMap(Map<String, List<String>> characterMap, Map<String, String> variant) {
+  Map<String, List<String>> _characterMap = {};
+  var variantMap = switchMapKeyValue(variant);
+
+  characterMap.forEach((character, segments) {
+    _characterMap.addAll({character: segments.map((segment) => variantMap[segment]!).toList()});
+  });
+  return _characterMap;
+}
+
+Map<String, String> _createBaseVariant(List<String> baseSegments) {
+  return Map<String, String>.fromIterables(baseSegments, baseSegments);
+}
+
+Map<String, String> _detectVariant(String input, Iterable<Map<String, String>> variants) {
+  if (variants.length == 1) return variants.first;
+  var countSegments = 0;
+  var maxCountSegments = 0;
+  var variant = variants.first;
+
+  for (var baseSegments in variants) {
+    countSegments = 0;
+    for (int i = 0; i < input.length; i++) {
+      var splitResult = _splitSegment(input, i, baseSegments);
+      i = splitResult.item2;
+      if (baseSegments.containsValue(splitResult.item1)) countSegments++;
+    }
+    if (countSegments > maxCountSegments) {
+      maxCountSegments = countSegments;
+      variant = baseSegments;
+    }
+  }
+  return variant;
+}
+
+Tuple2<String, int> _splitSegment(String input, int i, Map<String, String> baseSegments) {
+  var segment = input[i];
+  var found = false;
+  if (baseSegments.containsKey(segment)) {
+    segment = baseSegments[segment]!;
+    found= true;
+  }
+  if (i + 2 < input.length && baseSegments.containsKey(segment + input[i + 1] + input[i + 2])) {
+    segment = baseSegments[segment + input[i + 1] + input[i + 2]]!;
+    i += 2;
+    found= true;
+  } else if (i + 1 < input.length && baseSegments.containsKey(segment + input[i + 1])) {
+    segment = baseSegments[segment + input[i + 1]]!;
+    i++;
+    found= true;
+  }
+  return Tuple2<String, int>(found ? segment : '', i);
 }

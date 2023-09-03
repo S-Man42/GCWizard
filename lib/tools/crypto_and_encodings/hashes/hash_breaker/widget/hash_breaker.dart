@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -58,14 +58,13 @@ class _HashBreakerState extends State<HashBreaker> {
     super.dispose();
   }
 
-  KeyValueBase? _getNewEntry(KeyValueBase entry) {
-    if (entry.key.isEmpty) return null;
+  void _onAddEntry(KeyValueBase entry) {
+    if (entry.key.isEmpty) return;
     _currentIdCount++;
     if (_currentSubstitutions.firstWhereOrNull((_entry) => _entry.id == _currentIdCount) == null) {
       entry.id = _currentIdCount;
-      return entry;
+      return _currentSubstitutions.add(entry);
     }
-    return null;
   }
 
   void _updateNewEntry(KeyValueBase entry) {
@@ -127,7 +126,7 @@ class _HashBreakerState extends State<HashBreaker> {
         valueFlex: 4,
         entries: _currentSubstitutions,
         onNewEntryChanged: (entry) => _updateNewEntry(entry),
-        onGetNewEntry: (entry) => _getNewEntry(entry),
+        onAddEntry: (entry) => _onAddEntry(entry),
       );
   }
 
@@ -138,8 +137,8 @@ class _HashBreakerState extends State<HashBreaker> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<BoolText?>(
               isolatedFunction: breakHashAsync,
               parameter: _buildJobData,

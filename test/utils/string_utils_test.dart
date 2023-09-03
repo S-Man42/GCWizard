@@ -282,4 +282,40 @@ void main() {
       });
     }
   });
+
+  group("StringUtils.formatStringForDecimals_withEmpty", () {
+    test('', () {
+      var _actual = formatStringForDecimals();
+      expect(_actual, '00.000###');
+    });
+  });
+
+  group("StringUtils.formatStringForDecimals", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'integerPrecision' : -1, 'decimalPrecision' : -1, 'minDecimalPrecision' : -1, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : -1, 'decimalPrecision' : -1, 'minDecimalPrecision' : 1, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : -1, 'decimalPrecision' : 1, 'minDecimalPrecision' : -1, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : 0, 'decimalPrecision' : 0, 'minDecimalPrecision' : 0, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 0, 'minDecimalPrecision' : 1, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : 2, 'decimalPrecision' : 0, 'minDecimalPrecision' : 0, 'expectedOutput' : '00.0'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 0, 'minDecimalPrecision' : 2, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 1, 'minDecimalPrecision' : 2, 'expectedOutput' : '0.0'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 2, 'minDecimalPrecision' : 2, 'expectedOutput' : '0.00'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 3, 'minDecimalPrecision' : 2, 'expectedOutput' : '0.00#'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 3, 'minDecimalPrecision' : 3, 'expectedOutput' : '0.000'},
+      {'integerPrecision' : 1, 'decimalPrecision' : 6, 'minDecimalPrecision' : 3, 'expectedOutput' : '0.000###'},
+      {'integerPrecision' : 3, 'decimalPrecision' : 6, 'minDecimalPrecision' : 3, 'expectedOutput' : '000.000###'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('integerPrecision: ${elem['integerPrecision']}, decimalPrecision: ${elem['decimalPrecision']}, minDecimalPrecision: ${elem['minDecimalPrecision']}', () {
+        var _actual = formatStringForDecimals(
+          integerPrecision: elem['integerPrecision'] as int,
+          decimalPrecision: elem['decimalPrecision'] as int,
+          minDecimalPrecision: elem['minDecimalPrecision'] as int,
+        );
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
 }

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -56,8 +56,8 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
 
   @override
   Widget build(BuildContext context) {
-    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40) / 3;
-    var _decryptionSwitchWidth = (MediaQuery.of(context).size.width - 40 - 57 - 20);
+    var _symbolTableSwitchPartWidth = (maxScreenWidth(context) - 40) / 3;
+    var _decryptionSwitchWidth = (maxScreenWidth(context) - 40 - 57 - 20);
     var _decryptionSwitchPartWidth = (_symbolTableSwitchPartWidth / _decryptionSwitchWidth * 100).toInt();
 
     _imageData = widget.imageData;

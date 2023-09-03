@@ -5,12 +5,14 @@ import 'dart:ui' as ui;
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_specialsorts.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
-const SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
+part 'package:gc_wizard/tools/symbol_tables/_common/logic/common_symbols.dart';
+
+const SYMBOLTABLES_ASSETPATH = 'lib/tools/symbol_tables/_common/assets/';
 
 class SymbolTableConstants {
   static final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
@@ -18,182 +20,11 @@ class SymbolTableConstants {
 
   static const CONFIG_FILENAME = 'config.file';
   static const CONFIG_SPECIALMAPPINGS = 'special_mappings';
+  static const CONFIG_KEEPCASE = 'keep_case';
   static const CONFIG_TRANSLATE = 'translate';
   static const CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
   static const CONFIG_CASESENSITIVE = 'case_sensitive';
   static const CONFIG_IGNORE = 'ignore';
-
-  static const Map<String, String> CONFIG_SPECIAL_CHARS = {
-    "ampersand": "&",
-    "asterisk": "*",
-    "apostrophe": "'",
-    "apostrophe_in": "'",
-    "apostrophe_out": "'",
-    "backslash": "\\",
-    "backtick": "`",
-    "brace_close": "}",
-    "brace_open": "{",
-    "bracket_close": "]",
-    "bracket_open": "[",
-    "bullet": "•",
-    "caret": "^",
-    "cedille": "¸",
-    "cent": "¢",
-    "colon": ":",
-    "comma": ",",
-    "copyright": "©",
-    "cross": "†",
-    "dash": "-",
-    "degree": "°",
-    "division": "÷",
-    "dollar": "\$",
-    "dot": ".",
-    "doublecross": "‡",
-    "dje": "ђ",
-    "Dje": "Ђ",
-    "ellipse": "…",
-    "equals": "=",
-    "Eth": "Ð",
-    "eth1": "ð",
-    "eth2": "đ",
-    "euro": "€",
-    "exclamation": "!",
-    "function": "ƒ",
-    "greaterthan": ">",
-    "guillemet_in": "«",
-    "guillemet_out": "»",
-    "hard_space": " ",
-    "hashtag": "#",
-    "high_1": "¹",
-    "high_2": "²",
-    "high_3": "³",
-    "high_a": "ª",
-    "hyphen": "-",
-    "inverted_exclamation": "¡",
-    "inverted_question": "¿",
-    "lessthan": "<",
-    "middle_dot": "·",
-    "minus": "-",
-    "my": "µ",
-    "number": "N°",
-    "not": "¬",
-    "one_fourth": "¼",
-    "one_half": "½",
-    "open_pipe": "¦",
-    "paragraph": "§",
-    "parentheses_open": "(",
-    "parentheses_close": ")",
-    "parentheses": "()",
-    "percent": "%",
-    "pi": "π",
-    "pipe": "|",
-    "plus": "+",
-    "plus_minus": "±",
-    "pound": "£",
-    "promille": "‰",
-    "quotation": "\"",
-    "quotation_in": "“",
-    "quotation_out": "”",
-    "question": "?",
-    "register": "®",
-    "semicolon": ";",
-    "slash": "/",
-    "space": " ",
-    "tilde": "~",
-    "times": "×",
-    "three_fourth": "¾",
-    "trademark": "™",
-    "trema": "¨",
-    "underscore": "_",
-    "web_at": "@",
-    "yen": "¥",
-    "A_acute": "Á",
-    "A_grave": "À",
-    "A_circumflex": "Â",
-    "A_ring": "Å",
-    "A_tilde": "Ã",
-    "A_cedille": "Ą",
-    "AE_together": "Æ",
-    "AE_umlaut": "Ä",
-    "C_acute": "Ć",
-    "C_caron": "Č",
-    "C_cedille": "Ç",
-    "E_acute": "É",
-    "E_cedille": "Ę",
-    "E_circumflex": "Ê",
-    "E_grave": "È",
-    "E_eth": "Ð",
-    "E_trema": "Ë",
-    "I_acute": "Í",
-    "I_grave": "Ì",
-    "I_circumflex": "Î",
-    "I_trema": "Ï",
-    "L_slash": "Ł",
-    "N_acute": "Ń",
-    "N_tilde": "Ñ",
-    "O_acute": "Ó",
-    "O_grave": "Ò",
-    "O_circumflex": "Ô",
-    "O_slash": "Ø",
-    "O_tilde": "Õ",
-    "OE_together": "Œ",
-    "OE_umlaut": "Ö",
-    "R_acute": "Ŕ",
-    "S_acute": "Ś",
-    "S_caron": "Š",
-    "SZ_umlaut": "ß",
-    "T_thorn": "Þ",
-    "U_acute": "Ú",
-    "U_circumflex": "Û",
-    "U_grave": "Ù",
-    "UE_umlaut": "Ü",
-    "Y_acute": "Ý",
-    "Y_trema": "Ÿ",
-    "Z_acute": "Ź",
-    "Z_caron": "Ž",
-    "Z_dot": "Ż",
-    "a_acute": "á",
-    "a_circumflex": "â",
-    "a_grave": "à",
-    "a_ring": "å",
-    "a_tilde": "ã",
-    "a_cedille": "ą",
-    "ae_umlaut": "ä",
-    "ae_together": "æ",
-    "c_acute": "ć",
-    "c_caron": "č",
-    "c_cedille": "ç",
-    "e_acute": "é",
-    "e_cedille": "ę",
-    "e_circumflex": "ê",
-    "e_grave": "è",
-    "e_eth": "ð", // here for backwards compatibility; new: eth1
-    "e_trema": "ë",
-    "i_acute": "í",
-    "i_circumflex": "î",
-    "i_grave": "ì",
-    "i_trema": "ï",
-    "l_slash": "ł",
-    "n_tilde": "ñ",
-    "o_acute": "ó",
-    "o_circumflex": "o",
-    "o_grave": "ò",
-    "o_slash": "ø",
-    "o_tilde": "õ",
-    "oe_together": "œ",
-    "oe_umlaut": "ö",
-    "t_thorn": "þ",
-    "s_caron": "š",
-    "u_acute": "ú",
-    "u_circumflex": "û",
-    "u_grave": "ù",
-    "ue_umlaut": "ü",
-    "y_acute": "ý",
-    "y_trema": "ÿ",
-    "z_acute": "ź",
-    "z_caron": "ž",
-    "z_dot": "ż"
-  };
 }
 
 class SymbolData {
@@ -222,6 +53,7 @@ class _SymbolTableConfig {
   var caseSensitive = false;
   var ignore = <String>[];
   var specialMappings = <String, String>{};
+  var keepCase = <String>[];
   var translate = <String>[];
   var translationPrefix = '';
   int Function(Map<String, SymbolData>, Map<String, SymbolData>)? sort;
@@ -281,6 +113,10 @@ class SymbolTableData {
       _config.specialMappings = toStringMapOrNull(map) ?? {};
     }
 
+    if (jsonConfig[SymbolTableConstants.CONFIG_KEEPCASE] != null) {
+      _config.keepCase = toStringListOrNull(jsonConfig[SymbolTableConstants.CONFIG_KEEPCASE]) ?? [];
+    }
+
     switch (symbolKey) {
       case "notes_names_altoclef":
         _config.sort = specialSortNoteNames;
@@ -314,8 +150,8 @@ class SymbolTableData {
 
     String key;
 
-    if (SymbolTableConstants.CONFIG_SPECIAL_CHARS.containsKey(imageKey)) {
-      key = SymbolTableConstants.CONFIG_SPECIAL_CHARS[imageKey]!;
+    if (_COMMON_SYMBOLS.containsKey(imageKey)) {
+      key = _COMMON_SYMBOLS[imageKey]!;
     } else if ((_config.translate.contains(imageKey))) {
       if (_config.translationPrefix.isNotEmpty) {
         key = i18n(_context, _config.translationPrefix + imageKey);
@@ -327,7 +163,9 @@ class SymbolTableData {
       key = imageKey;
     }
 
-    if (!isCaseSensitive()) key = key.toUpperCase();
+    key = _config.specialMappings[key] ?? key;
+
+    if (!isCaseSensitive() && !_config.keepCase.contains(imageKey)) key = key.toUpperCase();
 
     if (setTranslateable) _config.translateables.add(key);
 

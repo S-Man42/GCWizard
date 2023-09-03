@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -350,8 +350,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<Uint8List?>(
                 isolatedFunction: decodeImagesAsync,
                 parameter: _buildJobDataDecode,
@@ -394,8 +394,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   //                 onReady: (data) => _saveOutputOffsetAutoCalc(data),
   //                 isOverlay: true,
   //               ),
-  //               height: 220,
-  //               width: 150,
+  //               height: executerHeight,
+  //               width: executerWidth,
   //             ),
   //           );
   //         },
@@ -419,8 +419,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   //                   onReady: (data) => _saveOutputOffsetAutoCalc(data),
   //                   isOverlay: true,
   //                 ),
-  //                 height: 220,
-  //                 width: 150,
+  //                 height: executerHeight,
+  //                 width: executerWidth,
   //               ),
   //             );
   //           },
@@ -452,8 +452,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<Tuple2<Uint8List, Uint8List?>?>(
                 isolatedFunction: encodeImagesAsync,
                 parameter: _buildJobDataEncode,
