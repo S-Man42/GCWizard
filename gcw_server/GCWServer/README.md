@@ -9,7 +9,7 @@ dart run
 # parameter
 
 input
-modeencode
+mode
 parameter1
 parameter2
 fromformat
@@ -21,14 +21,13 @@ toolname?input=xxx&parameter1=xxx&parameter2=xxx
 
 # example
 
-/MultiDecoder?input=Test%20String
-/Morse?input=Test%20String&modeencode=true
+/Morse?input=Test%20String&mode=encode
 /Morse?input=...%20---%20...
-/Morse?input=test&modeencode=true
+/Morse?input=test&mode=encode
 /alphabetvalues?input=Test
-/alphabetvalues?input=Test&modeencode=true
-/alphabetvalues?input=Test12&modeencode=true
-/alphabetvalues?input=1%202%203%204&modeencode=true
+/alphabetvalues?input=Test&mode=encode
+/alphabetvalues?input=Test12&mode=encode
+/alphabetvalues?input=1%202%203%204&mode=encode
 /coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&
 /coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&toformat=coords_utm
 /coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&toformat=coords_all

@@ -43,24 +43,26 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return
+    return Row(
+      children: <Widget>[
         Expanded(
-            child:
-              Stack(children:<Widget>[
-                  AspectRatio(
-                      aspectRatio: 1 / 0.5,
-                      child: CanvasTouchDetector(
-                        gesturesToOverride: const [GestureType.onTapDown],
-                        builder: (context) {
-                          return CustomPaint(
-                            painter: NumberPyramidBoardPainter(context, widget.type, widget.board, _showInputTextBox, _setState)
-                          );
-                        },
-                      )
-                  ),
-                  _editWidget()
-              ])
-    );
+          child:
+            Stack(children:<Widget>[
+                AspectRatio(
+                    aspectRatio: 1 / 0.5,
+                    child: CanvasTouchDetector(
+                      gesturesToOverride: const [GestureType.onTapDown],
+                      builder: (context) {
+                        return CustomPaint(
+                          painter: NumberPyramidBoardPainter(context, widget.type, widget.board, _showInputTextBox, _setState)
+                        );
+                      },
+                    )
+                ),
+              _editWidget()
+          ])
+      )
+    ]);
   }
 
   Widget _editWidget() {

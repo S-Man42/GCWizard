@@ -297,6 +297,7 @@ import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/widget/complex_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/compound_interest/widget/compound_interest.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_calling_codes/widget/countries_calling_codes.dart';
+import 'package:gc_wizard/tools/science_and_technology/countries/countries_embassycodes_ger/widget/countries_calling_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_ioc_codes/widget/countries_ioc_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_iso_codes/widget/countries_iso_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_vehicle_codes/widget/countries_vehicle_codes.dart';
@@ -309,6 +310,7 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/iterated_cross
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/widget/calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/widget/day_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_year/widget/day_of_the_year.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/excel_time/widget/excel_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calculator/widget/time_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/widget/unix_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
@@ -1858,6 +1860,10 @@ void initializeRegistry(BuildContext context) {
       'countries',
       'countries_vehiclecodes',
     ]),
+    GCWTool(tool: CountriesEmbassyCodesGER(), id: 'countries_embassycodes_ger', searchKeys: const [
+      'countries',
+      'countries_embassycodes_ger',
+    ]),
     GCWTool(tool: const CountriesFlags(), id: 'countries_flags', searchKeys: const [
       'countries',
       'symbol_flags',
@@ -1908,6 +1914,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',
       'dates_calendar',
+    ]),
+    GCWTool(tool: const ExcelTime(), id: 'excel_time', searchKeys: const [
+      'dates',
+      'excel_time',
     ]),
     GCWTool(tool: const UnixTime(), id: 'unix_time', searchKeys: const [
       'dates',
@@ -3284,6 +3294,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
     ]),
+    GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
+      'symbol_blue_monday',
+    ]),
     GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: const [
       'symbol_brahmi_numerals',
     ]),
@@ -3621,6 +3634,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: const [
       'symbol_intergalactic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'interlac', symbolSearchStrings: const [
+      'symbol_interlac',
+    ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
     ]),
@@ -3666,6 +3682,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
       'symbol_la_buse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
+      'symbol_linear_b',
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
@@ -3949,6 +3968,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
       'symbol_sprykski',
     ]),
+    GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
+      'symbol_steinheil', 'telegraph',
+    ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
     ]),
@@ -4041,6 +4063,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: const [
       'symbol_visitor_2009',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'voynich', symbolSearchStrings: const [
+      'symbol_voynich',
     ]),
     GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: const [
       'symbol_vulcanian',

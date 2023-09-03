@@ -6,7 +6,8 @@ enum CountryProperties {
   iso3166_1_3,
   iso3166_1_n,
   iso3166_2,
-  ioccode
+  ioccode,
+  embassy_plate_code_de
 }
 
 class _Country {
@@ -18,6 +19,7 @@ class _Country {
   final String iso3166_1_n;
   final String iso3166_2;
   final String ioccode;
+  final int? embassy_plate_code_de;
 
   const _Country({
     required this.name,
@@ -27,10 +29,11 @@ class _Country {
     required this.iso3166_1_3,
     required this.iso3166_1_n,
     required this.iso3166_2,
-    required this.ioccode
+    required this.ioccode,
+    this.embassy_plate_code_de
   });
 
-  String getProperty(CountryProperties property) {
+  Object? getProperty(CountryProperties property) {
     switch (property) {
       case CountryProperties.name:
         return name;
@@ -48,6 +51,8 @@ class _Country {
         return iso3166_2;
       case CountryProperties.ioccode:
         return ioccode;
+      case CountryProperties.embassy_plate_code_de:
+        return embassy_plate_code_de;
     }
   }
 }
@@ -72,6 +77,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "784",
     iso3166_2: "AE",
     ioccode: "UAE",
+    embassy_plate_code_de: 148
   ),
   "Afghanistan": _Country(
     name: "common_country_Afghanistan",
@@ -82,6 +88,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "004",
     iso3166_2: "AF",
     ioccode: "AFG",
+    embassy_plate_code_de: 15
   ),
   "AntiguaandBarbuda": _Country(
     name: "common_country_AntiguaandBarbuda",
@@ -112,6 +119,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "008",
     iso3166_2: "AL",
     ioccode: "ALB",
+    embassy_plate_code_de: 13
   ),
   "Armenia": _Country(
     name: "common_country_Armenia",
@@ -122,6 +130,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "051",
     iso3166_2: "AM",
     ioccode: "ARM",
+    embassy_plate_code_de: 166
   ),
   "NetherlandsAntilles": _Country(
     name: "common_country_NetherlandsAntilles",
@@ -142,6 +151,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "024",
     iso3166_2: "AO",
     ioccode: "ANG",
+    embassy_plate_code_de: 12
   ),
   "Antarctica": _Country(
     name: "common_country_Antarctica",
@@ -182,6 +192,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "032",
     iso3166_2: "AR",
     ioccode: "ARG",
+    embassy_plate_code_de: 18
   ),
   "AmericanSamoa": _Country(
     name: "common_country_AmericanSamoa",
@@ -202,6 +213,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "040",
     iso3166_2: "AT",
     ioccode: "AUT",
+    embassy_plate_code_de: 105
   ),
   "Australia": _Country(
     name: "common_country_Australia",
@@ -212,6 +224,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "036",
     iso3166_2: "AU",
     ioccode: "AUS",
+    embassy_plate_code_de: 19
   ),
   "Aruba": _Country(
     name: "common_country_Aruba",
@@ -242,6 +255,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "031",
     iso3166_2: "AZ",
     ioccode: "AZE",
+    embassy_plate_code_de: 156
   ),
   "BosniaandHerzegovina": _Country(
     name: "common_country_BosniaandHerzegovina",
@@ -252,6 +266,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "070",
     iso3166_2: "BA",
     ioccode: "BIH",
+    embassy_plate_code_de: 32
   ),
   "Barbados": _Country(
     name: "common_country_Barbados",
@@ -272,6 +287,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "050",
     iso3166_2: "BD",
     ioccode: "BAN",
+    embassy_plate_code_de:20
   ),
   "Belgium": _Country(
     name: "common_country_Belgium",
@@ -282,6 +298,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "056",
     iso3166_2: "BE",
     ioccode: "BEL",
+    embassy_plate_code_de:21
   ),
   "BurkinaFaso": _Country(
     name: "common_country_BurkinaFaso",
@@ -292,6 +309,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "854",
     iso3166_2: "BF",
     ioccode: "BUR",
+    embassy_plate_code_de: 104
   ),
   "Bulgaria": _Country(
     name: "common_country_Bulgaria",
@@ -302,6 +320,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "100",
     iso3166_2: "BG",
     ioccode: "BUL",
+    embassy_plate_code_de: 23
   ),
   "Bahrain": _Country(
     name: "common_country_Bahrain",
@@ -312,6 +331,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "048",
     iso3166_2: "BH",
     ioccode: "BRN",
+    embassy_plate_code_de: 164
   ),
   "Burundi": _Country(
     name: "common_country_Burundi",
@@ -322,6 +342,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "108",
     iso3166_2: "BI",
     ioccode: "BDI",
+    embassy_plate_code_de: 27
   ),
   "Benin": _Country(
     name: "common_country_Benin",
@@ -332,6 +353,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "204",
     iso3166_2: "BJ",
     ioccode: "BEN",
+    embassy_plate_code_de: 35
   ),
   "SaintBarthélemy": _Country(
     name: "common_country_SaintBarthelemy",
@@ -362,6 +384,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "096",
     iso3166_2: "BN",
     ioccode: "BRU",
+    embassy_plate_code_de: 22
   ),
   "Bolivia": _Country(
     name: "common_country_Bolivia",
@@ -372,6 +395,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "068",
     iso3166_2: "BO",
     ioccode: "BOL",
+    embassy_plate_code_de: 25
   ),
   "Bonaire": _Country(
     name: "common_country_Bonaire",
@@ -412,6 +436,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "076",
     iso3166_2: "BR",
     ioccode: "BRA",
+    embassy_plate_code_de: 26
   ),
   "Bahamas": _Country(
     name: "common_country_Bahamas",
@@ -452,6 +477,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "072",
     iso3166_2: "BW",
     ioccode: "BOT",
+    embassy_plate_code_de: 205
   ),
   "Belarus": _Country(
     name: "common_country_Belarus",
@@ -462,6 +488,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "112",
     iso3166_2: "BY",
     ioccode: "BLR",
+    embassy_plate_code_de: 31
   ),
   "Belize": _Country(
     name: "common_country_Belize",
@@ -482,6 +509,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "124",
     iso3166_2: "CA",
     ioccode: "CAN",
+    embassy_plate_code_de: 75
   ),
   "CocosIslands": _Country(
     name: "common_country_CocosIslands",
@@ -502,6 +530,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "180",
     iso3166_2: "CD",
     ioccode: "COD",
+    embassy_plate_code_de: 151
   ),
   "RepublicoftheCongo/Brazzaville": _Country(
     name: "common_country_RepublicoftheCongo",
@@ -512,6 +541,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "180",
     iso3166_2: "CG",
     ioccode: "CGO",
+    embassy_plate_code_de:78
   ),
   "CentralAfricanRepublic": _Country(
     name: "common_country_CentralAfricanRepublic",
@@ -522,6 +552,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "140",
     iso3166_2: "CF",
     ioccode: "CAF",
+    embassy_plate_code_de: 152
   ),
   "Switzerland": _Country(
     name: "common_country_Switzerland",
@@ -532,6 +563,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "756",
     iso3166_2: "CH",
     ioccode: "SUI",
+    embassy_plate_code_de: 120
   ),
   "IvoryCoast(Côted'Ivoire)": _Country(
     name: "common_country_CotedIvoire",
@@ -542,6 +574,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "384",
     iso3166_2: "CI",
     ioccode: "CIV",
+    embassy_plate_code_de: 38
   ),
   "CookIslands": _Country(
     name: "common_country_CookIslands",
@@ -562,6 +595,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "152",
     iso3166_2: "CL",
     ioccode: "CHI",
+    embassy_plate_code_de: 28
   ),
   "Cameroon": _Country(
     name: "common_country_Cameroon",
@@ -572,6 +606,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "120",
     iso3166_2: "CM",
     ioccode: "CMR",
+    embassy_plate_code_de: 74
   ),
   "China": _Country(
     name: "common_country_PeoplesRepublicofChina",
@@ -582,6 +617,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "156",
     iso3166_2: "CN",
     ioccode: "CHN",
+    embassy_plate_code_de: 29
   ),
   "Colombia": _Country(
     name: "common_country_Colombia",
@@ -592,6 +628,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "170",
     iso3166_2: "CO",
     ioccode: "COL",
+    embassy_plate_code_de: 77
   ),
   "CostaRica": _Country(
     name: "common_country_CostaRica",
@@ -602,6 +639,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "188",
     iso3166_2: "CR",
     ioccode: "CRC",
+    embassy_plate_code_de: 30
   ),
   "Cuba": _Country(
     name: "common_country_Cuba",
@@ -612,6 +650,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "192",
     iso3166_2: "CU",
     ioccode: "CUB",
+    embassy_plate_code_de: 72
   ),
   "CapeVerde": _Country(
     name: "common_country_CapeVerde",
@@ -622,6 +661,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "132",
     iso3166_2: "CV",
     ioccode: "CPV",
+    embassy_plate_code_de: 63
   ),
   "Curaçao": _Country(
     name: "common_country_Curacao",
@@ -652,6 +692,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "196",
     iso3166_2: "CY",
     ioccode: "CYP",
+    embassy_plate_code_de: 153
   ),
   "CzechRepublic": _Country(
     name: "common_country_CzechRepublic",
@@ -662,6 +703,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "203",
     iso3166_2: "CZ",
     ioccode: "CZE",
+    embassy_plate_code_de: 135
   ),
   "Germany": _Country(
     name: "common_country_Germany",
@@ -682,6 +724,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "262",
     iso3166_2: "DJ",
     ioccode: "DJI",
+    embassy_plate_code_de: 202
   ),
   "Denmark": _Country(
     name: "common_country_Denmark",
@@ -692,6 +735,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "208",
     iso3166_2: "DK",
     ioccode: "DEN",
+    embassy_plate_code_de: 34
   ),
   "Dominica": _Country(
     name: "common_country_Dominica",
@@ -712,6 +756,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "214",
     iso3166_2: "DO",
     ioccode: "DOM",
+    embassy_plate_code_de: 36
   ),
   "Algeria": _Country(
     name: "common_country_Algeria",
@@ -722,6 +767,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "012",
     iso3166_2: "DZ",
     ioccode: "ALG",
+    embassy_plate_code_de: 16
   ),
   "Ecuador": _Country(
     name: "common_country_Ecuador",
@@ -732,6 +778,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "218",
     iso3166_2: "EC",
     ioccode: "ECU",
+    embassy_plate_code_de: 37
   ),
   "Estonia": _Country(
     name: "common_country_Estonia",
@@ -742,6 +789,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "233",
     iso3166_2: "EE",
     ioccode: "EST",
+    embassy_plate_code_de: 41
   ),
   "Egypt": _Country(
     name: "common_country_Egypt",
@@ -752,6 +800,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "818",
     iso3166_2: "EG",
     ioccode: "EGY",
+    embassy_plate_code_de: 11
   ),
   "SahrawiArabDemocraticRepublic": _Country(
     name: "common_country_SahrawiArabDemocraticRepublic",
@@ -772,6 +821,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "232",
     iso3166_2: "ER",
     ioccode: "ERI",
+    embassy_plate_code_de: 161
   ),
   "Spain": _Country(
     name: "common_country_Spain",
@@ -782,6 +832,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "724",
     iso3166_2: "ES",
     ioccode: "ESP",
+    embassy_plate_code_de: 126
   ),
   "Ethiopia": _Country(
     name: "common_country_Ethiopia",
@@ -792,6 +843,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "231",
     iso3166_2: "ET",
     ioccode: "ETH",
+    embassy_plate_code_de: 14
   ),
   "Finland": _Country(
     name: "common_country_Finland",
@@ -802,6 +854,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "246",
     iso3166_2: "FI",
     ioccode: "FIN",
+    embassy_plate_code_de: 44
   ),
   "Fiji": _Country(
     name: "common_country_Fiji",
@@ -852,6 +905,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "250",
     iso3166_2: "FR",
     ioccode: "FRA",
+    embassy_plate_code_de: 45
   ),
   "Gabon": _Country(
     name: "common_country_Gabon",
@@ -862,6 +916,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "266",
     iso3166_2: "GA",
     ioccode: "GAB",
+    embassy_plate_code_de: 46
   ),
   "GreatBritain": _Country(
     name: "common_country_UnitedKingdom",
@@ -872,6 +927,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "826",
     iso3166_2: "GB",
     ioccode: "GBR",
+    embassy_plate_code_de: 49
   ),
   "Grenada": _Country(
     name: "common_country_Grenada",
@@ -882,6 +938,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "308",
     iso3166_2: "GD",
     ioccode: "GRN",
+    embassy_plate_code_de: 144
   ),
   "Georgia": _Country(
     name: "common_country_Georgia",
@@ -892,6 +949,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "268",
     iso3166_2: "GE",
     ioccode: "GEO",
+    embassy_plate_code_de: 162
   ),
   "FrenchGuiana": _Country(
     name: "common_country_FrenchGuiana",
@@ -932,6 +990,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "288",
     iso3166_2: "GH",
     ioccode: "GHA",
+    embassy_plate_code_de: 47
   ),
   "Gibraltar": _Country(
     name: "common_country_Gibraltar",
@@ -972,6 +1031,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "324",
     iso3166_2: "GN",
     ioccode: "GUI",
+    embassy_plate_code_de: 51
   ),
   "Guadeloupe": _Country(
     name: "common_country_Guadeloupe",
@@ -992,6 +1052,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "226",
     iso3166_2: "GQ",
     ioccode: "GEQ",
+    embassy_plate_code_de: 33
   ),
   "Greece": _Country(
     name: "common_country_Greece",
@@ -1002,6 +1063,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "300",
     iso3166_2: "GR",
     ioccode: "GRE",
+    embassy_plate_code_de: 48
   ),
   "SouthGeorgiaandtheSouthSandwichIslands": _Country(
     name: "common_country_SouthGeorgiaandtheSouthSandwichIslands",
@@ -1022,6 +1084,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "320",
     iso3166_2: "GT",
     ioccode: "GUA",
+    embassy_plate_code_de: 50
   ),
   "Guam": _Country(
     name: "common_country_Guam",
@@ -1042,6 +1105,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "624",
     iso3166_2: "GW",
     ioccode: "GBS",
+    embassy_plate_code_de: 203
   ),
   "Guyana": _Country(
     name: "common_country_Guyana",
@@ -1082,6 +1146,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "340",
     iso3166_2: "HN",
     ioccode: "HON",
+    embassy_plate_code_de: 55
   ),
   "Croatia": _Country(
     name: "common_country_Croatia",
@@ -1092,6 +1157,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "191",
     iso3166_2: "HR",
     ioccode: "CRO",
+    embassy_plate_code_de: 154
   ),
   "Haiti": _Country(
     name: "common_country_Haiti",
@@ -1102,6 +1168,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "332",
     iso3166_2: "HT",
     ioccode: "HAI",
+    embassy_plate_code_de: 54
   ),
   "Hungary": _Country(
     name: "common_country_Hungary",
@@ -1112,6 +1179,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "348",
     iso3166_2: "HU",
     ioccode: "HUN",
+    embassy_plate_code_de: 142
   ),
   "CanaryIslands": _Country(
     name: "common_country_CanaryIslands",
@@ -1132,6 +1200,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "360",
     iso3166_2: "ID",
     ioccode: "INA",
+    embassy_plate_code_de: 57
   ),
   "Ireland": _Country(
     name: "common_country_Ireland",
@@ -1142,6 +1211,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "372",
     iso3166_2: "IE",
     ioccode: "IRL",
+    embassy_plate_code_de: 60
   ),
   "Israel": _Country(
     name: "common_country_Israel",
@@ -1152,6 +1222,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "376",
     iso3166_2: "IL",
     ioccode: "ISR",
+    embassy_plate_code_de: 64
   ),
   "IsleofMan": _Country(
     name: "common_country_IsleofMan",
@@ -1172,6 +1243,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "356",
     iso3166_2: "IN",
     ioccode: "IND",
+    embassy_plate_code_de: 56
   ),
   "BritishIndianOceanTerrirory": _Country(
     name: "common_country_BritishIndianOceanTerritory",
@@ -1192,6 +1264,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "368",
     iso3166_2: "IQ",
     ioccode: "IRQ",
+    embassy_plate_code_de: 58
   ),
   "Iran": _Country(
     name: "common_country_Iran",
@@ -1202,6 +1275,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "364",
     iso3166_2: "IR",
     ioccode: "IRI",
+    embassy_plate_code_de: 59
   ),
   "Iceland": _Country(
     name: "common_country_Iceland",
@@ -1212,6 +1286,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "352",
     iso3166_2: "IS",
     ioccode: "ISL",
+    embassy_plate_code_de: 61
   ),
   "Italy": _Country(
     name: "common_country_Italy",
@@ -1222,6 +1297,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "380",
     iso3166_2: "IT",
     ioccode: "ITA",
+    embassy_plate_code_de: 65
   ),
   "Jersey": _Country(
     name: "common_country_Jersey",
@@ -1242,6 +1318,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "388",
     iso3166_2: "JM",
     ioccode: "JAM",
+    embassy_plate_code_de: 66
   ),
   "Jordan": _Country(
     name: "common_country_Jordan",
@@ -1252,6 +1329,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "400",
     iso3166_2: "JO",
     ioccode: "JOR",
+    embassy_plate_code_de: 69
   ),
   "Japan": _Country(
     name: "common_country_Japan",
@@ -1262,6 +1340,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "392",
     iso3166_2: "JP",
     ioccode: "JPN",
+    embassy_plate_code_de: 67
   ),
   "Kenya": _Country(
     name: "common_country_Kenya",
@@ -1272,6 +1351,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "404",
     iso3166_2: "KE",
     ioccode: "KEN",
+    embassy_plate_code_de: 76
   ),
   "Kyrgyzstan": _Country(
     name: "common_country_Kyrgyzstan",
@@ -1282,6 +1362,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "417",
     iso3166_2: "KG",
     ioccode: "KGZ",
+    embassy_plate_code_de: 167
   ),
   "Cambodia": _Country(
     name: "common_country_Cambodia",
@@ -1292,6 +1373,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "116",
     iso3166_2: "KH",
     ioccode: "CAM",
+    embassy_plate_code_de: 165
   ),
   "Kiribati(GilbertIslands)": _Country(
     name: "common_country_Kiribati",
@@ -1332,6 +1414,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "408",
     iso3166_2: "KP",
     ioccode: "PRK",
+    embassy_plate_code_de: 201
   ),
   "SouthKorea(RepublicofKorea)": _Country(
     name: "common_country_SouthKorea",
@@ -1342,6 +1425,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "410",
     iso3166_2: "KR",
     ioccode: "KOR",
+    embassy_plate_code_de: 79
   ),
   "Kuwait": _Country(
     name: "common_country_Kuwait",
@@ -1352,6 +1436,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "414",
     iso3166_2: "KW",
     ioccode: "KUW",
+    embassy_plate_code_de: 71
   ),
   "CaymanIslands": _Country(
     name: "common_country_CaymanIslands",
@@ -1372,6 +1457,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "398",
     iso3166_2: "KZ",
     ioccode: "KAZ",
+    embassy_plate_code_de: 158
   ),
   "Laos": _Country(
     name: "common_country_Laos",
@@ -1382,6 +1468,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "418",
     iso3166_2: "LA",
     ioccode: "LAO",
+    embassy_plate_code_de: 62
   ),
   "Lebanon": _Country(
     name: "common_country_Lebanon",
@@ -1392,6 +1479,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "422",
     iso3166_2: "LB",
     ioccode: "LBN",
+    embassy_plate_code_de: 80
   ),
   "SaintLucia": _Country(
     name: "common_country_SaintLucia",
@@ -1412,6 +1500,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "438",
     iso3166_2: "LI",
     ioccode: "LIE",
+    embassy_plate_code_de: 42
   ),
   "SriLanka": _Country(
     name: "common_country_SriLanka",
@@ -1422,6 +1511,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "144",
     iso3166_2: "LK",
     ioccode: "SRI",
+    embassy_plate_code_de: 127
   ),
   "Liberia": _Country(
     name: "common_country_Liberia",
@@ -1432,6 +1522,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "430",
     iso3166_2: "LR",
     ioccode: "LBR",
+    embassy_plate_code_de: 81
   ),
   "Lesotho": _Country(
     name: "common_country_Lesotho",
@@ -1442,6 +1533,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "426",
     iso3166_2: "LS",
     ioccode: "LES",
+    embassy_plate_code_de: 83
   ),
   "Lithuania": _Country(
     name: "common_country_Lithuania",
@@ -1452,6 +1544,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "440",
     iso3166_2: "LT",
     ioccode: "LTU",
+    embassy_plate_code_de: 53
   ),
   "Luxembourg": _Country(
     name: "common_country_Luxembourg",
@@ -1462,6 +1555,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "442",
     iso3166_2: "LU",
     ioccode: "LUX",
+    embassy_plate_code_de: 84
   ),
   "Latvia": _Country(
     name: "common_country_Latvia",
@@ -1472,6 +1566,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "428",
     iso3166_2: "LV",
     ioccode: "LAT",
+    embassy_plate_code_de: 52
   ),
   "Libya": _Country(
     name: "common_country_Libya",
@@ -1482,6 +1577,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "434",
     iso3166_2: "LY",
     ioccode: "LBA",
+    embassy_plate_code_de: 82
   ),
   "Morocco": _Country(
     name: "common_country_Morocco",
@@ -1492,6 +1588,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "504",
     iso3166_2: "MA",
     ioccode: "MAR",
+    embassy_plate_code_de: 89
   ),
   "Monaco": _Country(
     name: "common_country_Monaco",
@@ -1502,6 +1599,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "492",
     iso3166_2: "MC",
     ioccode: "MON",
+    embassy_plate_code_de: 93
   ),
   "Moldova": _Country(
     name: "common_country_Moldova",
@@ -1512,6 +1610,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "498",
     iso3166_2: "MD",
     ioccode: "MDA",
+    embassy_plate_code_de: 168
   ),
   "Montenegro": _Country(
     name: "common_country_Montenegro",
@@ -1522,6 +1621,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "499",
     iso3166_2: "ME",
     ioccode: "MNE",
+    embassy_plate_code_de: 43
   ),
   "CollectivityofSaintMartin": _Country(
     name: "common_country_CollectivityofSaintMartin",
@@ -1542,6 +1642,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "450",
     iso3166_2: "MG",
     ioccode: "MAD",
+    embassy_plate_code_de: 85
   ),
   "MarshallIslands": _Country(
     name: "common_country_MarshallIslands",
@@ -1562,6 +1663,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "807",
     iso3166_2: "MK",
     ioccode: "MKD",
+    embassy_plate_code_de: 159
   ),
   "Mali": _Country(
     name: "common_country_Mali",
@@ -1572,6 +1674,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "466",
     iso3166_2: "ML",
     ioccode: "MLI",
+    embassy_plate_code_de: 88
   ),
   "Myanmar": _Country(
     name: "common_country_Myanmar",
@@ -1582,6 +1685,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "104",
     iso3166_2: "MM",
     ioccode: "MYA",
+    embassy_plate_code_de: 24
   ),
   "Mongolia": _Country(
     name: "common_country_Mongolia",
@@ -1592,6 +1696,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "496",
     iso3166_2: "MN",
     ioccode: "MGL",
+    embassy_plate_code_de: 101
   ),
   "Macau": _Country(
     name: "common_country_Macau",
@@ -1632,6 +1737,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "478",
     iso3166_2: "MR",
     ioccode: "MTN",
+    embassy_plate_code_de: 90
   ),
   "Montserrat": _Country(
     name: "common_country_Montserrat",
@@ -1652,6 +1758,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "470",
     iso3166_2: "MT",
     ioccode: "MLT",
+    embassy_plate_code_de: 92
   ),
   "Mauritius": _Country(
     name: "common_country_Mauritius",
@@ -1662,6 +1769,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "480",
     iso3166_2: "MU",
     ioccode: "MRI",
+    embassy_plate_code_de: 200
   ),
   "Maldives": _Country(
     name: "common_country_Maldives",
@@ -1672,6 +1780,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "462",
     iso3166_2: "MV",
     ioccode: "MDV",
+    embassy_plate_code_de: 206
   ),
   "Malawi": _Country(
     name: "common_country_Malawi",
@@ -1682,6 +1791,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "454",
     iso3166_2: "MW",
     ioccode: "MAW",
+    embassy_plate_code_de: 86
   ),
   "Mexico": _Country(
     name: "common_country_Mexico",
@@ -1692,6 +1802,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "484",
     iso3166_2: "MX",
     ioccode: "MEX",
+    embassy_plate_code_de: 91
   ),
   "Malaysia": _Country(
     name: "common_country_Malaysia",
@@ -1702,6 +1813,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "458",
     iso3166_2: "MY",
     ioccode: "MAS",
+    embassy_plate_code_de: 87
   ),
   "Mozambique": _Country(
     name: "common_country_Mozambique",
@@ -1712,6 +1824,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "508",
     iso3166_2: "MZ",
     ioccode: "MOZ",
+    embassy_plate_code_de: 102
   ),
   "Namibia": _Country(
     name: "common_country_Namibia",
@@ -1722,6 +1835,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "516",
     iso3166_2: "NA",
     ioccode: "NAM",
+    embassy_plate_code_de: 114
   ),
   "NewCaledonia": _Country(
     name: "common_country_NewCaledonia",
@@ -1742,6 +1856,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "562",
     iso3166_2: "NE",
     ioccode: "NIG",
+    embassy_plate_code_de: 98
   ),
   "NorfolkIsland": _Country(
     name: "common_country_NorfolkIsland",
@@ -1762,6 +1877,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "566",
     iso3166_2: "NG",
     ioccode: "NGR",
+    embassy_plate_code_de: 99
   ),
   "Nicaragua": _Country(
     name: "common_country_Nicaragua",
@@ -1772,6 +1888,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "558",
     iso3166_2: "NI",
     ioccode: "NCA",
+    embassy_plate_code_de: 96
   ),
   "NorthernIreland": _Country(
     name: "common_country_NorthernIreland",
@@ -1792,6 +1909,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "528",
     iso3166_2: "NL",
     ioccode: "NED",
+    embassy_plate_code_de: 97
   ),
   "Norway": _Country(
     name: "common_country_Norway",
@@ -1802,6 +1920,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "578",
     iso3166_2: "NO",
     ioccode: "NOR",
+    embassy_plate_code_de: 100
   ),
   "Nepal": _Country(
     name: "common_country_Nepal",
@@ -1812,6 +1931,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "524",
     iso3166_2: "NP",
     ioccode: "NEP",
+    embassy_plate_code_de: 94
   ),
   "Nauru": _Country(
     name: "common_country_Nauru",
@@ -1842,6 +1962,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "554",
     iso3166_2: "NZ",
     ioccode: "NZL",
+    embassy_plate_code_de: 95
   ),
   "Oman": _Country(
     name: "common_country_Oman",
@@ -1852,6 +1973,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "512",
     iso3166_2: "OM",
     ioccode: "OMA",
+    embassy_plate_code_de: 103
   ),
   "Panama": _Country(
     name: "common_country_Panama",
@@ -1862,6 +1984,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "591",
     iso3166_2: "PA",
     ioccode: "PAN",
+    embassy_plate_code_de: 107
   ),
   "Peru": _Country(
     name: "common_country_Peru",
@@ -1872,6 +1995,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "604",
     iso3166_2: "PE",
     ioccode: "PER",
+    embassy_plate_code_de: 109
   ),
   "FrenchPolynesia": _Country(
     name: "common_country_FrenchPolynesia",
@@ -1892,6 +2016,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "598",
     iso3166_2: "PG",
     ioccode: "PNG",
+    embassy_plate_code_de: 113
   ),
   "Philippines": _Country(
     name: "common_country_Philippines",
@@ -1902,6 +2027,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "608",
     iso3166_2: "PH",
     ioccode: "PHI",
+    embassy_plate_code_de: 110
   ),
   "Pakistan": _Country(
     name: "common_country_Pakistan",
@@ -1912,6 +2038,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "586",
     iso3166_2: "PK",
     ioccode: "PAK",
+    embassy_plate_code_de: 106
   ),
   "Poland": _Country(
     name: "common_country_Poland",
@@ -1922,6 +2049,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "616",
     iso3166_2: "PL",
     ioccode: "POL",
+    embassy_plate_code_de: 111
   ),
   "Saint-PierreandMiquelon": _Country(
     name: "common_country_SaintPierreandMiquelon",
@@ -1972,6 +2100,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "620",
     iso3166_2: "PT",
     ioccode: "POR",
+    embassy_plate_code_de: 112
   ),
   "Azores": _Country(
     name: "common_country_Azores",
@@ -2012,6 +2141,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "600",
     iso3166_2: "PY",
     ioccode: "PAR",
+    embassy_plate_code_de: 108
   ),
   "Qatar": _Country(
     name: "common_country_Qatar",
@@ -2022,6 +2152,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "634",
     iso3166_2: "QA",
     ioccode: "QAT",
+    embassy_plate_code_de: 73
   ),
   "Réunion": _Country(
     name: "common_country_Reunion",
@@ -2042,6 +2173,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "642",
     iso3166_2: "RO",
     ioccode: "ROU",
+    embassy_plate_code_de: 116
   ),
   "Serbia": _Country(
     name: "common_country_Serbia",
@@ -2052,6 +2184,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "688",
     iso3166_2: "RS",
     ioccode: "SRB",
+    embassy_plate_code_de: 70
   ),
   "Russia": _Country(
     name: "common_country_Russia",
@@ -2062,6 +2195,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "643",
     iso3166_2: "RU",
     ioccode: "RUS",
+    embassy_plate_code_de: 140
   ),
   "Rwanda": _Country(
     name: "common_country_Rwanda",
@@ -2072,6 +2206,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "646",
     iso3166_2: "RW",
     ioccode: "RWA",
+    embassy_plate_code_de: 115
   ),
   "SaudiArabia": _Country(
     name: "common_country_SaudiArabia",
@@ -2082,6 +2217,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "682",
     iso3166_2: "SA",
     ioccode: "KSA",
+    embassy_plate_code_de: 118
   ),
   "SolomonIslands": _Country(
     name: "common_country_SolomonIslands",
@@ -2112,6 +2248,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "729",
     iso3166_2: "SD",
     ioccode: "SUD",
+    embassy_plate_code_de: 128
   ),
   "Sweden": _Country(
     name: "common_country_Sweden",
@@ -2172,6 +2309,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "705",
     iso3166_2: "SI",
     ioccode: "SLO",
+    embassy_plate_code_de: 155
   ),
   "SvalbardandJanMayen": _Country(
     name: "common_country_SvalbardandJanMayen",
@@ -2192,6 +2330,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "703",
     iso3166_2: "SK",
     ioccode: "SVK",
+    embassy_plate_code_de: 157
   ),
   "SierraLeone": _Country(
     name: "common_country_SierraLeone",
@@ -2202,6 +2341,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "694",
     iso3166_2: "SL",
     ioccode: "SLE",
+    embassy_plate_code_de: 122
   ),
   "SanMarino": _Country(
     name: "common_country_SanMarino",
@@ -2222,6 +2362,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "686",
     iso3166_2: "SN",
     ioccode: "SEN",
+    embassy_plate_code_de: 121
   ),
   "Somalia": _Country(
     name: "common_country_Somalia",
@@ -2232,6 +2373,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "706",
     iso3166_2: "SO",
     ioccode: "SOM",
+    embassy_plate_code_de: 125
   ),
   "Somaliland": _Country(
     name: "common_country_Somaliland",
@@ -2262,6 +2404,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "728",
     iso3166_2: "SS",
     ioccode: "SSD",
+    embassy_plate_code_de: 204
   ),
   "SãoToméandPríncipe": _Country(
     name: "common_country_SaoTomeandPrincipe",
@@ -2282,6 +2425,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "222",
     iso3166_2: "SV",
     ioccode: "ESA",
+    embassy_plate_code_de: 39
   ),
   "SintMaarten": _Country(
     name: "common_country_SintMaarten",
@@ -2302,6 +2446,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "760",
     iso3166_2: "SY",
     ioccode: "SYR",
+    embassy_plate_code_de: 130
   ),
   "Eswatini": _Country(
     name: "common_country_Eswatini",
@@ -2332,6 +2477,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "148",
     iso3166_2: "TD",
     ioccode: "CHA",
+    embassy_plate_code_de: 136
   ),
   "FrenchSouthernandAntarcticLands": _Country(
     name: "common_country_FrenchSouthernandAntarcticLands",
@@ -2352,6 +2498,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "768",
     iso3166_2: "TG",
     ioccode: "TOG",
+    embassy_plate_code_de: 133
   ),
   "Thailand": _Country(
     name: "common_country_Thailand",
@@ -2362,6 +2509,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "764",
     iso3166_2: "TH",
     ioccode: "THA",
+    embassy_plate_code_de: 132
   ),
   "Tajikistan": _Country(
     name: "common_country_Tajikistan",
@@ -2372,6 +2520,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "762",
     iso3166_2: "TJ",
     ioccode: "TJK",
+    embassy_plate_code_de: 163
   ),
   "Tokelau": _Country(
     name: "common_country_Tokelau",
@@ -2402,6 +2551,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "795",
     iso3166_2: "TM",
     ioccode: "TKM",
+    embassy_plate_code_de: 169
   ),
   "Tunisia": _Country(
     name: "common_country_Tunisia",
@@ -2412,6 +2562,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "788",
     iso3166_2: "TN",
     ioccode: "TUN",
+    embassy_plate_code_de: 138
   ),
   "Tonga": _Country(
     name: "common_country_Tonga",
@@ -2422,6 +2573,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "776",
     iso3166_2: "TO",
     ioccode: "TGA",
+    embassy_plate_code_de: 134
   ),
   "Turkey": _Country(
     name: "common_country_Turkey",
@@ -2432,6 +2584,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "792",
     iso3166_2: "TR",
     ioccode: "TUR",
+    embassy_plate_code_de: 137
   ),
   "TrinidadandTobago": _Country(
     name: "common_country_TrinidadandTobago",
@@ -2472,6 +2625,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "834",
     iso3166_2: "TZ",
     ioccode: "TAN",
+    embassy_plate_code_de: 131
   ),
   "Ukraine": _Country(
     name: "common_country_Ukraine",
@@ -2482,6 +2636,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "804",
     iso3166_2: "UA",
     ioccode: "UKR",
+    embassy_plate_code_de: 143
   ),
   "Uganda": _Country(
     name: "common_country_Uganda",
@@ -2492,6 +2647,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "800",
     iso3166_2: "UG",
     ioccode: "UGA",
+    embassy_plate_code_de: 139
   ),
   "JohnstonAtoll": _Country(
     name: "common_country_JohnstonAtoll",
@@ -2522,6 +2678,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "840",
     iso3166_2: "US",
     ioccode: "USA",
+    embassy_plate_code_de: 17
   ),
   "Hawaii": _Country(
     name: "common_country_Hawaii",
@@ -2542,6 +2699,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "858",
     iso3166_2: "UY",
     ioccode: "URU",
+    embassy_plate_code_de: 141
   ),
   "Uzbekistan": _Country(
     name: "common_country_Uzbekistan",
@@ -2552,6 +2710,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "860",
     iso3166_2: "UZ",
     ioccode: "UZB",
+    embassy_plate_code_de: 160
   ),
   "VaticanCity": _Country(
     name: "common_country_VaticanCity",
@@ -2562,6 +2721,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "336",
     iso3166_2: "VA",
     ioccode: "",
+    embassy_plate_code_de: 10
   ),
   "St.VincentandtheGrenadines": _Country(
     name: "common_country_SaintVincentandtheGrenadines",
@@ -2582,6 +2742,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "862",
     iso3166_2: "VE",
     ioccode: "VEN",
+    embassy_plate_code_de: 146
   ),
   "BritishVirginIslands": _Country(
     name: "common_country_BritishVirginIslands",
@@ -2612,6 +2773,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "704",
     iso3166_2: "VN",
     ioccode: "VIE",
+    embassy_plate_code_de: 147
   ),
   "Vanuatu": _Country(
     name: "common_country_Vanuatu",
@@ -2652,6 +2814,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "",
     iso3166_2: "",
     ioccode: "KOS",
+    embassy_plate_code_de: 40
   ),
   "Yemen": _Country(
     name: "common_country_Yemen",
@@ -2662,6 +2825,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "887",
     iso3166_2: "YE",
     ioccode: "YEM",
+    embassy_plate_code_de: 68
   ),
   "Mayotte": _Country(
     name: "common_country_Mayotte",
@@ -2682,6 +2846,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "710",
     iso3166_2: "ZA",
     ioccode: "RSA",
+    embassy_plate_code_de: 129
   ),
   "Zambia": _Country(
     name: "common_country_Zambia",
@@ -2692,6 +2857,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "894",
     iso3166_2: "ZM",
     ioccode: "ZAM",
+    embassy_plate_code_de: 117
   ),
   "Zimbabwe": _Country(
     name: "common_country_Zimbabwe",
@@ -2702,6 +2868,7 @@ const Map<String, _Country> COUNTRIES = {
     iso3166_1_n: "716",
     iso3166_2: "ZW",
     ioccode: "ZIM",
+    embassy_plate_code_de: 124
   ),
   "Abkhazia": _Country(
     name: "common_country_RepublicofAbkhazia",
