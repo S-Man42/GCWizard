@@ -649,18 +649,18 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
       if ((i == formula.length - 1) || (formulaColors[i + 1] != formulaColors[i])) {
         TextStyle textStyle;
         switch (formulaColors[i]) {
-          case 'g':
+          case FormulaPainter.Number:
             textStyle = TextStyle(color: themeColors().formulaNumber());
             break;
-          case 'r':
+          case FormulaPainter.Variable:
             textStyle = TextStyle(color: themeColors().formulaVariable());
             break;
-          case 'b':
+          case FormulaPainter.OFRB:
             textStyle = TextStyle(color: themeColors().formulaMath());
             break;
-          case 'R':
-          case 'G':
-          case 'B':
+          case FormulaPainter.VariableError:
+          case FormulaPainter.NumberError:
+          case FormulaPainter.OFRBError:
             textStyle = TextStyle(color: themeColors().formulaError(), fontWeight: FontWeight.bold);
             break;
           default:
