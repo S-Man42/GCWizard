@@ -2142,6 +2142,8 @@
   "formulasolver_values_type_interpolated_result": "Interpolation Results",
   "formulasolver_values_type_text": "Text",
   "formulasolver_values_currentvalues": "Created Variables",
+  "formulasolver_values_alerts_keynumbers_title": "Need Non-Digit Character",
+  "formulasolver_values_alerts_keynumbers_text": "A value's name needs at least one non-digit character.",
   "fox_title": "Fox Code",
   "fox_example": "FOX → 16 26 36",
   "gade_title": "Gade",
