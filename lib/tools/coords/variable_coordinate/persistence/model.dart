@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 
-List<Formula> formulas = [];
+List<VariableCoordinateFormula> formulas = [];
 
 class ProjectionData {
   String distance;
@@ -36,12 +36,12 @@ class ProjectionData {
   }
 }
 
-class Formula extends FormulaBase {
+class VariableCoordinateFormula extends FormulaBase {
   String formula = '';
   ProjectionData? projection;
   List<FormulaValue> values = [];
 
-  Formula(String name) : super (name);
+  VariableCoordinateFormula(String name) : super (name);
 
   @override
   Map<String, Object?> toMap() => {
@@ -52,8 +52,8 @@ class Formula extends FormulaBase {
         'values': values.map((value) => value.toMap()).toList(),
       };
 
-  static Formula fromJson(Map<String, Object?> json) {
-    var newFormula = Formula(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
+  static VariableCoordinateFormula fromJson(Map<String, Object?> json) {
+    var newFormula = VariableCoordinateFormula(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
     newFormula.id = toIntOrNull(json['id']);
     newFormula.formula = toStringOrNull(json['formula']) ?? '';
     newFormula.projection = ProjectionData.fromJson(asJsonMapOrNull(json['projection']) ?? <String, Object?>{});

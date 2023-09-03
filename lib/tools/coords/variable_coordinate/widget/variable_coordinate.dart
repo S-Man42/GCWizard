@@ -39,7 +39,7 @@ const _WARNING_COUNT = 500;
 const _TOOMANY_COUNT = 5000;
 
 class VariableCoordinate extends StatefulWidget {
-  final Formula formula;
+  final VariableCoordinateFormula formula;
 
   const VariableCoordinate({Key? key, required this.formula}) : super(key: key);
 
