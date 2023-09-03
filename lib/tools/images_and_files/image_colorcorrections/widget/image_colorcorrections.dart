@@ -344,8 +344,8 @@ class _ImageColorCorrectionsState extends State<ImageColorCorrections> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<Image.Image?>(
               isolatedFunction: _adjustColorAsync,
               parameter: _buildJobDataAdjustColor,

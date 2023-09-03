@@ -151,8 +151,8 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<SymbolReplacerImage?>(
                 isolatedFunction: replaceSymbolsAsync,
                 parameter: _buildJobDataReplacer,
@@ -380,8 +380,8 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<SubstitutionBreakerResult?>(
               isolatedFunction: break_cipherAsync,
               parameter: _buildSubstitutionBreakerJobData,
@@ -401,8 +401,8 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<List<Map<String, SymbolReplacerSymbolData>>?>(
               isolatedFunction: searchSymbolTableAsync,
               parameter: _buildJobDataSearchSymbolTable,

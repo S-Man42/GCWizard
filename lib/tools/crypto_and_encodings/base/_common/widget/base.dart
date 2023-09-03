@@ -175,8 +175,8 @@ class _AbstractBaseState extends State<AbstractBase> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<_AsyncBaseDecodeReturn?>(
               isolatedFunction: _execAsyncBaseDecode,
               parameter: _buildJobData,

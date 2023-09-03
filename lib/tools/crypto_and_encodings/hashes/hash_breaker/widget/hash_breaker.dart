@@ -137,8 +137,8 @@ class _HashBreakerState extends State<HashBreaker> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<BoolText?>(
               isolatedFunction: breakHashAsync,
               parameter: _buildJobData,

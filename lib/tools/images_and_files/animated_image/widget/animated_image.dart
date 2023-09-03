@@ -157,8 +157,8 @@ class _AnimatedImageState extends State<AnimatedImage> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<AnimatedImageOutput?>(
               isolatedFunction: analyseImageAsync,
               parameter: _buildJobData,

@@ -227,8 +227,8 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<Tuple2<Uint8List?, MagicEyeErrorCode>?>(
               isolatedFunction: generateImageAsync,
               parameter: _buildJobDataEncode,

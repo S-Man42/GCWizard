@@ -284,8 +284,8 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<Uint8List?>(
                 isolatedFunction: createImageAsync,
                 parameter: _buildJobDataEncode,
@@ -369,8 +369,8 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: executerHeight,
+            width: executerWidth,
             child: GCWAsyncExecuter<AnimatedImageMorseOutput?>(
               isolatedFunction: analyseImageMorseCodeAsync,
               parameter: _buildJobDataDecode,

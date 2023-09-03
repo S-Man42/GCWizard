@@ -95,8 +95,8 @@ class _IntersectFourPointsState extends State<IntersectFourPoints> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<LatLng?>(
                 isolatedFunction: intersectFourPointsAsync,
                 parameter: _buildJobData,

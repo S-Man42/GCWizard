@@ -350,8 +350,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<Uint8List?>(
                 isolatedFunction: decodeImagesAsync,
                 parameter: _buildJobDataDecode,
@@ -394,8 +394,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   //                 onReady: (data) => _saveOutputOffsetAutoCalc(data),
   //                 isOverlay: true,
   //               ),
-  //               height: 220,
-  //               width: 150,
+  //               height: executerHeight,
+  //               width: executerWidth,
   //             ),
   //           );
   //         },
@@ -419,8 +419,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   //                   onReady: (data) => _saveOutputOffsetAutoCalc(data),
   //                   isOverlay: true,
   //                 ),
-  //                 height: 220,
-  //                 width: 150,
+  //                 height: executerHeight,
+  //                 width: executerWidth,
   //               ),
   //             );
   //           },
@@ -452,8 +452,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<Tuple2<Uint8List, Uint8List?>?>(
                 isolatedFunction: encodeImagesAsync,
                 parameter: _buildJobDataEncode,

@@ -80,8 +80,8 @@ class _EquilateralTriangleState extends State<EquilateralTriangle> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: executerHeight,
+              width: executerWidth,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: equilateralTriangleAsync,
                 parameter: _buildJobData,
