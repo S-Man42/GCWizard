@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
@@ -84,39 +85,60 @@ class _HumidexState extends State<Humidex> {
 
     return Column(
       children: [
+        dewpoint.toString() == 'NaN'
+            ? Container()
+            : Column(children: <Widget>[
+                GCWTextDivider(text: i18n(context, 'common_measure_dewpoint')),
+                GCWOutput(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        //child: Text(_currentOutputUnit.symbol),
+                        child: Container(
+                            margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                            child: GCWUnitDropDown(
+                              value: _currentOutputUnit,
+                              onlyShowSymbols: true,
+                              unitList: temperatures,
+                              unitCategory: UNITCATEGORY_TEMPERATURE,
+                              onChanged: (value) {
+                                setState(() {
+                                  _currentOutputUnit = value;
+                                });
+                              },
+                            )),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                            margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                            child: GCWOutput(child: NumberFormat('#.###').format(dewpoint))),
+                      ),
+                    ],
+                  ),
+                ),
+              ]),
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-          Expanded(
-            flex: 4,
-            child: Text(i18n(context, 'humidex_title')),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN), child: const Text('')),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-                margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                child: GCWOutput(child: NumberFormat('#.###').format(humidex))),
-          ),
-        ])),
-        GCWOutput(
-            suppressCopyButton: true,
-            child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'common_measure_dewpoint')),
+              Container(
+                width: 50,
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                child: GCWIconButton(
+                  icon: Icons.wb_sunny,
+                  iconColor: _colorHumidex(humidex),
+                  backgroundColor: const Color(0xFF4d4d4d),
+                  onPressed: () {},
+                ),
               ),
               Expanded(
                 flex: 2,
                 //child: Text(_currentOutputUnit.symbol),
                 child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
                     child: GCWUnitDropDown(
                       value: _currentOutputUnit,
-                      onlyShowSymbols: true,
+                      onlyShowSymbols: false,
                       unitList: temperatures,
                       unitCategory: UNITCATEGORY_TEMPERATURE,
                       onChanged: (value) {
@@ -129,30 +151,23 @@ class _HumidexState extends State<Humidex> {
               Expanded(
                 flex: 2,
                 child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWOutput(child: NumberFormat('#.###').format(dewpoint))),
+                    margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                    child: GCWOutput(child: NumberFormat('#.###').format(humidex))),
               ),
             ])),
-        const GCWDivider(),
-        Row(
-          children: [
-            Container(
-              width: 50,
-              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              child: GCWIconButton(
-                icon: Icons.wb_sunny,
-                iconColor: _colorHumidex(humidex),
-                backgroundColor: const Color(0xFF4d4d4d),
-                onPressed: () {},
-              ),
+        Column(
+          children: <Widget>[
+            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+            Row(
+                children: <Widget> [
+
+                ]
             ),
-            Expanded(
-              child: GCWOutput(
-                child: hint != '' ? hint : i18n(context, hintHumidex),
-              ),
-            )
+            GCWOutput(
+              child: hint != '' ? hint : i18n(context, hintHumidex),
+            ),
           ],
-        )
+        ),
       ],
     );
   }
