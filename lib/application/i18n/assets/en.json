@@ -2187,7 +2187,7 @@
   "generalcodebreakers_selection_title": "General Code Solvers",
   "generalcodebreakers_selection_description": "Tools, which try to identify or break codes without any further information (Multi Decoder, Hash Search, ...)",
   "geohashing_title": "Geohashing",
-  "geohashing_description": "Coordinate format from xkcd-Comic. Format: 2023-09-10 34 -111",
+  "geohashing_description": "Coordinate format from xkcd webcomic. Example: 2023-09-10 34 -111",
   "geohashing_dow_jones_index": "Dow Jones Index",
   "geohashing_dow_jones_index_online": "Load Dow Jones Index from website http://geo.crox.net",
   "geohashing_dow_jones_index_w30_rule": "from the previous day (W30 rule)",
