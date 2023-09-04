@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inp
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -138,7 +139,7 @@ class _GeohashingState extends State<Geohashing> {
           setState(() {
             _currentOnline = value;
             if (_currentOnline == GCWSwitchPosition.right) {
-              _showOnlineToast();
+              _showOnlineDialog();
             }
           });
         }
@@ -253,8 +254,17 @@ class _GeohashingState extends State<Geohashing> {
     });
   }
 
-  void _showOnlineToast() {
-    showToast(i18n(context, 'geohashing_dow_jones_index_online'));
+  void _showOnlineDialog() {
+    showGCWDialog(
+      context,
+      i18n(context, 'geohashing_dow_jones_index_online'),
+      null,
+      [GCWDialogButton(
+          text: i18n(context, 'common_ok'),
+        )
+      ],
+      cancelButton: false,
+    );
   }
 
   bool _W30RuleNecessary() {
