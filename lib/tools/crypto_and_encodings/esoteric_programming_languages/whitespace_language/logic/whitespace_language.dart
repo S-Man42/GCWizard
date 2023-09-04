@@ -846,7 +846,7 @@ Tuple2<int, int> _num_parameter() {
 /// Converts the Whitespace representation of a number to an integer.
 int _whitespaceToInt(String code) {
   var num = 0;
-  if (code.length == 1) {
+  if (code.length <= 1) {
     num = 0;
     return num;
   }
