@@ -13,7 +13,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
@@ -46,7 +46,7 @@ class _GeohashingState extends State<Geohashing> {
 
   var _currentLatitude = defaultIntegerText;
   var _currentLongitude = defaultIntegerText;
-  var _currentOnline = false;
+  var _currentOnline = GCWSwitchPosition.left;
   var _currentDowJonesIndex = 0.0;
 
   var _currentOutputFormat = defaultCoordinateFormat;
@@ -130,19 +130,20 @@ class _GeohashingState extends State<Geohashing> {
           )
       ]),
       GCWTextDivider(text: i18n(context, 'geohashing_dow_jones_index')),
-      GCWOnOffSwitch(
-        title: i18n(context, 'common_loadfile_openfrom_url'),
+      GCWTwoOptionsSwitch(
+        leftValue: i18n(context, 'common_manually'),
+        rightValue: i18n(context, 'common_loadfile_openfrom_url'),
         value: _currentOnline,
         onChanged: (value) {
           setState(() {
             _currentOnline = value;
-            if (_currentOnline) {
+            if (_currentOnline == GCWSwitchPosition.right) {
               _showOnlineToast();
             }
           });
         }
       ),
-      if (!_currentOnline) GCWDoubleTextField(
+      if (_currentOnline == GCWSwitchPosition.left) GCWDoubleTextField(
         min: 0,
         controller: _DowJonesIndexController,
         hintText: i18n(context, 'geohashing_dow_jones_index') +
@@ -243,7 +244,7 @@ class _GeohashingState extends State<Geohashing> {
           return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid);
         }).toList();
 
-        if (_currentOnline) {
+        if (_currentOnline == GCWSwitchPosition.right) {
           _currentDowJonesIndex = _geohashing!.dowJonesIndex;
           _DowJonesIndexController.text = _currentDowJonesIndex.toString();
         }
@@ -263,7 +264,7 @@ class _GeohashingState extends State<Geohashing> {
   geohashing.Geohashing _buildGeohashing() {
     return geohashing.Geohashing(
         _currentDate, _currentLatitude.value, _currentLongitude.value,
-        dowJonesIndex: _currentOnline ? 0 : _currentDowJonesIndex
+        dowJonesIndex: _currentOnline == GCWSwitchPosition.right ? 0 : _currentDowJonesIndex
     );
   }
 
