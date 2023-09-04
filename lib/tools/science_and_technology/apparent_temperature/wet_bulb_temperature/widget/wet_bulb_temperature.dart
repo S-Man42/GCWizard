@@ -25,7 +25,6 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
   double _currentTemperature = 1.0;
   double _currentHumidity = 0.0;
 
-  //Map<String, dynamic> _currentOutputUnit = {'unit': TEMPERATURE_CELSIUS, 'prefix': UNITPREFIX_NONE};
   Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
 
   @override
@@ -57,18 +56,6 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_outputunit')),
-        GCWUnitDropDown<Unit>(
-          value: _currentOutputUnit,
-          onlyShowSymbols: false,
-          unitList: temperatures,
-          unitCategory: UNITCATEGORY_TEMPERATURE,
-          onChanged: (value) {
-            setState(() {
-              _currentOutputUnit = value;
-            });
-          },
-        ),
         _buildOutput(context)
       ],
     );
@@ -89,39 +76,53 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'wet_bulb_temperature_title')),
-              ),
-              Expanded(
-                flex: 1,
-                child: Text(_currentOutputUnit.symbol),
-              ),
-              Expanded(
-                flex: 2,
-                child: GCWOutput(
-                    child: NumberFormat('#.###').format(WBT)),
-              ),
-            ]
-            )
-        ),
-        Row(
-          children: [
-            Container(
+              Container(
                 width: 50,
                 padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIconButton(
-                    icon: Icons.wb_sunny, iconColor: _colorWBT(WBT_C), backgroundColor: const Color(0xFF4d4d4d),
-                    onPressed: () {  },
+                  icon: Icons.wb_sunny,
+                  iconColor: _colorWBT(WBT_C),
+                  backgroundColor: const Color(0xFF4d4d4d),
+                  onPressed: () {},
                 ),
-            ),
-            Expanded(
-              child: GCWOutput(
-                child: i18n(context, hintWBT),
               ),
-            )
+              Expanded(
+                flex: 2,
+                //child: Text(_currentOutputUnit.symbol),
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+                    child: GCWUnitDropDown(
+                      value: _currentOutputUnit,
+                      onlyShowSymbols: false,
+                      unitList: temperatures,
+                      unitCategory: UNITCATEGORY_TEMPERATURE,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentOutputUnit = value;
+                        });
+                      },
+                    )),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                    child: GCWOutput(child: NumberFormat('#.###').format(WBT))),
+              ),
+            ])),
+        Column(
+          children: <Widget>[
+            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+            Row(
+                children: <Widget> [
+
+                ]
+            ),
+            GCWOutput(
+              child: i18n(context, hintWBT),
+            ),
           ],
-        )
+        ),
       ],
     );
   }
