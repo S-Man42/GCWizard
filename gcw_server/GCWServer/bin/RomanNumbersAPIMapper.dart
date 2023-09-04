@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 
 import 'APIMapper.dart';
 
@@ -6,7 +6,7 @@ const String _apiSpecification = '''
 {
 	"/key_label" : {
 		"get": {
-			"summary": "Rotation Tool",
+			"summary": "Roman numbers Tool",
 			"responses": {
         "description": "Encoded or decoded text."
 			}
@@ -16,18 +16,22 @@ const String _apiSpecification = '''
 				"in": "query",
 				"name": "input",
 				"required": true,
-				"description": "Input data for rotate text",
+				"description": "Input data for encoding or decoding Roman Numbers",
 				"schema": {
 					"type": "string"
 				}
 			},
 			{
 				"in": "query",
-				"name": "parameter1",
-				"description": "Shifts letters count",
+				"name": "mode",
+				"description": "Defines encoding or decoding mode",
 				"schema": {
 					"type": "string",
-					"default": "0"
+					"enum": [
+						"encode",
+						"decode"
+					],
+					"default": "decode"
 				}
 			}
 		]
@@ -35,9 +39,9 @@ const String _apiSpecification = '''
 }
 ''';
 
-class RotatorAPIMapper extends APIMapper {
+class RomanNumbersAPIMapper extends APIMapper {
   @override
-  String get Key => 'rotation_general';
+  String get Key => 'roman_numbers';
 
   @override
   String doLogic() {
@@ -45,13 +49,12 @@ class RotatorAPIMapper extends APIMapper {
     if (input == null) {
       return '';
     }
-    var parameter1 = getWebParameter(WEBPARAMETER.parameter1);
-    var key = 0;
-    if (parameter1 != null && parameter1.isNotEmpty) {
-      key = int.parse(parameter1);
-    }
 
-    return Rotator().rotate(input, key);
+    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+      return encodeRomanNumbers(int.tryParse(input) ?? 0);
+    } else {
+      return decodeRomanNumbers(input)?.toString() ?? '';
+    }
   }
 
   /// convert doLogic output to map
@@ -65,3 +68,4 @@ class RotatorAPIMapper extends APIMapper {
     return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
+
