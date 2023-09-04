@@ -86,7 +86,7 @@ class _GeohashingState extends State<Geohashing> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWTextDivider(text: '', trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
+      GCWTextDivider(text: i18n(context, 'common_date_format_ymd'), trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
       GCWDatePicker(
           date: _currentDate,
           yearController: _yearController,

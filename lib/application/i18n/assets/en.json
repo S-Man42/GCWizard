@@ -1192,6 +1192,7 @@
   "common_country_TurkishRepublicofNorthernCyprus": "Turkish Republic of Northern Cyprus",
   "common_country_WakeIsland": "Wake Island",
   "common_country_UnitedNations": "United Nations",
+  "common_date_format_ymd": "Year, Month, Day",
   "common_exportfile_saved": "File saved",
   "common_exportfile_savepath": "File saved as\n\n%s1",
   "common_exportfile_nowritepermission": "Permission for writing files denied.",
