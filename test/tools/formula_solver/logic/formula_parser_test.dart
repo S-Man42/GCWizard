@@ -43,6 +43,7 @@ void main() {
       {'formula' : ' ', 'expectedOutput' : {'state': 'error', 'output': [{'result': '', 'state': 'error'}]}},
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'A', 'state': 'error'}]}},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0', 'state': 'ok'}]}},
+      {'formula' : '0', 'values': <String, String>{'0': '1'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
 
       {'formula' : 'A', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
       {'formula' : 'AB', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '320', 'state': 'ok'}]}},
@@ -278,6 +279,17 @@ void main() {
       {'formula' : '"ABCD', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"ABCD', 'state': 'error'}]}},
       {'formula' : '\'ABCD', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': '\'ABCD', 'state': 'error'}]}},
       {'formula' : 'ABCD\'', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'ABCD\'', 'state': 'error'}]}},
+      {'formula' : '"A"C"B"', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"A"C"B"', 'state': 'error'}]}},
+      {'formula' : '"A"C"B"', 'values': <FormulaValue>[FormulaValue('C', '', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"A"C"B"', 'state': 'error'}]}},
+      {'formula' : '"A"C"B"', 'values': <FormulaValue>[FormulaValue('C', '""', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'AB', 'state': 'ok'}]}},
+      {'formula' : 'ACB', 'values': <FormulaValue>[FormulaValue('A', '"A"', type: FormulaValueType.FIXED), FormulaValue('C', '"B"', type: FormulaValueType.FIXED), FormulaValue('B', '"C"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'ABC', 'state': 'ok'}]}},
+      {'formula' : '"A"CB', 'values': <FormulaValue>[FormulaValue('C', '"B"', type: FormulaValueType.FIXED), FormulaValue('B', '"C"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'ABC', 'state': 'ok'}]}},
+      {'formula' : '"A"CB', 'values': <FormulaValue>[FormulaValue('C', '"B"', type: FormulaValueType.FIXED), FormulaValue('B', '"C"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'ABC', 'state': 'ok'}]}},
+      {'formula' : 'ACB', 'values': <FormulaValue>[FormulaValue('A', '"A"', type: FormulaValueType.FIXED), FormulaValue('B', '"C"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"A"C"C"', 'state': 'error'}]}},
+      {'formula' : '"A"C"B"', 'values': <FormulaValue>[FormulaValue('C', '1', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"A"1"B"', 'state': 'error'}]}},
+      {'formula' : '"A"C"B"', 'values': <FormulaValue>[FormulaValue('C', '"1"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'A1B', 'state': 'ok'}]}},
+      {'formula' : '"A""B"', 'values': <FormulaValue>[FormulaValue('C', '"1"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'AB', 'state': 'ok'}]}},
+      {'formula' : '"A"1"B"', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"A"1"B"', 'state': 'error'}]}},
 
       {'formula' : 'A', 'values': [FormulaValue('A', '"ABC"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'ABC', 'state': 'ok'}]}},
       {'formula' : 'AB', 'values': [FormulaValue('A', '"ABC"', type: FormulaValueType.FIXED), FormulaValue('B', '\'xyz\'', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': 'ABCxyz', 'state': 'ok'}]}},
@@ -374,6 +386,8 @@ void main() {
       // },
 
       {'formula' : 'len("ABC") * bww(\'55\')', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '30', 'state': 'ok'}]}},
+      {'formula' : 'len("ABC) * bww(\'55\')', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'len("ABC) * bww(\'55\')', 'state': 'error'}]}},
+      {'formula' : 'len("ABC) * bww("55")', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'len("ABC) * bww("55")', 'state': 'error'}]}},
       {'formula' : 'len("ABC") * bww(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'len("ABC") * bww(55)', 'state': 'error'}]}},
       {'formula' : 'cs(bww(\'ABCDE\')) * len("55")', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
 

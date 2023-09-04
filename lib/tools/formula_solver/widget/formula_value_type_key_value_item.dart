@@ -77,7 +77,7 @@ class _GCWKeyValueTypeItemState extends GCWKeyValueItemState {
                             rotateDegrees: 90.0),
                         action: (index) => setState(() {
                           _currentType = FormulaValueType.INTERPOLATED;
-                        }))
+                        })),
                   ],
                 ))
                 : Transform.rotate(

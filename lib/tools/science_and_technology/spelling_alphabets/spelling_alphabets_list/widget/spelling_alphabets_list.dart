@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_common/spelling_alphabets_data.dart';
@@ -8,7 +10,6 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 
-
 class SpellingAlphabetsList extends StatefulWidget {
   const SpellingAlphabetsList({Key? key}) : super(key: key);
 
@@ -17,11 +18,10 @@ class SpellingAlphabetsList extends StatefulWidget {
 }
 
 class SpellingAlphabetsListState extends State<SpellingAlphabetsList> {
-
   SPELLING _currentLanguage = SPELLING.DEU2022;
   bool _setDefaultLanguage = false;
 
- @override
+  @override
   void initState() {
     super.initState();
   }
@@ -47,7 +47,12 @@ class SpellingAlphabetsListState extends State<SpellingAlphabetsList> {
               _currentLanguage = value;
             });
           },
-          items: SPELLING_LIST.entries.map((mode) {
+          items: SplayTreeMap<SPELLING, String>.from(
+                  SPELLING_LIST,
+                  (keys1, keys2) =>
+                      i18n(context, SPELLING_LIST[keys1]!).compareTo(i18n(context, SPELLING_LIST[keys2]!)))
+              .entries
+              .map((mode) {
             return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value),

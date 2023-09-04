@@ -66,7 +66,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
   void _importFromClipboard(String data) {
     try {
       data = normalizeCharacters(data);
-      var formula = Formula.fromJson(asJsonMap(jsonDecode(data)));
+      var formula = VariableCoordinateFormula.fromJson(asJsonMap(jsonDecode(data)));
       formula.name = _createImportName(formula.name);
 
       setState(() {
@@ -80,7 +80,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
 
   void _addNewFormula(String name) {
     if (name.isNotEmpty) {
-      var formula = Formula(name);
+      var formula = VariableCoordinateFormula(name);
       insertFormula(formula);
     }
   }

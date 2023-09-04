@@ -13,12 +13,15 @@ void refreshFormulas() {
   if (formulasList.isEmpty) return;
 
   formulas = formulasList.where((formula) => formula.isNotEmpty).map((formula) {
-    return Formula.fromJson(asJsonMap(jsonDecode(formula)));
+    return VariableCoordinateFormula.fromJson(asJsonMap(jsonDecode(formula)));
   }).toList();
 }
 
 void _saveData() {
   var jsonData = formulas.map((formula) => jsonEncode(formula.toMap())).toList();
+  print("saveDAta");
+  print(jsonData);
+  print("saved");
 
   Prefs.setStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS, jsonData);
 }
@@ -27,17 +30,19 @@ void updateFormulas() {
   _saveData();
 }
 
-int insertFormula(Formula formula) {
+int insertFormula(VariableCoordinateFormula formula) {
   var id = newID(formulas.map((formula) => formula.id).toList());
   formula.id = id;
   formulas.add(formula);
 
   _saveData();
 
+  print(id);
+
   return id;
 }
 
-void updateFormula(Formula formula) {
+void updateFormula(VariableCoordinateFormula formula) {
   _updateFormula(formula);
   _saveData();
 }
@@ -48,7 +53,7 @@ void deleteFormula(int formulaId) {
   _saveData();
 }
 
-void _updateFormula(Formula formula) {
+void _updateFormula(VariableCoordinateFormula formula) {
   formulas = formulas.map((f) {
     if (f.id == formula.id) return formula;
 
@@ -56,7 +61,7 @@ void _updateFormula(Formula formula) {
   }).toList();
 }
 
-int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula) {
+int insertFormulaValue(formula_model.FormulaValue formulaValue, VariableCoordinateFormula formula) {
   var id = newID(formula.values.map((value) => value.id as int?).toList());
   formulaValue.id = id;
   formula.values.add(formulaValue);
@@ -66,6 +71,6 @@ int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula)
   return id;
 }
 
-void updateFormulaValue(KeyValueBase formulaValue, Formula formula) {
+void updateFormulaValue(KeyValueBase formulaValue, VariableCoordinateFormula formula) {
   updateFormula(formula);
 }

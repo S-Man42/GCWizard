@@ -385,9 +385,9 @@ class FormulaParser {
 
       try {
         String result;
-        if (_isString(formula)) {
-          return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, _contentFromString(formula));
-        } else {
+        try {
+          return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, _contentFromString(substitutedFormula));
+        } catch(e) {
           result = _evaluateFormula(substitutedFormula);
           return FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, result);
         }
@@ -403,13 +403,12 @@ class FormulaParser {
       _formula = _formula.substring(1, _formula.length - 1).trim();
     }
 
-    if (_formula.startsWith('"') && _formula.endsWith('"')) {
+    try {
+      var s = _contentFromString(_formula);
       return true;
+    } catch (e) {
+      return false;
     }
-    if (_formula.startsWith("'") && _formula.endsWith("'")) {
-      return true;
-    }
-    return false;
   }
 
   String _reSubstituteSavings(String formula) {
