@@ -4,12 +4,16 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/logic/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:intl/intl.dart';
 
 class SummerSimmerIndex extends StatefulWidget {
@@ -22,6 +26,8 @@ class SummerSimmerIndex extends StatefulWidget {
 class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
+
+  Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
 
   @override
   Widget build(BuildContext context) {
@@ -76,39 +82,53 @@ class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-          Expanded(
-            flex: 4,
-            child: Text(i18n(context, 'summersimmerindex_title')),
-          ),
-          const Expanded(
-            flex: 1,
-            child: Text(''),
-          ),
-          Expanded(
-            flex: 2,
-            child: GCWOutput(child: NumberFormat('#.###').format(summersimmer)),
-          ),
-        ])),
-        const GCWDivider(),
-        Row(
-          children: [
-            Container(
-              width: 50,
-              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              child: GCWIconButton(
-                icon: Icons.wb_sunny,
-                iconColor: _colorSummerSimmer(summersimmer),
-                backgroundColor: const Color(0xFF4d4d4d),
-                onPressed: () {},
+              Container(
+                width: 50,
+                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                child: GCWIconButton(
+                  icon: Icons.wb_sunny,
+                  iconColor: _colorSummerSimmer(summersimmer),
+                  backgroundColor: const Color(0xFF4d4d4d),
+                  onPressed: () {},
+                ),
               ),
+              Expanded(
+                flex: 2,
+                //child: Text(_currentOutputUnit.symbol),
+                child: Container(
+                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+                    child: GCWUnitDropDown(
+                      value: _currentOutputUnit,
+                      onlyShowSymbols: false,
+                      unitList: temperatures,
+                      unitCategory: UNITCATEGORY_TEMPERATURE,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentOutputUnit = value;
+                        });
+                      },
+                    )),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                    child: GCWOutput(child: NumberFormat('#.###').format(summersimmer))),
+              ),
+            ])),
+        Column(
+          children: <Widget>[
+            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+            Row(
+                children: <Widget> [
+
+                ]
             ),
-            Expanded(
-              child: GCWOutput(
-                child: hint != '' ? hint : i18n(context, hintSummerSimmer),
-              ),
-            )
+            GCWOutput(
+              child: hint != '' ? hint : i18n(context, hintSummerSimmer),
+            ),
           ],
-        )
+        ),
       ],
     );
   }
