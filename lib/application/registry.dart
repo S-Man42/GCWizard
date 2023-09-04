@@ -750,11 +750,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const GeneralCodebreakersSelection(), id: 'generalcodebreakers_selection', searchKeys: const [
       'codebreaker',
     ]),
-    GCWTool(tool: const Geohashing(), id: 'geohashing', categories: const [
-      ToolCategory.COORDINATES
-    ], searchKeys: const [
-      'geohashing',
-    ]),
     GCWTool(tool: const Gray(), id: 'gray', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1836,6 +1831,15 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_ellipsoidtransform',
+        ]),
+    GCWTool(
+        tool: const Geohashing(),
+        id: 'geohashing',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'geohashing',
         ]),
 
     //Countries Selection ******************************************************************************************
