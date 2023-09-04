@@ -11,6 +11,12 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
+      {'formula' : '"A"C"B"', 'values': {'C': '1'}, 'expectedOutput' : 'GGGRGGG'}, // mix of text and numbers
+      {'formula' : '"A"1"B"', 'expectedOutput' : 'GGGGGGG'}, // mix of text and numbers
+      {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGGGGGGGGGGGGGG'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
+      {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbgggggggggggggggGG'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
+
+
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
