@@ -154,20 +154,10 @@ class _HumidexState extends State<Humidex> {
                     child: GCWOutput(child: NumberFormat('#.###').format(humidex))),
               ),
             ])),
-        Column(
-          children: <Widget>[
-            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
-            Row(
-                children: <Widget> [
-
-                ]
-            ),
-            GCWOutput(
-              child: hint != '' ? hint : i18n(context, hintHumidex),
-            ),
-          ],
-        ),
-      ],
+        GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+        GCWOutput(
+          child: hint != '' ? hint : i18n(context, hintHumidex),
+        ),      ],
     );
   }
 

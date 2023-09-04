@@ -110,18 +110,9 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
                     child: GCWOutput(child: NumberFormat('#.###').format(WBT))),
               ),
             ])),
-        Column(
-          children: <Widget>[
-            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
-            Row(
-                children: <Widget> [
-
-                ]
-            ),
-            GCWOutput(
-              child: i18n(context, hintWBT),
-            ),
-          ],
+        GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+        GCWOutput(
+          child: i18n(context, hintWBT),
         ),
       ],
     );

@@ -122,19 +122,10 @@ class _HeatIndexState extends State<HeatIndex> {
                     child: GCWOutput(child: NumberFormat('#.###').format(HeatIndex))),
               ),
         ])),
-        Column(
-          children: <Widget>[
-            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
-            Row(
-              children: <Widget> [
-
-              ]
-            ),
-            GCWOutput(
-              child: hint != '' ? hint : i18n(context, hintHeatIndex),
-            ),
-          ],
-        )
+        GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+        GCWOutput(
+          child: hint != '' ? hint : i18n(context, hintHeatIndex),
+        ),
       ],
     );
   }

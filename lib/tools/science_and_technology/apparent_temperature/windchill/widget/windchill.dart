@@ -113,18 +113,9 @@ class _WindchillState extends State<Windchill> {
                   child: GCWOutput(child: NumberFormat('#.###').format(windchill))),
             ),
           ])),
-      Column(
-        children: <Widget>[
-          GCWTextDivider(text: i18n(context, 'heatindex_hint')),
-          Row(
-              children: <Widget> [
-
-              ]
-          ),
-          GCWOutput(
-            child: hintWindchill,
-          ),
-        ],
+      GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+      GCWOutput(
+        child: hintWindchill,
       ),
     ]);
   }

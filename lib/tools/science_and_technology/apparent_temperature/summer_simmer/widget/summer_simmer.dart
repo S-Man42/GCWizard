@@ -115,18 +115,9 @@ class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
                     child: GCWOutput(child: NumberFormat('#.###').format(summersimmer))),
               ),
             ])),
-        Column(
-          children: <Widget>[
-            GCWTextDivider(text: i18n(context, 'heatindex_hint')),
-            Row(
-                children: <Widget> [
-
-                ]
-            ),
-            GCWOutput(
-              child: hint != '' ? hint : i18n(context, hintSummerSimmer),
-            ),
-          ],
+        GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+        GCWOutput(
+          child: hint != '' ? hint : i18n(context, hintSummerSimmer),
         ),
       ],
     );
