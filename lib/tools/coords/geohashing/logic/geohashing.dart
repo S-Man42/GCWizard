@@ -18,8 +18,7 @@ class Geohashing {
   double dowJonesIndex;
   LatLng? location;
 
-  Geohashing(this.date, this.latitude, this.longitude, {this.dowJonesIndex = 0}) {
-  }
+  Geohashing(this.date, this.latitude, this.longitude, {this.dowJonesIndex = 0});
 
   Future<LatLng?> toLatLng() async {
     location = await geohashingToLatLon(this);

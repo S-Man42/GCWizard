@@ -87,7 +87,7 @@ class _GeohashingState extends State<Geohashing> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWTextDivider(text: i18n(context, 'common_date_format_ymd'), trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
+      GCWTextDivider(text: i18n(context, 'common_date_format_ymd')),
       GCWDatePicker(
           date: _currentDate,
           yearController: _yearController,
@@ -99,6 +99,7 @@ class _GeohashingState extends State<Geohashing> {
           });
         },
       ),
+      GCWTextDivider(text: i18n(context, 'common_location'), trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
       Row(
         children: [
           Expanded(
@@ -132,16 +133,32 @@ class _GeohashingState extends State<Geohashing> {
       ]),
       GCWTextDivider(text: i18n(context, 'geohashing_dow_jones_index')),
       GCWTwoOptionsSwitch(
-        leftValue: i18n(context, 'common_manually'),
-        rightValue: i18n(context, 'common_loadfile_openfrom_url'),
+        leftValue: i18n(context, 'geohashing_loaddata_manual'),
+        rightValue: i18n(context, 'geohashing_loaddata_internet'),
+        title: i18n(context, 'geohashing_loaddata'),
         value: _currentOnline,
         onChanged: (value) {
-          setState(() {
-            _currentOnline = value;
-            if (_currentOnline == GCWSwitchPosition.right) {
-              _showOnlineDialog();
-            }
-          });
+          if (value == GCWSwitchPosition.right) {
+            showGCWDialog(
+              context,
+              i18n(context, 'geohashing_dow_jones_index_online'),
+              null,
+              [
+                GCWDialogButton(
+                  text: i18n(context, 'common_ok'),
+                  onPressed: () {
+                    setState(() {
+                      _currentOnline = value;
+                    });
+                  },
+                )
+              ]
+            );
+          } else {
+            setState(() {
+              _currentOnline = value;
+            });
+          }
         }
       ),
       if (_currentOnline == GCWSwitchPosition.left) GCWDoubleTextField(
@@ -252,19 +269,6 @@ class _GeohashingState extends State<Geohashing> {
         setState(() {});
       }
     });
-  }
-
-  void _showOnlineDialog() {
-    showGCWDialog(
-      context,
-      i18n(context, 'geohashing_dow_jones_index_online'),
-      null,
-      [GCWDialogButton(
-          text: i18n(context, 'common_ok'),
-        )
-      ],
-      cancelButton: false,
-    );
   }
 
   bool _W30RuleNecessary() {
