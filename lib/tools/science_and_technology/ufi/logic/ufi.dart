@@ -9,7 +9,7 @@ class UFI {
   final String countryName;
   final String ufiRegExp;
   final int countryGroupCodeG;
-  final int? numberOfBitsForCountryCodeB;
+  final int numberOfBitsForCountryCodeB;
   final int? countryCodeC;
   final BigInt Function(String)? specialConversion;
 
@@ -27,9 +27,9 @@ class UFI {
 const int UFI_MAX_FORMULATIONNUMBER = 268435455;
 
 final List<UFI> UFI_CODES = [
-  const UFI(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: null, countryCodeC: null, specialConversion: _vConversionFR),
-  const UFI(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: null, countryCodeC: null, specialConversion: _vConversionGB),
-  const UFI(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: null, countryCodeC: null, specialConversion: _vConversionGB),
+  const UFI(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialConversion: _vConversionFR),
+  const UFI(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialConversion: _vConversionGB),
+  const UFI(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: 0, specialConversion: _vConversionGB),
   const UFI(countryCode: 'LT', countryName: 'common_country_Lithuania', ufiRegExp: r'([0-9]{9}|[0-9]{12})', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 0),
   const UFI(countryCode: 'SE', countryName: 'common_country_Sweden', ufiRegExp: r'[0-9]{12}', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 1),
   const UFI(countryCode: 'HR', countryName: 'common_country_Croatia', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 0),
@@ -92,11 +92,28 @@ BigInt _vConversionES(String vatNumber) {
 }
 
 BigInt _vConversionFR(String vatNumber) {
+  var d = BigInt.parse(vatNumber.substring(2));
+  var c1 = _alphaNumValue(vatNumber[0]);
+  var c2 = _alphaNumValue(vatNumber[1]);
 
+  return BigInt.from(36 * c1 + c2) * BigInt.from(10).pow(9) + d;
 }
 
 BigInt _vConversionGB(String vatNumber) {
+  RegExp regExp1 = RegExp(r'[0-9]{9}([0-9]{3})?');
+  RegExp regExp2 = RegExp(r'[A-Z]{2}[0-9]{3}');
 
+  if (regExp1.hasMatch(vatNumber)) {
+    return BigInt.two.pow(40) + BigInt.parse(vatNumber);
+  } else if (regExp2.hasMatch(vatNumber)) {
+    var d = BigInt.parse(vatNumber.substring(2));
+    var l1 = _alphabetValue(vatNumber[0]);
+    var l2 = _alphabetValue(vatNumber[1]);
+
+    return BigInt.from(26 * l1 + l2) * BigInt.from(10).pow(3) + d;
+  }
+
+  throw Exception('Invalid VAT Number for GB/XN');
 }
 
 BigInt _vConversionIE(String vatNumber) {
@@ -132,8 +149,9 @@ BigInt _vConversionIE(String vatNumber) {
 
 BigInt _vConversionIS(String vatNumber) {
   BigInt V = BigInt.zero;
-  for (int i = 0; i < 6; i++) {
-    V += BigInt.from(_alphabetValue(vatNumber[i])) * BigInt.from(36).pow(i);
+  const vatLength = 6;
+  for (int i = 0; i < vatLength; i++) {
+    V += BigInt.from(_alphaNumValue(vatNumber[vatLength - 1 - i])) * BigInt.from(36).pow(i);
   }
 
   return V;
@@ -152,9 +170,12 @@ String encodeUFI(String countryCode, String vatNumber, int formulationNumber) {
   var g = convertBase(ufi.countryGroupCodeG.toString(), 10, 2);
   g = g.padLeft(4, '0');
 
-  var b = ufi.numberOfBitsForCountryCodeB!;  // TODO: FR?
-  var c = convertBase(ufi.countryCodeC.toString(), 10, 2);
-  c = c.padLeft(b, '0');
+  var b = ufi.numberOfBitsForCountryCodeB;
+  var c = '';
+  if (b > 0 && ufi.countryCodeC != null) {
+    c = convertBase(ufi.countryCodeC.toString(), 10, 2);
+    c = c.padLeft(b, '0');
+  }
 
   var n = convertBase(
       ufi.specialConversion == null
@@ -195,10 +216,117 @@ String encodeUFI(String countryCode, String vatNumber, int formulationNumber) {
   return insertEveryNthCharacter(checkSum + reOrganised, 4, '-');
 }
 
-String decodeUFI(String ufi) {
-  return '';
+bool _validateUFI(String ufi) {  
+  if (ufi.length != 16) {
+    return false;
+  }
+
+  int x = 0;
+  for (int i = 0; i < ufi.length; i++) {
+    var u = _UFI_BASE31.indexOf(ufi[i]);
+    x += (i + 1) * u;
+  }
+  
+  return modulo(x, 31) == 0;
 }
 
-void main() {
-  print(encodeUFI('IE', '9Z54321Y', 134217728));
+int _bByGroupCode(int groupCode) {
+  if (groupCode < 0 || groupCode > 5) {
+    throw Exception('ufi_notvalidgroupcode');
+  }
+
+  return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == groupCode).numberOfBitsForCountryCodeB;
+}
+
+String decodeUFI(String ufi) {
+
+  ////// Step 4 ///////////////////////////////////////////////////////////////
+
+  // int x = 0;
+  // for (int i = 0; i < reOrganised.length; i++) {
+  //   var u = _UFI_BASE31.indexOf(reOrganised[i]);
+  //   x += (i + 2) * u;
+  // }
+  //
+  // int u0 = modulo(31 - modulo(x, 31), 31) as int;
+  // var checkSum = _UFI_BASE31[u0];
+  //
+  // return insertEveryNthCharacter(checkSum + reOrganised, 4, '-');
+
+  ufi = ufi.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+  if (!_validateUFI(ufi)) {
+    throw Exception('ufi_notvalid');
+  }
+
+  var reOrganised = ufi.substring(1);
+
+  ////// Step 3 ///////////////////////////////////////////////////////////////
+
+  // var reOrganised =
+  //   base31[5] + base31[4] + base31[3] + base31[7] + base31[2] +
+  //   base31[8] + base31[9] + base31[10] + base31[1] + base31[0] +
+  //   base31[11] + base31[6] + base31[12] +  base31[13] + base31[14];
+  
+  var base31 =
+      reOrganised[9] + reOrganised[8] + reOrganised[4] + reOrganised[2] + reOrganised[1] +
+      reOrganised[0] + reOrganised[11] + reOrganised[3] + reOrganised[5] + reOrganised[6] +
+      reOrganised[7] + reOrganised[10] + reOrganised[12] + reOrganised[13] + reOrganised[14];
+
+  ////// Step 2 ///////////////////////////////////////////////////////////////
+
+  // var base31 = convertBase(ufiPayload, 10, 31, alphabet: _UFI_BASE31);
+  // base31 = base31.padLeft(15, '0');
+
+  var ufiPayload = trimCharactersLeft(base31, '0');
+  ufiPayload = convertBase(ufiPayload, 31, 10, alphabet: _UFI_BASE31);
+
+  ////// Step 1 ///////////////////////////////////////////////////////////////
+
+  // var ufiPayloadBinary = f + g + c + n + '0';
+  // var ufiPayload = convertBase(ufiPayloadBinary, 2, 10);
+  //
+
+  var ufiPayloadBinary = convertBase(ufiPayload, 10, 2);
+  var f = ufiPayloadBinary.substring(0, 28);
+  var g = int.parse(ufiPayloadBinary.substring(28, 32), radix: 2);
+
+  // var f = convertBase(formulationNumber.toString(), 10, 2);
+  // f = f.padLeft(28, '0');
+  //
+
+  var formulationNumber = convertBase(f, 2, 10);
+
+  // var b = ufi.numberOfBitsForCountryCodeB;
+  // var c = '';
+  // if (b != 0 && ufi.countryCodeC != null) {
+  //   c = convertBase(ufi.countryCodeC.toString(), 10, 2);
+  //   c = c.padLeft(b, '0');
+  // }
+
+  var b = _bByGroupCode(g);
+
+  int? c;
+  if (b > 0) {
+    c = int.parse(ufiPayloadBinary.substring(32, 32 + b), radix: 2);
+  }
+
+  // var n = convertBase(
+  //     ufi.specialConversion == null
+  //         ? _vConversionRegular(_vatNumber).toString()
+  //         : ufi.specialConversion!(_vatNumber).toString(),
+  //     10, 2
+  // );
+  // n = n.padLeft(41 - b, '0');
+  //
+  var n = ufiPayloadBinary.substring(ufiPayloadBinary.length - (41 - b));
+  n = convertBase(n, 2, 10);
+
+  // TODO: ...
+
+  //
+  // var g = convertBase(ufi.countryGroupCodeG.toString(), 10, 2);
+  // g = g.padLeft(4, '0');
+
+  
+
 }

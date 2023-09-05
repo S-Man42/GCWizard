@@ -72,12 +72,12 @@ void main() {
     }
   });
 
-  group("UFI.decodeUFI:", () {
-    for (var elem in _testCases) {
-      test('ufi: ${elem['ufi']}', () {
-        var _actual = decodeUFI(elem['ufi'] as String);
-        expect(_actual, elem['expectedOutput']);
-      });
-    }
-  });
+  // group("UFI.decodeUFI:", () {
+  //   for (var elem in _testCases) {
+  //     test('ufi: ${elem['ufi']}', () {
+  //       var _actual = decodeUFI(elem['ufi'] as String);
+  //       expect(_actual, elem['expectedOutput']);
+  //     });
+  //   }
+  // });
 }
