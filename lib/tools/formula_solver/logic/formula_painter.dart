@@ -13,6 +13,9 @@ class FormulaPainter {
   static const _operators = {'+', '-', '*', '/', '^', '%'};
   static const _bracket = {'[': ']', '(': ')', '{': '}'};
   static const numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const _STRING_MARKER_APOSTROPHE = "'";
+  static const _STRING_MARKER_QUOTE = '"';
+
   static final _allCharacters = allCharacters();
   Map<String, String> _values = {};
   var _variables = <String>[];
@@ -472,14 +475,14 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp('^(["\'])(?:(?=(\\\\?))\\2.)*?\\1');
+    RegExp regex = RegExp('^(['+ _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
   }
 
   List<String>? _isInvalidString(String formula) {
-    if (formula.startsWith("'") || formula.startsWith('"')) return [formula];
+    if (formula.startsWith(_STRING_MARKER_APOSTROPHE) || formula.startsWith(_STRING_MARKER_QUOTE)) return [formula];
     return null;
   }
 
