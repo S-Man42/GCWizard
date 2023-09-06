@@ -40,6 +40,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/enclosed_areas/logic/enclos
 import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/logic/gc_code.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/complex_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
@@ -557,7 +558,7 @@ class _GCWizardSCriptInterpreter {
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT
         + '********* GC Wizard Skript **********\n'
-        + '*      Version vom 31.08.2023       *\n'
+        + '*      Version vom 06.09.2023       *\n'
         + '*  nach einer Idee von Herb Schildt *\n'
         + '* The Art of C, 1991, © McGraw Hill *\n'
         + '*  GCW-Weiterentwicklung genehmigt  *\n'
@@ -603,21 +604,24 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandDATA() {
     Object? result;
+    print('----- DATA -------------------------------------');
     do {
       result = evaluateExpression();
       state.listDATA.add(result);
 
       getToken(); // get next list item
-      if (state.keywordToken == EOL || state.token == EOP) break;
+      print(state.token);
+      if (state.keywordToken == EOL || state.token == EOP || state.token == '\r\n' || state.token == '\n') break;
     } while (state.keywordToken != EOL && state.token != EOP);
   }
 
   void executeCommandREAD() {
     String vname = '';
-
+print('----- READ -------------------------------------');
     do {
       getToken(); // get next list item
-      if (state.keywordToken == EOL || state.token == EOP) break;
+      print(state.token);
+      if (state.keywordToken == EOL || state.token == EOP || state.token == '\r\n' || state.token == '\n') break;
       if (state.token != ',') {
         vname = state.token;
         //if (isNotAVariable(vname)) {

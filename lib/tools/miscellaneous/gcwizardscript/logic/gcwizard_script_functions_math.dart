@@ -359,3 +359,36 @@ void _divisors(Object? list, Object? number){
   }
 }
 
+void _polar(Object? list, Object? x, Object? y, ){
+  if (_isNotAList(list) || _isNotANumber(x) || _isNotANumber(y)) {
+    _handleError(_INVALIDTYPECAST);
+  } else {
+    Map<String, String> result = CartesianToPolar((x as num).toString(), (y as num).toString());
+    _listAdd(list as _GCWList, double.parse(result['complex_numbers_hint_radius']!));
+    _listAdd(list, double.parse(result['complex_numbers_hint_angle']!));
+    }
+  }
+
+void _karthesian(Object? list, Object? angle, Object? radius, ){
+  if (_isNotAList(list) || _isNotANumber(angle) || _isNotANumber(radius)) {
+    _handleError(_INVALIDTYPECAST);
+  } else {
+    Map<String, String> result = PolarToCartesian((angle as num).toString(), (radius as num).toString());
+    _listAdd(list as _GCWList, double.parse(result['complex_numbers_hint_a']!));
+    _listAdd(list, double.parse(result['complex_numbers_hint_b']!));
+  }
+}
+
+double _sum(Object? list, ){
+  double result = 0.0;
+  if (_isNotAList(list)) {
+    _handleError(_INVALIDTYPECAST);
+    return result;
+  } else {
+    for (int i = 0; i < (list as _GCWList).length(); i++){
+      Object element = list.getIndex(i);
+      if (_isANumber(element)) result = result + (element as num);
+    }
+    return result;
+  }
+}

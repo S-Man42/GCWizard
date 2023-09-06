@@ -51,6 +51,7 @@ const List<String> _Functions_3 = [
   'SIN(',
   'SQR(',
   'STR(',
+  'SUM(',
   'TAN(',
   'VAL(',
 ];
@@ -86,6 +87,7 @@ const List<String> _Functions_5 = [
   'ISINT(',
   'ISSQR(',
   'MORSE(',
+  'POLAR(',
   'RIGHT(',
   'ROT13(',
   'ROT18(',
@@ -143,6 +145,7 @@ const List<String> _Functions_9 = [
 ];
 const List<String> _Functions_10 = [
   'DECTOROMAN(',
+  'KARTHESIAN(',
   'LISTADDALL(',
   'LISTINSERT(',
   'LISTLENGTH(',
@@ -231,6 +234,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'COS': _GCWizardScriptClassFunctionDefinition(_cos, 1),
   'DEG': _GCWizardScriptClassFunctionDefinition(_deg, 1),
   'DIV': _GCWizardScriptClassFunctionDefinition(_div, 2),
+  'DIVISORS': _GCWizardScriptClassFunctionDefinition(_divisors, 2),
   'EXP': _GCWizardScriptClassFunctionDefinition(_exp, 1),
   'FAC': _GCWizardScriptClassFunctionDefinition(_fac, 1),
   'FLOOR': _GCWizardScriptClassFunctionDefinition(_floor, 1),
@@ -240,11 +244,13 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'IQSUM': _GCWizardScriptClassFunctionDefinition(_iqsum, 1),
   'ISPRIME': _GCWizardScriptClassFunctionDefinition(_isPrime, 1),
   'ISSQR': _GCWizardScriptClassFunctionDefinition(_isSqr, 1),
+  'KARTHESIAN': _GCWizardScriptClassFunctionDefinition(_karthesian, 3, functionReturn: false),
   'KGV': _GCWizardScriptClassFunctionDefinition(_kgv, 2),
   'LCM': _GCWizardScriptClassFunctionDefinition(_lcm, 2),
   'LN': _GCWizardScriptClassFunctionDefinition(_ln, 1),
   'LOG': _GCWizardScriptClassFunctionDefinition(_log10, 1),
   'MOD': _GCWizardScriptClassFunctionDefinition(_mod, 2),
+  'POLAR': _GCWizardScriptClassFunctionDefinition(_polar, 3, functionReturn: false),
   'POW': _GCWizardScriptClassFunctionDefinition(_pow, 2),
   'QSUM': _GCWizardScriptClassFunctionDefinition(_qsum, 1),
   'RAD': _GCWizardScriptClassFunctionDefinition(_rad, 1),
@@ -254,9 +260,9 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'SIN': _GCWizardScriptClassFunctionDefinition(_sin, 1),
   'SQRT': _GCWizardScriptClassFunctionDefinition(_sqrt, 1),
   'SQR': _GCWizardScriptClassFunctionDefinition(_sqr, 1),
+  'SUM': _GCWizardScriptClassFunctionDefinition(_sum, 1),
   'TAN': _GCWizardScriptClassFunctionDefinition(_tan, 1),
   'TRUNC': _GCWizardScriptClassFunctionDefinition(_trunc, 1),
-  'DIVISORS': _GCWizardScriptClassFunctionDefinition(_divisors, 2),
 
   // String
   'STR': _GCWizardScriptClassFunctionDefinition(_str, 1),
