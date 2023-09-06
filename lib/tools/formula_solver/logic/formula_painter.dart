@@ -12,7 +12,7 @@ class FormulaPainter {
   static const String OFRBError = 'B'; //operator, function, reference, bracket error
   static const _operators = {'+', '-', '*', '/', '^', '%'};
   static const _bracket = {'[': ']', '(': ')', '{': '}'};
-  static const numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const _numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
   static const _STRING_MARKER_APOSTROPHE = "'";
   static const _STRING_MARKER_QUOTE = '"';
 
@@ -600,7 +600,7 @@ class FormulaPainter {
   }
 
   List<String>? _isNumberWithPoint(String formula) {
-    RegExp regex = RegExp('^$numberRegEx');
+    RegExp regex = RegExp('^$_numberRegEx');
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
