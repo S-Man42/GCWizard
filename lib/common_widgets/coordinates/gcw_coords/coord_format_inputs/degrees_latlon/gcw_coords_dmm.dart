@@ -115,7 +115,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                 padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: _DegreesLatTextInputFormatter(allowNegativeValues: false),
+                    textInputFormatter: DegreesLatTextInputFormatter(allowNegativeValues: false),
                     controller: _LatDegreesController,
                     onChanged: (IntegerText ret) {
                       setState(() {
@@ -190,7 +190,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
                 padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: _DegreesLonTextInputFormatter(),
+                    textInputFormatter: DegreesLonTextInputFormatter(),
                     controller: _LonDegreesController,
                     onChanged: (IntegerText ret) {
                       setState(() {
