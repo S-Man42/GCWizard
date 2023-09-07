@@ -557,12 +557,12 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT
-        + '********* GC Wizard Skript **********\n'
-        + '*     Version as of 06.09.2023      *\n'
-        + '* based on the work of Herb Schildt *\n'
-        + '* The Art of C, 1991, © McGraw Hill *\n'
-        + '*       Enhancement permitted       *\n'
-        + '*************************************\n';
+        + '********** GC Wizard  Skript **********\n'
+        + '*      Version as of  07.09.2023      *\n'
+        + '* based on the work of Herb. Schildt  *\n'
+        + '*  The Art of C, 1991, © McGraw Hill  *\n'
+        + '* Enhancement for GC Wizard permitted *\n'
+        + '***************************************\n';
   }
 
   void executeCommandNEWFILE() {
@@ -604,23 +604,19 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandDATA() {
     Object? result;
-    print('----- DATA -------------------------------------');
     do {
       result = evaluateExpression();
       state.listDATA.add(result);
 
       getToken(); // get next list item
-      print(state.token);
       if (state.keywordToken == EOL || state.token == EOP || state.token == '\r\n' || state.token == '\n') break;
     } while (state.keywordToken != EOL && state.token != EOP);
   }
 
   void executeCommandREAD() {
     String vname = '';
-print('----- READ -------------------------------------');
     do {
       getToken(); // get next list item
-      print(state.token);
       if (state.keywordToken == EOL || state.token == EOP || state.token == '\r\n' || state.token == '\n') break;
       if (state.token != ',') {
         vname = state.token;

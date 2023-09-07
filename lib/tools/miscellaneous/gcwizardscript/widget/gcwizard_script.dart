@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
@@ -44,11 +45,10 @@ class GCWizardScript extends StatefulWidget {
 
 class GCWizardScriptState extends State<GCWizardScript> {
   late TextEditingController _programController;
-  late TextEditingController _inputController;
+  late TextEditingController _outputController;
 
   String _currentProgram = '';
   String _currentInput = '';
-  String _currentScriptOutput = '';
 
   GCWizardScriptOutput _currentOutput = GCWizardScriptOutput.empty();
 
@@ -62,7 +62,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   void initState() {
     super.initState();
     _programController = TextEditingController(text: _currentProgram);
-    _inputController = TextEditingController(text: _currentInput);
+    _outputController = TextEditingController(text: '');
 
     _programController = CodeController(
       text: _currentProgram,
@@ -74,7 +74,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   @override
   void dispose() {
     _programController.dispose();
-    _inputController.dispose();
+    _outputController.dispose();
     super.dispose();
   }
 
@@ -160,7 +160,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   _programController.text = '';
                   _currentProgram = '';
                   _currentOutput = GCWizardScriptOutput.empty();
-                  _currentScriptOutput = '';
                 });
               },
             ),
@@ -190,125 +189,159 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Widget _buildOutput(BuildContext context) {
     return Column(
       children: <Widget>[
-        if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
-            _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
-          GCWDefaultOutput(
-            child: (_outGraphicData.isNotEmpty)
-                ? GCWImageView(
-                    imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
-                    suppressOpenInTool: const {
-                      GCWImageViewOpenInTools.METADATA,
-                      GCWImageViewOpenInTools.HIDDENDATA,
-                      GCWImageViewOpenInTools.HEXVIEW
-                    },
-                  )
-                : Container(),
-          ),
-        if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
-            _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
-          GCWDefaultOutput(
-            trailing: Row(
-              children: <Widget>[
-                GCWIconButton(
-                  icon: Icons.clear,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    setState(() {
-                      _currentOutput = GCWizardScriptOutput.empty();
-                      _currentScriptOutput = '';
-                    });
-                  },
-                ),
-                GCWIconButton(
-                  icon: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    _exportFile(
-                        context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
-                  },
-                )
-              ],
-            ),
-            child: _buildOutputText(_currentOutput),
-          ),
-        if (_currentOutput.Points.isNotEmpty)
-          Column(
-            children: <Widget>[
-              GCWTextDivider(
-                trailing: Row(
-                  children: <Widget>[
-                    GCWIconButton(
-                      icon: Icons.my_location,
-                      size: IconButtonSize.SMALL,
-                      onPressed: () {
-                        _openInMap(_currentOutput.Points);
-                      },
-                    ),
-                    GCWIconButton(
-                      icon: Icons.save,
-                      size: IconButtonSize.SMALL,
-                      onPressed: () {
-                        _exportCoordinates(context, _currentOutput.Points);
-                      },
-                    ),
-                  ],
-                ),
-                text: i18n(context, 'gcwizard_script_waypoints'),),
-              GCWOutput(
-                child: GCWOutputText(
-                  style: gcwMonotypeTextStyle(),
-                  text: _buildWayPointList(_currentOutput.Points),
-                  isMonotype: true,
-                ),
-              ),
-            ]
-          ),
+        _builOutputGraphics(),
+        _buildOutputText(),
+        _buildOutputWaypoints(),
+        _buildOutputErrorText(),
+        _buildOutputMemoryDump(),
       ],
     );
   }
 
-  Widget _buildOutputText(GCWizardScriptOutput output) {
-    List<List<String>> memoryDump = [
-      [i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]
-    ];
-    memoryDump.addAll(output.VariableDump);
-    Widget memoryDumpWidget = GCWExpandableTextDivider(
-                                expanded: false,
-                                text: i18n(context, 'gcwizard_script_dump'),
-                                child: GCWColumnedMultilineOutput(
-                                  data: memoryDump,
-                                  hasHeader: true,
-                                ),
-                              );
-    if (output.ErrorMessage.isEmpty) {
+  Widget _buildOutputText(){
+    if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
+        _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+      return GCWDefaultOutput(
+          trailing: Row(
+            children: <Widget>[
+              GCWIconButton(
+                icon: Icons.clear,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  setState(() {
+                    _currentOutput = GCWizardScriptOutput.empty();
+                    _outputController.text = '';
+                  });
+                },
+              ),
+              GCWIconButton(
+                icon: Icons.copy,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  insertIntoGCWClipboard(context, _outputController.text);
+                },
+              ),
+              GCWIconButton(
+                icon: Icons.save,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  _exportFile(
+                      context, Uint8List.fromList(_outputController.text.codeUnits), GCWizardScriptFileType.OUTPUT);
+                },
+              ),
+            ],
+          ),
+          child: GCWCodeTextField(
+            lineNumbers: false,
+            controller: _outputController,
+            readOnly: true,
+            onChanged: (text) {
+              setState(() {});
+            },
+          )
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _builOutputGraphics(){
+    if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
+        _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+      return GCWDefaultOutput(
+        child: (_outGraphicData.isNotEmpty)
+            ? GCWImageView(
+          imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
+          suppressOpenInTool: const {
+            GCWImageViewOpenInTools.METADATA,
+            GCWImageViewOpenInTools.HIDDENDATA,
+            GCWImageViewOpenInTools.HEXVIEW
+          },
+        )
+            : Container(),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildOutputWaypoints(){
+    if (_currentOutput.Points.isNotEmpty) {
       return Column(
           children: <Widget>[
-            GCWOutputText(
-              style: gcwMonotypeTextStyle(),
-              text: output.STDOUT, //_currentScriptOutput,
-              isMonotype: true,
+            GCWTextDivider(
+              trailing: Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    icon: Icons.my_location,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      _openInMap(_currentOutput.Points);
+                    },
+                  ),
+                  GCWIconButton(
+                    icon: Icons.save,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      _exportCoordinates(context, _currentOutput.Points);
+                    },
+                  ),
+                ],
+              ),
+              text: i18n(context, 'gcwizard_script_waypoints'),),
+            GCWOutput(
+              child: GCWOutputText(
+                style: gcwMonotypeTextStyle(),
+                text: _buildWayPointList(_currentOutput.Points),
+                isMonotype: true,
+              ),
             ),
-            memoryDumpWidget,
           ]
       );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildOutputMemoryDump() {
+    if (_currentOutput.VariableDump.isNotEmpty) {
+      List<List<String>> memoryDump = [
+        [i18n(context, 'gcwizard_script_dump_variable'), i18n(context, 'gcwizard_script_dump_value')]
+      ];
+      memoryDump.addAll(_currentOutput.VariableDump);
+      return GCWExpandableTextDivider(
+        expanded: false,
+        text: i18n(context, 'gcwizard_script_dump'),
+        child: GCWColumnedMultilineOutput(
+          data: memoryDump,
+          hasHeader: true,
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildOutputErrorText() {
+    if (_currentOutput.ErrorMessage.isEmpty) {
+      return Container();
     } else {
       return Column(
         children: <Widget>[
           GCWOutputText(
             style: gcwMonotypeTextStyle(),
-            text: output.STDOUT +
+            text: _currentOutput.STDOUT +
                 '\n' +
-                i18n(context, output.ErrorMessage) +
+                i18n(context, _currentOutput.ErrorMessage) +
                 '\n' +
                 i18n(context, 'gcwizard_script_error_position') +
                 ' ' +
-                output.ErrorPosition.toString() +
+                _currentOutput.ErrorPosition.toString() +
                 '\n' +
                 '=> ' +
-                _printFaultyProgram(_currentProgram, output.ErrorPosition), //_currentScriptOutput,
+                _printFaultyProgram(_currentProgram, _currentOutput.ErrorPosition),
             isMonotype: true,
           ),
-          memoryDumpWidget,
         ],
       );
     }
@@ -324,14 +357,15 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   void _showInterpreterOutput(GCWizardScriptOutput output) {
     _currentOutput = output;
+    _outputController.text = _currentOutput.STDOUT;
     //var showInput = false;
     if (output.continueState != null) {
       switch (output.BreakType) {
         case GCWizardScriptBreakType.INPUT:
-          _currentScriptOutput = _currentOutput.STDOUT;
+          _outputController.text = _currentOutput.STDOUT;
           break;
         case GCWizardScriptBreakType.PRINT:
-          _currentScriptOutput = _currentOutput.STDOUT;
+          _outputController.text = _currentOutput.STDOUT;
           break;
         case GCWizardScriptBreakType.OPENFILE:
           break;
@@ -340,14 +374,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
         case GCWizardScriptBreakType.NULL:
           break;
       }
-      // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
-      //   _currentScriptOutput = _currentOutput.STDOUT;
-      //   //showInput = true;
-      // } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-      //   _currentScriptOutput = _currentOutput.STDOUT;
-      // }
     } else {
-      _currentScriptOutput = output.STDOUT;
+      _outputController.text = _currentOutput.STDOUT;
       if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
           _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
         _createImage(_currentOutput.Graphic).then((value) {
@@ -366,7 +394,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
             break;
           case GCWizardScriptBreakType.PRINT:
             if (_currentOutput.continueState != null) {
-              _currentScriptOutput = _currentOutput.STDOUT;
               _interpretGCWScriptAsync();
             }
             break;
@@ -381,17 +408,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
           case GCWizardScriptBreakType.NULL:
             break;
         }
-        // if (output.BreakType == GCWizardScriptBreakType.INPUT) {
-        //   _showDialogBox(context, output.continueState?.quotestr ?? '');
-        // } else if (output.BreakType == GCWizardScriptBreakType.PRINT) {
-        //   if (_currentOutput.continueState != null) {
-        //     _currentScriptOutput = _currentOutput.STDOUT;
-        //     _interpretGCWScriptAsync();
-        //   }
-        // }
-        //if (showInput) {
-        //  _showDialogBox(context, output.continueState?.quotestr ?? '');
-        //}
       });
     });
   }
