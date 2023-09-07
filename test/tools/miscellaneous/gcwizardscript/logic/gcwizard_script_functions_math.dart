@@ -293,4 +293,10 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print CONVERTBASE("42.42", 10, 9)', 'expectedOutput' : '46.37015518733701551465724800440338241104884421633301'},
   {'code' : 'print CONVERTBASE("42.42", 10, 10)', 'expectedOutput' : '42.42'},
   {'code' : 'print CONVERTBASE("a", 16, 10)', 'expectedOutput' : '10'},
+
+  {'code' : 'dim t\ndivisors(t,24)\nprint sum(t)', 'expectedOutput' : '60.0'},
+
+  {'code' : 'dim t\npolar(t,1.91372648, 2.4914364)\nprint t', 'expectedOutput' : '[3.14159265, 52.47135]'},
+
+  {'code' : 'dim t\nkarthesian(t,3.14159265, 52.47135)\nprint t', 'expectedOutput' : '[1.9137265, 2.4914364]'},
 ];
