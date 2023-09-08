@@ -361,7 +361,7 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
     result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
 
-// ToDo only working with AsncPort (await not working)
+// ToDo only working with AsyncPort (await not working)
   if (result.text.isNotEmpty) {
     sendAsyncPort?.send(result);
   }

@@ -85,6 +85,7 @@ flutter:
   assets:
     - assets/logo/
     - assets/tokens/
+    - lib/application/_common/assets/img/
     - lib/application/i18n/assets/
     - lib/application/searchstrings/assets/
     - lib/tools/coords/_common/assets/icons/

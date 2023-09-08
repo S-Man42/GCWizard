@@ -75,6 +75,17 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
           onUpdateEntry: (entry) => _updateEntry(entry),
           onCreateInput: (Key? key) => _FormulaValueTypeKeyInput(key: key),
           onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
+          trailing: GCWIconButton(
+            customIcon: Image.asset('lib/application/_common/assets/img/cgeo_logo.png'),
+            size: IconButtonSize.SMALL,
+            onPressed: () {
+              var cgeoFormattedValues = widget.group.values.map((value) {
+                return '\$' + value.key + '=' + value.value;
+              }).join(' | ');
+
+              insertIntoGCWClipboard(context, cgeoFormattedValues);
+            },
+          )
         ),
       ],
     );

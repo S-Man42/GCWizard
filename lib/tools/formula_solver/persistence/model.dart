@@ -113,7 +113,6 @@ class Formula extends FormulaBase {
 enum FormulaValueType { FIXED, INTERPOLATED}
 
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
-const _FORMULAVALUETYPE_TEXT = 'text';
 
 FormulaValueType _readType(String? jsonType) {
   switch (jsonType) {
@@ -145,7 +144,7 @@ class FormulaValue extends KeyValueBase {
     var value = toStringOrNull(json['value']) ?? '';
     var type = _readType(json['type'] as String?);
 
-    var newFormulaValue =FormulaValue(key, value, type: type);
+    var newFormulaValue = FormulaValue(key, value, type: type);
     newFormulaValue.id = id;
 
     return newFormulaValue;

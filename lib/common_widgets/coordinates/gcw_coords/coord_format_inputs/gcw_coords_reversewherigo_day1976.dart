@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
   final void Function(ReverseWherigoDay1976?) onChanged;
   final ReverseWherigoDay1976 coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();
@@ -21,7 +21,7 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
   var _currentA = '';
   var _currentB = '';
 
-  bool _initialized = false;
+
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var day1976 = widget.coordinates;
       _currentA = day1976.s;
       _currentB = day1976.t;
@@ -50,7 +50,6 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
       _ControllerA.text = _currentA.toString();
       _ControllerB.text = _currentB.toString();
 
-      _initialized = true;
     }
 
     return Column(children: <Widget>[
