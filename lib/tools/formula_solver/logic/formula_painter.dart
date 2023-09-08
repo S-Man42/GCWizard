@@ -6,8 +6,8 @@ class FormulaPainter {
   static const String _Space = 'S'; //space
   static const String Number = 'g'; // or character in word function or ' "
   static const String NumberError = 'G'; //or character in word function error
-  static const String Variable = 'r'; //varibale
-  static const String VariableError = 'R'; //varibale error
+  static const String Variable = 'r'; //variable
+  static const String VariableError = 'R'; //variable error
   static const String OFRB = 'b'; //operator, function, reference, bracket
   static const String OFRBError = 'B'; //operator, function, reference, bracket error
   static const _operators = {'+', '-', '*', '/', '^', '%'};
