@@ -17,10 +17,10 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
+import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/widget/gcwizard_script_help.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -82,47 +82,17 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            if (_loadFile)
-              GCWOpenFile(
-                onLoaded: (_file) {
-                  if (_file == null) {
-                    showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                    _loadFile = !_loadFile;
-                    return;
-                  }
-
-                  _currentProgram = String.fromCharCodes(_file.bytes);
-                  _programController.text = _currentProgram;
-                  _loadFile = !_loadFile;
-                  setState(() {});
-                },
-              ),
-            if (_loadCoords)
-              GCWCoords(
-                title: i18n(context, 'gcwizard_script_coords'),
-                coordsFormat: _currentCoords.format,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentCoords = ret;
-                  });
-                },
-              ),
-            GCWCodeTextField(
-              lineNumbers: true,
-              lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
-              controller: _programController,
-              // hintText: i18n(context, 'gcwizard_script_hint_program'),
-              language: CodeHighlightingLanguage.BASIC,
-              readOnly: false,
-              onChanged: (text) {
-                setState(() {
-                  _currentProgram = text;
-                });
-              },
-            ),
-          ],
+        GCWCodeTextField(
+          lineNumbers: true,
+          lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
+          controller: _programController,
+          language: CodeHighlightingLanguage.BASIC,
+          readOnly: false,
+          onChanged: (text) {
+            setState(() {
+              _currentProgram = text;
+            });
+          },
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -167,7 +137,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               icon: Icons.help_outline,
               size: IconButtonSize.SMALL,
               onPressed: () {
-                _showDialogBoxHelp(context);
+                _openHelpWidget(context);
               },
             ),
             GCWIconButton(
@@ -181,6 +151,31 @@ class GCWizardScriptState extends State<GCWizardScript> {
             ),
           ],
         ),
+        if (_loadFile)
+          GCWOpenFile(
+            onLoaded: (_file) {
+              if (_file == null) {
+                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                _loadFile = !_loadFile;
+                return;
+              }
+
+              _currentProgram = String.fromCharCodes(_file.bytes);
+              _programController.text = _currentProgram;
+              _loadFile = !_loadFile;
+              setState(() {});
+            },
+          ),
+        if (_loadCoords)
+          GCWCoords(
+            title: i18n(context, 'gcwizard_script_coords'),
+            coordsFormat: _currentCoords.format,
+            onChanged: (ret) {
+              setState(() {
+                _currentCoords = ret;
+              });
+            },
+          ),
         _buildOutput(context),
       ],
     );
@@ -198,7 +193,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     );
   }
 
-  Widget _buildOutputText(){
+  Widget _buildOutputText() {
     if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
         _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
       return GCWDefaultOutput(
@@ -238,26 +233,25 @@ class GCWizardScriptState extends State<GCWizardScript> {
             onChanged: (text) {
               setState(() {});
             },
-          )
-      );
+          ));
     } else {
       return Container();
     }
   }
 
-  Widget _builOutputGraphics(){
+  Widget _builOutputGraphics() {
     if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
         _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
       return GCWDefaultOutput(
         child: (_outGraphicData.isNotEmpty)
             ? GCWImageView(
-          imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
-          suppressOpenInTool: const {
-            GCWImageViewOpenInTools.METADATA,
-            GCWImageViewOpenInTools.HIDDENDATA,
-            GCWImageViewOpenInTools.HEXVIEW
-          },
-        )
+                imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
+                suppressOpenInTool: const {
+                  GCWImageViewOpenInTools.METADATA,
+                  GCWImageViewOpenInTools.HIDDENDATA,
+                  GCWImageViewOpenInTools.HEXVIEW
+                },
+              )
             : Container(),
       );
     } else {
@@ -265,39 +259,38 @@ class GCWizardScriptState extends State<GCWizardScript> {
     }
   }
 
-  Widget _buildOutputWaypoints(){
+  Widget _buildOutputWaypoints() {
     if (_currentOutput.Points.isNotEmpty) {
-      return Column(
-          children: <Widget>[
-            GCWTextDivider(
-              trailing: Row(
-                children: <Widget>[
-                  GCWIconButton(
-                    icon: Icons.my_location,
-                    size: IconButtonSize.SMALL,
-                    onPressed: () {
-                      _openInMap(_currentOutput.Points);
-                    },
-                  ),
-                  GCWIconButton(
-                    icon: Icons.save,
-                    size: IconButtonSize.SMALL,
-                    onPressed: () {
-                      _exportCoordinates(context, _currentOutput.Points);
-                    },
-                  ),
-                ],
+      return Column(children: <Widget>[
+        GCWTextDivider(
+          trailing: Row(
+            children: <Widget>[
+              GCWIconButton(
+                icon: Icons.my_location,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  _openInMap(_currentOutput.Points);
+                },
               ),
-              text: i18n(context, 'gcwizard_script_waypoints'),),
-            GCWOutput(
-              child: GCWOutputText(
-                style: gcwMonotypeTextStyle(),
-                text: _buildWayPointList(_currentOutput.Points),
-                isMonotype: true,
+              GCWIconButton(
+                icon: Icons.save,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  _exportCoordinates(context, _currentOutput.Points);
+                },
               ),
-            ),
-          ]
-      );
+            ],
+          ),
+          text: i18n(context, 'gcwizard_script_waypoints'),
+        ),
+        GCWOutput(
+          child: GCWOutputText(
+            style: gcwMonotypeTextStyle(),
+            text: _buildWayPointList(_currentOutput.Points),
+            isMonotype: true,
+          ),
+        ),
+      ]);
     } else {
       return Container();
     }
@@ -359,11 +352,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
   void _showInterpreterOutput(GCWizardScriptOutput output) {
     _currentOutput = output;
     _outputController.text = _currentOutput.STDOUT;
-    //var showInput = false;
+
+    var showInput = false;
+
     if (output.continueState != null) {
       switch (output.BreakType) {
         case GCWizardScriptBreakType.INPUT:
           _outputController.text = _currentOutput.STDOUT;
+          showInput = true;
           break;
         case GCWizardScriptBreakType.PRINT:
           _outputController.text = _currentOutput.STDOUT;
@@ -391,7 +387,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       setState(() {
         switch (output.BreakType) {
           case GCWizardScriptBreakType.INPUT:
-            _showDialogBox(context, output.continueState?.quotestr ?? '');
+            _showDialogBoxInput(context, output.continueState?.quotestr ?? '');
             break;
           case GCWizardScriptBreakType.PRINT:
             if (_currentOutput.continueState != null) {
@@ -447,7 +443,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return result.replaceAll('\n', '↩') + '\n' + '   ^';
   }
 
-  void _showDialogBox(BuildContext context, String text) {
+  void _showDialogBoxInput(BuildContext context, String text) {
     showGCWDialog(
         context,
         text,
@@ -464,63 +460,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   _currentInput = text;
                 },
               ),
-            ],
-          ),
-        ),
-        [
-          GCWDialogButton(
-            text: i18n(context, 'common_ok'),
-            onPressed: () {
-              if (_currentOutput.continueState != null) {
-                _currentOutput.continueState!.addInput(_currentInput);
-                _interpretGCWScriptAsync();
-              }
-            },
-          )
-        ],
-        cancelButton: false);
-  }
-
-  Container _buildUrl(int key) {
-    return Container(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: Row(children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: InkWell(
-                child: Text(GCW_SKRIPT_HELP_URLS[key]![0],
-                    style: const TextStyle(color: Colors.black, decoration: TextDecoration.underline),
-                    ),
-                onTap: () {
-                  launchUrl(Uri.parse(GCW_SKRIPT_HELP_URLS[key]![1]));
-                },
-              ))
-        ]));
-  }
-
-  void _showDialogBoxHelp(BuildContext context) {
-    showGCWDialog(
-        context,
-        i18n(context, 'gcwizard_script_help'),
-        SizedBox(
-          width: 300,
-          height: 500,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildUrl(GCW_SKRIPT_HELP_VARIABLE),
-              _buildUrl(GCW_SKRIPT_HELP_DATATYPES),
-              _buildUrl(GCW_SKRIPT_HELP_OPERATORS),
-              _buildUrl(GCW_SKRIPT_HELP_COMMANDS),
-              _buildUrl(GCW_SKRIPT_HELP_CONTROLS),
-              _buildUrl(GCW_SKRIPT_HELP_MATH),
-              _buildUrl(GCW_SKRIPT_HELP_STRINGS),
-              _buildUrl(GCW_SKRIPT_HELP_LISTS),
-              _buildUrl(GCW_SKRIPT_HELP_FILES),
-              _buildUrl(GCW_SKRIPT_HELP_DATE),
-              _buildUrl(GCW_SKRIPT_HELP_GRAPHIC),
-              _buildUrl(GCW_SKRIPT_HELP_WPTS),
-              _buildUrl(GCW_SKRIPT_HELP_COORD),
             ],
           ),
         ),
@@ -581,6 +520,14 @@ class GCWizardScriptState extends State<GCWizardScript> {
       showCoordinatesExportDialog(context, points, []);
     }
     return false;
+  }
+
+  void _openHelpWidget(BuildContext context, ) {
+    Navigator.push(
+        context,
+        MaterialPageRoute<GCWTool>(
+            builder: (context) => GCWTool(
+                tool: GCWizardScriptHelp(), toolName: i18n(context, 'gcwizard_script_title') + ' ' + i18n(context, 'gcwizard_script_help'), id: '')));
   }
 
   void _openInMap(

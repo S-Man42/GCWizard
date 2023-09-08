@@ -215,7 +215,7 @@ num _pow(Object? x, Object? y) {
   return pow(x as num, y as num);
 }
 
-int _qsum(Object? x) {
+int _csum(Object? x) {
   if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
@@ -227,14 +227,14 @@ int _qsum(Object? x) {
   return result;
 }
 
-int _iqsum(Object? x) {
+int _icsum(Object? x) {
   if (!_isANumber(x)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
   }
-  int result = _qsum(x);
+  int result = _csum(x);
   while (result.toString().length > 1) {
-    result = _qsum(result);
+    result = _csum(result);
   }
   return result;
 }
@@ -369,7 +369,7 @@ void _polar(Object? list, Object? x, Object? y, ){
     }
   }
 
-void _karthesian(Object? list, Object? angle, Object? radius, ){
+void _carthesian(Object? list, Object? angle, Object? radius, ){
   if (_isNotAList(list) || _isNotANumber(angle) || _isNotANumber(radius)) {
     _handleError(_INVALIDTYPECAST);
   } else {
