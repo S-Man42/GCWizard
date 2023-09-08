@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
@@ -22,6 +23,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -508,17 +510,24 @@ class _GCWCoordsState extends State<GCWCoords> {
   Row _buildTrailingButtons(IconButtonSize size) {
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-          child: GCWIconButton(
-            icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
-            size: size,
+        GCWIconButton(
+            icon: Icons.copy,
+            size: IconButtonSize.SMALL,
             onPressed: () {
-              _setUserLocationCoords();
-            },
-          ),
+              insertIntoGCWClipboard(context, formatCoordOutput(_currentCoords.toLatLng() ?? defaultCoordinate, _currentCoords.format, defaultEllipsoid));
+            }
         ),
-        GCWCoordsPasteButton(size: size, onPasted: _setCoords)
+        Container(width: DEFAULT_MARGIN),
+        GCWIconButton(
+          icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+          size: size,
+          onPressed: () {
+            _setUserLocationCoords();
+          },
+        ),
+        Container(width: DEFAULT_MARGIN),
+        GCWCoordsPasteButton(size: size, onPasted: _setCoords),
+
       ],
     );
   }
