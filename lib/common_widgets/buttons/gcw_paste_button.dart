@@ -78,6 +78,7 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
       ),
       GCWPopupMenuItem(
           child: GCWTextDivider(
+            style: gcwTextStyle().copyWith(color: themeColors().dialogText()),
             suppressTopSpace: true,
             trailing: GCWIconButton(
               icon: Icons.settings,

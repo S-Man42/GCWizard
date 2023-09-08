@@ -8,9 +8,9 @@ part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/net.ma
 LatLng? makaneyToLatLon(Makaney makaney) {
   if (makaney.text.isEmpty) return null;
 
-  var _text = makaney.text.toLowerCase().replaceAll(RegExp(r'[^\-+abo2zptscjkwmgnxqfd984ery3h5l76ui]'), '');
+  var _text = makaney.text.toLowerCase();
 
-  var regexCheck = RegExp(r'-?[a-z\d]+([+-])[a-z\d]+');
+  var regexCheck = RegExp(r'^-?[a-z\d]{1,4}([+\-])[a-z\d]{1,5}$');
   if (!regexCheck.hasMatch(_text)) {
     return null;
   }

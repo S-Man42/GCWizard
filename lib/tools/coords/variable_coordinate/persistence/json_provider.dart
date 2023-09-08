@@ -19,10 +19,6 @@ void refreshFormulas() {
 
 void _saveData() {
   var jsonData = formulas.map((formula) => jsonEncode(formula.toMap())).toList();
-  print("saveDAta");
-  print(jsonData);
-  print("saved");
-
   Prefs.setStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS, jsonData);
 }
 
@@ -36,8 +32,6 @@ int insertFormula(VariableCoordinateFormula formula) {
   formulas.add(formula);
 
   _saveData();
-
-  print(id);
 
   return id;
 }
