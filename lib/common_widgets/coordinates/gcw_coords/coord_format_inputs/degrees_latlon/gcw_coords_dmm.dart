@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsDMM extends StatefulWidget {
   final void Function(DMM) onChanged;
   final DMM coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates, this.initialize = true}) : super(key: key);
 
   @override
   _GCWCoordsDMMState createState() => _GCWCoordsDMMState();
@@ -34,8 +34,6 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   final FocusNode _latMilliMinutesFocusNode = FocusNode();
   final FocusNode _lonMinutesFocusNode = FocusNode();
   final FocusNode _lonMilliMinutesFocusNode = FocusNode();
-
-  bool _initialized = false;
 
   @override
   void initState() {
@@ -68,7 +66,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var dmm = widget.coordinates;
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
@@ -90,8 +88,6 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
       _LonDegreesController.text = _currentLonDegrees;
       _LonMinutesController.text = _currentLonMinutes;
       _LonMilliMinutesController.text = _currentLonMilliMinutes;
-
-      _initialized = true;
     }
 
     return Column(children: <Widget>[
