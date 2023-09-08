@@ -206,7 +206,7 @@ class FormulaParser {
     String currentString = '';
     for (int i = 0; i < formula.length; i++) {
       var char = formula[i];
-      if (["'", '"'].contains(char)) {
+      if ([_STRING_MARKER_APOSTROPHE, _STRING_MARKER_QUOTE].contains(char)) {
         if (stringChar == null) {
           stringChar = char;
           currentString = '';

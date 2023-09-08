@@ -344,13 +344,13 @@ void main() {
      {'formula' : 'A B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrr'},
      {'formula' : 'A "C" B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrggggr'},
      {'formula' : 'A C B', 'values': {'A': '"ABC"', 'B': '\'xyz\''}, 'expectedOutput' : 'rrRRr'},
-     {'formula' : '"A"C"B"', 'expectedOutput' : 'gggRggg'},
+     {'formula' : '"A"C"B"', 'expectedOutput' : 'gggGggg'},
      {'formula' : '"A"C"B"', 'values': {'C': ''}, 'expectedOutput' : 'gggRggg'},
      {'formula' : '"A"C"B"', 'values': {'C': '""'}, 'expectedOutput' : 'gggrggg'},
-     {'formula' : '"A"C"B"', 'values': {'C': '1'}, 'expectedOutput' : 'GGGRGGG'}, // mix of text and numbers
+     {'formula' : '"A"C"B"', 'values': {'C': '1'}, 'expectedOutput' : 'gggRggg'}, // mix of text and numbers
      {'formula' : 'bww("A"C"B")', 'values': {'C': '1'}, 'expectedOutput' : 'bbbbgggRgggb'},
      {'formula' : '"A"C"B"', 'values': {'C': '"1"'}, 'expectedOutput' : 'gggrggg'},
-     {'formula' : '"A"1"B"', 'expectedOutput' : 'GGGGGGG'}, // mix of text and numbers
+     {'formula' : '"A"1"B"', 'expectedOutput' : 'gggGggg'}, // mix of text and numbers
      {'formula' : '"A""B"', 'values': {'C': '"1"'}, 'expectedOutput' : 'gggggg'},
 
      {'formula' : 'len(ABC)', 'expectedOutput' : 'bbbbGGGb'},
@@ -385,8 +385,8 @@ void main() {
      {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : 'bbbbRrb'},
      {'formula' : 'len(AB)', 'values': {'A': '""', 'B': "C"}, 'expectedOutput' : 'bbbbrRb'},
      {'formula' : 'len("ABC") * bww(\'55\')', 'expectedOutput' : 'bbbbgggggbbbbbbbbggggb'},
-     {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGGGGGGGGGGGGGG'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
-     {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbgggggggggggggggGG'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
+     {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
+     {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
     ];
 
     for (var elem in _inputsToExpected) {
