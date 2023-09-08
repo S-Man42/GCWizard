@@ -32,6 +32,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final void Function(KeyValueBase)? onNewEntryChanged;
   final GCWKeyValueInput Function(Key? key)? onCreateInput;
   final GCWKeyValueItem Function(KeyValueBase, bool)? onCreateNewItem;
+  final Widget? trailing;
 
   final Widget? middleWidget;
 
@@ -57,7 +58,8 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.addOnDispose = false,
     this.onUpdateEntry,
     this.onCreateInput,
-    this.onCreateNewItem
+    this.onCreateNewItem,
+    this.trailing
   }) : super(key: key);
 
   @override
@@ -112,26 +114,34 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       return _buildEntry(entry, odd);
     }).toList();
 
+    var _trailingChildren = <Widget>[];
+    if (widget.trailing != null) {
+      _trailingChildren.add(widget.trailing!);
+    }
+    _trailingChildren.addAll(
+      <Widget>[
+        GCWPasteButton(
+          iconSize: IconButtonSize.SMALL,
+          onSelected: (text) => _InputState.currentState?.pasteClipboard(text),
+        ),
+        GCWIconButton(
+          size: IconButtonSize.SMALL,
+          icon: Icons.content_copy,
+          onPressed: () {
+            var copyText = _toJson();
+            if (copyText == null) return;
+            insertIntoGCWClipboard(context, copyText);
+          },
+        )
+      ]
+    );
+
     if (rows.isNotEmpty) {
       rows.insert(
         0,
         GCWTextDivider(
             text: widget.dividerText ?? '',
-            trailing: Row(children: <Widget>[
-              GCWPasteButton(
-                iconSize: IconButtonSize.SMALL,
-                onSelected: (text) => _InputState.currentState?.pasteClipboard(text),
-              ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                icon: Icons.content_copy,
-                onPressed: () {
-                  var copyText = _toJson();
-                  if (copyText == null) return;
-                  insertIntoGCWClipboard(context, copyText);
-                },
-              )
-            ])),
+            trailing: Row(children: _trailingChildren)),
       );
     }
 

@@ -404,7 +404,6 @@ class FormulaParser {
     }
 
     try {
-      var s = _contentFromString(_formula);
       return true;
     } catch (e) {
       return false;
