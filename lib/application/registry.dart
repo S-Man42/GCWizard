@@ -3946,6 +3946,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: const ['symbol_siemens', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: const ['symbol_signlanguage']),
+    GCWSymbolTableTool(symbolKey: 'sith', symbolSearchStrings: const ['symbol_sith']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
     ]),
