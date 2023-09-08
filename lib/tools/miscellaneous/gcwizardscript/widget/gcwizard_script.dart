@@ -310,6 +310,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
       ];
       memoryDump.addAll(_currentOutput.VariableDump);
       return GCWExpandableTextDivider(
+        suppressTopSpace: false,
         expanded: false,
         text: i18n(context, 'gcwizard_script_dump'),
         child: GCWColumnedMultilineOutput(

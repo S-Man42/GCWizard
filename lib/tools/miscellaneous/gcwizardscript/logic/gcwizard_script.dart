@@ -325,6 +325,7 @@ class _GCWizardSCriptInterpreter {
 
     if (!state.continueLoop) {
       getLabels(); // find the labels in the program
+      getDATA(); // find the DATA in the program
     }
     return scriptInterpreter(); // execute
   }
@@ -385,6 +386,24 @@ class _GCWizardSCriptInterpreter {
       dump.add([key, value.toString()]);
     });
     return dump;
+  }
+
+  void getDATA(){
+    state.script.split('\n').forEach((line) {
+      line = line.trim();
+      if (line.substring(0, line.length > 5 ? 5 : line.length).toUpperCase() == 'DATA ') {
+        line.substring(5).split(',').forEach((data){
+          data = data.trim().replaceAll('"', '');
+          if (int.tryParse(data) != null) {
+            state.listDATA.add(int.parse(data));
+          } else if (double.tryParse(data) != null) {
+            state.listDATA.add(double.parse(data));
+          } else {
+            state.listDATA.add(data);
+          }
+        });
+      }
+    });
   }
 
   void getLabels() {
@@ -603,14 +622,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandDATA() {
-    Object? result;
-    do {
-      result = evaluateExpression();
-      state.listDATA.add(result);
-
-      getToken(); // get next list item
-      if (state.keywordToken == EOL || state.token == EOP || state.token == '\r\n' || state.token == '\n') break;
-    } while (state.keywordToken != EOL && state.token != EOP);
+    findEOL();
   }
 
   void executeCommandREAD() {
