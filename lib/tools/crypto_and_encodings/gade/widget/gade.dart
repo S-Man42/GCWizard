@@ -100,7 +100,7 @@ class _GadeState extends State<Gade> {
                     }).toList()
           ),
         ),
-        GCWButton(text: 'Export to Formula Solver', onPressed: () {
+        GCWButton(text: i18n(context, 'gade_exporttoformulasolver'), onPressed: () {
           var formulaGroup = FormulaGroup('Gade Export');
 
           for (var entry in gade.entries) {

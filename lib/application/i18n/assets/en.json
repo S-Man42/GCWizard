@@ -2152,6 +2152,7 @@
   "gade_parselettervalues": "Parse Letters",
   "gade_parsed": "Parsed",
   "gade_sorted": "Sorted",
+  "gade_exporttoformulasolver": "Export to Formula Solver",
   "gameoflife_title": "Conway's Game of Life",
   "gameoflife_description": "Simulator for John Horton Conway's 'Game of Life'",
   "gameoflife_conway": "Conway's Original",

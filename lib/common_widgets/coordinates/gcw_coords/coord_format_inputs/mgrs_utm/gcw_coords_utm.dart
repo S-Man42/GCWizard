@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsUTM extends StatefulWidget {
   final void Function(UTMREF) onChanged;
   final BaseCoordinate coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();
@@ -21,7 +21,7 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  bool _initialized = false;
+
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var utm = widget.coordinates is UTMREF
           ? widget.coordinates as UTMREF
           : UTMREF.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
@@ -55,7 +55,6 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
 
-      _initialized = true;
     }
 
     return Column(children: <Widget>[
