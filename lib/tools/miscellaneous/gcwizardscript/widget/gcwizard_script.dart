@@ -107,7 +107,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               },
             ),
             GCWIconButton(
-              icon: Icons.download,
+              icon: Icons.file_open,
               size: IconButtonSize.SMALL,
               onPressed: () {
                 setState(() {
@@ -522,12 +522,16 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return false;
   }
 
-  void _openHelpWidget(BuildContext context, ) {
+  void _openHelpWidget(
+    BuildContext context,
+  ) {
     Navigator.push(
         context,
         MaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
-                tool: GCWizardScriptHelp(), toolName: i18n(context, 'gcwizard_script_title') + ' ' + i18n(context, 'gcwizard_script_help'), id: '')));
+                tool: GCWizardScriptHelp(),
+                toolName: i18n(context, 'gcwizard_script_title') + ' ' + i18n(context, 'gcwizard_script_help'),
+                id: '')));
   }
 
   void _openInMap(
