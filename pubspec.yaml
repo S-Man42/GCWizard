@@ -7,7 +7,7 @@ environment:
   sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
-  archive: ^3.3.7
+  archive: ^3.3.8
   audioplayers: ^5.0.0
   auto_size_text: ^3.0.0
   base32: ^2.1.3
@@ -17,7 +17,7 @@ dependencies:
   diacritic: ^0.1.1
   encrypt: ^5.0.0
   exif: ^3.1.4
-  file_picker: ^5.3.3
+  file_picker: ^5.5.0
   file_picker_writable: ^2.0.3
   flutter:
     sdk: flutter
@@ -39,7 +39,7 @@ dependencies:
   math_expressions: ^2.4.0
   package_info_plus: ^4.0.2
   path: ^1.8.3
-  path_provider: ^2.0.15
+  path_provider: ^2.1.1
   permission_handler: ^10.1.0
   photo_view: ^0.14.0
   pointycastle: ^3.7.3
@@ -50,13 +50,14 @@ dependencies:
     git:
       url: https://github.com/S-Man42/r_scan.git
   scrollable_positioned_list: ^0.3.7
-  shared_preferences: ^2.1.1
+  shared_preferences: ^2.2.1
+  stack: ^0.2.1
   touchable: ^1.0.2
   tuple: ^2.0.1
   universal_html: ^2.2.3
   unrar_file: ^1.1.0
   uuid: ^3.0.6
-  url_launcher: ^6.1.11
+  url_launcher: ^6.1.14
   utility: ^1.0.3
   week_of_year: ^2.0.0
   xml: ^6.3.0
