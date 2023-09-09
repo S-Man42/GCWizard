@@ -1038,3 +1038,18 @@ class CachedNetworkTileProvider extends TileProvider {
     return CachedNetworkImageProvider(getTileUrl(coords, layer));
   }
 }
+
+void openInMap(BuildContext context, List<GCWMapPoint> mapPoints, {List<GCWMapPolyline>? mapPolylines, bool freeMap = false}) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (context) => GCWTool(
+              tool: GCWMapView(
+                points: List<GCWMapPoint>.from(mapPoints),
+                polylines: mapPolylines == null ? null : List<GCWMapPolyline>.from(mapPolylines),
+                isEditable: freeMap,
+              ),
+              id: freeMap ? 'coords_openmap' : 'coords_map_view',
+              autoScroll: false,
+              suppressToolMargin: true)));
+}
