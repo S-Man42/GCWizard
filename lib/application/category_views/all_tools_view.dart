@@ -263,6 +263,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
+import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
@@ -272,6 +273,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'selector_lists/miscellaneous_selection.dart';
 
 
 class MainView extends GCWWebStatefulWidget {
@@ -581,6 +583,7 @@ void _initStaticToolList() {
       className(const Gade()),
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
+      className(const GCWizardScript()),
       className(const GCD()),
       className(const Geohashing()),
       className(const Gray()),
@@ -751,6 +754,7 @@ void _initStaticToolList() {
       className(const ImagesAndFilesSelection()),
       className(const ScienceAndTechnologySelection()),
       className(const SymbolTableSelection()),
+      className(const MiscellaneousSelection()),
     ].contains(className(element.tool));
   }).toList();
 
