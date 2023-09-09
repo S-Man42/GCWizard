@@ -55,7 +55,7 @@ class _WASDState extends State<WASD> {
   var _currentKeyboardControls = WASD_TYPE.CURSORS;
   int _keyboardLayout = 8;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'\S')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'\S')});
 
   //must be nullable unless finding a way to initialize growable Uint8Lists. All tested ways resulted in fixed-length lists
   Uint8List? _outDecodeData;

@@ -15,7 +15,7 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
   late TextEditingController _controller;
   var _currentCoord = '';
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(
+  final _maskInputFormatter = GCWMaskTextInputFormatter(
       mask: '**#################',
       filter: {"*": RegExp(r'[23456789CFGHJMPQRVcfghjmpqrv]'), "#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx+]')});
 

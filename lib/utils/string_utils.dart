@@ -180,3 +180,29 @@ String formatStringForDecimals({int integerPrecision = 2, int decimalPrecision =
 
   return formatString;
 }
+
+String trimCharactersLeft(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  var i = 0;
+
+  while (text.length > i && text.substring(i).startsWith(characters)) {
+    i += characters.length;
+  }
+
+  return text.substring(i);
+}
+
+String trimCharactersRight(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  while (text.length >= characters.length && text.endsWith(characters)) {
+    text = text.substring(0, text.length - characters.length);
+  }
+
+  return text;
+}
