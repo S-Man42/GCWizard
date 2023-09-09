@@ -29,15 +29,15 @@ class _OneTimePadState extends State<OneTimePad> {
   // (entered value in one input will be used for the other one)
   final _mask = '#' * 10000;
   final _filter = {"#": RegExp(r'[A-Za-z]')};
-  late WrapperForMaskTextInputFormatter _inputMaskInputFormatter;
-  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
+  late GCWMaskTextInputFormatter _inputMaskInputFormatter;
+  late GCWMaskTextInputFormatter _keyMaskInputFormatter;
 
   @override
   void initState() {
     super.initState();
 
-    _inputMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
-    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _inputMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _keyMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
 
     _inputController = TextEditingController(text: _currentInput);
     _keyController = TextEditingController(text: _currentKey);

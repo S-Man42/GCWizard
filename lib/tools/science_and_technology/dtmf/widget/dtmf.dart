@@ -31,7 +31,7 @@ class _DTMFState extends State<DTMF> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   final _maskInputFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
+      GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
 
   @override
   void initState() {

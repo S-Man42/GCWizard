@@ -409,6 +409,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
+import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/widget/vanity_multitap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
@@ -1220,6 +1221,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'tts',
+    ]),
+    GCWTool(tool: const UFI(), id: 'ufi', categories: const [
+      ToolCategory.CRYPTOGRAPHY, ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'ufi',
     ]),
     GCWTool(tool: const UnitConverter(), id: 'unitconverter', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY

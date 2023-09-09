@@ -58,9 +58,7 @@ void main() {
     {'countryCode' : 'SE', 'vatNumber': '987654321098', 'formulationNumber': 156920229, 'ufi' : '1KC1-87DH-0KFR-2WGE'},
     {'countryCode' : 'SI', 'vatNumber': '12345678', 'formulationNumber': 178956970, 'ufi' : 'U23S-WQK5-AMH7-V03N'},
     {'countryCode' : 'SK', 'vatNumber': '9987654321', 'formulationNumber': 252644556, 'ufi' : 'N0SW-W2AP-FGRV-F9RH'},
-    // ????????????????
-    // {'countryCode' : 'No VATIN ', 'vatNumber': '1828639338661', 'formulationNumber': 156920229, 'ufi' : 'NJC1-671A-UKF3-J0M8'},
-    // ????????????????
+    {'countryCode' : 'ufi_companykey', 'vatNumber': '1828639338661', 'formulationNumber': 156920229, 'ufi' : 'NJC1-671A-UKF3-J0M8'},
   ];
 
   group("UFI.encodeUFI:", () {
@@ -76,7 +74,7 @@ void main() {
     for (var elem in _testCases) {
       test('ufi: ${elem['ufi']}, countryCode: ${elem['countryCode']}, vatNumber: ${elem['vatNumber']}, formulationNumber: ${elem['formulationNumber']}', () {
         var _actual = decodeUFI(elem['ufi'] as String);
-        var _countryCode = elem['countryCode'] as String;
+        var _countryCode = elem['countryCode'] as String?;
         switch (_countryCode) {
           case 'EL': _countryCode = 'GR'; break;
           case 'XN': _countryCode = 'GB'; break;

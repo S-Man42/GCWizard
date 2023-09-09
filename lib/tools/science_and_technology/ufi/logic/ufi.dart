@@ -39,9 +39,10 @@ class UFI {
   });
 }
 
-const int UFI_MAX_FORMULATIONNUMBER = 268435455;
+const String UFI_COMPANYKEY = 'ufi_companykey';
 
-final List<_UFI_COUNTRY_DEFINITION> UFI_CODES = [
+final List<_UFI_COUNTRY_DEFINITION> UFI_DEFINITIONS = [
+  const _UFI_COUNTRY_DEFINITION(countryCode: UFI_COMPANYKEY, countryName: UFI_COMPANYKEY, ufiRegExp: r'[0-9]+', countryGroupCodeG: 0, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialEncode: _vEncodeCompany, decode: _vDecodeCompany),
   const _UFI_COUNTRY_DEFINITION(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialEncode: _vEncodeFR, decode: _vDecodeFR),
   const _UFI_COUNTRY_DEFINITION(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialEncode: _vEncodeGB, decode: _vDecodeGB),
   const _UFI_COUNTRY_DEFINITION(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: 0, specialEncode: _vEncodeGB, decode: _vDecodeGB),
@@ -118,13 +119,17 @@ String _alphaNumValueCharAt(int index) {
   return _ALPHANUM[index];
 }
 
-_UFI_COUNTRY_DEFINITION _ufiByCountryCode(String countryCode) {
-  return UFI_CODES.firstWhere((_UFI_COUNTRY_DEFINITION ufi) => ufi.countryCode == countryCode);
+_UFI_COUNTRY_DEFINITION _ufiDefinitionByCountryCode(String countryCode) {
+  return UFI_DEFINITIONS.firstWhere((_UFI_COUNTRY_DEFINITION ufi) => ufi.countryCode == countryCode);
 }
 
 String encodeUFI(UFI ufi) {
-  _UFI_COUNTRY_DEFINITION ufiDefinition = _ufiByCountryCode(ufi.countryCode);
-  var _vatNumber = ufi.vatNumber.toUpperCase();
+  _UFI_COUNTRY_DEFINITION ufiDefinition = _ufiDefinitionByCountryCode(ufi.countryCode);
+  String _vatNumber = ufi.vatNumber.toUpperCase().trim();
+
+  if (!RegExp('^' + ufiDefinition.ufiRegExp + '\$').hasMatch(_vatNumber)){
+    throw Exception('ufi_invalidvat');
+  }
 
   ////// Step 1 ///////////////////////////////////////////////////////////////
 
@@ -196,7 +201,7 @@ int _bByGroupCode(int groupCode) {
     throw Exception('ufi_notvalidgroupcode');
   }
 
-  return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == groupCode).numberOfBitsForCountryCodeB;
+  return UFI_DEFINITIONS.firstWhere((ufi) => ufi.countryGroupCodeG == groupCode).numberOfBitsForCountryCodeB;
 }
 
 UFI decodeUFI(String ufiCode) {
@@ -205,7 +210,7 @@ UFI decodeUFI(String ufiCode) {
 
   ufiCode = ufiCode.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
   if (!_validateUFI(ufiCode)) {
-    throw Exception('ufi_notvalid');
+    throw Exception('ufi_invalidufi');
   }
 
   var reOrganised = ufiCode.substring(1);
@@ -241,8 +246,9 @@ UFI decodeUFI(String ufiCode) {
   var n = ufiPayloadBinary.substring(ufiPayloadBinary.length - 1 - (41 - b), ufiPayloadBinary.length - 1);
   n = convertBase(n, 2, 10);
 
-  _UFI_COUNTRY_DEFINITION ufi = _ufiByGC(g, c);
   try {
+    _UFI_COUNTRY_DEFINITION ufi = _ufiByGC(g, c);
+
     var vatNumber = ufi.decode(n);
 
     var countryCode = ufi.countryCode;
@@ -254,15 +260,15 @@ UFI decodeUFI(String ufiCode) {
 
     return UFI(countryCode: countryCode, vatNumber: vatNumber, formulationNumber: formulationNumber);
   } catch(e) {
-    throw Exception('No valid input for ' + ufi.countryCode);
+    throw Exception('ufi_invalidufi');
   }
 }
 
 _UFI_COUNTRY_DEFINITION _ufiByGC(int g, int? c) {
   if (g < 3) {
-    return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == g);
+    return UFI_DEFINITIONS.firstWhere((ufi) => ufi.countryGroupCodeG == g);
   } else if (c != null) {
-    return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == g && ufi.countryCodeC == c);
+    return UFI_DEFINITIONS.firstWhere((ufi) => ufi.countryGroupCodeG == g && ufi.countryCodeC == c);
   } else {
     throw Exception();
   }

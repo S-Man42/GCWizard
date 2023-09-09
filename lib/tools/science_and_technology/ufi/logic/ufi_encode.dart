@@ -84,3 +84,7 @@ BigInt _vEncodeIS(String vatNumber) {
 
   return V;
 }
+
+BigInt _vEncodeCompany(String companyCode) {
+  return BigInt.parse(companyCode);
+}
