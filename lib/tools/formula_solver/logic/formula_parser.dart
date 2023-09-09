@@ -173,7 +173,7 @@ class FormulaParser {
   // different minus/hyphens/dashes
   static const Map<String, String> alternateOperators = {
     //'-': '—–˗−‒', // not required here, because normalized in common_utils.normalizeCharacters()
-    '/': ':÷',
+    '/': ':÷⁄',
     '*': '×•',
   };
 
