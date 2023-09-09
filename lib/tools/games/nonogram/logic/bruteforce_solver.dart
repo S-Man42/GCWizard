@@ -42,11 +42,11 @@ class bruteForce extends Solver {
       return _GapResult(zeros, ones);
     }
     for (var hintStart = 0; hintStart <= maxIndex; hintStart++) {
-      if (gap[hintStart + hint] == 1) {
+      if (hintStart + hint < gap.length && gap[hintStart + hint] == 1) {
         continue;
       }
-      var rest = _solveGap(gap.sublist(hintStart + hint + 1), hints.sublist(1));
-      if (rest != null) {
+      var rest = _solveGap(hintStart + hint + 1 < gap.length ? gap.sublist(hintStart + hint + 1) : [], hints.sublist(1));
+      if (rest == null) {
         continue;
       }
       for (var k = 0; k < gap.length; k++) {
@@ -55,8 +55,8 @@ class bruteForce extends Solver {
         } else if (k < hintStart + hint) {
           ones[k] = 1;
         } else {
-          zeros[k] = ((zeros[k] != 0) || (rest!.zeros[k - (hintStart + hint + 1)]) != 0 ? 1 : 0);
-          ones[k]  = ((ones[k] != 0) || (rest!.ones[k - (hintStart + hint + 1)]) != 0 ? 1 : 0);
+          zeros[k] = ((zeros[k] != 0) || (rest.zeros[k - (hintStart + hint + 1)]) != 0 ? 1 : 0);
+          ones[k]  = ((ones[k] != 0) || (rest.ones[k - (hintStart + hint + 1)]) != 0 ? 1 : 0);
         }
       }
     }
@@ -141,8 +141,8 @@ class bruteForce extends Solver {
   }
 
   @override
-  set slowSolveSpeed(bool _slowSpeed) {
-    super.slowSolveSpeed = true;
+  bool get slowSolveSpeed {
+    return true;
   }
 }
 

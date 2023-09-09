@@ -120,18 +120,21 @@ class Strategy {
     //print(rearrangedLines.length);
     for (var line in rearrangedLines) { //estimate
       if (skip || visited.current[line.index][solverIndex] != 0) {
-        print("skip Line Index: " + line.index.toString() + " " + counter.toString() + " " + visited.current[line.index][solverIndex].toString());
+        //print("skip Line Index: " + line.index.toString() + " " + counter.toString() + " " + visited.current[line.index][solverIndex].toString());
         continue;
       }
 
       visited.current[line.index][solverIndex] = 1;
       // First, trim unnecessary information from the line
-      var actual = line.line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
-
-      print("trimLine Index: " + line.index.toString() + " " + counter.toString() + " " + actual.toString());
       var trimresult = trimLine(line.line, hints[line.index]); //[trimmedLine, trimmedHints, trimInfo]
 
-  // if (debugMode) {
+      if (solverIndex == 1) {
+        var actual = line.line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
+        print(
+            "trimLine Index: " + line.index.toString() + " " + counter.toString() + " " + solverIndex.toString() + " " +
+                actual.toString() + " " + trimresult.trimmedLine.toString());
+      }
+      // if (debugMode) {
       // var start = Date.now();
       // }
       // solver run

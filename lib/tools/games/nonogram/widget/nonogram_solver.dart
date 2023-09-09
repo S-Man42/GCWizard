@@ -223,9 +223,11 @@ class NonogramSolverState extends State<NonogramSolver> {
       var row =  Row(
         children: <Widget>[
           Expanded(
+            flex: 2,
             child: GCWText(text: i18n(context, 'common_row') + ' ' + (i + 1).toString())
           ),
           Expanded(
+            flex: 3,
             child: GCWTextField(
               controller: controller,
               onChanged: (text) {
@@ -272,9 +274,11 @@ class NonogramSolverState extends State<NonogramSolver> {
       var row =  Row(
           children: <Widget>[
             Expanded(
-                child: GCWText(text: i18n(context, 'common_column') + ' ' + (i + 1).toString())
+                flex: 2,
+                child: GCWText(text: i18n(context, 'common_column') + ' ' + (i + 1).toString()),
             ),
             Expanded(
+                flex: 3,
                 child: GCWTextField(
                     controller: controller,
                     onChanged: (text) {
@@ -288,7 +292,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                         }
                       });
                     }
-                )
+                ),
             )
           ]
       );

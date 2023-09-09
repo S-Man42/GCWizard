@@ -177,19 +177,7 @@ class NonogramBoardPainter extends CustomPainter {
                                 rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
             _touchCanvas.drawRect(rect, paintFull);
           } else if (value == 0 && (board.state == PuzzleState.Finished || board.state == PuzzleState.Solved)) {
-            // rect = Rect.fromLTWH(rect.left, rect.top,
-            //     rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
-                _paintText(canvas, rect, '?', fontsize * 1.2, paintFull.color);
-
-          // } else if (value == -1) {
-          //   rect = Rect.fromLTWH(rect.left + fieldBorderOff, rect.top + fieldBorderOff,
-          //                       rect.width - 2 * fieldBorderOff, rect.height - 2 * fieldBorderOff);
-          //   _touchCanvas.drawLine(
-          //       Offset(rect.left, rect.top),
-          //       Offset(rect.right, rect.bottom), paintGray);
-          //   _touchCanvas.drawLine(
-          //       Offset(rect.right, rect.top),
-          //       Offset(rect.left, rect.bottom), paintGray);
+            _paintText(canvas, rect, '?', fontsize * 3.2, paintFull.color);
           }
         }
       }
