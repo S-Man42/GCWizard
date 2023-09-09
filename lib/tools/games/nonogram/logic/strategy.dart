@@ -1,9 +1,5 @@
 //ported from https://github.com/ThomasR/nonogram-solver
 
-// const util = require("./util");
-// const guessAndConquer = require('./guessAndConquer');
-//
-// const debugMode = require('commander').debug;
 import 'dart:math';
 
 import 'package:collection/collection.dart';
@@ -13,10 +9,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/guess_and_conquer.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
-import 'package:utility/utility.dart';
 
-
-//import 'guessAndConquer.dart';
 
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
@@ -43,7 +36,7 @@ class Strategy {
     try {
       Puzzle.generateRows(puzzle);
 
-      var solvers = [pushSolver(), bruteForce()];
+      var solvers = [pushSolver()]; //, bruteForce()
       // keep tracks of visited lines
       _visited = VisitedG(
         rows: List<Uint8List>.generate(puzzle.height, (index) => Uint8List(solvers.length)),
@@ -91,10 +84,10 @@ class Strategy {
       // console.log('Runs (on puzzle) per solver: ${JSON.stringify(statistics)}');
       // }
     } on FormatException {
-      puzzle.isSolved;
-      return puzzle;//printErrorMessage(context, e.message);
+       // puzzle.isSolved;
+      // return puzzle;//printErrorMessage(context, e.message);
     }
-    puzzle.isSolved;
+    puzzle.state = puzzle.isSolved ? PuzzleState.Solved : PuzzleState.Finished;
     return puzzle;
   }
 

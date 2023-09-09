@@ -89,6 +89,8 @@ class NonogramSolverState extends State<NonogramSolver> {
         Container(height: 10),
         GCWPainterContainer(
           scale: _scale,
+          suppressTopSpace: true,
+          suppressBottomSpace: true,
           onChanged: (value) {_scale = value;},
           child: NonogramBoard(
             board: _currentBoard,

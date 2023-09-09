@@ -107,7 +107,7 @@ class NonogramBoardPainter extends CustomPainter {
         for (int i = 0; i < board.rowHints[y].length; i++) {
           rect = Rect.fromLTWH(offset + i * widthInner, yInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
-          _paintText(canvas, rect, board.rowHints[y][i].toString(), fontsize);
+          _paintText(canvas, rect, board.rowHints[y][i].toString(), fontsize, themeColors().mainFont());
         }
         if ((y % _boldLineIntvervall) == 0) {
           // double line
@@ -140,7 +140,7 @@ class NonogramBoardPainter extends CustomPainter {
         for (int i = 0; i < board.columnHints[x].length; i++) {
           rect = Rect.fromLTWH(xInner, offset + i * heightInner, widthInner, heightInner);
           _touchCanvas.drawRect(rect, paintGray);
-          _paintText(canvas, rect, board.columnHints[x][i].toString(), fontsize);
+          _paintText(canvas, rect, board.columnHints[x][i].toString(), fontsize, themeColors().mainFont());
         }
 
         if ((x % _boldLineIntvervall) == 0) {
@@ -176,15 +176,20 @@ class NonogramBoardPainter extends CustomPainter {
             rect = Rect.fromLTWH(rect.left + fieldBorderOn, rect.top + fieldBorderOn,
                                 rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
             _touchCanvas.drawRect(rect, paintFull);
-          } else if (value == -1) {
-            rect = Rect.fromLTWH(rect.left + fieldBorderOff, rect.top + fieldBorderOff,
-                                rect.width - 2 * fieldBorderOff, rect.height - 2 * fieldBorderOff);
-            _touchCanvas.drawLine(
-                Offset(rect.left, rect.top),
-                Offset(rect.right, rect.bottom), paintGray);
-            _touchCanvas.drawLine(
-                Offset(rect.right, rect.top),
-                Offset(rect.left, rect.bottom), paintGray);
+          } else if (value == 0 && (board.state == PuzzleState.Finished || board.state == PuzzleState.Solved)) {
+            // rect = Rect.fromLTWH(rect.left, rect.top,
+            //     rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
+                _paintText(canvas, rect, '?', fontsize * 1.2, paintFull.color);
+
+          // } else if (value == -1) {
+          //   rect = Rect.fromLTWH(rect.left + fieldBorderOff, rect.top + fieldBorderOff,
+          //                       rect.width - 2 * fieldBorderOff, rect.height - 2 * fieldBorderOff);
+          //   _touchCanvas.drawLine(
+          //       Offset(rect.left, rect.top),
+          //       Offset(rect.right, rect.bottom), paintGray);
+          //   _touchCanvas.drawLine(
+          //       Offset(rect.right, rect.top),
+          //       Offset(rect.left, rect.bottom), paintGray);
           }
         }
       }
@@ -195,8 +200,8 @@ class NonogramBoardPainter extends CustomPainter {
     return (value / _boldLineIntvervall).floor();
   }
 
-  void _paintText(Canvas canvas, Rect rect, String text, double fontsize) {
-    var textPainter = _buildTextPainter(text, themeColors().mainFont(), fontsize);
+  void _paintText(Canvas canvas, Rect rect, String text, double fontsize, Color color) {
+    var textPainter = _buildTextPainter(text, color, fontsize);
     textPainter.paint(canvas, Offset(rect.topCenter.dx - textPainter.width * 0.5,
                                      rect.centerLeft.dy - textPainter.height * 0.5));
 }

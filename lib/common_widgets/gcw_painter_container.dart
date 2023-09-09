@@ -10,11 +10,15 @@ class GCWPainterContainer extends StatefulWidget {
   final void Function(double)? onChanged;
   final Widget child;
   final double scale;
+  final bool? suppressTopSpace;
+  final bool? suppressBottomSpace;
 
   const GCWPainterContainer(
       {Key? key,
         required this.child,
         this.scale = 1,
+        this.suppressTopSpace,
+        this.suppressBottomSpace,
         this.onChanged})
       : super(key: key);
 
@@ -38,6 +42,8 @@ class _GCWPainterContainerState extends State<GCWPainterContainer> {
       children: [
         GCWTextDivider(
           text: '',
+          suppressTopSpace: widget.suppressTopSpace,
+          suppressBottomSpace: widget.suppressBottomSpace,
           trailing: Row(children: <Widget>[
             GCWIconButton(
               size: IconButtonSize.SMALL,

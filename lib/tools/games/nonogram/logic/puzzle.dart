@@ -104,7 +104,7 @@ class Puzzle {
     for (var row in rows) {
       if (row.any((item) => item == 0)) return false;
     }
-    state = PuzzleState.Finished;
+    //state = PuzzleState.Finished;
     return true;
   }
 
@@ -115,7 +115,7 @@ class Puzzle {
     if (!ok) return false;
     columns.forEachIndexed((i, column) => ok = ok && _isOk(column, columnHints[i]));
 
-    if (ok) state = PuzzleState.Solved;
+    //if (ok) state = PuzzleState.Solved;
     return ok;
   }
 
@@ -158,6 +158,7 @@ class Puzzle {
 
   void removeCalculated() {
     rows = generateRows(this);
+    state = PuzzleState.Ok;
   }
 
   /// nonogram.org format (with 'rows' for row hints and 'columns' for column hints)
