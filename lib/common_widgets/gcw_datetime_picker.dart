@@ -38,10 +38,10 @@ class TimeZone {
   final int offset;
   final String name;
 
-  TimeZone(this.offset, this.name);
+  const TimeZone(this.offset, this.name);
 }
 
-final TIMEZONES = [
+const TIMEZONES = [
   TimeZone(720, 'IDLW'),
   TimeZone(-660, ''),
   TimeZone(-600, 'HAST'),

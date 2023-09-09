@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsLambert extends StatefulWidget {
   final void Function(Lambert) onChanged;
   final Lambert coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsLambert({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+  const _GCWCoordsLambert({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
       : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
   var _currentSubtype = defaultLambertType;
 
-  bool _initialized = false;
+
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
-    } else if (!widget.isDefault && !_initialized) {
+    } else if (widget.initialize) {
       var lambert = widget.coordinates;
       _currentEasting.value = lambert.easting;
       _currentNorthing.value = lambert.northing;
@@ -53,7 +53,6 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
       _eastingController.text = _currentEasting.value.toString();
       _northingController.text = _currentNorthing.value.toString();
 
-      _initialized = true;
     }
 
     return Column(children: <Widget>[

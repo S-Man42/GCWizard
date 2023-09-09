@@ -18,4 +18,4 @@ final HUMIDITY = Humidity(
   isReference: true,
 );
 
-final List<Unit> humidity = [HUMIDITY];
+final List<Humidity> humidity = [HUMIDITY];

@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsGeoHex extends StatefulWidget {
   final void Function(GeoHex?) onChanged;
   final GeoHex coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();
@@ -15,7 +15,7 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
   late TextEditingController _controller;
   var _currentCoord = '';
 
-  bool _initialized = false;
+
 
   @override
   void initState() {
@@ -31,13 +31,12 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var geohHex = widget.coordinates;
       _currentCoord = geohHex.text;
 
       _controller.text = _currentCoord;
 
-      _initialized = true;
     }
 
     return Column(children: <Widget>[

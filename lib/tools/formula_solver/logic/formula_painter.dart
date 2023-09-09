@@ -2,9 +2,20 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class FormulaPainter {
-  static final _operators = {'+', '-', '*', '/', '^', '%'};
-  static final _bracket = {'[': ']', '(': ')', '{': '}'};
-  static const numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const String _Text ='t'; //text
+  static const String _Space = 'S'; //space
+  static const String Number = 'g'; // or character in word function or ' "
+  static const String NumberError = 'G'; //or character in word function error
+  static const String Variable = 'r'; //variable
+  static const String VariableError = 'R'; //variable error
+  static const String OFRB = 'b'; //operator, function, reference, bracket
+  static const String OFRBError = 'B'; //operator, function, reference, bracket error
+  static const _operators = {'+', '-', '*', '/', '^', '%'};
+  static const _bracket = {'[': ']', '(': ')', '{': '}'};
+  static const _numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const _STRING_MARKER_APOSTROPHE = "'";
+  static const _STRING_MARKER_QUOTE = '"';
+
   static final _allCharacters = allCharacters();
   Map<String, String> _values = {};
   var _variables = <String>[];
@@ -12,6 +23,7 @@ class FormulaPainter {
   var _constants = <String>[];
   late int _formulaId;
   late bool _operatorBevor;
+  var _stringBevor = false;
   String? _parentFunctionName;
   late String formula;
 
@@ -30,7 +42,7 @@ class FormulaPainter {
   }
 
   String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
-    var result = _buildResultString('t', formula.length);
+    var result = _buildResultString(_Text, formula.length);
     if (!coloredFormulas) return result;
 
     var subResult = '';
@@ -104,8 +116,9 @@ class FormulaPainter {
   String _paintSubFormula(String formula, int literalOffset, {bool onlyFormulaReference = false}) {
     var offset = 0;
     if (formula.isEmpty) return '';
-    var result = _buildResultString('t', formula.length);
+    var result = _buildResultString(_Text, formula.length);
     var isOperator = false;
+    var isString = false;
     String subResult;
     List<String>? _parserResult;
 
@@ -184,7 +197,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isNumberWithPoint(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false);
+        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName), false);
         offset = _calcOffset(_parserResult);
       }
     }
@@ -192,7 +205,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isNumber(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false);
+        result = _coloredNumber(result, _parserResult, _wordFunction(_parentFunctionName), false);
         offset = _calcOffset(_parserResult);
       }
     }
@@ -212,6 +225,23 @@ class FormulaPainter {
         result = _coloredOperator(result, _parserResult, true);
         offset = _calcOffset(_parserResult);
         isOperator = true;
+      }
+    }
+    // string
+    if (offset == 0) {
+      _parserResult = _isString(formula);
+      if (_parserResult != null) {
+        result = _coloredNumber(result, _parserResult, false, true);
+        offset = _calcOffset(_parserResult);
+        isString = true;
+      }
+    }
+    // invalid string
+    if (offset == 0) {
+      _parserResult = _isInvalidString(formula);
+      if (_parserResult != null) {
+        result = _coloredNumber(result, _parserResult, true, false);
+        offset = _calcOffset(_parserResult);
       }
     }
     // faculty
@@ -240,23 +270,26 @@ class FormulaPainter {
         result = _coloredSpaces(result, _parserResult);
         offset = _calcOffset(_parserResult);
         isOperator = _operatorBevor;
+        isString = _stringBevor;
       }
     }
 
     // undefnied ?
     if (offset == 0) {
-      subResult = 'R';
-      if (_bracket.containsKey(formula[0])) subResult = 'B';
-      if (_bracket.containsValue(formula[0])) subResult = 'B';
-      if (formula[0] == ',') subResult = 'B';
+      subResult = VariableError;
+      if (_bracket.containsKey(formula[0])) subResult = OFRBError;
+      if (_bracket.containsValue(formula[0])) subResult = OFRBError;
+      if (formula[0] == ',') subResult = OFRBError;
       result = _replaceRange(result, offset, subResult.length, subResult);
       offset = subResult.length;
       isOperator = _operatorBevor;
+      isString = _stringBevor;
     }
 
     // analyse rest recursive
     if (offset < formula.length) {
       _operatorBevor = isOperator;
+      _stringBevor = isString;
       subResult = formula.substring(offset);
       subResult = _paintSubFormula(subResult, literalOffset + offset, onlyFormulaReference: onlyFormulaReference);
       result = _replaceRange(result, offset, null, subResult);
@@ -280,7 +313,7 @@ class FormulaPainter {
   }
 
   String _coloredSpaces(String result, List<String> parts) {
-    return _replaceRange(result, 0, parts[0].length, 'S');
+    return _replaceRange(result, 0, parts[0].length, _Space);
   }
 
   List<String>? _isFormulaReference(String formula) {
@@ -291,13 +324,13 @@ class FormulaPainter {
   }
 
   String _coloredFormulaReference(String result, List<String> parts) {
-    result = _replaceRange(result, 0, parts[0].length, 'b');
+    result = _replaceRange(result, 0, parts[0].length, OFRB);
     if ((int.tryParse(parts[1]) ?? 9999999 )< _formulaId) {
-      result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'b');
+      result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
     } else {
-      result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'B');
+      result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
     }
-    result = _replaceRange(result, _calcOffset(parts, count: 2), parts[2].length, 'b');
+    result = _replaceRange(result, _calcOffset(parts, count: 2), parts[2].length, OFRB);
 
     return result;
   }
@@ -322,9 +355,9 @@ class FormulaPainter {
   }
 
   String _coloredFunction(String result, List<String> parts, bool hasError) {
-    result = _replaceRange(result, 0, parts[0].length, hasError ? 'B' : 'b');
-    result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, hasError ? 'B' : 'b');
-    result = _replaceRange(result, _calcOffset(parts, count: 3), parts[3].length, hasError ? 'B' : 'b');
+    result = _replaceRange(result, 0, parts[0].length, hasError ? OFRBError : OFRB);
+    result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, hasError ? OFRBError : OFRB);
+    result = _replaceRange(result, _calcOffset(parts, count: 3), parts[3].length, hasError ? OFRBError : OFRB);
 
     return result;
   }
@@ -357,7 +390,6 @@ class FormulaPainter {
       case 'CS':
       case 'CSI':
         break;
-      case 'BWW':
       case 'AV':
       case 'LEN':
         maxCommaCount = null;
@@ -365,7 +397,7 @@ class FormulaPainter {
       default:
         maxCommaCount = minCommaCount;
     }
-    minCommaCount = minCommaCount * 2 + 1; // ${number commas} * 2 + 1
+    minCommaCount = minCommaCount * 2 + 1;
     maxCommaCount = maxCommaCount == null ? null : maxCommaCount * 2 + 1;
     if (arguments.length < minCommaCount) return null;
 
@@ -375,11 +407,10 @@ class FormulaPainter {
         var subresult = _paintSubFormula(arguments[i], 0);
         result.add(subresult.toUpperCase());
       } else if (arguments[i] == ',') {
-        result.add(_wordFunction(functionName) ? 'g' : 'b');
+        result.add(_wordFunction(functionName) ? Number : OFRB);
       } else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
-        if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll('R', 'g');
         result.add(subresult);
       }
     }
@@ -417,7 +448,7 @@ class FormulaPainter {
         result = _replaceRange(result, _calcOffset(parts, count: i), null, parts[i]);
       }
     } else {
-      result = _buildResultString('R', result.length);
+      result = _buildResultString(VariableError, result.length);
     }
 
     return result;
@@ -448,18 +479,30 @@ class FormulaPainter {
     return [result[1], result[2], result[3]];
   }
 
+  List<String>? _isString(String formula) {
+    RegExp regex = RegExp('^(['+ _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
+    var match = regex.firstMatch(formula);
+
+    return (match == null) ? null : [match.group(0)!];
+  }
+
+  List<String>? _isInvalidString(String formula) {
+    if (formula.startsWith(_STRING_MARKER_APOSTROPHE) || formula.startsWith(_STRING_MARKER_QUOTE)) return [formula];
+    return null;
+  }
+
   String _coloredLiteral(String result, List<String> parts, bool hasError) {
-    result = _replaceRange(result, 0, parts[0].length, hasError ? 'B' : 'b');
-    result = _replaceRange(result, _calcOffset(parts, count: 2), parts[2].length, hasError ? 'B' : 'b');
-    if (hasError) result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'B');
+    result = _replaceRange(result, 0, parts[0].length, hasError ? OFRBError : OFRB);
+    result = _replaceRange(result, _calcOffset(parts, count: 2), parts[2].length, hasError ? OFRBError : OFRB);
+    if (hasError) result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
 
     return result;
   }
 
   String _coloredContent(String result, List<String?> parts, bool hasError) {
-    result = _replaceRange(result, (parts[0] ?? '').length, (parts[1] ?? '').length, hasError ? 'B' : 'b');
-    result = _replaceRange(result, _calcOffset(parts, count: 3), (parts[3] ?? '').length, hasError ? 'B' : 'b');
-    if (hasError) result = _replaceRange(result, _calcOffset(parts, count: 2), (parts[2] ?? '').length, 'B');
+    result = _replaceRange(result, (parts[0] ?? '').length, (parts[1] ?? '').length, hasError ? OFRBError : OFRB);
+    result = _replaceRange(result, _calcOffset(parts, count: 3), (parts[3] ?? '').length, hasError ? OFRBError : OFRB);
+    if (hasError) result = _replaceRange(result, _calcOffset(parts, count: 2), (parts[2] ?? '').length, OFRBError);
 
     return result;
   }
@@ -483,7 +526,7 @@ class FormulaPainter {
   }
 
   String _coloredConstant(String result, List<String?> parts, bool hasError) {
-    return _replaceRange(result, 0, parts[0]?.length, hasError ? 'G' : 'g');
+    return _replaceRange(result, 0, parts[0]?.length, hasError ? NumberError : Number);
   }
 
   List<String>? _isVariable(String formula) {
@@ -497,7 +540,20 @@ class FormulaPainter {
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
-    return variableValue == null || variableValue.isEmpty;
+    var result = variableValue == null || variableValue.isEmpty;
+    if (result) return result;
+    var stringResult = _isString(variableValue);
+    return stringResult != null && stringResult.first.length <= 2;
+  }
+
+  bool _isStringVariable(String formula) {
+    var match = _variableMatch(formula);
+    if (match == null) return true;
+
+    var variableValue = _variableValue(match.group(1)!);
+    if (variableValue == null) return false;
+    var result = _isString(variableValue);
+    return (result != null && result[0].length == variableValue.length);
   }
 
   String? _variableValue(String variable) {
@@ -512,10 +568,6 @@ class FormulaPainter {
     return regex.firstMatch(formula);
   }
 
-  bool _emptyValues() {
-    return (_values.isEmpty);
-  }
-
   List<String>? _isInvalidVariable(String formula) {
     RegExp regex = RegExp(r'^(\S)');
     var match = regex.firstMatch(formula);
@@ -528,9 +580,10 @@ class FormulaPainter {
   }
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
-    var char = hasError ? 'R' : 'r';
-    if (hasError && _wordFunction(_parentFunctionName)) {
+    var char = hasError ? VariableError : Variable;
+    if (_wordFunction(_parentFunctionName) || _stringBevor) {
       char = _coloredWordFunctionVariable(parts[0]);
+      _operatorBevor = true;
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
     }
@@ -539,19 +592,20 @@ class FormulaPainter {
   }
 
   String _coloredWordFunctionVariable(String variable) {
-    return (_isVariable(variable) == null || !_isEmptyVariable(variable)) ? 'g' : 'R';
+    if (_isVariable(variable) == null) return NumberError;
+    return (_isStringVariable(variable)) ? Variable : VariableError;
   }
 
   String _coloredNumberFunctionVariable(String variable) {
     var variableValue = _variableValue(variable);
-    if ((variableValue == null) || variableValue.isEmpty) return 'R';
-    if (_isNumberWithPoint(variableValue) == null) return 'R';
+    if ((variableValue == null) || variableValue.isEmpty) return VariableError;
+    if (_isNumberWithPoint(variableValue) == null) return VariableError;
 
-    return 'r';
+    return Variable;
   }
 
   List<String>? _isNumberWithPoint(String formula) {
-    RegExp regex = RegExp('^$numberRegEx');
+    RegExp regex = RegExp('^$_numberRegEx');
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
@@ -566,9 +620,10 @@ class FormulaPainter {
     return (match == null) ? null : [match.group(0)!];
   }
 
-  String _coloredNumber(String result, List<String> parts, bool hasError) {
-    hasError |= !_operatorBevor;
-    return _replaceRange(result, 0, parts[0].length, hasError ? 'G' : 'g');
+  String _coloredNumber(String result, List<String> parts, bool hasError, bool stringValue) {
+    hasError |= (!_operatorBevor && !_wordFunction(_parentFunctionName) && !stringValue); // ||
+        //(stringValue && _parentFunctionName == null && !_isString(formula)); //
+    return _replaceRange(result, 0, parts[0].length, hasError ? NumberError : Number);
   }
 
   List<String>? _isOperator(String formula, int offset) {
@@ -578,9 +633,7 @@ class FormulaPainter {
     if ((match != null) && (offset == 0) && (match.group(0)![0] != '-')) return null;
     return (match == null)
         ? null
-        : [
-            _combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])
-          ];
+        : [_combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])];
   }
 
   List<String>? _isInvalidOperator(String formula) {
@@ -591,7 +644,7 @@ class FormulaPainter {
   }
 
   String _coloredOperator(String result, List<String> parts, bool hasError) {
-    return _replaceRange(result, 0, parts[0].length, hasError ? 'B' : 'b');
+    return _replaceRange(result, 0, parts[0].length, hasError ? OFRBError : OFRB);
   }
 
   String _replaceRange(String string, int start, int? length, String replacement) {
@@ -690,11 +743,11 @@ class FormulaPainter {
 
   String _replaceSpaces(String result) {
     for (var i = 1; i < result.length; i++) {
-      if (result[i] == 'S') result = _replaceRange(result, i, 1, result[i - 1]);
+      if (result[i] == _Space) result = _replaceRange(result, i, 1, result[i - 1]);
     }
 
     for (var i = result.length - 2; i > 0; i--) {
-      if (result[i] == 'S') result = _replaceRange(result, i, 1, result[i + 1]);
+      if (result[i] == _Space) result = _replaceRange(result, i, 1, result[i + 1]);
     }
 
     return result;
