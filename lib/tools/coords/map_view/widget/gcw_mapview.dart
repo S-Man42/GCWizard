@@ -1034,8 +1034,8 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
 
 class CachedNetworkTileProvider extends TileProvider {
   @override
-  ImageProvider getImage(TileCoordinates coords, TileLayer layer) {
-    return CachedNetworkImageProvider(getTileUrl(coords, layer));
+  ImageProvider getImage(TileCoordinates coordinates, TileLayer options) {
+    return CachedNetworkImageProvider(getTileUrl(coordinates, options));
   }
 }
 

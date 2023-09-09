@@ -79,6 +79,7 @@ class Formula extends FormulaBase {
 
   Formula(this.formula) : super('');
 
+  @override
   Map<String, Object?> toMap() {
     var map = {
       'id': id,
