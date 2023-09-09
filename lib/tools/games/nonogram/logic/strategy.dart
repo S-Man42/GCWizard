@@ -13,6 +13,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/guess_and_conquer.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
+import 'package:utility/utility.dart';
 
 
 //import 'guessAndConquer.dart';
@@ -65,6 +66,7 @@ class Strategy {
           _solveOnce(puzzle, solver, i); //, solutionSequence
           //print(puzzle.state);
           progress = !listEquals(snapshot, puzzle.snapshot);
+          print("progress " + progress.toString());
           // if (debugMode) {
           //   statistics[i]++;
           // }
@@ -112,6 +114,7 @@ class Strategy {
     // run on rows
 
     skip = run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
+    print(counter.toString() + " skip: " + skip.toString());
     if (skip) {
       return;
     }
@@ -121,12 +124,13 @@ class Strategy {
     skip =  run(lines, puzzle.columnHints, false, solver, solverIndex, skip, skipEarly);
     puzzle.columns = lines;
 
-    print(counter.toString() + listEquals(puzzle.snapshot, snapshots[counter]).toString() );
+    //print(counter.toString() + listEquals(puzzle.snapshot, snapshots[counter]).toString() );
     // print('rows');
     // print(puzzle.rows);
     // print('columns');
     // print(puzzle.columns);
     counter++;
+    print(counter.toString() + " skip: " + skip.toString());
   }
   var counter = 0;
 
@@ -139,6 +143,7 @@ class Strategy {
     //print(rearrangedLines.length);
     for (var line in rearrangedLines) { //estimate
       if (skip || visited.current[line.index][solverIndex] != 0) {
+        print("skip Line Index: " + line.index.toString() + " " + counter.toString() + " " + visited.current[line.index][solverIndex].toString());
         continue;
       }
       // if (debugMode) {
@@ -149,6 +154,9 @@ class Strategy {
       // }
       visited.current[line.index][solverIndex] = 1;
       // First, trim unnecessary information from the line
+      var actual = line.line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
+
+      print("trimLine Index: " + line.index.toString() + " " + counter.toString() + " " + actual.toString());
       var trimresult = trimLine(line.line, hints[line.index]); //[trimmedLine, trimmedHints, trimInfo]
 
   // if (debugMode) {
@@ -156,7 +164,7 @@ class Strategy {
       // }
       // solver run
        //print('index ' + line.index.toString() + ' trimmedLine ' + trimresult.trimmedLine.toString() + ' trimmedHints ' + trimresult.trimmedHints.toString());
-      print('index ' + line.index.toString() + ' '  + solverIndex.toString());
+      //print('index ' + line.index.toString() + ' '  + solverIndex.toString());
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // if (debugMode) {
@@ -210,7 +218,8 @@ class Strategy {
     // remove already solved lines
     var unsolvedLines = lines.mapIndexed((index, line) {
       //var zeros = line.where((element) => element == 0).length; //.reduce((count, x) => count + (x == 0 ? 1 : 0));
-      var zeros = line.reduce((count, x) => count + (x == 0 ? 1 : 0));
+      //var zeros = line.reduce((count, x) => count + (x == 0 ? 1 : 0));
+      var zeros = line.fold(0, (count, x)  => count + (x == 0 ? 1 : 0));
       if (zeros == 0) {
         return null;
       }

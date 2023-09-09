@@ -63,7 +63,7 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
   }
 
   return ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
-      TrimInfo( line.sublist(0, minIndex),  line.sublist(maxIndex + 1)));
+      TrimInfo( line.sublist(0, minIndex), line.sublist(maxIndex + 1)));
 }
 
 List<int> restoreLine(List<int> line, TrimInfo trimInfo) {
