@@ -41,7 +41,7 @@ class _GCWizardScriptHelpState extends State<GCWizardScriptHelp> {
     var content = Column(
       children: <Widget>[
         _buildUrl(GCW_SKRIPT_HELP_EXAMPLES),
-        GCWDivider(),
+        const GCWDivider(),
         _buildUrl(GCW_SKRIPT_HELP_VARIABLE),
         _buildUrl(GCW_SKRIPT_HELP_DATATYPES),
         _buildUrl(GCW_SKRIPT_HELP_OPERATORS),

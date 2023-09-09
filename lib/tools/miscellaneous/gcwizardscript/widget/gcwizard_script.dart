@@ -194,48 +194,52 @@ class GCWizardScriptState extends State<GCWizardScript> {
   }
 
   Widget _buildOutputText() {
-    if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
-        _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
-      return GCWDefaultOutput(
-          trailing: Row(
-            children: <Widget>[
-              GCWIconButton(
-                icon: Icons.clear,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _currentOutput = GCWizardScriptOutput.empty();
-                    _outputController.text = '';
-                  });
-                },
-              ),
-              GCWIconButton(
-                icon: Icons.copy,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  insertIntoGCWClipboard(context, _outputController.text);
-                },
-              ),
-              GCWIconButton(
-                icon: Icons.save,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  _exportFile(
-                      context, Uint8List.fromList(_outputController.text.codeUnits), GCWizardScriptFileType.OUTPUT);
-                },
-              ),
-            ],
-          ),
-          child: GCWCodeTextField(
-            lineNumbers: false,
-            controller: _outputController,
-            readOnly: true,
-            onChanged: (text) {
-              setState(() {});
-            },
-          ));
-    } else {
+    if (_outputController.text == '') {
       return Container();
+    } else {
+      if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXT ||
+          _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
+        return GCWDefaultOutput(
+            trailing: Row(
+              children: <Widget>[
+                GCWIconButton(
+                  icon: Icons.clear,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _currentOutput = GCWizardScriptOutput.empty();
+                      _outputController.text = '';
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.copy,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    insertIntoGCWClipboard(context, _outputController.text);
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    _exportFile(
+                        context, Uint8List.fromList(_outputController.text.codeUnits), GCWizardScriptFileType.OUTPUT);
+                  },
+                ),
+              ],
+            ),
+            child: GCWCodeTextField(
+              lineNumbers: false,
+              controller: _outputController,
+              readOnly: true,
+              onChanged: (text) {
+                setState(() {});
+              },
+            ));
+      } else {
+        return Container();
+      }
     }
   }
 
@@ -353,13 +357,10 @@ class GCWizardScriptState extends State<GCWizardScript> {
     _currentOutput = output;
     _outputController.text = _currentOutput.STDOUT;
 
-    var showInput = false;
-
     if (output.continueState != null) {
       switch (output.BreakType) {
         case GCWizardScriptBreakType.INPUT:
           _outputController.text = _currentOutput.STDOUT;
-          showInput = true;
           break;
         case GCWizardScriptBreakType.PRINT:
           _outputController.text = _currentOutput.STDOUT;
@@ -529,7 +530,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
         context,
         MaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
-                tool: GCWizardScriptHelp(),
+                tool: const GCWizardScriptHelp(),
                 toolName: i18n(context, 'gcwizard_script_title') + ' ' + i18n(context, 'gcwizard_script_help'),
                 id: '')));
   }
