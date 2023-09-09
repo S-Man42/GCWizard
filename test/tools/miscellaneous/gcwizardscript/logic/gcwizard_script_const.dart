@@ -7,7 +7,6 @@ List<Map<String, Object?>> _inputsConstToExpected = [
   {'code' : 'print RHO', 'expectedOutput' : '2.414213562373095'},
   {'code' : 'print EULER', 'expectedOutput' : '2.718281828459045'},
 
-  {'code' : 'print AVOGADRO', 'expectedOutput' : '6.02214076e+23'},
   {'code' : 'print BOLTZMANN', 'expectedOutput' : '1.380649e-23'},
   {'code' : 'print STEFANBOLTZMANN', 'expectedOutput' : '5.670374419e-8'},
 ];

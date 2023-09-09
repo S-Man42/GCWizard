@@ -1,11 +1,11 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-const GraphicMode = 'Mode';
-const GraphicWidthT = 'widthT';
-const GraphicHeightT = 'heightT';
-const GraphicWidthG = 'widthG';
-const GraphicHeightG = 'heightG';
-const GraphicColors = 'colors';
+const _GCWizardScriptGraphicMode = 'Mode';
+const _GCWizardScriptGraphicWidthT = 'widthT';
+const _GCWizardScriptGraphicHeightT = 'heightT';
+const _GCWizardScriptGraphicWidthG = 'widthG';
+const _GCWizardScriptGraphicHeightG = 'heightG';
+const _GCWizardScriptGraphicColors = 'colors';
 
 Random _random = Random();
 

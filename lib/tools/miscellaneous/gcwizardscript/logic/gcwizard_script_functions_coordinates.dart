@@ -209,11 +209,12 @@ _GCWList _convertTo(Object target) {
     case _COORD_GAUSS_KRUEGER_GK3: //= 903;
     case _COORD_GAUSS_KRUEGER_GK4: //= 904;
     case _COORD_GAUSS_KRUEGER_GK5: //= 905;
-      GaussKrueger result = latLonToGaussKrueger(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      GaussKrueger result =
+          latLonToGaussKrueger(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
-    break;
+      break;
 
     case _COORD_LAMBERT2008: //= 1008;
     case _COORD_LAMBERT93: //= 1093;
@@ -228,7 +229,8 @@ _GCWList _convertTo(Object target) {
     case _COORD_LAMBERT93_CC48: //= 1048;
     case _COORD_LAMBERT93_CC49: //= 1049;
     case _COORD_LAMBERT93_CC50: //= 1050;
-      Lambert result = latLonToLambert(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      Lambert result =
+          latLonToLambert(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
@@ -284,7 +286,7 @@ _GCWList _convertTo(Object target) {
     case _COORD_SLIPPYMAP_28: //= 1428;
     case _COORD_SLIPPYMAP_29: //= 1429;
     case _COORD_SLIPPYMAP_30: //= 1430;
-    SlippyMap result = latLonToSlippyMap(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!);
+      SlippyMap result = latLonToSlippyMap(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!);
       _listAdd(targetData, result.x.toString() + ' ' + result.y.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
@@ -326,7 +328,7 @@ _GCWList _convertTo(Object target) {
       _listAdd(targetData, result.a);
       _listAdd(targetData, result.b);
       _listAdd(targetData, result.c);
-     break;
+      break;
 
     case _COORD_REVERSE_WIG_DAY1976: //= 22;
       ReverseWherigoDay1976 result = latLonToReverseWIGDay1976(coord);
@@ -362,14 +364,16 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if ((parameter_1 as String).toUpperCase() == 'N') {
         parameter_1 = 1;
-      } else {parameter_1 = -1;
+      } else {
+        parameter_1 = -1;
       }
       parameter_2 = _listGet(parameter, 1)!;
       parameter_3 = _listGet(parameter, 2)!;
       parameter_4 = _listGet(parameter, 3)!;
       if ((parameter_4 as String).toUpperCase() == 'E') {
         parameter_4 = 1;
-      } else {parameter_4 = -1;
+      } else {
+        parameter_4 = -1;
       }
       parameter_5 = _listGet(parameter, 4)!;
       parameter_6 = _listGet(parameter, 5)!;
@@ -379,8 +383,10 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotAString(parameter_4)) _handleError(_INVALIDTYPECAST);
       if (_isNotAInt(parameter_5)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_6)) _handleError(_INVALIDTYPECAST);
-      DMM result = DMM(DMMLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as double),
-        DMMLongitude(parameter_4 as int, parameter_5 as int, parameter_6 as double),);
+      DMM result = DMM(
+        DMMLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as double),
+        DMMLongitude(parameter_4 as int, parameter_5 as int, parameter_6 as double),
+      );
       coord = dmmToLatLon(result);
       break;
 
@@ -389,7 +395,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if ((parameter_1 as String).toUpperCase() == 'N') {
         parameter_1 = 1;
-      } else {parameter_1 = -1;
+      } else {
+        parameter_1 = -1;
       }
       parameter_2 = _listGet(parameter, 1)!;
       parameter_3 = _listGet(parameter, 2)!;
@@ -397,7 +404,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_5 = _listGet(parameter, 4)!;
       if ((parameter_5 as String).toUpperCase() == 'E') {
         parameter_5 = 1;
-      } else {parameter_5 = -1;
+      } else {
+        parameter_5 = -1;
       }
       parameter_6 = _listGet(parameter, 5)!;
       parameter_7 = _listGet(parameter, 6)!;
@@ -408,8 +416,10 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotAString(parameter_4)) _handleError(_INVALIDTYPECAST);
       if (_isNotAInt(parameter_5)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_6)) _handleError(_INVALIDTYPECAST);
-      DMS result = DMS(DMSLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as int, parameter_7 as double),
-        DMSLongitude(parameter_5 as int, parameter_6 as int, parameter_7 as int, parameter_8 as double),);
+      DMS result = DMS(
+        DMSLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as int, parameter_7 as double),
+        DMSLongitude(parameter_5 as int, parameter_6 as int, parameter_7 as int, parameter_8 as double),
+      );
       coord = dmsToLatLon(result);
       break;
 
@@ -423,7 +433,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotAString(parameter_2)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_3)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_4)) _handleError(_INVALIDTYPECAST);
-      UTMREF result = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as double,
+      UTMREF result = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2.toString()), parameter_3 as double,
           parameter_4 as double);
       coord = UTMREFtoLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
@@ -440,8 +450,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotAString(parameter_3)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_4)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_5)) _handleError(_INVALIDTYPECAST);
-      MGRS result = MGRS(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as String, parameter_4 as double,
-          parameter_5 as double);
+      MGRS result = MGRS(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as String,
+          parameter_4 as double, parameter_5 as double);
       coord = mgrsToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
@@ -453,7 +463,11 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_3)) _handleError(_INVALIDTYPECAST);
-      XYZ result = XYZ(parameter_1 as double, parameter_2 as double, parameter_3 as double,);
+      XYZ result = XYZ(
+        parameter_1 as double,
+        parameter_2 as double,
+        parameter_3 as double,
+      );
       coord = xyzToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
@@ -464,9 +478,12 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-      SwissGrid result = SwissGrid(parameter_1 as double, parameter_2 as double, );
+      SwissGrid result = SwissGrid(
+        parameter_1 as double,
+        parameter_2 as double,
+      );
       coord = swissGridToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
-    break;
+      break;
 
     case _COORD_DUTCH_GRID: //= 8;
       if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
@@ -474,7 +491,10 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-      DutchGrid result = DutchGrid(parameter_1 as double, parameter_2 as double, );
+      DutchGrid result = DutchGrid(
+        parameter_1 as double,
+        parameter_2 as double,
+      );
       coord = dutchGridToLatLon(result);
       break;
 
@@ -488,9 +508,13 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-      GaussKrueger result = GaussKrueger(_GCW_SCRIPT_COORD_CONVERTER[source]!, parameter_1 as double, parameter_2 as double, );
+      GaussKrueger result = GaussKrueger(
+        _GCW_SCRIPT_COORD_CONVERTER[source]!,
+        parameter_1 as double,
+        parameter_2 as double,
+      );
       coord = gaussKruegerToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
-    break;
+      break;
 
     case _COORD_LAMBERT93: //= 1093;
     case _COORD_LAMBERT2008: //= 1008;
@@ -510,7 +534,11 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-      Lambert result = Lambert(_GCW_SCRIPT_COORD_CONVERTER[source]!, parameter_1 as double, parameter_2 as double, );
+      Lambert result = Lambert(
+        _GCW_SCRIPT_COORD_CONVERTER[source]!,
+        parameter_1 as double,
+        parameter_2 as double,
+      );
       coord = lambertToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
@@ -528,7 +556,10 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-      Mercator result = Mercator(parameter_1 as double, parameter_2 as double, );
+      Mercator result = Mercator(
+        parameter_1 as double,
+        parameter_2 as double,
+      );
       coord = mercatorToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
@@ -538,7 +569,10 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_2 = _listGet(parameter, 1)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isAList(parameter_2)) _handleError(_INVALIDTYPECAST);
-      NaturalAreaCode result = NaturalAreaCode(parameter_1 as String, parameter_2 as String, );
+      NaturalAreaCode result = NaturalAreaCode(
+        parameter_1 as String,
+        parameter_2 as String,
+      );
       coord = naturalAreaCodeToLatLon(result);
       break;
 
@@ -573,13 +607,13 @@ void _convertFrom(Object source, _GCWList parameter) {
     case _COORD_SLIPPYMAP_28: //= 1428;
     case _COORD_SLIPPYMAP_29: //= 1429;
     case _COORD_SLIPPYMAP_30: //= 1430;
-    if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
-    parameter_1 = _listGet(parameter, 0)!;
-    parameter_2 = _listGet(parameter, 1)!;
-    if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
-    if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
-    SlippyMap result = SlippyMap(parameter_1 as double, parameter_2 as double, _GCW_SCRIPT_COORD_CONVERTER[source]!);
-    coord = slippyMapToLatLon(result);
+      if (_listLength(parameter) != 2) _handleError(_INVALIDNUMBEROFPARAMETER);
+      parameter_1 = _listGet(parameter, 0)!;
+      parameter_2 = _listGet(parameter, 1)!;
+      if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
+      if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
+      SlippyMap result = SlippyMap(parameter_1 as double, parameter_2 as double, _GCW_SCRIPT_COORD_CONVERTER[source]!);
+      coord = slippyMapToLatLon(result);
       break;
 
     case _COORD_GEOHASH: //= 15;
@@ -638,7 +672,8 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotAInt(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotAInt(parameter_2)) _handleError(_INVALIDTYPECAST);
       if (_isNotAInt(parameter_3)) _handleError(_INVALIDTYPECAST);
-      ReverseWherigoWaldmeister result = ReverseWherigoWaldmeister(parameter_1 as int, parameter_2 as int, parameter_3 as int);
+      ReverseWherigoWaldmeister result =
+          ReverseWherigoWaldmeister(parameter_1 as int, parameter_2 as int, parameter_3 as int);
       coord = reverseWIGWaldmeisterToLatLon(result);
       break;
 
@@ -690,15 +725,19 @@ void _projection(Object lat, Object lon, Object distance, Object bearing) {
     if (_isAInt(distance)) distance = (distance as int).toDouble();
     distance = distance as double;
     distanceBearing(LatLng(lat, lon), LatLng(lat, lon), getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
-    LatLng _currentValues = projection(
-        LatLng(lat, lon), bearing, distance, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+    LatLng _currentValues = projection(LatLng(lat, lon), bearing, distance, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
     _state.GCWizardScript_LAT = _currentValues.latitude;
     _state.GCWizardScript_LON = _currentValues.longitude;
   }
 }
 
 void _centerThreePoints(Object lat1, Object lon1, Object lat2, Object lon2, Object lat3, Object lon3) {
-  if (_isNotANumber(lat1) || _isNotANumber(lon1) || _isNotANumber(lat2) || _isNotANumber(lon2) || _isNotANumber(lat3) || _isNotANumber(lon3)) {
+  if (_isNotANumber(lat1) ||
+      _isNotANumber(lon1) ||
+      _isNotANumber(lat2) ||
+      _isNotANumber(lon2) ||
+      _isNotANumber(lat3) ||
+      _isNotANumber(lon3)) {
     _handleError(_INVALIDTYPECAST);
     return;
   }

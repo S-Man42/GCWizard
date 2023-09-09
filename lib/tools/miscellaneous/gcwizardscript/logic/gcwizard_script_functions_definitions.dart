@@ -340,17 +340,21 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ISLIST': _GCWizardScriptClassFunctionDefinition(_isList, 1),
 };
 
-List<String> scriptFunctions() {
+List<String> GCWizardScriptFunctions() {
   return _FUNCTIONS.keys.toList();
 }
 
-List<String> scriptCommands() {
+List<String> GCWizardScriptConsts() {
+  return _GCWIZARDSCRIPT_SCIENCE_CONST.keys.toList();
+}
+
+List<String> GCWizardScriptCommands() {
   return _GCWizardSCriptInterpreter.registeredKeywordsCommands.keys.toList();
 }
 
-List<String> scriptControls() {
+List<String> GCWizardScriptControls() {
   return _GCWizardSCriptInterpreter.registeredKeywordsControls.keys.toList();
 }
 
-List<String> scriptParantheses = ['(', ')'];
+List<String> GCWizardScriptParantheses = ['(', ')'];
 

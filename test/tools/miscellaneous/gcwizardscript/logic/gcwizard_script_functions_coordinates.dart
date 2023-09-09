@@ -9,7 +9,10 @@ SETLON(13.456789)
 PRINT CONVERTTO(11)''';
 
 String _convertFrom_3 = '''DIM C
-LISTADD(C, "JO62RI42TX51MB52")
+LISTADD(C, 33)
+LISTADD(C, "U")
+LISTADD(C, 394878.89897400007)
+LISTADD(C, 5800607.559253929)
 CONVERTFROM(3, C)
 PRINT GETLAT()
 PRINT GETLON()''';
@@ -67,9 +70,9 @@ List<Map<String, Object?>> _inputsCoordinatesToExpected = [
   {'code' : 'print DMSTODEC(54, 1, 3)', 'expectedOutput' : '54.0175'},
   {'code' : 'print DMSTODEC(54, 1, 3.0)', 'expectedOutput' : '54.0175'},
 
-  {'code' : '_convertTo_3', 'expectedOutput' : ''}, // TODO '[33U 394878.89897400007 5800607.559253929, 33, U, 394878.89897400007, 5800607.559253929]'}
-  {'code' : '_convertTo_11', 'expectedOutput' : ''}, // TODO '[JO62RI42TX51MB52]'}
+  {'code' : _convertTo_3, 'expectedOutput' : '[33U 394878.89897400007 5800607.559253929, 33, U, 394878.89897400007, 5800607.559253929]'},
+  {'code' : _convertTo_11, 'expectedOutput' : '[JO62RI42TX51MB52]'},
 
-  {'code' : '_convertFrom_3', 'expectedOutput' : ''}, // TODO 52.34567795138889\n13.456788917824042
-  {'code' : '_convertFrom_11', 'expectedOutput' : ''}, // TODO 52.34567795138889\n13.456788917824042
+  {'code' : _convertFrom_3, 'expectedOutput' : '52.34567800325836\n13.456788999833897'},
+  {'code' : _convertFrom_11, 'expectedOutput' : '52.34567795138889\n13.456788917824042'},
 ];

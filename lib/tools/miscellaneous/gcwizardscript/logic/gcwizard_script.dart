@@ -42,6 +42,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/complex_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dart';
+import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/logic/mathematical_constants.dart';
+import 'package:gc_wizard/tools/science_and_technology/physical_constants/logic/physical_constants.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
@@ -119,17 +121,16 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // TODO
 // Enhance Performance
 // async PRINT
-// FIELD, GET, PUT
 // http://www.mopsos.net/Script.html => Dreiecke
 
 ScriptState? state;
 
-Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<GCWizardScriptOutput> GCWizardScriptInterpretScriptAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! InterpreterJobData) {
     return Future.value(GCWizardScriptOutput.empty());
   }
   var interpreter = jobData!.parameters as InterpreterJobData;
-  var output = await interpretScript(
+  var output = await GCWizardScriptInterpretScript(
       interpreter.jobDataScript, interpreter.jobDataInput, interpreter.jobDataCoords, interpreter.continueState,
       sendAsyncPort: jobData.sendAsyncPort);
 
@@ -137,7 +138,8 @@ Future<GCWizardScriptOutput> interpretGCWScriptAsync(GCWAsyncExecuterParameters?
   return output;
 }
 
-Future<GCWizardScriptOutput> interpretScript(String script, String input, LatLng coords, ScriptState? continueState,
+Future<GCWizardScriptOutput> GCWizardScriptInterpretScript(
+    String script, String input, LatLng coords, ScriptState? continueState,
     {SendPort? sendAsyncPort}) async {
   if (script == '') {
     return GCWizardScriptOutput.empty();
@@ -269,26 +271,26 @@ class _GCWizardSCriptInterpreter {
 
   static const Map<int, Map<String, Object?>> SCREEN_MODES = {
     0: {
-      GraphicMode: GCWizardSCript_SCREENMODE.TEXT,
-      GraphicWidthT: 80,
-      GraphicHeightT: 25,
-      GraphicColors: 256,
+      _GCWizardScriptGraphicMode: GCWizardSCript_SCREENMODE.TEXT,
+      _GCWizardScriptGraphicWidthT: 80,
+      _GCWizardScriptGraphicHeightT: 25,
+      _GCWizardScriptGraphicColors: 256,
     },
     1: {
-      GraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
-      GraphicWidthT: 80,
-      GraphicHeightT: 25,
-      GraphicWidthG: 1920,
-      GraphicHeightG: 1080,
-      GraphicColors: 256,
+      _GCWizardScriptGraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
+      _GCWizardScriptGraphicWidthT: 80,
+      _GCWizardScriptGraphicHeightT: 25,
+      _GCWizardScriptGraphicWidthG: 1920,
+      _GCWizardScriptGraphicHeightG: 1080,
+      _GCWizardScriptGraphicColors: 256,
     },
     2: {
-      GraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
-      GraphicWidthT: 80,
-      GraphicHeightT: 25,
-      GraphicWidthG: 1920,
-      GraphicHeightG: 1080,
-      GraphicColors: 256,
+      _GCWizardScriptGraphicMode: GCWizardSCript_SCREENMODE.GRAPHIC,
+      _GCWizardScriptGraphicWidthT: 80,
+      _GCWizardScriptGraphicHeightT: 25,
+      _GCWizardScriptGraphicWidthG: 1920,
+      _GCWizardScriptGraphicHeightG: 1080,
+      _GCWizardScriptGraphicColors: 256,
     },
   };
 
@@ -388,11 +390,11 @@ class _GCWizardSCriptInterpreter {
     return dump;
   }
 
-  void getDATA(){
+  void getDATA() {
     state.script.split('\n').forEach((line) {
       line = line.trim();
       if (line.substring(0, line.length > 5 ? 5 : line.length).toUpperCase() == 'DATA ') {
-        line.substring(5).split(',').forEach((data){
+        line.substring(5).split(',').forEach((data) {
           data = data.trim().replaceAll('"', '');
           if (int.tryParse(data) != null) {
             state.listDATA.add(int.parse(data));
@@ -575,13 +577,13 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandVERSION() {
-    state.STDOUT = state.STDOUT
-        + '********** GC Wizard  Skript **********\n'
-        + '*      Version as of  2023.09.09      *\n'
-        + '*  based on the work of Herb Schildt  *\n'
-        + '*  The Art of C, 1991, © McGraw Hill  *\n'
-        + '* Enhancement for GC Wizard permitted *\n'
-        + '***************************************\n';
+    state.STDOUT = state.STDOUT +
+        '********** GC Wizard  Skript **********\n' +
+        '*      Version as of  2023.09.09      *\n' +
+        '*  based on the work of Herb Schildt  *\n' +
+        '*  The Art of C, 1991, © McGraw Hill  *\n' +
+        '* Enhancement for GC Wizard permitted *\n' +
+        '***************************************\n';
   }
 
   void executeCommandNEWFILE() {
@@ -827,7 +829,9 @@ class _GCWizardSCriptInterpreter {
     }
   }
 
-  void executeCommandTHEN() {}
+  void executeCommandTHEN() {
+    findEOL();
+  }
 
   void findCorrespondingELSE() {
     List<int> ifList = [];
@@ -1021,7 +1025,7 @@ class _GCWizardSCriptInterpreter {
     if (_isANumber(valueTarget)) {
       stckvar.targetValue = valueTarget as num;
     } else {
-      _handleError(_INVALIDTYPECAST);
+      _handleError(_INVALIDTARGETVALUE);
       return;
     }
 
@@ -1356,22 +1360,22 @@ class _GCWizardSCriptInterpreter {
             state.graficOutput.graphics = [];
             state.graficOutput.graphic = true;
             state.graficOutput.GCWizardSCriptScreenWidth =
-                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![_GCWizardScriptGraphicWidthG] as int;
             state.graficOutput.GCWizardSCriptScreenHeight =
-                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![_GCWizardScriptGraphicHeightG] as int;
             state.graficOutput.GCWizardSCriptScreenColors =
-                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![_GCWizardScriptGraphicColors] as int;
             break;
           case 2:
             state.graficOutput.GCWizardScriptScreenMode = GCWizardSCript_SCREENMODE.TEXTGRAPHIC;
             state.graficOutput.graphics = [];
             state.graficOutput.graphic = true;
             state.graficOutput.GCWizardSCriptScreenWidth =
-                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicWidthG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![_GCWizardScriptGraphicWidthG] as int;
             state.graficOutput.GCWizardSCriptScreenHeight =
-                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicHeightG] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![_GCWizardScriptGraphicHeightG] as int;
             state.graficOutput.GCWizardSCriptScreenColors =
-                SCREEN_MODES[double.parse(state.token).toInt()]![GraphicColors] as int;
+                SCREEN_MODES[double.parse(state.token).toInt()]![_GCWizardScriptGraphicColors] as int;
             break;
           default:
             _handleError(_INVALIDSCREEN);
@@ -1707,11 +1711,11 @@ class _GCWizardSCriptInterpreter {
                     return;
                   } else {
                     if (_FUNCTIONS[command]!.functionReturn) {
-                      result = _FUNCTIONS[command]!.functionName(
-                          partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+                      result = _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3,
+                          partialResult4, partialResult5, partialResult6);
                     } else {
-                      _FUNCTIONS[command]!.functionName(
-                          partialResult1, partialResult2, partialResult3, partialResult4, partialResult5, partialResult6);
+                      _FUNCTIONS[command]!.functionName(partialResult1, partialResult2, partialResult3, partialResult4,
+                          partialResult5, partialResult6);
                     }
                     getToken();
                   }
@@ -2098,8 +2102,8 @@ class _GCWizardSCriptInterpreter {
   }
 
   Object? getValueOfVariable(String variableName) {
-    if (SCIENCE_CONST[variableName] != null) {
-      return SCIENCE_CONST[variableName];
+    if (_GCWIZARDSCRIPT_SCIENCE_CONST[variableName.toUpperCase()] != null) {
+      return _GCWIZARDSCRIPT_SCIENCE_CONST[variableName.toUpperCase()];
     } else {
       if (isNotAVariable(variableName)) {
         state.variables[variableName] = 0.0;

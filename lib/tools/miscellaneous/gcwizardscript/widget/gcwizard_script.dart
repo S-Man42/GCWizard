@@ -332,9 +332,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 '\n' +
                 i18n(context, _currentOutput.ErrorMessage) +
                 '\n' +
-                i18n(context, 'gcwizard_script_error_position') +
-                ' ' +
-                _currentOutput.ErrorPosition.toString() +
+                i18n(context, 'gcwizard_script_error_line') + ' ' + _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
+                '\n' +
+                i18n(context, 'gcwizard_script_error_position') + ' ' + _currentOutput.ErrorPosition.toString() +
                 '\n' +
                 '=> ' +
                 _printFaultyProgram(_currentProgram, _currentOutput.ErrorPosition),
@@ -420,7 +420,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
             height: 220,
             width: 150,
             child: GCWAsyncExecuter<GCWizardScriptOutput>(
-              isolatedFunction: interpretGCWScriptAsync,
+              isolatedFunction: GCWizardScriptInterpretScriptAsync,
               parameter: _buildInterpreterJobData,
               onReady: (data) => _showInterpreterOutput(data),
               isOverlay: true,
@@ -431,8 +431,26 @@ class GCWizardScriptState extends State<GCWizardScript> {
     );
   }
 
+  String _printFaultyLine(String program, int position) {
+    String line = '';
+    int pc = position >= program.length ? program.length - 1 : position;
+    if (program.isNotEmpty) {
+      while (pc > 0 && program[pc] != '\n') {
+        line = program[pc] + line;
+        pc--;
+      }
+      pc = position + 1;
+      while (pc < program.length && program[pc] != '\n') {
+        line = line + program[pc];
+        pc++;
+      }
+    }
+    return line;
+  }
+
   String _printFaultyProgram(String program, int position) {
     String result = '';
+
     if (program.isNotEmpty) {
       if (position > 0) {
         result = (position < program.length) ? program[position - 1] : program[program.length - 1];
@@ -675,19 +693,23 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Map<String, TextStyle> _buildHiglightMap() {
     var highlightMap = <String, TextStyle>{};
 
-    scriptFunctions().forEach((entry) {
+    GCWizardScriptFunctions().forEach((entry) {
       highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.purple)});
       highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.purple)});
     });
-    scriptCommands().forEach((entry) {
+    GCWizardScriptConsts().forEach((entry) {
+      highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.purpleAccent)});
+      highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.purpleAccent)});
+    });
+    GCWizardScriptCommands().forEach((entry) {
       highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.blue)});
       highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.blue)});
     });
-    scriptControls().forEach((entry) {
+    GCWizardScriptControls().forEach((entry) {
       highlightMap.addAll({entry.toLowerCase(): const TextStyle(color: Colors.red)});
       highlightMap.addAll({entry.toUpperCase(): const TextStyle(color: Colors.red)});
     });
-    for (var entry in scriptParantheses) {
+    for (var entry in GCWizardScriptParantheses) {
       highlightMap.addAll({entry: const TextStyle(color: Colors.orange)});
     }
     return highlightMap;

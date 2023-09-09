@@ -119,7 +119,7 @@ class ScriptState {
   late String script;
   late String inputData;
   GCWizardScriptBreakType BreakType = GCWizardScriptBreakType.NULL;
-  Map<String, Object?> variables = SCIENCE_CONST;
+  Map<String, Object?> variables = _GCWIZARDSCRIPT_SCIENCE_CONST;
   List<String> get graphics {return graficOutput.graphics;}
   GraphicState graficOutput = GraphicState();
   List<GCWMapPoint> waypoints = [];

@@ -48,6 +48,7 @@ const _RUNTIMEERROREOFEXCEEDED = 43;
 const _IOERRORFILENOTOPEN = 44;
 const _FILEMISSING = 45;
 const _FILESAVING = 46;
+const _INVALIDTARGETVALUE = 47;
 
 Map<int, String> _errorMessages = {
   _SYNTAXERROR : "gcwizard_script_syntax_error",
@@ -96,6 +97,7 @@ Map<int, String> _errorMessages = {
   _IOERRORFILENOTOPEN: "gcwizard_script_io_error_on_openfile_statement",
   _FILEMISSING : "gcwizard_script_io_error_file_missing",
   _FILESAVING : "gcwizard_script_io_error_file_saving",
+  _INVALIDTARGETVALUE : "gcwizard_script_for_loop_invalid_target_value",
 };
 
 void _resetErrors() {

@@ -219,7 +219,13 @@ Object? _listGet(_GCWList? list, Object? index) {
     if (_isNotANumber(index)) {
       _handleError(_INVALIDTYPECAST);
     } else {
-      if (_isADouble(index) && ((index as double) - (index).truncate() == 0)) {
+      if (_isAInt(index)) {
+        if (index as int >= list.length()) {
+          _handleError(_RANGEERROR);
+        } else {
+          return list.getIndex(index);
+        }
+      } else if (_isADouble(index) && ((index as double) - (index).truncate() == 0)) {
         index = index.toInt();
         if (index as int >= list.length()) {
           _handleError(_RANGEERROR);

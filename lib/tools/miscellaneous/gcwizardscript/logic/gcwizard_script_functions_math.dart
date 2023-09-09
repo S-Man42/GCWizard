@@ -1,13 +1,26 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-Map<String, double> SCIENCE_CONST = {
+double _getValueFromMathConstant(MathematicalConstant constant){
+  return double.parse(constant.value.replaceAll(' ', '').replaceAll('...', ''));
+}
+
+double _getValueFromPhysicalConstant(PhysicalConstant constant){
+  return double.parse(constant.value.replaceAll(' ', '').replaceAll('...', '')) * pow(10, constant.exponent as int);
+}
+
+Map<String, double> _GCWIZARDSCRIPT_SCIENCE_CONST = {
   'PI' : pi,
   'EULER' : e,
-  'PHI' : 1.61803398874989484820,
-  'RHO' : 2.41421356237309504880168872420969807,
-  'STEFANBOLTZMANN' : 5.670374419e-8,
-  'BOLTZMANN': 1.380649e-23,
-  'AVOGADRO' : 6.02214076e23,
+  'PHI' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_phi']!),
+  'RHO' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_silverratio']!),
+  'CONWAY' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_conway']!),
+  'APERY' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_apery']!),
+  'SQRT2' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_pythagoras']!),
+  'SQRT3' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_theodorus']!),
+  'SQRT5' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_sqrt5']!),
+
+  'STEFANBOLTZMANN' : _getValueFromPhysicalConstant(PHYSICAL_CONSTANTS['physical_constants_stefan_boltzmann']!), //5.670374419e-8,
+  'BOLTZMANN': _getValueFromPhysicalConstant(PHYSICAL_CONSTANTS['physical_constants_boltzmann']!), //1.380649e-23,
 };
 
 int _sgn(Object? x) {

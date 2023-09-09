@@ -14,7 +14,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print MOD(X, 3)', 'expectedOutput' : '0.0'},
   {'code' : 'print MOD(11, X)', 'expectedOutput' : '0', 'error': 'gcwizard_script_division_by_zero'},
   {'code' : 'print MOD(, X)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print MOD(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print MOD(11, )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print MOD(11)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print MOD(11, 0)', 'expectedOutput' : '0', 'error': 'gcwizard_script_division_by_zero'},
   {'code' : 'print MOD(11, 3, 2)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
@@ -25,7 +25,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print SGN(0)', 'expectedOutput' : '0'},
   {'code' : 'print SGN(-0)', 'expectedOutput' : '0'},
   {'code' : 'print SGN(X)', 'expectedOutput' : '0'},
-  {'code' : 'print SGN( )', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
+  {'code' : 'print SGN( )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print SGN(11, 2, 1)', 'expectedOutput' : '1', 'error': 'gcwizard_script_unbalanced_parentheses'},
 
   {'code' : 'print PI', 'expectedOutput' : '3.141592653589793'},
@@ -52,7 +52,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print GGT(X, 3)', 'expectedOutput' : '3'},
   {'code' : 'print GGT(11, X)', 'expectedOutput' : '11'},
   {'code' : 'print GGT(X, X)', 'expectedOutput' : '0'},
-  {'code' : 'print GGT(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print GGT(11, )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print KGV(12, 3)', 'expectedOutput' : '12.0'},
   {'code' : 'print KGV(12.6, 3)', 'expectedOutput' : '12.6'},
@@ -67,7 +67,7 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'print KGV(X, 3)', 'expectedOutput' : '0.0'},
   {'code' : 'print KGV(11, X)', 'expectedOutput' : '0.0'},
   {'code' : 'print KGV(X, X)', 'expectedOutput' : 'NaN'},
-  {'code' : 'print KGV(11, )', 'expectedOutput' : '0', 'error': 'gcwizard_script_casting_error'},
+  {'code' : 'print KGV(11, )', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
 
   {'code' : 'print FAC(3)', 'expectedOutput' : '6'},
   {'code' : 'print FAC(3.6)', 'expectedOutput' : '0', 'error': 'gcwizard_script_syntax_error'},
@@ -298,5 +298,5 @@ List<Map<String, Object?>> _inputsMathToExpected = [
 
   {'code' : 'dim t\npolar(t,1.91372648, 2.4914364)\nprint t', 'expectedOutput' : '[3.14159265, 52.47135]'},
 
-  {'code' : 'dim t\nkarthesian(t,3.14159265, 52.47135)\nprint t', 'expectedOutput' : '[1.9137265, 2.4914364]'},
+  {'code' : 'dim t\ncarthesian(t,3.14159265, 52.47135)\nprint t', 'expectedOutput' : '[1.9137265, 2.4914364]'},
 ];
