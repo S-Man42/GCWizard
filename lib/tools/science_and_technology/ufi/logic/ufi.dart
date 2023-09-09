@@ -4,188 +4,149 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-class UFI {
+part 'package:gc_wizard/tools/science_and_technology/ufi/logic/ufi_encode.dart';
+part 'package:gc_wizard/tools/science_and_technology/ufi/logic/ufi_decode.dart';
+
+class _UFI_COUNTRY_DEFINITION {
   final String countryCode;
   final String countryName;
   final String ufiRegExp;
   final int countryGroupCodeG;
   final int numberOfBitsForCountryCodeB;
   final int? countryCodeC;
-  final BigInt Function(String)? specialConversion;
+  final BigInt Function(String)? specialEncode;
+  final String Function(String) decode;
 
-  const UFI({
+  const _UFI_COUNTRY_DEFINITION({
     required this.countryCode,
     required this.countryName,
     required this.ufiRegExp,
     required this.countryGroupCodeG,
     required this.numberOfBitsForCountryCodeB,
     required this.countryCodeC,
-    this.specialConversion
+    this.specialEncode,
+    required this.decode
+  });
+}
+
+class UFI {
+  final String countryCode;
+  final String vatNumber;
+  final String formulationNumber;
+
+  const UFI ({
+    required this.countryCode, required this.vatNumber, required this.formulationNumber
   });
 }
 
 const int UFI_MAX_FORMULATIONNUMBER = 268435455;
 
-final List<UFI> UFI_CODES = [
-  const UFI(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialConversion: _vConversionFR),
-  const UFI(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialConversion: _vConversionGB),
-  const UFI(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: 0, specialConversion: _vConversionGB),
-  const UFI(countryCode: 'LT', countryName: 'common_country_Lithuania', ufiRegExp: r'([0-9]{9}|[0-9]{12})', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 0),
-  const UFI(countryCode: 'SE', countryName: 'common_country_Sweden', ufiRegExp: r'[0-9]{12}', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 1),
-  const UFI(countryCode: 'HR', countryName: 'common_country_Croatia', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 0),
-  const UFI(countryCode: 'IT', countryName: 'common_country_Italy', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 1),
-  const UFI(countryCode: 'LV', countryName: 'common_country_Latvia', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 2),
-  const UFI(countryCode: 'NL', countryName: 'common_country_Netherlands', ufiRegExp: r'[0-9]{9}B[0-9]{2}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 3),
-  const UFI(countryCode: 'BG', countryName: 'common_country_Bulgaria', ufiRegExp: r'[0-9]{9,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 0),
-  const UFI(countryCode: 'CZ', countryName: 'common_country_CzechRepublic', ufiRegExp: r'[0-9]{8,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 1),
-  const UFI(countryCode: 'IE', countryName: 'common_country_Ireland', ufiRegExp: r'([0-9][A-Z*+][0-9]{5}[A-Z]|[0-9]{7}([A-Z]W?|[A-Z]{2}))', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 2, specialConversion: _vConversionIE),
-  const UFI(countryCode: 'ES', countryName: 'common_country_Spain', ufiRegExp: r'[0-9A-Z][0-9]{7}[0-9A-Z]', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 3, specialConversion: _vConversionES),
-  const UFI(countryCode: 'PL', countryName: 'common_country_Poland', ufiRegExp: r'[0-9]{10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 4),
-  const UFI(countryCode: 'RO', countryName: 'common_country_Romania', ufiRegExp: r'[0-9]{2,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 5),
-  const UFI(countryCode: 'SK', countryName: 'common_country_Slovakia', ufiRegExp: r'[0-9]{10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 6),
-  const UFI(countryCode: 'CY', countryName: 'common_country_Cyprus', ufiRegExp: r'[0-9]{8}[A-Z]', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 7, specialConversion: _vConversionCY),
-  const UFI(countryCode: 'IS', countryName: 'common_country_Iceland', ufiRegExp: r'[A-Z0-9]{6}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 8, specialConversion: _vConversionIS),
-  const UFI(countryCode: 'BE', countryName: 'common_country_Belgium', ufiRegExp: r'0[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 9),
-  const UFI(countryCode: 'DE', countryName: 'common_country_Germany', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 10),
-  const UFI(countryCode: 'EE', countryName: 'common_country_Estonia', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 11),
-  const UFI(countryCode: 'GR', countryName: 'common_country_Greece', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 12),
-  const UFI(countryCode: 'EL', countryName: 'common_country_Greece', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 12),
-  const UFI(countryCode: 'NO', countryName: 'common_country_Norway', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 13),
-  const UFI(countryCode: 'PT', countryName: 'common_country_Portugal', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 14),
-  const UFI(countryCode: 'AT', countryName: 'common_country_Austria', ufiRegExp: r'U[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 15),
-  const UFI(countryCode: 'DK', countryName: 'common_country_Denmark', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 16),
-  const UFI(countryCode: 'FI', countryName: 'common_country_Finland', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 17),
-  const UFI(countryCode: 'HU', countryName: 'common_country_Hungary', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 18),
-  const UFI(countryCode: 'LU', countryName: 'common_country_Luxembourg', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 19),
-  const UFI(countryCode: 'MT', countryName: 'common_country_Malta', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 20),
-  const UFI(countryCode: 'SI', countryName: 'common_country_Slovenia', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 21),
-  const UFI(countryCode: 'LI', countryName: 'common_country_Liechtenstein', ufiRegExp: r'[0-9]{5}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 22),
+final List<_UFI_COUNTRY_DEFINITION> UFI_CODES = [
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'FR', countryName: 'common_country_France', ufiRegExp: r'[0-9A-Z]{2}[0-9]{9}', countryGroupCodeG: 1, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialEncode: _vEncodeFR, decode: _vDecodeFR),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'GB', countryName: 'common_country_UnitedKingdom', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: null, specialEncode: _vEncodeGB, decode: _vDecodeGB),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'XN', countryName: 'common_country_NorthernIreland', ufiRegExp: r'([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})', countryGroupCodeG: 2, numberOfBitsForCountryCodeB: 0, countryCodeC: 0, specialEncode: _vEncodeGB, decode: _vDecodeGB),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'LT', countryName: 'common_country_Lithuania', ufiRegExp: r'([0-9]{9}|[0-9]{12})', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 0, decode: _vDecodeLT),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'SE', countryName: 'common_country_Sweden', ufiRegExp: r'[0-9]{12}', countryGroupCodeG: 3, numberOfBitsForCountryCodeB: 1, countryCodeC: 1, decode: _vDecodeSE),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'HR', countryName: 'common_country_Croatia', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 0, decode: _vDecodeHR),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'IT', countryName: 'common_country_Italy', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 1, decode: _vDecodeIT),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'LV', countryName: 'common_country_Latvia', ufiRegExp: r'[0-9]{11}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 2, decode: _vDecodeLV),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'NL', countryName: 'common_country_Netherlands', ufiRegExp: r'[0-9]{9}B[0-9]{2}', countryGroupCodeG: 4, numberOfBitsForCountryCodeB: 4, countryCodeC: 3, decode: _vDecodeNL),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'BG', countryName: 'common_country_Bulgaria', ufiRegExp: r'[0-9]{9,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 0, decode: _vDecodeBG),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'CZ', countryName: 'common_country_CzechRepublic', ufiRegExp: r'[0-9]{8,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 1, decode: _vDecodeCZ),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'IE', countryName: 'common_country_Ireland', ufiRegExp: r'([0-9][A-Z*+][0-9]{5}[A-Z]|[0-9]{7}([A-Z]W?|[A-Z]{2}))', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 2, specialEncode: _vEncodeIE, decode: _vDecodeIE),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'ES', countryName: 'common_country_Spain', ufiRegExp: r'[0-9A-Z][0-9]{7}[0-9A-Z]', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 3, specialEncode: _vEncodeES, decode: _vDecodeES),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'PL', countryName: 'common_country_Poland', ufiRegExp: r'[0-9]{10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 4, decode: _vDecodePL),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'RO', countryName: 'common_country_Romania', ufiRegExp: r'[0-9]{2,10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 5, decode: _vDecodeRO),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'SK', countryName: 'common_country_Slovakia', ufiRegExp: r'[0-9]{10}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 6, decode: _vDecodeSK),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'CY', countryName: 'common_country_Cyprus', ufiRegExp: r'[0-9]{8}[A-Z]', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 7, specialEncode: _vEncodeCY, decode: _vDecodeCY),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'IS', countryName: 'common_country_Iceland', ufiRegExp: r'[A-Z0-9]{6}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 8, specialEncode: _vEncodeIS, decode: _vDecodeIS),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'BE', countryName: 'common_country_Belgium', ufiRegExp: r'0[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 9, decode: _vDecodeBE),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'DE', countryName: 'common_country_Germany', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 10, decode: _vDecodeDE),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'EE', countryName: 'common_country_Estonia', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 11, decode: _vDecodeEE),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'GR', countryName: 'common_country_Greece', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 12, decode: _vDecodeGR),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'EL', countryName: 'common_country_Greece', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 12, decode: _vDecodeGR),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'NO', countryName: 'common_country_Norway', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 13, decode: _vDecodeNO),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'PT', countryName: 'common_country_Portugal', ufiRegExp: r'[0-9]{9}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 14, decode: _vDecodePT),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'AT', countryName: 'common_country_Austria', ufiRegExp: r'U[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 15, decode: _vDecodeAT),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'DK', countryName: 'common_country_Denmark', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 16, decode: _vDecodeDK),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'FI', countryName: 'common_country_Finland', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 17, decode: _vDecodeFI),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'HU', countryName: 'common_country_Hungary', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 18, decode: _vDecodeHU),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'LU', countryName: 'common_country_Luxembourg', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 19, decode: _vDecodeLU),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'MT', countryName: 'common_country_Malta', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 20, decode: _vDecodeMT),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'SI', countryName: 'common_country_Slovenia', ufiRegExp: r'[0-9]{8}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 21, decode: _vDecodeSI),
+  const _UFI_COUNTRY_DEFINITION(countryCode: 'LI', countryName: 'common_country_Liechtenstein', ufiRegExp: r'[0-9]{5}', countryGroupCodeG: 5, numberOfBitsForCountryCodeB: 7, countryCodeC: 22, decode: _vDecodeLI),
 ];
 
-String _UFI_BASE31 = '0123456789ACDEFGHJKMNPQRSTUVWXY';
+const String _UFI_BASE31 = '0123456789ACDEFGHJKMNPQRSTUVWXY';
 
-int _alphabetValue(String char) {
-  return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(char);
-}
+const String _ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const String _ALPHANUM = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-int _alphaNumValue(String char) {
-  return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(char);
-}
+int _alphabetValueIndexOf(String char) {
+  var index = _ALPHABET.indexOf(char);
 
-BigInt _vConversionRegular(String vatNumber) {
-  return BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
-}
-
-BigInt _vConversionCY(String vatNumber) {
-  var d = BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
-  var l = _alphabetValue(vatNumber[vatNumber.length - 1]);
-
-  return BigInt.from(l) * BigInt.from(10).pow(8) + d;
-}
-
-BigInt _vConversionES(String vatNumber) {
-  var d = BigInt.parse(vatNumber.substring(1, vatNumber.length - 1));
-  var c1 = _alphaNumValue(vatNumber[0]);
-  var c2 = _alphaNumValue(vatNumber[vatNumber.length - 1]);
-
-  return BigInt.from(36 * c1 + c2) * BigInt.from(10).pow(7) + d;
-}
-
-BigInt _vConversionFR(String vatNumber) {
-  var d = BigInt.parse(vatNumber.substring(2));
-  var c1 = _alphaNumValue(vatNumber[0]);
-  var c2 = _alphaNumValue(vatNumber[1]);
-
-  return BigInt.from(36 * c1 + c2) * BigInt.from(10).pow(9) + d;
-}
-
-BigInt _vConversionGB(String vatNumber) {
-  RegExp regExp1 = RegExp(r'[0-9]{9}([0-9]{3})?');
-  RegExp regExp2 = RegExp(r'[A-Z]{2}[0-9]{3}');
-
-  if (regExp1.hasMatch(vatNumber)) {
-    return BigInt.two.pow(40) + BigInt.parse(vatNumber);
-  } else if (regExp2.hasMatch(vatNumber)) {
-    var d = BigInt.parse(vatNumber.substring(2));
-    var l1 = _alphabetValue(vatNumber[0]);
-    var l2 = _alphabetValue(vatNumber[1]);
-
-    return BigInt.from(26 * l1 + l2) * BigInt.from(10).pow(3) + d;
+  if (index < 0) {
+    throw Exception();
   }
 
-  throw Exception('Invalid VAT Number for GB/XN');
+  return index;
 }
 
-BigInt _vConversionIE(String vatNumber) {
-  RegExp regExp1 = RegExp(r'[0-9][A-Z*+][0-9]{5}[A-Z]');
-  RegExp regExp2 = RegExp(r'[0-9]{7}([A-Z]W?|[A-Z]{2})');
-
-  if (regExp1.hasMatch(vatNumber)) {
-    var d = BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
-    var c = vatNumber.replaceAll(RegExp(r'[\d]'), '');
-
-    int c1;
-    switch (c[0]) {
-      case '+': c1 = 26; break;
-      case '*': c1 = 27; break;
-      default: c1 = _alphabetValue(c[0]);
-    }
-
-    int c2 = _alphabetValue(c[1]);
-
-    return BigInt.from(26 * c1 + c2) * BigInt.from(10).pow(6) + d;
-  } else if (regExp2.hasMatch(vatNumber)) {
-    var d = BigInt.parse(vatNumber.replaceAll(RegExp(r'[^\d]'), ''));
-    var c = vatNumber.replaceAll(RegExp(r'[\d]'), '');
-
-    var c1 = _alphabetValue(c[0]);
-    var c2 = c.length == 1 ? 0 : _alphabetValue(c[1]);
-
-    return BigInt.two.pow(33) + (BigInt.from(26 * c2 + c1) * BigInt.from(10).pow(7) + d);
+String _alphabetValueCharAt(int index) {
+  if (index >= _ALPHABET.length) {
+    throw Exception();
   }
 
-  throw Exception('Invalid VAT Number for IE');
+  return _ALPHABET[index];
 }
 
-BigInt _vConversionIS(String vatNumber) {
-  BigInt V = BigInt.zero;
-  const vatLength = 6;
-  for (int i = 0; i < vatLength; i++) {
-    V += BigInt.from(_alphaNumValue(vatNumber[vatLength - 1 - i])) * BigInt.from(36).pow(i);
+int _alphaNumValueIndexOf(String char) {
+  var index = _ALPHANUM.indexOf(char);
+
+  if (index < 0) {
+    throw Exception();
   }
 
-  return V;
+  return index;
 }
 
-UFI _ufiByCountryCode(String countryCode) {
-  return UFI_CODES.firstWhere((UFI ufi) => ufi.countryCode == countryCode);
+String _alphaNumValueCharAt(int index) {
+  if (index >= _ALPHANUM.length) {
+    throw Exception();
+  }
+
+  return _ALPHANUM[index];
 }
 
-String encodeUFI(String countryCode, String vatNumber, int formulationNumber) {
-  UFI ufi = _ufiByCountryCode(countryCode);
-  var _vatNumber = vatNumber.toUpperCase();
+_UFI_COUNTRY_DEFINITION _ufiByCountryCode(String countryCode) {
+  return UFI_CODES.firstWhere((_UFI_COUNTRY_DEFINITION ufi) => ufi.countryCode == countryCode);
+}
+
+String encodeUFI(UFI ufi) {
+  _UFI_COUNTRY_DEFINITION ufiDefinition = _ufiByCountryCode(ufi.countryCode);
+  var _vatNumber = ufi.vatNumber.toUpperCase();
 
   ////// Step 1 ///////////////////////////////////////////////////////////////
 
-  var g = convertBase(ufi.countryGroupCodeG.toString(), 10, 2);
+  var g = convertBase(ufiDefinition.countryGroupCodeG.toString(), 10, 2);
   g = g.padLeft(4, '0');
 
-  var b = ufi.numberOfBitsForCountryCodeB;
+  var b = ufiDefinition.numberOfBitsForCountryCodeB;
   var c = '';
-  if (b > 0 && ufi.countryCodeC != null) {
-    c = convertBase(ufi.countryCodeC.toString(), 10, 2);
+  if (b > 0 && ufiDefinition.countryCodeC != null) {
+    c = convertBase(ufiDefinition.countryCodeC.toString(), 10, 2);
     c = c.padLeft(b, '0');
   }
 
   var n = convertBase(
-      ufi.specialConversion == null
-          ? _vConversionRegular(_vatNumber).toString()
-          : ufi.specialConversion!(_vatNumber).toString(),
+      ufiDefinition.specialEncode == null
+          ? _vEncodeRegular(_vatNumber).toString()
+          : ufiDefinition.specialEncode!(_vatNumber).toString(),
       10, 2
   );
   n = n.padLeft(41 - b, '0');
 
-  var f = convertBase(formulationNumber.toString(), 10, 2);
+  var f = convertBase(ufi.formulationNumber, 10, 2);
   f = f.padLeft(28, '0');
 
   var ufiPayloadBinary = f + g + c + n + '0';
@@ -238,35 +199,19 @@ int _bByGroupCode(int groupCode) {
   return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == groupCode).numberOfBitsForCountryCodeB;
 }
 
-String decodeUFI(String ufi) {
+UFI decodeUFI(String ufiCode) {
 
   ////// Step 4 ///////////////////////////////////////////////////////////////
 
-  // int x = 0;
-  // for (int i = 0; i < reOrganised.length; i++) {
-  //   var u = _UFI_BASE31.indexOf(reOrganised[i]);
-  //   x += (i + 2) * u;
-  // }
-  //
-  // int u0 = modulo(31 - modulo(x, 31), 31) as int;
-  // var checkSum = _UFI_BASE31[u0];
-  //
-  // return insertEveryNthCharacter(checkSum + reOrganised, 4, '-');
-
-  ufi = ufi.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
-  if (!_validateUFI(ufi)) {
+  ufiCode = ufiCode.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+  if (!_validateUFI(ufiCode)) {
     throw Exception('ufi_notvalid');
   }
 
-  var reOrganised = ufi.substring(1);
+  var reOrganised = ufiCode.substring(1);
 
   ////// Step 3 ///////////////////////////////////////////////////////////////
 
-  // var reOrganised =
-  //   base31[5] + base31[4] + base31[3] + base31[7] + base31[2] +
-  //   base31[8] + base31[9] + base31[10] + base31[1] + base31[0] +
-  //   base31[11] + base31[6] + base31[12] +  base31[13] + base31[14];
-  
   var base31 =
       reOrganised[9] + reOrganised[8] + reOrganised[4] + reOrganised[2] + reOrganised[1] +
       reOrganised[0] + reOrganised[11] + reOrganised[3] + reOrganised[5] + reOrganised[6] +
@@ -274,34 +219,17 @@ String decodeUFI(String ufi) {
 
   ////// Step 2 ///////////////////////////////////////////////////////////////
 
-  // var base31 = convertBase(ufiPayload, 10, 31, alphabet: _UFI_BASE31);
-  // base31 = base31.padLeft(15, '0');
-
   var ufiPayload = trimCharactersLeft(base31, '0');
   ufiPayload = convertBase(ufiPayload, 31, 10, alphabet: _UFI_BASE31);
 
   ////// Step 1 ///////////////////////////////////////////////////////////////
 
-  // var ufiPayloadBinary = f + g + c + n + '0';
-  // var ufiPayload = convertBase(ufiPayloadBinary, 2, 10);
-  //
+  var ufiPayloadBinary = convertBase(ufiPayload, 10, 2).padLeft(74, '0');
 
-  var ufiPayloadBinary = convertBase(ufiPayload, 10, 2);
   var f = ufiPayloadBinary.substring(0, 28);
   var g = int.parse(ufiPayloadBinary.substring(28, 32), radix: 2);
 
-  // var f = convertBase(formulationNumber.toString(), 10, 2);
-  // f = f.padLeft(28, '0');
-  //
-
   var formulationNumber = convertBase(f, 2, 10);
-
-  // var b = ufi.numberOfBitsForCountryCodeB;
-  // var c = '';
-  // if (b != 0 && ufi.countryCodeC != null) {
-  //   c = convertBase(ufi.countryCodeC.toString(), 10, 2);
-  //   c = c.padLeft(b, '0');
-  // }
 
   var b = _bByGroupCode(g);
 
@@ -310,23 +238,32 @@ String decodeUFI(String ufi) {
     c = int.parse(ufiPayloadBinary.substring(32, 32 + b), radix: 2);
   }
 
-  // var n = convertBase(
-  //     ufi.specialConversion == null
-  //         ? _vConversionRegular(_vatNumber).toString()
-  //         : ufi.specialConversion!(_vatNumber).toString(),
-  //     10, 2
-  // );
-  // n = n.padLeft(41 - b, '0');
-  //
-  var n = ufiPayloadBinary.substring(ufiPayloadBinary.length - (41 - b));
+  var n = ufiPayloadBinary.substring(ufiPayloadBinary.length - 1 - (41 - b), ufiPayloadBinary.length - 1);
   n = convertBase(n, 2, 10);
 
-  // TODO: ...
+  _UFI_COUNTRY_DEFINITION ufi = _ufiByGC(g, c);
+  try {
+    var vatNumber = ufi.decode(n);
 
-  //
-  // var g = convertBase(ufi.countryGroupCodeG.toString(), 10, 2);
-  // g = g.padLeft(4, '0');
+    var countryCode = ufi.countryCode;
+    switch (countryCode) {
+      case 'EL': countryCode = 'GR'; break;
+      case 'XN': countryCode = 'GB'; break;
+      default: break;
+    }
 
-  
+    return UFI(countryCode: countryCode, vatNumber: vatNumber, formulationNumber: formulationNumber);
+  } catch(e) {
+    throw Exception('No valid input for ' + ufi.countryCode);
+  }
+}
 
+_UFI_COUNTRY_DEFINITION _ufiByGC(int g, int? c) {
+  if (g < 3) {
+    return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == g);
+  } else if (c != null) {
+    return UFI_CODES.firstWhere((ufi) => ufi.countryGroupCodeG == g && ufi.countryCodeC == c);
+  } else {
+    throw Exception();
+  }
 }

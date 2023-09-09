@@ -66,18 +66,26 @@ void main() {
   group("UFI.encodeUFI:", () {
     for (var elem in _testCases) {
       test('countryCode: ${elem['countryCode']}, vatNumber: ${elem['vatNumber']}, formulationNumber: ${elem['formulationNumber']}', () {
-        var _actual = encodeUFI(elem['countryCode'] as String, elem['vatNumber'] as String, elem['formulationNumber'] as int);
+        var _actual = encodeUFI(UFI(countryCode: elem['countryCode'] as String, vatNumber: elem['vatNumber'] as String, formulationNumber: elem['formulationNumber'].toString()));
         expect(_actual, elem['ufi']);
       });
     }
   });
 
-  // group("UFI.decodeUFI:", () {
-  //   for (var elem in _testCases) {
-  //     test('ufi: ${elem['ufi']}', () {
-  //       var _actual = decodeUFI(elem['ufi'] as String);
-  //       expect(_actual, elem['expectedOutput']);
-  //     });
-  //   }
-  // });
+  group("UFI.decodeUFI:", () {
+    for (var elem in _testCases) {
+      test('ufi: ${elem['ufi']}, countryCode: ${elem['countryCode']}, vatNumber: ${elem['vatNumber']}, formulationNumber: ${elem['formulationNumber']}', () {
+        var _actual = decodeUFI(elem['ufi'] as String);
+        var _countryCode = elem['countryCode'] as String;
+        switch (_countryCode) {
+          case 'EL': _countryCode = 'GR'; break;
+          case 'XN': _countryCode = 'GB'; break;
+          default: break;
+        }
+        expect(_actual.countryCode, _countryCode);
+        expect(_actual.vatNumber, elem['vatNumber'] as String);
+        expect(_actual.formulationNumber, elem['formulationNumber'].toString());
+      });
+    }
+  });
 }
