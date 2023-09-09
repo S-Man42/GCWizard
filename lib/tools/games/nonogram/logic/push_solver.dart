@@ -48,7 +48,6 @@ class pushSolver extends Solver {
     return null;
   }
 
-
   void _enumerate(List<int> array) {
     if (array.isEmpty) return;
     for (var i = 0, j = array[0] % 2; i < array.length; i++) {
@@ -89,9 +88,6 @@ class pushSolver extends Solver {
     super.slowSolveSpeed = false;
   }
 }
-// solve.speed = 'fast';
-//
-// module.exports = {solve, pushLeft};
 
 abstract class Solver {
   List<int>? solve(List<int> line, List<int> hints);

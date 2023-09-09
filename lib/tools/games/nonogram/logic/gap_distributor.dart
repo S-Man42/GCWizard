@@ -1,5 +1,3 @@
-//const pushLeft = require('./solvers/pushSolver').pushLeft;
-
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 
@@ -17,24 +15,24 @@ List<List<int>> findGaps(List<int> line) {
   return result;
 }
 
-GapInfo? allWithOneGap(List<int> line, List<List<int>> gaps, List<int> hints) {
+_GapInfo? _allWithOneGap(List<int> line, List<List<int>> gaps, List<int> hints) {
   var left = gaps[0][0];
   var right = gaps[0][1];
   if (pushSolver.pushLeft(line.sublist(left, right), hints) != null) {
-    return GapInfo(gaps, [hints]);
+    return _GapInfo(gaps, [hints]);
   }
   return null;
 }
 
-GapInfo? gapDistributor(List<int> line, List<int> hints) {
+_GapInfo? gapDistributor(List<int> line, List<int> hints) {
   var gaps = findGaps(line);
   if (gaps.length == 1) {
-    return allWithOneGap(line, gaps, hints);
+    return _allWithOneGap(line, gaps, hints);
   }
   var distributions = <List<int>>[];
   var gap = gaps[0];
   for (var hintCount = 0; hintCount <= hints.length; hintCount++) {
-    var first = allWithOneGap(line, [gap], hints.sublist(0, hintCount));
+    var first = _allWithOneGap(line, [gap], hints.sublist(0, hintCount));
     if (first == null) {
       continue;
     }
@@ -52,12 +50,12 @@ GapInfo? gapDistributor(List<int> line, List<int> hints) {
       }
     }
   }
-  return GapInfo(gaps, distributions);
+  return _GapInfo(gaps, distributions);
 }
 
-class GapInfo {
+class _GapInfo {
   List<List<int>> gaps;
   List<List<int>> distributions;
 
-  GapInfo(this.gaps, this.distributions);
+  _GapInfo(this.gaps, this.distributions);
 }

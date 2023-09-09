@@ -1,5 +1,3 @@
-//const clone = x => JSON.parse(JSON.stringify(x));
-
 import 'package:collection/collection.dart';
 import 'package:utility/utility.dart';
 
@@ -63,10 +61,10 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
   }
 
   return ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
-      TrimInfo( line.sublist(0, minIndex), line.sublist(maxIndex + 1)));
+      _TrimInfo( line.sublist(0, minIndex), line.sublist(maxIndex + 1)));
 }
 
-List<int> restoreLine(List<int> line, TrimInfo trimInfo) {
+List<int> restoreLine(List<int> line, _TrimInfo trimInfo) {
   var _line = List<int>.from(trimInfo.left);
   _line.addAll(line);
   _line.addAll(trimInfo.right);
@@ -103,27 +101,19 @@ List<int> restoreLine(List<int> line, TrimInfo trimInfo) {
 //   hintSum
 // };
 
-int createHash(List<List<int>> list) {
-  var text = '';
-  for (var row in list) {
-    text += row.toString();
-  }
-  return text.hashCode;
-}
-
 class ShiftResult {
   List<int>? trimmedLine;
   List<int>? trimmedHints;
-  TrimInfo? trimInfo;
+  _TrimInfo? trimInfo;
 
   ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo);
 }
 
-class TrimInfo {
+class _TrimInfo {
   List<int> left;
   List<int> right;
 
-  TrimInfo(this.left, this.right);
+  _TrimInfo(this.left, this.right);
 }
 
 class LineMetaData {

@@ -1,10 +1,3 @@
-// const String assert = require("assert");
-//
-// const util = require('../util');
-// const findGapDistributions = require('../gapDistributor');
-// const pushSolver = require('./pushSolver');
-//
-// const debugMode = require('commander').debug;
 import 'dart:math';
 
 import 'package:collection/collection.dart';
@@ -12,13 +5,12 @@ import 'package:gc_wizard/tools/games/nonogram/logic/gap_distributor.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
-const cacheLimits = [2, 20];
+const _cacheLimits = [2, 20];
 
 class bruteForce extends Solver {
-  Map<String, GapResult> solveGapCache = {};
+  Map<String, _GapResult> _solveGapCache = {};
 
-  /// @returns {{zeros: Uint8List, ones: Uint8List}}
-  GapResult? solveGap(List<int> gap, List<int> hints) {
+  _GapResult? _solveGap(List<int> gap, List<int> hints) {
     var zeros = List<int>.filled(gap.length, 0);
     var ones = List<int>.filled(gap.length, 0);
     if (hints.isEmpty) {
@@ -26,15 +18,15 @@ class bruteForce extends Solver {
         return null;
       }
       zeros.fillRange(0, zeros.length, 0);
-      return GapResult(zeros, ones);
+      return _GapResult(zeros, ones);
     }
     // if (solveGap.cache == null) {
     //   solveGap.cache = [];
     // }
-    if (cacheLimits[0] <= hints.length && hints.length <= cacheLimits[1]) {
+    if (_cacheLimits[0] <= hints.length && hints.length <= _cacheLimits[1]) {
       var key = [gap, hints].toString();
-      if (solveGapCache.containsKey(key)) {
-        return solveGapCache[key];
+      if (_solveGapCache.containsKey(key)) {
+        return _solveGapCache[key];
       }
     }
     var hint = hints[0];
@@ -47,13 +39,13 @@ class bruteForce extends Solver {
     if (maxIndex > _hintSum && !gap.contains(1)) {
       zeros.fillRange(0, zeros.length, 1);
       ones.fillRange(0, ones.length, 1);
-      return GapResult(zeros, ones);
+      return _GapResult(zeros, ones);
     }
     for (var hintStart = 0; hintStart <= maxIndex; hintStart++) {
       if (gap[hintStart + hint] == 1) {
         continue;
       }
-      var rest = solveGap(gap.sublist(hintStart + hint + 1), hints.sublist(1));
+      var rest = _solveGap(gap.sublist(hintStart + hint + 1), hints.sublist(1));
       if (rest != null) {
         continue;
       }
@@ -68,19 +60,19 @@ class bruteForce extends Solver {
         }
       }
     }
-    var result = GapResult(zeros, ones);
-    solveGapCache.addAll({[gap, hints].toString() : result});
+    var result = _GapResult(zeros, ones);
+    _solveGapCache.addAll({[gap, hints].toString() : result});
     return result;
   }
 
-  List<int> solveGapWithHintList(List<int> gap, List<List<int>> hintList) {
+  List<int> _solveGapWithHintList(List<int> gap, List<List<int>> hintList) {
     if (gap.contains(-1)) {
       throw const FormatException('solveGapWithHintList called with a non-gap');
     }
     var zeros = List<int>.filled(gap.length, 0);
     var ones = List<int>.filled(gap.length, 0);
     for (var hints in hintList) {
-      var item = solveGap(gap, hints);
+      var item = _solveGap(gap, hints);
       zeros.forEachIndexed((i, zero) => zeros[i] = (zero != 0 || ((item?.zeros[i] ?? 0) != 0) ? 1 : 0));
       ones.forEachIndexed((i, one) => ones[i] = (one != 0 || ((item?.ones[i] ?? 0) != 0) ? 1 : 0));
     }
@@ -110,9 +102,6 @@ class bruteForce extends Solver {
       return pushSolver().solve(line, hints);
     }
     var gapResult = gapDistributor(line, hints);
-    // if (debugMode) {
-    //   console.log(`Gap distributions: ${distributions.length}`);
-    // }
     if (gapResult == null || gapResult.distributions.isEmpty) {
       print('Contradiction in line $line | $hints');
       throw FormatException('Contradiction in line $line | $hints');
@@ -132,7 +121,7 @@ class bruteForce extends Solver {
     var result = line.sublist(0);
     Set<int> changed = {};
     gapResult.gaps.forEachIndexed((i, gap) {
-    var gapResult = solveGapWithHintList(line.sublist(gap[0], gap[1]), distributionsPerGap[i]);
+    var gapResult = _solveGapWithHintList(line.sublist(gap[0], gap[1]), distributionsPerGap[i]);
       gapResult.forEachIndexed((i, item) {
         var before = result[gap[0] + i];
         if (before != item) {
@@ -157,13 +146,9 @@ class bruteForce extends Solver {
   }
 }
 
-class GapResult {
+class _GapResult {
   List<int> zeros = [];
   List<int> ones = [];
 
-  GapResult(this.zeros, this.ones);
+  _GapResult(this.zeros, this.ones);
 }
-
-// solve.speed = 'slow';
-//
-// module.exports = {solveGap, solveGapWithHintList, solve};
