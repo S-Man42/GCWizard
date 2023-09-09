@@ -20,6 +20,8 @@ const Map<String, String Function(String)> BASE_FUNCTIONS = {
 String decodeBase16(String input) {
   if (input.isEmpty) return '';
 
+  if (input.length % 2 != 0) input = input + ' ';
+
   return List.generate(input.length, (i) => i % 2 == 0 ? input.substring(i, i + 2) : null)
       .where((b) => b != null && RegExp(r'[0-9A-Fa-f]{2}').hasMatch(b))
       .map((b) => String.fromCharCode(int.parse(b!, radix: 16)))

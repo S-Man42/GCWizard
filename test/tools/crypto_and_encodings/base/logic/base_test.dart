@@ -10,6 +10,39 @@ import 'package:gc_wizard/utils/constants.dart';
 
 void main() {
 
+  group("Base16.encode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'expectedOutput' : ''},
+      {'input' : '3429289555', 'expectedOutput' : '33343239323839353535'},
+      {'input' : 'hallo', 'expectedOutput' : '68616c6c6f'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBase16(elem['input'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("Base16.decode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'expectedOutput' : '', 'input' : ''},
+      {'expectedOutput' : '3429289555', 'input' : '33343239323839353535'},
+      {'expectedOutput' : 'hallo', 'input' : '68616c6c6f'},
+      {'expectedOutput' : '', 'input' : 'h'},
+      {'expectedOutput' : '', 'input' : 'ha'},
+      {'expectedOutput' : '', 'input' : 'kl'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBase16(elem['input'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
   group("Base58.encode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},

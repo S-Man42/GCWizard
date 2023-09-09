@@ -6,13 +6,16 @@ class FormulaPainter {
   static const String _Space = 'S'; //space
   static const String Number = 'g'; // or character in word function or ' "
   static const String NumberError = 'G'; //or character in word function error
-  static const String Variable = 'r'; //varibale
-  static const String VariableError = 'R'; //varibale error
+  static const String Variable = 'r'; //variable
+  static const String VariableError = 'R'; //variable error
   static const String OFRB = 'b'; //operator, function, reference, bracket
   static const String OFRBError = 'B'; //operator, function, reference, bracket error
   static const _operators = {'+', '-', '*', '/', '^', '%'};
   static const _bracket = {'[': ']', '(': ')', '{': '}'};
-  static const numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const _numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
+  static const _STRING_MARKER_APOSTROPHE = "'";
+  static const _STRING_MARKER_QUOTE = '"';
+
   static final _allCharacters = allCharacters();
   Map<String, String> _values = {};
   var _variables = <String>[];
@@ -20,6 +23,7 @@ class FormulaPainter {
   var _constants = <String>[];
   late int _formulaId;
   late bool _operatorBevor;
+  var _stringBevor = false;
   String? _parentFunctionName;
   late String formula;
 
@@ -114,6 +118,7 @@ class FormulaPainter {
     if (formula.isEmpty) return '';
     var result = _buildResultString(_Text, formula.length);
     var isOperator = false;
+    var isString = false;
     String subResult;
     List<String>? _parserResult;
 
@@ -176,7 +181,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isVariable(formula);
       if (_parserResult != null) {
-        result = _coloredVariable(result, _parserResult, _isEmptyVariable(formula, false));
+        result = _coloredVariable(result, _parserResult, _isEmptyVariable(formula));
         offset = _calcOffset(_parserResult);
       }
     }
@@ -228,6 +233,7 @@ class FormulaPainter {
       if (_parserResult != null) {
         result = _coloredNumber(result, _parserResult, false, true);
         offset = _calcOffset(_parserResult);
+        isString = true;
       }
     }
     // invalid string
@@ -264,6 +270,7 @@ class FormulaPainter {
         result = _coloredSpaces(result, _parserResult);
         offset = _calcOffset(_parserResult);
         isOperator = _operatorBevor;
+        isString = _stringBevor;
       }
     }
 
@@ -276,11 +283,13 @@ class FormulaPainter {
       result = _replaceRange(result, offset, subResult.length, subResult);
       offset = subResult.length;
       isOperator = _operatorBevor;
+      isString = _stringBevor;
     }
 
     // analyse rest recursive
     if (offset < formula.length) {
       _operatorBevor = isOperator;
+      _stringBevor = isString;
       subResult = formula.substring(offset);
       subResult = _paintSubFormula(subResult, literalOffset + offset, onlyFormulaReference: onlyFormulaReference);
       result = _replaceRange(result, offset, null, subResult);
@@ -388,7 +397,7 @@ class FormulaPainter {
       default:
         maxCommaCount = minCommaCount;
     }
-    minCommaCount = minCommaCount * 2 + 1; // ${number commas} * 2 + 1
+    minCommaCount = minCommaCount * 2 + 1;
     maxCommaCount = maxCommaCount == null ? null : maxCommaCount * 2 + 1;
     if (arguments.length < minCommaCount) return null;
 
@@ -402,7 +411,6 @@ class FormulaPainter {
       } else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
-        //if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll(VariableError, Number);
         result.add(subresult);
       }
     }
@@ -472,14 +480,14 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp('^(["\'])(?:(?=(\\\\?))\\2.)*?\\1');
+    RegExp regex = RegExp('^(['+ _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
   }
 
   List<String>? _isInvalidString(String formula) {
-    if (formula.startsWith("'") || formula.startsWith('"')) return [formula];
+    if (formula.startsWith(_STRING_MARKER_APOSTROPHE) || formula.startsWith(_STRING_MARKER_QUOTE)) return [formula];
     return null;
   }
 
@@ -527,15 +535,15 @@ class FormulaPainter {
     return (match == null) ? null : [match.group(0)!];
   }
 
-  bool _isEmptyVariable(String formula, bool stringVariable) {
+  bool _isEmptyVariable(String formula) {
     var match = _variableMatch(formula);
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
     var result = variableValue == null || variableValue.isEmpty;
-    if (!stringVariable || result) return result;
+    if (result) return result;
     var stringResult = _isString(variableValue);
-    return stringResult == null || stringResult.first.length <= 2;
+    return stringResult != null && stringResult.first.length <= 2;
   }
 
   bool _isStringVariable(String formula) {
@@ -573,7 +581,7 @@ class FormulaPainter {
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
     var char = hasError ? VariableError : Variable;
-    if (_wordFunction(_parentFunctionName)) {
+    if (_wordFunction(_parentFunctionName) || _stringBevor) {
       char = _coloredWordFunctionVariable(parts[0]);
       _operatorBevor = true;
     } else if (_numberFunction(_parentFunctionName)) {
@@ -597,7 +605,7 @@ class FormulaPainter {
   }
 
   List<String>? _isNumberWithPoint(String formula) {
-    RegExp regex = RegExp('^$numberRegEx');
+    RegExp regex = RegExp('^$_numberRegEx');
     var match = regex.firstMatch(formula);
     if (match == null) return null;
 
@@ -613,7 +621,8 @@ class FormulaPainter {
   }
 
   String _coloredNumber(String result, List<String> parts, bool hasError, bool stringValue) {
-    hasError |= !_operatorBevor && !_wordFunction(_parentFunctionName) && !stringValue;
+    hasError |= (!_operatorBevor && !_wordFunction(_parentFunctionName) && !stringValue); // ||
+        //(stringValue && _parentFunctionName == null && !_isString(formula)); //
     return _replaceRange(result, 0, parts[0].length, hasError ? NumberError : Number);
   }
 
