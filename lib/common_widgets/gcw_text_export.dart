@@ -16,6 +16,8 @@ enum TextExportMode { TEXT, QR }
 
 enum PossibleExportMode { TEXTONLY, QRONLY, BOTH }
 
+const MAX_QR_TEXT_LENGTH_FOR_EXPORT = 1000;
+
 class GCWTextExport extends StatefulWidget {
   final String text;
   final void Function(TextExportMode)? onModeChanged;
@@ -42,6 +44,8 @@ class _GCWTextExportState extends State<GCWTextExport> {
 
   Uint8List? _qrImageData;
 
+  late PossibleExportMode _currentPossibleMode;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +53,14 @@ class _GCWTextExportState extends State<GCWTextExport> {
     _currentExportText = widget.text;
     _currentMode = widget.initMode;
     _textExportController = TextEditingController(text: _currentExportText);
+
+    _currentPossibleMode = widget.possibileExportMode;
+    if ([PossibleExportMode.QRONLY, PossibleExportMode.BOTH].contains(widget.possibileExportMode)) {
+      if (widget.text.length > MAX_QR_TEXT_LENGTH_FOR_EXPORT) {
+        _currentPossibleMode = PossibleExportMode.TEXTONLY;
+        _currentMode = TextExportMode.TEXT;
+      }
+    }
   }
 
   @override
@@ -80,7 +92,7 @@ class _GCWTextExportState extends State<GCWTextExport> {
         height: 360,
         child: Column(
           children: <Widget>[
-            widget.possibileExportMode == PossibleExportMode.BOTH
+            _currentPossibleMode == PossibleExportMode.BOTH
                 ? GCWTwoOptionsSwitch(
                     leftValue: 'QR',
                     rightValue: i18n(context, 'common_text'),
