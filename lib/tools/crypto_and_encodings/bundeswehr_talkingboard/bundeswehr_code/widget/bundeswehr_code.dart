@@ -38,13 +38,13 @@ class _BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoa
   var _currentTableMode = GCWSwitchPosition.left;
 
   final _cryptedTextMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '## ' * 1000 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
+      GCWMaskTextInputFormatter(mask: '## ' * 1000 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
 
   final _numeralCodeyXAxisCodeMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+      GCWMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   final _numeralCodeYAxisCodeMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+      GCWMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   @override
   void initState() {

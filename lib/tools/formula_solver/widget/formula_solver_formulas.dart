@@ -137,8 +137,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return name;
   }
 
-  var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
-    var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
+  var_coords_model.VariableCoordinateFormula _exportToVariableCoordinate(Formula formula) {
+    var_coords_model.VariableCoordinateFormula varCoordsFormula = var_coords_model.VariableCoordinateFormula(_createVariableCoordinateName());
     varCoordsFormula.formula = formula.formula;
     var_coords_provider.insertFormula(varCoordsFormula);
 
@@ -150,7 +150,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return varCoordsFormula;
   }
 
-  void _openInVariableCoordinate(var_coords_model.Formula formula) {
+  void _openInVariableCoordinate(var_coords_model.VariableCoordinateFormula formula) {
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute<GCWTool>(
@@ -649,18 +649,18 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
       if ((i == formula.length - 1) || (formulaColors[i + 1] != formulaColors[i])) {
         TextStyle textStyle;
         switch (formulaColors[i]) {
-          case 'g':
+          case FormulaPainter.Number:
             textStyle = TextStyle(color: themeColors().formulaNumber());
             break;
-          case 'r':
+          case FormulaPainter.Variable:
             textStyle = TextStyle(color: themeColors().formulaVariable());
             break;
-          case 'b':
+          case FormulaPainter.OFRB:
             textStyle = TextStyle(color: themeColors().formulaMath());
             break;
-          case 'R':
-          case 'G':
-          case 'B':
+          case FormulaPainter.VariableError:
+          case FormulaPainter.NumberError:
+          case FormulaPainter.OFRBError:
             textStyle = TextStyle(color: themeColors().formulaError(), fontWeight: FontWeight.bold);
             break;
           default:

@@ -47,7 +47,7 @@ class _EnigmaState extends State<Enigma> {
 
   var _currentRotorInformation = 0;
 
-  final _plugboardMaskFormatter = WrapperForMaskTextInputFormatter(
+  final _plugboardMaskFormatter = GCWMaskTextInputFormatter(
       mask: '## ' * 25 + '##', filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override

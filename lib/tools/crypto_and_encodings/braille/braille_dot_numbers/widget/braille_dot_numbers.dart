@@ -30,7 +30,7 @@ class _BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  final _decodeInputFormatter = WrapperForMaskTextInputFormatter(
+  final _decodeInputFormatter = GCWMaskTextInputFormatter(
       mask: '#' * 100000, filter: {"#": RegExp(r'[0-9\s]')});
 
   @override

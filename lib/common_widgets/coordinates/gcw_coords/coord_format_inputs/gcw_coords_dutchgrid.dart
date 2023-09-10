@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsDutchGrid extends StatefulWidget {
   final void Function(DutchGrid) onChanged;
   final DutchGrid coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();
@@ -18,7 +18,7 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
   var _currentX = defaultDoubleText;
   var _currentY = defaultDoubleText;
 
-  bool _initialized = false;
+
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var dutchGrid = widget.coordinates;
       _currentX.value = dutchGrid.x;
       _currentY.value = dutchGrid.y;
@@ -45,7 +45,6 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
       _xController.text = _currentX.value.toString();
       _yController.text = _currentY.value.toString();
 
-      _initialized = true;
     }
 
     return Column(children: <Widget>[

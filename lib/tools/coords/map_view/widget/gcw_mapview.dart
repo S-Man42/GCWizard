@@ -1034,7 +1034,22 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
 
 class CachedNetworkTileProvider extends TileProvider {
   @override
-  ImageProvider getImage(TileCoordinates coords, TileLayer layer) {
-    return CachedNetworkImageProvider(getTileUrl(coords, layer));
+  ImageProvider getImage(TileCoordinates coordinates, TileLayer options) {
+    return CachedNetworkImageProvider(getTileUrl(coordinates, options));
   }
+}
+
+void openInMap(BuildContext context, List<GCWMapPoint> mapPoints, {List<GCWMapPolyline>? mapPolylines, bool freeMap = false}) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (context) => GCWTool(
+              tool: GCWMapView(
+                points: List<GCWMapPoint>.from(mapPoints),
+                polylines: mapPolylines == null ? null : List<GCWMapPolyline>.from(mapPolylines),
+                isEditable: freeMap,
+              ),
+              id: freeMap ? 'coords_openmap' : 'coords_map_view',
+              autoScroll: false,
+              suppressToolMargin: true)));
 }

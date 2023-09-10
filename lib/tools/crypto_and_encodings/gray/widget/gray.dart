@@ -25,10 +25,10 @@ class _GrayState extends State<Gray> {
   GCWSwitchPosition _currentInputMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  final _decimalMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
+  final _decimalMaskFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
 
   final _binaryDigitsMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
+      GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
 
   @override
   void initState() {

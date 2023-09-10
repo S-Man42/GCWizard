@@ -79,6 +79,7 @@ class Formula extends FormulaBase {
 
   Formula(this.formula) : super('');
 
+  @override
   Map<String, Object?> toMap() {
     var map = {
       'id': id,
@@ -110,17 +111,14 @@ class Formula extends FormulaBase {
   }
 }
 
-enum FormulaValueType { FIXED, INTERPOLATED, TEXT }
+enum FormulaValueType { FIXED, INTERPOLATED}
 
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
-const _FORMULAVALUETYPE_TEXT = 'text';
 
 FormulaValueType _readType(String? jsonType) {
   switch (jsonType) {
     case _FORMULAVALUETYPE_INTERPOLATE:
       return FormulaValueType.INTERPOLATED;
-    case _FORMULAVALUETYPE_TEXT:
-      return FormulaValueType.TEXT;
     default:
       return FormulaValueType.FIXED;
   }
@@ -147,7 +145,7 @@ class FormulaValue extends KeyValueBase {
     var value = toStringOrNull(json['value']) ?? '';
     var type = _readType(json['type'] as String?);
 
-    var newFormulaValue =FormulaValue(key, value, type: type);
+    var newFormulaValue = FormulaValue(key, value, type: type);
     newFormulaValue.id = id;
 
     return newFormulaValue;
@@ -164,9 +162,6 @@ class FormulaValue extends KeyValueBase {
     switch (type) {
       case FormulaValueType.INTERPOLATED:
         mapType = _FORMULAVALUETYPE_INTERPOLATE;
-        break;
-      case FormulaValueType.TEXT:
-        mapType = _FORMULAVALUETYPE_TEXT;
         break;
       default:
         break;
