@@ -69,7 +69,6 @@ const String _apiSpecification = '''
 		]
 	}
 }
-
 ''';
 
 class AlphabetValues extends GCWWebStatefulWidget {

@@ -87,6 +87,7 @@ class _LicensesState extends State<Licenses> {
           ['Cow Generator', 'Frank Buss', 'Personal Permission'],
           ['DutchGrid Code', '@djvanderlaan', 'MIT License'],
           ['Gauss-Krüger Code', 'moenk', 'Personal Permission'],
+          ['GC Wizard Script Code', 'Herbert Schildt/James Holmes\nMcGrawHill', 'Personal Permission'],
           ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
           ['Geodetics Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
           ['GeoHex Code', '@chsii (geohex4j), @sa2da (geohex.org)', 'MIT License'],

@@ -104,8 +104,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             builder: (context) {
               return Center(
                 child: SizedBox(
-                  height: 220,
-                  width: 150,
+                  height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+                  width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
                   child: GCWAsyncExecuter<Uint8ListText?>(
                     isolatedFunction: _downloadFileAsync,
                     parameter: _buildJobDataDownload,
@@ -361,7 +361,7 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
     result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
 
-// ToDo only working with AsncPort (await not working)
+// ToDo only working with AsyncPort (await not working)
   if (result.text.isNotEmpty) {
     sendAsyncPort?.send(result);
   }
