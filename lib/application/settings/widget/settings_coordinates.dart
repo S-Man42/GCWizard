@@ -30,7 +30,7 @@ class CoordinatesSettings extends StatefulWidget {
   const CoordinatesSettings({Key? key}) : super(key: key);
 
   @override
- _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
+  _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
 }
 
 class _CoordinatesSettingsState extends State<CoordinatesSettings> {
@@ -38,6 +38,10 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid;
+  GCWSwitchPosition _currentGC8K7RCEllipsoid =
+      (Prefs.getString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID) == 'left')
+          ? GCWSwitchPosition.left
+          : GCWSwitchPosition.right;
 
   late TextEditingController _controllerAPIKey;
 
@@ -73,7 +77,7 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
 
               var typePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.type);
               Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
-              
+
               if (_currentDefaultFormat.subtype == null) {
                 restoreSingleDefaultPreference(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
               } else {
@@ -93,10 +97,10 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             onChanged: (value) {
               setState(() {
                 _currentDefaultHemisphereLatitude =
-                value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
+                    value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
                 Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE, _currentDefaultHemisphereLatitude);
               });
-        }),
+            }),
         GCWSignDropDown(
             title: i18n(context, 'coords_common_longitude'),
             itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
@@ -104,9 +108,8 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             onChanged: (value) {
               setState(() {
                 _currentDefaultHemisphereLongitude =
-                value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
-                Prefs.setString(
-                    PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
+                    value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
               });
             }),
         GCWTextDivider(
@@ -147,11 +150,28 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
           text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
         ),
         GCWTextField(
-          controller: _controllerAPIKey,
+            controller: _controllerAPIKey,
+            onChanged: (value) {
+              setState(() {
+                _currentAPIKey = value;
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, value);
+              });
+            }),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_gc8k7rc'),
+        ),
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'settings_coordinates_gc8k7rc_default_ellipsoid'),
+          rightValue: i18n(context, 'settings_coordinates_gc8k7rc_listing'),
+          value: _currentGC8K7RCEllipsoid,
           onChanged: (value) {
+            if (value == GCWSwitchPosition.left) {
+              Prefs.setString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID, 'left');
+            } else {
+              Prefs.setString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID, 'right');
+            }
             setState(() {
-              _currentAPIKey = value;
-              Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, value);
+              _currentGC8K7RCEllipsoid = value;
             });
           },
         ),

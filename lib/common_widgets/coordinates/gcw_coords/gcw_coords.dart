@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
@@ -29,6 +30,11 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -45,6 +51,7 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/gcw_coords_dms.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_dutchgrid.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_gausskrueger.dart';
+part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_gc8k7rc.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_lambert.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_mercator.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_openlocationcode.dart';
@@ -461,6 +468,20 @@ class _GCWCoordsState extends State<GCWCoords> {
           },
         ),
       ),
+     _GCWCoordWidget(
+         CoordinateFormatKey.GC8K7RC,
+         _GCWCoordsGC8K7RC(
+           isDefault: !_hasSetCoords,
+           coordinates: _currentCoords is GC8K7RC
+               ? _currentCoords as GC8K7RC
+               : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GC8K7RC)) as GC8K7RC,
+           onChanged: (newValue) {
+             setState(() {
+               _setCurrentValueAndEmitOnChange(newValue);
+             });
+           },
+         ),
+       ),
     ];
 
     _resetCoords = false;
