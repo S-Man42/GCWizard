@@ -10,6 +10,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 const defaultLambertType = CoordinateFormatKey.LAMBERT93;
 const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
+const defaultWhat3WordsType = CoordinateFormatKey.WHAT3WORDS_DE;
 
 const defaultCoordinate = LatLng(0.0, 0.0);
 
@@ -21,6 +22,8 @@ CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
       return defaultLambertType;
     case CoordinateFormatKey.SLIPPY_MAP:
       return defaultSlippyMapType;
+    case CoordinateFormatKey.WHAT3WORDS:
+      return defaultWhat3WordsType;
     default: return null;
   }
 }

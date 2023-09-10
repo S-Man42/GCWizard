@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_paste_button.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
@@ -34,9 +35,10 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as location;
 import 'package:collection/collection.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/gcw_coords_dec.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/gcw_coords_dmm.dart';
@@ -53,6 +55,7 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_swissgrid.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_swissgridplus.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_xyz.dart';
+part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/gcw_coords_w3w.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/geo3x3/gcw_coords_geo3x3.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/geo3x3/geo3x3_textinputformatter.dart';
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/geohash/gcw_coords_geohash.dart';
@@ -96,7 +99,7 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   Widget? _currentWidget;
 
-  final _location = Location();
+  final _location = location.Location();
   bool _isOnLocationAccess = false;
 
   @override
@@ -444,6 +447,20 @@ class _GCWCoordsState extends State<GCWCoords> {
           },
         ),
       ),
+      _GCWCoordWidget(
+        CoordinateFormatKey.WHAT3WORDS,
+        _GCWCoordsWhat3Words(
+          isDefault: !_hasSetCoords,
+          coordinates: _currentCoords is What3Words
+              ? _currentCoords as What3Words
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.WHAT3WORDS)) as What3Words,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      ),
     ];
 
     _resetCoords = false;
@@ -575,7 +592,7 @@ class _GCWCoordsState extends State<GCWCoords> {
         return;
       }
 
-      _location.getLocation().then((LocationData locationData) {
+      _location.getLocation().then((location.LocationData locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));

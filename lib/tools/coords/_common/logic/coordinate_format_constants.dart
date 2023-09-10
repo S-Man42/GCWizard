@@ -1,6 +1,8 @@
 enum CoordinateFormatKey {ALL, DEC, DMM, DMS, UTM, MGRS, XYZ, SWISS_GRID, SWISS_GRID_PLUS, DUTCH_GRID,
   GAUSS_KRUEGER, LAMBERT, MAIDENHEAD, MERCATOR, NATURAL_AREA_CODE, SLIPPY_MAP, GEOHASH, GEO3X3,
-  GEOHEX, OPEN_LOCATION_CODE, MAKANEY, QUADTREE, REVERSE_WIG_WALDMEISTER, REVERSE_WIG_DAY1976,
+  GEOHEX, OPEN_LOCATION_CODE, MAKANEY, QUADTREE, REVERSE_WIG_WALDMEISTER, REVERSE_WIG_DAY1976, WHAT3WORDS,
+  //What3Words Subtypes
+  WHAT3WORDS_DE, WHAT3WORDS_EN, WHAT3WORDS_FR, WHAT3WORDS_IT, WHAT3WORDS_RU, WHAT3WORDS_PL, WHAT3WORDS_NL, WHAT3WORDS_SP, WHAT3WORDS_KO, WHAT3WORDS_JA, WHAT3WORDS_ZH, WHAT3WORDS_DK, WHAT3WORDS_CZ,
   //GaussKrueger Subtypes
   GAUSS_KRUEGER_GK1, GAUSS_KRUEGER_GK2, GAUSS_KRUEGER_GK3, GAUSS_KRUEGER_GK4, GAUSS_KRUEGER_GK5,
   //Lambert Subtypes
@@ -53,4 +55,36 @@ const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
   3: CoordinateFormatKey.GAUSS_KRUEGER_GK3,
   4: CoordinateFormatKey.GAUSS_KRUEGER_GK4,
   5: CoordinateFormatKey.GAUSS_KRUEGER_GK5,
+};
+
+const Map<int, CoordinateFormatKey> WHAT3WORDS_CODE = {
+  1: CoordinateFormatKey.WHAT3WORDS_DE,
+  2: CoordinateFormatKey.WHAT3WORDS_EN,
+  3: CoordinateFormatKey.WHAT3WORDS_FR,
+  4: CoordinateFormatKey.WHAT3WORDS_IT,
+  5: CoordinateFormatKey.WHAT3WORDS_RU,
+  6: CoordinateFormatKey.WHAT3WORDS_NL,
+  7: CoordinateFormatKey.WHAT3WORDS_SP,
+  8: CoordinateFormatKey.WHAT3WORDS_KO,
+  9: CoordinateFormatKey.WHAT3WORDS_JA,
+  10: CoordinateFormatKey.WHAT3WORDS_ZH,
+  11: CoordinateFormatKey.WHAT3WORDS_DK,
+  12: CoordinateFormatKey.WHAT3WORDS_CZ,
+  13: CoordinateFormatKey.WHAT3WORDS_PL,
+};
+
+const Map<CoordinateFormatKey, String> WHAT3WORDS_LANGUAGE = {
+  CoordinateFormatKey.WHAT3WORDS_DE: 'common_language_german',
+  CoordinateFormatKey.WHAT3WORDS_EN: 'common_language_english',
+  CoordinateFormatKey.WHAT3WORDS_FR: 'common_language_french',
+  CoordinateFormatKey.WHAT3WORDS_IT: 'common_language_italian',
+  CoordinateFormatKey.WHAT3WORDS_RU: 'common_language_russian',
+  CoordinateFormatKey.WHAT3WORDS_NL: 'common_language_dutch',
+  CoordinateFormatKey.WHAT3WORDS_SP: 'common_language_spanish',
+  CoordinateFormatKey.WHAT3WORDS_KO: 'common_language_korean',
+  CoordinateFormatKey.WHAT3WORDS_JA:'common_language_japanese' ,
+  CoordinateFormatKey.WHAT3WORDS_ZH: 'common_language_chinese',
+  CoordinateFormatKey.WHAT3WORDS_DK:'common_language_danish' ,
+  CoordinateFormatKey.WHAT3WORDS_CZ: 'common_language_czech',
+  CoordinateFormatKey.WHAT3WORDS_PL: 'common_language_polish',
 };

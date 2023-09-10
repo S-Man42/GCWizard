@@ -3,6 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:prefs/prefs.dart';
 
@@ -14,6 +15,22 @@ class ToolSettings extends StatefulWidget {
 }
 
 class _ToolSettingsState extends State<ToolSettings> {
+
+  late TextEditingController _inputControllerW3WApiKey;
+  String _currentInputW3WApiKey = Prefs.get(PREFERENCE_COORD_DEFAULT_W3W_APIKEY).toString();
+
+  @override
+  void initState() {
+    super.initState();
+    _inputControllerW3WApiKey = TextEditingController(text: _currentInputW3WApiKey);
+  }
+
+  @override
+  void dispose() {
+    _inputControllerW3WApiKey.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,6 +56,19 @@ class _ToolSettingsState extends State<ToolSettings> {
               child: mode.value,
             );
           }).toList(),
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+          controller: _inputControllerW3WApiKey,
+          onChanged: (text) {
+            setState(() {
+              _currentInputW3WApiKey = text;
+              Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, text);
+            });
+          },
         ),
       ],
     );

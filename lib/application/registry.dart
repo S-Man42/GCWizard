@@ -106,6 +106,7 @@ import 'package:gc_wizard/tools/coords/dmm_offset/widget/dmm_offset.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/widget/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/equilateral_triangle/widget/equilateral_triangle.dart';
 import 'package:gc_wizard/tools/coords/format_converter/widget/format_converter.dart';
+import 'package:gc_wizard/tools/coords/format_converter_w3w/widget/format_converter_w3w.dart';
 import 'package:gc_wizard/tools/coords/geohashing/widget/geohashing.dart';
 import 'package:gc_wizard/tools/coords/intersect_bearing_and_circle/widget/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_bearings/widget/intersect_bearings.dart';
@@ -1604,6 +1605,17 @@ void initializeRegistry(BuildContext context) {
         tool: const FormatConverter(),
         id: 'coords_formatconverter',
         iconPath: 'lib/tools/coords/_common/assets/icons/icon_format_converter.png',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'coordinates',
+          'coordinates_formatconverter',
+        ]),
+    GCWTool(
+        tool: const FormatConverterW3W(),
+        id: 'coords_formatconverter_w3w',
+        iconPath: 'assets/icons/coords/icon_w3w.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
