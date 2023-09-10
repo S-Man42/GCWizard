@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -10,10 +10,10 @@ class VanityWordsList extends StatefulWidget {
   const VanityWordsList({Key? key}) : super(key: key);
 
   @override
-  VanityWordsListState createState() => VanityWordsListState();
+ _VanityWordsListState createState() => _VanityWordsListState();
 }
 
-class VanityWordsListState extends State<VanityWordsList> {
+class _VanityWordsListState extends State<VanityWordsList> {
   late TextEditingController _decodeController;
 
   final _currentDecodeInput = '';
@@ -58,9 +58,7 @@ class VanityWordsListState extends State<VanityWordsList> {
     var vanityWordsOverview = VANITY_WORDS[_currentLanguage];
     if (vanityWordsOverview == null) return Container();
 
-    if (_currentLanguage == NumeralWordsLanguage.DEU) NUMERAL_WORDS[_currentLanguage]?['fünf'] = '5';
-
-    return GCWDefaultOutput(
+     return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
             data: vanityWordsOverview.entries.map((entry) {
                     return [

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/navigation_service.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -38,10 +38,10 @@ class GCWPasteButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  GCWPasteButtonState createState() => GCWPasteButtonState();
+ _GCWPasteButtonState createState() => _GCWPasteButtonState();
 }
 
-class GCWPasteButtonState extends State<GCWPasteButton> {
+class _GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -78,17 +78,18 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
       ),
       GCWPopupMenuItem(
           child: GCWTextDivider(
+            style: gcwTextStyle().copyWith(color: themeColors().dialogText()),
             suppressTopSpace: true,
             trailing: GCWIconButton(
               icon: Icons.settings,
               size: IconButtonSize.SMALL,
               iconColor: themeColors().dialogText(),
-              onPressed: () => {},
+              onPressed: () => _openClipboardEditor(),
             ),
             text: '', // TODO: A GCWTextDivider without any text is a simple GCWDivider, but the GCWDivider currently does not support 'suppressTopSpace' and 'trailing'; Move both attributes to GCWDivider
           ),
           action: (index) {
-            NavigationService.instance.navigateTo('clipboard_editor');
+            _openClipboardEditor();
           })
     ];
 
@@ -146,5 +147,9 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
 
     menuItems.addAll(gcwClipboard);
     return menuItems;
+  }
+
+  void _openClipboardEditor() {
+    NavigationService.instance.navigateTo(clipboard_editor);
   }
 }

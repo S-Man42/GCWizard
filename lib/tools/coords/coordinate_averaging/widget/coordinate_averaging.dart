@@ -1,15 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
+import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:intl/intl.dart';
@@ -20,10 +24,10 @@ class CoordinateAveraging extends StatefulWidget {
   const CoordinateAveraging({Key? key}) : super(key: key);
 
   @override
-  CoordinateAveragingState createState() => CoordinateAveragingState();
+ _CoordinateAveragingState createState() => _CoordinateAveragingState();
 }
 
-class CoordinateAveragingState extends State<CoordinateAveraging> {
+class _CoordinateAveragingState extends State<CoordinateAveraging> {
   bool? _currentLocationPermissionGranted;
   StreamSubscription<LocationData>? _locationSubscription;
   final Location _currentLocation = Location();
@@ -33,6 +37,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
   var _isMeasuring = false;
 
   late List<_AveragedLocation> _averagedLocations;
+  late List<_MeasuredLocation> _measuredValues;
   late double averageAccuracy;
   late double weightedLatSum;
   late double weightedLonSum;
@@ -55,6 +60,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
 
   void _clearMeasurements() {
     _averagedLocations = [];
+    _measuredValues = [];
 
     averageAccuracy = 0.0;
     weightedLatSum = 0.0;
@@ -96,9 +102,43 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
           },
         ),
         GCWDefaultOutput(
+            trailing:
+              _averagedLocations.isNotEmpty ? GCWIconButton(
+                icon: Icons.my_location,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  var mapPoints = _measuredValues.map((measured) {
+                    return GCWMapPoint(
+                      point: measured.coord,
+                      color: COLOR_MAP_POINT,
+                      isEditable: false,
+                      isVisible: true,
+                      circle: GCWMapCircle(
+                        centerPoint: measured.coord,
+                        radius: measured.accuracy,
+                        color: COLOR_MAP_POINT
+                      )
+                    );
+                  }).toList();
+
+                  mapPoints.add(GCWMapPoint(
+                    point: _averagedLocations.first.coord,
+                    color: COLOR_MAP_CALCULATEDPOINT,
+                    isEditable: false,
+                    isVisible: true,
+                    circle: GCWMapCircle(
+                      centerPoint: _averagedLocations.first.coord,
+                      radius: _averagedLocations.first.accuracy,
+                      color: COLOR_MAP_CALCULATEDPOINT
+                    )
+                  ));
+
+                  openInMap(context, mapPoints);
+                }
+              ) : Container(),
             child: GCWColumnedMultilineOutput(
               data: [
-                    <dynamic>[
+                    <Object?>[
                       null,
                       i18n(context, 'coords_averaging_averagedcoordinate', parameters: [_averagedLocations.length]),
                       i18n(context, 'coords_averaging_calculatedaccuracy')
@@ -118,7 +158,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
                       .toList(),
               flexValues: const [1, 6, 4],
               copyColumn: 1,
-              hasHeader: true
+              hasHeader: true,
             ),
         ),
       ],
@@ -179,6 +219,8 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
       || location.longitude == null
     ) return;
 
+    _measuredValues.add(_MeasuredLocation(LatLng(location.latitude!, location.longitude!), location.accuracy!));
+
     final double invertedAccuracy = 1 / (location.accuracy! == 0 ? 1 : location.accuracy!);
     weightedLatSum += location.latitude! * invertedAccuracy;
     weightedLonSum += location.longitude! * invertedAccuracy;
@@ -206,4 +248,11 @@ class _AveragedLocation {
   double accuracy;
 
   _AveragedLocation(this.coord, this.accuracy);
+}
+
+class _MeasuredLocation {
+  LatLng coord;
+  double accuracy;
+
+  _MeasuredLocation(this.coord, this.accuracy);
 }

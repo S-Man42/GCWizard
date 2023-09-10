@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_abc_dropdown.dart';
@@ -22,10 +22,10 @@ class Enigma extends StatefulWidget {
   const Enigma({Key? key}) : super(key: key);
 
   @override
-  EnigmaState createState() => EnigmaState();
+ _EnigmaState createState() => _EnigmaState();
 }
 
-class EnigmaState extends State<Enigma> {
+class _EnigmaState extends State<Enigma> {
   late TextEditingController _inputController;
   late TextEditingController _plugboardController;
 
@@ -47,7 +47,7 @@ class EnigmaState extends State<Enigma> {
 
   var _currentRotorInformation = 0;
 
-  final _plugboardMaskFormatter = WrapperForMaskTextInputFormatter(
+  final _plugboardMaskFormatter = GCWMaskTextInputFormatter(
       mask: '## ' * 25 + '##', filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override

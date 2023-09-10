@@ -162,3 +162,47 @@ List<String> allCharacters() {
   }
   return characters.toSet().toList();
 }
+
+String enumName(String fullName) {
+  return fullName.split('.').last;
+}
+
+String formatStringForDecimals({int integerPrecision = 2, int decimalPrecision = 6, int minDecimalPrecision = 3}) {
+  var formatString = '0' * max(1, integerPrecision) + '.';
+  if (decimalPrecision < 1) decimalPrecision = 1;
+  if (minDecimalPrecision < 1) minDecimalPrecision = 1;
+
+  if (decimalPrecision <= minDecimalPrecision) {
+    formatString += '0' * decimalPrecision;
+  } else {
+    formatString += '0' * minDecimalPrecision + '#' * (decimalPrecision - minDecimalPrecision);
+  }
+
+  return formatString;
+}
+
+String trimCharactersLeft(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  var i = 0;
+
+  while (text.length > i && text.substring(i).startsWith(characters)) {
+    i += characters.length;
+  }
+
+  return text.substring(i);
+}
+
+String trimCharactersRight(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  while (text.length >= characters.length && text.endsWith(characters)) {
+    text = text.substring(0, text.length - characters.length);
+  }
+
+  return text;
+}

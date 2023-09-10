@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -33,10 +33,10 @@ class AnimatedImageMorseCode extends StatefulWidget {
   const AnimatedImageMorseCode({Key? key, this.file}) : super(key: key);
 
   @override
-  AnimatedImageMorseCodeState createState() => AnimatedImageMorseCodeState();
+ _AnimatedImageMorseCodeState createState() => _AnimatedImageMorseCodeState();
 }
 
-class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
+class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   AnimatedImageMorseOutput? _outData;
   List<bool> _marked = [];
   MorseCodeOutput? _outText;
@@ -92,7 +92,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Widget _decodeWidgets() {
     return Column(children: <Widget>[
       GCWOpenFile(
-        supportedFileTypes: AnimatedImageState.allowedExtensions,
+        supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -186,8 +186,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   Widget _buildDecodeOutput() {
+    var output = _outText?.text;
+    if (output == null || output.isEmpty) output = i18n(context, 'animated_image_select_on_image');
     return Column(children: <Widget>[
-      GCWDefaultOutput(child: GCWOutputText(text: _outText == null ? '' : _outText!.text)),
+      GCWDefaultOutput(child: GCWOutputText(text: output)),
       GCWOutput(
           title: i18n(context, 'animated_image_morse_code_morse_code'),
           child: GCWOutputText(text: _outText == null ? '' : _outText!.morseCode)),
@@ -204,7 +206,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(
           child: Column(children: [
             GCWOpenFile(
-              supportedFileTypes: AnimatedImageState.allowedExtensions,
+              supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
               onLoaded: (GCWFile? value) {
                 if (value != null) {
                   setState(() {
@@ -218,7 +220,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(
           child: Column(children: [
             GCWOpenFile(
-              supportedFileTypes: AnimatedImageState.allowedExtensions,
+              supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
               onLoaded: (GCWFile? value) {
                 if (value != null) {
                   setState(() {
@@ -282,8 +284,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<Uint8List?>(
                 isolatedFunction: createImageAsync,
                 parameter: _buildJobDataEncode,
@@ -367,8 +369,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<AnimatedImageMorseOutput?>(
               isolatedFunction: analyseImageMorseCodeAsync,
               parameter: _buildJobDataDecode,
@@ -402,6 +404,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < _outData!.images.length; i++) {
         _outData!.images[i] = _outData!.images[linkList[i]];
       }
+      showToast(i18n(context, 'animated_image_select_on_image'));
     } else {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       return;

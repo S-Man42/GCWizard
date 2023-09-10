@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -45,10 +45,10 @@ class SymbolReplacer extends StatefulWidget {
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
 
   @override
-  SymbolReplacerState createState() => SymbolReplacerState();
+ _SymbolReplacerState createState() => _SymbolReplacerState();
 }
 
-class SymbolReplacerState extends State<SymbolReplacer> {
+class _SymbolReplacerState extends State<SymbolReplacer> {
   static String no_symbol_table_key = 'no_symbol_table';
   final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
   SymbolReplacerImage? _symbolImage;
@@ -151,8 +151,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<SymbolReplacerImage?>(
                 isolatedFunction: replaceSymbolsAsync,
                 parameter: _buildJobDataReplacer,
@@ -380,8 +380,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<SubstitutionBreakerResult?>(
               isolatedFunction: break_cipherAsync,
               parameter: _buildSubstitutionBreakerJobData,
@@ -401,8 +401,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<List<Map<String, SymbolReplacerSymbolData>>?>(
               isolatedFunction: searchSymbolTableAsync,
               parameter: _buildJobDataSearchSymbolTable,

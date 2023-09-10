@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -22,20 +22,21 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
+final List<FileType> ANIMATED_IMAGE_ALLOWED_FILETYPES = [FileType.GIF, FileType.PNG, FileType.WEBP];
+
 class AnimatedImage extends StatefulWidget {
   final GCWFile? file;
 
   const AnimatedImage({Key? key, this.file}) : super(key: key);
 
   @override
-  AnimatedImageState createState() => AnimatedImageState();
+ _AnimatedImageState createState() => _AnimatedImageState();
 }
 
-class AnimatedImageState extends State<AnimatedImage> {
+class _AnimatedImageState extends State<AnimatedImage> {
   AnimatedImageOutput? _outData;
   GCWFile? _file;
   bool _play = false;
-  static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class AnimatedImageState extends State<AnimatedImage> {
 
     return Column(children: <Widget>[
       GCWOpenFile(
-        supportedFileTypes: AnimatedImageState.allowedExtensions,
+        supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -100,15 +101,17 @@ class AnimatedImageState extends State<AnimatedImage> {
     var durations = <List<Object>>[];
     if (_outData!.durations.length > 1) {
       var counter = 0;
+      var total = 0;
+
       durations.addAll([
         [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
       ]);
       for (var value in _outData!.durations) {
         counter++;
-        durations.addAll([
-          [counter, value]
-        ]);
+        total += value;
+        durations.addAll([[counter, value]]);
       }
+      durations.addAll([[i18n(context, 'common_total'), total]]);
     }
 
     return Column(children: <Widget>[
@@ -154,8 +157,8 @@ class AnimatedImageState extends State<AnimatedImage> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<AnimatedImageOutput?>(
               isolatedFunction: analyseImageAsync,
               parameter: _buildJobData,

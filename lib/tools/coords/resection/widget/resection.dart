@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -22,10 +22,10 @@ class Resection extends StatefulWidget {
   const Resection({Key? key}) : super(key: key);
 
   @override
-  ResectionState createState() => ResectionState();
+ _ResectionState createState() => _ResectionState();
 }
 
-class ResectionState extends State<Resection> {
+class _ResectionState extends State<Resection> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoords1 = defaultBaseCoordinate;
@@ -109,8 +109,8 @@ class ResectionState extends State<Resection> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: resectionAsync,
                 parameter: _buildJobData,

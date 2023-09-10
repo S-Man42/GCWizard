@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
@@ -18,10 +20,10 @@ Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
 
   switch (type) {
     case FileType.GPX:
-      var xml = String.fromCharCodes(file.bytes);
+      var xml = convertBytesToString(file.bytes);
       return parseCoordinatesFile(xml);
     case FileType.KML:
-      var xml = String.fromCharCodes(file.bytes);
+      var xml = convertBytesToString(file.bytes);
       return parseCoordinatesFile(xml, kmlFormat: true);
     case FileType.KMZ:
       InputStream input = InputStream(file.bytes.buffer.asByteData());
@@ -30,10 +32,9 @@ Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
       if (archive.files.isNotEmpty) {
         var file = archive.first;
         file.decompress();
-        if (file.content is Iterable<int>) {
-          var xml = String.fromCharCodes(file.content as Iterable<int>);
-          return parseCoordinatesFile(xml, kmlFormat: true);
-        }
+
+        var xml = convertBytesToString(Uint8List.fromList(file.content as List<int>));
+        return parseCoordinatesFile(xml, kmlFormat: true);
       }
       break;
     default: break;
@@ -212,7 +213,7 @@ class _KmlReader {
     if (coords == null) return [];
 
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
-    var regExp = RegExp(r'(-?[\.\d]+),(-?[\.\d]+),?(-?[\.\d]+)?');
+    var regExp = RegExp(r'(-?[.\d]+),(-?[.\d]+),?(-?[.\d]+)?');
 
     regExp.allMatches(coords.innerText).forEach((coordinates) {
       var lat = coordinates.group(2);

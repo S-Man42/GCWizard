@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,10 +11,10 @@ class OneTimePad extends StatefulWidget {
   const OneTimePad({Key? key}) : super(key: key);
 
   @override
-  OneTimePadState createState() => OneTimePadState();
+ _OneTimePadState createState() => _OneTimePadState();
 }
 
-class OneTimePadState extends State<OneTimePad> {
+class _OneTimePadState extends State<OneTimePad> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 
@@ -29,15 +29,15 @@ class OneTimePadState extends State<OneTimePad> {
   // (entered value in one input will be used for the other one)
   final _mask = '#' * 10000;
   final _filter = {"#": RegExp(r'[A-Za-z]')};
-  late WrapperForMaskTextInputFormatter _inputMaskInputFormatter;
-  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
+  late GCWMaskTextInputFormatter _inputMaskInputFormatter;
+  late GCWMaskTextInputFormatter _keyMaskInputFormatter;
 
   @override
   void initState() {
     super.initState();
 
-    _inputMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
-    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _inputMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _keyMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
 
     _inputController = TextEditingController(text: _currentInput);
     _keyController = TextEditingController(text: _currentKey);

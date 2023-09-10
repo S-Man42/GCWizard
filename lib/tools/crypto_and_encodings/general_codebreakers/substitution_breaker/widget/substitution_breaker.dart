@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -26,10 +26,10 @@ class SubstitutionBreaker extends StatefulWidget {
   const SubstitutionBreaker({Key? key}) : super(key: key);
 
   @override
-  SubstitutionBreakerState createState() => SubstitutionBreakerState();
+ _SubstitutionBreakerState createState() => _SubstitutionBreakerState();
 }
 
-class SubstitutionBreakerState extends State<SubstitutionBreaker> {
+class _SubstitutionBreakerState extends State<SubstitutionBreaker> {
   String _currentInput = '';
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   SubstitutionBreakerResult? _currentOutput;
@@ -84,8 +84,8 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<SubstitutionBreakerResult?>(
                 isolatedFunction: break_cipherAsync,
                 parameter: _buildJobData,

@@ -52,6 +52,11 @@ class VariableCoordinateSingleResult {
   Map<String, String>? variables;
 
   VariableCoordinateSingleResult(this.coordinate, [this.variables]);
+
+  @override
+  String toString() {
+    return coordinate.toString() + '\n' + variables.toString();
+  }
 }
 
 VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, String> substitutions, {ProjectionData? projectionData}) {
@@ -141,7 +146,7 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
 
     } else {
       var parsedCoord = _parseCoordText(_removeBrackets(expandedText.result));
-      if (parsedCoord == null || parsedCoord.coordinate.toLatLng() == null) continue;
+      if (parsedCoord == null || ![CoordinateFormatKey.DEC, CoordinateFormatKey.DMM, CoordinateFormatKey.DMS].contains(parsedCoord.coordinate.format.type) || parsedCoord.coordinate.toLatLng() == null) continue;
 
       coords.add(VariableCoordinateSingleResult(parsedCoord.coordinate.toLatLng()!, expandedText.variables));
       if (parsedCoord.leftPadCoordinate != null) {

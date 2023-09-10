@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
@@ -20,10 +20,10 @@ class CenterThreePoints extends StatefulWidget {
   const CenterThreePoints({Key? key}) : super(key: key);
 
   @override
-  CenterThreePointsState createState() => CenterThreePointsState();
+ _CenterThreePointsState createState() => _CenterThreePointsState();
 }
 
-class CenterThreePointsState extends State<CenterThreePoints> {
+class _CenterThreePointsState extends State<CenterThreePoints> {
   LatLng _currentCenter = defaultCoordinate;
   double _currentDistance = 0.0;
 
@@ -92,8 +92,8 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<List<CenterPointDistance>?>(
                 isolatedFunction: centerPointThreePointsAsync,
                 parameter: _buildJobData,

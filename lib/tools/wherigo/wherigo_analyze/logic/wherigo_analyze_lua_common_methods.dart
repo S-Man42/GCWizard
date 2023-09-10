@@ -4,6 +4,7 @@ String _normalizeLUAmultiLineText(String LUA) {
   return LUA
       .replaceAll('[[\n', '[[')
       .replaceAll('<BR>\n', '<BR>')
+      .replaceAll('<BR>', ' ')
       .replaceAll('&gt;', '>')
       .replaceAll('&lt;', '<')
       .replaceAll('&nbsp;', ' ')
@@ -177,6 +178,7 @@ WherigoCartridgeLUA _faultyWherigoCartridgeLUA(
       Media: [],
       Messages: [],
       Variables: [],
+      BuilderVariables: [],
       NameToObject: {},
       ResultStatus: resultStatus,
       ResultsLUA: _http_code_http,

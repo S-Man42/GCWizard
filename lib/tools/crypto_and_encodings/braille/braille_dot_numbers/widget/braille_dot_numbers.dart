@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -16,10 +16,10 @@ class BrailleDotNumbers extends StatefulWidget {
   const BrailleDotNumbers({Key? key}) : super(key: key);
 
   @override
-  BrailleDotNumbersState createState() => BrailleDotNumbersState();
+ _BrailleDotNumbersState createState() => _BrailleDotNumbersState();
 }
 
-class BrailleDotNumbersState extends State<BrailleDotNumbers> {
+class _BrailleDotNumbersState extends State<BrailleDotNumbers> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
@@ -30,7 +30,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  final _decodeInputFormatter = WrapperForMaskTextInputFormatter(
+  final _decodeInputFormatter = GCWMaskTextInputFormatter(
       mask: '#' * 100000, filter: {"#": RegExp(r'[0-9\s]')});
 
   @override
@@ -117,7 +117,6 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       if (_currentDecodeInput.isEmpty) {
         return const GCWDefaultOutput();
       }
-
       var segments = decodeBraille(
           _currentDecodeInput.split(RegExp(r'\s+')).toList(),
           _currentLanguage,
