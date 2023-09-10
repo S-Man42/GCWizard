@@ -25,7 +25,7 @@ class _TapirState extends State<Tapir> {
   var _currentOneTimePad = '';
 
   final _maskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '##### ' * 100000 + '#####', filter: {"#": RegExp(r'\d')});
+      GCWMaskTextInputFormatter(mask: '##### ' * 100000 + '#####', filter: {"#": RegExp(r'\d')});
 
   @override
   void initState() {

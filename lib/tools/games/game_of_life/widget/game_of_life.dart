@@ -38,7 +38,7 @@ class _GameOfLifeState extends State<GameOfLife> {
   late TextEditingController _currentCustomBirthController;
   var _currentCustomInverse = false;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
 
   @override
   void initState() {

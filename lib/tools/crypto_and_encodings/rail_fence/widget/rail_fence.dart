@@ -23,7 +23,7 @@ class _RailFenceState extends State<RailFence> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override
   Widget build(BuildContext context) {

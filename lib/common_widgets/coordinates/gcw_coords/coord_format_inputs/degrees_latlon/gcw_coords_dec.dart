@@ -3,9 +3,9 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsDEC extends StatefulWidget {
   final void Function(DEC) onChanged;
   DEC coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();
@@ -28,7 +28,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   String _currentLonDegrees = '';
   String _currentLonMilliDegrees = '';
 
-  bool _initialized = false;
+
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var dec = widget.coordinates;
       _currentLatDegrees = dec.latitude.abs().floor().toString();
       _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
@@ -72,7 +72,6 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
       _LonDegreesController.text = _currentLonDegrees;
       _LonMilliDegreesController.text = _currentLonMilliDegrees;
 
-      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -96,7 +95,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                 padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: _DegreesLatTextInputFormatter(allowNegativeValues: false),
+                    textInputFormatter: DegreesLatTextInputFormatter(allowNegativeValues: false),
                     controller: _LatDegreesController,
                     onChanged: (IntegerText ret) {
                       setState(() {
@@ -153,7 +152,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
                 padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: _DegreesLonTextInputFormatter(allowNegativeValues: false),
+                    textInputFormatter: DegreesLonTextInputFormatter(allowNegativeValues: false),
                     controller: _LonDegreesController,
                     onChanged: (IntegerText ret) {
                       setState(() {

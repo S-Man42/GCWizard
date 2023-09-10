@@ -35,7 +35,7 @@ class _HomophoneState extends State<Homophone> {
 
   late TextEditingController _currentRotationController;
   late TextEditingController _newKeyController;
-  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
+  late GCWMaskTextInputFormatter _keyMaskInputFormatter;
   String _currentInput = '';
   Alphabet _currentAlphabet = alphabetGerman1;
   _KeyType _currentKeyType = _KeyType.GENERATED;
@@ -54,7 +54,7 @@ class _HomophoneState extends State<Homophone> {
 
     _currentRotationController = TextEditingController(text: _currentRotation.toString());
     _newKeyController = TextEditingController(text: _maxLetter());
-    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _keyMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
   }
 
   @override

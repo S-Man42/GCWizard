@@ -64,6 +64,7 @@ import 'package:gc_wizard/tools/coords/distance_and_bearing/widget/distance_and_
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/widget/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/equilateral_triangle/widget/equilateral_triangle.dart';
 import 'package:gc_wizard/tools/coords/format_converter/widget/format_converter.dart';
+import 'package:gc_wizard/tools/coords/geohashing/widget/geohashing.dart';
 import 'package:gc_wizard/tools/coords/intersect_bearing_and_circle/widget/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_bearings/widget/intersect_bearings.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_four_points/widget/intersect_four_points.dart';
@@ -260,8 +261,10 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/triangle/widget/triangle.dart';
+import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
+import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
@@ -271,6 +274,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'selector_lists/miscellaneous_selection.dart';
 
 
 
@@ -581,7 +585,9 @@ void _initStaticToolList() {
       className(const Gade()),
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
+      className(const GCWizardScript()),
       className(const GCD()),
+      className(const Geohashing()),
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
@@ -713,6 +719,7 @@ void _initStaticToolList() {
       className(const Trifid()),
       className(const Trithemius()),
       className(const TTS()),
+      className(const UFI()),
       className(const UnitConverter()),
       className(const UnixTime()),
       className(const UrwigoHashBreaker()),
@@ -750,6 +757,7 @@ void _initStaticToolList() {
       className(const ImagesAndFilesSelection()),
       className(const ScienceAndTechnologySelection()),
       className(const SymbolTableSelection()),
+      className(const MiscellaneousSelection()),
     ].contains(className(element.tool));
   }).toList();
 
