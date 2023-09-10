@@ -961,7 +961,7 @@ class GC8K7RC extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return '$velocity\n$distance';
   }
 }
