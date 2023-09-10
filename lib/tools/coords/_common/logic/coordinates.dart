@@ -969,7 +969,7 @@ class What3Words extends BaseCoordinate {
   }
 
   @override
-  String toString() {
+  String toString([int? precision]) {
     return word1 + '.' + word2 + '.' + word3;
   }
 }
