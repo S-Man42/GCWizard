@@ -161,6 +161,7 @@ import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagrou
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/images_and_files/adventure_labs/widget/adventure_labs.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -494,6 +495,7 @@ void _initStaticToolList() {
     return [
       className(const Abaddon()),
       className(const ADFGVX()),
+      className(const AdventureLabs()),
       className(const Affine()),
       className(const AlcoholMass()),
       className(const ALGOL()),
