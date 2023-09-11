@@ -150,6 +150,6 @@ void openInFormulaGroups(BuildContext context) {
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
-              tool: FormulaSolverFormulaGroups(),
+              tool: const FormulaSolverFormulaGroups(),
               id: 'formulasolver')));
 }

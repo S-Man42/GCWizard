@@ -66,6 +66,7 @@ String encodeBase64(String input) {
 
 
 String decodeBase64(String input) {
+
    if (input.isEmpty) return '';
 
    var out = '';
@@ -156,7 +157,6 @@ String encodeBase58(String input) {
     num = div;
   }
   if (num > 0) encoded = encoded + alphabet[num];
-
   return encoded.split('').reversed.join('');
 }
 

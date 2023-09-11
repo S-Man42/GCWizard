@@ -169,6 +169,7 @@
   "games_sudokusolver": "raster sudoku-oplosser",
   "gccode": "hexadecimaal",
   "gcd": "GGD grootstegemeenschappelijkedeler gemeenschappelijkedeler grootstedeler deler deelbaar veelvoud",
+  "geohashing": "dates days stockprice money locations",
   "glagolitic": "glagolitische slavisch",
   "gray": "afstand",
   "grid": "cellen regels kolommen intersecties punten coördinatensysteem ruitjespapier ruitjes ruiten grafisch millimeterpapier schaakbord lotterij",
@@ -475,7 +476,11 @@
   "symbol_illuminati_v1": "mannelijk mannelijkheid",
   "symbol_illuminati_v2": "vrouwelijk vrouwelijkheid asterisk driehoeken vierkanten rechthoeken haarspelden cirkels zandlopervorm",
   "symbol_intergalactic": "intergalactische sterrenstelsel galactisch heelal melkweg ruimte galaxy buitenaards alien ruimtewezen futuristische stippen strepen dikkelijnen hoekig gehoekt",
+<<<<<<< HEAD
+  "symbol_interlac": "dc detectivecomics aliens",
+=======
   "symbol_interlac": "dc detectivecomics aliens buitenaards",
+>>>>>>> 537f05435d0e569e3d2e1306f0f803e1bef3621c
   "symbol_iokharic": "iokharic drakenalfabet skyrim videogame rollenspel dungeons dragons draak",
   "symbol_kabouter_abc": "welpen scouts kabouters esta's nederland scouting Nederlands bambilië dwergen appel boom cent domino eend fles golf hark iglo jas kat mond naald oog pijl verticalestrepen verticalelijnen raam ster trap wenkbrauwen vlag wiel horizontalelijnen horizontalestrepen ijs zon limonade lachebekje smiley uil",
   "symbol_kabouter_abc_1947": "welpen kabouters nederland scouting acht boom cent hoed fles golf denkmuts elfje inktlap hark vierkantmetstip kat juk limonade glas glaasje smiley lachebekje naald paddenstoel verticalelijnen verticalestrepen raam venster ster spiraal uil oehoe vlieger wiel horizontalestrepen horizontalelijnen zon oliebol krentenbol balmetstippen touw swirl werveling ijspegel",
@@ -623,6 +628,7 @@
   "tomtom": "",
   "trifid": "",
   "trithemius": "",
+  "ufi": "vatin vatcountrycode companykey formulationnumber productnumber productidentifier vatnumber vatinnumber poisoncenters poisencentres toxicology toxicologicalriskassessment medical accidential emergency",
   "unitconverter": "eenheden converter omzetter omzetting lengte lengtematen lengtemaat snelheid snelheden energie kracht vermogen dichtheid druk hoek massa gewicht oppervlakte volume badkuipen temperatuur tijd typografie graden voetbalvelden dichtheden oppervlakken micro nano pico femto atto zepto yocto ronto quecto mega giga tera terra peta exa zetta yotta ronna quetta",
   "urwigo_textdeobfuscation": "urwigo wherigo decoderen deobfuscator tekst dtabel versleuteling ontsleuteling coderen",
   "vanity": "telefoontoetsen telefoon toetsen knoppen cijfers keypad toetsenbord sms mobiel tekstbericht teksten berichten mobieltje gsm",
