@@ -29,21 +29,19 @@ class pushSolver extends Solver {
       if (_shouldSkip(line, hint, i)) {
         continue;
       }
-      //if ((line.length >= i + hint + 1) && hints.isNotEmpty) {
       var _line = (line.length >= i + hint + 1) ? line.sublist(i + hint + 1) : <int>[];
       var _hints = hints.isNotEmpty ? hints.sublist(1) : <int>[];
-        var rest = pushLeft(_line, _hints);
-        if (rest != null) {
-          line = line.isNotEmpty ? line.sublist(0) : <int>[];
-          for (var x = i; x < i + hint; x++) {
-            line[x] = 1;
-          }
-          for (var x = 0; x < rest.length; x++) {
-            line[x + i + hint + 1] = rest[x];
-          }
-          return line;
+      var rest = pushLeft(_line, _hints);
+      if (rest != null) {
+        line = line.isNotEmpty ? line.sublist(0) : <int>[];
+        for (var x = i; x < i + hint; x++) {
+          line[x] = 1;
         }
-      //}
+        for (var x = 0; x < rest.length; x++) {
+          line[x + i + hint + 1] = rest[x];
+        }
+        return line;
+      }
     }
     return null;
   }

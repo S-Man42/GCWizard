@@ -1,7 +1,3 @@
-// const assert = require('assert');
-// const clone = require('./util').clone;
-// const ascii = require('./serializers/ascii');
-// const svg = require('./serializers/svg');
 import 'dart:convert';
 import 'dart:math';
 
@@ -97,7 +93,6 @@ class Puzzle {
     for (var row in rows) {
       if (row.any((item) => item == 0)) return false;
     }
-    //state = PuzzleState.Finished;
     return true;
   }
 
@@ -108,7 +103,6 @@ class Puzzle {
     if (!ok) return false;
     columns.forEachIndexed((i, column) => ok = ok && _isOk(column, columnHints[i]));
 
-    //if (ok) state = PuzzleState.Solved;
     return ok;
   }
 
@@ -202,131 +196,7 @@ class Puzzle {
     return list;
   }
 
-
-  // void initAccessors(state) {
-  //
-  //   var rows = Array(height);
-  //   var makeRow = (rowIndex) => {
-  //   var row = Array(width).fill(0);
-  //     row.forEach((_, colIndex) => {
-  //       Object.defineProperty(row, colIndex, {
-  //         get() {
-  //           return state[rowIndex * width + colIndex];
-  //         },
-  //         set(el) {
-  //           state[rowIndex * width + colIndex] = el;
-  //         }
-  //       });
-  //     });
-  //     return row;
-  //   };
-  //   for (var rowIndex = 0; rowIndex < height; rowIndex++) {
-  //     var row = makeRow(rowIndex);
-  //     Object.defineProperty(rows, rowIndex, {
-  //       get() {
-  //         return row;
-  //       },
-  //       set(newRow) {
-  //         newRow.forEach((el, x) => state[rowIndex * width + x] = el);
-  //       }
-  //     });
-  //   }
-  //
-  //   var columns = Array(width);
-  //   var makeColumn = (colIndex) => {
-  //     var column = Array(height).fill(0);
-  //     column.forEach((_, rowIndex) => {
-  //       Object.defineProperty(column, rowIndex, {
-  //         get() {
-  //           return state[rowIndex * width + colIndex];
-  //         },
-  //         set(el) {
-  //           state[rowIndex * width + colIndex] = el;
-  //         }
-  //       });
-  //     });
-  //     return column;
-  //   };
-  //   for (var colIndex = 0; colIndex < width; colIndex++) {
-  //     var column = makeColumn(colIndex);
-  //     Object.defineProperty(columns, colIndex, {
-  //       get() {
-  //         return column;
-  //       },
-  //       set(newCol) {
-  //         newCol.forEach((el, y) => state[y * width + colIndex] = el);
-  //       }
-  //     });
-  //   }
-  //
-  //   Object.defineProperties(this, {
-  //     rows: {
-  //       get() {
-  //         return rows;
-  //       },
-  //       set(newRows) {
-  //         newRows.forEach((el, i) => {
-  //           rows[i] = el;
-  //         });
-  //       }
-  //     },
-  //     columns: {
-  //       get() {
-  //         return columns;
-  //       },
-  //       set(cols) {
-  //         cols.forEach((el, i) => {
-  //           columns[i] = el;
-  //         });
-  //       }
-  //     },
-  //     isFinished: {
-  //       get() {
-  //         return state.every(item => item !== 0);
-  //       }
-  //     },
-  //     snapshot: {
-  //       get() {
-  //         return clone(state);
-  //       }
-  //     },
-  //     isSolved: {
-  //       get() {
-  //         let isOk = (line, hints) => {
-  //           let actual = line.join('').split(/(?:-1)+/g).map(x => x.length).filter(x => x);
-  //           return actual.length === hints.length && actual.every((x, i) => x === hints[i]);
-  //         };
-  //         return (
-  //           this.isFinished &&
-  //           columns.every((col, i) => isOk(col, this.columnHints[i])) &&
-  //           rows.every((row, i) => isOk(row, this.rowHints[i]))
-  //         );
-  //       }
-  //     }
-  //   });
-  //
-  //   this.import = function(puzzle) {
-  //     state = clone(puzzle.snapshot);
-  //   };
-  //
-  //   this.toJSON = function() {
-  //     return {
-  //       columns: this.columnHints,
-  //       rows: this.rowHints,
-  //       content: state
-  //     }
-  //   };
-  //
-  // }
-
   static void _checkConsistency(Puzzle data) {
-    // if (content) {
-    //   var invalid = !content || !Array.isArray(content);
-    //   invalid = invalid || (content.length != this.height * this.width);
-    //   invalid = invalid || !content.every(i => i === -1 || i === 0 || i === 1);
-    //   assert(!invalid, 'Invalid content data');
-    // }
-
     if (data.rowHints.isEmpty || data.columnHints.isEmpty ||
         data.height == 0 || data.width == 0) {
       data.state = PuzzleState.InvalidContentData;

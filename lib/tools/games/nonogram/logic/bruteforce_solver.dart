@@ -86,13 +86,7 @@ class bruteForce extends Solver {
       }
       throw FormatException('Cannot fill gap ($gap, $hintList)');
     }).toList();
-    // if (debugMode) {
-    //   if (gap.some((x, i) => x !== result[i])) {
-    //     console.log(`Gap solved: [${gap}], ${JSON.stringify(hintList)} -> ${result}`);
-    //   } else {
-    //     console.log(`No progress on gap: [${gap}], ${JSON.stringify(hintList)}`);
-    //   }
-    // }
+
     return result;
   }
 

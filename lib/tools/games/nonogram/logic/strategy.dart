@@ -1,4 +1,5 @@
 //ported from https://github.com/ThomasR/nonogram-solver
+//json import with nonogram.org format
 
 import 'dart:math';
 
@@ -89,7 +90,6 @@ class Strategy {
     var skip = false;
 
     // run on rows
-
     skip = _run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
     //print(counter.toString() + " skip: " + skip.toString());
     if (skip) {

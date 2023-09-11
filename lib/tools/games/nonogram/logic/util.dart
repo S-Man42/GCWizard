@@ -6,7 +6,7 @@ int hintSum(List<int> hints) {
   return hints.reduceIndexed((i, x, y) => x + y + (i != 0 ? 1 : 0));
 }
 
-ShiftResult trimLine(List<int> line, List<int> hints) {
+_ShiftResult trimLine(List<int> line, List<int> hints) {
 
   var minIndex = line.indexOf(0);
   if (minIndex == -1) {
@@ -30,7 +30,7 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
           break;
         }
       } else {
-        clonedHints.removeFirst(); //.shift()
+        clonedHints.removeFirst();
       }
     }
   }
@@ -52,7 +52,7 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
           break;
         }
       } else {
-        clonedHints.removeLast(); //pop();
+        clonedHints.removeLast();
       }
     }
   }
@@ -60,7 +60,7 @@ ShiftResult trimLine(List<int> line, List<int> hints) {
     throw FormatException('Impossible line $line, $hints');
   }
 
-  return ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
+  return _ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
       _TrimInfo( line.sublist(0, minIndex), line.sublist(maxIndex + 1)));
 }
 
@@ -71,42 +71,12 @@ List<int> restoreLine(List<int> line, _TrimInfo trimInfo) {
   return _line;
 }
 
-// const spinner = {
-//   steps: ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'],
-//   index: 0,
-//   lastExecution: 0,
-//   spin: function (stream = process.stderr) {
-//     if (!stream) {
-//       return;
-//     }
-//     let now = Date.now();
-//     if (now - this.lastExecution < 42) {
-//       return;
-//     }
-//     this.lastExecution = now;
-//     stream.write('\x1b[1G');
-//     stream.write(this.steps[this.index] + ' ');
-//     this.index++;
-//     if (this.index >= this.steps.length) {
-//       this.index = 0;
-//     }
-//   }
-// };
-//
-// module.exports = {
-//   clone,
-//   trimLine,
-//   restoreLine,
-//   spinner,
-//   hintSum
-// };
-
-class ShiftResult {
+class _ShiftResult {
   List<int>? trimmedLine;
   List<int>? trimmedHints;
   _TrimInfo? trimInfo;
 
-  ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo);
+  _ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo);
 }
 
 class _TrimInfo {

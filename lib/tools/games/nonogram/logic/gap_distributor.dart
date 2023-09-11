@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 
-List<List<int>> findGaps(List<int> line) {
+List<List<int>> _findGaps(List<int> line) {
   var result = <List<int>>[];
   line.forEachIndexed((i, el) {
     if (el > -1) {
@@ -25,7 +25,7 @@ _GapInfo? _allWithOneGap(List<int> line, List<List<int>> gaps, List<int> hints) 
 }
 
 _GapInfo? gapDistributor(List<int> line, List<int> hints) {
-  var gaps = findGaps(line);
+  var gaps = _findGaps(line);
   if (gaps.length == 1) {
     return _allWithOneGap(line, gaps, hints);
   }
