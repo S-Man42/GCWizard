@@ -58,7 +58,7 @@ class Strategy {
           _solveOnce(puzzle, solver, i); //, solutionSequence
           //print(puzzle.state);
           progress = !listEquals(snapshot, puzzle.snapshot);
-          print("progress " + progress.toString());
+          //print("progress " + progress.toString());
         });
 
       } while(progress);
@@ -91,7 +91,7 @@ class Strategy {
     // run on rows
 
     skip = _run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
-    print(counter.toString() + " skip: " + skip.toString());
+    //print(counter.toString() + " skip: " + skip.toString());
     if (skip) {
       return;
     }
@@ -107,7 +107,7 @@ class Strategy {
     // print('columns');
     // print(puzzle.columns);
     counter++;
-    print(counter.toString() + " skip: " + skip.toString());
+    //print(counter.toString() + " skip: " + skip.toString());
   }
   var counter = 0;
 

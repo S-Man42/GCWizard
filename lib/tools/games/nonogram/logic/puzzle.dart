@@ -44,16 +44,9 @@ class Puzzle {
     return List<List<int>>.generate(data.height, (index) => List<int>.filled(data.width, 0));
   }
 
-  // constructor(data) {
-  //   if (typeof data === 'string') {
-  //     data = JSON.parse(data);
-  //   }
-  //   let initialState = this.mapData(data);
-  //   this.initAccessors(initialState);
-  // }
   static void mapData(Puzzle data) {
-    data.rowHints = cleanClone(data.rowHints);
-    data.columnHints = cleanClone(data.columnHints);
+    data.rowHints = _cleanClone(data.rowHints);
+    data.columnHints = _cleanClone(data.columnHints);
     data.height = data.rowHints.length;
     data.width = data.columnHints.length;
     data.rows = generateRows(data);
@@ -61,7 +54,7 @@ class Puzzle {
     _checkConsistency(data);
   }
 
-  static List<List<int>> cleanClone(List<List<int>> hints) {
+  static List<List<int>> _cleanClone(List<List<int>> hints) {
     return hints.map((h) {
       if (h.length == 1 && h[0] == 0) {
         return <int>[];
