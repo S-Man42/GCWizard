@@ -82,14 +82,12 @@ class NonogramBoardPainter extends CustomPainter {
     var maxColumnHints = _maxColumnHintCount(board);
 
     double widthOuter = size.width - 2 * border;
-    double heightOuter = size.height - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
     double widthInner = (widthOuter - _lineOffset(maxRowHints + board.width)) / (maxRowHints + board.width);
     double heightInner = widthInner;
     var fontsize = heightInner * 0.7;
     var fieldBorderOn = widthInner / 10;
-    var fieldBorderOff = widthInner / 4;
 
     var xInnerStart = xOuter + (maxRowHints * widthInner);
     var xInnerEnd = xInnerStart + (board.width * widthInner) + _lineOffset(board.width);

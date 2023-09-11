@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 const _cacheLimits = [2, 20];
 
 class bruteForce extends Solver {
-  Map<String, _GapResult> _solveGapCache = {};
+  final Map<String, _GapResult> _solveGapCache = {};
 
   _GapResult? _solveGap(List<int> gap, List<int> hints) {
     var zeros = List<int>.filled(gap.length, 0);
@@ -20,9 +20,6 @@ class bruteForce extends Solver {
       zeros.fillRange(0, zeros.length, 0);
       return _GapResult(zeros, ones);
     }
-    // if (solveGap.cache == null) {
-    //   solveGap.cache = [];
-    // }
     if (_cacheLimits[0] <= hints.length && hints.length <= _cacheLimits[1]) {
       var key = [gap, hints].toString();
       if (_solveGapCache.containsKey(key)) {
