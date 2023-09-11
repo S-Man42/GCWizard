@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
@@ -29,7 +30,11 @@ class Puzzle {
     }
   }
 
-  static Puzzle generate(int height, int width) {
+  void solve() {
+    Strategy().solve(this);
+  }
+
+   static Puzzle generate(int height, int width) {
    var puzzle = Puzzle(List<List<int>>.generate(height, (index) => []),
                  List<List<int>>.generate(width, (index) => []));
    mapData(puzzle);

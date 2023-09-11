@@ -14,7 +14,6 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
-import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
@@ -110,8 +109,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      var strategy  = Strategy();
-                      _currentBoard = strategy.solve(_currentBoard);
+                      _currentBoard.solve();
                       if (_currentBoard.state != PuzzleState.Solved) {
                         showToast(i18n(context, 'sudokusolver_error'));
                       }

@@ -61,8 +61,7 @@ void main() {
       test('rows: ${elem['rows']},columns: ${elem['columns']}',() {
         var puzzle = Puzzle(elem['rows'] as List<List<int>>,elem['columns'] as List<List<int>>);
         Puzzle.mapData(puzzle);
-        var s = Strategy();
-        s.solve(puzzle, withTrialAndError : true);
+        puzzle.solve();
         var _actual = puzzle;
         
         print(_actual.rows.toString());

@@ -24,9 +24,7 @@ class Strategy {
   //  * @param {boolean} randomize 'false' to run trial and error in order. Defaults to 'true'.
   //  *     In practice, using random guessing mostly yields faster results.
   //  */
-  Strategy({this.randomize = true}) { //solvers,
-    //this.solvers = solvers;
-  }
+  Strategy({this.randomize = true});
 
   /**
    * Solve the puzzle.
