@@ -1,7 +1,3 @@
-// const assert = require("assert");
-//
-// const Puzzle = require('./Puzzle');
-
 import 'dart:math';
 
 import 'package:collection/collection.dart';
@@ -9,9 +5,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:utility/utility.dart';
 
-
-// const { recursionDepth: maxRecursionLevel, debugMode } = require('commander');
-const int maxRecursionLevel = 0;
+const int _maxRecursionLevel = 0;
 
 int getNextIndex(List<int> zeroIndexes, bool randomize) {
   if (zeroIndexes.isEmpty) return 0;
@@ -24,20 +18,15 @@ int getNextIndex(List<int> zeroIndexes, bool randomize) {
 }
 
 Puzzle? recurse(Strategy strategy, int currentRecursionLevel, List<int> snapshot, int index, Puzzle trial) {
-  if (currentRecursionLevel >= maxRecursionLevel) {
+  if (currentRecursionLevel >= _maxRecursionLevel) {
     // reset and just try the next index
     snapshot[index] = 0;
     return null;
   }
   // try recursion
   var anotherTry = Puzzle(trial.rowHints, trial.columnHints, content: snapshot);
-  // if (debugMode) {
-  //   console.log('>>> Recursing to level ${currentRecursionLevel + 1}');
-  // }
   var result = guessAndConquer(strategy, anotherTry, currentRecursionLevel: currentRecursionLevel + 1);
-  // if (debugMode) {
-  //   console.log('<<< Done recursing level ${currentRecursionLevel + 1}');
-  // }
+
   return result;
 }
 
@@ -88,31 +77,20 @@ Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionL
           // This is a contradiction
           throw Exception('Not a solution');
         }
-        // if (debugMode) {
-        //   console.log('Successfully guessed square ${index}=1');
-        // }
         // We found a solution by guessing.
         return trial;
       }
       // No progress
       var result = recurse(strategy, currentRecursionLevel, snapshot, index, trial);
       if (result != null) {
-        // if (debugMode) {
-        //   console.log('[${currentRecursionLevel}] Successfully guessed square ${index}=1');
-        // }
         return result;
       }
       // reset and just try the next index
       snapshot[index] = 0;
     } catch (e) {
       // A contradiction has occurred, which means we can be sure that 'index'th cell is empty
-      // if (debugMode) {
-      //   console.log('[${currentRecursionLevel}] Successfully guessed square ${index}=-1 by contradiction');
-      // }
       snapshot[index] = -1;
     }
   }
   return null;
 }
-
-// module.exports = guessAndConquer;
