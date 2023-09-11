@@ -2,7 +2,6 @@ import 'dart:io' as io;
 
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
-import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:path/path.dart' as path;
 
 var testDirPath = 'test/tools/games/nonogram/resources/';
