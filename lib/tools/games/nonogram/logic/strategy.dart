@@ -130,7 +130,7 @@ class Strategy {
         var actual = line.line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
         print(
             "trimLine Index: " + line.index.toString() + " " + counter.toString() + " " + solverIndex.toString() + " " +
-                actual.toString() + " " + trimresult.trimmedLine.toString());
+                actual.toString().replaceAll(' ', '') + " " + trimresult.trimmedLine.toString().replaceAll(' ', ''));
       }
       // if (debugMode) {
       // var start = Date.now();
