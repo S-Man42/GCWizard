@@ -15,16 +15,16 @@ List<List<int>> _findGaps(List<int> line) {
   return result;
 }
 
-_GapInfo1? _allWithOneGap(List<int> line, List<List<int>> gaps, List<int> hints) {
+_GapInfo? _allWithOneGap(List<int> line, List<List<int>> gaps, List<int> hints) {
   var left = gaps[0][0];
   var right = gaps[0][1];
   if (pushSolver.pushLeft(line.sublist(left, right), hints) != null) {
-    return _GapInfo1(gaps, [[hints]]);
+    return _GapInfo(gaps, [[hints]]);
   }
   return null;
 }
 
-_GapInfo1? gapDistributor(List<int> line, List<int> hints) {
+_GapInfo? gapDistributor(List<int> line, List<int> hints) {
   var gaps = _findGaps(line);
   if (gaps.length == 1) {
     return _allWithOneGap(line, gaps, hints);
@@ -50,19 +50,12 @@ _GapInfo1? gapDistributor(List<int> line, List<int> hints) {
       }
     }
   }
-  return _GapInfo1(gaps, distributions);
+  return _GapInfo(gaps, distributions);
 }
 
 class _GapInfo {
   List<List<int>> gaps;
-  List<List<int>> distributions;
-
-  _GapInfo(this.gaps, this.distributions);
-}
-
-class _GapInfo1 {
-  List<List<int>> gaps;
   List<List<List<int>>> distributions;
 
-  _GapInfo1(this.gaps, this.distributions);
+  _GapInfo(this.gaps, this.distributions);
 }
