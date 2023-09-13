@@ -96,13 +96,13 @@ class _PietState extends State<Piet> {
               });
             });
           },
-        ), // Fixes a display issue
-
-        GCWImageView(
-          imageData: _originalData?.bytes == null
-              ? GCWImageViewData(GCWFile(bytes: Uint8List(0)))
-              : GCWImageViewData(GCWFile(bytes: _originalData!.bytes)),
         ),
+        if (_originalData != null)
+          GCWImageView(
+            imageData: _originalData?.bytes == null
+                ? GCWImageViewData(GCWFile(bytes: Uint8List(0)))
+                : GCWImageViewData(GCWFile(bytes: _originalData!.bytes)),
+          ),
         _buildInterpreterOutput(context)
       ],
     );
