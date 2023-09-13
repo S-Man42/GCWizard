@@ -99,11 +99,11 @@ class bruteForce extends Solver {
     }
 
     var distributionsPerGap = gapResult.gaps.mapIndexed((i, gap) {
-      Map<String, List<List<int>>> set = {};
+      Map<String, List<int>> set = {};
       for (var dist in gapResult.distributions) {
-        var key = dist.toSet().toString();
-        if (!set.containsKey(key)) {
-          set.addAll({key : dist.toSet().toList()});
+        var value = dist[i].toSet().toList();
+        if (!set.containsKey(value.toString())) {
+          set.addAll({value.toString() : value});
         }
       }
       return set.values.toList();
@@ -112,7 +112,7 @@ class bruteForce extends Solver {
     var result = line.sublist(0);
     Set<int> changed = {};
     gapResult.gaps.forEachIndexed((i, gap) {
-    var gapResult = _solveGapWithHintList(line.sublist(gap[0], gap[1]), distributionsPerGap[i].first); //ToDo fix
+      var gapResult = _solveGapWithHintList(line.sublist(gap[0], gap[1]), distributionsPerGap[i]);
       gapResult.forEachIndexed((i, item) {
         var before = result[gap[0] + i];
         if (before != item) {

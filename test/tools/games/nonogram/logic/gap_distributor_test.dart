@@ -81,7 +81,7 @@ void main() {
       },
       {// works with 2,3, one gap
         'line': [0, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 0],
-        'hints': [[1,1,1,1],[0],[1,1,1,1]],
+        'hints': [2, 3],
         'expectedOutputGaps': [[0, 5], [7, 12]], 'expectedOutputDistributions': [[[2], [3]]],
       },
     ];
