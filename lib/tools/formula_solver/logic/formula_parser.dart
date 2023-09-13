@@ -114,7 +114,7 @@ class FormulaParser {
 
       var subNumStart = max(min(numbers[1].toInt() - 1, numStr.length - 1), 0);
       var subNumEnd =
-          (numbers.length > 2 && numbers[2] > numbers[1]) ? min(numbers[2].toInt(), numStr.length) : subNumStart + 1;
+      (numbers.length > 2 && numbers[2] > numbers[1]) ? min(numbers[2].toInt(), numStr.length) : subNumStart + 1;
 
       numStr = numStr.substring(subNumStart, subNumEnd);
 
@@ -263,14 +263,14 @@ class FormulaParser {
   // Because: When a former formula will be included, this one IS still ready calculated and does not need another calculation round
   String _safeFormulaReplacements(String formula) {
     var formulaReplacementPattern =
-        RegExp(RECURSIVE_FORMULA_REPLACEMENT_START + '(.*?)' + RECURSIVE_FORMULA_REPLACEMENT_END);
+    RegExp(RECURSIVE_FORMULA_REPLACEMENT_START + '(.*?)' + RECURSIVE_FORMULA_REPLACEMENT_END);
     var matches = formulaReplacementPattern.allMatches(formula);
 
     for (Match m in matches) {
       var group = m.group(0);
       if (group == null) continue;
       safedFormulaReplacementMap.putIfAbsent(group,
-          () => '$_SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$_SAFED_RECURSIVE_FORMULA_MARKER');
+              () => '$_SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$_SAFED_RECURSIVE_FORMULA_MARKER');
       formula = substitution(formula, safedFormulaReplacementMap);
     }
 
@@ -283,11 +283,11 @@ class FormulaParser {
     });
     /**** exponents *****/
     formula = formula.replaceAllMapped(RegExp('[\u2070\u00B9\u00B2\u00B3\u2074\u2075\u2076\u2077\u2078\u2079]+'),
-        (Match match) {
-      var group = match.group(0);
-      group = substitution(group!, switchMapKeyValue(SUPERSCRIPT_CHARACTERS));
-      return '^$group';
-    });
+            (Match match) {
+          var group = match.group(0);
+          group = substitution(group!, switchMapKeyValue(SUPERSCRIPT_CHARACTERS));
+          return '^$group';
+        });
 
     return formula;
   }
@@ -368,17 +368,17 @@ class FormulaParser {
               FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, result, variables: expandedFormula.variables));
         } catch (e) {
           results.add(FormulaSolverSingleResult(
-            FormulaState.STATE_SINGLE_ERROR,
-            substitutedFormula,
-            variables: expandedFormula.variables
+              FormulaState.STATE_SINGLE_ERROR,
+              substitutedFormula,
+              variables: expandedFormula.variables
           ));
           hasError = true;
         }
       }
 
       return FormulaSolverMultiResult(
-        hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK,
-        results
+          hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK,
+          results
       );
     } else {
       substitutedFormula = _reSubstituteSavings(substitutedFormula);
@@ -404,6 +404,7 @@ class FormulaParser {
     }
 
     try {
+      _contentFromString(_formula);
       return true;
     } catch (e) {
       return false;
@@ -566,7 +567,7 @@ class FormulaParser {
             break;
           case FormulaState.STATE_SINGLE_ERROR:
           case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
-            // restore brackets if formerly removed
+          // restore brackets if formerly removed
             var out = FormulaSolverSingleResult(state, (result as FormulaSolverSingleResult).result);
             if (matchedVariables.containsKey(_MATCHED_VARIABLES_NO_KEY)) {
               matchedVariables[_MATCHED_VARIABLES_NO_KEY]!.putIfAbsent(matchString, () => out);
