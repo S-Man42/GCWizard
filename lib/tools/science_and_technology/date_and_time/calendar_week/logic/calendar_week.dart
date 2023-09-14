@@ -61,16 +61,11 @@ Tuple2<DateTime, DateTime> datesForCalendarWeek(int year, int calendarWeek, {boo
 
     _dateToCheck = _dateToCheck.add(const Duration(days: 1));
     if (_dateToCheck.compareTo(_lastDateToCheck) >= 0) {
-      throw Exception('calendarweek_error_invalidweek');
+      throw Exception('dates_calendarweek_error_invalidweek');
     }
   }
 
   start = end.add(const Duration(days: -6));
 
   return Tuple2(start, end);
-}
-
-void main() {
-  print(_getUSweekNumber(DateTime(2015, 12, 27)));
-  print(datesForCalendarWeek(2016, 1, iso: false));
 }

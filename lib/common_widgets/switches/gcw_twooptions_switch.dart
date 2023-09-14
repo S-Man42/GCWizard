@@ -18,11 +18,11 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
 
   const GCWTwoOptionsSwitch(
       {Key? key,
-      required this.onChanged,
       this.title,
       this.leftValue,
       this.rightValue,
       required this.value,
+      required this.onChanged,
       this.alternativeColor = false,
       this.notitle = false})
       : super(key: key);
