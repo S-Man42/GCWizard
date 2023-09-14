@@ -1,12 +1,11 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
-
-import 'APIMapper.dart';
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 
 const String _apiSpecification = '''
 {
 	"/key_label" : {
 		"get": {
-			"summary": "Roman numbers Tool",
+			"summary": "Morse Tool",
 			"responses": {
         "description": "Encoded or decoded text."
 			}
@@ -16,7 +15,7 @@ const String _apiSpecification = '''
 				"in": "query",
 				"name": "input",
 				"required": true,
-				"description": "Input data for encoding or decoding Roman Numbers",
+				"description": "Input data for encoding or decoding Morse",
 				"schema": {
 					"type": "string"
 				}
@@ -39,9 +38,9 @@ const String _apiSpecification = '''
 }
 ''';
 
-class RomanNumbersAPIMapper extends APIMapper {
+class MorseAPIMapper extends APIMapper {
   @override
-  String get Key => 'roman_numbers';
+  String get Key => 'morse';
 
   @override
   String doLogic() {
@@ -51,9 +50,9 @@ class RomanNumbersAPIMapper extends APIMapper {
     }
 
     if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
-      return encodeRomanNumbers(int.tryParse(input) ?? 0);
+      return encodeMorse(input);
     } else {
-      return decodeRomanNumbers(input)?.toString() ?? '';
+      return decodeMorse(input);
     }
   }
 

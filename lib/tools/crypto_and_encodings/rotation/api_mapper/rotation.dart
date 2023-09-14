@@ -1,12 +1,12 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 
-import 'APIMapper.dart';
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {
 	"/key_label" : {
 		"get": {
-			"summary": "Morse Tool",
+			"summary": "Rotation Tool",
 			"responses": {
         "description": "Encoded or decoded text."
 			}
@@ -16,22 +16,18 @@ const String _apiSpecification = '''
 				"in": "query",
 				"name": "input",
 				"required": true,
-				"description": "Input data for encoding or decoding Morse",
+				"description": "Input data for rotate text",
 				"schema": {
 					"type": "string"
 				}
 			},
 			{
 				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
+				"name": "parameter1",
+				"description": "Shifts letters count",
 				"schema": {
 					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "decode"
+					"default": "0"
 				}
 			}
 		]
@@ -39,9 +35,9 @@ const String _apiSpecification = '''
 }
 ''';
 
-class MorseAPIMapper extends APIMapper {
+class RotatorAPIMapper extends APIMapper {
   @override
-  String get Key => 'morse';
+  String get Key => 'rotation_general';
 
   @override
   String doLogic() {
@@ -49,12 +45,13 @@ class MorseAPIMapper extends APIMapper {
     if (input == null) {
       return '';
     }
-
-    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
-      return encodeMorse(input);
-    } else {
-      return decodeMorse(input);
+    var parameter1 = getWebParameter(WEBPARAMETER.parameter1);
+    var key = 0;
+    if (parameter1 != null && parameter1.isNotEmpty) {
+      key = int.parse(parameter1);
     }
+
+    return Rotator().rotate(input, key);
   }
 
   /// convert doLogic output to map
@@ -68,4 +65,3 @@ class MorseAPIMapper extends APIMapper {
     return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
-

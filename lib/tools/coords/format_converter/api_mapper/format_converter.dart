@@ -4,15 +4,15 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 
-import 'APIMapper.dart';
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {
 	"/key_label" : {
 		"get": {
-			"summary": "Coordinate Converter Tool",
+			"summary": "Format Converter Tool",
 			"responses": {
-        "description": "Converted Coordinates."
+        "description": "Converts coordinate formats"
 			}
 		},
 		"parameters" : [
@@ -42,7 +42,7 @@ const String _apiSpecification = '''
 }
 ''';
 
-class CoordsFormatconverterAPIMapper extends APIMapper {
+class FormatConverterAPIMapper extends APIMapper {
   @override
   String get Key => 'coords_formatconverter';
 

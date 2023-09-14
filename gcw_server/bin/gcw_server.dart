@@ -1,15 +1,8 @@
+import 'package:gcw_server/controller.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
-import 'Controller.dart';
-
-class WebParameter {
-  String title;
-  Map<String, String> arguments;
-  Request? settings;
-
-  WebParameter({required this.title, required this.arguments, required this.settings});
-}
+import 'package:gcw_server/web_parameter.dart';
 
 void main() async {
   var handler =

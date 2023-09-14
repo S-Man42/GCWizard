@@ -1,8 +1,7 @@
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
-
-import 'APIMapper.dart';
 
 const String _apiSpecification = '''
 {
@@ -89,9 +88,7 @@ Alphabet _getAlphabetByKey(String key) {
       alphabet = _alphabets.firstWhere((alphabet) => alphabet.key == key);
     } catch (e) {}
   }
-  if (alphabet == null) {
-    alphabet = alphabetAZ;
-  }
+  alphabet ??= alphabetAZ;
 
   return alphabet;
 }

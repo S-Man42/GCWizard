@@ -9,19 +9,19 @@ const String _apiSpecification = '''
 				"204": {
 					"description": "Tool loaded. No response data."
 				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for decoding text",
-				"schema": {
-					"type": "string"
-				}
-			}
-		]
+			},
+		  "parameters" : [
+		  	{
+		  		"in": "query",
+			  	"name": "input",
+			  	"required": true,
+			  	"description": "Input data for decoding text",
+			  	"schema": {
+				  	"type": "string"
+				  }
+		  	}
+		  ]
+    }
 	}
 }
 ''';

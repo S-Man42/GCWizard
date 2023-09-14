@@ -22,32 +22,32 @@ const String _apiSpecification = '''
 				"204": {
 					"description": "Tool loaded. No response data."
 				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for encoding or decoding Morse",
-				"schema": {
-					"type": "string"
-				}
 			},
-			{
-				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
-				"schema": {
-					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "decode"
+			"parameters" : [
+				{
+					"in": "query",
+					"name": "input",
+					"required": true,
+					"description": "Input data for encoding or decoding Morse",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"in": "query",
+					"name": "mode",
+					"description": "Defines encoding or decoding mode",
+					"schema": {
+						"type": "string",
+						"enum": [
+							"encode",
+							"decode"
+						],
+						"default": "decode"
+					}
 				}
-			}
-		]
+			]
+		}
 	}
 }
 ''';
