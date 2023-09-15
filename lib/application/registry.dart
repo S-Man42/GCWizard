@@ -299,7 +299,7 @@ import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/widget/complex_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/compound_interest/widget/compound_interest.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_calling_codes/widget/countries_calling_codes.dart';
-import 'package:gc_wizard/tools/science_and_technology/countries/countries_embassycodes_ger/widget/countries_calling_codes.dart';
+import 'package:gc_wizard/tools/science_and_technology/countries/countries_embassycodes_ger/widget/countries_embassycodes_ger.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_ioc_codes/widget/countries_ioc_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_iso_codes/widget/countries_iso_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_vehicle_codes/widget/countries_vehicle_codes.dart';
