@@ -170,7 +170,7 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
         return _buildRowWidget(context,
             tool,
             snapshot.data?.item2 ?? '',
-            'https://test.gcwizard.net/#/' +  (snapshot.data?.item1 ?? '')
+            'https://gcwizard.net/#/' +  (snapshot.data?.item1 ?? '')
         );
       }
   );
