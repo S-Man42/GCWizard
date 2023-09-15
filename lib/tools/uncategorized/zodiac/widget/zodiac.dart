@@ -66,7 +66,7 @@ class _ZodiacState extends State<Zodiac> {
           GCWDropDown<_ZODIACSIGNS_ATTRIBUTES>(
             value: _currentAttribute,
             items: _ZODIACSIGNS_ATTRIBUTES.values.map((attribute) {
-              return GCWDropDownMenuItem(value: attribute, child: i18n(context, enumName(attribute.toString())));
+              return GCWDropDownMenuItem(value: attribute, child: i18n(context, _attributeName(attribute)));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -108,12 +108,12 @@ class _ZodiacState extends State<Zodiac> {
 
       return GCWColumnedMultilineOutput(
           data: [
-                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.date.toString())), _createDateOutput(zodiacSign.date)],
-                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.planet.toString())), _createPlanetOutput(zodiacSign.planet)],
-                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.element.toString())), i18n(context, zodiacSign.element)],
-                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.house.toString())), zodiacSign.house],
-                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.quality.toString())), i18n(context, zodiacSign.quality)],
-                  [i18n(context, enumName(_ZODIACSIGNS_ATTRIBUTES.polarity.toString())), i18n(context, zodiacSign.polarity)],
+                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.date)), _createDateOutput(zodiacSign.date)],
+                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.planet)), _createPlanetOutput(zodiacSign.planet)],
+                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.element)), i18n(context, zodiacSign.element)],
+                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.house)), zodiacSign.house],
+                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.quality)), i18n(context, zodiacSign.quality)],
+                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.polarity)), i18n(context, zodiacSign.polarity)],
                 ],
           flexValues: const [1, 2]
       );
@@ -149,5 +149,9 @@ class _ZodiacState extends State<Zodiac> {
                   .toList(),
       );
     }
+  }
+
+  String _attributeName(_ZODIACSIGNS_ATTRIBUTES attribute) {
+    return 'zodiac_attribute_' + enumName(attribute.toString());
   }
 }
