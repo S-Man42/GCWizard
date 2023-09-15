@@ -36,7 +36,7 @@ class WebParameter {
 
 NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
   var args = _parseUrl(settings);
-  return (args == null) ? null : _createRoute(context, args);
+  return (args == null) ? null : _createRoute(context, args, settings);
 }
 
 List<Route<GCWTool>> startMainView(BuildContext context, String route) {
@@ -49,11 +49,11 @@ List<Route<GCWTool>> startMainView(BuildContext context, String route) {
 
 NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
   var webparameter = WebParameter(title: arguments[_initRoute] ?? '', arguments: arguments, settings: null);
-  return _createRoute(context, webparameter);
+  return _createRoute(context, webparameter, const RouteSettings());
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
-NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebParameter arguments) {
+NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebParameter arguments, RouteSettings settings) {
   var gcwTool = _findGCWTool(context, arguments);
   if (gcwTool == null) return null;
 
@@ -62,12 +62,12 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebPar
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
      } catch (e) {}
   }
-  return _buildRoute(context, gcwTool);
+  return _buildRoute(context, gcwTool, settings);
 }
 
-NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool) {
+NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings settings) {
   // arguments settings only for view the path in the url , settings: arguments.settings
-  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool);
+  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: settings);
 }
 
 GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
@@ -224,7 +224,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
               icon: Icons.question_mark,
               onPressed: () {
                 var route = _createRoute(context,
-                    WebParameter(title: _toolId(tool), arguments: { _questionmark : _questionmark}, settings: null));
+                    WebParameter(title: _toolId(tool), arguments: { _questionmark : _questionmark}, settings: null), const RouteSettings());
                 if (route != null) {
                   Navigator.push(context, route);
                 }
@@ -244,7 +244,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
           ],
     ),
     onTap: () {
-        Navigator.of(context).push(_buildRoute(context, tool));
+        Navigator.of(context).push(_buildRoute(context, tool, const RouteSettings()));
       }
   );
 }
