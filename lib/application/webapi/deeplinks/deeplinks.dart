@@ -48,7 +48,6 @@ List<Route<GCWTool>> startMainView(BuildContext context, String route) {
 }
 
 NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
-
   var webparameter = WebParameter(title: arguments[_initRoute] ?? '', arguments: arguments, settings: null);
   return _createRoute(context, webparameter);
 }
@@ -93,15 +92,17 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
 
 WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
   if (settings.name == null) return null;
+
   Uri? uri;
   try {
     uri = settings.name == _questionmark ? Uri(pathSegments: [_questionmark]) : Uri.parse(settings.name!);
   } catch (e) {
     return null;
   }
-  if (uri.pathSegments.isEmpty) return null;
-  var title = uri.pathSegments[0];
 
+  if (uri.pathSegments.isEmpty) return null;
+
+  var title = uri.pathSegments[0];
   var parameter = uri.queryParameters;
   // tool info ?
   if ((uri.pathSegments.length > 1) && (uri.pathSegments[1].isEmpty && settings.name!.endsWith(_questionmark))) {
@@ -112,24 +113,8 @@ WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
     parameter = Map<String, String>.from(parameter);
     parameter.addAll({_initRoute : title });
   }
+
   return WebParameter(title: title, arguments: parameter, settings: settings);
-
-  // MultiDecoder?input=Test%20String
-  //Morse?input=Test%20String&modeencode=true
-  //Morse?input=...%20---%20...
-  //Morse?input=test&modeencode=true
-  //alphabetvalues?input=Test
-  //alphabetvalues?input=Test&modeencode=true&result=json
-  //alphabetvalues?input=Test12&modeencode=true
-  //alphabetvalues?input=1%202%203%204&modeencode=true
-  //coords_formatconverter?fromformat=coords_utm
-  //coords_formatconverter?fromformat=coords_utm?toformat=coords_utm ->Error
-  //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&result=json     N48°23.123 E9°12.456
-  //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&toformat=coords_utm&result=json
-  //coords_formatconverter?input=N48%C2%B023.123%20E9%C2%B012.456&toformat=coords_all&result=json
-  //rotation_general?input=test&parameter1=4&result=json
-
-  // toolname?parameter1=xxx&parameter2=xxx
 }
 
 GCWTool _toolNameList(BuildContext context) {
