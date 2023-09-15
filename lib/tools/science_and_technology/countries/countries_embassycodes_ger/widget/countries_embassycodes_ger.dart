@@ -3,5 +3,5 @@ import 'package:gc_wizard/tools/science_and_technology/countries/countries/widge
 import 'package:gc_wizard/tools/science_and_technology/countries/logic/countries.dart';
 
 class CountriesEmbassyCodesGER extends Countries {
-  CountriesEmbassyCodesGER({Key? key}) : super(key: key, fields: [CountryProperties.embassy_plate_code_de]);
+  CountriesEmbassyCodesGER({Key? key}) : super(key: key, fields: [CountryProperties.embassycodes_ger]);
 }
