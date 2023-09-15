@@ -52,7 +52,7 @@ class FormulaPainter {
       return ((variable.isEmpty)) ? '' : variable;
     }).toList();
 
-    _values = values;
+    _values = values.map((key, value) => MapEntry(key.toUpperCase(), value));
     _variables = _toUpperCaseAndSort(_variables);
     _variablesRegEx = _variables.map((variable) => variable).join('|');
 
