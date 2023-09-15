@@ -209,6 +209,7 @@ import 'package:gc_wizard/tools/science_and_technology/cross_sums/cross_sum_rang
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/iterated_cross_sum_range/widget/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency/widget/iterated_cross_sum_range_frequency.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/widget/calendar.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar_week/widget/calendar_week.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/widget/day_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_year/widget/day_of_the_year.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/excel_time/widget/excel_time.dart';
@@ -526,6 +527,7 @@ void _initStaticToolList() {
       className(const BurrowsWheeler()),
       className(const Caesar()),
       className(const Calendar()),
+      className(const CalendarWeek()),
       className(const Catan()),
       className(const CenterThreePoints()),
       className(const CenterTwoPoints()),

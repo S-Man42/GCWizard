@@ -20,7 +20,7 @@ Widget _toolInfo(BuildContext context, GCWTool tool) {
             GCWColumnedMultilineOutput(
               data: [
                 [i18n(context, 'webapi_deeplink_toolsapi_toolinfo_toolname'), toolName(context, tool)],
-                [i18n(context, 'webapi_deeplink_toolsapi_toolinfo_apipath'), i18n(context, 'about_webversion_url') + '/#/' + (snapshot.data?.item1 ?? '')],
+                [i18n(context, 'webapi_deeplink_toolsapi_toolinfo_apipath'), i18n(context, 'about_webversion_url') + '#/' + (snapshot.data?.item1 ?? '')],
               ]
             ),
             ((snapshot.data?.item2 ?? '').isNotEmpty)

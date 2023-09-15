@@ -34,39 +34,39 @@ part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphab
 
 const String _apiSpecification = '''
 {
-	"/alphabet_values" : {
+	"/alphabetvalues" : {
 		"get": {
 			"summary": "Alphabet Values Tool",
 			"responses": {
 				"204": {
 					"description": "Tool loaded. No response data."
 				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for encoding or decoding text",
-				"schema": {
-					"type": "string"
-				}
 			},
-			{
-				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
-				"schema": {
-					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "encode"
-				}
-			}
-		]
+	  	"parameters" : [
+			  {
+			  	"in": "query",
+			  	"name": "input",
+				  "required": true,
+				  "description": "Input data for encoding or decoding text",
+				  "schema": {
+				  	"type": "string"
+			  	}
+		  	},
+			  {
+			  	"in": "query",
+			  	"name": "mode",
+			  	"description": "Defines encoding or decoding mode",
+			  	"schema": {
+				  	"type": "string",
+				  	"enum": [
+					  	"encode",
+					  	"decode"
+				  	],
+				  	"default": "encode"
+				  }
+			  }
+		  ] 
+		}
 	}
 }
 ''';

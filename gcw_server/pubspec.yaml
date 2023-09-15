@@ -1,6 +1,6 @@
 name: gcw_server
 description: GC Wizard API
-version: 3.0.0+1
+version: 0.1.0
 publish_to: none
 
 environment:
@@ -9,6 +9,6 @@ environment:
 dependencies:
   shelf: ^1.4.0
   gc_wizard:
-    git: https://github.com/S-Man42/GCWizard
+    path: ./../
 
 

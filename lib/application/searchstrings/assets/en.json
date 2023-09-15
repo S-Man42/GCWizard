@@ -129,6 +129,7 @@
   "dates_timecalculator": "times timecalculator clockcalculator minutes hours seconds",
   "dates_weekday": "weekdays",
   "dates_calendar": "julian date gregorian date calendar timestamp",
+  "dates_calendarweek": "calendarweek calenderweek",
   "decabit": "ripple control",
   "divisor": "divisor divider",
   "dna": "desoxyribonucleicacid genetics genes genomes sequence nucleotide codesun dna rna mrna",

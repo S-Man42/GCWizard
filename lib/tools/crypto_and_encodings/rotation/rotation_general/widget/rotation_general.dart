@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
 const String _apiSpecification = '''
@@ -17,28 +17,28 @@ const String _apiSpecification = '''
 				"204": {
 					"description": "Tool loaded. No response data."
 				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for rotate text",
-				"schema": {
-					"type": "string"
-				}
 			},
-			{
-				"in": "query",
-				"name": "parameter1",
-				"description": "Shifts letters count",
-				"schema": {
-					"type": "string",
-					"default": "0"
+			"parameters" : [
+				{
+					"in": "query",
+					"name": "input",
+					"required": true,
+					"description": "Input data for rotate text",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"in": "query",
+					"name": "parameter1",
+					"description": "Key: Shifts the input for n alphabet places",
+					"schema": {
+						"type": "int32",
+						"default": 0
+					}
 				}
-			}
-		]
+			]
+		}
 	}
 }
 ''';

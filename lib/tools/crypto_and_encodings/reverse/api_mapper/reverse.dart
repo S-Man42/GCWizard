@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart';
 
-import 'APIMapper.dart';
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {

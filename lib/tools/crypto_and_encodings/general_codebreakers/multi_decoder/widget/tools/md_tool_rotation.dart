@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_abc_spinner.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 
 const MDT_INTERNALNAMES_ROTATION = 'multidecoder_tool_rotation_title';
 const MDT_ROTATION_OPTION_KEY = 'multidecoder_tool_rotation_option_key';
