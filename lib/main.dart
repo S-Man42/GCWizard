@@ -7,12 +7,11 @@ import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/navigation/navigation_service.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
-
-import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

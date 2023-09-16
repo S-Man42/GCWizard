@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:tuple/tuple.dart';

@@ -1,10 +1,9 @@
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-
-import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {

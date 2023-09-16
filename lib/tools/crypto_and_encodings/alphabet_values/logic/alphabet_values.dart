@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:collection/collection.dart';
 
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';

@@ -1,6 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:collection/collection.dart';
 
 const List<Map<String, String>> _alphabet = [
   {'character': '0', 'binary': '00000'},

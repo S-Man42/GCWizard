@@ -1,6 +1,5 @@
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
-
 import 'package:gc_wizard/application/webapi/api_mapper.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 
 const String _apiSpecification = '''
 {

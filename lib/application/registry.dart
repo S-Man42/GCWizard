@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/application/main_menu/about.dart';
-import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
-import 'package:gc_wizard/application/main_menu/changelog.dart';
-import 'package:gc_wizard/application/main_menu/licenses.dart';
-import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -37,6 +29,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/keyboard_sel
 import 'package:gc_wizard/application/category_views/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
@@ -79,6 +72,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/scrabble_sel
 import 'package:gc_wizard/application/category_views/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt2_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt3_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt5_selection.dart';
@@ -89,6 +83,12 @@ import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selec
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/main_menu/about.dart';
+import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
+import 'package:gc_wizard/application/main_menu/changelog.dart';
+import 'package:gc_wizard/application/main_menu/licenses.dart';
+import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 import 'package:gc_wizard/application/settings/widget/settings_general.dart';
 import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
@@ -275,9 +275,9 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humi
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_date/widget/easter_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_years/widget/easter_years.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_single_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/widget/moon_rise_set.dart';
@@ -385,8 +385,8 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_eia96/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
-import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/widget/spelling_alphabets_crypt.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
@@ -422,9 +422,9 @@ import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_list/
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_search/widget/vanity_words_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/weather_symbols.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';

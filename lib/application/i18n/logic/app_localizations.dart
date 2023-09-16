@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
-import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 

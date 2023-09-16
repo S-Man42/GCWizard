@@ -1,11 +1,11 @@
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:prefs/prefs.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:prefs/prefs.dart';
 
 const defaultLambertType = CoordinateFormatKey.LAMBERT93;
 const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;

@@ -21,7 +21,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.d
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/geohashing/logic/geohashing.dart' as geohashing;
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';

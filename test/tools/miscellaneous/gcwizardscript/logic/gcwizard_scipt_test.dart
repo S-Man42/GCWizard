@@ -4,20 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 part 'gcwizard_script_codes.dart';
+part 'gcwizard_script_const.dart';
 part 'gcwizard_script_functions_codes_base.dart';
 part 'gcwizard_script_functions_codes_crypto.dart';
 part 'gcwizard_script_functions_codes_hash.dart';
-part 'gcwizard_script_functions_geocaching.dart';
+part 'gcwizard_script_functions_coordinates.dart';
 part 'gcwizard_script_functions_datetime.dart';
+part 'gcwizard_script_functions_geocaching.dart';
 part 'gcwizard_script_functions_graphic.dart';
 part 'gcwizard_script_functions_math.dart';
 part 'gcwizard_script_functions_math_nested.dart';
 part 'gcwizard_script_functions_string.dart';
 part 'gcwizard_script_functions_waypoints.dart';
-part 'gcwizard_script_functions_coordinates.dart';
 part 'gcwizard_script_loops.dart';
 part 'gcwizard_script_nested_loops.dart';
-part 'gcwizard_script_const.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
@@ -14,7 +15,6 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/color_utils.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
-import 'package:collection/collection.dart';
 
 class MapViewPersistenceAdapter {
   final GCWMapView mapWidget;

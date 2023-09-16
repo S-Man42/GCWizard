@@ -13,7 +13,6 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-
 import 'dialogs/gcw_delete_alertdialog.dart';
 import 'dialogs/gcw_dialog.dart';
 import 'gcw_popup_menu.dart';

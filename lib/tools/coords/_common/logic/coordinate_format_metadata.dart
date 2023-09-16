@@ -1,5 +1,5 @@
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
 class CoordinateFormatMetadata {
   final CoordinateFormatKey type;

@@ -5,7 +5,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar_week/logic/calendar_week.dart';
 import 'package:intl/intl.dart';
 

@@ -4,8 +4,8 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-part 'package:gc_wizard/tools/science_and_technology/ufi/logic/ufi_encode.dart';
 part 'package:gc_wizard/tools/science_and_technology/ufi/logic/ufi_decode.dart';
+part 'package:gc_wizard/tools/science_and_technology/ufi/logic/ufi_encode.dart';
 
 class _UFI_COUNTRY_DEFINITION {
   final String countryCode;
