@@ -5,7 +5,8 @@ class _GCWCoordsMercator extends StatefulWidget {
   final Mercator coordinates;
   final bool initialize;
 
-  const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsMercatorState createState() => _GCWCoordsMercatorState();
@@ -17,8 +18,6 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
 
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
-
-
 
   @override
   void initState() {
@@ -43,7 +42,6 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
 
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
-
     }
 
     return Column(children: <Widget>[

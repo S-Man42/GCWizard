@@ -331,9 +331,13 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 '\n' +
                 i18n(context, _currentOutput.ErrorMessage) +
                 '\n' +
-                i18n(context, 'gcwizard_script_error_line') + ' ' + _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
+                i18n(context, 'gcwizard_script_error_line') +
+                ' ' +
+                _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
                 '\n' +
-                i18n(context, 'gcwizard_script_error_position') + ' ' + _currentOutput.ErrorPosition.toString() +
+                i18n(context, 'gcwizard_script_error_position') +
+                ' ' +
+                _currentOutput.ErrorPosition.toString() +
                 '\n' +
                 '=> ' +
                 _printFaultyProgram(_currentProgram, _currentOutput.ErrorPosition),

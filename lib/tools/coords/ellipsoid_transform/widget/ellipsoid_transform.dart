@@ -15,7 +15,7 @@ class EllipsoidTransform extends StatefulWidget {
   const EllipsoidTransform({Key? key}) : super(key: key);
 
   @override
- _EllipsoidTransformState createState() => _EllipsoidTransformState();
+  _EllipsoidTransformState createState() => _EllipsoidTransformState();
 }
 
 class _EllipsoidTransformState extends State<EllipsoidTransform> {

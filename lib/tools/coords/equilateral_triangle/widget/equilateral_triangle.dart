@@ -17,7 +17,7 @@ class EquilateralTriangle extends StatefulWidget {
   const EquilateralTriangle({Key? key}) : super(key: key);
 
   @override
- _EquilateralTriangleState createState() => _EquilateralTriangleState();
+  _EquilateralTriangleState createState() => _EquilateralTriangleState();
 }
 
 class _EquilateralTriangleState extends State<EquilateralTriangle> {
@@ -96,8 +96,8 @@ class _EquilateralTriangleState extends State<EquilateralTriangle> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(
-        EquilateralTriangleJobData(coord1: _currentCoords1.toLatLng()!, coord2: _currentCoords2.toLatLng()!, ells: defaultEllipsoid));
+    return GCWAsyncExecuterParameters(EquilateralTriangleJobData(
+        coord1: _currentCoords1.toLatLng()!, coord2: _currentCoords2.toLatLng()!, ells: defaultEllipsoid));
   }
 
   void _showOutput(List<LatLng> output) {

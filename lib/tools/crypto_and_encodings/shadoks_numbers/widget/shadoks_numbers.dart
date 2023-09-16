@@ -19,7 +19,7 @@ class ShadoksNumbers extends StatefulWidget {
   const ShadoksNumbers({Key? key}) : super(key: key);
 
   @override
- _ShadoksNumbersState createState() => _ShadoksNumbersState();
+  _ShadoksNumbersState createState() => _ShadoksNumbersState();
 }
 
 class _ShadoksNumbersState extends State<ShadoksNumbers> {
@@ -120,7 +120,9 @@ class _ShadoksNumbersState extends State<ShadoksNumbers> {
                   }
                   _currentDisplay.putIfAbsent('a', () => false);
                 } else {
-                  _currentDisplays = Segments(displays: [['a']]);
+                  _currentDisplays = Segments(displays: [
+                    ['a']
+                  ]);
                   _currentDisplay = {'a': true};
                 }
               });
@@ -130,7 +132,9 @@ class _ShadoksNumbersState extends State<ShadoksNumbers> {
             icon: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = Segments(displays: [['a']]);
+                _currentDisplays = Segments(displays: [
+                  ['a']
+                ]);
                 _currentDisplay = {'a': true};
               });
             },
@@ -148,7 +152,8 @@ class _ShadoksNumbersState extends State<ShadoksNumbers> {
     return result;
   }
 
-  NSegmentDisplay _SanatizedShadoksNumbersSegmentDisplay({required Map<String, bool> segments, required bool readOnly}) {
+  NSegmentDisplay _SanatizedShadoksNumbersSegmentDisplay(
+      {required Map<String, bool> segments, required bool readOnly}) {
     segments.putIfAbsent('a', () => false);
     return _ShadoksNumbersSegmentDisplay(segments: segments, readOnly: true);
   }

@@ -18,7 +18,6 @@ import 'dialogs/gcw_dialog.dart';
 import 'gcw_popup_menu.dart';
 import 'gcw_text_export.dart';
 
-
 class GCWFormulaListEditor extends StatefulWidget {
   final List<FormulaBase> formulaList;
   final GCWTool? Function(int id) buildGCWTool;
@@ -146,22 +145,24 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                     )
                   : IgnorePointer(
                       child: Column(
-                        children: <Widget>[
-                          GCWText(text: entry.name),
-                          (widget.formulaGroups)
+                      children: <Widget>[
+                        GCWText(text: entry.name),
+                        (widget.formulaGroups)
                             ? Container(
                                 padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                                 child: GCWText(
                                   text: '${entry.subFormulaCount} ' +
-                                      i18n(context,
-                                          entry.subFormulaCount == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
+                                      i18n(
+                                          context,
+                                          entry.subFormulaCount == 1
+                                              ? 'formulasolver_formula'
+                                              : 'formulasolver_formulas'),
                                   style: gcwDescriptionTextStyle(),
                                 ),
                               )
                             : Container(),
-                        ],
-                      )
-                    ),
+                      ],
+                    )),
             ),
             _currentEditId == entry.id
                 ? GCWIconButton(
@@ -173,32 +174,43 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                         _currentEditId = null;
                         _editEntryController.clear();
                       });
-                    }
-                  )
+                    })
                 : Container(),
             GCWPopupMenu(
                 iconData: Icons.settings,
                 menuItemBuilder: (context) => [
-                  GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.edit,
-                          widget.formulaGroups ? 'formulasolver_groups_editgroup' : 'formulasolver_formulas_editformula'),
-                      action: (index) => setState(() {
-                        _currentEditId = entry.id;
-                        _currentEditedName = entry.name;
-                        _editEntryController.text = entry.name;
-                      })),
-                  GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.delete,
-                          widget.formulaGroups ? 'formulasolver_groups_removegroup' : 'formulasolver_formulas_removeformula'),
-                      action: (index) => showDeleteAlertDialog(context, entry.name, () {
-                        if (entry.id != null) _removeEntry(entry.id!);
-                        setState(() {});
-                      })),
-                  GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.forward,
-                          widget.formulaGroups ? 'formulasolver_groups_exportgroup' : 'formulasolver_formulas_exportformula'),
-                      action: (index) => _exportGroup(entry)),
-                ])
+                      GCWPopupMenuItem(
+                          child: iconedGCWPopupMenuItem(
+                              context,
+                              Icons.edit,
+                              widget.formulaGroups
+                                  ? 'formulasolver_groups_editgroup'
+                                  : 'formulasolver_formulas_editformula'),
+                          action: (index) => setState(() {
+                                _currentEditId = entry.id;
+                                _currentEditedName = entry.name;
+                                _editEntryController.text = entry.name;
+                              })),
+                      GCWPopupMenuItem(
+                          child: iconedGCWPopupMenuItem(
+                              context,
+                              Icons.delete,
+                              widget.formulaGroups
+                                  ? 'formulasolver_groups_removegroup'
+                                  : 'formulasolver_formulas_removeformula'),
+                          action: (index) => showDeleteAlertDialog(context, entry.name, () {
+                                if (entry.id != null) _removeEntry(entry.id!);
+                                setState(() {});
+                              })),
+                      GCWPopupMenuItem(
+                          child: iconedGCWPopupMenuItem(
+                              context,
+                              Icons.forward,
+                              widget.formulaGroups
+                                  ? 'formulasolver_groups_exportgroup'
+                                  : 'formulasolver_formulas_exportformula'),
+                          action: (index) => _exportGroup(entry)),
+                    ])
           ],
         ),
         onTap: () {
@@ -237,6 +249,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
       _listChanged();
     }
   }
+
   void _removeEntry(int id) {
     var entry = widget.formulaList.firstWhereOrNull((formula) => formula.id == id);
     if (entry != null) {
@@ -264,7 +277,8 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
     );
     showGCWDialog(
         context,
-        i18n(context, widget.formulaGroups ? 'formulasolver_groups_exportgroup' : 'formulasolver_formulas_exportformula'),
+        i18n(context,
+            widget.formulaGroups ? 'formulasolver_groups_exportgroup' : 'formulasolver_formulas_exportformula'),
         contentWidget,
         [
           GCWDialogButton(

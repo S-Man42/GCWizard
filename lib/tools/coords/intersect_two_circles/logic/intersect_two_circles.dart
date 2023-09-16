@@ -16,7 +16,8 @@ class IntersectTwoCirclesJobData {
 }
 
 class _IntersectTwoCirclesCalculator extends IntervalCalculator {
-  _IntersectTwoCirclesCalculator(IntersectTwoCirclesParameters parameters, Ellipsoid ellipsoid) : super(parameters, ellipsoid);
+  _IntersectTwoCirclesCalculator(IntersectTwoCirclesParameters parameters, Ellipsoid ellipsoid)
+      : super(parameters, ellipsoid);
 
   @override
   bool checkCell(CoordinateCell cell, IntervalCalculatorParameters parameters) {
@@ -41,8 +42,7 @@ Future<List<LatLng>> intersectTwoCirclesAsync(GCWAsyncExecuterParameters? jobDat
   }
 
   var data = jobData!.parameters as IntersectTwoCirclesJobData;
-  var output = intersectTwoCircles(data.coord1, data.radius1, data.coord2,
-      data.radius2, data.ells);
+  var output = intersectTwoCircles(data.coord1, data.radius1, data.coord2, data.radius2, data.ells);
 
   jobData.sendAsyncPort?.send(output);
 
@@ -53,10 +53,7 @@ List<LatLng> intersectTwoCircles(LatLng coord1, double radius1, LatLng coord2, d
   // same position
   if ((coord1.latitude == coord2.latitude) & (coord1.longitude == coord2.longitude)) return [];
 
-  return _IntersectTwoCirclesCalculator(
-            IntersectTwoCirclesParameters(
-                coord1, radius1, coord2, radius2
-            ), ellipsoid)
+  return _IntersectTwoCirclesCalculator(IntersectTwoCirclesParameters(coord1, radius1, coord2, radius2), ellipsoid)
       .check();
 }
 

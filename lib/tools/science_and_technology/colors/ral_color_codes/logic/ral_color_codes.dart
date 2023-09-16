@@ -231,8 +231,8 @@ const Map<String, RalColor> RAL_COLOR_CODES = {
 
 MapEntry<String, RalColor>? _ralByRGB(RGB rgb) {
   var hexCode = HexCode.fromRGB(rgb);
-  return RAL_COLOR_CODES.entries.firstWhereOrNull(
-      (element) => element.value.colorcode.toLowerCase() == hexCode.toString().toLowerCase());
+  return RAL_COLOR_CODES.entries
+      .firstWhereOrNull((element) => element.value.colorcode.toLowerCase() == hexCode.toString().toLowerCase());
 }
 
 Map<String, RalColor> findSimilarRALColors(RGB rgb) {

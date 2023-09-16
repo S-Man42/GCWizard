@@ -17,23 +17,22 @@ Widget _toolInfo(BuildContext context, GCWTool tool) {
       builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
         return Column(
           children: [
-            GCWColumnedMultilineOutput(
-              data: [
-                [i18n(context, 'webapi_deeplink_toolsapi_toolinfo_toolname'), toolName(context, tool)],
-                [i18n(context, 'webapi_deeplink_toolsapi_toolinfo_apipath'), i18n(context, 'about_webversion_url') + '#/' + (snapshot.data?.item1 ?? '')],
-              ]
-            ),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'webapi_deeplink_toolsapi_toolinfo_toolname'), toolName(context, tool)],
+              [
+                i18n(context, 'webapi_deeplink_toolsapi_toolinfo_apipath'),
+                i18n(context, 'about_webversion_url') + '#/' + (snapshot.data?.item1 ?? '')
+              ],
+            ]),
             ((snapshot.data?.item2 ?? '').isNotEmpty)
                 ? GCWExpandableTextDivider(
                     text: 'OpenAPI 3.0.0 ' + i18n(context, 'webapi_deeplink_toolsapi_toolinfo_specification'),
                     expanded: true,
-                    child:  _buildApiInfo(snapshot.data?.item2 ?? '')
-                  )
+                    child: _buildApiInfo(snapshot.data?.item2 ?? ''))
                 : Container()
           ],
         );
-      }
-  );
+      });
 }
 
 GCWTool _infoTool(BuildContext context, GCWTool tool) {

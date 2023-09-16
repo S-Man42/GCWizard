@@ -10,11 +10,7 @@ const MDT_INTERNALNAMES_POLYBIOS = 'multidecoder_tool_polybios_title';
 const MDT_POLYBIOS_OPTION_MODE = 'multidecoder_tool_polybios_option_mode';
 
 class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
-  MultiDecoderToolPolybios({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolPolybios({Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -36,28 +32,24 @@ class MultiDecoderToolPolybios extends AbstractMultiDecoderTool {
 class _MultiDecoderToolPolybiosState extends State<MultiDecoderToolPolybios> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDown(
         suppressTitle: true,
-        value:  _parseStringToEnum(stringNullableTypeCheck(widget.options[MDT_POLYBIOS_OPTION_MODE], null)),
+        value: _parseStringToEnum(stringNullableTypeCheck(widget.options[MDT_POLYBIOS_OPTION_MODE], null)),
         onChanged: (newValue) {
           setState(() {
-            widget.options[MDT_POLYBIOS_OPTION_MODE] =
-                alphabetModeName(newValue);
+            widget.options[MDT_POLYBIOS_OPTION_MODE] = alphabetModeName(newValue);
           });
-
         },
       )
-    }
-    );
+    });
   }
 }
 
 AlphabetModificationMode _parseStringToEnum(String? item) {
-  var result = AlphabetModificationMode.values
-      .firstWhereOrNull((e) => alphabetModeName(e) == item);
-  if( result != null) return result;
-  var value = _parseStringToEnum((getDefaultValue(MDT_INTERNALNAMES_POLYBIOS, MDT_POLYBIOS_OPTION_MODE) ?? '').toString());
+  var result = AlphabetModificationMode.values.firstWhereOrNull((e) => alphabetModeName(e) == item);
+  if (result != null) return result;
+  var value =
+      _parseStringToEnum((getDefaultValue(MDT_INTERNALNAMES_POLYBIOS, MDT_POLYBIOS_OPTION_MODE) ?? '').toString());
   return value;
 }

@@ -20,7 +20,7 @@ class MathematicalConstants extends StatefulWidget {
   const MathematicalConstants({Key? key}) : super(key: key);
 
   @override
- _MathematicalConstantsState createState() => _MathematicalConstantsState();
+  _MathematicalConstantsState createState() => _MathematicalConstantsState();
 }
 
 class _MathematicalConstantsState extends State<MathematicalConstants> {
@@ -37,7 +37,6 @@ class _MathematicalConstantsState extends State<MathematicalConstants> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWDropDown<String>(
@@ -102,22 +101,18 @@ class _MathematicalConstantsState extends State<MathematicalConstants> {
     }
 
     List<List<Object?>> data = [];
-      if (constantData.symbol != null) {
-        data.add([
-                  i18n(context, 'physical_constants_symbol'),
-                  buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol!)
-                ]);
-      }
-      data.add([i18n(context, 'physical_constants_value'), constantData.value]);
-      if (names != null) {
-        data.add([i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')]);
-      }
+    if (constantData.symbol != null) {
+      data.add([
+        i18n(context, 'physical_constants_symbol'),
+        buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol!)
+      ]);
+    }
+    data.add([i18n(context, 'physical_constants_value'), constantData.value]);
+    if (names != null) {
+      data.add([i18n(context, 'mathematical_constants_additionalnames'), names.join('\n')]);
+    }
 
-
-    var dataView = GCWColumnedMultilineOutput(
-        data: data,
-        flexValues: const [1, 2]
-    );
+    var dataView = GCWColumnedMultilineOutput(data: data, flexValues: const [1, 2]);
 
     var toolLink = _buildToolLink(constantData.tool);
 

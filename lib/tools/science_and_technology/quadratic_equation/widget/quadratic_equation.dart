@@ -14,7 +14,7 @@ class QuadraticEquation extends StatefulWidget {
   const QuadraticEquation({Key? key}) : super(key: key);
 
   @override
- _QuadraticEquationState createState() => _QuadraticEquationState();
+  _QuadraticEquationState createState() => _QuadraticEquationState();
 }
 
 class _QuadraticEquationState extends State<QuadraticEquation> {
@@ -98,16 +98,15 @@ class _QuadraticEquationState extends State<QuadraticEquation> {
     result = solveQuadraticEquation(_currentA, _currentB, _currentC);
     if (result[''] == null) {
       return GCWDefaultOutput(
-          child: GCWColumnedMultilineOutput(
-              data: result.entries.map((entry) {
-                    if (entry.key.startsWith('quad')) {
-                      return [i18n(context, entry.key), i18n(context, entry.value)];
-                    } else {
-                      return [entry.key, entry.value];
-                    }
-                  }).toList(),
-              flexValues: const [1, 1]
-          ),
+        child: GCWColumnedMultilineOutput(
+            data: result.entries.map((entry) {
+              if (entry.key.startsWith('quad')) {
+                return [i18n(context, entry.key), i18n(context, entry.value)];
+              } else {
+                return [entry.key, entry.value];
+              }
+            }).toList(),
+            flexValues: const [1, 1]),
       );
     } else {
       return Container();

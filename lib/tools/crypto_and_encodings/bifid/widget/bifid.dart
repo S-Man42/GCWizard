@@ -18,7 +18,7 @@ class Bifid extends StatefulWidget {
   const Bifid({Key? key}) : super(key: key);
 
   @override
- _BifidState createState() => _BifidState();
+  _BifidState createState() => _BifidState();
 }
 
 class _BifidState extends State<Bifid> {

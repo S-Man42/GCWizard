@@ -26,7 +26,8 @@ class ProjectionData {
 
   ProjectionData.fromJson(Map<String, Object?> json)
       : distance = toStringOrNull(json['distance']) ?? '',
-        distanceUnit = getUnitByName<Length>(allLengths(), toStringOrNull(json['distanceUnit']) ?? '') ?? defaultLengthUnit,
+        distanceUnit =
+            getUnitByName<Length>(allLengths(), toStringOrNull(json['distanceUnit']) ?? '') ?? defaultLengthUnit,
         bearing = toStringOrNull(json['bearing']) ?? '',
         reverse = toBoolOrNull(json['reverse']) ?? false;
 
@@ -41,7 +42,7 @@ class VariableCoordinateFormula extends FormulaBase {
   ProjectionData? projection;
   List<FormulaValue> values = [];
 
-  VariableCoordinateFormula(String name) : super (name);
+  VariableCoordinateFormula(String name) : super(name);
 
   @override
   Map<String, Object?> toMap() => {
@@ -53,7 +54,8 @@ class VariableCoordinateFormula extends FormulaBase {
       };
 
   static VariableCoordinateFormula fromJson(Map<String, Object?> json) {
-    var newFormula = VariableCoordinateFormula(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
+    var newFormula =
+        VariableCoordinateFormula(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
     newFormula.id = toIntOrNull(json['id']);
     newFormula.formula = toStringOrNull(json['formula']) ?? '';
     newFormula.projection = ProjectionData.fromJson(asJsonMapOrNull(json['projection']) ?? <String, Object?>{});

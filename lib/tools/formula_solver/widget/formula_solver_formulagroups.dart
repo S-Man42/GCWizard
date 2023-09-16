@@ -57,11 +57,10 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
   const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
 
   @override
- _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
+  _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
 }
 
 class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
-
   @override
   void initState() {
     super.initState();
@@ -71,21 +70,22 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWTextDivider(
             text: i18n(context, 'formulasolver_groups_newgroup'),
-            trailing: GCWPasteButton(iconSize: IconButtonSize.SMALL, onSelected: (String data) {
-              try {
-                setState(() {
-                  importFormulaGroupFromJson(context, data);
-                });
-                showToast(i18n(context, 'formulasolver_groups_imported'));
-              } catch (e) {
-                showToast(i18n(context, 'formulasolver_groups_importerror'));
-              }
-            })),
+            trailing: GCWPasteButton(
+                iconSize: IconButtonSize.SMALL,
+                onSelected: (String data) {
+                  try {
+                    setState(() {
+                      importFormulaGroupFromJson(context, data);
+                    });
+                    showToast(i18n(context, 'formulasolver_groups_imported'));
+                  } catch (e) {
+                    showToast(i18n(context, 'formulasolver_groups_importerror'));
+                  }
+                })),
         GCWFormulaListEditor(
           formulaList: formulaGroups,
           buildGCWTool: (id) => _buildNavigateGCWTool(id),
@@ -114,9 +114,9 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
         tool: _FormulaSolverFormulas(group: entry),
         toolName: '${entry.name} - ${i18n(context, 'formulasolver_formulas')}',
         helpSearchString: 'formulasolver_formulas',
-        defaultLanguageToolName:
-        '${entry.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
-        id: '',);
+        defaultLanguageToolName: '${entry.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
+        id: '',
+      );
     } else {
       return null;
     }
@@ -149,7 +149,5 @@ void openInFormulaGroups(BuildContext context) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
-          builder: (context) => GCWTool(
-              tool: const FormulaSolverFormulaGroups(),
-              id: 'formulasolver')));
+          builder: (context) => GCWTool(tool: const FormulaSolverFormulaGroups(), id: 'formulasolver')));
 }

@@ -35,7 +35,7 @@ class GCWPopupMenu extends StatefulWidget {
   }) : super(key: key);
 
   @override
- _GCWPopupMenuState createState() => _GCWPopupMenuState();
+  _GCWPopupMenuState createState() => _GCWPopupMenuState();
 }
 
 class _GCWPopupMenuState extends State<GCWPopupMenu> {
@@ -84,7 +84,8 @@ class _GCWPopupMenuState extends State<GCWPopupMenu> {
       return MapEntry<PopupMenuEntry<int>, void Function(int)>(
           item.isDivider
               ? const PopupMenuDivider() as PopupMenuEntry<int>
-              : PopupMenuItem(value: index, child: item.child), item.action);
+              : PopupMenuItem(value: index, child: item.child),
+          item.action);
     });
 
     _afterLayout();

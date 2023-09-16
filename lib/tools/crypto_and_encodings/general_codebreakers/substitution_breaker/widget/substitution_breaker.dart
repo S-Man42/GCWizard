@@ -66,7 +66,7 @@ class SubstitutionBreaker extends GCWWebStatefulWidget {
   SubstitutionBreaker({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _SubstitutionBreakerState createState() => _SubstitutionBreakerState();
+  _SubstitutionBreakerState createState() => _SubstitutionBreakerState();
 }
 
 class _SubstitutionBreakerState extends State<SubstitutionBreaker> {
@@ -88,16 +88,34 @@ class _SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
       var lang = widget.getWebParameter('lang') ?? 'en';
       switch (lang.toLowerCase()) {
-        case 'de': _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN; break;
-        case 'en': _currentAlphabet = SubstitutionBreakerAlphabet.ENGLISH; break;
-        case 'nl': _currentAlphabet = SubstitutionBreakerAlphabet.DUTCH; break;
-        case 'es': _currentAlphabet = SubstitutionBreakerAlphabet.SPANISH; break;
-        case 'pl': _currentAlphabet = SubstitutionBreakerAlphabet.POLISH; break;
+        case 'de':
+          _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
+          break;
+        case 'en':
+          _currentAlphabet = SubstitutionBreakerAlphabet.ENGLISH;
+          break;
+        case 'nl':
+          _currentAlphabet = SubstitutionBreakerAlphabet.DUTCH;
+          break;
+        case 'es':
+          _currentAlphabet = SubstitutionBreakerAlphabet.SPANISH;
+          break;
+        case 'pl':
+          _currentAlphabet = SubstitutionBreakerAlphabet.POLISH;
+          break;
         case 'gr':
-        case 'el': _currentAlphabet = SubstitutionBreakerAlphabet.GREEK; break;
-        case 'fr': _currentAlphabet = SubstitutionBreakerAlphabet.FRENCH; break;
-        case 'ru': _currentAlphabet = SubstitutionBreakerAlphabet.RUSSIAN; break;
-        default: _currentAlphabet = SubstitutionBreakerAlphabet.ENGLISH; break;
+        case 'el':
+          _currentAlphabet = SubstitutionBreakerAlphabet.GREEK;
+          break;
+        case 'fr':
+          _currentAlphabet = SubstitutionBreakerAlphabet.FRENCH;
+          break;
+        case 'ru':
+          _currentAlphabet = SubstitutionBreakerAlphabet.RUSSIAN;
+          break;
+        default:
+          _currentAlphabet = SubstitutionBreakerAlphabet.ENGLISH;
+          break;
       }
 
       widget.webParameter = null;

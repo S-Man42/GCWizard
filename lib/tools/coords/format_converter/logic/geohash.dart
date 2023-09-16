@@ -98,13 +98,20 @@ Geohash latLonToGeohash(LatLng coords, int geohashLength) {
     i++;
   }
 
-  return Geohash(_splitIntoBinaryChunks(binary).map((chunk) => _getCharacterByBinary(chunk)).where((element) => element != null).join());
+  return Geohash(_splitIntoBinaryChunks(binary)
+      .map((chunk) => _getCharacterByBinary(chunk))
+      .where((element) => element != null)
+      .join());
 }
 
 LatLng? geohashToLatLon(Geohash geohash) {
   try {
     var _geohash = geohash.text.toLowerCase();
-    var binary = _geohash.split('').map((character) => _getBinaryByCharacter(character)).where((element) => element != null).join();
+    var binary = _geohash
+        .split('')
+        .map((character) => _getBinaryByCharacter(character))
+        .where((element) => element != null)
+        .join();
 
     var latBinary = '';
     var lonBinary = '';

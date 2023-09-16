@@ -28,7 +28,7 @@ class SymbolReplacerManualControl extends StatefulWidget {
   const SymbolReplacerManualControl({Key? key, required this.symbolImage}) : super(key: key);
 
   @override
- _SymbolReplacerManualControlState createState() => _SymbolReplacerManualControlState();
+  _SymbolReplacerManualControlState createState() => _SymbolReplacerManualControlState();
 }
 
 class _SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
@@ -73,8 +73,7 @@ class _SymbolReplacerManualControlState extends State<SymbolReplacerManualContro
         if (_symbolData?.values.first.displayName != _displayText) {
           _symbolMap[symbol] = _cloneSymbolData(_symbolData!, _displayText);
         }
-      }
-      else {
+      } else {
         _symbolMap.addAll({
           symbol: {'': SymbolData(bytes: symbol.getImage(), displayName: symbol.symbolGroup?.text ?? '', path: '')}
         });
@@ -83,25 +82,24 @@ class _SymbolReplacerManualControlState extends State<SymbolReplacerManualContro
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-          fixed: false,
-          imageData: _symbolMap.values,
-          countColumns: countColumns,
-          mediaQueryData: mediaQueryData,
-          onChanged: () => setState(() {}),
-          selectable: true,
-          overlayOn: true,
-          scale: widget.symbolImage.symbolScale,
-          onSymbolTapped: (String tappedText, SymbolData imageData) {
-            setState(() {
-              _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
-            });
-          },
-        )
-    );
+      fixed: false,
+      imageData: _symbolMap.values,
+      countColumns: countColumns,
+      mediaQueryData: mediaQueryData,
+      onChanged: () => setState(() {}),
+      selectable: true,
+      overlayOn: true,
+      scale: widget.symbolImage.symbolScale,
+      onSymbolTapped: (String tappedText, SymbolData imageData) {
+        setState(() {
+          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
+        });
+      },
+    ));
   }
 
   void _selectGroupSymbols(SymbolData imageData, bool selected) {
-    var _symbol = _getSymbol(_symbolMap,imageData);
+    var _symbol = _getSymbol(_symbolMap, imageData);
 
     if (!(_addActiv || _removeActiv)) {
       _selectedSymbolData = selected ? imageData : null;
@@ -110,7 +108,7 @@ class _SymbolReplacerManualControlState extends State<SymbolReplacerManualContro
     }
 
     if (_addActiv && !selected && _symbol != null) {
-      widget.symbolImage.addToGroup(_symbol, _getSymbol(_symbolMap,_selectedSymbolData)?.symbolGroup);
+      widget.symbolImage.addToGroup(_symbol, _getSymbol(_symbolMap, _selectedSymbolData)?.symbolGroup);
       imageData.primarySelected = true;
       _symbol = _getSymbol(_symbolMap, _selectedSymbolData);
       selected = true;
@@ -121,12 +119,13 @@ class _SymbolReplacerManualControlState extends State<SymbolReplacerManualContro
         var symbolGroup = _getSymbol(_symbolMap, _selectedSymbolData)?.symbolGroup;
         widget.symbolImage.removeFromGroup(_symbol);
         if (symbolGroup != null) {
-          _selectedSymbolData = symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values.first;
+          _selectedSymbolData =
+              symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values.first;
         }
       } else {
         widget.symbolImage.removeFromGroup(_symbol);
       }
-      _symbol = _getSymbol(_symbolMap,_selectedSymbolData);
+      _symbol = _getSymbol(_symbolMap, _selectedSymbolData);
     }
 
     if (selected) {
@@ -148,7 +147,7 @@ class _SymbolReplacerManualControlState extends State<SymbolReplacerManualContro
   }
 
   SymbolReplacerSymbolData? _getGroupSymbol(SymbolData imageData) {
-    var _symbol = _getSymbol(_symbolMap,imageData);
+    var _symbol = _getSymbol(_symbolMap, imageData);
     if (_symbol?.symbolGroup != null) return _symbol!.symbolGroup?.compareSymbol;
     return null;
   }

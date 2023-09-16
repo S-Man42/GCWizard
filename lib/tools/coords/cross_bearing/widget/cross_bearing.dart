@@ -21,7 +21,7 @@ class CrossBearing extends StatefulWidget {
   const CrossBearing({Key? key}) : super(key: key);
 
   @override
- _CrossBearingState createState() => _CrossBearingState();
+  _CrossBearingState createState() => _CrossBearingState();
 }
 
 class _CrossBearingState extends State<CrossBearing> {
@@ -108,7 +108,8 @@ class _CrossBearingState extends State<CrossBearing> {
     if (_currentIntersection == null) {
       var distance1To2 = distanceBearing(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, _ells).distance;
       mapPoint = GCWMapPoint(
-          point: projection(_currentCoords1.toLatLng()!, _currentBearing1.value, distance1To2 / 2.0, _ells), isVisible: false);
+          point: projection(_currentCoords1.toLatLng()!, _currentBearing1.value, distance1To2 / 2.0, _ells),
+          isVisible: false);
     } else {
       var distance1ToIntersect = distanceBearing(_currentIntersection!, _currentCoords1.toLatLng()!, _ells).distance;
       mapPoint = GCWMapPoint(
@@ -127,7 +128,8 @@ class _CrossBearingState extends State<CrossBearing> {
     if (_currentIntersection == null) {
       var distance2To1 = distanceBearing(_currentCoords2.toLatLng()!, _currentCoords1.toLatLng()!, _ells).distance;
       mapPoint = GCWMapPoint(
-          point: projection(_currentCoords2.toLatLng()!, _currentBearing2.value, distance2To1 / 2.0, _ells), isVisible: false);
+          point: projection(_currentCoords2.toLatLng()!, _currentBearing2.value, distance2To1 / 2.0, _ells),
+          isVisible: false);
     } else {
       var distance2ToIntersect = distanceBearing(_currentIntersection!, _currentCoords2.toLatLng()!, _ells).distance;
       mapPoint = GCWMapPoint(

@@ -9,21 +9,21 @@ const MDT_BACON_OPTION_MODE_01 = '01';
 const MDT_BACON_OPTION_MODE_AB = 'AB';
 
 class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
-  MultiDecoderToolBacon({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolBacon({Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
-            key: key,
-            id: id,
-            name: name,
-            internalToolName: MDT_INTERNALNAMES_BACON,
-            onDecode: (String input, String key) {
-              return decodeBacon(input, false, checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE) == MDT_BACON_OPTION_MODE_01);
-            },
-            options: options,
-           );
+          key: key,
+          id: id,
+          name: name,
+          internalToolName: MDT_INTERNALNAMES_BACON,
+          onDecode: (String input, String key) {
+            return decodeBacon(
+                input,
+                false,
+                checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE) ==
+                    MDT_BACON_OPTION_MODE_01);
+          },
+          options: options,
+        );
   @override
   State<StatefulWidget> createState() => _MultiDecoderToolBaconState();
 }
@@ -31,8 +31,7 @@ class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
 class _MultiDecoderToolBaconState extends State<MultiDecoderToolBacon> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_BACON_OPTION_MODE: GCWDropDown<String>(
         value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, widget.options, MDT_BACON_OPTION_MODE),
         onChanged: (newValue) {
@@ -47,7 +46,6 @@ class _MultiDecoderToolBaconState extends State<MultiDecoderToolBacon> {
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }

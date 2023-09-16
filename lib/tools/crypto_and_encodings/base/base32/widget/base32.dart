@@ -43,5 +43,11 @@ const String _apiSpecification = '''
 ''';
 
 class Base32 extends AbstractBase {
-  Base32({Key? key}) : super(key: key, encode: encodeBase32, decode: decodeBase32, searchMultimedia: false, apiSpecification: _apiSpecification);
+  Base32({Key? key})
+      : super(
+            key: key,
+            encode: encodeBase32,
+            decode: decodeBase32,
+            searchMultimedia: false,
+            apiSpecification: _apiSpecification);
 }

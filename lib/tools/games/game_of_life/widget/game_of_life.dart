@@ -18,7 +18,7 @@ class GameOfLife extends StatefulWidget {
   const GameOfLife({Key? key}) : super(key: key);
 
   @override
- _GameOfLifeState createState() => _GameOfLifeState();
+  _GameOfLifeState createState() => _GameOfLifeState();
 }
 
 const _KEY_CUSTOM_RULES = 'gameoflife_custom';

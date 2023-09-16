@@ -22,7 +22,7 @@ class Piet extends StatefulWidget {
   const Piet({Key? key, this.file}) : super(key: key);
 
   @override
- _PietState createState() => _PietState();
+  _PietState createState() => _PietState();
 }
 
 class _PietState extends State<Piet> {
@@ -115,7 +115,9 @@ class _PietState extends State<Piet> {
     return GCWDefaultOutput(
       child: (_currentInterpreterOutput?.output ?? '') +
           (_currentInterpreterOutput?.error == true && (_currentInterpreterOutput?.errorText != null)
-              ? '\n' + (i18n(context, _currentInterpreterOutput!.errorText, ifTranslationNotExists: _currentInterpreterOutput!.errorText))
+              ? '\n' +
+                  (i18n(context, _currentInterpreterOutput!.errorText,
+                      ifTranslationNotExists: _currentInterpreterOutput!.errorText))
               : ''),
     );
   }
@@ -126,14 +128,12 @@ class _PietState extends State<Piet> {
     _isStarted = true;
 
     var imageReader = PietImageReader();
-    var _pietPixels = _currentInterpreterOutput?.state?.data
-        ?? ((_originalData?.bytes == null)
-        ? null
-        : imageReader.readImage(_originalData!.bytes));
+    var _pietPixels = _currentInterpreterOutput?.state?.data ??
+        ((_originalData?.bytes == null) ? null : imageReader.readImage(_originalData!.bytes));
 
     if (_pietPixels != null) {
       var currentOutputFuture =
-      interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
+          interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
 
       currentOutputFuture.then((output) {
         if (output.finished) {

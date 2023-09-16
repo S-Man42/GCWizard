@@ -10,7 +10,7 @@ class Binary extends StatefulWidget {
   const Binary({Key? key}) : super(key: key);
 
   @override
- _BinaryState createState() => _BinaryState();
+  _BinaryState createState() => _BinaryState();
 }
 
 class _BinaryState extends State<Binary> {

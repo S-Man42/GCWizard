@@ -13,8 +13,14 @@ String formatResistorTolerancedValueInterval(List<double> valueInterval, [String
   var _prefix = prefix ?? '';
 
   var formatter = NumberFormat('0.############');
-  return formatter.format(valueInterval[0]) + ' ' + _prefix + '\u03A9 - ' +
-      formatter.format(valueInterval[1]) + ' ' + _prefix + '\u03A9';
+  return formatter.format(valueInterval[0]) +
+      ' ' +
+      _prefix +
+      '\u03A9 - ' +
+      formatter.format(valueInterval[1]) +
+      ' ' +
+      _prefix +
+      '\u03A9';
 }
 
 String formatResistorTolerance(double tolerance) {

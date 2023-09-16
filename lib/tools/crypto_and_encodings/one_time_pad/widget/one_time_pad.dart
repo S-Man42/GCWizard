@@ -71,7 +71,7 @@ class OneTimePad extends GCWWebStatefulWidget {
   OneTimePad({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _OneTimePadState createState() => _OneTimePadState();
+  _OneTimePadState createState() => _OneTimePadState();
 }
 
 class _OneTimePadState extends State<OneTimePad> {

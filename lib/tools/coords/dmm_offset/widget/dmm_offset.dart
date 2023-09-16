@@ -15,7 +15,7 @@ class DMMOffset extends StatefulWidget {
   const DMMOffset({Key? key}) : super(key: key);
 
   @override
- _DMMOffsetState createState() => _DMMOffsetState();
+  _DMMOffsetState createState() => _DMMOffsetState();
 }
 
 class _DMMOffsetState extends State<DMMOffset> {

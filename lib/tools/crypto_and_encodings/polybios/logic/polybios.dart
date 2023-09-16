@@ -131,7 +131,6 @@ PolybiosOutput? encryptPolybios(String input, String key,
     String? fillAlphabet,
     String? firstLetters,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
-
   modificationMode ??= AlphabetModificationMode.J_TO_I;
 
   int dim = key.length;
@@ -165,7 +164,6 @@ PolybiosOutput? decryptPolybios(String input, String key,
     String? fillAlphabet,
     String? firstLetters,
     AlphabetModificationMode? modificationMode = AlphabetModificationMode.J_TO_I}) {
-
   modificationMode ??= AlphabetModificationMode.J_TO_I;
 
   int dim = key.length;

@@ -15,12 +15,14 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   const GCWCoordsFormatSelector({Key? key, required this.onChanged, required this.format}) : super(key: key);
 
   @override
- _GCWCoordsFormatSelectorState createState() => _GCWCoordsFormatSelectorState();
+  _GCWCoordsFormatSelectorState createState() => _GCWCoordsFormatSelectorState();
 
   List<GCWDropDownMenuItem<CoordinateFormatKey>> getDropDownItems(BuildContext context) {
     return allCoordinateFormatMetadata.map((entry) {
       return GCWDropDownMenuItem<CoordinateFormatKey>(
-          value: entry.type, child: i18n(context, entry.name, ifTranslationNotExists: entry.name), subtitle: entry.example);
+          value: entry.type,
+          child: i18n(context, entry.name, ifTranslationNotExists: entry.name),
+          subtitle: entry.example);
     }).toList();
   }
 }

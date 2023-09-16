@@ -27,7 +27,7 @@ class VisualCryptography extends StatefulWidget {
   const VisualCryptography({Key? key}) : super(key: key);
 
   @override
- _VisualCryptographyState createState() => _VisualCryptographyState();
+  _VisualCryptographyState createState() => _VisualCryptographyState();
 }
 
 class _VisualCryptographyState extends State<VisualCryptography> {
@@ -174,12 +174,11 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         },
       ),
       Container(
-          padding: const EdgeInsets.symmetric(vertical: 25),
-          child:
-              GCWImageView(imageData: _encodeImage == null ? null :GCWImageViewData(_encodeImage!),
-                  suppressedButtons: const {GCWImageViewButtons.ALL}),
-        ),
-
+        padding: const EdgeInsets.symmetric(vertical: 25),
+        child: GCWImageView(
+            imageData: _encodeImage == null ? null : GCWImageViewData(_encodeImage!),
+            suppressedButtons: const {GCWImageViewButtons.ALL}),
+      ),
       GCWOnOffSwitch(
         value: _currentEncryptionWithKeyMode,
         title: i18n(context, 'visual_cryptography_keyimage'),
@@ -292,7 +291,6 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   }
 
   void __encodeImageSize() {
-
     if (_encodeImage == null) return;
     var _image = img.decodeImage(_encodeImage!.bytes);
     if (_image == null) return;
@@ -468,9 +466,12 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(Tuple5<Uint8List, Uint8List?, int, int, int>(_encodeImage?.bytes ?? Uint8List(0),
+    return GCWAsyncExecuterParameters(Tuple5<Uint8List, Uint8List?, int, int, int>(
+        _encodeImage?.bytes ?? Uint8List(0),
         _currentEncryptionWithKeyMode ? _encodeKeyImage?.bytes ?? Uint8List(0) : null,
-        _encodeOffsetsX, _encodeOffsetsY, _encodeScale));
+        _encodeOffsetsX,
+        _encodeOffsetsY,
+        _encodeScale));
   }
 
   void _saveOutputEncode(Tuple2<Uint8List, Uint8List?>? output) {

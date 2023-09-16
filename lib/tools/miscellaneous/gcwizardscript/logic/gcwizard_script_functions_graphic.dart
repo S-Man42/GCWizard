@@ -1,6 +1,5 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-
 void _circle(Object x, Object y, Object r) {
   if (_isNotAInt(x) || _isNotAInt(y) || _isNotAInt(r)) {
     _handleError(_INVALIDTYPECAST);
@@ -94,7 +93,8 @@ void _text(Object t, Object x, Object y, Object s) {
     return;
   }
   t = (t as String).replaceAll(' ', '⟳');
-  _state.graphics.add('TEXT ' + t + ' ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (s as int).toString());
+  _state.graphics
+      .add('TEXT ' + t + ' ' + (x as int).toString() + ' ' + (y as int).toString() + ' ' + (s as int).toString());
 }
 
 void _oval(Object x1, Object y1, Object x2, Object y2) {

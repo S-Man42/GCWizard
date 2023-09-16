@@ -24,7 +24,7 @@ class CoordinateAveraging extends StatefulWidget {
   const CoordinateAveraging({Key? key}) : super(key: key);
 
   @override
- _CoordinateAveragingState createState() => _CoordinateAveragingState();
+  _CoordinateAveragingState createState() => _CoordinateAveragingState();
 }
 
 class _CoordinateAveragingState extends State<CoordinateAveraging> {
@@ -102,64 +102,58 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
           },
         ),
         GCWDefaultOutput(
-            trailing:
-              _averagedLocations.isNotEmpty ? GCWIconButton(
-                icon: Icons.my_location,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  var mapPoints = _measuredValues.map((measured) {
-                    return GCWMapPoint(
-                      point: measured.coord,
-                      color: COLOR_MAP_POINT,
-                      isEditable: false,
-                      isVisible: true,
-                      circle: GCWMapCircle(
-                        centerPoint: measured.coord,
-                        radius: measured.accuracy,
-                        color: COLOR_MAP_POINT
-                      )
-                    );
-                  }).toList();
+          trailing: _averagedLocations.isNotEmpty
+              ? GCWIconButton(
+                  icon: Icons.my_location,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    var mapPoints = _measuredValues.map((measured) {
+                      return GCWMapPoint(
+                          point: measured.coord,
+                          color: COLOR_MAP_POINT,
+                          isEditable: false,
+                          isVisible: true,
+                          circle: GCWMapCircle(
+                              centerPoint: measured.coord, radius: measured.accuracy, color: COLOR_MAP_POINT));
+                    }).toList();
 
-                  mapPoints.add(GCWMapPoint(
-                    point: _averagedLocations.first.coord,
-                    color: COLOR_MAP_CALCULATEDPOINT,
-                    isEditable: false,
-                    isVisible: true,
-                    circle: GCWMapCircle(
-                      centerPoint: _averagedLocations.first.coord,
-                      radius: _averagedLocations.first.accuracy,
-                      color: COLOR_MAP_CALCULATEDPOINT
-                    )
-                  ));
+                    mapPoints.add(GCWMapPoint(
+                        point: _averagedLocations.first.coord,
+                        color: COLOR_MAP_CALCULATEDPOINT,
+                        isEditable: false,
+                        isVisible: true,
+                        circle: GCWMapCircle(
+                            centerPoint: _averagedLocations.first.coord,
+                            radius: _averagedLocations.first.accuracy,
+                            color: COLOR_MAP_CALCULATEDPOINT)));
 
-                  openInMap(context, mapPoints);
-                }
-              ) : Container(),
-            child: GCWColumnedMultilineOutput(
-              data: [
-                    <Object?>[
-                      null,
-                      i18n(context, 'coords_averaging_averagedcoordinate', parameters: [_averagedLocations.length]),
-                      i18n(context, 'coords_averaging_calculatedaccuracy')
-                    ]
-                  ] +
-                  _averagedLocations
-                      .asMap()
-                      .map((index, location) {
-                        var coord = formatCoordOutput(location.coord, defaultCoordinateFormat, defaultEllipsoid);
-                        var accuracy = _formatLength(location.accuracy);
+                    openInMap(context, mapPoints);
+                  })
+              : Container(),
+          child: GCWColumnedMultilineOutput(
+            data: [
+                  <Object?>[
+                    null,
+                    i18n(context, 'coords_averaging_averagedcoordinate', parameters: [_averagedLocations.length]),
+                    i18n(context, 'coords_averaging_calculatedaccuracy')
+                  ]
+                ] +
+                _averagedLocations
+                    .asMap()
+                    .map((index, location) {
+                      var coord = formatCoordOutput(location.coord, defaultCoordinateFormat, defaultEllipsoid);
+                      var accuracy = _formatLength(location.accuracy);
 
-                        return MapEntry(index, [index + 1, coord, accuracy]);
-                      })
-                      .values
-                      .toList()
-                      .reversed
-                      .toList(),
-              flexValues: const [1, 6, 4],
-              copyColumn: 1,
-              hasHeader: true,
-            ),
+                      return MapEntry(index, [index + 1, coord, accuracy]);
+                    })
+                    .values
+                    .toList()
+                    .reversed
+                    .toList(),
+            flexValues: const [1, 6, 4],
+            copyColumn: 1,
+            hasHeader: true,
+          ),
         ),
       ],
     );
@@ -214,10 +208,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
    */
   //TODO Extract logic from widget
   void _addAveragedLocation(LocationData location) {
-    if (location.accuracy == null
-      || location.latitude == null
-      || location.longitude == null
-    ) return;
+    if (location.accuracy == null || location.latitude == null || location.longitude == null) return;
 
     _measuredValues.add(_MeasuredLocation(LatLng(location.latitude!, location.longitude!), location.accuracy!));
 

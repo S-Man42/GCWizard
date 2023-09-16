@@ -9,7 +9,7 @@ class IntegerFactorization extends StatefulWidget {
   const IntegerFactorization({Key? key, this.numberLabel}) : super(key: key);
 
   @override
- _IntegerFactorizationState createState() => _IntegerFactorizationState();
+  _IntegerFactorizationState createState() => _IntegerFactorizationState();
 }
 
 class _IntegerFactorizationState extends State<IntegerFactorization> {

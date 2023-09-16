@@ -13,7 +13,7 @@ class GCWTextViewer extends StatefulWidget {
   const GCWTextViewer({Key? key, required this.text}) : super(key: key);
 
   @override
- _GCWTextViewerState createState() => _GCWTextViewerState();
+  _GCWTextViewerState createState() => _GCWTextViewerState();
 }
 
 class _GCWTextViewerState extends State<GCWTextViewer> {

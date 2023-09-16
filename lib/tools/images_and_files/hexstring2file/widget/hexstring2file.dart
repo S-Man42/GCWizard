@@ -21,7 +21,7 @@ class HexString2File extends StatefulWidget {
   const HexString2File({Key? key}) : super(key: key);
 
   @override
- _HexString2FileState createState() => _HexString2FileState();
+  _HexString2FileState createState() => _HexString2FileState();
 }
 
 class _HexString2FileState extends State<HexString2File> {
@@ -71,7 +71,6 @@ class _HexString2FileState extends State<HexString2File> {
 }
 
 Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
-
   var children = outData.map((Uint8List _outData) {
     var file = GCWFile(bytes: _outData);
 

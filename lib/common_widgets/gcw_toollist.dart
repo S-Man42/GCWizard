@@ -26,13 +26,9 @@ class GCWToolList extends StatefulWidget {
 class _GCWToolListState extends State<GCWToolList> {
   @override
   Widget build(BuildContext context) {
-
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
-        dragDevices: {
-          PointerDeviceKind.touch,
-          PointerDeviceKind.mouse
-        },
+        dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
       ),
       child: _buildItems(),
     );

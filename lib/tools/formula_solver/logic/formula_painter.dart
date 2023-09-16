@@ -2,7 +2,7 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class FormulaPainter {
-  static const String _Text ='t'; //text
+  static const String _Text = 't'; //text
   static const String _Space = 'S'; //space
   static const String Number = 'g'; // or character in word function or ' "
   static const String NumberError = 'G'; //or character in word function error
@@ -325,7 +325,7 @@ class FormulaPainter {
 
   String _coloredFormulaReference(String result, List<String> parts) {
     result = _replaceRange(result, 0, parts[0].length, OFRB);
-    if ((int.tryParse(parts[1]) ?? 9999999 )< _formulaId) {
+    if ((int.tryParse(parts[1]) ?? 9999999) < _formulaId) {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
     } else {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
@@ -480,7 +480,7 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp('^(['+ _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
+    RegExp regex = RegExp('^([' + _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
@@ -622,7 +622,7 @@ class FormulaPainter {
 
   String _coloredNumber(String result, List<String> parts, bool hasError, bool stringValue) {
     hasError |= (!_operatorBevor && !_wordFunction(_parentFunctionName) && !stringValue); // ||
-        //(stringValue && _parentFunctionName == null && !_isString(formula)); //
+    //(stringValue && _parentFunctionName == null && !_isString(formula)); //
     return _replaceRange(result, 0, parts[0].length, hasError ? NumberError : Number);
   }
 
@@ -633,7 +633,9 @@ class FormulaPainter {
     if ((match != null) && (offset == 0) && (match.group(0)![0] != '-')) return null;
     return (match == null)
         ? null
-        : [_combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])];
+        : [
+            _combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])
+          ];
   }
 
   List<String>? _isInvalidOperator(String formula) {
@@ -648,7 +650,7 @@ class FormulaPainter {
   }
 
   String _replaceRange(String string, int start, int? length, String replacement) {
-    try  {
+    try {
       if (length == null) {
         return string.replaceRange(start, start + replacement.length, replacement);
       } else {

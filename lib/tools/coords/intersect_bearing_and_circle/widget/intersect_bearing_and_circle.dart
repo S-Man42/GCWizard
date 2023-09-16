@@ -24,7 +24,7 @@ class IntersectGeodeticAndCircle extends StatefulWidget {
   const IntersectGeodeticAndCircle({Key? key}) : super(key: key);
 
   @override
- _IntersectBearingAndCircleState createState() => _IntersectBearingAndCircleState();
+  _IntersectBearingAndCircleState createState() => _IntersectBearingAndCircleState();
 }
 
 class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
@@ -98,7 +98,9 @@ class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> 
         point: projection(
             _currentCoordsStart.toLatLng()!,
             _currentBearingStart.value,
-            max<double>(distanceBearing(_currentCoordsStart.toLatLng()!, _currentCoordsCircle.toLatLng()!, defaultEllipsoid).distance,
+            max<double>(
+                    distanceBearing(_currentCoordsStart.toLatLng()!, _currentCoordsCircle.toLatLng()!, defaultEllipsoid)
+                        .distance,
                     _currentRadiusCircle) *
                 2.5,
             defaultEllipsoid),

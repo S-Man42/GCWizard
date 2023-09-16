@@ -17,7 +17,7 @@ class Befunge extends StatefulWidget {
   const Befunge({Key? key}) : super(key: key);
 
   @override
- _BefungeState createState() => _BefungeState();
+  _BefungeState createState() => _BefungeState();
 }
 
 class _BefungeState extends State<Befunge> {

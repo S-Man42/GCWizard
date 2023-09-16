@@ -68,14 +68,14 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
           children: <Widget>[
             widget.upsideDownButton
                 ? GCWIconButton(
-                  icon: Icons.rotate_left,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    setState(() {
-                      _currentUpsideDown = !_currentUpsideDown;
-                    });
-                  },
-                )
+                    icon: Icons.rotate_left,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      setState(() {
+                        _currentUpsideDown = !_currentUpsideDown;
+                      });
+                    },
+                  )
                 : Container(),
             Container(
               padding: const EdgeInsets.only(right: 10.0),
@@ -88,7 +88,6 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
                           horizontalPadding: widget.horizontalSymbolPadding,
                           verticalPadding: widget.verticalSymbolPadding)
                       .then((image) {
-
                     image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                       _exportFile(context, data?.buffer.asUint8List());
                     });
@@ -133,7 +132,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
     var segmentsList = _currentUpsideDown ? Segments(displays: segments.displays.reversed.toList()) : segments;
 
     _displays = segmentsList.displays.map((character) {
-      var displayedSegments = { for (var e in character) e.toString() : true };
+      var displayedSegments = {for (var e in character) e.toString(): true};
       return widget.segmentFunction(displayedSegments, widget.readOnly);
     }).toList();
 

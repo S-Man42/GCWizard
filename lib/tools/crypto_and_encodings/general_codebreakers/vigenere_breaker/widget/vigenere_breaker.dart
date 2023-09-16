@@ -21,7 +21,7 @@ class VigenereBreaker extends StatefulWidget {
   const VigenereBreaker({Key? key}) : super(key: key);
 
   @override
- _VigenereBreakerState createState() => _VigenereBreakerState();
+  _VigenereBreakerState createState() => _VigenereBreakerState();
 }
 
 class _VigenereBreakerState extends State<VigenereBreaker> {

@@ -41,7 +41,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWSymbolTableSymbolMatrixState createState() => _GCWSymbolTableSymbolMatrixState();
+  _GCWSymbolTableSymbolMatrixState createState() => _GCWSymbolTableSymbolMatrixState();
 }
 
 class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
@@ -84,10 +84,10 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
           widget.symbolKey.isEmpty
               ? Container(width: 20)
               : GCWIconButton(
-              icon: Icons.app_registration,
-              onPressed: () {
-                openInSymbolReplacer(context, widget.symbolKey);
-              }),
+                  icon: Icons.app_registration,
+                  onPressed: () {
+                    openInSymbolReplacer(context, widget.symbolKey);
+                  }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
@@ -99,7 +99,8 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
               child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   primary: true,
-                  child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped, widget.scale)))
+                  child: _buildDecryptionButtonMatrix(
+                      widget.countColumns, widget.selectable, widget.onSymbolTapped, widget.scale)))
     ]);
   }
 

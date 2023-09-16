@@ -107,8 +107,7 @@ Future<List<LatLng>> resectionAsync(GCWAsyncExecuterParameters? jobData) async {
   }
 
   var data = jobData!.parameters as ResectionJobData;
-  var output = resection(data.coord1, data.angle12, data.coord2,
-      data.angle23, data.coord3, data.ells);
+  var output = resection(data.coord1, data.angle12, data.coord2, data.angle23, data.coord3, data.ells);
 
   jobData.sendAsyncPort?.send(output);
 
@@ -125,11 +124,7 @@ List<LatLng> resection(LatLng coord1, double angle12, LatLng coord2, double angl
       utils.equalsLatLng(coord1, coord3, tolerance: minDistance) ||
       utils.equalsLatLng(coord2, coord3, tolerance: minDistance)) return [];
 
-  return _ResectionCalculator(
-      ResectionParameters(
-        coord1, angle12, coord2, angle23, coord3
-      ), ells)
-      .check();
+  return _ResectionCalculator(ResectionParameters(coord1, angle12, coord2, angle23, coord3), ells).check();
 }
 
 class ResectionParameters extends IntervalCalculatorParameters {

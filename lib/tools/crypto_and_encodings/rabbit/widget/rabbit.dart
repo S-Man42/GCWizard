@@ -13,7 +13,7 @@ class Rabbit extends StatefulWidget {
   const Rabbit({Key? key}) : super(key: key);
 
   @override
- _RabbitState createState() => _RabbitState();
+  _RabbitState createState() => _RabbitState();
 }
 
 class _RabbitState extends State<Rabbit> {

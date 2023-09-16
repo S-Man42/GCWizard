@@ -24,7 +24,7 @@ int _getUSweekNumber(DateTime date) {
 
   int weekNr;
 
-  if( currentDay.millisecondsSinceEpoch >= (beginOfNextYear.millisecondsSinceEpoch - (oneDay * dayOfWeekNextYear)) ) {
+  if (currentDay.millisecondsSinceEpoch >= (beginOfNextYear.millisecondsSinceEpoch - (oneDay * dayOfWeekNextYear))) {
     //First week of next year
     weekNr = 1;
   } else {
@@ -34,7 +34,7 @@ int _getUSweekNumber(DateTime date) {
   return weekNr;
 }
 
-int calendarWeek(DateTime date , {bool iso = true}) {
+int calendarWeek(DateTime date, {bool iso = true}) {
   if (iso) {
     return _isoWeek(date);
   } else {

@@ -27,7 +27,7 @@ class Homophone extends StatefulWidget {
   const Homophone({Key? key}) : super(key: key);
 
   @override
- _HomophoneState createState() => _HomophoneState();
+  _HomophoneState createState() => _HomophoneState();
 }
 
 class _HomophoneState extends State<Homophone> {

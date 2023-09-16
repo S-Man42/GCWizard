@@ -63,7 +63,7 @@ class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
 
   @override
- _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
+  _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
 }
 
 class _WherigoAnalyzeState extends State<WherigoAnalyze> {
@@ -1393,14 +1393,18 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
             onPressed: () {
               setState(() {
                 _builderIdentifierIndex--;
-                if (_builderIdentifierIndex < 1) _builderIdentifierIndex = WherigoCartridgeLUAData.BuilderVariables.length;
+                if (_builderIdentifierIndex < 1) {
+                  _builderIdentifierIndex = WherigoCartridgeLUAData.BuilderVariables.length;
+                }
               });
             },
           ),
           Expanded(
             child: GCWText(
               align: Alignment.center,
-              text: _builderIdentifierIndex.toString() + ' / ' + (WherigoCartridgeLUAData.BuilderVariables.length).toString(),
+              text: _builderIdentifierIndex.toString() +
+                  ' / ' +
+                  (WherigoCartridgeLUAData.BuilderVariables.length).toString(),
             ),
           ),
           GCWIconButton(
@@ -1408,14 +1412,17 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
             onPressed: () {
               setState(() {
                 _builderIdentifierIndex++;
-                if (_builderIdentifierIndex > WherigoCartridgeLUAData.BuilderVariables.length) _builderIdentifierIndex = 1;
+                if (_builderIdentifierIndex > WherigoCartridgeLUAData.BuilderVariables.length) {
+                  _builderIdentifierIndex = 1;
+                }
               });
             },
           ),
         ],
       ),
       GCWColumnedMultilineOutput(
-          data: _buildOutputListOfBuilderVariables(context, WherigoCartridgeLUAData.BuilderVariables[_builderIdentifierIndex - 1])),
+          data: _buildOutputListOfBuilderVariables(
+              context, WherigoCartridgeLUAData.BuilderVariables[_builderIdentifierIndex - 1])),
     ]);
   }
 
@@ -1737,7 +1744,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     // Build data
     for (WherigoZoneData zone in WherigoCartridgeLUAData.Zones) {
-
       if (WHERIGONameToObject[zone.ZoneLUAName] == null) {
         return;
       }

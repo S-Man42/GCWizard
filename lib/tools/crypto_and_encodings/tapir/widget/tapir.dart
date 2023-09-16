@@ -59,7 +59,7 @@ class Tapir extends GCWWebStatefulWidget {
   Tapir({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _TapirState createState() => _TapirState();
+  _TapirState createState() => _TapirState();
 }
 
 class _TapirState extends State<Tapir> {
@@ -72,8 +72,7 @@ class _TapirState extends State<Tapir> {
 
   var _currentOneTimePad = '';
 
-  final _maskFormatter =
-      GCWMaskTextInputFormatter(mask: '##### ' * 100000 + '#####', filter: {"#": RegExp(r'\d')});
+  final _maskFormatter = GCWMaskTextInputFormatter(mask: '##### ' * 100000 + '#####', filter: {"#": RegExp(r'\d')});
 
   @override
   void initState() {

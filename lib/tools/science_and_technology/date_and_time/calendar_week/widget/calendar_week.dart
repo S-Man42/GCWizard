@@ -12,7 +12,7 @@ class CalendarWeek extends StatefulWidget {
   const CalendarWeek({Key? key}) : super(key: key);
 
   @override
- _CalendarWeekState createState() => _CalendarWeekState();
+  _CalendarWeekState createState() => _CalendarWeekState();
 }
 
 class _CalendarWeekState extends State<CalendarWeek> {
@@ -37,57 +37,54 @@ class _CalendarWeekState extends State<CalendarWeek> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          }
-        ),
+            value: _currentMode,
+            onChanged: (value) {
+              setState(() {
+                _currentMode = value;
+              });
+            }),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'dates_calendarweek_weektype'),
-          leftValue: 'ISO',
-          rightValue: 'US',
-          value: _currentISOMode,
-          onChanged: (value) {
-            setState(() {
-              _currentISOMode = value;
-            });
-          }
-        ),
-        _currentMode == GCWSwitchPosition.left ?
-        GCWDateTimePicker(
-          config: const {DateTimePickerConfig.DATE},
-          datetime: _currentEncryptionDate,
-          onChanged: (value) {
-            setState(() {
-              _currentEncryptionDate = value.datetime;
-            });
-          },
-        ) : Column(
-          children: [
-            GCWIntegerSpinner(
-                value: _currentYear,
-                min: -5000,
-                max: 5000,
-                onChanged: (int value) {
+            title: i18n(context, 'dates_calendarweek_weektype'),
+            leftValue: 'ISO',
+            rightValue: 'US',
+            value: _currentISOMode,
+            onChanged: (value) {
+              setState(() {
+                _currentISOMode = value;
+              });
+            }),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWDateTimePicker(
+                config: const {DateTimePickerConfig.DATE},
+                datetime: _currentEncryptionDate,
+                onChanged: (value) {
                   setState(() {
-                    _currentYear = value;
+                    _currentEncryptionDate = value.datetime;
                   });
-                }
-            ),
-            GCWIntegerSpinner(
-                value: _currentWeek,
-                min: 1,
-                max: 53,
-                onChanged: (int value) {
-                  setState(() {
-                    _currentWeek = value;
-                  });
-                }
-            ),
-          ],
-        ),
+                },
+              )
+            : Column(
+                children: [
+                  GCWIntegerSpinner(
+                      value: _currentYear,
+                      min: -5000,
+                      max: 5000,
+                      onChanged: (int value) {
+                        setState(() {
+                          _currentYear = value;
+                        });
+                      }),
+                  GCWIntegerSpinner(
+                      value: _currentWeek,
+                      min: 1,
+                      max: 53,
+                      onChanged: (int value) {
+                        setState(() {
+                          _currentWeek = value;
+                        });
+                      }),
+                ],
+              ),
         _buildOutput()
       ],
     );
@@ -103,19 +100,15 @@ class _CalendarWeekState extends State<CalendarWeek> {
         var dates = datesForCalendarWeek(_currentYear, _currentWeek, iso: _currentISOMode == GCWSwitchPosition.left);
         var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
 
-        out = GCWColumnedMultilineOutput(
-            data: [
-              [i18n(context, 'common_start'), dateFormat.format(dates.item1)],
-              [i18n(context, 'common_end'), dateFormat.format(dates.item2)],
-            ]
-        );
-      } catch(e) {
+        out = GCWColumnedMultilineOutput(data: [
+          [i18n(context, 'common_start'), dateFormat.format(dates.item1)],
+          [i18n(context, 'common_end'), dateFormat.format(dates.item2)],
+        ]);
+      } catch (e) {
         out = i18n(context, 'dates_calendarweek_error_invalidweek');
       }
     }
 
-    return GCWDefaultOutput(
-      child: out
-    );
+    return GCWDefaultOutput(child: out);
   }
 }

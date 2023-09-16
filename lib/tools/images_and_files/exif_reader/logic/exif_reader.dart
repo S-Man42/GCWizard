@@ -63,7 +63,6 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
         data.containsKey(_GPS_LNG) &&
         data.containsKey(_GPS_LAT_REF) &&
         data.containsKey(_GPS_LNG_REF)) {
-
       IfdTag? latRef = data[_GPS_LAT_REF];
       IfdTag? lat = data[_GPS_LAT];
       double? _lat;
@@ -85,8 +84,7 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       // DEC should be the pivot format from EXIF
       return decToLatLon(DEC(_lat, _lng));
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 
   return null;
 }
@@ -107,8 +105,7 @@ LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
         }
       }
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 
   return point;
 }

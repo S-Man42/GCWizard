@@ -21,7 +21,7 @@ class IntersectBearings extends StatefulWidget {
   const IntersectBearings({Key? key}) : super(key: key);
 
   @override
- _IntersectBearingsState createState() => _IntersectBearingsState();
+  _IntersectBearingsState createState() => _IntersectBearingsState();
 }
 
 class _IntersectBearingsState extends State<IntersectBearings> {
@@ -100,7 +100,8 @@ class _IntersectBearingsState extends State<IntersectBearings> {
     if (_currentIntersection == null) {
       var distance1To2 = distanceBearing(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, _ells).distance;
       mapPoint = GCWMapPoint(
-          point: projection(_currentCoords1.toLatLng()!, _currentBearing1.value, distance1To2 * 3, _ells), isVisible: false);
+          point: projection(_currentCoords1.toLatLng()!, _currentBearing1.value, distance1To2 * 3, _ells),
+          isVisible: false);
     } else {
       var distance1ToIntersect = distanceBearing(_currentCoords1.toLatLng()!, _currentIntersection!, _ells).distance;
       mapPoint = GCWMapPoint(
@@ -119,7 +120,8 @@ class _IntersectBearingsState extends State<IntersectBearings> {
     if (_currentIntersection == null) {
       var distance2To1 = distanceBearing(_currentCoords2.toLatLng()!, _currentCoords1.toLatLng()!, _ells).distance;
       mapPoint = GCWMapPoint(
-          point: projection(_currentCoords2.toLatLng()!, _currentBearing2.value, distance2To1 * 3, _ells), isVisible: false);
+          point: projection(_currentCoords2.toLatLng()!, _currentBearing2.value, distance2To1 * 3, _ells),
+          isVisible: false);
     } else {
       var distance2ToIntersect = distanceBearing(_currentCoords2.toLatLng()!, _currentIntersection!, _ells).distance;
       mapPoint = GCWMapPoint(

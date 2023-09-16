@@ -10,7 +10,7 @@ class EasterDate extends StatefulWidget {
   const EasterDate({Key? key}) : super(key: key);
 
   @override
- _EasterDateState createState() => _EasterDateState();
+  _EasterDateState createState() => _EasterDateState();
 }
 
 class _EasterDateState extends State<EasterDate> {

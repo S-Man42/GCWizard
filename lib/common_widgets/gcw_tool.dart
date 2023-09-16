@@ -86,8 +86,13 @@ class GCWToolActionButtonsEntry {
   final IconData icon; // - icon tto be shown in the appbar
   final void Function()? onPressed;
 
-  GCWToolActionButtonsEntry({required this.showDialog, required this.url, required this.title,
-    required this.text, required this.icon, this.onPressed});
+  GCWToolActionButtonsEntry(
+      {required this.showDialog,
+      required this.url,
+      required this.title,
+      required this.text,
+      required this.icon,
+      this.onPressed});
 }
 
 class GCWTool extends StatefulWidget {
@@ -116,22 +121,21 @@ class GCWTool extends StatefulWidget {
 
   GCWTool(
       {Key? key,
-        required this.tool,
-        this.toolName,
-        this.defaultLanguageToolName,
-        required this.id,
-        this.id_prefix,
-        this.categories = const [],
-        this.autoScroll = true,
-        this.suppressToolMargin = false,
-        this.iconPath,
-        this.searchKeys = const [],
-        this.buttonList = const [],
-        this.helpSearchString = '',
-        this.isBeta = false,
-        this.suppressHelpButton = false,
-        this.deeplinkAlias
-      })
+      required this.tool,
+      this.toolName,
+      this.defaultLanguageToolName,
+      required this.id,
+      this.id_prefix,
+      this.categories = const [],
+      this.autoScroll = true,
+      this.suppressToolMargin = false,
+      this.iconPath,
+      this.searchKeys = const [],
+      this.buttonList = const [],
+      this.helpSearchString = '',
+      this.isBeta = false,
+      this.suppressHelpButton = false,
+      this.deeplinkAlias})
       : super(key: key) {
     longId = className(tool) + '_' + (id);
 
@@ -220,7 +224,8 @@ class _GCWToolState extends State<GCWTool> {
         searchString = _toolName;
       }
     } else {
-      searchString = i18n(context, widget.helpSearchString, useDefaultLanguage: _needsDefaultHelp(appLocale), ifTranslationNotExists: widget.helpSearchString);
+      searchString = i18n(context, widget.helpSearchString,
+          useDefaultLanguage: _needsDefaultHelp(appLocale), ifTranslationNotExists: widget.helpSearchString);
     }
 
     searchString = _normalizeSearchString(searchString);
@@ -264,7 +269,7 @@ class _GCWToolState extends State<GCWTool> {
                 context,
                 i18n(context, button.title),
                 i18n(context, button.text),
-                    () {
+                () {
                   launchUrl(Uri.parse(i18n(context, url, ifTranslationNotExists: url)));
                 },
               );

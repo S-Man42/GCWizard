@@ -40,10 +40,10 @@ NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSe
 }
 
 List<Route<GCWTool>> startMainView(BuildContext context, String route) {
-  return  [
-    NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => MainView(
-        webParameter: _parseUrl(RouteSettings(name: route), initRoute: true)?.arguments)
-    ),
+  return [
+    NoAnimationMaterialPageRoute<GCWTool>(
+        builder: (context) =>
+            MainView(webParameter: _parseUrl(RouteSettings(name: route), initRoute: true)?.arguments)),
   ];
 }
 
@@ -53,14 +53,15 @@ NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext con
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
-NoAnimationMaterialPageRoute<GCWTool>? _createRoute(BuildContext context, WebParameter arguments, RouteSettings settings) {
+NoAnimationMaterialPageRoute<GCWTool>? _createRoute(
+    BuildContext context, WebParameter arguments, RouteSettings settings) {
   var gcwTool = _findGCWTool(context, arguments);
   if (gcwTool == null) return null;
 
   if (gcwTool.tool is GCWWebStatefulWidget) {
     try {
       (gcwTool.tool as GCWWebStatefulWidget).webQueryParameter = arguments.arguments;
-     } catch (e) {}
+    } catch (e) {}
   }
   return _buildRoute(context, gcwTool, settings);
 }
@@ -114,7 +115,7 @@ WebParameter? _parseUrl(RouteSettings settings, {bool initRoute = false}) {
 
   if (initRoute) {
     parameter = Map<String, String>.from(parameter);
-    parameter.addAll({_initRoute : title });
+    parameter.addAll({_initRoute: title});
   }
 
   return WebParameter(title: title, arguments: parameter, settings: settings);
@@ -124,7 +125,9 @@ GCWTool _toolNameList(BuildContext context) {
   var apiToolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is GCWWebStatefulWidget));
   var toolList = List<GCWTool>.from(registeredTools.where((element) => element.tool is! GCWSelection));
 
-  for (var element in apiToolList) {toolList.remove(element);}
+  for (var element in apiToolList) {
+    toolList.remove(element);
+  }
 
   apiToolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
   toolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
@@ -133,33 +136,25 @@ GCWTool _toolNameList(BuildContext context) {
   return GCWTool(
     suppressHelpButton: true,
     id: 'webapi_deeplink_toolsapi_title',
-    toolName: i18n(context, 'webapi_deeplink_toolsapi_title') + ': ' + i18n(context, 'webapi_deeplink_toolsapi_toolpaths'),
+    toolName:
+        i18n(context, 'webapi_deeplink_toolsapi_title') + ': ' + i18n(context, 'webapi_deeplink_toolsapi_toolpaths'),
     tool: _buildItems(context, apiToolList),
   );
 }
 
 Widget _buildItems(BuildContext context, List<GCWTool> toolList) {
   return SizedBox(
-    height: maxScreenHeight(context),
-    child: ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(
-        dragDevices: {
-          PointerDeviceKind.touch,
-          PointerDeviceKind.mouse
-        },
-      ),
-      child: FutureBuilder<List<Widget>>(
-        future: _buildRows(context, toolList),
-        builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-          return ListView(
-            primary: true,
-            physics: const AlwaysScrollableScrollPhysics(),
-            children: snapshot.data ?? []
-          );
-        }
-      )
-    )
-  );
+      height: maxScreenHeight(context),
+      child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
+          ),
+          child: FutureBuilder<List<Widget>>(
+              future: _buildRows(context, toolList),
+              builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+                return ListView(
+                    primary: true, physics: const AlwaysScrollableScrollPhysics(), children: snapshot.data ?? []);
+              })));
 }
 
 Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) async {
@@ -170,17 +165,16 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
   return FutureBuilder<Tuple2<String, String>>(
       future: _toolInfoTextShort(context, tool),
       builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
-        return _buildRowWidget(context,
+        return _buildRowWidget(
+            context,
             tool,
             snapshot.data?.item2 ?? '',
-            i18n(context, 'about_webversion_url') + '#/' + (
-                tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty
+            i18n(context, 'about_webversion_url') +
+                '#/' +
+                (tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty
                     ? tool.deeplinkAlias!.first
-                    : (snapshot.data?.item1 ?? '')
-            )
-        );
-      }
-  );
+                    : (snapshot.data?.item1 ?? '')));
+      });
 }
 
 String _toolId(GCWTool tool) {
@@ -194,65 +188,68 @@ Future<Tuple2<String, String>> _toolInfoTextShort(BuildContext context, GCWTool 
 }
 
 bool _hasAPISpecification(GCWTool tool) {
-  return  (tool.tool is GCWWebStatefulWidget) && (tool.tool as GCWWebStatefulWidget).apiSpecification != null;
+  return (tool.tool is GCWWebStatefulWidget) && (tool.tool as GCWWebStatefulWidget).apiSpecification != null;
 }
 
 InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String copyText) {
   return InkWell(
       child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row (
-                    children: [
-                      if (_hasAPISpecification(tool))
-                        Icon(Icons.check, color: themeColors().secondary()),
-                      Container(width: DOUBLE_DEFAULT_MARGIN),
-                      SelectableText(
-                        '/' + (tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty ? tool.deeplinkAlias!.first : id),
-                        textAlign: TextAlign.left,
-                        style: gcwTextStyle(),
-                        selectionControls: GCWTextSelectionControls(),
-                      )
-                    ],
-                  )
-                ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(toolName(context, tool), style: gcwTextStyle()),
-            ),
-            _hasAPISpecification(tool)
-                ? GCWIconButton(
-              iconColor: themeColors().mainFont(),
-              size: IconButtonSize.SMALL,
-              icon: Icons.question_mark,
-              onPressed: () {
-                var route = _createRoute(context,
-                    WebParameter(title: _toolId(tool), arguments: { _questionmark : _questionmark}, settings: null), const RouteSettings());
-                if (route != null) {
-                  Navigator.push(context, route);
-                }
-              },
-            )
-            : Container(width: 40.0,),
-            copyText.isNotEmpty
+        children: [
+          Expanded(
+            flex: 3,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    if (_hasAPISpecification(tool)) Icon(Icons.check, color: themeColors().secondary()),
+                    Container(width: DOUBLE_DEFAULT_MARGIN),
+                    SelectableText(
+                      '/' +
+                          (tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty
+                              ? tool.deeplinkAlias!.first
+                              : id),
+                      textAlign: TextAlign.left,
+                      style: gcwTextStyle(),
+                      selectionControls: GCWTextSelectionControls(),
+                    )
+                  ],
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(toolName(context, tool), style: gcwTextStyle()),
+          ),
+          _hasAPISpecification(tool)
               ? GCWIconButton(
-                iconColor: themeColors().mainFont(),
-                size: IconButtonSize.SMALL,
-                icon: Icons.content_copy,
-                onPressed: () {
-                  insertIntoGCWClipboard(context, copyText);
-                },
-              )
+                  iconColor: themeColors().mainFont(),
+                  size: IconButtonSize.SMALL,
+                  icon: Icons.question_mark,
+                  onPressed: () {
+                    var route = _createRoute(
+                        context,
+                        WebParameter(title: _toolId(tool), arguments: {_questionmark: _questionmark}, settings: null),
+                        const RouteSettings());
+                    if (route != null) {
+                      Navigator.push(context, route);
+                    }
+                  },
+                )
+              : Container(
+                  width: 40.0,
+                ),
+          copyText.isNotEmpty
+              ? GCWIconButton(
+                  iconColor: themeColors().mainFont(),
+                  size: IconButtonSize.SMALL,
+                  icon: Icons.content_copy,
+                  onPressed: () {
+                    insertIntoGCWClipboard(context, copyText);
+                  },
+                )
               : Container()
-          ],
-    ),
-    onTap: () {
+        ],
+      ),
+      onTap: () {
         Navigator.of(context).push(_buildRoute(context, tool, const RouteSettings()));
-      }
-  );
+      });
 }
-

@@ -63,14 +63,7 @@ Future<List<Intersect>> intersectThreeCirclesAsync(GCWAsyncExecuterParameters? j
   var data = jobData!.parameters as IntersectThreeCirclesJobData;
 
   var output = intersectThreeCircles(
-      data.coord1,
-      data.dist14,
-      data.coord2,
-      data.dist24,
-      data.coord3,
-      data.dist34,
-      data.accuracy,
-      data.ells);
+      data.coord1, data.dist14, data.coord2, data.dist24, data.coord3, data.dist34, data.accuracy, data.ells);
 
   jobData.sendAsyncPort?.send(output);
 

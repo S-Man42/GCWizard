@@ -20,7 +20,7 @@ class CenterThreePoints extends StatefulWidget {
   const CenterThreePoints({Key? key}) : super(key: key);
 
   @override
- _CenterThreePointsState createState() => _CenterThreePointsState();
+  _CenterThreePointsState createState() => _CenterThreePointsState();
 }
 
 class _CenterThreePointsState extends State<CenterThreePoints> {
@@ -112,8 +112,7 @@ class _CenterThreePointsState extends State<CenterThreePoints> {
         coord1: _currentCoords1.toLatLng()!,
         coord2: _currentCoords2.toLatLng()!,
         coord3: _currentCoords3.toLatLng()!,
-        ellipsoid: defaultEllipsoid)
-    );
+        ellipsoid: defaultEllipsoid));
   }
 
   void _showOutput(List<CenterPointDistance>? output) {

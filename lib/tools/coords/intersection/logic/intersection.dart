@@ -12,7 +12,8 @@ class IntersectionJobData {
   final double beta;
   final Ellipsoid ells;
 
-  IntersectionJobData({required this.coord1, this.alpha = 0.0, required this.coord2, this.beta = 0.0, required this.ells});
+  IntersectionJobData(
+      {required this.coord1, this.alpha = 0.0, required this.coord2, this.beta = 0.0, required this.ells});
 }
 
 Future<List<LatLng?>> intersectionAsync(GCWAsyncExecuterParameters? jobData) async {
@@ -21,8 +22,7 @@ Future<List<LatLng?>> intersectionAsync(GCWAsyncExecuterParameters? jobData) asy
   }
 
   var data = jobData!.parameters as IntersectionJobData;
-  var output = intersection(data.coord1, data.alpha, data.coord2,
-      data.beta, data.ells);
+  var output = intersection(data.coord1, data.alpha, data.coord2, data.beta, data.ells);
 
   jobData.sendAsyncPort?.send(output);
 

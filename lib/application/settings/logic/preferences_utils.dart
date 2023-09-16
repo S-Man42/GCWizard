@@ -47,12 +47,13 @@ void setUntypedPref(String key, Object value) {
       if (value is bool) Prefs.setBool(key, value);
       break;
     case PrefType.STRINGLIST:
-
       if (value is List<String> || value is List<Object> || value is List<dynamic>) {
         var saveList = <String>[];
 
         switch (value.runtimeType) {
-          case List<String>: saveList = value as List<String>; break;
+          case List<String>:
+            saveList = value as List<String>;
+            break;
           case List<Object>:
             for (var element in (value as List<Object>)) {
               saveList.add(element.toString());
@@ -63,14 +64,16 @@ void setUntypedPref(String key, Object value) {
               saveList.add(element.toString());
             }
             break;
-          default: throw Exception('No valid Preference STRINGLIST type');
+          default:
+            throw Exception('No valid Preference STRINGLIST type');
         }
 
         saveList.removeWhere((element) => element.isEmpty);
         Prefs.setStringList(key, saveList);
       }
       break;
-    default: throw Exception('No valid preference type');
+    default:
+      throw Exception('No valid preference type');
   }
 }
 
@@ -82,10 +85,14 @@ bool isCorrectType(String key, Object? value) {
   if (value == null) return false;
 
   switch (getPrefType(key.toLowerCase())) {
-    case PrefType.STRING: return value is String;
-    case PrefType.INT: return value is int;
-    case PrefType.DOUBLE: return value is double;
-    case PrefType.BOOL: return value is bool;
+    case PrefType.STRING:
+      return value is String;
+    case PrefType.INT:
+      return value is int;
+    case PrefType.DOUBLE:
+      return value is double;
+    case PrefType.BOOL:
+      return value is bool;
     case PrefType.STRINGLIST:
       if (value is List<String>) return true;
       if (value is List<Object>) {

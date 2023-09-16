@@ -14,10 +14,7 @@ SegmentedLine segmentLine(LatLng coord1, LatLng coord2, int countSegments, Ellip
   var distBear = distanceBearing(coord1, coord2, ells);
 
   if (countSegments < 2) {
-    return SegmentedLine(
-        [coord1, coord2],
-        distanceBearing(coord1, coord2, ells).distance
-    );
+    return SegmentedLine([coord1, coord2], distanceBearing(coord1, coord2, ells).distance);
   }
 
   var segmentLength = distBear.distance / countSegments;

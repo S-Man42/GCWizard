@@ -4,7 +4,7 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
   Map<String, String>? webParameter;
   final String? apiSpecification;
 
-  GCWWebStatefulWidget({Key? key, this.webParameter, required this.apiSpecification}): super(key: key);
+  GCWWebStatefulWidget({Key? key, this.webParameter, required this.apiSpecification}) : super(key: key);
 
   set webQueryParameter(Map<String, String> parameter) {
     webParameter = parameter;
@@ -18,5 +18,3 @@ abstract class GCWWebStatefulWidget extends StatefulWidget {
     return webParameter?[parameter];
   }
 }
-
-

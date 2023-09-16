@@ -7,10 +7,11 @@ abstract class AbstractRotation extends GCWWebStatefulWidget {
   final String Function(String) rotate;
   final String apiSpecification;
 
-  AbstractRotation({Key? key, required this.rotate, required this.apiSpecification}) : super(key: key, apiSpecification: apiSpecification);
+  AbstractRotation({Key? key, required this.rotate, required this.apiSpecification})
+      : super(key: key, apiSpecification: apiSpecification);
 
   @override
- _AbstractRotationState createState() => _AbstractRotationState();
+  _AbstractRotationState createState() => _AbstractRotationState();
 }
 
 class _AbstractRotationState extends State<AbstractRotation> {

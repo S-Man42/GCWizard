@@ -14,7 +14,7 @@ class WhitespaceLanguage extends StatefulWidget {
   const WhitespaceLanguage({Key? key}) : super(key: key);
 
   @override
- _WhitespaceLanguageState createState() => _WhitespaceLanguageState();
+  _WhitespaceLanguageState createState() => _WhitespaceLanguageState();
 }
 
 class _WhitespaceLanguageState extends State<WhitespaceLanguage> {

@@ -12,7 +12,7 @@ class TimeCalculator extends StatefulWidget {
   const TimeCalculator({Key? key}) : super(key: key);
 
   @override
- _TimeCalculatorState createState() => _TimeCalculatorState();
+  _TimeCalculatorState createState() => _TimeCalculatorState();
 }
 
 class _TimeCalculatorState extends State<TimeCalculator> {

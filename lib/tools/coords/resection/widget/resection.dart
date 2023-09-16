@@ -22,7 +22,7 @@ class Resection extends StatefulWidget {
   const Resection({Key? key}) : super(key: key);
 
   @override
- _ResectionState createState() => _ResectionState();
+  _ResectionState createState() => _ResectionState();
 }
 
 class _ResectionState extends State<Resection> {

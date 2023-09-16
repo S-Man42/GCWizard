@@ -17,7 +17,7 @@ class IntersectFourPoints extends StatefulWidget {
   const IntersectFourPoints({Key? key}) : super(key: key);
 
   @override
- _IntersectFourPointsState createState() => _IntersectFourPointsState();
+  _IntersectFourPointsState createState() => _IntersectFourPointsState();
 }
 
 class _IntersectFourPointsState extends State<IntersectFourPoints> {

@@ -79,40 +79,40 @@ class _WindchillState extends State<Windchill> {
     return Column(children: <Widget>[
       GCWDefaultOutput(
           child: Row(children: <Widget>[
-            Container(
-              width: 50,
-              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              child: GCWIconButton(
-                icon: Icons.wb_sunny,
-                iconColor: _colorWindchill(windchill_c),
-                backgroundColor: const Color(0xFF4d4d4d),
-                onPressed: () {},
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              //child: Text(_currentOutputUnit.symbol),
-              child: Container(
-                  margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
-                  child: GCWUnitDropDown(
-                    value: _currentOutputUnit,
-                    onlyShowSymbols: false,
-                    unitList: temperatures,
-                    unitCategory: UNITCATEGORY_TEMPERATURE,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentOutputUnit = value;
-                      });
-                    },
-                  )),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                  margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
-                  child: GCWOutput(child: NumberFormat('#.###').format(windchill))),
-            ),
-          ])),
+        Container(
+          width: 50,
+          padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+          child: GCWIconButton(
+            icon: Icons.wb_sunny,
+            iconColor: _colorWindchill(windchill_c),
+            backgroundColor: const Color(0xFF4d4d4d),
+            onPressed: () {},
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          //child: Text(_currentOutputUnit.symbol),
+          child: Container(
+              margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+              child: GCWUnitDropDown(
+                value: _currentOutputUnit,
+                onlyShowSymbols: false,
+                unitList: temperatures,
+                unitCategory: UNITCATEGORY_TEMPERATURE,
+                onChanged: (value) {
+                  setState(() {
+                    _currentOutputUnit = value;
+                  });
+                },
+              )),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+              margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+              child: GCWOutput(child: NumberFormat('#.###').format(windchill))),
+        ),
+      ])),
       GCWTextDivider(text: i18n(context, 'heatindex_hint')),
       GCWOutput(
         child: hintWindchill,

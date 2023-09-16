@@ -1,17 +1,6 @@
-enum WEBPARAMETER {
-  input,
-  mode,
-  parameter1,
-  parameter2,
-  fromformat,
-  toformat,
-  result
-}
+enum WEBPARAMETER { input, mode, parameter1, parameter2, fromformat, toformat, result }
 
-enum MODE {
-  encode,
-  decode
-}
+enum MODE { encode, decode }
 
 abstract class APIMapper {
   Map<String, String> webParameter = {};

@@ -13,7 +13,7 @@ class Chef extends StatefulWidget {
   const Chef({Key? key}) : super(key: key);
 
   @override
- _ChefState createState() => _ChefState();
+  _ChefState createState() => _ChefState();
 }
 
 class _ChefState extends State<Chef> {
@@ -33,11 +33,14 @@ class _ChefState extends State<Chef> {
   var _currentTemperature = '';
   var _currentOutput = '';
 
-  var TimeInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
+  var TimeInputFormatter = GCWMaskTextInputFormatter(
+      mask: '#' * 3, // allow 3 characters input
       filter: {"#": RegExp(r'\d')});
-  var TemperatureInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
+  var TemperatureInputFormatter = GCWMaskTextInputFormatter(
+      mask: '#' * 3, // allow 3 characters input
       filter: {"#": RegExp(r'\d')});
-  var DigitSpacesInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 1000, // allow 1000 characters input
+  var DigitSpacesInputFormatter = GCWMaskTextInputFormatter(
+      mask: '#' * 1000, // allow 1000 characters input
       filter: {"#": RegExp(r'\d ')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left; // interpret
@@ -197,9 +200,11 @@ class _ChefState extends State<Chef> {
     if (_currentMode == GCWSwitchPosition.right) {
       // generate chef
       if (_currentTitle.isEmpty) {
-        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
+        output =
+            chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
       } else if (_currentOutput.isEmpty) {
-        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
+        output =
+            chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
       } else {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
             _currentOutput, _auxilaryRecipes);

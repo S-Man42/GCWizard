@@ -8,21 +8,21 @@ const MDT_INTERNALNAMES_KEYBOARDNUMBERS = 'multidecoder_tool_keyboardnumbers_tit
 const MDT_KEYBOARDNUMBERS_OPTION_TYPE = 'multidecoder_tool_keyboardnumbers_type';
 
 class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
-  MultiDecoderToolKeyboardNumbers({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolKeyboardNumbers(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_KEYBOARDNUMBERS,
             onDecode: (String input, String key) {
-              return keyboardNumbersByName[
-                    checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDNUMBERS, options, MDT_KEYBOARDNUMBERS_OPTION_TYPE)
-                    ]!(input).trim();
+              return keyboardNumbersByName[checkStringFormatOrDefaultOption(
+                      MDT_INTERNALNAMES_KEYBOARDNUMBERS, options, MDT_KEYBOARDNUMBERS_OPTION_TYPE)]!(input)
+                  .trim();
             },
             options: options);
   @override
@@ -32,10 +32,10 @@ class MultiDecoderToolKeyboardNumbers extends AbstractMultiDecoderTool {
 class _MultiDecoderToolKeyboardNumbersState extends State<MultiDecoderToolKeyboardNumbers> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_KEYBOARDNUMBERS_OPTION_TYPE: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDNUMBERS, widget.options, MDT_KEYBOARDNUMBERS_OPTION_TYPE),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_KEYBOARDNUMBERS, widget.options, MDT_KEYBOARDNUMBERS_OPTION_TYPE),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_KEYBOARDNUMBERS_OPTION_TYPE] = newValue;
@@ -43,12 +43,11 @@ class _MultiDecoderToolKeyboardNumbersState extends State<MultiDecoderToolKeyboa
         },
         items: keyboardNumbersByName
             .map((name, function) {
-          return MapEntry(name, GCWDropDownMenuItem(value: name, child: i18n(context, name)));
-        })
+              return MapEntry(name, GCWDropDownMenuItem(value: name, child: i18n(context, name)));
+            })
             .values
             .toList(),
       )
-    }
-    );
+    });
   }
 }

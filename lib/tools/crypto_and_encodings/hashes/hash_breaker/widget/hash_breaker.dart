@@ -72,7 +72,6 @@ class _HashBreakerState extends State<HashBreaker> {
     _currentToInput = entry.value;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -120,14 +119,14 @@ class _HashBreakerState extends State<HashBreaker> {
 
   Widget _buildVariablesEditor() {
     return GCWKeyValueEditor(
-        keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
-        valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-        valueInputFormatters: [VariableStringTextInputFormatter()],
-        valueFlex: 4,
-        entries: _currentSubstitutions,
-        onNewEntryChanged: (entry) => _updateNewEntry(entry),
-        onAddEntry: (entry) => _onAddEntry(entry),
-      );
+      keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
+      valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
+      valueInputFormatters: [VariableStringTextInputFormatter()],
+      valueFlex: 4,
+      entries: _currentSubstitutions,
+      onNewEntryChanged: (entry) => _updateNewEntry(entry),
+      onAddEntry: (entry) => _onAddEntry(entry),
+    );
   }
 
   void _onDoCalculation() async {
@@ -178,8 +177,7 @@ class _HashBreakerState extends State<HashBreaker> {
       _substitutions.putIfAbsent(entry.key, () => entry.value);
     }
 
-    if (_currentFromInput.isNotEmpty &&
-        _currentToInput.isNotEmpty) {
+    if (_currentFromInput.isNotEmpty && _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 

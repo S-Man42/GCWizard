@@ -35,10 +35,8 @@ class ClipboardItem {
   }
 
   String toJson() {
-    return jsonEncode({
-      _CLIPBOARD_ITEM_FIELD_TEXT: text,
-      _CLIPBOARD_ITEM_FIELD_CREATED: datetime.microsecondsSinceEpoch.toString()
-    });
+    return jsonEncode(
+        {_CLIPBOARD_ITEM_FIELD_TEXT: text, _CLIPBOARD_ITEM_FIELD_CREATED: datetime.microsecondsSinceEpoch.toString()});
   }
 
   @override
@@ -61,13 +59,14 @@ void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalCl
         jsonEncode({
           _CLIPBOARD_ITEM_FIELD_TEXT: jsonDecode(existingText)[_CLIPBOARD_ITEM_FIELD_TEXT],
           _CLIPBOARD_ITEM_FIELD_CREATED: DateTime.now().millisecondsSinceEpoch.toString()
-        })
-    );
+        }));
   } else {
-    gcwClipboard.insert(0, jsonEncode({
-      _CLIPBOARD_ITEM_FIELD_TEXT: text,
-      _CLIPBOARD_ITEM_FIELD_CREATED: DateTime.now().millisecondsSinceEpoch.toString()
-    }));
+    gcwClipboard.insert(
+        0,
+        jsonEncode({
+          _CLIPBOARD_ITEM_FIELD_TEXT: text,
+          _CLIPBOARD_ITEM_FIELD_CREATED: DateTime.now().millisecondsSinceEpoch.toString()
+        }));
     while (gcwClipboard.length > Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS)) {
       gcwClipboard.removeLast();
     }

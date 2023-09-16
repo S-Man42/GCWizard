@@ -277,9 +277,9 @@ import 'package:prefs/prefs.dart';
 
 import 'selector_lists/miscellaneous_selection.dart';
 
-
 class MainView extends GCWWebStatefulWidget {
-  MainView({Key? key, Map<String, String>? webParameter}) : super(key: key, webParameter: webParameter, apiSpecification: null);
+  MainView({Key? key, Map<String, String>? webParameter})
+      : super(key: key, webParameter: webParameter, apiSpecification: null);
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -331,8 +331,8 @@ class _MainViewState extends State<MainView> {
                   Navigator.push(
                       context,
                       NoAnimationMaterialPageRoute<GCWTool>(
-                          builder: (context) =>
-                              registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
+                          builder: (context) => registeredTools
+                              .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
                 }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
@@ -604,7 +604,9 @@ void _initStaticToolList() {
       className(const Humidex()),
       className(const IATAICAOSearch()),
       className(const IAUAllConstellations()),
-      className(const IAUSingleConstellation(ConstellationName: 'Andromeda',)),
+      className(const IAUSingleConstellation(
+        ConstellationName: 'Andromeda',
+      )),
       className(const IceCodesSelection()),
       className(const ILLIAC()),
       className(const ImageColorCorrections()),
@@ -647,7 +649,9 @@ void _initStaticToolList() {
       className(const PasleyTelegraph()),
       className(const PophamTelegraph()),
       className(const PeriodicTable()),
-      className(const PeriodicTableDataView(atomicNumber: 1,)),
+      className(const PeriodicTableDataView(
+        atomicNumber: 1,
+      )),
       className(const Permutation()),
       className(const PhiSelection()),
       className(const PhysicalConstants()),

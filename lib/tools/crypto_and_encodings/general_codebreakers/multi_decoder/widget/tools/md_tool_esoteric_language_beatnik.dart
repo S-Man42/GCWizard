@@ -10,12 +10,12 @@ const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK = 'beatnik_title';
 const MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE = 'beatnik_hint_scrabble';
 
 class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageBeatnik({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolEsotericLanguageBeatnik(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -24,7 +24,8 @@ class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
             optionalKey: true,
             onDecode: (String input, String key) {
               try {
-                var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK, options, MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE);
+                var option = checkStringFormatOrDefaultOption(
+                    MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK, options, MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE);
 
                 var _output = interpretBeatnik(option, input, key);
                 if (_output.output.isNotEmpty) {
@@ -46,15 +47,14 @@ class MultiDecoderToolEsotericLanguageBeatnik extends AbstractMultiDecoderTool {
 class _MultiDecoderToolEsotericLanguageBeatnikState extends State<MultiDecoderToolEsotericLanguageBeatnik> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK, widget.options, MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK, widget.options, MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE] = newValue;
           });
-
         },
         items: scrabbleSets.entries.map((set) {
           return GCWDropDownMenuItem(
@@ -63,7 +63,6 @@ class _MultiDecoderToolEsotericLanguageBeatnikState extends State<MultiDecoderTo
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }

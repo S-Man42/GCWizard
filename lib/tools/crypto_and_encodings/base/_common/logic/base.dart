@@ -63,26 +63,24 @@ String encodeBase64(String input) {
   return base64.encode(input.codeUnits);
 }
 
-
 String decodeBase64(String input) {
+  if (input.isEmpty) return '';
 
-   if (input.isEmpty) return '';
+  var out = '';
 
-   var out = '';
+  input = input.replaceAll(RegExp(r'\s'), '');
 
-   input = input.replaceAll(RegExp(r'\s'), '');
+  //if there's no result, try with appended = or ==
+  for (int i = 0; i <= 2; i++) {
+    try {
+      //out = utf8.decode(base64.decode(input + '=' * i));
+      out = String.fromCharCodes(base64.decode(input + '=' * i));
 
-   //if there's no result, try with appended = or ==
-   for (int i = 0; i <= 2; i++) {
-     try {
-       //out = utf8.decode(base64.decode(input + '=' * i));
-       out = String.fromCharCodes(base64.decode(input + '=' * i));
+      if (out.isNotEmpty) break;
+    } on FormatException {}
+  }
 
-       if (out.isNotEmpty) break;
-     } on FormatException {}
-   }
-
-   return out;
+  return out;
 }
 
 String encodeBase85(String input) {
@@ -106,7 +104,7 @@ String decodeBase85(String input) {
   return decoded == null ? '' : utf8.decode(decoded);
 }
 
-bool _invalidBase85(String base85){
+bool _invalidBase85(String base85) {
   bool result = false;
   base85.split('').forEach((letter) {
     if (letter.codeUnitAt(0) > 127 || letter.codeUnitAt(0) < 32) result = true;
@@ -567,10 +565,10 @@ String decodeBase122(String base122Data) {
   return String.fromCharCodes(outputStream);
 }
 
-String asciiToHexString(String input){
+String asciiToHexString(String input) {
   List<String> result = [];
   String hex = '';
-  input.split('').forEach((char){
+  input.split('').forEach((char) {
     hex = convertBase(char.codeUnitAt(0).toString(), 10, 16);
     if (hex.length == 1) {
       result.add('0' + hex);

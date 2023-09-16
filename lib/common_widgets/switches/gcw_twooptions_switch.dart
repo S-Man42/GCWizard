@@ -28,7 +28,7 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWTwoOptionsSwitchState createState() => _GCWTwoOptionsSwitchState();
+  _GCWTwoOptionsSwitchState createState() => _GCWTwoOptionsSwitchState();
 }
 
 class _GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {

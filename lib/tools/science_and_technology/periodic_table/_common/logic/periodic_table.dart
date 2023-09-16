@@ -567,8 +567,7 @@ String atomicNumbersToText(List<int> atomicNumbers) {
   if (atomicNumbers.isEmpty) return '';
 
   return atomicNumbers.map((atomicNumber) {
-    var element =
-        allPeriodicTableElements.firstWhereOrNull((element) => element.atomicNumber == atomicNumber);
+    var element = allPeriodicTableElements.firstWhereOrNull((element) => element.atomicNumber == atomicNumber);
     return element != null ? element.chemicalSymbol : UNKNOWN_ELEMENT;
   }).join();
 }

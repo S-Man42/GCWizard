@@ -35,7 +35,7 @@ class Atbash extends GCWWebStatefulWidget {
   Atbash({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _AtbashState createState() => _AtbashState();
+  _AtbashState createState() => _AtbashState();
 }
 
 class _AtbashState extends State<Atbash> {

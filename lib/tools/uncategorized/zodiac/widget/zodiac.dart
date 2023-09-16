@@ -23,7 +23,7 @@ class Zodiac extends StatefulWidget {
   const Zodiac({Key? key}) : super(key: key);
 
   @override
- _ZodiacState createState() => _ZodiacState();
+  _ZodiacState createState() => _ZodiacState();
 }
 
 class _ZodiacState extends State<Zodiac> {
@@ -106,47 +106,47 @@ class _ZodiacState extends State<Zodiac> {
       var zodiacSign = ZODIACSIGNS[zodiacSignKey];
       if (zodiacSign == null) return Container();
 
-      return GCWColumnedMultilineOutput(
-          data: [
-                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.date)), _createDateOutput(zodiacSign.date)],
-                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.planet)), _createPlanetOutput(zodiacSign.planet)],
-                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.element)), i18n(context, zodiacSign.element)],
-                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.house)), zodiacSign.house],
-                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.quality)), i18n(context, zodiacSign.quality)],
-                  [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.polarity)), i18n(context, zodiacSign.polarity)],
-                ],
-          flexValues: const [1, 2]
-      );
+      return GCWColumnedMultilineOutput(data: [
+        [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.date)), _createDateOutput(zodiacSign.date)],
+        [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.planet)), _createPlanetOutput(zodiacSign.planet)],
+        [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.element)), i18n(context, zodiacSign.element)],
+        [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.house)), zodiacSign.house],
+        [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.quality)), i18n(context, zodiacSign.quality)],
+        [i18n(context, _attributeName(_ZODIACSIGNS_ATTRIBUTES.polarity)), i18n(context, zodiacSign.polarity)],
+      ], flexValues: const [
+        1,
+        2
+      ]);
     } else {
       return GCWColumnedMultilineOutput(
-          data: ZODIACSIGNS
-                  .map((key, value) {
-                    String output = '';
-                    switch (_currentAttribute) {
-                      case _ZODIACSIGNS_ATTRIBUTES.date:
-                        output = _createDateOutput(value.date);
-                        break;
-                      case _ZODIACSIGNS_ATTRIBUTES.planet:
-                        output = _createPlanetOutput(value.planet);
-                        break;
-                      case _ZODIACSIGNS_ATTRIBUTES.house:
-                        output = value.house.toString();
-                        break;
-                      case _ZODIACSIGNS_ATTRIBUTES.element:
-                        output = i18n(context, value.element);
-                        break;
-                      case _ZODIACSIGNS_ATTRIBUTES.quality:
-                        output = i18n(context, value.quality);
-                        break;
-                      case _ZODIACSIGNS_ATTRIBUTES.polarity:
-                        output = i18n(context, value.polarity);
-                        break;
-                    }
+        data: ZODIACSIGNS
+            .map((key, value) {
+              String output = '';
+              switch (_currentAttribute) {
+                case _ZODIACSIGNS_ATTRIBUTES.date:
+                  output = _createDateOutput(value.date);
+                  break;
+                case _ZODIACSIGNS_ATTRIBUTES.planet:
+                  output = _createPlanetOutput(value.planet);
+                  break;
+                case _ZODIACSIGNS_ATTRIBUTES.house:
+                  output = value.house.toString();
+                  break;
+                case _ZODIACSIGNS_ATTRIBUTES.element:
+                  output = i18n(context, value.element);
+                  break;
+                case _ZODIACSIGNS_ATTRIBUTES.quality:
+                  output = i18n(context, value.quality);
+                  break;
+                case _ZODIACSIGNS_ATTRIBUTES.polarity:
+                  output = i18n(context, value.polarity);
+                  break;
+              }
 
-                    return MapEntry(key, [i18n(context, key), output]);
-                  })
-                  .values
-                  .toList(),
+              return MapEntry(key, [i18n(context, key), output]);
+            })
+            .values
+            .toList(),
       );
     }
   }

@@ -19,7 +19,7 @@ class DistanceBearing extends StatefulWidget {
   const DistanceBearing({Key? key}) : super(key: key);
 
   @override
- _DistanceBearingState createState() => _DistanceBearingState();
+  _DistanceBearingState createState() => _DistanceBearingState();
 }
 
 class _DistanceBearingState extends State<DistanceBearing> {

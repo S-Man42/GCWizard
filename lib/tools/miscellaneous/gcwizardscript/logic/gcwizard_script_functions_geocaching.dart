@@ -11,7 +11,9 @@ String _rotx(Object text, Object rot) {
   return Rotator().rotate((text as String), (rot as num).round());
 }
 
-String _rot5(Object text, ) {
+String _rot5(
+  Object text,
+) {
   if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -21,7 +23,9 @@ String _rot5(Object text, ) {
   return rot.rotate((text as String), 5);
 }
 
-String _rot13(Object text, ) {
+String _rot13(
+  Object text,
+) {
   if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -31,7 +35,9 @@ String _rot13(Object text, ) {
   return rot.rotate((text as String), 5);
 }
 
-String _rot18(Object text, ) {
+String _rot18(
+  Object text,
+) {
   if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -48,7 +54,9 @@ String _rot18(Object text, ) {
   }).join();
 }
 
-String _rot47(Object text, ) {
+String _rot47(
+  Object text,
+) {
   if (_isNotAString(text)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -65,23 +73,28 @@ int _bww(Object text, Object opt_alph, Object opt_itqs) {
     return 0;
   }
   Map<String, String> alphabet = {};
-  switch ((opt_alph as num).round()){
-    case 0: alphabet = alphabetAZ.alphabet;
+  switch ((opt_alph as num).round()) {
+    case 0:
+      alphabet = alphabetAZ.alphabet;
       break;
-    case 1: alphabet = alphabetGerman1.alphabet;
+    case 1:
+      alphabet = alphabetGerman1.alphabet;
       break;
-    case 2: alphabet = alphabetGerman2.alphabet;
+    case 2:
+      alphabet = alphabetGerman2.alphabet;
       break;
-    case 3: alphabet = alphabetGerman3.alphabet;
+    case 3:
+      alphabet = alphabetGerman3.alphabet;
       break;
-    default: alphabet = alphabetAZ.alphabet;
+    default:
+      alphabet = alphabetAZ.alphabet;
   }
   int wordValue = 0;
   List<int> values = [];
   AlphabetValues(alphabet: alphabet).textToValues(text as String).forEach((number) {
     if (number != null) values.add(number);
-  });// as List<int>;//.cast<int>();
-  for (int number in values ) {
+  }); // as List<int>;//.cast<int>();
+  for (int number in values) {
     wordValue = wordValue + number;
   }
   switch ((opt_itqs as num).round()) {

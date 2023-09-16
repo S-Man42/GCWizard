@@ -76,13 +76,12 @@ bool _isNotANumber(Object? value) {
   return _isNotAInt(value) && _isNotADouble(value); //.runtimeType.toString() == 'String');
 }
 
-bool _isAList(Object? value){
+bool _isAList(Object? value) {
   if (value.toString().toLowerCase() == 'null') return false;
   return (value.runtimeType.toString() == '_GCWList');
 }
 
-bool _isNotAList(Object? value){
+bool _isNotAList(Object? value) {
   if (value.toString().toLowerCase() == 'null') return false;
   return !_isAList(value);
 }
-

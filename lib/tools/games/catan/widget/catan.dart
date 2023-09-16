@@ -9,7 +9,7 @@ class Catan extends StatefulWidget {
   const Catan({Key? key}) : super(key: key);
 
   @override
- _CatanState createState() => _CatanState();
+  _CatanState createState() => _CatanState();
 }
 
 class _CatanState extends State<Catan> {

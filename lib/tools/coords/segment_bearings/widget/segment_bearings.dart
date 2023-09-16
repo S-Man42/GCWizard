@@ -25,7 +25,7 @@ class SegmentBearings extends StatefulWidget {
   const SegmentBearings({Key? key}) : super(key: key);
 
   @override
- _SegmentBearingsState createState() => _SegmentBearingsState();
+  _SegmentBearingsState createState() => _SegmentBearingsState();
 }
 
 class _SegmentBearingsState extends State<SegmentBearings> {
@@ -209,8 +209,8 @@ class _SegmentBearingsState extends State<SegmentBearings> {
     var endMapPoint2 = GCWMapPoint(
         point: endPoint2, markerText: i18n(context, 'coords_segmentbearings_end2'), coordinateFormat: format2);
 
-    var segments =
-        segmentBearings(_currentCoordsStart.toLatLng()!, bearing1, bearing2, _currentDistance, _currentSegmentCount, ells);
+    var segments = segmentBearings(
+        _currentCoordsStart.toLatLng()!, bearing1, bearing2, _currentDistance, _currentSegmentCount, ells);
 
     _currentMapPoints = [startMapPoint, endMapPoint1];
     _currentMapPolylines = [

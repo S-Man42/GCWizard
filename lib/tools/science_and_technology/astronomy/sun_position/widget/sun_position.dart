@@ -16,7 +16,7 @@ class SunPosition extends StatefulWidget {
   const SunPosition({Key? key}) : super(key: key);
 
   @override
- _SunPositionState createState() => _SunPositionState();
+  _SunPositionState createState() => _SunPositionState();
 }
 
 class _SunPositionState extends State<SunPosition> {
@@ -77,10 +77,8 @@ class _SunPositionState extends State<SunPosition> {
       ],
     ];
 
-    var rowsSunData = GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputsSun
-    );
+    var rowsSunData =
+        GCWColumnedMultilineOutput(firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputsSun);
 
     var outputsJD = [
       [i18n(context, 'astronomy_position_juliandate'), NumberFormat('0.00000').format(julianDate.julianDate)],
@@ -90,10 +88,8 @@ class _SunPositionState extends State<SunPosition> {
     ];
 
     var rowsJDData = GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'astronomy_position_juliandate'))],
-        data: outputsJD
-    );
+        firstRows: [GCWTextDivider(text: i18n(context, 'astronomy_position_juliandate'))], data: outputsJD);
 
-    return Column( children: [rowsSunData, rowsJDData]);
+    return Column(children: [rowsSunData, rowsJDData]);
   }
 }

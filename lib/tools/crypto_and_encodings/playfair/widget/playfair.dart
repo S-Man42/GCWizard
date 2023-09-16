@@ -60,7 +60,7 @@ class Playfair extends GCWWebStatefulWidget {
   Playfair({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _PlayfairState createState() => _PlayfairState();
+  _PlayfairState createState() => _PlayfairState();
 }
 
 class _PlayfairState extends State<Playfair> {

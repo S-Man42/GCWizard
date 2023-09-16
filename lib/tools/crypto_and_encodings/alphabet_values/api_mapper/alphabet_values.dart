@@ -68,8 +68,7 @@ class AlphabetValuesAPIMapper extends APIMapper {
       var values = textToIntList(input);
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(values);
     } else {
-      return intListToString(
-          logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
+      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
           delimiter: ' ');
     }
   }
@@ -77,7 +76,7 @@ class AlphabetValuesAPIMapper extends APIMapper {
   /// convert doLogic output to map
   @override
   Map<String, String> toMap(Object result) {
-    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+    return <String, String>{enumName(WEBPARAMETER.result.toString()): result.toString()};
   }
 
   @override

@@ -9,7 +9,7 @@ Object? _readFromFile(Object mode, Object index) {
   int start = _state.FILEINDEX;
   if (index as int == -1) start = index;
 
-  switch (mode as int){
+  switch (mode as int) {
     case -1: // 8 byte double
       result = _readDouble(_state.FILE, start);
       break;
@@ -53,7 +53,7 @@ Object? _readFromFile(Object mode, Object index) {
         if (index != -1) {
           _state.FILEINDEX = _state.FILEINDEX + 4;
         }
-      }  else {
+      } else {
         _handleError(_RUNTIMEERROREOFEXCEEDED);
         return null;
       }
@@ -133,7 +133,7 @@ void _writeToFile(Object? value) {
   _state.fileSaved = false;
 }
 
-void _writeFileList(_GCWList value){
+void _writeFileList(_GCWList value) {
   value.getContent().forEach((element) {
     if (_isAList(element)) {
       _writeFileList(element as _GCWList);
@@ -147,14 +147,14 @@ void _writeFileList(_GCWList value){
   });
 }
 
-void _writeFileString(String value){
+void _writeFileString(String value) {
   value.split('').forEach((letter) {
     _state.FILE.add(letter.codeUnitAt(0));
   });
   _state.FILE.add(0);
 }
 
-void _writeFileInt(int value){
+void _writeFileInt(int value) {
   ByteData bytes = ByteData(8);
   bytes.setInt64(0, value);
   bytes.buffer.asInt8List().toList().forEach((byte) {
@@ -162,7 +162,7 @@ void _writeFileInt(int value){
   });
 }
 
-void _writeFileDouble(double value){
+void _writeFileDouble(double value) {
   ByteData bytes = ByteData(8);
   bytes.setFloat64(0, value);
 
@@ -171,17 +171,16 @@ void _writeFileDouble(double value){
   });
 }
 
-bool _eof(){
+bool _eof() {
   return _state.FILEINDEX < _state.FILE.length;
 }
 
-String _dumpFile(Object? mode){
-
-  String _byteToString(int byte){
+String _dumpFile(Object? mode) {
+  String _byteToString(int byte) {
     return String.fromCharCode(byte);
   }
 
-  String _byteToHex(int byte){
+  String _byteToHex(int byte) {
     return convertBase(byte.toString(), 10, 16);
   }
 
@@ -190,7 +189,7 @@ String _dumpFile(Object? mode){
     _handleError(_INVALIDTYPECAST);
   } else {
     List<String> dump = [];
-    switch (mode as int){
+    switch (mode as int) {
       case 0: // integer
         for (int byte in _state.FILE) {
           dump.add(byte.toString().padLeft(3, ' '));
@@ -198,12 +197,12 @@ String _dumpFile(Object? mode){
         result = dump.join(' ');
         break;
       case 2: // string
-    for (int byte in _state.FILE) {
+        for (int byte in _state.FILE) {
           dump.add(_byteToString(byte));
         }
         result = dump.join('');
         break;
-      default : // hex
+      default: // hex
         for (int byte in _state.FILE) {
           dump.add(_byteToHex(byte));
         }

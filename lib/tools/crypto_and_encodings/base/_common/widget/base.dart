@@ -24,10 +24,16 @@ abstract class AbstractBase extends GCWWebStatefulWidget {
   final bool searchMultimedia;
   final String apiSpecification;
 
-  AbstractBase({Key? key, required this.encode, required this.decode, required this.searchMultimedia, required this.apiSpecification}) : super(key: key, apiSpecification: apiSpecification);
+  AbstractBase(
+      {Key? key,
+      required this.encode,
+      required this.decode,
+      required this.searchMultimedia,
+      required this.apiSpecification})
+      : super(key: key, apiSpecification: apiSpecification);
 
   @override
- _AbstractBaseState createState() => _AbstractBaseState();
+  _AbstractBaseState createState() => _AbstractBaseState();
 }
 
 class _AbstractBaseState extends State<AbstractBase> {
@@ -83,19 +89,21 @@ class _AbstractBaseState extends State<AbstractBase> {
             });
           },
         ),
-        _calcAsync() ? Column(
-          children: [
-            GCWButton(
-              text: i18n(context, 'common_start'),
-              onPressed: () {
-                setState(() {
-                  _outData == null;
-                  _decodeBaseAsync();
-                });
-              },
-            )
-          ],
-        ) : Container(),
+        _calcAsync()
+            ? Column(
+                children: [
+                  GCWButton(
+                    text: i18n(context, 'common_start'),
+                    onPressed: () {
+                      setState(() {
+                        _outData == null;
+                        _decodeBaseAsync();
+                      });
+                    },
+                  )
+                ],
+              )
+            : Container(),
         _buildOutput(context)
       ],
     );
@@ -110,21 +118,19 @@ class _AbstractBaseState extends State<AbstractBase> {
       output = widget.encode(_currentInput);
       outputWidget = GCWDefaultOutput(child: output);
     } else {
-      if (_calcAsync()){
+      if (_calcAsync()) {
         if (_outData == null) return Container();
 
         if (_outData!.fileData != null) {
-          outputWidget =
-            GCWDefaultOutput(
-                trailing: GCWIconButton(
-                  icon: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    _exportFile(context, _outData!.fileData!);
-                  },
-                ),
-                child: hexDataOutput(context, <Uint8List>[_outData!.fileData!])
-            );
+          outputWidget = GCWDefaultOutput(
+              trailing: GCWIconButton(
+                icon: Icons.save,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  _exportFile(context, _outData!.fileData!);
+                },
+              ),
+              child: hexDataOutput(context, <Uint8List>[_outData!.fileData!]));
         } else if (_outData!.plainText != null) {
           outputWidget = GCWDefaultOutput(child: _outData!.plainText);
         } else {
@@ -141,9 +147,9 @@ class _AbstractBaseState extends State<AbstractBase> {
   }
 
   bool _calcAsync() {
-    return widget.searchMultimedia
-        && _currentMode == GCWSwitchPosition.right
-        && _currentInput.length > _MAX_LENGTH_BASE_INPUT;
+    return widget.searchMultimedia &&
+        _currentMode == GCWSwitchPosition.right &&
+        _currentInput.length > _MAX_LENGTH_BASE_INPUT;
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List data) async {
@@ -220,12 +226,12 @@ class _AsyncBaseDecodeParameters {
   _AsyncBaseDecodeParameters(this.decode, this.input);
 }
 
-class _AsyncBaseDecodeReturn{
+class _AsyncBaseDecodeReturn {
   final String plainText;
   _AsyncBaseDecodeReturn({required this.plainText});
 }
 
-class _AsyncBaseDecodeOutput{
+class _AsyncBaseDecodeOutput {
   Uint8List? fileData;
   String? plainText;
 

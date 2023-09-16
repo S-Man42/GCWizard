@@ -26,18 +26,17 @@ class MapViewPersistenceAdapter {
 
   static MapPointDAO gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
     return MapPointDAO(
-      gcwMapPoint.uuid!,
-      gcwMapPoint.markerText,
-      gcwMapPoint.point.latitude,
-      gcwMapPoint.point.longitude,
-      persistenceKeyByCoordinateFormatKey(gcwMapPoint.coordinateFormat!.type),
-      gcwMapPoint.isVisible,
-      colorToHexString(gcwMapPoint.color),
-      gcwMapPoint.hasCircle() ? gcwMapPoint.circle!.radius : null,
-      gcwMapPoint.circleColorSameAsPointColor,
-      gcwMapPoint.hasCircle() ? colorToHexString(gcwMapPoint.circle!.color) : null,
-      gcwMapPoint.isEditable
-    );
+        gcwMapPoint.uuid!,
+        gcwMapPoint.markerText,
+        gcwMapPoint.point.latitude,
+        gcwMapPoint.point.longitude,
+        persistenceKeyByCoordinateFormatKey(gcwMapPoint.coordinateFormat!.type),
+        gcwMapPoint.isVisible,
+        colorToHexString(gcwMapPoint.color),
+        gcwMapPoint.hasCircle() ? gcwMapPoint.circle!.radius : null,
+        gcwMapPoint.circleColorSameAsPointColor,
+        gcwMapPoint.hasCircle() ? colorToHexString(gcwMapPoint.circle!.color) : null,
+        gcwMapPoint.isEditable);
   }
 
   GCWMapPoint _mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
@@ -54,19 +53,15 @@ class MapViewPersistenceAdapter {
             ? GCWMapCircle(
                 centerPoint: coords,
                 radius: mapPointDAO.radius!,
-                color: hexStringToColor(mapPointDAO.circleColor ?? mapPointDAO.color)
-              )
+                color: hexStringToColor(mapPointDAO.circleColor ?? mapPointDAO.color))
             : null,
         circleColorSameAsPointColor: mapPointDAO.circleColorSameAsColor,
         isEditable: mapPointDAO.isEditable ?? false);
   }
 
   static MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
-    return MapPolylineDAO(
-        gcwMapPolyline.uuid!,
-        gcwMapPolyline.points.map((GCWMapPoint point) => point.uuid!).toList(),
-        colorToHexString(gcwMapPolyline.color)
-    );
+    return MapPolylineDAO(gcwMapPolyline.uuid!, gcwMapPolyline.points.map((GCWMapPoint point) => point.uuid!).toList(),
+        colorToHexString(gcwMapPolyline.color));
   }
 
   GCWMapPolyline _mapPolylineDAOToGCWMapPolyline(MapPolylineDAO mapPolylineDAO) {
@@ -105,7 +100,8 @@ class MapViewPersistenceAdapter {
     }
 
     if (mapWidget.polylines.isNotEmpty) {
-      _mapViewDAO.polylines.addAll(mapWidget.polylines.where((polyline) =>
+      _mapViewDAO.polylines.addAll(mapWidget.polylines
+          .where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
           .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
           .toList());
@@ -163,7 +159,8 @@ class MapViewPersistenceAdapter {
 
     updateMapPointDAO(mapPointDAO, _mapViewDAO);
 
-    mapWidget.polylines.where((polyline) => polyline.points.contains(mapPoint))
+    mapWidget.polylines
+        .where((polyline) => polyline.points.contains(mapPoint))
         .forEach((polyline) => updateMapPolyline(polyline));
   }
 

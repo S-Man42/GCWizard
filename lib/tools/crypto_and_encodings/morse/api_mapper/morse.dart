@@ -67,7 +67,7 @@ class MorseAPIMapper extends APIMapper {
   /// convert doLogic output to map
   @override
   Map<String, String> toMap(Object result) {
-    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+    return <String, String>{enumName(WEBPARAMETER.result.toString()): result.toString()};
   }
 
   @override
@@ -75,4 +75,3 @@ class MorseAPIMapper extends APIMapper {
     return _apiSpecification.replaceAll('/key_label', Key);
   }
 }
-

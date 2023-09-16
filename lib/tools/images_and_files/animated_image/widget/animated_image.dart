@@ -30,7 +30,7 @@ class AnimatedImage extends StatefulWidget {
   const AnimatedImage({Key? key, this.file}) : super(key: key);
 
   @override
- _AnimatedImageState createState() => _AnimatedImageState();
+  _AnimatedImageState createState() => _AnimatedImageState();
 }
 
 class _AnimatedImageState extends State<AnimatedImage> {
@@ -109,14 +109,20 @@ class _AnimatedImageState extends State<AnimatedImage> {
       for (var value in _outData!.durations) {
         counter++;
         total += value;
-        durations.addAll([[counter, value]]);
+        durations.addAll([
+          [counter, value]
+        ]);
       }
-      durations.addAll([[i18n(context, 'common_total'), total]]);
+      durations.addAll([
+        [i18n(context, 'common_total'), total]
+      ]);
     }
 
     return Column(children: <Widget>[
       _play
-          ? (_file?.bytes == null) ? Container() : Image.memory(_file!.bytes)
+          ? (_file?.bytes == null)
+              ? Container()
+              : Image.memory(_file!.bytes)
           : GCWGallery(imageData: _convertImageData(_outData!.images, _outData!.durations)),
       _buildDurationOutput(durations)
     ]);
@@ -126,13 +132,7 @@ class _AnimatedImageState extends State<AnimatedImage> {
     return Column(children: <Widget>[
       const GCWDivider(),
       GCWOutput(
-        child: GCWColumnedMultilineOutput(
-            data: durations,
-            flexValues: const [1, 2],
-            hasHeader: true,
-            copyAll: true
-        )
-      ),
+          child: GCWColumnedMultilineOutput(data: durations, flexValues: const [1, 2], hasHeader: true, copyAll: true)),
     ]);
   }
 
@@ -209,7 +209,5 @@ void openInAnimatedImage(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
           builder: (context) => GCWTool(
-              tool: AnimatedImage(file: file),
-              toolName: i18n(context, 'animated_image_title'),
-              id: 'animated_image')));
+              tool: AnimatedImage(file: file), toolName: i18n(context, 'animated_image_title'), id: 'animated_image')));
 }

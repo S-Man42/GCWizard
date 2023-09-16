@@ -18,7 +18,7 @@ class CenterTwoPoints extends StatefulWidget {
   const CenterTwoPoints({Key? key}) : super(key: key);
 
   @override
- _CenterTwoPointsState createState() => _CenterTwoPointsState();
+  _CenterTwoPointsState createState() => _CenterTwoPointsState();
 }
 
 class _CenterTwoPointsState extends State<CenterTwoPoints> {

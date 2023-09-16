@@ -44,7 +44,7 @@ class VariableCoordinate extends StatefulWidget {
   const VariableCoordinate({Key? key, required this.formula}) : super(key: key);
 
   @override
- _VariableCoordinateState createState() => _VariableCoordinateState();
+  _VariableCoordinateState createState() => _VariableCoordinateState();
 }
 
 class _VariableCoordinateState extends State<VariableCoordinate> {
@@ -107,7 +107,8 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
   void _addEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
-      var newEntry = formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
+      var newEntry =
+          formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
       insertFormulaValue(newEntry, widget.formula);
     }
   }
@@ -315,8 +316,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
       _substitutions.putIfAbsent(value.key, () => value.value);
     }
 
-    if (_currentFromInput.isNotEmpty &&
-        _currentToInput.isNotEmpty) {
+    if (_currentFromInput.isNotEmpty && _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
@@ -357,27 +357,26 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
     var hasLeftPaddedCoords = leftPaddedCoords.isNotEmpty;
 
-    _currentOutput =
-        (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
-          .map((VariableCoordinateSingleResult varCoordResult) {
-            var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
-            return Column(
-              children: [
-                GCWOutputText(text: formattedCoordinate),
-                GCWText(text: _formatVariables(varCoordResult.variables), style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
-              ],
-            );
-          })
-          .toList();
+    _currentOutput = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
+        .map((VariableCoordinateSingleResult varCoordResult) {
+      var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
+      return Column(
+        children: [
+          GCWOutputText(text: formattedCoordinate),
+          GCWText(
+              text: _formatVariables(varCoordResult.variables),
+              style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
+        ],
+      );
+    }).toList();
 
     _currentMapPoints = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
-      .map((VariableCoordinateSingleResult varCoordResult) {
-        return GCWMapPoint(
-            point: varCoordResult.coordinate,
-            markerText: _formatVariables(varCoordResult.variables),
-            coordinateFormat: _currentOutputFormat);
-      })
-      .toList();
+        .map((VariableCoordinateSingleResult varCoordResult) {
+      return GCWMapPoint(
+          point: varCoordResult.coordinate,
+          markerText: _formatVariables(varCoordResult.variables),
+          coordinateFormat: _currentOutputFormat);
+    }).toList();
 
     if (_currentOutput.isEmpty) {
       _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];

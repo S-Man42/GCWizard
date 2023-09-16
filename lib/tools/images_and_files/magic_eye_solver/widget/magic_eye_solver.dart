@@ -22,7 +22,7 @@ class MagicEyeSolver extends StatefulWidget {
   const MagicEyeSolver({Key? key}) : super(key: key);
 
   @override
- _MagicEyeSolverState createState() => _MagicEyeSolverState();
+  _MagicEyeSolverState createState() => _MagicEyeSolverState();
 }
 
 class _MagicEyeSolverState extends State<MagicEyeSolver> {

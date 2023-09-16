@@ -43,5 +43,11 @@ const String _apiSpecification = '''
 ''';
 
 class Base58 extends AbstractBase {
-  Base58({Key? key}) : super(key: key, encode: encodeBase58, decode: decodeBase58, searchMultimedia: false, apiSpecification: _apiSpecification);
+  Base58({Key? key})
+      : super(
+            key: key,
+            encode: encodeBase58,
+            decode: decodeBase58,
+            searchMultimedia: false,
+            apiSpecification: _apiSpecification);
 }

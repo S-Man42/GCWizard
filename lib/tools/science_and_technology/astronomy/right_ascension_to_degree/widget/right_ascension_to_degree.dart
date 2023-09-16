@@ -24,12 +24,11 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
 
-
 class RightAscensionToDegree extends StatefulWidget {
   const RightAscensionToDegree({Key? key}) : super(key: key);
 
   @override
- _RightAscensionToDegreeState createState() => _RightAscensionToDegreeState();
+  _RightAscensionToDegreeState createState() => _RightAscensionToDegreeState();
 }
 
 class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
@@ -151,13 +150,13 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             : GCWTextDivider(
                 text: '',
                 trailing: GCWPasteButton(
-                    iconSize: IconButtonSize.SMALL,
-                    onSelected: (text) {
-                      setState(() {
-                        _parseRAPaste(text);
-                      });
-                    },
-                  ),
+                  iconSize: IconButtonSize.SMALL,
+                  onSelected: (text) {
+                    setState(() {
+                      _parseRAPaste(text);
+                    });
+                  },
+                ),
               ),
         _currentMode == GCWSwitchPosition.left ? _buildDecryptWidget() : _buildHmsWidget(),
         Container(height: 10),
@@ -201,7 +200,6 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 break;
               default:
                 _setDecRightAscension();
-
             }
           });
         },

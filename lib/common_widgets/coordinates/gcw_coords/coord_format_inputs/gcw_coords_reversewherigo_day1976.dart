@@ -5,7 +5,9 @@ class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
   final ReverseWherigoDay1976 coordinates;
   final bool initialize;
 
-  const _GCWCoordsReverseWherigoDay1976({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsReverseWherigoDay1976(
+      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();
@@ -20,8 +22,6 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
   var _currentA = '';
   var _currentB = '';
-
-
 
   @override
   void initState() {
@@ -49,7 +49,6 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
 
       _ControllerA.text = _currentA.toString();
       _ControllerB.text = _currentB.toString();
-
     }
 
     return Column(children: <Widget>[

@@ -10,7 +10,7 @@ class Bacon extends StatefulWidget {
   const Bacon({Key? key}) : super(key: key);
 
   @override
- _BaconState createState() => _BaconState();
+  _BaconState createState() => _BaconState();
 }
 
 class _BaconState extends State<Bacon> {

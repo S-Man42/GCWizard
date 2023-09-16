@@ -29,7 +29,7 @@ class CoordinatesSettings extends StatefulWidget {
   const CoordinatesSettings({Key? key}) : super(key: key);
 
   @override
- _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
+  _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
 }
 
 class _CoordinatesSettingsState extends State<CoordinatesSettings> {
@@ -60,7 +60,7 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
 
               var typePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.type);
               Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
-              
+
               if (_currentDefaultFormat.subtype == null) {
                 restoreSingleDefaultPreference(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
               } else {
@@ -80,10 +80,10 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             onChanged: (value) {
               setState(() {
                 _currentDefaultHemisphereLatitude =
-                value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
+                    value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
                 Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE, _currentDefaultHemisphereLatitude);
               });
-        }),
+            }),
         GCWSignDropDown(
             title: i18n(context, 'coords_common_longitude'),
             itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
@@ -91,9 +91,8 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             onChanged: (value) {
               setState(() {
                 _currentDefaultHemisphereLongitude =
-                value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
-                Prefs.setString(
-                    PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
+                    value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
               });
             }),
         GCWTextDivider(

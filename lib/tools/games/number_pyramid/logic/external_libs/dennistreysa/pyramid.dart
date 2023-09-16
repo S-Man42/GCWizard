@@ -17,7 +17,7 @@ import 'dart:math';
 const _MAX_SOLUTIONS_DEFAULT = 10;
 var _max_solutions = _MAX_SOLUTIONS_DEFAULT;
 var _MAX_RECURSIVE_COUNTER = 100000;
-var _recursive_counter  = 0;
+var _recursive_counter = 0;
 var _globalMaxValue = 1000;
 List<List<List<int?>>> _solutions = [];
 
@@ -26,8 +26,7 @@ List<List<List<int?>>> _solutions = [];
 			pyramid -- The pyramid to be checked
 */
 bool _assertValidPyramid(List<List<int?>> pyramid) {
-
-  for (var layer=0; layer < pyramid.length - 1; layer++) {
+  for (var layer = 0; layer < pyramid.length - 1; layer++) {
     if (pyramid[layer].isEmpty) return false;
     if (pyramid[layer].length != layer + 1) return false;
   }
@@ -35,10 +34,8 @@ bool _assertValidPyramid(List<List<int?>> pyramid) {
 }
 
 bool _isSolved(List<List<int?>> pyramid) {
-
-  for (var layer=0; layer < pyramid.length - 1; layer++) {
-    for (var brick=0; brick < pyramid[layer].length; brick++) {
-
+  for (var layer = 0; layer < pyramid.length - 1; layer++) {
+    for (var brick = 0; brick < pyramid[layer].length; brick++) {
       var brickValue = pyramid[layer][brick];
       var leftChild = pyramid[layer + 1][brick];
       var rightChild = pyramid[layer + 1][brick + 1];
@@ -60,9 +57,8 @@ bool _isSolved(List<List<int?>> pyramid) {
 			pyramid -- The pyramid to be checked
 */
 bool _isSolveable(List<List<int?>> pyramid) {
-
-  for (var layer=0; layer < pyramid.length - 1; layer++) {
-    for (var brick=0; brick < pyramid[layer].length; brick++) {
+  for (var layer = 0; layer < pyramid.length - 1; layer++) {
+    for (var brick = 0; brick < pyramid[layer].length; brick++) {
       var brickValue = pyramid[layer][brick];
       if (brickValue != null) {
         // left child
@@ -88,7 +84,6 @@ bool _isSolveable(List<List<int?>> pyramid) {
 			layer/brick -- The location of the brick to get the max value for
 */
 int? _getMaxValue(List<List<int?>> pyramid, int layer, int brick) {
-
   // if brick already has a value, this is the maximum
   if (pyramid[layer][brick] != null) {
     return pyramid[layer][brick];
@@ -113,7 +108,7 @@ void _solveGuess(List<List<int?>> pyramid, int brick) {
     return;
   }
 
-  var lastLayer = pyramid.length - 1 ;
+  var lastLayer = pyramid.length - 1;
   var brickValue = pyramid[lastLayer][brick];
   var startValue = (brickValue != null) ? brickValue : 0;
   var endValue = (brickValue != null) ? brickValue + 1 : _getMaxValue(pyramid, lastLayer, brick);
@@ -153,8 +148,8 @@ List<List<int?>> _solveRepair(List<List<int?>> pyramid) {
 
   while (repairedSomething) {
     repairedSomething = false;
-    for (var layer=0; layer < pyramid.length - 1; layer++) {
-      for (var brick=0; brick < pyramid[layer].length; brick++) {
+    for (var layer = 0; layer < pyramid.length - 1; layer++) {
+      for (var brick = 0; brick < pyramid[layer].length; brick++) {
         var top = pyramid[layer][brick];
         var left = pyramid[layer + 1][brick];
         var right = pyramid[layer + 1][brick + 1];

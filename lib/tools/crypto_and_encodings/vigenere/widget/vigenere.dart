@@ -70,7 +70,7 @@ class Vigenere extends GCWWebStatefulWidget {
   Vigenere({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _VigenereState createState() => _VigenereState();
+  _VigenereState createState() => _VigenereState();
 }
 
 class _VigenereState extends State<Vigenere> {

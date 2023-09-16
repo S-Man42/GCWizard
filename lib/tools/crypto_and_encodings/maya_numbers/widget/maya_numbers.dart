@@ -16,7 +16,7 @@ class MayaNumbers extends StatefulWidget {
   const MayaNumbers({Key? key}) : super(key: key);
 
   @override
- _MayaNumbersState createState() => _MayaNumbersState();
+  _MayaNumbersState createState() => _MayaNumbersState();
 }
 
 class _MayaNumbersState extends State<MayaNumbers> {

@@ -38,29 +38,28 @@ class App extends StatelessWidget {
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return AppBuilder(builder: (context) {
             return MaterialApp(
-              title: 'GC Wizard',
-              supportedLocales: SUPPORTED_LOCALES.keys,
-              locale: model.appLocal,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              theme: buildTheme(),
-              debugShowCheckedModeBanner: false,
-              navigatorKey: NavigationService.instance.navigationKey,
-              routes: {
-                // Required extra way because normal Navigator.of(context) way
-                // crashes because of some NULL problems on TextSelectionControls menu
-                clipboard_editor: (BuildContext context) => GCWTool(
-                    tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
-              },
-              onGenerateInitialRoutes: (route) => startMainView(context, route),
-              onGenerateRoute: (RouteSettings settings) {
-                return createRoute(context, settings);
-              }
-            );
+                title: 'GC Wizard',
+                supportedLocales: SUPPORTED_LOCALES.keys,
+                locale: model.appLocal,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                theme: buildTheme(),
+                debugShowCheckedModeBanner: false,
+                navigatorKey: NavigationService.instance.navigationKey,
+                routes: {
+                  // Required extra way because normal Navigator.of(context) way
+                  // crashes because of some NULL problems on TextSelectionControls menu
+                  clipboard_editor: (BuildContext context) => GCWTool(
+                      tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
+                },
+                onGenerateInitialRoutes: (route) => startMainView(context, route),
+                onGenerateRoute: (RouteSettings settings) {
+                  return createRoute(context, settings);
+                });
           });
         }));
   }

@@ -64,7 +64,7 @@ class RotatorAPIMapper extends APIMapper {
   /// convert doLogic output to map
   @override
   Map<String, String> toMap(Object result) {
-    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+    return <String, String>{enumName(WEBPARAMETER.result.toString()): result.toString()};
   }
 
   @override

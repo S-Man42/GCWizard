@@ -9,12 +9,12 @@ const MDT_INTERNALNAMES_VANITYMULTITAP = 'multidecoder_tool_vanitymultitap_title
 const MDT_VANITYMULTITAP_OPTION_PHONEMODEL = 'multidecoder_tool_vanitymultitap_option_phonemodel';
 
 class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
-  MultiDecoderToolVanityMultitap({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolVanityMultitap(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -22,7 +22,8 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_VANITYMULTITAP,
             onDecode: (String input, String key) {
               PhoneModel model;
-              var modelName = _ensureBackwardsCompatibility(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_VANITYMULTITAP, options, MDT_VANITYMULTITAP_OPTION_PHONEMODEL));
+              var modelName = _ensureBackwardsCompatibility(checkStringFormatOrDefaultOption(
+                  MDT_INTERNALNAMES_VANITYMULTITAP, options, MDT_VANITYMULTITAP_OPTION_PHONEMODEL));
 
               switch (modelName) {
                 case NAME_PHONEMODEL_SIMPLE_SPACE_0:
@@ -52,10 +53,10 @@ class MultiDecoderToolVanityMultitap extends AbstractMultiDecoderTool {
 class _MultiDecoderToolVanityMultitapState extends State<MultiDecoderToolVanityMultitap> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_VANITYMULTITAP_OPTION_PHONEMODEL: GCWDropDown<String>(
-          value: _ensureBackwardsCompatibility(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_VANITYMULTITAP, widget.options, MDT_VANITYMULTITAP_OPTION_PHONEMODEL)),
+          value: _ensureBackwardsCompatibility(checkStringFormatOrDefaultOption(
+              MDT_INTERNALNAMES_VANITYMULTITAP, widget.options, MDT_VANITYMULTITAP_OPTION_PHONEMODEL)),
           onChanged: (newValue) {
             setState(() {
               widget.options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL] = newValue;
@@ -69,8 +70,7 @@ class _MultiDecoderToolVanityMultitapState extends State<MultiDecoderToolVanityM
           ].map((model) {
             return GCWDropDownMenuItem(value: model, child: i18n(context, model));
           }).toList()),
-    }
-    );
+    });
   }
 }
 
