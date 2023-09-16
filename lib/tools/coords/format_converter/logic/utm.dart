@@ -210,11 +210,7 @@ UTMREF? parseUTM(String input) {
 
   if (matches.isEmpty) return null;
 
-  if (_latZone == null
-    || _lonZoneString == null
-    || _eastingString == null
-    || _northingString == null
-  ) {
+  if (_latZone == null || _lonZoneString == null || _eastingString == null || _northingString == null) {
     return null;
   }
 

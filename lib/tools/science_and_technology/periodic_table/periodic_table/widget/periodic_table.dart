@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'package:collection/collection.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -18,7 +18,7 @@ class PeriodicTable extends StatefulWidget {
   const PeriodicTable({Key? key}) : super(key: key);
 
   @override
- _PeriodicTableState createState() => _PeriodicTableState();
+  _PeriodicTableState createState() => _PeriodicTableState();
 }
 
 class _PeriodicTableState extends State<PeriodicTable> {
@@ -96,8 +96,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
             onTap: () {
               Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                   builder: (context) => GCWTool(
-                      tool: PeriodicTableDataView(atomicNumber: element.atomicNumber),
-                      id: 'periodictable_dataview')));
+                      tool: PeriodicTableDataView(atomicNumber: element.atomicNumber), id: 'periodictable_dataview')));
             },
           );
   }
@@ -119,7 +118,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
           )),
           Expanded(
               child: AutoSizeText(
-                group?.item2 == null ? '' : encodeRomanNumbers(group!.item2),
+            group?.item2 == null ? '' : encodeRomanNumbers(group!.item2),
             style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
             minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
@@ -264,9 +263,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
     }
 
     if (color1 == null && color2 == null) return null;
-    var list =
-      [MapEntry<Color?, String?>(color1, text1),
-       MapEntry<Color?, String?>(color2, text2)];
+    var list = [MapEntry<Color?, String?>(color1, text1), MapEntry<Color?, String?>(color2, text2)];
 
     return Column(
       children: list.map((e) {

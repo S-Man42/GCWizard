@@ -19,7 +19,6 @@ class IAUAllConstellations extends StatefulWidget {
 }
 
 class IAUAllConstellationsState extends State<IAUAllConstellations> {
-
   IAU_CONSTELLATION_SORT _currentSortCategory = IAU_CONSTELLATION_SORT.CONSTELLATION;
 
   GCWSwitchPosition _currentSortingOrder = GCWSwitchPosition.left;
@@ -122,9 +121,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
           if (_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION) {
             entry.add(constellation.ConstellationName);
           } else {
-            entry.addAll([
-              relevantValue, constellation.ConstellationName
-            ]);
+            entry.addAll([relevantValue, constellation.ConstellationName]);
           }
           return MapEntry<int, List<Object>>(index, entry);
         })
@@ -132,8 +129,8 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
         .toList();
   }
 
-  List<Object> _buildHeader(){
-     switch (_currentSortCategory) {
+  List<Object> _buildHeader() {
+    switch (_currentSortCategory) {
       case IAU_CONSTELLATION_SORT.CONSTELLATION:
         return ['', i18n(context, 'iau_constellation_iauname')];
       case IAU_CONSTELLATION_SORT.NAME:
@@ -163,17 +160,20 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
       4,
       3,
     ];
-    tappables = outputData.asMap().map((index, data) {
-      if (index == 0) {
-        return MapEntry<int, void Function()>(index,
-          () => {}
-        );
-      }
+    tappables = outputData
+        .asMap()
+        .map((index, data) {
+          if (index == 0) {
+            return MapEntry<int, void Function()>(index, () => {});
+          }
 
-      return MapEntry<int, void Function()>(index,
-        () => _showConstellation(data[_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? 1 : 2] as String)
-      );
-    }).values.toList();
+          return MapEntry<int, void Function()>(
+              index,
+              () => _showConstellation(
+                  data[_currentSortCategory == IAU_CONSTELLATION_SORT.CONSTELLATION ? 1 : 2] as String));
+        })
+        .values
+        .toList();
 
     List<Widget> rows = [
       GCWColumnedMultilineOutput(

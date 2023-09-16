@@ -23,7 +23,7 @@ class RALColorCodes extends StatefulWidget {
   const RALColorCodes({Key? key}) : super(key: key);
 
   @override
- _RALColorCodesState createState() => _RALColorCodesState();
+  _RALColorCodesState createState() => _RALColorCodesState();
 }
 
 class _RALColorCodesState extends State<RALColorCodes> {
@@ -121,15 +121,14 @@ class _RALColorCodesState extends State<RALColorCodes> {
     }
 
     return GCWOutput(
-        title: similarRALs.length == 1
-            ? i18n(context, 'common_output')
-            : i18n(context, 'ralcolorcodes_mode_colorstoral_similarcolorsfound'),
-        child: GCWColumnedMultilineOutput(
-                  data: similarRALs.entries.map((e) => _buildRALColorOutput(e)).toList(),
-                  flexValues: const [1, 2, 2],
-                  copyColumn: 1
-              ),
-        );
+      title: similarRALs.length == 1
+          ? i18n(context, 'common_output')
+          : i18n(context, 'ralcolorcodes_mode_colorstoral_similarcolorsfound'),
+      child: GCWColumnedMultilineOutput(
+          data: similarRALs.entries.map((e) => _buildRALColorOutput(e)).toList(),
+          flexValues: const [1, 2, 2],
+          copyColumn: 1),
+    );
   }
 
   Widget _buildRALToColorOutput() {
@@ -138,14 +137,14 @@ class _RALColorCodesState extends State<RALColorCodes> {
     var name = _currentValue.value.name;
     if (name.isEmpty) name = 'common_unknown';
 
-    List<Widget> children = [GCWColumnedMultilineOutput(
-                                data : [
-                                  ['Name', i18n(context, name)],
-                                  ['Hex Color Code', _currentValue.value.colorcode],
-                                  ['RGB', rgbColor.toRBGString()],
-                                  ['CMYK', CMYK.fromRGB(rgbColor).toCMYKString()],
-                                ]
-                            )];
+    List<Widget> children = [
+      GCWColumnedMultilineOutput(data: [
+        ['Name', i18n(context, name)],
+        ['Hex Color Code', _currentValue.value.colorcode],
+        ['RGB', rgbColor.toRBGString()],
+        ['CMYK', CMYK.fromRGB(rgbColor).toCMYKString()],
+      ])
+    ];
 
     children.add(Container(
       margin: const EdgeInsets.only(top: 10 * DEFAULT_MARGIN),

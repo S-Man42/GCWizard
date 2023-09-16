@@ -15,7 +15,7 @@ class Amsco extends StatefulWidget {
   const Amsco({Key? key}) : super(key: key);
 
   @override
- _AmscoState createState() => _AmscoState();
+  _AmscoState createState() => _AmscoState();
 }
 
 class _AmscoState extends State<Amsco> {
@@ -28,7 +28,7 @@ class _AmscoState extends State<Amsco> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentOneCharStart = GCWSwitchPosition.left;
 
-  final _maskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
+  final _maskFormatter = GCWMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
 
   @override
   void initState() {

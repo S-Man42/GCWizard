@@ -5,7 +5,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
 
-
 class AveMaria extends StatefulWidget {
   const AveMaria({Key? key}) : super(key: key);
 
@@ -42,29 +41,29 @@ class AveMariaState extends State<AveMaria> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
-          ],
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-              _calculateOutput();
-            });
-          },
-        )
+                controller: _encodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                    _calculateOutput();
+                  });
+                },
+              )
             : GCWTextField(
-          controller: _decodeController,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
-          ],
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-              _calculateOutput();
-            });
-          },
-        ),
+                controller: _decodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                    _calculateOutput();
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {

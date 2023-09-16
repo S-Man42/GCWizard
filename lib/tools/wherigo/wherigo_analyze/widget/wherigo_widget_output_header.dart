@@ -96,25 +96,26 @@ List<List<String>> _buildHeaderExpertMode(BuildContext context) {
     [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + WherigoCartridgeLUAData.UseLogging)]
   ];
 
-    switch (WherigoCartridgeLUAData.Builder) {
-      case WHERIGO_BUILDER.EARWIGO:
-        header.add([i18n(context, 'wherigo_header_builder'), 'Earwigo Webbuilder']);
-        break;
-      case WHERIGO_BUILDER.URWIGO:
-        header.add([i18n(context, 'wherigo_header_builder'), 'Urwigo']);
-        break;
-      case WHERIGO_BUILDER.UNKNOWN:
-        header.add([i18n(context, 'wherigo_header_builder'), i18n(context, 'wherigo_header_builder_unknown')]);
-        break;
-      case WHERIGO_BUILDER.WHERIGOKIT:
-        header.add([i18n(context, 'wherigo_header_builder'), 'Wherigo Kit']);
-        break;
-      case WHERIGO_BUILDER.GROUNDSPEAK:
-        header.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
-        break;
+  switch (WherigoCartridgeLUAData.Builder) {
+    case WHERIGO_BUILDER.EARWIGO:
+      header.add([i18n(context, 'wherigo_header_builder'), 'Earwigo Webbuilder']);
+      break;
+    case WHERIGO_BUILDER.URWIGO:
+      header.add([i18n(context, 'wherigo_header_builder'), 'Urwigo']);
+      break;
+    case WHERIGO_BUILDER.UNKNOWN:
+      header.add([i18n(context, 'wherigo_header_builder'), i18n(context, 'wherigo_header_builder_unknown')]);
+      break;
+    case WHERIGO_BUILDER.WHERIGOKIT:
+      header.add([i18n(context, 'wherigo_header_builder'), 'Wherigo Kit']);
+      break;
+    case WHERIGO_BUILDER.GROUNDSPEAK:
+      header.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
+      break;
 
-      default: {}
-    }
-     header.add([i18n(context, 'wherigo_header_version'), WherigoCartridgeLUAData.BuilderVersion]);
+    default:
+      {}
+  }
+  header.add([i18n(context, 'wherigo_header_version'), WherigoCartridgeLUAData.BuilderVersion]);
   return header;
 }

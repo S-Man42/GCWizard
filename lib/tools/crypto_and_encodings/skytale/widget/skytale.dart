@@ -12,7 +12,7 @@ class Skytale extends StatefulWidget {
   const Skytale({Key? key}) : super(key: key);
 
   @override
- _SkytaleState createState() => _SkytaleState();
+  _SkytaleState createState() => _SkytaleState();
 }
 
 class _SkytaleState extends State<Skytale> {

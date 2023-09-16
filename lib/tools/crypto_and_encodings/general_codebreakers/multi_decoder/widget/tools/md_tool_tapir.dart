@@ -5,11 +5,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tapir/logic/tapir.dart';
 const MDT_INTERNALNAMES_TAPIR = 'multidecoder_tool_tapir_title';
 
 class MultiDecoderToolTapir extends AbstractMultiDecoderTool {
-  MultiDecoderToolTapir({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolTapir({Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,

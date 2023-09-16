@@ -15,12 +15,12 @@ class FormulaBase {
   FormulaBase(this.name);
 
   Map<String, Object?> toMap() => {
-    'id': id,
-    'name': name,
-  };
+        'id': id,
+        'name': name,
+      };
 }
 
-class FormulaGroup  extends FormulaBase {
+class FormulaGroup extends FormulaBase {
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
 
@@ -29,7 +29,7 @@ class FormulaGroup  extends FormulaBase {
     return formulas.length;
   }
 
-  FormulaGroup(String name) :super(name);
+  FormulaGroup(String name) : super(name);
 
   @override
   Map<String, Object?> toMap() => {
@@ -40,7 +40,8 @@ class FormulaGroup  extends FormulaBase {
       };
 
   static FormulaGroup fromJson(Map<String, Object?> json) {
-    var newFormulaGroup = FormulaGroup(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
+    var newFormulaGroup =
+        FormulaGroup(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
     newFormulaGroup.id = toIntOrNull(json['id']);
 
     var formulasRaw = toObjectWithNullableContentListOrNull(json['formulas']);
@@ -67,7 +68,6 @@ class FormulaGroup  extends FormulaBase {
     return newFormulaGroup;
   }
 
-
   @override
   String toString() {
     return toMap().toString();
@@ -79,6 +79,7 @@ class Formula extends FormulaBase {
 
   Formula(this.formula) : super('');
 
+  @override
   Map<String, Object?> toMap() {
     var map = {
       'id': id,
@@ -110,17 +111,14 @@ class Formula extends FormulaBase {
   }
 }
 
-enum FormulaValueType { FIXED, INTERPOLATED, TEXT }
+enum FormulaValueType { FIXED, INTERPOLATED }
 
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
-const _FORMULAVALUETYPE_TEXT = 'text';
 
 FormulaValueType _readType(String? jsonType) {
   switch (jsonType) {
     case _FORMULAVALUETYPE_INTERPOLATE:
       return FormulaValueType.INTERPOLATED;
-    case _FORMULAVALUETYPE_TEXT:
-      return FormulaValueType.TEXT;
     default:
       return FormulaValueType.FIXED;
   }
@@ -138,16 +136,15 @@ class FormulaValue extends KeyValueBase {
 
   FormulaValueType? type;
 
-  FormulaValue(String key, String value, {this.type})
-      : super ('', key, value);
-  
+  FormulaValue(String key, String value, {this.type}) : super('', key, value);
+
   static FormulaValue fromJson(Map<String, Object?> json) {
     var id = toIntOrNull(json['id']);
-    var key = toStringOrNull(json['key']) ?? '';  // TODO Proper default types if key is not in map
+    var key = toStringOrNull(json['key']) ?? ''; // TODO Proper default types if key is not in map
     var value = toStringOrNull(json['value']) ?? '';
     var type = _readType(json['type'] as String?);
 
-    var newFormulaValue =FormulaValue(key, value, type: type);
+    var newFormulaValue = FormulaValue(key, value, type: type);
     newFormulaValue.id = id;
 
     return newFormulaValue;
@@ -164,9 +161,6 @@ class FormulaValue extends KeyValueBase {
     switch (type) {
       case FormulaValueType.INTERPOLATED:
         mapType = _FORMULAVALUETYPE_INTERPOLATE;
-        break;
-      case FormulaValueType.TEXT:
-        mapType = _FORMULAVALUETYPE_TEXT;
         break;
       default:
         break;

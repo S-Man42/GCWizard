@@ -16,7 +16,7 @@ class Polybios extends StatefulWidget {
   const Polybios({Key? key}) : super(key: key);
 
   @override
- _PolybiosState createState() => _PolybiosState();
+  _PolybiosState createState() => _PolybiosState();
 }
 
 class _PolybiosState extends State<Polybios> {
@@ -120,8 +120,7 @@ class _PolybiosState extends State<Polybios> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput.isEmpty ||
-        ![5, 6].contains(_currentKey.length)) {
+    if (_currentInput.isEmpty || ![5, 6].contains(_currentKey.length)) {
       return const GCWDefaultOutput(); // TODO: Exception
     }
 

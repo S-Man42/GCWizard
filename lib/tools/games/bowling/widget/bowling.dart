@@ -18,7 +18,7 @@ class Bowling extends StatefulWidget {
   const Bowling({Key? key}) : super(key: key);
 
   @override
- _BowlingState createState() => _BowlingState();
+  _BowlingState createState() => _BowlingState();
 }
 
 class _BowlingState extends State<Bowling> {
@@ -163,11 +163,7 @@ class _BowlingState extends State<Bowling> {
       children: <Widget>[
         GCWDefaultOutput(
           child: GCWColumnedMultilineOutput(
-            data: _buildBowlingScoreTable(),
-            hasHeader: true,
-            copyColumn: 4,
-            flexValues: const [2, 1, 1, 1, 2, 3]
-          ),
+              data: _buildBowlingScoreTable(), hasHeader: true, copyColumn: 4, flexValues: const [2, 1, 1, 1, 2, 3]),
         ),
         GCWTextDivider(
           text: i18n(context, 'bowling_scoreboard'),

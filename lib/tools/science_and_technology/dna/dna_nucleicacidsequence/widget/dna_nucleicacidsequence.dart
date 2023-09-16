@@ -11,7 +11,7 @@ class DNANucleicAcidSequence extends StatefulWidget {
   const DNANucleicAcidSequence({Key? key}) : super(key: key);
 
   @override
- _DNANucleicAcidSequenceState createState() => _DNANucleicAcidSequenceState();
+  _DNANucleicAcidSequenceState createState() => _DNANucleicAcidSequenceState();
 }
 
 class _DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {

@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Area extends Unit {
-  late double Function (double) toSquareMeter;
-  late double Function (double) fromSquareMeter;
+  late double Function(double) toSquareMeter;
+  late double Function(double) fromSquareMeter;
 
   Area({
     required String name,
@@ -15,7 +15,8 @@ class Area extends Unit {
   }
 }
 
-final AREA_SQUAREMETER = Area(name: 'common_unit_area_m2_name', symbol: 'm\u00B2', inSquareMeters: 1.0, isReference: true);
+final AREA_SQUAREMETER =
+    Area(name: 'common_unit_area_m2_name', symbol: 'm\u00B2', inSquareMeters: 1.0, isReference: true);
 
 final AREA_SQUAREKILOMETER =
     Area(name: 'common_unit_area_km2_name', symbol: 'km\u00B2', inSquareMeters: 1000.0 * 1000.0);

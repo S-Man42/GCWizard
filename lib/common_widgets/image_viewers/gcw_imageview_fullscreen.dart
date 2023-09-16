@@ -12,7 +12,7 @@ class GCWImageViewFullScreen extends StatefulWidget {
   const GCWImageViewFullScreen({Key? key, required this.imageData}) : super(key: key);
 
   @override
- _GCWImageViewFullScreenState createState() => _GCWImageViewFullScreenState();
+  _GCWImageViewFullScreenState createState() => _GCWImageViewFullScreenState();
 }
 
 class _GCWImageViewFullScreenState extends State<GCWImageViewFullScreen> {

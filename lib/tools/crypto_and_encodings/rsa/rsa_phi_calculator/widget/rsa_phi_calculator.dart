@@ -11,7 +11,7 @@ class RSAPhiCalculator extends StatefulWidget {
   const RSAPhiCalculator({Key? key}) : super(key: key);
 
   @override
- _RSAPhiCalculatorState createState() => _RSAPhiCalculatorState();
+  _RSAPhiCalculatorState createState() => _RSAPhiCalculatorState();
 }
 
 class _RSAPhiCalculatorState extends State<RSAPhiCalculator> {

@@ -33,7 +33,7 @@ class AnimatedImageMorseCode extends StatefulWidget {
   const AnimatedImageMorseCode({Key? key, this.file}) : super(key: key);
 
   @override
- _AnimatedImageMorseCodeState createState() => _AnimatedImageMorseCodeState();
+  _AnimatedImageMorseCodeState createState() => _AnimatedImageMorseCodeState();
 }
 
 class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
@@ -155,11 +155,12 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
     return Column(children: <Widget>[
       _play
-          ? _file?.bytes == null ?  Container() : Image.memory(_file!.bytes)
+          ? _file?.bytes == null
+              ? Container()
+              : Image.memory(_file!.bytes)
           : _filtered
               ? GCWGallery(
-                  imageData:
-                      _convertImageDataFiltered(_outData!.images, _outData!.durations, _outData!.imagesFiltered),
+                  imageData: _convertImageDataFiltered(_outData!.images, _outData!.durations, _outData!.imagesFiltered),
                   onDoubleTap: (index) {
                     setState(() {
                       List<List<int>> imagesFiltered = _outData!.imagesFiltered;
@@ -284,8 +285,8 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<Uint8List?>(
                 isolatedFunction: createImageAsync,
                 parameter: _buildJobDataEncode,
@@ -342,7 +343,8 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return list;
   }
 
-  List<GCWImageViewData> _convertImageData(List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
+  List<GCWImageViewData> _convertImageData(
+      List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
     var list = <GCWImageViewData>[];
 
     if (images != null) {
@@ -369,8 +371,8 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<AnimatedImageMorseOutput?>(
               isolatedFunction: analyseImageMorseCodeAsync,
               parameter: _buildJobDataDecode,

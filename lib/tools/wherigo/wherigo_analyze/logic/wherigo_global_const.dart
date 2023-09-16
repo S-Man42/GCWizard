@@ -426,6 +426,6 @@ const WherigoObfuscationData _WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscat
   ObfuscationName: '',
 );
 WherigoAnswer _WHERIGO_EMPTYTESTANSWER_LUA = WherigoAnswer(
-    InputFunction: '',
-    InputAnswers: [],
+  InputFunction: '',
+  InputAnswers: [],
 );

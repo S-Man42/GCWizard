@@ -19,11 +19,10 @@ class VariableCoordinateFormulas extends StatefulWidget {
   const VariableCoordinateFormulas({Key? key}) : super(key: key);
 
   @override
- _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
+  _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
 }
 
 class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
-
   @override
   void initState() {
     super.initState();
@@ -49,6 +48,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
       ],
     );
   }
+
   String _createImportName(String currentName) {
     var baseName = '[${i18n(context, 'common_import')}] $currentName';
 
@@ -66,7 +66,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
   void _importFromClipboard(String data) {
     try {
       data = normalizeCharacters(data);
-      var formula = Formula.fromJson(asJsonMap(jsonDecode(data)));
+      var formula = VariableCoordinateFormula.fromJson(asJsonMap(jsonDecode(data)));
       formula.name = _createImportName(formula.name);
 
       setState(() {
@@ -80,7 +80,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
 
   void _addNewFormula(String name) {
     if (name.isNotEmpty) {
-      var formula = Formula(name);
+      var formula = VariableCoordinateFormula(name);
       insertFormula(formula);
     }
   }
@@ -94,7 +94,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
           toolName: '${entry.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
           helpSearchString: 'coords_variablecoordinate_title',
           defaultLanguageToolName:
-          '${entry.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
+              '${entry.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
           id: 'coords_variablecoordinate');
     } else {
       return null;

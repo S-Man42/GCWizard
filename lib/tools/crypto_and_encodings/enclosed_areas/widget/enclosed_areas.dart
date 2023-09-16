@@ -10,7 +10,7 @@ class EnclosedAreas extends StatefulWidget {
   const EnclosedAreas({Key? key}) : super(key: key);
 
   @override
- _EnclosedAreasState createState() => _EnclosedAreasState();
+  _EnclosedAreasState createState() => _EnclosedAreasState();
 }
 
 class _EnclosedAreasState extends State<EnclosedAreas> {
