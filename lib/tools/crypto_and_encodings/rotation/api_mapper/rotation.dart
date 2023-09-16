@@ -8,29 +8,37 @@ const String _apiSpecification = '''
 		"get": {
 			"summary": "Rotation Tool",
 			"responses": {
-        "description": "Encoded or decoded text."
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for rotate text",
-				"schema": {
-					"type": "string"
-				}
+				"200": {
+					"description": "Encoded or decoded text."
+				},
+				"400": {
+					"description": "Bad Request"
+				},
+				"500": {
+					"description": "Internal Server Error"
+				}        
 			},
-			{
-				"in": "query",
-				"name": "parameter1",
-				"description": "Shifts letters count",
-				"schema": {
-					"type": "string",
-					"default": "0"
+			"parameters" : [
+				{
+					"in": "query",
+					"name": "input",
+					"required": true,
+					"description": "Input data for rotate text",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"in": "query",
+					"name": "parameter1",
+					"description": "Shifts letters count",
+					"schema": {
+						"type": "string",
+						"default": "0"
+					}
 				}
-			}
-		]
+			]
+		}
 	}
 }
 ''';

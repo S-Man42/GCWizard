@@ -8,33 +8,41 @@ const String _apiSpecification = '''
 		"get": {
 			"summary": "Roman numbers Tool",
 			"responses": {
-        "description": "Encoded or decoded text."
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for encoding or decoding Roman Numbers",
-				"schema": {
-					"type": "string"
+				"200": {
+					"description": "Encoded or decoded text."
+				},
+				"400": {
+					"description": "Bad Request"
+				},
+				"500": {
+					"description": "Internal Server Error"
 				}
 			},
-			{
-				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
-				"schema": {
-					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "decode"
+			"parameters" : [
+				{
+					"in": "query",
+					"name": "input",
+					"required": true,
+					"description": "Input data for encoding or decoding Roman Numbers",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"in": "query",
+					"name": "mode",
+					"description": "Defines encoding or decoding mode",
+					"schema": {
+						"type": "string",
+						"enum": [
+							"encode",
+							"decode"
+						],
+						"default": "decode"
+					}
 				}
-			}
-		]
+			]
+		}
 	}
 }
 ''';

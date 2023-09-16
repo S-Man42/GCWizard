@@ -8,20 +8,28 @@ const String _apiSpecification = '''
 		"get": {
 			"summary": "Reverse Text Tool",
 			"responses": {
-        "description": "Reversed text."
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for reverse text",
-				"schema": {
-					"type": "string"
-				}
+				"200": {
+					"description": "Reversed text."
+				},
+				"400": {
+					"description": "Bad Request"
+				},
+				"500": {
+					"description": "Internal Server Error"
+				}        
 			},
-		]
+			"parameters" : [
+				{
+					"in": "query",
+					"name": "input",
+					"required": true,
+					"description": "Input data for reverse text",
+					"schema": {
+						"type": "string"
+					}
+				},
+			]
+		}
 	}
 }
 ''';

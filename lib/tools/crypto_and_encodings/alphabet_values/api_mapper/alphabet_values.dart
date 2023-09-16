@@ -7,38 +7,44 @@ const String _apiSpecification = '''
 {
 	"/key_label" : {
 		"get": {
-			"summary": "Alphabet Values Tool",
+			"summary": "Format Converter Tool",
 			"responses": {
-        "description": "Encoded or decoded text."
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for encoding or decoding text",
-				"schema": {
-					"type": "string"
+				"200": {
+					"description": "Converts coordinate formats"
+				},
+				"400": {
+					"description": "Bad Request"
+				},
+				"500": {
+					"description": "Internal Server Error"
 				}
 			},
-			{
-				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
-				"schema": {
-					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "encode"
+			"parameters" : [
+				{
+					"in": "query",
+					"name": "input",
+					"required": true,
+					"description": "Input data for parse coordinates",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"in": "query",
+					"name": "toformat",
+					"description": "Target coordinate format",
+					"schema": {
+						"type": "string",
+						"enum": [
+							coordinate_formats
+						],
+						"default": "defaultCoordinateFormat"
+					}
 				}
-			}
-		]
+			]
+		}
 	}
 }
-
 ''';
 
 class AlphabetValuesAPIMapper extends APIMapper {
