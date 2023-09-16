@@ -2,7 +2,8 @@ part of 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 
 const Map<String, TextStyle> _openApiHiglightMap = {
   '"get"'  : TextStyle(color: Colors.blue),
-  '"parameters"'  : TextStyle(color: Colors.blue),
+  '"alternative_paths"'  : TextStyle(color: Colors.blue),
+  '"parameters"'  : TextStyle(color: Colors.purple),
   '"summary"'  : TextStyle(color: Colors.purple),
   '"responses"'  : TextStyle(color: Colors.purple),
   '"in"'  : TextStyle(color: Colors.purple),

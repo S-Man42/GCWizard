@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -17,12 +18,13 @@ import 'package:gc_wizard/tools/images_and_files/hexstring2file/widget/hexstring
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 
-abstract class AbstractBase extends StatefulWidget {
+abstract class AbstractBase extends GCWWebStatefulWidget {
   final String Function(String) encode;
   final String Function(String) decode;
   final bool searchMultimedia;
+  final String apiSpecification;
 
-  const AbstractBase({Key? key, required this.encode, required this.decode, required this.searchMultimedia}) : super(key: key);
+  AbstractBase({Key? key, required this.encode, required this.decode, required this.searchMultimedia, required this.apiSpecification}) : super(key: key, apiSpecification: apiSpecification);
 
   @override
  _AbstractBaseState createState() => _AbstractBaseState();
@@ -42,6 +44,16 @@ class _AbstractBaseState extends State<AbstractBase> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter('mode') == 'encode') {
+        _currentMode = GCWSwitchPosition.left;
+      }
+
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
+      widget.webParameter = null;
+    }
+
     _inputController = TextEditingController(text: _currentInput);
   }
 

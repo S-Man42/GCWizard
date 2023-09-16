@@ -499,11 +499,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'astronomy',
     ]),
-    GCWTool(tool: const Atbash(), id: 'atbash', categories: const [
+    GCWTool(tool: Atbash(), id: 'atbash', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'atbash',
-    ]),
+    ], deeplinkAlias: const ['atbasch'],),
     GCWTool(tool: const AveMaria(), id: 'avemaria', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -590,7 +590,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'burroeswheeler',
     ]),
-    GCWTool(tool: const Caesar(), id: 'caesar', categories: const [
+    GCWTool(tool: Caesar(), id: 'caesar', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'rotation',
@@ -956,11 +956,11 @@ void initializeRegistry(BuildContext context) {
         id: 'numeralwords_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
-    GCWTool(tool: const OneTimePad(), id: 'onetimepad', categories: const [
+    GCWTool(tool: OneTimePad(), id: 'onetimepad', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'onetimepad',
-    ]),
+    ], deeplinkAlias: const ['otp', 'one_time_pad']),
     GCWTool(tool: const PeriodicTableSelection(), id: 'periodictable_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -990,7 +990,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'physical_constants',
     ]),
-    GCWTool(tool: const Playfair(), id: 'playfair', categories: const [
+    GCWTool(tool: Playfair(), id: 'playfair', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'playfair',
@@ -1068,7 +1068,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(
         tool: const RomanNumbersSelection(),
-        id: 'romannumbers',
+        id: 'romannumbers_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
     GCWTool(
@@ -1155,12 +1155,12 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'substitution',
     ]),
-    GCWTool(tool: const SubstitutionBreaker(), id: 'substitutionbreaker', categories: const [
+    GCWTool(tool: SubstitutionBreaker(), id: 'substitutionbreaker', categories: const [
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
       'codebreaker',
       'substitutionbreaker',
-    ]),
+    ], deeplinkAlias: const ['substitution_breaker', 'substbreaker', 'substbreak', 'subst_breaker', 'subst_break'],),
     GCWTool(tool: const SudokuSolver(), id: 'sudokusolver', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
@@ -1185,7 +1185,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'tapcode',
     ]),
-    GCWTool(tool: const Tapir(), id: 'tapir', categories: const [
+    GCWTool(tool: Tapir(), id: 'tapir', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'tapir',
@@ -1385,34 +1385,34 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //BaseSelection **************************************************************************************************
-    GCWTool(tool: const Base16(), id: 'base_base16', searchKeys: const [
+    GCWTool(tool: Base16(), id: 'base_base16', searchKeys: const [
       'base',
       'base16',
-    ]),
-    GCWTool(tool: const Base32(), id: 'base_base32', searchKeys: const [
+    ], deeplinkAlias: const ['base16']),
+    GCWTool(tool: Base32(), id: 'base_base32', searchKeys: const [
       'base',
       'base32',
-    ]),
-    GCWTool(tool: const Base58(), id: 'base_base58', searchKeys: const [
+    ], deeplinkAlias: const ['base32']),
+    GCWTool(tool: Base58(), id: 'base_base58', searchKeys: const [
       'base',
       'base58',
-    ]),
-    GCWTool(tool: const Base64(), id: 'base_base64', searchKeys: const [
+    ], deeplinkAlias: const ['base58']),
+    GCWTool(tool: Base64(), id: 'base_base64', searchKeys: const [
       'base',
       'base64',
-    ]),
-    GCWTool(tool: const Base85(), id: 'base_base85', searchKeys: const [
+    ], deeplinkAlias: const ['base64']),
+    GCWTool(tool: Base85(), id: 'base_base85', searchKeys: const [
       'base',
       'base85',
-    ]),
-    GCWTool(tool: const Base91(), id: 'base_base91', searchKeys: const [
+    ], deeplinkAlias: const ['base85']),
+    GCWTool(tool: Base91(), id: 'base_base91', searchKeys: const [
       'base',
       'base91',
-    ]),
-    GCWTool(tool: const Base122(), id: 'base_base122', searchKeys: const [
+    ], deeplinkAlias: const ['base91']),
+    GCWTool(tool: Base122(), id: 'base_base122', searchKeys: const [
       'base',
       'base122',
-    ]),
+    ], deeplinkAlias: const ['base122']),
 
     //BCD selection **************************************************************************************************
     GCWTool(tool: const BCDOriginal(), id: 'bcd_original', searchKeys: const [
@@ -3069,9 +3069,9 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //RomanNumbersSelection **********************************************************************************************
-    GCWTool(tool: const RomanNumbers(), id: 'romannumbers', searchKeys: const [
+    GCWTool(tool: RomanNumbers(), id: 'romannumbers', searchKeys: const [
       'roman_numbers',
-    ]),
+    ], deeplinkAlias: const ['roman'],),
     GCWTool(tool: const Chronogram(), id: 'chronogram', searchKeys: const [
       'roman_numbers',
       'chronogram',
@@ -3081,26 +3081,26 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: Rot13(), id: 'rotation_rot13', searchKeys: const [
       'rotation',
       'rotation_rot13',
-    ]),
+    ], deeplinkAlias: const ['rot13']),
     GCWTool(tool: Rot5(), id: 'rotation_rot5', searchKeys: const [
       'rotation',
       'rotation_rot5',
-    ]),
+    ], deeplinkAlias: const ['rot5']),
     GCWTool(tool: Rot18(), id: 'rotation_rot18', searchKeys: const [
       'rotation',
       'rotation_rot18',
-    ]),
+    ], deeplinkAlias: const ['rot18']),
     GCWTool(tool: Rot47(), id: 'rotation_rot47', searchKeys: const [
       'rotation',
       'rotation_rot47',
-    ]),
+    ], deeplinkAlias: const ['rot47']),
     GCWTool(tool: const Rot123(), id: 'rotation_rot123', searchKeys: const [
       'rotation',
       'rotation_rot123',
     ]),
     GCWTool(tool: RotationGeneral(), id: 'rotation_general', searchKeys: const [
       'rotation',
-    ], deeplinkAlias: const ['rotation', 'rot', 'rotx'],),
+    ], deeplinkAlias: const ['rotation', 'rot', 'rotx']),
 
     // RSA *******************************************************************************************************
     GCWTool(tool: const RSA(), id: 'rsa_rsa', searchKeys: const [
@@ -4263,7 +4263,7 @@ void initializeRegistry(BuildContext context) {
       'vigenere',
       'rotation',
     ]),
-    GCWTool(tool: const Vigenere(), id: 'vigenere', searchKeys: const [
+    GCWTool(tool: Vigenere(), id: 'vigenere', searchKeys: const [
       'vigenere',
       'rotation',
     ]),

@@ -26,7 +26,7 @@ Widget _toolInfo(BuildContext context, GCWTool tool) {
             ((snapshot.data?.item2 ?? '').isNotEmpty)
                 ? GCWExpandableTextDivider(
                     text: 'OpenAPI 3.0.0 ' + i18n(context, 'webapi_deeplink_toolsapi_toolinfo_specification'),
-                    expanded: false,
+                    expanded: true,
                     child:  _buildApiInfo(snapshot.data?.item2 ?? '')
                   )
                 : Container()

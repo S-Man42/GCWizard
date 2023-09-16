@@ -173,7 +173,11 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
         return _buildRowWidget(context,
             tool,
             snapshot.data?.item2 ?? '',
-            'https://gcwizard.net/#/' +  (snapshot.data?.item1 ?? '')
+            i18n(context, 'about_webversion_url') + '#/' + (
+                tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty
+                    ? tool.deeplinkAlias!.first
+                    : (snapshot.data?.item1 ?? '')
+            )
         );
       }
   );
@@ -207,7 +211,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
                         Icon(Icons.check, color: themeColors().secondary()),
                       Container(width: DOUBLE_DEFAULT_MARGIN),
                       SelectableText(
-                        '/' + id,
+                        '/' + (tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty ? tool.deeplinkAlias!.first : id),
                         textAlign: TextAlign.left,
                         style: gcwTextStyle(),
                         selectionControls: GCWTextSelectionControls(),
@@ -218,7 +222,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
             ),
             Expanded(
               flex: 2,
-              child: GCWText(text: toolName(context, tool)),
+              child: Text(toolName(context, tool), style: gcwTextStyle()),
             ),
             _hasAPISpecification(tool)
                 ? GCWIconButton(

@@ -35,7 +35,7 @@ const String _apiSpecification = '''
           "description": "Shifts the input for n alphabet places",
           "schema": {
             "type": "integer",
-            "default": 0
+            "default": 13
           }
         }
       ]
@@ -55,7 +55,7 @@ class _RotationGeneralState extends State<RotationGeneral> {
   late TextEditingController _controller;
 
   String _currentInput = '';
-  int _currentKey = 0;
+  int _currentKey = 13;
 
   @override
   void initState() {
@@ -63,8 +63,10 @@ class _RotationGeneralState extends State<RotationGeneral> {
 
     if (widget.hasWebParameter()) {
       _currentInput = widget.getWebParameter('input') ?? _currentInput;
+
       var key = widget.getWebParameter('key');
-      if (key != null) _currentKey = int.tryParse(key) ?? 13;
+      if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+
       widget.webParameter = null;
     }
 

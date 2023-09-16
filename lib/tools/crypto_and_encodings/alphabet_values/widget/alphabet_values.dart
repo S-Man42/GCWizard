@@ -32,7 +32,7 @@ part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphab
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_item.dart';
 
 const String _apiSpecification = '''
-{'
+{
   "/alphabetvalues" : {
     "alternative_paths": ["alphabet_values", "av", "buchstabenwerte", "bww"],
     "get": {
@@ -55,7 +55,7 @@ const String _apiSpecification = '''
         {
           "in": "query",
           "name": "mode",
-          "description": "Defines encoding or decoding mode",
+          "description": "Defines encoding or decoding mode; 'encode' is for letters to values, 'decode' is for values to letters",
           "schema": {
             "type": "string",
             "enum": [
@@ -106,7 +106,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter('mode') == 'encode') {
+      if (widget.getWebParameter('mode') == 'decode') {
         _currentMode = GCWSwitchPosition.right;
       }
       if (_currentMode == GCWSwitchPosition.left) {
