@@ -162,7 +162,6 @@ MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal, {doub
   var signalTimes = foundSignalTimes(timeList);
 
   if (signalTimes == null) return null;
-
   var out = '';
   for (var element in timeList) {
     if (element.item1) {

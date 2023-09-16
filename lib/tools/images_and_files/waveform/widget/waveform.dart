@@ -30,7 +30,14 @@ class WaveForm extends StatefulWidget {
 class WaveFormState extends State<WaveForm> {
   Uint8List _bytes = Uint8List.fromList([]);
   Uint8List _soundfileImage = Uint8List.fromList([]);
-  SoundfileData _soundfileData = SoundfileData(PCMformat: 0, bits: 0, channels: 0, sampleRate: 0, structure: [], duration: 0.0, amplitudesData: Uint8List.fromList([]));
+  SoundfileData _soundfileData = SoundfileData(
+      PCMformat: 0,
+      bits: 0,
+      channels: 0,
+      sampleRate: 0,
+      structure: [],
+      duration: 0.0,
+      amplitudesData: Uint8List.fromList([]));
   AmplitudeData _amplitudesData = AmplitudeData(maxAmplitude: 0.0, Amplitudes: []);
   MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
   List<bool> _soundfileMorsecode = [];
@@ -68,11 +75,8 @@ class WaveFormState extends State<WaveForm> {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
-print('file loaded ----------------------------------------------------------');
-            print(_file.bytes);
-            _setData(_file.bytes);
+           _setData(_file.bytes);
             _soundfileData = getSoundfileData(_bytes);
-            print('calculate aamplitudes -----------------------------------------');
             _amplitudesData = calculateRMSAmplitudes(
                 PCMformat: _soundfileData.PCMformat,
                 bits: _soundfileData.bits,
@@ -81,7 +85,6 @@ print('file loaded ----------------------------------------------------------');
                 PCMamplitudesData: _soundfileData.amplitudesData,
                 blocksize: _blocksizes[_currentBlocksize],
                 vScalefactor: _currentVScalefactor * 1000);
-            print('PCMamplitudes2Image -----------------------------------------');
             PCMamplitudes2Image(
                     duration: _soundfileData.duration,
                     RMSperPoint: _amplitudesData.Amplitudes,
@@ -93,10 +96,8 @@ print('file loaded ----------------------------------------------------------');
               setState(() {
                 _soundfileImage = value.MorseImage;
                 _soundfileMorsecode = value.MorseCode;
-                _decodedMorse = decodeMorseCode(
-                  List.filled(_soundfileMorsecode.length, 1),
-                  _soundfileMorsecode,
-                );
+                _decodedMorse = decodeMorseCode(List.filled(_soundfileMorsecode.length, 1), _soundfileMorsecode,
+                    tolerance: 1 + _currentTolerance / 10);
               });
             });
           },
@@ -152,9 +153,8 @@ print('file loaded ----------------------------------------------------------');
                                 setState(() {
                                   _soundfileMorsecode = value.MorseCode;
                                   _decodedMorse = decodeMorseCode(
-                                    List.filled(_soundfileMorsecode.length, 1),
-                                    _soundfileMorsecode,
-                                  );
+                                      List.filled(_soundfileMorsecode.length, 1), _soundfileMorsecode,
+                                      tolerance: 1 + _currentTolerance / 10);
                                 });
                               });
                             });
@@ -188,9 +188,8 @@ print('file loaded ----------------------------------------------------------');
                                   _soundfileImage = value.MorseImage;
                                   _soundfileMorsecode = value.MorseCode;
                                   _decodedMorse = decodeMorseCode(
-                                    List.filled(_soundfileMorsecode.length, 1),
-                                    _soundfileMorsecode,
-                                  );
+                                      List.filled(_soundfileMorsecode.length, 1), _soundfileMorsecode,
+                                      tolerance: 1 + _currentTolerance / 10);
                                 });
                               });
                             });
@@ -199,7 +198,7 @@ print('file loaded ----------------------------------------------------------');
                         GCWIntegerSpinner(
                           title: i18n(context, 'waveform_settings_image_pointsize'),
                           min: 1,
-                          max: 5,
+                          max: 10,
                           value: _currentPointsize,
                           onChanged: (value) {
                             setState(() {
@@ -216,9 +215,8 @@ print('file loaded ----------------------------------------------------------');
                                   _soundfileImage = value.MorseImage;
                                   _soundfileMorsecode = value.MorseCode;
                                   _decodedMorse = decodeMorseCode(
-                                    List.filled(_soundfileMorsecode.length, 1),
-                                    _soundfileMorsecode,
-                                  );
+                                      List.filled(_soundfileMorsecode.length, 1), _soundfileMorsecode,
+                                      tolerance: 1 + _currentTolerance / 10);
                                 });
                               });
                             });
@@ -244,9 +242,8 @@ print('file loaded ----------------------------------------------------------');
                                   _soundfileImage = value.MorseImage;
                                   _soundfileMorsecode = value.MorseCode;
                                   _decodedMorse = decodeMorseCode(
-                                    List.filled(_soundfileMorsecode.length, 1),
-                                    _soundfileMorsecode,
-                                  );
+                                      List.filled(_soundfileMorsecode.length, 1), _soundfileMorsecode,
+                                      tolerance: 1 + _currentTolerance / 10);
                                 });
                               });
                             });
@@ -271,9 +268,8 @@ print('file loaded ----------------------------------------------------------');
                                 setState(() {
                                   _soundfileMorsecode = value.MorseCode;
                                   _decodedMorse = decodeMorseCode(
-                                    List.filled(_soundfileMorsecode.length, 1),
-                                    _soundfileMorsecode,
-                                  );
+                                      List.filled(_soundfileMorsecode.length, 1), _soundfileMorsecode,
+                                      tolerance: 1 + _currentTolerance / 10);
                                 });
                               });
                             });
@@ -351,7 +347,7 @@ print('file loaded ----------------------------------------------------------');
           i18n(context, 'waveform_output_value'),
         ]
       ];
-      for (var element in section.SectionContent){
+      for (var element in section.SectionContent) {
         content.add([i18n(context, 'waveform_output_' + element.Meaning), element.Bytes, element.Value]);
       }
       result.add(GCWExpandableTextDivider(
