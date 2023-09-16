@@ -26,48 +26,48 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_input.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_item.dart';
 
 const String _apiSpecification = '''
-{
-	"/alphabetvalues" : {
-		"get": {
-			"summary": "Alphabet Values Tool",
-			"responses": {
-				"204": {
-					"description": "Tool loaded. No response data."
-				}
-			},
-	  	"parameters" : [
-			  {
-			  	"in": "query",
-			  	"name": "input",
-				  "required": true,
-				  "description": "Input data for encoding or decoding text",
-				  "schema": {
-				  	"type": "string"
-			  	}
-		  	},
-			  {
-			  	"in": "query",
-			  	"name": "mode",
-			  	"description": "Defines encoding or decoding mode",
-			  	"schema": {
-				  	"type": "string",
-				  	"enum": [
-					  	"encode",
-					  	"decode"
-				  	],
-				  	"default": "encode"
-				  }
-			  }
-		  ] 
-		}
-	}
+{'
+  "/alphabetvalues" : {
+    "alternative_paths": ["alphabet_values", "av", "buchstabenwerte", "bww"],
+    "get": {
+      "summary": "Alphabet Values Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for encoding or decoding text",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "mode",
+          "description": "Defines encoding or decoding mode",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "encode",
+              "decode"
+            ],
+            "default": "encode"
+          }
+        }
+      ] 
+    }
+  }
 }
 ''';
 
@@ -106,13 +106,13 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.decode.toString())) {
+      if (widget.getWebParameter('mode') == 'encode') {
         _currentMode = GCWSwitchPosition.right;
       }
       if (_currentMode == GCWSwitchPosition.left) {
-        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
+        _currentEncodeInput = widget.getWebParameter('input') ?? _currentEncodeInput;
       } else {
-        var webInput = widget.getWebParameter(WEBPARAMETER.input);
+        var webInput = widget.getWebParameter('input');
         _currentDecodeInput = webInput == null
             ? _currentDecodeInput
             : IntegerListText(webInput, textToIntList(webInput));

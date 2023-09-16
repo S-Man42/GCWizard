@@ -10,36 +10,37 @@ import 'package:gc_wizard/utils/math_utils.dart';
 
 const String _apiSpecification = '''
 {
-	"/rotation_general" : {
-		"get": {
-			"summary": "Rotation Tool",
-			"responses": {
-				"204": {
-					"description": "Tool loaded. No response data."
-				}
-			},
-			"parameters" : [
-				{
-					"in": "query",
-					"name": "input",
-					"required": true,
-					"description": "Input data for rotate text",
-					"schema": {
-						"type": "string"
-					}
-				},
-				{
-					"in": "query",
-					"name": "parameter1",
-					"description": "Key: Shifts the input for n alphabet places",
-					"schema": {
-						"type": "int32",
-						"default": 0
-					}
-				}
-			]
-		}
-	}
+  "/rotation_general" : {
+    "alternative_paths": ["rotation", "rot", "rotx"],
+    "get": {
+      "summary": "Rotation Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for rotate text",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "key",
+          "description": "Shifts the input for n alphabet places",
+          "schema": {
+            "type": "integer",
+            "default": 0
+          }
+        }
+      ]
+    }
+  }
 }
 ''';
 
@@ -61,9 +62,9 @@ class _RotationGeneralState extends State<RotationGeneral> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
-      var key = widget.getWebParameter(WEBPARAMETER.parameter1);
-      if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
+      var key = widget.getWebParameter('key');
+      if (key != null) _currentKey = int.tryParse(key) ?? 13;
       widget.webParameter = null;
     }
 

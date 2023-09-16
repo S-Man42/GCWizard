@@ -3,46 +3,46 @@ import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Morse Tool",
-			"responses": {
-				"200": {
-					"description": "Encoded or decoded text."
-				},
-				"400": {
-					"description": "Bad Request"
-				},
-				"500": {
-					"description": "Internal Server Error"
-				}
-			},
-			"parameters" : [
-				{
-					"in": "query",
-					"name": "input",
-					"required": true,
-					"description": "Input data for encoding or decoding Morse",
-					"schema": {
-						"type": "string"
-					}
-				},
-				{
-					"in": "query",
-					"name": "mode",
-					"description": "Defines encoding or decoding mode",
-					"schema": {
-						"type": "string",
-						"enum": [
-							"encode",
-							"decode"
-						],
-						"default": "decode"
-					}
-				}
-			]
-		}
-	}
+  "/key_label" : {
+    "get": {
+      "summary": "Morse Tool",
+      "responses": {
+        "200": {
+          "description": "Encoded or decoded text."
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for encoding or decoding Morse",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "mode",
+          "description": "Defines encoding or decoding mode",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "encode",
+              "decode"
+            ],
+            "default": "decode"
+          }
+        }
+      ]
+    }
+  }
 }
 ''';
 

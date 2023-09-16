@@ -4,33 +4,33 @@ import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Reverse Text Tool",
-			"responses": {
-				"200": {
-					"description": "Reversed text."
-				},
-				"400": {
-					"description": "Bad Request"
-				},
-				"500": {
-					"description": "Internal Server Error"
-				}        
-			},
-			"parameters" : [
-				{
-					"in": "query",
-					"name": "input",
-					"required": true,
-					"description": "Input data for reverse text",
-					"schema": {
-						"type": "string"
-					}
-				},
-			]
-		}
-	}
+  "/key_label" : {
+    "get": {
+      "summary": "Reverse Text Tool",
+      "responses": {
+        "200": {
+          "description": "Reversed text."
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }        
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for reverse text",
+          "schema": {
+            "type": "string"
+          }
+        },
+      ]
+    }
+  }
 }
 ''';
 

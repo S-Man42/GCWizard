@@ -4,42 +4,42 @@ import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Rotation Tool",
-			"responses": {
-				"200": {
-					"description": "Encoded or decoded text."
-				},
-				"400": {
-					"description": "Bad Request"
-				},
-				"500": {
-					"description": "Internal Server Error"
-				}        
-			},
-			"parameters" : [
-				{
-					"in": "query",
-					"name": "input",
-					"required": true,
-					"description": "Input data for rotate text",
-					"schema": {
-						"type": "string"
-					}
-				},
-				{
-					"in": "query",
-					"name": "parameter1",
-					"description": "Shifts letters count",
-					"schema": {
-						"type": "string",
-						"default": "0"
-					}
-				}
-			]
-		}
-	}
+  "/key_label" : {
+    "get": {
+      "summary": "Rotation Tool",
+      "responses": {
+        "200": {
+          "description": "Encoded or decoded text."
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }        
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for rotate text",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "parameter1",
+          "description": "Shifts letters count",
+          "schema": {
+            "type": "string",
+            "default": "0"
+          }
+        }
+      ]
+    }
+  }
 }
 ''';
 

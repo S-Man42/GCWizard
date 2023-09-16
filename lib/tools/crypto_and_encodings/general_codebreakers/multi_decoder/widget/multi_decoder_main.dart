@@ -2,27 +2,28 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi
 
 const String _apiSpecification = '''
 {
-	"/multidecoder" : {
-		"get": {
-			"summary": "Multi Decoder Tool",
-			"responses": {
-				"204": {
-					"description": "Tool loaded. No response data."
-				}
-			},
-		  "parameters" : [
-		  	{
-		  		"in": "query",
-			  	"name": "input",
-			  	"required": true,
-			  	"description": "Input data for decoding text",
-			  	"schema": {
-				  	"type": "string"
-				  }
-		  	}
-		  ]
+  
+  "/multidecoder" : {
+    "get": {
+      "summary": "Multi Decoder Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        },
+        "parameters" : [
+          {
+            "in": "query",
+            "name": "input",
+            "required": true,
+            "description": "Input data for decoding text",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
     }
-	}
+  }
 }
 ''';
 
@@ -49,7 +50,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
       widget.webParameter = null;
     }
 

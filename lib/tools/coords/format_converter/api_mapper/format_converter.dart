@@ -8,37 +8,37 @@ import 'package:gc_wizard/application/webapi/api_mapper.dart';
 
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Format Converter Tool",
-			"responses": {
+  "/key_label" : {
+    "get": {
+      "summary": "Format Converter Tool",
+      "responses": {
         "description": "Converts coordinate formats"
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for parse coordinates",
-				"schema": {
-					"type": "string"
-				}
-			},
-			{
-				"in": "query",
-				"name": "toformat",
-				"description": "Target coordinate format",
-				"schema": {
-					"type": "string",
-					"enum": [
-						coordinate_formats
-					],
-					"default": "defaultCoordinateFormat"
-				}
-			}
-		]
-	}
+      }
+    },
+    "parameters" : [
+      {
+        "in": "query",
+        "name": "input",
+        "required": true,
+        "description": "Input data for parse coordinates",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "in": "query",
+        "name": "toformat",
+        "description": "Target coordinate format",
+        "schema": {
+          "type": "string",
+          "enum": [
+            coordinate_formats
+          ],
+          "default": "defaultCoordinateFormat"
+        }
+      }
+    ]
+  }
 }
 ''';
 
@@ -73,8 +73,8 @@ class FormatConverterAPIMapper extends APIMapper {
   String apiSpecification() {
     var info = _apiSpecification;
 
-    var formats = allCoordinateFormatMetadata.map((entry) => '						"' + entry.persistenceKey + '"').join(',\n');
-    info = info.replaceAll('						coordinate_formats', formats);
+    var formats = allCoordinateFormatMetadata.map((entry) => '            "' + entry.persistenceKey + '"').join(',\n');
+    info = info.replaceAll('            coordinate_formats', formats);
     return info.replaceAll('/key_label', Key);
   }
 }

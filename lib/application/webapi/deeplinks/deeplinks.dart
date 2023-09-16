@@ -78,7 +78,10 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
     // if name == /? open tool overview
     if (name == _questionmark) return _toolNameList(context);
 
-    var tool = registeredTools.firstWhereOrNull((_tool) => _toolId(_tool) == name);
+    var tool = registeredTools.firstWhereOrNull((_tool) {
+      var id = _toolId(_tool);
+      return id == name || (_tool.deeplinkAlias != null && _tool.deeplinkAlias!.contains(name));
+    });
     // if name == toolname/? open tool info
     if ((arguments.arguments[_questionmark] == _questionmark) && tool != null) {
       return _infoTool(context, tool);

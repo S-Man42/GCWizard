@@ -5,45 +5,45 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Format Converter Tool",
-			"responses": {
-				"200": {
-					"description": "Converts coordinate formats"
-				},
-				"400": {
-					"description": "Bad Request"
-				},
-				"500": {
-					"description": "Internal Server Error"
-				}
-			},
-			"parameters" : [
-				{
-					"in": "query",
-					"name": "input",
-					"required": true,
-					"description": "Input data for parse coordinates",
-					"schema": {
-						"type": "string"
-					}
-				},
-				{
-					"in": "query",
-					"name": "toformat",
-					"description": "Target coordinate format",
-					"schema": {
-						"type": "string",
-						"enum": [
-							coordinate_formats
-						],
-						"default": "defaultCoordinateFormat"
-					}
-				}
-			]
-		}
-	}
+  "/key_label" : {
+    "get": {
+      "summary": "Format Converter Tool",
+      "responses": {
+        "200": {
+          "description": "Converts coordinate formats"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for parse coordinates",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "toformat",
+          "description": "Target coordinate format",
+          "schema": {
+            "type": "string",
+            "enum": [
+              coordinate_formats
+            ],
+            "default": "defaultCoordinateFormat"
+          }
+        }
+      ]
+    }
+  }
 }
 ''';
 

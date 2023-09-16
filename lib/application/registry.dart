@@ -466,7 +466,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'alphabetvalues',
-    ]),
+    ], deeplinkAlias: const ['alphabet_values', 'av', 'buchstabenwerte', 'bww']),
     GCWTool(tool: const Amsco(), id: 'amsco', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -923,7 +923,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
       'multidecoder',
-    ]),
+    ], deeplinkAlias: const ['multitool'],),
     GCWTool(
         tool: const MusicNotes(),
         id: 'music_notes',
@@ -3100,7 +3100,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: RotationGeneral(), id: 'rotation_general', searchKeys: const [
       'rotation',
-    ]),
+    ], deeplinkAlias: const ['rotation', 'rot', 'rotx'],),
 
     // RSA *******************************************************************************************************
     GCWTool(tool: const RSA(), id: 'rsa_rsa', searchKeys: const [

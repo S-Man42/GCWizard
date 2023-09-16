@@ -103,6 +103,7 @@ class GCWTool extends StatefulWidget {
   final bool suppressHelpButton;
   final String helpSearchString;
   final bool isBeta;
+  final List<String>? deeplinkAlias;
 
   GCWSymbolContainer? icon;
   var longId = '';
@@ -128,7 +129,9 @@ class GCWTool extends StatefulWidget {
         this.buttonList = const [],
         this.helpSearchString = '',
         this.isBeta = false,
-        this.suppressHelpButton = false})
+        this.suppressHelpButton = false,
+        this.deeplinkAlias
+      })
       : super(key: key) {
     longId = className(tool) + '_' + (id);
 
