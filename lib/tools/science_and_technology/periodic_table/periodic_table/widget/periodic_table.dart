@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'package:collection/collection.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -18,10 +18,10 @@ class PeriodicTable extends StatefulWidget {
   const PeriodicTable({Key? key}) : super(key: key);
 
   @override
-  PeriodicTableState createState() => PeriodicTableState();
+  _PeriodicTableState createState() => _PeriodicTableState();
 }
 
-class PeriodicTableState extends State<PeriodicTable> {
+class _PeriodicTableState extends State<PeriodicTable> {
   late double _cellWidth;
   late double _maxCellHeight;
   final BorderSide _border = const BorderSide(width: 1.0, color: Colors.black87);
@@ -38,7 +38,7 @@ class PeriodicTableState extends State<PeriodicTable> {
 
   @override
   Widget build(BuildContext context) {
-    _cellWidth = (MediaQuery.of(context).size.width - 20) / 19;
+    _cellWidth = (maxScreenWidth(context) - 20) / 19;
     _maxCellHeight = maxScreenHeight(context) / 11;
 
     return Column(children: _buildOutput());
@@ -96,8 +96,7 @@ class PeriodicTableState extends State<PeriodicTable> {
             onTap: () {
               Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
                   builder: (context) => GCWTool(
-                      tool: PeriodicTableDataView(atomicNumber: element.atomicNumber),
-                      id: 'periodictable_dataview')));
+                      tool: PeriodicTableDataView(atomicNumber: element.atomicNumber), id: 'periodictable_dataview')));
             },
           );
   }
@@ -119,7 +118,7 @@ class PeriodicTableState extends State<PeriodicTable> {
           )),
           Expanded(
               child: AutoSizeText(
-                group?.item2 == null ? '' : encodeRomanNumbers(group!.item2),
+            group?.item2 == null ? '' : encodeRomanNumbers(group!.item2),
             style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
             minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
@@ -264,9 +263,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     }
 
     if (color1 == null && color2 == null) return null;
-    var list =
-      [MapEntry<Color?, String?>(color1, text1),
-       MapEntry<Color?, String?>(color2, text2)];
+    var list = [MapEntry<Color?, String?>(color1, text1), MapEntry<Color?, String?>(color2, text2)];
 
     return Column(
       children: list.map((e) {

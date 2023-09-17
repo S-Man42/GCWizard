@@ -1,20 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_bearing.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/intersect_bearing_and_circle/logic/intersect_geodetic_and_circle.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -24,10 +24,10 @@ class IntersectGeodeticAndCircle extends StatefulWidget {
   const IntersectGeodeticAndCircle({Key? key}) : super(key: key);
 
   @override
-  IntersectBearingAndCircleState createState() => IntersectBearingAndCircleState();
+  _IntersectBearingAndCircleState createState() => _IntersectBearingAndCircleState();
 }
 
-class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
+class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
   var _currentIntersections = <LatLng>[];
 
   var _currentCoordsStart = defaultBaseCoordinate;
@@ -98,7 +98,9 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         point: projection(
             _currentCoordsStart.toLatLng()!,
             _currentBearingStart.value,
-            max<double>(distanceBearing(_currentCoordsStart.toLatLng()!, _currentCoordsCircle.toLatLng()!, defaultEllipsoid).distance,
+            max<double>(
+                    distanceBearing(_currentCoordsStart.toLatLng()!, _currentCoordsCircle.toLatLng()!, defaultEllipsoid)
+                        .distance,
                     _currentRadiusCircle) *
                 2.5,
             defaultEllipsoid),
@@ -117,8 +119,8 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<List<LatLng>>(
                 isolatedFunction: intersectGeodeticAndCircleAsync,
                 parameter: _buildJobData,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -12,10 +12,10 @@ class KeyboardLayout extends StatefulWidget {
   const KeyboardLayout({Key? key}) : super(key: key);
 
   @override
-  KeyboardLayoutState createState() => KeyboardLayoutState();
+  _KeyboardLayoutState createState() => _KeyboardLayoutState();
 }
 
-class KeyboardLayoutState extends State<KeyboardLayout> {
+class _KeyboardLayoutState extends State<KeyboardLayout> {
   late TextEditingController _inputController;
 
   String _currentInput = '';

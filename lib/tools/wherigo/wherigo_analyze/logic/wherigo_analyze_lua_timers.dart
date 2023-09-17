@@ -62,8 +62,7 @@ WherigoTimerData _analyzeAndExtractTimerSectionData(List<String> lines) {
     }
 
     if (lines[i].trim().startsWith(LUAname + '.Visible')) {
-      visible =
-          getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable).trim().toLowerCase();
+      visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable).trim().toLowerCase();
     }
   }
   return WherigoTimerData(

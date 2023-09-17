@@ -34,7 +34,7 @@ TextStyle gcwBetaStyle() {
 }
 
 TextStyle gcwMonotypeTextStyle() {
-  return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier', fontWeight: FontWeight.bold);
+  return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier');
 }
 
 TextStyle gcwHyperlinkTextStyle() {
@@ -91,17 +91,11 @@ ThemeData buildTheme() {
       ),
       unselectedWidgetColor: colors.secondary(),
       indicatorColor: themeColors().secondary(),
-      tabBarTheme: TabBarTheme(
-        indicatorColor: themeColors().secondary(),
-        labelColor: colors.mainFont()),
-      appBarTheme: AppBarTheme(
-        backgroundColor: colors.primaryBackground(),
-        foregroundColor: colors.mainFont()),
-      cardColor: colors.messageBackground(), 
-      colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: _generateMaterialColor(colors.primaryBackground()))
-          .copyWith(secondary: colors.secondary(), brightness: base.brightness)
-  );
+      tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(), labelColor: colors.mainFont()),
+      appBarTheme: AppBarTheme(backgroundColor: colors.primaryBackground(), foregroundColor: colors.mainFont()),
+      cardColor: colors.messageBackground(),
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground()))
+          .copyWith(secondary: colors.secondary(), brightness: base.brightness));
 }
 
 // https://medium.com/@morgenroth/using-flutters-primary-swatch-with-a-custom-materialcolor-c5e0f18b95b0
@@ -149,4 +143,8 @@ double defaultFontSize() {
 
 double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
+}
+
+double maxScreenWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
 }

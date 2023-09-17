@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -45,12 +45,13 @@ class SymbolReplacer extends StatefulWidget {
   const SymbolReplacer({Key? key, this.platformFile, this.symbolKey}) : super(key: key);
 
   @override
-  SymbolReplacerState createState() => SymbolReplacerState();
+  _SymbolReplacerState createState() => _SymbolReplacerState();
 }
 
-class SymbolReplacerState extends State<SymbolReplacer> {
+class _SymbolReplacerState extends State<SymbolReplacer> {
   static String no_symbol_table_key = 'no_symbol_table';
-  final no_symbol_table = SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon :null, description: null);
+  final no_symbol_table =
+      SymbolReplacerSymbolTableViewData(symbolKey: no_symbol_table_key, toolName: null, icon: null, description: null);
   SymbolReplacerImage? _symbolImage;
   GCWFile? _platformFile;
   double _blackLevel = 50.0;
@@ -151,8 +152,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<SymbolReplacerImage?>(
                 isolatedFunction: replaceSymbolsAsync,
                 parameter: _buildJobDataReplacer,
@@ -277,9 +278,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               });
               if (_symbolImage != null) {
                 if (_currentSymbolTableViewData.data == null && _currentSymbolTableViewData != no_symbol_table) {
-                      _currentSymbolTableViewData.initialize(context).then((_) {
-                        _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
-                      });
+                  _currentSymbolTableViewData.initialize(context).then((_) {
+                    _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
+                  });
                 } else {
                   _symbolImage!.compareSymbols = _currentSymbolTableViewData.data?.images;
                 }
@@ -380,8 +381,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<SubstitutionBreakerResult?>(
               isolatedFunction: break_cipherAsync,
               parameter: _buildSubstitutionBreakerJobData,
@@ -401,8 +402,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<List<Map<String, SymbolReplacerSymbolData>>?>(
               isolatedFunction: searchSymbolTableAsync,
               parameter: _buildJobDataSearchSymbolTable,
@@ -445,7 +446,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if ((symbolKey != null)) {
       for (var item in _compareSymbolItems) {
         if (item.value.symbolKey == symbolKey) {
-
           _currentSymbolTableViewData = item.value;
           break;
         }
@@ -464,17 +464,16 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(toolName ?? '', style: _gcwTextStyle),
-                (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
-              ]))
+            Text(toolName ?? '', style: _gcwTextStyle),
+            (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
+          ]))
     ]);
   }
 
   Future<GCWAsyncExecuterParameters?> _buildSubstitutionBreakerJobData() async {
     if (_symbolImage == null) return null;
 
-    var quadgrams =
-        await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
+    var quadgrams = await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
     if (quadgrams == null) return null;
 
     if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {

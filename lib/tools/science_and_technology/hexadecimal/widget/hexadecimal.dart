@@ -10,10 +10,10 @@ class Hexadecimal extends StatefulWidget {
   const Hexadecimal({Key? key}) : super(key: key);
 
   @override
-  HexadecimalState createState() => HexadecimalState();
+  _HexadecimalState createState() => _HexadecimalState();
 }
 
-class HexadecimalState extends State<Hexadecimal> {
+class _HexadecimalState extends State<Hexadecimal> {
   var _currentDecimalValue = '';
   var _currentHexValue = '';
   late TextEditingController _hexController;

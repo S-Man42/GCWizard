@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetdropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -12,10 +12,10 @@ class ADFGVX extends StatefulWidget {
   const ADFGVX({Key? key}) : super(key: key);
 
   @override
-  ADFGVXState createState() => ADFGVXState();
+  _ADFGVXState createState() => _ADFGVXState();
 }
 
-class ADFGVXState extends State<ADFGVX> {
+class _ADFGVXState extends State<ADFGVX> {
   late TextEditingController _inputController;
   late TextEditingController _substitutionKeyController;
   late TextEditingController _transpositionKeyController;

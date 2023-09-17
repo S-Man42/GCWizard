@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -10,10 +10,10 @@ class Bacon extends StatefulWidget {
   const Bacon({Key? key}) : super(key: key);
 
   @override
-  BaconState createState() => BaconState();
+  _BaconState createState() => _BaconState();
 }
 
-class BaconState extends State<Bacon> {
+class _BaconState extends State<Bacon> {
   late TextEditingController _controller;
 
   var _currentInput = '';

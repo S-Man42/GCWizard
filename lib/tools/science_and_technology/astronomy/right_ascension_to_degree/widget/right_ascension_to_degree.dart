@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
@@ -19,25 +19,19 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_minutessecond
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
-
 
 class RightAscensionToDegree extends StatefulWidget {
   const RightAscensionToDegree({Key? key}) : super(key: key);
 
   @override
-  RightAscensionToDegreeState createState() => RightAscensionToDegreeState();
+  _RightAscensionToDegreeState createState() => _RightAscensionToDegreeState();
 }
 
-class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
-  late FocusNode _hoursFocusNode;
-  late FocusNode _minutesFocusNode;
-  late FocusNode _secondsFocusNode;
-  late FocusNode _mSecondsFocusNode;
-
+class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   late FocusNode _decMilliDegreesFocusNode;
 
   late TextEditingController _hoursController;
@@ -84,6 +78,9 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   @override
   void initState() {
     super.initState();
+
+    _decMilliDegreesFocusNode = FocusNode();
+
     _hoursController = TextEditingController(text: _currentRightAscension.hours.toString());
     _minutesController = TextEditingController(text: _currentRightAscension.minutes.toString());
     _secondsController = TextEditingController(text: _currentRightAscension.seconds.truncate().toString());
@@ -116,11 +113,6 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
 
     _decDegreesController.dispose();
     _decMilliDegreesController.dispose();
-
-    _hoursFocusNode.dispose();
-    _minutesFocusNode.dispose();
-    _secondsFocusNode.dispose();
-    _mSecondsFocusNode.dispose();
 
     _decMilliDegreesFocusNode.dispose();
 
@@ -158,13 +150,13 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             : GCWTextDivider(
                 text: '',
                 trailing: GCWPasteButton(
-                    iconSize: IconButtonSize.SMALL,
-                    onSelected: (text) {
-                      setState(() {
-                        _parseRAPaste(text);
-                      });
-                    },
-                  ),
+                  iconSize: IconButtonSize.SMALL,
+                  onSelected: (text) {
+                    setState(() {
+                      _parseRAPaste(text);
+                    });
+                  },
+                ),
               ),
         _currentMode == GCWSwitchPosition.left ? _buildDecryptWidget() : _buildHmsWidget(),
         Container(height: 10),
@@ -208,7 +200,6 @@ class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 break;
               default:
                 _setDecRightAscension();
-
             }
           });
         },

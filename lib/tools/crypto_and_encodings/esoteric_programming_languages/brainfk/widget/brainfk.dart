@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -15,10 +15,10 @@ class Brainfk extends StatefulWidget {
   const Brainfk({Key? key, this.interpret, this.generate}) : super(key: key);
 
   @override
-  BrainfkState createState() => BrainfkState();
+  _BrainfkState createState() => _BrainfkState();
 }
 
-class BrainfkState extends State<Brainfk> {
+class _BrainfkState extends State<Brainfk> {
   late TextEditingController _textController;
   late TextEditingController _inputController;
   late TextEditingController _inputController_shiftRight;
@@ -235,16 +235,15 @@ class BrainfkState extends State<Brainfk> {
         if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
-                    pointerShiftRightInstruction: _currentInput_shiftRight,
-                    pointerShiftLeftInstruction: _currentInput_shiftLeft,
-                    increaseValueInstruction: _currentInput_increaseValue,
-                    decreaseValueInstruction: _currentInput_decreaseValue,
-                    outputInstruction: _currentInput_output,
-                    inputInstruction: _currentInput_input,
-                    startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop,
-            )
-                .interpretBrainfkDerivatives(_currentText, input: _currentInput);
+              pointerShiftRightInstruction: _currentInput_shiftRight,
+              pointerShiftLeftInstruction: _currentInput_shiftLeft,
+              increaseValueInstruction: _currentInput_increaseValue,
+              decreaseValueInstruction: _currentInput_decreaseValue,
+              outputInstruction: _currentInput_output,
+              inputInstruction: _currentInput_input,
+              startLoopInstruction: _currentInput_startLoop,
+              endLoopInstruction: _currentInput_endLoop,
+            ).interpretBrainfkDerivatives(_currentText, input: _currentInput);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
@@ -259,16 +258,15 @@ class BrainfkState extends State<Brainfk> {
         if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
-                    pointerShiftRightInstruction: _currentInput_shiftRight,
-                    pointerShiftLeftInstruction: _currentInput_shiftLeft,
-                    increaseValueInstruction: _currentInput_increaseValue,
-                    decreaseValueInstruction: _currentInput_decreaseValue,
-                    outputInstruction: _currentInput_output,
-                    inputInstruction: _currentInput_input,
-                    startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop,
-            )
-                .generateBrainfkDerivative(_currentText);
+              pointerShiftRightInstruction: _currentInput_shiftRight,
+              pointerShiftLeftInstruction: _currentInput_shiftLeft,
+              increaseValueInstruction: _currentInput_increaseValue,
+              decreaseValueInstruction: _currentInput_decreaseValue,
+              outputInstruction: _currentInput_output,
+              inputInstruction: _currentInput_input,
+              startLoopInstruction: _currentInput_startLoop,
+              endLoopInstruction: _currentInput_endLoop,
+            ).generateBrainfkDerivative(_currentText);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }

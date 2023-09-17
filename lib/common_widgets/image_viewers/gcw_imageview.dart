@@ -290,6 +290,5 @@ class _GCWImageViewState extends State<GCWImageView> {
     await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
       if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
-
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -15,10 +15,10 @@ class Amsco extends StatefulWidget {
   const Amsco({Key? key}) : super(key: key);
 
   @override
-  AmscoState createState() => AmscoState();
+  _AmscoState createState() => _AmscoState();
 }
 
-class AmscoState extends State<Amsco> {
+class _AmscoState extends State<Amsco> {
   late TextEditingController _inputController;
   late TextEditingController _keyController;
 
@@ -28,7 +28,7 @@ class AmscoState extends State<Amsco> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentOneCharStart = GCWSwitchPosition.left;
 
-  final _maskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
+  final _maskFormatter = GCWMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
 
   @override
   void initState() {

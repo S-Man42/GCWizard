@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 import 'package:gc_wizard/application/settings/widget/settings_general.dart';
+import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
 import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -52,13 +53,9 @@ Drawer buildMainMenu(BuildContext context) {
 
   final otherMenuItems = [
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())),
-      Icons.show_chart
-    ),
+        registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())), Icons.show_chart),
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())),
-      Icons.info
-    )
+        registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())), Icons.info)
   ];
 
   menuEntries.addAll(otherMenuItems.map((_CategoryMetaData item) {
@@ -88,23 +85,22 @@ Drawer buildMainMenu(BuildContext context) {
           onTap: () {
             Navigator.pop(context); //close Drawer
             Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
-                builder: (context) =>
-                    registeredTools.firstWhere((tool) => className(tool.tool) == className(const CallForContribution()))));
+                builder: (context) => registeredTools
+                    .firstWhere((tool) => className(tool.tool) == className(const CallForContribution()))));
           })
     ],
   );
 
   return Drawer(
-    child: Column(
-      children: <Widget>[
-        header,
-        Expanded(
-          child: ListView(
+      child: Column(
+    children: <Widget>[
+      header,
+      Expanded(
+        child: ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.zero, // Remove any padding from the ListView.
-            children: menuEntries
-            ),
-          ),
+            children: menuEntries),
+      ),
       footer,
     ],
   ));
@@ -126,22 +122,21 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
       Icons.settings,
       i18n(context, 'mainmenu_settings_general_title'),
     ),
-    _CategoryMetaData (
+    _CategoryMetaData(
       registeredTools.firstWhere((tool) => className(tool.tool) == className(const CoordinatesSettings())),
       Icons.language,
       i18n(context, 'mainmenu_settings_coordinates_title'),
     ),
-    _CategoryMetaData (
+    _CategoryMetaData(
       registeredTools.firstWhere((tool) => className(tool.tool) == className(const ToolSettings())),
       Icons.category,
       i18n(context, 'mainmenu_settings_tools_title'),
+    ),
+    _CategoryMetaData(
+      registeredTools.firstWhere((tool) => className(tool.tool) == className(const SaveRestoreSettings())),
+      Icons.save,
+      i18n(context, 'mainmenu_settings_saverestore_title'),
     )
-    // TODO ML 12/2022: Postponed to 3.0.0 because of encoding issues
-    // {
-    //   'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(SaveRestoreSettings())),
-    //   'toolName': i18n(context, 'mainmenu_settings_saverestore_title'),
-    //   'icon': Icons.save
-    // },
   ];
 
   return ExpansionTile(

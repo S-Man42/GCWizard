@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
@@ -14,10 +14,10 @@ class SunRiseSet extends StatefulWidget {
   const SunRiseSet({Key? key}) : super(key: key);
 
   @override
-  SunRiseSetState createState() => SunRiseSetState();
+  _SunRiseSetState createState() => _SunRiseSetState();
 }
 
-class SunRiseSetState extends State<SunRiseSet> {
+class _SunRiseSetState extends State<SunRiseSet> {
   var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   var _currentCoords = defaultBaseCoordinate;
 
@@ -51,11 +51,8 @@ class SunRiseSetState extends State<SunRiseSet> {
   }
 
   Widget _buildOutput() {
-    var sunRise = logic.SunRiseSet(
-        _currentCoords.toLatLng() ?? defaultCoordinate,
-        JulianDate(_currentDateTime),
-        _currentDateTime.timezone,
-        defaultEllipsoid);
+    var sunRise = logic.SunRiseSet(_currentCoords.toLatLng() ?? defaultCoordinate, JulianDate(_currentDateTime),
+        _currentDateTime.timezone, defaultEllipsoid);
 
     var outputs = [
       [
@@ -108,9 +105,6 @@ class SunRiseSetState extends State<SunRiseSet> {
       ],
     ];
 
-    return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs
-    );
+    return GCWColumnedMultilineOutput(firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs);
   }
 }

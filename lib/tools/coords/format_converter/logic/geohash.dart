@@ -1,8 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:collection/collection.dart';
 
-List<Map<String, String>> _alphabet = [
+const List<Map<String, String>> _alphabet = [
   {'character': '0', 'binary': '00000'},
   {'character': '1', 'binary': '00001'},
   {'character': '2', 'binary': '00010'},
@@ -98,13 +98,20 @@ Geohash latLonToGeohash(LatLng coords, int geohashLength) {
     i++;
   }
 
-  return Geohash(_splitIntoBinaryChunks(binary).map((chunk) => _getCharacterByBinary(chunk)).where((element) => element != null).join());
+  return Geohash(_splitIntoBinaryChunks(binary)
+      .map((chunk) => _getCharacterByBinary(chunk))
+      .where((element) => element != null)
+      .join());
 }
 
 LatLng? geohashToLatLon(Geohash geohash) {
   try {
     var _geohash = geohash.text.toLowerCase();
-    var binary = _geohash.split('').map((character) => _getBinaryByCharacter(character)).where((element) => element != null).join();
+    var binary = _geohash
+        .split('')
+        .map((character) => _getBinaryByCharacter(character))
+        .where((element) => element != null)
+        .join();
 
     var latBinary = '';
     var lonBinary = '';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -11,10 +11,10 @@ class RSADCalculator extends StatefulWidget {
   const RSADCalculator({Key? key}) : super(key: key);
 
   @override
-  RSADCalculatorState createState() => RSADCalculatorState();
+  _RSADCalculatorState createState() => _RSADCalculatorState();
 }
 
-class RSADCalculatorState extends State<RSADCalculator> {
+class _RSADCalculatorState extends State<RSADCalculator> {
   String _currentE = '';
   String _currentP = '';
   String _currentQ = '';
@@ -66,9 +66,7 @@ class RSADCalculatorState extends State<RSADCalculator> {
   }
 
   void _calculateOutput() {
-    if (_currentE.isEmpty ||
-        _currentP.isEmpty ||
-        _currentQ.isEmpty) {
+    if (_currentE.isEmpty || _currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 

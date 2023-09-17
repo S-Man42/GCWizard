@@ -1,6 +1,6 @@
-import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:latlong2/latlong.dart';
 
 String digraphLettersEast = "ABCDEFGHJKLMNPQRSTUVWXYZ"; //without I and O
@@ -169,12 +169,11 @@ MGRS? parseMGRS(String input) {
   }
 
   if (matches.isEmpty) return null;
-  if (_lonZoneString == null
-    || _latZone == null
-    || _digraph == null
-    || _eastingString == null
-    || _northingString == null
-  ) {
+  if (_lonZoneString == null ||
+      _latZone == null ||
+      _digraph == null ||
+      _eastingString == null ||
+      _northingString == null) {
     return null;
   }
 

@@ -3,9 +3,9 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class SymbolTableSelection extends GCWSelection {
@@ -44,5 +44,5 @@ String symboltablesDownloadLink(BuildContext context) {
   var usedLocale = 'en';
   if (_SUPPORTED_LANGUAGES.contains(locale)) usedLocale = locale;
 
-  return 'https://misc.gcwizard.net/symboltables_$usedLocale.pdf';
+  return 'https://misc.gcwizard.net/symbol_tables/symboltables_$usedLocale.pdf';
 }

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -22,10 +22,10 @@ class ImageFlipRotate extends StatefulWidget {
   const ImageFlipRotate({Key? key, this.file}) : super(key: key);
 
   @override
-  ImageFlipRotateState createState() => ImageFlipRotateState();
+  _ImageFlipRotateState createState() => _ImageFlipRotateState();
 }
 
-class ImageFlipRotateState extends State<ImageFlipRotate> {
+class _ImageFlipRotateState extends State<ImageFlipRotate> {
   GCWFile? _originalData;
 
   Image.Image? _currentImage;
@@ -78,7 +78,9 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
 
         if (_currentImage != null)
           GCWImageView(
-            imageData: _originalData == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes(_currentImage) ?? Uint8List(0))),
+            imageData: _originalData == null
+                ? null
+                : GCWImageViewData(GCWFile(bytes: _imageBytes(_currentImage) ?? Uint8List(0))),
             suppressOpenInTool: const {GCWImageViewOpenInTools.FLIPROTATE},
           ),
         if (_currentImage != null)
@@ -142,7 +144,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
   }
 
   Image.Image? _flipRotate(Image.Image? image) {
-    if(image == null) return null;
+    if (image == null) return null;
     return _doFlipRotate(_FlipRotateInput(
       image: image,
       flipHorizontally: _currentFlipHorizontally,
@@ -185,5 +187,7 @@ void openInFlipRotate(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
           builder: (BuildContext context) => GCWTool(
-              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), id: 'image_fliprotate')));
+              tool: ImageFlipRotate(file: file),
+              toolName: i18n(context, 'image_fliprotate_title'),
+              id: 'image_fliprotate')));
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -11,10 +11,10 @@ class RSAPhiCalculator extends StatefulWidget {
   const RSAPhiCalculator({Key? key}) : super(key: key);
 
   @override
-  RSAPhiCalculatorState createState() => RSAPhiCalculatorState();
+  _RSAPhiCalculatorState createState() => _RSAPhiCalculatorState();
 }
 
-class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
+class _RSAPhiCalculatorState extends State<RSAPhiCalculator> {
   String _currentP = '';
   String _currentQ = '';
 

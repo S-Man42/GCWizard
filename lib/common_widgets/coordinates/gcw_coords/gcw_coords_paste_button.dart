@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
@@ -11,8 +11,7 @@ class GCWCoordsPasteButton extends StatefulWidget {
   final void Function(List<BaseCoordinate>) onPasted;
   final IconButtonSize size;
 
-  const GCWCoordsPasteButton({Key? key, required this.onPasted, required this.size})
-      : super(key: key);
+  const GCWCoordsPasteButton({Key? key, required this.onPasted, required this.size}) : super(key: key);
 
   @override
   _GCWCoordsPasteButtonState createState() => _GCWCoordsPasteButtonState();
@@ -28,7 +27,6 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   }
 
   void _parseClipboardAndSetCoords(String text) {
-
     List<BaseCoordinate> parsed = parseCoordinates(text);
 
     if (parsed.isEmpty) {
