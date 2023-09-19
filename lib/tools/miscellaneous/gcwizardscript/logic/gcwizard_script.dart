@@ -103,7 +103,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use REPEAT-UNTIL, WHILE-WEND, STEP
 // - use ELSEIF-ELSE-ENDIF
 // - use SWITCH-CASE_DEFAULT-ENDSWITCH
-// - use BEEP, SLEEP, RANDOMIZE, RND
+// - use SLEEP, RANDOMIZE, RND
 // - use REM
 // - use DATA, RESTORE, READ
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, COLOR, FILL, TEXT, BOX, OVAL
@@ -119,6 +119,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // TODO
 // Enhance Performance
 // async PRINT
+// BEEP
 // http://www.mopsos.net/Script.html => Dreiecke
 
 ScriptState? state;
@@ -184,7 +185,7 @@ class _GCWizardSCriptInterpreter {
   static const REPEAT = 13;
   static const UNTIL = 14;
   static const CLS = 15;
-  static const BEEP = 16;
+  //static const BEEP = 16;
   static const SLEEP = 17;
   static const RANDOMIZE = 18;
   static const RND = 19;
@@ -250,7 +251,7 @@ class _GCWizardSCriptInterpreter {
     "print": PRINT,
     "input": INPUT,
     "cls": CLS,
-    "beep": BEEP,
+    //"beep": BEEP,
     "sleep": SLEEP,
     "randomize": RANDOMIZE,
     "rnd": RND,
@@ -515,9 +516,9 @@ class _GCWizardSCriptInterpreter {
       case CLS:
         executeCommandCLS();
         break;
-      case BEEP:
-        executeCommandBEEP();
-        break;
+      //case BEEP:
+      //  executeCommandBEEP();
+      //  break;
       case SLEEP:
         executeCommandSLEEP();
         break;
