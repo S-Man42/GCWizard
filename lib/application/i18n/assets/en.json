@@ -5925,6 +5925,7 @@
   "wherigo_header_altitude": "Altitude",
   "wherigo_header_author": "Author",
   "wherigo_header_builder": "Builder",
+  "wherigo_header_builder_unknown": "Unknown builder",
   "wherigo_header_device": "Recommended Device",
   "wherigo_header_deviceversion": "Recommended Device Version",
   "wherigo_header_cartridgedescription": "Description of Cartridge",

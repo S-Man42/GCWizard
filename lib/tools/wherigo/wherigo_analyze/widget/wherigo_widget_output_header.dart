@@ -77,7 +77,15 @@ List<List<String>> _buildHeaderExpertMode(BuildContext context) {
           : WherigoCartridgeGWCData.CartridgeGUID
     ],
     [i18n(context, 'wherigo_header_cartridgedescription'), WherigoCartridgeGWCData.CartridgeDescription],
-    [i18n(context, 'wherigo_header_startinglocation'), WherigoCartridgeGWCData.StartingLocationDescription],
+    [
+      i18n(context, 'wherigo_header_startinglocation'),
+      WherigoCartridgeGWCData.StartingLocationDescription +
+          '\n' +
+          formatCoordOutput(
+              LatLng(WherigoCartridgeLUAData.StartLocation.Latitude, WherigoCartridgeLUAData.StartLocation.Longitude),
+              defaultCoordinateFormat,
+              defaultEllipsoid)
+    ],
     [i18n(context, 'wherigo_header_state'), WherigoCartridgeLUAData.StateID],
     [i18n(context, 'wherigo_header_country'), WherigoCartridgeLUAData.CountryID],
     [i18n(context, 'wherigo_header_version'), WherigoCartridgeGWCData.Version],
@@ -91,11 +99,13 @@ List<List<String>> _buildHeaderExpertMode(BuildContext context) {
     [i18n(context, 'wherigo_header_lastplayed'), _formatDate(context, WherigoCartridgeLUAData.LastPlayedDate)],
     [i18n(context, 'wherigo_header_author'), WherigoCartridgeGWCData.Author],
     [i18n(context, 'wherigo_header_company'), WherigoCartridgeGWCData.Company],
-    [i18n(context, 'wherigo_header_device'), WherigoCartridgeGWCData.RecommendedDevice],
+    [
+      i18n(context, 'wherigo_header_device'),
+      WherigoCartridgeGWCData.RecommendedDevice + '\n' + WherigoCartridgeLUAData.TargetDevice
+    ],
     [i18n(context, 'wherigo_header_deviceversion'), WherigoCartridgeLUAData.TargetDeviceVersion],
     [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + WherigoCartridgeLUAData.UseLogging)]
   ];
-
   switch (WherigoCartridgeLUAData.Builder) {
     case WHERIGO_BUILDER.EARWIGO:
       header.add([i18n(context, 'wherigo_header_builder'), 'Earwigo Webbuilder']);
