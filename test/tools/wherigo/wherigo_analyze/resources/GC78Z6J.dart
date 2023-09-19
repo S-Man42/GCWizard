@@ -1,3 +1,4 @@
+var luaCodeGC78Z6J = '''
 require("Wherigo")
 function WWB_latin1_string(s, latin1_is_win1252)
   if WWB_utf8_extensions == nil then
@@ -133,7 +134,7 @@ function WWB_multiplatform_string(s, latin1_devices)
     end
     WWB_localize_latin1_buttons = false
     local latin1_is_win1252 = false
-    WWB_strings_unicode = string.len("\224\160\128") == 1
+    WWB_strings_unicode = string.len("224160128") == 1
     if platform == "Vendor 1 ARM9" then
       WWB_device = "Garmin"
       latin1_is_win1252 = true
@@ -1598,7 +1599,7 @@ zmediaZeugenhausA.Resources = {
   }
 }
 cartILuebeck.Id = "319d75f3-ad1b-4012-924c-cbb6e3cd9190"
-cartILuebeck.Name = "I \240\159\146\151 Lübeck"
+cartILuebeck.Name = "I love Lübeck"
 cartILuebeck.Activity = "Geocache"
 cartILuebeck.Version = "2.8"
 cartILuebeck.Company = ""
@@ -3510,7 +3511,7 @@ function zoneHolstentor:OnEnter()
   if zoneHolstentor.Visible == false then
     Wherigo.PlayAudio(zmediasoundfanfare)
     Wherigo.MessageBox({
-      Text = WWB_multiplatform_string("Das Holstentor (\"Holstein-Tor\") gehört zu den Überresten der Lübecker Stadtbefestigung und zierte früher den 50DM Schein. \nDas spätgotisches Holstentor ist neben dem Burgtor das einzige erhaltene Stadttor Lübecks. Mehr als 300 Jahre lang stand es als \"Mittleres Holstentor\" in einer Reihe mit drei weiteren Holstentoren, die im 19. Jahrhundert abgerissen wurden.", {PocketPC = 1}),
+      Text = WWB_multiplatform_string("Das Holstentor (Holstein-Tor) gehört zu den Überresten der Lübecker Stadtbefestigung und zierte früher den 50DM Schein. \nDas spätgotisches Holstentor ist neben dem Burgtor das einzige erhaltene Stadttor Lübecks. Mehr als 300 Jahre lang stand es als Mittleres Holstentor in einer Reihe mit drei weiteren Holstentoren, die im 19. Jahrhundert abgerissen wurden.", {PocketPC = 1}),
       Media = zmediaholstentor2,
       Buttons = {
         "sofort weiter",
@@ -3660,7 +3661,7 @@ function zoneMarienkirche:OnEnter()
   if zoneMarienkirche.Visible == false then
     Wherigo.PlayAudio(zmediasoundfanfare)
     Wherigo.MessageBox({
-      Text = WWB_multiplatform_string("Die Lübecker Bürger- und Marktkirche, 1277 bis 1351 erbaut und Teil des UNESCO-Welterbes, ist von jeher ein Symbol für Macht und Wohlstand der alten Hansestadt und befindet sich auf dem höchsten Punkt der Lübecker Altstadtinsel. \nSt. Marien gilt als \"Mutterkirche der Backsteingotik\" und war Vorbild für rund 70 Kirchen dieses Stils im Ostseeraum. Daher wird dem Bauwerk eine herausragende architektonische Bedeutung beigemessen. Mit der Marienkirche wurde der hochaufstrebende Gotik-Stil aus Frankreich mit norddeutschem Backstein umgesetzt. Sie beherbergt mit 38,5m das höchste Backsteingewölbe der Welt. \nZuvor hatte man keine Kirche aus Backstein so hoch gebaut und mit einem Gewölbe versehen. Ein System aus Stützen lenkt die Schubkräfte des Gewölbes nach außen über ein Strebewerk ab und ermöglicht so die enorme Höhe.", {PocketPC = 1}),
+      Text = WWB_multiplatform_string("Die Lübecker Bürger- und Marktkirche, 1277 bis 1351 erbaut und Teil des UNESCO-Welterbes, ist von jeher ein Symbol für Macht und Wohlstand der alten Hansestadt und befindet sich auf dem höchsten Punkt der Lübecker Altstadtinsel. \nSt. Marien gilt als Mutterkirche der Backsteingotik und war Vorbild für rund 70 Kirchen dieses Stils im Ostseeraum. Daher wird dem Bauwerk eine herausragende architektonische Bedeutung beigemessen. Mit der Marienkirche wurde der hochaufstrebende Gotik-Stil aus Frankreich mit norddeutschem Backstein umgesetzt. Sie beherbergt mit 38,5m das höchste Backsteingewölbe der Welt. \nZuvor hatte man keine Kirche aus Backstein so hoch gebaut und mit einem Gewölbe versehen. Ein System aus Stützen lenkt die Schubkräfte des Gewölbes nach außen über ein Strebewerk ab und ermöglicht so die enorme Höhe.", {PocketPC = 1}),
       Media = zmediaMarien1,
       Buttons = {
         "sofort weiter",
@@ -4140,7 +4141,7 @@ function zitemGoldcache:OnFund()
   ztaskFindedasGoldFinal.Active = false
   Wherigo.PlayAudio(zmediasoundapplaus)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Du hast Gold! \nHolt den gekühlten Champagner raus!!! ;D \nEs gibt in Lübeck natürlich noch jede Menge mehr Sehenswertes;  \nAndere schöne Gänge und Höfe, mehrere Restaurants in historischen Gewölben, Theater, etc. - man kann nicht allem gerecht werden, aber sie sind definitv auch ein Besuch wert! \n \nWenn du möchtest, kannst du jetzt über eine Sicherheitsabfrage noch den Unlock-Code für die Cartridge bekommen. \nDies ist nur notwendig, wenn du auch auf wherigo.com loggen möchtest. \nAlle anderen können die Cartridge nun einfach beenden. \n \nIch hoffe Ihr hattet viel Spaß bei der \"kleinen\" Stadtführung  :D \ndie thavorianer", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Du hast Gold! \nHolt den gekühlten Champagner raus!!! ;D \nEs gibt in Lübeck natürlich noch jede Menge mehr Sehenswertes;  \nAndere schöne Gänge und Höfe, mehrere Restaurants in historischen Gewölben, Theater, etc. - man kann nicht allem gerecht werden, aber sie sind definitv auch ein Besuch wert! \n \nWenn du möchtest, kannst du jetzt über eine Sicherheitsabfrage noch den Unlock-Code für die Cartridge bekommen. \nDies ist nur notwendig, wenn du auch auf wherigo.com loggen möchtest. \nAlle anderen können die Cartridge nun einfach beenden. \n \nIch hoffe Ihr hattet viel Spaß bei der kleinen Stadtführung  :D \ndie thavorianer", {PocketPC = 1}),
     Media = zmediathavorianer,
     Buttons = {
       "Unlock-Code"
@@ -4246,7 +4247,7 @@ function zitemInfo:OnHeiligenGeistHospital()
 end
 function zitemInfo:OnHolstentor()
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Das Holstentor (\"Holstein-Tor\") gehört zu den Überresten der Lübecker Stadtbefestigung und zierte früher den 50DM Schein. \nDas spätgotisches Holstentor ist neben dem Burgtor das einzige erhaltene Stadttor Lübecks. Mehr als 300 Jahre lang stand es als \"Mittleres Holstentor\" in einer Reihe mit drei weiteren Holstentoren, die im 19. Jahrhundert abgerissen wurden.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Das Holstentor (Holstein-Tor) gehört zu den Überresten der Lübecker Stadtbefestigung und zierte früher den 50DM Schein. \nDas spätgotisches Holstentor ist neben dem Burgtor das einzige erhaltene Stadttor Lübecks. Mehr als 300 Jahre lang stand es als Mittleres Holstentor in einer Reihe mit drei weiteren Holstentoren, die im 19. Jahrhundert abgerissen wurden.", {PocketPC = 1}),
     Media = zmediaholstentor2,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB120
@@ -4294,7 +4295,7 @@ function zitemInfo:OnLwenapotheke()
 end
 function zitemInfo:OnMarienkirche()
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Die Lübecker Bürger- und Marktkirche, 1277 bis 1351 erbaut und Teil des UNESCO-Welterbes, ist von jeher ein Symbol für Macht und Wohlstand der alten Hansestadt und befindet sich auf dem höchsten Punkt der Lübecker Altstadtinsel. \nSt. Marien gilt als \"Mutterkirche der Backsteingotik\" und war Vorbild für rund 70 Kirchen dieses Stils im Ostseeraum. Daher wird dem Bauwerk eine herausragende architektonische Bedeutung beigemessen. Mit der Marienkirche wurde der hochaufstrebende Gotik-Stil aus Frankreich mit norddeutschem Backstein umgesetzt. Sie beherbergt mit 38,5m das höchste Backsteingewölbe der Welt. \nZuvor hatte man keine Kirche aus Backstein so hoch gebaut und mit einem Gewölbe versehen. Ein System aus Stützen lenkt die Schubkräfte des Gewölbes nach außen über ein Strebewerk ab und ermöglicht so die enorme Höhe.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Die Lübecker Bürger- und Marktkirche, 1277 bis 1351 erbaut und Teil des UNESCO-Welterbes, ist von jeher ein Symbol für Macht und Wohlstand der alten Hansestadt und befindet sich auf dem höchsten Punkt der Lübecker Altstadtinsel. \nSt. Marien gilt als Mutterkirche der Backsteingotik und war Vorbild für rund 70 Kirchen dieses Stils im Ostseeraum. Daher wird dem Bauwerk eine herausragende architektonische Bedeutung beigemessen. Mit der Marienkirche wurde der hochaufstrebende Gotik-Stil aus Frankreich mit norddeutschem Backstein umgesetzt. Sie beherbergt mit 38,5m das höchste Backsteingewölbe der Welt. \nZuvor hatte man keine Kirche aus Backstein so hoch gebaut und mit einem Gewölbe versehen. Ein System aus Stützen lenkt die Schubkräfte des Gewölbes nach außen über ein Strebewerk ab und ermöglicht so die enorme Höhe.", {PocketPC = 1}),
     Media = zmediaMarien1,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB136
@@ -4575,7 +4576,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB14(action)
     Station(nil)
   else
     Wherigo.MessageBox({
-      Text = WWB_multiplatform_string("Der Name \"Dunkelgrüner Gang\" erinnert an die Gärten und ehemaligen Wiesenflächen. \nDie im Süden gelegenen Gangteile wurden wegen ihrer lichten Bebauung \"Hellgrüner Gang\" genannt. \nDie Geschichte dieses Viertels geht zurück bis ins Jahr 1357, die erste Bebauung wurde um 1587 unternommen. Allmählich bildete sich eine kleine Kolonie in der Hafengegend, dicht am Wasser und nicht fern von der Hauptstraße nach Mecklenburg. \nAm 23. April 1596 erschütterte eine gewaltige Gasexplosion das Gangviertel, die sogar die Burgkirche ins Wanken brachte. Ein Spanier hatte heimlich ungekörntes Schießpulver gelagert, das durch Selbstentzündung den größten Teil des Gangviertels zerstörte. \nDie heutige Bebauung des Viertels stammt aus der Zeit der großen Explosion, also nach dem 17. Jahrhundert.", {PocketPC = 1}),
+      Text = WWB_multiplatform_string("Der Name Dunkelgrüner Gang erinnert an die Gärten und ehemaligen Wiesenflächen. \nDie im Süden gelegenen Gangteile wurden wegen ihrer lichten Bebauung Hellgrüner Gang genannt. \nDie Geschichte dieses Viertels geht zurück bis ins Jahr 1357, die erste Bebauung wurde um 1587 unternommen. Allmählich bildete sich eine kleine Kolonie in der Hafengegend, dicht am Wasser und nicht fern von der Hauptstraße nach Mecklenburg. \nAm 23. April 1596 erschütterte eine gewaltige Gasexplosion das Gangviertel, die sogar die Burgkirche ins Wanken brachte. Ein Spanier hatte heimlich ungekörntes Schießpulver gelagert, das durch Selbstentzündung den größten Teil des Gangviertels zerstörte. \nDie heutige Bebauung des Viertels stammt aus der Zeit der großen Explosion, also nach dem 17. Jahrhundert.", {PocketPC = 1}),
       Media = zmediaGangGruen2,
       Buttons = {"Weiter"},
       Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB15
@@ -4599,7 +4600,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB20(action)
     Station(nil)
   else
     Wherigo.MessageBox({
-      Text = WWB_multiplatform_string("Um die Ärmsten der Armen vor Mietwucher zu schützen, gründeten angesehene Lübecker damals Stiftungen wie zum Beispiel den Füchtingshof, um nur den berühmtesten zu nennen. Der Ratsherr Johann Füchting bestimmte 1636 ein Drittel seines Erbes \226\128\158zum Nutzen und Besten der Armen\226\128\156. Als Gegenleistung erbat sich der Stifter oft das Gebet nach seinem Ableben. Das sollte ihm dann einen \226\128\158guten Platz im Himmel\226\128\156 sichern. Noch heute sind 28 Wohnungen günstig an Pensionärinnen, oftmals auch Witwen und Lübecker Kaufleute, vermietet. \nDas Innere des Füchtingshofs diente Friedrich Wilhelm Murnau für seinen Film Nosferatu - Eine Symphonie des Grauens bei seinen Lübecker Außenaufnahmen in zwei Szenen als Kulisse.", {PocketPC = 1}),
+      Text = WWB_multiplatform_string("Um die Ärmsten der Armen vor Mietwucher zu schützen, gründeten angesehene Lübecker damals Stiftungen wie zum Beispiel den Füchtingshof, um nur den berühmtesten zu nennen. Der Ratsherr Johann Füchting bestimmte 1636 ein Drittel seines Erbes zum Nutzen und Besten der Armen. Als Gegenleistung erbat sich der Stifter oft das Gebet nach seinem Ableben. Das sollte ihm dann einen guten Platz im Himmel sichern. Noch heute sind 28 Wohnungen günstig an Pensionärinnen, oftmals auch Witwen und Lübecker Kaufleute, vermietet. \nDas Innere des Füchtingshofs diente Friedrich Wilhelm Murnau für seinen Film Nosferatu - Eine Symphonie des Grauens bei seinen Lübecker Außenaufnahmen in zwei Szenen als Kulisse.", {PocketPC = 1}),
       Media = zmediaGangFuechting2,
       Buttons = {"Weiter"},
       Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB21
@@ -4707,7 +4708,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB32(action)
     Station(nil)
   else
     Wherigo.MessageBox({
-      Text = WWB_multiplatform_string("Über dem Durchgang ist auf der Stadt- wie auf der Feldseite je eine Inschrift angebracht. Auf der Stadtseite lautet die Inschrift S.P.Q.L., eingerahmt von den Jahreszahlen 1477 und 1871; ersteres war das vermeintliche Datum der Erbauung (korrektes Datum ist allerdings 1478), letzteres das Datum der Restaurierung sowie der Gründung des Deutschen Reiches. Diese Inschrift hatte das römische S.P.Q.R. (lateinisch Senatus populusque Romanus \226\128\147 Senat und Volk Roms) zum Vorbild und sollte entsprechend für Senatus populusque Lubecensis stehen. Sie wurde allerdings erst 1871 angebracht.", {PocketPC = 1}),
+      Text = WWB_multiplatform_string("Über dem Durchgang ist auf der Stadt- wie auf der Feldseite je eine Inschrift angebracht. Auf der Stadtseite lautet die Inschrift S.P.Q.L., eingerahmt von den Jahreszahlen 1477 und 1871; ersteres war das vermeintliche Datum der Erbauung (korrektes Datum ist allerdings 1478), letzteres das Datum der Restaurierung sowie der Gründung des Deutschen Reiches. Diese Inschrift hatte das römische S.P.Q.R. (lateinisch Senatus populusque Romanus Senat und Volk Roms) zum Vorbild und sollte entsprechend für Senatus populusque Lubecensis stehen. Sie wurde allerdings erst 1871 angebracht.", {PocketPC = 1}),
       Media = zmediaholstentor1,
       Buttons = {"Weiter"},
       Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB33
@@ -4716,7 +4717,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB32(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB33(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Eine andere Inschrift befindet sich auf der Feldseite. Dort steht CONCORDIA DOMI FORIS PAX (\"Eintracht innen, draußen Friede\"). Auch dieser Schriftzug stammt von 1871 und ist eine verkürzte Form der Inschrift, die zuvor auf dem (nicht erhaltenen) Vortor gestanden hatte: Concordia domi et foris pax sane res est omnium pulcherrima (\"Eintracht innen und Friede draußen sind in der Tat für alle am besten\").", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Eine andere Inschrift befindet sich auf der Feldseite. Dort steht CONCORDIA DOMI FORIS PAX (Eintracht innen, draußen Friede). Auch dieser Schriftzug stammt von 1871 und ist eine verkürzte Form der Inschrift, die zuvor auf dem (nicht erhaltenen) Vortor gestanden hatte: Concordia domi et foris pax sane res est omnium pulcherrima (Eintracht innen und Friede draußen sind in der Tat für alle am besten).", {PocketPC = 1}),
     Media = zmediaholstentor3,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB34
@@ -4724,7 +4725,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB33(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB34(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Der Durchgang war früher zur Feldseite mit zwei Torflügeln versehen, die nicht erhalten sind. Ein \"Fallgatter\" wurde erst 1934 angebracht und entspricht nicht den ursprünglichen Sicherungsanlagen. An dieser Stelle befand sich einst ein so genanntes Orgelwerk, bei dem die Eisenstangen einzeln und nicht als Ganzes heruntergelassen wurden. So war es möglich, alle Stangen bis auf eine oder zwei bereits zu senken und dann abzuwarten, um den eigenen Männern noch ein Hindurchkommen zu ermöglichen oder durch die Verengung des Durchganges ein Einfallen feindlicher Kavallerie oder Fahrzeuge unter geringstem Aufwand zu verhindern.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Der Durchgang war früher zur Feldseite mit zwei Torflügeln versehen, die nicht erhalten sind. Ein Fallgatter wurde erst 1934 angebracht und entspricht nicht den ursprünglichen Sicherungsanlagen. An dieser Stelle befand sich einst ein so genanntes Orgelwerk, bei dem die Eisenstangen einzeln und nicht als Ganzes heruntergelassen wurden. So war es möglich, alle Stangen bis auf eine oder zwei bereits zu senken und dann abzuwarten, um den eigenen Männern noch ein Hindurchkommen zu ermöglichen oder durch die Verengung des Durchganges ein Einfallen feindlicher Kavallerie oder Fahrzeuge unter geringstem Aufwand zu verhindern.", {PocketPC = 1}),
     Media = zmediaholstentor4,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB35
@@ -4944,7 +4945,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB59(action)
     Station(nil)
   else
     Wherigo.MessageBox({
-      Text = WWB_multiplatform_string("Johann Georg Niederegger wurde 1777 in Ulm geboren. In Langenau absolvierte er eine Konditorlehre. Danach zog er 1803 nach Lübeck und arbeitete in der Konditorei Maret am Markt. Nach dem Tod des Besitzers übertrug dessen Witwe Niederegger das Geschäft, der somit am 1. März 1806 sein eigenes Unternehmen gründen konnte.  \nKurz danach richtete Napol\195\169on die Kontinentalsperre ein (Handelsembargo), so dass Niederegger die Rohstoffe Mandeln aus Sizilien und Zucker ausgingen. Zwischen 1811 und 1812 kam die Produktion gänzlich zum Erliegen. Zwischen 1812 und 1814 konnte der Nachschub durch Schmuggel via Helgoland gesichert werden.", {PocketPC = 1}),
+      Text = WWB_multiplatform_string("Johann Georg Niederegger wurde 1777 in Ulm geboren. In Langenau absolvierte er eine Konditorlehre. Danach zog er 1803 nach Lübeck und arbeitete in der Konditorei Maret am Markt. Nach dem Tod des Besitzers übertrug dessen Witwe Niederegger das Geschäft, der somit am 1. März 1806 sein eigenes Unternehmen gründen konnte.  Kurz danach richtete Napoleon die Kontinentalsperre ein (Handelsembargo), so dass Niederegger die Rohstoffe Mandeln aus Sizilien und Zucker ausgingen. Zwischen 1811 und 1812 kam die Produktion gänzlich zum Erliegen. Zwischen 1812 und 1814 konnte der Nachschub durch Schmuggel via Helgoland gesichert werden.", {PocketPC = 1}),
       Media = zmediaNiederegger1,
       Buttons = {"Weiter"},
       Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB60
@@ -4953,7 +4954,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB59(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB60(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("1873 wurde das Marzipan von Niederegger auf der Wiener Weltausstellung prämiert. \n1908 ernannte Kaiser Wilhelm II das Unternehmen zum Hoflieferanten. \nIm zweiten Obergeschoss des Caf\195\169s in der Breiten Straße befindet sich seit 1999 ein Marzipanmuseum mit historischen Holzformen für die Herstellung von reliefartigen Marzipanblöcken und einer Gruppe historischer Figuren in Menschengröße aus Marzipan.  \nAm 1. März 2006 feierte die Fa. Niederegger ihr 200-jähriges Bestehen. ", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("1873 wurde das Marzipan von Niederegger auf der Wiener Weltausstellung prämiert. \n1908 ernannte Kaiser Wilhelm II das Unternehmen zum Hoflieferanten. \nIm zweiten Obergeschoss des Cafes in der Breiten Straße befindet sich seit 1999 ein Marzipanmuseum mit historischen Holzformen für die Herstellung von reliefartigen Marzipanblöcken und einer Gruppe historischer Figuren in Menschengröße aus Marzipan.  \nAm 1. März 2006 feierte die Fa. Niederegger ihr 200-jähriges Bestehen. ", {PocketPC = 1}),
     Media = zmediaNiederegger3,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB61
@@ -5069,7 +5070,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB72(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB73(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Die Lübecker Salzspeicher waren Drehort für den Film \"Nosferatu \226\128\147 Eine Symphonie des Grauens\" von Friedrich Wilhelm Murnau und dienten als Kulisse für das Haus, das der Vampir mietet. \nIm Bild eine Szene aus dem Film.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Die Lübecker Salzspeicher waren Drehort für den Film Nosferatu Eine Symphonie des Grauens von Friedrich Wilhelm Murnau und dienten als Kulisse für das Haus, das der Vampir mietet. \nIm Bild eine Szene aus dem Film.", {PocketPC = 1}),
     Media = zmediasalzspeicher3,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB74
@@ -5264,13 +5265,13 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB103(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB105(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Der Name \"Dunkelgrüner Gang\" erinnert an die Gärten und ehemaligen Wiesenflächen. \nDie im Süden gelegenen Gangteile wurden wegen ihrer lichten Bebauung \"Hellgrüner Gang\" genannt. \nDie Geschichte dieses Viertels geht zurück bis ins Jahr 1357, die erste Bebauung wurde um 1587 unternommen. Allmählich bildete sich eine kleine Kolonie in der Hafengegend, dicht am Wasser und nicht fern von der Hauptstraße nach Mecklenburg. \nAm 23. April 1596 erschütterte eine gewaltige Gasexplosion das Gangviertel, die sogar die Burgkirche ins Wanken brachte. Ein Spanier hatte heimlich ungekörntes Schießpulver gelagert, das durch Selbstentzündung den größten Teil des Gangviertels zerstörte. \nDie heutige Bebauung des Viertels stammt aus der Zeit der großen Explosion, also nach dem 17. Jahrhundert.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Der Name Dunkelgrüner Gang erinnert an die Gärten und ehemaligen Wiesenflächen. \nDie im Süden gelegenen Gangteile wurden wegen ihrer lichten Bebauung Hellgrüner Gang genannt. \nDie Geschichte dieses Viertels geht zurück bis ins Jahr 1357, die erste Bebauung wurde um 1587 unternommen. Allmählich bildete sich eine kleine Kolonie in der Hafengegend, dicht am Wasser und nicht fern von der Hauptstraße nach Mecklenburg. \nAm 23. April 1596 erschütterte eine gewaltige Gasexplosion das Gangviertel, die sogar die Burgkirche ins Wanken brachte. Ein Spanier hatte heimlich ungekörntes Schießpulver gelagert, das durch Selbstentzündung den größten Teil des Gangviertels zerstörte. \nDie heutige Bebauung des Viertels stammt aus der Zeit der großen Explosion, also nach dem 17. Jahrhundert.", {PocketPC = 1}),
     Media = zmediaGangGruen2
   })
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB107(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Um die Ärmsten der Armen vor Mietwucher zu schützen, gründeten angesehene Lübecker damals Stiftungen wie zum Beispiel den Füchtingshof, um nur den berühmtesten zu nennen. Der Ratsherr Johann Füchting bestimmte 1636 ein Drittel seines Erbes \226\128\158zum Nutzen und Besten der Armen\226\128\156. Als Gegenleistung erbat sich der Stifter oft das Gebet nach seinem Ableben. Das sollte ihm dann einen \226\128\158guten Platz im Himmel\226\128\156 sichern. Noch heute sind 28 Wohnungen günstig an Pensionärinnen, oftmals auch Witwen und Lübecker Kaufleute, vermietet. \nDas Innere des Füchtingshofs diente Friedrich Wilhelm Murnau für seinen Film Nosferatu - Eine Symphonie des Grauens bei seinen Lübecker Außenaufnahmen in zwei Szenen als Kulisse.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Um die Ärmsten der Armen vor Mietwucher zu schützen, gründeten angesehene Lübecker damals Stiftungen wie zum Beispiel den Füchtingshof, um nur den berühmtesten zu nennen. Der Ratsherr Johann Füchting bestimmte 1636 ein Drittel seines Erbes zum Nutzen und Besten der Armen. Als Gegenleistung erbat sich der Stifter oft das Gebet nach seinem Ableben. Das sollte ihm dann einen guten Platz im Himmel sichern. Noch heute sind 28 Wohnungen günstig an Pensionärinnen, oftmals auch Witwen und Lübecker Kaufleute, vermietet. \nDas Innere des Füchtingshofs diente Friedrich Wilhelm Murnau für seinen Film Nosferatu - Eine Symphonie des Grauens bei seinen Lübecker Außenaufnahmen in zwei Szenen als Kulisse.", {PocketPC = 1}),
     Media = zmediaGangFuechting2
   })
 end
@@ -5282,7 +5283,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB111(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB113(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Der Hügel Bucu war zuvor bereits Standort einer wendischen Burg gewesen und wies topografisch bessere Voraussetzungen der Befestigung auf. Die Befestigung der Stadtgründung des 12. Jahrhunderts bestand aus der Lübecker Burg, die nach der Schlacht von Bornhöved zum Burgkloster wurde und einer Stadtmauer und vier Stadttoren, von denen das Burgtor und das Holstentor in ihren späteren baulichen Überformungen heute noch zeugen. \nDie Stadtmauer umgab die gesamte Altstadt. An der Trave war sie in regelmäßigen Abständen mit kleinen Toren versehen, um den Warentransport zwischen Hafen und Stadt zu ermöglichen. Am nördlichen Rand der Altstadt (entlang der Straßen An der Mauer und Wakenitzmauer) sind noch Reste der mittelalterlichen Stadtmauer erhalten, zum Teil in im 17. Jahrhundert errichteten Häusern verbaut.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Der Hügel Bucu war zuvor bereits Standort einer wendischen Burg gewesen und wies topografisch bessere Voraussetzungen der Befestigung auf. Die Befestigung der Stadtgründung des 12. Jahrhunderts bestand aus der Lübecker Burg, die nach der Schlacht von Bornhöved zum Burgkloster wurde und einer Stadtmauer und vier Stadttoren, von denen das Burgtor und das Holstentor in ihren späteren baulichen Überformungen heute noch zeugen. Die Stadtmauer umgab die gesamte Altstadt. An der Trave war sie in regelmäßigen Abständen mit kleinen Toren versehen, um den Warentransport zwischen Hafen und Stadt zu ermöglichen. Am nördlichen Rand der Altstadt (entlang der Straßen An der Mauer und Wakenitzmauer) sind noch Reste der mittelalterlichen Stadtmauer erhalten, zum Teil in im 17. Jahrhundert errichteten Häusern verbaut.", {PocketPC = 1}),
     Media = zmediawallanlagen2
   })
 end
@@ -5308,7 +5309,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB118(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB120(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Über dem Durchgang ist auf der Stadt- wie auf der Feldseite je eine Inschrift angebracht. Auf der Stadtseite lautet die Inschrift S.P.Q.L., eingerahmt von den Jahreszahlen 1477 und 1871; ersteres war das vermeintliche Datum der Erbauung (korrektes Datum ist allerdings 1478), letzteres das Datum der Restaurierung sowie der Gründung des Deutschen Reiches. Diese Inschrift hatte das römische S.P.Q.R. (lateinisch Senatus populusque Romanus \226\128\147 Senat und Volk Roms) zum Vorbild und sollte entsprechend für Senatus populusque Lubecensis stehen. Sie wurde allerdings erst 1871 angebracht.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Über dem Durchgang ist auf der Stadt- wie auf der Feldseite je eine Inschrift angebracht. Auf der Stadtseite lautet die Inschrift S.P.Q.L., eingerahmt von den Jahreszahlen 1477 und 1871; ersteres war das vermeintliche Datum der Erbauung (korrektes Datum ist allerdings 1478), letzteres das Datum der Restaurierung sowie der Gründung des Deutschen Reiches. Diese Inschrift hatte das römische S.P.Q.R. (lateinisch Senatus populusque Romanus Senat und Volk Roms) zum Vorbild und sollte entsprechend für Senatus populusque Lubecensis stehen. Sie wurde allerdings erst 1871 angebracht.", {PocketPC = 1}),
     Media = zmediaholstentor1,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB121
@@ -5316,7 +5317,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB120(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB121(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Eine andere Inschrift befindet sich auf der Feldseite. Dort steht CONCORDIA DOMI FORIS PAX (\"Eintracht innen, draußen Friede\"). Auch dieser Schriftzug stammt von 1871 und ist eine verkürzte Form der Inschrift, die zuvor auf dem (nicht erhaltenen) Vortor gestanden hatte: Concordia domi et foris pax sane res est omnium pulcherrima (\"Eintracht innen und Friede draußen sind in der Tat für alle am besten\").", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Eine andere Inschrift befindet sich auf der Feldseite. Dort steht CONCORDIA DOMI FORIS PAX (Eintracht innen, draußen Friede). Auch dieser Schriftzug stammt von 1871 und ist eine verkürzte Form der Inschrift, die zuvor auf dem (nicht erhaltenen) Vortor gestanden hatte: Concordia domi et foris pax sane res est omnium pulcherrima (Eintracht innen und Friede draußen sind in der Tat für alle am besten).", {PocketPC = 1}),
     Media = zmediaholstentor3,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB122
@@ -5324,7 +5325,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB121(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB122(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Der Durchgang war früher zur Feldseite mit zwei Torflügeln versehen, die nicht erhalten sind. Ein \"Fallgatter\" wurde erst 1934 angebracht und entspricht nicht den ursprünglichen Sicherungsanlagen. An dieser Stelle befand sich einst ein so genanntes Orgelwerk, bei dem die Eisenstangen einzeln und nicht als Ganzes heruntergelassen wurden. So war es möglich, alle Stangen bis auf eine oder zwei bereits zu senken und dann abzuwarten, um den eigenen Männern noch ein Hindurchkommen zu ermöglichen oder durch die Verengung des Durchganges ein Einfallen feindlicher Kavallerie oder Fahrzeuge unter geringstem Aufwand zu verhindern.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Der Durchgang war früher zur Feldseite mit zwei Torflügeln versehen, die nicht erhalten sind. Ein Fallgatter wurde erst 1934 angebracht und entspricht nicht den ursprünglichen Sicherungsanlagen. An dieser Stelle befand sich einst ein so genanntes Orgelwerk, bei dem die Eisenstangen einzeln und nicht als Ganzes heruntergelassen wurden. So war es möglich, alle Stangen bis auf eine oder zwei bereits zu senken und dann abzuwarten, um den eigenen Männern noch ein Hindurchkommen zu ermöglichen oder durch die Verengung des Durchganges ein Einfallen feindlicher Kavallerie oder Fahrzeuge unter geringstem Aufwand zu verhindern.", {PocketPC = 1}),
     Media = zmediaholstentor4
   })
 end
@@ -5418,7 +5419,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB143(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB147(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Johann Georg Niederegger wurde 1777 in Ulm geboren. In Langenau absolvierte er eine Konditorlehre. Danach zog er 1803 nach Lübeck und arbeitete in der Konditorei Maret am Markt. Nach dem Tod des Besitzers übertrug dessen Witwe Niederegger das Geschäft, der somit am 1. März 1806 sein eigenes Unternehmen gründen konnte.  \nKurz danach richtete Napol\195\169on die Kontinentalsperre ein (Handelsembargo), so dass Niederegger die Rohstoffe Mandeln aus Sizilien und Zucker ausgingen. Zwischen 1811 und 1812 kam die Produktion gänzlich zum Erliegen. Zwischen 1812 und 1814 konnte der Nachschub durch Schmuggel via Helgoland gesichert werden.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Johann Georg Niederegger wurde 1777 in Ulm geboren. In Langenau absolvierte er eine Konditorlehre. Danach zog er 1803 nach Lübeck und arbeitete in der Konditorei Maret am Markt. Nach dem Tod des Besitzers übertrug dessen Witwe Niederegger das Geschäft, der somit am 1. März 1806 sein eigenes Unternehmen gründen konnte. Kurz danach richtete Napoleon die Kontinentalsperre ein (Handelsembargo), so dass Niederegger die Rohstoffe Mandeln aus Sizilien und Zucker ausgingen. Zwischen 1811 und 1812 kam die Produktion gänzlich zum Erliegen. Zwischen 1812 und 1814 konnte der Nachschub durch Schmuggel via Helgoland gesichert werden.", {PocketPC = 1}),
     Media = zmediaNiederegger1,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB148
@@ -5426,13 +5427,13 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB147(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB148(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("1873 wurde das Marzipan von Niederegger auf der Wiener Weltausstellung prämiert. \n1908 ernannte Kaiser Wilhelm II das Unternehmen zum Hoflieferanten. \nIm zweiten Obergeschoss des Caf\195\169s in der Breiten Straße befindet sich seit 1999 ein Marzipanmuseum mit historischen Holzformen für die Herstellung von reliefartigen Marzipanblöcken und einer Gruppe historischer Figuren in Menschengröße aus Marzipan.  \nAm 1. März 2006 feierte die Fa. Niederegger ihr 200-jähriges Bestehen. ", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("1873 wurde das Marzipan von Niederegger auf der Wiener Weltausstellung prämiert. \n1908 ernannte Kaiser Wilhelm II das Unternehmen zum Hoflieferanten. \nIm zweiten Obergeschoss des Cafes in der Breiten Straße befindet sich seit 1999 ein Marzipanmuseum mit historischen Holzformen für die Herstellung von reliefartigen Marzipanblöcken und einer Gruppe historischer Figuren in Menschengröße aus Marzipan.  \nAm 1. März 2006 feierte die Fa. Niederegger ihr 200-jähriges Bestehen. ", {PocketPC = 1}),
     Media = zmediaNiederegger3
   })
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB150(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Im 15. Jahrhundert erfolgte der Ausbau zur heutigen Erscheinung: Eine gotische, fünfschiffige Hallenkirche aus Backsteinen mit fünf Jochen. Damit wurde die Petrikirche eine der wenigen existierenden fünfschiffigen Kirchen. \nDie Reformation hielt in Lübeck 1529/30 einzug und die Petrikirche wurde evangelisch. \nWährend des Luftangriffs auf Lübeck am Palmsonntag 1942 brannte die Petrikirche völlig aus. Das Dach, der Turmhelm und die reiche Innenausstattung wurden zerstört. \nDie notdürftig abgedeckte Kirche diente der Lübecker Kirchbauhütte zunächst als Lapidarium, in dem geborgene skulpturale Fragmente aus allen kriegszerstörten Lübecker Kirchen zwischengelagert wurden. Erst 1987 war die Kirche äußerlich wieder vollständig aufgebaut.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Im 15. Jahrhundert erfolgte der Ausbau zur heutigen Erscheinung: Eine gotische, fünfschiffige Hallenkirche aus Backsteinen mit fünf Jochen. Damit wurde die Petrikirche eine der wenigen existierenden fünfschiffigen Kirchen. Die Reformation hielt in Lübeck 1529/30 einzug und die Petrikirche wurde evangelisch. Während des Luftangriffs auf Lübeck am Palmsonntag 1942 brannte die Petrikirche völlig aus. Das Dach, der Turmhelm und die reiche Innenausstattung wurden zerstört. \nDie notdürftig abgedeckte Kirche diente der Lübecker Kirchbauhütte zunächst als Lapidarium, in dem geborgene skulpturale Fragmente aus allen kriegszerstörten Lübecker Kirchen zwischengelagert wurden. Erst 1987 war die Kirche äußerlich wieder vollständig aufgebaut.", {PocketPC = 1}),
     Media = zmediaPetri2,
     Buttons = {"Weiter"},
     Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB151
@@ -5490,7 +5491,7 @@ function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB160(action)
 end
 function cartILuebeck.MsgBoxCBFuncs.MsgBoxCB161(action)
   Wherigo.MessageBox({
-    Text = WWB_multiplatform_string("Die Lübecker Salzspeicher waren Drehort für den Film \"Nosferatu \226\128\147 Eine Symphonie des Grauens\" von Friedrich Wilhelm Murnau und dienten als Kulisse für das Haus, das der Vampir mietet. \nIm Bild eine Szene aus dem Film.", {PocketPC = 1}),
+    Text = WWB_multiplatform_string("Die Lübecker Salzspeicher waren Drehort für den Film Nosferatu Eine Symphonie des Grauens von Friedrich Wilhelm Murnau und dienten als Kulisse für das Haus, das der Vampir mietet. \nIm Bild eine Szene aus dem Film.", {PocketPC = 1}),
     Media = zmediasalzspeicher3
   })
 end
@@ -5622,4 +5623,4 @@ function round(num, idp)
   local mult = 10 ^ (idp or 0)
   return math.floor(num * mult + 0.5) / mult
 end
-return cartILuebeck'''
+return cartILuebeck''';

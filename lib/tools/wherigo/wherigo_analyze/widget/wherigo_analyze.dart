@@ -1605,7 +1605,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           BuilderVersion: '',
           TargetDevice: '',
           TargetDeviceVersion: '',
-          StartLocation: WherigoZonePoint(),
+          StartLocation: const WherigoZonePoint(),
           CountryID: '',
           StateID: '',
           UseLogging: '',

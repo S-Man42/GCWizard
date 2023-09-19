@@ -148,7 +148,7 @@ WherigoCartridgeLUA _faultyWherigoCartridgeLUA(String _LUAFile, WHERIGO_ANALYSE_
       BuilderVersion: '',
       TargetDevice: '',
       TargetDeviceVersion: '',
-      StartLocation: WherigoZonePoint(),
+      StartLocation: const WherigoZonePoint(),
       StateID: '',
       UseLogging: '',
       CountryID: '',
