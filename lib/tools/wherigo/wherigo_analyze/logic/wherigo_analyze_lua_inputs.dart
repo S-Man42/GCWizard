@@ -87,6 +87,8 @@ WherigoInputData _analyzeAndExtractInputSectionData(List<String> lines) {
       } else if (lines[i].contains('[[') && lines[i].endsWith(']]')) {
         text = getLineData(lines[i].replaceAll('[[', '"').replaceAll(']]', '"'), LUAname, 'Text', _obfuscatorFunction,
             _obfuscatorTable);
+      } else if (lines[i].contains('WWB_multi') && lines[i].endsWith(')')) {
+        text = getLineData(lines[i].replaceAll('WWB_multiplatform_string("', '"').replaceAll('")', '"'), LUAname, 'Text', _obfuscatorFunction, _obfuscatorTable);
       } else {
         // multi Lines of Text
         text = '';
