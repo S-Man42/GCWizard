@@ -325,6 +325,10 @@ void main() {
         'input': testInputBUILDERVARIABLE,
         'expectedOutput': testOutputBUILDERVARIABLE,
       },
+      {
+        'input': luaCodeGC78Z6J,
+        'expectedOutput': testOutputBUILDERVARIABLEGC78Z6J,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
