@@ -1847,6 +1847,8 @@
   "coords_averaging_stop": "Stop Measurement",
   "coords_averaging_averagedcoordinate": "Averaged Coordinate\n(%s1 Measurements)",
   "coords_averaging_calculatedaccuracy": "Calculated Accuracy",
+  "coords_averaging_measurepoint": "Measured",
+  "coords_averaging_averaged": "Averaged",
   "countries_selection_title": "Countries/Nations",
   "countries_selection_description": "Calling Codes, Vehicle Registration Codes, ISO and IOC Codes, Flags, ...",
   "countries_sort": "Sort by",

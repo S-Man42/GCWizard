@@ -113,6 +113,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
                           color: COLOR_MAP_POINT,
                           isEditable: false,
                           isVisible: true,
+                          markerText: i18n(context, 'coords_averaging_measurepoint'),
                           circle: GCWMapCircle(
                               centerPoint: measured.coord, radius: measured.accuracy, color: COLOR_MAP_POINT));
                     }).toList();
@@ -122,6 +123,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
                         color: COLOR_MAP_CALCULATEDPOINT,
                         isEditable: false,
                         isVisible: true,
+                        markerText: i18n(context, 'coords_averaging_averaged'),
                         circle: GCWMapCircle(
                             centerPoint: _averagedLocations.first.coord,
                             radius: _averagedLocations.first.accuracy,
