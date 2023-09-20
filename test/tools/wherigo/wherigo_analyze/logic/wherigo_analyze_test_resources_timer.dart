@@ -11,6 +11,16 @@ WherigoTimerData testOutputTIMER = const WherigoTimerData(
   TimerType: 'interval',
 );
 
+WherigoTimerData testOutputTIMERGC78Z6J = const WherigoTimerData(
+  TimerLUAName: 'terminate',
+  TimerID: '',
+  TimerName: '',
+  TimerDescription: '',
+  TimerVisible: '',
+  TimerDuration: '3',
+  TimerType: 'countdown',
+);
+
 String testInputTIMER = 'objupdate_distance = Wherigo.ZTimer(objKlausMastermindKlabuster)\n' +
     'objupdate_distance.Id = "f8e161bb-9069-4a91-8f41-ea3927d37561"\n' +
     'objupdate_distance.Name = "update_distance"\n' +

@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-String testInputBUILDERVARIABLE =
-    'buildervar.Answer = {}\n' +
+String testInputBUILDERVARIABLE = 'buildervar.Answer = {}\n' +
     'buildervar.Answer.Id = "00000000-0000-0000-0000-000000000000"\n' +
     'buildervar.Answer.Name = "Answer"\n' +
     'buildervar.Answer.Type = "String"\n' +
@@ -17,21 +16,59 @@ String testInputBUILDERVARIABLE =
 
 List<WherigoBuilderVariableData> testOutputBUILDERVARIABLE = [
   const WherigoBuilderVariableData(
-  BuilderVariableID: '00000000-0000-0000-0000-000000000000',
-  BuilderVariableName: 'Answer',
-  BuilderVariableType: 'String',
-  BuilderVariableData: '',
-  BuilderVariableDescription: '',
+    BuilderVariableID: '00000000-0000-0000-0000-000000000000',
+    BuilderVariableName: 'Answer',
+    BuilderVariableType: 'String',
+    BuilderVariableData: '',
+    BuilderVariableDescription: '',
   ),
   const WherigoBuilderVariableData(
-  BuilderVariableID: '00000000-0000-0000-0000-000000000001',
-  BuilderVariableName: 'EnteredFinalZone',
-  BuilderVariableType: 'Flag',
-  BuilderVariableData: 'False',
-  BuilderVariableDescription: 'Has the player entered the final zone? &nbsp;Used so the final zone can stay active, but the events will not be triggered a second time.',
+    BuilderVariableID: '00000000-0000-0000-0000-000000000001',
+    BuilderVariableName: 'EnteredFinalZone',
+    BuilderVariableType: 'Flag',
+    BuilderVariableData: 'False',
+    BuilderVariableDescription:
+        'Has the player entered the final zone? &nbsp;Used so the final zone can stay active, but the events will not be triggered a second time.',
   ),
 ];
 
+List<WherigoBuilderVariableData> testOutputBUILDERVARIABLEGC78Z6J = [
+  const WherigoBuilderVariableData(
+    BuilderVariableID: '267b20afe75745002981d1d54753e9cc',
+    BuilderVariableName: 'var_Anzahl',
+    BuilderVariableType: 'Number',
+    BuilderVariableData: '0',
+    BuilderVariableDescription: '',
+  ),
+  const WherigoBuilderVariableData(
+    BuilderVariableID: '5046477a65cb4436ffe0a97fed127221',
+    BuilderVariableName: 'var_Bronze',
+    BuilderVariableType: 'Number',
+    BuilderVariableData: '0',
+    BuilderVariableDescription: '',
+  ),
+  const WherigoBuilderVariableData(
+    BuilderVariableID: 'dc0ed01b5e82aeaeaf245a2b4080c929',
+    BuilderVariableName: 'var_Final',
+    BuilderVariableType: 'String',
+    BuilderVariableData: '',
+    BuilderVariableDescription: '',
+  ),
+  const WherigoBuilderVariableData(
+    BuilderVariableID: 'c850d1feea2f02f1f26ac05dadbae39a',
+    BuilderVariableName: 'var_Gold',
+    BuilderVariableType: 'Number',
+    BuilderVariableData: '0',
+    BuilderVariableDescription: '',
+  ),
+  const WherigoBuilderVariableData(
+    BuilderVariableID: '3830970a4f5dfce9292f8d1570e7be50',
+    BuilderVariableName: 'var_Silber',
+    BuilderVariableType: 'Number',
+    BuilderVariableData: '0',
+    BuilderVariableDescription: '',
+  ),
+];
 
 void expectBuilderVariable(List<WherigoBuilderVariableData> actual, List<WherigoBuilderVariableData> expected) {
   for (int i = 0; i < expected.length; i++) {

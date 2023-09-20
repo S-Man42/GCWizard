@@ -8,7 +8,8 @@ bool _insideSectionTimer(String currentLine) {
 }
 
 bool _notDoneWithTimers(String currentLine) {
-  if (RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine)) {
+  if (RegExp(r'( Wherigo.ZInput\()').hasMatch(currentLine) ||
+      RegExp(r'(function)').hasMatch(currentLine)) {
     return false;
   }
   return true;

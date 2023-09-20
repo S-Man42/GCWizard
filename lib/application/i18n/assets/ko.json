@@ -1848,6 +1848,8 @@
   "coords_averaging_stop": "측정 중지",
   "coords_averaging_averagedcoordinate": "평균 좌표\n(%s1 측정)",
   "coords_averaging_calculatedaccuracy": "계산된 정확도",
+  "coords_averaging_measurepoint": "Measured",
+  "coords_averaging_averaged": "Averaged",
   "countries_selection_title": "국가/나라",
   "countries_selection_description": "통화 코드, 차량 등록 코드, ISO 및 IOC 코드, 국기, 등",
   "countries_sort": "정렬 기준",
