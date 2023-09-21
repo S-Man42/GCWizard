@@ -3480,7 +3480,7 @@
   "periodictable_attribute_boilingpoint": "Boiling Point",
   "periodictable_attribute_electronegativity": "Electronegativity",
   "periodictable_attribute_electronegativity_none": "None",
-  "periodictable_attribute_density": "Density (ᵍ/cm³)",
+  "periodictable_attribute_density": "Density (g/cm³)",
   "periodictable_attribute_issynthetic": "Natural/Synthetic",
   "periodictable_attribute_issynthetic_alternative": "Natural Occurrence",
   "periodictable_attribute_issynthetic_true": "Synthetic",
