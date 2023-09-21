@@ -3,7 +3,6 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.d
 List<WherigoVariableData> _analyzeAndExtractVariableSectionData(List<String> lines) {
   List<WherigoVariableData> result = [];
   List<String> _declaration = [];
-
   for (int i = 0; i < lines.length; i++) {
     if (i < lines.length - 1) {
       if (lines[i + 1].trim().startsWith('buildervar')) {
