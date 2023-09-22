@@ -60,7 +60,10 @@ dependencies:
   url_launcher: ^6.1.14
   utility: ^1.0.3
   week_of_year: ^2.0.0
-  what3words: ^3.1.0
+  #what3words: ^3.1.0
+  what3words:
+    git:
+      url: https://github.com/t-m-z/w3w-dart-wrapper
   xml: ^6.3.0
 
 dev_dependencies:

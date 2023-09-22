@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
@@ -25,7 +26,6 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
-
 
 class FormatConverterW3W extends StatefulWidget {
   const FormatConverterW3W({Key? key}) : super(key: key);
@@ -118,36 +118,45 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: GCWTextField(
-                hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
-                controller: _ControllerW1,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentW1 = ret;
-                  });
-                }),
+            child: Container(
+              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              child: GCWTextField(
+                  hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
+                  controller: _ControllerW1,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentW1 = ret;
+                    });
+                  }),
+            ),
           ),
           Expanded(
             flex: 1,
-            child: GCWTextField(
-                hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
-                controller: _ControllerW2,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentW2 = ret;
-                  });
-                }),
+            child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              child: GCWTextField(
+                  hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
+                  controller: _ControllerW2,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentW2 = ret;
+                    });
+                  }),
+            ),
           ),
           Expanded(
             flex: 1,
-            child: GCWTextField(
-                hintText: i18n(context, 'coords_formatconverter_w3w_w3'),
-                controller: _ControllerW3,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentW3 = ret;
-                  });
-                }),
+            child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                  hintText: i18n(context, 'coords_formatconverter_w3w_w3'),
+                  controller: _ControllerW3,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentW3 = ret;
+                    });
+                  }),
+            ),
           ),
         ],
       ),
@@ -308,12 +317,13 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     return GCWAsyncExecuterParameters(LatLngFromW3WJobData(_currentW1 + '.' + _currentW2 + '.' + _currentW3, _APIKey));
   }
 
-
   void _showLatLon(LatLng output) {
     _currentCoordsLatLng = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {_calculateOutput(context);});
+      setState(() {
+        _calculateOutput(context);
+      });
     });
   }
 
@@ -346,10 +356,11 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     _currentCoordsW3W = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {_calculateOutput(context);});
+      setState(() {
+        _calculateOutput(context);
+      });
     });
   }
-
 }
 
 class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
