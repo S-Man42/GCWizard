@@ -45,7 +45,7 @@ GCWTool _infoTool(BuildContext context, GCWTool tool) {
 }
 
 Future<Tuple2<String, String>> _toolInfoText(GCWTool tool) async {
-  var id = _toolId(tool);
+  var id = deeplinkToolId(tool);
   var apiInfo = '';
   if (_hasAPISpecification(tool)) {
     apiInfo = (tool.tool as GCWWebStatefulWidget).apiSpecification!;

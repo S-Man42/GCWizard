@@ -14,6 +14,7 @@ class GCWIconButton extends StatelessWidget {
   final Color? iconColor;
   final Color? backgroundColor;
   final double? rotateDegrees;
+  final bool? noBorder;
 
   GCWIconButton(
       {Key? key,
@@ -24,7 +25,7 @@ class GCWIconButton extends StatelessWidget {
       this.iconSize,
       this.iconColor,
       this.backgroundColor,
-      this.rotateDegrees})
+      this.rotateDegrees, this.noBorder})
       : super(key: key) {
     if (icon == null && customIcon == null) {
       throw Exception('No icon defined');
@@ -69,9 +70,9 @@ class GCWIconButton extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
+            shape: noBorder == null || !noBorder! ? RoundedRectangleBorder(
                 side: BorderSide(color: themeColors().secondary(), width: 1, style: BorderStyle.solid),
-                borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
+                borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)) : null,
             backgroundColor: backgroundColor),
         onPressed: onPressed,
         child: Transform.rotate(

@@ -18,6 +18,8 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/deeplink_utils.dart';
 import 'package:tuple/tuple.dart';
 
 part 'package:gc_wizard/application/webapi/deeplinks/deeplinks_toolinfo.dart';
@@ -80,7 +82,7 @@ GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
     if (name == _questionmark) return _toolNameList(context);
 
     var tool = registeredTools.firstWhereOrNull((_tool) {
-      var id = _toolId(_tool);
+      var id = deeplinkToolId(_tool);
       return id == name || (_tool.deeplinkAlias != null && _tool.deeplinkAlias!.contains(name));
     });
     // if name == toolname/? open tool info
@@ -129,8 +131,8 @@ GCWTool _toolNameList(BuildContext context) {
     toolList.remove(element);
   }
 
-  apiToolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
-  toolList.sort((a, b) => _toolId(a).compareTo(_toolId(b)));
+  apiToolList.sort((a, b) => deeplinkToolId(a).compareTo(deeplinkToolId(b)));
+  toolList.sort((a, b) => deeplinkToolId(a).compareTo(deeplinkToolId(b)));
   apiToolList.addAll(toolList);
 
   return GCWTool(
@@ -169,20 +171,12 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
             context,
             tool,
             snapshot.data?.item2 ?? '',
-            i18n(context, 'about_webversion_url') +
-                '#/' +
-                (tool.deeplinkAlias != null && tool.deeplinkAlias!.isNotEmpty
-                    ? tool.deeplinkAlias!.first
-                    : (snapshot.data?.item1 ?? '')));
+            deepLinkURL(tool, fallbackPath: snapshot.data?.item1));
       });
 }
 
-String _toolId(GCWTool tool) {
-  return (tool.id_prefix ?? '') + tool.id;
-}
-
 Future<Tuple2<String, String>> _toolInfoTextShort(BuildContext context, GCWTool tool) async {
-  var id = _toolId(tool);
+  var id = deeplinkToolId(tool);
   var info = id;
   return Tuple2<String, String>(id, info);
 }
@@ -191,7 +185,7 @@ bool _hasAPISpecification(GCWTool tool) {
   return (tool.tool is GCWWebStatefulWidget) && (tool.tool as GCWWebStatefulWidget).apiSpecification != null;
 }
 
-InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String copyText) {
+InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String url) {
   return InkWell(
       child: Row(
         children: [
@@ -227,7 +221,7 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
                   onPressed: () {
                     var route = _createRoute(
                         context,
-                        WebParameter(title: _toolId(tool), arguments: {_questionmark: _questionmark}, settings: null),
+                        WebParameter(title: deeplinkToolId(tool), arguments: {_questionmark: _questionmark}, settings: null),
                         const RouteSettings());
                     if (route != null) {
                       Navigator.push(context, route);
@@ -237,19 +231,19 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String co
               : Container(
                   width: 40.0,
                 ),
-          copyText.isNotEmpty
+          url.isNotEmpty
               ? GCWIconButton(
                   iconColor: themeColors().mainFont(),
                   size: IconButtonSize.SMALL,
                   icon: Icons.content_copy,
                   onPressed: () {
-                    insertIntoGCWClipboard(context, copyText);
+                    insertIntoGCWClipboard(context, url);
                   },
                 )
               : Container()
         ],
       ),
       onTap: () {
-        Navigator.of(context).push(_buildRoute(context, tool, const RouteSettings()));
+        launchUrl(Uri.parse(url));
       });
 }
