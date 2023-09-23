@@ -21,6 +21,20 @@ WherigoTimerData testOutputTIMERGC78Z6J = const WherigoTimerData(
   TimerType: 'countdown',
 );
 
+String testInputTIMERGC78Z6J = '''
+terminate = Wherigo.ZTimer(cart)
+      terminate.Type = "Countdown"
+      terminate.Duration = 3
+      terminate:Start()
+      Wherigo.MessageBox({Text = message, Callback = cbfunc})
+      function terminate:OnTick()
+        cbfunc()
+      end
+    end
+  end
+end
+''';
+
 String testInputTIMER = 'objupdate_distance = Wherigo.ZTimer(objKlausMastermindKlabuster)\n' +
     'objupdate_distance.Id = "f8e161bb-9069-4a91-8f41-ea3927d37561"\n' +
     'objupdate_distance.Name = "update_distance"\n' +

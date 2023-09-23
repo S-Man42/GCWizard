@@ -1,75 +1,54 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-WherigoAnswer testOutputANSWER =
-WherigoAnswer(InputFunction: '_Ejb_',
-    InputAnswers: [
-  WherigoAnswerData(
-    AnswerAnswer: '491',
-    AnswerHash: '',
-    AnswerActions: [
-      WherigoActionMessageElementData(
+WherigoAnswer testOutputANSWERGC78Z6J = WherigoAnswer(InputFunction: 'zinputFinal', InputAnswers: [
+    WherigoAnswerData(AnswerAnswer: 'Drache\ndrache', AnswerHash: '', AnswerActions: [
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'cartILuebeck.Complete = true'),
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: ' .. Player.CompletionCode .. '),
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: 'zmedialogo'),
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'zitemUnlockCode:MoveTo(Player)'),
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Das war leider nicht korrekt. Versuch es anders.'),
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: 'zmediathavorianer'),
+      WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON, ActionMessageContent: '"Unlock-Code"'),
+    ]),
+]);
+
+WherigoAnswer testOutputANSWER = WherigoAnswer(InputFunction: '_Ejb_', InputAnswers: [
+  WherigoAnswerData(AnswerAnswer: '491', AnswerHash: '', AnswerActions: [
+    WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
-        ActionMessageContent: 'Wunderbach, du scheinst sehr gute Augen zu haben. Doch nun wartet bereits die naechste Aufgabe auf dich. Gehe weiter Richtung Wald, um die weiteren Codes zu suchen. Den gesuchten Code habe ich dir sicherheitshalber auf deinen Notizzettel geschrieben.'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE,
-          ActionMessageContent: '_rZ0wN'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_Aie.Complete = true'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_n1j.Active = true'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_n1j.Visible = true'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_kcK.Active = true'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_kcK.Visible = true'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_4VcW.Active = false'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_lJLB.Active = true'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_L0J.Commands._PxceW.Enabled = false'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_L0J.Commands._geDc.Enabled = false'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: '_L0J:MoveTo(_lJLB)'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-          ActionMessageContent: 'ShowScreen MAINSCREEN'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
-          ActionMessageContent: 'Das war er wohl nicht ... versuche es doch einfach erneut!'
-      ),
-      WherigoActionMessageElementData(
-          ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE,
-          ActionMessageContent: '_rZ0wN'
-      ),
-    ]
-  ) // final List<WherigoActionMessageElementData>
+        ActionMessageContent:
+            'Wunderbach, du scheinst sehr gute Augen zu haben. Doch nun wartet bereits die naechste Aufgabe auf dich. Gehe weiter Richtung Wald, um die weiteren Codes zu suchen. Den gesuchten Code habe ich dir sicherheitshalber auf deinen Notizzettel geschrieben.'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_rZ0wN'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_Aie.Complete = true'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_n1j.Active = true'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_n1j.Visible = true'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_kcK.Active = true'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_kcK.Visible = true'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_4VcW.Active = false'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_lJLB.Active = true'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
+        ActionMessageContent: '_L0J.Commands._PxceW.Enabled = false'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
+        ActionMessageContent: '_L0J.Commands._geDc.Enabled = false'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_L0J:MoveTo(_lJLB)'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'ShowScreen MAINSCREEN'),
+    WherigoActionMessageElementData(
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
+        ActionMessageContent: 'Das war er wohl nicht ... versuche es doch einfach erneut!'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_rZ0wN'),
+  ]) // final List<WherigoActionMessageElementData>
 ]);
 
 String testInputANSWER = '''
@@ -112,6 +91,33 @@ function _Ejb_:OnGetInput(input)
   end
 end''';
 
+String testInputANSWERGC78Z6J = '''
+function zinputFinal:OnGetInput(input)
+  var_Final = input
+  if var_Final ~= nil then
+    if Wherigo.NoCaseEquals(var_Final, "Drache") or Wherigo.NoCaseEquals(var_Final, "drache") then
+      cartILuebeck.Complete = true
+      Wherigo.MessageBox({
+        Text = WWB_multiplatform_string("" .. Player.CompletionCode .. " \n \nZum optionalen Unlocken auf wherigo.com nur die ersten 15 Buchstaben des Codes eingeben! \nDu hast ihn auch jetzt als Gegenstand im Inventar. \n \nDer Code ist user-bezogen. Wurde der Cache als Gruppe gemacht, muß man die 3. Option nehmen und den entsprechenden User nennen!", {PocketPC = 1}),
+        Media = zmedialogo,
+        Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB180
+      })
+      zitemUnlockCode.Description = WWB_multiplatform_string("" .. Player.CompletionCode .. "")
+      zitemUnlockCode:MoveTo(Player)
+    else
+      Wherigo.MessageBox({
+        Text = [[Das war leider nicht korrekt. Versuch es anders.]],
+        Media = zmediathavorianer,
+        Buttons = {
+          "Unlock-Code"
+        },
+        Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB181
+      })
+    end
+  end
+end
+''';
+
 void expectANSWER(
   WherigoAnswer actual,
   WherigoAnswer expected,
@@ -119,7 +125,6 @@ void expectANSWER(
   expect(actual.InputFunction, expected.InputFunction);
 
   List<WherigoAnswerData> listInputAnswers = actual.InputAnswers;
-
   if (expected.InputAnswers.length == listInputAnswers.length) {
     for (int i = 0; i < listInputAnswers.length; i++) {
       expect(listInputAnswers[i].AnswerAnswer, expected.InputAnswers[i].AnswerAnswer);

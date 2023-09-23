@@ -1,6 +1,35 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
+String testInputVARIABLE_BUILDERVARGC78Z6J = '''
+buildervar = {}
+buildervar.var_Anzahl = {}
+buildervar.var_Anzahl.Id = "267b20afe75745002981d1d54753e9cc"
+buildervar.var_Anzahl.Name = "Anzahl"
+buildervar.var_Anzahl.Type = "Number"
+buildervar.var_Anzahl.Data = "0"
+buildervar.var_Bronze = {}
+buildervar.var_Bronze.Id = "5046477a65cb4436ffe0a97fed127221"
+buildervar.var_Bronze.Name = "Bronze"
+buildervar.var_Bronze.Type = "Number"
+buildervar.var_Bronze.Data = "0"
+buildervar.var_Final = {}
+buildervar.var_Final.Id = "dc0ed01b5e82aeaeaf245a2b4080c929"
+buildervar.var_Final.Name = "Final"
+buildervar.var_Final.Type = "String"
+buildervar.var_Final.Data = ""
+buildervar.var_Gold = {}
+buildervar.var_Gold.Id = "c850d1feea2f02f1f26ac05dadbae39a"
+buildervar.var_Gold.Name = "Gold"
+buildervar.var_Gold.Type = "Number"
+buildervar.var_Gold.Data = "0"
+buildervar.var_Silber = {}
+buildervar.var_Silber.Id = "3830970a4f5dfce9292f8d1570e7be50"
+buildervar.var_Silber.Name = "Silber"
+buildervar.var_Silber.Type = "Number"
+buildervar.var_Silber.Data = "0"
+''';
+
 String testInputBUILDERVARIABLE = 'buildervar.Answer = {}\n' +
     'buildervar.Answer.Id = "00000000-0000-0000-0000-000000000000"\n' +
     'buildervar.Answer.Name = "Answer"\n' +

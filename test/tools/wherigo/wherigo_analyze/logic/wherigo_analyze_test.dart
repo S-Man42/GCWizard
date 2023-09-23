@@ -5,7 +5,6 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 import 'package:path/path.dart' as path;
 
-import '../resources/GC78Z6J.dart';
 import 'wherigo_analyze_test_resources_answers.dart';
 import 'wherigo_analyze_test_resources_builder_variable.dart';
 import 'wherigo_analyze_test_resources_character.dart';
@@ -163,7 +162,7 @@ void main() {
         'expectedOutput': testOutputTIMER,
       },
       {
-        'input': luaCodeGC78Z6J,
+        'input': testInputTIMERGC78Z6J,
         'expectedOutput': testOutputTIMERGC78Z6J,
       },
     ];
@@ -280,7 +279,11 @@ void main() {
       {
         'input': testInputINPUT,
         'expectedOutput': testOutputINPUT,
-      }
+      },
+      {
+        'input': testInputINPUTC78Z6J,
+        'expectedOutput': testOutputINPUTGC78Z6J,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -304,7 +307,11 @@ void main() {
       {
         'input': testInputVARIABLE,
         'expectedOutput': testOutputVARIABLE,
-      }
+      },
+      {
+        'input': testInputVARIABLEGC78Z6J,
+        'expectedOutput': testOutputVARIABLEGC78Z6J,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -326,7 +333,7 @@ void main() {
         'expectedOutput': testOutputBUILDERVARIABLE,
       },
       {
-        'input': luaCodeGC78Z6J,
+        'input': testInputVARIABLE_BUILDERVARGC78Z6J,
         'expectedOutput': testOutputBUILDERVARIABLEGC78Z6J,
       },
     ];
@@ -396,7 +403,11 @@ void main() {
       {
         'input': testInputANSWER,
         'expectedOutput': testOutputANSWER,
-      }
+      },
+      {
+        'input': testInputANSWERGC78Z6J,
+        'expectedOutput': testOutputANSWERGC78Z6J,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
