@@ -781,8 +781,19 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandIF() {
     double result;
+    Object? expression = evaluateExpression();
 
-    result = evaluateExpression() as double;
+    if (_isNotANumber(expression)) {
+      _handleError(_INVALIDTYPECAST);
+      return;
+    }
+
+    if (_isAInt(expression)) {
+      result = (expression as int).toDouble();
+    } else {
+      result = expression as double;
+    }
+
     state.executeElse = false;
 
     if (result != 0.0) {
