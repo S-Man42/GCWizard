@@ -238,6 +238,10 @@ class _GeohashingState extends State<Geohashing> {
     _currentOutput.clear();
 
     _geohashing = _buildGeohashing();
+    if (_geohashing!.errorCode == geohashing.ErrorCode.futureDate) {
+      showToast(i18n(context, 'geohashing_future_date'));
+    }
+
     _geohashing!.toLatLng().then((value) {
       if (value != null) {
         var point = GCWMapPoint(

@@ -2280,6 +2280,7 @@
   "geohashing_title": "Geohashing",
   "geohashing_description": "Coordinate format from xkcd webcomic",
   "geohashing_example": "2023-09-10 34 -111",
+  "geohashing_future_date": "The date is too far in the future",
   "geohashing_dow_jones_index": "Dow Jones Index",
   "geohashing_dow_jones_index_online": "The Dow Jones data is loaded from an external internet source (http://geo.crox.net) over which the GC Wizard has no control.\n\nDo you want to continue?",
   "geohashing_dow_jones_index_w30_rule": "from the previous day (W30 rule)",
