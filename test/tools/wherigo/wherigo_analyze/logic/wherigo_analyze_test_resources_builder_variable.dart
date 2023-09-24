@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-String testInputVARIABLE_BUILDERVARGC78Z6J = '''
+String testInputVARIABLE_BUILDERVARGC = '''
 buildervar = {}
 buildervar.var_Anzahl = {}
 buildervar.var_Anzahl.Id = "267b20afe75745002981d1d54753e9cc"
@@ -61,7 +61,7 @@ List<WherigoBuilderVariableData> testOutputBUILDERVARIABLE = [
   ),
 ];
 
-List<WherigoBuilderVariableData> testOutputBUILDERVARIABLEGC78Z6J = [
+List<WherigoBuilderVariableData> testOutputBUILDERVARIABLEGC = [
   const WherigoBuilderVariableData(
     BuilderVariableID: '267b20afe75745002981d1d54753e9cc',
     BuilderVariableName: 'var_Anzahl',

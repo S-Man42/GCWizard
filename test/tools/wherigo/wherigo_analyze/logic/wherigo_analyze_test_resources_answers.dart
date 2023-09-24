@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-WherigoAnswer testOutputANSWERGC78Z6J = WherigoAnswer(InputFunction: 'zinputFinal', InputAnswers: [
+WherigoAnswer testOutputANSWERGC = WherigoAnswer(InputFunction: 'zinputFinal', InputAnswers: [
     WherigoAnswerData(AnswerAnswer: 'Drache\ndrache', AnswerHash: '', AnswerActions: [
       WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'cartILuebeck.Complete = true'),
       WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: ' .. Player.CompletionCode .. '),
@@ -18,7 +18,7 @@ WherigoAnswer testOutputANSWER = WherigoAnswer(InputFunction: '_Ejb_', InputAnsw
     WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
         ActionMessageContent:
-            'Wunderbach, du scheinst sehr gute Augen zu haben. Doch nun wartet bereits die naechste Aufgabe auf dich. Gehe weiter Richtung Wald, um die weiteren Codes zu suchen. Den gesuchten Code habe ich dir sicherheitshalber auf deinen Notizzettel geschrieben.'),
+            'Wunderbach, du scheinst sehr gute Augen zu haben.'),
     WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_rZ0wN'),
     WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_Aie.Complete = true'),
@@ -61,7 +61,7 @@ function _Ejb_:OnGetInput(input)
     _KMOuP()
     _Urwigo.Dialog(false, {
       {
-        Text = "Wunderbach, du scheinst sehr gute Augen zu haben. Doch nun wartet bereits die naechste Aufgabe auf dich. Gehe weiter Richtung Wald, um die weiteren Codes zu suchen. Den gesuchten Code habe ich dir sicherheitshalber auf deinen Notizzettel geschrieben.",
+        Text = "Wunderbach, du scheinst sehr gute Augen zu haben.",
         Media = _rZ0wN,
         Buttons = {"Ok"}
       }
@@ -91,14 +91,14 @@ function _Ejb_:OnGetInput(input)
   end
 end''';
 
-String testInputANSWERGC78Z6J = '''
+String testInputANSWERGC = '''
 function zinputFinal:OnGetInput(input)
   var_Final = input
   if var_Final ~= nil then
     if Wherigo.NoCaseEquals(var_Final, "Drache") or Wherigo.NoCaseEquals(var_Final, "drache") then
       cartILuebeck.Complete = true
       Wherigo.MessageBox({
-        Text = WWB_multiplatform_string("" .. Player.CompletionCode .. " \n \nZum optionalen Unlocken auf wherigo.com nur die ersten 15 Buchstaben des Codes eingeben! \nDu hast ihn auch jetzt als Gegenstand im Inventar. \n \nDer Code ist user-bezogen. Wurde der Cache als Gruppe gemacht, muß man die 3. Option nehmen und den entsprechenden User nennen!", {PocketPC = 1}),
+        Text = WWB_multiplatform_string("" .. Player.CompletionCode .. "}),
         Media = zmedialogo,
         Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB180
       })

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-WherigoInputData testOutputINPUTGC78Z6J = const WherigoInputData(
+WherigoInputData testOutputINPUTGC = const WherigoInputData(
   InputLUAName: 'zinputFinal',
   InputID: 'bc3d7e27b2632afb762386925af7ef65',
   InputVariableID: 'dc0ed01b5e82aeaeaf245a2b4080c929',
@@ -31,7 +31,7 @@ WherigoInputData testOutputINPUT = const WherigoInputData(
   InputAnswers: [],
 );
 
-String testInputINPUTC78Z6J = '''
+String testInputINPUTGC = '''
 zinputFinal = Wherigo.ZInput(cartILuebeck)
 zinputFinal.Id = "bc3d7e27b2632afb762386925af7ef65"
 zinputFinal.Name = "Final"

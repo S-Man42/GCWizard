@@ -11,7 +11,7 @@ WherigoTimerData testOutputTIMER = const WherigoTimerData(
   TimerType: 'interval',
 );
 
-WherigoTimerData testOutputTIMERGC78Z6J = const WherigoTimerData(
+WherigoTimerData testOutputTIMERGC = const WherigoTimerData(
   TimerLUAName: 'terminate',
   TimerID: '',
   TimerName: '',
@@ -21,7 +21,7 @@ WherigoTimerData testOutputTIMERGC78Z6J = const WherigoTimerData(
   TimerType: 'countdown',
 );
 
-String testInputTIMERGC78Z6J = '''
+String testInputTIMERGC = '''
 terminate = Wherigo.ZTimer(cart)
       terminate.Type = "Countdown"
       terminate.Duration = 3

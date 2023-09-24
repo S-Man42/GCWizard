@@ -162,8 +162,8 @@ void main() {
         'expectedOutput': testOutputTIMER,
       },
       {
-        'input': testInputTIMERGC78Z6J,
-        'expectedOutput': testOutputTIMERGC78Z6J,
+        'input': testInputTIMERGC,
+        'expectedOutput': testOutputTIMERGC,
       },
     ];
 
@@ -281,8 +281,8 @@ void main() {
         'expectedOutput': testOutputINPUT,
       },
       {
-        'input': testInputINPUTC78Z6J,
-        'expectedOutput': testOutputINPUTGC78Z6J,
+        'input': testInputINPUTGC,
+        'expectedOutput': testOutputINPUTGC,
       },
     ];
 
@@ -333,8 +333,8 @@ void main() {
         'expectedOutput': testOutputBUILDERVARIABLE,
       },
       {
-        'input': testInputVARIABLE_BUILDERVARGC78Z6J,
-        'expectedOutput': testOutputBUILDERVARIABLEGC78Z6J,
+        'input': testInputVARIABLE_BUILDERVARGC,
+        'expectedOutput': testOutputBUILDERVARIABLEGC,
       },
     ];
 
@@ -405,8 +405,8 @@ void main() {
         'expectedOutput': testOutputANSWER,
       },
       {
-        'input': testInputANSWERGC78Z6J,
-        'expectedOutput': testOutputANSWERGC78Z6J,
+        'input': testInputANSWERGC,
+        'expectedOutput': testOutputANSWERGC,
       },
     ];
 
