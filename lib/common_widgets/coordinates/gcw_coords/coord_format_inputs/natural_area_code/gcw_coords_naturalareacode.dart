@@ -5,7 +5,9 @@ class _GCWCoordsNaturalAreaCode extends StatefulWidget {
   final NaturalAreaCode coordinates;
   final bool initialize;
 
-  const _GCWCoordsNaturalAreaCode({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsNaturalAreaCode(
+      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsNaturalAreaCodeState createState() => _GCWCoordsNaturalAreaCodeState();
@@ -16,8 +18,6 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
   late TextEditingController _controllerY;
   var _currentX = '';
   var _currentY = '';
-
-
 
   @override
   void initState() {
@@ -44,7 +44,6 @@ class _GCWCoordsNaturalAreaCodeState extends State<_GCWCoordsNaturalAreaCode> {
 
       _controllerX.text = _currentX;
       _controllerY.text = _currentY;
-
     }
 
     return Column(children: <Widget>[

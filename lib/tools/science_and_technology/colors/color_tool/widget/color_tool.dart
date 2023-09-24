@@ -17,7 +17,7 @@ class ColorTool extends StatefulWidget {
   const ColorTool({Key? key, this.color}) : super(key: key);
 
   @override
- _ColorToolState createState() => _ColorToolState();
+  _ColorToolState createState() => _ColorToolState();
 }
 
 class _ColorToolState extends State<ColorTool> {
@@ -157,8 +157,6 @@ class _ColorToolState extends State<ColorTool> {
     }
 
     return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: colorSpaceOutputs
-    );
+        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: colorSpaceOutputs);
   }
 }

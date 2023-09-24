@@ -37,12 +37,8 @@ class SymbolData {
   ui.Image? standardImage;
   ui.Image? specialEncryptionImage;
 
-  SymbolData({
-    required this.path,
-    required this.bytes,
-    this.displayName,
-    this.standardImage,
-    this.specialEncryptionImage});
+  SymbolData(
+      {required this.path, required this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 
   Size? imageSize() {
     if (standardImage == null) return null;
@@ -283,5 +279,5 @@ String filenameWithoutSuffix(String filename) {
 }
 
 class defaultSymbolTableData extends SymbolTableData {
-  defaultSymbolTableData(BuildContext context) : super (context, '');
+  defaultSymbolTableData(BuildContext context) : super(context, '');
 }

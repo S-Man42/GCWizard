@@ -2,7 +2,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dar
 import 'package:gc_wizard/utils/alphabets.dart';
 
 String encryptOneTimePad(String input, String key, {int keyOffset = 0}) {
-
   input = input.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
   key = key.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
 
@@ -26,7 +25,6 @@ String encryptOneTimePad(String input, String key, {int keyOffset = 0}) {
 }
 
 String decryptOneTimePad(String input, String key, {int keyOffset = 0}) {
-
   input = input.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
   key = key.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
 

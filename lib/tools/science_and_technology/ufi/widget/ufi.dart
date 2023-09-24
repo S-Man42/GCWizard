@@ -14,7 +14,7 @@ class UFI extends StatefulWidget {
   const UFI({Key? key}) : super(key: key);
 
   @override
- _UFIState createState() => _UFIState();
+  _UFIState createState() => _UFIState();
 }
 
 class _UFIState extends State<UFI> {
@@ -34,8 +34,8 @@ class _UFIState extends State<UFI> {
   late Widget _outputEncode;
   late Widget _outputDecode;
 
-  final _ufiMaskFormatter = GCWMaskTextInputFormatter(
-      mask: '####-' * 3 + '####', filter: {"#": RegExp(r'[A-Za-z0-9]')});
+  final _ufiMaskFormatter =
+      GCWMaskTextInputFormatter(mask: '####-' * 3 + '####', filter: {"#": RegExp(r'[A-Za-z0-9]')});
 
   @override
   void initState() {
@@ -83,59 +83,57 @@ class _UFIState extends State<UFI> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left ?
-            Column(
-              children: [
-                GCWDropDown(
-                  title: i18n(context, 'ufi_country'),
-                  value: _currentCountryCode,
-                  items: _countries.entries.map((country) {
-                    return GCWDropDownMenuItem(
-                      value: country.key,
-                      child: country.value
-                    );
-                  }).toList(),
-                  onChanged: (String value) {
-                    setState(() {
-                      _currentCountryCode = value;
-                    });
-                  }
-                ),
-                GCWTextField(
-                  title: _currentCountryCode == logic.UFI_COMPANYKEY ? i18n(context, 'common_key') : i18n(context, 'ufi_vat'),
-                  controller: _vatController,
-                  onChanged: (String text) {
-                    setState(() {
-                      _currentVat = text;
-                    });
-                  },
-                ),
-                GCWTextField(
-                  title: i18n(context, 'ufi_formula'),
-                  inputFormatters: [GCWIntegerTextInputFormatter()],
-                  controller: _formulationController,
-                  onChanged: (String text) {
-                    setState(() {
-                      _currentFormulation = text;
-                    });
-                  },
-                ),
-              ],
-            ):
-            Column(
-              children: [
-                GCWTextField(
-                  title: 'UFI',
-                  controller: _ufiCodeController,
-                  inputFormatters: [_ufiMaskFormatter],
-                  onChanged: (String text) {
-                    setState(() {
-                      _currentUFICode = text;
-                    });
-                  },
-                ),
-              ],
-            ),
+        _currentMode == GCWSwitchPosition.left
+            ? Column(
+                children: [
+                  GCWDropDown(
+                      title: i18n(context, 'ufi_country'),
+                      value: _currentCountryCode,
+                      items: _countries.entries.map((country) {
+                        return GCWDropDownMenuItem(value: country.key, child: country.value);
+                      }).toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          _currentCountryCode = value;
+                        });
+                      }),
+                  GCWTextField(
+                    title: _currentCountryCode == logic.UFI_COMPANYKEY
+                        ? i18n(context, 'common_key')
+                        : i18n(context, 'ufi_vat'),
+                    controller: _vatController,
+                    onChanged: (String text) {
+                      setState(() {
+                        _currentVat = text;
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    title: i18n(context, 'ufi_formula'),
+                    inputFormatters: [GCWIntegerTextInputFormatter()],
+                    controller: _formulationController,
+                    onChanged: (String text) {
+                      setState(() {
+                        _currentFormulation = text;
+                      });
+                    },
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  GCWTextField(
+                    title: 'UFI',
+                    controller: _ufiCodeController,
+                    inputFormatters: [_ufiMaskFormatter],
+                    onChanged: (String text) {
+                      setState(() {
+                        _currentUFICode = text;
+                      });
+                    },
+                  ),
+                ],
+              ),
         GCWSubmitButton(onPressed: () {
           setState(() {
             if (_currentMode == GCWSwitchPosition.left) {
@@ -160,12 +158,13 @@ class _UFIState extends State<UFI> {
 
     try {
       var ufi = logic.decodeUFI(ufiCode);
-      return GCWDefaultOutput(child: GCWColumnedMultilineOutput(
-          data: [
-            ufi.countryCode == logic.UFI_COMPANYKEY ? [ i18n(context, logic.UFI_COMPANYKEY), ufi.vatNumber] : [i18n(context, 'ufi_vat'), ufi.countryCode + ufi.vatNumber],
-            [i18n(context, 'ufi_formula'), ufi.formulationNumber],
-          ]
-      ));
+      return GCWDefaultOutput(
+          child: GCWColumnedMultilineOutput(data: [
+        ufi.countryCode == logic.UFI_COMPANYKEY
+            ? [i18n(context, logic.UFI_COMPANYKEY), ufi.vatNumber]
+            : [i18n(context, 'ufi_vat'), ufi.countryCode + ufi.vatNumber],
+        [i18n(context, 'ufi_formula'), ufi.formulationNumber],
+      ]));
     } catch (e) {
       return GCWDefaultOutput(
         child: i18n(context, e.toString().substring(11)),
@@ -175,9 +174,7 @@ class _UFIState extends State<UFI> {
 
   Widget _calculateEncode() {
     if (_currentVat.isEmpty || _currentFormulation.isEmpty) {
-      return GCWDefaultOutput(
-          child: i18n(context, 'ufi_emptyinput')
-      );
+      return GCWDefaultOutput(child: i18n(context, 'ufi_emptyinput'));
     }
 
     String out;
@@ -187,13 +184,12 @@ class _UFIState extends State<UFI> {
         vat = vat.substring(_currentCountryCode.length);
       }
 
-      out = logic.encodeUFI(logic.UFI(countryCode: _currentCountryCode, vatNumber: vat, formulationNumber: _currentFormulation));
-    } catch(e) {
+      out = logic.encodeUFI(
+          logic.UFI(countryCode: _currentCountryCode, vatNumber: vat, formulationNumber: _currentFormulation));
+    } catch (e) {
       out = i18n(context, e.toString().substring(11));
     }
 
-    return GCWDefaultOutput(
-        child: out
-    );
+    return GCWDefaultOutput(child: out);
   }
 }

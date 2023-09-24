@@ -21,8 +21,6 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
 
   CoordinateFormatKey _currentSubtype = defaultGaussKruegerType;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -52,7 +50,6 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
 
       _eastingController.text = _currentEasting.value.toString();
       _northingController.text = _currentNorthing.value.toString();
-
     }
 
     return Column(children: <Widget>[
@@ -88,4 +85,3 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
     widget.onChanged(gaussKrueger);
   }
 }
-

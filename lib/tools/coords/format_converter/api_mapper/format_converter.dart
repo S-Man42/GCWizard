@@ -1,44 +1,43 @@
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 
-import 'package:gc_wizard/application/webapi/api_mapper.dart';
-
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Format Converter Tool",
-			"responses": {
+  "/key_label" : {
+    "get": {
+      "summary": "Format Converter Tool",
+      "responses": {
         "description": "Converts coordinate formats"
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for parse coordinates",
-				"schema": {
-					"type": "string"
-				}
-			},
-			{
-				"in": "query",
-				"name": "toformat",
-				"description": "Target coordinate format",
-				"schema": {
-					"type": "string",
-					"enum": [
-						coordinate_formats
-					],
-					"default": "defaultCoordinateFormat"
-				}
-			}
-		]
-	}
+      }
+    },
+    "parameters" : [
+      {
+        "in": "query",
+        "name": "input",
+        "required": true,
+        "description": "Input data for parse coordinates",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "in": "query",
+        "name": "toformat",
+        "description": "Target coordinate format",
+        "schema": {
+          "type": "string",
+          "enum": [
+            coordinate_formats
+          ],
+          "default": "defaultCoordinateFormat"
+        }
+      }
+    ]
+  }
 }
 ''';
 
@@ -66,15 +65,15 @@ class FormatConverterAPIMapper extends APIMapper {
   /// convert doLogic output to map
   @override
   Map<String, String> toMap(Object result) {
-    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+    return <String, String>{enumName(WEBPARAMETER.result.toString()): result.toString()};
   }
 
   @override
   String apiSpecification() {
     var info = _apiSpecification;
 
-    var formats = allCoordinateFormatMetadata.map((entry) => '						"' + entry.persistenceKey + '"').join(',\n');
-    info = info.replaceAll('						coordinate_formats', formats);
+    var formats = allCoordinateFormatMetadata.map((entry) => '            "' + entry.persistenceKey + '"').join(',\n');
+    info = info.replaceAll('            coordinate_formats', formats);
     return info.replaceAll('/key_label', Key);
   }
 }

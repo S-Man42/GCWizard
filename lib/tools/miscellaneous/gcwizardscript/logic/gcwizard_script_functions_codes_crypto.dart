@@ -152,7 +152,7 @@ BCDType _intToBCDType(int type) {
   }
 }
 
-Object _GCCode(Object text, Object mode){
+Object _GCCode(Object text, Object mode) {
   if (_isNotAInt(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';

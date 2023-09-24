@@ -5,7 +5,9 @@ class _GCWCoordsOpenLocationCode extends StatefulWidget {
   final OpenLocationCode coordinates;
   final bool initialize;
 
-  const _GCWCoordsOpenLocationCode({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsOpenLocationCode(
+      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsOpenLocationCodeState createState() => _GCWCoordsOpenLocationCodeState();
@@ -18,8 +20,6 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
   final _maskInputFormatter = GCWMaskTextInputFormatter(
       mask: '**#################',
       filter: {"*": RegExp(r'[23456789CFGHJMPQRVcfghjmpqrv]'), "#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx+]')});
-
-
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
       _currentCoord = openLocationCode.text;
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

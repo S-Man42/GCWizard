@@ -5,40 +5,46 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 const String _apiSpecification = '''
 {
-	"/key_label" : {
-		"get": {
-			"summary": "Alphabet Values Tool",
-			"responses": {
-        "description": "Encoded or decoded text."
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for encoding or decoding text",
-				"schema": {
-					"type": "string"
-				}
-			},
-			{
-				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
-				"schema": {
-					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "encode"
-				}
-			}
-		]
-	}
+  "/key_label" : {
+    "get": {
+      "summary": "Format Converter Tool",
+      "responses": {
+        "200": {
+          "description": "Converts coordinate formats"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for parse coordinates",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "toformat",
+          "description": "Target coordinate format",
+          "schema": {
+            "type": "string",
+            "enum": [
+              coordinate_formats
+            ],
+            "default": "defaultCoordinateFormat"
+          }
+        }
+      ]
+    }
+  }
 }
-
 ''';
 
 class AlphabetValuesAPIMapper extends APIMapper {
@@ -62,8 +68,7 @@ class AlphabetValuesAPIMapper extends APIMapper {
       var values = textToIntList(input);
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(values);
     } else {
-      return intListToString(
-          logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
+      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(input, keepNumbers: true),
           delimiter: ' ');
     }
   }
@@ -71,7 +76,7 @@ class AlphabetValuesAPIMapper extends APIMapper {
   /// convert doLogic output to map
   @override
   Map<String, String> toMap(Object result) {
-    return <String, String>{enumName(WEBPARAMETER.result.toString()) : result.toString()};
+    return <String, String>{enumName(WEBPARAMETER.result.toString()): result.toString()};
   }
 
   @override

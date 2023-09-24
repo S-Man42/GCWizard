@@ -6,11 +6,8 @@ import 'package:gc_wizard/utils/constants.dart';
 const MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS = 'multidecoder_tool_braille_dot_numbers_title';
 
 class MultiDecoderToolBrailleDotNumbers extends AbstractMultiDecoderTool {
-  MultiDecoderToolBrailleDotNumbers({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolBrailleDotNumbers(
+      {Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,

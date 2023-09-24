@@ -181,12 +181,9 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateExifSections(List<Widget> widgets, Map<String, List<List<dynamic>>> _tableTags) {
     _tableTags.forEach((section, tags) {
       widgets.add(GCWOutput(
-          title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section),
-          child: GCWColumnedMultilineOutput(
-              data: tags
-          ),
-        )
-      );
+        title: i18n(context, "exif_section_" + section, ifTranslationNotExists: section),
+        child: GCWColumnedMultilineOutput(data: tags),
+      ));
     });
   }
 
@@ -221,11 +218,9 @@ class _ExifReaderState extends State<ExifReader> {
 
     if (data.isNotEmpty) {
       widgets.add(GCWOutput(
-          title: fileType.toString().split('.').last,
-          child: GCWColumnedMultilineOutput(
-              data: data),
-          )
-      );
+        title: fileType.toString().split('.').last,
+        child: GCWColumnedMultilineOutput(data: data),
+      ));
     }
   }
 
@@ -253,15 +248,14 @@ class _ExifReaderState extends State<ExifReader> {
           title: i18n(context, "exif_section_file"),
           child: GCWColumnedMultilineOutput(
             data: [
-                    [i18n(context, 'exif_filename'), file.name ?? ''],
-                    [i18n(context, 'exif_filesize_bytes'), file.bytes.length],
-                    [i18n(context, 'exif_filesize_kb'), (file.bytes.length / 1024).ceil()],
-                    lastModified != null ? ['lastModified', lastModified] : [null, null],
-                    lastAccessed != null ? ['lastAccessed', lastAccessed] : [null, null],
-                    [i18n(context, 'exif_extension'), file.extension]
-                  ],
-          )
-      ));
+              [i18n(context, 'exif_filename'), file.name ?? ''],
+              [i18n(context, 'exif_filesize_bytes'), file.bytes.length],
+              [i18n(context, 'exif_filesize_kb'), (file.bytes.length / 1024).ceil()],
+              lastModified != null ? ['lastModified', lastModified] : [null, null],
+              lastAccessed != null ? ['lastAccessed', lastAccessed] : [null, null],
+              [i18n(context, 'exif_extension'), file.extension]
+            ],
+          )));
     }
   }
 
@@ -274,20 +268,18 @@ class _ExifReaderState extends State<ExifReader> {
     widgets.add(GCWOutput(
         title: i18n(context, 'exif_section_image'),
         child: GCWColumnedMultilineOutput(
-            data: [
-                    [i18n(context, 'exif_width'), image.width ],
-                    [i18n(context, 'exif_height'), image.height],
-                    ['Color Channels', channels ],
-                    ['ICC Color Profile', image.iccProfile],
-                    // Only for frames within an animation
-                    // [i18n(context, 'exif_duration'), image.duration ?? ''],
-                    // ['Offset X', image.xOffset ?? ''],
-                    // ['Offset Y', image.yOffset ?? ''],
-                    // image.exif
-                  ],
-        )
-    ));
-
+          data: [
+            [i18n(context, 'exif_width'), image.width],
+            [i18n(context, 'exif_height'), image.height],
+            ['Color Channels', channels],
+            ['ICC Color Profile', image.iccProfile],
+            // Only for frames within an animation
+            // [i18n(context, 'exif_duration'), image.duration ?? ''],
+            // ['Offset X', image.xOffset ?? ''],
+            // ['Offset Y', image.yOffset ?? ''],
+            // image.exif
+          ],
+        )));
   }
 
   Future<Image.Image?> _completeImageMetadata(GCWFile file) async {

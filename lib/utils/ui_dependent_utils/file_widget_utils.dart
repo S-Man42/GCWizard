@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:universal_html/html.dart' as html;
 
-enum _SAVE_TYPE {STRING, BYTE_DATA}
+enum _SAVE_TYPE { STRING, BYTE_DATA }
 
 Future<bool> saveByteDataToFile(BuildContext context, Uint8List data, String fileName) async {
   return _saveDataToFile(context, data, fileName, _SAVE_TYPE.BYTE_DATA);

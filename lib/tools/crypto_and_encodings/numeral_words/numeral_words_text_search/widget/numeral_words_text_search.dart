@@ -20,7 +20,7 @@ class NumeralWordsTextSearch extends StatefulWidget {
   const NumeralWordsTextSearch({Key? key}) : super(key: key);
 
   @override
- _NumeralWordsTextSearchState createState() => _NumeralWordsTextSearchState();
+  _NumeralWordsTextSearchState createState() => _NumeralWordsTextSearchState();
 }
 
 class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
@@ -144,8 +144,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
-      _codeControllerHighlighted.text =
-          _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-zäöüß0-9]'), '');
+      _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-zäöüß0-9]'), '');
     }
 
     return Column(
@@ -170,12 +169,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                 text: i18n(context, 'common_outputdetail'),
                 suppressTopSpace: false,
                 expanded: true,
-                child: GCWColumnedMultilineOutput(
-                    data: columnData,
-                    flexValues: const [1, 2],
-                    copyColumn: 1
-                )
-              ),
+                child: GCWColumnedMultilineOutput(data: columnData, flexValues: const [1, 2], copyColumn: 1)),
       ],
     );
   }

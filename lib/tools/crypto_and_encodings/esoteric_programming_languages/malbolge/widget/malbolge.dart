@@ -14,7 +14,7 @@ class Malbolge extends StatefulWidget {
   const Malbolge({Key? key}) : super(key: key);
 
   @override
- _MalbolgeState createState() => _MalbolgeState();
+  _MalbolgeState createState() => _MalbolgeState();
 }
 
 class _MalbolgeState extends State<Malbolge> {

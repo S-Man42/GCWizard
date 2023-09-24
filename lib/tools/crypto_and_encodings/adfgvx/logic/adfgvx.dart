@@ -121,8 +121,7 @@ String? _decrypt(String input, String substitutionKey, String transpositionKey, 
       firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
   if (alphabet == null) return null;
 
-  var polybiosOutput =
-      decryptPolybios(transposed, adfgvxMode, mode: PolybiosMode.CUSTOM, fillAlphabet: alphabet);
+  var polybiosOutput = decryptPolybios(transposed, adfgvxMode, mode: PolybiosMode.CUSTOM, fillAlphabet: alphabet);
 
   if (polybiosOutput == null) return null;
 

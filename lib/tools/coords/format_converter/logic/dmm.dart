@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:latlong2/latlong.dart';
@@ -57,9 +57,7 @@ DMM? parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString 
   if (regex.hasMatch(_input)) {
     RegExpMatch matches = regex.firstMatch(_input)!;
 
-    if (matches.group(2) == null
-        || matches.group(3) == null
-    ) {
+    if (matches.group(2) == null || matches.group(3) == null) {
       return null;
     }
 
@@ -85,9 +83,7 @@ DMM? parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString 
 
     var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
-    if (matches.group(6) == null
-        || matches.group(7) == null
-    ) {
+    if (matches.group(6) == null || matches.group(7) == null) {
       return null;
     }
 
@@ -134,9 +130,7 @@ DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
-    if (matches.group(2) == null
-      || matches.group(4) == null
-    ) {
+    if (matches.group(2) == null || matches.group(4) == null) {
       return null;
     }
 
@@ -162,9 +156,7 @@ DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
 
     var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
-    if (matches.group(6) == null
-        || matches.group(8) == null
-    ) {
+    if (matches.group(6) == null || matches.group(8) == null) {
       return null;
     }
 

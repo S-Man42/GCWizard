@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:collection/collection.dart';
-import 'package:http/http.dart' as http;
 
 const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
@@ -31,17 +31,15 @@ class Geohashing {
 
   @override
   String toString([int? precision]) {
-    return DateFormat('yyyy-MM-dd').format(date) + ' ' +
-            latitude.toString() + ' ' + longitude.toString();
+    return DateFormat('yyyy-MM-dd').format(date) + ' ' + latitude.toString() + ' ' + longitude.toString();
   }
 }
-
 
 Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
   if (geohashing.dowJonesIndex <= 0) {
     var _date = geohashing.date;
     if (w30RuleNecessary(geohashing)) {
-      _date = _date.add(const Duration (days: -1));
+      _date = _date.add(const Duration(days: -1));
     }
     geohashing.dowJonesIndex = await dowJonesIndex(_date) ?? 0;
   }
@@ -55,7 +53,7 @@ Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
   var lng = _hexToDec(md5.substring(16));
 
   return LatLng((geohashing.latitude.abs() + lat) * (geohashing.latitude < 0 ? -1 : 1),
-                (geohashing.longitude.abs() + lng) * (geohashing.longitude < 0 ? -1 : 1));
+      (geohashing.longitude.abs() + lng) * (geohashing.longitude < 0 ? -1 : 1));
 }
 
 Geohashing? parseGeohashing(String input) {
@@ -70,12 +68,8 @@ Geohashing? parseGeohashing(String input) {
       dec = DEC.parse(decString, wholeString: false); // test after date
     }
     if (dec != null) {
-      return Geohashing(DateTime (
-            int.parse(match.group(1)!),
-            int.parse(match.group(2)!),
-            int.parse(match.group(3)!)),
-            dec.latitude.truncate(),
-            dec.longitude.truncate());
+      return Geohashing(DateTime(int.parse(match.group(1)!), int.parse(match.group(2)!), int.parse(match.group(3)!)),
+          dec.latitude.truncate(), dec.longitude.truncate());
     }
   }
   return null;
@@ -105,7 +99,9 @@ bool w30RuleNecessary(Geohashing geohashing) {
 }
 
 double _hexToDec(String input) {
-  var t = _toValidChars(input).split('').toList()
+  var t = _toValidChars(input)
+      .split('')
+      .toList()
       .mapIndexed((index, char) => _charToValue(char, index))
       .reduce((memo, element) => memo + element);
 
@@ -113,9 +109,9 @@ double _hexToDec(String input) {
 }
 
 String _toValidChars(String input) {
-  return input = input.toUpperCase().replaceAll(RegExp('[^' + _VALID_CHARS +']'), '');
+  return input = input.toUpperCase().replaceAll(RegExp('[^' + _VALID_CHARS + ']'), '');
 }
 
-double _charToValue (String char, int index) {
+double _charToValue(String char, int index) {
   return _VALID_CHARS.indexOf(char) * pow(16, -(index + 1)).toDouble();
 }

@@ -5,7 +5,8 @@ class _GCWCoordsMaidenhead extends StatefulWidget {
   final Maidenhead coordinates;
   final bool initialize;
 
-  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsMaidenheadState createState() => _GCWCoordsMaidenheadState();
@@ -14,8 +15,6 @@ class _GCWCoordsMaidenhead extends StatefulWidget {
 class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
   late TextEditingController _controller;
   var _currentCoord = '';
-
-
 
   @override
   void initState() {
@@ -36,7 +35,6 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
       _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

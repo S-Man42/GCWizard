@@ -16,7 +16,7 @@ class BundeswehrTalkingBoardObfuscation extends StatefulWidget {
   const BundeswehrTalkingBoardObfuscation({Key? key}) : super(key: key);
 
   @override
- _BundeswehrTalkingBoardObfuscationState createState() => _BundeswehrTalkingBoardObfuscationState();
+  _BundeswehrTalkingBoardObfuscationState createState() => _BundeswehrTalkingBoardObfuscationState();
 }
 
 class _BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoardObfuscation> {
@@ -192,7 +192,7 @@ class _BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoa
     List<String> _rowTitle;
     List<String> _numeralCode = [];
     Map<String, List<String>> _tableEncoding = {};
-    if (custom ==  true) {
+    if (custom == true) {
       if (xAxis == null || xAxis.isEmpty || yAxis == null || yAxis.isEmpty) {
         _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE;
         return;

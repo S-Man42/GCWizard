@@ -27,7 +27,7 @@ class SaveRestoreSettings extends StatefulWidget {
   const SaveRestoreSettings({Key? key}) : super(key: key);
 
   @override
- _SaveRestoreSettingsState createState() => _SaveRestoreSettingsState();
+  _SaveRestoreSettingsState createState() => _SaveRestoreSettingsState();
 }
 
 class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
@@ -62,7 +62,8 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
             showGCWAlertDialog(
               context,
               i18n(context, 'settings_saverestore_restore_warning_title'),
-              i18n(context, 'settings_saverestore_restore_warning_text'), () {
+              i18n(context, 'settings_saverestore_restore_warning_text'),
+              () {
                 openFileExplorer(allowedFileTypes: [FileType.GCW]).then((GCWFile? file) {
                   if (file == null) {
                     showToast(i18n(context, 'common_loadfile_exception_nofile'));
@@ -90,7 +91,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                     });
 
                     showToast(i18n(context, 'settings_saverestore_restore_success'));
-                  } catch(e) {
+                  } catch (e) {
                     showToast(i18n(context, 'settings_saverestore_restore_failed'));
                   }
                 });
@@ -106,10 +107,10 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
           onPressed: () {
             showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_resetall_title'),
                 i18n(context, 'settings_preferences_warning_resetall_text'), () {
-                  setState(() {
-                    restoreAllDefaultPreferencesAndRebuild(context);
-                  });
-                });
+              setState(() {
+                restoreAllDefaultPreferencesAndRebuild(context);
+              });
+            });
           },
         ),
         const GCWDivider(),
@@ -120,14 +121,11 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                 Icon(Icons.warning_amber, color: themeColors().secondary()),
                 Container(padding: const EdgeInsets.symmetric(horizontal: DOUBLE_DEFAULT_MARGIN)),
                 Flexible(
-                  child: GCWText(
-                      text: i18n(context, 'settings_saverestore_restore_restart'),
-                      style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2)
-                  )
-                ),
+                    child: GCWText(
+                        text: i18n(context, 'settings_saverestore_restore_restart'),
+                        style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2))),
               ],
-            )
-        ),
+            )),
 
         // always on bottom
         Container(margin: const EdgeInsets.only(top: 50.0), child: const GCWDivider()),
@@ -138,10 +136,10 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
               context,
               i18n(context, 'settings_preferences_warning_title'),
               i18n(context, 'settings_preferences_warning_text'),
-                  () {
+              () {
                 Navigator.of(context)
                     .push(NoAnimationMaterialPageRoute<GCWTool>(
-                    builder: (context) => GCWTool(tool: const SettingsPreferences(), id: 'settings_preferences')))
+                        builder: (context) => GCWTool(tool: const SettingsPreferences(), id: 'settings_preferences')))
                     .whenComplete(() {
                   setState(() {
                     AppBuilder.of(context).rebuild();

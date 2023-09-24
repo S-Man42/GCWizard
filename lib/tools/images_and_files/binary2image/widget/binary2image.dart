@@ -19,7 +19,7 @@ class Binary2Image extends StatefulWidget {
   const Binary2Image({Key? key}) : super(key: key);
 
   @override
- _Binary2ImageState createState() => _Binary2ImageState();
+  _Binary2ImageState createState() => _Binary2ImageState();
 }
 
 class _Binary2ImageState extends State<Binary2Image> {

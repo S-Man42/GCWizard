@@ -11,7 +11,7 @@ class RSADCalculator extends StatefulWidget {
   const RSADCalculator({Key? key}) : super(key: key);
 
   @override
- _RSADCalculatorState createState() => _RSADCalculatorState();
+  _RSADCalculatorState createState() => _RSADCalculatorState();
 }
 
 class _RSADCalculatorState extends State<RSADCalculator> {
@@ -66,9 +66,7 @@ class _RSADCalculatorState extends State<RSADCalculator> {
   }
 
   void _calculateOutput() {
-    if (_currentE.isEmpty ||
-        _currentP.isEmpty ||
-        _currentQ.isEmpty) {
+    if (_currentE.isEmpty || _currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 

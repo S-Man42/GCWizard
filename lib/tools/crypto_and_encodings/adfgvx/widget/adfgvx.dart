@@ -12,7 +12,7 @@ class ADFGVX extends StatefulWidget {
   const ADFGVX({Key? key}) : super(key: key);
 
   @override
- _ADFGVXState createState() => _ADFGVXState();
+  _ADFGVXState createState() => _ADFGVXState();
 }
 
 class _ADFGVXState extends State<ADFGVX> {

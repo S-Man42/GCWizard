@@ -11,7 +11,7 @@ class TapCode extends StatefulWidget {
   const TapCode({Key? key}) : super(key: key);
 
   @override
- _TapCodeState createState() => _TapCodeState();
+  _TapCodeState createState() => _TapCodeState();
 }
 
 class _TapCodeState extends State<TapCode> {

@@ -17,7 +17,7 @@ class NumeralWordsConverter extends StatefulWidget {
   const NumeralWordsConverter({Key? key}) : super(key: key);
 
   @override
- _NumeralWordsConverterState createState() => _NumeralWordsConverterState();
+  _NumeralWordsConverterState createState() => _NumeralWordsConverterState();
 }
 
 class _NumeralWordsConverterState extends State<NumeralWordsConverter> {
@@ -114,27 +114,26 @@ class _NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
     return GCWDefaultOutput(
         child: Column(children: <Widget>[
-            Column(
-              children: <Widget>[
-                GCWOutputText(
-                  text: output.numeralWord,
-                ),
-                if (output.nameOfNumberSystem.isNotEmpty)
-                  Column(
-                    children: <Widget>[
-                      GCWTextDivider(text: i18n(context, output.nameOfNumberSystem)),
-                      GCWOutputText(
-                        text: output.numbersystem,
-                      ),
-                    ]
-                  )
-              ],
-            ),
-        ]));
+      Column(
+        children: <Widget>[
+          GCWOutputText(
+            text: output.numeralWord,
+          ),
+          if (output.nameOfNumberSystem.isNotEmpty)
+            Column(children: <Widget>[
+              GCWTextDivider(text: i18n(context, output.nameOfNumberSystem)),
+              GCWOutputText(
+                text: output.numbersystem,
+              ),
+            ])
+        ],
+      ),
+    ]));
   }
 
   Widget _buildOutputDecode(BuildContext context) {
-    OutputConvertToNumber output = decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput).toLowerCase());
+    OutputConvertToNumber output =
+        decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput).toLowerCase());
 
     if (output.error.isNotEmpty) {
       return GCWDefaultOutput(
@@ -144,19 +143,19 @@ class _NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
     return GCWDefaultOutput(
         child: Column(children: <Widget>[
-          GCWOutputText(
-            text: _currentDecodeInput.isEmpty ? '' : output.number.toString(),
-          ),
-          if (output.nameOfNumberSystem.isNotEmpty)
-            Column(
-              children: <Widget>[
-                GCWTextDivider(text: i18n(context, output.nameOfNumberSystem)),
-                GCWOutputText(
-                  text: output.numbersystem,
-                ),
-              ],
+      GCWOutputText(
+        text: _currentDecodeInput.isEmpty ? '' : output.number.toString(),
+      ),
+      if (output.nameOfNumberSystem.isNotEmpty)
+        Column(
+          children: <Widget>[
+            GCWTextDivider(text: i18n(context, output.nameOfNumberSystem)),
+            GCWOutputText(
+              text: output.numbersystem,
             ),
-        ]));
+          ],
+        ),
+    ]));
   }
 
   Widget _buildOutput(BuildContext context) {
@@ -166,5 +165,4 @@ class _NumeralWordsConverterState extends State<NumeralWordsConverter> {
       return _buildOutputEncode(context);
     }
   }
-
 }
