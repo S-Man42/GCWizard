@@ -43,10 +43,9 @@ Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
     var _date = geohashing.date;
     if (w30RuleNecessary(geohashing)) {
       _date = _date.add(const Duration(days: -1));
-
-      if (_validDate(_date) != ErrorCode.Ok && _date.weekday == 7) {
-        _date = _date.add(const Duration(days: -1));
-      }
+    }
+    if (_validDate(_date) != ErrorCode.Ok && _date.weekday >= 6) {
+      _date = _date.add(Duration(days: (_date.weekday == 6 ? -1 : -2)));
     }
     var dji =  await dowJonesIndex(_date);
     geohashing.dowJonesIndex = dji ?? 0;
