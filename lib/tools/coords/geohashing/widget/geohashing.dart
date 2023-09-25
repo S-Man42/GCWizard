@@ -131,7 +131,14 @@ class _GeohashingState extends State<Geohashing> {
           value: _currentOnline,
           onChanged: (value) {
             if (value == GCWSwitchPosition.right) {
-              showGCWDialog(context, i18n(context, 'geohashing_dow_jones_index_online'), null, [
+              showGCWDialog(context,
+                i18n(context, 'geohashing_dow_jones_index'),
+                SizedBox(
+                  width: 300,
+                  height: 130,
+                  child: Text(i18n(context, 'geohashing_dow_jones_index_online'))
+                ),
+                [
                 GCWDialogButton(
                   text: i18n(context, 'common_ok'),
                   onPressed: () {
@@ -238,6 +245,10 @@ class _GeohashingState extends State<Geohashing> {
     _currentOutput.clear();
 
     _geohashing = _buildGeohashing();
+    if (_geohashing!.errorCode == geohashing.ErrorCode.futureDate) {
+      showToast(i18n(context, 'geohashing_future_date'));
+    }
+
     _geohashing!.toLatLng().then((value) {
       if (value != null) {
         var point = GCWMapPoint(
