@@ -12,6 +12,10 @@ class FormulaBase {
     return -1; //inactive
   }
 
+  int get valueCount {
+    return -1; //inactive
+  }
+
   FormulaBase(this.name);
 
   Map<String, Object?> toMap() => {
@@ -27,6 +31,11 @@ class FormulaGroup extends FormulaBase {
   @override
   int get subFormulaCount {
     return formulas.length;
+  }
+
+  @override
+  int get valueCount {
+    return values.length;
   }
 
   FormulaGroup(String name) : super(name);
