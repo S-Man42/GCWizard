@@ -546,14 +546,25 @@ class FormulaPainter {
     return stringResult != null && stringResult.first.length <= 2;
   }
 
-  bool _isStringVariable(String formula) {
-    var match = _variableMatch(formula);
+  bool _isStringVariable(String variable) {
+    var match = _variableMatch(variable);
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
     if (variableValue == null) return false;
     var result = _isString(variableValue);
     return (result != null && result[0].length == variableValue.length);
+  }
+
+  bool _isNumberVariable(String variable) {
+    var match = _variableMatch(variable);
+    if (match == null) return true;
+
+    var variableValue = _variableValue(match.group(1)!);
+
+    var res = (variableValue != null && _isNumberWithPoint(variableValue) != null) || !_isStringVariable(variable);
+    print(res.toString() + ' ' + (variableValue ?? '_') + (_isNumberWithPoint(variableValue ?? '')?.toString() ?? ' null') + (_isNumber(variableValue ?? '')?.toString() ?? ' null')+ (_isStringVariable(variable).toString()));
+    return (variableValue != null && ((_isNumberWithPoint(variableValue) != null) || _isFunction(variableValue) != null)); // !_isStringVariable(variable);
   }
 
   String? _variableValue(String variable) {
@@ -599,9 +610,9 @@ class FormulaPainter {
   String _coloredNumberFunctionVariable(String variable) {
     var variableValue = _variableValue(variable);
     if ((variableValue == null) || variableValue.isEmpty) return VariableError;
-    if (_isNumberWithPoint(variableValue) == null) return VariableError;
-
-    return Variable;
+    return (_isNumberVariable(variable)) ? Variable : VariableError;
+    // if (_isNumberWithPoint(variableValue) == null) return VariableError;
+    // return Variable;
   }
 
   List<String>? _isNumberWithPoint(String formula) {

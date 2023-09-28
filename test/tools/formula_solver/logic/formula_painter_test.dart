@@ -11,6 +11,8 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
+
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
