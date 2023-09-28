@@ -1,5 +1,7 @@
 import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 class FormulaPainter {
   static const String _Text = 't'; //text
@@ -17,8 +19,7 @@ class FormulaPainter {
   static const _STRING_MARKER_QUOTE = '"';
 
   static final _allCharacters = allCharacters();
-  Map<String, String> _values = {};
-  var _variables = <String>[];
+  var _variables = <FormulaValue>[];
   var _functions = <String>[];
   var _constants = <String>[];
   late int _formulaId;
@@ -41,20 +42,17 @@ class FormulaPainter {
     _constantsRegEx = _constants.map((constant) => constant).join('|');
   }
 
-  String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
+  String paintFormula(String formula, List<FormulaValue> values, int formulaIndex, bool coloredFormulas) {
     var result = _buildResultString(_Text, formula.length);
     if (!coloredFormulas) return result;
 
     var subResult = '';
     _formulaId = formulaIndex;
 
-    _variables = values.keys.map((variable) {
-      return ((variable.isEmpty)) ? '' : variable;
-    }).toList();
+    _variables = values.map((value) => FormulaValue(value.key.toUpperCase(), value.value, type: value.type)).toList();
 
-    _values = values.map((key, value) => MapEntry(key.toUpperCase(), value));
-    _variables = _toUpperCaseAndSort(_variables);
-    _variablesRegEx = _variables.map((variable) => variable).join('|');
+    _variables = _variablesSort(_variables);
+    _variablesRegEx = _variables.map((variable) => variable.key).join('|');
 
     formula = normalizeCharacters(formula);
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
@@ -231,7 +229,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isString(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false, true);
+        result = _coloredNumber(result, _parserResult, _parentFunctionName != null && !_wordFunction(_parentFunctionName), true);
         offset = _calcOffset(_parserResult);
         isString = true;
       }
@@ -561,15 +559,29 @@ class FormulaPainter {
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
+    if (variableValue != null && variableValue.isNotEmpty && _variableType(match.group(1)!) == FormulaValueType.INTERPOLATED) {
+      var expanded = VariableStringExpander('x', {'x': variableValue}, orderAndUnique: false)
+          .run()
+          .map((e) => e.text)
+          .whereType<String>()
+          .toList();
+      return (expanded.isNotEmpty) && expanded.first != 'x';
+    }
+    return (variableValue != null && ((_isNumberWithPoint(variableValue) != null) || _isFunction(variableValue.trim()) != null)); // !_isStringVariable(variable);
+  }
 
-    var res = (variableValue != null && _isNumberWithPoint(variableValue) != null) || !_isStringVariable(variable);
-    print(res.toString() + ' ' + (variableValue ?? '_') + (_isNumberWithPoint(variableValue ?? '')?.toString() ?? ' null') + (_isNumber(variableValue ?? '')?.toString() ?? ' null')+ (_isStringVariable(variable).toString()));
-    return (variableValue != null && ((_isNumberWithPoint(variableValue) != null) || _isFunction(variableValue) != null)); // !_isStringVariable(variable);
+  FormulaValueType? _variableType(String variable) {
+    for (var _variable in _variables) {
+      if (_variable.key == variable) return _variable.type;
+    }
+    return null;
   }
 
   String? _variableValue(String variable) {
-    if (!_values.containsKey(variable)) return null;
-    return _values[variable];
+    for (var _variable in _variables) {
+      if (_variable.key == variable) return _variable.value.toUpperCase();
+    }
+    return null;
   }
 
   /// return VariableName (group(1))
@@ -686,6 +698,11 @@ class FormulaPainter {
       return entry.toUpperCase();
     }).toList();
     list.sort((a, b) => b.length.compareTo(a.length));
+    return list;
+  }
+
+  List<FormulaValue> _variablesSort(List<FormulaValue> list) {
+    list.sort((a, b) => b.key.length.compareTo(b.key.length));
     return list;
   }
 
