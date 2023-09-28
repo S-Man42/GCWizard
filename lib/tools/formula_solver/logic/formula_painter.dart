@@ -610,7 +610,6 @@ class FormulaPainter {
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
     }
-
     return _replaceRange(result, 0, parts[0].length, char);
   }
 
@@ -623,8 +622,6 @@ class FormulaPainter {
     var variableValue = _variableValue(variable);
     if ((variableValue == null) || variableValue.isEmpty) return VariableError;
     return (_isNumberVariable(variable)) ? Variable : VariableError;
-    // if (_isNumberWithPoint(variableValue) == null) return VariableError;
-    // return Variable;
   }
 
   List<String>? _isNumberWithPoint(String formula) {
