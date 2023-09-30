@@ -82,7 +82,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return Column(
       children: <Widget>[
         GCWCodeTextField(
-          lineNumbers: true,
+          lineNumbers: false,
           lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
           controller: _programController,
           language: CodeHighlightingLanguage.BASIC,

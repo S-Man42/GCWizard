@@ -2,7 +2,6 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.
 
 List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputData input, WherigoAnswerData data) {
   List<List<String>> result;
-
   List<String> answers = data.AnswerAnswer.split('\x01');
   var hash = answers[0].trim();
   var answerAlphabetical = answers.length >= 2 ? answers[1].trim() : null;
