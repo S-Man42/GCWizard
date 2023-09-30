@@ -64,7 +64,6 @@ class _TeletypewriterState extends State<Teletypewriter> {
               });
             },
             items: widget.codebook!.entries.map((mode) {
-              print(mode.value.title + ' ' +i18n(context, mode.value.title));
               return GCWDropDownMenuItem(
                   value: mode.key,
                   child: i18n(context, mode.value.title),
