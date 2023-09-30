@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
@@ -15,7 +16,6 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
@@ -123,36 +123,45 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: GCWTextField(
-                hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
-                controller: _ControllerW1,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentW1 = ret;
-                  });
-                }),
+            child: Container(
+              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              child: GCWTextField(
+                  hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
+                  controller: _ControllerW1,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentW1 = ret;
+                    });
+                  }),
+            ),
           ),
           Expanded(
             flex: 1,
-            child: GCWTextField(
-                hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
-                controller: _ControllerW2,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentW2 = ret;
-                  });
-                }),
+            child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              child: GCWTextField(
+                  hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
+                  controller: _ControllerW2,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentW2 = ret;
+                    });
+                  }),
+            ),
           ),
           Expanded(
             flex: 1,
-            child: GCWTextField(
-                hintText: i18n(context, 'coords_formatconverter_w3w_w3'),
-                controller: _ControllerW3,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentW3 = ret;
-                  });
-                }),
+            child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                  hintText: i18n(context, 'coords_formatconverter_w3w_w3'),
+                  controller: _ControllerW3,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentW3 = ret;
+                    });
+                  }),
+            ),
           ),
         ],
       ),
