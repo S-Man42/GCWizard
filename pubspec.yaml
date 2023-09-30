@@ -1,11 +1,6 @@
 name: gc_wizard
-<<<<<<< HEAD
 description: GC Wizard nightly
 version: 3.0.0+666
-=======
-description: GC Wizard
-version: 3.0.0+170
->>>>>>> 949efd30dfd6867375c6d233efe2baaf3dbee8d7
 publish_to: none
 
 environment:
