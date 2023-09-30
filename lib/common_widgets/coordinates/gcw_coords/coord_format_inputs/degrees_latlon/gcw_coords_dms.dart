@@ -5,7 +5,8 @@ class _GCWCoordsDMS extends StatefulWidget {
   final DMS coordinates;
   final bool initialize;
 
-  const _GCWCoordsDMS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsDMS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsDMSState createState() => _GCWCoordsDMSState();
@@ -39,8 +40,6 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
   String _currentLonMinutes = '';
   String _currentLonSeconds = '';
   String _currentLonMilliSeconds = '';
-
-
 
   @override
   void initState() {
@@ -105,7 +104,6 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
       _LonMinutesController.text = _currentLonMinutes;
       _LonSecondsController.text = _currentLonSeconds;
       _LonMilliSecondsController.text = _currentLonMilliSeconds;
-
     }
 
     return Column(children: <Widget>[

@@ -5,7 +5,8 @@ class _GCWCoordsGeoHex extends StatefulWidget {
   final GeoHex coordinates;
   final bool initialize;
 
-  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();
@@ -14,8 +15,6 @@ class _GCWCoordsGeoHex extends StatefulWidget {
 class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
   late TextEditingController _controller;
   var _currentCoord = '';
-
-
 
   @override
   void initState() {
@@ -36,7 +35,6 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
       _currentCoord = geohHex.text;
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

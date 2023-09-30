@@ -10,7 +10,7 @@ class GCCode extends StatefulWidget {
   const GCCode({Key? key}) : super(key: key);
 
   @override
- _GCCodeState createState() => _GCCodeState();
+  _GCCodeState createState() => _GCCodeState();
 }
 
 class _GCCodeState extends State<GCCode> {

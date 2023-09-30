@@ -10,7 +10,7 @@ class VanitySingletap extends StatefulWidget {
   const VanitySingletap({Key? key}) : super(key: key);
 
   @override
- _VanitySingletapState createState() => _VanitySingletapState();
+  _VanitySingletapState createState() => _VanitySingletapState();
 }
 
 class _VanitySingletapState extends State<VanitySingletap> {

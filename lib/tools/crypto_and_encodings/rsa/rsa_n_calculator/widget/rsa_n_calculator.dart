@@ -11,7 +11,7 @@ class RSANCalculator extends StatefulWidget {
   const RSANCalculator({Key? key}) : super(key: key);
 
   @override
- _RSANCalculatorState createState() => _RSANCalculatorState();
+  _RSANCalculatorState createState() => _RSANCalculatorState();
 }
 
 class _RSANCalculatorState extends State<RSANCalculator> {

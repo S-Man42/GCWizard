@@ -13,7 +13,7 @@ class Solitaire extends StatefulWidget {
   const Solitaire({Key? key}) : super(key: key);
 
   @override
- _SolitaireState createState() => _SolitaireState();
+  _SolitaireState createState() => _SolitaireState();
 }
 
 class _SolitaireState extends State<Solitaire> {

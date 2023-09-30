@@ -26,7 +26,7 @@ class MusicNotes extends StatefulWidget {
   const MusicNotes({Key? key}) : super(key: key);
 
   @override
- _MusicNotesState createState() => _MusicNotesState();
+  _MusicNotesState createState() => _MusicNotesState();
 }
 
 class _MusicNotesState extends State<MusicNotes> {

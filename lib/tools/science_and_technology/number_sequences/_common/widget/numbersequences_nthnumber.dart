@@ -10,7 +10,7 @@ class NumberSequenceNthNumber extends StatefulWidget {
   const NumberSequenceNthNumber({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
- _NumberSequenceNthNumberState createState() => _NumberSequenceNthNumberState();
+  _NumberSequenceNthNumberState createState() => _NumberSequenceNthNumberState();
 }
 
 class _NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {

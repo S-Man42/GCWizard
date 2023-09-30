@@ -11,7 +11,9 @@ bool _obfuscatorFound = false;
 String _LUACartridgeName = '';
 String _LUACartridgeGUID = '';
 String _BuilderVersion = '';
+String _TargetDevice = '';
 String _TargetDeviceVersion = '';
+WherigoZonePoint _StartLocation = const WherigoZonePoint();
 String _CountryID = '';
 String _StateID = '';
 String _UseLogging = '';
@@ -498,6 +500,8 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         ResultsLUA: _LUAAnalyzeResults,
         Builder: _builder,
         BuilderVersion: _BuilderVersion,
+        StartLocation: _StartLocation,
+        TargetDevice: _TargetDevice,
         TargetDeviceVersion: _TargetDeviceVersion,
         StateID: _StateID,
         CountryID: _CountryID,
@@ -533,10 +537,22 @@ void _checkAndGetCartridgeMetaData(String currentLine) {
     _BuilderVersion = currentLine.replaceAll('.BuilderVersion = ', '').replaceAll('"', '').trim();
   }
 
+  if (currentLine.startsWith('.TargetDevice = ')) {
+    _TargetDevice = currentLine.replaceAll('.TargetDevice = ', '').replaceAll('"', '').trim();
+  }
+
   if (currentLine.startsWith('.TargetDeviceVersion')) {
     _TargetDeviceVersion = currentLine.replaceAll('.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
   }
 
+  if (currentLine.startsWith('.StartingLocation =')) {
+
+    currentLine = currentLine.replaceAll('.StartingLocation = ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
+    _StartLocation = WherigoZonePoint(
+        Latitude: double.parse(currentLine.split(',')[0]),
+        Longitude: double.parse(currentLine.split(',')[1]),
+        Altitude: double.parse(currentLine.split(',')[2]));
+  }
   if (currentLine.startsWith('.CountryId')) {
     _CountryID = currentLine.replaceAll('.CountryId = ', '').replaceAll('"', '').trim();
   }
@@ -569,7 +585,7 @@ void _checkAndGetCartridgeMetaData(String currentLine) {
 void _checkAndGetWherigoBuilder() {
   if (RegExp(r'(_Urwigo)').hasMatch(_LUAFile)) {
     _builder = WHERIGO_BUILDER.URWIGO;
-  } else if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
+  } else if (RegExp(r'(WWB_)').hasMatch(_LUAFile)) {
     _builder = WHERIGO_BUILDER.EARWIGO;
   } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
     _builder = WHERIGO_BUILDER.WHERIGOKIT;

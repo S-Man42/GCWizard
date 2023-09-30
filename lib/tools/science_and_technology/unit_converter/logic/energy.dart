@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Energy extends Unit {
-  late double Function (double) toJoule;
-  late double Function (double) fromJoule;
+  late double Function(double) toJoule;
+  late double Function(double) fromJoule;
 
   Energy({required String name, required String symbol, bool isReference = false, required double inJoule})
       : super(name, symbol, isReference, (e) => e * inJoule, (e) => e / inJoule) {

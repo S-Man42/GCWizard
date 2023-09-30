@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/spinner_constants.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 
 class GCWABCSpinner extends StatefulWidget {
   final void Function(int) onChanged;
@@ -21,7 +21,7 @@ class GCWABCSpinner extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWABCSpinnerState createState() => _GCWABCSpinnerState();
+  _GCWABCSpinnerState createState() => _GCWABCSpinnerState();
 }
 
 class _GCWABCSpinnerState extends State<GCWABCSpinner> {

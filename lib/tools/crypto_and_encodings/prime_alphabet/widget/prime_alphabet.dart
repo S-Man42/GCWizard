@@ -12,7 +12,7 @@ class PrimeAlphabet extends StatefulWidget {
   const PrimeAlphabet({Key? key}) : super(key: key);
 
   @override
- _PrimeAlphabetState createState() => _PrimeAlphabetState();
+  _PrimeAlphabetState createState() => _PrimeAlphabetState();
 }
 
 const _MAX_PRIME_INDEX = 26 * 10;

@@ -1,25 +1,26 @@
 part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
 
-double _getValueFromMathConstant(MathematicalConstant constant){
+double _getValueFromMathConstant(MathematicalConstant constant) {
   return double.parse(constant.value.replaceAll(' ', '').replaceAll('...', ''));
 }
 
-double _getValueFromPhysicalConstant(PhysicalConstant constant){
+double _getValueFromPhysicalConstant(PhysicalConstant constant) {
   return double.parse(constant.value.replaceAll(' ', '').replaceAll('...', '')) * pow(10, constant.exponent as int);
 }
 
 Map<String, double> _GCWIZARDSCRIPT_SCIENCE_CONST = {
-  'PI' : pi,
-  'EULER' : e,
-  'PHI' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_phi']!),
-  'RHO' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_silverratio']!),
-  'CONWAY' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_conway']!),
-  'APERY' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_apery']!),
-  'SQRT2' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_pythagoras']!),
-  'SQRT3' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_theodorus']!),
-  'SQRT5' : _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_sqrt5']!),
+  'PI': pi,
+  'EULER': e,
+  'PHI': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_phi']!),
+  'RHO': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_silverratio']!),
+  'CONWAY': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_conway']!),
+  'APERY': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_apery']!),
+  'SQRT2': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_pythagoras']!),
+  'SQRT3': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_theodorus']!),
+  'SQRT5': _getValueFromMathConstant(MATHEMATICAL_CONSTANTS['mathematical_constants_sqrt5']!),
 
-  'STEFANBOLTZMANN' : _getValueFromPhysicalConstant(PHYSICAL_CONSTANTS['physical_constants_stefan_boltzmann']!), //5.670374419e-8,
+  'STEFANBOLTZMANN':
+      _getValueFromPhysicalConstant(PHYSICAL_CONSTANTS['physical_constants_stefan_boltzmann']!), //5.670374419e-8,
   'BOLTZMANN': _getValueFromPhysicalConstant(PHYSICAL_CONSTANTS['physical_constants_boltzmann']!), //1.380649e-23,
 };
 
@@ -40,8 +41,7 @@ num _mod(Object? x, Object? y) {
   num result = 0;
   if (_isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
-  } else
-  if (y == 0) {
+  } else if (y == 0) {
     _handleError(_DIVISIONBYZERO);
   } else {
     result = ((x as num) % (y as num));
@@ -320,7 +320,7 @@ String _convertBase(Object? value, Object? startBase, Object? destinationBase) {
   return convertBase(value as String, startBase as int, destinationBase as int);
 }
 
-int _isPrime(Object x){
+int _isPrime(Object x) {
   if (_isNotAInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return -1;
@@ -331,7 +331,7 @@ int _isPrime(Object x){
   return 0;
 }
 
-double _round(Object? x, Object? y){
+double _round(Object? x, Object? y) {
   if (_isNotANumber(x) || _isNotAInt(y)) {
     _handleError(_INVALIDTYPECAST);
     return 0;
@@ -339,7 +339,7 @@ double _round(Object? x, Object? y){
   return double.parse((x as double).toStringAsFixed(y as int));
 }
 
-int _isSqr(Object? x){
+int _isSqr(Object? x) {
   if (_isNotAInt(x)) {
     _handleError(_INVALIDTYPECAST);
     return -1;
@@ -362,27 +362,35 @@ int _div(Object? x, Object? y) {
   return ((x as num) ~/ (y as num));
 }
 
-void _divisors(Object? list, Object? number){
+void _divisors(Object? list, Object? number) {
   if (_isNotAList(list) || _isNotAInt(number)) {
     _handleError(_INVALIDTYPECAST);
   } else {
-    divisors(number as int).forEach ((element) {
+    divisors(number as int).forEach((element) {
       _listAdd(list as _GCWList?, element);
     });
   }
 }
 
-void _polar(Object? list, Object? x, Object? y, ){
+void _polar(
+  Object? list,
+  Object? x,
+  Object? y,
+) {
   if (_isNotAList(list) || _isNotANumber(x) || _isNotANumber(y)) {
     _handleError(_INVALIDTYPECAST);
   } else {
     Map<String, String> result = CartesianToPolar((x as num).toString(), (y as num).toString());
     _listAdd(list as _GCWList, double.parse(result['complex_numbers_hint_radius']!));
     _listAdd(list, double.parse(result['complex_numbers_hint_angle']!));
-    }
   }
+}
 
-void _carthesian(Object? list, Object? angle, Object? radius, ){
+void _carthesian(
+  Object? list,
+  Object? angle,
+  Object? radius,
+) {
   if (_isNotAList(list) || _isNotANumber(angle) || _isNotANumber(radius)) {
     _handleError(_INVALIDTYPECAST);
   } else {
@@ -392,13 +400,15 @@ void _carthesian(Object? list, Object? angle, Object? radius, ){
   }
 }
 
-double _sum(Object? list, ){
+double _sum(
+  Object? list,
+) {
   double result = 0.0;
   if (_isNotAList(list)) {
     _handleError(_INVALIDTYPECAST);
     return result;
   } else {
-    for (int i = 0; i < (list as _GCWList).length(); i++){
+    for (int i = 0; i < (list as _GCWList).length(); i++) {
       Object element = list.getIndex(i);
       if (_isANumber(element)) result = result + (element as num);
     }

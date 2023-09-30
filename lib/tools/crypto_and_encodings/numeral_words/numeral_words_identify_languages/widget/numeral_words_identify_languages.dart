@@ -12,7 +12,7 @@ class NumeralWordsIdentifyLanguages extends StatefulWidget {
   const NumeralWordsIdentifyLanguages({Key? key}) : super(key: key);
 
   @override
- _NumeralWordsIdentifyLanguagesState createState() => _NumeralWordsIdentifyLanguagesState();
+  _NumeralWordsIdentifyLanguagesState createState() => _NumeralWordsIdentifyLanguagesState();
 }
 
 class _NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLanguages> {
@@ -119,12 +119,7 @@ class _NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLang
                 text: i18n(context, 'common_outputdetail'),
                 suppressTopSpace: false,
                 expanded: false,
-                child: GCWColumnedMultilineOutput(
-                    data: columnData,
-                    flexValues: const [1, 3, 1],
-                    copyColumn: 1
-                )
-            ),
+                child: GCWColumnedMultilineOutput(data: columnData, flexValues: const [1, 3, 1], copyColumn: 1)),
       ],
     );
   }

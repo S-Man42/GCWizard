@@ -5,7 +5,8 @@ class _GCWCoordsSlippyMap extends StatefulWidget {
   final SlippyMap coordinates;
   final bool initialize;
 
-  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();
@@ -19,8 +20,6 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
   var _currentY = defaultDoubleText;
 
   late int _currentZoom;
-
-
 
   @override
   void initState() {
@@ -52,7 +51,6 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
 
       _xController.text = _currentX.value.toString();
       _yController.text = _currentY.value.toString();
-
     }
 
     return Column(children: <Widget>[

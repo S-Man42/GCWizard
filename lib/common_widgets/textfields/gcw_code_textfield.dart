@@ -67,20 +67,20 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
   @override
   Widget build(BuildContext context) {
     return CodeTheme(
-      data: CodeThemeData(styles:
-          widget.theme ?? (Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
-              ? atomOneDarkTheme
-              : atomOneLightTheme)
-          ),
-      child: CodeField(
-          controller:( widget.controller is CodeController)
+        data: CodeThemeData(
+            styles: widget.theme ??
+                (Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
+                    ? atomOneDarkTheme
+                    : atomOneLightTheme)),
+        child: CodeField(
+          controller: (widget.controller is CodeController)
               ? (widget.controller as CodeController)
-             : CodeController(
-                text: widget.controller.text,
-                language: _language,
-                stringMap: widget.stringMap,
-                patternMap: widget.patternMap,
-              ),
+              : CodeController(
+                  text: widget.controller.text,
+                  language: _language,
+                  stringMap: widget.stringMap,
+                  patternMap: widget.patternMap,
+                ),
           readOnly: widget.readOnly,
           selectionControls: GCWTextSelectionControls(),
           wrap: widget.wrap ?? false,
@@ -90,10 +90,10 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
               ? LineNumberStyle(
                   width: widget.lineNumberStyle!.width,
                 )
-              : const LineNumberStyle(width: 0.0, margin: 0.0, textStyle: TextStyle(fontSize: 0.1, color: Colors.black54)),
+              : const LineNumberStyle(
+                  width: 0.0, margin: 0.0, textStyle: TextStyle(fontSize: 0.1, color: Colors.black54)),
           onChanged: widget.onChanged,
-        )
-    );
+        ));
   }
 }
 

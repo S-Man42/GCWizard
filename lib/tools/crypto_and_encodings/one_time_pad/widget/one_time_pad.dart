@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -7,11 +8,70 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/logic/one_time_pad.dart';
 
-class OneTimePad extends StatefulWidget {
-  const OneTimePad({Key? key}) : super(key: key);
+const String _apiSpecification = '''
+{
+  "/onetimepad" : {
+    "alternative_paths": ["otp", "one_time_pad"],
+    "get": {
+      "summary": "OneTimePad Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for OneTimePad text",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "key",
+          "required": true,
+          "description": "OTP key",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "a",
+          "required": true,
+          "description": "Value for letter A",
+          "schema": {
+            "type": "integer"
+          },
+          "default": 0
+        },
+        {
+          "in": "query",
+          "name": "mode",
+          "description": "Defines encoding or decoding mode",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "encode",
+              "decode"
+            ],
+            "default": "decode"
+          }
+        }
+      ]
+    }
+  }
+}
+''';
+
+class OneTimePad extends GCWWebStatefulWidget {
+  OneTimePad({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _OneTimePadState createState() => _OneTimePadState();
+  _OneTimePadState createState() => _OneTimePadState();
 }
 
 class _OneTimePadState extends State<OneTimePad> {
@@ -35,6 +95,23 @@ class _OneTimePadState extends State<OneTimePad> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.hasWebParameter()) {
+      if (widget.getWebParameter('mode') == 'encode') {
+        _currentMode = GCWSwitchPosition.left;
+      }
+
+      _currentKey = widget.getWebParameter('key') ?? _currentKey;
+
+      var a = widget.getWebParameter('a');
+      if (a != null) {
+        var aInt = int.tryParse(a);
+        if (aInt != null) _currentOffset = aInt - 1;
+      }
+
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
+      widget.webParameter = null;
+    }
 
     _inputMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
     _keyMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);

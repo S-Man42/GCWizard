@@ -21,8 +21,6 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
   var _currentSubtype = defaultLambertType;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -52,7 +50,6 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
       _eastingController.text = _currentEasting.value.toString();
       _northingController.text = _currentNorthing.value.toString();
-
     }
 
     return Column(children: <Widget>[

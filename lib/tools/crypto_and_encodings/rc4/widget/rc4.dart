@@ -12,7 +12,7 @@ class RC4 extends StatefulWidget {
   const RC4({Key? key}) : super(key: key);
 
   @override
- _RC4State createState() => _RC4State();
+  _RC4State createState() => _RC4State();
 }
 
 class _RC4State extends State<RC4> {
@@ -133,7 +133,7 @@ class _RC4State extends State<RC4> {
       switch (_currentOutput.errorCode) {
         case ErrorCode.MISSING_KEY:
           return GCWDefaultOutput(child: i18n(context, 'rc4_error_missing_key'));
-         case ErrorCode.KEY_FORMAT:
+        case ErrorCode.KEY_FORMAT:
           showToast(i18n(context, 'rc4_error_key_format'));
           break;
         case ErrorCode.INPUT_FORMAT:

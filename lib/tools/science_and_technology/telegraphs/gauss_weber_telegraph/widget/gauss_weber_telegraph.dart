@@ -13,7 +13,7 @@ class GaussWeberTelegraph extends StatefulWidget {
   const GaussWeberTelegraph({Key? key, this.mode = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL}) : super(key: key);
 
   @override
- _GaussWeberTelegraphState createState() => _GaussWeberTelegraphState();
+  _GaussWeberTelegraphState createState() => _GaussWeberTelegraphState();
 }
 
 class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {

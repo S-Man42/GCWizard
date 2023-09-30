@@ -14,7 +14,7 @@ class NumeralBases extends StatefulWidget {
   const NumeralBases({Key? key}) : super(key: key);
 
   @override
- _NumeralBasesState createState() => _NumeralBasesState();
+  _NumeralBasesState createState() => _NumeralBasesState();
 }
 
 class _NumeralBasesState extends State<NumeralBases> {
@@ -118,8 +118,7 @@ class _NumeralBasesState extends State<NumeralBases> {
       return GCWColumnedMultilineOutput(
           firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
           data: outputValues,
-          flexValues: const [1, 3]
-      );
+          flexValues: const [1, 3]);
     }
   }
 }

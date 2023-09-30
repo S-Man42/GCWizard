@@ -13,24 +13,25 @@ const MDT_CCITT2_OPTION_MODE_DENARY = 'common_numeralbase_denary';
 const MDT_CCITT2_OPTION_MODE_BINARY = 'common_numeralbase_binary';
 
 class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
-  MultiDecoderToolCcitt2({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolCcitt2(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_CCITT2,
             onDecode: (String input, String key) {
-              if (checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_CCITT2, options, MDT_CCITT2_OPTION_MODE) == MDT_CCITT2_OPTION_MODE_BINARY) {
+              if (checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_CCITT2, options, MDT_CCITT2_OPTION_MODE) ==
+                  MDT_CCITT2_OPTION_MODE_BINARY) {
                 var intValues = textToBinaryList(input).map((value) {
-                    return int.tryParse(convertBase(value, 2, 10));
-                  }).toList();
-                return decodeTeletypewriter(intValues.whereType<int>().toList(),
-                    TeletypewriterCodebook.CCITT_ITA2_1931);
+                  return int.tryParse(convertBase(value, 2, 10));
+                }).toList();
+                return decodeTeletypewriter(
+                    intValues.whereType<int>().toList(), TeletypewriterCodebook.CCITT_ITA2_1931);
               } else {
                 return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA2_1931);
               }
@@ -43,8 +44,7 @@ class MultiDecoderToolCcitt2 extends AbstractMultiDecoderTool {
 class _MultiDecoderToolCcitt2State extends State<MultiDecoderToolCcitt2> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_CCITT2_OPTION_MODE: GCWDropDown<String>(
         value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_CCITT2, widget.options, MDT_CCITT2_OPTION_MODE),
         onChanged: (newValue) {
@@ -59,7 +59,6 @@ class _MultiDecoderToolCcitt2State extends State<MultiDecoderToolCcitt2> {
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }
