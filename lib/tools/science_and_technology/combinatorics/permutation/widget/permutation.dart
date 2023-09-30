@@ -11,7 +11,7 @@ class Permutation extends StatefulWidget {
   const Permutation({Key? key}) : super(key: key);
 
   @override
- _PermutationState createState() => _PermutationState();
+  _PermutationState createState() => _PermutationState();
 }
 
 class _PermutationState extends State<Permutation> {

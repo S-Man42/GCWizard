@@ -17,7 +17,7 @@ class MayaCalendar extends StatefulWidget {
   const MayaCalendar({Key? key}) : super(key: key);
 
   @override
- _MayaCalendarState createState() => _MayaCalendarState();
+  _MayaCalendarState createState() => _MayaCalendarState();
 }
 
 class _MayaCalendarState extends State<MayaCalendar> {
@@ -155,7 +155,8 @@ class _MayaCalendarState extends State<MayaCalendar> {
           MayaLongCountToTzolkin(segments.numbers) +
           '   ' +
           MayaLongCountToHaab(segments.numbers);
-      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments.numbers));
+      outputDates[i18n(context, 'mayacalendar_juliandate')] =
+          MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments.numbers));
       outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = dateFormat.format(gregorian);
       outputDates[i18n(context, 'mayacalendar_juliancalendar')] = dateFormat.format(julian);
 
@@ -163,11 +164,10 @@ class _MayaCalendarState extends State<MayaCalendar> {
         children: <Widget>[
           _buildDigitalOutput(segments),
           GCWColumnedMultilineOutput(
-            data: outputDates.entries.map((entry) {
-                    return [entry.key, entry.value];
-                  }).toList(),
-            flexValues: const [1, 1]
-          ),
+              data: outputDates.entries.map((entry) {
+                return [entry.key, entry.value];
+              }).toList(),
+              flexValues: const [1, 1]),
         ],
       );
     } else {
@@ -190,11 +190,10 @@ class _MayaCalendarState extends State<MayaCalendar> {
         children: <Widget>[
           _buildDigitalOutput(segments),
           GCWColumnedMultilineOutput(
-            data: outputDates.entries.map((entry) {
-                    return [entry.key, entry.value];
-                  }).toList(),
-            flexValues: const [1, 1]
-          ),
+              data: outputDates.entries.map((entry) {
+                return [entry.key, entry.value];
+              }).toList(),
+              flexValues: const [1, 1]),
         ],
       );
     }

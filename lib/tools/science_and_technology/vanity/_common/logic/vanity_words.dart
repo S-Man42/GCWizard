@@ -383,17 +383,16 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String? text, NumeralWordsLangua
             // already found
             ambigous = true;
             if (NUMERAL_WORDS[language]![hWord.toLowerCase()] != null) {
-              output.add(VanityWordsDecodeOutput(
-                  hDigits, hWord, NUMERAL_WORDS[language]![hWord.toLowerCase()] ?? '', true));
+              output.add(
+                  VanityWordsDecodeOutput(hDigits, hWord, NUMERAL_WORDS[language]![hWord.toLowerCase()] ?? '', true));
             } else {
               output.add(VanityWordsDecodeOutput(
                   hDigits, hWord, NUMERAL_WORDS[language]![removeAccents(hWord.toLowerCase())] ?? '', true));
             }
             if (NUMERAL_WORDS[language]![word.toLowerCase()] != null) {
-              output.add(VanityWordsDecodeOutput(
-                  digits, word, NUMERAL_WORDS[language]![word.toLowerCase()] ?? '', true));
-            }
-            else {
+              output
+                  .add(VanityWordsDecodeOutput(digits, word, NUMERAL_WORDS[language]![word.toLowerCase()] ?? '', true));
+            } else {
               output.add(VanityWordsDecodeOutput(
                   digits, word, NUMERAL_WORDS[language]![removeAccents(word.toLowerCase())] ?? '', true));
             }

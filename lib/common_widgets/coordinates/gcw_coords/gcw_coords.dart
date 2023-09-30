@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -11,7 +12,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
@@ -24,10 +24,9 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
@@ -35,6 +34,8 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velo
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -42,7 +43,6 @@ import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart' as location;
-import 'package:collection/collection.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
@@ -96,10 +96,10 @@ class GCWCoords extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWCoordsState createState() => _GCWCoordsState();
+  _GCWCoordsState createState() => _GCWCoordsState();
 }
 
-class _GCWCoordsState extends State<GCWCoords> {  
+class _GCWCoordsState extends State<GCWCoords> {
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   bool _hasSetCoords = false;
   bool _resetCoords = false;
@@ -159,8 +159,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.DMS,
         _GCWCoordsDMS(
           initialize: _resetCoords,
@@ -173,8 +173,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.UTM,
         _GCWCoordsUTM(
           initialize: _resetCoords,
@@ -187,8 +187,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.MGRS,
         _GCWCoordsMGRS(
           initialize: _resetCoords,
@@ -201,8 +201,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.XYZ,
         _GCWCoordsXYZ(
           initialize: _resetCoords,
@@ -215,8 +215,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.SWISS_GRID,
         _GCWCoordsSwissGrid(
           initialize: _resetCoords,
@@ -229,36 +229,38 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.SWISS_GRID_PLUS,
         _GCWCoordsSwissGridPlus(
           initialize: _resetCoords,
           coordinates: _currentCoords is SwissGridPlus
               ? _currentCoords as SwissGridPlus
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS)) as SwissGridPlus,
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS))
+                  as SwissGridPlus,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.GAUSS_KRUEGER,
         _GCWCoordsGaussKrueger(
           initialize: _resetCoords,
           coordinates: _currentCoords is GaussKrueger
               ? _currentCoords as GaussKrueger
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER)) as GaussKrueger,
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER))
+                  as GaussKrueger,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.LAMBERT,
         _GCWCoordsLambert(
           initialize: _resetCoords,
@@ -271,8 +273,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.DUTCH_GRID,
         _GCWCoordsDutchGrid(
           initialize: _resetCoords,
@@ -285,8 +287,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.MAIDENHEAD,
         _GCWCoordsMaidenhead(
           initialize: _resetCoords,
@@ -299,8 +301,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.MERCATOR,
         _GCWCoordsMercator(
           initialize: _resetCoords,
@@ -313,22 +315,23 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.NATURAL_AREA_CODE,
         _GCWCoordsNaturalAreaCode(
           initialize: _resetCoords,
           coordinates: _currentCoords is NaturalAreaCode
               ? _currentCoords as NaturalAreaCode
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE)) as NaturalAreaCode,
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE))
+                  as NaturalAreaCode,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.SLIPPY_MAP,
         _GCWCoordsSlippyMap(
           initialize: _resetCoords,
@@ -341,8 +344,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.MAKANEY,
         _GCWCoordsMakaney(
           initialize: _resetCoords,
@@ -355,8 +358,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.GEOHASH,
         _GCWCoordsGeohash(
           initialize: _resetCoords,
@@ -369,8 +372,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.GEOHEX,
         _GCWCoordsGeoHex(
           initialize: _resetCoords,
@@ -383,8 +386,8 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.GEO3X3,
         _GCWCoordsGeo3x3(
           initialize: _resetCoords,
@@ -397,22 +400,23 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.OPEN_LOCATION_CODE,
         _GCWCoordsOpenLocationCode(
           initialize: _resetCoords,
           coordinates: _currentCoords is OpenLocationCode
               ? _currentCoords as OpenLocationCode
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE)) as OpenLocationCode,
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE))
+                  as OpenLocationCode,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.QUADTREE,
         _GCWCoordsQuadtree(
           initialize: _resetCoords,
@@ -425,28 +429,30 @@ class _GCWCoordsState extends State<GCWCoords> {
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.REVERSE_WIG_WALDMEISTER,
         _GCWCoordsReverseWherigoWaldmeister(
           initialize: _resetCoords,
           coordinates: _currentCoords is ReverseWherigoWaldmeister
               ? _currentCoords as ReverseWherigoWaldmeister
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER)) as ReverseWherigoWaldmeister,
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER))
+                  as ReverseWherigoWaldmeister,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
-    ),
-    _GCWCoordWidget(
+      ),
+      _GCWCoordWidget(
         CoordinateFormatKey.REVERSE_WIG_DAY1976,
         _GCWCoordsReverseWherigoDay1976(
           initialize: _resetCoords,
           coordinates: _currentCoords is ReverseWherigoDay1976
               ? _currentCoords as ReverseWherigoDay1976
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976)) as ReverseWherigoDay1976,
+              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976))
+                  as ReverseWherigoDay1976,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -509,7 +515,8 @@ class _GCWCoordsState extends State<GCWCoords> {
       );
     }
 
-    var rawWidget = _coordsWidgets.firstWhereOrNull((_GCWCoordWidget entry) => entry.coordinateFormatKey == _currentCoords.format.type);
+    var rawWidget = _coordsWidgets
+        .firstWhereOrNull((_GCWCoordWidget entry) => entry.coordinateFormatKey == _currentCoords.format.type);
     if (rawWidget == null) {
       _currentWidget = _coordsWidgets.first.widget;
     } else {
@@ -552,9 +559,11 @@ class _GCWCoordsState extends State<GCWCoords> {
             icon: Icons.copy,
             size: IconButtonSize.SMALL,
             onPressed: () {
-              insertIntoGCWClipboard(context, formatCoordOutput(_currentCoords.toLatLng() ?? defaultCoordinate, _currentCoords.format, defaultEllipsoid));
-            }
-        ),
+              insertIntoGCWClipboard(
+                  context,
+                  formatCoordOutput(
+                      _currentCoords.toLatLng() ?? defaultCoordinate, _currentCoords.format, defaultEllipsoid));
+            }),
         Container(width: DEFAULT_MARGIN),
         GCWIconButton(
           icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
@@ -565,7 +574,6 @@ class _GCWCoordsState extends State<GCWCoords> {
         ),
         Container(width: DEFAULT_MARGIN),
         GCWCoordsPasteButton(size: size, onPasted: _setCoords),
-
       ],
     );
   }
@@ -583,10 +591,12 @@ class _GCWCoordsState extends State<GCWCoords> {
   void _setCoords(List<BaseCoordinate> pastedCoords) {
     if (pastedCoords.isEmpty) return;
 
-    var _coordsForCurrentFormat = pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoords.format.type);
+    var _coordsForCurrentFormat =
+        pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoords.format.type);
     _coordsForCurrentFormat ??= pastedCoords.first;
     if (isCoordinateFormatWithSubtype(_coordsForCurrentFormat.format.type)) {
-      _coordsForCurrentFormat.format.subtype = defaultCoordinateFormatSubtypeForFormat(_coordsForCurrentFormat.format.type);
+      _coordsForCurrentFormat.format.subtype =
+          defaultCoordinateFormatSubtypeForFormat(_coordsForCurrentFormat.format.type);
     }
 
     _currentCoords = _coordsForCurrentFormat;
@@ -636,7 +646,7 @@ class _GCWCoordsState extends State<GCWCoords> {
   }
 }
 
-class _GCWCoordWidget{
+class _GCWCoordWidget {
   final CoordinateFormatKey coordinateFormatKey;
   final Widget widget;
 

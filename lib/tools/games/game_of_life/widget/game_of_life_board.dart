@@ -10,7 +10,7 @@ class GameOfLifeBoard extends StatefulWidget {
   const GameOfLifeBoard({Key? key, required this.size, required this.onChanged, required this.state}) : super(key: key);
 
   @override
- _GameOfLifeBoardState createState() => _GameOfLifeBoardState();
+  _GameOfLifeBoardState createState() => _GameOfLifeBoardState();
 }
 
 class _GameOfLifeBoardState extends State<GameOfLifeBoard> {

@@ -5,7 +5,8 @@ class _GCWCoordsUTM extends StatefulWidget {
   final BaseCoordinate coordinates;
   final bool initialize;
 
-  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();
@@ -20,8 +21,6 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
   var _currentLonZone = defaultIntegerText;
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
-
-
 
   @override
   void initState() {
@@ -54,7 +53,6 @@ class _GCWCoordsUTMState extends State<_GCWCoordsUTM> {
       _LonZoneController.text = _currentLonZone.value.toString();
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
-
     }
 
     return Column(children: <Widget>[

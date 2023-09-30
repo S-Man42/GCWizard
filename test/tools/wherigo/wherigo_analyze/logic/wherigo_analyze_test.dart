@@ -1,22 +1,23 @@
-import 'dart:typed_data';
 import 'dart:io' as io;
-import 'package:path/path.dart' as path;
+import 'dart:typed_data';
 
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
+import 'package:path/path.dart' as path;
+
+import 'wherigo_analyze_test_resources_answers.dart';
+import 'wherigo_analyze_test_resources_builder_variable.dart';
+import 'wherigo_analyze_test_resources_character.dart';
+import 'wherigo_analyze_test_resources_gwc.dart';
+import 'wherigo_analyze_test_resources_input.dart';
+import 'wherigo_analyze_test_resources_item.dart';
+import 'wherigo_analyze_test_resources_lua_source.dart';
+import 'wherigo_analyze_test_resources_media.dart';
+import 'wherigo_analyze_test_resources_messages.dart';
 import 'wherigo_analyze_test_resources_task.dart';
 import 'wherigo_analyze_test_resources_timer.dart';
-import 'wherigo_analyze_test_resources_zone.dart';
-import 'wherigo_analyze_test_resources_input.dart';
-import 'wherigo_analyze_test_resources_media.dart';
-import 'wherigo_analyze_test_resources_character.dart';
-import 'wherigo_analyze_test_resources_messages.dart';
-import 'wherigo_analyze_test_resources_answers.dart';
-import 'wherigo_analyze_test_resources_item.dart';
 import 'wherigo_analyze_test_resources_variable.dart';
-import 'wherigo_analyze_test_resources_builder_variable.dart';
-import 'wherigo_analyze_test_resources_lua_source.dart';
-import 'wherigo_analyze_test_resources_gwc.dart';
+import 'wherigo_analyze_test_resources_zone.dart';
 
 String testDirPath = 'test/tools/wherigo/wherigo_analyze/resources/';
 
@@ -159,7 +160,11 @@ void main() {
       {
         'input': testInputTIMER,
         'expectedOutput': testOutputTIMER,
-      }
+      },
+      {
+        'input': testInputTIMERGC,
+        'expectedOutput': testOutputTIMERGC,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -274,7 +279,11 @@ void main() {
       {
         'input': testInputINPUT,
         'expectedOutput': testOutputINPUT,
-      }
+      },
+      {
+        'input': testInputINPUTGC,
+        'expectedOutput': testOutputINPUTGC,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -298,7 +307,11 @@ void main() {
       {
         'input': testInputVARIABLE,
         'expectedOutput': testOutputVARIABLE,
-      }
+      },
+      {
+        'input': testInputVARIABLEGC78Z6J,
+        'expectedOutput': testOutputVARIABLEGC78Z6J,
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -318,6 +331,10 @@ void main() {
       {
         'input': testInputBUILDERVARIABLE,
         'expectedOutput': testOutputBUILDERVARIABLE,
+      },
+      {
+        'input': testInputVARIABLE_BUILDERVARGC,
+        'expectedOutput': testOutputBUILDERVARIABLEGC,
       },
     ];
 
@@ -386,7 +403,11 @@ void main() {
       {
         'input': testInputANSWER,
         'expectedOutput': testOutputANSWER,
-      }
+      },
+      {
+        'input': testInputANSWERGC,
+        'expectedOutput': testOutputANSWERGC,
+      },
     ];
 
     for (var elem in _inputsToExpected) {

@@ -23,7 +23,7 @@ class HexViewer extends StatefulWidget {
   const HexViewer({Key? key, this.file}) : super(key: key);
 
   @override
- _HexViewerState createState() => _HexViewerState();
+  _HexViewerState createState() => _HexViewerState();
 }
 
 class _HexViewerState extends State<HexViewer> {
@@ -162,7 +162,7 @@ class _HexViewerState extends State<HexViewer> {
                 Expanded(
                   child: GCWText(
                     text:
-                    '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines?.ceil() as int)} / ${_hexDataLines?.ceil()}',
+                        '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines?.ceil() as int)} / ${_hexDataLines?.ceil()}',
                     align: Alignment.center,
                   ),
                 ),
@@ -253,6 +253,6 @@ void openInHexViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
-          builder: (context) => GCWTool(
-              tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: 'hexviewer')));
+          builder: (context) =>
+              GCWTool(tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: 'hexviewer')));
 }

@@ -328,7 +328,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // files
   'READFROMFILE': _GCWizardScriptClassFunctionDefinition(_readFromFile, 2),
   'WRITETOFILE': _GCWizardScriptClassFunctionDefinition(_writeToFile, 1, functionReturn: false),
-  'DUMPFILE':  _GCWizardScriptClassFunctionDefinition(_dumpFile, 1),
+  'DUMPFILE': _GCWizardScriptClassFunctionDefinition(_dumpFile, 1),
   'EOF': _GCWizardScriptClassFunctionDefinition(_eof, 0),
 
   // datatypes
@@ -357,4 +357,3 @@ List<String> GCWizardScriptControls() {
 }
 
 List<String> GCWizardScriptParantheses = ['(', ')'];
-

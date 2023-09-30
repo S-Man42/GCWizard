@@ -7,7 +7,7 @@ class NearestPrime extends StatefulWidget {
   const NearestPrime({Key? key}) : super(key: key);
 
   @override
- _NearestPrimeState createState() => _NearestPrimeState();
+  _NearestPrimeState createState() => _NearestPrimeState();
 }
 
 class _NearestPrimeState extends State<NearestPrime> {

@@ -10,7 +10,7 @@ class DayCalculator extends StatefulWidget {
   const DayCalculator({Key? key}) : super(key: key);
 
   @override
- _DayCalculatorState createState() => _DayCalculatorState();
+  _DayCalculatorState createState() => _DayCalculatorState();
 }
 
 class _DayCalculatorState extends State<DayCalculator> {
@@ -86,9 +86,6 @@ class _DayCalculatorState extends State<DayCalculator> {
       [i18n(context, 'dates_daycalculator_seconds'), outputData.seconds]
     ];
 
-    return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: rows
-    );
+    return GCWColumnedMultilineOutput(firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: rows);
   }
 }

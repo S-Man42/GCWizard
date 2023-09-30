@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
+import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -26,13 +26,9 @@ class GCWToolList extends StatefulWidget {
 class _GCWToolListState extends State<GCWToolList> {
   @override
   Widget build(BuildContext context) {
-
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
-        dragDevices: {
-          PointerDeviceKind.touch,
-          PointerDeviceKind.mouse
-        },
+        dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
       ),
       child: _buildItems(),
     );

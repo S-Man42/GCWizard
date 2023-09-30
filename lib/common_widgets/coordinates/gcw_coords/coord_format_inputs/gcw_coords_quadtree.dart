@@ -5,7 +5,8 @@ class _GCWCoordsQuadtree extends StatefulWidget {
   final BaseCoordinate coordinates;
   final bool initialize;
 
-  const _GCWCoordsQuadtree({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsQuadtree({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsQuadtreeState createState() => _GCWCoordsQuadtreeState();
@@ -16,8 +17,6 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
   var _currentCoord = '';
 
   final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
-
-
 
   @override
   void initState() {
@@ -38,7 +37,6 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
       _currentCoord = quadtree.toString();
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

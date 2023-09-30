@@ -12,15 +12,19 @@ class FormulaBase {
     return -1; //inactive
   }
 
+  int get valueCount {
+    return -1; //inactive
+  }
+
   FormulaBase(this.name);
 
   Map<String, Object?> toMap() => {
-    'id': id,
-    'name': name,
-  };
+        'id': id,
+        'name': name,
+      };
 }
 
-class FormulaGroup  extends FormulaBase {
+class FormulaGroup extends FormulaBase {
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
 
@@ -29,7 +33,12 @@ class FormulaGroup  extends FormulaBase {
     return formulas.length;
   }
 
-  FormulaGroup(String name) :super(name);
+  @override
+  int get valueCount {
+    return values.length;
+  }
+
+  FormulaGroup(String name) : super(name);
 
   @override
   Map<String, Object?> toMap() => {
@@ -40,7 +49,8 @@ class FormulaGroup  extends FormulaBase {
       };
 
   static FormulaGroup fromJson(Map<String, Object?> json) {
-    var newFormulaGroup = FormulaGroup(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
+    var newFormulaGroup =
+        FormulaGroup(toStringOrNull(json['name']) ?? ''); // TODO Proper default types if key is not in map
     newFormulaGroup.id = toIntOrNull(json['id']);
 
     var formulasRaw = toObjectWithNullableContentListOrNull(json['formulas']);
@@ -66,7 +76,6 @@ class FormulaGroup  extends FormulaBase {
     }
     return newFormulaGroup;
   }
-
 
   @override
   String toString() {
@@ -111,7 +120,7 @@ class Formula extends FormulaBase {
   }
 }
 
-enum FormulaValueType { FIXED, INTERPOLATED}
+enum FormulaValueType { FIXED, INTERPOLATED }
 
 const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
 
@@ -136,12 +145,11 @@ class FormulaValue extends KeyValueBase {
 
   FormulaValueType? type;
 
-  FormulaValue(String key, String value, {this.type})
-      : super ('', key, value);
-  
+  FormulaValue(String key, String value, {this.type}) : super('', key, value);
+
   static FormulaValue fromJson(Map<String, Object?> json) {
     var id = toIntOrNull(json['id']);
-    var key = toStringOrNull(json['key']) ?? '';  // TODO Proper default types if key is not in map
+    var key = toStringOrNull(json['key']) ?? ''; // TODO Proper default types if key is not in map
     var value = toStringOrNull(json['value']) ?? '';
     var type = _readType(json['type'] as String?);
 

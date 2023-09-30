@@ -33,7 +33,7 @@ class GCWTextExport extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWTextExportState createState() => _GCWTextExportState();
+  _GCWTextExportState createState() => _GCWTextExportState();
 }
 
 class _GCWTextExportState extends State<GCWTextExport> {
@@ -82,7 +82,6 @@ class _GCWTextExportState extends State<GCWTextExport> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (_currentMode == TextExportMode.QR && _qrImageData == null) _buildQRCode();
@@ -126,7 +125,7 @@ class _GCWTextExportState extends State<GCWTextExport> {
                       GCWButton(
                         text: i18n(context, 'common_copy'),
                         onPressed: () {
-                          if (_currentExportText!= null) insertIntoGCWClipboard(context, _currentExportText!);
+                          if (_currentExportText != null) insertIntoGCWClipboard(context, _currentExportText!);
                         },
                       )
                     ],
@@ -147,10 +146,9 @@ Future<void> exportFile(String text, TextExportMode mode, BuildContext context) 
     var qrCode = generateBarCode(text);
     if (qrCode == null) return;
     input2Image(qrCode).then((data) async {
-      saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value){
+      saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
         if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
       });
-
     });
   }
 }

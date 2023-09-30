@@ -23,7 +23,7 @@ class QrCode extends StatefulWidget {
   const QrCode({Key? key, this.file}) : super(key: key);
 
   @override
- _QrCodeState createState() => _QrCodeState();
+  _QrCodeState createState() => _QrCodeState();
 }
 
 class _QrCodeState extends State<QrCode> {
@@ -147,12 +147,11 @@ class _QrCodeState extends State<QrCode> {
         _outDataEncrypt = null;
         var qrCode = generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize);
         if (qrCode == null) return;
-        input2Image(qrCode)
-            .then((qr_code) {
-                setState(() {
-                  _outDataEncrypt = qr_code;
-                });
-              });
+        input2Image(qrCode).then((qr_code) {
+          setState(() {
+            _outDataEncrypt = qr_code;
+          });
+        });
       } else {
         if (_outData == null) return;
 

@@ -10,7 +10,7 @@ class RSAEChecker extends StatefulWidget {
   const RSAEChecker({Key? key}) : super(key: key);
 
   @override
- _RSAECheckerState createState() => _RSAECheckerState();
+  _RSAECheckerState createState() => _RSAECheckerState();
 }
 
 class _RSAECheckerState extends State<RSAEChecker> {
@@ -59,9 +59,7 @@ class _RSAECheckerState extends State<RSAEChecker> {
   }
 
   void _calculateOutput() {
-    if (_currentE.isEmpty ||
-        _currentP.isEmpty ||
-        _currentQ.isEmpty) {
+    if (_currentE.isEmpty || _currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 

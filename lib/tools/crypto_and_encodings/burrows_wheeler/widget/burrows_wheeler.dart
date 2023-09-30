@@ -15,7 +15,7 @@ class BurrowsWheeler extends StatefulWidget {
   const BurrowsWheeler({Key? key}) : super(key: key);
 
   @override
- _BurrowsWheelerState createState() => _BurrowsWheelerState();
+  _BurrowsWheelerState createState() => _BurrowsWheelerState();
 }
 
 class _BurrowsWheelerState extends State<BurrowsWheeler> {

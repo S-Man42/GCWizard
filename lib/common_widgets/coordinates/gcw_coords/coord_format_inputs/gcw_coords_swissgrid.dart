@@ -5,7 +5,8 @@ class _GCWCoordsSwissGrid extends StatefulWidget {
   final BaseCoordinate coordinates;
   final bool initialize;
 
-  const _GCWCoordsSwissGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsSwissGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsSwissGridState createState() => _GCWCoordsSwissGridState();
@@ -17,8 +18,6 @@ class _GCWCoordsSwissGridState extends State<_GCWCoordsSwissGrid> {
 
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
-
-
 
   @override
   void initState() {
@@ -45,7 +44,6 @@ class _GCWCoordsSwissGridState extends State<_GCWCoordsSwissGrid> {
 
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
-
     }
 
     return Column(children: <Widget>[

@@ -5,7 +5,8 @@ class _GCWCoordsMGRS extends StatefulWidget {
   final MGRS coordinates;
   final bool initialize;
 
-  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();
@@ -23,8 +24,6 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
   var _currentLonZone = defaultIntegerText;
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
-
-
 
   @override
   void initState() {
@@ -58,7 +57,6 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
       _LonZoneController.text = _currentLonZone.value.toString();
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
-
     }
 
     return Column(children: <Widget>[

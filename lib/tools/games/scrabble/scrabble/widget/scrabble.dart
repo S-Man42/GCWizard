@@ -14,7 +14,7 @@ class Scrabble extends StatefulWidget {
   const Scrabble({Key? key}) : super(key: key);
 
   @override
- _ScrabbleState createState() => _ScrabbleState();
+  _ScrabbleState createState() => _ScrabbleState();
 }
 
 class _ScrabbleState extends State<Scrabble> {
