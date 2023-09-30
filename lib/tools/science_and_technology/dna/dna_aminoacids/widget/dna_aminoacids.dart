@@ -11,7 +11,7 @@ class DNAAminoAcids extends StatefulWidget {
   const DNAAminoAcids({Key? key}) : super(key: key);
 
   @override
- _DNAAminoAcidsState createState() => _DNAAminoAcidsState();
+  _DNAAminoAcidsState createState() => _DNAAminoAcidsState();
 }
 
 class _DNAAminoAcidsState extends State<DNAAminoAcids> {

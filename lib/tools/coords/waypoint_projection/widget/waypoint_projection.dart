@@ -20,7 +20,7 @@ class WaypointProjection extends StatefulWidget {
   const WaypointProjection({Key? key}) : super(key: key);
 
   @override
- _WaypointProjectionState createState() => _WaypointProjectionState();
+  _WaypointProjectionState createState() => _WaypointProjectionState();
 }
 
 class _WaypointProjectionState extends State<WaypointProjection> {
@@ -102,7 +102,8 @@ class _WaypointProjectionState extends State<WaypointProjection> {
         return;
       }
 
-      _currentValues = reverseProjection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
+      _currentValues =
+          reverseProjection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
       if (_currentValues.isEmpty) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;
@@ -129,7 +130,9 @@ class _WaypointProjectionState extends State<WaypointProjection> {
         _currentMapPolylines.add(GCWMapPolyline(points: [projectionMapPoint, _currentMapPoints[0]]));
       }
     } else {
-      _currentValues = [projection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid)];
+      _currentValues = [
+        projection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid)
+      ];
 
       _currentMapPoints = [
         GCWMapPoint(

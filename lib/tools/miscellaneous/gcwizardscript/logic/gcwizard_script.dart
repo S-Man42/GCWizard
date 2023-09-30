@@ -1,15 +1,19 @@
 import 'dart:core';
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
-import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
+import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dutchgrid.dart';
@@ -31,62 +35,56 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/logic/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/logic/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/_common/logic/bcd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/enclosed_areas/logic/enclosed_areas.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/gc_code/logic/gc_code.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/complex_numbers.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/logic/divisor.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/logic/mathematical_constants.dart';
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/physical_constants/logic/physical_constants.dart';
+import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
-import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
-
-import 'package:stack/stack.dart' as datastack;
 import 'package:latlong2/latlong.dart';
+import 'package:stack/stack.dart' as datastack;
 
-import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
-import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
-import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
-import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
-import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_test_datatypes.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_classes.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_consts.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_enums.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_help.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_variables.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_error_handling.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_definitions.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_datetime.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_list.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_geocaching.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_math.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_string.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_waypoints.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_graphic.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_base.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_crypto.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_coordinates.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_datetime.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_definitions.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_files.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_geocaching.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_graphic.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_list.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_math.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_string.dart';
 part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_typetests.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_waypoints.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_help.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_test_datatypes.dart';
+part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_variables.dart';
 
 // Tiny BASIC
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff
@@ -105,7 +103,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // - use REPEAT-UNTIL, WHILE-WEND, STEP
 // - use ELSEIF-ELSE-ENDIF
 // - use SWITCH-CASE_DEFAULT-ENDSWITCH
-// - use BEEP, SLEEP, RANDOMIZE, RND
+// - use SLEEP, RANDOMIZE, RND
 // - use REM
 // - use DATA, RESTORE, READ
 // - use SCREEN, CIRCLE, LINE, POINT, ARC, COLOR, FILL, TEXT, BOX, OVAL
@@ -121,6 +119,7 @@ part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script
 // TODO
 // Enhance Performance
 // async PRINT
+// BEEP
 // http://www.mopsos.net/Script.html => Dreiecke
 
 ScriptState? state;
@@ -186,7 +185,7 @@ class _GCWizardSCriptInterpreter {
   static const REPEAT = 13;
   static const UNTIL = 14;
   static const CLS = 15;
-  static const BEEP = 16;
+  //static const BEEP = 16;
   static const SLEEP = 17;
   static const RANDOMIZE = 18;
   static const RND = 19;
@@ -252,7 +251,7 @@ class _GCWizardSCriptInterpreter {
     "print": PRINT,
     "input": INPUT,
     "cls": CLS,
-    "beep": BEEP,
+    //"beep": BEEP,
     "sleep": SLEEP,
     "randomize": RANDOMIZE,
     "rnd": RND,
@@ -517,9 +516,9 @@ class _GCWizardSCriptInterpreter {
       case CLS:
         executeCommandCLS();
         break;
-      case BEEP:
-        executeCommandBEEP();
-        break;
+      //case BEEP:
+      //  executeCommandBEEP();
+      //  break;
       case SLEEP:
         executeCommandSLEEP();
         break;
@@ -782,8 +781,19 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandIF() {
     double result;
+    Object? expression = evaluateExpression();
 
-    result = evaluateExpression() as double;
+    if (_isNotANumber(expression)) {
+      _handleError(_INVALIDTYPECAST);
+      return;
+    }
+
+    if (_isAInt(expression)) {
+      result = (expression as int).toDouble();
+    } else {
+      result = expression as double;
+    }
+
     state.executeElse = false;
 
     if (result != 0.0) {

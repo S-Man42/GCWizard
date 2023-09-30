@@ -299,4 +299,8 @@ List<Map<String, Object?>> _inputsMathToExpected = [
   {'code' : 'dim t\npolar(t,1.91372648, 2.4914364)\nprint t', 'expectedOutput' : '[3.14159265, 52.47135]'},
 
   {'code' : 'dim t\ncarthesian(t,3.14159265, 52.47135)\nprint t', 'expectedOutput' : '[1.9137265, 2.4914364]'},
+
+  {'code' : 'print issqr(4)', 'expectedOutput' : '1'},
+  {'code' : 'print issqr(14)', 'expectedOutput' : '0'},
+
 ];

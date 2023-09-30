@@ -79,7 +79,7 @@ Object _val(Object x) {
   return 0.0;
 }
 
-String _subst(Object text, Object x, Object y, Object caseSensitive){
+String _subst(Object text, Object x, Object y, Object caseSensitive) {
   if (_isNotAString(text) || _isNotAString(x) || _isNotAString(y) || _isNotAInt(caseSensitive)) {
     _handleError(_INVALIDTYPECAST);
     return '';
@@ -88,4 +88,3 @@ String _subst(Object text, Object x, Object y, Object caseSensitive){
   substitutions[x as String] = y as String;
   return substitution(text as String, substitutions, caseSensitive: ((caseSensitive as int) == 1));
 }
-

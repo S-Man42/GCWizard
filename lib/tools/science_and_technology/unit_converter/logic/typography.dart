@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Typography extends Unit {
-  late double Function (double) toDTPPt;
-  late double Function (double) fromDTPPt;
+  late double Function(double) toDTPPt;
+  late double Function(double) fromDTPPt;
 
   Typography({
     required String name,
@@ -15,9 +15,11 @@ class Typography extends Unit {
   }
 }
 
-final TYPOGRAPHY_DTPPOINT = Typography(name: 'common_unit_typography_pt_name', symbol: 'pt', inDTPPt: 1.0, isReference: true);
+final TYPOGRAPHY_DTPPOINT =
+    Typography(name: 'common_unit_typography_pt_name', symbol: 'pt', inDTPPt: 1.0, isReference: true);
 
-final _TYPOGRAPHY_SCALEDPOINT = Typography(name: 'common_unit_typography_sp_name', symbol: 'sp', inDTPPt: 1.0 / 65536.0);
+final _TYPOGRAPHY_SCALEDPOINT =
+    Typography(name: 'common_unit_typography_sp_name', symbol: 'sp', inDTPPt: 1.0 / 65536.0);
 
 final _TYPOGRAPHY_BIGPOINT =
     Typography(name: 'common_unit_typography_bp_name', symbol: 'bp', inDTPPt: 25.4 / 72.0 / 0.3528);

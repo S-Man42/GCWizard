@@ -8,7 +8,7 @@ class MainMenuEntryStub extends StatefulWidget {
   const MainMenuEntryStub({Key? key, required this.content}) : super(key: key);
 
   @override
- _MainMenuEntryStubState createState() => _MainMenuEntryStubState();
+  _MainMenuEntryStubState createState() => _MainMenuEntryStubState();
 }
 
 class _MainMenuEntryStubState extends State<MainMenuEntryStub> {
@@ -39,7 +39,6 @@ class _MainMenuEntryStubState extends State<MainMenuEntryStub> {
                   child: widget.content),
             )
           ],
-        )
-    );
+        ));
   }
 }

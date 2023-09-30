@@ -5,7 +5,8 @@ class _GCWCoordsDEC extends StatefulWidget {
   DEC coordinates;
   final bool initialize;
 
-  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();
@@ -27,8 +28,6 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   String _currentLatMilliDegrees = '';
   String _currentLonDegrees = '';
   String _currentLonMilliDegrees = '';
-
-
 
   @override
   void initState() {
@@ -71,7 +70,6 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
 
       _LonDegreesController.text = _currentLonDegrees;
       _LonMilliDegreesController.text = _currentLonMilliDegrees;
-
     }
 
     return Column(children: <Widget>[

@@ -11,7 +11,7 @@ class PhysicalConstants extends StatefulWidget {
   const PhysicalConstants({Key? key}) : super(key: key);
 
   @override
- _PhysicalConstantsState createState() => _PhysicalConstantsState();
+  _PhysicalConstantsState createState() => _PhysicalConstantsState();
 }
 
 class _PhysicalConstantsState extends State<PhysicalConstants> {
@@ -52,15 +52,11 @@ class _PhysicalConstantsState extends State<PhysicalConstants> {
 
   Widget _buildOutput() {
     PhysicalConstant? constantData = PHYSICAL_CONSTANTS[_currentConstant];
-    if (constantData== null) return Container();
+    if (constantData == null) return Container();
 
     var data = [
-      [
-        i18n(context, 'physical_constants_symbol'),
-        buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol)
-      ],
+      [i18n(context, 'physical_constants_symbol'), buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol)],
       [i18n(context, 'physical_constants_value'), constantData.value, _buildExponent(constantData.exponent)],
-
       constantData.standard_uncertainty != null
           ? [
               i18n(context, 'physical_constants_standard_uncertainty'),

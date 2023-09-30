@@ -5,7 +5,8 @@ class _GCWCoordsMakaney extends StatefulWidget {
   final Makaney coordinates;
   final bool initialize;
 
-  const _GCWCoordsMakaney({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsMakaney({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsMakaneyState createState() => _GCWCoordsMakaneyState();
@@ -14,8 +15,6 @@ class _GCWCoordsMakaney extends StatefulWidget {
 class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
   late TextEditingController _controller;
   var _currentCoord = '';
-
-
 
   @override
   void initState() {
@@ -36,7 +35,6 @@ class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
       _currentCoord = makaney.toString();
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

@@ -8,4 +8,4 @@ enum GCWizardSCript_SCREENMODE {
   TEXTGRAPHIC,
 }
 
-enum GCWizardScriptBreakType {INPUT, PRINT, OPENFILE, SAVEFILE, NULL}
+enum GCWizardScriptBreakType { INPUT, PRINT, OPENFILE, SAVEFILE, NULL }

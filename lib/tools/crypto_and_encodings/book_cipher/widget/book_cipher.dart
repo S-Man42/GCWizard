@@ -12,7 +12,7 @@ class BookCipher extends StatefulWidget {
   const BookCipher({Key? key}) : super(key: key);
 
   @override
- _BookCipherState createState() => _BookCipherState();
+  _BookCipherState createState() => _BookCipherState();
 }
 
 class _BookCipherState extends State<BookCipher> {
@@ -211,7 +211,8 @@ class _BookCipherState extends State<BookCipher> {
               const emptyLinesOffNeeded = [
                 searchFormat.SectionRowWordCharacter,
                 searchFormat.SectionRowWord,
-                searchFormat.SectionCharacter];
+                searchFormat.SectionCharacter
+              ];
 
               if (!_emptyLinesOn && emptyLinesOffNeeded.contains(value)) {
                 _emptyLinesOn = true;

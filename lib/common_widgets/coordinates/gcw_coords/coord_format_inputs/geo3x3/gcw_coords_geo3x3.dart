@@ -5,7 +5,8 @@ class _GCWCoordsGeo3x3 extends StatefulWidget {
   final Geo3x3 coordinates;
   final bool initialize;
 
-  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsGeo3x3State createState() => _GCWCoordsGeo3x3State();
@@ -14,8 +15,6 @@ class _GCWCoordsGeo3x3 extends StatefulWidget {
 class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
   late TextEditingController _controller;
   var _currentCoord = '';
-
-
 
   @override
   void initState() {
@@ -36,7 +35,6 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
       _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

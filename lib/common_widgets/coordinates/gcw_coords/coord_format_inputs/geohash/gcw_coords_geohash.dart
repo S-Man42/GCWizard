@@ -5,7 +5,8 @@ class _GCWCoordsGeohash extends StatefulWidget {
   final Geohash coordinates;
   final bool initialize;
 
-  const _GCWCoordsGeohash({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsGeohash({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsGeohashState createState() => _GCWCoordsGeohashState();
@@ -14,8 +15,6 @@ class _GCWCoordsGeohash extends StatefulWidget {
 class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
   late TextEditingController _controller;
   var _currentCoord = '';
-
-
 
   @override
   void initState() {
@@ -36,7 +35,6 @@ class _GCWCoordsGeohashState extends State<_GCWCoordsGeohash> {
       _currentCoord = geohash.text;
 
       _controller.text = _currentCoord;
-
     }
 
     return Column(children: <Widget>[

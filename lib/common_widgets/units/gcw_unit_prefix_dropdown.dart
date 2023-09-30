@@ -40,14 +40,8 @@ class _GCWUnitPrefixDropDownState extends State<GCWUnitPrefixDropDown> {
         selectedItemBuilder: (context) {
           return unitPrefixes.map((UnitPrefix prefix) {
             return Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                  widget.onlyShowSymbols
-                      ? prefix.symbol
-                      : _longText(prefix),
-                  style: gcwTextStyle()
-              )
-            );
+                alignment: Alignment.centerLeft,
+                child: Text(widget.onlyShowSymbols ? prefix.symbol : _longText(prefix), style: gcwTextStyle()));
           }).toList();
         });
   }

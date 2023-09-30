@@ -19,7 +19,7 @@ class BloodAlcoholContent extends StatefulWidget {
   const BloodAlcoholContent({Key? key}) : super(key: key);
 
   @override
- _BloodAlcoholContentState createState() => _BloodAlcoholContentState();
+  _BloodAlcoholContentState createState() => _BloodAlcoholContentState();
 }
 
 class _BloodAlcoholContentState extends State<BloodAlcoholContent> {

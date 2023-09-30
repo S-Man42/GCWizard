@@ -1,24 +1,21 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 
 class _AlphabetValuesKeyValueItem extends GCWKeyValueItem {
-
-  _AlphabetValuesKeyValueItem(
-     {Key? key,
-       required KeyValueBase keyValueEntry,
-       required bool odd,
-     })
-     : super(
-        key: key,
-        keyValueEntry: keyValueEntry,
-        odd: odd,
-  );
+  _AlphabetValuesKeyValueItem({
+    Key? key,
+    required KeyValueBase keyValueEntry,
+    required bool odd,
+  }) : super(
+          key: key,
+          keyValueEntry: keyValueEntry,
+          odd: odd,
+        );
 
   @override
   GCWKeyValueItemState createState() => _GCWKeyValueAlphabetEntryState();
 }
 
 class _GCWKeyValueAlphabetEntryState extends GCWKeyValueItemState {
-
   @override
   void removeEntry() {
     var _isList = widget.keyValueEntry.value.contains(',');
@@ -28,8 +25,7 @@ class _GCWKeyValueAlphabetEntryState extends GCWKeyValueItemState {
           text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
           onPressed: () {
             super.removeEntry();
-          }
-      )
+          })
     ];
 
     if (!_isList) {
@@ -56,9 +52,11 @@ class _GCWKeyValueAlphabetEntryState extends GCWKeyValueItemState {
       ));
     }
 
-    showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
-        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [widget.keyValueEntry.key])), buttons);
+    showGCWDialog(
+        context,
+        i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
+        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text',
+            parameters: [widget.keyValueEntry.key])),
+        buttons);
   }
 }
-
-

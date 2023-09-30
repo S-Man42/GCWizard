@@ -380,8 +380,10 @@ class WherigoCartridgeLUA {
   final Map<String, WherigoObjectData> NameToObject;
   final WHERIGO_ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsLUA;
+  final WherigoZonePoint StartLocation;
   final WHERIGO_BUILDER Builder;
   final String BuilderVersion;
+  final String TargetDevice;
   final String TargetDeviceVersion;
   final String StateID;
   final String CountryID;
@@ -412,8 +414,10 @@ class WherigoCartridgeLUA {
     required this.NameToObject,
     required this.ResultStatus,
     required this.ResultsLUA,
+    required this.StartLocation,
     required this.Builder,
     required this.BuilderVersion,
+    required this.TargetDevice,
     required this.TargetDeviceVersion,
     required this.CountryID,
     required this.StateID,

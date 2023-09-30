@@ -6,11 +6,8 @@ class InterpreterJobData {
   final LatLng jobDataCoords;
   final ScriptState? continueState;
 
-  InterpreterJobData({required this.jobDataScript,
-    required this.jobDataInput,
-    required this.jobDataCoords,
-    this.continueState
-  });
+  InterpreterJobData(
+      {required this.jobDataScript, required this.jobDataInput, required this.jobDataCoords, this.continueState});
 }
 
 class GCWizardScriptOutput {
@@ -42,16 +39,16 @@ class GCWizardScriptOutput {
 
   static GCWizardScriptOutput empty() {
     return GCWizardScriptOutput(
-        STDOUT: '',
-        Graphic: GraphicState(),
-        Points: [],
-        ErrorMessage: '',
-        ErrorPosition: 0,
-        VariableDump: [],
-        FILE: Uint8List.fromList([]),
-        fileSaved: false,
-        randomNumber: 0.0,
-        BreakType: GCWizardScriptBreakType.NULL,
+      STDOUT: '',
+      Graphic: GraphicState(),
+      Points: [],
+      ErrorMessage: '',
+      ErrorPosition: 0,
+      VariableDump: [],
+      FILE: Uint8List.fromList([]),
+      fileSaved: false,
+      randomNumber: 0.0,
+      BreakType: GCWizardScriptBreakType.NULL,
     );
   }
 }
@@ -70,7 +67,8 @@ class _GCWizardScriptClassFunctionDefinition {
   final int functionParamCount;
   final bool functionReturn;
 
-  const _GCWizardScriptClassFunctionDefinition(this.functionName, this.functionParamCount, {this.functionReturn = true});
+  const _GCWizardScriptClassFunctionDefinition(this.functionName, this.functionParamCount,
+      {this.functionReturn = true});
 }
 
 class _GCWizardScriptClassLabelStack {
@@ -120,7 +118,10 @@ class ScriptState {
   late String inputData;
   GCWizardScriptBreakType BreakType = GCWizardScriptBreakType.NULL;
   Map<String, Object?> variables = _GCWIZARDSCRIPT_SCIENCE_CONST;
-  List<String> get graphics {return graficOutput.graphics;}
+  List<String> get graphics {
+    return graficOutput.graphics;
+  }
+
   GraphicState graficOutput = GraphicState();
   List<GCWMapPoint> waypoints = [];
 
@@ -204,7 +205,7 @@ class ScriptState {
     });
   }
 
-  void addFile(Uint8List inputFile){
+  void addFile(Uint8List inputFile) {
     FILE = inputFile;
   }
 }

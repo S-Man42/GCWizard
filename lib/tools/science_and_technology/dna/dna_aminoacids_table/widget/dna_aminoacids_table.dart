@@ -7,7 +7,7 @@ class DNAAminoAcidsTable extends StatefulWidget {
   const DNAAminoAcidsTable({Key? key}) : super(key: key);
 
   @override
- _DNAAminoAcidsTableState createState() => _DNAAminoAcidsTableState();
+  _DNAAminoAcidsTableState createState() => _DNAAminoAcidsTableState();
 }
 
 class _DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
@@ -35,19 +35,11 @@ class _DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
       var sequences = acid.nucleobaseSequences;
       sequences.sort();
 
-      return [
-        name,
-        acid.symbolLong ?? '-',
-        acid.symbolShort ?? '-',
-        sequences.join(', ')
-      ];
+      return [name, acid.symbolLong ?? '-', acid.symbolShort ?? '-', sequences.join(', ')];
     }).toList();
 
     acids.sort((a, b) => (a[0] as String).compareTo((b[0] as String)));
 
-    return GCWColumnedMultilineOutput(
-        data: acids,
-        flexValues: const [3, 1, 1, 2]
-    );
+    return GCWColumnedMultilineOutput(data: acids, flexValues: const [3, 1, 1, 2]);
   }
 }

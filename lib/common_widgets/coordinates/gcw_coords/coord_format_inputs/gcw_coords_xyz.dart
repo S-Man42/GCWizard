@@ -5,7 +5,8 @@ class _GCWCoordsXYZ extends StatefulWidget {
   final BaseCoordinate coordinates;
   final bool initialize;
 
-  const _GCWCoordsXYZ({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsXYZ({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsXYZState createState() => _GCWCoordsXYZState();
@@ -19,8 +20,6 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   var _currentX = 0.0;
   var _currentY = 0.0;
   var _currentZ = 0.0;
-
-
 
   @override
   void initState() {
@@ -51,7 +50,6 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
       _ControllerX.text = _currentX.toString();
       _ControllerY.text = _currentY.toString();
       _ControllerZ.text = _currentZ.toString();
-
     }
 
     return Column(children: <Widget>[

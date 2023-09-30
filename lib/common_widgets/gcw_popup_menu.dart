@@ -16,6 +16,7 @@ class GCWPopupMenu extends StatefulWidget {
   final bool isTextSelectionToolBarButton;
   final EdgeInsets? textSelectionToolBarButtonPadding;
   final String? textSelectionToolBarButtonLabel;
+  final bool? buttonNoBorder;
 
   final Function? onBeforePressed;
 
@@ -31,11 +32,11 @@ class GCWPopupMenu extends StatefulWidget {
     this.onBeforePressed,
     this.isTextSelectionToolBarButton = false,
     this.textSelectionToolBarButtonPadding,
-    this.textSelectionToolBarButtonLabel,
+    this.textSelectionToolBarButtonLabel, this.buttonNoBorder,
   }) : super(key: key);
 
   @override
- _GCWPopupMenuState createState() => _GCWPopupMenuState();
+  _GCWPopupMenuState createState() => _GCWPopupMenuState();
 }
 
 class _GCWPopupMenuState extends State<GCWPopupMenu> {
@@ -74,6 +75,7 @@ class _GCWPopupMenuState extends State<GCWPopupMenu> {
         size: widget.size,
         iconColor: widget.iconColor,
         backgroundColor: widget.backgroundColor,
+        noBorder: widget.buttonNoBorder,
         onPressed: _onPressed);
   }
 
@@ -84,7 +86,8 @@ class _GCWPopupMenuState extends State<GCWPopupMenu> {
       return MapEntry<PopupMenuEntry<int>, void Function(int)>(
           item.isDivider
               ? const PopupMenuDivider() as PopupMenuEntry<int>
-              : PopupMenuItem(value: index, child: item.child), item.action);
+              : PopupMenuItem(value: index, child: item.child),
+          item.action);
     });
 
     _afterLayout();
