@@ -1646,7 +1646,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const FormatConverterW3W(),
         id: 'coords_formatconverter_w3w',
-        iconPath: 'assets/icons/coords/icon_w3w.png',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_w3w.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
