@@ -41,15 +41,7 @@ class FormatConverterW3W extends StatefulWidget {
 class FormatConverterW3WState extends State<FormatConverterW3W> {
   LatLng _currentCoordsLatLng = LatLng(0.0, 0.0);
   String _currentCoordsW3W = '';
-  W3WResults _currentW3wToCoordinates = W3WResults(
-    statusCode: 0,
-    error: '',
-    country: '',
-    nearestPlace: '',
-    square_sw: const LatLng(0.0, 0.0),
-    square_ne: const LatLng(0.0, 0.0),
-    center: const LatLng(0.0, 0.0),
-  );
+  W3WResults _currentW3wToCoordinates = W3WRESULTS_EMPTY;
 
   var _currentCoords = defaultBaseCoordinate;
   List<BaseCoordinate> _currentOutputs = [];
@@ -252,7 +244,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
       GCWMapPoint(
           uuid: 'Original Point ' + _currentW1 + '//' + _currentW2 + '//' + _currentW3,
           markerText: _currentW1 + '//' + _currentW2 + '//' + _currentW3,
-          point: _currentW3wToCoordinates.center,
+          point: _currentW3wToCoordinates.coordinates,
           color: Colors.red),
     ];
   }
@@ -289,7 +281,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     ];
   }
 
-  Widget _outputW32ToCoordinates() {
+  Widget _outputW3WToCoordinates() {
     return GCWDefaultOutput(
       trailing: Row(children: <Widget>[
         GCWIconButton(
@@ -333,31 +325,88 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
           [
             i18n(context, 'coords_formatconverter_w3w_location'),
             '',
-            formatCoordOutput(LatLng(_currentW3wToCoordinates.center.latitude, _currentW3wToCoordinates.center.longitude),
+            formatCoordOutput(LatLng(_currentW3wToCoordinates.coordinates.latitude, _currentW3wToCoordinates.coordinates.longitude),
                 defaultCoordinateFormat, defaultEllipsoid)
           ],
           [i18n(context, 'coords_formatconverter_w3w_country'), '', _currentW3wToCoordinates.country],
           [i18n(context, 'coords_formatconverter_w3w_nearest_place'), '', _currentW3wToCoordinates.nearestPlace],
+          [i18n(context, 'coords_formatconverter_w3w_locale'), '', _currentW3wToCoordinates.locale],
+          [i18n(context, 'coords_formatconverter_w3w_language'), '', _currentW3wToCoordinates.language],
+          [i18n(context, 'coords_formatconverter_w3w_map'), '', _currentW3wToCoordinates.map],
         ],
-        flexValues: [2,1,2],
+        flexValues: [2,1,3],
       ),
     );
-    return Container();
+  }
+
+  Widget _outputCoordinatesToW3W() {
+    return GCWDefaultOutput(
+      trailing: Row(children: <Widget>[
+        GCWIconButton(
+          icon: Icons.save,
+          size: IconButtonSize.SMALL,
+          iconColor: themeColors().mainFont(),
+          onPressed: () {
+            _exportCoordinates(
+              context,
+              _center(),
+              _square(),
+            );
+          },
+        ),
+        GCWIconButton(
+          icon: Icons.my_location,
+          size: IconButtonSize.SMALL,
+          iconColor: themeColors().mainFont(),
+          onPressed: () {
+            _openInMap(
+              _center(),
+              _square(),
+            );
+          },
+        ),
+      ]),
+      child: GCWColumnedMultilineOutput(
+        data: [
+          [i18n(context, 'coords_formatconverter_w3w_words'), '', _currentW3wToCoordinates.words.toUpperCase()],
+          [
+            i18n(context, 'coords_formatconverter_w3w_square'),
+            i18n(context, 'coords_formatconverter_w3w_square_ne'),
+            formatCoordOutput(LatLng(_currentW3wToCoordinates.square_ne.latitude, _currentW3wToCoordinates.square_ne.longitude),
+                defaultCoordinateFormat, defaultEllipsoid)
+          ],
+          [
+            '',
+            i18n(context, 'coords_formatconverter_w3w_square_sw'),
+            formatCoordOutput(LatLng(_currentW3wToCoordinates.square_sw.latitude, _currentW3wToCoordinates.square_sw.longitude),
+                defaultCoordinateFormat, defaultEllipsoid)
+          ],
+          [
+            i18n(context, 'coords_formatconverter_w3w_location'),
+            '',
+            formatCoordOutput(LatLng(_currentW3wToCoordinates.coordinates.latitude, _currentW3wToCoordinates.coordinates.longitude),
+                defaultCoordinateFormat, defaultEllipsoid)
+          ],
+          [i18n(context, 'coords_formatconverter_w3w_country'), '', _currentW3wToCoordinates.country],
+          [i18n(context, 'coords_formatconverter_w3w_nearest_place'), '', _currentW3wToCoordinates.nearestPlace],
+          [i18n(context, 'coords_formatconverter_w3w_locale'), '', _currentW3wToCoordinates.locale],
+          [i18n(context, 'coords_formatconverter_w3w_language'), '', _currentW3wToCoordinates.language],
+          [i18n(context, 'coords_formatconverter_w3w_map'), '', _currentW3wToCoordinates.map],
+        ],
+        flexValues: [2,1,3],
+      ),
+    );
   }
 
   Widget _buildOutput() {
     if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
       return _currentAllOutput;
     } else {
-      if (_currentMode == GCWSwitchPosition.right) {
-        return _outputW32ToCoordinates();
-      } else {
-        return GCWDefaultOutput(
-          child: GCWOutputText(
-            text: _currentCoordsW3W,
-          ),
-        );
-      }
+       if (_currentMode == GCWSwitchPosition.right) {
+         return _outputW3WToCoordinates();
+       } else {
+         return _outputCoordinatesToW3W();
+       }
     }
   }
 
@@ -439,7 +488,8 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
   }
 
   void _showW3WToCoordinatesResults(W3WResults output) {
-    _currentCoordsLatLng = output.center;
+    _currentCoordsLatLng = output.coordinates;
+    _currentCoordsW3W = output.words.toUpperCase();
     _currentW3wToCoordinates = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -458,10 +508,10 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
           child: SizedBox(
             height: 220,
             width: 150,
-            child: GCWAsyncExecuter<CoordinateResults>(
+            child: GCWAsyncExecuter<W3WResults>(
               isolatedFunction: convertW3WFromLatLngAsync,
               parameter: _buildJobDataW3WFromLatLng,
-              onReady: (data) => _showW3W(data),
+              onReady: (data) => _showW3WToCoordinatesResults(data),
               isOverlay: true,
             ),
           ),
@@ -474,15 +524,6 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     return GCWAsyncExecuterParameters(W3WFromLatLngJobData(_currentCoords.toLatLng()!, _currentLanguage, _APIKey));
   }
 
-  void _showW3W(CoordinateResults output) {
-    _currentCoordsW3W = output.coordinatesW3W.toUpperCase();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        _calculateOutput(context);
-      });
-    });
-  }
 }
 
 class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
