@@ -23,6 +23,25 @@ class W3WFromLatLngJobData {
   W3WFromLatLngJobData(this.coordinates, this.language, this.APIKey);
 }
 
+class W3WSuggestion {
+  final String country;
+  final String nearestPlace;
+  final String words;
+  final String distanceToFocusKm;
+  final String rank;
+  final String language;
+  final String locale;
+
+  W3WSuggestion(
+      {required this.country,
+      required this.nearestPlace,
+      required this.words,
+      required this.distanceToFocusKm,
+      required this.rank,
+      required this.language,
+      required this.locale});
+}
+
 class W3WResults {
   final int statusCode;
   final String error;
@@ -35,19 +54,22 @@ class W3WResults {
   final String map;
   final String locale;
   final String language;
+  final List<W3WSuggestion> suggestions;
 
-  W3WResults(
-      {required this.statusCode,
-      required this.error,
-      required this.country,
-      required this.nearestPlace,
-      required this.square_sw,
-      required this.square_ne,
-      required this.words,
-      required this.coordinates,
-      required this.map,
-      required this.locale,
-      required this.language,});
+  W3WResults({
+    required this.statusCode,
+    required this.error,
+    required this.country,
+    required this.nearestPlace,
+    required this.square_sw,
+    required this.square_ne,
+    required this.words,
+    required this.coordinates,
+    required this.map,
+    required this.locale,
+    required this.language,
+    required this.suggestions,
+  });
 }
 
 final W3WRESULTS_EMPTY = W3WResults(
@@ -62,9 +84,12 @@ final W3WRESULTS_EMPTY = W3WResults(
   map: '',
   locale: '',
   language: '',
+  suggestions: [],
 );
+
 const _URL_w3wToCoordinate = 'https://api.what3words.com/v3/convert-to-coordinates';
 const _URL_coordinates2w2w = 'https://api.what3words.com/v3/convert-to-3wa';
+const _URL_autosuggest = 'https://api.what3words.com/v3/autosuggest';
 
 String _convertLanguageFromFormatKey(CoordinateFormatKey formatKey) {
   switch (formatKey) {
@@ -99,13 +124,17 @@ String _convertLanguageFromFormatKey(CoordinateFormatKey formatKey) {
   }
 }
 
-W3WResults _errorHandlingW3WResults(http.Response response){
+W3WResults _errorHandlingW3WResults(http.Response response) {
   String error = '';
   switch (response.statusCode) {
-    case 400: break;
-    case 401: break;
-    case 404: break;
-    case 405: break;
+    case 400:
+      break;
+    case 401:
+      break;
+    case 404:
+      break;
+    case 405:
+      break;
     default:
   }
   return W3WResults(
@@ -120,35 +149,59 @@ W3WResults _errorHandlingW3WResults(http.Response response){
     map: '',
     locale: '',
     language: '',
+    suggestions: [],
   );
 }
 
-W3WResults _analyzeHttpResponse(http.Response response){
-    if (response.statusCode == 200) {
-      String data = response.body;
-      var decodedData = json.decode(data);
-      double sw_lat = double.parse(decodedData['square']['southwest']['lat'].toString());
-      double sw_lon = double.parse(decodedData['square']['southwest']['lng'].toString());
-      double ne_lat = double.parse(decodedData['square']['northeast']['lat'].toString());
-      double ne_lon = double.parse(decodedData['square']['northeast']['lng'].toString());
-      double ct_lat = double.parse(decodedData['coordinates']['lat'].toString());
-      double ct_lon = double.parse(decodedData['coordinates']['lng'].toString());
-      return W3WResults(
-        statusCode: 200,
-        error: '',
+List<W3WSuggestion> _analyzeSuggestions(http.Response suggestionsW3W) {
+  List<W3WSuggestion> result = [];
+  if (suggestionsW3W.statusCode == 200) {
+    String data = suggestionsW3W.body;
+    var decodedData = json.decode(data);
+    List<dynamic> suggestions = decodedData['suggestions'] as List<dynamic>;
+    for (var suggestion in suggestions) {
+      print(suggestion);
+      result.add(W3WSuggestion(
         country: decodedData['country'].toString(),
-        nearestPlace: decodedData['nearestPlace'].toString(),
-        square_sw: LatLng(sw_lat, sw_lon),
-        square_ne: LatLng(ne_lat, ne_lon),
-        coordinates: LatLng(ct_lat, ct_lon),
-        words: decodedData['words'].toString(),
-        map: decodedData['map'].toString(),
-        locale: decodedData['locale'].toString(),
-        language: decodedData['language'].toString(),
-      );
-    } else {
-      return _errorHandlingW3WResults(response);
+        nearestPlace: suggestion['nearestPlace'].toString(),
+        words: suggestion['words'].toString(),
+        distanceToFocusKm: suggestion['distanceToFocusKm'].toString(),
+        rank: suggestion['rank'].toString(),
+        language: suggestion['language'].toString(),
+        locale: suggestion['locale'].toString(),
+      ));
     }
+  }
+  return result;
+}
+
+W3WResults _analyzeHttpResponse(http.Response response, {http.Response? suggestionsW3W}) {
+  if (response.statusCode == 200) {
+    String data = response.body;
+    var decodedData = json.decode(data);
+    double sw_lat = double.parse(decodedData['square']['southwest']['lat'].toString());
+    double sw_lon = double.parse(decodedData['square']['southwest']['lng'].toString());
+    double ne_lat = double.parse(decodedData['square']['northeast']['lat'].toString());
+    double ne_lon = double.parse(decodedData['square']['northeast']['lng'].toString());
+    double ct_lat = double.parse(decodedData['coordinates']['lat'].toString());
+    double ct_lon = double.parse(decodedData['coordinates']['lng'].toString());
+    return W3WResults(
+      statusCode: 200,
+      error: '',
+      country: decodedData['country'].toString(),
+      nearestPlace: decodedData['nearestPlace'].toString(),
+      square_sw: LatLng(sw_lat, sw_lon),
+      square_ne: LatLng(ne_lat, ne_lon),
+      coordinates: LatLng(ct_lat, ct_lon),
+      words: decodedData['words'].toString(),
+      map: decodedData['map'].toString(),
+      locale: decodedData['locale'].toString(),
+      language: decodedData['language'].toString(),
+      suggestions: suggestionsW3W != null ? _analyzeSuggestions(suggestionsW3W) : [],
+    );
+  } else {
+    return _errorHandlingW3WResults(response);
+  }
 }
 
 Future<W3WResults> convertLatLonFromW3Wasync(GCWAsyncExecuterParameters? jobData) async {
@@ -167,9 +220,11 @@ Future<W3WResults> convertLatLonFromW3Wasync(GCWAsyncExecuterParameters? jobData
 
 Future<W3WResults> _getLatLonFromW3W(String words, String APIKey, {required SendPort sendAsyncPort}) async {
   String address = _URL_w3wToCoordinate + '?words=' + words + '&key=' + APIKey + '&format=json';
-  var uri = Uri.parse(address);
-  http.Response response = await http.get(uri);
-  return _analyzeHttpResponse(response);
+  http.Response response = await http.get(Uri.parse(address));
+
+  address = _URL_autosuggest + '?input=' + words + '&key=' + APIKey + '&format=json';
+  http.Response suggestions = await http.get(Uri.parse(address));
+  return _analyzeHttpResponse(response, suggestionsW3W: suggestions);
 }
 
 Future<W3WResults> convertW3WFromLatLngAsync(GCWAsyncExecuterParameters? jobData) async {
@@ -188,13 +243,18 @@ Future<W3WResults> convertW3WFromLatLngAsync(GCWAsyncExecuterParameters? jobData
 
 Future<W3WResults> _getW3WFromLatLng(LatLng coordinates, String APIKey, CoordinateFormatKey language,
     {required SendPort sendAsyncPort}) async {
-
   String address = _URL_coordinates2w2w +
-      '?key=' + APIKey +
-      '&coordinates=' + coordinates.latitude.toString() + ',' + coordinates.longitude.toString() +
-      '&language=' + _convertLanguageFromFormatKey(language) +
+      '?key=' +
+      APIKey +
+      '&coordinates=' +
+      coordinates.latitude.toString() +
+      ',' +
+      coordinates.longitude.toString() +
+      '&language=' +
+      _convertLanguageFromFormatKey(language) +
       '&format=json';
-  var uri = Uri.parse(address);
-  http.Response response = await http.get(uri);
-  return _analyzeHttpResponse(response);
+  http.Response response = await http.get(Uri.parse(address));
+  return _analyzeHttpResponse(
+    response,
+  );
 }
