@@ -13,6 +13,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_forma
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -291,33 +292,10 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     ];
   }
 
-  Widget _outputW3WToCoordinates() {
-    return GCWDefaultOutput(
-      trailing: Row(children: <Widget>[
-        GCWIconButton(
-          icon: Icons.save,
-          size: IconButtonSize.SMALL,
-          iconColor: themeColors().mainFont(),
-          onPressed: () {
-            _exportCoordinates(
-              context,
-              _center(),
-              _square(),
-            );
-          },
-        ),
-        GCWIconButton(
-          icon: Icons.my_location,
-          size: IconButtonSize.SMALL,
-          iconColor: themeColors().mainFont(),
-          onPressed: () {
-            _openInMap(
-              _center(),
-              _square(),
-            );
-          },
-        ),
-      ]),
+  Widget _outputDetails(){
+    return GCWExpandableTextDivider(
+      expanded: false,
+      text: i18n(context, 'coords_formatconverter_w3w_details'),
       child: GCWColumnedMultilineOutput(
         data: [
           [
@@ -330,12 +308,6 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
             '',
             i18n(context, 'coords_formatconverter_w3w_square_sw'),
             formatCoordOutput(LatLng(_currentW3wToCoordinates.square_sw.latitude, _currentW3wToCoordinates.square_sw.longitude),
-                defaultCoordinateFormat, defaultEllipsoid)
-          ],
-          [
-            i18n(context, 'coords_formatconverter_w3w_location'),
-            '',
-            formatCoordOutput(LatLng(_currentW3wToCoordinates.coordinates.latitude, _currentW3wToCoordinates.coordinates.longitude),
                 defaultCoordinateFormat, defaultEllipsoid)
           ],
           [i18n(context, 'coords_formatconverter_w3w_country'), '', _currentW3wToCoordinates.country],
@@ -349,61 +321,28 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     );
   }
 
-  Widget _outputCoordinatesToW3W() {
-    return GCWDefaultOutput(
-      trailing: Row(children: <Widget>[
-        GCWIconButton(
-          icon: Icons.save,
-          size: IconButtonSize.SMALL,
-          iconColor: themeColors().mainFont(),
-          onPressed: () {
-            _exportCoordinates(
-              context,
-              _center(),
-              _square(),
-            );
-          },
-        ),
-        GCWIconButton(
-          icon: Icons.my_location,
-          size: IconButtonSize.SMALL,
-          iconColor: themeColors().mainFont(),
-          onPressed: () {
-            _openInMap(
-              _center(),
-              _square(),
-            );
-          },
-        ),
-      ]),
+  Widget _outputSuggestions(){
+    List<List<String>> suggestions = [];
+    for (var suggestion in _currentW3wToCoordinates.suggestions) {
+      suggestions.add([suggestion.rank, i18n(context, 'coords_formatconverter_w3w_words'), suggestion.words]);
+      if (suggestion.country != 'null') {
+        suggestions.add(['', i18n(context, 'coords_formatconverter_w3w_country'), suggestion.country]);
+      }
+      suggestions.add(['', i18n(context, 'coords_formatconverter_w3w_nearest_place'), suggestion.nearestPlace]);
+      if (suggestion.distanceToFocusKm != 'null') {
+        suggestions.add(['', i18n(context, 'coords_formatconverter_w3w_distance'), suggestion.distanceToFocusKm]);
+      }
+      suggestions.add(['', i18n(context, 'coords_formatconverter_w3w_language'), suggestion.language]);
+      if (suggestion.locale != 'null') {
+        suggestions.add(['', i18n(context, 'coords_formatconverter_w3w_locale'), suggestion.locale]);
+      }
+    }
+    return GCWExpandableTextDivider(
+      expanded: false,
+      text: i18n(context, 'coords_formatconverter_w3w_suggestions'),
       child: GCWColumnedMultilineOutput(
-        data: [
-          [i18n(context, 'coords_formatconverter_w3w_words'), '', _currentW3wToCoordinates.words.toUpperCase()],
-          [
-            i18n(context, 'coords_formatconverter_w3w_square'),
-            i18n(context, 'coords_formatconverter_w3w_square_ne'),
-            formatCoordOutput(LatLng(_currentW3wToCoordinates.square_ne.latitude, _currentW3wToCoordinates.square_ne.longitude),
-                defaultCoordinateFormat, defaultEllipsoid)
-          ],
-          [
-            '',
-            i18n(context, 'coords_formatconverter_w3w_square_sw'),
-            formatCoordOutput(LatLng(_currentW3wToCoordinates.square_sw.latitude, _currentW3wToCoordinates.square_sw.longitude),
-                defaultCoordinateFormat, defaultEllipsoid)
-          ],
-          [
-            i18n(context, 'coords_formatconverter_w3w_location'),
-            '',
-            formatCoordOutput(LatLng(_currentW3wToCoordinates.coordinates.latitude, _currentW3wToCoordinates.coordinates.longitude),
-                defaultCoordinateFormat, defaultEllipsoid)
-          ],
-          [i18n(context, 'coords_formatconverter_w3w_country'), '', _currentW3wToCoordinates.country],
-          [i18n(context, 'coords_formatconverter_w3w_nearest_place'), '', _currentW3wToCoordinates.nearestPlace],
-          [i18n(context, 'coords_formatconverter_w3w_locale'), '', _currentW3wToCoordinates.locale],
-          [i18n(context, 'coords_formatconverter_w3w_language'), '', _currentW3wToCoordinates.language],
-          [i18n(context, 'coords_formatconverter_w3w_map'), '', _currentW3wToCoordinates.map],
-        ],
-        flexValues: [2,1,3],
+        data: suggestions,
+        flexValues: [1,2,3],
       ),
     );
   }
@@ -412,11 +351,57 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
       return _currentAllOutput;
     } else {
-       if (_currentMode == GCWSwitchPosition.right) {
-         return _outputW3WToCoordinates();
-       } else {
-         return _outputCoordinatesToW3W();
-       }
+      return GCWDefaultOutput(
+        trailing: Row(children: <Widget>[
+          GCWIconButton(
+            icon: Icons.save,
+            size: IconButtonSize.SMALL,
+            iconColor: themeColors().mainFont(),
+            onPressed: () {
+              _exportCoordinates(
+                context,
+                _center(),
+                _square(),
+              );
+            },
+          ),
+          GCWIconButton(
+            icon: Icons.my_location,
+            size: IconButtonSize.SMALL,
+            iconColor: themeColors().mainFont(),
+            onPressed: () {
+              _openInMap(
+                _center(),
+                _square(),
+              );
+            },
+          ),
+        ]),
+        child: Column(
+          children: <Widget>[
+            _currentMode == GCWSwitchPosition.left
+            ? GCWColumnedMultilineOutput(
+              data: [
+                [i18n(context, 'coords_formatconverter_w3w_words'), '', _currentW3wToCoordinates.words.toUpperCase()],
+              ],
+              flexValues: [2,1,3],
+            )
+            : GCWColumnedMultilineOutput(
+              data: [
+                [
+                  i18n(context, 'coords_formatconverter_w3w_location'),
+                  '',
+                  formatCoordOutput(LatLng(_currentW3wToCoordinates.coordinates.latitude, _currentW3wToCoordinates.coordinates.longitude),
+                      defaultCoordinateFormat, defaultEllipsoid)
+                ],
+              ],
+              flexValues: [2,1,3],
+            ),
+            _outputDetails(),
+            _currentW3wToCoordinates.suggestions.isNotEmpty ? _outputSuggestions() : Container(),
+          ],
+        ),
+      );
     }
   }
 
