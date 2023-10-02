@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var iso3166alpha = [
+const iso3166alpha = [
 
     'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
     'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
@@ -104,7 +104,7 @@ var iso3166alpha = [
 ];
 
 
-var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD," +
+const aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD," +
         "COL=5CL,5ME=5MX,MEX=5MX,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR," +
         "5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO," +
         "5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX," +
@@ -114,7 +114,7 @@ var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4
         "CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL," +
         "JTN=UMI,MID=1HI,1PR=PRI,5TM=TAM,TAM=TAM,2OD=2OR,";
 
-var dependency = [
+const dependency = [
     27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
     21, 408, 4, 408, 42, 408, 11, 408,
     18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166,
@@ -194,7 +194,7 @@ function parentletter(territoryAlphaCode) {
 
 /// PRIVATE given an ISO abbreviation, set disambiguation for future calls to iso2ccode(); returns nonzero in case of error
 var disambiguate = 1; // GLOBAL
-function set_disambiguate(territoryAlphaCode) {
+int set_disambiguate(String territoryAlphaCode) {
     var p = parentletter(territoryAlphaCode);
     if (p < 0) {
         return -2;
@@ -204,8 +204,8 @@ function set_disambiguate(territoryAlphaCode) {
 }
 
 /// PRIVATE returns alias of ISO abbreviation (if any), or return empty
-function alias2iso(territoryAlphaCode) {
-    var rx;
+String alias2iso(String territoryAlphaCode) {
+    String rx;
     if (territoryAlphaCode.length == 2) {
         rx = '[0-9]' + territoryAlphaCode;
     } else {
@@ -220,7 +220,7 @@ function alias2iso(territoryAlphaCode) {
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-function findISO(territoryAlphaCode) {
+int findISO(String territoryAlphaCode) {
     for (var i = 0; i < iso3166alpha.length; i++) {
         if (territoryAlphaCode == iso3166alpha[i]) {
             return i;
@@ -230,14 +230,14 @@ function findISO(territoryAlphaCode) {
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-function iso2ccode(territoryAlphaCode) {
-    if (typeof territoryAlphaCode == "undefined") {
+int iso2ccode(String territoryAlphaCode) {
+    if (territoryAlphaCode == "undefined") {
         return undefined;
     }
-    territoryAlphaCode = trim(String(territoryAlphaCode)).toUpperCase();
+    territoryAlphaCode = territoryAlphaCode.toUpperCase().trim();
     var sp = territoryAlphaCode.indexOf(" ");
     if (sp > 0) {
-        territoryAlphaCode = territoryAlphaCode.substr(0, sp);
+        territoryAlphaCode = territoryAlphaCode.substring(0, sp);
     }
     if (!isNaN(territoryAlphaCode)) {
         var n = Number(territoryAlphaCode);
@@ -246,7 +246,8 @@ function iso2ccode(territoryAlphaCode) {
         }
     }
 
-    var i, isoa;
+    var i = 0;
+    var isoa = 0;
     var sep = territoryAlphaCode.lastIndexOf('-');
     if (sep >= 0) { // territory!
         var prefix = territoryAlphaCode.substring(0, sep);
