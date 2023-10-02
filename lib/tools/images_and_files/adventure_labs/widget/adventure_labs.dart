@@ -14,6 +14,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -37,6 +38,7 @@ class AdventureLabsState extends State<AdventureLabs> {
   List<AdventureData> _adventureList = [];
   int _currentAdventureIndex = 0;
   final List<String> _currentAdventureList = [];
+  bool expertMode = false;
 
   Adventures _outData = Adventures(
       AdventureList: [], resultCode: ANALYSE_RESULT_STATUS.NONE, httpCode: '', httpMessage: '', httpBody: '');
@@ -51,22 +53,22 @@ class AdventureLabsState extends State<AdventureLabs> {
           await showDialog<bool>(
               context: context,
               builder: (_) => AlertDialog(
-                title: Text(i18n(context, 'adventure_labs_exit_title')),
-                titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-                content: Text(i18n(context, 'adventure_labs_exit_message')),
-                contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
-                backgroundColor: themeColors().dialog(),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        willLeave = true;
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(i18n(context, 'common_yes'))),
-                  ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
-                ],
-              ));
+                    title: Text(i18n(context, 'adventure_labs_exit_title')),
+                    titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+                    content: Text(i18n(context, 'adventure_labs_exit_message')),
+                    contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
+                    backgroundColor: themeColors().dialog(),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            willLeave = true;
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(i18n(context, 'common_yes'))),
+                      ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
+                    ],
+                  ));
           return willLeave;
         },
         child: Column(
@@ -93,6 +95,14 @@ class AdventureLabsState extends State<AdventureLabs> {
                 });
               },
             ),
+            GCWOnOffSwitch(
+                title: i18n(context, 'adventure_labs_expert_mode'),
+                value: expertMode,
+                onChanged: (value) {
+                  setState(() {
+                    expertMode = !expertMode;
+                  });
+                }),
             GCWButton(
               text: i18n(context, 'adventure_labs_search'),
               onPressed: () {
@@ -206,21 +216,26 @@ class AdventureLabsState extends State<AdventureLabs> {
   }
 
   List<List<dynamic>> _outputAdventureData(AdventureData adventure) {
-    List<List<dynamic>> result = [
-      [i18n(context, 'adventure_labs_lab_id'), adventure.Id],
-      [i18n(context, 'adventure_labs_lab_keyImageUrl'), adventure.KeyImageUrl],
-      [i18n(context, 'adventure_labs_lab_deeplink'), adventure.DeepLink],
-      [i18n(context, 'adventure_labs_lab_description'), adventure.Description],
-      [i18n(context, 'adventure_labs_lab_ownerusername'), adventure.OwnerUsername],
-      [i18n(context, 'adventure_labs_lab_ratingsaverage'), adventure.RatingsAverage],
-      [i18n(context, 'adventure_labs_lab_ratingstotalcount'), adventure.RatingsTotalCount],
-      [
+    List<List<dynamic>> result = [];
+
+    if (expertMode) {
+      result = [
+        [i18n(context, 'adventure_labs_lab_id'), adventure.Id],
+        [i18n(context, 'adventure_labs_lab_keyImageUrl'), adventure.KeyImageUrl],
+        [i18n(context, 'adventure_labs_lab_deeplink'), adventure.DeepLink],
+      ];
+    }
+    result.add([i18n(context, 'adventure_labs_lab_description'), adventure.Description]);
+    result.add([i18n(context, 'adventure_labs_lab_ownerusername'), adventure.OwnerUsername]);
+    result.add([i18n(context, 'adventure_labs_lab_ratingsaverage'), adventure.RatingsAverage]);
+    result.add([i18n(context, 'adventure_labs_lab_ratingstotalcount'), adventure.RatingsTotalCount]);
+    result.add([
         i18n(context, 'adventure_labs_lab_location'),
         formatCoordOutput(LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
             _currentCoords.format, defaultEllipsoid)
-      ],
-      [i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes],
-    ];
+      ]);
+    result.add([i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes]);
+
 
     return result;
   }
@@ -281,13 +296,15 @@ class AdventureLabsState extends State<AdventureLabs> {
         ),
       );
     }
-    result.add(GCWColumnedMultilineOutput(
-      data: _outputAdventureStageCompletionData(stage),
-      flexValues: const [1, 3],
-    ));
-    result.add(
-      GCWColumnedMultilineOutput(data: _outputAdventureStageExpertData(stage), flexValues: const [1, 3]),
-    );
+    if (expertMode) {
+      result.add(GCWColumnedMultilineOutput(
+        data: _outputAdventureStageCompletionData(stage),
+        flexValues: const [1, 3],
+      ));
+      result.add(
+        GCWColumnedMultilineOutput(data: _outputAdventureStageExpertData(stage), flexValues: const [1, 3]),
+      );
+    }
     return result;
   }
 
@@ -387,7 +404,7 @@ class AdventureLabsState extends State<AdventureLabs> {
         ]),
       ),
       GCWOutputText(
-        text: i18n(context, 'adventure_labs_lab_number') + ': '+ _outData.AdventureList.length.toString(),
+        text: i18n(context, 'adventure_labs_lab_number') + ': ' + _outData.AdventureList.length.toString(),
         suppressCopyButton: true,
       ),
       GCWDropDownSpinner(
@@ -444,7 +461,7 @@ class AdventureLabsState extends State<AdventureLabs> {
         break;
       case ANALYSE_RESULT_STATUS.OK:
         if (_currentAdventureList.isNotEmpty) {
-          result =  _buildOutputAdventure();
+          result = _buildOutputAdventure();
         } else {
           result = Container();
         }
