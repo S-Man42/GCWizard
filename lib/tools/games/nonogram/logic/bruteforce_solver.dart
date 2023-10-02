@@ -17,7 +17,7 @@ class bruteForce extends Solver {
       if (gap.contains(1)) {
         return null;
       }
-      zeros.fillRange(0, zeros.length, 0);
+      zeros.fillRange(0, zeros.length, 1);
       return _GapResult(zeros, ones);
     }
     if (_cacheLimits[0] <= hints.length && hints.length <= _cacheLimits[1]) {
