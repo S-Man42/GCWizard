@@ -15,6 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams.dart';
+part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ndata.dart';
+
 const iso3166alpha = [
 
   'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
@@ -230,9 +233,9 @@ int findISO(String territoryAlphaCode) {
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-int iso2ccode(String territoryAlphaCode) {
+int? iso2ccode(String territoryAlphaCode) {
   if (territoryAlphaCode == "undefined") {
-    return undefined;
+    return null;
   }
   territoryAlphaCode = territoryAlphaCode.toUpperCase().trim();
   var sp = territoryAlphaCode.indexOf(" ");
@@ -247,12 +250,12 @@ int iso2ccode(String territoryAlphaCode) {
   }
 
   var i = 0;
-  var isoa = 0;
+  String isoa;
   var sep = territoryAlphaCode.lastIndexOf('-');
   if (sep >= 0) { // territory!
     var prefix = territoryAlphaCode.substring(0, sep);
     var properMapcode = territoryAlphaCode.substring(sep + 1);
-    if (set_disambiguate(prefix) || properMapcode.length < 2) {
+    if (set_disambiguate(prefix) != 0 || properMapcode.length < 2) {
       return -1;
     }
     i = findISO(parentname2(disambiguate) + '-' + properMapcode);
@@ -265,7 +268,7 @@ int iso2ccode(String territoryAlphaCode) {
     } else {
       isoa = alias2iso(disambiguate + '' + properMapcode);
     }
-    if (isoa) {
+    if (isoa.isNotEmpty) {
       if (isoa.charAt(0) == disambiguate) {
         properMapcode = isoa.substring(1);
       } else {
@@ -282,7 +285,7 @@ int iso2ccode(String territoryAlphaCode) {
   // first rewrite alias in context
   if (territoryAlphaCode.length == 2) {
     isoa = alias2iso(disambiguate + '' + territoryAlphaCode);
-    if (isoa) {
+    if (isoa.isNotEmpty) {
       if (isoa.charAt(0) == disambiguate) {
         territoryAlphaCode = isoa.substring(1);
       } else {
@@ -324,9 +327,9 @@ int iso2ccode(String territoryAlphaCode) {
 
   // all else failed, try non-disambiguated alphacode
   isoa = alias2iso(territoryAlphaCode); // or try ANY alias
-  if (isoa) {
-    if (isoa.charCodeAt(0) <= 57) { // starts with digit
-      territoryAlphaCode = parentname2(isoa.charCodeAt(0) - 48) + '-' + isoa.substring(1);
+  if (isoa.isNotEmpty) {
+    if (isoa.codeUnitAt(0) <= 57) { // starts with digit
+      territoryAlphaCode = parentname2(isoa.codeUnitAt(0) - 48) + '-' + isoa.substring(1);
     } else {
       territoryAlphaCode = isoa;
     }
@@ -353,7 +356,7 @@ String? getTerritoryFullname(String territory) {
   }
   var idx = isofullname[territoryNumber].indexOf(' (');
   if (idx > 0) {
-    return isofullname[territoryNumber].substr(0, idx);
+    return isofullname[territoryNumber].substring(0, idx);
   }
   return isofullname[territoryNumber];
 }
@@ -563,7 +566,7 @@ function decodeBase31(str) {
   var value = 0;
   var i;
   for (i = 0; i < str.length; i++) {
-    var c = str.charCodeAt(i);
+    var c = str.codeUnitAt(i);
     if (c == 46) // dot!
         {
       return value;
@@ -578,37 +581,37 @@ function decodeBase31(str) {
 
 function decodeTriple(input) {
   var triplex, tripley;
-  var c1 = decodeChar[input.charCodeAt(0)];
-  var x = decodeBase31(input.substr(1));
+  var c1 = decodeChar[input.codeUnitAt(0)];
+  var x = decodeBase31(input.substring(1));
   if (c1 < 24) {
-    triplex = (c1 % 6) * 28 + Math.floor(x / 34);
-    tripley = Math.floor(c1 / 6) * 34 + Math.floor(x % 34);
+    triplex = (c1 % 6) * 28 + (x / 34).floor();
+    tripley = (c1 / 6).floor() * 34 + (x % 34).floor();
   }
   else {
     tripley = (x % 40) + 136;
-    triplex = Math.floor(x / 40) + 24 * (c1 - 24);
+    triplex = (x / 40).floor() + 24 * (c1 - 24);
   }
   return {y: tripley, x: triplex}
 }
 
 function decodeSixWide(v, width, height) {
   var D = 6;
-  var col = Math.floor(v / (height * 6));
-  var maxcol = Math.floor((width - 4) / 6);
+  var col = (v / (height * 6)).floor();
+  var maxcol = ((width - 4) / 6).floor();
   if (col >= maxcol) {
     col = maxcol;
     D = width - maxcol * 6;
   }
   var w = v - (col * height * 6);
   var x6 = col * 6 + (w % D);
-  var y6 = height - 1 - Math.floor(w / D);
+  var y6 = height - 1 - (w / D).floor();
   return {y: y6, x: x6}
 }
 
 function encodeSixWide(x, y, width, height) {
   var D = 6;
-  var col = Math.floor(x / 6);
-  var maxcol = Math.floor((width - 4) / 6);
+  var col = (x / 6).floor();
+  var maxcol = ((width - 4) / 6).floor();
   if (col >= maxcol) {
     col = maxcol;
     D = width - maxcol * 6;
@@ -675,13 +678,13 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
   result += '-';
   for (; ;) {
     factorx /= 30;
-    var gx = Math.floor(valx / factorx);
+    var gx = (valx / factorx).floor();
 
     factory /= 30;
-    var gy = Math.floor(valy / factory);
+    var gy = (valy / factory).floor();
 
-    var column1 = Math.floor(gx / 6);
-    var row1 = Math.floor(gy / 5);
+    var column1 = (gx / 6).floor();
+    var row1 = (gy / 5).floor();
     result += encodeChar[row1 * 5 + column1];
     if (--extraDigits == 0) {
       break;
@@ -745,14 +748,14 @@ function mzSetFromFractions(y, x, yDelta, xDelta) {
 
 function mzMidPointFractions(zone) {
   return {
-    y: Math.floor((zone.fminy + zone.fmaxy) / 2),
-    x: Math.floor((zone.fminx + zone.fmaxx) / 2)
+    y: ((zone.fminy + zone.fmaxy) / 2).floor(),
+    x: ((zone.fminx + zone.fmaxx) / 2).floor()
   };
 }
 
 function convertFractionsToCoord32(p) {
-  p.y = Math.floor(p.y / 810000);
-  p.x = Math.floor(p.x / 3240000);
+  p.y = (p.y / 810000).floor();
+  p.x = (p.x / 3240000).floor();
   return p;
 }
 
@@ -815,18 +818,18 @@ function decodeExtension(extensionchars, coord32, dividerx4, dividery, lon_offse
   }
   while (idx < extensionchars.length) {
     var column1, row1, column2, row2;
-    var c1 = decodeChar[extensionchars.charCodeAt(idx++)];
+    var c1 = decodeChar[extensionchars.codeUnitAt(idx++)];
     if (c1 < 0 || c1 == 30) {
       return mzEmpty();
     }
-    row1 = Math.floor(c1 / 5);
+    row1 = (c1 / 5).floor();
     column1 = (c1 % 5);
     if (idx < extensionchars.length) {
-      var c2 = decodeChar[extensionchars.charCodeAt(idx++)];
+      var c2 = decodeChar[extensionchars.codeUnitAt(idx++)];
       if (c2 < 0 || c2 == 30) {
         return mzEmpty();
       }
-      row2 = Math.floor(c2 / 6);
+      row2 = (c2 / 6).floor();
       column2 = (c2 % 6);
     } else { //
       row2 = 0;
@@ -887,11 +890,11 @@ function decodeGrid(input, extensionchars, m) {
     divx = xside[prefixlength];
     divy = yside[prefixlength];
   } else {
-    divx = Math.floor(nc[prefixlength] / divy);
+    divx = (nc[prefixlength] / divy).floor();
   }
 
   if (prefixlength == 4 && divx == 961 && divy == 961) {
-    input = input.charAt(0) + input.charAt(2) + input.charAt(1) + input.substr(3);
+    input = input.charAt(0) + input.charAt(2) + input.charAt(1) + input.substring(3);
   }
 
   var v = decodeBase31(input);
@@ -903,24 +906,24 @@ function decodeGrid(input, extensionchars, m) {
     rely = rel.y;
   }
   else {
-    relx = Math.floor(v / divy);
+    relx = (v / divy).floor();
     rely = v % divy;
     rely = divy - 1 - rely;
   }
 
   var mm = minmaxSetup(m);
-  var ygridsize = Math.floor((mm.maxy - mm.miny + divy - 1) / divy);
-  var xgridsize = Math.floor((mm.maxx - mm.minx + divx - 1) / divx);
+  var ygridsize = ((mm.maxy - mm.miny + divy - 1).floor() / divy);
+  var xgridsize = ((mm.maxx - mm.minx + divx - 1).floor() / divx);
 
   rely = mm.miny + (rely * ygridsize);
   relx = mm.minx + (relx * xgridsize);
 
   var xp = xside[postfixlength];
-  var dividerx = Math.floor((xgridsize + xp - 1) / xp);
+  var dividerx = ((xgridsize + xp - 1) / xp).floor();
   var yp = yside[postfixlength];
-  var dividery = Math.floor((ygridsize + yp - 1) / yp);
+  var dividery = ((ygridsize + yp - 1) / yp).floor();
 
-  var rest = input.substr(prefixlength + 1);
+  var rest = input.substring(prefixlength + 1);
 
   // decoderelative (postfix vs rely,relx)
   var difx;
@@ -935,8 +938,8 @@ function decodeGrid(input, extensionchars, m) {
       rest = rest.charAt(0) + rest.charAt(2) + rest.charAt(1) + rest.charAt(3);
     }
     v = decodeBase31(rest);
-    difx = Math.floor(v / yp);
-    dify = Math.floor(v % yp);
+    difx = (v / yp).floor();
+    dify = (v % yp).floor();
   }
 
   dify = yp - 1 - dify;
@@ -960,7 +963,7 @@ function encodeBase31(value, nrchars) {
   var result = '';
   while (nrchars-- > 0) {
     result = encodeChar[value % 31] + result;
-    value = Math.floor(value / 31);
+    value = (value / 31).floor();
   }
   return result;
 }
@@ -968,8 +971,8 @@ function encodeBase31(value, nrchars) {
 function encodeTriple(difx, dify, dividerx, dividery) {
   var rx, ry, cx, cy;
   if (dify < 4 * 34) {
-    rx = Math.floor(difx / 28);
-    ry = Math.floor(dify / 34);
+    rx = (difx / 28).floor();
+    ry = (dify / 34).floor();
     cx = (difx % 28);
     cy = (dify % 34);
     if (getDebugInfo) {
@@ -979,7 +982,7 @@ function encodeTriple(difx, dify, dividerx, dividery) {
     return encodeChar[(rx + 6 * ry)] + encodeBase31(cx * 34 + cy, 2);
   }
   else {
-    rx = Math.floor(difx / 24);
+    rx = (difx / 24).floor();
     cx = (difx % 24);
     if (getDebugInfo) {
       mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + (24 * rx * dividerx),
@@ -999,7 +1002,7 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
     codex = 23;
   }
 
-  var prefixlength = Math.floor(codex / 10);
+  var prefixlength = (codex / 10).floor();
   var postfixlength = (codex % 10);
 
   var divx;
@@ -1012,7 +1015,7 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
     }
   }
   else {
-    divx = Math.floor(nc[prefixlength] / divy);
+    divx = (nc[prefixlength] / divy).floor();
     if (getDebugInfo) {
       mcInfo = {
         type: 4,
@@ -1034,10 +1037,10 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
     mcInfo.prefixDivy = divy;
   }
 
-  var ygridsize = Math.floor((mm.maxy - mm.miny + divy - 1) / divy);
+  var ygridsize = ((mm.maxy - mm.miny + divy - 1) / divy).floor();
   var rely = enc.coord32.y - mm.miny;
-  rely = Math.floor(rely / ygridsize);
-  var xgridsize = Math.floor((mm.maxx - mm.minx + divx - 1) / divx);
+  rely = (rely / ygridsize).floor();
+  var xgridsize = ((mm.maxx - mm.minx + divx - 1) / divx).floor();
 
   var x = enc.coord32.x;
   var relx = x - mm.minx;
@@ -1051,7 +1054,7 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
   if (relx < 0) {
     return "";
   }
-  relx = Math.floor(relx / xgridsize);
+  relx = (relx / xgridsize).floor();
   if (relx >= divx) {
     return "";
   }
@@ -1071,15 +1074,15 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
   }
 
   if (getDebugInfo && prefixlength == 4 && divx == 961 && divy == 961) {
-    mcInfo.rectZone = asDegreeRect(mm.minx + 31 * xgridsize * Math.floor(relx / 31),
-        mm.miny + 31 * ygridsize * Math.floor(rely / 31), xgridsize * 31, ygridsize * 31);
+    mcInfo.rectZone = asDegreeRect(mm.minx + 31 * xgridsize * (relx / 31).floor(),
+        mm.miny + 31 * ygridsize * (rely / 31).floor(), xgridsize * 31, ygridsize * 31);
   }
 
   rely = mm.miny + (rely * ygridsize);
   relx = mm.minx + (relx * xgridsize);
 
-  var dividery = Math.floor((((ygridsize)) + yside[postfixlength] - 1) / yside[postfixlength]);
-  var dividerx = Math.floor((((xgridsize)) + xside[postfixlength] - 1) / xside[postfixlength]);
+  var dividery = ((((ygridsize)) + yside[postfixlength] - 1) / yside[postfixlength]).floor();
+  var dividerx = ((((xgridsize)) + xside[postfixlength] - 1) / xside[postfixlength]).floor();
 
   result += '.';
 
@@ -1089,8 +1092,8 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
   var dify = enc.coord32.y - rely;
   var extrax = difx % dividerx;
   var extray = dify % dividery;
-  difx = Math.floor(difx / dividerx);
-  dify = Math.floor(dify / dividery);
+  difx = (difx / dividerx).floor();
+  dify = (dify / dividery).floor();
   dify = yside[postfixlength] - 1 - dify;
 
   if (getDebugInfo) {
@@ -1109,8 +1112,8 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
     if (postfixlength == 4) {
       postfix = postfix.charAt(0) + postfix.charAt(2) + postfix.charAt(1) + postfix.charAt(3);
       if (getDebugInfo) {
-        mcInfo.rectRegion = asDegreeRect(relx + (31 * Math.floor(difx / 31) * dividerx),
-            rely + (31 * Math.floor((yside[postfixlength] - 1 - dify) / 31) * dividery), 31 * dividerx, 31 * dividery);
+        mcInfo.rectRegion = asDegreeRect(relx + (31 * (difx / 31).floor() * dividerx),
+            rely + (31 * ((yside[postfixlength] - 1 - dify) / 31).floor() * dividery), 31 * dividerx, 31 * dividery);
       }
     }
     result += postfix;
@@ -1239,8 +1242,8 @@ function showinlan(str, lan, asHTML) {
   // skip leading territory
   var sp = str.indexOf(' ');
   if (sp++ > 0) {
-    result = str.substr(0, sp);
-    str = str.substr(sp);
+    result = str.substring(0, sp);
+    str = str.substring(sp);
   }
 
   if (lan == 1 || lan == 3 || lan == 14 || lan == 15) { // greek hebrew arabic korean
@@ -1265,7 +1268,7 @@ function showinlan(str, lan, asHTML) {
       {
     var i;
     for (i = 0; i < str.length; i++) {
-      var c = str.charCodeAt(i);
+      var c = str.codeUnitAt(i);
       if (c >= 65 && c <= 90) {
         c = asc2lan[lan][c - 65];
       } else if (c >= 48 && c <= 57) {
@@ -1283,34 +1286,32 @@ function showinlan(str, lan, asHTML) {
 }
 
 /// PRIVATE convert all characters to Roman (ASCII) alphabet (if possible)
-function to_ascii(str) {
+function to_ascii(String str) {
   var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var result = '';
-  str = trim(str).toUpperCase();
+  str = str.trim().toUpperCase();
 
   var len = str.length;
   for (var i = 0; i < len; i++) {
-    var c = str.charCodeAt(i);
+    var c = str.codeUnitAt(i);
     if (c > 0 && c < 127) {
-      result += str.charAt(i);
+      result += str[i];
     } else {
       var found = 0;
-      var lan;
-      for (lan = 0; lan < MAXLANS; lan++) {
+      for (int lan = 0; lan < MAXLANS; lan++) {
         var nrc = asc2lan[lan].length;
-        var j;
-        for (j = 0; j < nrc; j++) {
+        for (int j = 0; j < nrc; j++) {
           if (c == asc2lan[lan][j]) {
-            result += letters.charAt(j);
+            result += letters[j];
             found = 1;
             break;
           }
         }
-        if (found) {
+        if (found != 0) {
           break;
         }
       }
-      if (!found) {
+      if (found == 0) {
         result += '?';
       }
     }
@@ -1321,15 +1322,15 @@ function to_ascii(str) {
   } else {
     p++;
   }
-  if (result.charAt(p) == 'A') {
-    var mc = result.substr(p);
+  if (result[p] == 'A') {
+    var mc = result.substring(p);
     var rest = '';
     var h = mc.indexOf('-');
     if (h >= 0) {
       rest = mc.substring(h);
       mc = mc.substring(0, h);
     }
-    result = result.substr(0, p) + aeu_pack(aeu_unpack(mc), false) + rest;
+    result = result.substring(0, p) + aeu_pack(aeu_unpack(mc), false) + rest;
     /* v1.50 repack A-voweled to AEU-voweled */
   }
 
@@ -1367,12 +1368,12 @@ function isAutoHeader(i) {
 
 function codexLen(i) {
   var flags = data_flags[i] & 31;
-  return Math.floor(flags / 5) + (flags % 5) + 1;
+  return (flags / 5).floor() + (flags % 5) + 1;
 }
 
 function coDex(i) {
   var flags = data_flags[i] & 31;
-  return 10 * Math.floor(flags / 5) + (flags % 5) + 1;
+  return 10 * (flags / 5).floor() + (flags % 5) + 1;
 }
 
 function isSpecialShape(i) {
@@ -1383,7 +1384,7 @@ function recType(i) {
   return ((data_flags[i] >> 7) & 3); // 1=pipe 2=plus 3=star
 }
 
-function firstNamelessRecord(index, firstcode) {
+int firstNamelessRecord(int index, int firstcode) {
   var i = index;
   var codex = coDex(i);
   while (i >= firstcode && coDex(i) == codex && isNameless(i)) {
@@ -1392,7 +1393,7 @@ function firstNamelessRecord(index, firstcode) {
   return (i + 1);
 }
 
-function countNamelessRecords(index, firstcode) {
+int countNamelessRecords(int index, int firstcode) {
   var i = firstNamelessRecord(index, firstcode);
   var e = index;
   var codex = coDex(e);
@@ -1403,12 +1404,12 @@ function countNamelessRecords(index, firstcode) {
 }
 
 // mid-level encode/decode
-function encodeNameless(enc, m, firstcode, extraDigits) {
+String encodeNameless(enc, int m, int firstcode, extraDigits) {
   var A = countNamelessRecords(m, firstcode);
   if (A < 1) {
     return '';
   }
-  var p = Math.floor(31 / A);
+  var p = (31 / A).floor();
   var r = (31 % A);
   var codex = coDex(m);
   var codexlen = codexLen(m);
@@ -1424,7 +1425,7 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
       storage_offset = X * (961 * 961);
     }
     else {
-      storage_offset = (62 - A + Math.floor((X - 62 + A) / 2)) * (961 * 961);
+      storage_offset = (62 - A + ((X - 62 + A) / 2).floor()) * (961 * 961);
       if (((X + A) % 2) == 1) {
         storage_offset += (16 * 961 * 31);
       }
@@ -1432,11 +1433,11 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
   }
   else {
     var BASEPOWER = (codex == 21) ? 961 * 961 : 961 * 961 * 31;
-    var BASEPOWERA = Math.floor(BASEPOWER / A);
+    var BASEPOWERA = (BASEPOWER / A).floor();
     if (A == 62) {
       BASEPOWERA++;
     } else {
-      BASEPOWERA = (961) * Math.floor(BASEPOWERA / 961);
+      BASEPOWERA = (961) * (BASEPOWERA / 961).floor();
     }
 
     storage_offset = X * BASEPOWERA;
@@ -1448,12 +1449,12 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
   var xSIDE = SIDE;
 
   var dividerx4 = xDivider4(mm.miny, mm.maxy); // note that xDivider4 is 4 times too large
-  var xFracture = Math.floor(enc.fraclon / 810000);
-  var dx = Math.floor((4 * (enc.coord32.x - mm.minx) + xFracture) / dividerx4); // dx is in millionths
+  var xFracture = (enc.fraclon / 810000).floor();
+  var dx = ((4 * (enc.coord32.x - mm.minx) + xFracture).floor() / dividerx4).floor(); // dx is in millionths
   var extrax4 = (enc.coord32.x - mm.minx) * 4 - dx * dividerx4; // extrax4 is in quarter-millionths
 
   var dividery = 90;
-  var dy = Math.floor((mm.maxy - enc.coord32.y) / dividery);
+  var dy = ((mm.maxy - enc.coord32.y) / dividery).floor();
   var extray = (mm.maxy - enc.coord32.y) % dividery;
 
   if (extray == 0 && enc.fraclat > 0) {
@@ -1464,8 +1465,8 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
   var v = storage_offset;
   if (isSpecialShape(m)) {
     xSIDE *= SIDE;
-    SIDE = 1 + Math.floor((mm.maxy - mm.miny) / 90);
-    xSIDE = Math.floor(xSIDE / SIDE);
+    SIDE = 1 + ((mm.maxy - mm.miny) / 90).floor();
+    xSIDE = (xSIDE / SIDE).floor();
     v += encodeSixWide(dx, SIDE - 1 - dy, xSIDE, SIDE);
   }
   else {
@@ -1485,7 +1486,7 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
   var result = encodeBase31(v, codexlen + 1);
 
   if (codexlen == 3) {
-    result = result.substr(0, 2) + '.' + result.substr(2);
+    result = result.substring(0, 2) + '.' + result.substring(2);
   }
   else if (codexlen == 4) {
     if (codex == 22 && orgSIDE == 961 && !isSpecialShape(m)) {
@@ -1494,49 +1495,49 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
         mcInfo.headerletter = encodeChar[storage_offset / (961 * 961)];
         mcInfo.postfixType = 2;
         mcInfo.regular = true;
-        mcInfo.rectRegion = asDegreeRect((mm.minx + (31 * Math.floor(dx / 31) * dividerx4 / 4)),
-            mm.maxy - (31 * dividery) * (1 + Math.floor(dy / 31)), 31 * dividerx4 / 4, 31 * dividery);
+        mcInfo.rectRegion = asDegreeRect((mm.minx + (31 * (dx / 31).floor() * dividerx4 / 4)),
+            mm.maxy - (31 * dividery) * (1 + (dy / 31).floor()), 31 * dividerx4 / 4, 31 * dividery);
       }
       result = result.charAt(0) + result.charAt(1) + result.charAt(3) + '.' + result.charAt(2) + result.charAt(4);
     } else if (codex == 13) {
-      result = result.substr(0, 2) + '.' + result.substr(2);
+      result = result.substring(0, 2) + '.' + result.substring(2);
     } else {
-      result = result.substr(0, 3) + '.' + result.substr(3);
+      result = result.substring(0, 3) + '.' + result.substring(3);
     }
   }
 
   return encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extraDigits, -1);
 } // nameless
 
-function decodeNameless(input, extensionchars, m, firstindex) {
+function decodeNameless(String input, extensionchars, m, firstindex) {
   var codex = coDex(m);
   if (codex == 22) {
-    input = input.substr(0, 3) + input.substr(4);
+    input = input.substring(0, 3) + input.substring(4);
   } else {
-    input = input.substr(0, 2) + input.substr(3);
+    input = input.substring(0, 2) + input.substring(3);
   }
 
   var A = countNamelessRecords(m, firstindex);
   var F = firstNamelessRecord(m, firstindex);
-  var p = Math.floor(31 / A);
-  var r = (31 % A);
+  var p = (31 / A).floor();
+  int r = (31 % A);
   var v = 0;
-  var X;
+  int X;
   var swapletters = 0;
 
   if (codex != 21 && A <= 31) {
-    var offset = decodeChar[input.charCodeAt(0)];
+    var offset = decodeChar[input.codeUnitAt(0)];
 
     if (offset < r * (p + 1)) {
-      X = Math.floor(offset / (p + 1));
+      X = (offset / (p + 1)).floor();
     }
     else {
       swapletters = (p == 1 && codex == 22);
-      X = r + Math.floor((offset - (r * (p + 1))) / p);
+      X = r + ((offset - (r * (p + 1))) / p).floor();
     }
   }
   else if (codex != 21 && A < 62) {
-    X = decodeChar[input.charCodeAt(0)];
+    X = decodeChar[input.codeUnitAt(0)];
     if (X < (62 - A)) {
       swapletters = (codex == 22);
     } else {
@@ -1546,17 +1547,17 @@ function decodeNameless(input, extensionchars, m, firstindex) {
   else // codex==21 || A>=62
       {
     var BASEPOWER = (codex == 21) ? 961 * 961 : 961 * 961 * 31;
-    var BASEPOWERA = Math.floor(BASEPOWER / A);
+    var BASEPOWERA = (BASEPOWER / A).floor();
     if (A == 62) {
       BASEPOWERA++;
     } else {
-      BASEPOWERA = 961 * Math.floor(BASEPOWERA / 961);
+      BASEPOWERA = 961 * (BASEPOWERA / 961).floor();
     }
 
     // decode
     v = decodeBase31(input);
 
-    X = Math.floor(v / BASEPOWERA);
+    X = (v / BASEPOWERA).floor();
     v %= BASEPOWERA;
   }
 
@@ -1574,7 +1575,7 @@ function decodeNameless(input, extensionchars, m, firstindex) {
     }
   }
   else if (codex != 21 && A < 62) {
-    v = decodeBase31(input.substr(1));
+    v = decodeBase31(input.substring(1));
 
     if (X >= (62 - A)) {
       if (v >= (16 * 961 * 31)) {
@@ -1597,8 +1598,8 @@ function decodeNameless(input, extensionchars, m, firstindex) {
   var dx, dy;
   if (isSpecialShape(m)) {
     xSIDE *= SIDE;
-    SIDE = 1 + Math.floor((mm.maxy - mm.miny) / 90);
-    xSIDE = Math.floor(xSIDE / SIDE);
+    SIDE = 1 + ((mm.maxy - mm.miny) / 90).floor();
+    xSIDE = (xSIDE / SIDE).floor();
 
     var d = decodeSixWide(v, xSIDE, SIDE);
     dx = d.x;
@@ -1606,7 +1607,7 @@ function decodeNameless(input, extensionchars, m, firstindex) {
   }
   else {
     dy = (v % SIDE);
-    dx = Math.floor(v / SIDE);
+    dx = (v / SIDE).floor();
   }
 
   if (dx >= xSIDE) { // else out-of-range!
@@ -1618,7 +1619,7 @@ function decodeNameless(input, extensionchars, m, firstindex) {
 
   var corner = { // in microdegrees
     y: mm.maxy - (dy * dividery),
-    x: mm.minx + Math.floor((dx * dividerx4) / 4)
+    x: mm.minx + ((dx * dividerx4) / 4).floor()
   };
   return decodeExtension(extensionchars, corner, dividerx4, -dividery,
       ((dx * dividerx4) % 4), mm.miny, mm.maxx); // nameless
@@ -1638,32 +1639,32 @@ function encodeAutoHeader(enc, m, extraDigits) {
   var i;
   for (i = firstindex; coDex(i) == codex; i++) {
     var mm = minmaxSetup(i);
-    var H = Math.floor((mm.maxy - mm.miny + 89) / 90);
+    var H = ((mm.maxy - mm.miny + 89) / 90).floor();
     var xdiv = xDivider4(mm.miny, mm.maxy);
-    var W = Math.floor(((mm.maxx - mm.minx) * 4 + (xdiv - 1)) / xdiv);
+    var W = (((mm.maxx - mm.minx) * 4 + (xdiv - 1)) / xdiv).floor();
 
-    H = 176 * Math.floor((H + 176 - 1) / 176);
-    W = 168 * Math.floor((W + 168 - 1) / 168);
+    H = 176 * ((H + 176 - 1) / 176).floor();
+    W = 168 * ((W + 168 - 1) / 168).floor();
 
-    var product = Math.floor(W / 168) * Math.floor(H / 176) * 961 * 31;
+    var product = (W / 168).floor() * (H / 176).floor() * 961 * 31;
 
     if (recType(i) == 2) { // *+
       var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
-      product = Math.floor((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER) * GOODROUNDER - STORAGE_START;
+      product = ((STORAGE_START + product + GOODROUNDER - 1).floor() / GOODROUNDER) * GOODROUNDER - STORAGE_START;
     }
 
     if (i == m && fitsInside(enc.coord32, mm)) {
-      var dividerx = Math.floor((mm.maxx - mm.minx + W - 1) / W);
-      var vx = Math.floor((enc.coord32.x - mm.minx) / dividerx);
+      var dividerx = ((mm.maxx - mm.minx + W - 1) / W).floor();
+      var vx = ((enc.coord32.x - mm.minx) / dividerx).floor();
       var extrax = ((enc.coord32.x - mm.minx) % dividerx);
 
-      var dividery = Math.floor((mm.maxy - mm.miny + H - 1) / H);
-      var vy = Math.floor((mm.maxy - enc.coord32.y) / dividery);
+      var dividery = ((mm.maxy - mm.miny + H - 1) / H).floor();
+      var vy = ((mm.maxy - enc.coord32.y) / dividery).floor();
       var extray = ((mm.maxy - enc.coord32.y) % dividery);
 
       var spx = vx % 168;
-      vx = Math.floor(vx / 168);
-      var value = vx * Math.floor(H / 176);
+      vx = (vx / 168).floor();
+      var value = vx * (H / 176).floor();
 
       if (extray == 0 && enc.fraclat > 0) {
         vy--;
@@ -1671,7 +1672,7 @@ function encodeAutoHeader(enc, m, extraDigits) {
       }
 
       var spy = vy % 176;
-      vy = Math.floor(vy / 176);
+      vy = (vy / 176).floor();
       value += vy;
 
       if (getDebugInfo) {
@@ -1679,15 +1680,15 @@ function encodeAutoHeader(enc, m, extraDigits) {
         mcInfo.form = (codexlen == 4 ? 'ggppp' : 'gggppp');
         mcInfo.postfixType = 3;
         mcInfo.dotPosition = codexlen - 2;
-        mcInfo.prefixDivx = Math.floor(W / 168);
-        mcInfo.prefixDivy = Math.floor(H / 176);
+        mcInfo.prefixDivx = (W / 168).floor();
+        mcInfo.prefixDivy = (H / 176).floor();
         mcInfo.rectSubarea = asDegreeRect(mm.minx + (vx * 168) * dividerx, mm.maxy - ((vy + 1) * 176) * dividery,
             168 * dividerx, 176 * dividery);
         mcInfo.rectCell = asDegreeRect(mm.minx + (vx * 168 + spx) * dividerx, mm.maxy - ((vy) * 176 + spy + 1) * dividery,
             dividerx, dividery);
       }
 
-      var mapc = encodeBase31(Math.floor(STORAGE_START / (961 * 31)) + value, codexlen - 2) + '.' +
+      var mapc = encodeBase31((STORAGE_START / (961 * 31)).floor() + value, codexlen - 2) + '.' +
           encodeTriple(spx, spy, dividerx, dividery);
 
       return encodeExtension(mapc, enc, extrax << 2, extray, dividerx << 2, dividery, extraDigits, -1);
@@ -1697,42 +1698,42 @@ function encodeAutoHeader(enc, m, extraDigits) {
   return '';
 }  // autoheader
 
-function decodeAutoHeader(input, extensionchars, m) {
+function decodeAutoHeader(String input, extensionchars, m) {
   var STORAGE_START = 0;
   var codex = coDex(m);
 
   var value = decodeBase31(input); // decode (before dot)
 
   value *= (961 * 31);
-  var triple = decodeTriple(input.substr(input.length - 3)); // decode bottom 3 chars
+  var triple = decodeTriple(input.substring(input.length - 3)); // decode bottom 3 chars
 
   for (; coDex(m) == codex && recType(m) > 1; m++) {
     var mm = minmaxSetup(m);
 
-    var H = Math.floor((mm.maxy - mm.miny + 89) / 90);
+    var H = ((mm.maxy - mm.miny + 89) / 90).floor();
     var xdiv = xDivider4(mm.miny, mm.maxy);
-    var W = Math.floor(((mm.maxx - mm.minx) * 4 + (xdiv - 1)) / xdiv);
+    var W = (((mm.maxx - mm.minx) * 4 + (xdiv - 1)) / xdiv).floor();
 
-    H = 176 * Math.floor((H + 176 - 1) / 176);
-    W = 168 * Math.floor((W + 168 - 1) / 168);
+    H = 176 * ((H + 176 - 1) / 176).floor();
+    W = 168 * ((W + 168 - 1) / 168).floor();
 
-    var product = Math.floor(W / 168) * Math.floor(H / 176) * 961 * 31;
+    var product = (W / 168).floor() * (H / 176).floor() * 961 * 31;
 
     if (recType(m) == 2) {
       var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
-      product = Math.floor((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER) * GOODROUNDER - STORAGE_START;
+      product = ((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER).floor() * GOODROUNDER - STORAGE_START;
     }
 
     if (value >= STORAGE_START && value < STORAGE_START + product) // code belongs here?
         {
-      var dividerx = Math.floor((mm.maxx - mm.minx + W - 1) / W);
-      var dividery = Math.floor((mm.maxy - mm.miny + H - 1) / H);
+      var dividerx = ((mm.maxx - mm.minx + W - 1) / W).floor();
+      var dividery = ((mm.maxy - mm.miny + H - 1) / H).floor();
 
       value -= STORAGE_START;
-      value = Math.floor(value / (961 * 31));
+      value = (value / (961 * 31)).floor();
 
-      var vx = triple.x + 168 * Math.floor(value / Math.floor(H / 176));
-      var vy = triple.y + 176 * (value % Math.floor(H / 176));
+      var vx = triple.x + 168 * (value / (H / 176).floor()).floor();
+      var vy = triple.y + 176 * (value % (H / 176).floor());
 
       var corner = {  // in microdegrees
         y: mm.maxy - (vy * dividery),
@@ -1775,12 +1776,12 @@ function aeu_pack(r, short) /* v1.50 */ {
   var v;
   if (dotpos >= 2 && rlen - 2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?
     if (short) { /* v1.50 new way: use only A */
-      v = (r.charCodeAt(0) - 48) * 100 + (r.charCodeAt(rlen - 2) - 48) * 10 + (r.charCodeAt(rlen - 1) - 48);
-      r = 'A' + r.substring(1, rlen - 2) + encodeChar[Math.floor(v / 32)] + encodeChar[v % 32]; // 1.50
+      v = (r.codeUnitAt(0) - 48) * 100 + (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
+      r = 'A' + r.substring(1, rlen - 2) + encodeChar[(v / 32).floor()] + encodeChar[v % 32]; // 1.50
     }
     else { /* old way: use A, E and U */
-      v = (r.charCodeAt(rlen - 2) - 48) * 10 + (r.charCodeAt(rlen - 1) - 48);
-      r = r.substring(0, rlen - 2) + encodeChar[Math.floor(v / 34) + 31] + encodeChar[v % 34]; // v1.50
+      v = (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
+      r = r.substring(0, rlen - 2) + encodeChar[(v / 34).floor() + 31] + encodeChar[v % 34]; // v1.50
     }
   }
   return r + rest;
@@ -1804,9 +1805,9 @@ function getEncodeRec(lat, lon) {
   }
   lat += 90; // lat now [0..180]
   lat *= 810000000000;
-  var fraclat = Math.floor(lat + 0.1);
+  var fraclat = (lat + 0.1).floor();
   var d = fraclat / 810000;
-  var lat32 = Math.floor(d);
+  var lat32 = d.floor();
   fraclat -= (lat32 * 810000);
   lat32 -= 90000000;
 
@@ -1815,11 +1816,11 @@ function getEncodeRec(lat, lon) {
   } else {
     lon = Number(lon);
   }
-  lon -= (360 * Math.floor(lon / 360)); // lon now in [0..360>
+  lon -= (360 * (lon / 360).floor()); // lon now in [0..360>
   lon *= 3240000000000;
-  var fraclon = Math.floor(lon + 0.1);
+  var fraclon = (lon + 0.1).floor();
   d = fraclon / 3240000;
-  var lon32 = Math.floor(d);
+  var lon32 = d.floor();
   fraclon -= (lon32 * 3240000);
   if (lon32 >= 180000000) {
     lon32 -= 360000000;
@@ -1906,7 +1907,7 @@ function mapcoderEngine(enc, tn, getshortest, state_override, extraDigits) {
               mcInfo.mapcode = r;
               mcInfo.record = i;
               mcInfo.rectArea = asDegreeRect(mm.minx, mm.miny, mm.maxx - mm.minx, mm.maxy - mm.miny);
-              mcInfo.form = mcInfo.form.substr(0, mcInfo.dotPosition) + '.' + mcInfo.form.substr(mcInfo.dotPosition);
+              mcInfo.form = mcInfo.form.substring(0, mcInfo.dotPosition) + '.' + mcInfo.form.substring(mcInfo.dotPosition);
               var mu = minmaxSetup(upto);
               mcInfo.rectEncompassing = asDegreeRect(mu.minx, mu.miny, mu.maxx - mu.minx, mu.maxy - mu.miny);
             }
@@ -1945,11 +1946,11 @@ function aeu_unpack(str) {
 
   if (str.charAt(0) == 'A') /* V1.50 */
   {
-    var v1 = decodeChar[str.charCodeAt(lastpos)];
+    var v1 = decodeChar[str.codeUnitAt(lastpos)];
     if (v1 < 0) {
       v1 = 31;
     }
-    var v2 = decodeChar[str.charCodeAt(lastpos - 1)];
+    var v2 = decodeChar[str.codeUnitAt(lastpos - 1)];
     if (v2 < 0) {
       v2 = 31;
     }
@@ -1983,7 +1984,7 @@ function aeu_unpack(str) {
       } else if (e == 'U') {
         v += 33;
       } else {
-        var ve = decodeChar[str.charCodeAt(lastpos)];
+        var ve = decodeChar[str.codeUnitAt(lastpos)];
         if (ve < 0) {
           return '';
         }
@@ -1993,7 +1994,7 @@ function aeu_unpack(str) {
         return '';
       }
       voweled = 1;
-      str = str.substring(0, lastpos - 1) + encodeChar[Math.floor(v / 10)] + encodeChar[Math.floor(v % 10)];
+      str = str.substring(0, lastpos - 1) + encodeChar[(v / 10).floor()] + encodeChar[(v % 10).floor()];
     }
   }
 
@@ -2004,10 +2005,10 @@ function aeu_unpack(str) {
   var hasletters = 0;
   for (v = 0; v <= lastpos; v++) {
     if (v != dotpos) {
-      if (decodeChar[str.charCodeAt(v)] < 0) {
+      if (decodeChar[str.codeUnitAt(v)] < 0) {
         return '';
       }// bad char!
-      else if (decodeChar[str.charCodeAt(v)] > 9) {
+      else if (decodeChar[str.codeUnitAt(v)] > 9) {
         hasletters++;
       }
     }
@@ -2115,7 +2116,7 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
       break;
     }
     else if (recType(m) == 1 && codex + 10 == incodex && headerLetter(m) == mapcode.charAt(0)) {
-      zone = decodeGrid(mapcode.substr(1), extensionchars, m);
+      zone = decodeGrid(mapcode.substring(1), extensionchars, m);
       break;
     }
     else if (isNameless(m) && ((codex == 21 && incodex == 22) || (codex == 22 && incodex == 32) ||
@@ -2319,7 +2320,7 @@ function convertToAbjad(mapcode) {
   // see if >2 non-digits in a row
   var inarow = 0;
   for (var i = 0; i < len; i++) {
-    var c = str.charCodeAt(i);
+    var c = str.codeUnitAt(i);
     if (c != 46) {
       inarow++;
       if (decodeChar[c] <= 9) {
@@ -2334,21 +2335,21 @@ function convertToAbjad(mapcode) {
     return mapcode;
   }
   else {
-    var c = decodeChar[str.charCodeAt(2)];
+    var c = decodeChar[str.codeUnitAt(2)];
     if (c < 0) {
-      c = decodeChar[str.charCodeAt(3)];
+      c = decodeChar[str.codeUnitAt(3)];
       if (c < 0) {
         return mapcode;
       }
     }
     var c1, c2, c3 = 0;
     if (form >= 44) {
-      c = (c * 31) + (decodeChar[str.charCodeAt(len - 1)] + 39);
+      c = (c * 31) + (decodeChar[str.codeUnitAt(len - 1)] + 39);
       if (c < 39 || c > 999) {
         return mapcode;
       }
-      c1 = Math.floor(c / 100)
-      c2 = Math.floor((c % 100) / 10);
+      c1 = (c / 100).floor();
+      c2 = ((c % 100) / 10).floor();
       c3 = (c % 10);
     }
     else if (len == 7) {
@@ -2359,11 +2360,11 @@ function convertToAbjad(mapcode) {
       } else if (form == 42) {
         c += 69;
       }
-      c1 = Math.floor(c / 10);
+      c1 = (c / 10).floor();
       c2 = (c % 10);
     }
     else {
-      c1 = 2 + Math.floor(c / 8);
+      c1 = 2 + (c / 8).floor();
       c2 = 2 + (c % 8);
     }
 
@@ -2408,7 +2409,7 @@ function convertToAbjad(mapcode) {
 /// PRIVATE returns true if str contains characters from an abjad-script
 function isAbjadScript(str) {
   for (var i = 0; i < str.length; i++) {
-    var c = str.charCodeAt(i);
+    var c = str.codeUnitAt(i);
     if (c >= 0x0628 && c <= 0x0649) {
       return true;
     } // arabic
@@ -2434,8 +2435,8 @@ function convertFromAbjad(result) {
   } else {
     p++;
   }
-  var prefix = result.substr(0, p);
-  var s = result.substr(p);
+  var prefix = result.substring(0, p);
+  var s = result.substring(p);
   var postfix = '';
   var h = s.indexOf('-');
   if (h > 0) {
@@ -2484,11 +2485,11 @@ function convertFromAbjad(result) {
   }
   else if (form == 45) {
     c = (s.charAt(2) * 100) + (s.charAt(5) * 10) + (s.charAt(8) - 39);
-    s = s.charAt(0) + s.charAt(1) + encodeChar[Math.floor(c / 31)] + s.charAt(3) + '.' + s.charAt(6) + s.charAt(7) + s.charAt(9) + encodeChar[c % 31];
+    s = s.charAt(0) + s.charAt(1) + encodeChar[(c / 31).floor()] + s.charAt(3) + '.' + s.charAt(6) + s.charAt(7) + s.charAt(9) + encodeChar[c % 31];
   }
   else if (form == 55) {
     c = (s.charAt(2) * 100) + (s.charAt(6) * 10) + (s.charAt(9) - 39);
-    s = s.charAt(0) + s.charAt(1) + encodeChar[Math.floor(c / 31)] + s.charAt(3) + s.charAt(4) + '.' + s.charAt(7) + s.charAt(8) + s.charAt(10) + encodeChar[c % 31];
+    s = s.charAt(0) + s.charAt(1) + encodeChar[(c / 31).floor()] + s.charAt(3) + s.charAt(4) + '.' + s.charAt(7) + s.charAt(8) + s.charAt(10) + encodeChar[c % 31];
   }
   else {
     return result;

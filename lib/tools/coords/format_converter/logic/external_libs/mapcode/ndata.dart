@@ -16,6 +16,7 @@
 
 // *** GENERATED FILE, DO NOT CHANGE OR PRETTIFY ***
 
+part of 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
 
 const data_start = [
   0, 3, 6, 10, 14, 17, 19, 20, 31, 32,

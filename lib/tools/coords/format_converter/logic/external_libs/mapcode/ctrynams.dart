@@ -16,6 +16,8 @@
 
 // *** GENERATED FILE (coords.cpp), DO NOT CHANGE OR PRETTIFY ***
 
+part of 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
+
 var isofullname = [
 "Vatican (Holy See) (_ City State)",
 "Monaco (Principality of _)",
