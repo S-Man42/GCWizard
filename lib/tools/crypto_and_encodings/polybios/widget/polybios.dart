@@ -55,6 +55,8 @@ class _PolybiosState extends State<Polybios> {
     var polybiosModeItems = {
       PolybiosMode.AZ09: i18n(context, 'polybios_mode_az09'),
       PolybiosMode.ZA90: i18n(context, 'polybios_mode_za90'),
+      PolybiosMode.x09AZ: i18n(context, 'polybios_mode_09az'),
+      PolybiosMode.x90ZA: i18n(context, 'polybios_mode_90za'),
       PolybiosMode.CUSTOM: i18n(context, 'common_custom'),
     };
 
