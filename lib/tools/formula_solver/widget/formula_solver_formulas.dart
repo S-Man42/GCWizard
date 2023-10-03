@@ -640,7 +640,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
         children: _buildTextSpans(
             formula,
             formulaPainter.paintFormula(
-                formula, vals, formulaIndex, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
+                formula, values, formulaIndex, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {
