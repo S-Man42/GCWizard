@@ -18,6 +18,7 @@
 import 'dart:math';
 
 import 'package:latlong2/latlong.dart';
+import 'package:utility/utility.dart';
 
 part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams.dart';
 part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ndata.dart';
@@ -236,8 +237,8 @@ int findISO(String territoryAlphaCode) {
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-int? iso2ccode(String territoryAlphaCode) {
-  if (territoryAlphaCode == "undefined") {
+int? iso2ccode(String? territoryAlphaCode) {
+  if (territoryAlphaCode == null) {
     return null;
   }
   territoryAlphaCode = territoryAlphaCode.toUpperCase().trim();
@@ -245,8 +246,9 @@ int? iso2ccode(String territoryAlphaCode) {
   if (sp > 0) {
     territoryAlphaCode = territoryAlphaCode.substring(0, sp);
   }
-  if (!isNaN(territoryAlphaCode)) {
-    var n = Number(territoryAlphaCode);
+
+  var n= int.tryParse(territoryAlphaCode);
+  if (n != null) {
     if ((n >= 0) && (n <= ccode_earth)) {
       return n;
     }
@@ -270,10 +272,10 @@ int? iso2ccode(String territoryAlphaCode) {
     if (properMapcode.length == 3) {
       isoa = alias2iso(properMapcode);
     } else {
-      isoa = alias2iso(disambiguate + '' + properMapcode);
+      isoa = alias2iso(disambiguate.toString() + '' + properMapcode);
     }
     if (isoa.isNotEmpty) {
-      if (isoa[0] == disambiguate) {
+      if (isoa[0] == disambiguate.toString()) {
         properMapcode = isoa.substring(1);
       } else {
         properMapcode = isoa;
@@ -288,9 +290,9 @@ int? iso2ccode(String territoryAlphaCode) {
 
   // first rewrite alias in context
   if (territoryAlphaCode.length == 2) {
-    isoa = alias2iso(disambiguate + '' + territoryAlphaCode);
+    isoa = alias2iso(disambiguate.toString() + '' + territoryAlphaCode);
     if (isoa.isNotEmpty) {
-      if (isoa[0] == disambiguate) {
+      if (isoa[0] == disambiguate.toString()) {
         territoryAlphaCode = isoa.substring(1);
       } else {
         territoryAlphaCode = isoa;
@@ -366,7 +368,7 @@ String? getTerritoryFullname(String territory) {
 }
 
 /// PUBLIC return parent country of subdivision (negative if territory is not a subdivision)
-int getParentOf(int territory) {
+int getParentOf(String territory) {
   var territoryNumber = getTerritoryNumber(territory);
   if (territoryNumber == null) return -199;
   if (territoryNumber >= usa_from && territoryNumber <= usa_upto) {
@@ -397,17 +399,19 @@ int getParentOf(int territory) {
 }
 
 /// PUBLIC returns true iff territoryNumber is a state
-bool isSubdivision(int territory) {
+bool isSubdivision(String territory) {
   return getParentOf(territory) >= 0;
 }
 
 /// PUBLIC returns true iff territoryNumber is a country that has states
 bool hasSubdivision(String territory) {
-  return (parents3.indexOf(getTerritoryAlphaCode(getTerritoryNumber(territory), 0)) >= 0);
+  var territoryNumber = getTerritoryNumber(territory);
+  if (territoryNumber == null) return false;
+  return parents3.contains(getTerritoryAlphaCode(territoryNumber.toString(), 0));
 }
 
 /// PRIVATE returns true iff x in range (all values in millionths)
-bool isInRangeX(int x, double minx, double maxx) {
+bool isInRangeX(int x, int minx, int maxx) {
   if (minx <= x && x < maxx) {
     return true;
   }
@@ -421,7 +425,7 @@ bool isInRangeX(int x, double minx, double maxx) {
 
 /// PRIVATE returns true iff coordinate inside rectangle (all values in millionths)
 bool fitsInside(coord coord, mmSet mm) {
-  return (mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx.toDouble(), mm.maxx.toDouble()));
+  return (mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx, mm.maxx));
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare outside (all values in millionths)
@@ -429,7 +433,7 @@ bool fitsInsideWithRoom(coord coord, mmSet mm) {
   if (((mm.miny - 60) > coord.y) || (coord.y >= (mm.maxy + 60))) {
     return false;
   }
-  var xroom = xDivider4(mm.miny, mm.maxy) / 4;
+  var xroom = (xDivider4(mm.miny, mm.maxy) / 4).toInt(); //ToDo
   return isInRangeX(coord.x, mm.minx - xroom, mm.maxx + xroom);
 }
 
@@ -438,7 +442,7 @@ bool fitsWellInside(coord coord, mmSet mm) {
   if (((mm.miny + 60) > coord.y) || (coord.y >= (mm.maxy - 60))) {
     return false;
   }
-  var xroom = xDivider4(mm.miny, mm.maxy) / 4;
+  var xroom = (xDivider4(mm.miny, mm.maxy) / 4).toInt(); //ToDo;
   return isInRangeX(coord.x, mm.minx + xroom, mm.maxx - xroom);
 }
 
@@ -566,7 +570,7 @@ int xDivider4(int miny, int maxy) {
 
 /// PRIVATE lowest level encode/decode routines
 
-int decodeBase31(String str) {
+int? decodeBase31(String str) {
   var value = 0;
   for (int i = 0; i < str.length; i++) {
     var c = str.codeUnitAt(i);
@@ -575,26 +579,28 @@ int decodeBase31(String str) {
       return value;
     }
     if (decodeChar[c] < 0) {
-      return NaN;
+      return null;
     }
     value = value * 31 + decodeChar[c];
   }
   return value;
 }
 
-Point<int> decodeTriple(String input) {
-  int triplex, tripley;
+coord decodeTriple(String input) {
+  int triplex = 0;
+  int tripley = 0;
   var c1 = decodeChar[input.codeUnitAt(0)];
   var x = decodeBase31(input.substring(1));
-  if (c1 < 24) {
-    triplex = (c1 % 6) * 28 + (x / 34).floor();
-    tripley = (c1 / 6).floor() * 34 + (x % 34).floor();
+  if (x != null) {
+    if (c1 < 24) {
+      triplex = (c1 % 6) * 28 + (x / 34).floor();
+      tripley = (c1 / 6).floor() * 34 + (x % 34).floor();
+    } else {
+      tripley = (x % 40) + 136;
+      triplex = (x / 40).floor() + 24 * (c1 - 24);
+    }
   }
-  else {
-    tripley = (x % 40) + 136;
-    triplex = (x / 40).floor() + 24 * (c1 - 24);
-  }
-  return Point<int>(triplex, tripley);
+  return coord(x: triplex, y: tripley);
 }
 
 Point<int> decodeSixWide(int v, int width, int height) {
@@ -622,8 +628,8 @@ int encodeSixWide(int x, int y, int width, int height) {
   return (height * 6 * col) + (height - 1 - y) * D + (x - col * 6);
 }
 
-var getDebugInfo;    // caller must set this to 1 to get debug info about first successful encode
-var mcInfo;
+// var getDebugInfo;    // caller must set this to 1 to get debug info about first successful encode
+// var mcInfo;
 
 /*
  type: 1=topdown nameless, 2=sixwide nameless, 3=regulargrid 4=irregular grid 5=rounded groups 6=unrounded groups
@@ -749,39 +755,38 @@ mzSet mzSetFromFractions(int y, int x, int yDelta, int xDelta) {
   }
 }
 
-Point<double> mzMidPointFractions(mzSet zone) {
-  return Point<double>(
-      ((zone.fminx + zone.fmaxx) / 2).floor().toDouble(),
-      ((zone.fminy + zone.fmaxy) / 2).floor().toDouble()
+coord mzMidPointFractions(mzSet zone) {
+  return coord(
+      x: ((zone.fminx + zone.fmaxx) / 2).floor(),
+      y: ((zone.fminy + zone.fmaxy) / 2).floor()
   );
 }
 
-Point<double> convertFractionsToCoord32(Point<double> p) {
-  return Point<double>(
-      (p.x / 3240000).floor().toDouble(),
-      (p.y / 810000).floor().toDouble()
+coord convertFractionsToCoord32(coord p) {
+  return coord(
+      x: (p.x / 3240000).floor(),
+      y: (p.y / 810000).floor()
   );
 }
 
-Point<double> wrap(Point<double> p) {
-  var p_x = p.x;
-  if (p_x >= (180 * 3240000 * 1000000)) {
-    p_x -= (360 * 3240000 * 1000000);
+coord wrap(coord p) {
+  if (p.x >= (180 * 3240000 * 1000000)) {
+    p.x -= (360 * 3240000 * 1000000);
   }
-  if (p_x < (-180 * 3240000 * 1000000)) {
-    p_x += (360 * 3240000 * 1000000);
+  if (p.x < (-180 * 3240000 * 1000000)) {
+    p.x += (360 * 3240000 * 1000000);
   }
-  return Point<int>(p_x, p.y);
+  return p;
 }
 
-Point<double> convertFractionsToDegrees(Point<double> p) {
-  return Point<double>(
+LatLng convertFractionsToDegrees(coord p) {
+  return LatLng(
       p.x / (3240000 * 1000000),
       p.y / (810000 * 1000000)
   );
 }
 
-mmSet mzRestrictZoneTo(mzSet zone, mmSet mm) {
+mzSet mzRestrictZoneTo(mzSet zone, mmSet mm) {
   var z = mzCopy(zone);
   var miny = mm.miny * 810000;
   if (z.fminy < miny) {
@@ -813,7 +818,7 @@ mmSet mzRestrictZoneTo(mzSet zone, mmSet mm) {
 }
 
 // returns (possibly empty) MapcodeZone
-function decodeExtension(extensionchars, coord coord32, dividerx4, dividery, lon_offset4, extremeLatMicroDeg, maxLonMicroDeg) {
+mzSet decodeExtension(String extensionchars, coord coord32, int dividerx4, int dividery, int lon_offset4, int extremeLatMicroDeg, int maxLonMicroDeg) {
   var processor = 1;
   var lon32 = 0;
   var lat32 = 0;
@@ -823,7 +828,7 @@ function decodeExtension(extensionchars, coord coord32, dividerx4, dividery, lon
     return mzEmpty(); // too many digits
   }
   while (idx < extensionchars.length) {
-    var column1, row1, column2, row2;
+    int column1, row1, column2, row2;
     var c1 = decodeChar[extensionchars.codeUnitAt(idx++)];
     if (c1 < 0 || c1 == 30) {
       return mzEmpty();
@@ -853,35 +858,36 @@ function decodeExtension(extensionchars, coord coord32, dividerx4, dividery, lon
     processor *= 30;
   }
 
-  var lon4 = (coord32.x * 3240000.0) + (lon32 * dividerx4) + (lon_offset4 * 810000.0);
-  var lat1 = (coord32.y * 810000.0) + (lat32 * dividery);
+  var lon4 = (coord32.x * 3240000) + (lon32 * dividerx4) + (lon_offset4 * 810000);
+  var lat1 = (coord32.y * 810000) + (lat32 * dividery);
 
   // determine the range of coordinates that are encode to this mapcode
-  var mapcodeZone;
-  if (odd) { // odd
+  mzSet mapcodeZone;
+  if (odd != 0) { // odd
     mapcodeZone = mzSetFromFractions(lat1, lon4, 5 * dividery, 6 * dividerx4);
   } else { // not odd
     mapcodeZone = mzSetFromFractions(lat1, lon4, dividery, dividerx4);
   } // not odd
 
   // FORCE_RECODE - restrict the coordinate range to the extremes that were provided
-  if (mapcodeZone.fmaxx > (maxLonMicroDeg * 3240000.0)) {
-    mapcodeZone.fmaxx = (maxLonMicroDeg * 3240000.0);
+  if (mapcodeZone.fmaxx > (maxLonMicroDeg * 3240000)) {
+    mapcodeZone.fmaxx = (maxLonMicroDeg * 3240000);
   }
   if (dividery >= 0) {
-    if (mapcodeZone.fmaxy > (extremeLatMicroDeg * 810000.0)) {
-      mapcodeZone.fmaxy = (extremeLatMicroDeg * 810000.0);
+    if (mapcodeZone.fmaxy > (extremeLatMicroDeg * 810000)) {
+      mapcodeZone.fmaxy = (extremeLatMicroDeg * 810000);
     }
   } else {
-    if (mapcodeZone.fminy < (extremeLatMicroDeg * 810000.0)) {
-      mapcodeZone.fminy = (extremeLatMicroDeg * 810000.0);
+    if (mapcodeZone.fminy < (extremeLatMicroDeg * 810000)) {
+      mapcodeZone.fminy = (extremeLatMicroDeg * 810000);
     }
   }
   return mapcodeZone;
 }
 
 mzSet decodeGrid(String input, String extensionchars, int m) {
-  double relx, rely;
+  int relx = 0;
+  int rely = 0;
   var prefixlength = input.indexOf('.');
   var postfixlength = input.length - 1 - prefixlength;
   if (prefixlength == 1 && postfixlength == 4) {
@@ -890,7 +896,7 @@ mzSet decodeGrid(String input, String extensionchars, int m) {
     input = input[0] + input[2] + '.' + input.substring(3);
   }
 
-  int divx;
+  int divx = 0;
   int divy = smartdiv(m);
   if (divy == 1) {
     divx = xside[prefixlength];
@@ -905,21 +911,21 @@ mzSet decodeGrid(String input, String extensionchars, int m) {
 
   var v = decodeBase31(input);
 
-  if (divx != divy && prefixlength > 2) // D==6
-      {
-    var rel = decodeSixWide(v, divx, divy);
-    relx = rel.x.toDouble();
-    rely = rel.y.toDouble();
-  }
-  else {
-    relx = (v / divy).floor().toDouble();
-    rely = (v % divy).toDouble();
-    rely = divy - 1 - rely;
+  if (v != null) {
+    if (divx != divy && prefixlength > 2) { // D==6
+      var rel = decodeSixWide(v, divx, divy);
+      relx = rel.x;
+      rely = rel.y;
+    } else {
+      relx = (v / divy).floor();
+      rely = (v % divy);
+      rely = divy - 1 - rely;
+    }
   }
 
   var mm = minmaxSetup(m);
-  var ygridsize = ((mm.maxy - mm.miny + divy - 1).floor() / divy);
-  var xgridsize = ((mm.maxx - mm.minx + divx - 1).floor() / divx);
+  var ygridsize = ((mm.maxy - mm.miny + divy - 1).floor() / divy).toInt();
+  var xgridsize = ((mm.maxx - mm.minx + divx - 1).floor() / divx).toInt();
 
   rely = mm.miny + (rely * ygridsize);
   relx = mm.minx + (relx * xgridsize);
@@ -932,8 +938,8 @@ mzSet decodeGrid(String input, String extensionchars, int m) {
   var rest = input.substring(prefixlength + 1);
 
   // decoderelative (postfix vs rely,relx)
-  int difx;
-  int dify;
+  int difx = 0;
+  int dify = 0;
   if (postfixlength == 3) {
     var d = decodeTriple(rest);
     difx = d.x;
@@ -944,15 +950,17 @@ mzSet decodeGrid(String input, String extensionchars, int m) {
       rest = rest[0] + rest[2] + rest[1] + rest[3];
     }
     v = decodeBase31(rest);
-    difx = (v / yp).floor();
-    dify = (v % yp).floor();
+    if (v != null) {
+      difx = (v / yp).floor();
+      dify = (v % yp).floor();
+    }
   }
 
   dify = yp - 1 - dify;
 
-  var corner = Point<double>( // in microdegrees
-      relx + (difx * dividerx),
-      rely + (dify * dividery)
+  var corner = coord( // in microdegrees
+      x: relx + (difx * dividerx),
+      y: rely + (dify * dividery)
     );
 
   if (!fitsInside(corner, mm)) {
@@ -979,8 +987,8 @@ String encodeTriple(int difx, int dify, int dividerx, int dividery) {
   if (dify < 4 * 34) {
     rx = (difx / 28).floor();
     ry = (dify / 34).floor();
-    cx = (difx % 28);
-    cy = (dify % 34);
+    cx = (difx % 28).toInt();
+    cy = (dify % 34).toInt();
     // if (getDebugInfo) {
     //   mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + ((28 * rx * dividerx)),
     //       (1000000 * (mcInfo.rectSubarea.maxy)) - (((34 * ry) + 34) * dividery), 28 * dividerx, 34 * dividery);
@@ -989,7 +997,7 @@ String encodeTriple(int difx, int dify, int dividerx, int dividery) {
   }
   else {
     rx = (difx / 24).floor();
-    cx = (difx % 24);
+    cx = (difx % 24).toInt();
     // if (getDebugInfo) {
     //   mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + (24 * rx * dividerx),
     //       1000000 * mcInfo.rectSubarea.miny, 24 * dividerx, 40 * dividery);
@@ -998,7 +1006,7 @@ String encodeTriple(int difx, int dify, int dividerx, int dividery) {
   }
 }
 
-function encodeGrid(enc enc, int m, mmSet mm, headerletter, extraDigits) {
+String encodeGrid(enc enc, int m, mmSet mm, String headerletter, int extraDigits) {
   var orgcodex = coDex(m);
   var codex = orgcodex;
   if (codex == 21) {
@@ -1264,8 +1272,8 @@ String showinlan(String str, int lan, bool asHTML) {
       rest = str.substring(h);
       str = str.substring(0, h);
     }
-    if (str.indexOf('E') >= 0 || str.indexOf('U') >= 0) {
-      str = aeu_pack(aeu_unpack(str), true);
+    if (str.contains('E') || str.contains('U')) {
+      str = aeu_pack(aeu_unpack(str), short: true);
     }
     str += rest;
   }
@@ -1280,7 +1288,7 @@ String showinlan(String str, int lan, bool asHTML) {
     }
 
     if (asHTML && (c < 32 || c > 93)) {
-      result += '&#' + c + ';';
+      result += '&#' + c.toString() + ';';
     } else {
       result += String.fromCharCode(c);
     }
@@ -1289,7 +1297,7 @@ String showinlan(String str, int lan, bool asHTML) {
 }
 
 /// PRIVATE convert all characters to Roman (ASCII) alphabet (if possible)
-function to_ascii(String str) {
+String to_ascii(String str) {
   var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var result = '';
   str = str.trim().toUpperCase();
@@ -1333,7 +1341,7 @@ function to_ascii(String str) {
       rest = mc.substring(h);
       mc = mc.substring(0, h);
     }
-    result = result.substring(0, p) + aeu_pack(aeu_unpack(mc), false) + rest;
+    result = result.substring(0, p) + aeu_pack(aeu_unpack(mc), short: false) + rest;
     /* v1.50 repack A-voweled to AEU-voweled */
   }
 
@@ -1407,7 +1415,7 @@ int countNamelessRecords(int index, int firstcode) {
 }
 
 // mid-level encode/decode
-String encodeNameless(enc enc, int m, int firstcode, extraDigits) {
+String encodeNameless(enc enc, int m, int firstcode, int extraDigits) {
   var A = countNamelessRecords(m, firstcode);
   if (A < 1) {
     return '';
@@ -1512,7 +1520,7 @@ String encodeNameless(enc enc, int m, int firstcode, extraDigits) {
   return encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extraDigits, -1);
 } // nameless
 
-function decodeNameless(String input, extensionchars, int m, int firstindex) {
+mzSet decodeNameless(String input, String extensionchars, int m, int firstindex) {
   var codex = coDex(m);
   if (codex == 22) {
     input = input.substring(0, 3) + input.substring(4);
@@ -1524,8 +1532,8 @@ function decodeNameless(String input, extensionchars, int m, int firstindex) {
   var F = firstNamelessRecord(m, firstindex);
   var p = (31 / A).floor();
   int r = (31 % A);
-  var v = 0;
-  int X;
+  int? v = 0;
+  int X = 0;
   var swapletters = false;
 
   if (codex != 21 && A <= 31) {
@@ -1559,8 +1567,10 @@ function decodeNameless(String input, extensionchars, int m, int firstindex) {
     // decode
     v = decodeBase31(input);
 
-    X = (v / BASEPOWERA).floor();
-    v %= BASEPOWERA;
+    if (v != null) {
+      X = (v / BASEPOWERA).floor();
+      v %= BASEPOWERA;
+    }
   }
 
   if (swapletters) {
@@ -1572,14 +1582,14 @@ function decodeNameless(String input, extensionchars, int m, int firstindex) {
   if (codex != 21 && A <= 31) {
     v = decodeBase31(input);
 
-    if (X > 0) {
+    if (X > 0 && v != null) {
       v -= ((X * p + (X < r ? X : r)) * (961 * 961));
     }
   }
   else if (codex != 21 && A < 62) {
     v = decodeBase31(input.substring(1));
 
-    if (X >= (62 - A)) {
+    if (X >= (62 - A) && v != null) {
       if (v >= (16 * 961 * 31)) {
         v -= (16 * 961 * 31);
         X++;
@@ -1597,17 +1607,19 @@ function decodeNameless(String input, extensionchars, int m, int firstindex) {
   var SIDE = smartdiv(m);
   var xSIDE = SIDE;
 
-  int dx, dy;
+  int dx = 0;
+  int dy = 0;
   if (isSpecialShape(m)) {
     xSIDE *= SIDE;
     SIDE = 1 + ((mm.maxy - mm.miny) / 90).floor();
     xSIDE = (xSIDE / SIDE).floor();
 
-    var d = decodeSixWide(v, xSIDE, SIDE);
-    dx = d.x;
-    dy = SIDE - 1 - d.y;
-  }
-  else {
+    if (v != null) {
+      var d = decodeSixWide(v, xSIDE, SIDE);
+      dx = d.x;
+      dy = SIDE - 1 - d.y;
+    }
+  } else if (v != null){
     dy = (v % SIDE);
     dx = (v / SIDE).floor();
   }
@@ -1619,15 +1631,15 @@ function decodeNameless(String input, extensionchars, int m, int firstindex) {
   var dividerx4 = xDivider4(mm.miny, mm.maxy); // 4 times too large!
   var dividery = 90;
 
-  var corner = { // in microdegrees
+  var corner = coord( // in microdegrees
     y: mm.maxy - (dy * dividery),
     x: mm.minx + ((dx * dividerx4) / 4).floor()
-  };
+  );
   return decodeExtension(extensionchars, corner, dividerx4, -dividery,
       ((dx * dividerx4) % 4), mm.miny, mm.maxx); // nameless
 }
 
-String encodeAutoHeader(enc enc, int m, extraDigits) {
+String encodeAutoHeader(enc enc, int m, int extraDigits) {
   var STORAGE_START = 0;
 
   // search back to first of the group
@@ -1651,7 +1663,7 @@ String encodeAutoHeader(enc enc, int m, extraDigits) {
 
     if (recType(i) == 2) { // *+
       var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
-      product = ((STORAGE_START + product + GOODROUNDER - 1).floor() / GOODROUNDER) * GOODROUNDER - STORAGE_START;
+      product = (((STORAGE_START + product + GOODROUNDER - 1).floor() / GOODROUNDER) * GOODROUNDER - STORAGE_START).toInt();
     }
 
     if (i == m && fitsInside(enc.coord32, mm)) {
@@ -1676,18 +1688,18 @@ String encodeAutoHeader(enc enc, int m, extraDigits) {
       vy = (vy / 176).floor();
       value += vy;
 
-      if (getDebugInfo) {
-        mcInfo = {type: (recType(i) == 2 ? 6 : 5), regular: false, record: i}; // 5=unrounded groups / 6=rounded groups
-        mcInfo.form = (codexlen == 4 ? 'ggppp' : 'gggppp');
-        mcInfo.postfixType = 3;
-        mcInfo.dotPosition = codexlen - 2;
-        mcInfo.prefixDivx = (W / 168).floor();
-        mcInfo.prefixDivy = (H / 176).floor();
-        mcInfo.rectSubarea = asDegreeRect(mm.minx + (vx * 168) * dividerx, mm.maxy - ((vy + 1) * 176) * dividery,
-            168 * dividerx, 176 * dividery);
-        mcInfo.rectCell = asDegreeRect(mm.minx + (vx * 168 + spx) * dividerx, mm.maxy - ((vy) * 176 + spy + 1) * dividery,
-            dividerx, dividery);
-      }
+      // if (getDebugInfo) {
+      //   mcInfo = {type: (recType(i) == 2 ? 6 : 5), regular: false, record: i}; // 5=unrounded groups / 6=rounded groups
+      //   mcInfo.form = (codexlen == 4 ? 'ggppp' : 'gggppp');
+      //   mcInfo.postfixType = 3;
+      //   mcInfo.dotPosition = codexlen - 2;
+      //   mcInfo.prefixDivx = (W / 168).floor();
+      //   mcInfo.prefixDivy = (H / 176).floor();
+      //   mcInfo.rectSubarea = asDegreeRect(mm.minx + (vx * 168) * dividerx, mm.maxy - ((vy + 1) * 176) * dividery,
+      //       168 * dividerx, 176 * dividery);
+      //   mcInfo.rectCell = asDegreeRect(mm.minx + (vx * 168 + spx) * dividerx, mm.maxy - ((vy) * 176 + spy + 1) * dividery,
+      //       dividerx, dividery);
+      // }
 
       var mapc = encodeBase31((STORAGE_START / (961 * 31)).floor() + value, codexlen - 2) + '.' +
           encodeTriple(spx, spy, dividerx, dividery);
@@ -1699,13 +1711,15 @@ String encodeAutoHeader(enc enc, int m, extraDigits) {
   return '';
 }  // autoheader
 
-function decodeAutoHeader(String input, extensionchars, int m) {
+mzSet decodeAutoHeader(String input, String extensionchars, int m) {
   var STORAGE_START = 0;
   var codex = coDex(m);
 
   var value = decodeBase31(input); // decode (before dot)
 
-  value *= (961 * 31);
+  if (value != null) {
+    value *= (961 * 31);
+  }
   var triple = decodeTriple(input.substring(input.length - 3)); // decode bottom 3 chars
 
   for (; coDex(m) == codex && recType(m) > 1; m++) {
@@ -1725,7 +1739,7 @@ function decodeAutoHeader(String input, extensionchars, int m) {
       product = ((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER).floor() * GOODROUNDER - STORAGE_START;
     }
 
-    if (value >= STORAGE_START && value < STORAGE_START + product) // code belongs here?
+    if (value != null && value >= STORAGE_START && value < STORAGE_START + product) // code belongs here?
         {
       var dividerx = ((mm.maxx - mm.minx + W - 1) / W).floor();
       var dividery = ((mm.maxy - mm.miny + H - 1) / H).floor();
@@ -1736,10 +1750,10 @@ function decodeAutoHeader(String input, extensionchars, int m) {
       var vx = triple.x + 168 * (value / (H / 176).floor()).floor();
       var vy = triple.y + 176 * (value % (H / 176).floor());
 
-      var corner = {  // in microdegrees
+      var corner = coord(  // in microdegrees
         y: mm.maxy - (vy * dividery),
         x: mm.minx + (vx * dividerx)
-      };
+      );
       if ((corner.y != mm.maxy) && (!fitsInside(corner, mm))) {
         return mzEmpty();
       }
@@ -1753,17 +1767,16 @@ function decodeAutoHeader(String input, extensionchars, int m) {
 }
 
 /// PRIVATE add vowels to prevent a mapcode r from being all-digit
-function aeu_pack(r, short) /* v1.50 */ {
+String aeu_pack(String r, {bool short = false}) /* v1.50 */ {
   var dotpos = -9;
   var rlen = r.length;
-  var d;
   var rest = '';
-  for (d = 0; d < rlen; d++) {
-    if (r.charAt(d) < '0' || r.charAt(d) > '9') // not digit?
+  for (int d = 0; d < rlen; d++) {
+    if (!r[d].isNumber) // not digit?
         {
-      if (r.charAt(d) == '.' && dotpos < 0) {
+      if (r[d] == '.' && dotpos < 0) {
         dotpos = d; // first dot?
-      } else if (r.charAt(d) == '-') {
+      } else if (r[d] == '-') {
         rest = r.substring(d);
         r = r.substring(0, d);
         rlen = d;
@@ -1774,7 +1787,7 @@ function aeu_pack(r, short) /* v1.50 */ {
     }
   }
 
-  var v;
+  var v = 0;
   if (dotpos >= 2 && rlen - 2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?
     if (short) { /* v1.50 new way: use only A */
       v = (r.codeUnitAt(0) - 48) * 100 + (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
@@ -1794,11 +1807,6 @@ var debugStopRecord = -1; // GLOBAL
 
 enc getEncodeRec(double lat, double lon) {
 
-  if (isNaN(lat)) {
-    lat = 0;
-  } else {
-    lat = Number(lat);
-  }
   if (lat < -90) {
     lat = -90;
   } else if (lat > 90) {
@@ -1812,11 +1820,6 @@ enc getEncodeRec(double lat, double lon) {
   fraclat -= (lat32 * 810000);
   lat32 -= 90000000;
 
-  if (isNaN(lon)) {
-    lon = 0;
-  } else {
-    lon = Number(lon);
-  }
   lon -= (360 * (lon / 360).floor()); // lon now in [0..360>
   lon *= 3240000000000;
   var fraclon = (lon + 0.1).floor();
@@ -1830,15 +1833,15 @@ enc getEncodeRec(double lat, double lon) {
   return enc(coord32: coord(y: lat32, x: lon32), fraclat: fraclat, fraclon: fraclon);
 }
 
-function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigits) {
-  var results = [];
+List<mcInfoC> mapcoderEngine(enc enc, int? tn, bool getshortest, int state_override, int extraDigits) {
+  var results = <mcInfoC>[];
 
-  mcInfo = {type: 0};
+  var mcInfo = mcInfoC();
 
   var fromTerritory = 0;
   var uptoTerritory = ccode_earth;
-  if (tn != undefined) {
-    if (isNaN(tn) || tn < 0 || tn > ccode_earth) {
+  if (tn != null) {
+    if (tn < 0 || tn > ccode_earth) {
       tn = ccode_earth;
     }
     fromTerritory = tn;
@@ -1849,7 +1852,7 @@ function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigit
   for (var territoryNumber = fromTerritory; territoryNumber <= uptoTerritory; territoryNumber++) {
     var original_length = results.length;
     var from = dataFirstRecord(territoryNumber);
-    if (!data_flags[from]) {
+    if (!data_flags.contains(from)) {
       continue;
     }   // 1.27 survive partially filled data_ array
     var upto = dataLastRecord(territoryNumber);
@@ -1874,10 +1877,10 @@ function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigit
           else if (recType(i) > 1) {
             r = encodeAutoHeader(enc, i, extraDigits);
           }
-          else if ((i == upto) && (getParentOf(territoryNumber) >= 0)) {
-            var moreresults = mapcoderEngine(enc, getParentOf(territoryNumber), getshortest, territoryNumber, extraDigits);
-            if (moreresults && moreresults.length > 0) {
-              results = results.concat(moreresults);
+          else if ((i == upto) && (getParentOf(territoryNumber.toString()) >= 0)) {
+            var moreresults = mapcoderEngine(enc, getParentOf(territoryNumber.toString()), getshortest, territoryNumber, extraDigits);
+            if (moreresults.isNotEmpty) {
+              results.addAll(moreresults);
             }
             continue;
           }
@@ -1894,7 +1897,7 @@ function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigit
             r = aeu_pack(r);
 
             var storecode = territoryNumber;
-            if (state_override != undefined && state_override >= 0) {
+            if (state_override >= 0) {
               storecode = state_override;
             }
 
@@ -1912,12 +1915,13 @@ function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigit
             //   mcInfo.rectEncompassing = asDegreeRect(mu.minx, mu.miny, mu.maxx - mu.minx, mu.maxy - mu.miny);
             // }
             // else {
-              mcInfo = {mapcode: r};
+              mcInfo = mcInfoC();
+              mcInfo.mapcode = r;
             // }
-            mcInfo.territoryAlphaCode = getTerritoryAlphaCode(storecode);
+            mcInfo.territoryAlphaCode = getTerritoryAlphaCode(storecode.toString(), null);
             mcInfo.fullmapcode = (storecode == ccode_earth ? '' : mcInfo.territoryAlphaCode + ' ') + r;
             mcInfo.territoryNumber = storecode;
-            results.push(mcInfo);
+            results.add(mcInfo);
 
             if (getshortest || debugStopRecord == i) {
               break;
@@ -1928,15 +1932,15 @@ function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigit
     }
   }
 
-  if (debugStopRecord >= 0 && debugStopFailed) {
-    results.length = 0;
-  }
+  // if (debugStopRecord >= 0 && debugStopFailed) {
+  //   results.length = 0;
+  // }
 
   return results;
 }
 
 /// PRIVATE remove vowels from mapcode str into an all-digit mapcode (assumes str is already uppercase!)
-function aeu_unpack(String str) {
+String aeu_unpack(String str) {
   var voweled = 0;
   var lastpos = str.length - 1;
   var dotpos = str.indexOf('.');
@@ -1954,7 +1958,7 @@ function aeu_unpack(String str) {
     if (v2 < 0) {
       v2 = 31;
     }
-    var s = String(1000 + v1 + 32 * v2);
+    var s = (1000 + v1 + 32 * v2).toString();
     str = s[1] + str.substring(1, lastpos - 1) + s[2] + s[3];
     voweled = 1;
   }
@@ -1965,12 +1969,13 @@ function aeu_unpack(String str) {
     dotpos--;
   }
   else {
-    var v = str[lastpos - 1];
-    if (v == 'A') {
+    var vS = str[lastpos - 1];
+    var v = 0;
+    if (vS == 'A') {
       v = 0;
-    } else if (v == 'E') {
+    } else if (vS == 'E') {
       v = 34;
-    } else if (v == 'U') {
+    } else if (vS == 'U') {
       v = 68;
     } else {
       v = -1;
@@ -2003,7 +2008,7 @@ function aeu_unpack(String str) {
   }
 
   var hasletters = 0;
-  for (v = 0; v <= lastpos; v++) {
+  for (var v = 0; v <= lastpos; v++) {
     if (v != dotpos) {
       if (decodeChar[str.codeUnitAt(v)] < 0) {
         return '';
@@ -2013,10 +2018,10 @@ function aeu_unpack(String str) {
       }
     }
   }
-  if (voweled && hasletters) {
+  if (voweled != 0 && hasletters != 0) {
     return '';
   }
-  if (!voweled && !hasletters) {
+  if (voweled == 0 && hasletters == 0) {
     return '';
   }
   return str;
@@ -2043,7 +2048,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
     territoryNumber = ccode_earth;
   }
   // *** long codes in states are handled by the country
-  var parent = getParentOf(territoryNumber);
+  var parent = getParentOf(territoryNumber.toString());
   if (parent >= 0) {
     if (mclen >= 9 || (mclen >= 8 && (parent == ccode_ind || parent == ccode_mex))) {
       territoryNumber = parent;
@@ -2084,7 +2089,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
 
         if (nrZoneOverlaps == 0) {
           // see if mapcode zone OVERLAPS any sub-area...
-          mzSet zfound;
+          var zfound = mzEmpty();
           for (var j = from; j < m; j++) { // try all smaller rectangles j
             if (!isRestricted(j)) {
               var z = mzRestrictZoneTo(zone, minmaxSetup(j));
@@ -2106,7 +2111,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
           }
         }
 
-        if (!nrZoneOverlaps) {
+        if (nrZoneOverlaps == 0) {
           zone = mzEmpty();
         }
       }
@@ -2129,7 +2134,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
 
   zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
   if (mzIsEmpty(zone)) {
-    return false;
+    return null;
   }
 
   return convertFractionsToDegrees(wrap(mzMidPointFractions(zone)));
@@ -2157,7 +2162,7 @@ String? fullname(int territoryNumber, bool keepindex) {
   if (keepindex) {
     return isofullname[territoryNumber];
   }
-  return getTerritoryFullname(territoryNumber);
+  return getTerritoryFullname(territoryNumber.toString());
 }
 
 const maxErrorInMetersForDigits = [
@@ -2191,14 +2196,14 @@ double distanceInMeters(double latDeg1, double lonDeg1, double latDeg2, double l
 /// PUBLIC convert a mapcode (skipping the territory abbreviation) into a particular alphabet
 /// targetAlphabet: 0=roman, 1=greek etc.
 /// returns: string
-String convertToAlphabet(String mapcode, targetAlphabet) {
+String convertToAlphabet(String mapcode, int targetAlphabet) {
   return showinlan(mapcode, targetAlphabet, false);
 }
 
 /// PUBLIC convert a mapcode (skipping the territory abbreviation) into a particular alphabet
 /// targetAlphabet: 0=roman, 1=greek etc.
 /// returns: HTML-encoded string
-String convertToAlphabetAsHTML(String mapcode, targetAlphabet) {
+String convertToAlphabetAsHTML(String mapcode, int targetAlphabet) {
   return showinlan(mapcode, targetAlphabet, true);
 }
 
@@ -2212,8 +2217,8 @@ LatLng? decode(String mapcodeString, String territory) {
   var parts = mapcodeString.split(RegExp(r'/\s+/'));
   LatLng? dec;
   if (parts.length == 2) {
-    if (isSubdivision(contextTerritoryNumber)) {
-      contextTerritoryNumber = getParentOf(contextTerritoryNumber);
+    if (isSubdivision(contextTerritoryNumber.toString())) {
+      contextTerritoryNumber = getParentOf(contextTerritoryNumber.toString());
     }
     var territoryNumber = getTerritoryNumber(parts[0], contextTerritory: contextTerritoryNumber.toString());
     if (territoryNumber != null && territoryNumber >= 0) {
@@ -2232,27 +2237,27 @@ LatLng? decode(String mapcodeString, String territory) {
 /// the International variants only return the 9-letter "international" mapcode
 /// the WithPrecision variants produce mapcodes extended with high-precision letters (the parameter specifies how many letters: 0, 1, or 2).
 
-function encodeWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, int territory) {
+List<mcInfoC>  encodeWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, String territory) {
   return mapcoderEngine(getEncodeRec(latitudeDegrees, longitudeDegrees), getTerritoryNumber(territory), false/*getshortest*/, -1/*override*/, precision);
 }
 
-function encode(double latitudeDegrees, double longitudeDegrees, territory) {
-  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory)
+List<mcInfoC> encode(double latitudeDegrees, double longitudeDegrees, String territory) {
+  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory);
 }
 
-function encodeInternational(double latitudeDegrees, double longitudeDegrees) {
-  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, ccode_earth)
+List<mcInfoC> encodeInternational(double latitudeDegrees, double longitudeDegrees) {
+  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, ccode_earth.toString());
 }
 
-function encodeInternationalWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision) {
-  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, precision, ccode_earth)
+List<mcInfoC> encodeInternationalWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision) {
+  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, precision, ccode_earth.toString());
 }
 
-function encodeShortestWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, territory) {
+List<mcInfoC> encodeShortestWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, String territory) {
   return mapcoderEngine(getEncodeRec(latitudeDegrees, longitudeDegrees), getTerritoryNumber(territory), true/*getshortest*/, -1/*override*/, precision);
 }
 
-function encodeShortest(double latitudeDegrees, double longitudeDegrees, territory) {
+List<mcInfoC> encodeShortest(double latitudeDegrees, double longitudeDegrees, String territory) {
   return encodeShortestWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory);
 }
 
@@ -2260,10 +2265,10 @@ function encodeShortest(double latitudeDegrees, double longitudeDegrees, territo
 bool multipleBordersNearby(double latitudeDegrees, double longitudeDegrees, String territory) {
   var territoryNumber = getTerritoryNumber(territory);
   if (territoryNumber!= null && (territoryNumber >= 0) && (territoryNumber < ccode_earth)) {
-    var parentTerritory = getParentOf(territoryNumber);
+    var parentTerritory = getParentOf(territoryNumber.toString());
     if (parentTerritory >= 0) {
       // there is a parent! check its borders as well...
-      if (multipleBordersNearby(latitudeDegrees, longitudeDegrees, parentTerritory)) {
+      if (multipleBordersNearby(latitudeDegrees, longitudeDegrees, parentTerritory.toString())) {
         return true;
       }
     }
@@ -2287,12 +2292,12 @@ bool multipleBordersNearby(double latitudeDegrees, double longitudeDegrees, Stri
 
 /// PUBLIC returns the worst-case distance (in meters) between a decoded mapcode and the original encoded location,
 /// given the number of high-precision digits after the hyphen of the mapcode.
-function maxErrorInMeters(extraDigits) {
+double maxErrorInMeters(int extraDigits) {
   return maxErrorInMetersForDigits[extraDigits];
 }
 
 /// PRIVATE convert a mapcode to an ABJAD-format (never more than 2 non-digits in a row)
-function convertToAbjad(String mapcode) {
+String convertToAbjad(String mapcode) {
   String str, rest;
   var h = mapcode.indexOf('-');
   if (h >= 0) {
@@ -2363,45 +2368,45 @@ function convertToAbjad(String mapcode) {
     }
 
     if (form == 22) {
-      str = str[0] + str[1] + '.' + c1 + c2 + str[4];
+      str = str[0] + str[1] + '.' + c1.toString() + c2.toString() + str[4];
     }
     else if (form == 23) {
-      str = str[0] + str[1] + '.' + c1 + c2 + str[4] + str[5];
+      str = str[0] + str[1] + '.' + c1.toString() + c2.toString() + str[4] + str[5];
     }
     else if (form == 32) {
-      str = str[0] + str[1] + '.' + (c1 + 4) + c2 + str[4] + str[5];
+      str = str[0] + str[1] + '.' + (c1 + 4).toString() + c2.toString() + str[4] + str[5];
     }
     else if (form == 24) {
-      str = str[0] + str[1] + c1 + '.' + str[4] + c2 + str[5] + str[6];
+      str = str[0] + str[1] + c1.toString() + '.' + str[4] + c2.toString() + str[5] + str[6];
     }
     else if (form == 33) {
-      str = str[0] + str[1] + c1 + '.' + str[4] + c2 + str[5] + str[6];
+      str = str[0] + str[1] + c1.toString() + '.' + str[4] + c2.toString() + str[5] + str[6];
     }
     else if (form == 42) {
-      str = str[0] + str[1] + c1 + '.' + str[3] + c2 + str[5] + str[6];
+      str = str[0] + str[1] + c1.toString() + '.' + str[3] + c2.toString() + str[5] + str[6];
     }
     else if (form == 43) {
-      str = str[0] + str[1] + (c1 + 4) + '.' + str[3] + str[5] + c2 + str[6] + str[7];
+      str = str[0] + str[1] + (c1 + 4).toString() + '.' + str[3] + str[5] + c2.toString() + str[6] + str[7];
     }
     else if (form == 34) {
-      str = str[0] + str[1] + c1 + '.' + str[4] + str[5] + c2 + str[6] + str[7];
+      str = str[0] + str[1] + c1.toString() + '.' + str[4] + str[5] + c2.toString() + str[6] + str[7];
     }
     else if (form == 44) {
-      str = str[0] + str[1] + c1 + str[3] + '.' + c2 + str[5] + str[6] + c3 + str[7];
+      str = str[0] + str[1] + c1.toString() + str[3] + '.' + c2.toString() + str[5] + str[6] + c3.toString() + str[7];
     }
     else if (form == 54) {
-      str = str[0] + str[1] + c1 + str[3] + str[4] + '.' + c2 + str[6] + str[7] + c3 + str[8];
+      str = str[0] + str[1] + c1.toString() + str[3] + str[4] + '.' + c2.toString() + str[6] + str[7] + c3.toString() + str[8];
     }
     else {
       return mapcode;
     }
   }
   //alert(str+' ['+rest+'] = '+aeu_pack(str, false));
-  return aeu_pack(str, false) + rest;
+  return aeu_pack(str, short: false) + rest;
 }
 
 /// PRIVATE returns true if str contains characters from an abjad-script
-function isAbjadScript(String str) {
+bool isAbjadScript(String str) {
   for (var i = 0; i < str.length; i++) {
     var c = str.codeUnitAt(i);
     if (c >= 0x0628 && c <= 0x0649) {
@@ -2421,7 +2426,7 @@ function isAbjadScript(String str) {
 }
 
 /// PRIVATE convert a mapcode in ABJAD-format to normal format
-function convertFromAbjad(String result) {
+String convertFromAbjad(String result) {
   // split into prefix, s, postfix
   var p = result.lastIndexOf(' ');
   if (p < 0) {
@@ -2445,7 +2450,7 @@ function convertFromAbjad(String result) {
     return result;
   }
   var form = 10 * dot + (len - dot - 1);
-  var c;
+  int c;
 
   if (form == 23) {
     c = (s.codeUnitAt(3) * 8) + (s.codeUnitAt(4) - 18);
@@ -2483,12 +2488,12 @@ function convertFromAbjad(String result) {
   }
   else if (form == 55) {
     c = (s.codeUnitAt(2) * 100) + (s.codeUnitAt(6) * 10) + (s.codeUnitAt(9) - 39);
-    s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + s[4] + '.' + s[7] + s[8] + s.charAt(10) + encodeChar[c % 31];
+    s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + s[4] + '.' + s[7] + s[8] + s[10] + encodeChar[c % 31];
   }
   else {
     return result;
   }
-  return prefix + aeu_pack(s, false) + postfix;
+  return prefix + aeu_pack(s, short: false) + postfix;
 }
 
 class mzSet {
@@ -2532,4 +2537,11 @@ class enc {
   var maxy = 0;
 
   enc({required this.coord32, required this.fraclat, required this.fraclon});
+}
+
+class mcInfoC {
+  String mapcode = '';
+  String territoryAlphaCode = '';
+  String fullmapcode = '';
+  int territoryNumber = 0;
 }
