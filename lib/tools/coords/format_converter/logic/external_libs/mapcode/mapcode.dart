@@ -250,6 +250,7 @@ int? iso2ccode(String territoryAlphaCode) {
     }
   }
 
+
   var i = 0;
   String isoa;
   var sep = territoryAlphaCode.lastIndexOf('-');
@@ -404,7 +405,7 @@ bool hasSubdivision(String territory) {
 }
 
 /// PRIVATE returns true iff x in range (all values in millionths)
-bool isInRangeX(int x, int minx, int maxx) {
+bool isInRangeX(int x, double minx, double maxx) {
   if (minx <= x && x < maxx) {
     return true;
   }
@@ -417,12 +418,12 @@ bool isInRangeX(int x, int minx, int maxx) {
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle (all values in millionths)
-bool fitsInside(coord, mmSet mm) {
-  return (mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx, mm.maxx));
+bool fitsInside(coord coord, mmSet mm) {
+  return (mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx.toDouble(), mm.maxx.toDouble()));
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare outside (all values in millionths)
-bool fitsInsideWithRoom(coord, mmSet mm) {
+bool fitsInsideWithRoom(coord coord, mmSet mm) {
   if (((mm.miny - 60) > coord.y) || (coord.y >= (mm.maxy + 60))) {
     return false;
   }
@@ -431,7 +432,7 @@ bool fitsInsideWithRoom(coord, mmSet mm) {
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare inside (all values in millionths)
-bool fitsWellInside(coord, mmSet mm) {
+bool fitsWellInside(coord coord, mmSet mm) {
   if (((mm.miny + 60) > coord.y) || (coord.y >= (mm.maxy - 60))) {
     return false;
   }
@@ -440,7 +441,7 @@ bool fitsWellInside(coord, mmSet mm) {
 }
 
 /// PRIVATE returns true iff coordinate near the rectangle border
-bool isNearBorderOf(coord, mmSet mm) {
+bool isNearBorderOf(coord coord, mmSet mm) {
   return fitsInsideWithRoom(coord, mm) && (!fitsWellInside(coord, mm));
 }
 
@@ -551,7 +552,7 @@ const encodeChar = [
   'A', 'E', 'U'];
 
 /// PRIVATE given a minimum and maximum latitude, returns a relative stretch factor (in 360th) for the longitude
-function xDivider4(int miny, int maxy) {
+int xDivider4(int miny, int maxy) {
   if (miny >= 0) {
     return xdivider19[(miny) >> 19];
   }
@@ -640,17 +641,17 @@ var mcInfo;
  prefixDivx,prefixDivy = how prefix divides the area (if any)
  */
 
-function asDegreeRect(minx, miny, dx, dy) {
-  return {minx: minx / 1000000, miny: miny / 1000000, maxx: (minx + dx) / 1000000, maxy: (miny + dy) / 1000000};
+mmSetD asDegreeRect(int minx, int miny, int dx, int dy) {
+  return mmSetD(minx: minx / 1000000, miny: miny / 1000000, maxx: (minx + dx) / 1000000, maxy: (miny + dy) / 1000000);
 }
 
 /// high-precision extension routines
-function maxMapcodePrecision() {
+int maxMapcodePrecision() {
   return 8;
 }
 
-function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extraDigits, ydirection) {
-  if (!extraDigits) {
+String encodeExtension(String result, enc enc, int extrax4, int extray, int dividerx4, int dividery, int extraDigits, int ydirection) {
+  if (extraDigits == 0) {
     return result;
   }
   if (extraDigits > maxMapcodePrecision()) {
@@ -658,10 +659,10 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
   }
 
   // the following are all perfect integers
-  var factorx = 810000 * dividerx4; // 810000 = 30^4
-  var factory = 810000 * dividery;
-  var valx = (810000 * extrax4) + (enc.fraclon);
-  var valy = (810000 * extray) + (enc.fraclat * ydirection);
+  var factorx = 810000.0 * dividerx4; // 810000 = 30^4
+  var factory = 810000.0 * dividery;
+  var valx = (810000.0 * extrax4) + (enc.fraclon);
+  var valy = (810000.0 * extray) + (enc.fraclat * ydirection);
 
   // protect against floating point errors
   if (valx < 0) {
@@ -778,7 +779,7 @@ Point<double> convertFractionsToDegrees(Point<double> p) {
   );
 }
 
-function mzRestrictZoneTo(mzSet zone, int mm) {
+mmSet mzRestrictZoneTo(mzSet zone, mmSet mm) {
   var z = mzCopy(zone);
   var miny = mm.miny * 810000;
   if (z.fminy < miny) {
@@ -810,7 +811,7 @@ function mzRestrictZoneTo(mzSet zone, int mm) {
 }
 
 // returns (possibly empty) MapcodeZone
-function decodeExtension(extensionchars, coord32, dividerx4, dividery, lon_offset4, extremeLatMicroDeg, maxLonMicroDeg) {
+function decodeExtension(extensionchars, coord coord32, dividerx4, dividery, lon_offset4, extremeLatMicroDeg, maxLonMicroDeg) {
   var processor = 1;
   var lon32 = 0;
   var lat32 = 0;
@@ -905,12 +906,12 @@ function decodeGrid(String input, extensionchars, int m) {
   if (divx != divy && prefixlength > 2) // D==6
       {
     var rel = decodeSixWide(v, divx, divy);
-    relx = rel.x;
-    rely = rel.y;
+    relx = rel.x.toDouble();
+    rely = rel.y.toDouble();
   }
   else {
-    relx = (v / divy).floor();
-    rely = v % divy;
+    relx = (v / divy).floor().toDouble();
+    rely = (v % divy).toDouble();
     rely = divy - 1 - rely;
   }
 
@@ -947,7 +948,7 @@ function decodeGrid(String input, extensionchars, int m) {
 
   dify = yp - 1 - dify;
 
-  var corner = Point<int>( // in microdegrees
+  var corner = Point<double>( // in microdegrees
       relx + (difx * dividerx),
       rely + (dify * dividery)
     );
@@ -1166,7 +1167,7 @@ var asc2lan = [
   [0x0B1D, 0x0B15, 0x0B16, 0x0B17, 0x0B23, 0x0B18, 0x0B1A, 0x0B1C, 0x0049, 0x0B1F, 0x0B21, 0x0B22, 0x0B24, 0x0B25, 0x0B20, 0x0B26, 0x0B27, 0x0B28, 0x0B2A, 0x0B2C, 0x0B39, 0x0B2E, 0x0B2F, 0x0B30, 0x0B33, 0x0B38, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Odia
   [0x0C92, 0x0C95, 0x0C96, 0x0C97, 0x0C8E, 0x0C99, 0x0C9A, 0x0C9B, 0x0049, 0x0C9C, 0x0CA0, 0x0CA1, 0x0CA3, 0x0CA4, 0x004f, 0x0CA6, 0x0CA7, 0x0CA8, 0x0CAA, 0x0CAB, 0x0C87, 0x0CAC, 0x0CAD, 0x0CB0, 0x0CB2, 0x0CB5, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Kannada
   [0x0AB3, 0x0A97, 0x0A9C, 0x0AA1, 0x0A87, 0x0AA6, 0x0AAC, 0x0A95, 0x0049, 0x0A9A, 0x0A9F, 0x0AA4, 0x0AAA, 0x0AA0, 0x004f, 0x0AB0, 0x0AB5, 0x0A9E, 0x0AAE, 0x0AAB, 0x0A89, 0x0AB7, 0x0AA8, 0x0A9D, 0x0AA2, 0x0AAD, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Gujarati
-]
+];
 
 
 // *UI*
@@ -1827,7 +1828,7 @@ enc getEncodeRec(double lat, double lon) {
   return enc(coord32: coord(y: lat32, x: lon32), fraclat: fraclat, fraclon: fraclon);
 }
 
-function mapcoderEngine(enc enc, tn, getshortest, state_override, extraDigits) {
+function mapcoderEngine(enc enc, int tn, getshortest, state_override, extraDigits) {
   var results = [];
 
   mcInfo = {type: 0};
@@ -2151,7 +2152,7 @@ String ccode2iso(String territoryNumber, int? format) {
   return getTerritoryAlphaCode(territoryNumber, format);
 }
 
-String? fullname(String territoryNumber, bool keepindex) {
+String? fullname(int territoryNumber, bool keepindex) {
   if (keepindex) {
     return isofullname[territoryNumber];
   }
@@ -2174,16 +2175,16 @@ const maxErrorInMetersForDigits = [
 
 /// PUBLIC returns {distance,width,height}, the distance between two coordinates, and the longitudinal distance ("width") and latitudinal distance ("height") - all expressed in meters
 /// Warning: accurate only for coordinates within a few hundred meters of each other
-function distanceInMeters(latDeg1, lonDeg1, latDeg2, lonDeg2) {
+double distanceInMeters(double latDeg1, double lonDeg1, double latDeg2, double lonDeg2) {
   if (lonDeg1 < 0 && lonDeg2 > 1) {
     lonDeg1 += 360;
   }
   if (lonDeg2 < 0 && lonDeg1 > 1) {
     lonDeg2 += 360;
   }
-  var dx = 111319.49079327 * (lonDeg2 - lonDeg1) * Math.cos((latDeg1 + latDeg2) * Math.PI / 360.0);
+  var dx = 111319.49079327 * (lonDeg2 - lonDeg1) * cos((latDeg1 + latDeg2) * pi / 360.0);
   var dy = 110946.25213273 * (latDeg2 - latDeg1);
-  return Math.sqrt(dx * dx + dy * dy);
+  return sqrt(dx * dx + dy * dy);
 }
 
 /// PUBLIC convert a mapcode (skipping the territory abbreviation) into a particular alphabet
@@ -2209,7 +2210,7 @@ function decode(mapcodeString, territory) {
   if (contextTerritoryNumber == undefined) {
     contextTerritoryNumber = ccode_earth;
   }
-  var parts = mapcodeString.split(/\s+/);
+  var parts = mapcodeString.split(Regexp(r'/\s+/');
   var dec = undefined;
   if (parts.length == 2) {
     if (isSubdivision(contextTerritoryNumber)) {
@@ -2233,34 +2234,34 @@ function decode(mapcodeString, territory) {
 /// the International variants only return the 9-letter "international" mapcode
 /// the WithPrecision variants produce mapcodes extended with high-precision letters (the parameter specifies how many letters: 0, 1, or 2).
 
-function encodeWithPrecision(latitudeDegrees, longitudeDegrees, precision, territory) {
+function encodeWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, int territory) {
   return mapcoderEngine(getEncodeRec(latitudeDegrees, longitudeDegrees), getTerritoryNumber(territory), false/*getshortest*/, -1/*override*/, precision);
 }
 
-function encode(latitudeDegrees, longitudeDegrees, territory) {
+function encode(double latitudeDegrees, double longitudeDegrees, territory) {
   return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory)
 }
 
-function encodeInternational(latitudeDegrees, longitudeDegrees) {
+function encodeInternational(double latitudeDegrees, double longitudeDegrees) {
   return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, ccode_earth)
 }
 
-function encodeInternationalWithPrecision(latitudeDegrees, longitudeDegrees, precision) {
+function encodeInternationalWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision) {
   return encodeWithPrecision(latitudeDegrees, longitudeDegrees, precision, ccode_earth)
 }
 
-function encodeShortestWithPrecision(latitudeDegrees, longitudeDegrees, precision, territory) {
+function encodeShortestWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, territory) {
   return mapcoderEngine(getEncodeRec(latitudeDegrees, longitudeDegrees), getTerritoryNumber(territory), true/*getshortest*/, -1/*override*/, precision);
 }
 
-function encodeShortest(latitudeDegrees, longitudeDegrees, territory) {
+function encodeShortest(double latitudeDegrees, double longitudeDegrees, territory) {
   return encodeShortestWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory);
 }
 
 // returns true iff coordinate is near more than one territory border
-function multipleBordersNearby(latitudeDegrees, longitudeDegrees, territory) {
+bool multipleBordersNearby(double latitudeDegrees, double longitudeDegrees, String territory) {
   var territoryNumber = getTerritoryNumber(territory);
-  if ((territoryNumber >= 0) && (territoryNumber < ccode_earth)) {
+  if (territoryNumber!= null && (territoryNumber >= 0) && (territoryNumber < ccode_earth)) {
     var parentTerritory = getParentOf(territoryNumber);
     if (parentTerritory >= 0) {
       // there is a parent! check its borders as well...
@@ -2508,6 +2509,15 @@ class mmSet {
   var maxy = 0;
 
   mmSet({required this.minx, required this.maxx, required this.miny, required this.maxy});
+}
+
+class mmSetD {
+  var minx = 0.0;
+  var maxx = 0.0;
+  var miny = 0.0;
+  var maxy = 0.0;
+
+  mmSetD({required this.minx, required this.maxx, required this.miny, required this.maxy});
 }
 
 class coord {
