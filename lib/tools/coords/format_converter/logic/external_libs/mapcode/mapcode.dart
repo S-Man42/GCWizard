@@ -17,6 +17,8 @@
  */
 import 'dart:math';
 
+import 'package:latlong2/latlong.dart';
+
 part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams.dart';
 part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ndata.dart';
 
@@ -364,7 +366,7 @@ String? getTerritoryFullname(String territory) {
 }
 
 /// PUBLIC return parent country of subdivision (negative if territory is not a subdivision)
-int getParentOf(String territory) {
+int getParentOf(int territory) {
   var territoryNumber = getTerritoryNumber(territory);
   if (territoryNumber == null) return -199;
   if (territoryNumber >= usa_from && territoryNumber <= usa_upto) {
@@ -395,7 +397,7 @@ int getParentOf(String territory) {
 }
 
 /// PUBLIC returns true iff territoryNumber is a state
-bool isSubdivision(String territory) {
+bool isSubdivision(int territory) {
   return getParentOf(territory) >= 0;
 }
 
@@ -878,7 +880,7 @@ function decodeExtension(extensionchars, coord coord32, dividerx4, dividery, lon
   return mapcodeZone;
 }
 
-function decodeGrid(String input, extensionchars, int m) {
+mzSet decodeGrid(String input, String extensionchars, int m) {
   double relx, rely;
   var prefixlength = input.indexOf('.');
   var postfixlength = input.length - 1 - prefixlength;
@@ -2021,8 +2023,7 @@ function aeu_unpack(String str) {
 }
 
 /// PRIVATE decode a PROPER mapcode within a KNOWN territory number to an x,y coordinate (or false)
-function master_decode(mapcode, territoryNumber) // returns object with y and x fields, or false
-{
+LatLng? master_decode(String mapcode, int territoryNumber) { // returns object with y and x fields, or false
   mapcode = to_ascii(mapcode);
   var extensionchars = '';
   var minpos = mapcode.indexOf('-');
@@ -2033,7 +2034,7 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
 
   mapcode = aeu_unpack(mapcode);
   if (mapcode == '') {
-    return false;
+    return null;
   } // failed to decode!
 
   var mclen = mapcode.length;
@@ -2050,8 +2051,8 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
   }
 
   var from = dataFirstRecord(territoryNumber);
-  if (!data_flags[from]) {
-    return false;
+  if (!data_flags.contains(from)) {
+    return null;
   } // 1.27 survive partially filled data_ array
   var upto = dataLastRecord(territoryNumber);
 
@@ -2204,24 +2205,21 @@ String convertToAlphabetAsHTML(String mapcode, targetAlphabet) {
 /// PUBLIC decode a string (which may contain a full mapcode, including a territory)
 /// the optional contextTerritoryNumber is used in case the mapcode specifies no (unambiguous) territory.
 /// returns coordinate, or false.
-function decode(mapcodeString, territory) {
+LatLng? decode(String mapcodeString, String territory) {
   mapcodeString = trim(mapcodeString);
   var contextTerritoryNumber = getTerritoryNumber(territory);
-  if (contextTerritoryNumber == undefined) {
-    contextTerritoryNumber = ccode_earth;
-  }
-  var parts = mapcodeString.split(Regexp(r'/\s+/');
-  var dec = undefined;
+  contextTerritoryNumber ??= ccode_earth;
+  var parts = mapcodeString.split(RegExp(r'/\s+/'));
+  LatLng? dec;
   if (parts.length == 2) {
     if (isSubdivision(contextTerritoryNumber)) {
       contextTerritoryNumber = getParentOf(contextTerritoryNumber);
     }
-    var territoryNumber = getTerritoryNumber(parts[0], contextTerritoryNumber);
-    if (territoryNumber >= 0) {
+    var territoryNumber = getTerritoryNumber(parts[0], contextTerritory: contextTerritoryNumber.toString());
+    if (territoryNumber != null && territoryNumber >= 0) {
       dec = master_decode(parts[1], territoryNumber);
     }
-  }
-  else if (parts.length == 1) {
+  } else if (parts.length == 1) {
     dec = master_decode(parts[0], contextTerritoryNumber);
   }
   return dec;
