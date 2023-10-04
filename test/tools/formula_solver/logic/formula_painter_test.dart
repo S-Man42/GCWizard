@@ -98,6 +98,7 @@ void main() {
       {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
       {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
       {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbgggbgbgBGb'},
+      {'formula' : 'nth("ABC", 1)', 'expectedOutput' : 'bbbbGGGGGbggb'},
       {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
       {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
       {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
@@ -432,6 +433,8 @@ void main() {
      {'formula' : 'len(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
      {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : 'bbbbRrb'},
      {'formula' : 'len(AB)', 'values': {'A': '""', 'B': "C"}, 'expectedOutput' : 'bbbbrRb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '10'}, 'expectedOutput' : 'bbbbrbggb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '"AB"'}, 'expectedOutput' : 'bbbbRbbgb'},
      {'formula' : 'len("ABC") * bww(\'55\')', 'expectedOutput' : 'bbbbgggggbbbbbbbbggggb'},
      {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
      {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
