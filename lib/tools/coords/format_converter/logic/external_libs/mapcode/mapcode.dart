@@ -1301,6 +1301,7 @@ String to_ascii(String str) {
   var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var result = '';
   str = str.trim().toUpperCase();
+  if (str.isEmpty) return str;
 
   var len = str.length;
   for (var i = 0; i < len; i++) {
@@ -2453,11 +2454,11 @@ String convertFromAbjad(String result) {
   int c;
 
   if (form == 23) {
-    c = (s.codeUnitAt(3) * 8) + (s.codeUnitAt(4) - 18);
+    c = (_toNumber(s[3]) * 8) + (_toNumber(s[4]) - 18);
     s = s[0] + s[1] + '.' + encodeChar[c] + s[5];
   }
   else if (form == 24) {
-    c = (s.codeUnitAt(3) * 8) + (s.codeUnitAt(4) - 18);
+    c = (_toNumber(s[3]) * 8) + (_toNumber(s[4]) - 18);
     if (c >= 32) {
       s = s[0] + s[1] + encodeChar[c - 32] + '.' + s[5] + s[6];
     } else {
@@ -2465,7 +2466,7 @@ String convertFromAbjad(String result) {
     }
   }
   else if (form == 34) {
-    c = (s.codeUnitAt(2) * 10) + (s.codeUnitAt(5) - 7);
+    c = (_toNumber(s[2]) * 10) + (_toNumber(s[5]) - 7);
     if (c < 31) {
       s = s[0] + s[1] + '.' + encodeChar[c] + s[4] + s[6] + s[7];
     } else if (c < 62) {
@@ -2475,7 +2476,7 @@ String convertFromAbjad(String result) {
     }
   }
   else if (form == 35) {
-    c = (s.codeUnitAt(2) * 8) + (s.codeUnitAt(6) - 18);
+    c = (_toNumber(s[2]) * 8) + (_toNumber(s[6]) - 18);
     if (c >= 32) {
       s = s[0] + s[1] + encodeChar[c - 32] + s[4] + '.' + s[5] + s[7] + s[8];
     } else {
@@ -2483,17 +2484,21 @@ String convertFromAbjad(String result) {
     }
   }
   else if (form == 45) {
-    c = (s.codeUnitAt(2) * 100) + (s.codeUnitAt(5) * 10) + (s.codeUnitAt(8) - 39);
+    c = (_toNumber(s[2]) * 100) + (_toNumber(s[5]) * 10) + (_toNumber(s[8]) - 39);
     s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + '.' + s[6] + s[7] + s[9] + encodeChar[c % 31];
   }
   else if (form == 55) {
-    c = (s.codeUnitAt(2) * 100) + (s.codeUnitAt(6) * 10) + (s.codeUnitAt(9) - 39);
+    c = (_toNumber(s[2]) * 100) + (_toNumber(s[6]) * 10) + (_toNumber(s[9]) - 39);
     s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + s[4] + '.' + s[7] + s[8] + s[10] + encodeChar[c % 31];
   }
   else {
     return result;
   }
   return prefix + aeu_pack(s, short: false) + postfix;
+}
+
+int _toNumber(String s) {
+  return s.toNumber?.toInt() ?? 0;
 }
 
 class mzSet {
