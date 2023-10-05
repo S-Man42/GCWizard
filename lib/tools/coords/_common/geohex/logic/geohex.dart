@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/chsh.geohex4j/geohex.dart';
+part 'package:gc_wizard/tools/coords/_common/geohex/logic/external_libs/chsh.geohex4j/geohex.dart';
 
 LatLng? geoHexToLatLon(GeoHex geoHex) {
   try {

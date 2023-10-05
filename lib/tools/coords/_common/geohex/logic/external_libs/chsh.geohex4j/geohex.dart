@@ -6,7 +6,7 @@
  * GeoHex by @sa2da (http://geogames.net) is licensed under MIT license. (http://www.geohex.org/)
  */
 
-part of 'package:gc_wizard/tools/coords/format_converter/logic/geohex.dart';
+part of 'package:gc_wizard/tools/coords/_common/geohex/logic/geohex.dart';
 
 // ignore: unused_element
 const String _VERSION = "3.2.2";

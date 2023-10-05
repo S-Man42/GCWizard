@@ -7,7 +7,7 @@
  *
  */
 
-part of 'package:gc_wizard/tools/coords/format_converter/logic/dutchgrid.dart';
+part of 'package:gc_wizard/tools/coords/_common/dutchgrid/logic/dutchgrid.dart';
 
 // Coordinates of origin (Amersfoort)
 const _X0 = 155000.0;

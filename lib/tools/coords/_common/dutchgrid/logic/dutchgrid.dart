@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/djvanderlaan.rijksdriehoek/rijksdriehoek_js.dart';
+part 'package:gc_wizard/tools/coords/_common/dutchgrid/logic/external_libs/djvanderlaan.rijksdriehoek/rijksdriehoek_js.dart';
 
 DutchGrid latLonToDutchGrid(LatLng coord) {
   var dutchGrid = _rijksdriehoek(coord.longitude, coord.latitude);

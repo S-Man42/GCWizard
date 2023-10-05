@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/net.makaney/makaney.dart';
+part 'package:gc_wizard/tools/coords/_common/makaney/logic/external_libs/net.makaney/makaney.dart';
 
 LatLng? makaneyToLatLon(Makaney makaney) {
   if (makaney.text.isEmpty) return null;

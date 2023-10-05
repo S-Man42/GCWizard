@@ -1,7 +1,7 @@
 // written by taisukef https://github.com/taisukef/Geo3x3/blob/master/Geo3x3.dart
 // CC0-1.0 License
 
-part of 'package:gc_wizard/tools/coords/format_converter/logic/geo3x3.dart';
+part of 'package:gc_wizard/tools/coords/_common/geo3x3/logic/geo3x3.dart';
 
 class _Geo3x3 {
   static String encode(num lat, num lng, num level) {

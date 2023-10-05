@@ -27,7 +27,7 @@
 //	makaneyToLatLon(Makaney Code) returns Latitude and longitude up to X digits.
 //	makaneyToLatLon('THUN+MW9K') // gives 24.4973, 44.3860
 
-part of 'package:gc_wizard/tools/coords/format_converter/logic/makaney.dart';
+part of 'package:gc_wizard/tools/coords/_common/makaney/logic/makaney.dart';
 
 var _zbase33 = 'abo2zptscjkwmgnxqfd984ery3h5l76ui';
 var _mbase = 33;

@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/taisukef.geo3x3/geo3x3.dart';
+part 'package:gc_wizard/tools/coords/_common/geo3x3/logic/external_libs/taisukef.geo3x3/geo3x3.dart';
 
 LatLng? geo3x3ToLatLon(Geo3x3 geo3x3) {
   var latLon = _Geo3x3.decode(geo3x3.text.toUpperCase());

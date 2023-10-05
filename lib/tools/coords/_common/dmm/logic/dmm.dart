@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
+import 'package:gc_wizard/tools/coords/_common/dec/logic/dec.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:latlong2/latlong.dart';
