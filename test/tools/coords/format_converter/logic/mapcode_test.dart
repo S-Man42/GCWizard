@@ -29,13 +29,201 @@ void main() {
         var enc = convertToAlphabet(str, 1); // to greek
 
         expect(str, enc);
-    });
-      //test('coord: ${elem['coord']}', () {
-      //   var _actual = Maidenhead.fromLatLon(elem['coord'] as LatLng).toString();
-      //   expect(_actual, elem['expectedOutput']);
-      //});
+      });
     }
   });
+
+  group("Converter.mapcode.encode_decode:", () {
+
+    for (var i = 0; i < testdata.length; i += 4) {
+      var nrWarnings = 0;
+
+      test('string: ${testdata[i]}', () {
+        var str = testdata[i] as String;
+        var y = testdata[i + 1] as double;
+        var x = testdata[i + 2] as double;
+        var localsolutions = testdata[i + 3] as int;
+        var globalsolutions = testdata[i + 4] as int;
+
+        str.trim();
+
+        var sp = str.indexOf(' ');
+        var territory = (sp > 0) ? str.substring(0, sp) : 'AAA';
+        var precision = 2;
+
+        if (y < -90) {
+          y = -90;
+        } else if (y > 90) {
+          y = 90;
+        }
+
+        if (localsolutions != 0 || str != "") {
+          // encode locally
+          var r = encodeWithPrecision(y, x, precision, territory);
+
+          expect(r.length, localsolutions);
+
+
+          // test that expected solution is there
+          var foundlocal = 0;
+          for (var i = 0; i < r.length; i++) {
+            if (r[i].fullmapcode.indexOf(str) == 0) {
+              foundlocal = 1;
+            }
+          }
+          expect(foundlocal, 1);
+        }
+
+        // encode globally
+        var r = encodeWithPrecision(y, x, precision, "");
+        if (globalsolutions != 0) {
+          expect(r.length, globalsolutions);
+        }
+
+        // check that all global solutions are within 9 millimeters of coordinate
+        for (precision = 0; precision <= 8; precision++) {
+          r = encodeWithPrecision(y, x, precision, "");
+          for (i = 0; i < r.length; i++) {
+            str = r[i].fullmapcode;
+
+            var dec = convertToAlphabet(convertToAlphabet(str, 14), 0);
+            expect(dec, str);
+
+            var p = decode(str, "");
+            if (p != null) {
+              var dm = distanceInMeters(y, x, p.latitude, p.longitude);
+              var maxerror = maxErrorInMeters(precision);
+              if (dm > maxerror) {
+                expect(dm <= maxerror, true);
+              } else if (nrWarnings < 86) {
+                // see if decode encodes back to the same solution
+                var parent = getParentOf(r[i].territoryAlphaCode);
+                var r2 = encodeWithPrecision(p.latitude, p.longitude, precision, r[i].territoryAlphaCode);
+                var r3 = <mcInfoC>[];
+                var found = 0;
+                for (var i2 = 0; i2 < r2.length; i2++) {
+                  if (r2[i2].fullmapcode == str) {
+                    found = 1;
+                    break;
+                  }
+                }
+                // of, if inherited from parent country: the same parent solution
+                if (found == 0) {
+                  if (parent >= 0) {
+                    r3 = encodeWithPrecision(p.latitude, p.longitude, precision, parent.toString());
+                    for (var i3 = 0; i3 < r3.length; i3++) {
+                      if (r3[i3].fullmapcode.split(" ")[1] == str.split(" ")[1]) {
+                        found = 1;
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (found == 0) {
+                  if (!multipleBordersNearby(p.latitude, p.longitude, r[i].territoryAlphaCode))  // should re-encode
+                      {
+                    nrWarnings++;
+                    print('*** WARNING *** decode(' + str + ') = (' + p.latitude.toStringAsFixed(15) + ', ' + p.longitude.toStringAsFixed(15) + ') does not re-encode from (' + y.toStringAsFixed(15) + ', ' + x.toStringAsFixed(15) + ')' + r[i].territoryAlphaCode);
+                    printGeneratedMapcodes(r, "global");
+                    printGeneratedMapcodes(r2, r[i].territoryAlphaCode);
+                    printGeneratedMapcodes(r3, (parent < 0) ? "no parent" : parent.toString());
+                  }
+                }
+              } else {
+                printGeneratedMapcodes(r, "global");
+              }
+            }
+          }
+        }
+      });
+    }
+  });
+
+  // test strings that are expected to FAIL a decode
+  group("Converter.mapcode.failing_decodes:", () {
+    var badcodes = [
+      "",              // empty
+      "NLD 00.00",     // all-digits
+      "12345.6789",    // all-digits
+      "12345.6789-X",  // all-digits
+      "GGG XX.XX",     // unknown country
+      "GGG-GG XX.XX",  // unknown country
+      "NLDX XX.XX",    // unknown/long country
+      "NLDNLDNLD XX.XX", // unknown/long country
+      "USAUSA-CA XX.XX", // unknown/long country
+      "USA-CACA XX.XX",  // unknown/long state
+      "US-CACACA XX.XX", // unknown/long state
+      "US-US XX00.XX00",     // parent as state
+      "US-RU XX00.XX00",     // parent as state
+      "CA-CA XX00.XX00",     // state as country
+      "US-GG XX.XX",   // unknown state (anywhere)
+      "RU-CA XX.XX",   // unknown state (in RU)
+      "RUS-CA XX.XX",  // unknown state (in RUS)
+      "NLD-CA XX.XX",  // unknown state (NL has none)
+      "NLD X.XXX",     // short prefix
+      "NLD XXXXXX.XX", // long prefix
+      "NLD XXX.X",     // short postfix
+      "NLD XXX.XXXXX", // long postfix
+      "NLD XXXXX.XXX", // invalid codex 5+3
+      "NLD XXXX.XXXX", // non-existing codex in NLD
+      "NLD XXXX",      // no dot
+      "NLD XXXXX",     // no dot
+      "NLD XXX.",      // no postfix
+      "NLD .XXX",      // no prefix
+      "AAA x234.6789", // too short for AAA
+      "x234.6789",     // too short for AAA
+
+      "NLD XXX..XXX",  // 2 dots
+      "NLD XXX.XX.X",  // 2 dots
+
+      "NLD XX.XX-Z",   // Z in extension
+      "NLD XX.XX-1Z",  // Z in extension
+      "NLD XX.XX-X-",  // 2nd -
+      "NLD XX.XX-X-X", // 2nd -
+
+      // "NLD XXX.XXX-",  // empty extension ALLOWED!
+
+      "NLD XX.XX-123456789", // extension too long
+      "NLD XXX.#XX",   // invalid char
+      "NLD XXX.UXX",   // invalid char
+      "NLD 123.A45",   // A in invalid position
+      "NLD 123.E45",   // E in invalid position
+      "NLD 123.U45",   // U in invalid position
+      "NLD 123.1UE",   // UE illegal vowel-encode
+      "NLD 123.1UU",   // UU illegal
+      "NLD x23.1A0",   // A0 with non-digit
+      "NLD 1x3.1A0",   // A0 with non-digit
+      "NLD 12x.1A0",   // A0 with non-digit
+      "NLD 123.xA0",   // A0 with non-digit
+      "NLD 123.1U#",   // U#
+
+      "NLD ZZ.ZZ",     // nameless out of range
+      "NLD Q000.000",  // grid out of range
+      "NLD ZZZ.ZZZ",   // grid out of range
+      "NLD L222.222",  // grid out of range (restricted)
+      "end"
+    ];
+
+    for (var i = 0; i < badcodes.length; i++) {
+      test('string: ${badcodes[i]}', () {
+        var p = decode(badcodes[i], "");
+
+        expect(p != null, true);
+      });
+    }
+  });
+
+}
+
+
+
+void printGeneratedMapcodes(List<mcInfoC> r, String name) {
+  var n = r.length;
+  var t = ' &nbsp; ' + n.toString() + ' results generated (' + name + '):';
+  for (var i = 0; i < n; i++) {
+    t += ' (' + r[i].fullmapcode + ')';
+  }
+  print(t);
 }
 
 var testdata = [
@@ -15923,6 +16111,9 @@ var testdata = [
 "CN-XJ 12.XXXX", 45.925468, 80.918028500, 2, 5,
 "CN-XJ 0123.XX", 40.917864, 79.977318500, 3, 6,
 -1];
+
+
+
 
 var test_territories = [
   test_territory("AAA", 533, 0, 0, 0),
