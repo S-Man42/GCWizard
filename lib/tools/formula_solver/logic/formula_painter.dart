@@ -434,6 +434,7 @@ class FormulaPainter {
       case 'MAX':
       case 'CS':
       case 'CSI':
+      case 'NTH':
         return true;
       default:
         return false;
