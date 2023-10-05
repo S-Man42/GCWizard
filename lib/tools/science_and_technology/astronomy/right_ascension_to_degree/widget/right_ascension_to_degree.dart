@@ -20,8 +20,8 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
+import 'package:gc_wizard/tools/coords/_common/dmm/logic/dmm.dart';
+import 'package:gc_wizard/tools/coords/_common/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
 
 class RightAscensionToDegree extends StatefulWidget {

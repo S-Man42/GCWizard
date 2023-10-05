@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart' as dec;
+import 'package:gc_wizard/tools/coords/_common/dec/logic/dec.dart' as dec;
 import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
