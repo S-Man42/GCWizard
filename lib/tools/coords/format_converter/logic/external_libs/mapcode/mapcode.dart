@@ -136,42 +136,42 @@ const dependency = [
   77, 210,
   -1];
 
-var usa_from = 343;
-var usa_upto = 393;
-var ccode_usa = 410;
-var ind_from = 271;
-var ind_upto = 306;
-var ccode_ind = 407;
-var can_from = 394;
-var can_upto = 406;
-var ccode_can = 495;
-var aus_from = 307;
-var aus_upto = 315;
-var ccode_aus = 408;
-var mex_from = 233;
-var mex_upto = 264;
-var ccode_mex = 411;
-var bra_from = 316;
-var bra_upto = 342;
-var ccode_bra = 409;
-var chn_from = 497;
-var chn_upto = 527;
-var ccode_chn = 528;
-var rus_from = 412;
-var rus_upto = 494;
-var ccode_rus = 496;
-var ccode_earth = 532;
+const usa_from = 343;
+const usa_upto = 393;
+const ccode_usa = 410;
+const ind_from = 271;
+const ind_upto = 306;
+const ccode_ind = 407;
+const can_from = 394;
+const can_upto = 406;
+const ccode_can = 495;
+const aus_from = 307;
+const aus_upto = 315;
+const ccode_aus = 408;
+const mex_from = 233;
+const mex_upto = 264;
+const ccode_mex = 411;
+const bra_from = 316;
+const bra_upto = 342;
+const ccode_bra = 409;
+const chn_from = 497;
+const chn_upto = 527;
+const ccode_chn = 528;
+const rus_from = 412;
+const rus_upto = 494;
+const ccode_rus = 496;
+const ccode_earth = 532;
 
-var parents3 = "USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,";
-var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
+const parents3 = "USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,";
+const parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
-var ccode_start = 112; // NLD
-var mapcode_cversion = "2.0.2";
-var mapcode_dataversion = "2.3.0";
+const ccode_start = 112; // NLD
+const mapcode_cversion = "2.0.2";
+const mapcode_dataversion = "2.3.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.4.2/Data' + mapcode_dataversion;
+const mapcode_javaversion = '2.4.2/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 String trim(String str) {
@@ -1067,8 +1067,7 @@ String encodeGrid(enc enc, int m, mmSet mm, String headerletter, int extraDigits
   }
 
   int v;
-  if (divx != divy && prefixlength > 2) // D==6
-      {
+  if (divx != divy && prefixlength > 2) { // D==6
     v = encodeSixWide(relx, rely, divx, divy);
   } else {
     v = relx * divy + (divy - 1 - rely);
@@ -1754,8 +1753,7 @@ String aeu_pack(String r, {bool short = false}) /* v1.50 */ {
   var rlen = r.length;
   var rest = '';
   for (int d = 0; d < rlen; d++) {
-    if (!r[d].isNumber) // not digit?
-        {
+    if (!r[d].isNumber) { // not digit?
       if (r[d] == '.' && dotpos < 0) {
         dotpos = d; // first dot?
       } else if (r[d] == '-') {
@@ -1846,8 +1844,7 @@ List<mcInfoC> mapcoderEngine(enc enc, int? tn, bool getshortest, int state_overr
 
     for (var i = from; i <= upto; i++) {
 
-      if (coDex(i) < 54) // exlude 54 and 55
-          {
+      if (coDex(i) < 54) { // exlude 54 and 55
         var mm = minmaxSetup(i);
         if (fitsInside(enc.coord32, mm)) {
           String r;
