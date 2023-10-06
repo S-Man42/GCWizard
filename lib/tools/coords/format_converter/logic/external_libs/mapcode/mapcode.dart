@@ -179,7 +179,7 @@ String trim(String str) {
 }
 
 /// PRIVATE return 2-letter parent country abbreviation (disam in range 1..8)
-String parentname2(int  disam) {
+String parentname2(int disam) {
   return parents2.substring(disam * 3 - 3, 2);
 }
 
@@ -313,7 +313,6 @@ int? iso2ccode(String? territoryAlphaCode) {
   if (i >= 0) {
     return i;
   }
-
 
   if (territoryAlphaCode.length >= 2) {
     i = findISO(parentname2(disambiguate) + '-' + territoryAlphaCode);
@@ -574,8 +573,7 @@ int? decodeBase31(String str) {
   var value = 0;
   for (int i = 0; i < str.length; i++) {
     var c = str.codeUnitAt(i);
-    if (c == 46) // dot!
-        {
+    if (c == 46) { // dot!
       return value;
     }
     if (decodeChar[c] < 0) {
@@ -744,8 +742,7 @@ mzSet mzSetFromFractions(int y, int x, int yDelta, int xDelta) {
       fminy: y + 1 + yDelta, // y+yDelta can NOT be represented
       fmaxy: y + 1           // y CAN be represented
     );
-  }
-  else {
+  } else {
     return mzSet(
       fminx: x,
       fmaxx: x + xDelta,
@@ -802,8 +799,7 @@ mzSet mzRestrictZoneTo(mzSet zone, mmSet mm) {
     if ((maxx < 0) && (z.fminx > 0)) {
       minx += (360000000 * 3240000);
       maxx += (360000000 * 3240000);
-    }
-    else if ((minx > 1) && (z.fmaxx < 0)) {
+    } else if ((minx > 1) && (z.fmaxx < 0)) {
       minx -= (360000000 * 3240000);
       maxx -= (360000000 * 3240000);
     }
@@ -944,8 +940,7 @@ mzSet decodeGrid(String input, String extensionchars, int m) {
     var d = decodeTriple(rest);
     difx = d.x;
     dify = d.y;
-  }
-  else {
+  } else {
     if (postfixlength == 4) {
       rest = rest[0] + rest[2] + rest[1] + rest[3];
     }
@@ -994,8 +989,7 @@ String encodeTriple(int difx, int dify, int dividerx, int dividery) {
     //       (1000000 * (mcInfo.rectSubarea.maxy)) - (((34 * ry) + 34) * dividery), 28 * dividerx, 34 * dividery);
     // }
     return encodeChar[(rx + 6 * ry)] + encodeBase31(cx * 34 + cy, 2);
-  }
-  else {
+  } else {
     rx = (difx / 24).floor();
     cx = (difx % 24).toInt();
     // if (getDebugInfo) {
@@ -1027,8 +1021,7 @@ String encodeGrid(enc enc, int m, mmSet mm, String headerletter, int extraDigits
     // if (getDebugInfo) {
     //   mcInfo = {type: 3, record: m, regular: true, form: (prefixlength == 2 ? 'rr' : 'rrrr')};
     // }
-  }
-  else {
+  } else {
     divx = (nc[prefixlength] / divy).floor();
     // if (getDebugInfo) {
     //   mcInfo = {
@@ -1077,8 +1070,7 @@ String encodeGrid(enc enc, int m, mmSet mm, String headerletter, int extraDigits
   if (divx != divy && prefixlength > 2) // D==6
       {
     v = encodeSixWide(relx, rely, divx, divy);
-  }
-  else {
+  } else {
     v = relx * divy + (divy - 1 - rely);
   }
   var result = encodeBase31(v, prefixlength);
@@ -1120,8 +1112,7 @@ String encodeGrid(enc enc, int m, mmSet mm, String headerletter, int extraDigits
 
   if (postfixlength == 3) {
     result += encodeTriple(difx, dify, dividerx, dividery);
-  }
-  else {
+  } else {
     var postfix = encodeBase31((difx) * yside[postfixlength] + dify, postfixlength);
     if (postfixlength == 4) {
       postfix = postfix[0] + postfix[2] + postfix[1] + postfix[3];
@@ -1146,8 +1137,8 @@ String encodeGrid(enc enc, int m, mmSet mm, String headerletter, int extraDigits
 
 /// alphabet support
 
-var MAXLANS = 28;
-var asc2lan = [
+const MAXLANS = 28;
+const asc2lan = [
   //  A       B       C       D       E       F       G       H       I       J       K       L       M       N       O       P       Q       R       S       T       U       V       W       X       Y       Z       0       1       2       3       4       5       6       7       8       9
   [0x0041, 0x0042, 0x0043, 0x0044, 0x0045, 0x0046, 0x0047, 0x0048, 0x0049, 0x004a, 0x004b, 0x004c, 0x004d, 0x004e, 0x004f, 0x0050, 0x0051, 0x0052, 0x0053, 0x0054, 0x0055, 0x0056, 0x0057, 0x0058, 0x0059, 0x005a, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // roman
   [0x0391, 0x0392, 0x039e, 0x0394, 0x0388, 0x0395, 0x0393, 0x0397, 0x0399, 0x03a0, 0x039a, 0x039b, 0x039c, 0x039d, 0x039f, 0x03a1, 0x0398, 0x03a8, 0x03a3, 0x03a4, 0x0389, 0x03a6, 0x03a9, 0x03a7, 0x03a5, 0x0396, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // greek
@@ -1181,7 +1172,7 @@ var asc2lan = [
 
 
 // *UI*
-var lannam = [
+const lannam = [
   ["Roman"],
   ["Greek"],
   ["Cyrillic"],
@@ -1213,7 +1204,7 @@ var lannam = [
 ];
 
 // *UI*
-var lanlannam = [
+const lanlannam = [
   ["Roman"],
   ["&#949;&#955;&#955;&#951;&#957;&#953;&#954;&#940;"],
   ["&#1082;&#1080;&#1088;&#1080;&#1083;&#1083;&#1080;&#1094;&#1072;"],
@@ -1431,19 +1422,16 @@ String encodeNameless(enc enc, int m, int firstcode, int extraDigits) {
 
   if (codex != 21 && A <= 31) {
     storage_offset = (X * p + (X < r ? X : r)) * (961 * 961);
-  }
-  else if (codex != 21 && A < 62) {
+  } else if (codex != 21 && A < 62) {
     if (X < (62 - A)) {
       storage_offset = X * (961 * 961);
-    }
-    else {
+    } else {
       storage_offset = (62 - A + ((X - 62 + A) / 2).floor()) * (961 * 961);
       if (((X + A) % 2) == 1) {
         storage_offset += (16 * 961 * 31);
       }
     }
-  }
-  else {
+  } else {
     var BASEPOWER = (codex == 21) ? 961 * 961 : 961 * 961 * 31;
     var BASEPOWERA = (BASEPOWER / A).floor();
     if (A == 62) {
@@ -1480,8 +1468,7 @@ String encodeNameless(enc enc, int m, int firstcode, int extraDigits) {
     SIDE = 1 + ((mm.maxy - mm.miny) / 90).floor();
     xSIDE = (xSIDE / SIDE).floor();
     v += encodeSixWide(dx, SIDE - 1 - dy, xSIDE, SIDE);
-  }
-  else {
+  } else {
     v += (dx * SIDE + dy);
   }
 
@@ -1499,8 +1486,7 @@ String encodeNameless(enc enc, int m, int firstcode, int extraDigits) {
 
   if (codexlen == 3) {
     result = result.substring(0, 2) + '.' + result.substring(2);
-  }
-  else if (codexlen == 4) {
+  } else if (codexlen == 4) {
     if (codex == 22 && orgSIDE == 961 && !isSpecialShape(m)) {
       // if (getDebugInfo) {
       //   mcInfo.form = 'hrrpp';
@@ -1542,21 +1528,18 @@ mzSet decodeNameless(String input, String extensionchars, int m, int firstindex)
 
     if (offset < r * (p + 1)) {
       X = (offset / (p + 1)).floor();
-    }
-    else {
+    } else {
       swapletters = (p == 1 && codex == 22);
       X = r + ((offset - (r * (p + 1))) / p).floor();
     }
-  }
-  else if (codex != 21 && A < 62) {
+  } else if (codex != 21 && A < 62) {
     X = decodeChar[input.codeUnitAt(0)];
     if (X < (62 - A)) {
       swapletters = (codex == 22);
     } else {
       X += (X - (62 - A));
     }
-  }
-  else { // codex==21 || A>=62
+  } else { // codex==21 || A>=62
     var BASEPOWER = (codex == 21) ? 961 * 961 : 961 * 961 * 31;
     var BASEPOWERA = (BASEPOWER / A).floor();
     if (A == 62) {
@@ -1586,8 +1569,7 @@ mzSet decodeNameless(String input, String extensionchars, int m, int firstindex)
     if (X > 0 && v != null) {
       v -= ((X * p + (X < r ? X : r)) * (961 * 961));
     }
-  }
-  else if (codex != 21 && A < 62) {
+  } else if (codex != 21 && A < 62) {
     v = decodeBase31(input.substring(1));
 
     if (X >= (62 - A) && v != null) {
@@ -1740,8 +1722,7 @@ mzSet decodeAutoHeader(String input, String extensionchars, int m) {
       product = ((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER).floor() * GOODROUNDER - STORAGE_START;
     }
 
-    if (value != null && value >= STORAGE_START && value < STORAGE_START + product) // code belongs here?
-        {
+    if (value != null && value >= STORAGE_START && value < STORAGE_START + product) { // code belongs here?
       var dividerx = ((mm.maxx - mm.minx + W - 1) / W).floor();
       var dividery = ((mm.maxy - mm.miny + H - 1) / H).floor();
 
@@ -1781,8 +1762,7 @@ String aeu_pack(String r, {bool short = false}) /* v1.50 */ {
         rest = r.substring(d);
         r = r.substring(0, d);
         rlen = d;
-      }
-      else {
+      } else {
         return r;
       }
     }
@@ -1793,8 +1773,7 @@ String aeu_pack(String r, {bool short = false}) /* v1.50 */ {
     if (short) { /* v1.50 new way: use only A */
       v = (r.codeUnitAt(0) - 48) * 100 + (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
       r = 'A' + r.substring(1, rlen - 2) + encodeChar[(v / 32).floor()] + encodeChar[v % 32]; // 1.50
-    }
-    else { /* old way: use A, E and U */
+    } else { /* old way: use A, E and U */
       v = (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
       r = r.substring(0, rlen - 2) + encodeChar[(v / 34).floor() + 31] + encodeChar[v % 34]; // v1.50
     }
@@ -1874,22 +1853,18 @@ List<mcInfoC> mapcoderEngine(enc enc, int? tn, bool getshortest, int state_overr
           String r;
           if (isNameless(i)) {
             r = encodeNameless(enc, i, from, extraDigits);
-          }
-          else if (recType(i) > 1) {
+          } else if (recType(i) > 1) {
             r = encodeAutoHeader(enc, i, extraDigits);
-          }
-          else if ((i == upto) && (getParentOf(territoryNumber.toString()) >= 0)) {
+          } else if ((i == upto) && (getParentOf(territoryNumber.toString()) >= 0)) {
             var moreresults = mapcoderEngine(enc, getParentOf(territoryNumber.toString()), getshortest, territoryNumber, extraDigits);
             if (moreresults.isNotEmpty) {
               results.addAll(moreresults);
             }
             continue;
-          }
-          else {
+          } else {
             if (isRestricted(i) && results.length == original_length) {
               r = ''; // restricted, and no shorter mapcodes exist: do not generate mapcodes
-            }
-            else {
+            } else {
               r = encodeGrid(enc, i, mm, headerLetter(i), extraDigits);
             }
           }
@@ -1962,14 +1937,11 @@ String aeu_unpack(String str) {
     var s = (1000 + v1 + 32 * v2).toString();
     str = s[1] + str.substring(1, lastpos - 1) + s[2] + s[3];
     voweled = 1;
-  }
-  else if (str[0] == 'U') /* V1.50 */
-  {
+  } else if (str[0] == 'U') { /* V1.50 */
     voweled = 1;
     str = str.substring(1);
     dotpos--;
-  }
-  else {
+  } else {
     var vS = str[lastpos - 1];
     var v = 0;
     if (vS == 'A') {
@@ -2013,8 +1985,7 @@ String aeu_unpack(String str) {
     if (v != dotpos) {
       if (decodeChar[str.codeUnitAt(v)] < 0) {
         return '';
-      }// bad char!
-      else if (decodeChar[str.codeUnitAt(v)] > 9) {
+      } else if (decodeChar[str.codeUnitAt(v)] > 9) { // bad char!
         hasletters++;
       }
     }
@@ -2099,8 +2070,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
                 if (nrZoneOverlaps == 1) {
                   // first fit! remember...
                   zfound = mzCopy(z);
-                }
-                else { // nrZoneOverlaps > 1
+                } else { // nrZoneOverlaps > 1
                   // more than one hit
                   break; // give up!
                 }
@@ -2117,17 +2087,14 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
         }
       }
       break;
-    }
-    else if (recType(m) == 1 && codex + 10 == incodex && headerLetter(m) == mapcode[0]) {
+    } else if (recType(m) == 1 && codex + 10 == incodex && headerLetter(m) == mapcode[0]) {
       zone = decodeGrid(mapcode.substring(1), extensionchars, m);
       break;
-    }
-    else if (isNameless(m) && ((codex == 21 && incodex == 22) || (codex == 22 && incodex == 32) ||
+    } else if (isNameless(m) && ((codex == 21 && incodex == 22) || (codex == 22 && incodex == 32) ||
         (codex == 13 && incodex == 23))) {
       zone = decodeNameless(mapcode, extensionchars, m, from);
       break;
-    }
-    else if (recType(m) > 1 && postfixlength == 3 && codexLen(m) == prefixlength + 2) {
+    } else if (recType(m) > 1 && postfixlength == 3 && codexLen(m) == prefixlength + 2) {
       zone = decodeAutoHeader(mapcode, extensionchars, m);
       break;
     }
@@ -2304,8 +2271,7 @@ String convertToAbjad(String mapcode) {
   if (h >= 0) {
     rest = mapcode.substring(h);
     str = aeu_unpack(mapcode.substring(0, h));
-  }
-  else {
+  } else {
     rest = '';
     str = aeu_unpack(mapcode);
   }
@@ -2333,8 +2299,7 @@ String convertToAbjad(String mapcode) {
   if (inarow < 3 && (form == 22 || form == 32 || form == 33 || form == 42 || form == 43 || form == 44 || form == 54)) {
     // no need to do anything
     return mapcode;
-  }
-  else {
+  } else {
     var c = decodeChar[str.codeUnitAt(2)];
     if (c < 0) {
       c = decodeChar[str.codeUnitAt(3)];
@@ -2351,8 +2316,7 @@ String convertToAbjad(String mapcode) {
       c1 = (c / 100).floor();
       c2 = ((c % 100) / 10).floor();
       c3 = (c % 10);
-    }
-    else if (len == 7) {
+    } else if (len == 7) {
       if (form == 24) {
         c += 7;
       } else if (form == 33) {
@@ -2362,43 +2326,32 @@ String convertToAbjad(String mapcode) {
       }
       c1 = (c / 10).floor();
       c2 = (c % 10);
-    }
-    else {
+    } else {
       c1 = 2 + (c / 8).floor();
       c2 = 2 + (c % 8);
     }
 
     if (form == 22) {
       str = str[0] + str[1] + '.' + c1.toString() + c2.toString() + str[4];
-    }
-    else if (form == 23) {
+    } else if (form == 23) {
       str = str[0] + str[1] + '.' + c1.toString() + c2.toString() + str[4] + str[5];
-    }
-    else if (form == 32) {
+    } else if (form == 32) {
       str = str[0] + str[1] + '.' + (c1 + 4).toString() + c2.toString() + str[4] + str[5];
-    }
-    else if (form == 24) {
+    } else if (form == 24) {
       str = str[0] + str[1] + c1.toString() + '.' + str[4] + c2.toString() + str[5] + str[6];
-    }
-    else if (form == 33) {
+    } else if (form == 33) {
       str = str[0] + str[1] + c1.toString() + '.' + str[4] + c2.toString() + str[5] + str[6];
-    }
-    else if (form == 42) {
+    } else if (form == 42) {
       str = str[0] + str[1] + c1.toString() + '.' + str[3] + c2.toString() + str[5] + str[6];
-    }
-    else if (form == 43) {
+    } else if (form == 43) {
       str = str[0] + str[1] + (c1 + 4).toString() + '.' + str[3] + str[5] + c2.toString() + str[6] + str[7];
-    }
-    else if (form == 34) {
+    } else if (form == 34) {
       str = str[0] + str[1] + c1.toString() + '.' + str[4] + str[5] + c2.toString() + str[6] + str[7];
-    }
-    else if (form == 44) {
+    } else if (form == 44) {
       str = str[0] + str[1] + c1.toString() + str[3] + '.' + c2.toString() + str[5] + str[6] + c3.toString() + str[7];
-    }
-    else if (form == 54) {
+    } else if (form == 54) {
       str = str[0] + str[1] + c1.toString() + str[3] + str[4] + '.' + c2.toString() + str[6] + str[7] + c3.toString() + str[8];
-    }
-    else {
+    } else {
       return mapcode;
     }
   }
@@ -2456,16 +2409,14 @@ String convertFromAbjad(String result) {
   if (form == 23) {
     c = (_toNumber(s[3]) * 8) + (_toNumber(s[4]) - 18);
     s = s[0] + s[1] + '.' + encodeChar[c] + s[5];
-  }
-  else if (form == 24) {
+  } else if (form == 24) {
     c = (_toNumber(s[3]) * 8) + (_toNumber(s[4]) - 18);
     if (c >= 32) {
       s = s[0] + s[1] + encodeChar[c - 32] + '.' + s[5] + s[6];
     } else {
       s = s[0] + s[1] + '.' + encodeChar[c] + s[5] + s[6];
     }
-  }
-  else if (form == 34) {
+  } else if (form == 34) {
     c = (_toNumber(s[2]) * 10) + (_toNumber(s[5]) - 7);
     if (c < 31) {
       s = s[0] + s[1] + '.' + encodeChar[c] + s[4] + s[6] + s[7];
@@ -2474,24 +2425,20 @@ String convertFromAbjad(String result) {
     } else {
       s = s[0] + s[1] + encodeChar[c - 62] + s[4] + '.' + s[6] + s[7];
     }
-  }
-  else if (form == 35) {
+  } else if (form == 35) {
     c = (_toNumber(s[2]) * 8) + (_toNumber(s[6]) - 18);
     if (c >= 32) {
       s = s[0] + s[1] + encodeChar[c - 32] + s[4] + '.' + s[5] + s[7] + s[8];
     } else {
       s = s[0] + s[1] + encodeChar[c] + '.' + s[4] + s[5] + s[7] + s[8];
     }
-  }
-  else if (form == 45) {
+  } else if (form == 45) {
     c = (_toNumber(s[2]) * 100) + (_toNumber(s[5]) * 10) + (_toNumber(s[8]) - 39);
     s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + '.' + s[6] + s[7] + s[9] + encodeChar[c % 31];
-  }
-  else if (form == 55) {
+  } else if (form == 55) {
     c = (_toNumber(s[2]) * 100) + (_toNumber(s[6]) * 10) + (_toNumber(s[9]) - 39);
     s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + s[4] + '.' + s[7] + s[8] + s[10] + encodeChar[c % 31];
-  }
-  else {
+  } else {
     return result;
   }
   return prefix + aeu_pack(s, short: false) + postfix;
