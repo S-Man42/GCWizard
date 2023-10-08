@@ -110,7 +110,6 @@ const _iso3166alpha = [
   'CPT', 'ATA', 'AAA'
 ];
 
-
 const _aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD," +
     "COL=5CL,5ME=5MX,MEX=5MX,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR," +
     "5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO," +
@@ -184,18 +183,18 @@ int _parentletter(String territoryAlphaCode) {
 }
 
 /// PRIVATE given an ISO abbreviation, set disambiguation for future calls to iso2ccode(); returns nonzero in case of error
-var disambiguate = 1; // GLOBAL
-int set_disambiguate(String territoryAlphaCode) {
+var _disambiguate = 1; // GLOBAL
+int _set_disambiguate(String territoryAlphaCode) {
   var p = _parentletter(territoryAlphaCode);
   if (p < 0) {
     return -2;
   }
-  disambiguate = p;
+  _disambiguate = p;
   return 0;
 }
 
 /// PRIVATE returns alias of ISO abbreviation (if any), or return empty
-String alias2iso(String territoryAlphaCode) {
+String _alias2iso(String territoryAlphaCode) {
   String rx;
   if (territoryAlphaCode.length == 2) {
     rx = '[0-9]' + territoryAlphaCode;
@@ -211,12 +210,12 @@ String alias2iso(String territoryAlphaCode) {
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-int findISO(String territoryAlphaCode) {
+int _findISO(String territoryAlphaCode) {
   return _iso3166alpha.indexOf(territoryAlphaCode);
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-int? iso2ccode(String territoryAlphaCode) {
+int? _iso2ccode(String territoryAlphaCode) {
   if (territoryAlphaCode.isEmpty) {
     return null;
   }
@@ -240,38 +239,38 @@ int? iso2ccode(String territoryAlphaCode) {
   if (sep >= 0) { // territory!
     var prefix = territoryAlphaCode.substring(0, sep);
     var properMapcode = territoryAlphaCode.substring(sep + 1);
-    if (set_disambiguate(prefix) != 0 || properMapcode.length < 2) {
+    if (_set_disambiguate(prefix) != 0 || properMapcode.length < 2) {
       return -1;
     }
-    i = findISO(_parentname2(disambiguate) + '-' + properMapcode);
+    i = _findISO(_parentname2(_disambiguate) + '-' + properMapcode);
     if (i >= 0) {
       return i;
     }
     // recognise alias
     if (properMapcode.length == 3) {
-      isoa = alias2iso(properMapcode);
+      isoa = _alias2iso(properMapcode);
     } else {
-      isoa = alias2iso(disambiguate.toString() + '' + properMapcode);
+      isoa = _alias2iso(_disambiguate.toString() + '' + properMapcode);
     }
     if (isoa.isNotEmpty) {
-      if (isoa[0] == disambiguate.toString()) {
+      if (isoa[0] == _disambiguate.toString()) {
         properMapcode = isoa.substring(1);
       } else {
         properMapcode = isoa;
-        i = findISO(properMapcode);
+        i = _findISO(properMapcode);
         if (i >= 0) {
           return i;
         }
       }
     }
-    return findISO(_parentname2(disambiguate) + '-' + properMapcode);
+    return _findISO(_parentname2(_disambiguate) + '-' + properMapcode);
   }
 
   // first rewrite alias in context
   if (territoryAlphaCode.length == 2) {
-    isoa = alias2iso(disambiguate.toString() + '' + territoryAlphaCode);
+    isoa = _alias2iso(_disambiguate.toString() + '' + territoryAlphaCode);
     if (isoa.isNotEmpty) {
-      if (isoa[0] == disambiguate.toString()) {
+      if (isoa[0] == _disambiguate.toString()) {
         territoryAlphaCode = isoa.substring(1);
       } else {
         territoryAlphaCode = isoa;
@@ -281,20 +280,20 @@ int? iso2ccode(String territoryAlphaCode) {
 
   // no prefix. check if a normal territory
   if (territoryAlphaCode.length == 3) {
-    i = findISO(territoryAlphaCode);
+    i = _findISO(territoryAlphaCode);
     if (i >= 0) {
       return i;
     }
   }
 
   // no prefix, check in context
-  i = findISO(_parentname2(disambiguate) + '-' + territoryAlphaCode);
+  i = _findISO(_parentname2(_disambiguate) + '-' + territoryAlphaCode);
   if (i >= 0) {
     return i;
   }
 
   if (territoryAlphaCode.length >= 2) {
-    i = findISO(_parentname2(disambiguate) + '-' + territoryAlphaCode);
+    i = _findISO(_parentname2(_disambiguate) + '-' + territoryAlphaCode);
     if (i >= 0) {
       return i;
     }
@@ -310,14 +309,14 @@ int? iso2ccode(String territoryAlphaCode) {
   }
 
   // all else failed, try non-disambiguated alphacode
-  isoa = alias2iso(territoryAlphaCode); // or try ANY alias
+  isoa = _alias2iso(territoryAlphaCode); // or try ANY alias
   if (isoa.isNotEmpty) {
     if (isoa.codeUnitAt(0) <= 57) { // starts with digit
       territoryAlphaCode = _parentname2(isoa.codeUnitAt(0) - 48) + '-' + isoa.substring(1);
     } else {
       territoryAlphaCode = isoa;
     }
-    return iso2ccode(territoryAlphaCode);
+    return _iso2ccode(territoryAlphaCode);
   }
   return -1;
 }
@@ -327,9 +326,9 @@ int? iso2ccode(String territoryAlphaCode) {
 int? _getTerritoryNumber(String territoryAlphaCode, {String? contextTerritory}) {
   if (contextTerritory != null) {
     var contextTerritoryNumber = _getTerritoryNumber(contextTerritory);
-    set_disambiguate(_iso3166alpha[contextTerritoryNumber!]);
+    _set_disambiguate(_iso3166alpha[contextTerritoryNumber!]);
   }
-  return iso2ccode(territoryAlphaCode);
+  return _iso2ccode(territoryAlphaCode);
 }
 
 /// PUBLIC return full name of territory
@@ -389,7 +388,7 @@ bool _hasSubdivision(String territory) {
 }
 
 /// PRIVATE returns true iff x in range (all values in millionths)
-bool isInRangeX(int x, int minx, int maxx) {
+bool _isInRangeX(int x, int minx, int maxx) {
   if (minx <= x && x < maxx) {
     return true;
   }
@@ -403,7 +402,7 @@ bool isInRangeX(int x, int minx, int maxx) {
 
 /// PRIVATE returns true iff coordinate inside rectangle (all values in millionths)
 bool _fitsInside(_coord coord, _mmSet mm) {
-  return (mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx, mm.maxx));
+  return (mm.miny <= coord.y && coord.y < mm.maxy && _isInRangeX(coord.x, mm.minx, mm.maxx));
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare outside (all values in millionths)
@@ -412,7 +411,7 @@ bool _fitsInsideWithRoom(_coord coord, _mmSet mm) {
     return false;
   }
   var xroom = _xDivider4(mm.miny, mm.maxy) ~/ 4;
-  return isInRangeX(coord.x, mm.minx - xroom, mm.maxx + xroom);
+  return _isInRangeX(coord.x, mm.minx - xroom, mm.maxx + xroom);
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare inside (all values in millionths)
@@ -421,7 +420,7 @@ bool _fitsWellInside(_coord coord, _mmSet mm) {
     return false;
   }
   var xroom = _xDivider4(mm.miny, mm.maxy) ~/ 4;
-  return isInRangeX(coord.x, mm.minx + xroom, mm.maxx - xroom);
+  return _isInRangeX(coord.x, mm.minx + xroom, mm.maxx - xroom);
 }
 
 /// PRIVATE returns true iff coordinate near the rectangle border
@@ -529,7 +528,7 @@ const _decodeChar = [
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
-const encodeChar = [
+const _encodeChar = [
   '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
   'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
   'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z',
@@ -647,14 +646,14 @@ String _encodeExtension(String result, _enc enc, int extrax4, int extray, int di
 
     var column1 = (gx / 6).floor();
     var row1 = (gy / 5).floor();
-    result += encodeChar[row1 * 5 + column1];
+    result += _encodeChar[row1 * 5 + column1];
     if (--extraDigits == 0) {
       break;
     }
 
     var column2 = (gx % 6);
     var row2 = (gy % 5);
-    result += encodeChar[row2 * 6 + column2];
+    result += _encodeChar[row2 * 6 + column2];
     if (--extraDigits == 0) {
       break;
     }
@@ -684,7 +683,7 @@ _mzSet _mzCopy(_mzSet zone) {
 }
 
 // return true iff MapcodeZone is empty
-bool mzIsEmpty(_mzSet zone) {
+bool _mzIsEmpty(_mzSet zone) {
   return ((zone.fmaxx <= zone.fminx) || (zone.fmaxy <= zone.fminy));
 }
 
@@ -926,7 +925,7 @@ _mzSet _decodeGrid(String input, String extensionchars, int m) {
 String _encodeBase31(int value, int nrchars) {
   var result = '';
   while (nrchars-- > 0) {
-    result = encodeChar[value % 31] + result;
+    result = _encodeChar[value % 31] + result;
     value = (value / 31).floor();
   }
   return result;
@@ -940,12 +939,12 @@ String _encodeTriple(int difx, int dify, int dividerx, int dividery) {
     cx = (difx % 28).toInt();
     cy = (dify % 34).toInt();
 
-    return encodeChar[(rx + 6 * ry)] + _encodeBase31(cx * 34 + cy, 2);
+    return _encodeChar[(rx + 6 * ry)] + _encodeBase31(cx * 34 + cy, 2);
   } else {
     rx = (difx / 24).floor();
     cx = (difx % 24).toInt();
 
-    return encodeChar[rx + 24] + _encodeBase31(cx * 40 + (dify - 136), 2);
+    return _encodeChar[rx + 24] + _encodeBase31(cx * 40 + (dify - 136), 2);
   }
 }
 
@@ -1255,7 +1254,7 @@ String _to_ascii(String str) {
 String _headerLetter(int i) {
   var flags = _data_flags[i];
   if (((flags >> 7) & 3) == 1) {
-    return encodeChar[(flags >> 11) & 31];
+    return _encodeChar[(flags >> 11) & 31];
   }
   return '';
 }
@@ -1272,7 +1271,7 @@ bool _isNameless(int i) {
   return (_data_flags[i] & 64) != 0;
 }
 
-bool _(int i) {
+bool _isAutoHeader(int i) {
   return (_data_flags[i] & (8 << 5)) != 0;
 }
 
@@ -1518,7 +1517,7 @@ String _encodeAutoHeader(_enc enc, int m, int extraDigits) {
   var codex = _coDex(m);
   var codexlen = _codexLen(m);
   var firstindex = m;
-  while (_(firstindex - 1) && _coDex(firstindex - 1) == codex) {
+  while (_isAutoHeader(firstindex - 1) && _coDex(firstindex - 1) == codex) {
     firstindex--;
   }
   
@@ -1646,10 +1645,10 @@ String _aeu_pack(String r, {bool short = false}) /* v1.50 */ {
   if (dotpos >= 2 && rlen - 2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?
     if (short) { /* v1.50 new way: use only A */
       v = (r.codeUnitAt(0) - 48) * 100 + (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
-      r = 'A' + r.substring(1, rlen - 2) + encodeChar[(v / 32).floor()] + encodeChar[v % 32]; // 1.50
+      r = 'A' + r.substring(1, rlen - 2) + _encodeChar[(v / 32).floor()] + _encodeChar[v % 32]; // 1.50
     } else { /* old way: use A, E and U */
       v = (r.codeUnitAt(rlen - 2) - 48) * 10 + (r.codeUnitAt(rlen - 1) - 48);
-      r = r.substring(0, rlen - 2) + encodeChar[(v / 34).floor() + 31] + encodeChar[v % 34]; // v1.50
+      r = r.substring(0, rlen - 2) + _encodeChar[(v / 34).floor() + 31] + _encodeChar[v % 34]; // v1.50
     }
   }
   return r + rest;
@@ -1822,7 +1821,7 @@ String _aeu_unpack(String str) {
         return '';
       }
       voweled = 1;
-      str = str.substring(0, lastpos - 1) + encodeChar[(v / 10).floor()] + encodeChar[(v % 10).floor()];
+      str = str.substring(0, lastpos - 1) + _encodeChar[(v / 10).floor()] + _encodeChar[(v % 10).floor()];
     }
   }
 
@@ -1850,7 +1849,7 @@ String _aeu_unpack(String str) {
 }
 
 /// PRIVATE decode a PROPER mapcode within a KNOWN territory number to an x,y coordinate (or false)
-LatLng? master_decode(String mapcode, int territoryNumber) { // returns object with y and x fields, or false
+LatLng? _master_decode(String mapcode, int territoryNumber) { // returns object with y and x fields, or false
   mapcode = _to_ascii(mapcode);
   var extensionchars = '';
   var minpos = mapcode.indexOf('-');
@@ -1896,7 +1895,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
       // first of all, make sure the zone fits the country
       zone = _mzRestrictZoneTo(zone, _minmaxSetup(upto));
 
-      if (!mzIsEmpty(zone) && isRestricted(m)) {
+      if (!_mzIsEmpty(zone) && isRestricted(m)) {
         var nrZoneOverlaps = 0;
         // get midpoint in microdegrees
         var coord32 = _convertFractionsToCoord32(_mzMidPointFractions(zone));
@@ -1915,7 +1914,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
           for (var j = from; j < m; j++) { // try all smaller rectangles j
             if (!isRestricted(j)) {
               var z = _mzRestrictZoneTo(zone, _minmaxSetup(j));
-              if (!mzIsEmpty(z)) {
+              if (!_mzIsEmpty(z)) {
                 nrZoneOverlaps++;
                 if (nrZoneOverlaps == 1) {
                   // first fit! remember...
@@ -1951,7 +1950,7 @@ LatLng? master_decode(String mapcode, int territoryNumber) { // returns object w
   }
 
   zone = _mzRestrictZoneTo(zone, _minmaxSetup(upto));
-  if (mzIsEmpty(zone)) {
+  if (_mzIsEmpty(zone)) {
     return null;
   }
 
@@ -2040,10 +2039,10 @@ LatLng? decode(String mapcodeString, String territory) {
     }
     var territoryNumber = _getTerritoryNumber(parts[0], contextTerritory: contextTerritoryNumber.toString());
     if (territoryNumber != null && territoryNumber >= 0) {
-      dec = master_decode(parts[1], territoryNumber);
+      dec = _master_decode(parts[1], territoryNumber);
     }
   } else if (parts.length == 1) {
-    dec = master_decode(parts[0], contextTerritoryNumber);
+    dec = _master_decode(parts[0], contextTerritoryNumber);
   }
   return dec;
 }
@@ -2258,36 +2257,36 @@ String _convertFromAbjad(String result) {
 
   if (form == 23) {
     c = (_toNumber(s[3]) * 8) + (_toNumber(s[4]) - 18);
-    s = s[0] + s[1] + '.' + encodeChar[c] + s[5];
+    s = s[0] + s[1] + '.' + _encodeChar[c] + s[5];
   } else if (form == 24) {
     c = (_toNumber(s[3]) * 8) + (_toNumber(s[4]) - 18);
     if (c >= 32) {
-      s = s[0] + s[1] + encodeChar[c - 32] + '.' + s[5] + s[6];
+      s = s[0] + s[1] + _encodeChar[c - 32] + '.' + s[5] + s[6];
     } else {
-      s = s[0] + s[1] + '.' + encodeChar[c] + s[5] + s[6];
+      s = s[0] + s[1] + '.' + _encodeChar[c] + s[5] + s[6];
     }
   } else if (form == 34) {
     c = (_toNumber(s[2]) * 10) + (_toNumber(s[5]) - 7);
     if (c < 31) {
-      s = s[0] + s[1] + '.' + encodeChar[c] + s[4] + s[6] + s[7];
+      s = s[0] + s[1] + '.' + _encodeChar[c] + s[4] + s[6] + s[7];
     } else if (c < 62) {
-      s = s[0] + s[1] + encodeChar[c - 31] + '.' + s[4] + s[6] + s[7];
+      s = s[0] + s[1] + _encodeChar[c - 31] + '.' + s[4] + s[6] + s[7];
     } else {
-      s = s[0] + s[1] + encodeChar[c - 62] + s[4] + '.' + s[6] + s[7];
+      s = s[0] + s[1] + _encodeChar[c - 62] + s[4] + '.' + s[6] + s[7];
     }
   } else if (form == 35) {
     c = (_toNumber(s[2]) * 8) + (_toNumber(s[6]) - 18);
     if (c >= 32) {
-      s = s[0] + s[1] + encodeChar[c - 32] + s[4] + '.' + s[5] + s[7] + s[8];
+      s = s[0] + s[1] + _encodeChar[c - 32] + s[4] + '.' + s[5] + s[7] + s[8];
     } else {
-      s = s[0] + s[1] + encodeChar[c] + '.' + s[4] + s[5] + s[7] + s[8];
+      s = s[0] + s[1] + _encodeChar[c] + '.' + s[4] + s[5] + s[7] + s[8];
     }
   } else if (form == 45) {
     c = (_toNumber(s[2]) * 100) + (_toNumber(s[5]) * 10) + (_toNumber(s[8]) - 39);
-    s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + '.' + s[6] + s[7] + s[9] + encodeChar[c % 31];
+    s = s[0] + s[1] + _encodeChar[(c / 31).floor()] + s[3] + '.' + s[6] + s[7] + s[9] + _encodeChar[c % 31];
   } else if (form == 55) {
     c = (_toNumber(s[2]) * 100) + (_toNumber(s[6]) * 10) + (_toNumber(s[9]) - 39);
-    s = s[0] + s[1] + encodeChar[(c / 31).floor()] + s[3] + s[4] + '.' + s[7] + s[8] + s[10] + encodeChar[c % 31];
+    s = s[0] + s[1] + _encodeChar[(c / 31).floor()] + s[3] + s[4] + '.' + s[7] + s[8] + s[10] + _encodeChar[c % 31];
   } else {
     return result;
   }
@@ -2314,15 +2313,6 @@ class _mmSet {
   var maxy = 0;
 
   _mmSet({required this.minx, required this.maxx, required this.miny, required this.maxy});
-}
-
-class _mmSetD {
-  var minx = 0.0;
-  var maxx = 0.0;
-  var miny = 0.0;
-  var maxy = 0.0;
-
-  _mmSetD({required this.minx, required this.maxx, required this.miny, required this.maxy});
 }
 
 class _coord {
