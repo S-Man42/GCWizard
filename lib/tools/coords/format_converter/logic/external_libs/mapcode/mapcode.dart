@@ -908,8 +908,8 @@ _mzSet _decodeGrid(String input, String extensionchars, int m) {
   dify = yp - 1 - dify;
 
   var corner = _coord( // in microdegrees
-      x: relx + (difx * dividerx),
-      y: rely + (dify * dividery)
+      y: rely + (dify * dividery),
+      x: relx + (difx * dividerx)
     );
 
   if (!_fitsInside(corner, mm)) {
@@ -2316,10 +2316,10 @@ class _mmSet {
 }
 
 class _coord {
-  var x = 0;
   var y = 0;
+  var x = 0;
 
-  _coord({required this.x, required this.y});
+  _coord({required this.y, required this.x});
 }
 
 class _enc {
