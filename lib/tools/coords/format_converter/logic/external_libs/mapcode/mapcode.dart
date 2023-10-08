@@ -212,12 +212,7 @@ String alias2iso(String territoryAlphaCode) {
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
 int findISO(String territoryAlphaCode) {
-  for (var i = 0; i < _iso3166alpha.length; i++) {
-    if (territoryAlphaCode == _iso3166alpha[i]) { //ToDo Optimize Index of
-      return i;
-    }
-  }
-  return -1;
+  return _iso3166alpha.indexOf(territoryAlphaCode);
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
@@ -416,7 +411,7 @@ bool _fitsInsideWithRoom(_coord coord, _mmSet mm) {
   if (((mm.miny - 60) > coord.y) || (coord.y >= (mm.maxy + 60))) {
     return false;
   }
-  var xroom = (_xDivider4(mm.miny, mm.maxy) / 4).toInt(); //ToDo
+  var xroom = _xDivider4(mm.miny, mm.maxy) ~/ 4;
   return isInRangeX(coord.x, mm.minx - xroom, mm.maxx + xroom);
 }
 
@@ -610,27 +605,6 @@ int _encodeSixWide(int x, int y, int width, int height) {
   return (height * 6 * col) + (height - 1 - y) * D + (x - col * 6);
 }
 
-
-/*
- type: 1=topdown nameless, 2=sixwide nameless, 3=regulargrid 4=irregular grid 5=rounded groups 6=unrounded groups
- record: rectangle record used to encode
- rectangles:
- rectEncompassing : encompassing rectangle of country or subdivision
- rectArea         : area of the encoding record
- rectSubarea      : subArea (as determined by prefix)
- rectZone         : subArea zone (only exists for huge regular grids, e.g. Antarctica)
- rectRegion       : region in Subarea
- rectCell         : cell for the mapcode (usually 10x10 meters)
- rectCell1        : precision 1 cell (usually 2x2 meters)
- rectCell2        : precision 2 cell (usually 33x33 cm)
- other debug information:
- form = alphanumeric description of mapcode form
- dotPosition = position to insert dot in mapcode
- prefixDivx,prefixDivy = how prefix divides the area (if any)
- */
-_mmSetD _asDegreeRect(int minx, int miny, int dx, int dy) {
-  return _mmSetD(minx: minx / 1000000, miny: miny / 1000000, maxx: (minx + dx) / 1000000, maxy: (miny + dy) / 1000000);
-}
 
 /// high-precision extension routines
 int _maxMapcodePrecision() {
