@@ -202,9 +202,9 @@ String _alias2iso(String territoryAlphaCode) {
     rx = territoryAlphaCode;
   }
   rx = rx + '=';
-  var p = _aliases.indexOf(rx);
-  if (p >= 0) {
-    return _aliases.substring(p + 4, p + 7);
+  var p = RegExp(rx).firstMatch(_aliases);
+  if (p != null) {
+    return _aliases.substring(p.start + 4, p.start + 7);
   }
   return '';
 }
@@ -231,7 +231,6 @@ int? _iso2ccode(String territoryAlphaCode) {
       return n;
     }
   }
-
 
   var i = 0;
   String isoa;
@@ -268,7 +267,7 @@ int? _iso2ccode(String territoryAlphaCode) {
 
   // first rewrite alias in context
   if (territoryAlphaCode.length == 2) {
-    isoa = _alias2iso(_disambiguate.toString() + '' + territoryAlphaCode);
+    isoa = _alias2iso(_disambiguate.toString() + territoryAlphaCode);
     if (isoa.isNotEmpty) {
       if (isoa[0] == _disambiguate.toString()) {
         territoryAlphaCode = isoa.substring(1);
