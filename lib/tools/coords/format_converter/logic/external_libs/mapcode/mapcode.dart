@@ -180,7 +180,8 @@ String trim(String str) {
 
 /// PRIVATE return 2-letter parent country abbreviation (disam in range 1..8)
 String parentname2(int disam) {
-  return parents2.substring(disam * 3 - 3, 2);
+  var start = disam * 3 - 3;
+  return parents2.substring(start, start + 2);
 }
 
 /// PRIVATE given a parent country abbreviation, return disam (in range 1-8) or negative if error
@@ -229,7 +230,7 @@ String alias2iso(String territoryAlphaCode) {
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
 int findISO(String territoryAlphaCode) {
   for (var i = 0; i < iso3166alpha.length; i++) {
-    if (territoryAlphaCode == iso3166alpha[i]) {
+    if (territoryAlphaCode == iso3166alpha[i]) { //ToDo Optimize Index of
       return i;
     }
   }
@@ -237,8 +238,8 @@ int findISO(String territoryAlphaCode) {
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
-int? iso2ccode(String? territoryAlphaCode) {
-  if (territoryAlphaCode == null) {
+int? iso2ccode(String territoryAlphaCode) {
+  if (territoryAlphaCode.isEmpty) {
     return null;
   }
   territoryAlphaCode = territoryAlphaCode.toUpperCase().trim();
@@ -247,7 +248,7 @@ int? iso2ccode(String? territoryAlphaCode) {
     territoryAlphaCode = territoryAlphaCode.substring(0, sp);
   }
 
-  var n= int.tryParse(territoryAlphaCode);
+  var n = territoryAlphaCode.isEmpty ? 0 : int.tryParse(territoryAlphaCode);
   if (n != null) {
     if ((n >= 0) && (n <= ccode_earth)) {
       return n;
@@ -1645,7 +1646,7 @@ String encodeAutoHeader(enc enc, int m, int extraDigits) {
 
     if (recType(i) == 2) { // *+
       var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
-      product = (((STORAGE_START + product + GOODROUNDER - 1).floor() / GOODROUNDER) * GOODROUNDER - STORAGE_START).toInt();
+      product = (((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER).floor()  * GOODROUNDER - STORAGE_START).toInt();
     }
 
     if (i == m && fitsInside(enc.coord32, mm)) {
@@ -1739,8 +1740,7 @@ mzSet decodeAutoHeader(String input, String extensionchars, int m) {
         return mzEmpty();
       }
 
-      return decodeExtension(extensionchars, corner, dividerx << 2, -dividery,
-          0, mm.miny, mm.maxx); // autoheader
+      return decodeExtension(extensionchars, corner, dividerx << 2, -dividery, 0, mm.miny, mm.maxx); // autoheader
     }
     STORAGE_START += product;
   }
@@ -1830,7 +1830,7 @@ List<mcInfoC> mapcoderEngine(enc enc, int? tn, bool getshortest, int state_overr
   for (var territoryNumber = fromTerritory; territoryNumber <= uptoTerritory; territoryNumber++) {
     var original_length = results.length;
     var from = dataFirstRecord(territoryNumber);
-    if (!data_flags.contains(from)) {
+    if (data_flags[from] == 0) {
       continue;
     }   // 1.27 survive partially filled data_ array
     var upto = dataLastRecord(territoryNumber);
