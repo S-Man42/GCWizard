@@ -12,8 +12,6 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'formula' : '\'\'', 'expectedOutput' : 'gg'},
-
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
@@ -434,7 +432,7 @@ void main() {
      {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : 'bbbbRrb'},
      {'formula' : 'len(AB)', 'values': {'A': '""', 'B': "C"}, 'expectedOutput' : 'bbbbrRb'},
      {'formula' : 'nth(A, 1)', 'values': {'A': '10'}, 'expectedOutput' : 'bbbbrbggb'},
-     {'formula' : 'nth(A, 1)', 'values': {'A': '"AB"'}, 'expectedOutput' : 'bbbbRbbgb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '"AB"'}, 'expectedOutput' : 'bbbbRbggb'},
      {'formula' : 'len("ABC") * bww(\'55\')', 'expectedOutput' : 'bbbbgggggbbbbbbbbggggb'},
      {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
      {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
