@@ -1,18 +1,44 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_transform.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
-SwissGridPlus latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = SwissGrid.fromLatLon(coord, ells);
 
-  return SwissGridPlus(swissGrid.easting + 2000000, swissGrid.northing + 1000000);
+class SwissGrid extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.SWISS_GRID);
+  double easting;
+  double northing;
+
+  SwissGrid(this.easting, this.northing);
+
+  @override
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
+    return swissGridToLatLon(this, ells);
+  }
+
+  static SwissGrid fromLatLon(LatLng coord, Ellipsoid ells) {
+    return _latLonToSwissGrid(coord, ells);
+  }
+
+  static SwissGrid? parse(String input) {
+    return _parseSwissGrid(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return 'Y: $easting\nX: $northing';
+  }
 }
 
-SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
+SwissGrid _latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   int x = -1;
 
   switch (ells.name) {
@@ -74,12 +100,6 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   X += 200000;
 
   return SwissGrid(Y, X);
-}
-
-LatLng swissGridPlusToLatLon(SwissGridPlus coord, Ellipsoid ells) {
-  var swissGripPlus = SwissGrid(coord.easting - 2000000, coord.northing - 1000000);
-
-  return swissGridToLatLon(swissGripPlus, ells);
 }
 
 LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
@@ -145,7 +165,7 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-SwissGrid? parseSwissGrid(String input) {
+SwissGrid? _parseSwissGrid(String input) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*\,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';
@@ -180,7 +200,4 @@ SwissGrid? parseSwissGrid(String input) {
   return SwissGrid(_easting, _northing);
 }
 
-SwissGridPlus? parseSwissGridPlus(String input) {
-  var swissGrid = SwissGrid.parse(input);
-  return swissGrid == null ? null : SwissGridPlus(swissGrid.easting, swissGrid.northing);
-}
+

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -38,6 +40,33 @@ const _BASE30 = [
   'Z'
 ];
 
+class NaturalAreaCode extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE);
+  String x; //east
+  String y; //north
+
+  NaturalAreaCode(this.x, this.y);
+
+  @override
+  LatLng toLatLng() {
+    return _naturalAreaCodeToLatLon(this);
+  }
+
+  static NaturalAreaCode fromLatLon(LatLng coord, [int precision = 8]) {
+    return _latLonToNaturalAreaCode(coord, precision: precision);
+  }
+
+  static NaturalAreaCode? parse(String input) {
+    return _parseNaturalAreaCode(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return 'X: $x\nY: $y';
+  }
+}
+
 // source: http://www.nacgeo.com/nacsite/documents/nac.asp
 
 String _latlonComponentToNACComponent(double component, int precision) {
@@ -56,7 +85,7 @@ String _latlonComponentToNACComponent(double component, int precision) {
   }).join();
 }
 
-NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision = _DEFAULT_PRECISION}) {
+NaturalAreaCode _latLonToNaturalAreaCode(LatLng coords, {int precision = _DEFAULT_PRECISION}) {
   var lon = (coords.longitude + 180.0) / 360.0;
   var lat = (coords.latitude + 90.0) / 180.0;
 
@@ -78,14 +107,14 @@ double _nacComponentToLatLonComponent(String component) {
   return a;
 }
 
-LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
+LatLng _naturalAreaCodeToLatLon(NaturalAreaCode nac) {
   return LatLng(
     _nacComponentToLatLonComponent(nac.y) * 180.0 - 90.0,
     _nacComponentToLatLonComponent(nac.x) * 360.0 - 180.0,
   );
 }
 
-NaturalAreaCode? parseNaturalAreaCode(String input) {
+NaturalAreaCode? _parseNaturalAreaCode(String input) {
   RegExp regExp = RegExp(r'^\s*([\dA-Z]+)(\s*,\s*|\s+)([\dA-Z]+)\s*$');
   var matches = regExp.allMatches(input);
 

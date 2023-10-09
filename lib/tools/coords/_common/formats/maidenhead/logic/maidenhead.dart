@@ -1,8 +1,36 @@
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng? maidenheadToLatLon(Maidenhead maidenhead) {
+class Maidenhead extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);
+  String text;
+
+  Maidenhead(this.text);
+
+  @override
+  LatLng? toLatLng() {
+    return _maidenheadToLatLon(this);
+  }
+
+  static Maidenhead fromLatLon(LatLng coord) {
+    return _latLonToMaidenhead(coord);
+  }
+
+  static Maidenhead? parse(String input) {
+    return _parseMaidenhead(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return text;
+  }
+}
+
+LatLng? _maidenheadToLatLon(Maidenhead maidenhead) {
   var _maidenhead = maidenhead.text;
   if (_maidenhead.isEmpty) return null;
   _maidenhead = _maidenhead.toUpperCase();
@@ -46,15 +74,15 @@ LatLng? maidenheadToLatLon(Maidenhead maidenhead) {
   return LatLng(lat, lon);
 }
 
-Maidenhead? parseMaidenhead(String input) {
+Maidenhead? _parseMaidenhead(String input) {
   input = input.trim();
   if (input.isEmpty) return null;
 
   var _maidenhead = Maidenhead(input);
-  return maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;
+  return _maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;
 }
 
-Maidenhead latLonToMaidenhead(LatLng coord) {
+Maidenhead _latLonToMaidenhead(LatLng coord) {
   var lon = coord.longitude + 180.0;
   var lat = coord.latitude + 90.0;
 

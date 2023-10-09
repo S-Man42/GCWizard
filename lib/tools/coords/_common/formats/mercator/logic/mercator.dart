@@ -1,10 +1,41 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng mercatorToLatLon(Mercator mercator, Ellipsoid ells) {
+class Mercator extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MERCATOR);
+  double easting;
+  double northing;
+
+  Mercator(this.easting, this.northing);
+
+  @override
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
+    return _mercatorToLatLon(this, ells);
+  }
+
+  static Mercator fromLatLon(LatLng coord, Ellipsoid ells) {
+    return _latLonToMercator(coord, ells);
+  }
+
+  static Mercator? parse(String input) {
+    return _parseMercator(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return 'Y: $easting\nX: $northing';
+  }
+}
+
+LatLng _mercatorToLatLon(Mercator mercator, Ellipsoid ells) {
   var y = mercator.easting;
   var x = mercator.northing;
 
@@ -14,14 +45,14 @@ LatLng mercatorToLatLon(Mercator mercator, Ellipsoid ells) {
   return LatLng(lat, lon);
 }
 
-Mercator latLonToMercator(LatLng coord, Ellipsoid ells) {
+Mercator _latLonToMercator(LatLng coord, Ellipsoid ells) {
   var x = coord.longitude * (2 * pi * ells.a / 2.0) / 180.0;
   var y = (log(tan((90 + coord.latitude) * pi / 360.0)) / (pi / 180.0)) * (2 * pi * ells.a / 2.0) / 180.0;
 
   return Mercator(y, x);
 }
 
-Mercator? parseMercator(String input) {
+Mercator? _parseMercator(String input) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
 

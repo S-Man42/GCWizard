@@ -1,7 +1,11 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -9,7 +13,49 @@ const double _k0 = 0.9996;
 const double _drad = pi / 180.0;
 const String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 
-UTMREF latLonToUTM(LatLng coord, Ellipsoid ells) {
+// UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
+class UTMREF extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.UTM);
+  UTMZone zone;
+  double easting;
+  double northing;
+
+  UTMREF(this.zone, this.easting, this.northing);
+
+  HemisphereLatitude get hemisphere {
+    return 'NPQRSTUVWXYZ'.contains(zone.latZone) ? HemisphereLatitude.North : HemisphereLatitude.South;
+  }
+
+  @override
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
+    return UTMREFtoLatLon(this, ells);
+  }
+
+  static UTMREF fromLatLon(LatLng coord, Ellipsoid ells) {
+    return _latLonToUTM(coord, ells);
+  }
+
+  static UTMREF? parse(String input) {
+    return _parseUTM(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return '${zone.lonZone} ${zone.latZone} ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
+  }
+}
+
+class UTMZone {
+  int lonZone;
+  int lonZoneRegular; //the real lonZone differs from mathematical because of two special zones around norway
+  String latZone;
+
+  UTMZone(this.lonZoneRegular, this.lonZone, this.latZone);
+}
+
+UTMREF _latLonToUTM(LatLng coord, Ellipsoid ells) {
   double a = ells.a;
   double b = ells.b;
   double e = ells.e;
@@ -148,7 +194,7 @@ UTMZone _getZone(LatLng coord) {
   return UTMZone(lonZoneRegular, lonZone, latZone);
 }
 
-UTMREF? parseUTM(String input) {
+UTMREF? _parseUTM(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([\d\.]+)\s+([\d\.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _lonZoneString = '';

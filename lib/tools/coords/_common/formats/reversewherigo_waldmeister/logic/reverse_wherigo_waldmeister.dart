@@ -1,8 +1,40 @@
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
+class ReverseWherigoWaldmeister extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);
+  int a, b, c;
+
+  ReverseWherigoWaldmeister(this.a, this.b, this.c);
+
+  @override
+  LatLng toLatLng() {
+    return _reverseWIGWaldmeisterToLatLon(this);
+  }
+
+  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+    return _latLonToReverseWIGWaldmeister(coord);
+  }
+
+  static ReverseWherigoWaldmeister? parse(String input) {
+    return _parseReverseWherigoWaldmeister(input);
+  }
+
+  String _leftPadComponent(int x) {
+    return x.toString().padLeft(6, '0');
+  }
+
+  @override
+  String toString([int? precision]) {
+    return [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
+  }
+}
+
+LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
   var a = waldmeister.a;
   var b = waldmeister.b;
   var c = waldmeister.c;
@@ -66,7 +98,7 @@ LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
   return decToLatLon(DEC(_lat, _lon));
 }
 
-ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
+ReverseWherigoWaldmeister _latLonToReverseWIGWaldmeister(LatLng coord) {
   var _lat = coord.latitude;
   var _lon = coord.longitude;
 
@@ -208,7 +240,7 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
   return ReverseWherigoWaldmeister(int.parse(a), int.parse(b), int.parse(c));
 }
 
-ReverseWherigoWaldmeister? parseReverseWherigoWaldmeister(String input) {
+ReverseWherigoWaldmeister? _parseReverseWherigoWaldmeister(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)(\s*,\s*|\s+)(\d+)(\s*,\s*|\s+)(\d+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.isEmpty) return null;

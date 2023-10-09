@@ -2,11 +2,43 @@
 
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
+class XYZ extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.XYZ);
+  double x, y, z;
+
+  XYZ(this.x, this.y, this.z);
+
+  @override
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
+    return _xyzToLatLon(this, ells);
+  }
+
+  static XYZ fromLatLon(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
+    return _latLonToXYZ(coord, ells, h: h);
+  }
+
+  static XYZ? parse(String input) {
+    return _parseXYZ(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    var numberFormat = NumberFormat('0.######');
+    return 'X: ${numberFormat.format(x)}\nY: ${numberFormat.format(y)}\nZ: ${numberFormat.format(z)}';
+  }
+}
+
+LatLng _xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   var x = xyz.x;
   var y = xyz.y;
   var z = xyz.z;
@@ -27,7 +59,7 @@ LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   return LatLng(radianToDeg(lat), radianToDeg(lon));
 }
 
-XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
+XYZ _latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
   var lat = coord.latitudeInRad;
   var lon = coord.longitudeInRad;
   var v = ells.a / sqrt(1 - ells.e2 * sin(lat) * sin(lat));
@@ -39,7 +71,7 @@ XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
   return XYZ(x, y, z);
 }
 
-XYZ? parseXYZ(String input) {
+XYZ? _parseXYZ(String input) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
 

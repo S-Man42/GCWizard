@@ -6,20 +6,65 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 import 'package:latlong2/latlong.dart';
 
-enum LambertType {
-  LAMBERT_93,
-  LAMBERT_2008,
-  ETRS89_LCC,
-  LAMBERT_72,
-  L93_CC42,
-  L93_CC43,
-  L93_CC44,
-  L93_CC45,
-  L93_CC46,
-  L93_CC47,
-  L93_CC48,
-  L93_CC49,
-  L93_CC50
+// enum _LambertType {
+//   LAMBERT_93,
+//   LAMBERT_2008,
+//   ETRS89_LCC,
+//   LAMBERT_72,
+//   L93_CC42,
+//   L93_CC43,
+//   L93_CC44,
+//   L93_CC45,
+//   L93_CC46,
+//   L93_CC47,
+//   L93_CC48,
+//   L93_CC49,
+//   L93_CC50
+// }
+
+class Lambert extends BaseCoordinateWithSubtypes {
+  late CoordinateFormat _format;
+  @override
+  CoordinateFormat get format => _format;
+  double easting;
+  double northing;
+
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
+
+  Lambert(CoordinateFormatKey subtypeKey, this.easting, this.northing) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    _format = CoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey);
+  }
+
+  @override
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
+    return _lambertToLatLon(this, ells);
+  }
+
+  static Lambert fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    return _latLonToLambert(coord, subtype, ells);
+  }
+
+  static Lambert? parse(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    return _parseLambert(input, subtype: subtype);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return 'X: $easting\nY: $northing';
+  }
 }
 
 class _LambertDefinition {
@@ -153,7 +198,7 @@ const Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
 // https://sourceforge.net/p/geographiclib/discussion/1026621/thread/87c3cb91af/
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
-Lambert latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
+Lambert _latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
     subtype = defaultLambertType;
   }
@@ -171,7 +216,7 @@ Lambert latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid el
   return Lambert(subtype, lambert.x - x0, lambert.y - y0);
 }
 
-LatLng lambertToLatLon(Lambert lambert, Ellipsoid ellipsoid) {
+LatLng _lambertToLatLon(Lambert lambert, Ellipsoid ellipsoid) {
   _LambertDefinition specificLambert = _LambertDefinitions[lambert.format.subtype]!;
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
@@ -206,7 +251,7 @@ LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert,
   return lambertCC;
 }
 
-Lambert? parseLambert(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
+Lambert? _parseLambert(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';

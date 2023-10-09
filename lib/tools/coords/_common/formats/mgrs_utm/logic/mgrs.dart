@@ -1,10 +1,44 @@
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 String digraphLettersEast = "ABCDEFGHJKLMNPQRSTUVWXYZ"; //without I and O
 String digraphLettersNorth = "ABCDEFGHJKLMNPQRSTUV";
+
+class MGRS extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MGRS);
+  UTMZone utmZone;
+  String digraph;
+  double easting;
+  double northing;
+
+  MGRS(this.utmZone, this.digraph, this.easting, this.northing);
+
+  @override
+  LatLng toLatLng({Ellipsoid? ells}) {
+    ells ??= defaultEllipsoid;
+    return _mgrsToLatLon(this, ells);
+  }
+
+  static MGRS fromLatLon(LatLng coord, Ellipsoid ells) {
+    return _latLonToMGRS(coord, ells);
+  }
+
+  static MGRS? parse(String text) {
+    return _parseMGRS(text);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return '${utmZone.lonZone}${utmZone.latZone} $digraph ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
+  }
+}
 
 String _constructDigraph(int zone, double easting, double northing) {
   var _letter = ((zone - 1) * 8 + easting).floor();
@@ -22,7 +56,7 @@ String _constructDigraph(int zone, double easting, double northing) {
   return _digraph + digraphLettersNorth[_letter];
 }
 
-MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
+MGRS _latLonToMGRS(LatLng coord, Ellipsoid ells) {
   UTMREF _utm = UTMREF.fromLatLon(coord, ells);
 
   var _digraph = _constructDigraph(_utm.zone.lonZone, _utm.easting / 100000.0, _utm.northing / 100000.0);
@@ -33,7 +67,7 @@ MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
   return MGRS(_utm.zone, _digraph, _easting, _northing);
 }
 
-List<List<num>> latitudeBandConstants = [
+List<List<num>> _latitudeBandConstants = [
   [2, 1100000.0, -72.0, -80.5, 0.0],
   [3, 2000000.0, -64.0, -72.0, 2000000.0],
   [4, 2800000.0, -56.0, -64.0, 2000000.0],
@@ -57,7 +91,7 @@ List<List<num>> latitudeBandConstants = [
 ];
 
 // ported from NASA Worldwind
-UTMREF convertMGRSToUTM(MGRS mgrs) {
+UTMREF _convertMGRSToUTM(MGRS mgrs) {
   String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   double grid_easting; /* Easting for 100,000 meter grid square      */
@@ -109,14 +143,14 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
   double northing_offset = 0.0;
 
   if ((letter >= alphabet.indexOf('C')) && (letter <= alphabet.indexOf('H'))) {
-    min_northing = latitudeBandConstants[letter - 2][1].toDouble();
-    northing_offset = latitudeBandConstants[letter - 2][4].toDouble();
+    min_northing = _latitudeBandConstants[letter - 2][1].toDouble();
+    northing_offset = _latitudeBandConstants[letter - 2][4].toDouble();
   } else if ((letter >= alphabet.indexOf('J')) && (letter <= alphabet.indexOf('N'))) {
-    min_northing = latitudeBandConstants[letter - 3][1].toDouble();
-    northing_offset = latitudeBandConstants[letter - 3][4].toDouble();
+    min_northing = _latitudeBandConstants[letter - 3][1].toDouble();
+    northing_offset = _latitudeBandConstants[letter - 3][4].toDouble();
   } else if ((letter >= alphabet.indexOf('P')) && (letter <= alphabet.indexOf('X'))) {
-    min_northing = latitudeBandConstants[letter - 4][1].toDouble();
-    northing_offset = latitudeBandConstants[letter - 4][4].toDouble();
+    min_northing = _latitudeBandConstants[letter - 4][1].toDouble();
+    northing_offset = _latitudeBandConstants[letter - 4][4].toDouble();
   }
 
   grid_northing = grid_northing - false_northing;
@@ -133,12 +167,12 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
   return UTMREF(mgrs.utmZone, easting, northing);
 }
 
-LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
-  var utm = convertMGRSToUTM(mgrs);
+LatLng _mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
+  var utm = _convertMGRSToUTM(mgrs);
   return UTMREFtoLatLon(utm, ells);
 }
 
-MGRS? parseMGRS(String input) {
+MGRS? _parseMGRS(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([\d.]+)\s+([\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _lonZoneString = '';

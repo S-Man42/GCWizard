@@ -1,6 +1,34 @@
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
+
+class ReverseWherigoDay1976 extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976);
+  String s, t;
+
+  ReverseWherigoDay1976(this.s, this.t);
+
+  @override
+  LatLng toLatLng() {
+    return _reverseWIGDay1976ToLatLon(this);
+  }
+
+  static ReverseWherigoDay1976 fromLatLon(LatLng coord) {
+    return _latLonToReverseWIGDay1976(coord);
+  }
+
+  static ReverseWherigoDay1976? parse(String input) {
+    return _parseReverseWherigoDay1976(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return '$s\n$t';
+  }
+}
 
 String _valueToLetter(int value) {
   // function _SRrF6()
@@ -162,7 +190,7 @@ int _letterToValue(String letter) {
   }
 }
 
-LatLng reverseWIGDay1976ToLatLon(ReverseWherigoDay1976 day1976) {
+LatLng _reverseWIGDay1976ToLatLon(ReverseWherigoDay1976 day1976) {
   // function _YvIY7()
 
   String a = day1976.s[0];
@@ -201,7 +229,7 @@ LatLng reverseWIGDay1976ToLatLon(ReverseWherigoDay1976 day1976) {
   return decToLatLon(DEC(lat, long));
 }
 
-ReverseWherigoDay1976 latLonToReverseWIGDay1976(LatLng coord) {
+ReverseWherigoDay1976 _latLonToReverseWIGDay1976(LatLng coord) {
   // function _6u3VL()
 
   int lat = ((coord.latitude + 90) * 100000).floor();
@@ -241,7 +269,7 @@ ReverseWherigoDay1976 latLonToReverseWIGDay1976(LatLng coord) {
   return ReverseWherigoDay1976(a + b + c + d + e, _vZmW2 + _2kSJl + _5mF + _tFCg + _vRGT);
 }
 
-ReverseWherigoDay1976? parseReverseWherigoDay1976(String input) {
+ReverseWherigoDay1976? _parseReverseWherigoDay1976(String input) {
   input = input.toLowerCase();
   RegExp regExp = RegExp(r'^\s*([\da-z]+)(\s*,\s*|\s+)([\da-z]+)\s*$');
   var matches = regExp.allMatches(input);

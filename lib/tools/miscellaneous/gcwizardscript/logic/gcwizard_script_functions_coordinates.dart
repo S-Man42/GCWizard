@@ -547,7 +547,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Maidenhead result = Maidenhead(parameter_1 as String);
-      coord = maidenheadToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_MERCATOR: //= 12;
