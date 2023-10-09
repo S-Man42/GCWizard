@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -24,9 +25,6 @@ import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_ma
 import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
-import 'package:gc_wizard/utils/collection_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 abstract class BaseCoordFormatKey {}
@@ -69,164 +67,6 @@ abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {}
 enum HemisphereLatitude { North, South }
 
 enum HemisphereLongitude { East, West }
-
-
-
-class Makaney extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAKANEY);
-  String text;
-
-  Makaney(this.text);
-
-  @override
-  LatLng? toLatLng() {
-    return makaneyToLatLon(this);
-  }
-
-  static Makaney fromLatLon(LatLng coord) {
-    return latLonToMakaney(coord);
-  }
-
-  static Makaney? parse(String input) {
-    return parseMakaney(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return text;
-  }
-}
-
-class Geohash extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHASH);
-  String text;
-
-  Geohash(this.text);
-
-  @override
-  LatLng? toLatLng() {
-    return geohashToLatLon(this);
-  }
-
-  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
-    return latLonToGeohash(coord, geohashLength);
-  }
-
-  static Geohash? parse(String input) {
-    return parseGeohash(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return text;
-  }
-}
-
-class GeoHex extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHEX);
-  String text;
-
-  GeoHex(this.text);
-
-  @override
-  LatLng? toLatLng() {
-    return geoHexToLatLon(this);
-  }
-
-  static GeoHex fromLatLon(LatLng coord, [int precision = 20]) {
-    return latLonToGeoHex(coord, precision);
-  }
-
-  static GeoHex? parse(String input) {
-    return parseGeoHex(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return text;
-  }
-}
-
-class Geo3x3 extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEO3X3);
-  String text;
-
-  Geo3x3(this.text);
-
-  @override
-  LatLng? toLatLng() {
-    return geo3x3ToLatLon(this);
-  }
-
-  static Geo3x3 fromLatLon(LatLng coord, [int level = 20]) {
-    return latLonToGeo3x3(coord, level);
-  }
-
-  static Geo3x3? parse(String input) {
-    return parseGeo3x3(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return text.toUpperCase();
-  }
-}
-
-class OpenLocationCode extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);
-  String text;
-
-  OpenLocationCode(this.text);
-
-  @override
-  LatLng? toLatLng() {
-    return openLocationCodeToLatLon(this);
-  }
-
-  static OpenLocationCode fromLatLon(LatLng coord, [int codeLength = 14]) {
-    return latLonToOpenLocationCode(coord, codeLength: codeLength);
-  }
-
-  static OpenLocationCode? parse(String input) {
-    return parseOpenLocationCode(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return text;
-  }
-}
-
-class Quadtree extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.QUADTREE);
-  List<int> coords;
-
-  Quadtree(this.coords);
-
-  @override
-  LatLng toLatLng() {
-    return quadtreeToLatLon(this);
-  }
-
-  static Quadtree? parse(String input) {
-    return parseQuadtree(input);
-  }
-
-  static Quadtree fromLatLon(LatLng coord, [int precision = 40]) {
-    return latLonToQuadtree(coord, precision: precision);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return coords.join();
-  }
-}
 
 BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
   if (isCoordinateFormatWithSubtype(format.type)) {

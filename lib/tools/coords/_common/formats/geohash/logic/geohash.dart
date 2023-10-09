@@ -1,4 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -38,6 +40,32 @@ const List<Map<String, String>> _alphabet = [
 ];
 
 const _binaryLength = 5;
+
+class Geohash extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHASH);
+  String text;
+
+  Geohash(this.text);
+
+  @override
+  LatLng? toLatLng() {
+    return _geohashToLatLon(this);
+  }
+
+  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
+    return _latLonToGeohash(coord, geohashLength);
+  }
+
+  static Geohash? parse(String input) {
+    return _parseGeohash(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return text;
+  }
+}
 
 String? _getCharacterByBinary(String binary) {
   var characterSet = _alphabet.firstWhereOrNull((entry) => entry['binary'] == binary);
@@ -85,7 +113,7 @@ String _generateBinaryFromCoord(double coord, double lowerBound, double upperBou
   return binaryOut;
 }
 
-Geohash latLonToGeohash(LatLng coords, int geohashLength) {
+Geohash _latLonToGeohash(LatLng coords, int geohashLength) {
   int binaryCoordLength = (geohashLength / 2).floor() * _binaryLength;
 
   String latBinaryOut = _generateBinaryFromCoord(coords.latitude, -90.0, 90.0, binaryCoordLength);
@@ -104,7 +132,7 @@ Geohash latLonToGeohash(LatLng coords, int geohashLength) {
       .join());
 }
 
-LatLng? geohashToLatLon(Geohash geohash) {
+LatLng? _geohashToLatLon(Geohash geohash) {
   try {
     var _geohash = geohash.text.toLowerCase();
     var binary = _geohash
@@ -134,12 +162,12 @@ LatLng? geohashToLatLon(Geohash geohash) {
   return null;
 }
 
-Geohash? parseGeohash(String input) {
+Geohash? _parseGeohash(String input) {
   input = input.trim();
   if (input == '') return null;
 
   var _geohash = Geohash(input);
-  return geohashToLatLon(_geohash) == null ? null : _geohash;
+  return _geohashToLatLon(_geohash) == null ? null : _geohash;
 }
 
 double _getCoordFromBinary(String binary, double lowerBound, double upperBound) {

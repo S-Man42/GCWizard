@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {

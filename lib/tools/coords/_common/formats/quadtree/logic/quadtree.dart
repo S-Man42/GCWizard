@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
@@ -7,7 +9,33 @@ import 'package:latlong2/latlong.dart';
 var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;
 
-Quadtree latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
+class Quadtree extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.QUADTREE);
+  List<int> coords;
+
+  Quadtree(this.coords);
+
+  @override
+  LatLng toLatLng() {
+    return _quadtreeToLatLon(this);
+  }
+
+  static Quadtree? parse(String input) {
+    return _parseQuadtree(input);
+  }
+
+  static Quadtree fromLatLon(LatLng coord, [int precision = 40]) {
+    return _latLonToQuadtree(coord, precision: precision);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return coords.join();
+  }
+}
+
+Quadtree _latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
   var x = (_TILESIZE / 2.0) + coord.longitude * (_TILESIZE / 360.0);
 
   var siny = sin(degreesToRadian(coord.latitude));
@@ -31,7 +59,7 @@ Quadtree latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
   return Quadtree(out.reversed.toList());
 }
 
-LatLng quadtreeToLatLon(Quadtree quadtree) {
+LatLng _quadtreeToLatLon(Quadtree quadtree) {
   var tileX = 0;
   var tileY = 0;
 
@@ -53,7 +81,7 @@ LatLng quadtreeToLatLon(Quadtree quadtree) {
   return LatLng(lat, lon);
 }
 
-Quadtree? parseQuadtree(String input) {
+Quadtree? _parseQuadtree(String input) {
   if (input.isEmpty) return null;
 
   if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length) return null;

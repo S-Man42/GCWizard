@@ -16,8 +16,36 @@
 
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
+
+class OpenLocationCode extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);
+  String text;
+
+  OpenLocationCode(this.text);
+
+  @override
+  LatLng? toLatLng() {
+    return _openLocationCodeToLatLon(this);
+  }
+
+  static OpenLocationCode fromLatLon(LatLng coord, [int codeLength = 14]) {
+    return _latLonToOpenLocationCode(coord, codeLength: codeLength);
+  }
+
+  static OpenLocationCode? parse(String input) {
+    return _parseOpenLocationCode(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return text;
+  }
+}
 
 /// A separator used to break the code into two parts to aid memorability.
 const _separator = '+'; // 43 Ascii
@@ -233,7 +261,7 @@ bool _isFull(String code) {
 /// to the range -180 to 180.
 /// * [codeLength]: The number of significant digits in the output code, not
 /// including any separator characters.
-OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = _pairCodeLength}) {
+OpenLocationCode _latLonToOpenLocationCode(LatLng coords, {int codeLength = _pairCodeLength}) {
   if (codeLength % 2 == 1) codeLength--;
 
   var code = '';
@@ -284,9 +312,9 @@ OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = _pair
   return OpenLocationCode(code.substring(0, codeLength) + (_padding * (_separatorPosition - codeLength)) + _separator);
 }
 
-OpenLocationCode? parseOpenLocationCode(String input) {
+OpenLocationCode? _parseOpenLocationCode(String input) {
   var openLocationCode = OpenLocationCode(input);
-  return openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
+  return _openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
 }
 
 String _sanitizeOLCode(String olc) {
@@ -306,7 +334,7 @@ String _sanitizeOLCode(String olc) {
 }
 
 /// Decodes an Open Location Code into the location coordinates.
-LatLng? openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
+LatLng? _openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
   if (openLocationCode.text.isEmpty) return null;
 
   var len = openLocationCode.text.replaceAll('+', '').length;
