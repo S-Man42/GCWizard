@@ -28,7 +28,6 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prefs/prefs.dart';
 
 abstract class BaseCoordFormatKey {}
 
@@ -69,21 +68,19 @@ abstract class BaseCoordinate {
 
 abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {}
 
-
-
 enum HemisphereLatitude { North, South }
 
 enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
 class UTMREF extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.UTM);
   UTMZone zone;
   double easting;
   double northing;
 
-  UTMREF(this.zone, this.easting, this.northing) {
-    _format = CoordinateFormat(CoordinateFormatKey.UTM);
-  }
+  UTMREF(this.zone, this.easting, this.northing);
 
   HemisphereLatitude get hemisphere {
     return 'NPQRSTUVWXYZ'.contains(zone.latZone) ? HemisphereLatitude.North : HemisphereLatitude.South;
@@ -118,14 +115,14 @@ class UTMZone {
 }
 
 class MGRS extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MGRS);
   UTMZone utmZone;
   String digraph;
   double easting;
   double northing;
 
-  MGRS(this.utmZone, this.digraph, this.easting, this.northing) {
-    _format = CoordinateFormat(CoordinateFormatKey.MGRS);
-  }
+  MGRS(this.utmZone, this.digraph, this.easting, this.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -148,12 +145,12 @@ class MGRS extends BaseCoordinate {
 }
 
 class SwissGrid extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.SWISS_GRID);
   double easting;
   double northing;
 
-  SwissGrid(this.easting, this.northing) {
-    _format = CoordinateFormat(CoordinateFormatKey.SWISS_GRID);
-  }
+  SwissGrid(this.easting, this.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -176,9 +173,10 @@ class SwissGrid extends BaseCoordinate {
 }
 
 class SwissGridPlus extends SwissGrid {
-  SwissGridPlus(double easting, double northing) : super(easting, northing) {
-    _format = CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS);
-  }
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS);
+
+  SwissGridPlus(double easting, double northing) : super(easting, northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -196,12 +194,12 @@ class SwissGridPlus extends SwissGrid {
 }
 
 class DutchGrid extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
   double x;
   double y;
 
-  DutchGrid(this.x, this.y) {
-    _format = CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
-  }
+  DutchGrid(this.x, this.y);
 
   @override
   LatLng toLatLng() {
@@ -223,6 +221,9 @@ class DutchGrid extends BaseCoordinate {
 }
 
 class GaussKrueger extends BaseCoordinateWithSubtypes {
+  late CoordinateFormat _format;
+  @override
+  CoordinateFormat get format => _format;
   double easting;
   double northing;
 
@@ -265,6 +266,9 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
 }
 
 class Lambert extends BaseCoordinateWithSubtypes {
+  late CoordinateFormat _format;
+  @override
+  CoordinateFormat get format => _format;
   double easting;
   double northing;
 
@@ -307,12 +311,12 @@ class Lambert extends BaseCoordinateWithSubtypes {
 }
 
 class Mercator extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MERCATOR);
   double easting;
   double northing;
 
-  Mercator(this.easting, this.northing) {
-    _format = CoordinateFormat(CoordinateFormatKey.MERCATOR);
-  }
+  Mercator(this.easting, this.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -335,12 +339,12 @@ class Mercator extends BaseCoordinate {
 }
 
 class NaturalAreaCode extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE);
   String x; //east
   String y; //north
 
-  NaturalAreaCode(this.x, this.y) {
-    _format = CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE);
-  }
+  NaturalAreaCode(this.x, this.y);
 
   @override
   LatLng toLatLng() {
@@ -362,6 +366,9 @@ class NaturalAreaCode extends BaseCoordinate {
 }
 
 class SlippyMap extends BaseCoordinateWithSubtypes {
+  late CoordinateFormat _format;
+  @override
+  CoordinateFormat get format => _format;
   double x;
   double y;
 
@@ -403,11 +410,11 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
 }
 
 class ReverseWherigoWaldmeister extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);
   int a, b, c;
 
-  ReverseWherigoWaldmeister(this.a, this.b, this.c) {
-    _format = CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);
-  }
+  ReverseWherigoWaldmeister(this.a, this.b, this.c);
 
   @override
   LatLng toLatLng() {
@@ -433,11 +440,11 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
 }
 
 class ReverseWherigoDay1976 extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976);
   String s, t;
 
-  ReverseWherigoDay1976(this.s, this.t) {
-    _format = CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976);
-  }
+  ReverseWherigoDay1976(this.s, this.t);
 
   @override
   LatLng toLatLng() {
@@ -459,11 +466,11 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
 }
 
 class XYZ extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.XYZ);
   double x, y, z;
 
-  XYZ(this.x, this.y, this.z) {
-    _format = CoordinateFormat(CoordinateFormatKey.XYZ);
-  }
+  XYZ(this.x, this.y, this.z);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -487,11 +494,11 @@ class XYZ extends BaseCoordinate {
 }
 
 class Maidenhead extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);
   String text;
 
-  Maidenhead(this.text) {
-    _format = CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);
-  }
+  Maidenhead(this.text);
 
   @override
   LatLng? toLatLng() {
@@ -513,11 +520,11 @@ class Maidenhead extends BaseCoordinate {
 }
 
 class Makaney extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAKANEY);
   String text;
 
-  Makaney(this.text) {
-    _format = CoordinateFormat(CoordinateFormatKey.MAKANEY);
-  }
+  Makaney(this.text);
 
   @override
   LatLng? toLatLng() {
@@ -539,11 +546,11 @@ class Makaney extends BaseCoordinate {
 }
 
 class Geohash extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHASH);
   String text;
 
-  Geohash(this.text) {
-    _format = CoordinateFormat(CoordinateFormatKey.GEOHASH);
-  }
+  Geohash(this.text);
 
   @override
   LatLng? toLatLng() {
@@ -565,11 +572,11 @@ class Geohash extends BaseCoordinate {
 }
 
 class GeoHex extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHEX);
   String text;
 
-  GeoHex(this.text) {
-    _format = CoordinateFormat(CoordinateFormatKey.GEOHEX);
-  }
+  GeoHex(this.text);
 
   @override
   LatLng? toLatLng() {
@@ -591,11 +598,11 @@ class GeoHex extends BaseCoordinate {
 }
 
 class Geo3x3 extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEO3X3);
   String text;
 
-  Geo3x3(this.text) {
-    _format = CoordinateFormat(CoordinateFormatKey.GEO3X3);
-  }
+  Geo3x3(this.text);
 
   @override
   LatLng? toLatLng() {
@@ -617,11 +624,11 @@ class Geo3x3 extends BaseCoordinate {
 }
 
 class OpenLocationCode extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);
   String text;
 
-  OpenLocationCode(this.text) {
-    _format = CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);
-  }
+  OpenLocationCode(this.text);
 
   @override
   LatLng? toLatLng() {
@@ -643,11 +650,11 @@ class OpenLocationCode extends BaseCoordinate {
 }
 
 class Quadtree extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.QUADTREE);
   List<int> coords;
 
-  Quadtree(this.coords) {
-    _format = CoordinateFormat(CoordinateFormatKey.QUADTREE);
-  }
+  Quadtree(this.coords);
 
   @override
   LatLng toLatLng() {
