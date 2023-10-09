@@ -80,8 +80,8 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
   Widget build(BuildContext context) {
     if (widget.initialize) {
       var dms = widget.coordinates;
-      var lat = dms.latitude.formatParts(10);
-      var lon = dms.longitude.formatParts(10);
+      var lat = dms.dmsLatitude.formatParts(10);
+      var lon = dms.dmsLongitude.formatParts(10);
 
       _currentLatDegrees = lat.degrees;
       _currentLatMinutes = lat.minutes;

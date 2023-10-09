@@ -17,6 +17,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';

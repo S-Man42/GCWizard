@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';

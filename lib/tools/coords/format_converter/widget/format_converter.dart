@@ -8,6 +8,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';

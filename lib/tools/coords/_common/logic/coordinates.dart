@@ -1,4 +1,3 @@
-import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -26,26 +25,14 @@ import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid
 import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
-import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
 abstract class BaseCoordFormatKey {}
 
-String _getCoordinateSignString(int sign, bool isLatitude) {
-  var _sign = '';
 
-  if (isLatitude) {
-    _sign = (sign >= 0) ? 'N' : 'S';
-  } else {
-    _sign = (sign >= 0) ? 'E' : 'W';
-  }
-
-  return _sign;
-}
 
 int getCoordinateSignFromString(String text, bool isLatitude) {
   int _sign = 0;
@@ -60,285 +47,29 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
 }
 
 abstract class BaseCoordinate {
-  late double _latitude;
-  late double _longitude;
-  late CoordinateFormat _format;
-
-  CoordinateFormat get format => _format;
+  CoordinateFormat get format;
+  late double latitude;
+  late double longitude;
 
   BaseCoordinate([double? latitude, double? longitude]) {
-    _latitude = latitude ?? defaultCoordinate.latitude;
-    _longitude = longitude ?? defaultCoordinate.longitude;
+    this.latitude = latitude ?? defaultCoordinate.latitude;
+    this.longitude = longitude ?? defaultCoordinate.longitude;
   }
 
   // TODO: Make this null-safe. Some inheriting CoordFormats may return null here. This shall be avoided.
   LatLng? toLatLng() {
-    return LatLng(_latitude, _longitude);
+    return LatLng(latitude, longitude);
   }
 
   @override
   String toString([int? precision]) {
-    return LatLng(_latitude, _longitude).toString();
+    return LatLng(latitude, longitude).toString();
   }
 }
 
 abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {}
 
-class DEC extends BaseCoordinate {
-  double latitude;
-  double longitude;
 
-  DEC(this.latitude, this.longitude) {
-    _format = CoordinateFormat(CoordinateFormatKey.DEC);
-  }
-
-  @override
-  LatLng toLatLng() {
-    return decToLatLon(this);
-  }
-
-  static DEC fromLatLon(LatLng coord) {
-    return latLonToDEC(coord);
-  }
-
-  static DEC? parse(String input, {bool wholeString = false}) {
-    return parseDEC(input, wholeString: wholeString);
-  }
-
-  @override
-  String toString([int? precision]) {
-    precision = precision ?? 10;
-    var latFormatStr = formatStringForDecimals(decimalPrecision: precision);
-    var lonFormatStr = formatStringForDecimals(integerPrecision: 3, decimalPrecision: precision);
-    return '${NumberFormat(latFormatStr).format(latitude)}\n${NumberFormat(lonFormatStr).format(longitude)}';
-  }
-}
-
-class FormattedDMMPart {
-  IntegerText sign;
-  String degrees, minutes;
-
-  FormattedDMMPart(this.sign, this.degrees, this.minutes);
-
-  @override
-  String toString() {
-    return sign.text + ' ' + degrees + '° ' + minutes + '\'';
-  }
-}
-
-class DMMPart {
-  int sign;
-  int degrees;
-  double minutes;
-
-  DMMPart(this.sign, this.degrees, this.minutes);
-
-  FormattedDMMPart _formatParts(bool isLatitude, [int precision = 10]) {
-    var _minutesStr = NumberFormat(formatStringForDecimals(decimalPrecision: precision)).format(minutes);
-    var _degrees = degrees;
-    var _sign = _getCoordinateSignString(sign, isLatitude);
-
-    //Values like 59.999999999' may be rounded to 60.0. So in that case,
-    //the degree has to be increased while minutes should be set to 0.0
-    if (_minutesStr.startsWith('60')) {
-      _minutesStr = '00.000';
-      _degrees += 1;
-    }
-
-    String _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
-
-    return FormattedDMMPart(IntegerText(_sign, sign), _degreesStr, _minutesStr);
-  }
-
-  String _format(bool isLatitude, [int precision = 10]) {
-    var formattedParts = _formatParts(isLatitude, precision);
-
-    return formattedParts.toString();
-  }
-
-  @override
-  String toString() {
-    return 'sign: $sign, degrees: $degrees, minutes: $minutes';
-  }
-}
-
-class DMMLatitude extends DMMPart {
-  DMMLatitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
-
-  static DMMLatitude from(DMMPart dmmPart) {
-    return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
-  }
-
-  FormattedDMMPart formatParts([int precision = 10]) {
-    return super._formatParts(true, precision);
-  }
-
-  String format([int precision = 10]) {
-    return super._format(true, precision);
-  }
-}
-
-class DMMLongitude extends DMMPart {
-  DMMLongitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
-
-  static DMMLongitude from(DMMPart dmmPart) {
-    return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
-  }
-
-  FormattedDMMPart formatParts([int precision = 10]) {
-    return super._formatParts(false, precision);
-  }
-
-  String format([int precision = 10]) {
-    return super._format(false, precision);
-  }
-}
-
-class DMM extends BaseCoordinate {
-  late DMMLatitude latitude;
-  late DMMLongitude longitude;
-
-  DMM(this.latitude, this.longitude) {
-    _format = CoordinateFormat(CoordinateFormatKey.DMM);
-  }
-
-  @override
-  LatLng toLatLng() {
-    return dmmToLatLon(this);
-  }
-
-  static DMM fromLatLon(LatLng coord) {
-    return latLonToDMM(coord);
-  }
-
-  static DMM? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
-    return parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
-  }
-
-  @override
-  String toString([int? precision]) {
-    precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
-    return '${latitude.format(precision)}\n${longitude.format(precision)}';
-  }
-}
-
-class FormattedDMSPart {
-  IntegerText sign;
-  String degrees, minutes, seconds;
-
-  FormattedDMSPart(this.sign, this.degrees, this.minutes, this.seconds);
-
-  @override
-  String toString() {
-    return sign.text + ' ' + degrees + '° ' + minutes + '\' ' + seconds + '"';
-  }
-}
-
-class DMSPart {
-  int sign;
-  int degrees;
-  int minutes;
-  double seconds;
-
-  DMSPart(this.sign, this.degrees, this.minutes, this.seconds);
-
-  FormattedDMSPart _formatParts(bool isLatitude, [int precision = 10]) {
-    var _sign = _getCoordinateSignString(sign, isLatitude);
-    var _secondsStr =
-        NumberFormat(formatStringForDecimals(decimalPrecision: precision, minDecimalPrecision: 2)).format(seconds);
-    var _minutes = minutes;
-
-    //Values like 59.999999999 may be rounded to 60.0. So in that case,
-    //the greater unit (minutes or degrees) has to be increased instead
-    if (_secondsStr.startsWith('60')) {
-      _secondsStr = '00.00';
-      _minutes += 1;
-    }
-
-    var _degrees = degrees;
-
-    var _minutesStr = _minutes.toString().padLeft(2, '0');
-    if (_minutesStr.startsWith('60')) {
-      _minutesStr = '00';
-      _degrees += 1;
-    }
-
-    var _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
-
-    return FormattedDMSPart(IntegerText(_sign, sign), _degreesStr, _minutesStr, _secondsStr);
-  }
-
-  String _format(bool isLatitude, [int precision = 10]) {
-    var formattedParts = _formatParts(isLatitude, precision);
-
-    return formattedParts.toString();
-  }
-
-  @override
-  String toString() {
-    return 'sign: $sign, degrees: $degrees, minutes: $minutes, seconds: $seconds';
-  }
-}
-
-class DMSLatitude extends DMSPart {
-  DMSLatitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
-
-  static DMSLatitude from(DMSPart dmsPart) {
-    return DMSLatitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
-  }
-
-  FormattedDMSPart formatParts([int precision = 10]) {
-    return super._formatParts(true, precision);
-  }
-
-  String format([int precision = 10]) {
-    return super._format(true, precision);
-  }
-}
-
-class DMSLongitude extends DMSPart {
-  DMSLongitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
-
-  static DMSLongitude from(DMSPart dmsPart) {
-    return DMSLongitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
-  }
-
-  FormattedDMSPart formatParts([int precision = 10]) {
-    return super._formatParts(false, precision);
-  }
-
-  String format([int precision = 10]) {
-    return super._format(false, precision);
-  }
-}
-
-class DMS extends BaseCoordinate {
-  DMSLatitude latitude;
-  DMSLongitude longitude;
-
-  DMS(this.latitude, this.longitude) {
-    _format = CoordinateFormat(CoordinateFormatKey.DMS);
-  }
-
-  @override
-  LatLng toLatLng() {
-    return dmsToLatLon(this);
-  }
-
-  static DMS fromLatLon(LatLng coord) {
-    return latLonToDMS(coord);
-  }
-
-  static DMS? parse(String input, {bool wholeString = false}) {
-    return parseDMS(input, wholeString: wholeString);
-  }
-
-  @override
-  String toString([int? precision]) {
-    precision = precision ?? 6;
-    return '${latitude.format(precision)}\n${longitude.format(precision)}';
-  }
-}
 
 enum HemisphereLatitude { North, South }
 

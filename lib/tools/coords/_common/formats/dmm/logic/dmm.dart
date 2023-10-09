@@ -1,17 +1,144 @@
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
+
+class FormattedDMMPart {
+  IntegerText sign;
+  String degrees, minutes;
+
+  FormattedDMMPart(this.sign, this.degrees, this.minutes);
+
+  @override
+  String toString() {
+    return sign.text + ' ' + degrees + '° ' + minutes + '\'';
+  }
+}
+
+class DMMPart {
+  int sign;
+  int degrees;
+  double minutes;
+
+  DMMPart(this.sign, this.degrees, this.minutes);
+
+  FormattedDMMPart _formatParts(bool isLatitude, [int precision = 10]) {
+    var _minutesStr = NumberFormat(formatStringForDecimals(decimalPrecision: precision)).format(minutes);
+    var _degrees = degrees;
+    var _sign = getCoordinateSignString(sign, isLatitude);
+
+    //Values like 59.999999999' may be rounded to 60.0. So in that case,
+    //the degree has to be increased while minutes should be set to 0.0
+    if (_minutesStr.startsWith('60')) {
+      _minutesStr = '00.000';
+      _degrees += 1;
+    }
+
+    String _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
+
+    return FormattedDMMPart(IntegerText(_sign, sign), _degreesStr, _minutesStr);
+  }
+
+  String _format(bool isLatitude, [int precision = 10]) {
+    var formattedParts = _formatParts(isLatitude, precision);
+
+    return formattedParts.toString();
+  }
+
+  @override
+  String toString() {
+    return 'sign: $sign, degrees: $degrees, minutes: $minutes';
+  }
+}
+
+class DMMLatitude extends DMMPart {
+  DMMLatitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
+
+  static DMMLatitude from(DMMPart dmmPart) {
+    return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
+  }
+
+  FormattedDMMPart formatParts([int precision = 10]) {
+    return super._formatParts(true, precision);
+  }
+
+  String format([int precision = 10]) {
+    return super._format(true, precision);
+  }
+}
+
+class DMMLongitude extends DMMPart {
+  DMMLongitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
+
+  static DMMLongitude from(DMMPart dmmPart) {
+    return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
+  }
+
+  FormattedDMMPart formatParts([int precision = 10]) {
+    return super._formatParts(false, precision);
+  }
+
+  String format([int precision = 10]) {
+    return super._format(false, precision);
+  }
+}
+
+class DMM extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DMM);
+  late final DMMLatitude dmmLatitude;
+  late final DMMLongitude dmmLongitude;
+
+  DMM(this.dmmLatitude, this.dmmLongitude);
+
+  @override
+  LatLng toLatLng() {
+    return dmmToLatLon(this);
+  }
+
+  static DMM fromLatLon(LatLng coord) {
+    return latLonToDMM(coord);
+  }
+
+  static DMM? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
+    return parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
+  }
+
+  @override
+  String toString([int? precision]) {
+    precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
+    return '${dmmLatitude.format(precision)}\n${dmmLongitude.format(precision)}';
+  }
+}
+
+String getCoordinateSignString(int sign, bool isLatitude) {
+  var _sign = '';
+
+  if (isLatitude) {
+    _sign = (sign >= 0) ? 'N' : 'S';
+  } else {
+    _sign = (sign >= 0) ? 'E' : 'W';
+  }
+
+  return _sign;
+}
 
 LatLng dmmToLatLon(DMM dmm) {
   return decToLatLon(_DMMToDEC(dmm));
 }
 
 DEC _DMMToDEC(DMM coord) {
-  var lat = _DMMPartToDouble(coord.latitude);
-  var lon = _DMMPartToDouble(coord.longitude);
+  var lat = _DMMPartToDouble(coord.dmmLatitude);
+  var lon = _DMMPartToDouble(coord.dmmLongitude);
 
   return DEC.fromLatLon(normalizeLatLon(lat, lon));
 }

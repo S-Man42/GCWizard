@@ -1,22 +1,146 @@
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+
+class _FormattedDMSPart {
+  IntegerText sign;
+  String degrees, minutes, seconds;
+
+  _FormattedDMSPart(this.sign, this.degrees, this.minutes, this.seconds);
+
+  @override
+  String toString() {
+    return sign.text + ' ' + degrees + '° ' + minutes + '\' ' + seconds + '"';
+  }
+}
+
+class _DMSPart {
+  int sign;
+  int degrees;
+  int minutes;
+  double seconds;
+
+  _DMSPart(this.sign, this.degrees, this.minutes, this.seconds);
+
+  _FormattedDMSPart _formatParts(bool isLatitude, [int precision = 10]) {
+    var _sign = getCoordinateSignString(sign, isLatitude);
+    var _secondsStr =
+    NumberFormat(formatStringForDecimals(decimalPrecision: precision, minDecimalPrecision: 2)).format(seconds);
+    var _minutes = minutes;
+
+    //Values like 59.999999999 may be rounded to 60.0. So in that case,
+    //the greater unit (minutes or degrees) has to be increased instead
+    if (_secondsStr.startsWith('60')) {
+      _secondsStr = '00.00';
+      _minutes += 1;
+    }
+
+    var _degrees = degrees;
+
+    var _minutesStr = _minutes.toString().padLeft(2, '0');
+    if (_minutesStr.startsWith('60')) {
+      _minutesStr = '00';
+      _degrees += 1;
+    }
+
+    var _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
+
+    return _FormattedDMSPart(IntegerText(_sign, sign), _degreesStr, _minutesStr, _secondsStr);
+  }
+
+  String _format(bool isLatitude, [int precision = 10]) {
+    var formattedParts = _formatParts(isLatitude, precision);
+
+    return formattedParts.toString();
+  }
+
+  @override
+  String toString() {
+    return 'sign: $sign, degrees: $degrees, minutes: $minutes, seconds: $seconds';
+  }
+}
+
+class DMSLatitude extends _DMSPart {
+  DMSLatitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
+
+  static DMSLatitude from(_DMSPart dmsPart) {
+    return DMSLatitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
+  }
+
+  _FormattedDMSPart formatParts([int precision = 10]) {
+    return super._formatParts(true, precision);
+  }
+
+  String format([int precision = 10]) {
+    return super._format(true, precision);
+  }
+}
+
+class DMSLongitude extends _DMSPart {
+  DMSLongitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
+
+  static DMSLongitude from(_DMSPart dmsPart) {
+    return DMSLongitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
+  }
+
+  _FormattedDMSPart formatParts([int precision = 10]) {
+    return super._formatParts(false, precision);
+  }
+
+  String format([int precision = 10]) {
+    return super._format(false, precision);
+  }
+}
+
+class DMS extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DMS);
+  late final DMSLatitude dmsLatitude;
+  late final DMSLongitude dmsLongitude;
+
+  DMS(this.dmsLatitude, this.dmsLongitude);
+
+  @override
+  LatLng toLatLng() {
+    return dmsToLatLon(this);
+  }
+
+  static DMS fromLatLon(LatLng coord) {
+    return latLonToDMS(coord);
+  }
+
+  static DMS? parse(String input, {bool wholeString = false}) {
+    return parseDMS(input, wholeString: wholeString);
+  }
+
+  @override
+  String toString([int? precision]) {
+    precision = precision ?? 6;
+    return '${dmsLatitude.format(precision)}\n${dmsLongitude.format(precision)}';
+  }
+}
 
 LatLng dmsToLatLon(DMS dms) {
   return decToLatLon(_DMSToDEC(dms));
 }
 
 DEC _DMSToDEC(DMS coord) {
-  var lat = _DMSPartToDouble(coord.latitude);
-  var lon = _DMSPartToDouble(coord.longitude);
+  var lat = _DMSPartToDouble(coord.dmsLatitude);
+  var lon = _DMSPartToDouble(coord.dmsLongitude);
 
   return DEC.fromLatLon(normalizeLatLon(lat, lon));
 }
 
-double _DMSPartToDouble(DMSPart dmsPart) {
+double _DMSPartToDouble(_DMSPart dmsPart) {
   return dmsPart.sign * (dmsPart.degrees.abs() + dmsPart.minutes / 60.0 + dmsPart.seconds / 60.0 / 60.0);
 }
 
@@ -33,7 +157,7 @@ DMS _DECToDMS(DEC coord) {
   return DMS(lat, lon);
 }
 
-DMSPart doubleToDMSPart(double value) {
+_DMSPart doubleToDMSPart(double value) {
   var _sign = sign(value);
 
   int _degrees = value.abs().floor();
@@ -42,7 +166,7 @@ DMSPart doubleToDMSPart(double value) {
   int _minutes = _minutesD.floor();
   double _seconds = (_minutesD - _minutes) * 60.0;
 
-  return DMSPart(_sign, _degrees, _minutes, _seconds);
+  return _DMSPart(_sign, _degrees, _minutes, _seconds);
 }
 
 DMS normalize(DMS coord) {

@@ -60,40 +60,40 @@ _GCWList _convertTo(Object target) {
 
       _listAdd(
           targetData,
-          _latSign(result.latitude.sign) +
+          _latSign(result.dmmLatitude.sign) +
               ' ' +
-              result.latitude.degrees.toString() +
+              result.dmmLatitude.degrees.toString() +
               '° ' +
-              result.latitude.minutes.toStringAsFixed(3) +
+              result.dmmLatitude.minutes.toStringAsFixed(3) +
               "' " +
-              _latSign(result.longitude.sign) +
+              _latSign(result.dmmLongitude.sign) +
               ' ' +
-              result.longitude.degrees.toString() +
+              result.dmmLongitude.degrees.toString() +
               '° ' +
-              result.latitude.minutes.toStringAsFixed(3) +
+              result.dmmLatitude.minutes.toStringAsFixed(3) +
               "'");
       _listAdd(
           targetData,
-          _latSign(result.latitude.sign) +
+          _latSign(result.dmmLatitude.sign) +
               ' ' +
-              result.latitude.degrees.toString() +
+              result.dmmLatitude.degrees.toString() +
               '° ' +
-              result.latitude.minutes.toStringAsFixed(3) +
+              result.dmmLatitude.minutes.toStringAsFixed(3) +
               "'");
-      _listAdd(targetData, _latSign(result.latitude.sign));
-      _listAdd(targetData, result.latitude.degrees);
-      _listAdd(targetData, result.latitude.minutes);
+      _listAdd(targetData, _latSign(result.dmmLatitude.sign));
+      _listAdd(targetData, result.dmmLatitude.degrees);
+      _listAdd(targetData, result.dmmLatitude.minutes);
       _listAdd(
           targetData,
-          _lonSign(result.longitude.sign) +
+          _lonSign(result.dmmLongitude.sign) +
               ' ' +
-              result.longitude.degrees.toString() +
+              result.dmmLongitude.degrees.toString() +
               '° ' +
-              result.longitude.minutes.toStringAsFixed(3) +
+              result.dmmLongitude.minutes.toStringAsFixed(3) +
               "'");
-      _listAdd(targetData, _lonSign(result.longitude.sign));
-      _listAdd(targetData, result.longitude.degrees);
-      _listAdd(targetData, result.longitude.minutes);
+      _listAdd(targetData, _lonSign(result.dmmLongitude.sign));
+      _listAdd(targetData, result.dmmLongitude.degrees);
+      _listAdd(targetData, result.dmmLongitude.minutes);
       break;
 
     case _COORD_DMS: //= 2;
@@ -101,49 +101,49 @@ _GCWList _convertTo(Object target) {
 
       _listAdd(
           targetData,
-          _latSign(result.latitude.sign) +
+          _latSign(result.dmsLatitude.sign) +
               ' ' +
-              result.latitude.degrees.toString() +
+              result.dmsLatitude.degrees.toString() +
               '° ' +
-              result.latitude.minutes.toStringAsFixed(3) +
+              result.dmsLatitude.minutes.toStringAsFixed(3) +
               "' " +
-              result.latitude.seconds.toStringAsFixed(3) +
-              _latSign(result.longitude.sign) +
+              result.dmsLatitude.seconds.toStringAsFixed(3) +
+              _latSign(result.dmsLongitude.sign) +
               ' ' +
-              result.longitude.degrees.toString() +
+              result.dmsLongitude.degrees.toString() +
               '° ' +
-              result.latitude.minutes.toStringAsFixed(3) +
+              result.dmsLatitude.minutes.toStringAsFixed(3) +
               "' " +
-              result.longitude.seconds.toStringAsFixed(3) +
+              result.dmsLongitude.seconds.toStringAsFixed(3) +
               '"');
       _listAdd(
           targetData,
-          _latSign(result.latitude.sign) +
+          _latSign(result.dmsLatitude.sign) +
               ' ' +
-              result.latitude.degrees.toString() +
+              result.dmsLatitude.degrees.toString() +
               '° ' +
-              result.latitude.minutes.toStringAsFixed(3) +
+              result.dmsLatitude.minutes.toStringAsFixed(3) +
               "' " +
-              result.latitude.seconds.toStringAsFixed(3) +
+              result.dmsLatitude.seconds.toStringAsFixed(3) +
               '"');
-      _listAdd(targetData, _latSign(result.latitude.sign));
-      _listAdd(targetData, result.latitude.degrees);
-      _listAdd(targetData, result.latitude.minutes);
-      _listAdd(targetData, result.latitude.seconds);
+      _listAdd(targetData, _latSign(result.dmsLatitude.sign));
+      _listAdd(targetData, result.dmsLatitude.degrees);
+      _listAdd(targetData, result.dmsLatitude.minutes);
+      _listAdd(targetData, result.dmsLatitude.seconds);
       _listAdd(
           targetData,
-          _lonSign(result.longitude.sign) +
+          _lonSign(result.dmsLongitude.sign) +
               ' ' +
-              result.longitude.degrees.toString() +
+              result.dmsLongitude.degrees.toString() +
               '° ' +
-              result.longitude.minutes.toStringAsFixed(3) +
+              result.dmsLongitude.minutes.toStringAsFixed(3) +
               "' " +
-              result.longitude.seconds.toStringAsFixed(3) +
+              result.dmsLongitude.seconds.toStringAsFixed(3) +
               '"');
-      _listAdd(targetData, _lonSign(result.longitude.sign));
-      _listAdd(targetData, result.longitude.degrees);
-      _listAdd(targetData, result.longitude.minutes);
-      _listAdd(targetData, result.longitude.seconds);
+      _listAdd(targetData, _lonSign(result.dmsLongitude.sign));
+      _listAdd(targetData, result.dmsLongitude.degrees);
+      _listAdd(targetData, result.dmsLongitude.minutes);
+      _listAdd(targetData, result.dmsLongitude.seconds);
       break;
 
     case _COORD_UTM: //= 3;

@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
