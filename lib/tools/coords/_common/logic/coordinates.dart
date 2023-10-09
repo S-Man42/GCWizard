@@ -31,8 +31,6 @@ import 'package:latlong2/latlong.dart';
 
 abstract class BaseCoordFormatKey {}
 
-
-
 int getCoordinateSignFromString(String text, bool isLatitude) {
   int _sign = 0;
 
