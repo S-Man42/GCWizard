@@ -731,8 +731,8 @@ _coord _wrap(_coord p) {
 
 LatLng _convertFractionsToDegrees(_coord p) {
   return LatLng(
-      p.x / (3240000 * 1000000),
-      p.y / (810000 * 1000000)
+      min(p.y / (810000 * 1000000), 90.0),
+      p.x / (3240000 * 1000000)
   );
 }
 
@@ -1876,7 +1876,7 @@ LatLng? _master_decode(String mapcode, int territoryNumber) { // returns object 
   }
 
   var from = _dataFirstRecord(territoryNumber);
-  if (!_data_flags.contains(from)) {
+  if (_data_flags[from] == 0) {
     return null;
   } // 1.27 survive partially filled data_ array
   var upto = _dataLastRecord(territoryNumber);
@@ -2030,7 +2030,7 @@ LatLng? decode(String mapcodeString, String territory) {
   mapcodeString = _trim(mapcodeString);
   var contextTerritoryNumber = _getTerritoryNumber(territory);
   contextTerritoryNumber ??= _ccode_earth;
-  var parts = mapcodeString.split(RegExp(r'/\s+/'));
+  var parts = mapcodeString.split(RegExp(r'\s+'));
   LatLng? dec;
   if (parts.length == 2) {
     if (_isSubdivision(contextTerritoryNumber.toString())) {

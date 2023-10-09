@@ -22,5 +22,6 @@ LatLng? parseMapCode(String input) {
 
   var match = RegExp(rx).firstMatch(input);
   if (match == null) return null;
-  return decode(input.substring(match.start, match.end).replaceFirst(match.group(1).toString(), ''), match.group(1)!);
+
+  return decode(input.substring(match.start, match.end), '');
 }
