@@ -1,16 +1,45 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/external_libs/djvanderlaan.rijksdriehoek/rijksdriehoek_js.dart';
+
+class DutchGrid extends BaseCoordinate {
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
+  double x;
+  double y;
+
+  DutchGrid(this.x, this.y);
+
+  @override
+  LatLng toLatLng() {
+    return _dutchGridToLatLon(this);
+  }
+
+  static DutchGrid fromLatLon(LatLng coord) {
+    return latLonToDutchGrid(coord);
+  }
+
+  static DutchGrid? parse(String input) {
+    return parseDutchGrid(input);
+  }
+
+  @override
+  String toString([int? precision]) {
+    return 'X: $x\nY: $y';
+  }
+}
 
 DutchGrid latLonToDutchGrid(LatLng coord) {
   var dutchGrid = _rijksdriehoek(coord.longitude, coord.latitude);
   return DutchGrid(dutchGrid[0], dutchGrid[1]);
 }
 
-LatLng dutchGridToLatLon(DutchGrid dutchGrid) {
+LatLng _dutchGridToLatLon(DutchGrid dutchGrid) {
   var latLon = _rijksdriehoekInverse(dutchGrid.x, dutchGrid.y);
   return LatLng(latLon[1], latLon[0]);
 }

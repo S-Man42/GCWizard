@@ -191,32 +191,7 @@ class SwissGridPlus extends SwissGrid {
   }
 }
 
-class DutchGrid extends BaseCoordinate {
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
-  double x;
-  double y;
 
-  DutchGrid(this.x, this.y);
-
-  @override
-  LatLng toLatLng() {
-    return dutchGridToLatLon(this);
-  }
-
-  static DutchGrid fromLatLon(LatLng coord) {
-    return latLonToDutchGrid(coord);
-  }
-
-  static DutchGrid? parse(String input) {
-    return parseDutchGrid(input);
-  }
-
-  @override
-  String toString([int? precision]) {
-    return 'X: $x\nY: $y';
-  }
-}
 
 class GaussKrueger extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;

@@ -111,11 +111,11 @@ class DMS extends BaseCoordinate {
 
   @override
   LatLng toLatLng() {
-    return dmsToLatLon(this);
+    return _dmsToLatLon(this);
   }
 
   static DMS fromLatLon(LatLng coord) {
-    return latLonToDMS(coord);
+    return _latLonToDMS(coord);
   }
 
   static DMS? parse(String input, {bool wholeString = false}) {
@@ -129,7 +129,7 @@ class DMS extends BaseCoordinate {
   }
 }
 
-LatLng dmsToLatLon(DMS dms) {
+LatLng _dmsToLatLon(DMS dms) {
   return decToLatLon(_DMSToDEC(dms));
 }
 
@@ -144,7 +144,7 @@ double _DMSPartToDouble(_DMSPart dmsPart) {
   return dmsPart.sign * (dmsPart.degrees.abs() + dmsPart.minutes / 60.0 + dmsPart.seconds / 60.0 / 60.0);
 }
 
-DMS latLonToDMS(LatLng coord) {
+DMS _latLonToDMS(LatLng coord) {
   return _DECToDMS(DEC.fromLatLon(coord));
 }
 

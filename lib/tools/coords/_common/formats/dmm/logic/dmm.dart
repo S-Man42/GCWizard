@@ -102,11 +102,11 @@ class DMM extends BaseCoordinate {
 
   @override
   LatLng toLatLng() {
-    return dmmToLatLon(this);
+    return _dmmToLatLon(this);
   }
 
   static DMM fromLatLon(LatLng coord) {
-    return latLonToDMM(coord);
+    return _latLonToDMM(coord);
   }
 
   static DMM? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
@@ -132,7 +132,7 @@ String getCoordinateSignString(int sign, bool isLatitude) {
   return _sign;
 }
 
-LatLng dmmToLatLon(DMM dmm) {
+LatLng _dmmToLatLon(DMM dmm) {
   return decToLatLon(_DMMToDEC(dmm));
 }
 
@@ -147,7 +147,7 @@ double _DMMPartToDouble(_DMMPart dmmPart) {
   return dmmPart.sign * (dmmPart.degrees.abs() + dmmPart.minutes / 60.0);
 }
 
-DMM latLonToDMM(LatLng coord) {
+DMM _latLonToDMM(LatLng coord) {
   return _DECToDMM(DEC.fromLatLon(coord));
 }
 

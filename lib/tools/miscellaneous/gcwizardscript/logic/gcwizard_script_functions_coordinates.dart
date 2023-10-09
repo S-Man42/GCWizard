@@ -56,7 +56,7 @@ _GCWList _convertTo(Object target) {
 
   switch (target) {
     case _COORD_DMM: //= 1;
-      DMM result = latLonToDMM(coord);
+      DMM result = DMM.fromLatLon(coord);
 
       _listAdd(
           targetData,
@@ -97,7 +97,7 @@ _GCWList _convertTo(Object target) {
       break;
 
     case _COORD_DMS: //= 2;
-      DMS result = latLonToDMS(coord);
+      DMS result = DMS.fromLatLon(coord);
 
       _listAdd(
           targetData,
@@ -147,7 +147,7 @@ _GCWList _convertTo(Object target) {
       break;
 
     case _COORD_UTM: //= 3;
-      UTMREF result = latLonToUTM(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      UTMREF result = UTMREF.fromLatLon(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(
           targetData,
           result.zone.lonZoneRegular.toString() +
@@ -163,7 +163,7 @@ _GCWList _convertTo(Object target) {
       break;
 
     case _COORD_MGRS: //= 4;
-      MGRS result = latLonToMGRS(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      MGRS result = MGRS.fromLatLon(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(
           targetData,
           result.utmZone.lonZoneRegular.toString() +
@@ -182,7 +182,7 @@ _GCWList _convertTo(Object target) {
       break;
 
     case _COORD_XYZ: //= 5;
-      XYZ result = latLonToXYZ(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      XYZ result = XYZ.fromLatLon(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString() + '\nZ: ' + result.z.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
@@ -191,14 +191,14 @@ _GCWList _convertTo(Object target) {
 
     case _COORD_SWISS_GRID: //= 6;
     case _COORD_SWISS_GRID_PLUS: //= 7;
-      SwissGrid result = latLonToSwissGrid(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      SwissGrid result = SwissGrid.fromLatLon(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
       break;
 
     case _COORD_DUTCH_GRID: //= 8;
-      DutchGrid result = latLonToDutchGrid(coord);
+      DutchGrid result = DutchGrid.fromLatLon(coord);
       _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
@@ -209,8 +209,8 @@ _GCWList _convertTo(Object target) {
     case _COORD_GAUSS_KRUEGER_GK3: //= 903;
     case _COORD_GAUSS_KRUEGER_GK4: //= 904;
     case _COORD_GAUSS_KRUEGER_GK5: //= 905;
-      GaussKrueger result =
-          latLonToGaussKrueger(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      GaussKrueger result = GaussKrueger.fromLatLon(
+          coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
@@ -230,26 +230,26 @@ _GCWList _convertTo(Object target) {
     case _COORD_LAMBERT93_CC49: //= 1049;
     case _COORD_LAMBERT93_CC50: //= 1050;
       Lambert result =
-          latLonToLambert(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+          Lambert.fromLatLon(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, result.easting.toString() + ' ' + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
       break;
 
     case _COORD_MAIDENHEAD: //= 11;
-      Maidenhead result = latLonToMaidenhead(coord);
+      Maidenhead result = Maidenhead.fromLatLon(coord);
       _listAdd(targetData, result.text);
       break;
 
     case _COORD_MERCATOR: //= 12;
-      Mercator result = latLonToMercator(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      Mercator result = Mercator.fromLatLon(coord, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       _listAdd(targetData, result.easting.toString() + result.northing.toString());
       _listAdd(targetData, result.easting);
       _listAdd(targetData, result.northing);
       break;
 
     case _COORD_NATURAL_AREA_CODE: //= 13;
-      NaturalAreaCode result = latLonToNaturalAreaCode(coord);
+      NaturalAreaCode result = NaturalAreaCode.fromLatLon(coord);
       _listAdd(targetData, 'X: ' + result.x.toString() + '\nY: ' + result.y.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
@@ -286,44 +286,44 @@ _GCWList _convertTo(Object target) {
     case _COORD_SLIPPYMAP_28: //= 1428;
     case _COORD_SLIPPYMAP_29: //= 1429;
     case _COORD_SLIPPYMAP_30: //= 1430;
-      SlippyMap result = latLonToSlippyMap(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!);
+      SlippyMap result = SlippyMap.fromLatLon(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!);
       _listAdd(targetData, result.x.toString() + ' ' + result.y.toString());
       _listAdd(targetData, result.x);
       _listAdd(targetData, result.y);
       break;
 
     case _COORD_GEOHASH: //= 15;
-      Geohash result = latLonToGeohash(coord, 14);
+      Geohash result = Geohash.fromLatLon(coord, 14);
       _listAdd(targetData, result.text);
       break;
 
     case _COORD_GEO3X3: //= 16;
-      Geo3x3 result = latLonToGeo3x3(coord, 20);
+      Geo3x3 result = Geo3x3.fromLatLon(coord, 20);
       _listAdd(targetData, result.text);
       break;
 
     case _COORD_GEOHEX: //= 17;
-      GeoHex result = latLonToGeoHex(coord, 20);
+      GeoHex result = GeoHex.fromLatLon(coord, 20);
       _listAdd(targetData, result.text);
       break;
 
     case _COORD_OPEN_LOCATION_CODE: //= 18;
-      OpenLocationCode result = latLonToOpenLocationCode(coord);
+      OpenLocationCode result = OpenLocationCode.fromLatLon(coord);
       _listAdd(targetData, result.text);
       break;
 
     case _COORD_MAKANEY: //= 19;
-      Makaney result = latLonToMakaney(coord);
+      Makaney result = Makaney.fromLatLon(coord);
       _listAdd(targetData, result.text);
       break;
 
     case _COORD_QUADTREE: //= 20;
-      Quadtree result = latLonToQuadtree(coord);
+      Quadtree result = Quadtree.fromLatLon(coord);
       _listAdd(targetData, result.coords.join(' '));
       break;
 
     case _COORD_REVERSE_WIG_WALDMEISTER: //= 21;
-      ReverseWherigoWaldmeister result = latLonToReverseWIGWaldmeister(coord);
+      ReverseWherigoWaldmeister result = ReverseWherigoWaldmeister.fromLatLon(coord);
       _listAdd(targetData, result.a.toString() + ' ' + result.b.toString() + ' ' + result.c.toString());
       _listAdd(targetData, result.a);
       _listAdd(targetData, result.b);
@@ -331,7 +331,7 @@ _GCWList _convertTo(Object target) {
       break;
 
     case _COORD_REVERSE_WIG_DAY1976: //= 22;
-      ReverseWherigoDay1976 result = latLonToReverseWIGDay1976(coord);
+      ReverseWherigoDay1976 result = ReverseWherigoDay1976.fromLatLon(coord);
       _listAdd(targetData, result.s.toString() + ' ' + result.t.toString());
       _listAdd(targetData, result.s);
       _listAdd(targetData, result.t);
@@ -387,7 +387,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         DMMLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as double),
         DMMLongitude(parameter_4 as int, parameter_5 as int, parameter_6 as double),
       );
-      coord = dmmToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_DMS: //= 2;
@@ -420,7 +420,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         DMSLatitude(parameter_1 as int, parameter_2 as int, parameter_3 as int, parameter_7 as double),
         DMSLongitude(parameter_5 as int, parameter_6 as int, parameter_7 as int, parameter_8 as double),
       );
-      coord = dmsToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_UTM: //= 3;
@@ -435,7 +435,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotANumber(parameter_4)) _handleError(_INVALIDTYPECAST);
       UTMREF result = UTMREF(UTMZone(parameter_1 as int, parameter_1, parameter_2.toString()), parameter_3 as double,
           parameter_4 as double);
-      coord = UTMREFtoLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_MGRS: //= 4;
@@ -452,7 +452,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotANumber(parameter_5)) _handleError(_INVALIDTYPECAST);
       MGRS result = MGRS(UTMZone(parameter_1 as int, parameter_1, parameter_2 as String), parameter_3 as String,
           parameter_4 as double, parameter_5 as double);
-      coord = mgrsToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_XYZ: //= 5;
@@ -468,7 +468,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_2 as double,
         parameter_3 as double,
       );
-      coord = xyzToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_SWISS_GRID: //= 6;
@@ -482,7 +482,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_1 as double,
         parameter_2 as double,
       );
-      coord = swissGridToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_DUTCH_GRID: //= 8;
@@ -495,7 +495,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_1 as double,
         parameter_2 as double,
       );
-      coord = dutchGridToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_GAUSS_KRUEGER_GK1: //= 901;
@@ -513,7 +513,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_1 as double,
         parameter_2 as double,
       );
-      coord = gaussKruegerToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_LAMBERT93: //= 1093;
@@ -539,7 +539,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_1 as double,
         parameter_2 as double,
       );
-      coord = lambertToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_MAIDENHEAD: //= 11;
@@ -560,7 +560,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_1 as double,
         parameter_2 as double,
       );
-      coord = mercatorToLatLon(result, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+      coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
 
     case _COORD_NATURAL_AREA_CODE: //= 13;
@@ -573,7 +573,7 @@ void _convertFrom(Object source, _GCWList parameter) {
         parameter_1 as String,
         parameter_2 as String,
       );
-      coord = naturalAreaCodeToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_SLIPPYMAP_0: //= 1400;
@@ -613,7 +613,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       SlippyMap result = SlippyMap(parameter_1 as double, parameter_2 as double, _GCW_SCRIPT_COORD_CONVERTER[source]!);
-      coord = slippyMapToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_GEOHASH: //= 15;
@@ -621,7 +621,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Geohash result = Geohash(parameter_1 as String);
-      coord = geohashToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_GEO3X3: //= 16;
@@ -629,7 +629,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Geo3x3 result = Geo3x3(parameter_1 as String);
-      coord = geo3x3ToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_GEOHEX: //= 17;
@@ -637,7 +637,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       GeoHex result = GeoHex(parameter_1 as String);
-      coord = geoHexToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_OPEN_LOCATION_CODE: //= 18;
@@ -645,7 +645,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       OpenLocationCode result = OpenLocationCode(parameter_1 as String);
-      coord = openLocationCodeToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_MAKANEY: //= 19;
@@ -653,7 +653,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Makaney result = Makaney(parameter_1 as String);
-      coord = makaneyToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_QUADTREE: //= 20;
@@ -661,7 +661,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       parameter_1 = _listGet(parameter, 0)!;
       if (_isNotAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       Quadtree result = Quadtree(parameter_1 as List<int>);
-      coord = quadtreeToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_REVERSE_WIG_WALDMEISTER: //= 21;
@@ -674,7 +674,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotAInt(parameter_3)) _handleError(_INVALIDTYPECAST);
       ReverseWherigoWaldmeister result =
           ReverseWherigoWaldmeister(parameter_1 as int, parameter_2 as int, parameter_3 as int);
-      coord = reverseWIGWaldmeisterToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     case _COORD_REVERSE_WIG_DAY1976: //= 22;
@@ -684,7 +684,7 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isAList(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isAList(parameter_2)) _handleError(_INVALIDTYPECAST);
       ReverseWherigoDay1976 result = ReverseWherigoDay1976(parameter_1 as String, parameter_2 as String);
-      coord = reverseWIGDay1976ToLatLon(result);
+      coord = result.toLatLng();
       break;
 
     default:
