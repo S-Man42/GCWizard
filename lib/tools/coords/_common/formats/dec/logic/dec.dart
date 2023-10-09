@@ -23,11 +23,11 @@ class DEC extends BaseCoordinate {
   }
 
   static DEC fromLatLon(LatLng coord) {
-    return latLonToDEC(coord);
+    return _latLonToDEC(coord);
   }
 
   static DEC? parse(String input, {bool wholeString = false}) {
-    return parseDEC(input, wholeString: wholeString);
+    return _parseDEC(input, wholeString: wholeString);
   }
 
   @override
@@ -43,7 +43,7 @@ LatLng decToLatLon(DEC dec) {
   return normalizeLatLon(dec.latitude, dec.longitude);
 }
 
-DEC latLonToDEC(LatLng coord) {
+DEC _latLonToDEC(LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
 }
 
@@ -68,14 +68,14 @@ String? prepareInput(String text, {bool wholeString = false}) {
   return text;
 }
 
-DEC? parseDEC(String input, {bool wholeString = false}) {
+DEC? _parseDEC(String input, {bool wholeString = false}) {
   var _input = prepareInput(input, wholeString: wholeString);
   if (_input == null) return null;
 
   var parsedTrailingSigns = _parseDECTrailingSigns(_input);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
-  RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
+  RegExp regex = RegExp(_PATTERN_DEC + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(_input)) {
     RegExpMatch matches = regex.firstMatch(_input)!;
@@ -121,7 +121,7 @@ DEC? parseDEC(String input, {bool wholeString = false}) {
 }
 
 DEC? _parseDECTrailingSigns(String text) {
-  RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
+  RegExp regex = RegExp(_PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
@@ -165,7 +165,7 @@ DEC? _parseDECTrailingSigns(String text) {
   return null;
 }
 
-const PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
+const _PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
     '(\\d{1,3})\\s*?' //lat degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat millidegrees
     '[\\s°]?\\s*?' //lat degrees symbol
@@ -179,7 +179,7 @@ const PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
     '([EWO]$LETTER*?|[\\+\\-])' //lon sign;
     '\\s*?';
 
-const PATTERN_DEC = '^\\s*?'
+const _PATTERN_DEC = '^\\s*?'
     '([NS]$LETTER*?|[\\+\\-])?\\s*?' //lat sign
     '(\\d{1,3})\\s*?' //lat degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat millidegrees

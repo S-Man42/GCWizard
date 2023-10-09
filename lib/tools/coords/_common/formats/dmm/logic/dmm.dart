@@ -12,11 +12,11 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-class FormattedDMMPart {
+class _FormattedDMMPart {
   IntegerText sign;
   String degrees, minutes;
 
-  FormattedDMMPart(this.sign, this.degrees, this.minutes);
+  _FormattedDMMPart(this.sign, this.degrees, this.minutes);
 
   @override
   String toString() {
@@ -24,14 +24,14 @@ class FormattedDMMPart {
   }
 }
 
-class DMMPart {
+class _DMMPart {
   int sign;
   int degrees;
   double minutes;
 
-  DMMPart(this.sign, this.degrees, this.minutes);
+  _DMMPart(this.sign, this.degrees, this.minutes);
 
-  FormattedDMMPart _formatParts(bool isLatitude, [int precision = 10]) {
+  _FormattedDMMPart _formatParts(bool isLatitude, [int precision = 10]) {
     var _minutesStr = NumberFormat(formatStringForDecimals(decimalPrecision: precision)).format(minutes);
     var _degrees = degrees;
     var _sign = getCoordinateSignString(sign, isLatitude);
@@ -45,7 +45,7 @@ class DMMPart {
 
     String _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
 
-    return FormattedDMMPart(IntegerText(_sign, sign), _degreesStr, _minutesStr);
+    return _FormattedDMMPart(IntegerText(_sign, sign), _degreesStr, _minutesStr);
   }
 
   String _format(bool isLatitude, [int precision = 10]) {
@@ -60,14 +60,14 @@ class DMMPart {
   }
 }
 
-class DMMLatitude extends DMMPart {
+class DMMLatitude extends _DMMPart {
   DMMLatitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
 
-  static DMMLatitude from(DMMPart dmmPart) {
+  static DMMLatitude from(_DMMPart dmmPart) {
     return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
-  FormattedDMMPart formatParts([int precision = 10]) {
+  _FormattedDMMPart formatParts([int precision = 10]) {
     return super._formatParts(true, precision);
   }
 
@@ -76,14 +76,14 @@ class DMMLatitude extends DMMPart {
   }
 }
 
-class DMMLongitude extends DMMPart {
+class DMMLongitude extends _DMMPart {
   DMMLongitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
 
-  static DMMLongitude from(DMMPart dmmPart) {
+  static DMMLongitude from(_DMMPart dmmPart) {
     return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
-  FormattedDMMPart formatParts([int precision = 10]) {
+  _FormattedDMMPart formatParts([int precision = 10]) {
     return super._formatParts(false, precision);
   }
 
@@ -110,7 +110,7 @@ class DMM extends BaseCoordinate {
   }
 
   static DMM? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
-    return parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
+    return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
 
   @override
@@ -143,7 +143,7 @@ DEC _DMMToDEC(DMM coord) {
   return DEC.fromLatLon(normalizeLatLon(lat, lon));
 }
 
-double _DMMPartToDouble(DMMPart dmmPart) {
+double _DMMPartToDouble(_DMMPart dmmPart) {
   return dmmPart.sign * (dmmPart.degrees.abs() + dmmPart.minutes / 60.0);
 }
 
@@ -160,20 +160,16 @@ DMM _DECToDMM(DEC coord) {
   return DMM(lat, lon);
 }
 
-DMMPart doubleToDMMPart(double value) {
+_DMMPart doubleToDMMPart(double value) {
   var _sign = sign(value);
 
   int _degrees = value.abs().floor();
   double _minutes = (value.abs() - _degrees) * 60.0;
 
-  return DMMPart(_sign, _degrees, _minutes);
+  return _DMMPart(_sign, _degrees, _minutes);
 }
 
-DMM normalize(DMM coord) {
-  return _DECToDMM(_DMMToDEC(coord));
-}
-
-DMM? parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
+DMM? _parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
   var _input = prepareInput(input, wholeString: wholeString);
   if (_input == null) return null;
 
