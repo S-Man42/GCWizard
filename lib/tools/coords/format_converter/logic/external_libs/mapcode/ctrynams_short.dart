@@ -16,9 +16,7 @@
 
 // *** GENERATED FILE (coords.cpp), DO NOT CHANGE OR PRETTIFY ***
 
-part of 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
-
-const _isofullname = [
+const isofullname = [
 "Vatican (Holy See)",
 "Monaco",
 "Gibraltar",
@@ -552,5 +550,5 @@ const _isofullname = [
 "Clipperton Island",
 "Antarctica",
 "International (Worldwide) (Earth)",
-"?"];
+];
 
