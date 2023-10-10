@@ -550,5 +550,5 @@ const isofullname = [
 "Clipperton Island",
 "Antarctica",
 "International (Worldwide) (Earth)",
-];
+"?"];
 
