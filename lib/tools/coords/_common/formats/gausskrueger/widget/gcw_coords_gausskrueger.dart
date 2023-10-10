@@ -80,7 +80,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
 
   void _setCurrentValueAndEmitOnChange() {
     var subtype = _currentSubtype;
-    var gaussKrueger = GaussKrueger(subtype, _currentEasting.value, _currentNorthing.value);
+    var gaussKrueger = GaussKrueger(_currentEasting.value, _currentNorthing.value, subtype);
 
     widget.onChanged(gaussKrueger);
   }

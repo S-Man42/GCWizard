@@ -79,7 +79,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    var lambert = Lambert(_currentSubtype, _currentEasting.value, _currentNorthing.value);
+    var lambert = Lambert(_currentEasting.value, _currentNorthing.value, _currentSubtype);
     widget.onChanged(lambert);
   }
 }

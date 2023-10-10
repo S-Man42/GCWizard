@@ -43,20 +43,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           onChanged: (CoordinateFormatKey newValue) {
             setState(() {
               _currentFormat = newValue;
-
-              switch (_currentFormat) {
-                case CoordinateFormatKey.GAUSS_KRUEGER:
-                  _currentSubtype = defaultGaussKruegerType;
-                  break;
-                case CoordinateFormatKey.LAMBERT:
-                  _currentSubtype = defaultLambertType;
-                  break;
-                case CoordinateFormatKey.SLIPPY_MAP:
-                  _currentSubtype = defaultSlippyMapType;
-                  break;
-                default:
-                  _currentSubtype = null;
-              }
+              _currentSubtype = getDefaultSubtypeForFormat(_currentFormat);
 
               _emitOnChange();
             });

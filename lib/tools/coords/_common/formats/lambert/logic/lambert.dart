@@ -22,6 +22,8 @@ import 'package:latlong2/latlong.dart';
 //   L93_CC50
 // }
 
+const defaultLambertType = CoordinateFormatKey.LAMBERT93;
+
 class Lambert extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
   @override
@@ -31,7 +33,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
 
   static const String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
 
-  Lambert(CoordinateFormatKey subtypeKey, this.easting, this.northing) {
+  Lambert(this.easting, this.northing, CoordinateFormatKey subtypeKey) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -213,7 +215,7 @@ Lambert _latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid e
 
   GeographicLibLambert lambert = lambertCC.forward(specificLambert.centralMeridian, latLon.latitude, latLon.longitude);
 
-  return Lambert(subtype, lambert.x - x0, lambert.y - y0);
+  return Lambert(lambert.x - x0, lambert.y - y0, subtype);
 }
 
 LatLng _lambertToLatLon(Lambert lambert, Ellipsoid ellipsoid) {
@@ -283,5 +285,5 @@ Lambert? _parseLambert(String input, {CoordinateFormatKey subtype = defaultLambe
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  return Lambert(subtype, _easting, _northing);
+  return Lambert(_easting, _northing, subtype);
 }

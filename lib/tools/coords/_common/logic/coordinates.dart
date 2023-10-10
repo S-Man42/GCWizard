@@ -27,19 +27,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:latlong2/latlong.dart';
 
-abstract class BaseCoordFormatKey {}
-
-int getCoordinateSignFromString(String text, bool isLatitude) {
-  int _sign = 0;
-
-  if (isLatitude) {
-    _sign = (text == 'N') ? 1 : -1;
-  } else {
-    _sign = (text == 'E') ? 1 : -1;
-  }
-
-  return _sign;
-}
+//abstract class BaseCoordFormatKey {}
 
 abstract class BaseCoordinate {
   CoordinateFormat get format;
@@ -68,6 +56,18 @@ enum HemisphereLatitude { North, South }
 
 enum HemisphereLongitude { East, West }
 
+int getCoordinateSignFromString(String text, bool isLatitude) {
+  int _sign = 0;
+
+  if (isLatitude) {
+    _sign = (text == 'N') ? 1 : -1;
+  } else {
+    _sign = (text == 'E') ? 1 : -1;
+  }
+
+  return _sign;
+}
+
 BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
@@ -95,9 +95,9 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.DUTCH_GRID:
       return DutchGrid(0, 0);
     case CoordinateFormatKey.GAUSS_KRUEGER:
-      return GaussKrueger(defaultGaussKruegerType, 0, 0);
+      return GaussKrueger(0, 0, defaultGaussKruegerType);
     case CoordinateFormatKey.LAMBERT:
-      return Lambert(defaultLambertType, 0, 0);
+      return Lambert(0, 0, defaultLambertType);
     case CoordinateFormatKey.MAIDENHEAD:
       return Maidenhead('');
     case CoordinateFormatKey.MERCATOR:

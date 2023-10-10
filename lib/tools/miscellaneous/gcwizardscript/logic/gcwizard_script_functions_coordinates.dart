@@ -509,9 +509,9 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       GaussKrueger result = GaussKrueger(
-        _GCW_SCRIPT_COORD_CONVERTER[source]!,
         parameter_1 as double,
         parameter_2 as double,
+        _GCW_SCRIPT_COORD_CONVERTER[source]!
       );
       coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;
@@ -535,9 +535,9 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isNotANumber(parameter_1)) _handleError(_INVALIDTYPECAST);
       if (_isNotANumber(parameter_2)) _handleError(_INVALIDTYPECAST);
       Lambert result = Lambert(
-        _GCW_SCRIPT_COORD_CONVERTER[source]!,
         parameter_1 as double,
         parameter_2 as double,
+        _GCW_SCRIPT_COORD_CONVERTER[source]!
       );
       coord = result.toLatLng(ells: getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
       break;

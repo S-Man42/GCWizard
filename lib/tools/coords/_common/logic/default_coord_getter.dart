@@ -1,4 +1,7 @@
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/lambert/logic/lambert.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
@@ -7,13 +10,9 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-const defaultLambertType = CoordinateFormatKey.LAMBERT93;
-const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
-const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
-
 const defaultCoordinate = LatLng(0.0, 0.0);
 
-CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
+CoordinateFormatKey? getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   switch (format) {
     case CoordinateFormatKey.GAUSS_KRUEGER:
       return defaultGaussKruegerType;
@@ -72,11 +71,11 @@ CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey
 
   var subtypeStr = Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
   if (subtypeStr.isEmpty) {
-    subtype = _getDefaultSubtypeForFormat(format)!;
+    subtype = getDefaultSubtypeForFormat(format)!;
   } else {
     var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey(subtypeStr);
     subtype = (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type))
-        ? _getDefaultSubtypeForFormat(format)!
+        ? getDefaultSubtypeForFormat(format)!
         : _subtype.type;
   }
 
