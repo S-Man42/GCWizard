@@ -575,7 +575,7 @@ _coord _decodeTriple(String input) {
       triplex = (x / 40).floor() + 24 * (c1 - 24);
     }
   }
-  return _coord(x: triplex, y: tripley);
+  return _coord(y: tripley, x: triplex);
 }
 
 Point<int> _decodeSixWide(int v, int width, int height) {
@@ -707,15 +707,15 @@ _mzSet _mzSetFromFractions(int y, int x, int yDelta, int xDelta) {
 
 _coord _mzMidPointFractions(_mzSet zone) {
   return _coord(
-      x: ((zone.fminx + zone.fmaxx) / 2).floor(),
-      y: ((zone.fminy + zone.fmaxy) / 2).floor()
+      y: ((zone.fminy + zone.fmaxy) / 2).floor(),
+      x: ((zone.fminx + zone.fmaxx) / 2).floor()
   );
 }
 
 _coord _convertFractionsToCoord32(_coord p) {
   return _coord(
-      x: (p.x / 3240000).floor(),
-      y: (p.y / 810000).floor()
+      y: (p.y / 810000).floor(),
+      x: (p.x / 3240000).floor()
   );
 }
 
@@ -907,8 +907,8 @@ _mzSet _decodeGrid(String input, String extensionchars, int m) {
   dify = yp - 1 - dify;
 
   var corner = _coord( // in microdegrees
-      y: rely + (dify * dividery),
-      x: relx + (difx * dividerx)
+      x: relx + (difx * dividerx),
+      y: rely + (dify * dividery)
     );
 
   if (!_fitsInside(corner, mm)) {
