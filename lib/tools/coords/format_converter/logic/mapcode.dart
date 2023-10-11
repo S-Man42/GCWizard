@@ -1,6 +1,4 @@
-
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams_short.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -42,21 +40,8 @@ LatLng? MapCodeToLatLon(MapCode mapcode) {
 }
 
 MapCode? parseMapCode(String input) {
-  // https://github.com/sindresorhus/mapcode-regex/blob/main/index.js
-  var rx = "(?:(11|12|13|14|15|21|22|23|31|32|33|34|35|36|37|41|42|43|44|45|46|50|51|52|53|54|61|62|63|64|65|71|91|92|";
-  for (var element in iso3166alpha) {
-    rx += element + "|";
-  }
-  var rx1 = "";
-  for (var element in isofullname) {
-    rx1 += element + "|";
-  }
-  rx1 = rx1.replaceAll( "(", '').replaceAll( ")", '');
-  rx1 = rx1.substring(0, rx1.length-1);
-  rx += rx1;
-  rx += r")\s*)?[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]{2,}\.[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]{2,}(-\d{1,8})?";
 
-  var match = RegExp(rx).firstMatch(input);
+  var match = RegExp(_regexString()).firstMatch(input);
   if (match == null) return null;
 
   var mapCode = input.substring(match.start, match.end);
@@ -71,6 +56,25 @@ MapCode? parseMapCode(String input) {
 
     return MapCode(coords);
   }
+}
+
+String _regexString() {
+  // https://github.com/sindresorhus/mapcode-regex/blob/main/index.js
+  var rx = "(?:(11|12|13|14|15|21|22|23|31|32|33|34|35|36|37|41|42|43|44|45|46|50|51|52|53|54|61|62|63|64|65|71|91|92|";
+  for (var element in iso3166alpha) {
+    rx += element + "|";
+  }
+  const letter = r"[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]";
+  // var rx1 = "";
+  // for (var element in isofullname) {
+  //   rx1 += element + "|";
+  // }
+  //rx1 = rx1.replaceAll( "(", '').replaceAll( ")", '');
+  // rx1 = rx1.substring(0, rx1.length-1);
+  // rx += rx1;
+  rx = rx.substring(0, rx.length-1);
+  rx += r")\s*)?" + letter + r"{2,}\." + letter + r"{2,}(-\d{1,8})?";
+  return rx;
 }
 
 class McInfo {
