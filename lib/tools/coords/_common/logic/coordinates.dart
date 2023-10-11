@@ -81,7 +81,6 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
 }
 
 BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
-
   return coordinateFormatDefinitionByKey(format.type).defaultCoordinate;
 }
 
@@ -145,6 +144,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return ReverseWherigoWaldmeisterCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976Coordinate.fromLatLon(coords);
+    case CoordinateFormatKey.MAPCODE:
+      return MapCode.fromLatLon(coords);
     default:
       return buildDefaultCoordinateByCoordinates(coords);
   }

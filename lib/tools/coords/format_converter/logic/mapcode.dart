@@ -37,6 +37,7 @@ MapCode latLonToMapCode(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
 }
 
 LatLng? MapCodeToLatLon(MapCode mapcode) {
+  if (mapcode.coords.isEmpty) return null;
   return decode(mapcode.coords.first.fullmapcode, '');
 }
 
@@ -53,7 +54,7 @@ MapCode? parseMapCode(String input) {
   rx1 = rx1.replaceAll( "(", '').replaceAll( ")", '');
   rx1 = rx1.substring(0, rx1.length-1);
   rx += rx1;
-  rx += r") )?[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]{2,}\.[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]{2,}(-\d{1,8})?";
+  rx += r")\s*)?[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]{2,}\.[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]{2,}(-\d{1,8})?";
 
   var match = RegExp(rx).firstMatch(input);
   if (match == null) return null;

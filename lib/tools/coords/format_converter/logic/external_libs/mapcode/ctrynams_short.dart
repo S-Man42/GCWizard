@@ -549,6 +549,6 @@ const isofullname = [
 "United States Minor Outlying Islands",
 "Clipperton Island",
 "Antarctica",
-"International (Worldwide) (Earth)",
-"?"];
+"International (Worldwide) (Earth)"
+];
 
