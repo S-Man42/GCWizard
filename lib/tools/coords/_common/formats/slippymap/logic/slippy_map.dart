@@ -9,7 +9,7 @@ import 'package:latlong2/latlong.dart';
 
 // Source: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 
-const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
+const _defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
 
 class SlippyMap extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
@@ -41,7 +41,7 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
     return _latLonToSlippyMap(coord, subtype);
   }
 
-  static SlippyMap? parse(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
+  static SlippyMap? parse(String input, {CoordinateFormatKey subtype = _defaultSlippyMapType}) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -49,7 +49,9 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
     return _parseSlippyMap(input, subtype: subtype);
   }
 
-  static SlippyMap get emptyCoordinate => SlippyMap(0, 0, defaultSlippyMapType);
+  static SlippyMap get emptyCoordinate => SlippyMap(0, 0, _defaultSlippyMapType);
+  @override
+  CoordinateFormatKey get defaultSubtype => _defaultSlippyMapType;
 
   @override
   String toString([int? precision]) {
@@ -69,7 +71,7 @@ LatLng _slippyMapToLatLon(SlippyMap slippyMap) {
 
 SlippyMap _latLonToSlippyMap(LatLng coords, CoordinateFormatKey subtype) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
-    subtype = defaultSlippyMapType;
+    subtype = _defaultSlippyMapType;
   }
 
   int zoom = switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!;
@@ -82,7 +84,7 @@ SlippyMap _latLonToSlippyMap(LatLng coords, CoordinateFormatKey subtype) {
   return SlippyMap(x, y, subtype);
 }
 
-SlippyMap? _parseSlippyMap(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
+SlippyMap? _parseSlippyMap(String input, {CoordinateFormatKey subtype = _defaultSlippyMapType}) {
   RegExp regExp = RegExp(r'^\s*([\0-9.]+)(\s*,\s*|\s+)([\0-9.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? xString = '';

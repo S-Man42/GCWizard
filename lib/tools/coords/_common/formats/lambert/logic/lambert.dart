@@ -22,7 +22,7 @@ import 'package:latlong2/latlong.dart';
 //   L93_CC50
 // }
 
-const defaultLambertType = CoordinateFormatKey.LAMBERT93;
+const _defaultLambertType = CoordinateFormatKey.LAMBERT93;
 
 class Lambert extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
@@ -55,7 +55,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
     return _latLonToLambert(coord, subtype, ells);
   }
 
-  static Lambert? parse(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
+  static Lambert? parse(String input, {CoordinateFormatKey subtype = _defaultLambertType}) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -63,7 +63,9 @@ class Lambert extends BaseCoordinateWithSubtypes {
     return _parseLambert(input, subtype: subtype);
   }
 
-  static Lambert get emptyCoordinate => Lambert(0, 0, defaultLambertType);
+  static Lambert get emptyCoordinate => Lambert(0, 0, _defaultLambertType);
+  @override
+  CoordinateFormatKey get defaultSubtype => _defaultLambertType;
 
   @override
   String toString([int? precision]) {
@@ -204,10 +206,10 @@ const Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
 
 Lambert _latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
-    subtype = defaultLambertType;
+    subtype = _defaultLambertType;
   }
 
-  _LambertDefinition specificLambert = _LambertDefinitions[subtype] ?? _LambertDefinitions[defaultLambertType]!;
+  _LambertDefinition specificLambert = _LambertDefinitions[subtype] ?? _LambertDefinitions[_defaultLambertType]!;
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
   GeographicLibLambert transformation = _transformLambertFalseXY(specificLambert, lambertCC);
@@ -255,7 +257,7 @@ LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert,
   return lambertCC;
 }
 
-Lambert? _parseLambert(String input, {CoordinateFormatKey subtype = defaultLambertType}) {
+Lambert? _parseLambert(String input, {CoordinateFormatKey subtype = _defaultLambertType}) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';

@@ -6,13 +6,7 @@ class CoordinateFormat {
   final CoordinateFormatKey type;
   CoordinateFormatKey? subtype;
 
-  CoordinateFormat(this.type, [this.subtype]) {
-    if (isCoordinateFormatWithSubtype(type)) {
-      if (subtype == null || !isSubtypeOfCoordinateFormat(type, subtype!)) {
-        subtype = defaultCoordinateFormatSubtypeForFormat(type);
-      }
-    }
-  }
+  CoordinateFormat(this.type, [this.subtype]);
 
   static CoordinateFormat fromPersistenceKey(String persistenceKey) {
     var coordFormat = coordinateFormatMetadataByPersistenceKey(persistenceKey);

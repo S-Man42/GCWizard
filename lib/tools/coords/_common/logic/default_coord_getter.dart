@@ -1,7 +1,4 @@
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/lambert/logic/lambert.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
@@ -13,16 +10,13 @@ import 'package:prefs/prefs.dart';
 const defaultCoordinate = LatLng(0.0, 0.0);
 
 CoordinateFormatKey? getDefaultSubtypeForFormat(CoordinateFormatKey format) {
-  switch (format) {
-    case CoordinateFormatKey.GAUSS_KRUEGER:
-      return defaultGaussKruegerType;
-    case CoordinateFormatKey.LAMBERT:
-      return defaultLambertType;
-    case CoordinateFormatKey.SLIPPY_MAP:
-      return defaultSlippyMapType;
-    default:
-      return null;
+  if (isCoordinateFormatWithSubtype(format)) {
+    var emptyCoords = buildUninitializedCoordinateByFormat(CoordinateFormat(format));
+    if (emptyCoords is BaseCoordinateWithSubtypes) {
+      return emptyCoords.defaultSubtype;
+    }
   }
+  return null;
 }
 
 BaseCoordinate get defaultBaseCoordinate {

@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_trans
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
+const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 
 class GaussKrueger extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
@@ -42,7 +42,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
     return _latLonToGaussKrueger(coord, subtype, ells);
   }
 
-  static GaussKrueger? parse(String input, {CoordinateFormatKey subtype = defaultGaussKruegerType}) {
+  static GaussKrueger? parse(String input, {CoordinateFormatKey subtype = _defaultGaussKruegerType}) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -50,7 +50,9 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
     return _parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
 
-  static GaussKrueger get emptyCoordinate => GaussKrueger(0, 0, defaultGaussKruegerType);
+  static GaussKrueger get emptyCoordinate => GaussKrueger(0, 0, _defaultGaussKruegerType);
+  @override
+  CoordinateFormatKey get defaultSubtype => _defaultGaussKruegerType;
 
   @override
   String toString([int? precision]) {
@@ -60,7 +62,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
 
 GaussKrueger _latLonToGaussKrueger(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
-    subtype = defaultGaussKruegerType;
+    subtype = _defaultGaussKruegerType;
   }
 
   int x = -1;
@@ -205,7 +207,7 @@ LatLng _gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
   return coord;
 }
 
-GaussKrueger? _parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerCode = defaultGaussKruegerType}) {
+GaussKrueger? _parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerCode = _defaultGaussKruegerType}) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';

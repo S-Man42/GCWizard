@@ -52,7 +52,10 @@ abstract class BaseCoordinate {
   }
 }
 
-abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {}
+abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {
+
+  CoordinateFormatKey? get defaultSubtype => null;
+}
 
 enum HemisphereLatitude { North, South }
 
@@ -71,11 +74,6 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
 }
 
 BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
-  if (isCoordinateFormatWithSubtype(format.type)) {
-    if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
-      format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
-    }
-  }
 
   switch (format.type) {
     case CoordinateFormatKey.DEC:
