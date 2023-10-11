@@ -28,9 +28,15 @@ class MapCode extends BaseCoordinate {
   }
 }
 
-const int _DEFAULT_PRECISION = 2;
+const int _DEFAULT_PRECISION = 0;
+const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
 
-MapCode latLonToMapCode(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
+const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
+  0: CoordinateFormatKey.MAPCODE_LOCAL,
+  1: CoordinateFormatKey.MAPCODE_INTERNATIONAL,
+};
+
+MapCode latLonToMapCode(LatLng coord, {bool internationalCode = true, int precision = _DEFAULT_PRECISION}) {
   return MapCode(encodeWithPrecision(coord.latitude, coord.longitude, precision, ''));
 }
 

@@ -124,7 +124,13 @@ const List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
   CoordinateFormatMetadata(CoordinateFormatKey.MAKANEY, 'coords_makaney', 'Makaney (MKC)', 'M97F-BBOOI'),
   CoordinateFormatMetadata(CoordinateFormatKey.GEOHEX, 'coords_geohex', 'GeoHex', 'RU568425483853568'),
   CoordinateFormatMetadata(CoordinateFormatKey.GEO3X3, 'coords_geo3x3', 'Geo3x3', 'W7392967941169'),
-  CoordinateFormatMetadata(CoordinateFormatKey.MAPCODE, 'coords_mapcode', 'MapCode', 'VJMM4.DTYX'),
+  CoordinateFormatMetadata(CoordinateFormatKey.MAPCODE, 'coords_mapcode', 'MapCode', 'VJMM4.DTYX',
+    subtypes: [
+      CoordinateFormatMetadata(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_mapcode_local',
+      'coords_formatconverter_mapcode_local', 'DEU GF.ZW'),
+      CoordinateFormatMetadata(CoordinateFormatKey.MAPCODE_INTERNATIONAL, 'coords_mapcode_international',
+      'coords_formatconverter_mapcode_international', 'VJMM4.DTYX'),
+    ]),
 ];
 
 const CoordinateFormatMetadataALL = CoordinateFormatMetadata(CoordinateFormatKey.ALL, '', '', '');
