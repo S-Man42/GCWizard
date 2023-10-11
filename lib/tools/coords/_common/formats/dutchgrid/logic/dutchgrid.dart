@@ -28,6 +28,8 @@ class DutchGrid extends BaseCoordinate {
     return parseDutchGrid(input);
   }
 
+  static DutchGrid get emptyCoordinate => DutchGrid(0, 0);
+
   @override
   String toString([int? precision]) {
     return 'X: $x\nY: $y';

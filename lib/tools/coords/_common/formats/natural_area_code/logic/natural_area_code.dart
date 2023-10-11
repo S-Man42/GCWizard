@@ -61,6 +61,8 @@ class NaturalAreaCode extends BaseCoordinate {
     return _parseNaturalAreaCode(input);
   }
 
+  static NaturalAreaCode get emptyCoordinate => NaturalAreaCode('', '');
+
   @override
   String toString([int? precision]) {
     return 'X: $x\nY: $y';

@@ -149,7 +149,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is DEC
               ? _currentCoords as DEC
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DEC)) as DEC,
+              : DEC.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -163,7 +163,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is DMM
               ? _currentCoords as DMM
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DMM)) as DMM,
+              : DMM.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -177,7 +177,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is DMS
               ? _currentCoords as DMS
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DMS)) as DMS,
+              : DMS.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -191,7 +191,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is UTMREF
               ? _currentCoords as UTMREF
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.UTM)) as UTMREF,
+              : UTMREF.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -205,7 +205,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is MGRS
               ? _currentCoords as MGRS
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MGRS)) as MGRS,
+              : MGRS.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -219,7 +219,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is XYZ
               ? _currentCoords as XYZ
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.XYZ)) as XYZ,
+              : XYZ.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -233,7 +233,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is SwissGrid
               ? _currentCoords as SwissGrid
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SWISS_GRID)) as SwissGrid,
+              : SwissGrid.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -247,8 +247,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is SwissGridPlus
               ? _currentCoords as SwissGridPlus
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS))
-                  as SwissGridPlus,
+              : SwissGridPlus.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -262,8 +261,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is GaussKrueger
               ? _currentCoords as GaussKrueger
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER))
-                  as GaussKrueger,
+              : GaussKrueger.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -277,7 +275,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Lambert
               ? _currentCoords as Lambert
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.LAMBERT)) as Lambert,
+              : Lambert.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -291,7 +289,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is DutchGrid
               ? _currentCoords as DutchGrid
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.DUTCH_GRID)) as DutchGrid,
+              : DutchGrid.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -305,7 +303,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Maidenhead
               ? _currentCoords as Maidenhead
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MAIDENHEAD)) as Maidenhead,
+              : Maidenhead.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -319,7 +317,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Mercator
               ? _currentCoords as Mercator
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MERCATOR)) as Mercator,
+              : Mercator.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -333,8 +331,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is NaturalAreaCode
               ? _currentCoords as NaturalAreaCode
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE))
-                  as NaturalAreaCode,
+              : NaturalAreaCode.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -348,7 +345,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is SlippyMap
               ? _currentCoords as SlippyMap
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.SLIPPY_MAP)) as SlippyMap,
+              : SlippyMap.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -362,7 +359,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Makaney
               ? _currentCoords as Makaney
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.MAKANEY)) as Makaney,
+              : Makaney.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -376,7 +373,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Geohash
               ? _currentCoords as Geohash
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEOHASH)) as Geohash,
+              : Geohash.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -390,7 +387,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is GeoHex
               ? _currentCoords as GeoHex
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEOHEX)) as GeoHex,
+              : GeoHex.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -404,7 +401,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Geo3x3
               ? _currentCoords as Geo3x3
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.GEO3X3)) as Geo3x3,
+              : Geo3x3.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -418,8 +415,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is OpenLocationCode
               ? _currentCoords as OpenLocationCode
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE))
-                  as OpenLocationCode,
+              : OpenLocationCode.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -433,7 +429,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is Quadtree
               ? _currentCoords as Quadtree
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.QUADTREE)) as Quadtree,
+              : Quadtree.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -447,8 +443,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is ReverseWherigoWaldmeister
               ? _currentCoords as ReverseWherigoWaldmeister
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER))
-                  as ReverseWherigoWaldmeister,
+              : ReverseWherigoWaldmeister.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -462,8 +457,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           initialize: _resetCoords,
           coordinates: _currentCoords is ReverseWherigoDay1976
               ? _currentCoords as ReverseWherigoDay1976
-              : buildUninitializedCoordinateByFormat(CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976))
-                  as ReverseWherigoDay1976,
+              : ReverseWherigoDay1976.emptyCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);

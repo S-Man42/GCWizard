@@ -29,6 +29,8 @@ class Quadtree extends BaseCoordinate {
     return _latLonToQuadtree(coord, precision: precision);
   }
 
+  static Quadtree get emptyCoordinate => Quadtree([]);
+
   @override
   String toString([int? precision]) {
     return coords.join();

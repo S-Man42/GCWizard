@@ -24,6 +24,8 @@ class Maidenhead extends BaseCoordinate {
     return _parseMaidenhead(input);
   }
 
+  static Maidenhead get emptyCoordinate => Maidenhead('');
+
   @override
   String toString([int? precision]) {
     return text;

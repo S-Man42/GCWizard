@@ -41,6 +41,8 @@ class OpenLocationCode extends BaseCoordinate {
     return _parseOpenLocationCode(input);
   }
 
+  static OpenLocationCode get emptyCoordinate => OpenLocationCode('');
+
   @override
   String toString([int? precision]) {
     return text;

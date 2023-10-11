@@ -61,6 +61,8 @@ class Geohash extends BaseCoordinate {
     return _parseGeohash(input);
   }
 
+  static Geohash get emptyCoordinate => Geohash('');
+
   @override
   String toString([int? precision]) {
     return text;

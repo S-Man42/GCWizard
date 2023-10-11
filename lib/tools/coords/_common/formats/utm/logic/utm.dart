@@ -41,6 +41,8 @@ class UTMREF extends BaseCoordinate {
     return _parseUTM(input);
   }
 
+  static UTMREF get emptyCoordinate => UTMREF(UTMZone(0, 0, 'U'), 0, 0);
+
   @override
   String toString([int? precision]) {
     return '${zone.lonZone} ${zone.latZone} ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';

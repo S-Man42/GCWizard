@@ -50,6 +50,8 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
     return _parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
 
+  static GaussKrueger get emptyCoordinate => GaussKrueger(0, 0, defaultGaussKruegerType);
+
   @override
   String toString([int? precision]) {
     return 'R: $easting\nH: $northing';

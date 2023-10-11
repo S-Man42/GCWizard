@@ -49,6 +49,8 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
     return _parseSlippyMap(input, subtype: subtype);
   }
 
+  static SlippyMap get emptyCoordinate => SlippyMap(0, 0, defaultSlippyMapType);
+
   @override
   String toString([int? precision]) {
     return 'X: $x\nY: $y\nZoom: ${switchMapKeyValue(SLIPPY_MAP_ZOOM)[_format.subtype]}';

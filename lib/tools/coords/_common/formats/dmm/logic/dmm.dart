@@ -113,6 +113,8 @@ class DMM extends BaseCoordinate {
     return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
 
+  static DMM get emptyCoordinate => DMM(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0));
+
   @override
   String toString([int? precision]) {
     precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);

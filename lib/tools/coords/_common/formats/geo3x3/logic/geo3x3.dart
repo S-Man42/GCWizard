@@ -25,6 +25,8 @@ class Geo3x3 extends BaseCoordinate {
     return _parseGeo3x3(input);
   }
 
+  static Geo3x3 get emptyCoordinate => Geo3x3('');
+
   @override
   String toString([int? precision]) {
     return text.toUpperCase();

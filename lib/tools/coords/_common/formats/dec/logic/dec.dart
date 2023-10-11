@@ -30,6 +30,8 @@ class DEC extends BaseCoordinate {
     return _parseDEC(input, wholeString: wholeString);
   }
 
+  static DEC get emptyCoordinate => DEC(0.0, 0.0);
+
   @override
   String toString([int? precision]) {
     precision = precision ?? 10;

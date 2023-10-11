@@ -122,6 +122,8 @@ class DMS extends BaseCoordinate {
     return parseDMS(input, wholeString: wholeString);
   }
 
+  static DMS get emptyCoordinate => DMS(DMSLatitude(0, 0, 0, 0), DMSLongitude(0, 0, 0, 0));
+
   @override
   String toString([int? precision]) {
     precision = precision ?? 6;

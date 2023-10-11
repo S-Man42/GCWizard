@@ -29,6 +29,8 @@ class Mercator extends BaseCoordinate {
     return _parseMercator(input);
   }
 
+  static Mercator get emptyCoordinate => Mercator(0, 0);
+
   @override
   String toString([int? precision]) {
     return 'Y: $easting\nX: $northing';

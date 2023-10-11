@@ -63,6 +63,8 @@ class Lambert extends BaseCoordinateWithSubtypes {
     return _parseLambert(input, subtype: subtype);
   }
 
+  static Lambert get emptyCoordinate => Lambert(0, 0, defaultLambertType);
+
   @override
   String toString([int? precision]) {
     return 'X: $easting\nY: $northing';

@@ -27,6 +27,8 @@ class Makaney extends BaseCoordinate {
     return _parseMakaney(input);
   }
 
+  static Makaney get emptyCoordinate => Makaney('');
+
   @override
   String toString([int? precision]) {
     return text;

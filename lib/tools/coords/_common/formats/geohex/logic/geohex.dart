@@ -27,6 +27,8 @@ class GeoHex extends BaseCoordinate {
     return _parseGeoHex(input);
   }
 
+  static GeoHex get emptyCoordinate => GeoHex('');
+
   @override
   String toString([int? precision]) {
     return text;

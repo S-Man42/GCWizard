@@ -32,6 +32,8 @@ class SwissGrid extends BaseCoordinate {
     return _parseSwissGrid(input);
   }
 
+  static SwissGrid get emptyCoordinate => SwissGrid(0, 0);
+
   @override
   String toString([int? precision]) {
     return 'Y: $easting\nX: $northing';

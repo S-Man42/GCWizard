@@ -34,6 +34,8 @@ class MGRS extends BaseCoordinate {
     return _parseMGRS(text);
   }
 
+  static MGRS get emptyCoordinate => MGRS(UTMZone(0, 0, 'A'), 'AA', 0, 0);
+
   @override
   String toString([int? precision]) {
     return '${utmZone.lonZone}${utmZone.latZone} $digraph ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';

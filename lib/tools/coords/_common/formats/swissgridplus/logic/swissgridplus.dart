@@ -1,4 +1,3 @@
-
 import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
@@ -25,6 +24,8 @@ class SwissGridPlus extends SwissGrid {
   static SwissGridPlus? parse(String input) {
     return _parseSwissGridPlus(input);
   }
+
+  static SwissGridPlus get emptyCoordinate => SwissGridPlus(0, 0);
 }
 
 SwissGridPlus _latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {

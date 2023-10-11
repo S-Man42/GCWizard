@@ -44,6 +44,8 @@ abstract class BaseCoordinate {
     return LatLng(latitude, longitude);
   }
 
+  static BaseCoordinate get emptyCoordinate => buildDefaultCoordinateByCoordinates(defaultCoordinate);
+
   @override
   String toString([int? precision]) {
     return LatLng(latitude, longitude).toString();
@@ -77,51 +79,51 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
 
   switch (format.type) {
     case CoordinateFormatKey.DEC:
-      return DEC(0.0, 0.0);
+      return DEC.emptyCoordinate;
     case CoordinateFormatKey.DMM:
-      return DMM(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0));
+      return DMM.emptyCoordinate;
     case CoordinateFormatKey.DMS:
-      return DMS(DMSLatitude(0, 0, 0, 0), DMSLongitude(0, 0, 0, 0));
+      return DMS.emptyCoordinate;
     case CoordinateFormatKey.UTM:
-      return UTMREF(UTMZone(0, 0, 'U'), 0, 0);
+      return UTMREF.emptyCoordinate;
     case CoordinateFormatKey.MGRS:
-      return MGRS(UTMZone(0, 0, 'A'), 'AA', 0, 0);
+      return MGRS.emptyCoordinate;
     case CoordinateFormatKey.XYZ:
-      return XYZ(0, 0, 0);
+      return XYZ.emptyCoordinate;
     case CoordinateFormatKey.SWISS_GRID:
-      return SwissGrid(0, 0);
+      return SwissGrid.emptyCoordinate;
     case CoordinateFormatKey.SWISS_GRID_PLUS:
-      return SwissGridPlus(0, 0);
+      return SwissGridPlus.emptyCoordinate;
     case CoordinateFormatKey.DUTCH_GRID:
-      return DutchGrid(0, 0);
+      return DutchGrid.emptyCoordinate;
     case CoordinateFormatKey.GAUSS_KRUEGER:
-      return GaussKrueger(0, 0, defaultGaussKruegerType);
+      return GaussKrueger.emptyCoordinate;
     case CoordinateFormatKey.LAMBERT:
-      return Lambert(0, 0, defaultLambertType);
+      return Lambert.emptyCoordinate;
     case CoordinateFormatKey.MAIDENHEAD:
-      return Maidenhead('');
+      return Maidenhead.emptyCoordinate;
     case CoordinateFormatKey.MERCATOR:
-      return Mercator(0, 0);
+      return Mercator.emptyCoordinate;
     case CoordinateFormatKey.NATURAL_AREA_CODE:
-      return NaturalAreaCode('', '');
+      return NaturalAreaCode.emptyCoordinate;
     case CoordinateFormatKey.SLIPPY_MAP:
-      return SlippyMap(0, 0, defaultSlippyMapType);
+      return SlippyMap.emptyCoordinate;
     case CoordinateFormatKey.GEOHASH:
-      return Geohash('');
+      return Geohash.emptyCoordinate;
     case CoordinateFormatKey.GEO3X3:
-      return Geo3x3('');
+      return Geo3x3.emptyCoordinate;
     case CoordinateFormatKey.GEOHEX:
-      return GeoHex('');
+      return GeoHex.emptyCoordinate;
     case CoordinateFormatKey.OPEN_LOCATION_CODE:
-      return OpenLocationCode('');
+      return OpenLocationCode.emptyCoordinate;
     case CoordinateFormatKey.MAKANEY:
-      return Makaney('');
+      return Makaney.emptyCoordinate;
     case CoordinateFormatKey.QUADTREE:
-      return Quadtree([]);
+      return Quadtree.emptyCoordinate;
     case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
-      return ReverseWherigoWaldmeister(0, 0, 0);
+      return ReverseWherigoWaldmeister.emptyCoordinate;
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
-      return ReverseWherigoDay1976('00000', '00000');
+      return ReverseWherigoDay1976.emptyCoordinate;
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

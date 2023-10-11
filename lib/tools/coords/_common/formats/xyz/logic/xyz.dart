@@ -31,6 +31,8 @@ class XYZ extends BaseCoordinate {
     return _parseXYZ(input);
   }
 
+  static XYZ get emptyCoordinate => XYZ(0, 0, 0);
+
   @override
   String toString([int? precision]) {
     var numberFormat = NumberFormat('0.######');

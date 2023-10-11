@@ -24,6 +24,8 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
     return _parseReverseWherigoDay1976(input);
   }
 
+  static ReverseWherigoDay1976 get emptyCoordinate => ReverseWherigoDay1976('00000', '00000');
+
   @override
   String toString([int? precision]) {
     return '$s\n$t';

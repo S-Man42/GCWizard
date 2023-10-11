@@ -28,6 +28,8 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
     return x.toString().padLeft(6, '0');
   }
 
+  static ReverseWherigoWaldmeister get emptyCoordinate => ReverseWherigoWaldmeister(0, 0, 0);
+
   @override
   String toString([int? precision]) {
     return [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
