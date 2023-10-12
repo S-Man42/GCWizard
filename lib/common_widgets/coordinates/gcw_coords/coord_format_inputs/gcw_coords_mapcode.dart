@@ -15,6 +15,7 @@ class _GCWCoordsMapCode extends StatefulWidget {
 class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
   late TextEditingController _controller;
   var _currentCoord = '';
+  var _currentArea = '';
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
     }
 
     return Column(children: <Widget>[
+      _buildAreasDropDown(),
       GCWTextField(
           controller: _controller,
           onChanged: (ret) {
@@ -54,4 +56,30 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
       widget.onChanged(MapCode.parse(_currentCoord));
     } catch (e) {}
   }
+
+  Widget _buildAreasDropDown() {
+    return GCWDropDown<String>(
+      value: _currentArea,
+      items: iso3166alpha.mapIndexed((index, territory) {
+        var name = '';
+        if (index == 0) {
+          name = '';
+          territory = '';
+        } else if (isofullname.length > index) {
+          name = ' (' + isofullname[index] + ')';
+        }
+        return GCWDropDownMenuItem(
+          value: territory,
+          child: territory + name,
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          _currentArea = value;
+        });
+      },
+    );
+  }
 }
+
+

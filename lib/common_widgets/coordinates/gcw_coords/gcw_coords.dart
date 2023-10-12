@@ -27,6 +27,8 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams_short.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/mgrs.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
