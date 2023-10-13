@@ -10,7 +10,7 @@ class EasterYears extends StatefulWidget {
   const EasterYears({Key? key}) : super(key: key);
 
   @override
- _EasterYearsState createState() => _EasterYearsState();
+  _EasterYearsState createState() => _EasterYearsState();
 }
 
 class _EasterYearsState extends State<EasterYears> {
@@ -40,35 +40,35 @@ class _EasterYearsState extends State<EasterYears> {
           children: [
             Expanded(
                 child: Container(
-                  padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                  child: GCWDropDown<int>(
-                    value: _currentMonth,
-                    onChanged: (value) {
-                      if (_currentMonth != value) {
-                        setState(() {
-                          _currentMonth = value;
+              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+              child: GCWDropDown<int>(
+                value: _currentMonth,
+                onChanged: (value) {
+                  if (_currentMonth != value) {
+                    setState(() {
+                      _currentMonth = value;
 
-                          if (_currentMonth == 3) {
-                            _currentDayList = _listDaysForMarch;
-                            if (_currentDay < 22) _currentDay = 22;
-                          } else {
-                            _currentDayList = _listDaysForApril;
-                            if (_currentDay > 25) _currentDay = 25;
-                          }
-                        });
+                      if (_currentMonth == 3) {
+                        _currentDayList = _listDaysForMarch;
+                        if (_currentDay < 22) _currentDay = 22;
+                      } else {
+                        _currentDayList = _listDaysForApril;
+                        if (_currentDay > 25) _currentDay = 25;
                       }
-                    },
-                    items: [
-                      GCWDropDownMenuItem(
-                        value: 3,
-                        child: i18n(context, 'common_month_march'),
-                      ),
-                      GCWDropDownMenuItem(
-                        value: 4,
-                        child: i18n(context, 'common_month_april'),
-                      )
-                    ],
+                    });
+                  }
+                },
+                items: [
+                  GCWDropDownMenuItem(
+                    value: 3,
+                    child: i18n(context, 'common_month_march'),
                   ),
+                  GCWDropDownMenuItem(
+                    value: 4,
+                    child: i18n(context, 'common_month_april'),
+                  )
+                ],
+              ),
             )),
             Expanded(
               child: Container(

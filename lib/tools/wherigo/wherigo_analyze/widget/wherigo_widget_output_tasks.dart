@@ -19,14 +19,18 @@ List<List<String>> _buildOutputListTaskDataExpertMode(BuildContext context, Wher
       i18n(context, 'wherigo_output_medianame'),
       data.TaskMedia +
           (data.TaskMedia != ''
-              ? (WHERIGONameToObject[data.TaskMedia] != null ? ' ⬌ ' + WHERIGONameToObject[data.TaskMedia]!.ObjectName : '')
+              ? (WHERIGONameToObject[data.TaskMedia] != null
+                  ? ' ⬌ ' + WHERIGONameToObject[data.TaskMedia]!.ObjectName
+                  : '')
               : '')
     ],
     [
       i18n(context, 'wherigo_output_iconname'),
       data.TaskIcon +
           (data.TaskIcon != ''
-              ? (WHERIGONameToObject[data.TaskIcon] != null ? ' ⬌ ' + WHERIGONameToObject[data.TaskIcon]!.ObjectName : '')
+              ? (WHERIGONameToObject[data.TaskIcon] != null
+                  ? ' ⬌ ' + WHERIGONameToObject[data.TaskIcon]!.ObjectName
+                  : '')
               : '')
     ],
     [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.TaskActive)],

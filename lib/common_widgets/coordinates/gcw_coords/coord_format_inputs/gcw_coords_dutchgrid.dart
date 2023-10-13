@@ -5,7 +5,8 @@ class _GCWCoordsDutchGrid extends StatefulWidget {
   final DutchGrid coordinates;
   final bool initialize;
 
-  const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false}) : super(key: key);
+  const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();
@@ -17,8 +18,6 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
 
   var _currentX = defaultDoubleText;
   var _currentY = defaultDoubleText;
-
-
 
   @override
   void initState() {
@@ -44,7 +43,6 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
 
       _xController.text = _currentX.value.toString();
       _yController.text = _currentY.value.toString();
-
     }
 
     return Column(children: <Widget>[

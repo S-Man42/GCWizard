@@ -239,18 +239,16 @@ String _vDecodeSK(String value) {
 String _vDecodeGB(String value) {
   BigInt d = BigInt.parse(value) - BigInt.two.pow(40);
   if (d > BigInt.zero) {
-
     var dStr = d.toString();
     if (dStr.length <= 9) {
       return dStr.padLeft(9, '0');
-    } if (dStr.length <= 12) {
+    }
+    if (dStr.length <= 12) {
       return dStr.padLeft(12, '0');
     } else {
       throw Exception();
     }
-
   } else {
-
     var str = value;
     if (str.length < 3) {
       throw Exception();
@@ -332,7 +330,6 @@ String _vDecodeFR(String value) {
 
 String _vDecodeIE(String value) {
   if (value.length > 9) {
-
     var numerical = BigInt.parse(value) - BigInt.two.pow(33);
     var numStr = numerical.toString();
 
@@ -352,9 +349,7 @@ String _vDecodeIE(String value) {
     var c2 = c ~/ 26;
 
     return d + _alphabetValueCharAt(c1) + (c2 > 0 ? _alphabetValueCharAt(c2) : '');
-
   } else {
-
     if (value.length < 6) {
       throw Exception();
     }
@@ -386,9 +381,15 @@ String _vDecodeIE(String value) {
 
     String c1Str;
     switch (c1) {
-      case 26: c1Str = '+'; break;
-      case 27: c1Str = '*'; break;
-      default: c1Str = _alphabetValueCharAt(c1); break;
+      case 26:
+        c1Str = '+';
+        break;
+      case 27:
+        c1Str = '*';
+        break;
+      default:
+        c1Str = _alphabetValueCharAt(c1);
+        break;
     }
 
     return d.substring(0, 1) + c1Str + d.substring(1) + _alphabetValueCharAt(c2);

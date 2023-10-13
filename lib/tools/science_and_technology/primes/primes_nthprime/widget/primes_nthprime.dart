@@ -7,7 +7,7 @@ class NthPrime extends StatefulWidget {
   const NthPrime({Key? key}) : super(key: key);
 
   @override
- _NthPrimeState createState() => _NthPrimeState();
+  _NthPrimeState createState() => _NthPrimeState();
 }
 
 class _NthPrimeState extends State<NthPrime> {

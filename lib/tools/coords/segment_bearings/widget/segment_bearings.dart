@@ -13,8 +13,8 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/segment_bearings/logic/segment_bearings.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
@@ -25,7 +25,7 @@ class SegmentBearings extends StatefulWidget {
   const SegmentBearings({Key? key}) : super(key: key);
 
   @override
- _SegmentBearingsState createState() => _SegmentBearingsState();
+  _SegmentBearingsState createState() => _SegmentBearingsState();
 }
 
 class _SegmentBearingsState extends State<SegmentBearings> {
@@ -209,8 +209,8 @@ class _SegmentBearingsState extends State<SegmentBearings> {
     var endMapPoint2 = GCWMapPoint(
         point: endPoint2, markerText: i18n(context, 'coords_segmentbearings_end2'), coordinateFormat: format2);
 
-    var segments =
-        segmentBearings(_currentCoordsStart.toLatLng()!, bearing1, bearing2, _currentDistance, _currentSegmentCount, ells);
+    var segments = segmentBearings(
+        _currentCoordsStart.toLatLng()!, bearing1, bearing2, _currentDistance, _currentSegmentCount, ells);
 
     _currentMapPoints = [startMapPoint, endMapPoint1];
     _currentMapPolylines = [

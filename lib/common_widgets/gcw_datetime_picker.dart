@@ -123,7 +123,7 @@ class GCWDateTimePicker extends StatefulWidget {
   }) : super(key: key);
 
   @override
- _GCWDateTimePickerState createState() => _GCWDateTimePickerState();
+  _GCWDateTimePickerState createState() => _GCWDateTimePickerState();
 }
 
 class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
@@ -241,7 +241,7 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
           if (_currentDay != widget.datetime?.day) _currentDay = widget.datetime!.day;
         } else if (widget.duration != null) {
           if (_currentDay != widget.duration!.inDays.abs()) {
-            _currentDay = widget.duration!.inDays.abs();//.remainder(24);
+            _currentDay = widget.duration!.inDays.abs(); //.remainder(24);
           }
         }
       }
@@ -520,10 +520,10 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
     duration *= _currentSign;
 
     var output = DateTimeDuration(
-      dateTime: DateTime(
-          _currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, _currentSecond, _currentMilliSecond),
-      timezone: Duration(minutes: _currentTimezoneOffset),
-      duration: duration);
+        dateTime: DateTime(_currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, _currentSecond,
+            _currentMilliSecond),
+        timezone: Duration(minutes: _currentTimezoneOffset),
+        duration: duration);
 
     widget.onChanged(output);
   }

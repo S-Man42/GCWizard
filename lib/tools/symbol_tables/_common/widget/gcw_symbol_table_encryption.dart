@@ -34,7 +34,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWSymbolTableEncryptionState createState() => _GCWSymbolTableEncryptionState();
+  _GCWSymbolTableEncryptionState createState() => _GCWSymbolTableEncryptionState();
 }
 
 class _GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {

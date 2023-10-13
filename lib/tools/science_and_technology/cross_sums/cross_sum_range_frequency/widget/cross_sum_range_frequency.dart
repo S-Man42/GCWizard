@@ -17,7 +17,7 @@ class CrossSumRangeFrequency extends StatefulWidget {
   const CrossSumRangeFrequency({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
 
   @override
- _CrossSumRangeFrequencyState createState() => _CrossSumRangeFrequencyState();
+  _CrossSumRangeFrequencyState createState() => _CrossSumRangeFrequencyState();
 }
 
 class _CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {

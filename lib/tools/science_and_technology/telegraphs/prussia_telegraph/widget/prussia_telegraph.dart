@@ -22,7 +22,7 @@ class PrussiaTelegraph extends StatefulWidget {
   const PrussiaTelegraph({Key? key}) : super(key: key);
 
   @override
- _PrussiaTelegraphState createState() => _PrussiaTelegraphState();
+  _PrussiaTelegraphState createState() => _PrussiaTelegraphState();
 }
 
 class _PrussiaTelegraphState extends State<PrussiaTelegraph> {

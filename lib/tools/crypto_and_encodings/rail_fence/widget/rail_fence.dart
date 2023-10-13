@@ -12,7 +12,7 @@ class RailFence extends StatefulWidget {
   const RailFence({Key? key}) : super(key: key);
 
   @override
- _RailFenceState createState() => _RailFenceState();
+  _RailFenceState createState() => _RailFenceState();
 }
 
 class _RailFenceState extends State<RailFence> {

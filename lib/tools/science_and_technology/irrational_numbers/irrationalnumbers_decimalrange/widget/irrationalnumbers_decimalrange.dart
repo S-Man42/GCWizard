@@ -12,7 +12,7 @@ class IrrationalNumbersDecimalRange extends StatefulWidget {
   const IrrationalNumbersDecimalRange({Key? key, required this.irrationalNumber}) : super(key: key);
 
   @override
- _IrrationalNumbersDecimalRangeState createState() => _IrrationalNumbersDecimalRangeState();
+  _IrrationalNumbersDecimalRangeState createState() => _IrrationalNumbersDecimalRangeState();
 }
 
 class _IrrationalNumbersDecimalRangeState extends State<IrrationalNumbersDecimalRange> {

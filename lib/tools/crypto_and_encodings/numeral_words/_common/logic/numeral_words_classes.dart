@@ -1,4 +1,3 @@
-
 part of 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 
 class NumeralWordsDecodeOutput {
@@ -37,6 +36,9 @@ class OutputConvertToNumeralWord extends OutputConvertBase {
   final String numeralWord;
 
   OutputConvertToNumeralWord(
-      {required this.numeralWord, required String targetNumberSystem, required String title, required String errorMessage})
+      {required this.numeralWord,
+      required String targetNumberSystem,
+      required String title,
+      required String errorMessage})
       : super(numbersystem: targetNumberSystem, nameOfNumberSystem: title, error: errorMessage);
 }

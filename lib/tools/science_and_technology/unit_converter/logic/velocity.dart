@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Velocity extends Unit {
-  late double Function (double) toMS;
-  late double Function (double) fromMS;
+  late double Function(double) toMS;
+  late double Function(double) fromMS;
 
   Velocity({required String name, required String symbol, bool isReference = false, required double inMS})
       : super(name, symbol, isReference, (e) => e * inMS, (e) => e / inMS) {

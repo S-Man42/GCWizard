@@ -11,7 +11,7 @@ class NumberSequenceDigits extends StatefulWidget {
   const NumberSequenceDigits({Key? key, required this.mode, required this.maxDigits}) : super(key: key);
 
   @override
- _NumberSequenceDigitsState createState() => _NumberSequenceDigitsState();
+  _NumberSequenceDigitsState createState() => _NumberSequenceDigitsState();
 }
 
 class _NumberSequenceDigitsState extends State<NumberSequenceDigits> {

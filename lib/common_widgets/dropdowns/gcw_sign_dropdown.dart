@@ -8,7 +8,8 @@ class GCWSignDropDown extends StatefulWidget {
   final List<String> itemList;
   final String? title;
 
-  const GCWSignDropDown({Key? key, required this.itemList, required this.onChanged, this.value = 1, this.title}) : super(key: key);
+  const GCWSignDropDown({Key? key, required this.itemList, required this.onChanged, this.value = 1, this.title})
+      : super(key: key);
 
   @override
   _GCWSignDropDownState createState() => _GCWSignDropDownState();

@@ -11,7 +11,7 @@ class Gray extends StatefulWidget {
   const Gray({Key? key}) : super(key: key);
 
   @override
- _GrayState createState() => _GrayState();
+  _GrayState createState() => _GrayState();
 }
 
 class _GrayState extends State<Gray> {
@@ -27,8 +27,7 @@ class _GrayState extends State<Gray> {
 
   final _decimalMaskFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
 
-  final _binaryDigitsMaskFormatter =
-      GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
+  final _binaryDigitsMaskFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
 
   @override
   void initState() {

@@ -20,7 +20,7 @@ class MapPointEditor extends StatefulWidget {
   MapPointEditor({Key? key, required this.mapPoint, required this.lengthUnit}) : super(key: key);
 
   @override
- _MapPointEditorState createState() => _MapPointEditorState();
+  _MapPointEditorState createState() => _MapPointEditorState();
 }
 
 class _MapPointEditorState extends State<MapPointEditor> {

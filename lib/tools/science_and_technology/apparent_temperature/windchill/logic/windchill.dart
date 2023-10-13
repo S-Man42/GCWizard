@@ -2,7 +2,12 @@ import 'dart:math';
 
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 
-enum WINDCHILL_HEATSTRESS_CONDITION { DARK_BLUE, BLUE, LIGHT_BLUE, WHITE, }
+enum WINDCHILL_HEATSTRESS_CONDITION {
+  DARK_BLUE,
+  BLUE,
+  LIGHT_BLUE,
+  WHITE,
+}
 
 final Map<WINDCHILL_HEATSTRESS_CONDITION, double> WINDCHILL_HEAT_STRESS = {
   WINDCHILL_HEATSTRESS_CONDITION.DARK_BLUE: -49.0,

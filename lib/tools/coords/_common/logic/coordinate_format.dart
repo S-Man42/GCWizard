@@ -2,11 +2,11 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 
-class CoordinateFormat{
+class CoordinateFormat {
   final CoordinateFormatKey type;
   CoordinateFormatKey? subtype;
 
-  CoordinateFormat(this.type, [this.subtype]){
+  CoordinateFormat(this.type, [this.subtype]) {
     if (isCoordinateFormatWithSubtype(type)) {
       if (subtype == null || !isSubtypeOfCoordinateFormat(type, subtype!)) {
         subtype = defaultCoordinateFormatSubtypeForFormat(type);
