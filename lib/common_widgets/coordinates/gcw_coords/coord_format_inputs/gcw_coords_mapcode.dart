@@ -61,16 +61,9 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
     return GCWDropDown<String>(
       value: _currentArea,
       items: _buildAreaList().map((entry) {
-        var name = '';
-        if (index == 0) {
-          name = '';
-          territory = '';
-        } else if (isofullname.length > index) {
-          name = ' (' + isofullname[index] + ')';
-        }
         return GCWDropDownMenuItem(
           value: entry.key,
-          child: territory + name,
+          child: entry.value,
         );
       }).toList(),
       onChanged: (value) {
@@ -81,13 +74,10 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
     );
   }
   List<MapEntry<String, String>> _buildAreaList() {
-    var map = Map<String, String>.fromIterables(iso3166alpha, isofullname);
-    var list = map.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key));
-    for (var element in list) {
-      if (element.value.isNotEmpty) {
-        element.value = ' (' + element.value + ')';
-      }
-    }
+    var list = iso3166alpha.mapIndexed((index, entry) => 
+        MapEntry(entry, entry + ' (' + isofullname[index].replaceAll(RegExp(r"\(.*\)"), '') + ')'))
+        .toList();
+    list.sort((e1, e2) => e1.key.compareTo(e2.key));
     list.insert(0, const MapEntry<String, String>('',''));
 
     return list;
