@@ -158,6 +158,7 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
   wholeAlphabet = key + alphabetWord;
   switch (mode) {
     case PolybiosMode.AZ09:
+    case PolybiosMode.x09AZ:
       if (matrix4x10) {
         if (wholeAlphabet.contains('.')) {
           wholeAlphabet = wholeAlphabet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -177,6 +178,7 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
       }
       break;
     case PolybiosMode.ZA90:
+    case PolybiosMode.x90ZA:
       if (matrix4x10) {
         if (wholeAlphabet.contains('.')) {
           wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';

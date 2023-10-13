@@ -1062,11 +1062,7 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.WHAT3WORDS:
       return What3Words('', '', '', CoordinateFormatKey.WHAT3WORDS_DE);
     case CoordinateFormatKey.GC8K7RC:
-      return GC8K7RC(
-        0,
-        0,
-      );
-
+      return GC8K7RC(0, 0,);
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }

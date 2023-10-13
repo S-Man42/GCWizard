@@ -26,9 +26,11 @@ TrifidOutput encryptTrifid(String input, int blockSize,
 
   switch (mode) {
     case PolybiosMode.AZ09:
+    case PolybiosMode.x09AZ:
       alphabet = alphabet_AZ.keys.join() + '+';
       break;
     case PolybiosMode.ZA90:
+    case PolybiosMode.x90ZA:
       alphabet = alphabet_AZ.keys.toList().reversed.join() + '+';
       break;
     case PolybiosMode.CUSTOM:
@@ -82,9 +84,11 @@ TrifidOutput decryptTrifid(String input, int blockSize,
 
   switch (mode) {
     case PolybiosMode.AZ09:
+    case PolybiosMode.x09AZ:
       alphabet = alphabet_AZ.keys.join() + '+';
       break;
     case PolybiosMode.ZA90:
+    case PolybiosMode.x90ZA:
       alphabet = alphabet_AZ.keys.toList().reversed.join() + '+';
       break;
     case PolybiosMode.CUSTOM:
