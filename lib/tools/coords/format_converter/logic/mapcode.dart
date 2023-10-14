@@ -1,4 +1,6 @@
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -36,8 +38,12 @@ const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
   1: CoordinateFormatKey.MAPCODE_INTERNATIONAL,
 };
 
-MapCode latLonToMapCode(LatLng coord, {bool internationalCode = true, int precision = _DEFAULT_PRECISION}) {
-  return MapCode(encodeWithPrecision(coord.latitude, coord.longitude, precision, ''));
+MapCode latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int precision = _DEFAULT_PRECISION}) {
+  if (subtype == CoordinateFormatKey.MAPCODE_INTERNATIONAL) {
+    return MapCode(encodeInternational(coord.latitude, coord.longitude, precision), subtype);
+  } else {
+    return MapCode(encodeWithPrecision(coord.latitude, coord.longitude, precision, ''), subtype);
+  }
 }
 
 LatLng? MapCodeToLatLon(MapCode mapcode) {
@@ -45,13 +51,15 @@ LatLng? MapCodeToLatLon(MapCode mapcode) {
   return decode(mapcode.coords.first.fullmapcode, '');
 }
 
-MapCode? parseMapCode(String input) {
-
+MapCode? parseMapCode(String input, {String territory = ''}) {
   var match = RegExp(_regexString()).firstMatch(input);
   if (match == null) return null;
 
   var mapCode = input.substring(match.start, match.end);
-  var latLon = decode(mapCode, '');
+  if (territory.isNotEmpty && match.group(1) != null) {
+    mapCode.replaceFirst(match.group(1)!, territory);
+  }
+  var latLon = decode(mapCode, territory);
   if (latLon == null) {
     return null;
   } else {
@@ -60,15 +68,15 @@ MapCode? parseMapCode(String input) {
     mcInfo.fullmapcode = mapCode;
     coords.add(mcInfo);
 
-    return MapCode(coords);
+    return MapCode(coords, defaultMapCodeType);
   }
 }
 
 String _regexString() {
   // https://github.com/sindresorhus/mapcode-regex/blob/main/index.js
-  var rx = "(?:(11|12|13|14|15|21|22|23|31|32|33|34|35|36|37|41|42|43|44|45|46|50|51|52|53|54|61|62|63|64|65|71|91|92|";
+  var rx = "(?:(11|12|13|14|15|21|22|23|31|32|33|34|35|36|37|41|42|43|44|45|46|50|51|52|53|54|61|62|63|64|65|71|91|92";
   for (var element in iso3166alpha) {
-    rx += element + "|";
+    rx += "|" + element;
   }
   const letter = r"[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]";
   // var rx1 = "";
@@ -78,7 +86,7 @@ String _regexString() {
   //rx1 = rx1.replaceAll( "(", '').replaceAll( ")", '');
   // rx1 = rx1.substring(0, rx1.length-1);
   // rx += rx1;
-  rx = rx.substring(0, rx.length-1);
+  //rx = rx.substring(0, rx.length-1);
   rx += r")\s*)?" + letter + r"{2,}\." + letter + r"{2,}(-\d{1,8})?";
   return rx;
 }
