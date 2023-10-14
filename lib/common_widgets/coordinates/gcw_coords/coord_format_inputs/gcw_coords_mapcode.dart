@@ -73,9 +73,10 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
       },
     );
   }
+
   List<MapEntry<String, String>> _buildAreaList() {
     var list = iso3166alpha.mapIndexed((index, entry) => 
-        MapEntry(entry, entry + ' (' + isofullname[index].replaceAll(RegExp(r"\(.*\)"), '') + ')'))
+        MapEntry(entry, entry + ' (' + isofullname[index].replaceAll(RegExp(r"\(.*\)"), '').trim() + ')'))
         .toList();
     list.sort((e1, e2) => e1.key.compareTo(e2.key));
     list.insert(0, const MapEntry<String, String>('',''));
