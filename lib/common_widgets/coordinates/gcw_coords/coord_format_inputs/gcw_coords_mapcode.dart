@@ -78,6 +78,7 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
       onChanged: (value) {
         setState(() {
           _currentTerritory = value;
+          _setCurrentValueAndEmitOnChange();
         });
       },
     );
