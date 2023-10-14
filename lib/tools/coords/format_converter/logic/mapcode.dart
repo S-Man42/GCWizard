@@ -55,9 +55,13 @@ MapCode? parseMapCode(String input, {String territory = ''}) {
   var match = RegExp(_regexString()).firstMatch(input);
   if (match == null) return null;
 
-  var mapCode = input.substring(match.start, match.end);
-  if (territory.isNotEmpty && match.group(1) != null) {
-    mapCode.replaceFirst(match.group(1)!, territory);
+  var mapCode = match.group(0).toString();
+  if (territory.isNotEmpty) {
+    if (match.group(1) != null) {
+      mapCode = mapCode.replaceFirst(match.group(1)!, territory);
+    } else {
+      mapCode = territory + ' ' + mapCode;
+    }
   }
   var latLon = decode(mapCode, territory);
   if (latLon == null) {

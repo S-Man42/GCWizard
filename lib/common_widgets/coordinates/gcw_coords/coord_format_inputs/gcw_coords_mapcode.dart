@@ -15,7 +15,8 @@ class _GCWCoordsMapCode extends StatefulWidget {
 class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
   late TextEditingController _controller;
   var _currentCoord = '';
-  var _currentArea = '';
+  var _currentTerritory = '';
+  CoordinateFormatKey _currentSubtype = defaultMapCodeType;
 
   @override
   void initState() {
@@ -31,15 +32,19 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.initialize) {
-      var quadtree = widget.coordinates;
-      _currentCoord = quadtree.toString();
+    _currentSubtype = widget.coordinates.format.subtype!;
+
+    if (_subtypeChanged()) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
+    } else if (widget.initialize) {
+      var mapcode = widget.coordinates;
+      _currentCoord = mapcode.toString();
 
       _controller.text = _currentCoord;
     }
 
     return Column(children: <Widget>[
-      _buildAreasDropDown(),
+      _buildTerritorysDropDown(),
       GCWTextField(
           controller: _controller,
           onChanged: (ret) {
@@ -51,16 +56,20 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
     ]);
   }
 
+  bool _subtypeChanged() {
+    return _currentSubtype != widget.coordinates.format.subtype;
+  }
+
   void _setCurrentValueAndEmitOnChange() {
     try {
-      widget.onChanged(MapCode.parse(_currentCoord));
+      widget.onChanged(MapCode.parse(_currentCoord, territory: _currentTerritory));
     } catch (e) {}
   }
 
-  Widget _buildAreasDropDown() {
+  Widget _buildTerritorysDropDown() {
     return GCWDropDown<String>(
-      value: _currentArea,
-      items: _buildAreaList().map((entry) {
+      value: _currentTerritory,
+      items: _buildTerritorysList().map((entry) {
         return GCWDropDownMenuItem(
           value: entry.key,
           child: entry.value,
@@ -68,13 +77,13 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
       }).toList(),
       onChanged: (value) {
         setState(() {
-          _currentArea = value;
+          _currentTerritory = value;
         });
       },
     );
   }
 
-  List<MapEntry<String, String>> _buildAreaList() {
+  List<MapEntry<String, String>> _buildTerritorysList() {
     var list = iso3166alpha.mapIndexed((index, entry) => 
         MapEntry(entry, entry + ' (' + isofullname[index].replaceAll(RegExp(r"\(.*\)"), '').trim() + ')'))
         .toList();
