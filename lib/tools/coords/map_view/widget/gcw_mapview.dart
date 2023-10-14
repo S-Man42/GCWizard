@@ -21,7 +21,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
@@ -940,7 +940,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   List<BaseCoordinate>? _parseCoords(String text) {
     var parsed = parseCoordinates(text);
     if (parsed.isEmpty) {
-      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
+      showSnackBar(i18n(context, 'coords_common_clipboard_nocoordsfound'), context);
       return null;
     }
 

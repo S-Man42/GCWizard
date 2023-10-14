@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -102,7 +102,7 @@ class _AmscoState extends State<Amsco> {
     if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.Key:
-          showToast(i18n(context, 'amsco_error_key'));
+          showSnackBar(i18n(context, 'amsco_error_key'), context);
           break;
         default:
       }

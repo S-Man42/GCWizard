@@ -16,7 +16,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
@@ -87,7 +87,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             });
             widget.onLoaded(file);
           } else {
-            showToast(i18n(context, 'common_loadfile_exception_nofile'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
           }
         });
       },
@@ -124,13 +124,13 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     _currentUri = null;
 
     if (_currentUrl == null) {
-      showToast(i18n(context, 'common_loadfile_exception_url'));
+      showSnackBar(i18n(context, 'common_loadfile_exception_url'), context);
       return null;
     }
 
     await _getAndValidateUri(_currentUrl!.trim()).then((uri) {
       if (uri == null) {
-        showToast(i18n(context, 'common_loadfile_exception_url'));
+        showSnackBar(i18n(context, 'common_loadfile_exception_url'), context);
         return null;
       }
       _currentUri = uri;
@@ -184,7 +184,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       _loadedFile = GCWFile(
           name: Uri.decodeFull(_currentUrl!).split('/').last.split('?').first, path: _currentUrl, bytes: data.value);
     } else if (data != null && data.text.isNotEmpty) {
-      showToast(i18n(context, data.text));
+      showSnackBar(i18n(context, data.text), context);
     }
 
     if (_loadedFile != null) {
@@ -282,7 +282,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           if ((contentType != null) && _validateContentType(contentType)) {
             return uri;
           } else {
-            showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_supportedfiletype'), context);
           }
         }
       } catch (e) {}

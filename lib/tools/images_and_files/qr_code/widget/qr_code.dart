@@ -6,7 +6,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -63,7 +63,7 @@ class _QrCodeState extends State<QrCode> {
                 supportedFileTypes: SUPPORTED_IMAGE_TYPES,
                 onLoaded: (GCWFile? value) {
                   if (value == null) {
-                    showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                    showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                     return;
                   }
 
@@ -140,7 +140,7 @@ class _QrCodeState extends State<QrCode> {
         var currentInput = _currentInput;
         if ((currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength)) {
           currentInput = currentInput.substring(0, maxLength);
-          showToast(i18n(context, 'qr_code_length_limited', parameters: [maxLength.toString()]));
+          showSnackBar(i18n(context, 'qr_code_length_limited', parameters: [maxLength.toString()]), context);
         }
         lastCurrentInputLength = _currentInput.length;
 
