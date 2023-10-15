@@ -4270,6 +4270,9 @@ void initializeRegistry(BuildContext context) {
       'calendar',
       'symbol_maya_calendar_tzolkin',
     ]),
+    GCWSymbolTableTool(symbolKey: 'maya_numbers_glyphs', symbolSearchStrings: const [
+      'mayanumbers',
+    ]),
     GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: const [
       'mayanumbers',
     ]),
