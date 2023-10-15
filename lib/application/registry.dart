@@ -4547,6 +4547,10 @@ void initializeRegistry(BuildContext context) {
       'telegraph',
       'telegraph_prussia',
     ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_schmidt', symbolSearchStrings: const [
+      'telegraph',
+      'telegraph_schmidt',
+    ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: const [
       'symbol_templers',
     ]),
