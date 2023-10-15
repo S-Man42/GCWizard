@@ -14,7 +14,7 @@ class CallForContribution extends StatefulWidget {
   const CallForContribution({Key? key}) : super(key: key);
 
   @override
- _CallForContributionState createState() => _CallForContributionState();
+  _CallForContributionState createState() => _CallForContributionState();
 }
 
 class _CallForContributionState extends State<CallForContribution> {

@@ -9,7 +9,7 @@ class ScrabbleOverview extends StatefulWidget {
   const ScrabbleOverview({Key? key}) : super(key: key);
 
   @override
- _ScrabbleOverviewState createState() => _ScrabbleOverviewState();
+  _ScrabbleOverviewState createState() => _ScrabbleOverviewState();
 }
 
 class _ScrabbleOverviewState extends State<ScrabbleOverview> {
@@ -55,10 +55,6 @@ class _ScrabbleOverviewState extends State<ScrabbleOverview> {
       return [entry.key.replaceAll(' ', String.fromCharCode(9251)), entry.value.value, entry.value.frequency];
     }).toList());
 
-    return GCWColumnedMultilineOutput(
-        data: data,
-        hasHeader: true,
-        copyColumn: 0
-    );
+    return GCWColumnedMultilineOutput(data: data, hasHeader: true, copyColumn: 0);
   }
 }

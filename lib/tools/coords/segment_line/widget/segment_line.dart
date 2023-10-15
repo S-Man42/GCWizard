@@ -21,7 +21,7 @@ class SegmentLine extends StatefulWidget {
   const SegmentLine({Key? key}) : super(key: key);
 
   @override
- _SegmentLineState createState() => _SegmentLineState();
+  _SegmentLineState createState() => _SegmentLineState();
 }
 
 class _SegmentLineState extends State<SegmentLine> {
@@ -114,7 +114,8 @@ class _SegmentLineState extends State<SegmentLine> {
   }
 
   void _calculateOutput() {
-    var segments = segmentLine(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, _currentSegmentCount, defaultEllipsoid);
+    var segments =
+        segmentLine(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, _currentSegmentCount, defaultEllipsoid);
 
     var startMapPoint = GCWMapPoint(
         point: _currentCoords1.toLatLng()!,

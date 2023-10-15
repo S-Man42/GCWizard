@@ -12,7 +12,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
@@ -21,7 +21,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.d
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/geohashing/logic/geohashing.dart' as geohashing;
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -54,7 +53,6 @@ class _GeohashingState extends State<Geohashing> {
   final _currentMapPoints = <GCWMapPoint>[];
   var _currentOutput = <String>[];
   geohashing.Geohashing? _geohashing;
-
 
   @override
   void initState() {
@@ -89,61 +87,58 @@ class _GeohashingState extends State<Geohashing> {
     return Column(children: <Widget>[
       GCWTextDivider(text: i18n(context, 'common_date_format_ymd')),
       GCWDatePicker(
-          date: _currentDate,
-          yearController: _yearController,
-          monthController: _monthController,
-          dayController: _dayController,
-          onChanged: (value) {
+        date: _currentDate,
+        yearController: _yearController,
+        monthController: _monthController,
+        dayController: _dayController,
+        onChanged: (value) {
           setState(() {
             _currentDate = value;
           });
         },
       ),
       GCWTextDivider(text: i18n(context, 'common_location'), trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
-      Row(
-        children: [
-          Expanded(
-            child:
-              GCWIntegerTextField(
-                hintText: i18n(context, 'coords_common_latitude'),
-                textInputFormatter: DegreesLatTextInputFormatter(allowNegativeValues: true),
-                controller: _LatitudeController,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLatitude = ret;
-                  });
-                }
-              ),
-          ),
-          const SizedBox(width: 4),
-          Expanded(
-            child:
-            GCWIntegerTextField(
-                hintText: i18n(context, 'coords_common_longitude'),
-                textInputFormatter: DegreesLonTextInputFormatter(allowNegativeValues: true),
-                controller: _LongitudeController,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLongitude = ret;
-                  });
-                }
-              ),
-
-          )
+      Row(children: [
+        Expanded(
+          child: GCWIntegerTextField(
+              hintText: i18n(context, 'coords_common_latitude'),
+              textInputFormatter: DegreesLatTextInputFormatter(allowNegativeValues: true),
+              controller: _LatitudeController,
+              onChanged: (ret) {
+                setState(() {
+                  _currentLatitude = ret;
+                });
+              }),
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: GCWIntegerTextField(
+              hintText: i18n(context, 'coords_common_longitude'),
+              textInputFormatter: DegreesLonTextInputFormatter(allowNegativeValues: true),
+              controller: _LongitudeController,
+              onChanged: (ret) {
+                setState(() {
+                  _currentLongitude = ret;
+                });
+              }),
+        )
       ]),
       GCWTextDivider(text: i18n(context, 'geohashing_dow_jones_index')),
       GCWTwoOptionsSwitch(
-        leftValue: i18n(context, 'geohashing_loaddata_manual'),
-        rightValue: i18n(context, 'geohashing_loaddata_internet'),
-        title: i18n(context, 'geohashing_loaddata'),
-        value: _currentOnline,
-        onChanged: (value) {
-          if (value == GCWSwitchPosition.right) {
-            showGCWDialog(
-              context,
-              i18n(context, 'geohashing_dow_jones_index_online'),
-              null,
-              [
+          leftValue: i18n(context, 'geohashing_loaddata_manual'),
+          rightValue: i18n(context, 'geohashing_loaddata_internet'),
+          title: i18n(context, 'geohashing_loaddata'),
+          value: _currentOnline,
+          onChanged: (value) {
+            if (value == GCWSwitchPosition.right) {
+              showGCWDialog(context,
+                i18n(context, 'geohashing_dow_jones_index'),
+                SizedBox(
+                  width: 300,
+                  height: 130,
+                  child: Text(i18n(context, 'geohashing_dow_jones_index_online'))
+                ),
+                [
                 GCWDialogButton(
                   text: i18n(context, 'common_ok'),
                   onPressed: () {
@@ -152,25 +147,24 @@ class _GeohashingState extends State<Geohashing> {
                     });
                   },
                 )
-              ]
-            );
-          } else {
-            setState(() {
-              _currentOnline = value;
-            });
-          }
-        }
-      ),
-      if (_currentOnline == GCWSwitchPosition.left) GCWDoubleTextField(
-        min: 0,
-        controller: _DowJonesIndexController,
-        hintText: i18n(context, 'geohashing_dow_jones_index') +
-            (_W30RuleNecessary() ? ' (' + i18n(context, 'geohashing_dow_jones_index_w30_rule') + ')': ''),
-        onChanged: (value) {
-        setState(() {
-          _currentDowJonesIndex = value.value;
-        });
-      }),
+              ]);
+            } else {
+              setState(() {
+                _currentOnline = value;
+              });
+            }
+          }),
+      if (_currentOnline == GCWSwitchPosition.left)
+        GCWDoubleTextField(
+            min: 0,
+            controller: _DowJonesIndexController,
+            hintText: i18n(context, 'geohashing_dow_jones_index') +
+                (_W30RuleNecessary() ? ' (' + i18n(context, 'geohashing_dow_jones_index_w30_rule') + ')' : ''),
+            onChanged: (value) {
+              setState(() {
+                _currentDowJonesIndex = value.value;
+              });
+            }),
       GCWCoordsOutputFormat(
         coordFormat: _currentOutputFormat,
         onChanged: (value) {
@@ -199,8 +193,10 @@ class _GeohashingState extends State<Geohashing> {
 
     if (_geohashing != null) {
       var rows = [
-        [i18n(context, 'geohashing_dow_jones_index'),
-          (_geohashing!.dowJonesIndex > 0) ? _geohashing!.dowJonesIndex.toString() : ''],
+        [
+          i18n(context, 'geohashing_dow_jones_index'),
+          (_geohashing!.dowJonesIndex > 0) ? _geohashing!.dowJonesIndex.toString() : ''
+        ],
         [i18n(context, 'geohashing_title'), _geohashing.toString()],
       ];
 
@@ -249,6 +245,10 @@ class _GeohashingState extends State<Geohashing> {
     _currentOutput.clear();
 
     _geohashing = _buildGeohashing();
+    if (_geohashing!.errorCode == geohashing.ErrorCode.futureDate) {
+      showSnackBar(i18n(context, 'geohashing_future_date'), context);
+    }
+
     _geohashing!.toLatLng().then((value) {
       if (value != null) {
         var point = GCWMapPoint(
@@ -258,7 +258,7 @@ class _GeohashingState extends State<Geohashing> {
 
         _currentMapPoints.add(point);
 
-        _currentOutput =  [value].map((LatLng coord) {
+        _currentOutput = [value].map((LatLng coord) {
           return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid);
         }).toList();
 
@@ -276,10 +276,8 @@ class _GeohashingState extends State<Geohashing> {
   }
 
   geohashing.Geohashing _buildGeohashing() {
-    return geohashing.Geohashing(
-        _currentDate, _currentLatitude.value, _currentLongitude.value,
-        dowJonesIndex: _currentOnline == GCWSwitchPosition.right ? 0 : _currentDowJonesIndex
-    );
+    return geohashing.Geohashing(_currentDate, _currentLatitude.value, _currentLongitude.value,
+        dowJonesIndex: _currentOnline == GCWSwitchPosition.right ? 0 : _currentDowJonesIndex);
   }
 
   void _setUserLocationCoords() {
@@ -294,7 +292,7 @@ class _GeohashingState extends State<Geohashing> {
         setState(() {
           _isOnLocationAccess = false;
         });
-        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+        showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
 
         return;
       }

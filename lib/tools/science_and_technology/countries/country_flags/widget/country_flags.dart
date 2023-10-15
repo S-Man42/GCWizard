@@ -11,7 +11,7 @@ class CountriesFlags extends StatefulWidget {
   const CountriesFlags({Key? key}) : super(key: key);
 
   @override
- _CountriesFlagsState createState() => _CountriesFlagsState();
+  _CountriesFlagsState createState() => _CountriesFlagsState();
 }
 
 class _CountriesFlagsState extends State<CountriesFlags> {
@@ -52,7 +52,6 @@ class _CountriesFlagsState extends State<CountriesFlags> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         GCWDropDown<String>(

@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Volume extends Unit {
-  late double Function (double) toCubicMeter;
-  late double Function (double) fromCubicMeter;
+  late double Function(double) toCubicMeter;
+  late double Function(double) fromCubicMeter;
 
   Volume({
     required String name,
@@ -15,7 +15,8 @@ class Volume extends Unit {
   }
 }
 
-final VOLUME_CUBICMETER = Volume(name: 'common_unit_volume_m3_name', symbol: 'm\u00B3', inCubicMeters: 1.0, isReference: true);
+final VOLUME_CUBICMETER =
+    Volume(name: 'common_unit_volume_m3_name', symbol: 'm\u00B3', inCubicMeters: 1.0, isReference: true);
 
 final _VOLUME_CUBICCENTIMETER =
     Volume(name: 'common_unit_volume_cm3_name', symbol: 'cm\u00B3', inCubicMeters: 0.01 * 0.01 * 0.01);

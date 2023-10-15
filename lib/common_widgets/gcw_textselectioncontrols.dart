@@ -41,8 +41,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
       delegate: delegate,
       handleCopy: canCopy(delegate)
           ? () {
-              insertIntoGCWClipboard(
-                  context, selectedText(delegate));
+              insertIntoGCWClipboard(context, selectedText(delegate));
               handleCopy(delegate, clipboardStatus);
             }
           : () {},
@@ -68,14 +67,13 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
               delegate.bringIntoView(delegate.textEditingValue.selection.extent);
               delegate.hideToolbar();
             }
-          :  () {},
+          : () {},
       handleCut: canCut(delegate)
           ? () {
-              insertIntoGCWClipboard(
-                  context, selectedText(delegate));
+              insertIntoGCWClipboard(context, selectedText(delegate));
               handleCut(delegate, clipboardStatus);
             }
-          :  () {},
+          : () {},
 
       handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll1(delegate) : () => {},
     );
@@ -89,7 +87,7 @@ bool canCopy(TextSelectionDelegate delegate) {
 
 /// copy of deprecated function
 void handleCopy(TextSelectionDelegate delegate, ValueListenable<ClipboardStatus>? clipboardStatus) {
-    delegate.copySelection(SelectionChangedCause.toolbar);
+  delegate.copySelection(SelectionChangedCause.toolbar);
 }
 
 /// copy of deprecated function

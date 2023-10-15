@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_formula_list_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
@@ -19,11 +19,10 @@ class VariableCoordinateFormulas extends StatefulWidget {
   const VariableCoordinateFormulas({Key? key}) : super(key: key);
 
   @override
- _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
+  _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
 }
 
 class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
-
   @override
   void initState() {
     super.initState();
@@ -49,6 +48,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
       ],
     );
   }
+
   String _createImportName(String currentName) {
     var baseName = '[${i18n(context, 'common_import')}] $currentName';
 
@@ -72,9 +72,9 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
       setState(() {
         insertFormula(formula);
       });
-      showToast(i18n(context, 'formulasolver_groups_imported'));
+      showSnackBar(i18n(context, 'formulasolver_groups_imported'), context);
     } catch (e) {
-      showToast(i18n(context, 'formulasolver_groups_importerror'));
+      showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
     }
   }
 
@@ -94,7 +94,7 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
           toolName: '${entry.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
           helpSearchString: 'coords_variablecoordinate_title',
           defaultLanguageToolName:
-          '${entry.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
+              '${entry.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
           id: 'coords_variablecoordinate');
     } else {
       return null;

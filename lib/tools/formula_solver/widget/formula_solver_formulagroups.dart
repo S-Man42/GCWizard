@@ -22,7 +22,7 @@ import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_formula_list_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -57,11 +57,10 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
   const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
 
   @override
- _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
+  _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
 }
 
 class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
-
   @override
   void initState() {
     super.initState();
@@ -71,21 +70,22 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWTextDivider(
             text: i18n(context, 'formulasolver_groups_newgroup'),
-            trailing: GCWPasteButton(iconSize: IconButtonSize.SMALL, onSelected: (String data) {
-              try {
-                setState(() {
-                  importFormulaGroupFromJson(context, data);
-                });
-                showToast(i18n(context, 'formulasolver_groups_imported'));
-              } catch (e) {
-                showToast(i18n(context, 'formulasolver_groups_importerror'));
-              }
-            })),
+            trailing: GCWPasteButton(
+                iconSize: IconButtonSize.SMALL,
+                onSelected: (String data) {
+                  try {
+                    setState(() {
+                      importFormulaGroupFromJson(context, data);
+                    });
+                    showSnackBar(i18n(context, 'formulasolver_groups_imported'), context);
+                  } catch (e) {
+                    showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
+                  }
+                })),
         GCWFormulaListEditor(
           formulaList: formulaGroups,
           buildGCWTool: (id) => _buildNavigateGCWTool(id),
@@ -114,9 +114,9 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
         tool: _FormulaSolverFormulas(group: entry),
         toolName: '${entry.name} - ${i18n(context, 'formulasolver_formulas')}',
         helpSearchString: 'formulasolver_formulas',
-        defaultLanguageToolName:
-        '${entry.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
-        id: '',);
+        defaultLanguageToolName: '${entry.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
+        id: '',
+      );
     } else {
       return null;
     }
@@ -149,7 +149,5 @@ void openInFormulaGroups(BuildContext context) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
-          builder: (context) => GCWTool(
-              tool: const FormulaSolverFormulaGroups(),
-              id: 'formulasolver')));
+          builder: (context) => GCWTool(tool: const FormulaSolverFormulaGroups(), id: 'formulasolver')));
 }

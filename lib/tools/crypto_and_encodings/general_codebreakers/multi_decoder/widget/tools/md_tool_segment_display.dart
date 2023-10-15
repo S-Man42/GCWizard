@@ -8,11 +8,8 @@ const MDT_INTERNALNAMES_SEGMENTDISPLAY = 'multidecoder_tool_segmentdisplay_title
 const MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS = 'multidecoder_tool_segmentdisplay_option_numbersegments';
 
 class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
-  MultiDecoderToolSegmentDisplay({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolSegmentDisplay(
+      {Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -20,7 +17,8 @@ class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_SEGMENTDISPLAY,
             onDecode: (String input, String key) {
               SegmentDisplayType segmentType;
-              var vale = checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_SEGMENTDISPLAY, options, MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS);
+              var vale = checkIntFormatOrDefaultOption(
+                  MDT_INTERNALNAMES_SEGMENTDISPLAY, options, MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS);
               switch (vale) {
                 case 7:
                   segmentType = SegmentDisplayType.SEVEN;
@@ -44,15 +42,14 @@ class MultiDecoderToolSegmentDisplay extends AbstractMultiDecoderTool {
 class _MultiDecoderToolSegmentDisplayState extends State<MultiDecoderToolSegmentDisplay> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: GCWDropDown<int>(
-        value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_SEGMENTDISPLAY, widget.options, MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS),
+        value: checkIntFormatOrDefaultOption(
+            MDT_INTERNALNAMES_SEGMENTDISPLAY, widget.options, MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS] = newValue;
           });
-
         },
         items: [7, 14, 16].map((numberSegments) {
           return GCWDropDownMenuItem(
@@ -61,7 +58,6 @@ class _MultiDecoderToolSegmentDisplayState extends State<MultiDecoderToolSegment
           );
         }).toList(),
       ),
-    }
-    );
+    });
   }
 }

@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_gallery.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -33,7 +33,7 @@ class AnimatedImageMorseCode extends StatefulWidget {
   const AnimatedImageMorseCode({Key? key, this.file}) : super(key: key);
 
   @override
- _AnimatedImageMorseCodeState createState() => _AnimatedImageMorseCodeState();
+  _AnimatedImageMorseCodeState createState() => _AnimatedImageMorseCodeState();
 }
 
 class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
@@ -95,7 +95,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
         onLoaded: (GCWFile? value) {
           if (value == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -155,11 +155,12 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
     return Column(children: <Widget>[
       _play
-          ? _file?.bytes == null ?  Container() : Image.memory(_file!.bytes)
+          ? _file?.bytes == null
+              ? Container()
+              : Image.memory(_file!.bytes)
           : _filtered
               ? GCWGallery(
-                  imageData:
-                      _convertImageDataFiltered(_outData!.images, _outData!.durations, _outData!.imagesFiltered),
+                  imageData: _convertImageDataFiltered(_outData!.images, _outData!.durations, _outData!.imagesFiltered),
                   onDoubleTap: (index) {
                     setState(() {
                       List<List<int>> imagesFiltered = _outData!.imagesFiltered;
@@ -342,7 +343,8 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return list;
   }
 
-  List<GCWImageViewData> _convertImageData(List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
+  List<GCWImageViewData> _convertImageData(
+      List<Uint8List>? images, List<int> durations, List<List<int>> imagesFiltered) {
     var list = <GCWImageViewData>[];
 
     if (images != null) {
@@ -404,9 +406,9 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < _outData!.images.length; i++) {
         _outData!.images[i] = _outData!.images[linkList[i]];
       }
-      showToast(i18n(context, 'animated_image_select_on_image'));
+      showSnackBar(i18n(context, 'animated_image_select_on_image'), context);
     } else {
-      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
       return;
     }
 

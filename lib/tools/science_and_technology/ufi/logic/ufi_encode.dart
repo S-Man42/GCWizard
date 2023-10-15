@@ -54,9 +54,14 @@ BigInt _vEncodeIE(String vatNumber) {
 
     int c1;
     switch (c[0]) {
-      case '+': c1 = 26; break;
-      case '*': c1 = 27; break;
-      default: c1 = _alphabetValueIndexOf(c[0]);
+      case '+':
+        c1 = 26;
+        break;
+      case '*':
+        c1 = 27;
+        break;
+      default:
+        c1 = _alphabetValueIndexOf(c[0]);
     }
 
     int c2 = _alphabetValueIndexOf(c[1]);

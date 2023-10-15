@@ -4,7 +4,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/logic/rabbit.dart';
@@ -13,7 +13,7 @@ class Rabbit extends StatefulWidget {
   const Rabbit({Key? key}) : super(key: key);
 
   @override
- _RabbitState createState() => _RabbitState();
+  _RabbitState createState() => _RabbitState();
 }
 
 class _RabbitState extends State<Rabbit> {
@@ -173,13 +173,13 @@ class _RabbitState extends State<Rabbit> {
         case ErrorCode.MISSING_KEY:
           return GCWDefaultOutput(child: i18n(context, 'rc4_error_missing_key'));
         case ErrorCode.KEY_FORMAT:
-          showToast(i18n(context, 'rc4_error_key_format'));
+          showSnackBar(i18n(context, 'rc4_error_key_format'), context);
           break;
         case ErrorCode.INPUT_FORMAT:
-          showToast(i18n(context, 'rc4_error_input_format'));
+          showSnackBar(i18n(context, 'rc4_error_input_format'), context);
           break;
         case ErrorCode.IV_FORMAT:
-          showToast(i18n(context, 'rabbit_error_iv_format'));
+          showSnackBar(i18n(context, 'rabbit_error_iv_format'), context);
           break;
         default:
           break;

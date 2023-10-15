@@ -59,8 +59,8 @@ class VariableCoordinateSingleResult {
   }
 }
 
-VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, String> substitutions, {ProjectionData? projectionData}) {
-
+VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, String> substitutions,
+    {ProjectionData? projectionData}) {
   String textToExpand = coordinate;
 
   var withProjection = false;
@@ -101,12 +101,8 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
 
       List<VariableCoordinateSingleResult> _projectCoordinates(BaseCoordinate coordinate) {
         if (projectionData!.reverse) {
-          List<LatLng> revProjected = reverseProjection(
-              coordinate.toLatLng()!,
-              parsedBearing,
-              projectionData.distanceUnit.toMeter(parsedDistance),
-              projectionData.ellipsoid ?? defaultEllipsoid
-          );
+          List<LatLng> revProjected = reverseProjection(coordinate.toLatLng()!, parsedBearing,
+              projectionData.distanceUnit.toMeter(parsedDistance), projectionData.ellipsoid ?? defaultEllipsoid);
           if (revProjected.isEmpty) return [];
 
           var projected = revProjected.map((LatLng projection) {
@@ -114,17 +110,11 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
           }).toList();
 
           return projected;
-
         } else {
           var projected = VariableCoordinateSingleResult(
-            projection(
-              coordinate.toLatLng()!,
-              parsedBearing,
-              projectionData.distanceUnit.toMeter(parsedDistance),
-              projectionData.ellipsoid ?? defaultEllipsoid
-            ),
-            expandedText.variables
-          );
+              projection(coordinate.toLatLng()!, parsedBearing, projectionData.distanceUnit.toMeter(parsedDistance),
+                  projectionData.ellipsoid ?? defaultEllipsoid),
+              expandedText.variables);
 
           return [projected];
         }
@@ -143,14 +133,17 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
       if (parsedCoord.leftPadCoordinate != null) {
         leftPadCoords.addAll(_projectCoordinates(parsedCoord.leftPadCoordinate!));
       }
-
     } else {
       var parsedCoord = _parseCoordText(_removeBrackets(expandedText.result));
-      if (parsedCoord == null || ![CoordinateFormatKey.DEC, CoordinateFormatKey.DMM, CoordinateFormatKey.DMS].contains(parsedCoord.coordinate.format.type) || parsedCoord.coordinate.toLatLng() == null) continue;
+      if (parsedCoord == null ||
+          ![CoordinateFormatKey.DEC, CoordinateFormatKey.DMM, CoordinateFormatKey.DMS]
+              .contains(parsedCoord.coordinate.format.type) ||
+          parsedCoord.coordinate.toLatLng() == null) continue;
 
       coords.add(VariableCoordinateSingleResult(parsedCoord.coordinate.toLatLng()!, expandedText.variables));
       if (parsedCoord.leftPadCoordinate != null) {
-        leftPadCoords.add(VariableCoordinateSingleResult(parsedCoord.leftPadCoordinate!.toLatLng(), expandedText.variables));
+        leftPadCoords
+            .add(VariableCoordinateSingleResult(parsedCoord.leftPadCoordinate!.toLatLng(), expandedText.variables));
       }
     }
   }

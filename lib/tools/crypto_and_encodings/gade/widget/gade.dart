@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -19,7 +19,7 @@ class Gade extends StatefulWidget {
   const Gade({Key? key}) : super(key: key);
 
   @override
- _GadeState createState() => _GadeState();
+  _GadeState createState() => _GadeState();
 }
 
 class _GadeState extends State<Gade> {
@@ -86,37 +86,35 @@ class _GadeState extends State<Gade> {
       children: [
         GCWOutput(
             title: i18n(context, 'common_input'),
-            child: GCWColumnedMultilineOutput(
-            data: [
-                    [i18n(context, 'gade_parsed'), _input],
-                    [i18n(context, 'gade_sorted'), sortedStr]
-                  ]
-            )
-        ),
+            child: GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'gade_parsed'), _input],
+              [i18n(context, 'gade_sorted'), sortedStr]
+            ])),
         GCWDefaultOutput(
           child: GCWColumnedMultilineOutput(
               data: gade.entries.map((entry) {
-                      return [entry.key, entry.value];
-                    }).toList()
-          ),
+            return [entry.key, entry.value];
+          }).toList()),
         ),
-        GCWButton(text: i18n(context, 'gade_exporttoformulasolver'), onPressed: () {
-          var formulaGroup = FormulaGroup('Gade Export');
+        GCWButton(
+            text: i18n(context, 'gade_exporttoformulasolver'),
+            onPressed: () {
+              var formulaGroup = FormulaGroup('Gade Export');
 
-          for (var entry in gade.entries) {
-            formulaGroup.values.add(FormulaValue(entry.key, entry.value));
-          }
+              for (var entry in gade.entries) {
+                formulaGroup.values.add(FormulaValue(entry.key, entry.value));
+              }
 
-          try {
-            setState(() {
-              importFormulaGroupFromJson(context, jsonEncode(formulaGroup.toMap()));
-            });
+              try {
+                setState(() {
+                  importFormulaGroupFromJson(context, jsonEncode(formulaGroup.toMap()));
+                });
 
-            openInFormulaGroups(context);
-          } catch (e) {
-            showToast(i18n(context, 'formulasolver_groups_importerror'));
-          }
-        })
+                openInFormulaGroups(context);
+              } catch (e) {
+                showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
+              }
+            })
       ],
     );
   }

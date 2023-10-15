@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 bool _insideSectionOnGetInput(String currentLine) {
-  if (currentLine.endsWith(':OnGetInput(input)')) {
+  if (currentLine.endsWith(':OnGetInput(input)') || currentLine.startsWith('function')) {
     return false;
   }
   return true;
@@ -14,7 +14,6 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
   List<String> _answerAnswerList = [];
   String _answerHash = '';
   List<WherigoActionMessageElementData> _answerActions = [];
-
 
   for (int i = 0; i < onGetInputLines.length; i++) {
     if (onGetInputLines[i].endsWith(':OnGetInput(input)')) {
@@ -39,19 +38,19 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
       } while (!_sectionAnalysed); // end of section
     } // end of NIL
 
-    else if (_OnGetInputSectionEnd(onGetInputLines[i])) { // found Answer
+    else if (_OnGetInputSectionEnd(onGetInputLines[i])) {
+      // found Answer
       _answerActions = [];
       _answerAnswerList = _getAnswers(i, onGetInputLines[i], onGetInputLines[i - 1], _cartridgeVariables);
-        for (var answer in _answerAnswerList) {
-          if (answer != 'NIL') {
-
-            resultAnswerData.add(WherigoAnswerData(
-              AnswerAnswer: answer,
-              AnswerHash: _answerHash,
-              AnswerActions: _answerActions,
-            ));
-          }
+      for (var answer in _answerAnswerList) {
+        if (answer != 'NIL') {
+          resultAnswerData.add(WherigoAnswerData(
+            AnswerAnswer: answer,
+            AnswerHash: _answerHash,
+            AnswerActions: _answerActions,
+          ));
         }
+      }
     } else if (onGetInputLines[i].trimLeft().startsWith('Buttons')) {
       do {
         i++;
@@ -60,12 +59,14 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
           if (onGetInputLines[i].trimLeft().startsWith(_obfuscatorFunction)) {
             _answerActions.add(WherigoActionMessageElementData(
                 ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                ActionMessageContent: deobfuscateUrwigoText(onGetInputLines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
+                ActionMessageContent: deobfuscateUrwigoText(
+                    onGetInputLines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
                     _obfuscatorTable)));
           } else {
             _answerActions.add(WherigoActionMessageElementData(
                 ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-                ActionMessageContent: onGetInputLines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
+                ActionMessageContent:
+                    onGetInputLines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
           }
         }
       } while (!onGetInputLines[i].trim().startsWith('}'));
@@ -78,8 +79,8 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
     } // end if other line content
   }
   return WherigoAnswer(
-      InputFunction: resultInputFunction,
-      InputAnswers: resultAnswerData,
+    InputFunction: resultInputFunction,
+    InputAnswers: resultAnswerData,
   );
 }
 

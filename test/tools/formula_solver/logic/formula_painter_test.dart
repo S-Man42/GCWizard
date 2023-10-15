@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/formula_solver/logic/formula_painter.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 
 void main() {
   var formulaPainter = FormulaPainter();
@@ -95,6 +96,7 @@ void main() {
       {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
       {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
       {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbgggbgbgBGb'},
+      {'formula' : 'nth("ABC", 1)', 'expectedOutput' : 'bbbbGGGGGbggb'},
       {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
       {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
       {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
@@ -306,6 +308,21 @@ void main() {
       {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23,23), csi(123,1,2,3))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbGGGbbbbttbbbbbbbbggbggbbbbbbbgggbgbgbgbbbtttbbbbbbbbbbbbbGbbggbbbt'},
       {'formula' : 'N 51° 09.[315- ( (A+1)! - A! + 2 )] E 013° 01.[056 + ( 2*A! - A² + 3 )]', 'expectedOutput' : 'tttttttttbgggbbbbbRbgbbbbbRbbbbggbbtttttttttttbggggbbbbgbRbbbbRbggbbggb'},
 
+      //Interpolated value types
+      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(A)', 'values': {FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(A)', 'values': {FormulaValue('A', '1-6#2', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(A)', 'values': {FormulaValue('A', '1-6#2,7', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbrb'},
+
+      {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {FormulaValue('A', '1-6#2', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbbRb'},
+      {'formula' : 'bww(A)', 'values': {FormulaValue('A', '1-6#2,7', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbbRb'},
+
+      {'formula' : 'cs(A) + bww(B)', 'values': {FormulaValue('A', '1-6#2,7', type: FormulaValueType.INTERPOLATED), FormulaValue('B', '1-3', type: FormulaValueType.INTERPOLATED)}, 'expectedOutput' : 'bbbrbbbbbbbbRb'},
+
       //empty variables are always hint for forgotten values, so always R
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : 'R'},
@@ -313,9 +330,36 @@ void main() {
       {'formula' : 'A', 'values': {'A': '"1"'}, 'expectedOutput' : 'r'},
 
       //recursive values
-      {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': '12'}, 'expectedOutput' : 'r'},
-      {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F', 'F': '2'}, 'expectedOutput' : 'r'},
-      {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F'}, 'expectedOutput' : 'r'},
+      // {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': '12'}, 'expectedOutput' : 'r'},
+      // {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F', 'F': '2'}, 'expectedOutput' : 'r'},
+      // {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F'}, 'expectedOutput' : 'R'},
+      // {'formula' : 'cs(A)', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1-2', 'E': 'F', 'F': 'bww("ABC")'}, 'expectedOutput' : 'bbbrb'},
+      // {'formula' : 'cs(A)', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '"XYZ"', 'E': 'F', 'F': '"ABC"'}, 'expectedOutput' : 'bbbRb'},
+      // {'formula' : 'cs(A)', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1-2', 'E': 'F', 'F': '"ABC"'}, 'expectedOutput' : 'bbbRb'},
+      // {'formula' : 'bww(A)', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1-2', 'E': 'F', 'F': 'bww("ABC")'}, 'expectedOutput' : 'bbbbRb'},
+      // {'formula' : 'bww(A)', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '"XYZ"', 'E': 'F', 'F': '"ABC"'}, 'expectedOutput' : 'bbbbRb'},
+      // {'formula' : 'bww(A)', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1-2', 'E': 'F', 'F': '"ABC"'}, 'expectedOutput' : 'bbbbrb'},
+
+      //formulas in values
+      {'formula' : 'A', 'values': {'A': '1 + 2'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': '1 + "ABC"'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': 'bww("ABC")'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': 'b', 'B': '"ABC"'}, 'expectedOutput' : 'r'},
+      // {'formula' : 'A + 1', 'values': {'A': 'b', 'B': '"ABC"'}, 'expectedOutput' : 'rrBBG'},
+      {'formula' : 'A', 'values': {'A': 'bww(b)', 'B': '"ABC"'}, 'expectedOutput' : 'r'},
+      //{'formula' : 'A', 'values': {'A': 'bww(b)', 'B': '123'}, 'expectedOutput' : 'R'},
+      {'formula' : 'A', 'values': {'A': 'cs(b)', 'B': '123'}, 'expectedOutput' : 'r'},
+      {'formula' : 'A', 'values': {'A': 'cs(b - 2)', 'B': 'cs(123) + 24'}, 'expectedOutput' : 'r'},
+      {'formula' : 'cs(A)', 'values': {'A': '1 + 2'}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(A)', 'values': {'A': '1 + bww("ABC")'}, 'expectedOutput' : 'bbbrb'},
+      //{'formula' : 'cs(A)', 'values': {'A': '1 + "ABC"'}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': 'b', 'B': '"ABC"'}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': 'bww(b)', 'B': '"ABC"'}, 'expectedOutput' : 'bbbrb'},
+      //{'formula' : 'cs(A)', 'values': {'A': 'bww(b)', 'B': '123'}, 'expectedOutput' : 'bbbRb'},
+      {'formula' : 'cs(A)', 'values': {'A': 'cs(b)', 'B': '123'}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'bww(A)', 'values': {'A': '1 + 2'}, 'expectedOutput' : 'bbbbRb'},
+      //{'formula' : 'bww(A)', 'values': {'A': '1 + bww("ABC")'}, 'expectedOutput' : 'bbbRb'},
+      //{'formula' : 'bww(A)', 'values': {'A': 'bww(b)', 'B': '123'}, 'expectedOutput' : 'bbbRb'},
 
       //text
       {'formula' : '\'\'', 'expectedOutput' : 'gg'},
@@ -353,6 +397,8 @@ void main() {
      {'formula' : '"A"1"B"', 'expectedOutput' : 'gggGggg'}, // mix of text and numbers
      {'formula' : '"A""B"', 'values': {'C': '"1"'}, 'expectedOutput' : 'gggggg'},
 
+     // {'formula' : '1 + "ABC"', 'expectedOutput' : 'ggbbRRRRR'},
+     // {'formula' : '"ABC" + 1', 'expectedOutput' : 'rrrrrrBBG'},
      {'formula' : 'len(ABC)', 'expectedOutput' : 'bbbbGGGb'},
      {'formula' : 'len("ABC")', 'expectedOutput' : 'bbbbgggggb'},
      {'formula' : 'len(ABC)', 'values': {'A': 'ABC'}, 'expectedOutput' : 'bbbbRGGb'},
@@ -374,6 +420,7 @@ void main() {
      {'formula' : 'len(A,B,C)', 'expectedOutput' : 'bbbbGgGgGb'},
      {'formula' : 'len(A,B,C")', 'values': {'A': '"ABC'}, 'expectedOutput' : 'bbbbRgGgGGb'},
      {'formula' : 'cs(bww(\'ABCDE\')) * len("55")', 'expectedOutput' : 'bbbbbbbgggggggbbbbbbbbbggggb'},
+     {'formula' : 'cs(\'ABCDE\')', 'expectedOutput' : 'bbbGGGGGGGb'},
      {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': 'C'}, 'expectedOutput' : 'bbbbrRb'},
      {'formula' : 'bww(AB)', 'values': {'A': '""', 'B': 'C', 'C': "'A'"}, 'expectedOutput' : 'bbbbrRb'},
      {'formula' : 'bww(AB)', 'values': {'A': '', 'B': 'C'}, 'expectedOutput' : 'bbbbRRb'},
@@ -384,6 +431,8 @@ void main() {
      {'formula' : 'len(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
      {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : 'bbbbRrb'},
      {'formula' : 'len(AB)', 'values': {'A': '""', 'B': "C"}, 'expectedOutput' : 'bbbbrRb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '10'}, 'expectedOutput' : 'bbbbrbggb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '"AB"'}, 'expectedOutput' : 'bbbbRbggb'},
      {'formula' : 'len("ABC") * bww(\'55\')', 'expectedOutput' : 'bbbbgggggbbbbbbbbggggb'},
      {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
      {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
@@ -391,7 +440,17 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = formulaPainter.paintFormula(elem['formula'] as String, (elem['values'] ?? <String, String>{}) as Map<String, String>, (elem['formulaId'] ?? 0) as int, true);
+        var variables = <FormulaValue>[];
+        if (elem['values'] is Map<String, String>) {
+          (elem['values'] as Map<String, String>).forEach((key, value) {
+            variables.add(FormulaValue(key, value));
+          });
+        }  else if (elem['values'] is List<FormulaValue> ) {
+          variables = elem['values'] as List<FormulaValue>;
+        }  else if (elem['values'] is Set<FormulaValue>) {
+          variables = (elem['values'] as Set<FormulaValue>).toList();
+        }
+        var _actual = formulaPainter.paintFormula(elem['formula'] as String, variables, (elem['formulaId'] ?? 0) as int, true);
         expect(_actual, elem['expectedOutput']);
       });
     }

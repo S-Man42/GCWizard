@@ -1,8 +1,10 @@
 import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 
 class FormulaPainter {
-  static const String _Text ='t'; //text
+  static const String _Text = 't'; //text
   static const String _Space = 'S'; //space
   static const String Number = 'g'; // or character in word function or ' "
   static const String NumberError = 'G'; //or character in word function error
@@ -17,8 +19,7 @@ class FormulaPainter {
   static const _STRING_MARKER_QUOTE = '"';
 
   static final _allCharacters = allCharacters();
-  Map<String, String> _values = {};
-  var _variables = <String>[];
+  var _variables = <FormulaValue>[];
   var _functions = <String>[];
   var _constants = <String>[];
   late int _formulaId;
@@ -41,20 +42,17 @@ class FormulaPainter {
     _constantsRegEx = _constants.map((constant) => constant).join('|');
   }
 
-  String paintFormula(String formula, Map<String, String> values, int formulaIndex, bool coloredFormulas) {
+  String paintFormula(String formula, List<FormulaValue> values, int formulaIndex, bool coloredFormulas) {
     var result = _buildResultString(_Text, formula.length);
     if (!coloredFormulas) return result;
 
     var subResult = '';
     _formulaId = formulaIndex;
 
-    _variables = values.keys.map((variable) {
-      return ((variable.isEmpty)) ? '' : variable;
-    }).toList();
+    _variables = values.map((value) => FormulaValue(value.key.toUpperCase(), value.value, type: value.type)).toList();
 
-    _values = values;
-    _variables = _toUpperCaseAndSort(_variables);
-    _variablesRegEx = _variables.map((variable) => variable).join('|');
+    _variables = _variablesSort(_variables);
+    _variablesRegEx = _variables.map((variable) => variable.key).join('|');
 
     formula = normalizeCharacters(formula);
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
@@ -231,7 +229,7 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isString(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, false, true);
+        result = _coloredNumber(result, _parserResult, _parentFunctionName != null && !_wordFunction(_parentFunctionName), true);
         offset = _calcOffset(_parserResult);
         isString = true;
       }
@@ -325,7 +323,7 @@ class FormulaPainter {
 
   String _coloredFormulaReference(String result, List<String> parts) {
     result = _replaceRange(result, 0, parts[0].length, OFRB);
-    if ((int.tryParse(parts[1]) ?? 9999999 )< _formulaId) {
+    if ((int.tryParse(parts[1]) ?? 9999999) < _formulaId) {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
     } else {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
@@ -436,6 +434,7 @@ class FormulaPainter {
       case 'MAX':
       case 'CS':
       case 'CSI':
+      case 'NTH':
         return true;
       default:
         return false;
@@ -480,7 +479,7 @@ class FormulaPainter {
   }
 
   List<String>? _isString(String formula) {
-    RegExp regex = RegExp('^(['+ _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
+    RegExp regex = RegExp('^([' + _STRING_MARKER_APOSTROPHE + _STRING_MARKER_QUOTE + '])(?:(?=(\\\\?))\\2.)*?\\1');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)!];
@@ -546,8 +545,8 @@ class FormulaPainter {
     return stringResult != null && stringResult.first.length <= 2;
   }
 
-  bool _isStringVariable(String formula) {
-    var match = _variableMatch(formula);
+  bool _isStringVariable(String variable) {
+    var match = _variableMatch(variable);
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
@@ -556,9 +555,34 @@ class FormulaPainter {
     return (result != null && result[0].length == variableValue.length);
   }
 
+  bool _isNumberVariable(String variable) {
+    var match = _variableMatch(variable);
+    if (match == null) return true;
+
+    var variableValue = _variableValue(match.group(1)!);
+    if (variableValue != null && variableValue.isNotEmpty && _variableType(match.group(1)!) == FormulaValueType.INTERPOLATED) {
+      var expanded = VariableStringExpander('x', {'x': variableValue}, orderAndUnique: false)
+          .run()
+          .map((e) => e.text)
+          .whereType<String>()
+          .toList();
+      return (expanded.isNotEmpty) && expanded.first != 'x';
+    }
+    return (variableValue != null && ((_isNumberWithPoint(variableValue) != null) || _isFunction(variableValue.trim()) != null)); // !_isStringVariable(variable);
+  }
+
+  FormulaValueType? _variableType(String variable) {
+    for (var _variable in _variables) {
+      if (_variable.key == variable) return _variable.type;
+    }
+    return null;
+  }
+
   String? _variableValue(String variable) {
-    if (!_values.containsKey(variable)) return null;
-    return _values[variable];
+    for (var _variable in _variables) {
+      if (_variable.key == variable) return _variable.value.toUpperCase();
+    }
+    return null;
   }
 
   /// return VariableName (group(1))
@@ -587,7 +611,6 @@ class FormulaPainter {
     } else if (_numberFunction(_parentFunctionName)) {
       char = _coloredNumberFunctionVariable(parts[0]);
     }
-
     return _replaceRange(result, 0, parts[0].length, char);
   }
 
@@ -599,9 +622,7 @@ class FormulaPainter {
   String _coloredNumberFunctionVariable(String variable) {
     var variableValue = _variableValue(variable);
     if ((variableValue == null) || variableValue.isEmpty) return VariableError;
-    if (_isNumberWithPoint(variableValue) == null) return VariableError;
-
-    return Variable;
+    return (_isNumberVariable(variable)) ? Variable : VariableError;
   }
 
   List<String>? _isNumberWithPoint(String formula) {
@@ -622,7 +643,7 @@ class FormulaPainter {
 
   String _coloredNumber(String result, List<String> parts, bool hasError, bool stringValue) {
     hasError |= (!_operatorBevor && !_wordFunction(_parentFunctionName) && !stringValue); // ||
-        //(stringValue && _parentFunctionName == null && !_isString(formula)); //
+    //(stringValue && _parentFunctionName == null && !_isString(formula)); //
     return _replaceRange(result, 0, parts[0].length, hasError ? NumberError : Number);
   }
 
@@ -633,7 +654,9 @@ class FormulaPainter {
     if ((match != null) && (offset == 0) && (match.group(0)![0] != '-')) return null;
     return (match == null)
         ? null
-        : [_combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])];
+        : [
+            _combineGroups([match.group(1), match.group(2), match.group(3), match.group(4)])
+          ];
   }
 
   List<String>? _isInvalidOperator(String formula) {
@@ -648,7 +671,7 @@ class FormulaPainter {
   }
 
   String _replaceRange(String string, int start, int? length, String replacement) {
-    try  {
+    try {
       if (length == null) {
         return string.replaceRange(start, start + replacement.length, replacement);
       } else {
@@ -673,6 +696,11 @@ class FormulaPainter {
       return entry.toUpperCase();
     }).toList();
     list.sort((a, b) => b.length.compareTo(a.length));
+    return list;
+  }
+
+  List<FormulaValue> _variablesSort(List<FormulaValue> list) {
+    list.sort((a, b) => b.key.length.compareTo(b.key.length));
     return list;
   }
 

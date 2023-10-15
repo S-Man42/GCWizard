@@ -9,5 +9,3 @@ List<List<String>> _buildOutputListOfBuilderVariables(BuildContext context, Wher
     [i18n(context, 'wherigo_output_description'), data.BuilderVariableDescription],
   ];
 }
-
-

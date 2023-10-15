@@ -117,7 +117,8 @@ SegmentsVigesimal encodeMayaCalendar(int? input) {
     if (list != null) displays.add(list);
   });
 
-  return SegmentsVigesimal(displays: displays, numbers: _longCountToList(input), vigesimal: BigInt.tryParse(vigesimal) ?? BigInt.zero);
+  return SegmentsVigesimal(
+      displays: displays, numbers: _longCountToList(input), vigesimal: BigInt.tryParse(vigesimal) ?? BigInt.zero);
 }
 
 List<int> _longCountToList(int numberDec) {

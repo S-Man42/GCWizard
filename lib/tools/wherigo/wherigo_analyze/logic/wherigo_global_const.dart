@@ -292,7 +292,9 @@ const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     ResultsLUA: [],
     Builder: WHERIGO_BUILDER.UNKNOWN,
     BuilderVersion: '',
+    TargetDevice: '',
     TargetDeviceVersion: '',
+    StartLocation: WherigoZonePoint(),
     CountryID: '',
     StateID: '',
     UseLogging: '',
@@ -426,6 +428,6 @@ const WherigoObfuscationData _WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscat
   ObfuscationName: '',
 );
 WherigoAnswer _WHERIGO_EMPTYTESTANSWER_LUA = WherigoAnswer(
-    InputFunction: '',
-    InputAnswers: [],
+  InputFunction: '',
+  InputAnswers: [],
 );

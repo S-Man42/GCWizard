@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -88,39 +87,39 @@ class _HeatIndexState extends State<HeatIndex> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Container(
-                width: 50,
-                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                child: GCWIconButton(
-                  icon: Icons.wb_sunny,
-                  iconColor: _colorHeatIndex(HeatIndex_C),
-                  backgroundColor: const Color(0xFF4d4d4d),
-                  onPressed: () {},
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                //child: Text(_currentOutputUnit.symbol),
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
-                    child: GCWUnitDropDown(
-                      value: _currentOutputUnit,
-                      onlyShowSymbols: false,
-                      unitList: temperatures,
-                      unitCategory: UNITCATEGORY_TEMPERATURE,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentOutputUnit = value;
-                        });
-                      },
-                    )),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                    margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
-                    child: GCWOutput(child: NumberFormat('#.###').format(HeatIndex))),
-              ),
+          Container(
+            width: 50,
+            padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            child: GCWIconButton(
+              icon: Icons.wb_sunny,
+              iconColor: _colorHeatIndex(HeatIndex_C),
+              backgroundColor: const Color(0xFF4d4d4d),
+              onPressed: () {},
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            //child: Text(_currentOutputUnit.symbol),
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+                child: GCWUnitDropDown(
+                  value: _currentOutputUnit,
+                  onlyShowSymbols: false,
+                  unitList: temperatures,
+                  unitCategory: UNITCATEGORY_TEMPERATURE,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputUnit = value;
+                    });
+                  },
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                child: GCWOutput(child: NumberFormat('#.###').format(HeatIndex))),
+          ),
         ])),
         GCWTextDivider(text: i18n(context, 'heatindex_hint')),
         GCWOutput(

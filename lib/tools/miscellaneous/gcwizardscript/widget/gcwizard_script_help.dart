@@ -12,7 +12,6 @@ class GCWizardScriptHelp extends StatefulWidget {
 }
 
 class _GCWizardScriptHelpState extends State<GCWizardScriptHelp> {
-
   @override
   void initState() {
     super.initState();
