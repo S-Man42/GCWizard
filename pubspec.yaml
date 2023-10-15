@@ -247,6 +247,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/maya_calendar_longcount/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_codices/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_inscripts/
+    - lib/tools/symbol_tables/_common/assets/maya_numbers_glyphs/
     - lib/tools/symbol_tables/_common/assets/maya_numerals/
     - lib/tools/symbol_tables/_common/assets/maze/
     - lib/tools/symbol_tables/_common/assets/minimoys/
