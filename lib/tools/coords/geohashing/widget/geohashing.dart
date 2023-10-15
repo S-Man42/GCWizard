@@ -12,7 +12,7 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
@@ -246,7 +246,7 @@ class _GeohashingState extends State<Geohashing> {
 
     _geohashing = _buildGeohashing();
     if (_geohashing!.errorCode == geohashing.ErrorCode.futureDate) {
-      showToast(i18n(context, 'geohashing_future_date'));
+      showSnackBar(i18n(context, 'geohashing_future_date'), context);
     }
 
     _geohashing!.toLatLng().then((value) {
@@ -292,7 +292,7 @@ class _GeohashingState extends State<Geohashing> {
         setState(() {
           _isOnLocationAccess = false;
         });
-        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+        showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
 
         return;
       }

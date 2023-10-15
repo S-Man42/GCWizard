@@ -7,7 +7,7 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -63,7 +63,7 @@ class _ExifReaderState extends State<ExifReader> {
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (_file) {
             if (_file == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 
@@ -82,7 +82,7 @@ class _ExifReaderState extends State<ExifReader> {
     if (_file != null) _image = await _completeImageMetadata(_file);
 
     if (_file == null) {
-      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
       _fileLoaded = false;
       return;
     }

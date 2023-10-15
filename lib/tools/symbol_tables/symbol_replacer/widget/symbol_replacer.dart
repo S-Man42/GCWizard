@@ -16,7 +16,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart'
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_slider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -93,7 +93,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -477,7 +477,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
     if (quadgrams == null) return null;
 
     if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {
-      showToast(i18n(context, 'symbol_replacer_automatic_groups'));
+      showSnackBar(i18n(context, 'symbol_replacer_automatic_groups'), context);
       return null;
     }
 

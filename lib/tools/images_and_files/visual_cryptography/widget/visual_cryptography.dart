@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -77,7 +77,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         file: _decodeImage1,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -93,7 +93,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         file: _decodeImage2,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -162,7 +162,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         file: _encodeImage,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -197,7 +197,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
                   file: _encodeKeyImage,
                   onLoaded: (_file) {
                     if (_file == null) {
-                      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                       return;
                     }
 

@@ -18,8 +18,8 @@ class MultiDecoderToolBacon extends AbstractMultiDecoderTool {
           onDecode: (String input, String key) {
             return decodeBacon(
                 input,
-                false,
-                checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE) ==
+                inverse: false,
+                binary: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_BACON, options, MDT_BACON_OPTION_MODE) ==
                     MDT_BACON_OPTION_MODE_01);
           },
           options: options,

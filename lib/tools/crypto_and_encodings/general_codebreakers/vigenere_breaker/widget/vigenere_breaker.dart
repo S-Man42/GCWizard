@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -168,7 +168,7 @@ class _VigenereBreakerState extends State<VigenereBreaker> {
     if (_currentOutput == null) return const GCWDefaultOutput();
 
     if (_currentOutput!.errorCode != VigenereBreakerErrorCode.OK) {
-      showToast(i18n(context, 'vigenerebreaker_error', parameters: [_currentOutput!.errorCode]));
+      showSnackBar(i18n(context, 'vigenerebreaker_error', parameters: [_currentOutput!.errorCode]), context);
       return const GCWDefaultOutput();
     }
 

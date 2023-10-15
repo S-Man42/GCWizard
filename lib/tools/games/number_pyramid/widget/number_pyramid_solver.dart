@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -122,7 +122,7 @@ class NumberPyramidSolverState extends State<NumberPyramidSolver> {
                       _hideInputTextBox();
                       _currentBoard.solvePyramid(_MAX_SOLUTIONS);
                       if (_currentBoard.solutions == null) {
-                        showToast(i18n(context, 'sudokusolver_error'));
+                        showSnackBar(i18n(context, 'sudokusolver_error'), context);
                       } else {
                         _currentSolution = 0;
                         _showSolution();

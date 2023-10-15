@@ -15,7 +15,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
@@ -66,7 +66,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
               () {
                 openFileExplorer(allowedFileTypes: [FileType.GCW]).then((GCWFile? file) {
                   if (file == null) {
-                    showToast(i18n(context, 'common_loadfile_exception_nofile'));
+                    showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
                     return;
                   }
 
@@ -90,9 +90,9 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                       afterRestorePreferences(context);
                     });
 
-                    showToast(i18n(context, 'settings_saverestore_restore_success'));
+                    showSnackBar(i18n(context, 'settings_saverestore_restore_success'), context);
                   } catch (e) {
-                    showToast(i18n(context, 'settings_saverestore_restore_failed'));
+                    showSnackBar(i18n(context, 'settings_saverestore_restore_failed'), context);
                   }
                 });
               },
@@ -159,7 +159,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
 
   Future<void> _exportSettings(BuildContext context, String data) async {
     await saveStringToFile(context, data, buildFileNameWithDate('settings_', FileType.GCW)).then((value) {
-      if (value) showToast(i18n(context, 'settings_saverestore_save_success'));
+      if (value) showSnackBar(i18n(context, 'settings_saverestore_save_success'), context);
     });
   }
 }

@@ -20,7 +20,7 @@ import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -283,7 +283,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
               WHERIGOExpertMode = !WHERIGOExpertMode;
               Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, WHERIGOExpertMode);
               _displayCartridgeDataList = _setDisplayCartridgeDataList();
-              showToast(WHERIGOExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
+              showSnackBar(WHERIGOExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'), context);
               if (!WHERIGOExpertMode && (_displayedCartridgeData == WHERIGO_OBJECT.LUABYTECODE) ||
                   _displayedCartridgeData == WHERIGO_OBJECT.GWCFILE ||
                   _displayedCartridgeData == WHERIGO_OBJECT.OBFUSCATORTABLE ||
@@ -320,12 +320,12 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       title: i18n(context, 'wherigo_open_gwc'),
       onLoaded: (_GWCfile) {
         if (_GWCfile == null) {
-          showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
           return;
         }
 
         if (isInvalidCartridge(_GWCfile.bytes)) {
-          showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
+          showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_gwc'), context);
           return;
         }
 
@@ -370,12 +370,12 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   title: i18n(context, 'wherigo_open_lua'),
                   onLoaded: (_LUAfile) {
                     if (_LUAfile == null) {
-                      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                       return;
                     }
 
                     if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-                      showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
+                      showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_lua'), context);
                       return;
                     }
 
@@ -1551,7 +1551,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         } else {
           _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          showToast(toastMessage, duration: toastDuration);
+          showSnackBar(toastMessage, duration: toastDuration, context);
 
           _updateOutput();
         }
@@ -1635,7 +1635,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       default:
         {}
     } // outData != null
-    showToast(toastMessage, duration: toastDuration);
+    showSnackBar(toastMessage, duration: toastDuration, context);
   }
 
   void _showCartridgeOutputGWC(WherigoCartridge output) {
@@ -1668,13 +1668,13 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
       _getLUAOnline = true;
       _WherigoShowLUASourcecodeDialog = true;
-      showToast(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
-          duration: 30);
+      showSnackBar(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'), context,
+          duration: 10);
     }
     _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
     _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
 
-    showToast(toastMessage, duration: toastDuration);
+    showSnackBar(toastMessage, duration: toastDuration, context);
 
     _updateOutput();
     // outData != null
