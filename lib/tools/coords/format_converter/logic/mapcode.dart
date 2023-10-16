@@ -40,7 +40,7 @@ const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
 
 MapCode latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int precision = _DEFAULT_PRECISION}) {
   if (subtype == CoordinateFormatKey.MAPCODE_INTERNATIONAL) {
-    return MapCode(encodeInternational(coord.latitude, coord.longitude, precision), subtype);
+    return MapCode(encodeInternationalWithPrecision(coord.latitude, coord.longitude, precision), subtype);
   } else {
     return MapCode(encodeWithPrecision(coord.latitude, coord.longitude, precision, ''), subtype);
   }
