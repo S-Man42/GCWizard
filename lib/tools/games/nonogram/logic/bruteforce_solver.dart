@@ -101,7 +101,7 @@ class bruteForce extends Solver {
     var distributionsPerGap = gapResult.gaps.mapIndexed((i, gap) {
       Map<String, List<int>> set = {};
       for (var dist in gapResult.distributions) {
-        var value = dist[i].toSet().toList();
+        var value = dist[i].toList();
         if (!set.containsKey(value.toString())) {
           set.addAll({value.toString() : value});
         }
