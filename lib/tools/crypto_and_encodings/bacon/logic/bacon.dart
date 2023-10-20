@@ -90,6 +90,8 @@ String encodeBacon(String input, {bool inverse = false, bool binary = false, Bac
 
 String decodeBacon(String input, {bool inverse = false, bool binary = false, BaconType type = BaconType.ORIGINAL}) {
   if (input.isEmpty) return '';
+// I has same code as J, so I replaces J in mapping; J will not occur in this map
+// U has same code as V, so U replaces V in mapping; V will not occur in this map
 
   if (binary) {
     input = input.replaceAll(RegExp(r'[^01]'), '');
