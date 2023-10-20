@@ -400,6 +400,7 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/popham_telegra
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/schilling_canstatt_telegraph/widget/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widget/semaphore.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/steinheil/widget/steinheil.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/widget/wigwag.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/algol/widget/algol.dart';
@@ -4722,6 +4723,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const SemaphoreTelegraph(), id: 'symboltables_semaphore', searchKeys: const [
       'telegraph',
       'telegraph_semaphore',
+    ]),
+    GCWTool(tool: const SteinheilTelegraph(), id: 'telegraph_steinheil', searchKeys: const [
+      'telegraph',
+      'telegraph_steinheil',
     ]),
     GCWTool(tool: const WigWagSemaphoreTelegraph(), id: 'telegraph_wigwag', searchKeys: const [
       'telegraph',
