@@ -1,7 +1,7 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -160,7 +160,6 @@ class BattleshipState extends State<Battleship> {
         ),
         child: GCWCodeTextField(
           controller: _plainGenerateController,
-          textStyle: gcwMonotypeTextStyle(),
         ),
       );
     } else {

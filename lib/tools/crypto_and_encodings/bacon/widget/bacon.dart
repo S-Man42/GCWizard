@@ -96,9 +96,9 @@ class _BaconState extends State<Bacon> {
     var type = _typeMode == GCWSwitchPosition.left ? BaconType.ORIGINAL : BaconType.FULL;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
+      _output = encodeBacon(_currentInput, inverse: _inversMode, binary: _binaryMode == GCWSwitchPosition.right, type: type);
     } else {
-      _output = decodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
+      _output = decodeBacon(_currentInput, inverse: _inversMode, binary: _binaryMode == GCWSwitchPosition.right, type: type);
     }
 
     return GCWDefaultOutput(child: _output);
