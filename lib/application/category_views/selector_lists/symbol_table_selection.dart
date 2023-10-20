@@ -52,16 +52,15 @@ String _symboltablesDownloadLink(BuildContext context) {
 
 GCWPopupMenuItem symbolTableToolbarMenuItem(BuildContext context) {
   return GCWPopupMenuItem(
-    child: iconedGCWPopupMenuItem(context, Icons.file_download, 'symboltables_selection_download_toolitem'),
-    action: (index) {
-      showGCWAlertDialog(
-        context,
-        i18n(context, 'symboltables_selection_download_dialog_title'),
-        i18n(context, 'symboltables_selection_download_dialog_text'),
-        () {
-          launchUrl(Uri.parse(_symboltablesDownloadLink(context)));
-        },
-      );
-    }
-  );
+      child: iconedGCWPopupMenuItem(context, Icons.file_download, 'symboltables_selection_download_toolitem'),
+      action: (index) {
+        showGCWAlertDialog(
+          context,
+          i18n(context, 'symboltables_selection_download_dialog_title'),
+          i18n(context, 'symboltables_selection_download_dialog_text'),
+          () {
+            launchUrl(Uri.parse(_symboltablesDownloadLink(context)));
+          },
+        );
+      });
 }

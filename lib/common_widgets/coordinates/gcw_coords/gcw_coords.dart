@@ -587,8 +587,10 @@ class _GCWCoordsState extends State<GCWCoords> {
 
       _location.getLocation().then((LocationData locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
-          showSnackBar(i18n(context, 'coords_common_location_lowaccuracy',
-              parameters: [NumberFormat('0.0').format(locationData.accuracy)]), context);
+          showSnackBar(
+              i18n(context, 'coords_common_location_lowaccuracy',
+                  parameters: [NumberFormat('0.0').format(locationData.accuracy)]),
+              context);
         }
 
         LatLng _coords;
