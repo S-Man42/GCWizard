@@ -5,7 +5,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -22,7 +22,7 @@ class Piet extends StatefulWidget {
   const Piet({Key? key, this.file}) : super(key: key);
 
   @override
- _PietState createState() => _PietState();
+  _PietState createState() => _PietState();
 }
 
 class _PietState extends State<Piet> {
@@ -81,7 +81,7 @@ class _PietState extends State<Piet> {
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile? value) {
             if (value == null || !_validateData(value.bytes)) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
             setState(() {
@@ -96,13 +96,13 @@ class _PietState extends State<Piet> {
               });
             });
           },
-        ), // Fixes a display issue
-
-        GCWImageView(
-          imageData: _originalData?.bytes == null
-              ? GCWImageViewData(GCWFile(bytes: Uint8List(0)))
-              : GCWImageViewData(GCWFile(bytes: _originalData!.bytes)),
         ),
+        if (_originalData != null)
+          GCWImageView(
+            imageData: _originalData?.bytes == null
+                ? GCWImageViewData(GCWFile(bytes: Uint8List(0)))
+                : GCWImageViewData(GCWFile(bytes: _originalData!.bytes)),
+          ),
         _buildInterpreterOutput(context)
       ],
     );
@@ -115,7 +115,9 @@ class _PietState extends State<Piet> {
     return GCWDefaultOutput(
       child: (_currentInterpreterOutput?.output ?? '') +
           (_currentInterpreterOutput?.error == true && (_currentInterpreterOutput?.errorText != null)
-              ? '\n' + (i18n(context, _currentInterpreterOutput!.errorText, ifTranslationNotExists: _currentInterpreterOutput!.errorText))
+              ? '\n' +
+                  (i18n(context, _currentInterpreterOutput!.errorText,
+                      ifTranslationNotExists: _currentInterpreterOutput!.errorText))
               : ''),
     );
   }
@@ -126,14 +128,12 @@ class _PietState extends State<Piet> {
     _isStarted = true;
 
     var imageReader = PietImageReader();
-    var _pietPixels = _currentInterpreterOutput?.state?.data
-        ?? ((_originalData?.bytes == null)
-        ? null
-        : imageReader.readImage(_originalData!.bytes));
+    var _pietPixels = _currentInterpreterOutput?.state?.data ??
+        ((_originalData?.bytes == null) ? null : imageReader.readImage(_originalData!.bytes));
 
     if (_pietPixels != null) {
       var currentOutputFuture =
-      interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
+          interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
 
       currentOutputFuture.then((output) {
         if (output.finished) {

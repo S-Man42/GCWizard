@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:base32/base32.dart';
-
-import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ascii85/logic/ascii85.dart';
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 const Map<String, String Function(String)> BASE_FUNCTIONS = {
@@ -19,6 +18,8 @@ const Map<String, String Function(String)> BASE_FUNCTIONS = {
 
 String decodeBase16(String input) {
   if (input.isEmpty) return '';
+
+  if (input.length % 2 != 0) input = input + ' ';
 
   return List.generate(input.length, (i) => i % 2 == 0 ? input.substring(i, i + 2) : null)
       .where((b) => b != null && RegExp(r'[0-9A-Fa-f]{2}').hasMatch(b))
@@ -62,25 +63,24 @@ String encodeBase64(String input) {
   return base64.encode(input.codeUnits);
 }
 
-
 String decodeBase64(String input) {
-   if (input.isEmpty) return '';
+  if (input.isEmpty) return '';
 
-   var out = '';
+  var out = '';
 
-   input = input.replaceAll(RegExp(r'\s'), '');
+  input = input.replaceAll(RegExp(r'\s'), '');
 
-   //if there's no result, try with appended = or ==
-   for (int i = 0; i <= 2; i++) {
-     try {
-       //out = utf8.decode(base64.decode(input + '=' * i));
-       out = String.fromCharCodes(base64.decode(input + '=' * i));
+  //if there's no result, try with appended = or ==
+  for (int i = 0; i <= 2; i++) {
+    try {
+      //out = utf8.decode(base64.decode(input + '=' * i));
+      out = String.fromCharCodes(base64.decode(input + '=' * i));
 
-       if (out.isNotEmpty) break;
-     } on FormatException {}
-   }
+      if (out.isNotEmpty) break;
+    } on FormatException {}
+  }
 
-   return out;
+  return out;
 }
 
 String encodeBase85(String input) {
@@ -104,7 +104,7 @@ String decodeBase85(String input) {
   return decoded == null ? '' : utf8.decode(decoded);
 }
 
-bool _invalidBase85(String base85){
+bool _invalidBase85(String base85) {
   bool result = false;
   base85.split('').forEach((letter) {
     if (letter.codeUnitAt(0) > 127 || letter.codeUnitAt(0) < 32) result = true;
@@ -154,7 +154,6 @@ String encodeBase58(String input) {
     num = div;
   }
   if (num > 0) encoded = encoded + alphabet[num];
-
   return encoded.split('').reversed.join('');
 }
 
@@ -566,10 +565,10 @@ String decodeBase122(String base122Data) {
   return String.fromCharCodes(outputStream);
 }
 
-String asciiToHexString(String input){
+String asciiToHexString(String input) {
   List<String> result = [];
   String hex = '';
-  input.split('').forEach((char){
+  input.split('').forEach((char) {
     hex = convertBase(char.codeUnitAt(0).toString(), 10, 16);
     if (hex.length == 1) {
       result.add('0' + hex);

@@ -14,7 +14,7 @@ class VanityWordsTextSearch extends StatefulWidget {
   const VanityWordsTextSearch({Key? key}) : super(key: key);
 
   @override
- _VanityWordsTextSearchState createState() => _VanityWordsTextSearchState();
+  _VanityWordsTextSearchState createState() => _VanityWordsTextSearchState();
 }
 
 class _VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
@@ -23,7 +23,7 @@ class _VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
 
-  final Map<NumeralWordsLanguage, String> _languageList= {};
+  final Map<NumeralWordsLanguage, String> _languageList = {};
 
   @override
   void initState() {
@@ -142,10 +142,7 @@ class _VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
             ? Container()
             : GCWOutput(
                 title: i18n(context, 'common_outputdetail'),
-                child: GCWColumnedMultilineOutput(
-                    data: columnData,
-                    flexValues: const [2, 2, 1],
-                    copyColumn: 1),
+                child: GCWColumnedMultilineOutput(data: columnData, flexValues: const [2, 2, 1], copyColumn: 1),
               ),
       ],
     );

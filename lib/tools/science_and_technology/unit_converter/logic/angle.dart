@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Angle extends Unit {
-  late double Function (double) toDegree;
-  late double Function (double) fromDegree;
+  late double Function(double) toDegree;
+  late double Function(double) fromDegree;
 
   Angle({required String name, required String symbol, bool isReference = false, required double inDegree})
       : super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {

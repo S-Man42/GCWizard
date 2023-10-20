@@ -19,7 +19,7 @@ class Braille extends StatefulWidget {
   const Braille({Key? key}) : super(key: key);
 
   @override
- _BrailleState createState() => _BrailleState();
+  _BrailleState createState() => _BrailleState();
 }
 
 class _BrailleState extends State<Braille> {
@@ -56,9 +56,7 @@ class _BrailleState extends State<Braille> {
         },
         items: BRAILLE_LANGUAGES.entries.map((mode) {
           return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value.title),
-              subtitle: i18n(context, mode.value.subtitle));
+              value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -69,8 +67,7 @@ class _BrailleState extends State<Braille> {
           });
         },
       ),
-      if (_currentMode ==
-          GCWSwitchPosition.left) // encrypt: input number => output segment
+      if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
           controller: _encodeController,
           onChanged: (text) {
@@ -108,8 +105,7 @@ class _BrailleState extends State<Braille> {
         Container(
           width: 180,
           height: 200,
-          padding: const EdgeInsets.only(
-              top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: const EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               if (_currentLanguage == BrailleLanguage.EUR)
@@ -163,11 +159,9 @@ class _BrailleState extends State<Braille> {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
           if (_currentLanguage == BrailleLanguage.EUR) {
-            return BrailleEuroSegmentDisplay(
-                segments: displayedSegments, readOnly: readOnly);
+            return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
           } else {
-            return BrailleSegmentDisplay(
-                segments: displayedSegments, readOnly: readOnly);
+            return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
           }
         },
         segments: segments,
@@ -181,36 +175,28 @@ class _BrailleState extends State<Braille> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
-          GCWOutput(
-              title: i18n(context, 'braille_output_numbers'),
-              child: segments.buildOutput()
-          )
+          GCWOutput(title: i18n(context, 'braille_output_numbers'), child: segments.buildOutput())
         ],
       );
     } else {
       //decode
       var output = _currentDisplays.buildOutput();
       var segments = decodeBraille(output, _currentLanguage, false);
-      var segmentsBasicDigits =
-          decodeBraille(output, BrailleLanguage.BASIC, false);
-      var segmentsBasicLetters =
-          decodeBraille(output, BrailleLanguage.BASIC, true);
+      var segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
+      var segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
-                GCWDefaultOutput(
-                    child: _normalizeChars(segments.chars.join())),
-                if (segmentsBasicLetters.chars.join().toUpperCase() !=
-                    segments.chars.join())
+                GCWDefaultOutput(child: _normalizeChars(segments.chars.join())),
+                if (segmentsBasicLetters.chars.join().toUpperCase() != segments.chars.join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_letters'),
                     child: segmentsBasicLetters.chars.join().toUpperCase(),
                   ),
-                if (segmentsBasicDigits.chars.join().toUpperCase() !=
-                    segments.chars.join())
+                if (segmentsBasicDigits.chars.join().toUpperCase() != segments.chars.join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_digits'),
                     child: segmentsBasicDigits.chars.join().toUpperCase(),
@@ -226,19 +212,13 @@ class _BrailleState extends State<Braille> {
 
   String _normalizeChars(String input) {
     if (input.endsWith('NUMBER FOLLOWS>')) {
-      return input
-              .replaceAll('<NUMBER FOLLOWS>', '')
-              .replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
           i18n(context, 'symboltables_braille_de_number_follows');
     } else if (input.endsWith('ANTOINE NUMBER FOLLOWS>')) {
-      return input
-              .replaceAll('<NUMBER FOLLOWS>', '')
-              .replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') +
           i18n(context, 'symboltables_braille_en_mathmatics_follows');
     } else {
-      return input
-          .replaceAll('<NUMBER FOLLOWS>', '')
-          .replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
     }
   }
 }

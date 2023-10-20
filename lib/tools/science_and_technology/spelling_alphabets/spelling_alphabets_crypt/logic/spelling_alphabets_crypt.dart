@@ -9,7 +9,7 @@ String encodeSpellingAlphabets(String plain, SPELLING language) {
 
   if (plain.isEmpty) return '';
 
-  plain.toUpperCase().split('').forEach((letter){
+  plain.toUpperCase().split('').forEach((letter) {
     if (alphabet[letter] != null) {
       result.add(alphabet[letter]!.toUpperCase());
     }

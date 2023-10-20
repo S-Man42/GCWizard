@@ -15,7 +15,7 @@ class IrrationalNumbersSearch extends StatefulWidget {
   const IrrationalNumbersSearch({Key? key, required this.irrationalNumber}) : super(key: key);
 
   @override
- _IrrationalNumbersSearchState createState() => _IrrationalNumbersSearchState();
+  _IrrationalNumbersSearchState createState() => _IrrationalNumbersSearchState();
 }
 
 class _IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
@@ -121,10 +121,7 @@ class _IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
     return Column(children: [
       selector,
-      GCWColumnedMultilineOutput(
-        data: output,
-        flexValues: const [2, 3]
-      )
+      GCWColumnedMultilineOutput(data: output, flexValues: const [2, 3])
     ]);
   }
 }

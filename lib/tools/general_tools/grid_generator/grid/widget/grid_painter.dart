@@ -21,7 +21,6 @@ final _GRID_COLORS = {
   _GridPaintColor.GREEN: {'color': Colors.green, 'fontColor': Colors.black},
 };
 
-
 class _GridPainter extends StatefulWidget {
   final _GridType type;
   final int countRows;

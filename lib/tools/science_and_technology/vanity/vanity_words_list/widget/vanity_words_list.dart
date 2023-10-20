@@ -10,7 +10,7 @@ class VanityWordsList extends StatefulWidget {
   const VanityWordsList({Key? key}) : super(key: key);
 
   @override
- _VanityWordsListState createState() => _VanityWordsListState();
+  _VanityWordsListState createState() => _VanityWordsListState();
 }
 
 class _VanityWordsListState extends State<VanityWordsList> {
@@ -58,19 +58,18 @@ class _VanityWordsListState extends State<VanityWordsList> {
     var vanityWordsOverview = VANITY_WORDS[_currentLanguage];
     if (vanityWordsOverview == null) return Container();
 
-     return GCWDefaultOutput(
-        child: GCWColumnedMultilineOutput(
-            data: vanityWordsOverview.entries.map((entry) {
-                    return [
-                      entry.key,
-                      entry.value,
-                      (NUMERAL_WORDS[_currentLanguage]?[(entry.value).toLowerCase()] ?? '').startsWith('numeralwords_')
-                          ? i18n(context, NUMERAL_WORDS[_currentLanguage]?[(entry.value).toLowerCase()] ?? '')  + ' '
-                          : NUMERAL_WORDS[_currentLanguage]?[entry.value.toLowerCase()]
-                    ];
-                  }).toList(),
-          flexValues: const [2, 2, 1]
-        ),
+    return GCWDefaultOutput(
+      child: GCWColumnedMultilineOutput(
+          data: vanityWordsOverview.entries.map((entry) {
+            return [
+              entry.key,
+              entry.value,
+              (NUMERAL_WORDS[_currentLanguage]?[(entry.value).toLowerCase()] ?? '').startsWith('numeralwords_')
+                  ? i18n(context, NUMERAL_WORDS[_currentLanguage]?[(entry.value).toLowerCase()] ?? '') + ' '
+                  : NUMERAL_WORDS[_currentLanguage]?[entry.value.toLowerCase()]
+            ];
+          }).toList(),
+          flexValues: const [2, 2, 1]),
     );
   }
 }

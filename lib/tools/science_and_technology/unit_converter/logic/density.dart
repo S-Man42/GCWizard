@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Density extends Unit {
-  late double Function (double) toGramPerCubicMeter;
-  late double Function (double) fromGramPerCubicMeter;
+  late double Function(double) toGramPerCubicMeter;
+  late double Function(double) fromGramPerCubicMeter;
 
   Density({
     required String name,
@@ -15,7 +15,8 @@ class Density extends Unit {
   }
 }
 
-final _DENSITY_GRAMPERCUBICMETER = Density(name: 'common_unit_density_gm3_name', symbol: 'g/m\u00B3', isReference: true);
+final _DENSITY_GRAMPERCUBICMETER =
+    Density(name: 'common_unit_density_gm3_name', symbol: 'g/m\u00B3', isReference: true);
 
 final DENSITY_KILOGRAMPERCUBICMETER =
     Density(name: 'common_unit_density_kgm3_name', symbol: 'kg/m\u00B3', inGramPerCubicMeter: 1000.0);

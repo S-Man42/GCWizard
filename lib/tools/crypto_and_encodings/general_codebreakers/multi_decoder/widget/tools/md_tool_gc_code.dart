@@ -10,12 +10,12 @@ const MDT_GCCODE_OPTION_MODE_IDTOGCCODE = 'multidecoder_tool_gccode_option_mode_
 const MDT_GCCODE_OPTION_MODE_GCCODETOID = 'multidecoder_tool_gccode_option_mode_gccode.to.id';
 
 class MultiDecoderToolGCCode extends AbstractMultiDecoderTool {
-  MultiDecoderToolGCCode({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolGCCode(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -36,8 +36,7 @@ class MultiDecoderToolGCCode extends AbstractMultiDecoderTool {
 class _MultiDecoderToolGCCodeState extends State<MultiDecoderToolGCCode> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_GCCODE_OPTION_MODE: GCWDropDown<String>(
         value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_GCCODE, widget.options, MDT_GCCODE_OPTION_MODE),
         onChanged: (newValue) {
@@ -52,7 +51,6 @@ class _MultiDecoderToolGCCodeState extends State<MultiDecoderToolGCCode> {
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }

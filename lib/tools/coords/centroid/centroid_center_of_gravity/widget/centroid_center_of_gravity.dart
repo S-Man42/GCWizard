@@ -16,7 +16,7 @@ class CentroidCenterOfGravity extends StatefulWidget {
   const CentroidCenterOfGravity({Key? key}) : super(key: key);
 
   @override
- _CentroidCenterOfGravityState createState() => _CentroidCenterOfGravityState();
+  _CentroidCenterOfGravityState createState() => _CentroidCenterOfGravityState();
 }
 
 class _CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {

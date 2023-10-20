@@ -51,7 +51,6 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
 
   @override
   Widget build(BuildContext context) {
-
     return Column(children: <Widget>[
       GCWTextDivider(
         text: i18n(context, 'segmentdisplay_displayoutput'),
@@ -59,14 +58,14 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
           children: <Widget>[
             widget.upsideDownButton
                 ? GCWIconButton(
-                  icon: Icons.rotate_left,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    setState(() {
-                      _currentUpsideDown = !_currentUpsideDown;
-                    });
-                  },
-                )
+                    icon: Icons.rotate_left,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      setState(() {
+                        _currentUpsideDown = !_currentUpsideDown;
+                      });
+                    },
+                  )
                 : Container(),
             Container(
               padding: const EdgeInsets.only(right: 10.0),
@@ -78,7 +77,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
                   await _buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
                     image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                       _exportFile(context, data?.buffer.asUint8List());
-                      });
+                    });
                   });
                 },
               ),
@@ -94,7 +93,7 @@ class _PunchtapeSegmentDisplayOutputState extends State<PunchtapeSegmentDisplayO
     var list = _currentUpsideDown ? segments.displays.reversed : segments.displays;
 
     _displays = list.map((character) {
-      var displayedSegments = { for (var e in character) e.toString() : true };
+      var displayedSegments = {for (var e in character) e.toString(): true};
       return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();
 

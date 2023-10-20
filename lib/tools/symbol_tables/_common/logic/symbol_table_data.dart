@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_specialsorts.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
 part 'package:gc_wizard/tools/symbol_tables/_common/logic/common_symbols.dart';
@@ -36,12 +37,8 @@ class SymbolData {
   ui.Image? standardImage;
   ui.Image? specialEncryptionImage;
 
-  SymbolData({
-    required this.path,
-    required this.bytes,
-    this.displayName,
-    this.standardImage,
-    this.specialEncryptionImage});
+  SymbolData(
+      {required this.path, required this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 
   Size? imageSize() {
     if (standardImage == null) return null;
@@ -278,9 +275,9 @@ class SymbolTableData {
 }
 
 String filenameWithoutSuffix(String filename) {
-  return filename.split('.').first;
+  return getFileBaseNameWithoutExtension(filename);
 }
 
 class defaultSymbolTableData extends SymbolTableData {
-  defaultSymbolTableData(BuildContext context) : super (context, '');
+  defaultSymbolTableData(BuildContext context) : super(context, '');
 }

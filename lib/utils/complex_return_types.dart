@@ -40,7 +40,7 @@ class Uint8ListText {
   Uint8ListText(this.text, this.value);
 }
 
-class DateTimeDuration extends DateTimeTimezone{
+class DateTimeDuration extends DateTimeTimezone {
   Duration duration;
 
   DateTimeDuration({required DateTime dateTime, required Duration timezone, required this.duration})
