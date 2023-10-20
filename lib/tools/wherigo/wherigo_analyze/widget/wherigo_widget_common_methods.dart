@@ -34,7 +34,7 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
     WHERIGOerrorMsg_MediaFiles.add(exception.toString());
     WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_gwc_mediafiles'));
     WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_hint_2'));
-    showToast(
+    showSnackBar(
         i18n(context, 'wherigo_error_runtime') +
             '\n' +
             i18n(context, 'wherigo_error_runtime_exception') +
@@ -44,7 +44,8 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
             exception.toString() +
             '\n\n' +
             i18n(context, 'wherigo_error_hint_2'),
-        duration: 45);
+        context,
+        duration: 10);
   }
   return result;
 }
@@ -91,13 +92,11 @@ Widget _buildImageView(BuildContext context, bool condition, String fileSource) 
 
   if (file == null) return Container();
 
-
   return GCWImageView(
     imageData: GCWImageViewData(file),
     suppressedButtons: const {GCWImageViewButtons.ALL},
   );
 }
-
 
 void _getErrorMessagesFromLUAAnalyzation(List<String> _errorMsg, BuildContext context) {
   if (WherigoCartridgeLUAData.ResultStatus == WHERIGO_ANALYSE_RESULT_STATUS.OK) {
@@ -110,8 +109,8 @@ void _getErrorMessagesFromLUAAnalyzation(List<String> _errorMsg, BuildContext co
         _errorMsg.add(i18n(context, WherigoCartridgeLUAData.ResultsLUA[i]));
       } else {
         _errorMsg.add(WherigoCartridgeLUAData.ResultsLUA[i]);
-    }
       }
+    }
   }
 }
 
@@ -127,11 +126,10 @@ void _getErrorMessagesFromGWCAnalyzation(List<dynamic> _errorMsg, BuildContext c
         _errorMsg.add(i18n(context, WherigoCartridgeGWCData.ResultsGWC[i]));
       } else {
         _errorMsg.add(WherigoCartridgeGWCData.ResultsGWC[i]);
-    }
       }
+    }
   }
 }
-
 
 String _getCreationDate(BuildContext context, int duration) {
   // Date of creation   ; Seconds since 2004-02-10 01:00:00

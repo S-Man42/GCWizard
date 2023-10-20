@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
@@ -13,12 +13,12 @@ const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats
 const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
 class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
-  MultiDecoderToolCoordinateFormats({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolCoordinateFormats(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -117,30 +117,30 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
 class _MultiDecoderToolCoordinateFormatsState extends State<MultiDecoderToolCoordinateFormats> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWDropDown<CoordinateFormatKey>(
         value: _getCoordinateFormatKey(widget.options, MDT_COORDINATEFORMATS_OPTION_FORMAT),
         onChanged: (newValue) {
           setState(() {
-            widget.options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = coordinateFormatMetadataByKey(newValue).persistenceKey;
+            widget.options[MDT_COORDINATEFORMATS_OPTION_FORMAT] =
+                coordinateFormatMetadataByKey(newValue).persistenceKey;
           });
-
         },
-        items: allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
+        items:
+            allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
           return GCWDropDownMenuItem<CoordinateFormatKey>(
             value: format.type,
             child: i18n(context, format.name, ifTranslationNotExists: format.name),
           );
         }).toList(),
       ),
-    }
-    );
+    });
   }
 }
 
 CoordinateFormatKey _getCoordinateFormatKey(Map<String, Object?> options, String option) {
-  var key = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
+  var key = checkStringFormatOrDefaultOption(
+      MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
   var formatKey = coordinateFormatMetadataByPersistenceKey(key)?.type;
   if (formatKey != null) return formatKey;
 

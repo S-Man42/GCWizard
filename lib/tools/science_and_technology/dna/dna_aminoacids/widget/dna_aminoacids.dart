@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -11,7 +11,7 @@ class DNAAminoAcids extends StatefulWidget {
   const DNAAminoAcids({Key? key}) : super(key: key);
 
   @override
- _DNAAminoAcidsState createState() => _DNAAminoAcidsState();
+  _DNAAminoAcidsState createState() => _DNAAminoAcidsState();
 }
 
 class _DNAAminoAcidsState extends State<DNAAminoAcids> {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
@@ -11,7 +11,7 @@ class CompoundInterest extends StatefulWidget {
   const CompoundInterest({Key? key}) : super(key: key);
 
   @override
- _CompoundInterestState createState() => _CompoundInterestState();
+  _CompoundInterestState createState() => _CompoundInterestState();
 }
 
 const _MODE_PRINCIPALSUM = 'compoundinterest_modes_principalsum';

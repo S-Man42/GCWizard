@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
@@ -10,7 +10,7 @@ class RSADChecker extends StatefulWidget {
   const RSADChecker({Key? key}) : super(key: key);
 
   @override
- _RSADCheckerState createState() => _RSADCheckerState();
+  _RSADCheckerState createState() => _RSADCheckerState();
 }
 
 class _RSADCheckerState extends State<RSADChecker> {
@@ -59,9 +59,7 @@ class _RSADCheckerState extends State<RSADChecker> {
   }
 
   void _calculateOutput() {
-    if (_currentD.isEmpty ||
-        _currentP.isEmpty ||
-        _currentQ.isEmpty) {
+    if (_currentD.isEmpty || _currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 

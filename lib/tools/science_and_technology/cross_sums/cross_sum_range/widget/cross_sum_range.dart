@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -21,7 +21,7 @@ class CrossSumRange extends StatefulWidget {
   const CrossSumRange({Key? key, this.type = CrossSumType.NORMAL}) : super(key: key);
 
   @override
- _CrossSumRangeState createState() => _CrossSumRangeState();
+  _CrossSumRangeState createState() => _CrossSumRangeState();
 }
 
 class _CrossSumRangeState extends State<CrossSumRange> {
@@ -141,9 +141,7 @@ class _CrossSumRangeState extends State<CrossSumRange> {
         text: '${i18n(context, 'common_count')}: ${output.length}',
         copyText: output.length.toString(),
       ),
-      GCWColumnedMultilineOutput(
-          data: List<List<dynamic>>.from(output.map((element) => [element]).toList())
-      )
+      GCWColumnedMultilineOutput(data: List<List<dynamic>>.from(output.map((element) => [element]).toList()))
     ];
   }
 }

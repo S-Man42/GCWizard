@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -21,7 +21,7 @@ class ChappeTelegraph extends StatefulWidget {
   const ChappeTelegraph({Key? key}) : super(key: key);
 
   @override
- _ChappeTelegraphState createState() => _ChappeTelegraphState();
+  _ChappeTelegraphState createState() => _ChappeTelegraphState();
 }
 
 class _ChappeTelegraphState extends State<ChappeTelegraph> {
@@ -64,9 +64,7 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
         },
         items: CHAPPE_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value.title),
-              subtitle: i18n(context, mode.value.subtitle));
+              value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       GCWTwoOptionsSwitch(

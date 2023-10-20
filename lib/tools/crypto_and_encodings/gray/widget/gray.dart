@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,7 +11,7 @@ class Gray extends StatefulWidget {
   const Gray({Key? key}) : super(key: key);
 
   @override
- _GrayState createState() => _GrayState();
+  _GrayState createState() => _GrayState();
 }
 
 class _GrayState extends State<Gray> {
@@ -25,10 +25,9 @@ class _GrayState extends State<Gray> {
   GCWSwitchPosition _currentInputMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  final _decimalMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
+  final _decimalMaskFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\s]')});
 
-  final _binaryDigitsMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
+  final _binaryDigitsMaskFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[01\s]')});
 
   @override
   void initState() {

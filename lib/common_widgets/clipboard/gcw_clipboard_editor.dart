@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -17,7 +17,7 @@ class GCWClipboardEditor extends StatefulWidget {
   const GCWClipboardEditor({Key? key}) : super(key: key);
 
   @override
- _GCWClipboardEditorState createState() => _GCWClipboardEditorState();
+  _GCWClipboardEditorState createState() => _GCWClipboardEditorState();
 }
 
 class _GCWClipboardEditorState extends State<GCWClipboardEditor> {

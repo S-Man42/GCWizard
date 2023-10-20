@@ -5,11 +5,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE = 'whitespace_language_title';
 
 class MultiDecoderToolEsotericLanguageWhitespace extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageWhitespace({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolEsotericLanguageWhitespace(
+      {Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -34,4 +31,3 @@ class _MultiDecoderToolEsotericLanguageWhitespaceState extends State<MultiDecode
     return Container();
   }
 }
-

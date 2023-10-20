@@ -1,3 +1,4 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
 WherigoMediaData testOutputMEDIA = const WherigoMediaData(
@@ -22,3 +23,12 @@ String testInputMEDIA = 'objicospoiler = Wherigo.ZMedia(objKlausMastermindKlabus
     'Directives = {}\n' +
     '}\n' +
     '}';
+
+void expectMedia(WherigoMediaData actual, WherigoMediaData expected, ){
+  expect(actual.MediaLUAName, expected.MediaLUAName);
+  expect(actual.MediaID, expected.MediaID);
+  expect(actual.MediaName, expected.MediaName);
+  expect(actual.MediaDescription, expected.MediaDescription);
+  expect(actual.MediaAltText, expected.MediaAltText);
+  expect(actual.MediaType, expected.MediaType);
+  expect(actual.MediaFilename, expected.MediaFilename);}

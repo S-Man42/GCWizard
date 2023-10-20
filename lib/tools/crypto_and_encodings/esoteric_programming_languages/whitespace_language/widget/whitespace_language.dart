@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -14,7 +14,7 @@ class WhitespaceLanguage extends StatefulWidget {
   const WhitespaceLanguage({Key? key}) : super(key: key);
 
   @override
- _WhitespaceLanguageState createState() => _WhitespaceLanguageState();
+  _WhitespaceLanguageState createState() => _WhitespaceLanguageState();
 }
 
 class _WhitespaceLanguageState extends State<WhitespaceLanguage> {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -12,7 +12,7 @@ class BookCipher extends StatefulWidget {
   const BookCipher({Key? key}) : super(key: key);
 
   @override
- _BookCipherState createState() => _BookCipherState();
+  _BookCipherState createState() => _BookCipherState();
 }
 
 class _BookCipherState extends State<BookCipher> {
@@ -211,7 +211,8 @@ class _BookCipherState extends State<BookCipher> {
               const emptyLinesOffNeeded = [
                 searchFormat.SectionRowWordCharacter,
                 searchFormat.SectionRowWord,
-                searchFormat.SectionCharacter];
+                searchFormat.SectionCharacter
+              ];
 
               if (!_emptyLinesOn && emptyLinesOffNeeded.contains(value)) {
                 _emptyLinesOn = true;

@@ -13,12 +13,13 @@ class MorseSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
-      if (className(element.tool) == className(const SymbolTable()) && (element.tool as SymbolTable).symbolKey == 'morse') {
+      if (className(element.tool) == className(const SymbolTable()) &&
+          (element.tool as SymbolTable).symbolKey == 'morse') {
         return true;
       }
 
       return [
-        className(const Morse()),
+        className(Morse()),
       ].contains(className(element.tool));
     }).toList();
 

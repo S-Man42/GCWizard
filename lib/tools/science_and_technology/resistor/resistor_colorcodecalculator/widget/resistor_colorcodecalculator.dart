@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/units/gcw_unit_prefix_dropdown.dart';
 import 'package:gc_wizard/tools/science_and_technology/resistor/_common/logic/resistor.dart';
 import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_formatter/widget/resistor_formatter.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/resistor/resistor_colorcodecalculator/widget/resistor_band_dropdown.dart';
 
@@ -14,7 +16,7 @@ class ResistorColorCodeCalculator extends StatefulWidget {
   const ResistorColorCodeCalculator({Key? key}) : super(key: key);
 
   @override
- _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
+  _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
 }
 
 // TODO:
@@ -54,6 +56,8 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
   ResistorBandColor _currentResistorColor_sixBands_tolerance = defaultResistorBandColor;
   ResistorBandColor _currentResistorColor_sixBands_temperatureCoefficient = defaultResistorBandColor;
 
+  UnitPrefix _currentPrefix = UNITPREFIX_NONE;
+
   @override
   void initState() {
     super.initState();
@@ -91,6 +95,15 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
         [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_multiplier : Container(),
         [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_tolerance : Container(),
         [6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_temperatureCoefficient : Container(),
+        GCWTextDivider(text: i18n(context, 'common_outputformat')),
+        GCWUnitPrefixDropDown(
+            onChanged: (value) {
+              setState(() {
+                _currentPrefix = value;
+              });
+            },
+            value: _currentPrefix,
+            onlyShowSymbols: false),
         _buildOutput()
       ],
     );
@@ -253,14 +266,21 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
 
     resistorValue = getResistorValue(colors);
     if (resistorValue.value != null && resistorValue.tolerance != null) {
+      var prefixValue = _currentPrefix.value;
+      var value = resistorValue.value! / prefixValue;
+      var tolerances = [
+        resistorValue.tolerancedValueInterval[0] / prefixValue,
+        resistorValue.tolerancedValueInterval[1] / prefixValue,
+      ];
+
       outputs = [
         [
           i18n(context, 'resistor_value'),
-          formatResistorValue(resistorValue.value!) + ' ' + formatResistorTolerance(resistorValue.tolerance!)
+          formatResistorValue(value, _currentPrefix.symbol) + ' ' + formatResistorTolerance(resistorValue.tolerance!)
         ],
         [
           i18n(context, 'resistor_value_range'),
-          formatResistorTolerancedValueInterval(resistorValue.tolerancedValueInterval)
+          formatResistorTolerancedValueInterval(tolerances, _currentPrefix.symbol)
         ],
       ];
       if (resistorValue.temperatureCoefficient != null) {
@@ -272,9 +292,6 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
     }
 
     return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs,
-        flexValues: const [2, 3]
-    );
+        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs, flexValues: const [2, 3]);
   }
 }

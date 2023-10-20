@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -12,7 +12,7 @@ class Gronsfeld extends StatefulWidget {
   const Gronsfeld({Key? key}) : super(key: key);
 
   @override
- _GronsfeldState createState() => _GronsfeldState();
+  _GronsfeldState createState() => _GronsfeldState();
 }
 
 class _GronsfeldState extends State<Gronsfeld> {

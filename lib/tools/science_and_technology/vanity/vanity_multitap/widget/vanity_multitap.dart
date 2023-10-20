@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -15,7 +15,7 @@ class VanityMultitap extends StatefulWidget {
   const VanityMultitap({Key? key}) : super(key: key);
 
   @override
- _VanityMultitapState createState() => _VanityMultitapState();
+  _VanityMultitapState createState() => _VanityMultitapState();
 }
 
 class _VanityMultitapState extends State<VanityMultitap> {
@@ -38,7 +38,6 @@ class _VanityMultitapState extends State<VanityMultitap> {
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
   }
-
 
   @override
   void dispose() {

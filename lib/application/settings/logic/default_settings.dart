@@ -1,21 +1,54 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
+import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
 enum PreferencesInitMode { STARTUP, REINIT_ALL, REINIT_SINGLE }
 
-void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference = ''}) {
-  if (mode == PreferencesInitMode.REINIT_SINGLE) {
-    if (reinitSinglePreference.isEmpty) return;
+void restoreAllDefaultPreferencesAndRebuild(BuildContext context) {
+  _initDefaultSettings(PreferencesInitMode.REINIT_ALL, context: context);
+}
+
+void restoreAllDefaultPreferences() {
+  _initDefaultSettings(PreferencesInitMode.REINIT_ALL);
+}
+
+void restoreSingleDefaultPreferenceAndRebuild(String preferenceKey, BuildContext context) {
+  _initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: preferenceKey, context: context);
+}
+
+void restoreSingleDefaultPreference(String preferenceKey) {
+  _initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: preferenceKey);
+}
+
+void initializePreferences() {
+  _initDefaultSettings(PreferencesInitMode.STARTUP);
+}
+
+void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreference = '', BuildContext? context}) {
+  switch (mode) {
+    case PreferencesInitMode.REINIT_ALL:
+      Prefs.clear();
+      break;
+    case PreferencesInitMode.REINIT_SINGLE:
+      if (reinitSinglePreference.isEmpty) {
+        return;
+      } else {
+        break;
+      }
+    default:
+      break;
   }
 
   var _reinitAll = mode == PreferencesInitMode.REINIT_ALL;
@@ -105,9 +138,11 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT ||
           _reinitAll ||
           Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT) == null ||
-          Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT) == 'coords_deg' //backward compatibility: old name for DMM until v1.1.0
+          Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT) ==
+              'coords_deg' //backward compatibility: old name for DMM until v1.1.0
       ) {
-    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).persistenceKey);
+    Prefs.setString(
+        PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).persistenceKey);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE ||
@@ -126,6 +161,12 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
       _reinitAll ||
       Prefs.get(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE) == null) {
     Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, HemisphereLongitude.East.toString());
+  }
+
+  if (reinitSinglePreference == PREFERENCE_COORD_PRECISION_DMM ||
+      _reinitAll ||
+      Prefs.get(PREFERENCE_COORD_PRECISION_DMM) == null) {
+    Prefs.setInt(PREFERENCE_COORD_PRECISION_DMM, 3);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS ||
@@ -270,4 +311,23 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
       Prefs.get(PREFERENCE_WHERIGOANALYZER_EXPERTMODE) == null) {
     Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, false);
   }
+
+  // AFTER /////////////////////////////////////////////////////////////
+
+  switch (mode) {
+    case PreferencesInitMode.REINIT_ALL:
+    case PreferencesInitMode.REINIT_SINGLE:
+      if (context != null) {
+        afterRestorePreferences(context);
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+void afterRestorePreferences(BuildContext context) {
+  setThemeColorsByName(Prefs.getString(PREFERENCE_THEME_COLOR));
+  refreshFormulas();
+  AppBuilder.of(context).rebuild();
 }

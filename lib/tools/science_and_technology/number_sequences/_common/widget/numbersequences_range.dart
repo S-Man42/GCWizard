@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -14,7 +14,7 @@ class NumberSequenceRange extends StatefulWidget {
   const NumberSequenceRange({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
- _NumberSequenceRangeState createState() => _NumberSequenceRangeState();
+  _NumberSequenceRangeState createState() => _NumberSequenceRangeState();
 }
 
 class _NumberSequenceRangeState extends State<NumberSequenceRange> {

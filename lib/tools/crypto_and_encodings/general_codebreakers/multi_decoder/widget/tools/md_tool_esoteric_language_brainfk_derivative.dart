@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/brainfk/logic/brainfk_derivative.dart';
@@ -14,12 +14,12 @@ const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE = 'common_language';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK = 'brainfk_title';
 
 class MultiDecoderToolEsotericLanguageBrainfkDerivative extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageBrainfkDerivative({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolEsotericLanguageBrainfkDerivative(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -27,7 +27,8 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivative extends AbstractMultiDec
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE,
             optionalKey: true,
             onDecode: (String input, String key) {
-              var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE, options, MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE);
+              var option = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE,
+                  options, MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE);
 
               if (option == MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK) {
                 try {
@@ -36,9 +37,10 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivative extends AbstractMultiDec
                   return null;
                 }
               } else {
-                var bfDerivatives = switchMapKeyValue(
-                    BRAINFK_DERIVATIVES)[checkStringFormatOrDefaultOption(
-                            MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE, options, MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE)];
+                var bfDerivatives = switchMapKeyValue(BRAINFK_DERIVATIVES)[checkStringFormatOrDefaultOption(
+                    MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE,
+                    options,
+                    MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE)];
                 if (bfDerivatives == null) return null;
 
                 try {
@@ -53,11 +55,11 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivative extends AbstractMultiDec
   State<StatefulWidget> createState() => _MultiDecoderToolEsotericLanguageBrainfkDerivateState();
 }
 
-class _MultiDecoderToolEsotericLanguageBrainfkDerivateState extends State<MultiDecoderToolEsotericLanguageBrainfkDerivative> {
+class _MultiDecoderToolEsotericLanguageBrainfkDerivateState
+    extends State<MultiDecoderToolEsotericLanguageBrainfkDerivative> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: GCWDropDown<String>(
         value: toStringOrDefault(widget.options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE], ''),
         onChanged: (newValue) {
@@ -73,7 +75,6 @@ class _MultiDecoderToolEsotericLanguageBrainfkDerivateState extends State<MultiD
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }

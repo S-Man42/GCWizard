@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
@@ -14,7 +14,7 @@ class MoonRiseSet extends StatefulWidget {
   const MoonRiseSet({Key? key}) : super(key: key);
 
   @override
- _MoonRiseSetState createState() => _MoonRiseSetState();
+  _MoonRiseSetState createState() => _MoonRiseSetState();
 }
 
 class _MoonRiseSetState extends State<MoonRiseSet> {
@@ -51,11 +51,8 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
   }
 
   Widget _buildOutput() {
-    var moonRise = logic.MoonRiseSet(
-        _currentCoords.toLatLng() ?? defaultCoordinate,
-        JulianDate(_currentDateTime),
-        _currentDateTime.timezone,
-        defaultEllipsoid);
+    var moonRise = logic.MoonRiseSet(_currentCoords.toLatLng() ?? defaultCoordinate, JulianDate(_currentDateTime),
+        _currentDateTime.timezone, defaultEllipsoid);
 
     var outputs = [
       [
@@ -72,9 +69,6 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
       ],
     ];
 
-    return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs
-    );
+    return GCWColumnedMultilineOutput(firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs);
   }
 }

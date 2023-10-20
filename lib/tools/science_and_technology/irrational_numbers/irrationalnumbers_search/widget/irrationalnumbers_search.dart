@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -15,7 +15,7 @@ class IrrationalNumbersSearch extends StatefulWidget {
   const IrrationalNumbersSearch({Key? key, required this.irrationalNumber}) : super(key: key);
 
   @override
- _IrrationalNumbersSearchState createState() => _IrrationalNumbersSearchState();
+  _IrrationalNumbersSearchState createState() => _IrrationalNumbersSearchState();
 }
 
 class _IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
@@ -121,10 +121,7 @@ class _IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
 
     return Column(children: [
       selector,
-      GCWColumnedMultilineOutput(
-        data: output,
-        flexValues: const [2, 3]
-      )
+      GCWColumnedMultilineOutput(data: output, flexValues: const [2, 3])
     ]);
   }
 }

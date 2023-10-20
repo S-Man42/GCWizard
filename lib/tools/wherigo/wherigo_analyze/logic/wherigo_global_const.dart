@@ -17,7 +17,7 @@ const int _WHERIGO_MEDIATYPE_SWF = 33;
 const int _WHERIGO_MEDIATYPE_TXT = 49;
 
 const Map<int, String> WHERIGO_MEDIATYPE = {
-  _WHERIGO_MEDIATYPE_UNK: '<?>',
+  _WHERIGO_MEDIATYPE_UNK: UNKNOWN_ELEMENT,
   _WHERIGO_MEDIATYPE_BMP: 'bmp',
   _WHERIGO_MEDIATYPE_PNG: 'png',
   _WHERIGO_MEDIATYPE_JPG: 'jpg',
@@ -90,6 +90,7 @@ const Map<WHERIGO_OBJECT, String> _WHERIGO_DATA_FULL_EXPERT = {
   WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
   WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
   WHERIGO_OBJECT.VARIABLES: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.BUILDERVARIABLES: 'wherigo_data_builder_identifier_list',
   WHERIGO_OBJECT.RESULTS_GWC: 'wherigo_data_results_gwc',
   WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
@@ -114,6 +115,7 @@ const Map<WHERIGO_OBJECT, String> _WHERIGO_DATA_LUA_EXPERT = {
   WHERIGO_OBJECT.TIMERS: 'wherigo_data_timer_list',
   WHERIGO_OBJECT.MESSAGES: 'wherigo_data_message_list',
   WHERIGO_OBJECT.VARIABLES: 'wherigo_data_identifier_list',
+  WHERIGO_OBJECT.BUILDERVARIABLES: 'wherigo_data_builder_identifier_list',
   WHERIGO_OBJECT.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
@@ -284,12 +286,15 @@ const WherigoCartridgeLUA WHERIGO_EMPTYCARTRIDGE_LUA = WherigoCartridgeLUA(
     Messages: [],
     //Answers: [],
     Variables: [],
+    BuilderVariables: [],
     NameToObject: {},
     ResultStatus: WHERIGO_ANALYSE_RESULT_STATUS.NONE,
     ResultsLUA: [],
     Builder: WHERIGO_BUILDER.UNKNOWN,
     BuilderVersion: '',
+    TargetDevice: '',
     TargetDeviceVersion: '',
+    StartLocation: WherigoZonePoint(),
     CountryID: '',
     StateID: '',
     UseLogging: '',
@@ -422,7 +427,7 @@ const WherigoObfuscationData _WHERIGO_EMPTYTESTOBFUSCATION_LUA = WherigoObfuscat
   ObfuscationTable: '',
   ObfuscationName: '',
 );
-const WherigoVariableData _WHERIGO_EMPTYTESTVARIABLE_LUA = WherigoVariableData(
-  VariableLUAName: '',
-  VariableName: '',
+WherigoAnswer _WHERIGO_EMPTYTESTANSWER_LUA = WherigoAnswer(
+  InputFunction: '',
+  InputAnswers: [],
 );

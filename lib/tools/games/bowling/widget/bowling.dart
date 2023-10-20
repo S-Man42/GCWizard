@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -18,7 +18,7 @@ class Bowling extends StatefulWidget {
   const Bowling({Key? key}) : super(key: key);
 
   @override
- _BowlingState createState() => _BowlingState();
+  _BowlingState createState() => _BowlingState();
 }
 
 class _BowlingState extends State<Bowling> {
@@ -45,7 +45,7 @@ class _BowlingState extends State<Bowling> {
 
   @override
   Widget build(BuildContext context) {
-    _cellWidth = (MediaQuery.of(context).size.width - 20) / 21;
+    _cellWidth = (maxScreenWidth(context) - 20) / 21;
 
     return Column(
       children: <Widget>[
@@ -163,11 +163,7 @@ class _BowlingState extends State<Bowling> {
       children: <Widget>[
         GCWDefaultOutput(
           child: GCWColumnedMultilineOutput(
-            data: _buildBowlingScoreTable(),
-            hasHeader: true,
-            copyColumn: 4,
-            flexValues: const [2, 1, 1, 1, 2, 3]
-          ),
+              data: _buildBowlingScoreTable(), hasHeader: true, copyColumn: 4, flexValues: const [2, 1, 1, 1, 2, 3]),
         ),
         GCWTextDivider(
           text: i18n(context, 'bowling_scoreboard'),

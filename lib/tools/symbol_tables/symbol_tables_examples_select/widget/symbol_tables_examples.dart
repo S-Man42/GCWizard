@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -17,7 +17,7 @@ class SymbolTableExamples extends StatefulWidget {
   const SymbolTableExamples({Key? key, required this.symbolKeys}) : super(key: key);
 
   @override
- _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
+  _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
 }
 
 class _SymbolTableExamplesState extends State<SymbolTableExamples> {
@@ -116,8 +116,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
                       data: snapshot.data!,
                       showExportButton: false,
                       specialEncryption: false,
-                      fixed: true
-                  );
+                      fixed: true);
                 } else {
                   return Container();
                 }
@@ -127,12 +126,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
     }).toList();
 
     return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        primary: true,
-        child: Column(
-            children: symbols
-        )
-    );
+        physics: const AlwaysScrollableScrollPhysics(), primary: true, child: Column(children: symbols));
   }
 
   Future<SymbolTableData> _loadSymbolData(String symbolKey) async {

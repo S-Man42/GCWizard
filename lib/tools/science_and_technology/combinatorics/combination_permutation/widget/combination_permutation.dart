@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -13,7 +13,7 @@ class CombinationPermutation extends StatefulWidget {
   const CombinationPermutation({Key? key}) : super(key: key);
 
   @override
- _CombinationPermutationState createState() => _CombinationPermutationState();
+  _CombinationPermutationState createState() => _CombinationPermutationState();
 }
 
 class _CombinationPermutationState extends State<CombinationPermutation> {
@@ -60,14 +60,15 @@ class _CombinationPermutationState extends State<CombinationPermutation> {
       return [combination, permutations.join(' ')];
     }).toList();
 
-    var rows = GCWColumnedMultilineOutput(
-        data:  outputData,
-        flexValues: const [1, 3],
-        firstRows: [GCWOutputText(
-                      text: '${i18n(context, 'common_count')}: $count',
-                      copyText: count.toString(),
-                    )]
-    );
+    var rows = GCWColumnedMultilineOutput(data: outputData, flexValues: const [
+      1,
+      3
+    ], firstRows: [
+      GCWOutputText(
+        text: '${i18n(context, 'common_count')}: $count',
+        copyText: count.toString(),
+      )
+    ]);
 
     return Column(children: [GCWTextDivider(text: i18n(context, 'common_output')), rows]);
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -13,7 +13,7 @@ class UrwigoHashBreaker extends StatefulWidget {
   const UrwigoHashBreaker({Key? key}) : super(key: key);
 
   @override
- _UrwigoHashBreakerState createState() => _UrwigoHashBreakerState();
+  _UrwigoHashBreakerState createState() => _UrwigoHashBreakerState();
 }
 
 class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
@@ -94,13 +94,10 @@ class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(
-          child: GCWColumnedMultilineOutput(
-              data: [
-                      [i18n(context, 'common_letters'), _currentOutputAlphabetical],
-                      [i18n(context, 'common_numbers'), _currentOutputNumeric]
-                    ]
-          )
-      );
+          child: GCWColumnedMultilineOutput(data: [
+        [i18n(context, 'common_letters'), _currentOutputAlphabetical],
+        [i18n(context, 'common_numbers'), _currentOutputNumeric]
+      ]));
     } else {
       return GCWDefaultOutput(child: RSHash(_currentTextInput).toString());
     }

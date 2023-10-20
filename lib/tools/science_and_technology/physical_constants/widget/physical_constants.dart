@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -11,7 +11,7 @@ class PhysicalConstants extends StatefulWidget {
   const PhysicalConstants({Key? key}) : super(key: key);
 
   @override
- _PhysicalConstantsState createState() => _PhysicalConstantsState();
+  _PhysicalConstantsState createState() => _PhysicalConstantsState();
 }
 
 class _PhysicalConstantsState extends State<PhysicalConstants> {
@@ -52,15 +52,11 @@ class _PhysicalConstantsState extends State<PhysicalConstants> {
 
   Widget _buildOutput() {
     PhysicalConstant? constantData = PHYSICAL_CONSTANTS[_currentConstant];
-    if (constantData== null) return Container();
+    if (constantData == null) return Container();
 
     var data = [
-      [
-        i18n(context, 'physical_constants_symbol'),
-        buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol)
-      ],
+      [i18n(context, 'physical_constants_symbol'), buildSubOrSuperscriptedRichTextIfNecessary(constantData.symbol)],
       [i18n(context, 'physical_constants_value'), constantData.value, _buildExponent(constantData.exponent)],
-
       constantData.standard_uncertainty != null
           ? [
               i18n(context, 'physical_constants_standard_uncertainty'),

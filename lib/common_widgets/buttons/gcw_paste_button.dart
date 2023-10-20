@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/navigation_service.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
@@ -38,7 +38,7 @@ class GCWPasteButton extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWPasteButtonState createState() => _GCWPasteButtonState();
+  _GCWPasteButtonState createState() => _GCWPasteButtonState();
 }
 
 class _GCWPasteButtonState extends State<GCWPasteButton> {
@@ -66,7 +66,7 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
           try {
             Clipboard.getData('text/plain').then((ClipboardData? data) {
               if (data == null || data.text == null || data.text!.isEmpty) {
-                showToast(i18n(context, 'common_clipboard_notextdatafound'));
+                showSnackBar(i18n(context, 'common_clipboard_notextdatafound'), context);
                 return;
               }
 
@@ -78,6 +78,7 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
       ),
       GCWPopupMenuItem(
           child: GCWTextDivider(
+            style: gcwTextStyle().copyWith(color: themeColors().dialogText()),
             suppressTopSpace: true,
             trailing: GCWIconButton(
               icon: Icons.settings,
@@ -85,7 +86,8 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
               iconColor: themeColors().dialogText(),
               onPressed: () => _openClipboardEditor(),
             ),
-            text: '', // TODO: A GCWTextDivider without any text is a simple GCWDivider, but the GCWDivider currently does not support 'suppressTopSpace' and 'trailing'; Move both attributes to GCWDivider
+            text:
+                '', // TODO: A GCWTextDivider without any text is a simple GCWDivider, but the GCWDivider currently does not support 'suppressTopSpace' and 'trailing'; Move both attributes to GCWDivider
           ),
           action: (index) {
             _openClipboardEditor();
@@ -142,13 +144,14 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
                 widget.onSelected(item.text);
                 insertIntoGCWClipboard(context, item.text, useGlobalClipboard: false);
               });
-        }).toList();
+        })
+        .toList();
 
     menuItems.addAll(gcwClipboard);
     return menuItems;
   }
 
   void _openClipboardEditor() {
-    NavigationService.instance.navigateTo('clipboard_editor');
+    NavigationService.instance.navigateTo(clipboard_editor);
   }
 }

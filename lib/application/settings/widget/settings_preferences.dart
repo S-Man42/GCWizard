@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences_utils.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -22,7 +22,7 @@ class SettingsPreferences extends StatefulWidget {
   const SettingsPreferences({Key? key}) : super(key: key);
 
   @override
- _SettingsPreferencesState createState() => _SettingsPreferencesState();
+  _SettingsPreferencesState createState() => _SettingsPreferencesState();
 }
 
 class _SettingsPreferencesState extends State<SettingsPreferences> {
@@ -59,7 +59,7 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
           showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_resetall_title'),
               i18n(context, 'settings_preferences_warning_resetall_text'), () {
             setState(() {
-              initDefaultSettings(PreferencesInitMode.REINIT_ALL);
+              restoreAllDefaultPreferencesAndRebuild(context);
             });
           });
         },
@@ -122,20 +122,20 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
                       ),
                       prefValue.length > _PREF_VALUE_MAX_LENGTH
                           ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GCWIconButton(
-                              icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
-                              size: IconButtonSize.SMALL,
-                              onPressed: () {
-                                setState(() {
-                                  _expandedValues.contains(key)
-                                      ? _expandedValues.remove(key)
-                                      : _expandedValues.add(key);
-                                });
-                              },
-                            )
-                          ],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GCWIconButton(
+                                  icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
+                                  size: IconButtonSize.SMALL,
+                                  onPressed: () {
+                                    setState(() {
+                                      _expandedValues.contains(key)
+                                          ? _expandedValues.remove(key)
+                                          : _expandedValues.add(key);
+                                    });
+                                  },
+                                )
+                              ],
                             )
                           : Container()
                     ],
@@ -229,7 +229,8 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
                 }
               });
             });
-      default: return Container();
+      default:
+        return Container();
     }
   }
 
@@ -251,7 +252,7 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
       onPressed: () {
         showGCWAlertDialog(context, i18n(context, 'settings_preferences_warning_resetsingle_title'),
             i18n(context, 'settings_preferences_warning_resetsingle_text'), () {
-          initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: key);
+          restoreSingleDefaultPreferenceAndRebuild(key, context);
 
           setState(() {
             _editKey = null;
@@ -397,6 +398,4 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
         );
     }
   }
-
-
 }

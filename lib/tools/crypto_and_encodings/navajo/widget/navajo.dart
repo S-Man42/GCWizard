@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -10,7 +10,7 @@ class Navajo extends StatefulWidget {
   const Navajo({Key? key}) : super(key: key);
 
   @override
- _NavajoState createState() => _NavajoState();
+  _NavajoState createState() => _NavajoState();
 }
 
 class _NavajoState extends State<Navajo> {

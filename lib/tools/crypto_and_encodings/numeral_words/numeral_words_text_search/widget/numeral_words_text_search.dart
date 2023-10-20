@@ -2,8 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/app_builder.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
-import 'package:gc_wizard/application/i18n/supported_locales.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -20,7 +20,7 @@ class NumeralWordsTextSearch extends StatefulWidget {
   const NumeralWordsTextSearch({Key? key}) : super(key: key);
 
   @override
- _NumeralWordsTextSearchState createState() => _NumeralWordsTextSearchState();
+  _NumeralWordsTextSearchState createState() => _NumeralWordsTextSearchState();
 }
 
 class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
@@ -144,8 +144,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
-      _codeControllerHighlighted.text =
-          _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-zäöüß0-9]'), '');
+      _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-zäöüß0-9]'), '');
     }
 
     return Column(
@@ -170,12 +169,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                 text: i18n(context, 'common_outputdetail'),
                 suppressTopSpace: false,
                 expanded: true,
-                child: GCWColumnedMultilineOutput(
-                    data: columnData,
-                    flexValues: const [1, 2],
-                    copyColumn: 1
-                )
-              ),
+                child: GCWColumnedMultilineOutput(data: columnData, flexValues: const [1, 2], copyColumn: 1)),
       ],
     );
   }

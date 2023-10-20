@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -16,7 +16,7 @@ class Projectiles extends StatefulWidget {
   const Projectiles({Key? key}) : super(key: key);
 
   @override
- _ProjectilesState createState() => _ProjectilesState();
+  _ProjectilesState createState() => _ProjectilesState();
 }
 
 class _ProjectilesState extends State<Projectiles> {

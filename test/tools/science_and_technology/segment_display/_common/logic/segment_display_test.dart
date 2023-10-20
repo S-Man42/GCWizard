@@ -92,7 +92,7 @@ void main() {
       {'input' : 'a3', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
       {'input' : 'b1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
       {'input' : '1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
-      {'input' : '1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays: [['a1']], text: '<?>')},
+      {'input' : '1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays: [['a1']], text: UNKNOWN_ELEMENT)},
 
       {'input' : 'dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
       {'input' : 'dpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/logic/chef_language.dart'
     as chef;
@@ -14,12 +14,12 @@ const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH = 'common_language_english';
 const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_GERMAN = 'common_language_german';
 
 class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageChef({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolEsotericLanguageChef(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -29,9 +29,13 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 if (chef.isValid(input)) {
-                  var result = chefWidget.chefBuildOutputText(context, chef.interpretChef(
-                      checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF, options, MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE),
-                          input.toLowerCase().replaceAll('  ', ' '), key));
+                  var result = chefWidget.chefBuildOutputText(
+                      context,
+                      chef.interpretChef(
+                          checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF, options,
+                              MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE),
+                          input.toLowerCase().replaceAll('  ', ' '),
+                          key));
                   return result.trim();
                 }
               } catch (e) {}
@@ -45,25 +49,22 @@ class MultiDecoderToolEsotericLanguageChef extends AbstractMultiDecoderTool {
 class _MultiDecoderToolEsotericLanguageChefState extends State<MultiDecoderToolEsotericLanguageChef> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF, widget.options, MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF, widget.options, MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE] = newValue;
           });
-
         },
-        items:
-        [MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH, MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_GERMAN].map((mode) {
+        items: [MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH, MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_GERMAN].map((mode) {
           return GCWDropDownMenuItem(
             value: mode,
             child: i18n(context, mode),
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }

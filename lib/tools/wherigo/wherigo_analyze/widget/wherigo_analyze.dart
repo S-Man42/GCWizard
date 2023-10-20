@@ -1,16 +1,14 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:prefs/prefs.dart';
-
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
@@ -18,12 +16,11 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_export_dialog.da
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -32,6 +29,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_files_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
@@ -43,26 +41,29 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_common_methods.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_zones.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_answers.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_builder_variables.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_bytecodestructure.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_characters.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_header.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_inputs.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_items.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_messages.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_tasks.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_timers.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_inputs.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_answers.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_characters.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_bytecodestructure.dart';
-part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_header.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_zones.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
 
   @override
- _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
+  _WherigoAnalyzeState createState() => _WherigoAnalyzeState();
 }
 
 class _WherigoAnalyzeState extends State<WherigoAnalyze> {
@@ -102,6 +103,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _messageIndex = 1;
   int _answerIndex = 1;
   int _identifierIndex = 1;
+  int _builderIdentifierIndex = 1;
 
   @override
   void initState() {
@@ -281,7 +283,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
               WHERIGOExpertMode = !WHERIGOExpertMode;
               Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, WHERIGOExpertMode);
               _displayCartridgeDataList = _setDisplayCartridgeDataList();
-              showToast(WHERIGOExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
+              showSnackBar(
+                  WHERIGOExpertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'),
+                  context);
               if (!WHERIGOExpertMode && (_displayedCartridgeData == WHERIGO_OBJECT.LUABYTECODE) ||
                   _displayedCartridgeData == WHERIGO_OBJECT.GWCFILE ||
                   _displayedCartridgeData == WHERIGO_OBJECT.OBFUSCATORTABLE ||
@@ -289,6 +293,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   _displayedCartridgeData == WHERIGO_OBJECT.TASKS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.TIMERS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.VARIABLES ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.BUILDERVARIABLES ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_GWC ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_LUA) {
                 _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
@@ -317,12 +322,12 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       title: i18n(context, 'wherigo_open_gwc'),
       onLoaded: (_GWCfile) {
         if (_GWCfile == null) {
-          showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
           return;
         }
 
         if (isInvalidCartridge(_GWCfile.bytes)) {
-          showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
+          showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_gwc'), context);
           return;
         }
 
@@ -367,12 +372,12 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   title: i18n(context, 'wherigo_open_lua'),
                   onLoaded: (_LUAfile) {
                     if (_LUAfile == null) {
-                      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                       return;
                     }
 
                     if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-                      showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
+                      showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_lua'), context);
                       return;
                     }
 
@@ -403,6 +408,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     _messageIndex = 1;
     _answerIndex = 1;
     _identifierIndex = 1;
+    _builderIdentifierIndex = 1;
   }
 
   Widget _buildOutput(BuildContext context) {
@@ -462,6 +468,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO_OBJECT.VARIABLES:
         return _buildWidgetToDisplayIdentifierData(context);
+
+      case WHERIGO_OBJECT.BUILDERVARIABLES:
+        return _buildWidgetToDisplayBuilderIdentifierData(context);
 
       default:
         return Container();
@@ -1369,6 +1378,56 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     ]);
   }
 
+  Widget _buildWidgetToDisplayBuilderIdentifierData(BuildContext context) {
+    if (WherigoCartridgeLUAData.BuilderVariables.isEmpty) {
+      return GCWDefaultOutput(
+        child: i18n(context, 'wherigo_data_nodata'),
+        suppressCopyButton: true,
+      );
+    }
+
+    return Column(children: <Widget>[
+      const GCWDefaultOutput(),
+      Row(
+        children: <Widget>[
+          GCWIconButton(
+            icon: Icons.arrow_back_ios,
+            onPressed: () {
+              setState(() {
+                _builderIdentifierIndex--;
+                if (_builderIdentifierIndex < 1) {
+                  _builderIdentifierIndex = WherigoCartridgeLUAData.BuilderVariables.length;
+                }
+              });
+            },
+          ),
+          Expanded(
+            child: GCWText(
+              align: Alignment.center,
+              text: _builderIdentifierIndex.toString() +
+                  ' / ' +
+                  (WherigoCartridgeLUAData.BuilderVariables.length).toString(),
+            ),
+          ),
+          GCWIconButton(
+            icon: Icons.arrow_forward_ios,
+            onPressed: () {
+              setState(() {
+                _builderIdentifierIndex++;
+                if (_builderIdentifierIndex > WherigoCartridgeLUAData.BuilderVariables.length) {
+                  _builderIdentifierIndex = 1;
+                }
+              });
+            },
+          ),
+        ],
+      ),
+      GCWColumnedMultilineOutput(
+          data: _buildOutputListOfBuilderVariables(
+              context, WherigoCartridgeLUAData.BuilderVariables[_builderIdentifierIndex - 1])),
+    ]);
+  }
+
   Future<void> _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType)).then((value) {
       var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
@@ -1384,7 +1443,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   void _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     Navigator.push(
         context,
-        MaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<GCWTool>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(points),
@@ -1417,8 +1476,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getGcwCartridgeAsync,
               parameter: _buildGwcJobData,
@@ -1438,8 +1497,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<WherigoCartridge>(
               isolatedFunction: getLuaCartridgeAsync,
               parameter: _buildLuaJobData,
@@ -1494,7 +1553,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         } else {
           _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          showToast(toastMessage, duration: toastDuration);
+          showSnackBar(toastMessage, duration: toastDuration, context);
 
           _updateOutput();
         }
@@ -1542,10 +1601,13 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           Media: [],
           Messages: [],
           Variables: [],
+          BuilderVariables: [],
           NameToObject: {},
           Builder: WHERIGO_BUILDER.UNKNOWN,
           BuilderVersion: '',
+          TargetDevice: '',
           TargetDeviceVersion: '',
+          StartLocation: const WherigoZonePoint(),
           CountryID: '',
           StateID: '',
           UseLogging: '',
@@ -1575,7 +1637,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       default:
         {}
     } // outData != null
-    showToast(toastMessage, duration: toastDuration);
+    showSnackBar(toastMessage, duration: toastDuration, context);
   }
 
   void _showCartridgeOutputGWC(WherigoCartridge output) {
@@ -1608,13 +1670,14 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       WherigoCartridgeLUAData = _resetLUA('wherigo_error_diff_gwc_lua_1');
       _getLUAOnline = true;
       _WherigoShowLUASourcecodeDialog = true;
-      showToast(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
-          duration: 30);
+      showSnackBar(
+          i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'), context,
+          duration: 10);
     }
     _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
     _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
 
-    showToast(toastMessage, duration: toastDuration);
+    showSnackBar(toastMessage, duration: toastDuration, context);
 
     _updateOutput();
     // outData != null
@@ -1686,7 +1749,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     // Build data
     for (WherigoZoneData zone in WherigoCartridgeLUAData.Zones) {
-
       if (WHERIGONameToObject[zone.ZoneLUAName] == null) {
         return;
       }

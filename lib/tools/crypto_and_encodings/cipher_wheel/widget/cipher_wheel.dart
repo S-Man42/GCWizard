@@ -9,7 +9,7 @@ class CipherWheel extends StatefulWidget {
   const CipherWheel({Key? key}) : super(key: key);
 
   @override
- _CipherWheelState createState() => _CipherWheelState();
+  _CipherWheelState createState() => _CipherWheelState();
 }
 
 class _CipherWheelState extends State<CipherWheel> {

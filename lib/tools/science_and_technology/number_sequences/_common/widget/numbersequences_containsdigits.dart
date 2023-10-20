@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -12,7 +12,7 @@ class NumberSequenceContainsDigits extends StatefulWidget {
   const NumberSequenceContainsDigits({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
- _NumberSequenceContainsDigitsState createState() => _NumberSequenceContainsDigitsState();
+  _NumberSequenceContainsDigitsState createState() => _NumberSequenceContainsDigitsState();
 }
 
 class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
@@ -58,11 +58,7 @@ class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDig
         [detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);
 
     _currentOutput = GCWDefaultOutput(
-        child: GCWColumnedMultilineOutput(
-            data: columnData,
-            flexValues: const [4, 2, 1],
-            copyColumn: 0,
-            hasHeader: true
-        ));
+        child:
+            GCWColumnedMultilineOutput(data: columnData, flexValues: const [4, 2, 1], copyColumn: 0, hasHeader: true));
   }
 }

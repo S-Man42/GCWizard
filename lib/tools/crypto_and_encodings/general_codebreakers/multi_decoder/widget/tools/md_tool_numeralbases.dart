@@ -7,11 +7,7 @@ const MDT_INTERNALNAMES_NUMERALBASES = 'multidecoder_tool_numeralbases_title';
 const MDT_NUMERALBASES_OPTION_FROM = 'multidecoder_tool_numeralbases_option_from';
 
 class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
-  MultiDecoderToolNumeralBases({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolNumeralBases({Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,
@@ -21,8 +17,13 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
               return input
                   .split(RegExp(r'\s+'))
                   .where((element) => element.isNotEmpty)
-                  .map((element) => convertBase(element, checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM), 10))
-                  .join(' ');
+                  .map((element) => convertBase(
+                      element,
+                      checkIntFormatOrDefaultOption(
+                          MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM),
+                      10))
+                  .join(' ')
+                  .trim();
             },
             options: options);
   @override
@@ -32,17 +33,16 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
 class _MultiDecoderToolNumeralBasesState extends State<MultiDecoderToolNumeralBases> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_NUMERALBASES_OPTION_FROM: NumeralBaseSpinner(
-        value: checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, widget.options, MDT_NUMERALBASES_OPTION_FROM),
+        value:
+            checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, widget.options, MDT_NUMERALBASES_OPTION_FROM),
         onChanged: (value) {
           setState(() {
             widget.options[MDT_NUMERALBASES_OPTION_FROM] = value;
           });
         },
       )
-    }
-    );
+    });
   }
 }

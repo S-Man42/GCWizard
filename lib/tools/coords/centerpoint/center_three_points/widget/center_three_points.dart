@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class CenterThreePoints extends StatefulWidget {
   const CenterThreePoints({Key? key}) : super(key: key);
 
   @override
- _CenterThreePointsState createState() => _CenterThreePointsState();
+  _CenterThreePointsState createState() => _CenterThreePointsState();
 }
 
 class _CenterThreePointsState extends State<CenterThreePoints> {
@@ -92,8 +92,8 @@ class _CenterThreePointsState extends State<CenterThreePoints> {
         builder: (context) {
           return Center(
             child: SizedBox(
-              height: 220,
-              width: 150,
+              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<List<CenterPointDistance>?>(
                 isolatedFunction: centerPointThreePointsAsync,
                 parameter: _buildJobData,
@@ -112,8 +112,7 @@ class _CenterThreePointsState extends State<CenterThreePoints> {
         coord1: _currentCoords1.toLatLng()!,
         coord2: _currentCoords2.toLatLng()!,
         coord3: _currentCoords3.toLatLng()!,
-        ellipsoid: defaultEllipsoid)
-    );
+        ellipsoid: defaultEllipsoid));
   }
 
   void _showOutput(List<CenterPointDistance>? output) {

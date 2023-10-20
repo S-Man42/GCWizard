@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
@@ -32,7 +32,6 @@ class _GCWAlphabetDropDownState<T> extends State<GCWAlphabetDropDown<T>> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(children: <Widget>[
       GCWDropDown<T>(
         value: widget.value,

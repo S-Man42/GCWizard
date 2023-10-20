@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/color_pickers/gcw_colorpicker.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -10,7 +10,7 @@ class MapPolylineEditor extends StatefulWidget {
   const MapPolylineEditor({Key? key, required this.polyline}) : super(key: key);
 
   @override
- _MapPolylineEditorState createState() => _MapPolylineEditorState();
+  _MapPolylineEditorState createState() => _MapPolylineEditorState();
 }
 
 class _MapPolylineEditorState extends State<MapPolylineEditor> {

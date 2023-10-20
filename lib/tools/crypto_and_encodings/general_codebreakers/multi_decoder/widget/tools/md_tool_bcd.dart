@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/_common/logic/bcd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
@@ -28,12 +28,12 @@ const Map<String, BCDType> _BCD_TYPES = {
 };
 
 class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
-  MultiDecoderToolBCD({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolBCD(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -50,8 +50,7 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
 class _MultiDecoderToolBCDState extends State<MultiDecoderToolBCD> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_BCD_OPTION_BCDFUNCTION: GCWDropDown<String>(
         value: _getBCDTypeKey(widget.options, MDT_BCD_OPTION_BCDFUNCTION),
         onChanged: (newValue) {
@@ -66,8 +65,7 @@ class _MultiDecoderToolBCDState extends State<MultiDecoderToolBCD> {
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }
 

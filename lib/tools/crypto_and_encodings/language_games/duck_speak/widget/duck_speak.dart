@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -9,7 +9,7 @@ class DuckSpeak extends StatefulWidget {
   const DuckSpeak({Key? key}) : super(key: key);
 
   @override
- _DuckSpeakState createState() => _DuckSpeakState();
+  _DuckSpeakState createState() => _DuckSpeakState();
 }
 
 class _DuckSpeakState extends State<DuckSpeak> {

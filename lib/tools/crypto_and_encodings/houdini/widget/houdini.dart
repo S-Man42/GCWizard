@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -10,7 +10,7 @@ class Houdini extends StatefulWidget {
   const Houdini({Key? key}) : super(key: key);
 
   @override
- _HoudiniState createState() => _HoudiniState();
+  _HoudiniState createState() => _HoudiniState();
 }
 
 class _HoudiniState extends State<Houdini> {

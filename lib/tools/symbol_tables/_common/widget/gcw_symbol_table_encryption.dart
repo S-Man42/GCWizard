@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -34,7 +34,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWSymbolTableEncryptionState createState() => _GCWSymbolTableEncryptionState();
+  _GCWSymbolTableEncryptionState createState() => _GCWSymbolTableEncryptionState();
 }
 
 class _GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {

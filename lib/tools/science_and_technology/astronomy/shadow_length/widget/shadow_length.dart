@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
@@ -22,7 +22,7 @@ class ShadowLength extends StatefulWidget {
   const ShadowLength({Key? key}) : super(key: key);
 
   @override
- _ShadowLengthState createState() => _ShadowLengthState();
+  _ShadowLengthState createState() => _ShadowLengthState();
 }
 
 class _ShadowLengthState extends State<ShadowLength> {
@@ -85,8 +85,7 @@ class _ShadowLengthState extends State<ShadowLength> {
   Widget _buildOutput() {
     var _startCoords = _currentInputCoords.toLatLng() ?? defaultCoordinate;
 
-    var shadowLen = shadowLength(
-        _currentHeight, _startCoords, defaultEllipsoid, _currentDateTime);
+    var shadowLen = shadowLength(_currentHeight, _startCoords, defaultEllipsoid, _currentDateTime);
 
     String lengthOutput = '';
     double _currentLength = shadowLen.length;
@@ -120,9 +119,7 @@ class _ShadowLengthState extends State<ShadowLength> {
 
     Widget outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
-      outputs: [
-        buildCoordinate(_currentOutputFormat.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()
-      ],
+      outputs: [buildCoordinate(_currentOutputFormat.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()],
       points: _currentMapPoints,
       polylines: [
         GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]])

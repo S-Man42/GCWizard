@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/color_pickers/gcw_colorpicker.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -20,7 +20,7 @@ class MapPointEditor extends StatefulWidget {
   MapPointEditor({Key? key, required this.mapPoint, required this.lengthUnit}) : super(key: key);
 
   @override
- _MapPointEditorState createState() => _MapPointEditorState();
+  _MapPointEditorState createState() => _MapPointEditorState();
 }
 
 class _MapPointEditorState extends State<MapPointEditor> {
@@ -70,7 +70,6 @@ class _MapPointEditorState extends State<MapPointEditor> {
         title: i18n(context, 'coords_openmap_pointeditor_point_coordinate'),
         coordinates: widget.mapPoint.point,
         coordsFormat: widget.mapPoint.coordinateFormat ?? defaultCoordinateFormat,
-        // restoreCoordinates: true, // TODO... somehow strange: Idea was: Changing the format but keeping the coords. What about the isDefault Setting?
         onChanged: (BaseCoordinate ret) {
           setState(() {
             if (ret.toLatLng() == null) {

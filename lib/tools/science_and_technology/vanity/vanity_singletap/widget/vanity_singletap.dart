@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -10,7 +10,7 @@ class VanitySingletap extends StatefulWidget {
   const VanitySingletap({Key? key}) : super(key: key);
 
   @override
- _VanitySingletapState createState() => _VanitySingletapState();
+  _VanitySingletapState createState() => _VanitySingletapState();
 }
 
 class _VanitySingletapState extends State<VanitySingletap> {
