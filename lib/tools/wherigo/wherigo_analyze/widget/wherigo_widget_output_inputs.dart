@@ -15,11 +15,13 @@ List<List<String>> _buildOutputListInputDataExpertMode(BuildContext context, Whe
     [i18n(context, 'wherigo_output_name'), data.InputName],
     [i18n(context, 'wherigo_output_description'), data.InputDescription],
     [
-        i18n(context, 'wherigo_output_medianame'),
-        data.InputMedia +
-            (data.InputMedia != ''
-                ? (WHERIGONameToObject[data.InputMedia] != null ? ' ⬌ ' + WHERIGONameToObject[data.InputMedia]!.ObjectName : '')
-                : '')
+      i18n(context, 'wherigo_output_medianame'),
+      data.InputMedia +
+          (data.InputMedia != ''
+              ? (WHERIGONameToObject[data.InputMedia] != null
+                  ? ' ⬌ ' + WHERIGONameToObject[data.InputMedia]!.ObjectName
+                  : '')
+              : '')
     ],
     [i18n(context, 'wherigo_output_text'), data.InputText],
     [i18n(context, 'wherigo_output_type'), data.InputType],

@@ -3,9 +3,10 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsMGRS extends StatefulWidget {
   final void Function(MGRS) onChanged;
   final MGRS coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();
@@ -23,8 +24,6 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
   var _currentLonZone = defaultIntegerText;
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
-
-  bool _initialized = false;
 
   @override
   void initState() {
@@ -45,7 +44,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var mgrs = widget.coordinates;
       _currentEasting.value = mgrs.easting;
       _currentNorthing.value = mgrs.northing;
@@ -58,8 +57,6 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
       _LonZoneController.text = _currentLonZone.value.toString();
       _EastingController.text = _currentEasting.value.toString();
       _NorthingController.text = _currentNorthing.value.toString();
-
-      _initialized = true;
     }
 
     return Column(children: <Widget>[

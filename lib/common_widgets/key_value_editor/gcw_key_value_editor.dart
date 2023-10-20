@@ -32,6 +32,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final void Function(KeyValueBase)? onNewEntryChanged;
   final GCWKeyValueInput Function(Key? key)? onCreateInput;
   final GCWKeyValueItem Function(KeyValueBase, bool)? onCreateNewItem;
+  final Widget? trailing;
 
   final Widget? middleWidget;
 
@@ -40,32 +41,32 @@ class GCWKeyValueEditor extends StatefulWidget {
   final bool editAllowed;
   final void Function(KeyValueBase)? onUpdateEntry;
 
-  const GCWKeyValueEditor({
-    Key? key,
-    required this.entries,
-    this.keyHintText,
-    this.keyController,
-    this.keyInputFormatters,
-    this.onNewEntryChanged,
-    required this.valueHintText,
-    this.valueInputFormatters,
-    this.valueFlex,
-    this.onAddEntry,
-    this.middleWidget,
-    this.dividerText,
-    this.editAllowed = true,
-    this.addOnDispose = false,
-    this.onUpdateEntry,
-    this.onCreateInput,
-    this.onCreateNewItem
-  }) : super(key: key);
+  const GCWKeyValueEditor(
+      {Key? key,
+      required this.entries,
+      this.keyHintText,
+      this.keyController,
+      this.keyInputFormatters,
+      this.onNewEntryChanged,
+      required this.valueHintText,
+      this.valueInputFormatters,
+      this.valueFlex,
+      this.onAddEntry,
+      this.middleWidget,
+      this.dividerText,
+      this.editAllowed = true,
+      this.addOnDispose = false,
+      this.onUpdateEntry,
+      this.onCreateInput,
+      this.onCreateNewItem,
+      this.trailing})
+      : super(key: key);
 
   @override
   _GCWKeyValueEditor createState() => _GCWKeyValueEditor();
 }
 
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
-
   final _keyValueEditorControl = KeyValueEditorControl();
   final GlobalKey<GCWKeyValueInputState> _InputState = GlobalKey<GCWKeyValueInputState>();
 
@@ -75,7 +76,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   }
 
   Widget _buildInput() {
-    GCWKeyValueInput input ;
+    GCWKeyValueInput input;
 
     if (widget.onCreateInput != null) {
       input = widget.onCreateInput!(_InputState);
@@ -112,26 +113,30 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       return _buildEntry(entry, odd);
     }).toList();
 
+    var _trailingChildren = <Widget>[];
+    if (widget.trailing != null) {
+      _trailingChildren.add(widget.trailing!);
+    }
+    _trailingChildren.addAll(<Widget>[
+      GCWPasteButton(
+        iconSize: IconButtonSize.SMALL,
+        onSelected: (text) => _InputState.currentState?.pasteClipboard(text),
+      ),
+      GCWIconButton(
+        size: IconButtonSize.SMALL,
+        icon: Icons.content_copy,
+        onPressed: () {
+          var copyText = _toJson();
+          if (copyText == null) return;
+          insertIntoGCWClipboard(context, copyText);
+        },
+      )
+    ]);
+
     if (rows.isNotEmpty) {
       rows.insert(
         0,
-        GCWTextDivider(
-            text: widget.dividerText ?? '',
-            trailing: Row(children: <Widget>[
-              GCWPasteButton(
-                iconSize: IconButtonSize.SMALL,
-                onSelected: (text) => _InputState.currentState?.pasteClipboard(text),
-              ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                icon: Icons.content_copy,
-                onPressed: () {
-                  var copyText = _toJson();
-                  if (copyText == null) return;
-                  insertIntoGCWClipboard(context, copyText);
-                },
-              )
-            ])),
+        GCWTextDivider(text: widget.dividerText ?? '', trailing: Row(children: _trailingChildren)),
       );
     }
 

@@ -4,8 +4,13 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:tuple/tuple.dart';
 
-enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
-  SEVENAUTO, SEVEN12345678,
+enum SegmentDisplayType {
+  SEVEN,
+  FOURTEEN,
+  SIXTEEN,
+  CUSTOM,
+  SEVENAUTO,
+  SEVEN12345678,
   FOURTEENAUTO,
   FOURTEEN_HIJ_G1G2_MLK,
   FOURTEEN_PGH_NJ_MLK,
@@ -16,13 +21,23 @@ enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM,
   SIXTEENAUTO,
   SIXTEEN_KMN_UP_TSR
 }
-const Variants7Segment = { SegmentDisplayType.SEVEN, SegmentDisplayType.SEVENAUTO, SegmentDisplayType.SEVEN12345678};
-const Variants14Segment = { SegmentDisplayType.FOURTEEN, SegmentDisplayType.FOURTEENAUTO,
-  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, SegmentDisplayType.FOURTEEN_PGH_NJ_MLK,
-  SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, SegmentDisplayType.FOURTEEN_GHJ_PK_NMI,
-  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, SegmentDisplayType.FOURTEEN_HJK_GM_QPN};
-const Variants16Segment = { SegmentDisplayType.SIXTEEN, SegmentDisplayType.SIXTEENAUTO,
-  SegmentDisplayType.SIXTEEN_KMN_UP_TSR};
+
+const Variants7Segment = {SegmentDisplayType.SEVEN, SegmentDisplayType.SEVENAUTO, SegmentDisplayType.SEVEN12345678};
+const Variants14Segment = {
+  SegmentDisplayType.FOURTEEN,
+  SegmentDisplayType.FOURTEENAUTO,
+  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK,
+  SegmentDisplayType.FOURTEEN_PGH_NJ_MLK,
+  SegmentDisplayType.FOURTEEN_KMN_G1G2_RST,
+  SegmentDisplayType.FOURTEEN_GHJ_PK_NMI,
+  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML,
+  SegmentDisplayType.FOURTEEN_HJK_GM_QPN
+};
+const Variants16Segment = {
+  SegmentDisplayType.SIXTEEN,
+  SegmentDisplayType.SIXTEENAUTO,
+  SegmentDisplayType.SIXTEEN_KMN_UP_TSR
+};
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
@@ -47,34 +62,150 @@ const _baseSegments16Segment = [
 ];
 
 //variants
-const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'dp' };
+const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'dp'};
 
-const _14SegmentTo_hij_g1g2_mlk = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'm', 'l': 'l', 'm': 'k', 'dp': 'dp' };
-const _14SegmentTo_pgh_nj_mlk   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'n': 'g1', 'j': 'g2', 'p': 'h', 'g': 'i', 'h': 'j', 'm': 'k', 'l': 'l', 'k': 'm', 'dp1': 'dp' };
-const _14SegmentTo_kmn_g1g2_rst = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'm', 's': 'l', 'r': 'k', 'dp': 'dp' };
-const _14SegmentTo_ghj_pk_nmi   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'p': 'g1', 'k': 'g2', 'g': 'h', 'h': 'i', 'j': 'j', 'i': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
-const _14SegmentTo_hjk_g1g2_nml = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g1': 'g1', 'g2': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'l': 'm', 'm': 'l', 'n': 'k', 'dp': 'dp' };
-const _14SegmentTo_hjk_gm_qpn   = {'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd', 'e': 'e', 'f': 'f', 'g': 'g1', 'm': 'g2', 'h': 'h', 'j': 'i', 'k': 'j', 'n': 'm', 'p': 'l', 'q': 'k', 'dp': 'dp' };
+const _14SegmentTo_hij_g1g2_mlk = {
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'g1': 'g1',
+  'g2': 'g2',
+  'h': 'h',
+  'i': 'i',
+  'j': 'j',
+  'k': 'm',
+  'l': 'l',
+  'm': 'k',
+  'dp': 'dp'
+};
+const _14SegmentTo_pgh_nj_mlk = {
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'n': 'g1',
+  'j': 'g2',
+  'p': 'h',
+  'g': 'i',
+  'h': 'j',
+  'm': 'k',
+  'l': 'l',
+  'k': 'm',
+  'dp1': 'dp'
+};
+const _14SegmentTo_kmn_g1g2_rst = {
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'g1': 'g1',
+  'g2': 'g2',
+  'k': 'h',
+  'm': 'i',
+  'n': 'j',
+  't': 'm',
+  's': 'l',
+  'r': 'k',
+  'dp': 'dp'
+};
+const _14SegmentTo_ghj_pk_nmi = {
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'p': 'g1',
+  'k': 'g2',
+  'g': 'h',
+  'h': 'i',
+  'j': 'j',
+  'i': 'm',
+  'm': 'l',
+  'n': 'k',
+  'dp': 'dp'
+};
+const _14SegmentTo_hjk_g1g2_nml = {
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'g1': 'g1',
+  'g2': 'g2',
+  'h': 'h',
+  'j': 'i',
+  'k': 'j',
+  'l': 'm',
+  'm': 'l',
+  'n': 'k',
+  'dp': 'dp'
+};
+const _14SegmentTo_hjk_gm_qpn = {
+  'a': 'a',
+  'b': 'b',
+  'c': 'c',
+  'd': 'd',
+  'e': 'e',
+  'f': 'f',
+  'g': 'g1',
+  'm': 'g2',
+  'h': 'h',
+  'j': 'i',
+  'k': 'j',
+  'n': 'm',
+  'p': 'l',
+  'q': 'k',
+  'dp': 'dp'
+};
 
-const _16SegmentTo_kmn_up_tsr = {'a': 'a1', 'b': 'a2', 'c': 'b', 'd': 'c', 'e': 'd1', 'f': 'd2', 'g': 'e', 'h': 'f', 'u': 'g1', 'p': 'g2', 'k': 'h', 'm': 'i', 'n': 'j', 't': 'k', 's': 'l', 'r': 'm', 'dp': 'dp' };
-
+const _16SegmentTo_kmn_up_tsr = {
+  'a': 'a1',
+  'b': 'a2',
+  'c': 'b',
+  'd': 'c',
+  'e': 'd1',
+  'f': 'd2',
+  'g': 'e',
+  'h': 'f',
+  'u': 'g1',
+  'p': 'g2',
+  'k': 'h',
+  'm': 'i',
+  'n': 'j',
+  't': 'k',
+  's': 'l',
+  'r': 'm',
+  'dp': 'dp'
+};
 
 final _7SegmentVariants = {
-  SegmentDisplayType.SEVEN : _createBaseVariant(_baseSegments7Segment),
-  SegmentDisplayType.SEVEN12345678 : _7SegmentTo12345678};
+  SegmentDisplayType.SEVEN: _createBaseVariant(_baseSegments7Segment),
+  SegmentDisplayType.SEVEN12345678: _7SegmentTo12345678
+};
 
 final _14SegmentVariants = {
-  SegmentDisplayType.FOURTEEN : _createBaseVariant(_baseSegments14Segment),
-  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK : _14SegmentTo_hij_g1g2_mlk,
-  SegmentDisplayType.FOURTEEN_PGH_NJ_MLK : _14SegmentTo_pgh_nj_mlk,
-  SegmentDisplayType.FOURTEEN_KMN_G1G2_RST : _14SegmentTo_kmn_g1g2_rst,
-  SegmentDisplayType.FOURTEEN_GHJ_PK_NMI :_14SegmentTo_ghj_pk_nmi,
-  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML : _14SegmentTo_hjk_g1g2_nml,
-  SegmentDisplayType.FOURTEEN_HJK_GM_QPN : _14SegmentTo_hjk_gm_qpn};
+  SegmentDisplayType.FOURTEEN: _createBaseVariant(_baseSegments14Segment),
+  SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK: _14SegmentTo_hij_g1g2_mlk,
+  SegmentDisplayType.FOURTEEN_PGH_NJ_MLK: _14SegmentTo_pgh_nj_mlk,
+  SegmentDisplayType.FOURTEEN_KMN_G1G2_RST: _14SegmentTo_kmn_g1g2_rst,
+  SegmentDisplayType.FOURTEEN_GHJ_PK_NMI: _14SegmentTo_ghj_pk_nmi,
+  SegmentDisplayType.FOURTEEN_HJK_G1G2_NML: _14SegmentTo_hjk_g1g2_nml,
+  SegmentDisplayType.FOURTEEN_HJK_GM_QPN: _14SegmentTo_hjk_gm_qpn
+};
 
 final _16SegmentVariants = {
-  SegmentDisplayType.SIXTEEN : _createBaseVariant(_baseSegments16Segment),
-  SegmentDisplayType.SIXTEEN_KMN_UP_TSR : _16SegmentTo_kmn_up_tsr};
+  SegmentDisplayType.SIXTEEN: _createBaseVariant(_baseSegments16Segment),
+  SegmentDisplayType.SIXTEEN_KMN_UP_TSR: _16SegmentTo_kmn_up_tsr
+};
 
 const Map<String, List<String>> _AZTo16Segment = {
   '1': ['b', 'c', 'j'],
@@ -617,8 +748,7 @@ class Segments {
 class SegmentsText extends Segments {
   final String text;
 
-  SegmentsText({required List<List<String>> displays, required this.text})
-    : super(displays: displays);
+  SegmentsText({required List<List<String>> displays, required this.text}) : super(displays: displays);
 }
 
 class SegmentsCodpoints extends SegmentsText {
@@ -631,8 +761,7 @@ class SegmentsCodpoints extends SegmentsText {
 class SegmentsChars extends Segments {
   final List<String> chars;
 
-  SegmentsChars({required List<List<String>> displays, required this.chars})
-      : super(displays: displays);
+  SegmentsChars({required List<List<String>> displays, required this.chars}) : super(displays: displays);
 }
 
 class SegmentsVigesimal extends Segments {
@@ -650,8 +779,6 @@ class SegmentsSexagesimal extends Segments {
   SegmentsSexagesimal({required List<List<String>> displays, required this.numbers, required this.sexagesimal})
       : super(displays: displays);
 }
-
-
 
 Segments encodeSegment(String input, SegmentDisplayType segmentType) {
   if (input.isEmpty) return Segments.Empty();
@@ -724,7 +851,7 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
       baseSegments = _7SegmentTo12345678;
       break;
     case SegmentDisplayType.FOURTEEN:
-       baseSegments = _createBaseVariant(_baseSegments14Segment);
+      baseSegments = _createBaseVariant(_baseSegments14Segment);
       break;
     case SegmentDisplayType.FOURTEENAUTO:
       baseSegments = _detectVariant(input, _14SegmentVariants.values);
@@ -901,19 +1028,21 @@ Map<String, String> _detectVariant(String input, Iterable<Map<String, String>> v
 
 Tuple2<String, int> _splitSegment(String input, int i, Map<String, String> baseSegments) {
   var segment = input[i];
-  var found = false;
-  if (baseSegments.containsKey(segment)) {
-    segment = baseSegments[segment]!;
-    found= true;
-  }
-  if (i + 2 < input.length && baseSegments.containsKey(segment + input[i + 1] + input[i + 2])) {
-    segment = baseSegments[segment + input[i + 1] + input[i + 2]]!;
+
+  if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1') {
+    segment += segment + input[i + 1] + input[i + 2];
     i += 2;
-    found= true;
-  } else if (i + 1 < input.length && baseSegments.containsKey(segment + input[i + 1])) {
-    segment = baseSegments[segment + input[i + 1]]!;
+  } else if (i + 1 < input.length && segment + input[i + 1] == 'dp') {
+    segment += input[i + 1];
     i++;
-    found= true;
+  } else if (i + 1 < input.length && ['1', '2'].contains(input[i + 1])) {
+    segment += input[i + 1];
+    i++;
   }
-  return Tuple2<String, int>(found ? segment : '', i);
+
+  if (baseSegments.containsKey(segment)) {
+    return Tuple2<String, int>(segment, i);
+  } else {
+    return Tuple2<String, int>('', i);
+  }
 }

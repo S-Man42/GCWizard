@@ -14,7 +14,7 @@ class NumberSequenceRange extends StatefulWidget {
   const NumberSequenceRange({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
- _NumberSequenceRangeState createState() => _NumberSequenceRangeState();
+  _NumberSequenceRangeState createState() => _NumberSequenceRangeState();
 }
 
 class _NumberSequenceRangeState extends State<NumberSequenceRange> {

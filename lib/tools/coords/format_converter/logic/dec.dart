@@ -89,8 +89,7 @@ DEC? _parseDECTrailingSigns(String text) {
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
-    if (matches.group(1) == null
-    ) {
+    if (matches.group(1) == null) {
       return null;
     }
 
@@ -107,8 +106,7 @@ DEC? _parseDECTrailingSigns(String text) {
 
     var latDegrees = latSign * _latDegrees;
 
-    if (matches.group(4) == null
-    ) {
+    if (matches.group(4) == null) {
       return null;
     }
 

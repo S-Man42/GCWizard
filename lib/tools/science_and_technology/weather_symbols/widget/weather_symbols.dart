@@ -12,7 +12,7 @@ class WeatherSymbols extends StatefulWidget {
   const WeatherSymbols({Key? key}) : super(key: key);
 
   @override
- _WeatherSymbolsState createState() => _WeatherSymbolsState();
+  _WeatherSymbolsState createState() => _WeatherSymbolsState();
 }
 
 class _WeatherSymbolsState extends State<WeatherSymbols> {
@@ -67,20 +67,20 @@ class _WeatherSymbolsState extends State<WeatherSymbols> {
 
     SymbolTableData data = _data[_currentWeatherSymbolClazz]!;
     return GCWColumnedMultilineOutput(
-        data: data.images.map((Map<String, SymbolData> image) {
-                return [
-                  image.keys.first,
-                  Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: GCWSymbolContainer(
-                      symbol: Image.memory(image.values.first.bytes),
-                    ),
-                  ),
-                  i18n(context, 'weathersymbols_${_currentWeatherSymbolClazz}_${image.keys.first}')
-                ];
-              }).toList(),
-        copyColumn: 2,
-        flexValues: const [1, 2, 6],
+      data: data.images.map((Map<String, SymbolData> image) {
+        return [
+          image.keys.first,
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            child: GCWSymbolContainer(
+              symbol: Image.memory(image.values.first.bytes),
+            ),
+          ),
+          i18n(context, 'weathersymbols_${_currentWeatherSymbolClazz}_${image.keys.first}')
+        ];
+      }).toList(),
+      copyColumn: 2,
+      flexValues: const [1, 2, 6],
     );
   }
 }

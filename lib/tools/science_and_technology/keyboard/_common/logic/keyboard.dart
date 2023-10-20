@@ -1901,7 +1901,7 @@ final Map<String, List<Map<String, String>>> keyboardNumberMapsByName = {
 List<List<String>> decodeKeyboardNumbers(String input) {
   List<List<String>> output = <List<String>>[];
   //keyboardNumbersByName.forEach((name, function) {output.add([name, function(input)]);});
-  keyboardNumberMapsByName.forEach((name, map){
+  keyboardNumberMapsByName.forEach((name, map) {
     output.add([name, _convert(input, map[0])]);
   });
 
@@ -1911,7 +1911,7 @@ List<List<String>> decodeKeyboardNumbers(String input) {
 List<List<String>> encodeKeyboardNumbers(String input) {
   List<List<String>> output = <List<String>>[];
   //keyboardNumbersByName.forEach((name, function) {output.add([name, function(input)]);});
-  keyboardNumberMapsByName.forEach((name, map){
+  keyboardNumberMapsByName.forEach((name, map) {
     output.add([name, _convert(input, map[1])]);
   });
 

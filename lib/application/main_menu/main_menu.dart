@@ -53,13 +53,9 @@ Drawer buildMainMenu(BuildContext context) {
 
   final otherMenuItems = [
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())),
-      Icons.show_chart
-    ),
+        registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())), Icons.show_chart),
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())),
-      Icons.info
-    )
+        registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())), Icons.info)
   ];
 
   menuEntries.addAll(otherMenuItems.map((_CategoryMetaData item) {
@@ -89,23 +85,22 @@ Drawer buildMainMenu(BuildContext context) {
           onTap: () {
             Navigator.pop(context); //close Drawer
             Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
-                builder: (context) =>
-                    registeredTools.firstWhere((tool) => className(tool.tool) == className(const CallForContribution()))));
+                builder: (context) => registeredTools
+                    .firstWhere((tool) => className(tool.tool) == className(const CallForContribution()))));
           })
     ],
   );
 
   return Drawer(
-    child: Column(
-      children: <Widget>[
-        header,
-        Expanded(
-          child: ListView(
+      child: Column(
+    children: <Widget>[
+      header,
+      Expanded(
+        child: ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.zero, // Remove any padding from the ListView.
-            children: menuEntries
-            ),
-          ),
+            children: menuEntries),
+      ),
       footer,
     ],
   ));
@@ -127,17 +122,17 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
       Icons.settings,
       i18n(context, 'mainmenu_settings_general_title'),
     ),
-    _CategoryMetaData (
+    _CategoryMetaData(
       registeredTools.firstWhere((tool) => className(tool.tool) == className(const CoordinatesSettings())),
       Icons.language,
       i18n(context, 'mainmenu_settings_coordinates_title'),
     ),
-    _CategoryMetaData (
+    _CategoryMetaData(
       registeredTools.firstWhere((tool) => className(tool.tool) == className(const ToolSettings())),
       Icons.category,
       i18n(context, 'mainmenu_settings_tools_title'),
     ),
-    _CategoryMetaData (
+    _CategoryMetaData(
       registeredTools.firstWhere((tool) => className(tool.tool) == className(const SaveRestoreSettings())),
       Icons.save,
       i18n(context, 'mainmenu_settings_saverestore_title'),

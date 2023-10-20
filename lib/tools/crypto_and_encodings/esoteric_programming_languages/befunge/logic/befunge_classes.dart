@@ -11,16 +11,16 @@ class BefungeOutput {
   List<String> Command;
   List<String> Mnemonic;
 
-  BefungeOutput({
-    required this.Output,
-    required this.Error,
-    required this.Iteration,
-    required this.curPosX,
-    required this.curPosY,
-    required this.BefungeStack,
-    required this.PC,
-    required this.Command,
-    required this.Mnemonic});
+  BefungeOutput(
+      {required this.Output,
+      required this.Error,
+      required this.Iteration,
+      required this.curPosX,
+      required this.curPosY,
+      required this.BefungeStack,
+      required this.PC,
+      required this.Command,
+      required this.Mnemonic});
 }
 
 class BefungeStack {
