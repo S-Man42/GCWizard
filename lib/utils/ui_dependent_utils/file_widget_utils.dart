@@ -6,11 +6,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/permissions/storage.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:universal_html/html.dart' as html;
 
-enum _SAVE_TYPE {STRING, BYTE_DATA}
+enum _SAVE_TYPE { STRING, BYTE_DATA }
 
 Future<bool> saveByteDataToFile(BuildContext context, Uint8List data, String fileName) async {
   return _saveDataToFile(context, data, fileName, _SAVE_TYPE.BYTE_DATA);
@@ -51,7 +51,7 @@ Future<bool> _saveDataToFile(BuildContext context, Uint8List data, String fileNa
   } else {
     var storagePermission = await checkStoragePermission();
     if (!storagePermission) {
-      showToast(i18n(context, 'common_exportfile_nowritepermission'));
+      showSnackBar(i18n(context, 'common_exportfile_nowritepermission'), context);
       return false;
     }
 
@@ -63,7 +63,7 @@ Future<bool> _saveDataToFile(BuildContext context, Uint8List data, String fileNa
       },
     );
     if (fileInfo == null) {
-      showToast(i18n(context, 'common_exportfile_couldntwrite'));
+      showSnackBar(i18n(context, 'common_exportfile_couldntwrite'), context);
       return false;
     }
   }

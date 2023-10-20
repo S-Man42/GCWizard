@@ -1,19 +1,13 @@
-
 part of 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_manual_control.dart';
-
 
 class SymbolReplacerManualSetter extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
   final List<Symbol> viewSymbols;
 
-  const SymbolReplacerManualSetter({
-    Key? key,
-    required this.symbolImage,
-    required this.viewSymbols})
-      : super(key: key);
+  const SymbolReplacerManualSetter({Key? key, required this.symbolImage, required this.viewSymbols}) : super(key: key);
 
   @override
- _SymbolReplacerManualSetterState createState() => _SymbolReplacerManualSetterState();
+  _SymbolReplacerManualSetterState createState() => _SymbolReplacerManualSetterState();
 }
 
 class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
@@ -60,8 +54,9 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
       }
 
       if ((widget.symbolImage.compareSymbols == null) ||
-          (widget.viewSymbols.isEmpty ||
-              widget.viewSymbols.first.symbolGroup?.compareSymbol == null)) _currentMode = GCWSwitchPosition.right;
+          (widget.viewSymbols.isEmpty || widget.viewSymbols.first.symbolGroup?.compareSymbol == null)) {
+        _currentMode = GCWSwitchPosition.right;
+      }
 
       _init = false;
     }
@@ -98,26 +93,24 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
 
   Widget _buildMatrix(
       SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
-
     _fillSymbolMap(symbolImage, viewSymbols);
 
     return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-          fixed: false,
-          imageData: _symbolMap.values,
-          countColumns: countColumns,
-          mediaQueryData: mediaQueryData,
-          onChanged: () => setState(() {}),
-          selectable: true,
-          overlayOn: true,
-          scale: widget.symbolImage.symbolScale,
-          onSymbolTapped: (String tappedText, SymbolData symbolData) {
-            setState(() {
-              _selectSymbol(symbolData);
-            });
-          },
-        )
-    );
+      fixed: false,
+      imageData: _symbolMap.values,
+      countColumns: countColumns,
+      mediaQueryData: mediaQueryData,
+      onChanged: () => setState(() {}),
+      selectable: true,
+      overlayOn: true,
+      scale: widget.symbolImage.symbolScale,
+      onSymbolTapped: (String tappedText, SymbolData symbolData) {
+        setState(() {
+          _selectSymbol(symbolData);
+        });
+      },
+    ));
   }
 
   void _selectSymbol(SymbolData symbolData) {
@@ -126,7 +119,7 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
   }
 
   void _setSelectedSymbolsText(String? text, {SymbolReplacerSymbolData? symbolData}) {
-     var selectedSymbols = <Symbol>[];
+    var selectedSymbols = <Symbol>[];
     _symbolMap.forEach((symbol, image) {
       var symbolData = image.values.first;
       if (symbolData.primarySelected || symbolData.secondarySelected) selectedSymbols.add(symbol);
@@ -185,8 +178,7 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
             onPressed: () {
               setState(() {
                 if (_currentMode == GCWSwitchPosition.left) {
-                  _setSelectedSymbolsText(_currentSymbolData?.keys.first,
-                      symbolData: _currentSymbolData?.values.first);
+                  _setSelectedSymbolsText(_currentSymbolData?.keys.first, symbolData: _currentSymbolData?.values.first);
                 } else {
                   _setSelectedSymbolsText(_editValueController.text);
                 }
@@ -239,7 +231,8 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
     }
   }
 
-  GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>> _buildDropDownMenuItem(Map<String, SymbolReplacerSymbolData> symbolData) {
+  GCWDropDownMenuItem<Map<String, SymbolReplacerSymbolData>> _buildDropDownMenuItem(
+      Map<String, SymbolReplacerSymbolData> symbolData) {
     var iconBytes = symbolData.values.first.bytes;
     var displayText = symbolData.keys.first;
     return GCWDropDownMenuItem(
@@ -255,8 +248,7 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(displayText, style: _gcwTextStyle)]
-              ))
+                  children: [Text(displayText, style: _gcwTextStyle)]))
         ]));
   }
 }

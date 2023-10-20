@@ -14,7 +14,7 @@ class SunRiseSet extends StatefulWidget {
   const SunRiseSet({Key? key}) : super(key: key);
 
   @override
- _SunRiseSetState createState() => _SunRiseSetState();
+  _SunRiseSetState createState() => _SunRiseSetState();
 }
 
 class _SunRiseSetState extends State<SunRiseSet> {
@@ -51,11 +51,8 @@ class _SunRiseSetState extends State<SunRiseSet> {
   }
 
   Widget _buildOutput() {
-    var sunRise = logic.SunRiseSet(
-        _currentCoords.toLatLng() ?? defaultCoordinate,
-        JulianDate(_currentDateTime),
-        _currentDateTime.timezone,
-        defaultEllipsoid);
+    var sunRise = logic.SunRiseSet(_currentCoords.toLatLng() ?? defaultCoordinate, JulianDate(_currentDateTime),
+        _currentDateTime.timezone, defaultEllipsoid);
 
     var outputs = [
       [
@@ -108,9 +105,6 @@ class _SunRiseSetState extends State<SunRiseSet> {
       ],
     ];
 
-    return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs
-    );
+    return GCWColumnedMultilineOutput(firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs);
   }
 }

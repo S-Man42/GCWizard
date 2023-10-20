@@ -19,10 +19,12 @@ int extractIntegerFromText(String text, {bool allowNegative = true}) {
 
 String normalizeUmlauts(String input) {
   return input.split('').map((letter) {
-    if (letter == '\u00DF') { //ß
+    if (letter == '\u00DF') {
+      //ß
       return 'ss';
     }
-    if (letter == '\u1E9E') { //ẞ
+    if (letter == '\u1E9E') {
+      //ẞ
       return 'SS';
     }
 
@@ -179,4 +181,30 @@ String formatStringForDecimals({int integerPrecision = 2, int decimalPrecision =
   }
 
   return formatString;
+}
+
+String trimCharactersLeft(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  var i = 0;
+
+  while (text.length > i && text.substring(i).startsWith(characters)) {
+    i += characters.length;
+  }
+
+  return text.substring(i);
+}
+
+String trimCharactersRight(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  while (text.length >= characters.length && text.endsWith(characters)) {
+    text = text.substring(0, text.length - characters.length);
+  }
+
+  return text;
 }

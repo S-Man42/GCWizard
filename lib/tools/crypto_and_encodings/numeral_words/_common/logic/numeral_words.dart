@@ -6,9 +6,9 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-part 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words_maps.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words_classes.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words_converter.dart';
+part 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words_maps.dart';
 
 List<NumeralWordsDecodeOutput> decodeNumeralwords(
     {required String input, required NumeralWordsLanguage language, bool decodeModeWholeWords = false}) {
@@ -277,7 +277,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
           _alreadyFound = false;
 
           searchLanguages.forEach((correctNumeralWord, value) {
-            var result = _isNumeralWordTable(element, correctNumeralWord, value); // checks - if element is part of a map
+            var result =
+                _isNumeralWordTable(element, correctNumeralWord, value); // checks - if element is part of a map
             if (result.state) {
               if (!_alreadyFound) {
                 output.add(NumeralWordsDecodeOutput(result.output, element, _languageList?[correctNumeralWord] ?? ''));
@@ -371,24 +372,24 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
                 } else {
                   oldValueInt = int.parse(value);
                 }
-                output.add(NumeralWordsDecodeOutput(
-                    value, _normalizeNumeralWord(correctNumeralWord, _language), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                output.add(NumeralWordsDecodeOutput(value, _normalizeNumeralWord(correctNumeralWord, _language),
+                    NUMERALWORDS_LANGUAGES[_language] ?? ''));
               } else {
                 if (oldKeyStr != _normalizeNumeralWord(correctNumeralWord, _language)) {
                   if (int.tryParse(value) == null) {
                     if (oldValueStr == value) {
-                      output.add(NumeralWordsDecodeOutput(
-                          '', _normalizeNumeralWord(correctNumeralWord, _language), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                      output.add(NumeralWordsDecodeOutput('', _normalizeNumeralWord(correctNumeralWord, _language),
+                          NUMERALWORDS_LANGUAGES[_language] ?? ''));
                     } else {
-                      output.add(NumeralWordsDecodeOutput(
-                          value, _normalizeNumeralWord(correctNumeralWord, _language), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                      output.add(NumeralWordsDecodeOutput(value, _normalizeNumeralWord(correctNumeralWord, _language),
+                          NUMERALWORDS_LANGUAGES[_language] ?? ''));
                     }
                   } else if (oldValueInt == int.parse(value)) {
-                    output.add(NumeralWordsDecodeOutput(
-                        '', _normalizeNumeralWord(correctNumeralWord, _language), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                    output.add(NumeralWordsDecodeOutput('', _normalizeNumeralWord(correctNumeralWord, _language),
+                        NUMERALWORDS_LANGUAGES[_language] ?? ''));
                   } else {
-                    output.add(NumeralWordsDecodeOutput(
-                        value, _normalizeNumeralWord(correctNumeralWord, _language), NUMERALWORDS_LANGUAGES[_language] ?? ''));
+                    output.add(NumeralWordsDecodeOutput(value, _normalizeNumeralWord(correctNumeralWord, _language),
+                        NUMERALWORDS_LANGUAGES[_language] ?? ''));
                   }
                 }
               }
@@ -398,10 +399,10 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       } else {
         // search entire parts for specific language
         NUMERAL_WORDS[language]!.forEach((correctNumeralWord, value) {
-            if (checkWord.startsWith(_normalizeNumeralWord(correctNumeralWord, language))) {
-              output.add(NumeralWordsDecodeOutput(
-                  value, _normalizeNumeralWord(correctNumeralWord, language), NUMERALWORDS_LANGUAGES[language] ?? ''));
-            }
+          if (checkWord.startsWith(_normalizeNumeralWord(correctNumeralWord, language))) {
+            output.add(NumeralWordsDecodeOutput(
+                value, _normalizeNumeralWord(correctNumeralWord, language), NUMERALWORDS_LANGUAGES[language] ?? ''));
+          }
         });
       } // else
     } // for element
@@ -458,7 +459,6 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, M
         default:
       }
       if (input.contains(pattern)) {
-
         // numeral word contains 1000
         List<String> decode = input.split(pattern);
         if (decode.length == 2) {

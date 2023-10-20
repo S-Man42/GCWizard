@@ -4,9 +4,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -27,7 +27,7 @@ class Homophone extends StatefulWidget {
   const Homophone({Key? key}) : super(key: key);
 
   @override
- _HomophoneState createState() => _HomophoneState();
+  _HomophoneState createState() => _HomophoneState();
 }
 
 class _HomophoneState extends State<Homophone> {
@@ -35,7 +35,7 @@ class _HomophoneState extends State<Homophone> {
 
   late TextEditingController _currentRotationController;
   late TextEditingController _newKeyController;
-  late WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
+  late GCWMaskTextInputFormatter _keyMaskInputFormatter;
   String _currentInput = '';
   Alphabet _currentAlphabet = alphabetGerman1;
   _KeyType _currentKeyType = _KeyType.GENERATED;
@@ -54,7 +54,7 @@ class _HomophoneState extends State<Homophone> {
 
     _currentRotationController = TextEditingController(text: _currentRotation.toString());
     _newKeyController = TextEditingController(text: _maxLetter());
-    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _keyMaskInputFormatter = GCWMaskTextInputFormatter(mask: _mask, filter: _filter);
   }
 
   @override
@@ -257,10 +257,10 @@ class _HomophoneState extends State<Homophone> {
     if (_currentOutput.errorCode != HomophoneErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case HomophoneErrorCode.CUSTOM_KEY_COUNT:
-          showToast(i18n(context, "homophone_error_own_key"));
+          showSnackBar(i18n(context, "homophone_error_own_key"), context);
           return const GCWDefaultOutput(child: '');
         case HomophoneErrorCode.CUSTOM_KEY_DUPLICATE:
-          showToast(i18n(context, "homophone_error_own_double_keys"));
+          showSnackBar(i18n(context, "homophone_error_own_double_keys"), context);
           return const GCWDefaultOutput(child: '');
         default:
       }

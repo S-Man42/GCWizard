@@ -10,7 +10,7 @@ class Navajo extends StatefulWidget {
   const Navajo({Key? key}) : super(key: key);
 
   @override
- _NavajoState createState() => _NavajoState();
+  _NavajoState createState() => _NavajoState();
 }
 
 class _NavajoState extends State<Navajo> {

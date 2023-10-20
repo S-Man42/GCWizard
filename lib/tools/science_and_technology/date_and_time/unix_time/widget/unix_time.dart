@@ -7,7 +7,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/logic/unix_time.dart';
 import 'package:intl/intl.dart';
 
-
 class UnixTime extends StatefulWidget {
   const UnixTime({Key? key}) : super(key: key);
 
@@ -53,7 +52,11 @@ class _UnixTimeState extends State<UnixTime> {
               }),
         if (_currentMode == GCWSwitchPosition.left)
           GCWDateTimePicker(
-            config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.SECOND_AS_INT, },
+            config: const {
+              DateTimePickerConfig.DATE,
+              DateTimePickerConfig.TIME,
+              DateTimePickerConfig.SECOND_AS_INT,
+            },
             onChanged: (datetime) {
               setState(() {
                 _currentDateTime = datetime.datetime;
@@ -67,13 +70,19 @@ class _UnixTimeState extends State<UnixTime> {
 
   Widget _buildOutput() {
     UnixTimeOutput output;
-    if (_currentMode == GCWSwitchPosition.left) {//Date to Unix
-        output = DateTimeToUnixTime(_currentDateTime);
-    } else {//UNIX to Date
+    if (_currentMode == GCWSwitchPosition.left) {
+      //Date to Unix
+      output = DateTimeToUnixTime(_currentDateTime);
+    } else {
+      //UNIX to Date
       output = UnixTimeToDateTime(_currentTimeStamp);
     }
     return GCWDefaultOutput(
-      child: output.Error.startsWith('dates_') ? i18n(context, output.Error) : _currentMode == GCWSwitchPosition.left ? output.UnixTimeStamp : _formatDate(context, output.GregorianDateTime),
+      child: output.Error.startsWith('dates_')
+          ? i18n(context, output.Error)
+          : _currentMode == GCWSwitchPosition.left
+              ? output.UnixTimeStamp
+              : _formatDate(context, output.GregorianDateTime),
     );
   }
 
@@ -81,5 +90,4 @@ class _UnixTimeState extends State<UnixTime> {
     String loc = Localizations.localeOf(context).toString();
     return DateFormat.yMd(loc).add_jms().format(datetime).toString();
   }
-
 }

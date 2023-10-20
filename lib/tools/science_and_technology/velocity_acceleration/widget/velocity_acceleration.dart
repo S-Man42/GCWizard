@@ -21,7 +21,7 @@ class VelocityAcceleration extends StatefulWidget {
   const VelocityAcceleration({Key? key}) : super(key: key);
 
   @override
- _VelocityAccelerationState createState() => _VelocityAccelerationState();
+  _VelocityAccelerationState createState() => _VelocityAccelerationState();
 }
 
 class _VelocityAccelerationState extends State<VelocityAcceleration> {
@@ -64,22 +64,17 @@ class _VelocityAccelerationState extends State<VelocityAcceleration> {
     return Column(
       children: [
         GCWOnOffSwitch(
-          title: i18n(context, 'unitconverter_category_acceleration'),
-          onChanged: (value) {
-            setState(() {
-              _currentAccelerationMode = value;
-            });
-          },
-          value: _currentAccelerationMode
-        ),
-
+            title: i18n(context, 'unitconverter_category_acceleration'),
+            onChanged: (value) {
+              setState(() {
+                _currentAccelerationMode = value;
+              });
+            },
+            value: _currentAccelerationMode),
         GCWDropDown<UnitCategory>(
           value: _currentMode,
           items: modes.map((mode) {
-            return GCWDropDownMenuItem(
-                value: mode,
-                child: i18n(context, _modes[mode]!)
-            );
+            return GCWDropDownMenuItem(value: mode, child: i18n(context, _modes[mode]!));
           }).toList(),
           onChanged: (value) {
             setState(() {
@@ -88,7 +83,8 @@ class _VelocityAccelerationState extends State<VelocityAcceleration> {
               if (_currentMode == UNITCATEGORY_LENGTH) {
                 _currentOutputUnit = GCWUnitsValue<Length>(UNITCATEGORY_LENGTH.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_ACCELERATION) {
-                _currentOutputUnit = GCWUnitsValue<Acceleration>(UNITCATEGORY_ACCELERATION.defaultUnit, UNITPREFIX_NONE);
+                _currentOutputUnit =
+                    GCWUnitsValue<Acceleration>(UNITCATEGORY_ACCELERATION.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_VELOCITY) {
                 _currentOutputUnit = GCWUnitsValue<v.Velocity>(UNITCATEGORY_VELOCITY.defaultUnit, UNITPREFIX_NONE);
               } else if (_currentMode == UNITCATEGORY_TIME) {
@@ -97,86 +93,82 @@ class _VelocityAccelerationState extends State<VelocityAcceleration> {
             });
           },
         ),
-
         _currentMode == UNITCATEGORY_ACCELERATION
-          ? GCWTwoOptionsSwitch(
-              leftValue: i18n(context, 'unitconverter_category_velocity'),
-              rightValue: i18n(context, 'velocity_acceleration_distance'),
-              onChanged: (value) {
-                setState(() {
-                  _currentAccelerationCalcMode = value;
-                });
-              },
-              value: _currentAccelerationCalcMode
-          ) : Container(),
-
+            ? GCWTwoOptionsSwitch(
+                leftValue: i18n(context, 'unitconverter_category_velocity'),
+                rightValue: i18n(context, 'velocity_acceleration_distance'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentAccelerationCalcMode = value;
+                  });
+                },
+                value: _currentAccelerationCalcMode)
+            : Container(),
         _currentMode != UNITCATEGORY_TIME
             ? GCWUnitInput<Time>(
-          value: _currentTime,
-          title: i18n(context, 'unitconverter_category_time'),
-          min: 0.0,
-          suppressOverflow: true,
-          unitCategory: UNITCATEGORY_TIME,
-          initialUnit: TIME_SECOND,
-          onChanged: (value) {
-            setState(() {
-              _currentTime = value;
-            });
-          },
-        )
+                value: _currentTime,
+                title: i18n(context, 'unitconverter_category_time'),
+                min: 0.0,
+                suppressOverflow: true,
+                unitCategory: UNITCATEGORY_TIME,
+                initialUnit: TIME_SECOND,
+                onChanged: (value) {
+                  setState(() {
+                    _currentTime = value;
+                  });
+                },
+              )
             : Container(),
         _currentMode != UNITCATEGORY_ACCELERATION && _currentAccelerationMode
             ? GCWUnitInput<Acceleration>(
-          value: _currentAcceleration,
-          title: i18n(context, 'unitconverter_category_acceleration'),
-          min: 0.0,
-          suppressOverflow: true,
-          unitList: accelerations,
-          onChanged: (value) {
-            setState(() {
-              _currentAcceleration = value;
-            });
-          },
-        )
+                value: _currentAcceleration,
+                title: i18n(context, 'unitconverter_category_acceleration'),
+                min: 0.0,
+                suppressOverflow: true,
+                unitList: accelerations,
+                onChanged: (value) {
+                  setState(() {
+                    _currentAcceleration = value;
+                  });
+                },
+              )
             : Container(),
-        (
-          (_currentAccelerationMode && _currentMode == UNITCATEGORY_ACCELERATION && _currentAccelerationCalcMode == GCWSwitchPosition.left)
-          || (!_currentAccelerationMode && _currentMode == UNITCATEGORY_LENGTH)
-          || (!_currentAccelerationMode && _currentMode == UNITCATEGORY_TIME)
-        )
+        ((_currentAccelerationMode &&
+                    _currentMode == UNITCATEGORY_ACCELERATION &&
+                    _currentAccelerationCalcMode == GCWSwitchPosition.left) ||
+                (!_currentAccelerationMode && _currentMode == UNITCATEGORY_LENGTH) ||
+                (!_currentAccelerationMode && _currentMode == UNITCATEGORY_TIME))
             ? GCWUnitInput<v.Velocity>(
-          value: _currentVelocity,
-          title: i18n(context, 'unitconverter_category_velocity'),
-          min: 0.0,
-          suppressOverflow: true,
-          unitList: v.velocities,
-          onChanged: (value) {
-            setState(() {
-              _currentVelocity = value;
-            });
-          },
-        )
+                value: _currentVelocity,
+                title: i18n(context, 'unitconverter_category_velocity'),
+                min: 0.0,
+                suppressOverflow: true,
+                unitList: v.velocities,
+                onChanged: (value) {
+                  setState(() {
+                    _currentVelocity = value;
+                  });
+                },
+              )
             : Container(),
-
-        (
-            (_currentAccelerationMode && _currentMode == UNITCATEGORY_ACCELERATION && _currentAccelerationCalcMode == GCWSwitchPosition.right)
-                || (!_currentAccelerationMode && _currentMode != UNITCATEGORY_LENGTH)
-                || _currentMode == UNITCATEGORY_TIME
-        )
+        ((_currentAccelerationMode &&
+                    _currentMode == UNITCATEGORY_ACCELERATION &&
+                    _currentAccelerationCalcMode == GCWSwitchPosition.right) ||
+                (!_currentAccelerationMode && _currentMode != UNITCATEGORY_LENGTH) ||
+                _currentMode == UNITCATEGORY_TIME)
             ? GCWUnitInput<Length>(
-          value: _currentDistance,
-          title: i18n(context, 'velocity_acceleration_distance'),
-          min: 0.0,
-          suppressOverflow: true,
-          unitList: allLengths(),
-          onChanged: (value) {
-            setState(() {
-              _currentDistance = value;
-            });
-          },
-        )
+                value: _currentDistance,
+                title: i18n(context, 'velocity_acceleration_distance'),
+                min: 0.0,
+                suppressOverflow: true,
+                unitList: allLengths(),
+                onChanged: (value) {
+                  setState(() {
+                    _currentDistance = value;
+                  });
+                },
+              )
             : Container(),
-
         GCWTextDivider(text: i18n(context, 'common_outputunit')),
         GCWUnits(
           value: _currentOutputUnit,
@@ -188,7 +180,6 @@ class _VelocityAccelerationState extends State<VelocityAcceleration> {
             });
           },
         ),
-
         _buildOutput()
       ],
     );
@@ -203,7 +194,6 @@ class _VelocityAccelerationState extends State<VelocityAcceleration> {
       } else {
         value = distance(time: _currentTime, velocity: _currentVelocity);
       }
-
     } else if (_currentMode == UNITCATEGORY_ACCELERATION) {
       if (_currentAccelerationMode) {
         if (_currentAccelerationCalcMode == GCWSwitchPosition.right) {
@@ -212,14 +202,12 @@ class _VelocityAccelerationState extends State<VelocityAcceleration> {
           value = acceleration(time: _currentTime, velocity: _currentVelocity);
         }
       }
-
     } else if (_currentMode == UNITCATEGORY_VELOCITY) {
       if (_currentAccelerationMode) {
         value = velocity(time: _currentTime, acceleration: _currentAcceleration);
       } else {
         value = velocity(time: _currentTime, distance: _currentDistance);
       }
-
     } else if (_currentMode == UNITCATEGORY_TIME) {
       if (_currentAccelerationMode) {
         value = time(distance: _currentDistance, acceleration: _currentAcceleration);

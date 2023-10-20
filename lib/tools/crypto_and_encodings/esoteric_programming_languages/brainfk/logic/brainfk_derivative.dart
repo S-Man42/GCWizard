@@ -10,8 +10,8 @@ class BrainfkDerivatives {
   final bool isCaseSensitive;
   final String Function(String code)? convertToBrainfk;
 
-  BrainfkDerivatives({
-      required String pointerShiftLeftInstruction,
+  BrainfkDerivatives(
+      {required String pointerShiftLeftInstruction,
       required String pointerShiftRightInstruction,
       required String decreaseValueInstruction,
       required String increaseValueInstruction,
@@ -22,8 +22,7 @@ class BrainfkDerivatives {
       this.isCaseSensitive = false,
       this.convertToBrainfk,
       this.fixedSize,
-      this.outputCommandDelimiter
-  }) {
+      this.outputCommandDelimiter}) {
     substitutions = {
       pointerShiftRightInstruction: '>',
       pointerShiftLeftInstruction: '<',
@@ -74,9 +73,7 @@ class BrainfkDerivatives {
 }
 
 String _sanitizeRegExpCharacters(String text) {
-  return text
-      .split('')
-      .map((e) {
+  return text.split('').map((e) {
     switch (e) {
       case '[':
       case ']':
@@ -100,7 +97,6 @@ String _convertOokToBrainfk(String code) {
   code = substitution(code, BRAINFKDERIVATIVE_SHORTOOK.substitutions);
   return _sanitizeBrainfkCharacters(code);
 }
-
 
 // https://esolangs.org/wiki/Trivial_brainfuck_substitution
 
@@ -134,8 +130,12 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_DETAILEDFK = BrainfkDerivatives(
     outputInstruction: 'PRINT THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE AS AN ASCII CHARACTER',
     inputInstruction:
         'REPLACE THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE WITH THE ASCII CHARACTER CODE OF USER INPUT',
-    startLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK',
-    endLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER' "'" 'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK',
+    startLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER'
+        "'"
+        'S VALUE IS ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE ] COMMAND IN BRAINFUCK',
+    endLoopInstruction: 'IF THE CELL UNDER THE MEMORY POINTER'
+        "'"
+        'S VALUE IS NOT ZERO INSTEAD OF READING THE NEXT COMMAND IN THE PROGRAM JUMP TO THE CORRESPONDING COMMAND EQUIVALENT TO THE [ COMMAND IN BRAINFUCK',
     outputCommandDelimiter: '\n');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_GERMAN = BrainfkDerivatives(
@@ -294,8 +294,7 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_BLUB = BrainfkDerivatives(
     startLoopInstruction: 'Blub! Blub?',
     endLoopInstruction: 'Blub? Blub!',
     outputCommandDelimiter: ' ',
-    convertToBrainfk: _convertOokToBrainfk
-);
+    convertToBrainfk: _convertOokToBrainfk);
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_OOK = BrainfkDerivatives(
     pointerShiftRightInstruction: 'Ook. Ook?',
@@ -307,8 +306,7 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_OOK = BrainfkDerivatives(
     startLoopInstruction: 'Ook! Ook?',
     endLoopInstruction: 'Ook? Ook!',
     outputCommandDelimiter: ' ',
-    convertToBrainfk: _convertOokToBrainfk
-);
+    convertToBrainfk: _convertOokToBrainfk);
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_SHORTOOK = BrainfkDerivatives(
     pointerShiftRightInstruction: '.?',
@@ -331,8 +329,7 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_NAK = BrainfkDerivatives(
     startLoopInstruction: 'Nak! Nak?',
     endLoopInstruction: 'Nak? Nak!',
     outputCommandDelimiter: ' ',
-    convertToBrainfk: _convertOokToBrainfk
-);
+    convertToBrainfk: _convertOokToBrainfk);
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_PIKALANG = BrainfkDerivatives(
     pointerShiftRightInstruction: 'pipi',
@@ -541,6 +538,5 @@ final Map<BrainfkDerivatives, String> BRAINFK_DERIVATIVES = {
   BRAINFKDERIVATIVE_WEPMLRIO: 'wepmlrIo',
   BRAINFKDERIVATIVE_UWU: 'UwU',
   BRAINFKDERIVATIVE_ZZZ: 'ZZZ',
-
   BRAINFKDERIVATIVE_CUSTOM: 'Custom',
 };

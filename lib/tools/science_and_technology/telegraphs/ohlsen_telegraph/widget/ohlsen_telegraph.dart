@@ -22,7 +22,7 @@ class OhlsenTelegraph extends StatefulWidget {
   const OhlsenTelegraph({Key? key}) : super(key: key);
 
   @override
- _OhlsenTelegraphState createState() => _OhlsenTelegraphState();
+  _OhlsenTelegraphState createState() => _OhlsenTelegraphState();
 }
 
 class _OhlsenTelegraphState extends State<OhlsenTelegraph> {

@@ -7,12 +7,11 @@ import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/navigation/navigation_service.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
-
-import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,29 +38,28 @@ class App extends StatelessWidget {
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return AppBuilder(builder: (context) {
             return MaterialApp(
-              title: 'GC Wizard',
-              supportedLocales: SUPPORTED_LOCALES.keys,
-              locale: model.appLocal,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              theme: buildTheme(),
-              debugShowCheckedModeBanner: false,
-              navigatorKey: NavigationService.instance.navigationKey,
-              routes: {
-                // Required extra way because normal Navigator.of(context) way
-                // crashes because of some NULL problems on TextSelectionControls menu
-                clipboard_editor: (BuildContext context) => GCWTool(
-                    tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
-              },
-              onGenerateInitialRoutes: (route) => startMainView(context, route),
-              onGenerateRoute: (RouteSettings settings) {
-                return createRoute(context, settings);
-              }
-            );
+                title: 'GC Wizard',
+                supportedLocales: SUPPORTED_LOCALES.keys,
+                locale: model.appLocal,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                theme: buildTheme(),
+                debugShowCheckedModeBanner: false,
+                navigatorKey: NavigationService.instance.navigationKey,
+                routes: {
+                  // Required extra way because normal Navigator.of(context) way
+                  // crashes because of some NULL problems on TextSelectionControls menu
+                  clipboard_editor: (BuildContext context) => GCWTool(
+                      tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
+                },
+                onGenerateInitialRoutes: (route) => startMainView(context, route),
+                onGenerateRoute: (RouteSettings settings) {
+                  return createRoute(context, settings);
+                });
           });
         }));
   }

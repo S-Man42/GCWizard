@@ -12,7 +12,7 @@ class RailFence extends StatefulWidget {
   const RailFence({Key? key}) : super(key: key);
 
   @override
- _RailFenceState createState() => _RailFenceState();
+  _RailFenceState createState() => _RailFenceState();
 }
 
 class _RailFenceState extends State<RailFence> {
@@ -23,7 +23,7 @@ class _RailFenceState extends State<RailFence> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override
   Widget build(BuildContext context) {

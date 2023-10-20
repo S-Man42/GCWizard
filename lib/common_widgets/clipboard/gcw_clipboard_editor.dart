@@ -17,7 +17,7 @@ class GCWClipboardEditor extends StatefulWidget {
   const GCWClipboardEditor({Key? key}) : super(key: key);
 
   @override
- _GCWClipboardEditorState createState() => _GCWClipboardEditorState();
+  _GCWClipboardEditorState createState() => _GCWClipboardEditorState();
 }
 
 class _GCWClipboardEditorState extends State<GCWClipboardEditor> {
