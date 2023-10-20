@@ -127,6 +127,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/w
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/widget/leetspeak.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_time_pad.dart';
@@ -638,6 +639,7 @@ void _initStaticToolList() {
       className(const Kenny()),
       className(const KeyboardSelection()),
       className(const LCM()),
+      className(const LeetSpeak()),
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
