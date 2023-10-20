@@ -17,7 +17,7 @@ class Trifid extends StatefulWidget {
   const Trifid({Key? key}) : super(key: key);
 
   @override
- _TrifidState createState() => _TrifidState();
+  _TrifidState createState() => _TrifidState();
 }
 
 class _TrifidState extends State<Trifid> {

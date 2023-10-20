@@ -131,7 +131,6 @@ String encodeNavajo(String plainText, bool useOnlyAlphabet) {
 }
 
 String encodeLetterWise(String plainText) {
-
   List<String> result = <String>[];
   plainText.split('').forEach((element) {
     if (_NAVAJO_ENCODE_ALPHABET[element] == null) {

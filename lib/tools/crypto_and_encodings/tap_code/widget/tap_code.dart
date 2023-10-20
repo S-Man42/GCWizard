@@ -11,7 +11,7 @@ class TapCode extends StatefulWidget {
   const TapCode({Key? key}) : super(key: key);
 
   @override
- _TapCodeState createState() => _TapCodeState();
+  _TapCodeState createState() => _TapCodeState();
 }
 
 class _TapCodeState extends State<TapCode> {
@@ -23,7 +23,7 @@ class _TapCodeState extends State<TapCode> {
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  final _maskFormatter = WrapperForMaskTextInputFormatter(mask: '## ' * 100000 + '##', filter: {"#": RegExp(r'[1-5]')});
+  final _maskFormatter = GCWMaskTextInputFormatter(mask: '## ' * 100000 + '##', filter: {"#": RegExp(r'[1-5]')});
 
   @override
   void initState() {

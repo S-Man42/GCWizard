@@ -2,7 +2,6 @@
 
 part of 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 
-
 // https://de.wikibrief.org/wiki/Romanian_numbers
 // https://de.wikipedia.org/wiki/Griechische_Zahlw%C3%B6rter
 //

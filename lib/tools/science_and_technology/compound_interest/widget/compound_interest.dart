@@ -11,7 +11,7 @@ class CompoundInterest extends StatefulWidget {
   const CompoundInterest({Key? key}) : super(key: key);
 
   @override
- _CompoundInterestState createState() => _CompoundInterestState();
+  _CompoundInterestState createState() => _CompoundInterestState();
 }
 
 const _MODE_PRINCIPALSUM = 'compoundinterest_modes_principalsum';

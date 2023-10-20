@@ -8,7 +8,7 @@ class PrimeIndex extends StatefulWidget {
   const PrimeIndex({Key? key}) : super(key: key);
 
   @override
- _PrimeIndexState createState() => _PrimeIndexState();
+  _PrimeIndexState createState() => _PrimeIndexState();
 }
 
 class _PrimeIndexState extends State<PrimeIndex> {

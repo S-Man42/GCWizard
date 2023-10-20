@@ -13,7 +13,7 @@ class Affine extends StatefulWidget {
   const Affine({Key? key}) : super(key: key);
 
   @override
- _AffineState createState() => _AffineState();
+  _AffineState createState() => _AffineState();
 }
 
 class _AffineState extends State<Affine> {

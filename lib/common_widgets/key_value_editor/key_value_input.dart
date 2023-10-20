@@ -1,25 +1,25 @@
 part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 
-
 class GCWKeyValueInput extends StatefulWidget {
-
   late List<KeyValueBase> entries;
   late String? keyHintText;
   late String valueHintText;
   late TextEditingController? keyController;
   late List<TextInputFormatter>? keyInputFormatters;
   late List<TextInputFormatter>? valueInputFormatters;
-  late KeyValueBase? Function(KeyValueBase)? onGetNewEntry;
+  late void Function(KeyValueBase)? onAddEntry;
   late void Function(KeyValueBase)? onNewEntryChanged;
   late void Function(KeyValueBase)? onUpdateEntry;
   late bool addOnDispose;
   late int? valueFlex;
   late void Function()? onSetState;
 
-  GCWKeyValueInput({Key? key,}) : super(key: key);
+  GCWKeyValueInput({
+    Key? key,
+  }) : super(key: key);
 
- @override
- GCWKeyValueInputState createState() => GCWKeyValueInputState();
+  @override
+  GCWKeyValueInputState createState() => GCWKeyValueInputState();
 }
 
 class GCWKeyValueInputState extends State<GCWKeyValueInput> {
@@ -47,7 +47,7 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
 
   @override
   void dispose() {
-    if (widget.addOnDispose && currentKey.isNotEmpty  && currentValue.isNotEmpty) {
+    if (widget.addOnDispose && currentKey.isNotEmpty && currentValue.isNotEmpty) {
       addEntry(KeyValueBase(null, currentKey, currentValue));
     }
     if (widget.keyController == null) _keyController.dispose();
@@ -87,8 +87,7 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
               _onNewEntryChanged(false);
             });
           },
-        )
-    );
+        ));
   }
 
   Widget arrowIcon() {
@@ -134,17 +133,19 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
   }
 
   void addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    var _entry = getNewEntry(entry);
-    if (_entry != null) {
-      widget.entries.add(_entry);
-
-      finishAddEntry(_entry, clearInput);
+    if (widget.onAddEntry == null) {
+      widget.entries.add(entry);
+    } else {
+      widget.onAddEntry!(entry);
     }
+    finishAddEntry(entry, clearInput);
   }
 
   void finishAddEntry(KeyValueBase entry, bool clearInput) {
     if (clearInput) _onNewEntryChanged(true);
-    if (widget.onUpdateEntry != null) widget.onUpdateEntry!(entry);
+    if (widget.onAddEntry == null) {
+      if (widget.onUpdateEntry != null) widget.onUpdateEntry!(entry);
+    }
 
     if (widget.onSetState != null) widget.onSetState!();
   }
@@ -163,14 +164,6 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
     }
     if (widget.onNewEntryChanged != null) {
       widget.onNewEntryChanged!(KeyValueBase(null, currentKey, currentValue));
-    }
-  }
-
-  KeyValueBase? getNewEntry(KeyValueBase entry) {
-    if (widget.onGetNewEntry == null) {
-      return entry;
-    } else {
-      return widget.onGetNewEntry!(entry);
     }
   }
 
@@ -227,6 +220,3 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
     return list.isEmpty ? null : list;
   }
 }
-
-
-

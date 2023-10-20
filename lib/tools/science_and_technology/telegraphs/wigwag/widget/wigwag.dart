@@ -12,7 +12,7 @@ class WigWagSemaphoreTelegraph extends StatefulWidget {
   const WigWagSemaphoreTelegraph({Key? key}) : super(key: key);
 
   @override
- _WigWagSemaphoreTelegraphState createState() => _WigWagSemaphoreTelegraphState();
+  _WigWagSemaphoreTelegraphState createState() => _WigWagSemaphoreTelegraphState();
 }
 
 class _WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
@@ -55,9 +55,7 @@ class _WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
           },
           items: CCITT_CODEBOOK.entries.map((mode) {
             return GCWDropDownMenuItem(
-                value: mode.key,
-                child: i18n(context, mode.value.title),
-                subtitle: i18n(context, mode.value.subtitle));
+                value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
           }).toList(),
         ),
         _currentMode == GCWSwitchPosition.left

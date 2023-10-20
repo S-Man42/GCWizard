@@ -11,12 +11,12 @@ const MDT_INTERNALNAMES_WASD = 'multidecoder_tool_wasd_title';
 const MDT_WASD_OPTION_SET = 'wasd_control_set';
 
 class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
-  MultiDecoderToolWasd({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolWasd(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -24,8 +24,7 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_WASD,
             onDecode: (String input, String key) {
               var value = checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_WASD, options, MDT_WASD_OPTION_SET);
-              var output = binary2image(
-                  decodeWASDGraphic(input, (value.characters.toList())), false, false);
+              var output = binary2image(decodeWASDGraphic(input, (value.characters.toList())), false, false);
               if (output == null) return null;
               return input2Image(output);
             },
@@ -38,15 +37,13 @@ class MultiDecoderToolWasd extends AbstractMultiDecoderTool {
 class _MultiDecoderToolWasdState extends State<MultiDecoderToolWasd> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_WASD_OPTION_SET: GCWDropDown<WASD_TYPE>(
         value: _getWASD_Type(widget.options[MDT_WASD_OPTION_SET], widget.options),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_WASD_OPTION_SET] = KEYBOARD_CONTROLS[newValue];
           });
-
         },
         items: KEYBOARD_CONTROLS.entries.where((element) => element.key != WASD_TYPE.CUSTOM).map((mode) {
           return GCWDropDownMenuItem(
@@ -55,8 +52,7 @@ class _MultiDecoderToolWasdState extends State<MultiDecoderToolWasd> {
           );
         }).toList(),
       ),
-    }
-    );
+    });
   }
 }
 

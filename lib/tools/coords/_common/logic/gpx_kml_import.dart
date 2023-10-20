@@ -2,10 +2,10 @@ import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/intersect_lines/logic/intersect_lines.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/intersect_lines/logic/intersect_lines.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
@@ -37,7 +37,8 @@ Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
         return parseCoordinatesFile(xml, kmlFormat: true);
       }
       break;
-    default: break;
+    default:
+      break;
   }
 
   return null;
@@ -73,15 +74,15 @@ MapViewDAO? parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
           }
 
           result.points[x].name = result.points[x].name;
-          result.points[x].color = (result.points[x].color == '#000000')
-              ? result.points[y].color
-              : result.points[x].color;
+          result.points[x].color =
+              (result.points[x].color == '#000000') ? result.points[y].color : result.points[x].color;
           result.points[x].radius = result.points[x].radius ?? result.points[y].radius;
           result.points[x].circleColor =
               (result.points[x].circleColor == null) || (result.points[x].circleColor == '#000000')
                   ? result.points[y].circleColor
                   : result.points[x].circleColor;
-          result.points[x].circleColorSameAsColor = result.points[x].circleColorSameAsColor || result.points[y].circleColorSameAsColor;
+          result.points[x].circleColorSameAsColor =
+              result.points[x].circleColorSameAsColor || result.points[y].circleColorSameAsColor;
 
           result.points.removeAt(y);
           y--;
@@ -142,7 +143,8 @@ class _GpxReader {
       var lat = trkpt.getAttribute('lat');
       var lon = trkpt.getAttribute('lon');
       if (lat != null && lon != null) {
-        line.points.add(GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true));
+        line.points
+            .add(GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true));
       }
     });
     return line;

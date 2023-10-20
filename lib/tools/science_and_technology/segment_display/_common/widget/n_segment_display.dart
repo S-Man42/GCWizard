@@ -30,7 +30,7 @@ class NSegmentDisplay extends StatefulWidget {
       : super(key: key);
 
   @override
- _NSegmentDisplayState createState() => _NSegmentDisplayState();
+  _NSegmentDisplayState createState() => _NSegmentDisplayState();
 
   Future<ui.Image> get renderedImage async {
     return nSegmentDisplayState.renderedImage;
@@ -77,7 +77,7 @@ class _NSegmentDisplayState extends State<NSegmentDisplay> {
   }
 
   Future<ui.Image> get renderedImage async {
-     _segments = Map.from(widget.segments);
+    _segments = Map.from(widget.segments);
 
     for (var segmentID in widget.initialSegments.keys) {
       _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]!);
@@ -100,7 +100,7 @@ class _NSegmentDisplayState extends State<NSegmentDisplay> {
 Map<String, bool> buildSegmentMap(Segments segments) {
   Map<String, bool> segmentMap;
   if (segments.displays.isNotEmpty) {
-    segmentMap = { for (var e in segments.displays.last) e.toString() : true };
+    segmentMap = {for (var e in segments.displays.last) e.toString(): true};
   } else {
     segmentMap = {};
   }

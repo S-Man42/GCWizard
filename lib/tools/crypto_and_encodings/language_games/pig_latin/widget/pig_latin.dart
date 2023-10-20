@@ -8,7 +8,7 @@ class PigLatin extends StatefulWidget {
   const PigLatin({Key? key}) : super(key: key);
 
   @override
- _PigLatinState createState() => _PigLatinState();
+  _PigLatinState createState() => _PigLatinState();
 }
 
 class _PigLatinState extends State<PigLatin> {
