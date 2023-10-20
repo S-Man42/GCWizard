@@ -8,8 +8,8 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coord
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -424,8 +424,10 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
       _location.getLocation().then((locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
-          showSnackBar(i18n(context, 'coords_common_location_lowaccuracy',
-              parameters: [NumberFormat('0.0').format(locationData.accuracy)]), context);
+          showSnackBar(
+              i18n(context, 'coords_common_location_lowaccuracy',
+                  parameters: [NumberFormat('0.0').format(locationData.accuracy)]),
+              context);
         }
 
         LatLng _coords;

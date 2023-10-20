@@ -131,14 +131,8 @@ class _GeohashingState extends State<Geohashing> {
           value: _currentOnline,
           onChanged: (value) {
             if (value == GCWSwitchPosition.right) {
-              showGCWDialog(context,
-                i18n(context, 'geohashing_dow_jones_index'),
-                SizedBox(
-                  width: 300,
-                  height: 130,
-                  child: Text(i18n(context, 'geohashing_dow_jones_index_online'))
-                ),
-                [
+              showGCWDialog(context, i18n(context, 'geohashing_dow_jones_index'),
+                  SizedBox(width: 300, height: 130, child: Text(i18n(context, 'geohashing_dow_jones_index_online'))), [
                 GCWDialogButton(
                   text: i18n(context, 'common_ok'),
                   onPressed: () {

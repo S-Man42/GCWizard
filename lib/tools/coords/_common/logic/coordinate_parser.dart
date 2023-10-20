@@ -12,7 +12,7 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
   try {
     BaseCoordinate? coord = parseStandardFormats(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
-    
+
     coord = UTMREF.parse(text);
     if (coord != null) coords.add(coord);
 

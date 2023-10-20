@@ -164,16 +164,13 @@ class _GCWToolState extends State<GCWTool> {
 
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
-        appBar: AppBar(
-          title: Text(_toolName),
-          actions: [
-            GCWPopupMenu(
-              iconData: Icons.more_vert,
-              buttonNoBorder: true,
-              menuItemBuilder: (context) => _buildToolBarItems(),
-            )
-          ]
-        ),
+        appBar: AppBar(title: Text(_toolName), actions: [
+          GCWPopupMenu(
+            iconData: Icons.more_vert,
+            buttonNoBorder: true,
+            menuItemBuilder: (context) => _buildToolBarItems(),
+          )
+        ]),
         body: _buildBody());
   }
 
@@ -228,11 +225,10 @@ class _GCWToolState extends State<GCWTool> {
     url = Uri.encodeFull(url);
 
     return GCWPopupMenuItem(
-      child: iconedGCWPopupMenuItem(context, Icons.help, 'gcwtool_help'),
-      action: (index) => setState(() {
-        launchUrl(Uri.parse(url));
-      })
-    );
+        child: iconedGCWPopupMenuItem(context, Icons.help, 'gcwtool_help'),
+        action: (index) => setState(() {
+              launchUrl(Uri.parse(url));
+            }));
   }
 
   List<GCWPopupMenuItem> _buildToolBarItems() {
@@ -240,19 +236,16 @@ class _GCWToolState extends State<GCWTool> {
 
     menuItems.addAll(widget.toolBarItemList);
 
-    menuItems.add(
-      GCWPopupMenuItem(
-          child: iconedGCWPopupMenuItem(context, Icons.link, kIsWeb ? 'gcwtool_weblink' : 'gcwtool_copyweblink'),
-          action: (index) => setState(() {
-            var url = deepLinkURL(widget);
-            if (kIsWeb) {
-              launchUrl(Uri.parse(url));
-            } else {
-              insertIntoGCWClipboard(context, url);
-            }
-          })
-      )
-    );
+    menuItems.add(GCWPopupMenuItem(
+        child: iconedGCWPopupMenuItem(context, Icons.link, kIsWeb ? 'gcwtool_weblink' : 'gcwtool_copyweblink'),
+        action: (index) => setState(() {
+              var url = deepLinkURL(widget);
+              if (kIsWeb) {
+                launchUrl(Uri.parse(url));
+              } else {
+                insertIntoGCWClipboard(context, url);
+              }
+            })));
 
     var helpItem = _buildHelpMenuItem();
     if (helpItem != null) menuItems.add(helpItem);
@@ -355,4 +348,3 @@ Map<String, int> _toolCounts() {
   var decoded = asJsonMap(jsonDecode(jsonString));
   return decoded.map((key, value) => MapEntry<String, int>(key, toIntOrNull(value) ?? 0));
 }
-

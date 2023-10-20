@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-enum BaconType {ORIGINAL, FULL}
+enum BaconType { ORIGINAL, FULL }
 
 const _AZToBaconOriginal = {
   'A': 'AAAAA',

@@ -546,7 +546,6 @@ void _checkAndGetCartridgeMetaData(String currentLine) {
   }
 
   if (currentLine.startsWith('.StartingLocation =')) {
-
     currentLine = currentLine.replaceAll('.StartingLocation = ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
     _StartLocation = WherigoZonePoint(
         Latitude: double.parse(currentLine.split(',')[0]),
