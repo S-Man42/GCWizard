@@ -1,77 +1,81 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-const Map<bool, Map<String, String>> _AZToBacon = {
-  true: {
-    'A': 'AAAAA',
-    'B': 'AAAAB',
-    'C': 'AAABA',
-    'D': 'AAABB',
-    'E': 'AABAA',
-    'F': 'AABAB',
-    'G': 'AABBA',
-    'H': 'AABBB',
-    'J': 'ABAAA',
-    'I': 'ABAAA',
-    'K': 'ABAAB',
-    'L': 'ABABA',
-    'M': 'ABABB',
-    'N': 'ABBAA',
-    'O': 'ABBAB',
-    'P': 'ABBBA',
-    'Q': 'ABBBB',
-    'R': 'BAAAA',
-    'S': 'BAAAB',
-    'T': 'BAABA',
-    'V': 'BAABB',
-    'U': 'BAABB',
-    'W': 'BABAA',
-    'X': 'BABAB',
-    'Y': 'BABBA',
-    'Z': 'BABBB',
-  },
-  false: {
-  //https://www.geocachingtoolbox.com/index.php?lang=de&page=baconianCipher
-    'A': 'AAAAA',
-    'B': 'AAAAB',
-    'C': 'AAABA',
-    'D': 'AAABB',
-    'E': 'AABAA',
-    'F': 'AABAB',
-    'G': 'AABBA',
-    'H': 'AABBB',
-    'I': 'ABAAA',
-    'J': 'ABAAB',
-    'K': 'ABABA',
-    'L': 'ABABB',
-    'M': 'ABBAA',
-    'N': 'ABBAB',
-    'O': 'ABBBA',
-    'P': 'ABBBB',
-    'Q': 'BAAAA',
-    'R': 'BAAAB',
-    'S': 'BAABA',
-    'T': 'BAABB',
-    'U': 'BABAA',
-    'V': 'BABAB',
-    'W': 'BABBA',
-    'X': 'BABBB',
-    'Y': 'BBAAA',
-    'Z': 'BBAAB',
-  }
+enum BaconType { ORIGINAL, FULL }
+
+const _AZToBaconOriginal = {
+  'A': 'AAAAA',
+  'B': 'AAAAB',
+  'C': 'AAABA',
+  'D': 'AAABB',
+  'E': 'AABAA',
+  'F': 'AABAB',
+  'G': 'AABBA',
+  'H': 'AABBB',
+  'I': 'ABAAA',
+  'K': 'ABAAB',
+  'L': 'ABABA',
+  'M': 'ABABB',
+  'N': 'ABBAA',
+  'O': 'ABBAB',
+  'P': 'ABBBA',
+  'Q': 'ABBBB',
+  'R': 'BAAAA',
+  'S': 'BAAAB',
+  'T': 'BAABA',
+  'U': 'BAABB',
+  'W': 'BABAA',
+  'X': 'BABAB',
+  'Y': 'BABBA',
+  'Z': 'BABBB',
 };
 
-final Map<bool, Map<String, String>> _BaconToAZ = {};
+const _AZToBaconFull = {
+  'A': 'AAAAA',
+  'B': 'AAAAB',
+  'C': 'AAABA',
+  'D': 'AAABB',
+  'E': 'AABAA',
+  'F': 'AABAB',
+  'G': 'AABBA',
+  'H': 'AABBB',
+  'I': 'ABAAA',
+  'J': 'ABAAB',
+  'K': 'ABABA',
+  'L': 'ABABB',
+  'M': 'ABBAA',
+  'N': 'ABBAB',
+  'O': 'ABBBA',
+  'P': 'ABBBB',
+  'Q': 'BAAAA',
+  'R': 'BAAAB',
+  'S': 'BAABA',
+  'T': 'BAABB',
+  'U': 'BABAA',
+  'V': 'BABAB',
+  'W': 'BABBA',
+  'X': 'BABBB',
+  'Y': 'BBAAA',
+  'Z': 'BBAAB',
+};
 
-String encodeBacon(String input, bool inverse, bool binary, bool original) {
-  if (input.isEmpty) return '';
 // I has same code as J, so I replaces J in mapping; J will not occur in this map
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
-  _BaconToAZ[true] = switchMapKeyValue(_AZToBacon[true]!);
-  _BaconToAZ[false] = switchMapKeyValue(_AZToBacon[false]!);
+final _BaconOriginalToAZ = switchMapKeyValue(_AZToBaconOriginal);
 
-  var out = input.toUpperCase().split('').map((character) {
-    var bacon = _AZToBacon[original]?[character];
+final _BaconFullToAZ = switchMapKeyValue(_AZToBaconFull);
+
+String encodeBacon(String input, {bool inverse = false, bool binary = false, BaconType type = BaconType.ORIGINAL}) {
+  if (input.isEmpty) return '';
+
+  var baconMap = type == BaconType.ORIGINAL ? _AZToBaconOriginal : _AZToBaconFull;
+  var out = input.toUpperCase();
+  if (type == BaconType.ORIGINAL) {
+    out = out.replaceAll('V', 'U').replaceAll('J', 'I');
+  }
+
+  out = out.split('').map((character) {
+    var bacon = baconMap[character];
     return bacon ?? '';
   }).join();
 
@@ -84,27 +88,27 @@ String encodeBacon(String input, bool inverse, bool binary, bool original) {
   return out;
 }
 
-String decodeBacon(String input, bool invers, bool binary, bool original) {
+String decodeBacon(String input, {bool inverse = false, bool binary = false, BaconType type = BaconType.ORIGINAL}) {
   if (input.isEmpty) return '';
 // I has same code as J, so I replaces J in mapping; J will not occur in this map
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
-  _BaconToAZ[true] = switchMapKeyValue(_AZToBacon[true]!);
-  _BaconToAZ[false] = switchMapKeyValue(_AZToBacon[false]!);
 
   if (binary) {
-    input = input.toUpperCase().replaceAll(RegExp('[A-B]'), '');
+    input = input.replaceAll(RegExp(r'[^01]'), '');
     input = substitution(input, {'0': 'A', '1': 'B'});
   }
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-B]'), '');
-  if (invers) input = _inverseString(input);
+  if (inverse) input = _inverseString(input);
 
   input = input.substring(0, input.length - (input.length % 5));
+
+  var baconMap = type == BaconType.ORIGINAL ? _BaconOriginalToAZ : _BaconFullToAZ;
 
   var out = '';
   int i = 0;
   while (i < input.length) {
-    out += _BaconToAZ[original]?[input.substring(i, i + 5)] ?? '';
+    out += baconMap[input.substring(i, i + 5)] ?? '';
     i += 5;
   }
 

@@ -10,7 +10,7 @@ class Bacon extends StatefulWidget {
   const Bacon({Key? key}) : super(key: key);
 
   @override
- _BaconState createState() => _BaconState();
+  _BaconState createState() => _BaconState();
 }
 
 class _BaconState extends State<Bacon> {
@@ -20,6 +20,7 @@ class _BaconState extends State<Bacon> {
   GCWSwitchPosition _currentVersion = GCWSwitchPosition.left;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _binaryMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _typeMode = GCWSwitchPosition.left;
   bool _inversMode = false;
 
   String _output = '';
@@ -92,6 +93,8 @@ class _BaconState extends State<Bacon> {
   }
 
   Widget _buildOutput() {
+    var type = _typeMode == GCWSwitchPosition.left ? BaconType.ORIGINAL : BaconType.FULL;
+
     if (_currentMode == GCWSwitchPosition.left) {
       _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
     } else {

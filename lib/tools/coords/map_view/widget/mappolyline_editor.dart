@@ -10,7 +10,7 @@ class MapPolylineEditor extends StatefulWidget {
   const MapPolylineEditor({Key? key, required this.polyline}) : super(key: key);
 
   @override
- _MapPolylineEditorState createState() => _MapPolylineEditorState();
+  _MapPolylineEditorState createState() => _MapPolylineEditorState();
 }
 
 class _MapPolylineEditorState extends State<MapPolylineEditor> {

@@ -14,7 +14,7 @@ class Beghilos extends StatefulWidget {
   const Beghilos({Key? key}) : super(key: key);
 
   @override
- _BeghilosState createState() => _BeghilosState();
+  _BeghilosState createState() => _BeghilosState();
 }
 
 class _BeghilosState extends State<Beghilos> {

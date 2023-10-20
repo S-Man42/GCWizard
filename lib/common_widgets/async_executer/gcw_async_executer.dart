@@ -28,10 +28,10 @@ class GCWAsyncExecuter<T> extends StatefulWidget {
 
   @override
   _GCWAsyncExecuterState<T> createState() => _GCWAsyncExecuterState<T>();
-
 }
 
-Future<ReceivePort> _makeIsolate(void Function(GCWAsyncExecuterParameters) isolatedFunction, GCWAsyncExecuterParameters parameters) async {
+Future<ReceivePort> _makeIsolate(
+    void Function(GCWAsyncExecuterParameters) isolatedFunction, GCWAsyncExecuterParameters parameters) async {
   ReceivePort receivePort = ReceivePort();
   parameters.sendAsyncPort = receivePort.sendPort;
 

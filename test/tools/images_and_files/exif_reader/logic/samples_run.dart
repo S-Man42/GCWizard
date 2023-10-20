@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/exif_reader.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 
 Future<void> runSamplesTest(FileSystemEntity file, bool emtyTags) async {
   Uint8List content = _getFileData(file.path);

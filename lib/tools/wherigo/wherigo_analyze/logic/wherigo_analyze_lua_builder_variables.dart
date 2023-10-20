@@ -38,20 +38,23 @@ List<WherigoBuilderVariableData> _analyzeAndExtractBuilderVariableSectionData(Li
           .replaceAll(' ', '')
           .replaceAll('"', '');
 
-      varDescription = lines[i + 5]
-          .replaceAll('buildervar.', '')
-          .replaceAll(varName + '.Description', '')
-          .replaceAll(' = ', '')
-          .replaceAll('"', '');
-
+      if ((i + 5) < lines.length && lines[i + 5].contains('Description')) {
+        varDescription = lines[i + 5]
+            .replaceAll('buildervar.', '')
+            .replaceAll(varName + '.Description', '')
+            .replaceAll(' = ', '')
+            .replaceAll('"', '');
+        i = i + 5;
+      } else {
+        varDescription = '';
+        i = i + 4;
+      }
       result.add(WherigoBuilderVariableData(
           BuilderVariableID: varID,
           BuilderVariableName: varName,
           BuilderVariableType: varType,
           BuilderVariableData: varData,
           BuilderVariableDescription: varDescription));
-
-      i = i + 5;
     }
     i++;
   }

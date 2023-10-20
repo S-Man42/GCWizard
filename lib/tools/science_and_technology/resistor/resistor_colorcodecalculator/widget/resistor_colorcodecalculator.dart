@@ -16,7 +16,7 @@ class ResistorColorCodeCalculator extends StatefulWidget {
   const ResistorColorCodeCalculator({Key? key}) : super(key: key);
 
   @override
- _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
+  _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
 }
 
 // TODO:
@@ -95,18 +95,15 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
         [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_multiplier : Container(),
         [5, 6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_tolerance : Container(),
         [6].contains(_currentNumberBands) ? _resistorBandDropDown_sixBands_temperatureCoefficient : Container(),
-        GCWTextDivider(
-          text: i18n(context, 'common_outputformat')
-        ),
+        GCWTextDivider(text: i18n(context, 'common_outputformat')),
         GCWUnitPrefixDropDown(
-          onChanged: (value) {
-            setState(() {
-              _currentPrefix = value;
-            });
-          },
-          value: _currentPrefix,
-          onlyShowSymbols: false
-        ),
+            onChanged: (value) {
+              setState(() {
+                _currentPrefix = value;
+              });
+            },
+            value: _currentPrefix,
+            onlyShowSymbols: false),
         _buildOutput()
       ],
     );
@@ -295,9 +292,6 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
     }
 
     return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs,
-        flexValues: const [2, 3]
-    );
+        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs, flexValues: const [2, 3]);
   }
 }

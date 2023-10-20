@@ -35,15 +35,15 @@ class GCWIntegerSpinner extends StatefulWidget {
       this.max = MAX_INT,
       this.leftPadZeros,
       this.controller,
-      this.layout= SpinnerLayout.HORIZONTAL,
+      this.layout = SpinnerLayout.HORIZONTAL,
       this.focusNode,
-      this.overflow=
+      this.overflow =
           SpinnerOverflowType.ALLOW_OVERFLOW // TODO: Automatically true if this.min == null || this.max == null
       })
       : super(key: key);
 
   @override
- _GCWIntegerSpinnerState createState() => _GCWIntegerSpinnerState();
+  _GCWIntegerSpinnerState createState() => _GCWIntegerSpinnerState();
 }
 
 class _GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
@@ -96,14 +96,14 @@ class _GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   void _increaseValue() {
     // setState(() {
-      if (_currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
-        _currentValue++;
-      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow) &&
-          _currentValue == widget.max) {
-        _currentValue = widget.min;
-      }
+    if (_currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
+      _currentValue++;
+    } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow) &&
+        _currentValue == widget.max) {
+      _currentValue = widget.min;
+    }
 
-      _setCurrentValueAndEmitOnChange(setTextFieldText: true);
+    _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     // });
   }
 
@@ -168,7 +168,7 @@ class _GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     }
   }
 
-  void _setCurrentValueAndEmitOnChange({bool setTextFieldText= false}) {
+  void _setCurrentValueAndEmitOnChange({bool setTextFieldText = false}) {
     if (setTextFieldText) {
       var text = _currentValue.toString();
 

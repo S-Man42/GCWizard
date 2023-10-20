@@ -24,27 +24,21 @@ List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoAct
         break;
       case WHERIGO_ACTIONMESSAGETYPE.BUTTON:
         resultWidget.add(Text(
-            '\n' +
-                i18n(context, 'wherigo_output_action_btn') +
-                ' « ' +
-                element.ActionMessageContent +
-                ' »' +
-                '\n',
+            '\n' + i18n(context, 'wherigo_output_action_btn') + ' « ' + element.ActionMessageContent + ' »' + '\n',
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.bold)));
         break;
       case WHERIGO_ACTIONMESSAGETYPE.COMMAND:
         if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
           String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
-          if (
-          WHERIGONameToObject[LUAName] == null ||
-              WHERIGONameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length
-          ) {
+          if (WHERIGONameToObject[LUAName] == null ||
+              WHERIGONameToObject[LUAName]!.ObjectIndex >= WherigoCartridgeGWCData.MediaFilesContents.length) {
             break;
           }
           resultWidget.add(GCWSoundPlayer(
             file: GCWFile(
-                bytes: WherigoCartridgeGWCData.MediaFilesContents[WHERIGONameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
+                bytes: WherigoCartridgeGWCData
+                    .MediaFilesContents[WHERIGONameToObject[LUAName]!.ObjectIndex].MediaFileBytes,
                 name: WHERIGONameToObject[LUAName]!.ObjectMedia),
           ));
         } else {
@@ -54,10 +48,9 @@ List<Widget> _buildOutputListOfMessageData(BuildContext context, List<WherigoAct
           ));
         }
         break;
-      default: {}
+      default:
+        {}
     }
   }
   return resultWidget;
 }
-
-
