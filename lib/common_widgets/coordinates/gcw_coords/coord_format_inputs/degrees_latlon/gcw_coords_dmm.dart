@@ -75,12 +75,12 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
       _currentLatDegrees = lat.degrees;
       _currentLatMinutes = lat.minutes.split('.')[0];
       _currentLatMilliMinutes = lat.minutes.split('.')[1];
-      _currentLatSign = lat.sign.value;
+      _currentLatSign = lat.sign.value != 0 ? lat.sign.value : 1;
 
       _currentLonDegrees = lon.degrees;
       _currentLonMinutes = lon.minutes.split('.')[0];
       _currentLonMilliMinutes = lon.minutes.split('.')[1];
-      _currentLonSign = lon.sign.value;
+      _currentLonSign = lon.sign.value != 0 ? lon.sign.value : 1;
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;

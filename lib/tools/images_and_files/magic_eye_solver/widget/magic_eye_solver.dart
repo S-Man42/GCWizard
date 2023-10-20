@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -59,7 +59,7 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
         file: _decodeImage,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -130,7 +130,7 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
         file: _encodeHiddenDataImage,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
           _encodeHiddenDataImage = _file;
@@ -175,7 +175,7 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
               file: _encodeTextureImage,
               onLoaded: (_file) {
                 if (_file == null) {
-                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                  showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                   return;
                 }
                 _encodeTextureImage = _file;
@@ -210,7 +210,8 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
     }
 
     _encodeOutData = output.item1;
-    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL) showToast(i18n(context, 'magic_eye_image_too_small'));
+    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL)
+      showSnackBar(i18n(context, 'magic_eye_image_too_small'), context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

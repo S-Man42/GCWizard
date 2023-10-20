@@ -156,7 +156,13 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
                                           context,
                                           entry.subFormulaCount == 1
                                               ? 'formulasolver_formula'
-                                              : 'formulasolver_formulas'),
+                                              : 'formulasolver_formulas') +
+                                      ', ${entry.valueCount} ' +
+                                      i18n(
+                                          context,
+                                          entry.valueCount == 1
+                                              ? 'formulasolver_formulas_value'
+                                              : 'formulasolver_formulas_values'),
                                   style: gcwDescriptionTextStyle(),
                                 ),
                               )

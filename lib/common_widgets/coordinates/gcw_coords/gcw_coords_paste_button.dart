@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -30,7 +30,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
     List<BaseCoordinate> parsed = parseCoordinates(text);
 
     if (parsed.isEmpty) {
-      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
+      showSnackBar(i18n(context, 'coords_common_clipboard_nocoordsfound'), context);
       widget.onPasted([]);
       return;
     } else if (parsed.length > 1) {
@@ -44,7 +44,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
         }
         return text;
       }).join();
-      showToast(i18n(context, 'coords_common_clipboard_recognizedcoordformats') + ':' + recognizedFormats);
+      showSnackBar(i18n(context, 'coords_common_clipboard_recognizedcoordformats') + ':' + recognizedFormats, context);
     }
 
     widget.onPasted(parsed);

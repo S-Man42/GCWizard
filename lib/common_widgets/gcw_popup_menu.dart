@@ -16,6 +16,7 @@ class GCWPopupMenu extends StatefulWidget {
   final bool isTextSelectionToolBarButton;
   final EdgeInsets? textSelectionToolBarButtonPadding;
   final String? textSelectionToolBarButtonLabel;
+  final bool? buttonNoBorder;
 
   final Function? onBeforePressed;
 
@@ -32,6 +33,7 @@ class GCWPopupMenu extends StatefulWidget {
     this.isTextSelectionToolBarButton = false,
     this.textSelectionToolBarButtonPadding,
     this.textSelectionToolBarButtonLabel,
+    this.buttonNoBorder,
   }) : super(key: key);
 
   @override
@@ -74,6 +76,7 @@ class _GCWPopupMenuState extends State<GCWPopupMenu> {
         size: widget.size,
         iconColor: widget.iconColor,
         backgroundColor: widget.backgroundColor,
+        noBorder: widget.buttonNoBorder,
         onPressed: _onPressed);
   }
 

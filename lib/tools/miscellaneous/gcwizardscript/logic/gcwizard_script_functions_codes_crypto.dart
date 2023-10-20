@@ -11,10 +11,10 @@ String _bacon(Object text, Object mode) {
   String output = '';
   switch (mode as int) {
     case _DECODE:
-      output = decodeBacon(text as String, false, false);
+      output = decodeBacon(text as String, inverse: false, binary: false);
       break;
     case _ENCODE:
-      output = encodeBacon(text as String, false, false);
+      output = encodeBacon(text as String, inverse: false, binary: false);
       break;
   }
   return output;

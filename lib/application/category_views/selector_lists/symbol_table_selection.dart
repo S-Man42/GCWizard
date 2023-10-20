@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
@@ -37,7 +40,7 @@ class SymbolTableSelection extends GCWSelection {
   }
 }
 
-String symboltablesDownloadLink(BuildContext context) {
+String _symboltablesDownloadLink(BuildContext context) {
   const _SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'ko', 'nl', 'sv', 'se'];
   var locale = Localizations.localeOf(context).languageCode;
 
@@ -45,4 +48,19 @@ String symboltablesDownloadLink(BuildContext context) {
   if (_SUPPORTED_LANGUAGES.contains(locale)) usedLocale = locale;
 
   return 'https://misc.gcwizard.net/symbol_tables/symboltables_$usedLocale.pdf';
+}
+
+GCWPopupMenuItem symbolTableToolbarMenuItem(BuildContext context) {
+  return GCWPopupMenuItem(
+      child: iconedGCWPopupMenuItem(context, Icons.file_download, 'symboltables_selection_download_toolitem'),
+      action: (index) {
+        showGCWAlertDialog(
+          context,
+          i18n(context, 'symboltables_selection_download_dialog_title'),
+          i18n(context, 'symboltables_selection_download_dialog_text'),
+          () {
+            launchUrl(Uri.parse(_symboltablesDownloadLink(context)));
+          },
+        );
+      });
 }

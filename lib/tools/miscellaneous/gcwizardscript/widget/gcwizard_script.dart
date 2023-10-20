@@ -16,7 +16,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -82,7 +82,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return Column(
       children: <Widget>[
         GCWCodeTextField(
-          lineNumbers: true,
+          lineNumbers: false,
           lineNumberStyle: const GCWCodeTextFieldLineNumberStyle(width: 48),
           controller: _programController,
           language: CodeHighlightingLanguage.BASIC,
@@ -154,7 +154,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
           GCWOpenFile(
             onLoaded: (_file) {
               if (_file == null) {
-                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                 _loadFile = !_loadFile;
                 return;
               }
@@ -532,7 +532,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
           _interpretGCWScriptAsync();
         }
       } else {
-        showToast(i18n(context, 'common_loadfile_exception_nofile'));
+        showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
       }
     });
   }

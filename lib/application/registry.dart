@@ -1192,14 +1192,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(
       tool: const SymbolTableSelection(),
-      buttonList: [
-        GCWToolActionButtonsEntry(
-            showDialog: true,
-            url: symboltablesDownloadLink(context),
-            title: 'symboltables_selection_download_dialog_title',
-            text: 'symboltables_selection_download_dialog_text',
-            icon: Icons.file_download),
-      ],
+      toolBarItemList: [symbolTableToolbarMenuItem(context)],
       id: 'symboltables_selection',
       searchKeys: const [],
     ),

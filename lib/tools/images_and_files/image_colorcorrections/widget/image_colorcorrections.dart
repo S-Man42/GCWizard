@@ -13,7 +13,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_slider.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -135,7 +135,7 @@ class _ImageColorCorrectionsState extends State<ImageColorCorrections> {
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile? value) {
             if (value == null || !_validateData(value.bytes)) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 

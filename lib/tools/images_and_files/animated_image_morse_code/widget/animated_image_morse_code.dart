@@ -3,14 +3,15 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_gallery.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -25,7 +26,6 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:tuple/tuple.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 class AnimatedImageMorseCode extends StatefulWidget {
   final GCWFile? file;
@@ -95,7 +95,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
         onLoaded: (GCWFile? value) {
           if (value == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -406,9 +406,9 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < _outData!.images.length; i++) {
         _outData!.images[i] = _outData!.images[linkList[i]];
       }
-      showToast(i18n(context, 'animated_image_select_on_image'));
+      showSnackBar(i18n(context, 'animated_image_select_on_image'), context);
     } else {
-      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
       return;
     }
 

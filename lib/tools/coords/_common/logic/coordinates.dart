@@ -25,6 +25,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
@@ -666,7 +667,7 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
 
   @override
   String toString([int? precision]) {
-    return 'X: $x\nY: $y\nZoom: ${_format.subtype}';
+    return 'X: $x\nY: $y\nZoom: ${switchMapKeyValue(SLIPPY_MAP_ZOOM)[_format.subtype]}';
   }
 }
 

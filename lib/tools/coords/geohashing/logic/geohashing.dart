@@ -11,12 +11,15 @@ import 'package:latlong2/latlong.dart';
 const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
 
+enum ErrorCode { Ok, futureDate, invalidDate }
+
 class Geohashing {
   int latitude;
   int longitude;
   DateTime date;
   double dowJonesIndex;
   LatLng? location;
+  ErrorCode errorCode = ErrorCode.Ok;
 
   Geohashing(this.date, this.latitude, this.longitude, {this.dowJonesIndex = 0});
 
@@ -41,7 +44,14 @@ Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
     if (w30RuleNecessary(geohashing)) {
       _date = _date.add(const Duration(days: -1));
     }
-    geohashing.dowJonesIndex = await dowJonesIndex(_date) ?? 0;
+    if (_validDate(_date) != ErrorCode.Ok && _date.weekday >= 6) {
+      _date = _date.add(Duration(days: (_date.weekday == 6 ? -1 : -2)));
+    }
+    var dji = await dowJonesIndex(_date);
+    geohashing.dowJonesIndex = dji ?? 0;
+    if (dji == null) {
+      geohashing.errorCode = _validDate(_date) != ErrorCode.Ok ? ErrorCode.futureDate : ErrorCode.invalidDate;
+    }
   }
   if (geohashing.dowJonesIndex == 0) return null;
 
@@ -75,8 +85,12 @@ Geohashing? parseGeohashing(String input) {
   return null;
 }
 
+ErrorCode _validDate(DateTime date) {
+  return (DateTime.now().difference(date).isNegative) ? ErrorCode.invalidDate : ErrorCode.Ok;
+}
+
 Future<double?> dowJonesIndex(DateTime date) async {
-  if (DateTime.now().difference(date).isNegative) return null;
+  if (_validDate(date) != ErrorCode.Ok) return null;
 
   var uri = Uri.parse(_domain + '/' + DateFormat('yyyy-MM-dd').format(date));
   var encoding = Encoding.getByName('utf-8');
@@ -85,7 +99,6 @@ Future<double?> dowJonesIndex(DateTime date) async {
     uri,
     encoding: encoding,
   );
-
   if (response.statusCode != 200) return null;
 
   return double.parse(response.body);

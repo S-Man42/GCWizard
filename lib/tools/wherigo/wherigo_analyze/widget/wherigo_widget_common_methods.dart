@@ -34,7 +34,7 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
     WHERIGOerrorMsg_MediaFiles.add(exception.toString());
     WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_gwc_mediafiles'));
     WHERIGOerrorMsg_MediaFiles.add(i18n(context, 'wherigo_error_hint_2'));
-    showToast(
+    showSnackBar(
         i18n(context, 'wherigo_error_runtime') +
             '\n' +
             i18n(context, 'wherigo_error_runtime_exception') +
@@ -44,7 +44,8 @@ GCWFile? _getFileFrom(BuildContext context, String resourceName) {
             exception.toString() +
             '\n\n' +
             i18n(context, 'wherigo_error_hint_2'),
-        duration: 45);
+        context,
+        duration: 10);
   }
   return result;
 }
