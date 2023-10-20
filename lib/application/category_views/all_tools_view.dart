@@ -146,6 +146,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot47/widget/rot47
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot5/widget/rot5.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/widget/rotation_general.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/slash_and_pipe/widget/slash_and_pipe.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/widget/straddling_checkerboard.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
@@ -703,6 +704,7 @@ void _initStaticToolList() {
       className(const SevenSegments()),
       className(const SixteenSegments()),
       className(const Skytale()),
+      className(const SlashAndPipe()),
       className(const Solitaire()),
       className(const SpellingAlphabetsCrypt()),
       className(const SpellingAlphabetsList()),
