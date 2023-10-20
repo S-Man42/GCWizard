@@ -227,17 +227,13 @@ class VariableStringExpander {
     if (_input.isEmpty) return [];
 
     if (_substitutions == null || _substitutions!.isEmpty) {
-      return [
-        VariableStringExpanderValue(text: _input)
-      ];
+      return [VariableStringExpanderValue(text: _input)];
     }
 
     // expand all groups, initialize lists
     for (MapEntry<String, String> substitution in _substitutions!.entries) {
       if (!VARIABLESTRING.hasMatch(substitution.value)) {
-        return [
-          VariableStringExpanderValue(text: _input)
-        ];
+        return [VariableStringExpanderValue(text: _input)];
       }
 
       _substitutionKeys.add(substitution.key.toUpperCase());
@@ -255,9 +251,7 @@ class VariableStringExpander {
     // check number of combinations
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
     if (onlyPrecheck) {
-      return [
-        VariableStringExpanderValue(count: _countCombinations)
-      ];
+      return [VariableStringExpanderValue(count: _countCombinations)];
     }
 
     // Find matching formula groups

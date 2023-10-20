@@ -18,8 +18,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_const.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_classes.dart';
+part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_const.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_data.dart';
 
 int _x = 0;

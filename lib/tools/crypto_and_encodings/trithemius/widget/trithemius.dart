@@ -9,7 +9,7 @@ class Trithemius extends StatefulWidget {
   const Trithemius({Key? key}) : super(key: key);
 
   @override
- _TrithemiusState createState() => _TrithemiusState();
+  _TrithemiusState createState() => _TrithemiusState();
 }
 
 class _TrithemiusState extends State<Trithemius> {

@@ -16,7 +16,7 @@ class Projectiles extends StatefulWidget {
   const Projectiles({Key? key}) : super(key: key);
 
   @override
- _ProjectilesState createState() => _ProjectilesState();
+  _ProjectilesState createState() => _ProjectilesState();
 }
 
 class _ProjectilesState extends State<Projectiles> {

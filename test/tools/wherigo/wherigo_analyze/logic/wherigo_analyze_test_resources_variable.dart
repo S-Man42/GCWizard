@@ -8,6 +8,17 @@ List<WherigoVariableData> testOutputVARIABLE_BUILDERVAR = [
   ),
 ];
 
+String testInputVARIABLEGC78Z6J = '''
+cartILuebeck.ZVariables = {
+  WWB_device = nil,
+  var_Anzahl = 0,
+  var_Bronze = 0,
+  var_Final = "",
+  var_Gold = 0,
+  var_Silber = 0
+}
+''';
+
 String testInputVARIABLE_BUILDERVAR = 'cartStetsgernfuerSiebesch.ZVariables = {Answer = ""}\n' +
     'buildervar = {}\n' +
     'buildervar.Answer = {}\n' +
@@ -22,6 +33,37 @@ String testInputVARIABLE_BUILDERVAR = 'cartStetsgernfuerSiebesch.ZVariables = {A
     'buildervar.EnteredFinalZone.Type = "Flag"\n' +
     'buildervar.EnteredFinalZone.Data = "False"\n' +
     'buildervar.EnteredFinalZone.Description = "Has the player entered the final zone? &nbsp;Used so the final zone can stay active, but the events will not be triggered a second time."';
+
+List<WherigoVariableData> testOutputVARIABLEGC78Z6J = [
+  const WherigoVariableData(
+    VariableLUAName: 'cartILuebeck.ZVariables',
+    VariableName: '{',
+  ),
+  const WherigoVariableData(
+    VariableLUAName: 'WWB_device',
+    VariableName: 'nil',
+  ),
+  const WherigoVariableData(
+    VariableLUAName: 'var_Anzahl',
+    VariableName: '0',
+  ),
+  const WherigoVariableData(
+    VariableLUAName: 'var_Bronze',
+    VariableName: '0',
+  ),
+  const WherigoVariableData(
+    VariableLUAName: 'var_Final',
+    VariableName: '',
+  ),
+  const WherigoVariableData(
+    VariableLUAName: 'var_Gold',
+    VariableName: '0',
+  ),
+  const WherigoVariableData(
+    VariableLUAName: 'var_Silber',
+    VariableName: '0',
+  ),
+];
 
 List<WherigoVariableData> testOutputVARIABLE = [
   const WherigoVariableData(

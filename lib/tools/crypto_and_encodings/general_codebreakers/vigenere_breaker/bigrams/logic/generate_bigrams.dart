@@ -60,9 +60,7 @@ Future<bool> generate_bigram() async {
     var fileIn = File(normalizePath(filePath + (elem['input'] as String)));
     var fileOut = File(normalizePath(filePath + (elem['fileOut'] as String)));
 
-    var _actual = await generateBigrams(fileIn, fileOut,
-        (elem['className'] as String),
-        (elem['alphabet'] as String),
+    var _actual = await generateBigrams(fileIn, fileOut, (elem['className'] as String), (elem['alphabet'] as String),
         (elem['replacementList'] as Map<String, String>));
 
     result = result && (_actual.errorCode == VigenereBreakerErrorCode.OK);

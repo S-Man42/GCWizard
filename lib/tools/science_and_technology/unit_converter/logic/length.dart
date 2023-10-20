@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Length extends Unit {
-  late double Function (double) toMeter;
-  late double Function (double) fromMeter;
+  late double Function(double) toMeter;
+  late double Function(double) fromMeter;
 
   Length({
     required String name,
@@ -29,7 +29,8 @@ final LENGTH_FOOT = Length(name: 'common_unit_length_ft_name', symbol: 'ft', inM
 
 final _LENGTH_YARD = Length(name: 'common_unit_length_yd_name', symbol: 'yd', inMeters: 3 * 0.3048);
 
-final _LENGTH_USSURVEYFOOT = Length(name: 'common_unit_length_ussurveyft_name', symbol: 'ft', inMeters: 1200.0 / 3937.0);
+final _LENGTH_USSURVEYFOOT =
+    Length(name: 'common_unit_length_ussurveyft_name', symbol: 'ft', inMeters: 1200.0 / 3937.0);
 
 final _LENGTH_LIGHTYEAR = Length(name: 'common_unit_length_ly_name', symbol: 'ly', inMeters: 9460730472580800.0);
 
@@ -41,11 +42,13 @@ final _LENGTH_LAR = Length(name: 'common_unit_length_lar_name', symbol: 'lar', i
 
 final _LENGTH_RANGAR = Length(name: 'common_unit_length_rangar_name', symbol: 'rangar', inMeters: 4827 / 5000);
 
-final _LENGTH_CABLELENGTH_IMP = Length(name: 'common_unit_length_cablelength_imp_name', symbol: 'kbl', inMeters: 182.88);
+final _LENGTH_CABLELENGTH_IMP =
+    Length(name: 'common_unit_length_cablelength_imp_name', symbol: 'kbl', inMeters: 182.88);
 
 final _LENGTH_CABLELENGTH_US = Length(name: 'common_unit_length_cablelength_us_name', symbol: 'kbl', inMeters: 219.456);
 
-final _LENGTH_CABLELENGTH_GB = Length(name: 'common_unit_length_cablelength_gb_name', symbol: 'kbl', inMeters: 185.3184);
+final _LENGTH_CABLELENGTH_GB =
+    Length(name: 'common_unit_length_cablelength_gb_name', symbol: 'kbl', inMeters: 185.3184);
 
 final _LENGTH_FATHOM = Length(name: 'common_unit_length_fathom_name', symbol: 'fm', inMeters: 1.8288);
 

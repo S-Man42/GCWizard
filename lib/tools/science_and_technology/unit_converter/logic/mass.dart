@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Mass extends Unit {
-  late double Function (double) toGram;
-  late double Function (double) fromGram;
+  late double Function(double) toGram;
+  late double Function(double) fromGram;
 
   Mass({
     required String name,
@@ -31,7 +31,8 @@ final MASS_POUND = Mass(name: 'common_unit_mass_lb_name', symbol: 'lb', inGram: 
 
 final _MASS_IMPERIALQUARTER = Mass(name: 'common_unit_mass_impqr_name', symbol: 'qr', inGram: 453.59237 * 28.0);
 
-final _MASS_IMPERIALHUNDREDWEIGHT = Mass(name: 'common_unit_mass_impcwt_name', symbol: 'cwt', inGram: 453.59237 * 112.0);
+final _MASS_IMPERIALHUNDREDWEIGHT =
+    Mass(name: 'common_unit_mass_impcwt_name', symbol: 'cwt', inGram: 453.59237 * 112.0);
 
 final _MASS_IMPERIALLONGTON = Mass(name: 'common_unit_mass_impt_name', symbol: 't', inGram: 453.59237 * 2240.0);
 

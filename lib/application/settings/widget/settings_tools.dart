@@ -10,7 +10,7 @@ class ToolSettings extends StatefulWidget {
   const ToolSettings({Key? key}) : super(key: key);
 
   @override
- _ToolSettingsState createState() => _ToolSettingsState();
+  _ToolSettingsState createState() => _ToolSettingsState();
 }
 
 class _ToolSettingsState extends State<ToolSettings> {

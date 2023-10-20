@@ -10,7 +10,7 @@ class UrwigoTextDeobfuscation extends StatefulWidget {
   const UrwigoTextDeobfuscation({Key? key}) : super(key: key);
 
   @override
- _UrwigoTextDeobfuscationState createState() => _UrwigoTextDeobfuscationState();
+  _UrwigoTextDeobfuscationState createState() => _UrwigoTextDeobfuscationState();
 }
 
 class _UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {

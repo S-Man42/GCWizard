@@ -15,7 +15,7 @@ class Beaufort extends StatefulWidget {
   const Beaufort({Key? key}) : super(key: key);
 
   @override
- _BeaufortState createState() => _BeaufortState();
+  _BeaufortState createState() => _BeaufortState();
 }
 
 class _BeaufortState extends State<Beaufort> {

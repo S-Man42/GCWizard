@@ -35,8 +35,7 @@ ExcelTimeOutput DateTimeToExcelTime(DateTime currentDateTime) {
   if (year == 1900 && month == 2 && day == 29) {
     excelTimestampInt = 60.0;
   } else {
-    excelTimestampInt =
-        calculateDayDifferences(DateTime(1900, 1, 0), DateTime(year, month, day)).days.toDouble();
+    excelTimestampInt = calculateDayDifferences(DateTime(1900, 1, 0), DateTime(year, month, day)).days.toDouble();
   }
 
   return ExcelTimeOutput(
@@ -56,13 +55,12 @@ ExcelTimeOutput ExcelTimeToDateTime(double excelTimestamp) {
     difference = Duration(days: excelTimestamp.truncate()) +
         Duration(seconds: (86400 * (excelTimestamp - excelTimestamp.truncate())).toInt());
   } else {
-    difference = Duration(days: excelTimestamp.truncate()) - const Duration(days: 1) +
+    difference = Duration(days: excelTimestamp.truncate()) -
+        const Duration(days: 1) +
         Duration(seconds: (86400 * (excelTimestamp - excelTimestamp.truncate())).toInt());
   }
   return ExcelTimeOutput(
-      GregorianDateTime: DateTime(1900, 1, 0, 0, 0, 0).add(difference),
-      ExcelTimeStamp: excelTimestamp,
-      Error: '');
+      GregorianDateTime: DateTime(1900, 1, 0, 0, 0, 0).add(difference), ExcelTimeStamp: excelTimestamp, Error: '');
 }
 
 bool _invalidExcelDate(double jd) {

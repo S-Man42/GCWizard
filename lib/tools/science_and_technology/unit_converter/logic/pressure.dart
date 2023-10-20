@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Pressure extends Unit {
-  late double Function (double) toPascal;
-  late double Function (double) fromPascal;
+  late double Function(double) toPascal;
+  late double Function(double) fromPascal;
 
   Pressure({required String key, required String symbol, bool isReference = false, required double inPascal})
       : super(key, symbol, isReference, (e) => e * inPascal, (e) => e / inPascal) {

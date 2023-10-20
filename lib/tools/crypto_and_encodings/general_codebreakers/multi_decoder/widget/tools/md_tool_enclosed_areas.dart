@@ -10,12 +10,12 @@ const MDT_ENCLOSEDAREAS_OPTION_WITH4 = 'enclosedareas_with4';
 const MDT_ENCLOSEDAREAS_OPTION_WITHOUT4 = 'enclosedareas_without4';
 
 class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
-  MultiDecoderToolEnclosedAreas({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolEnclosedAreas(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -23,7 +23,9 @@ class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_ENCLOSEDAREAS,
             onDecode: (String input, String key) {
               return decodeEnclosedAreas(input,
-                  with4: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ENCLOSEDAREAS, options, MDT_ENCLOSEDAREAS_OPTION_MODE) == MDT_ENCLOSEDAREAS_OPTION_WITH4);
+                  with4: checkStringFormatOrDefaultOption(
+                          MDT_INTERNALNAMES_ENCLOSEDAREAS, options, MDT_ENCLOSEDAREAS_OPTION_MODE) ==
+                      MDT_ENCLOSEDAREAS_OPTION_WITH4);
             },
             options: options);
   @override
@@ -33,10 +35,10 @@ class MultiDecoderToolEnclosedAreas extends AbstractMultiDecoderTool {
 class _MultiDecoderToolEnclosedAreasState extends State<MultiDecoderToolEnclosedAreas> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_ENCLOSEDAREAS_OPTION_MODE: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ENCLOSEDAREAS, widget.options, MDT_ENCLOSEDAREAS_OPTION_MODE),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_ENCLOSEDAREAS, widget.options, MDT_ENCLOSEDAREAS_OPTION_MODE),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_ENCLOSEDAREAS_OPTION_MODE] = newValue;
@@ -49,7 +51,6 @@ class _MultiDecoderToolEnclosedAreasState extends State<MultiDecoderToolEnclosed
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }

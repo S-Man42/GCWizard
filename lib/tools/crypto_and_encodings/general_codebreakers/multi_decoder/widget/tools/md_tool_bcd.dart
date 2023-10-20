@@ -28,12 +28,12 @@ const Map<String, BCDType> _BCD_TYPES = {
 };
 
 class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
-  MultiDecoderToolBCD({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolBCD(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -50,8 +50,7 @@ class MultiDecoderToolBCD extends AbstractMultiDecoderTool {
 class _MultiDecoderToolBCDState extends State<MultiDecoderToolBCD> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_BCD_OPTION_BCDFUNCTION: GCWDropDown<String>(
         value: _getBCDTypeKey(widget.options, MDT_BCD_OPTION_BCDFUNCTION),
         onChanged: (newValue) {
@@ -66,8 +65,7 @@ class _MultiDecoderToolBCDState extends State<MultiDecoderToolBCD> {
           );
         }).toList(),
       )
-    }
-    );
+    });
   }
 }
 
