@@ -281,12 +281,14 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'selector_lists/checkdigits/checkdigits_selection.dart';
 
 import 'selector_lists/miscellaneous_selection.dart';
 
 class MainView extends GCWWebStatefulWidget {
   MainView({Key? key, Map<String, String>? webParameter})
       : super(key: key, webParameter: webParameter, apiSpecification: null);
+
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -545,6 +547,7 @@ void _initStaticToolList() {
       className(const CentroidCenterOfGravity()),
       className(const Chao()),
       className(const ChappeTelegraph()),
+      className(const CheckDigitsSelection()),
       className(const Chef()),
       className(const ChickenLanguage()),
       className(const Chronogram()),
