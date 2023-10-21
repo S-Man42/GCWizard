@@ -1,0 +1,61 @@
+GC Wizard je kolekcia nástrojov s otvoreným zdrojovým kódom.
+
+Pôvodne bol vytvorený, aby ponúkol Geocacherom offline nástroj na ich podporu pri lúštení mysteriek a hádaniek v teréne. GC Wizard teda obsahuje množstvo nástrojov pre jednoduchú kryptografiu, geografické a vedecké výpočty, ako aj stovky sád rôznych symbolov.
+
+Medzitým sa projekt stal veľmi rozsiahlym a môže byť využiteľný na riešenie mnohých vecí, ktoré nesúvisia s geocachingom.
+
+Preložené do 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇸🇰
+
+<b>Vychytávky</b>
+
+<b>Základné</b>
+• Riešiteľ vzorcov: Na správu premenných zo zastávok multín
+• Multi Decoder: Zadajte neznámy kód a nechajte ho interpretovať niekoľkými dekodérmi a kalkulačkami za sebou
+• Viac ako 200 sád tabuliek symbolov: Priame dekódovanie symbolov na znaky; ukladanie vlastného kódovania vo forme obrázkov
+• Online manuál: Každý nástroj má svoju vlastnú manuálovú stránku preloženú do 🇬🇧 🇩🇪 🇫🇷
+
+<b>Kryptografia a kódovanie</b>
+• Abecedné hodnoty (A = 1, B = 2, ...): Konfigurovateľné abecedy so špeciálnymi znakmi špecifickými pre daný jazyk
+• Grafický dekodér Braillovho písma: Zadajte body do grafického rozhrania; podporuje rôzne jazyky
+• Knižná šifra: Vyberte si správny systém (napr. Riadok + Číslo písmena alebo Sekcia + Riadok + Číslo slova, ...), práca so špeciálnymi znakmi a prázdnymi riadkami, ...
+• Enigma: Plne funkčný simulátor Enigmy vrátane množstva rôznych nastavení
+• Ezoterické jazyky: Generátory a interpreti pre niekoľko ezoterických programovacích jazykov, ako sú Brainf**k, Ook, Malbolge a Chef
+• Morseova abeceda
+• Číselné slová: Zoznamy dôležitých čísel v rôznych jazykoch. Pre angličtinu + nemčinu existujú syntaktické analyzátory na identifikáciu aj zložitých číselných slov
+• Lámače subtitučnej a Vigenèrovej šifry: Pokúste sa nájsť riešenie bez toho, aby ste poznali kľúče
+• Klasické šifry: Playfair, Polybios, Railfence, ...
+• Historické šifry: Caesar, Vigenènere, telegrafné kódy, ...
+• Vojenské šifry: ADFGX, Cipher Wheel, Tapir, ...
+• Technické šifry: BCD, CCITT, Hashes (vrátane brute-force hash breaker), RSA, ...
+
+<b>Súradnice</b>
+• Vysoko presné súradnicové algoritmy, ktoré podporujú presné výpočty aj pri veľmi dlhých vzdialenostiach tým, že vždy zohľadňujú tvar zeme (elipsoid)
+• Podpora rôznych elipsoidov, dokonca aj iných planét
+• Formáty súradníc: Podpora UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Projekcia bodu trasy: Zahŕňa presnú spätnú projekciu
+• Open Map: Nastavte si vlastné body a čiary, merajte cesty, exportujte ako a importujte z GPX/KML; OpenStreetMap a satelitné zobrazenie
+• Variabilné súradnice: Interpolácia súradnicových vzorcov, ak niektoré časti súradníc nie sú zadané. Zobrazenie výsledku na mape
+• Priečny smer, Stred dvoch a troch súradníc, rôzne priesečníky čiar a kružníc, ...
+
+<b>Veda a technika</b>
+• Astronómia: Vypočítajte polohu Slnka a Mesiaca na určitom mieste a čase
+• Prevodník farebného priestoru: Prevádza hodnoty farieb medzi RGB, HSL, Hex, CMYK,...
+• Krajiny: ISO, volacie a registračné kódy vozidiel, vlajky
+• Funkcie dátumu a času: deň v týždni, časové rozdiely, ...
+• Iracionálne čísla: π, φ a e: Zobrazenie a vyhľadávanie do > 1 mil. číslic
+• Číselné postupnosti: faktoriál, Fibonacci a ďalšie
+• Číselné sústavy: Konvertuje desiatkové na binárne, hexadecimálne, ...
+• Periodická tabuľka prvkov: Interaktívny pohľad; zoznamy, ktoré usporiadajú prvky podľa ľubovoľného kritéria
+• Tlačidlá telefónu: Konvertuje klasické tlačidlá telefónu na písmená. Podporuje špecifické správanie modelu telefónu
+• Prvočísla: Vyhľadajte prvočísla až do 1 mil.
+• Segmentový displej: Grafické rozhranie na dekódovanie a kódovanie 7 až 16 segmentových displejov
+• Prevodník jednotiek: dĺžka, objem, tlak, výkon a mnoho ďalších; prevod medzi bežnými jednotkami vrátane predpôn ako mikro a kilo
+• Zdanlivá teplota, krížové súčty, DTMF, rozloženie klávesnice, projektily, kódy rezistorov, ...
+
+<b>Obrázky a súbory</b>
+• Hexadecimálny prehliadač
+• Zobrazovač Exif/Metadát
+• Analýza snímkov animovaných obrázkov
+• Farebné korekcie: Úprava kontrastu, sýtosti, detekcie hrán,...
+• Vyhľadávanie skrytých dát alebo skrytých archívov
+• Čítačka QR/čiarových kódov z obrázkov, ich tvorba z binárneho vstupu

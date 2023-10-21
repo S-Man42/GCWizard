@@ -1,0 +1,61 @@
+GC Wizard es una colección de herramientas de código abierto.
+
+Originalmente fue creado para ofrecérselo a los Geocachers como una herramienta sin conexión para ayudarlos con misterios y acertijos. Así, GC Wizard contiene numerosas herramientas para cálculos criptográficos, geográficos y científicos simples, así como cientos de conjuntos de diversos símbolos.
+
+Por otra parte, el proyecto se hizo muy grande y podría ser útil para muchos asuntos que no son de geocaching.
+
+Traducido al 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+
+<b>Lo más destacado</b>
+
+<b>General</b>
+• Solucionador de Fórmula: Para manejar variables multietapa
+• MultiDecodificador: Ingrese un código desconocido y deje que varios decodificadores y calculadoras lo interpreten de forma consecutiva
+• Más de 200 conjuntos de Tablas de Símbolos: Decodificación directa de símbolos a caracteres; guarde su propia codificación como una imagen
+• Manual en línea: Cada herramienta tiene su propia página de manual, traducida al 🇬🇧 🇩🇪 🇫🇷
+
+<b>Criptografía y Codificaciones</b>
+• Valores del Alfabeto (A = 1, B = 2, ...): Alfabetos configurables con manejo de caracteres especiales específicos del idioma
+• Decodificador gráfico de Braille: Escriba los puntos en una interfaz gráfica; soporta diferentes idiomas
+• Cifrado por Libro: Elige el sistema correcto (por ejemplo, Línea + Número de letra o Sección + Línea + Número de Palabra, . ), maneja caracteres especiales y líneas vacías, ...
+• Enigma: Un simulador de Enigma completo que funciona incl. numerosos ajustes posibles
+• Idiomas eotéricos: Generadores e intérpretes para varios lenguajes de programación esotéricos, como Brainf**k, Ook, Malbolge y Chef
+• Morse
+• Palabras Numéricas: Listas de números importantes en diferentes idiomas. Para Inglés + Alemán hay analizadores que identifican incluso palabras numéricas complejas
+• Rompedores de códigos cifrados por Sustitución y Vigenere: Intente encontrar la solución sin conocer las claves
+• Códigos clásicos: Playfair, Polybios, Railfence, ...
+• Códigos históricos: César, Vigenere, códigos telegráficos, ...
+• Códigos militares: ADFGX, Disco de Cifrado, Tapir, ...
+• Codificaciones técnicas: BCD, CCITT, Hashes (incl. rompedor de hash por fuerza bruta), RSA, ...
+
+<b>Coordenadas</b>
+• Algoritmos de coordenadas de alta precisión que soportan cálculos precisos incluso con distancias muy largas, considerando siempre la forma de la Tierra (elipsoide)
+- Soporte de diferentes elipsoides, incluso de otros planetas
+• Formatos de Coordenadas: Soporte de UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Proyección Waypoint: Incluye proyección inversa precisa
+• Mapa Abierto: Establece tus propios puntos y líneas, mide rutas, exporta como e importa desde GPX/KML; OpenStreetMap y vista por satélite
+• Coordenadas variables: Interpola las fórmulas de coordenadas si no se dan algunas partes de las coordenadas. Muestra el resultado en el mapa
+• Cruzado, punto central de dos y tres coordenadas, diferentes intersecciones de líneas y círculos, ...
+
+<b>Ciencia y Tecnología</b>
+• Astronomía: Calcula la posición del Sol y la Luna en un lugar y momento determinados
+• Conversor de Espacio de Color: Convierte valores de color entre RGB, HSL, Hex, CMYK, ...
+• Países: ISO, códigos de registro de llamadas y vehículos, banderas
+• Funciones de Fecha y Hora: Día de la semana, diferencias horarias, ...
+• Números irracionales: π, φ and e: Mostrar y buscar hasta > 1 millón de dígitos
+• Secuencias numéricas: Factorial, Fibonacci y Co.
+• Sistemas Numéricos: Convertir decimal a binario, hexadecimal, ...
+• Tabla periódica de los elementos: vista interactiva; listas que ordenan los elementos por cualquier criterio
+• Teclas de Teléfono: Convierte las clásicas teclas de teléfono a letras. Soporta comportamientos específicos del modelo de teléfono
+• Prime Numbers: Buscar números primos hasta 1 millón.
+• Pantalla de Segmentos: Interfaz gráfica para decodificar y codificar pantallas de 7 a 16 segmentos
+• Conversor de Unidades: Longitud, Volumen, Presión, Energía y mucho más; conversión entre unidades comunes incl. prefijos como micro y kilo
+• Temperatura Aparente, Sumas Cruzadas, DTMF, Diseños de Teclado, Proyectiles, Códigos de Resistencia, ...
+
+<b>Imágenes y Archivos</b>
+• Visor Hexadecimal
+• Visor de Exif/Metadatos
+• Analizar fotogramas de Imágenes Animadas
+• Correcciones de colores: Ajustar contraste, saturación, detección de bordes, ...
+• Buscar Datos o Archivos Ocultos
+• Leer códigos QR/de barras desde imágenes, crearlos a partir de entrada binaria

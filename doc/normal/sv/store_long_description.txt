@@ -1,0 +1,61 @@
+GC Wizard är en samling verktyg med öppen källkod.
+
+Den skapades ursprungligen för att ge Geocachers ett offline-verktyg för att hjälpa dem med mysterier och gåtor. GC-guiden innehåller därför många verktyg för enkel kryptografi, geografiska och vetenskapliga beräkningar och hundratals uppsättningar av olika symboler eller alfabet.
+
+Under tiden har projektet blivit mycket stort och kan användas för många andra problem än Geocaching.
+
+Översatt till 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+
+<b>Höjdpunkter</b>
+
+<b>Allmän</b>
+• Formelupplösare: För hantering av variabler vid multicacher
+• Multi avkodare: Ange en okänd kod och låt olika avkodare och kalkylatorer tolka den efter varandra
+• Mer än 200 uppsättningar av symboltabeller: Använd direkt avkodning av symboler för tecken, spara den egna kodningen som en bild
+• Onlinehandbok: Varje verktyg har en egen sida med instruktioner, översatta till 🇬🇧 🇩🇪 🇫🇷
+
+<b>Kryptografi & kryptering</b>
+• Alfabetsvärden (A = 1, B = 2, ...): Konfigurerbara alfabet med språkspecifik teckenbehandling
+• Grafisk punktskriftsavkodare: Skriv prickarna i ett grafiskt gränssnitt; stöder flera språk
+• Nummerbok: Välj rätt system (t.ex. linje + bokstavsnummer eller sektion + linje + ordnummer, ...), hantera specialtecken och tomma linjer ...
+• Enigma: En fullt fungerande Enigma-simulator inkl. många inställningsmöjligheter
+• Esoteriska språk: Generatorer och tolkar för flera esoteriska programmeringsspråk som Brainf**k, Ook, Malbolge och Chef
+• Morse
+• Grundtal: Listor över viktiga tal på olika språk. För engelska + tyska finns det parsers för att identifiera även komplexa numeriska ord
+• Ersättning och Vigenère Kodbrytare: Försök att hitta lösningen utan att känna till nycklarna
+• Klassiska koder: Playfair, Polybios, Railfence, ...
+• Historiska koder: Caesar, Vigenènere, telegraf koder, ...
+• Militära koder: ADFGX, Cipherhjul, Tapir, ...
+• Tekniska kodningar: BCD, CCITT, Hashes (inkl. brute-force hash brytare), RSA, ...
+
+<b>Koordinater</b>
+• Koordinatoralgoritmer med hög precision som stöder noggranna beräkningar även vid mycket långa avstånd genom att alltid ta hänsyn till jordens form (ellipsoid)
+• Stöd för olika ellipsoider, även andra planeter
+• Koordinatformat: Stöd för UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Vägpunkt (waypoint) projektion: Inkluderar exakt omvänd projektion
+• Open Map: Ange egna punkter och linjer, mäta vägar, exportera och importera GPX/KML; OpenStreetMap och satellitvisning
+• Variabel koordinat: Interpolera koordinatformler om vissa delar av koordinaten inte ges. Visa resultatet på kartan
+• Korsbäring, mitten av två och tre koordinater, olika skärningspunkter av linjer och cirklar, ...
+
+<b>Vetenskap och teknik</b>
+• Astronomi: Beräkna positionen av solen och månen på en viss plats och tid
+• Color Space Converter: Konvertera färgvärden mellan RGB, HSL, Hex, CMYK, ...
+• Länder: ISO, telefon- och fordonsregistreringskoder, flaggor
+• Datum och tid funktioner: Vardag, tidsskillnader, ...
+• Irrationella tal: π, φ och e: Visa och sök upp till > 1 miljon siffror
+• Talserier: Factorial, Fibonacci och Co.
+• Numeriska system: konvertera decimaltal till binärt tal, hexadecimalt tal, ...
+• Periodiskt system för grundämnena: Interaktiv visning; listor som sorterar elementen enligt varje kriterium
+• Telefonnycklar: Konverterar klassiska telefonknappar till bokstäver. Stödjer telefonmodellens specifika beteende
+• Primtal: Hitta primtal upp till 1 Miljon
+• Segmentsdisplay: Grafiskt gränssnitt för avkodning och kodning 7- till 16-segmentsdisplayer
+• Enhetsomvandlare: längd, volym, tryck, effekt och många fler; konvertera mellan gemensamma enheter inkl. prefix som micro och kg
+• Skenbar temperatur, Siffersummor, DTMF, tangentbordslayouter, Projektiler, Resistor-koder, ...
+
+<b>Bilder och Filer</b>
+• Hex Viewer
+• Exif/Metadata Viewer
+• Analysera ramar i animerade bilder
+• Färgkorrigeringar: Justera kontrast, mättnad, kantdetektering, ...
+• Sök efter dolda data eller dolda arkiv
+• -Läs QR/streckkoder från bilder, skapa dem från binär input

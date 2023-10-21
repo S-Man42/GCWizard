@@ -1,0 +1,1 @@
+Support-Version: Identisch mit freier "GC Wizard"-App, keine neuen Funktionen

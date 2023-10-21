@@ -1,0 +1,1 @@
+Tämä versio on täysin identtinen "GC Wizard" ilmaisen version kanssa, se ei sisällä lisäominaisuuksia. Tämän tarkoituksena on tukea kehitystämme ja auttaa meitä kattamaan kustannuksemme.

@@ -6,17 +6,17 @@
 
 The GC Wizard is an open-source tool collection for **Android** and **iOS**. There is also an alpha version of a **[Web View](http://gcwizard.net)**.
 
-It was originally created to offer Geocachers an offline tool to support them with in-field mysteries and riddles. So, the GC Wizard contains numerous tools for simple cryptography, geographic and scientific calculations as well as hundreds of sets of various symbols.
+It was originally created to offer Geocachers an offline tool to support them with in-field mysteries and riddles. So, the GC Wizard contains numerous tools for simple cryptography, geodetic and scientific calculations as well as hundreds of sets of various symbols.
 
 Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
 
-Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 (Crowdin: [Translate into your language](https://crowdin.com/project/gc-wizard))
+Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇳🇱 🇸🇰 🇸🇪 (Crowdin: [Translate into your language](https://crowdin.com/project/gc-wizard))
 
 Based on **Flutter/Dart**.
 
 ## Philosophy
 1. There are so many great Geocaches out there. We had so much fun with them. With the GC Wizard, **we want to give something back to the community**. We may not make such great Geocaches, but hopefully a great supporting tool.
-1. The **GC Wizard will always be free** for everybody
+1. The **GC Wizard will always be free** for everybody.
 1. With making this project open-source we want to invite all the great GC tool providers to share their knowledge and algorithms. Nobody should need to build a ROT-13 tool or whatever from scratch anymore. **Somebody already did it**.
 
 ## Highlights
@@ -24,8 +24,8 @@ Based on **Flutter/Dart**.
 ### General
 * **Formula Solver**: For handling variables in multi stage caches
 * **Multi Decoder**: Enter an unknown code and let several decoders and calculators interpret it in a row
-* More than **200 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
-* **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+* More than **250 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
+* **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪
 
 ### Cryptography & Encodings
 * **Alphabet Values** (A = 1, B = 2, ...): Completely configurable alphabets with language specific special character handling
@@ -37,7 +37,7 @@ Based on **Flutter/Dart**.
 * **Numeral Words**: Lists of important numbers in different languages. For English and German there are parsers to identify even complex numeral words like "onethousandthreehundredfourty-two"
 * **Substitution** and **Vigenère Code Breakers**: Try to find the solution without knowing the keys
 * **Classic Codes**: Playfair, Polybios, Railfence, ...
-* **Historic codes**: Caesar, Vigenènere, old telegraph codes, ...
+* **Historic codes**: Caesar, Vigenère, old telegraph codes, ...
 * **Military codes**: ADFGX, Cipher Wheel, Tapir, ...
 * **Technical encodings**: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
 * ...
@@ -45,7 +45,7 @@ Based on **Flutter/Dart**.
 ### Coordinates
 * **High precision coordinate algorithms** which support even with very long distances by always considering the earth's shape (ellipsoid)
 * Support of **many different rotation ellipsoids**, even other planets
-* **Coordinate Formats**: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+* **Coordinate Formats**: Support of UTM, MGRS, XYZ, SwissGrid, QTH, NAC, PlusCode, Geohash, ...
 * **Waypoint Projection**: Includes precise reverse projection
 * **Open Map**: Set own points and lines between points, measure paths, export as and import from GPX/KML files; OpenStreetMap and satellite view
 * **Variable Coordinate**: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map
@@ -69,6 +69,7 @@ Based on **Flutter/Dart**.
 ### Images and Files
 * **Hex Viewer**
 * **Exif/Metadata Viewer** for images
+* **Wherigo Analyzer** to show content of WIG cartridges
 * Analyse frames of **Animated Images**
 * **Color corrections**: Adjust contrast, saturation, gamma, edge detection, ...
 * Search for **Hidden Data** or hidden archives
@@ -77,7 +78,7 @@ Based on **Flutter/Dart**.
 
 ## Links
 
-* [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪 🇫🇷
+* [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪
 * [Web View](http://gcwizard.net)
 
 ### Development

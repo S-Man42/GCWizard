@@ -1,0 +1,61 @@
+Kreator GC jest kolekcją narzędzi open source.
+
+Stworzono go w celu zaoferowania keszerom narzędzia offline do wsparcia ich w rozwiązywaniu zagadek w terenie. Tak więc Kreator GC zawiera wiele narzędzi do prostych obliczeń kryptograficznych, geograficznych i naukowych, jak również setki zestawów różnych symboli i znaków.
+
+W międzyczasie projekt zrobił się ogromny i może być wykorzystywany do wielu kwestii niezwiązanych z Geocachingiem.
+
+Przetłumaczony na 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+
+<b>Wyróżnione</b>
+
+<b>Ogólne</b>
+• Rozwiązywanie formuł: Do obsługi zmiennych wieloetapowych
+• Multi Decoder: Wprowadź nieznany kod i pozwól kilku dekoderów i kalkulatorów interpretować go po kolei
+• Ponad 200 zestawów tabel symboli: Bezpośrednie dekodowanie symboli do znaków; zapisz własne kodowanie jako obraz
+• Podręcznik online: Każde narzędzie ma swoją własną stronę, przetłumaczoną na 🇬🇧 🇩🇪 🇫🇷
+
+<b>Kryptografia i kodowanie</b>
+• Wartości alfabetu (A = 1, B = 2, ...): Konfigurowalny alfabet z obsługą znaków specjalnych specyficznych dla języka
+• Dekoder graficzny Braille'a: wpisz punkty w interfejs graficzny; obsługuje różne języki
+• Szyfr oparty o książkę: Wybierz poprawny system (np. Numer Linii + Numer strony + Linia + Słowo, . .), znaki specjalne i puste wiersze...
+• Enigma: w pełni działający symulator Enigma wiele możliwych ustawień
+• Języki soteryczne: generatory i tłumacze dla kilku esoterycznych języków programowania, takich jak Brainf**k, Ook, Malbolge i Chef
+• Morse
+• Liczby słownie: Lista ważnych liczb w różnych językach. W przypadku angielskiego i niemieckiego istnieją skanery, które identyfikują nawet skomplikowane słowa liczbowe
+• Zastąpienie i łamanie kodu Vigenère: Spróbuj znaleźć rozwiązanie bez znajomości kluczy
+• Klasyczne kody: Playfair, Polybios, Railfence...
+• Historyczne szyfry: Cezara, Vigenènere, kody telegrafu, ...
+• Kody wojskowe: ADFGX, Koło do szyfrów, Tapir, ...
+• Kodowanie techniczne: BCD, CCITT, hashy: Łamanie kodów brute-force), RSA, ...
+
+<b>Współrzędne</b>
+• Algorytmy współrzędnych wysokiej precyzji, które obsługują dokładne obliczenia nawet z bardzo długimi odległościami, zawsze biorąc pod uwagę kształt Ziemi (elipsoida)
+• Wsparcie różnych elips, nawet innych planet
+• Formaty współrzędnych: Obsługa UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Prognoza punktu drogi: zawiera precyzyjne odwracalne rzutowanie
+• Open Map: Ustaw własne punkty i linie, mierzy ścieżki, eksport jako i import z GPX/KML; OpenStreetMap i widok satelitarny
+• Zmiana współrzędnych: Współrzędna interpolowana, jeśli nie podano części współrzędnych. Pokaż wynik na mapie
+• Przecięcie azymutów, punkt środkowy dwóch i trzech współrzędnych, różne przecięcia linii i kół, ...
+
+<b>Nauka i Technologia</b>
+• Astronomia: Obliczyć położenie słońca i księżyca w określonym miejscu i czasie
+• Konwerter notacji koloru: Konwertuj wartości kolorów pomiędzy RGB, HSL, Hex, CMYK, ...
+• Kraje: kody ISO, kody kierunkowe i kody rejestracyjne pojazdów, flagi
+• Funkcje daty i czasu: Dzień tygodnia, różnice w czasach, ...
+• Liczby niewymierne: π, φ oraz e: Pokaż i wyszukaj do > 1 Mio. cyfry
+• Sekwencje liczb: Factorial, Fibonacci i Co.
+• Systemy liczbowe: Konwertuje ułamek dziesiętny na binarny, szesnastkowy...
+• Okresowa tabela pierwiastków: widok interaktywny; wykaz pozycji według kryteriów
+• Przyciski telefonu: Konwertuje klasyczne przyciski telefonu na litery. Obsługuje specyficzne zachowania modelu telefonu
+• Liczby pierwsze: Wyszukaj liczby pierwsze w zakresie o 1 miliona.
+• Wyświetlacz segmentu: interfejs graficzny do dekodowania i kodowania od 7 do 16 wyświetlaczy segmentów
+• Konwerter jednostek: Długość, objętość, ciśnienie, moc i wiele więcej; konwertuj między jednostkami prefiksy takie jak mikro i kilo
+• Temperatura pozorna, sumy krzyżowe, DTMF, układy klawiatury, pociski, kody rezystancji, ...
+
+<b>Obrazy i Pliki</b>
+• Przeglądarka heksadecymalna
+• Przeglądarka Exif/Metadata
+• Analiza klatek animowanych zdjęć
+• Korekty kolorów: Dostosuj kontrast, nasycenie, wykrywanie krawędzi...
+• Szukaj ukrytych danych lub ukrytych archiwów
+• Odczytywanie kodów QR/kreskowych z obrazów, utwórz je z danych binarnych

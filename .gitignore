@@ -66,6 +66,8 @@ crowdin.properties
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
+**/linux/
+
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3
@@ -75,7 +77,6 @@ crowdin.properties
 
 /android/key.properties
 /.flutter-plugins-dependencies
-/lib/generated_plugin_registrant.dart
 web
 /pubspec.lock
 /assets/tokens/mapbox
@@ -91,15 +92,9 @@ web
 howtocode/
 /crowdin.properties
 /external_helpers/crowdin/crowdin_token.sh
-/assets/i18n/el.json
-/assets/i18n/fi.json
-/assets/i18n/ja.json
-/assets/i18n/no.json
-/assets/i18n/pt.json
-/assets/i18n/sv.json
-/assets/i18n/zh.json
-/assets/i18n/cs.json
-/assets/i18n/hu.json
-/assets/i18n/sk.json
-/assets/i18n/sl.json
 /ios/build
+crowdin.yml
+/.vscode
+macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+macos/Flutter/ephemeral/flutter_export_environment.sh
+macos/Flutter/GeneratedPluginRegistrant.swift
