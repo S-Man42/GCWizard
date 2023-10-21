@@ -210,8 +210,9 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
     }
 
     _encodeOutData = output.item1;
-    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL)
+    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL) {
       showSnackBar(i18n(context, 'magic_eye_image_too_small'), context);
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
