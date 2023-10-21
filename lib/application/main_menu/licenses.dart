@@ -181,6 +181,22 @@ class _LicensesState extends State<Licenses> {
           [i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']
         ],
       ),
+      GCWTextDivider(text: i18n(context, 'licenses_bibliography')),
+      GCWColumnedMultilineOutput(
+        data: [
+          ['Aschoff, Volker', 'Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen', 'ISBN 3-486-20691-5'],
+          ['Beyrer, Klaus [Hrsg.]', 'So weit das Auge reicht. Die Geschichte der optischen Telegrafie', 'ISBN 3-7650-8150-7'],
+          ['Brailleschriftkommission der deutschsprachigen Länder [Hrsg.]', 'Das System der deutschen Blindenschrift', 'ISBN 3-89642-022-4'],
+          ['Breuer, Volker', 'ALGOL-Fibel', 'ISBN 3-411-00506-8'],
+          ['International Council on English Braille', 'World braille usage', 'ISBN 978-0-8444-9564-4'],
+          ['International Council on English Braille', 'The Rules of Unified English Braille', 'ISBN 978-0-9807064-6-8'],
+          ['Long, Cully', 'How to puzzle Caches', 'ISBN 978-0-99783488-9-7'],
+          ['Museum für Post und Telekommunikation', 'Codebuch Classe 5.2', ''],
+          ['Museum für Post und Telekommunikation', 'Zeichentabelle Deutsche VolksTelegraphie', ''],
+          ['Schildt, Herbert', 'The Art of C', 'ISBN 0-07-881691-2'],
+          ['Wrixon, Fred', 'Geheimsprachen', 'ISBN 978-3-8331-2562-1'],
+        ],
+      ),
     ]);
 
     return MainMenuEntryStub(content: content);
