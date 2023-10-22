@@ -13,7 +13,7 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   Color secondary() {
-    return Colors.orange;
+    return Colors.blue;
   }
 
   @override
@@ -43,7 +43,7 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   Color dialog() {
-    return Colors.orangeAccent;
+    return Colors.blueAccent;
   }
 
   @override
@@ -139,7 +139,7 @@ class _ThemeColorsLight extends ThemeColors {
 
   @override
   Color hyperLinkText() {
-    return Colors.deepOrange;
+    return Colors.blue;
   }
 
   @override

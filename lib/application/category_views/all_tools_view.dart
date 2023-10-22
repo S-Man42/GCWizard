@@ -464,7 +464,7 @@ class _MainViewState extends State<MainView> {
   IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
-          'assets/logo/circle_border_128.png',
+          'assets/logo/circle_border_128_nightly.png',
           width: 35.0,
           height: 35.0,
         ),

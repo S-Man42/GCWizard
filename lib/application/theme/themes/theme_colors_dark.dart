@@ -12,12 +12,12 @@ class _ThemeColorsDark extends ThemeColors {
 
   @override
   Color secondary() {
-    return Colors.orangeAccent;
+    return Colors.blueAccent;
   }
 
   @override
   Color focused() {
-    return Colors.greenAccent;
+    return Colors.lightBlueAccent;
   }
 
   @override
@@ -42,7 +42,7 @@ class _ThemeColorsDark extends ThemeColors {
 
   @override
   Color dialog() {
-    return Colors.orangeAccent;
+    return Colors.blueAccent;
   }
 
   @override

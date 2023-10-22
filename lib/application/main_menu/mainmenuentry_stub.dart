@@ -21,7 +21,7 @@ class _MainMenuEntryStubState extends State<MainMenuEntryStub> {
             Align(
               alignment: Alignment.center,
               child: Image.asset(
-                'assets/logo/circle_border_128.png',
+                'assets/logo/circle_border_128_nightly.png',
                 width: 100.0,
                 height: 100.0,
               ),
