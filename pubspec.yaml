@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.0.0+170
+version: 3.0.0+173
 publish_to: none
 
 environment:
@@ -27,7 +27,6 @@ dependencies:
   flutter_map: ^5.0.0
   flutter_map_marker_popup: ^5.2.0
   flutter_map_tappable_polyline: ^5.0.0
-  fluttertoast: ^8.2.2
   highlight: ^0.7.0
   http: ^1.1.0
   http_parser: ^4.0.2

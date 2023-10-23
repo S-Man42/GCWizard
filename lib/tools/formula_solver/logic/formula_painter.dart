@@ -229,7 +229,8 @@ class FormulaPainter {
     if (offset == 0) {
       _parserResult = _isString(formula);
       if (_parserResult != null) {
-        result = _coloredNumber(result, _parserResult, _parentFunctionName != null && !_wordFunction(_parentFunctionName), true);
+        result = _coloredNumber(
+            result, _parserResult, _parentFunctionName != null && !_wordFunction(_parentFunctionName), true);
         offset = _calcOffset(_parserResult);
         isString = true;
       }
@@ -434,6 +435,7 @@ class FormulaPainter {
       case 'MAX':
       case 'CS':
       case 'CSI':
+      case 'NTH':
         return true;
       default:
         return false;
@@ -559,7 +561,9 @@ class FormulaPainter {
     if (match == null) return true;
 
     var variableValue = _variableValue(match.group(1)!);
-    if (variableValue != null && variableValue.isNotEmpty && _variableType(match.group(1)!) == FormulaValueType.INTERPOLATED) {
+    if (variableValue != null &&
+        variableValue.isNotEmpty &&
+        _variableType(match.group(1)!) == FormulaValueType.INTERPOLATED) {
       var expanded = VariableStringExpander('x', {'x': variableValue}, orderAndUnique: false)
           .run()
           .map((e) => e.text)
@@ -567,7 +571,9 @@ class FormulaPainter {
           .toList();
       return (expanded.isNotEmpty) && expanded.first != 'x';
     }
-    return (variableValue != null && ((_isNumberWithPoint(variableValue) != null) || _isFunction(variableValue.trim()) != null)); // !_isStringVariable(variable);
+    return (variableValue != null &&
+        ((_isNumberWithPoint(variableValue) != null) ||
+            _isFunction(variableValue.trim()) != null)); // !_isStringVariable(variable);
   }
 
   FormulaValueType? _variableType(String variable) {

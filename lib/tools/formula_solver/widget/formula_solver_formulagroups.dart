@@ -21,8 +21,8 @@ import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_formula_list_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -81,9 +81,9 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
                     setState(() {
                       importFormulaGroupFromJson(context, data);
                     });
-                    showToast(i18n(context, 'formulasolver_groups_imported'));
+                    showSnackBar(i18n(context, 'formulasolver_groups_imported'), context);
                   } catch (e) {
-                    showToast(i18n(context, 'formulasolver_groups_importerror'));
+                    showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
                   }
                 })),
         GCWFormulaListEditor(

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -74,5 +74,5 @@ void insertIntoGCWClipboard(BuildContext context, String text, {bool useGlobalCl
 
   Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, gcwClipboard);
 
-  if (useGlobalClipboard) showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
+  if (useGlobalClipboard) showSnackBar(i18n(context, 'common_clipboard_copied') + ':\n\n' + text, context);
 }

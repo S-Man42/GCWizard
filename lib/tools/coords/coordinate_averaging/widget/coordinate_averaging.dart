@@ -6,7 +6,7 @@ import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
@@ -163,7 +163,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
 
   void _toggleLocationListening() {
     if (_currentLocationPermissionGranted == false) {
-      showToast(i18n(context, 'coords_common_location_permissiondenied'));
+      showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
       return;
     }
 

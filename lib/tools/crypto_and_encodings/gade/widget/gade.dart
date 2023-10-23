@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -112,7 +112,7 @@ class _GadeState extends State<Gade> {
 
                 openInFormulaGroups(context);
               } catch (e) {
-                showToast(i18n(context, 'formulasolver_groups_importerror'));
+                showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
               }
             })
       ],

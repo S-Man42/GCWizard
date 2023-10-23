@@ -14,8 +14,8 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
@@ -580,15 +580,17 @@ class _GCWCoordsState extends State<GCWCoords> {
         setState(() {
           _isOnLocationAccess = false;
         });
-        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+        showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
 
         return;
       }
 
       _location.getLocation().then((LocationData locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
-          showToast(i18n(context, 'coords_common_location_lowaccuracy',
-              parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
+          showSnackBar(
+              i18n(context, 'coords_common_location_lowaccuracy',
+                  parameters: [NumberFormat('0.0').format(locationData.accuracy)]),
+              context);
         }
 
         LatLng _coords;

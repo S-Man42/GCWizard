@@ -87,7 +87,7 @@ class _GCWKeyValueTypeItemState extends GCWKeyValueItemState {
   void updateEntry() {
     if (_currentType == FormulaValueType.INTERPOLATED) {
       if (!VARIABLESTRING.hasMatch(currentValue.toLowerCase())) {
-        showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+        showSnackBar(i18n(context, 'formulasolver_values_novalidinterpolated'), context);
         return;
       }
     }

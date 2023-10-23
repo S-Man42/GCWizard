@@ -168,10 +168,7 @@ Widget _buildRow(BuildContext context, GCWTool tool) {
       future: _toolInfoTextShort(context, tool),
       builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
         return _buildRowWidget(
-            context,
-            tool,
-            snapshot.data?.item2 ?? '',
-            deepLinkURL(tool, fallbackPath: snapshot.data?.item1));
+            context, tool, snapshot.data?.item2 ?? '', deepLinkURL(tool, fallbackPath: snapshot.data?.item1));
       });
 }
 
@@ -221,7 +218,8 @@ InkWell _buildRowWidget(BuildContext context, GCWTool tool, String id, String ur
                   onPressed: () {
                     var route = _createRoute(
                         context,
-                        WebParameter(title: deeplinkToolId(tool), arguments: {_questionmark: _questionmark}, settings: null),
+                        WebParameter(
+                            title: deeplinkToolId(tool), arguments: {_questionmark: _questionmark}, settings: null),
                         const RouteSettings());
                     if (route != null) {
                       Navigator.push(context, route);

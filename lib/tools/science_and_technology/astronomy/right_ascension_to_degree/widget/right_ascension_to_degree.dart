@@ -7,8 +7,8 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -542,7 +542,7 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   void _parseRAPaste(String input) {
     var rightAscension = RightAscension.parse(input);
     if (rightAscension == null) {
-      showToast(i18n(context, 'right_ascension_to_degree_clipboard_nodatafound'));
+      showSnackBar(i18n(context, 'right_ascension_to_degree_clipboard_nodatafound'), context);
       return;
     }
 
