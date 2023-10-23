@@ -10,7 +10,7 @@ import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
@@ -72,7 +72,7 @@ class NonogramSolverState extends State<NonogramSolver> {
           supportedFileTypes: const [FileType.TXT, FileType.JSON],
           onLoaded: (GCWFile? value) {
             if (value == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 
@@ -111,7 +111,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                     setState(() {
                       _currentBoard.solve();
                       if (_currentBoard.state != PuzzleState.Solved) {
-                        showToast(i18n(context, 'sudokusolver_error'));
+                        showSnackBar(i18n(context, 'sudokusolver_error'), context);
                       }
                     });
                   },
@@ -235,7 +235,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                   data = Puzzle.cleanHints(data, _currentBoard.width);
                   _currentBoard.rowHints[i] = data;
                   if (!listEquals(data, dataBackup)) {
-                    showToast(i18n(context, 'nonogramsolver_hinterror'));
+                    showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
                   }
                 });
               }
@@ -286,7 +286,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                         data = Puzzle.cleanHints(data, _currentBoard.height);
                         _currentBoard.columnHints[i] = data;
                         if (!listEquals(data, dataBackup)) {
-                          showToast(i18n(context, 'nonogramsolver_hinterror'));
+                          showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
                         }
                       });
                     }
@@ -319,9 +319,9 @@ class NonogramSolverState extends State<NonogramSolver> {
   void _importJsonFile(Uint8List bytes) {
     _currentBoard = Puzzle.parseJson(convertBytesToString(bytes));
     if (_currentBoard.state == PuzzleState.InvalidHintData) {
-      showToast(i18n(context, 'nonogramsolver_hinterror'));
+      showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
     } else if (_currentBoard.state != PuzzleState.Ok) {
-      showToast(i18n(context, 'nonogramsolver_dataerror'));
+      showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
     }
     _setControllerData();
   }
