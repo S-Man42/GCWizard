@@ -92,7 +92,7 @@ class _BinaryState extends State<Binary> {
       return _currentBinaryValue.split(' ').map((value) => convertBase(value, 2, 10)).join(' ');
     }
   }
-  
+
   String _padLeftZero(int length, String text){
     return text.padLeft(length, '0');
   }
