@@ -71,6 +71,8 @@
   "alphabet_name_german2": "German, Version 2",
   "alphabet_name_german2_description": "Ä = AE → 1, 5 | ß = SS → 19, 19",
   "alphabet_name_german3": "German, Version 3",
+  "alphabet_name_danish": "Danish",
+  "alphabet_name_danish_description": "Æ Ø Å → 27 - 29",
   "alphabet_name_english": "English",
   "alphabet_name_english_description": "Incl. Ï = I → 9",
   "alphabet_name_french1": "French, Version 1",
