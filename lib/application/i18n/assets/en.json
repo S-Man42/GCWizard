@@ -351,6 +351,7 @@
   "binary_title": "Binary Numbers",
   "binary_description": "Convert binary numbers into decimal numbers",
   "binary_example": "101010 → 42",
+  "binary_length": "Length",
   "binary2image_title": "Binary code to image/ QR Code",
   "binary2image_description": "Converts binary data to an image",
   "binary2image_example": "100110100100 → image",
