@@ -354,6 +354,7 @@ final List<Alphabet> ALL_ALPHABETS = [
   alphabetGerman1,
   alphabetGerman2,
   alphabetGerman3,
+  alphabetDanish,
   alphabetEnglish,
   alphabetFrench1,
   alphabetFrench2,
@@ -388,6 +389,38 @@ const letterFrequencyAlphabetGerman1 = {
   'T': 6,
   'U': 4,
   'V': 1,
+  'W': 1,
+  'X': 1,
+  'Y': 1,
+  'Z': 1
+};
+const letterFrequencyAlphabetDanish = {
+  // https://www.sttmedia.de/buchstabenhaeufigkeit-daenisch
+  'A': 6,
+  'Å': 1,
+  'Æ': 1,
+  'B': 2,
+  'C': 1,
+  'D': 7,
+  'E': 16,
+  'F': 2,
+  'G': 5,
+  'H': 2,
+  'I': 6,
+  'J': 1,
+  'K': 3,
+  'L': 5,
+  'M': 3,
+  'N': 7,
+  'O': 4,
+  'Ø': 1,
+  'P': 1,
+  'Q': 1,
+  'R': 8,
+  'S': 5,
+  'T': 7,
+  'U': 24,
+  'V': 3,
   'W': 1,
   'X': 1,
   'Y': 1,
@@ -581,6 +614,7 @@ const letterFrequencyAlphabetGreek2 = {
 
 Map<String, int> getLetterFrequenciesFromAlphabet(Alphabet alphabet) {
   if (alphabet == alphabetGerman1) return letterFrequencyAlphabetGerman1;
+  if (alphabet == alphabetDanish) return letterFrequencyAlphabetDanish;
   if (alphabet == alphabetEnglish) return letterFrequencyAlphabetEnglish1;
   if (alphabet == alphabetSpanish2) return letterFrequencyAlphabetSpanish2;
   if (alphabet == alphabetPolish1) return letterFrequencyAlphabetPolish1;
