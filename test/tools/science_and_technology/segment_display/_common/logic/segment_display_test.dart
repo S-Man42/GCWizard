@@ -82,6 +82,11 @@ void main() {
       {'input' : 'bczbc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c'],['b','c']], text: '11')},
       {'input' : 'bczzz zzzbc', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['b','c'],['b','c']], text: '11')},
 
+      {'input' : '23 12457', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': SegmentsText(displays:[['b', 'c'], ['a', 'b', 'd', 'e', 'g']], text: '12')},
+
+      {'input' : '23 12457', 'segmentType' : SegmentDisplayType.SEVENAUTO, 'expectedOutput': SegmentsText(displays:[['b', 'c'], ['a', 'b', 'd', 'e', 'g']], text: '12')},
+      {'input' : 'cb', 'segmentType' : SegmentDisplayType.SEVENAUTO, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
+      
       {'input' : 'a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
       {'input' : 'a1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
       {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
@@ -93,6 +98,8 @@ void main() {
       {'input' : 'b1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
       {'input' : '1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
       {'input' : '1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays: [['a1']], text: UNKNOWN_ELEMENT)},
+
+      {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEENAUTO, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
 
       {'input' : 'dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
       {'input' : 'dpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},

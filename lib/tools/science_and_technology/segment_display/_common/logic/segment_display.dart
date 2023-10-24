@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:tuple/tuple.dart';
+import 'package:utility/utility.dart';
 
 enum SegmentDisplayType {
   SEVEN,
@@ -1029,19 +1030,21 @@ Map<String, String> _detectVariant(String input, Iterable<Map<String, String>> v
 Tuple2<String, int> _splitSegment(String input, int i, Map<String, String> baseSegments) {
   var segment = input[i];
 
-  if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1') {
-    segment += segment + input[i + 1] + input[i + 2];
-    i += 2;
-  } else if (i + 1 < input.length && segment + input[i + 1] == 'dp') {
-    segment += input[i + 1];
-    i++;
-  } else if (i + 1 < input.length && ['1', '2'].contains(input[i + 1])) {
-    segment += input[i + 1];
-    i++;
+  if (segment != ' ') {
+    if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1') {
+      segment += segment + input[i + 1] + input[i + 2];
+      i += 2;
+    } else if (i + 1 < input.length && segment + input[i + 1] == 'dp') {
+      segment += input[i + 1];
+      i++;
+    } else if (!input[i].isNumber && i + 1 < input.length && ['1', '2'].contains(input[i + 1])) {
+      segment += input[i + 1];
+      i++;
+    }
   }
 
   if (baseSegments.containsKey(segment)) {
-    return Tuple2<String, int>(segment, i);
+    return Tuple2<String, int>(baseSegments[segment]!, i);
   } else {
     return Tuple2<String, int>('', i);
   }
