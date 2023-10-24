@@ -11,6 +11,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
+part  'package:gc_wizard/tools/games/nonogram/logic/data.dart';
 
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
@@ -104,7 +105,7 @@ class Strategy {
     // print(puzzle.rows);
     // print('columns');
     // print(puzzle.columns);
-    counter++;
+    // counter++;
     //print(counter.toString() + " skip: " + skip.toString());
   }
   var counter = 0;
@@ -126,11 +127,16 @@ class Strategy {
       // First, trim unnecessary information from the line
       var trimresult = trimLine(line.line, hints[line.index]); //[trimmedLine, trimmedHints, trimInfo]
 
-      if (solverIndex == 1) {
-        var actual = line.line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
-        print(
-            "trimLine Index: " + line.index.toString() + " " + counter.toString() + " " + solverIndex.toString() + " " +
-                actual.toString().replaceAll(' ', '') + " " + trimresult.trimmedLine.toString().replaceAll(' ', ''));
+      if (solverIndex == 0 && line.index == 0) {
+        if (!listEquals(snapshots0[counter][0], line.line)) {
+          print(counter);
+          print(snapshots0[counter][0]);
+          print(line.line);
+        }
+        // var actual = line.line.join('').split(RegExp(r'(?:-1)+')).map((x) => x.length).where((x) => x > 0);
+        // print(
+        //     "trimLine Index: " + line.index.toString() + " " + counter.toString() + " " + solverIndex.toString() + " " +
+        //         actual.toString().replaceAll(' ', '') + " " + trimresult.trimmedLine.toString().replaceAll(' ', ''));
       }
       // if (debugMode) {
       // var start = Date.now();
@@ -158,6 +164,7 @@ class Strategy {
         skip = hasChanged && skipEarly;
       }
     }
+    counter++;
     return skip;
   }
 
