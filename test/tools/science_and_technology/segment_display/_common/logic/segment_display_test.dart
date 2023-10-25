@@ -13,10 +13,6 @@ void main() {
       {'input' : 'AB', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g'], ['c', 'd', 'e', 'f', 'g']]},
       {'input' : '1', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b', 'c']]},
 
-      {'input' : 'A', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
-      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2'],['a1', 'a2', 'b', 'c', 'd1', 'd2', 'g2', 'i', 'l']]},
-      {'input' : '1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['b', 'c','j']]},
-
       {'input' : '.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
       {'input' : '..', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['dp']]},
       {'input' : '1.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b','c','dp']]},
@@ -53,9 +49,67 @@ void main() {
       {'input' : '.öa', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
       {'input' : 'ö.a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
 
-      {'input' : '.', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['dp']]},
-      {'input' : '..', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['dp'],['dp']]},
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': [['1', '2', '3', '5', '6', '7']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput':  [['1', '2', '3', '5', '6', '7'], ['3', '4', '5', '6', '7']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': [['2', '3']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': [['1', '2', '4', '5', '7']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': []},
 
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'i', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['a', 'b', 'd', 'e', 'g1', 'g2']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['j', 'k']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'i', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['a', 'b', 'd', 'e', 'g1', 'g2']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['j', 'm']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'n', 'j']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'n', 'j'], ['a', 'b', 'c', 'd', 'j', 'g', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['b', 'c', 'h']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['a', 'b', 'd', 'e', 'n', 'j']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['h', 'm']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'm', 's']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['b', 'c', 'n']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['a', 'b', 'd', 'e', 'g1', 'g2']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['n', 'r']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'p', 'k']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'p', 'k'], ['a', 'b', 'c', 'd', 'k', 'h', 'm']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['a', 'b', 'd', 'e', 'p', 'k']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['j', 'n']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'j', 'm']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['b', 'c', 'k']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['a', 'b', 'd', 'e', 'g1', 'g2']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['k', 'n']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'm']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'm'], ['a', 'b', 'c', 'd', 'm', 'j', 'p']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['b', 'c', 'k']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput':  [['a', 'b', 'd', 'e', 'g', 'm']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['k', 'q']]},
+
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2'],['a1', 'a2', 'b', 'c', 'd1', 'd2', 'g2', 'i', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'd1', 'd2', 'e', 'g1', 'g2']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['j', 'k']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['a', 'b', 'c', 'd', 'g', 'h', 'u', 'p']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['a', 'b', 'c', 'd', 'g', 'h', 'u', 'p'],['a', 'b', 'c', 'd', 'e', 'f', 'p', 'm', 's']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['c', 'd', 'n']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'u', 'p']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['n', 't']]},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -93,6 +147,54 @@ void main() {
       {'input' : '23 12457', 'segmentType' : SegmentDisplayType.SEVENAUTO, 'expectedOutput': SegmentsText(displays:[['b', 'c'], ['a', 'b', 'd', 'e', 'g']], text: '12')},
       {'input' : 'cb', 'segmentType' : SegmentDisplayType.SEVENAUTO, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
 
+      {'input' : '123567', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': SegmentsText(displays:[['1', '2', '3', '5', '6', '7']], text: 'A')},
+      {'input' : '123567 34567', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': SegmentsText(displays:[['1', '2', '3', '5', '6', '7'], ['3', '4', '5', '6', '7']], text: 'AB')},
+      {'input' : '23', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': SegmentsText(displays:[['2', '3']], text: '1')},
+      {'input' : '12457', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': SegmentsText(displays:[['1', '2', '4', '5', '7']], text: '2')},
+
+      {'input' : 'abcefg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2']], text: 'A')},
+      {'input' : 'abcefg1g2 abcdg2il', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'i', 'l']], text: 'AB')},
+      {'input' : 'acj', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': SegmentsText(displays:[['b', 'c','j']], text: '1')},
+      {'input' : 'abdeg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'g1', 'g2']], text: '2')},
+      {'input' : 'jk', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': SegmentsText(displays:[['j', 'k']], text: '/')},
+
+      {'input' : 'abcefg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2']], text: 'A')},
+      {'input' : 'abcefg1g2 abcdg2il', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'i', 'l']], text: 'AB')},
+      {'input' : 'acj', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': SegmentsText(displays:[['b', 'c','j']], text: '1')},
+      {'input' : 'abdeg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'g1', 'g2']], text: '2')},
+      {'input' : 'jm', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': SegmentsText(displays:[['j', 'm']], text: '/')},
+
+      {'input' : 'abcefnj', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'n', 'j']], text: 'A')},
+      {'input' : 'abcefnj abcdjgl', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'n', 'j'], ['a', 'b', 'c', 'd', 'j', 'g', 'l']], text: 'AB')},
+      {'input' : 'bch', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': SegmentsText(displays:[['b', 'c', 'h']], text: '1')},
+      {'input' : 'abdenj', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'n', 'j']], text: '2')},
+      {'input' : 'hm', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': SegmentsText(displays:[['h', 'm']], text: '/')},
+
+      {'input' : 'abcefg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2']], text: 'A')},
+      {'input' : 'abcefg1g2 abcdg2ms', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'm', 's']], text: 'AB')},
+      {'input' : 'bcn', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': SegmentsText(displays:[['b', 'c','n']], text: '1')},
+      {'input' : 'abdeg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'g1', 'g2']], text: '2')},
+      {'input' : 'nr', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': SegmentsText(displays:[['n', 'r']], text: '/')},
+
+      {'input' : 'abcefpk', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'p', 'k']], text: 'A')},
+      {'input' : 'abcefpk abcdkhm', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'n', 'j'], ['a', 'b', 'c', 'd', 'k', 'h', 'm']], text: 'AB')},
+      {'input' : 'bcj', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': SegmentsText(displays:[['b', 'c', 'j']], text: '1')},
+      {'input' : 'abdepk', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'p', 'k']], text: '2')},
+      {'input' : 'jn', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': SegmentsText(displays:[['j', 'n']], text: '/')},
+
+      {'input' : 'abcefg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2']], text: 'A')},
+      {'input' : 'abcefg1g2 abcdg2jm', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'j', 'm']], text: 'AB')},
+      {'input' : 'bck', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': SegmentsText(displays:[['b', 'c','k']], text: '1')},
+      {'input' : 'abdeg1g2', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'g1', 'g2']], text: '2')},
+      {'input' : 'kn', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': SegmentsText(displays:[['k', 'n']], text: '/')},
+
+      {'input' : 'abcefgm', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g', 'm']], text: 'A')},
+      {'input' : 'abcefgm abcdmjp', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g', 'm'], ['a', 'b', 'c', 'd', 'm', 'j', 'p']], text: 'AB')},
+      {'input' : 'bck', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': SegmentsText(displays:[['b', 'c', 'k']], text: '1')},
+      {'input' : 'abdegm', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'd', 'e', 'g', 'm']], text: '2')},
+      {'input' : 'kq', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': SegmentsText(displays:[['k', 'q']], text: '/')},
+
+
       {'input' : 'a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
       {'input' : 'a1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
       {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
@@ -109,6 +211,13 @@ void main() {
 
       {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEENAUTO, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
       {'input' : 'cdn', 'segmentType' : SegmentDisplayType.SIXTEENAUTO, 'expectedOutput': SegmentsText(displays:[['b', 'c', 'j']], text: '1')},
+
+      {'input' : 'abcdghup', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'd', 'g', 'h', 'u', 'p']], text: 'A')},
+      {'input' : 'abcdghup abcdefpms', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'd', 'g', 'h', 'u', 'p'],['a', 'b', 'c', 'd', 'e', 'f', 'p', 'm', 's']], text: 'AB')},
+      {'input' : 'cdn', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': SegmentsText(displays:[['c', 'd', 'n']], text: '1')},
+      {'input' : 'abcefgup', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': SegmentsText(displays:[['a', 'b', 'c', 'e', 'f', 'g', 'u', 'p']], text: '2')},
+      {'input' : 'nt', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': SegmentsText(displays:[['n', 't']], text: '/')},
+
 
       {'input' : 'dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
       {'input' : 'dpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
