@@ -1,15 +1,15 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 
 class _AlphabetValuesKeyValueInput extends GCWKeyValueInput {
-
-  _AlphabetValuesKeyValueInput({Key? key,}) : super(key: key);
+  _AlphabetValuesKeyValueInput({
+    Key? key,
+  }) : super(key: key);
 
   @override
   GCWKeyValueInputState createState() => _GCWKeyValueAlphabetNewEntryState();
 }
 
 class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueInputState {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,7 +46,7 @@ class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueInputState {
             setState(() {
               var entry = KeyValueBase(null, currentKey.toUpperCase(), currentValue);
               _addNewLetter(entry, adjust: false);
-             });
+            });
           },
         ));
   }
@@ -55,17 +55,15 @@ class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueInputState {
     return Container(
         padding: const EdgeInsets.only(left: 4, right: 2),
         child: GCWButton(
-          text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
-          onPressed: () {
-            var entry = KeyValueBase(null, currentKey.toUpperCase(), currentValue);
-            if (_isAddAndAdjustEnabled(entry)) {
-              setState(() {
-                _addNewLetter(entry, adjust: true);
-              });
-            }
-          }
-        )
-      );
+            text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
+            onPressed: () {
+              var entry = KeyValueBase(null, currentKey.toUpperCase(), currentValue);
+              if (_isAddAndAdjustEnabled(entry)) {
+                setState(() {
+                  _addNewLetter(entry, adjust: true);
+                });
+              }
+            }));
   }
 
   void _addNewLetter(KeyValueBase entry, {bool adjust = false}) {
@@ -83,15 +81,15 @@ class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueInputState {
     if (existEntry != null) {
       showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
           Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [entry.key])), [
-            GCWDialogButton(
-                text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
-                onPressed: () {
-                  existEntry.key = entry.key;
-                  existEntry.value = entry.value;
+        GCWDialogButton(
+            text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
+            onPressed: () {
+              existEntry.key = entry.key;
+              existEntry.value = entry.value;
 
-                  finishAddEntry(existEntry, true);
-                })
-          ]);
+              finishAddEntry(existEntry, true);
+            })
+      ]);
     } else {
       if (adjust) {
         var insertedValue = int.tryParse(entry.value);
@@ -113,4 +111,3 @@ class _GCWKeyValueAlphabetNewEntryState extends GCWKeyValueInputState {
     }
   }
 }
-

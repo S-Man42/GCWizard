@@ -1,9 +1,9 @@
-part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+import 'package:flutter/services.dart';
 
-class _DegreesLonTextInputFormatter extends TextInputFormatter {
+class DegreesLonTextInputFormatter extends TextInputFormatter {
   final bool allowNegativeValues;
 
-  _DegreesLonTextInputFormatter({this.allowNegativeValues = false});
+  DegreesLonTextInputFormatter({this.allowNegativeValues = false});
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {

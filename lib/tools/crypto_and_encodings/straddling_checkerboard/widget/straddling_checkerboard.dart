@@ -16,7 +16,7 @@ class StraddlingCheckerboard extends StatefulWidget {
   const StraddlingCheckerboard({Key? key}) : super(key: key);
 
   @override
- _StraddlingCheckerboardState createState() => _StraddlingCheckerboardState();
+  _StraddlingCheckerboardState createState() => _StraddlingCheckerboardState();
 }
 
 class _StraddlingCheckerboardState extends State<StraddlingCheckerboard> {

@@ -28,7 +28,7 @@ Future<AnimatedImageOutput?> analyseImageAsync(GCWAsyncExecuterParameters? jobDa
 }
 
 Future<AnimatedImageOutput?> analyseImage(Uint8List bytes,
- {bool withFramesOutput = false, SendPort? sendAsyncPort}) async {
+    {bool withFramesOutput = false, SendPort? sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = Image.findDecoderForData(bytes);

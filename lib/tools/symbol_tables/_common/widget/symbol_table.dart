@@ -16,7 +16,7 @@ class SymbolTable extends StatefulWidget {
       : super(key: key);
 
   @override
- _SymbolTableState createState() => _SymbolTableState();
+  _SymbolTableState createState() => _SymbolTableState();
 }
 
 class _SymbolTableState extends State<SymbolTable> {

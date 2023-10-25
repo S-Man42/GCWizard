@@ -10,12 +10,12 @@ const MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION = 'multidecoder_tool_romannumbers
 const MDT_ROMANNUMBERS_OPTION_MODE_ADDITION = 'multidecoder_tool_romannumbers_option_mode_onlyaddition';
 
 class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
-  MultiDecoderToolRomanNumbers({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolRomanNumbers(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
@@ -36,15 +36,14 @@ class MultiDecoderToolRomanNumbers extends AbstractMultiDecoderTool {
 class _MultiDecoderToolRomanNumbersState extends State<MultiDecoderToolRomanNumbers> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_ROMANNUMBERS_OPTION_MODE: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_ROMANNUMBERS, widget.options, MDT_ROMANNUMBERS_OPTION_MODE),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_ROMANNUMBERS, widget.options, MDT_ROMANNUMBERS_OPTION_MODE),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_ROMANNUMBERS_OPTION_MODE] = newValue;
           });
-
         },
         items: RomanNumberType.values.map((type) {
           String key;
@@ -65,7 +64,6 @@ class _MultiDecoderToolRomanNumbersState extends State<MultiDecoderToolRomanNumb
           );
         }).toList(),
       ),
-    }
-    );
+    });
   }
 }
