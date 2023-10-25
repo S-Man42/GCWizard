@@ -1,4 +1,3 @@
-
 enum CalendarSystem {
   JULIANDATE,
   JULIANCALENDAR,

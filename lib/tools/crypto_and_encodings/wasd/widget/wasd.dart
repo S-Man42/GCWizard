@@ -23,7 +23,7 @@ class WASD extends StatefulWidget {
   const WASD({Key? key}) : super(key: key);
 
   @override
- _WASDState createState() => _WASDState();
+  _WASDState createState() => _WASDState();
 }
 
 class _WASDState extends State<WASD> {
@@ -55,7 +55,7 @@ class _WASDState extends State<WASD> {
   var _currentKeyboardControls = WASD_TYPE.CURSORS;
   int _keyboardLayout = 8;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'\S')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'\S')});
 
   //must be nullable unless finding a way to initialize growable Uint8Lists. All tested ways resulted in fixed-length lists
   Uint8List? _outDecodeData;
@@ -91,10 +91,10 @@ class _WASDState extends State<WASD> {
 
     super.dispose();
   }
-  
+
   String _defaultCursorForWASDDirection(WASD_DIRECTION direction) {
     String cursors = KEYBOARD_CONTROLS[WASD_TYPE.CURSORS]!;
-    
+
     switch (direction) {
       case WASD_DIRECTION.UP:
         return cursors[0];
@@ -112,7 +112,8 @@ class _WASDState extends State<WASD> {
         return cursors[6];
       case WASD_DIRECTION.DOWNRIGHT:
         return cursors[7];
-      default: return '';
+      default:
+        return '';
     }
   }
 
@@ -203,20 +204,10 @@ class _WASDState extends State<WASD> {
   }
 
   List<String> _controlSet() {
-    var controlSet = [
-      _currentUp,
-      _currentLeft,
-      _currentDown,
-      _currentRight
-    ];
+    var controlSet = [_currentUp, _currentLeft, _currentDown, _currentRight];
 
     if (_keyboardLayout == 8) {
-      controlSet.addAll([
-        _currentUpLeft,
-        _currentUpRight,
-        _currentDownLeft,
-        _currentDownRight
-      ]);
+      controlSet.addAll([_currentUpLeft, _currentUpRight, _currentDownLeft, _currentDownRight]);
     }
 
     return controlSet;
@@ -250,7 +241,7 @@ class _WASDState extends State<WASD> {
                 var _keyboardControls = KEYBOARD_CONTROLS[value]!.replaceAll(RegExp(r'\s'), '');
                 _keyboardLayout = _keyboardControls.length;
 
-                while (_keyboardLayout!= 4 && _keyboardLayout != 8) {
+                while (_keyboardLayout != 4 && _keyboardLayout != 8) {
                   _keyboardControls = KEYBOARD_CONTROLS[WASD_TYPE.CURSORS]!;
                   _keyboardLayout = 8;
                 }
@@ -299,10 +290,17 @@ class _WASDState extends State<WASD> {
           items: KEYBOARD_CONTROLS.entries.map((mode) {
             String name;
             switch (mode.key) {
-              case WASD_TYPE.CUSTOM: name = i18n(context, 'wasd_keyboard_custom'); break;
-              case WASD_TYPE.NUMERIC: name = i18n(context, 'wasd_keyboard_numpad'); break;
-              case WASD_TYPE.CURSORS: name = mode.value; break;
-              default: name = mode.value.substring(0, 4);
+              case WASD_TYPE.CUSTOM:
+                name = i18n(context, 'wasd_keyboard_custom');
+                break;
+              case WASD_TYPE.NUMERIC:
+                name = i18n(context, 'wasd_keyboard_numpad');
+                break;
+              case WASD_TYPE.CURSORS:
+                name = mode.value;
+                break;
+              default:
+                name = mode.value.substring(0, 4);
             }
 
             return GCWDropDownMenuItem(
@@ -340,7 +338,7 @@ class _WASDState extends State<WASD> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         _keyboardLayout == 8 ? _buildButton(_currentUpLeft) : Container(),
+                        _keyboardLayout == 8 ? _buildButton(_currentUpLeft) : Container(),
                         Container(width: 20),
                         _buildButton(_currentUp),
                         Container(width: 20),
@@ -501,14 +499,10 @@ class _WASDState extends State<WASD> {
   }
 
   void _createGraphicOutputEncodeData() {
-
     var controlSet = _controlSet();
     var encoded = encodeWASD(_currentEncodeInput, controlSet);
 
-    var out = decodeWASDGraphic(
-        encoded,
-        controlSet
-    );
+    var out = decodeWASDGraphic(encoded, controlSet);
 
     _outEncodeData = null;
     var input = binary2image(out, false, false);

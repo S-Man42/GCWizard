@@ -13,4 +13,3 @@ bool WHERIGOExpertMode = false;
 Map<String, WherigoObjectData> WHERIGONameToObject = {};
 
 WHERIGO_OBJECT_TYPE WHERIGOcurrentObjectSection = WHERIGO_OBJECT_TYPE.NONE;
-

@@ -9,7 +9,7 @@ class Deadfish extends StatefulWidget {
   const Deadfish({Key? key}) : super(key: key);
 
   @override
- _DeadfishState createState() => _DeadfishState();
+  _DeadfishState createState() => _DeadfishState();
 }
 
 class _DeadfishState extends State<Deadfish> {

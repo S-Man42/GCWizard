@@ -10,23 +10,28 @@ const MDT_KEYBOARDLAYOUT_OPTION_FROM = 'keyboard_from';
 const MDT_KEYBOARDLAYOUT_OPTION_TO = 'keyboard_to';
 
 class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
-  MultiDecoderToolKeyboardLayout({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolKeyboardLayout(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_KEYBOARDLAYOUT,
             onDecode: (String input, String key) {
-
-              var from = getKeyboardTypeByName(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDLAYOUT, options, MDT_KEYBOARDLAYOUT_OPTION_FROM));
-              from ??= getKeyboardTypeByName(toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT,MDT_KEYBOARDLAYOUT_OPTION_FROM)) ?? '');
-              var to = getKeyboardTypeByName(checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDLAYOUT, options, MDT_KEYBOARDLAYOUT_OPTION_TO));
-              to ??= getKeyboardTypeByName(toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT, MDT_KEYBOARDLAYOUT_OPTION_TO)) ?? '');
+              var from = getKeyboardTypeByName(checkStringFormatOrDefaultOption(
+                  MDT_INTERNALNAMES_KEYBOARDLAYOUT, options, MDT_KEYBOARDLAYOUT_OPTION_FROM));
+              from ??= getKeyboardTypeByName(
+                  toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT, MDT_KEYBOARDLAYOUT_OPTION_FROM)) ??
+                      '');
+              var to = getKeyboardTypeByName(checkStringFormatOrDefaultOption(
+                  MDT_INTERNALNAMES_KEYBOARDLAYOUT, options, MDT_KEYBOARDLAYOUT_OPTION_TO));
+              to ??= getKeyboardTypeByName(
+                  toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_KEYBOARDLAYOUT, MDT_KEYBOARDLAYOUT_OPTION_TO)) ??
+                      '');
               if (from == null || to == null) return null;
               return encodeKeyboard(input, from, to);
             },
@@ -38,15 +43,14 @@ class MultiDecoderToolKeyboardLayout extends AbstractMultiDecoderTool {
 class _MultiDecoderToolKeyboardLayoutState extends State<MultiDecoderToolKeyboardLayout> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDLAYOUT, widget.options, MDT_KEYBOARDLAYOUT_OPTION_FROM),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_KEYBOARDLAYOUT, widget.options, MDT_KEYBOARDLAYOUT_OPTION_FROM),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = newValue;
           });
-
         },
         items: allKeyboards.map((keyboard) {
           return GCWDropDownMenuItem(
@@ -54,19 +58,18 @@ class _MultiDecoderToolKeyboardLayoutState extends State<MultiDecoderToolKeyboar
         }).toList(),
       ),
       MDT_KEYBOARDLAYOUT_OPTION_TO: GCWDropDown<String>(
-        value: checkStringFormatOrDefaultOption(MDT_INTERNALNAMES_KEYBOARDLAYOUT, widget.options, MDT_KEYBOARDLAYOUT_OPTION_TO),
+        value: checkStringFormatOrDefaultOption(
+            MDT_INTERNALNAMES_KEYBOARDLAYOUT, widget.options, MDT_KEYBOARDLAYOUT_OPTION_TO),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_KEYBOARDLAYOUT_OPTION_TO] = newValue;
           });
-
         },
         items: allKeyboards.map((keyboard) {
           return GCWDropDownMenuItem(
               value: keyboard.name, child: i18n(context, keyboard.name), subtitle: keyboard.example);
         }).toList(),
       ),
-    }
-    );
+    });
   }
 }

@@ -10,7 +10,7 @@ class RSADChecker extends StatefulWidget {
   const RSADChecker({Key? key}) : super(key: key);
 
   @override
- _RSADCheckerState createState() => _RSADCheckerState();
+  _RSADCheckerState createState() => _RSADCheckerState();
 }
 
 class _RSADCheckerState extends State<RSADChecker> {
@@ -59,9 +59,7 @@ class _RSADCheckerState extends State<RSADChecker> {
   }
 
   void _calculateOutput() {
-    if (_currentD.isEmpty ||
-        _currentP.isEmpty ||
-        _currentQ.isEmpty) {
+    if (_currentD.isEmpty || _currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 

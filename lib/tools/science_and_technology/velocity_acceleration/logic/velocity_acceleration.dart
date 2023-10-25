@@ -1,6 +1,6 @@
 import 'dart:math';
 
-double velocity ({required double time, double? distance, double? acceleration}) {
+double velocity({required double time, double? distance, double? acceleration}) {
   if (acceleration != null) {
     return acceleration * time;
   } else {
@@ -8,7 +8,7 @@ double velocity ({required double time, double? distance, double? acceleration})
   }
 }
 
-double distance ({required double time, double? velocity, double? acceleration}) {
+double distance({required double time, double? velocity, double? acceleration}) {
   if (acceleration != null) {
     return 0.5 * acceleration * time * time;
   } else {
@@ -16,7 +16,7 @@ double distance ({required double time, double? velocity, double? acceleration})
   }
 }
 
-double time ({required double distance, double? velocity, double? acceleration}) {
+double time({required double distance, double? velocity, double? acceleration}) {
   if (acceleration != null) {
     if (acceleration == 0.0) {
       return double.nan;
@@ -32,7 +32,7 @@ double time ({required double distance, double? velocity, double? acceleration})
   }
 }
 
-double acceleration ({required double time, double? distance, double? velocity}) {
+double acceleration({required double time, double? distance, double? velocity}) {
   if (time == 0.0) {
     return double.nan;
   }

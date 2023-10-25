@@ -19,7 +19,7 @@ class SemaphoreTelegraph extends StatefulWidget {
   const SemaphoreTelegraph({Key? key}) : super(key: key);
 
   @override
- _SemaphoreTelegraphState createState() => _SemaphoreTelegraphState();
+  _SemaphoreTelegraphState createState() => _SemaphoreTelegraphState();
 }
 
 class _SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
