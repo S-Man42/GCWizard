@@ -10,13 +10,7 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
   var coords = <BaseCoordinate>[];
 
   try {
-    BaseCoordinate? coord = DMS.parse(text, wholeString: wholeString);
-    if (coord != null) coords.add(coord);
-
-    coord = DMM.parse(text, wholeString: wholeString);
-    if (coord != null) coords.add(coord);
-
-    coord = DEC.parse(text, wholeString: wholeString);
+    BaseCoordinate? coord = parseStandardFormats(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
 
     coord = UTMREF.parse(text);

@@ -21,7 +21,7 @@ class AlcoholMass extends StatefulWidget {
   const AlcoholMass({Key? key}) : super(key: key);
 
   @override
- _AlcoholMassState createState() => _AlcoholMassState();
+  _AlcoholMassState createState() => _AlcoholMassState();
 }
 
 class _AlcoholMassState extends State<AlcoholMass> {
@@ -45,9 +45,7 @@ class _AlcoholMassState extends State<AlcoholMass> {
           }).toList(),
           onChanged: (value) {
             setState(() {
-
-                _currentMode = value;
-
+              _currentMode = value;
             });
           },
         ),
@@ -106,9 +104,7 @@ class _AlcoholMassState extends State<AlcoholMass> {
                 onlyShowSymbols: false,
                 onChanged: (value) {
                   setState(() {
-
-                      _currentOutputMass = value;
-
+                    _currentOutputMass = value;
                   });
                 },
               )
@@ -120,9 +116,7 @@ class _AlcoholMassState extends State<AlcoholMass> {
                 onlyShowSymbols: false,
                 onChanged: (value) {
                   setState(() {
-
-                      _currentOutputVolume = value;
-
+                    _currentOutputVolume = value;
                   });
                 },
               )
@@ -140,7 +134,6 @@ class _AlcoholMassState extends State<AlcoholMass> {
         child: NumberFormat('0.000').format(outputMass) + ' ' + _currentOutputMass.symbol,
         copyText: outputMass.toString(),
       );
-
     } else if (_currentMode == _VOLUME) {
       var volume = alcoholVolumeInML(_currentAlcoholMass, _currentPercent);
       var outputVolume = _currentOutputVolume.fromCubicMeter(VOLUME_MILLILITER.toCubicMeter(volume));
@@ -148,7 +141,6 @@ class _AlcoholMassState extends State<AlcoholMass> {
         child: NumberFormat('0.000').format(outputVolume) + ' ' + _currentOutputVolume.symbol,
         copyText: outputVolume.toString(),
       );
-
     } else if (_currentMode == _ALCOHOL_MASS_BY_VOLUME) {
       var percent = alcoholByMassInPercent(_currentAlcoholMass, VOLUME_MILLILITER.fromCubicMeter(_currentVolume));
       return GCWDefaultOutput(

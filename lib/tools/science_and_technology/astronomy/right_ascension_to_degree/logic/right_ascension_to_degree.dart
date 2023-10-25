@@ -64,8 +64,7 @@ class RightAscension {
   }
 
   Duration toDuration() {
-    var duration = Duration(
-        hours: hours, minutes: minutes, seconds: seconds.truncate(), milliseconds: milliseconds);
+    var duration = Duration(hours: hours, minutes: minutes, seconds: seconds.truncate(), milliseconds: milliseconds);
 
     if (sign < 0) duration = -duration;
 
@@ -77,7 +76,7 @@ class RightAscension {
     var matches = regex.allMatches(input);
 
     if (matches.isNotEmpty) {
-      var match =matches.first;
+      var match = matches.first;
       return RightAscension(
           (matches.first.group(1) == "-") ? -1 : 1,
           int.parse(match.group(2) ?? ''),

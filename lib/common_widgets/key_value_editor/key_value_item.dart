@@ -1,8 +1,6 @@
 part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 
-
 class GCWKeyValueItem extends StatefulWidget {
-
   late List<KeyValueBase> entries;
   KeyValueBase keyValueEntry;
   late KeyValueEditorControl keyValueEditorControl;
@@ -14,15 +12,10 @@ class GCWKeyValueItem extends StatefulWidget {
   late void Function(KeyValueBase)? onUpdateEntry;
   late void Function()? onSetState;
 
-  GCWKeyValueItem(
-     {Key? key,
-       required this.keyValueEntry,
-       required this.odd
-     })
-     : super(key: key);
+  GCWKeyValueItem({Key? key, required this.keyValueEntry, required this.odd}) : super(key: key);
 
- @override
- GCWKeyValueItemState createState() => GCWKeyValueItemState();
+  @override
+  GCWKeyValueItemState createState() => GCWKeyValueItemState();
 }
 
 class GCWKeyValueItemState extends State<GCWKeyValueItem> {
@@ -133,8 +126,7 @@ class GCWKeyValueItemState extends State<GCWKeyValueItem> {
                   },
                 )
               : GCWText(text: widget.keyValueEntry.value),
-        )
-    );
+        ));
   }
 
   Widget editButton() {
@@ -164,7 +156,6 @@ class GCWKeyValueItemState extends State<GCWKeyValueItem> {
             },
           );
   }
-
 
   Widget removeButton() {
     return GCWIconButton(
@@ -201,6 +192,3 @@ class GCWKeyValueItemState extends State<GCWKeyValueItem> {
     if (widget.onSetState != null) widget.onSetState!();
   }
 }
-
-
-

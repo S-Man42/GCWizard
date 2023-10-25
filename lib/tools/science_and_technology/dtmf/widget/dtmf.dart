@@ -18,7 +18,7 @@ class DTMF extends StatefulWidget {
   const DTMF({Key? key}) : super(key: key);
 
   @override
- _DTMFState createState() => _DTMFState();
+  _DTMFState createState() => _DTMFState();
 }
 
 class _DTMFState extends State<DTMF> {
@@ -33,10 +33,9 @@ class _DTMFState extends State<DTMF> {
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  final _maskInputFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
 
-  var player = AudioPlayer(playerId: Uuid().v4(),);
+  var player = AudioPlayer(playerId: const Uuid().v4(),);
   int _index = 0;
   String _playlist = '';
 

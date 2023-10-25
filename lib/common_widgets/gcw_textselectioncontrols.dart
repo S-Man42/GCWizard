@@ -1,4 +1,5 @@
 /* https://ktuusj.medium.com/flutter-custom-selection-toolbar-3acbe7937dd3 ***/
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
@@ -21,7 +22,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
     Offset selectionMidpoint,
     List<TextSelectionPoint> endpoints,
     TextSelectionDelegate delegate,
-    ClipboardStatusNotifier? clipboardStatus,
+    ValueListenable<ClipboardStatus>? clipboardStatus,
     Offset? lastSecondaryTapDownPosition,
   ) {
     final TextSelectionPoint startTextSelectionPoint = endpoints[0];
@@ -36,12 +37,11 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
     return _GCWTextSelectionToolbar(
       anchorAbove: anchorAbove,
       anchorBelow: anchorBelow,
-      clipboardStatus: clipboardStatus,
+      clipboardStatus: null,
       delegate: delegate,
       handleCopy: canCopy(delegate)
           ? () {
-              insertIntoGCWClipboard(
-                  context, selectedText(delegate));
+              insertIntoGCWClipboard(context, selectedText(delegate));
               handleCopy(delegate, clipboardStatus);
             }
           : () {},
@@ -67,17 +67,14 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
               delegate.bringIntoView(delegate.textEditingValue.selection.extent);
               delegate.hideToolbar();
             }
-          :  () {},
+          : () {},
       handleCut: canCut(delegate)
           ? () {
-              insertIntoGCWClipboard(
-                  context, selectedText(delegate));
+              insertIntoGCWClipboard(context, selectedText(delegate));
               handleCut(delegate, clipboardStatus);
             }
-          :  () {},
-      // handlePaste: canPaste(delegate) && handlePaste != null
-      //     ? () => handlePaste(delegate)
-      //     : null,
+          : () {},
+
       handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll1(delegate) : () => {},
     );
   }
@@ -89,8 +86,8 @@ bool canCopy(TextSelectionDelegate delegate) {
 }
 
 /// copy of deprecated function
-void handleCopy(TextSelectionDelegate delegate, ClipboardStatusNotifier? clipboardStatus) {
-    delegate.copySelection(SelectionChangedCause.toolbar);
+void handleCopy(TextSelectionDelegate delegate, ValueListenable<ClipboardStatus>? clipboardStatus) {
+  delegate.copySelection(SelectionChangedCause.toolbar);
 }
 
 /// copy of deprecated function
@@ -99,7 +96,7 @@ bool canCut(TextSelectionDelegate delegate) {
 }
 
 /// copy of deprecated function
-void handleCut(TextSelectionDelegate delegate, ClipboardStatusNotifier? clipboardStatus) {
+void handleCut(TextSelectionDelegate delegate, ValueListenable<ClipboardStatus>? clipboardStatus) {
   delegate.cutSelection(SelectionChangedCause.toolbar);
 }
 

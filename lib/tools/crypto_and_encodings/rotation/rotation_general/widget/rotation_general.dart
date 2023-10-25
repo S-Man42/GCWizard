@@ -5,41 +5,42 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
 const String _apiSpecification = '''
 {
-	"/rotation_general" : {
-		"get": {
-			"summary": "Rotation Tool",
-			"responses": {
-				"204": {
-					"description": "Tool loaded. No response data."
-				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for rotate text",
-				"schema": {
-					"type": "string"
-				}
-			},
-			{
-				"in": "query",
-				"name": "parameter1",
-				"description": "Shifts letters count",
-				"schema": {
-					"type": "string",
-					"default": "0"
-				}
-			}
-		]
-	}
+  "/rotation_general" : {
+    "alternative_paths": ["rotation", "rot", "rotx"],
+    "get": {
+      "summary": "Rotation Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for rotate text",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "key",
+          "description": "Shifts the input for n alphabet places",
+          "schema": {
+            "type": "integer",
+            "default": 13
+          }
+        }
+      ]
+    }
+  }
 }
 ''';
 
@@ -54,16 +55,18 @@ class _RotationGeneralState extends State<RotationGeneral> {
   late TextEditingController _controller;
 
   String _currentInput = '';
-  int _currentKey = 0;
+  int _currentKey = 13;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
-      var key = widget.getWebParameter(WEBPARAMETER.parameter1);
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
+
+      var key = widget.getWebParameter('key');
       if (key != null) _currentKey = int.tryParse(key) ?? _currentKey;
+
       widget.webParameter = null;
     }
 

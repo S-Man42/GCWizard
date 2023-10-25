@@ -8,8 +8,7 @@
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-
-bool _validDateTime(int year, int month, int day){
+bool _validDateTime(int year, int month, int day) {
   // https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
   const _DATETIME_MAX_YEAR = 275760;
   const _DATETIME_MAX_MONTH = 9;
@@ -21,16 +20,17 @@ bool _validDateTime(int year, int month, int day){
   if (year > _DATETIME_MAX_YEAR ||
       (year == _DATETIME_MAX_YEAR && month > _DATETIME_MAX_MONTH) ||
       (year == _DATETIME_MAX_YEAR && month == _DATETIME_MAX_MONTH && day > _DATETIME_MAX_DAY)) {
-    return false;}
+    return false;
+  }
 
   if (year < _DATETIME_MIN_YEAR ||
       (year == _DATETIME_MIN_YEAR && month > _DATETIME_MIN_MONTH) ||
       (year == _DATETIME_MIN_YEAR && month == _DATETIME_MIN_MONTH && day > _DATETIME_MIN_DAY)) {
-    return false;}
-
-  return true;
+    return false;
   }
 
+  return true;
+}
 
 double UnixTimestampToJulianDate(int timestamp) {
   DateTime date = DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: timestamp));
@@ -382,7 +382,6 @@ DateTime? JulianDateToCopticCalendar(double jd) {
   } else {
     return null;
   }
-
 }
 
 double CopticCalendarToJulianDate(DateTime date) {

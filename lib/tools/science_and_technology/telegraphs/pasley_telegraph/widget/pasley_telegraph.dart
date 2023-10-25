@@ -20,7 +20,7 @@ class PasleyTelegraph extends StatefulWidget {
   const PasleyTelegraph({Key? key}) : super(key: key);
 
   @override
- _PasleyTelegraphState createState() => _PasleyTelegraphState();
+  _PasleyTelegraphState createState() => _PasleyTelegraphState();
 }
 
 class _PasleyTelegraphState extends State<PasleyTelegraph> {

@@ -13,7 +13,7 @@ class AtomicNumbersToText extends StatefulWidget {
   const AtomicNumbersToText({Key? key}) : super(key: key);
 
   @override
- _AtomicNumbersToTextState createState() => _AtomicNumbersToTextState();
+  _AtomicNumbersToTextState createState() => _AtomicNumbersToTextState();
 }
 
 class _AtomicNumbersToTextState extends State<AtomicNumbersToText> {

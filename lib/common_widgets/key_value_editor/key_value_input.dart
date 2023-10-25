@@ -1,8 +1,6 @@
 part of 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 
-
 class GCWKeyValueInput extends StatefulWidget {
-
   late List<KeyValueBase> entries;
   late String? keyHintText;
   late String valueHintText;
@@ -16,10 +14,12 @@ class GCWKeyValueInput extends StatefulWidget {
   late int? valueFlex;
   late void Function()? onSetState;
 
-  GCWKeyValueInput({Key? key,}) : super(key: key);
+  GCWKeyValueInput({
+    Key? key,
+  }) : super(key: key);
 
- @override
- GCWKeyValueInputState createState() => GCWKeyValueInputState();
+  @override
+  GCWKeyValueInputState createState() => GCWKeyValueInputState();
 }
 
 class GCWKeyValueInputState extends State<GCWKeyValueInput> {
@@ -47,7 +47,7 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
 
   @override
   void dispose() {
-    if (widget.addOnDispose && currentKey.isNotEmpty  && currentValue.isNotEmpty) {
+    if (widget.addOnDispose && currentKey.isNotEmpty && currentValue.isNotEmpty) {
       addEntry(KeyValueBase(null, currentKey, currentValue));
     }
     if (widget.keyController == null) _keyController.dispose();
@@ -87,8 +87,7 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
               _onNewEntryChanged(false);
             });
           },
-        )
-    );
+        ));
   }
 
   Widget arrowIcon() {
@@ -134,7 +133,7 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
   }
 
   void addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    if (widget.onAddEntry == null ) {
+    if (widget.onAddEntry == null) {
       widget.entries.add(entry);
     } else {
       widget.onAddEntry!(entry);
@@ -221,6 +220,3 @@ class GCWKeyValueInputState extends State<GCWKeyValueInput> {
     return list.isEmpty ? null : list;
   }
 }
-
-
-

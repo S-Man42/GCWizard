@@ -18,7 +18,7 @@ class GuitarStrings extends StatefulWidget {
   const GuitarStrings({Key? key}) : super(key: key);
 
   @override
- _GuitarStringsState createState() => _GuitarStringsState();
+  _GuitarStringsState createState() => _GuitarStringsState();
 }
 
 class _GuitarStringsState extends State<GuitarStrings> {

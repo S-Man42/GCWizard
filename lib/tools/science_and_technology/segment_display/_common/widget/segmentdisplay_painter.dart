@@ -685,4 +685,3 @@ class SegmentDisplayPainter extends CustomPainter {
   //   return textPainter;
   // }
 }
-

@@ -20,11 +20,9 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'dp': false
 };
 
-
 class FourteenSegmentDisplay extends NSegmentDisplay {
-
-  FourteenSegmentDisplay({
-      Key? key,
+  FourteenSegmentDisplay(
+      {Key? key,
       required Map<String, bool> segments,
       SegmentDisplayType? type,
       bool readOnly = false,
@@ -35,5 +33,5 @@ class FourteenSegmentDisplay extends NSegmentDisplay {
             segments: segments,
             readOnly: readOnly,
             onChanged: onChanged,
-            type: (Variants14Segment.contains(type) ? type : null)  ?? SegmentDisplayType.FOURTEEN);
+            type: (Variants14Segment.contains(type) ? type : null) ?? SegmentDisplayType.FOURTEEN);
 }
