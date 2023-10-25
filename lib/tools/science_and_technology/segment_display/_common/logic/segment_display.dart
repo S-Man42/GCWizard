@@ -1042,10 +1042,10 @@ Map<String, String> _detectVariant(String input, Iterable<Map<String, String>> v
 Tuple2<String, int> _splitSegment(String input, int i, Map<String, String> baseSegments) {
   var segment = input[i];
 
-  if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1') {
-    segment += segment + input[i + 1] + input[i + 2];
+  if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1' && baseSegments.containsKey('dp1')) {
+    segment += input[i + 1] + input[i + 2];
     i += 2;
-  } else if (i + 1 < input.length && segment + input[i + 1] == 'dp') {
+  } else if (i + 1 < input.length && segment + input[i + 1] == 'dp' && baseSegments.containsKey('dp')) {
     segment += input[i + 1];
     i++;
   } else if (!input[i].isNumber && segment != ' ' && i + 1 < input.length && ['1', '2'].contains(input[i + 1])) {
