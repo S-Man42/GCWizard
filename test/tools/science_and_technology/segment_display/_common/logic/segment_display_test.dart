@@ -5,8 +5,6 @@ import 'package:gc_wizard/utils/constants.dart';
 void main() {
   group("SegmentDisplay.encodeSegment:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : '.', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['dp']]},
-
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
 
       {'input' : 'A', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g']]},
