@@ -875,6 +875,9 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SIXTEEN:
       baseSegments = _createBaseVariant(_baseSegments16Segment);
       break;
+    case SegmentDisplayType.SIXTEEN_KMN_UP_TSR:
+      baseSegments = _16SegmentTo_kmn_up_tsr;
+      break;
     case SegmentDisplayType.SIXTEENAUTO:
       baseSegments = _detectVariant(input, _16SegmentVariants.values);
       break;

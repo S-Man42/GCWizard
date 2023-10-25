@@ -5,6 +5,8 @@ import 'package:gc_wizard/utils/constants.dart';
 void main() {
   group("SegmentDisplay.encodeSegment:", () {
     List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '.', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['dp']]},
+
       {'input' : '', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
 
       {'input' : 'A', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g']]},
@@ -50,6 +52,10 @@ void main() {
       {'input' : 'aö.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'dp']]},
       {'input' : '.öa', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
       {'input' : 'ö.a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
+
+      {'input' : '.', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['dp']]},
+      {'input' : '..', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['dp'],['dp']]},
+
     ];
 
     for (var elem in _inputsToExpected) {
@@ -86,7 +92,7 @@ void main() {
 
       {'input' : '23 12457', 'segmentType' : SegmentDisplayType.SEVENAUTO, 'expectedOutput': SegmentsText(displays:[['b', 'c'], ['a', 'b', 'd', 'e', 'g']], text: '12')},
       {'input' : 'cb', 'segmentType' : SegmentDisplayType.SEVENAUTO, 'expectedOutput': SegmentsText(displays:[['b','c']], text: '1')},
-      
+
       {'input' : 'a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
       {'input' : 'a1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1']], text: UNKNOWN_ELEMENT)},
       {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
@@ -99,7 +105,10 @@ void main() {
       {'input' : '1a', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays:[], text: '')},
       {'input' : '1a1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': SegmentsText(displays: [['a1']], text: UNKNOWN_ELEMENT)},
 
+      {'input' : 'cdn', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': SegmentsText(displays:[['b', 'c', 'j']], text: '1')},
+
       {'input' : 'ba1a2c', 'segmentType' : SegmentDisplayType.SIXTEENAUTO, 'expectedOutput': SegmentsText(displays:[['a1','a2','b','c']], text: '7')},
+      {'input' : 'cdn', 'segmentType' : SegmentDisplayType.SIXTEENAUTO, 'expectedOutput': SegmentsText(displays:[['b', 'c', 'j']], text: '1')},
 
       {'input' : 'dp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
       {'input' : 'dpdp', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': SegmentsText(displays:[['dp']], text: '.')},
