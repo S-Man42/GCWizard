@@ -3,9 +3,10 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsDMS extends StatefulWidget {
   final void Function(DMS) onChanged;
   final DMS coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsDMS({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsDMS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsDMSState createState() => _GCWCoordsDMSState();
@@ -39,8 +40,6 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
   String _currentLonMinutes = '';
   String _currentLonSeconds = '';
   String _currentLonMilliSeconds = '';
-
-  bool _initialized = false;
 
   @override
   void initState() {
@@ -79,7 +78,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var dms = widget.coordinates;
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
@@ -88,13 +87,13 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
       _currentLatMinutes = lat.minutes;
       _currentLatSeconds = lat.seconds.split('.')[0];
       _currentLatMilliSeconds = lat.seconds.split('.')[1];
-      _currentLatSign = lat.sign.value;
+      _currentLatSign = lat.sign.value != 0 ? lat.sign.value : 1;
 
       _currentLonDegrees = lon.degrees;
       _currentLonMinutes = lon.minutes;
       _currentLonSeconds = lon.seconds.split('.')[0];
       _currentLonMilliSeconds = lon.seconds.split('.')[1];
-      _currentLonSign = lon.sign.value;
+      _currentLonSign = lon.sign.value != 0 ? lon.sign.value : 1;
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;
@@ -105,8 +104,6 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
       _LonMinutesController.text = _currentLonMinutes;
       _LonSecondsController.text = _currentLonSeconds;
       _LonMilliSecondsController.text = _currentLonMilliSeconds;
-
-      _initialized = true;
     }
 
     return Column(children: <Widget>[
@@ -130,7 +127,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: _DegreesLatTextInputFormatter(),
+                    textInputFormatter: DegreesLatTextInputFormatter(),
                     controller: _LatDegreesController,
                     onChanged: (IntegerText ret) {
                       setState(() {
@@ -225,7 +222,7 @@ class _GCWCoordsDMSState extends State<_GCWCoordsDMS> {
                 padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: _DegreesLonTextInputFormatter(),
+                    textInputFormatter: DegreesLonTextInputFormatter(),
                     controller: _LonDegreesController,
                     onChanged: (IntegerText ret) {
                       setState(() {

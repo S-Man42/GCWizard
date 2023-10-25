@@ -12,8 +12,8 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
@@ -29,7 +29,7 @@ class BundeswehrTalkingBoardAuthentification extends StatefulWidget {
   const BundeswehrTalkingBoardAuthentification({Key? key}) : super(key: key);
 
   @override
- _BundeswehrTalkingBoardAuthentificationState createState() => _BundeswehrTalkingBoardAuthentificationState();
+  _BundeswehrTalkingBoardAuthentificationState createState() => _BundeswehrTalkingBoardAuthentificationState();
 }
 
 class _BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkingBoardAuthentification> {
@@ -61,19 +61,18 @@ class _BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalki
   bool _contentToSave = false;
   TABLE_SOURCE _tableSource = TABLE_SOURCE.NONE;
 
-  final _authTableMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '## ' * 64 + '##', filter: {"#": RegExp(r'\d')});
+  final _authTableMaskFormatter = GCWMaskTextInputFormatter(mask: '## ' * 64 + '##', filter: {"#": RegExp(r'\d')});
 
-  final _authCodeMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '## ' * 2 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
+
+  final _authCodeMaskFormatter = GCWMaskTextInputFormatter(mask: '## ' * 2 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
 
   final _numeralCodeXAxisCodeMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+      GCWMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   final _numeralCodeYAxisCodeMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+      GCWMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
-  final _callsignLetterMaskFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'[a-zA-Z]')});
+  final _callsignLetterMaskFormatter = GCWMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'[a-zA-Z]')});
 
   var _currentMode = GCWSwitchPosition.right;
   var _currentTableMode = GCWSwitchPosition.left;
@@ -168,7 +167,7 @@ class _BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalki
                 title: i18n(context, 'common_exportfile_openfile'),
                 onLoaded: (_bundeswehrTalkingBoard) {
                   if (_bundeswehrTalkingBoard == null) {
-                    showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                    showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                     return;
                   }
                   BundeswehrTalkingBoard bwTalkingBoard = BundeswehrTalkingBoard.fromJson(

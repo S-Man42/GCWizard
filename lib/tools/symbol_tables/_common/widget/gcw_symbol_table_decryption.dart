@@ -14,17 +14,17 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final void Function() onChanged;
   final String? Function(String)? onAfterDecrypt;
 
-  const GCWSymbolTableDecryption({
-    Key? key,
-    required this.data,
-    required this.countColumns,
-    required this.mediaQueryData,
-    required this.onChanged,
-    required this.onAfterDecrypt})
+  const GCWSymbolTableDecryption(
+      {Key? key,
+      required this.data,
+      required this.countColumns,
+      required this.mediaQueryData,
+      required this.onChanged,
+      required this.onAfterDecrypt})
       : super(key: key);
 
   @override
- _GCWSymbolTableDecryptionState createState() => _GCWSymbolTableDecryptionState();
+  _GCWSymbolTableDecryptionState createState() => _GCWSymbolTableDecryptionState();
 }
 
 class _GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
@@ -37,7 +37,6 @@ class _GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   @override
   void initState() {
     super.initState();
-
 
     _scrollController = ScrollController();
   }
@@ -58,20 +57,20 @@ class _GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
 
     return Column(
       children: <Widget>[
-            Expanded(
-              child: GCWSymbolTableSymbolMatrix(
-              imageData: _data.images,
-              symbolKey: _data.symbolKey,
-              countColumns: widget.countColumns,
-              mediaQueryData: widget.mediaQueryData,
-              onChanged: widget.onChanged,
-              onSymbolTapped: (String tappedText, SymbolData imageData) {
-                setState(() {
-                  _decryptionOutput += tappedText;
-                  _scrollToBottom();
-                });
-              },
-            )),
+        Expanded(
+            child: GCWSymbolTableSymbolMatrix(
+          imageData: _data.images,
+          symbolKey: _data.symbolKey,
+          countColumns: widget.countColumns,
+          mediaQueryData: widget.mediaQueryData,
+          onChanged: widget.onChanged,
+          onSymbolTapped: (String tappedText, SymbolData imageData) {
+            setState(() {
+              _decryptionOutput += tappedText;
+              _scrollToBottom();
+            });
+          },
+        )),
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: widget.mediaQueryData.orientation == Orientation.portrait ? 350 : 150),
           child: Column(
@@ -110,16 +109,16 @@ class _GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
               ]),
               Flexible(
                   child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      controller: _scrollController,
-                      child: widget.onAfterDecrypt != null
-                        ? Column(
-                            children: [
-                              GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
-                              GCWDefaultOutput(child: widget.onAfterDecrypt!(_decryptionOutput))
-                            ],
-                          )
-                        : GCWDefaultOutput(child: _decryptionOutput),
+                physics: const AlwaysScrollableScrollPhysics(),
+                controller: _scrollController,
+                child: widget.onAfterDecrypt != null
+                    ? Column(
+                        children: [
+                          GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
+                          GCWDefaultOutput(child: widget.onAfterDecrypt!(_decryptionOutput))
+                        ],
+                      )
+                    : GCWDefaultOutput(child: _decryptionOutput),
               ))
             ],
           ),

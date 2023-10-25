@@ -1,14 +1,46 @@
 import 'dart:io' as io;
 import 'dart:typed_data';
 
-import 'package:path/path.dart' as path;
 import "package:flutter_test/flutter_test.dart";
-
-import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
+import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:path/path.dart' as path;
 
 void main() {
+
+  group("Base16.encode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'expectedOutput' : ''},
+      {'input' : '3429289555', 'expectedOutput' : '33343239323839353535'},
+      {'input' : 'hallo', 'expectedOutput' : '68616c6c6f'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBase16(elem['input'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("Base16.decode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'expectedOutput' : '', 'input' : ''},
+      {'expectedOutput' : '3429289555', 'input' : '33343239323839353535'},
+      {'expectedOutput' : 'hallo', 'input' : '68616c6c6f'},
+      {'expectedOutput' : '', 'input' : 'h'},
+      {'expectedOutput' : '', 'input' : 'ha'},
+      {'expectedOutput' : '', 'input' : 'kl'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBase16(elem['input'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
 
   group("Base58.encode:", () {
     List<Map<String, Object?>> _inputsToExpected = [

@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:intl/intl.dart';
 
 final CHANGELOG = {
+  '3.0.0': DateTime(2023, 10, 25),
   '2.3.1': DateTime(2022, 12, 25),
   '2.3.0': DateTime(2022, 11, 30),
   '2.2.1': DateTime(2022, 04, 15),
@@ -41,7 +42,7 @@ class Changelog extends StatefulWidget {
   const Changelog({Key? key}) : super(key: key);
 
   @override
- _ChangelogState createState() => _ChangelogState();
+  _ChangelogState createState() => _ChangelogState();
 }
 
 class _ChangelogState extends State<Changelog> {

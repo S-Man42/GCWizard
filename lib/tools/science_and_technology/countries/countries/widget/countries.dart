@@ -13,7 +13,7 @@ class Countries extends StatefulWidget {
   const Countries({Key? key, required this.fields}) : super(key: key);
 
   @override
- _CountriesState createState() => _CountriesState();
+  _CountriesState createState() => _CountriesState();
 }
 
 class _CountriesState extends State<Countries> {
@@ -69,28 +69,25 @@ class _CountriesState extends State<Countries> {
   }
 
   Widget _buildOutput() {
-
-
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
-
 
     var data = COUNTRIES.values
         .where((e) => e.getProperty(field) != null)
         .where((e) => (e.getProperty(field) is String) ? (e.getProperty(field) as String).isNotEmpty : true)
         .map((e) {
-          if (_currentSort == 0) {
-            List<Object> dataList = [i18n(context, e.name)];
-            dataList.addAll(widget.fields.map((field) => e.getProperty(field)!));
+      if (_currentSort == 0) {
+        List<Object> dataList = [i18n(context, e.name)];
+        dataList.addAll(widget.fields.map((field) => e.getProperty(field)!));
 
-            return dataList;
-          } else {
-            var dataList = [e.getProperty(field)!, i18n(context, e.name)];
-            dataList.addAll(widget.fields.where((f) => f != field).map((f) => e.getProperty(f)!));
+        return dataList;
+      } else {
+        var dataList = [e.getProperty(field)!, i18n(context, e.name)];
+        dataList.addAll(widget.fields.where((f) => f != field).map((f) => e.getProperty(f)!));
 
-            return dataList;
-          }
-        }).toList();
+        return dataList;
+      }
+    }).toList();
 
     if (_currentSort == 0) {
       flexValues.insert(0, widget.fields.length + 1);
@@ -108,11 +105,7 @@ class _CountriesState extends State<Countries> {
       }
     });
 
-    return GCWColumnedMultilineOutput(
-      data: data,
-      flexValues: flexValues,
-      copyColumn: 1
-    );
+    return GCWColumnedMultilineOutput(data: data, flexValues: flexValues, copyColumn: 1);
   }
 
   int _compareAsString(List<Object> a, List<Object> b) {

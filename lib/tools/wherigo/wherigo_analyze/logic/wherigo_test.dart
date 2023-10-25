@@ -180,7 +180,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
       );
       break;
 
-  //TODO
+    //TODO
     case WHERIGO_OBJECT.GWCFILE:
       break;
     case WHERIGO_OBJECT.HEADER:

@@ -10,7 +10,7 @@ class Cow extends StatefulWidget {
   const Cow({Key? key}) : super(key: key);
 
   @override
- _CowState createState() => _CowState();
+  _CowState createState() => _CowState();
 }
 
 class _CowState extends State<Cow> {

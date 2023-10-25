@@ -10,7 +10,7 @@ class Chronogram extends StatefulWidget {
   const Chronogram({Key? key}) : super(key: key);
 
   @override
- _ChronogramState createState() => _ChronogramState();
+  _ChronogramState createState() => _ChronogramState();
 }
 
 class _ChronogramState extends State<Chronogram> {

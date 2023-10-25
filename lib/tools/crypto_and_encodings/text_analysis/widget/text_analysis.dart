@@ -18,7 +18,7 @@ class TextAnalysis extends StatefulWidget {
   const TextAnalysis({Key? key}) : super(key: key);
 
   @override
- _TextAnalysisState createState() => _TextAnalysisState();
+  _TextAnalysisState createState() => _TextAnalysisState();
 }
 
 class _TextAnalysisState extends State<TextAnalysis> {
@@ -246,22 +246,14 @@ class _TextAnalysisState extends State<TextAnalysis> {
         _currentSort != _SORT_TYPES.COUNT_OVERALL
             ? Column(
                 children: [
-                    GCWColumnedMultilineOutput(
-                        data: group.common,
-                            copyColumn: 1
-                    ),
+                  GCWColumnedMultilineOutput(data: group.common, copyColumn: 1),
                   Container(
                     height: 8 * DOUBLE_DEFAULT_MARGIN,
                   )
                 ],
               )
             : Container(),
-            GCWColumnedMultilineOutput(
-                data: group.detailed,
-                hasHeader: true,
-                flexValues: flexValues,
-                copyColumn: 1
-            )
+        GCWColumnedMultilineOutput(data: group.detailed, hasHeader: true, flexValues: flexValues, copyColumn: 1)
       ],
     );
 
@@ -272,7 +264,8 @@ class _TextAnalysisState extends State<TextAnalysis> {
         ),
         _currentSort == _SORT_TYPES.COUNT_OVERALL
             ? child
-            : GCWExpandableTextDivider(text: i18n(context, 'common_group') + ': ' + i18n(context, title ?? ''), child: child)
+            : GCWExpandableTextDivider(
+                text: i18n(context, 'common_group') + ': ' + i18n(context, title ?? ''), child: child)
       ],
     );
   }
@@ -342,15 +335,11 @@ class _TextAnalysisState extends State<TextAnalysis> {
 
     var commonOutput = GCWExpandableTextDivider(
         text: i18n(context, 'textanalysis_common_count'),
-        child: GCWColumnedMultilineOutput(
-            data: [
-                    [i18n(context, 'textanalysis_common_wordcount'), wordCount],
-                    [i18n(context, 'textanalysis_common_charactercount'), totalCharacterCount],
-                    [i18n(context, 'textanalysis_distinctcharacters'), totalDistinctCharacterCount],
-                  ],
-              copyColumn: 1
-        )
-    );
+        child: GCWColumnedMultilineOutput(data: [
+          [i18n(context, 'textanalysis_common_wordcount'), wordCount],
+          [i18n(context, 'textanalysis_common_charactercount'), totalCharacterCount],
+          [i18n(context, 'textanalysis_distinctcharacters'), totalDistinctCharacterCount],
+        ], copyColumn: 1));
 
     if (_currentSort == _SORT_TYPES.COUNT_OVERALL) {
       return _buildOverallGroupOutput(analysis, commonOutput, totalCharacterCount);
