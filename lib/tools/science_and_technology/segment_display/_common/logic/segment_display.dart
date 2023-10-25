@@ -855,7 +855,7 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
       baseSegments = _detectVariant(input, _7SegmentVariants.values);
       break;
     case SegmentDisplayType.SEVEN12345678:
-      baseSegments = _7SegmentTo12345678;
+      baseSegments = _7SegmentVariants[SegmentDisplayType.SEVEN12345678]!;
       break;
     case SegmentDisplayType.FOURTEEN:
       baseSegments = _createBaseVariant(_baseSegments14Segment);
@@ -864,25 +864,28 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
       baseSegments = _detectVariant(input, _14SegmentVariants.values);
       break;
     case SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK:
-      baseSegments = _14SegmentTo_hij_g1g2_mlk;
+      baseSegments = _14SegmentVariants[SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK]!;
       break;
     case SegmentDisplayType.FOURTEEN_PGH_NJ_MLK:
-      baseSegments = _14SegmentTo_pgh_nj_mlk;
+      baseSegments = _14SegmentVariants[SegmentDisplayType.FOURTEEN_PGH_NJ_MLK]!;
       break;
     case SegmentDisplayType.FOURTEEN_KMN_G1G2_RST:
-      baseSegments = _14SegmentTo_kmn_g1g2_rst;
+      baseSegments = _14SegmentVariants[SegmentDisplayType.FOURTEEN_KMN_G1G2_RST]!;
       break;
     case SegmentDisplayType.FOURTEEN_GHJ_PK_NMI:
-      baseSegments = _14SegmentTo_ghj_pk_nmi;
+      baseSegments = _14SegmentVariants[SegmentDisplayType.FOURTEEN_GHJ_PK_NMI]!;
       break;
     case SegmentDisplayType.FOURTEEN_HJK_G1G2_NML:
-      baseSegments = _14SegmentTo_hjk_g1g2_nml;
+      baseSegments = _14SegmentVariants[SegmentDisplayType.FOURTEEN_HJK_G1G2_NML]!;
+      break;
+    case SegmentDisplayType.FOURTEEN_HJK_GM_QPN:
+      baseSegments = _14SegmentVariants[SegmentDisplayType.FOURTEEN_HJK_GM_QPN]!;
       break;
     case SegmentDisplayType.SIXTEEN:
       baseSegments = _createBaseVariant(_baseSegments16Segment);
       break;
     case SegmentDisplayType.SIXTEEN_KMN_UP_TSR:
-      baseSegments = _16SegmentTo_kmn_up_tsr;
+      baseSegments = _16SegmentVariants[SegmentDisplayType.SIXTEEN_KMN_UP_TSR]!;
       break;
     case SegmentDisplayType.SIXTEENAUTO:
       baseSegments = _detectVariant(input, _16SegmentVariants.values);
@@ -1039,17 +1042,15 @@ Map<String, String> _detectVariant(String input, Iterable<Map<String, String>> v
 Tuple2<String, int> _splitSegment(String input, int i, Map<String, String> baseSegments) {
   var segment = input[i];
 
-  if (segment != ' ') {
-    if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1') {
-      segment += segment + input[i + 1] + input[i + 2];
-      i += 2;
-    } else if (i + 1 < input.length && segment + input[i + 1] == 'dp') {
-      segment += input[i + 1];
-      i++;
-    } else if (!input[i].isNumber && i + 1 < input.length && ['1', '2'].contains(input[i + 1])) {
-      segment += input[i + 1];
-      i++;
-    }
+  if (i + 2 < input.length && segment + input[i + 1] + input[i + 2] == 'dp1') {
+    segment += segment + input[i + 1] + input[i + 2];
+    i += 2;
+  } else if (i + 1 < input.length && segment + input[i + 1] == 'dp') {
+    segment += input[i + 1];
+    i++;
+  } else if (!input[i].isNumber && segment != ' ' && i + 1 < input.length && ['1', '2'].contains(input[i + 1])) {
+    segment += input[i + 1];
+    i++;
   }
 
   if (baseSegments.containsKey(segment)) {
