@@ -84,6 +84,7 @@ flutter:
         - asset: lib/application/_common/assets/fonts/Roboto/Roboto-Regular.ttf
   uses-material-design: true
   assets:
+    - assets/audio/
     - assets/logo/
     - assets/tokens/
     - lib/application/_common/assets/img/
