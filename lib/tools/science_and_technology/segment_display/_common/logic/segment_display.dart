@@ -318,7 +318,7 @@ const Map<String, List<String>> _AZTo14Segment = {
   '>': ['h', 'k'],
   '[': ['a', 'd', 'e', 'f'],
   ']': ['a', 'b', 'c', 'd'],
-  '?': ['a2', 'b', 'f', 'g2', 'k'],
+  '?': ['a', 'b', 'f', 'g2', 'k'],
   '/': ['j', 'k'],
   '\\': ['h', 'm'],
   '+': ['g1', 'g2', 'i', 'l'],
@@ -789,28 +789,34 @@ Segments encodeSegment(String input, SegmentDisplayType segmentType) {
       AZToSegment = _AZTo7Segment;
       break;
     case SegmentDisplayType.SEVEN12345678:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _7SegmentTo12345678);
+      AZToSegment = _convertCharacterMap(_AZTo7Segment, _7SegmentVariants[SegmentDisplayType.SEVEN12345678]!);
       break;
     case SegmentDisplayType.FOURTEEN:
       AZToSegment = _AZTo14Segment;
       break;
     case SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_hij_g1g2_mlk);
+      AZToSegment = _convertCharacterMap(_AZTo14Segment, _14SegmentVariants[SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK]!);
       break;
     case SegmentDisplayType.FOURTEEN_PGH_NJ_MLK:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_pgh_nj_mlk);
+      AZToSegment = _convertCharacterMap(_AZTo14Segment, _14SegmentVariants[SegmentDisplayType.FOURTEEN_PGH_NJ_MLK]!);
       break;
     case SegmentDisplayType.FOURTEEN_KMN_G1G2_RST:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_kmn_g1g2_rst);
+      AZToSegment = _convertCharacterMap(_AZTo14Segment, _14SegmentVariants[SegmentDisplayType.FOURTEEN_KMN_G1G2_RST]!);
       break;
     case SegmentDisplayType.FOURTEEN_GHJ_PK_NMI:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_ghj_pk_nmi);
+      AZToSegment = _convertCharacterMap(_AZTo14Segment, _14SegmentVariants[SegmentDisplayType.FOURTEEN_GHJ_PK_NMI]!);
       break;
     case SegmentDisplayType.FOURTEEN_HJK_G1G2_NML:
-      AZToSegment = _convertCharacterMap(_AZTo7Segment, _14SegmentTo_hjk_g1g2_nml);
+      AZToSegment = _convertCharacterMap(_AZTo14Segment, _14SegmentVariants[SegmentDisplayType.FOURTEEN_HJK_G1G2_NML]!);
+      break;
+    case SegmentDisplayType.FOURTEEN_HJK_GM_QPN:
+      AZToSegment = _convertCharacterMap(_AZTo14Segment, _14SegmentVariants[SegmentDisplayType.FOURTEEN_HJK_GM_QPN]!);
       break;
     case SegmentDisplayType.SIXTEEN:
       AZToSegment = _AZTo16Segment;
+      break;
+    case SegmentDisplayType.SIXTEEN_KMN_UP_TSR:
+      AZToSegment = _convertCharacterMap(_AZTo16Segment, _16SegmentVariants[SegmentDisplayType.SIXTEEN_KMN_UP_TSR]!);
       break;
     default:
   }

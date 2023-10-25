@@ -11,10 +11,6 @@ void main() {
       {'input' : 'AB', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g'], ['c', 'd', 'e', 'f', 'g']]},
       {'input' : '1', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b', 'c']]},
 
-      {'input' : 'A', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
-      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2'],['a1', 'a2', 'b', 'c', 'd1', 'd2', 'g2', 'i', 'l']]},
-      {'input' : '1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['b', 'c','j']]},
-
       {'input' : '.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
       {'input' : '..', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['dp']]},
       {'input' : '1.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b','c','dp']]},
@@ -50,6 +46,54 @@ void main() {
       {'input' : 'aö.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'dp']]},
       {'input' : '.öa', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
       {'input' : 'ö.a', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp'],['a', 'b', 'c', 'e', 'f', 'g']]},
+
+      {'input' : '1', 'segmentType' : SegmentDisplayType.SEVEN12345678, 'expectedOutput': [['2', '3']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'i', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN, 'expectedOutput': [['j', 'k']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'p', 'k']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'p', 'k'], ['a', 'b', 'c', 'd', 'k', 'h', 'm']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_GHJ_PK_NMI, 'expectedOutput': [['j', 'n']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'i', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK, 'expectedOutput': [['j', 'm']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'j', 'm']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['b', 'c', 'k']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_G1G2_NML, 'expectedOutput': [['k', 'n']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'm']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g', 'm'], ['a', 'b', 'c', 'd', 'm', 'j', 'p']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['b', 'c', 'k']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['k', 'q']]},
+      {'input' : '2', 'segmentType' : SegmentDisplayType.FOURTEEN_HJK_GM_QPN, 'expectedOutput': [['a', 'b', 'd', 'e', 'g', 'm']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'g1', 'g2'], ['a', 'b', 'c', 'd', 'g2', 'm', 's']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['b', 'c', 'n']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_KMN_G1G2_RST, 'expectedOutput': [['n', 'r']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'n', 'j']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['a', 'b', 'c', 'e', 'f', 'n', 'j'], ['a', 'b', 'c', 'd', 'j', 'g', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['b', 'c', 'h']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.FOURTEEN_PGH_NJ_MLK, 'expectedOutput': [['h', 'm']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g1', 'g2'],['a1', 'a2', 'b', 'c', 'd1', 'd2', 'g2', 'i', 'l']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['b', 'c','j']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.SIXTEEN, 'expectedOutput': [['j', 'k']]},
+
+      {'input' : 'A', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['a', 'b', 'c', 'd', 'g', 'h', 'u', 'p']]},
+      {'input' : 'AB', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['a', 'b', 'c', 'd', 'g', 'h', 'u', 'p'],['a', 'b', 'c', 'd', 'e', 'f', 'p', 'm', 's']]},
+      {'input' : '1', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['c', 'd', 'n']]},
+      {'input' : '/', 'segmentType' : SegmentDisplayType.SIXTEEN_KMN_UP_TSR, 'expectedOutput': [['n', 't']]},
     ];
 
     for (var elem in _inputsToExpected) {
