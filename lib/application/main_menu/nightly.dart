@@ -28,6 +28,7 @@ class _NightlyState extends State<Nightly> {
           GCWTextDivider(text: 'Previews'),
           GCWColumnedMultilineOutput(
             data: [
+              ['Tool', 'Ballistics\nSchiefer Wurf'],
               ['Tool', 'Checkdigits\nVerschiedene Prüfziffern'],
               ['Tool', 'Triangle\nBerechnungen von Dreiecken'],
               ['Tool', 'Waveform\nAnalyse von WAV-Dateien'],
