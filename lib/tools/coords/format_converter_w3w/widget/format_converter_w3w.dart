@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
@@ -41,7 +40,7 @@ class FormatConverterW3W extends StatefulWidget {
 }
 
 class FormatConverterW3WState extends State<FormatConverterW3W> {
-  LatLng _currentCoordsLatLng = LatLng(0.0, 0.0);
+  LatLng _currentCoordsLatLng = const LatLng(0.0, 0.0);
   String _currentCoordsW3W = '';
   W3WResults _currentW3wToCoordinates = W3WRESULTS_EMPTY;
 
@@ -126,7 +125,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
           Expanded(
             flex: 1,
             child: Container(
-              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
               child: GCWTextField(
                   hintText: i18n(context, 'coords_formatconverter_w3w_w1'),
                   controller: _ControllerW1,
@@ -140,7 +139,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
           Expanded(
             flex: 1,
             child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               child: GCWTextField(
                   hintText: i18n(context, 'coords_formatconverter_w3w_w2'),
                   controller: _ControllerW2,
@@ -316,7 +315,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
           [i18n(context, 'coords_formatconverter_w3w_language'), '', _currentW3wToCoordinates.language],
           [i18n(context, 'coords_formatconverter_w3w_map'), '', _currentW3wToCoordinates.map],
         ],
-        flexValues: [2,1,3],
+        flexValues: const [2,1,3],
       ),
     );
   }
@@ -342,7 +341,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
       text: i18n(context, 'coords_formatconverter_w3w_suggestions'),
       child: GCWColumnedMultilineOutput(
         data: suggestions,
-        flexValues: [1,2,3],
+        flexValues: const [1,2,3],
       ),
     );
   }
@@ -384,7 +383,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
               data: [
                 [i18n(context, 'coords_formatconverter_w3w_words'), '', _currentW3wToCoordinates.words.toUpperCase()],
               ],
-              flexValues: [2,1,3],
+              flexValues: const [2,1,3],
             )
             : GCWColumnedMultilineOutput(
               data: [
@@ -395,7 +394,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
                       defaultCoordinateFormat, defaultEllipsoid)
                 ],
               ],
-              flexValues: [2,1,3],
+              flexValues: const [2,1,3],
             ),
             _outputDetails(),
             _currentW3wToCoordinates.suggestions.isNotEmpty ? _outputSuggestions() : Container(),

@@ -15,7 +15,7 @@ class _NightlyState extends State<Nightly> {
   @override
   Widget build(BuildContext context) {
 
-    var content = Column(
+    var content = const Column(
         children: [
           GCWTextDivider(text: 'nightly Tools'),
           GCWColumnedMultilineOutput(

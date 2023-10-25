@@ -6,6 +6,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 
 
 class Licenses extends StatefulWidget {
+  const Licenses({super.key});
+
   @override
   LicensesState createState() => LicensesState();
 }
@@ -180,7 +182,7 @@ class LicensesState extends State<Licenses> {
         ],
       ),
       GCWTextDivider(text: i18n(context, 'licenses_bibliography')),
-      GCWColumnedMultilineOutput(data:
+      const GCWColumnedMultilineOutput(data:
         [
           ['Aschoff, Volker', 'Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
           ['Beyrer, Klaus [Hrsg.]','So weit das Auge reicht. Die Geschichte der optischen Telegraphie\nISBN 3-7650-8150-7, 1995'],

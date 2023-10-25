@@ -182,7 +182,7 @@ class _LicensesState extends State<Licenses> {
         ],
       ),
       GCWTextDivider(text: i18n(context, 'licenses_bibliography')),
-      GCWColumnedMultilineOutput(
+      const GCWColumnedMultilineOutput(
         data: [
           ['Aschoff, Volker', 'Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen', 'ISBN 3-486-20691-5'],
           ['Beyrer, Klaus [Hrsg.]', 'So weit das Auge reicht. Die Geschichte der optischen Telegrafie', 'ISBN 3-7650-8150-7'],

@@ -160,7 +160,6 @@ List<W3WSuggestion> _analyzeSuggestions(http.Response suggestionsW3W) {
     var decodedData = json.decode(data);
     List<dynamic> suggestions = decodedData['suggestions'] as List<dynamic>;
     for (var suggestion in suggestions) {
-      print(suggestion);
       result.add(W3WSuggestion(
         country: decodedData['country'].toString(),
         nearestPlace: suggestion['nearestPlace'].toString(),

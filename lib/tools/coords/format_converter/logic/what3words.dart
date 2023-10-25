@@ -10,7 +10,7 @@ What3Words latLonToWhat3Words(LatLng coord,) {
 
 LatLng What3WordsToLatLon(What3Words What3Words) {
 
-  return LatLng(0, 0);
+  return const LatLng(0, 0);
 }
 
 What3Words? parseWhat3Words(String input) {
