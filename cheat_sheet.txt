@@ -111,6 +111,7 @@ Actual Release:
 	- Android:
 		- Promote open test version to public
 		- Save -> Send for review -> Start roll-out
+		- Update Rollout Settings from 20 to 100%
 		- Reviewing may take a few days
 	- iOS:
 		- Go to normal AppStore
