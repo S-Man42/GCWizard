@@ -23,6 +23,7 @@ class _LicensesState extends State<Licenses> {
         ['base32', 'MIT License'],
         ['cached_network_image', 'MIT License'],
         ['code_text_field', 'MIT License'],
+        ['device_info_plus', 'BSD-3-Clause License'],
         ['diacritic', 'BSD-3-Clause License'],
         ['encrypt', 'BSD-3-Clause License'],
         ['exif', 'MIT License'],
