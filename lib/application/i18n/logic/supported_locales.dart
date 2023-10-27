@@ -10,7 +10,7 @@ final Map<Locale, Map<String, Object>> SUPPORTED_LOCALES = {
   const Locale('fi'): {'name_native': '🇫🇮 Suomi', 'percent_translated': 47},
   const Locale('fr'): {'name_native': '🇫🇷 Français', 'percent_translated': 88},
   const Locale('it'): {'name_native': '🇮🇹 Italiano', 'percent_translated': 8},
-  const Locale('ko'): {'name_native': '🇰🇷 한국어', 'percent_translated': 99},
+  const Locale('ko'): {'name_native': '🇰🇷 한국어', 'percent_translated': 100},
   const Locale('nl'): {'name_native': '🇳🇱 Nederlands', 'percent_translated': 100},
   const Locale('pl'): {'name_native': '🇵🇱 Polski', 'percent_translated': 54},
   const Locale('pt'): {'name_native': '🇵🇹 Português', 'percent_translated': 17},
