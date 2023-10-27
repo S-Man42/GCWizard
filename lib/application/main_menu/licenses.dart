@@ -31,7 +31,6 @@ class _LicensesState extends State<Licenses> {
         ['flutter_map', 'BSD-3-Clause License'],
         ['flutter_map_marker_popup', 'BSD-3-Clause License'],
         ['flutter_map_tappable_polyline', 'MIT License'],
-        ['fluttertoast', 'MIT License'],
         ['http', 'BSD-3-Clause License'],
         ['http_parser', 'BSD-3-Clause License'],
         ['image', 'Apache 2.0 License'],
