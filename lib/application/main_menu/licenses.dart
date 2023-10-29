@@ -101,6 +101,10 @@ class _LicensesState extends State<Licenses> {
         ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
         ['Wherigo Analyzer', 'WFoundation\ngithub.com/WFoundation', ''],
       ]),
+      GCWTextDivider(text: i18n(context, 'licenses_used_apis')),
+      const GCWColumnedMultilineOutput(data: [
+        ['Geohashing', 'http://geo.crox.net/djia/{yyyy-MM-dd}'],
+      ]),
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),
       GCWColumnedMultilineOutput(data: [
         const ['several', 'myGeoTools'],
