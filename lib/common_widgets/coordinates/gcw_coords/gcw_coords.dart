@@ -147,9 +147,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.DEC,
         _GCWCoordsDEC(
           initialize: _resetCoords,
-          coordinates: _currentCoords is DEC
-              ? _currentCoords as DEC
-              : DEC.emptyCoordinate,
+          coordinates: _currentCoords is DECCoordinate
+              ? _currentCoords as DECCoordinate
+              : DECCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -161,9 +161,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.DMM,
         _GCWCoordsDMM(
           initialize: _resetCoords,
-          coordinates: _currentCoords is DMM
-              ? _currentCoords as DMM
-              : DMM.emptyCoordinate,
+          coordinates: _currentCoords is DMMCoordinate
+              ? _currentCoords as DMMCoordinate
+              : DMMCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -175,9 +175,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.DMS,
         _GCWCoordsDMS(
           initialize: _resetCoords,
-          coordinates: _currentCoords is DMS
-              ? _currentCoords as DMS
-              : DMS.emptyCoordinate,
+          coordinates: _currentCoords is DMSCoordinate
+              ? _currentCoords as DMSCoordinate
+              : DMSCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -189,9 +189,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.UTM,
         _GCWCoordsUTM(
           initialize: _resetCoords,
-          coordinates: _currentCoords is UTMREF
-              ? _currentCoords as UTMREF
-              : UTMREF.emptyCoordinate,
+          coordinates: _currentCoords is UTMREFCoordinate
+              ? _currentCoords as UTMREFCoordinate
+              : UTMREFCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -203,9 +203,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.MGRS,
         _GCWCoordsMGRS(
           initialize: _resetCoords,
-          coordinates: _currentCoords is MGRS
-              ? _currentCoords as MGRS
-              : MGRS.emptyCoordinate,
+          coordinates: _currentCoords is MGRSCoordinate
+              ? _currentCoords as MGRSCoordinate
+              : MGRSCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -217,9 +217,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.XYZ,
         _GCWCoordsXYZ(
           initialize: _resetCoords,
-          coordinates: _currentCoords is XYZ
-              ? _currentCoords as XYZ
-              : XYZ.emptyCoordinate,
+          coordinates: _currentCoords is XYZCoordinate
+              ? _currentCoords as XYZCoordinate
+              : XYZCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -231,9 +231,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.SWISS_GRID,
         _GCWCoordsSwissGrid(
           initialize: _resetCoords,
-          coordinates: _currentCoords is SwissGrid
-              ? _currentCoords as SwissGrid
-              : SwissGrid.emptyCoordinate,
+          coordinates: _currentCoords is SwissGridCoordinate
+              ? _currentCoords as SwissGridCoordinate
+              : SwissGridCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -245,9 +245,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.SWISS_GRID_PLUS,
         _GCWCoordsSwissGridPlus(
           initialize: _resetCoords,
-          coordinates: _currentCoords is SwissGridPlus
-              ? _currentCoords as SwissGridPlus
-              : SwissGridPlus.emptyCoordinate,
+          coordinates: _currentCoords is SwissGridPlusCoordinate
+              ? _currentCoords as SwissGridPlusCoordinate
+              : SwissGridPlusCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -259,9 +259,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.GAUSS_KRUEGER,
         _GCWCoordsGaussKrueger(
           initialize: _resetCoords,
-          coordinates: _currentCoords is GaussKrueger
-              ? _currentCoords as GaussKrueger
-              : GaussKrueger.emptyCoordinate,
+          coordinates: _currentCoords is GaussKruegerCoordinate
+              ? _currentCoords as GaussKruegerCoordinate
+              : GaussKruegerCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -273,9 +273,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.LAMBERT,
         _GCWCoordsLambert(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Lambert
-              ? _currentCoords as Lambert
-              : Lambert.emptyCoordinate,
+          coordinates: _currentCoords is LambertCoordinate
+              ? _currentCoords as LambertCoordinate
+              : LambertCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -287,9 +287,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.DUTCH_GRID,
         _GCWCoordsDutchGrid(
           initialize: _resetCoords,
-          coordinates: _currentCoords is DutchGrid
-              ? _currentCoords as DutchGrid
-              : DutchGrid.emptyCoordinate,
+          coordinates: _currentCoords is DutchGridCoordinate
+              ? _currentCoords as DutchGridCoordinate
+              : DutchGridCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -301,9 +301,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.MAIDENHEAD,
         _GCWCoordsMaidenhead(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Maidenhead
-              ? _currentCoords as Maidenhead
-              : Maidenhead.emptyCoordinate,
+          coordinates: _currentCoords is MaidenheadCoordinate
+              ? _currentCoords as MaidenheadCoordinate
+              : MaidenheadCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -315,9 +315,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.MERCATOR,
         _GCWCoordsMercator(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Mercator
-              ? _currentCoords as Mercator
-              : Mercator.emptyCoordinate,
+          coordinates: _currentCoords is MercatorCoordinate
+              ? _currentCoords as MercatorCoordinate
+              : MercatorCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -329,9 +329,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.NATURAL_AREA_CODE,
         _GCWCoordsNaturalAreaCode(
           initialize: _resetCoords,
-          coordinates: _currentCoords is NaturalAreaCode
-              ? _currentCoords as NaturalAreaCode
-              : NaturalAreaCode.emptyCoordinate,
+          coordinates: _currentCoords is NaturalAreaCodeCoordinate
+              ? _currentCoords as NaturalAreaCodeCoordinate
+              : NaturalAreaCodeCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -343,9 +343,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.SLIPPY_MAP,
         _GCWCoordsSlippyMap(
           initialize: _resetCoords,
-          coordinates: _currentCoords is SlippyMap
-              ? _currentCoords as SlippyMap
-              : SlippyMap.emptyCoordinate,
+          coordinates: _currentCoords is SlippyMapCoordinate
+              ? _currentCoords as SlippyMapCoordinate
+              : SlippyMapCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -357,9 +357,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.MAKANEY,
         _GCWCoordsMakaney(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Makaney
-              ? _currentCoords as Makaney
-              : Makaney.emptyCoordinate,
+          coordinates: _currentCoords is MakaneyCoordinate
+              ? _currentCoords as MakaneyCoordinate
+              : MakaneyCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -371,9 +371,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.GEOHASH,
         _GCWCoordsGeohash(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Geohash
-              ? _currentCoords as Geohash
-              : Geohash.emptyCoordinate,
+          coordinates: _currentCoords is GeohashCoordinate
+              ? _currentCoords as GeohashCoordinate
+              : GeohashCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -385,9 +385,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.GEOHEX,
         _GCWCoordsGeoHex(
           initialize: _resetCoords,
-          coordinates: _currentCoords is GeoHex
-              ? _currentCoords as GeoHex
-              : GeoHex.emptyCoordinate,
+          coordinates: _currentCoords is GeoHexCoordinate
+              ? _currentCoords as GeoHexCoordinate
+              : GeoHexCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -399,9 +399,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.GEO3X3,
         _GCWCoordsGeo3x3(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Geo3x3
-              ? _currentCoords as Geo3x3
-              : Geo3x3.emptyCoordinate,
+          coordinates: _currentCoords is Geo3x3Coordinate
+              ? _currentCoords as Geo3x3Coordinate
+              : Geo3x3Coordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -413,9 +413,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.OPEN_LOCATION_CODE,
         _GCWCoordsOpenLocationCode(
           initialize: _resetCoords,
-          coordinates: _currentCoords is OpenLocationCode
-              ? _currentCoords as OpenLocationCode
-              : OpenLocationCode.emptyCoordinate,
+          coordinates: _currentCoords is OpenLocationCodeCoordinate
+              ? _currentCoords as OpenLocationCodeCoordinate
+              : OpenLocationCodeCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -427,9 +427,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.QUADTREE,
         _GCWCoordsQuadtree(
           initialize: _resetCoords,
-          coordinates: _currentCoords is Quadtree
-              ? _currentCoords as Quadtree
-              : Quadtree.emptyCoordinate,
+          coordinates: _currentCoords is QuadtreeCoordinate
+              ? _currentCoords as QuadtreeCoordinate
+              : QuadtreeCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -441,9 +441,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.REVERSE_WIG_WALDMEISTER,
         _GCWCoordsReverseWherigoWaldmeister(
           initialize: _resetCoords,
-          coordinates: _currentCoords is ReverseWherigoWaldmeister
-              ? _currentCoords as ReverseWherigoWaldmeister
-              : ReverseWherigoWaldmeister.emptyCoordinate,
+          coordinates: _currentCoords is ReverseWherigoWaldmeisterCoordinate
+              ? _currentCoords as ReverseWherigoWaldmeisterCoordinate
+              : ReverseWherigoWaldmeisterCoordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -455,9 +455,9 @@ class _GCWCoordsState extends State<GCWCoords> {
         CoordinateFormatKey.REVERSE_WIG_DAY1976,
         _GCWCoordsReverseWherigoDay1976(
           initialize: _resetCoords,
-          coordinates: _currentCoords is ReverseWherigoDay1976
-              ? _currentCoords as ReverseWherigoDay1976
-              : ReverseWherigoDay1976.emptyCoordinate,
+          coordinates: _currentCoords is ReverseWherigoDay1976Coordinate
+              ? _currentCoords as ReverseWherigoDay1976Coordinate
+              : ReverseWherigoDay1976Coordinate.defaultCoordinate,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);

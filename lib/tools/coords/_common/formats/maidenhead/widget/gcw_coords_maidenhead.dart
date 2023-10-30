@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMaidenhead extends StatefulWidget {
-  final void Function(Maidenhead?) onChanged;
-  final Maidenhead coordinates;
+  final void Function(MaidenheadCoordinate?) onChanged;
+  final MaidenheadCoordinate coordinates;
   final bool initialize;
 
   const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
@@ -55,6 +55,6 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
     var maidenhead = _currentCoord;
     if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 
-    widget.onChanged(Maidenhead.parse(maidenhead));
+    widget.onChanged(MaidenheadCoordinate.parse(maidenhead));
   }
 }

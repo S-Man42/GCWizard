@@ -10,12 +10,12 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
-class XYZ extends BaseCoordinate {
+class XYZCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.XYZ);
   double x, y, z;
 
-  XYZ(this.x, this.y, this.z);
+  XYZCoordinate(this.x, this.y, this.z);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -23,15 +23,15 @@ class XYZ extends BaseCoordinate {
     return _xyzToLatLon(this, ells);
   }
 
-  static XYZ fromLatLon(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
+  static XYZCoordinate fromLatLon(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
     return _latLonToXYZ(coord, ells, h: h);
   }
 
-  static XYZ? parse(String input) {
+  static XYZCoordinate? parse(String input) {
     return _parseXYZ(input);
   }
 
-  static XYZ get emptyCoordinate => XYZ(0, 0, 0);
+  static XYZCoordinate get defaultCoordinate => XYZCoordinate(0, 0, 0);
 
   @override
   String toString([int? precision]) {
@@ -40,7 +40,7 @@ class XYZ extends BaseCoordinate {
   }
 }
 
-LatLng _xyzToLatLon(XYZ xyz, Ellipsoid ells) {
+LatLng _xyzToLatLon(XYZCoordinate xyz, Ellipsoid ells) {
   var x = xyz.x;
   var y = xyz.y;
   var z = xyz.z;
@@ -61,7 +61,7 @@ LatLng _xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   return LatLng(radianToDeg(lat), radianToDeg(lon));
 }
 
-XYZ _latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
+XYZCoordinate _latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
   var lat = coord.latitudeInRad;
   var lon = coord.longitudeInRad;
   var v = ells.a / sqrt(1 - ells.e2 * sin(lat) * sin(lat));
@@ -70,10 +70,10 @@ XYZ _latLonToXYZ(LatLng coord, Ellipsoid ells, {double h = 0.0}) {
   var y = (v + h) * cos(lat) * sin(lon);
   var z = ((1 - ells.e2) * v + h) * sin(lat);
 
-  return XYZ(x, y, z);
+  return XYZCoordinate(x, y, z);
 }
 
-XYZ? _parseXYZ(String input) {
+XYZCoordinate? _parseXYZ(String input) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
 
@@ -110,5 +110,5 @@ XYZ? _parseXYZ(String input) {
 
   if (x == null || y == null || z == null) return null;
 
-  return XYZ(x, y, z);
+  return XYZCoordinate(x, y, z);
 }

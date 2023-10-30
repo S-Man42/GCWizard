@@ -38,7 +38,7 @@ class _FormatConverterState extends State<FormatConverter> {
 
     if (_currentCoords.format.type == _currentOutputFormat.type) {
       if (_currentOutputFormat.type == CoordinateFormatKey.DMM) {
-        _currentCoords = DEC.fromLatLon(defaultCoordinate);
+        _currentCoords = DECCoordinate.fromLatLon(defaultCoordinate);
       } else {
         _currentOutputFormat = CoordinateFormat(CoordinateFormatKey.DMM);
       }

@@ -24,7 +24,7 @@ import 'package:latlong2/latlong.dart';
 
 const _defaultLambertType = CoordinateFormatKey.LAMBERT93;
 
-class Lambert extends BaseCoordinateWithSubtypes {
+class LambertCoordinate extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
   @override
   CoordinateFormat get format => _format;
@@ -33,7 +33,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
 
   static const String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
 
-  Lambert(this.easting, this.northing, CoordinateFormatKey subtypeKey) {
+  LambertCoordinate(this.easting, this.northing, CoordinateFormatKey subtypeKey) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -47,7 +47,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
     return _lambertToLatLon(this, ells);
   }
 
-  static Lambert fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
+  static LambertCoordinate fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -55,7 +55,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
     return _latLonToLambert(coord, subtype, ells);
   }
 
-  static Lambert? parse(String input, {CoordinateFormatKey subtype = _defaultLambertType}) {
+  static LambertCoordinate? parse(String input, {CoordinateFormatKey subtype = _defaultLambertType}) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -63,7 +63,7 @@ class Lambert extends BaseCoordinateWithSubtypes {
     return _parseLambert(input, subtype: subtype);
   }
 
-  static Lambert get emptyCoordinate => Lambert(0, 0, _defaultLambertType);
+  static LambertCoordinate get defaultCoordinate => LambertCoordinate(0, 0, _defaultLambertType);
   @override
   CoordinateFormatKey get defaultSubtype => _defaultLambertType;
 
@@ -204,7 +204,7 @@ const Map<CoordinateFormatKey, _LambertDefinition> _LambertDefinitions = {
 // https://sourceforge.net/p/geographiclib/discussion/1026621/thread/87c3cb91af/
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
-Lambert _latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
+LambertCoordinate _latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid ellipsoid) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtype)) {
     subtype = _defaultLambertType;
   }
@@ -219,10 +219,10 @@ Lambert _latLonToLambert(LatLng latLon, CoordinateFormatKey subtype, Ellipsoid e
 
   GeographicLibLambert lambert = lambertCC.forward(specificLambert.centralMeridian, latLon.latitude, latLon.longitude);
 
-  return Lambert(lambert.x - x0, lambert.y - y0, subtype);
+  return LambertCoordinate(lambert.x - x0, lambert.y - y0, subtype);
 }
 
-LatLng _lambertToLatLon(Lambert lambert, Ellipsoid ellipsoid) {
+LatLng _lambertToLatLon(LambertCoordinate lambert, Ellipsoid ellipsoid) {
   _LambertDefinition specificLambert = _LambertDefinitions[lambert.format.subtype]!;
 
   LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
@@ -257,7 +257,7 @@ LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert,
   return lambertCC;
 }
 
-Lambert? _parseLambert(String input, {CoordinateFormatKey subtype = _defaultLambertType}) {
+LambertCoordinate? _parseLambert(String input, {CoordinateFormatKey subtype = _defaultLambertType}) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';
@@ -289,5 +289,5 @@ Lambert? _parseLambert(String input, {CoordinateFormatKey subtype = _defaultLamb
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  return Lambert(_easting, _northing, subtype);
+  return LambertCoordinate(_easting, _northing, subtype);
 }

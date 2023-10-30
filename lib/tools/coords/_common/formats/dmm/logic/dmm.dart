@@ -91,28 +91,28 @@ class DMMLongitude extends _DMMPart {
   }
 }
 
-class DMM extends BaseCoordinate {
+class DMMCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DMM);
   late final DMMLatitude dmmLatitude;
   late final DMMLongitude dmmLongitude;
 
-  DMM(this.dmmLatitude, this.dmmLongitude);
+  DMMCoordinate(this.dmmLatitude, this.dmmLongitude);
 
   @override
   LatLng toLatLng() {
     return _dmmToLatLon(this);
   }
 
-  static DMM fromLatLon(LatLng coord) {
+  static DMMCoordinate fromLatLon(LatLng coord) {
     return _latLonToDMM(coord);
   }
 
-  static DMM? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
+  static DMMCoordinate? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
     return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
 
-  static DMM get emptyCoordinate => DMM(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0));
+  static DMMCoordinate get defaultCoordinate => DMMCoordinate(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0));
 
   @override
   String toString([int? precision]) {
@@ -133,32 +133,32 @@ String getCoordinateSignString(int sign, bool isLatitude) {
   return _sign;
 }
 
-LatLng _dmmToLatLon(DMM dmm) {
+LatLng _dmmToLatLon(DMMCoordinate dmm) {
   return decToLatLon(_DMMToDEC(dmm));
 }
 
-DEC _DMMToDEC(DMM coord) {
+DECCoordinate _DMMToDEC(DMMCoordinate coord) {
   var lat = _DMMPartToDouble(coord.dmmLatitude);
   var lon = _DMMPartToDouble(coord.dmmLongitude);
 
-  return DEC.fromLatLon(normalizeLatLon(lat, lon));
+  return DECCoordinate.fromLatLon(normalizeLatLon(lat, lon));
 }
 
 double _DMMPartToDouble(_DMMPart dmmPart) {
   return dmmPart.sign * (dmmPart.degrees.abs() + dmmPart.minutes / 60.0);
 }
 
-DMM _latLonToDMM(LatLng coord) {
-  return _DECToDMM(DEC.fromLatLon(coord));
+DMMCoordinate _latLonToDMM(LatLng coord) {
+  return _DECToDMM(DECCoordinate.fromLatLon(coord));
 }
 
-DMM _DECToDMM(DEC coord) {
+DMMCoordinate _DECToDMM(DECCoordinate coord) {
   var normalizedCoord = normalizeLatLon(coord.latitude, coord.longitude);
 
   var lat = DMMLatitude.from(doubleToDMMPart(normalizedCoord.latitude));
   var lon = DMMLongitude.from(doubleToDMMPart(normalizedCoord.longitude));
 
-  return DMM(lat, lon);
+  return DMMCoordinate(lat, lon);
 }
 
 _DMMPart doubleToDMMPart(double value) {
@@ -170,7 +170,7 @@ _DMMPart doubleToDMMPart(double value) {
   return _DMMPart(_sign, _degrees, _minutes);
 }
 
-DMM? _parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
+DMMCoordinate? _parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
   var _input = prepareInput(input, wholeString: wholeString);
   if (_input == null) return null;
 
@@ -233,7 +233,7 @@ DMM? _parseDMM(String input, {bool leftPadMilliMinutes = false, bool wholeString
 
     var lon = DMMLongitude(lonSign, lonDegrees, lonMinutes);
 
-    return DMM(lat, lon);
+    return DMMCoordinate(lat, lon);
   }
 
   return null;
@@ -248,7 +248,7 @@ double _leftPadDMMMilliMinutes(String minutes, String milliMinutes) {
   return double.parse('$minuteValue.${milliMinuteValue % 1000}');
 }
 
-DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
+DMMCoordinate? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
   RegExp regex = RegExp(_PATTERN_DMM_TRAILINGSIGN + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(text)) {
@@ -307,7 +307,7 @@ DMM? _parseDMMTrailingSigns(String text, bool leftPadMilliMinutes) {
 
     var lon = DMMLongitude(lonSign, lonDegrees, lonMinutes);
 
-    return DMM(lat, lon);
+    return DMMCoordinate(lat, lon);
   }
 
   return null;

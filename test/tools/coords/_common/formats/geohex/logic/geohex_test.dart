@@ -13,7 +13,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = GeoHex.parse(elem['text'] as String)?.toLatLng();
+        var _actual = GeoHexCoordinate.parse(elem['text'] as String)?.toLatLng();
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {

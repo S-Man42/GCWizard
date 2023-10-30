@@ -440,7 +440,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
         String insertedCoord;
         if (defaultCoordinateFormat.type == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
-          insertedCoord = DMM.fromLatLon(coords.toLatLng()!).toString(3);
+          insertedCoord = DMMCoordinate.fromLatLon(coords.toLatLng()!).toString(3);
         } else {
           insertedCoord = formatCoordOutput(coords.toLatLng()!, defaultCoordinateFormat, defaultEllipsoid);
         }

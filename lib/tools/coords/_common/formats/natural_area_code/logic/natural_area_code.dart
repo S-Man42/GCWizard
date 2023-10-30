@@ -40,28 +40,28 @@ const _BASE30 = [
   'Z'
 ];
 
-class NaturalAreaCode extends BaseCoordinate {
+class NaturalAreaCodeCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.NATURAL_AREA_CODE);
   String x; //east
   String y; //north
 
-  NaturalAreaCode(this.x, this.y);
+  NaturalAreaCodeCoordinate(this.x, this.y);
 
   @override
   LatLng toLatLng() {
     return _naturalAreaCodeToLatLon(this);
   }
 
-  static NaturalAreaCode fromLatLon(LatLng coord, [int precision = 8]) {
+  static NaturalAreaCodeCoordinate fromLatLon(LatLng coord, [int precision = 8]) {
     return _latLonToNaturalAreaCode(coord, precision: precision);
   }
 
-  static NaturalAreaCode? parse(String input) {
+  static NaturalAreaCodeCoordinate? parse(String input) {
     return _parseNaturalAreaCode(input);
   }
 
-  static NaturalAreaCode get emptyCoordinate => NaturalAreaCode('', '');
+  static NaturalAreaCodeCoordinate get defaultCoordinate => NaturalAreaCodeCoordinate('', '');
 
   @override
   String toString([int? precision]) {
@@ -87,11 +87,11 @@ String _latlonComponentToNACComponent(double component, int precision) {
   }).join();
 }
 
-NaturalAreaCode _latLonToNaturalAreaCode(LatLng coords, {int precision = _DEFAULT_PRECISION}) {
+NaturalAreaCodeCoordinate _latLonToNaturalAreaCode(LatLng coords, {int precision = _DEFAULT_PRECISION}) {
   var lon = (coords.longitude + 180.0) / 360.0;
   var lat = (coords.latitude + 90.0) / 180.0;
 
-  return NaturalAreaCode(
+  return NaturalAreaCodeCoordinate(
       _latlonComponentToNACComponent(lon, precision), _latlonComponentToNACComponent(lat, precision));
 }
 
@@ -109,14 +109,14 @@ double _nacComponentToLatLonComponent(String component) {
   return a;
 }
 
-LatLng _naturalAreaCodeToLatLon(NaturalAreaCode nac) {
+LatLng _naturalAreaCodeToLatLon(NaturalAreaCodeCoordinate nac) {
   return LatLng(
     _nacComponentToLatLonComponent(nac.y) * 180.0 - 90.0,
     _nacComponentToLatLonComponent(nac.x) * 360.0 - 180.0,
   );
 }
 
-NaturalAreaCode? _parseNaturalAreaCode(String input) {
+NaturalAreaCodeCoordinate? _parseNaturalAreaCode(String input) {
   RegExp regExp = RegExp(r'^\s*([\dA-Z]+)(\s*,\s*|\s+)([\dA-Z]+)\s*$');
   var matches = regExp.allMatches(input);
 
@@ -144,5 +144,5 @@ NaturalAreaCode? _parseNaturalAreaCode(String input) {
     return null;
   }
 
-  return NaturalAreaCode(xString, yString);
+  return NaturalAreaCodeCoordinate(xString, yString);
 }

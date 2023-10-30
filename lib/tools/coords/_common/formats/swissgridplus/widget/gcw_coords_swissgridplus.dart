@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsSwissGridPlus extends StatefulWidget {
-  final void Function(SwissGridPlus) onChanged;
+  final void Function(SwissGridPlusCoordinate) onChanged;
   final BaseCoordinate coordinates;
   final bool initialize;
 
@@ -36,9 +36,9 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var swissGridPlus = widget.coordinates is SwissGridPlus
-          ? widget.coordinates as SwissGridPlus
-          : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      var swissGridPlus = widget.coordinates is SwissGridPlusCoordinate
+          ? widget.coordinates as SwissGridPlusCoordinate
+          : SwissGridPlusCoordinate.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
       _currentEasting.value = swissGridPlus.easting;
       _currentNorthing.value = swissGridPlus.northing;
 
@@ -69,6 +69,6 @@ class _GCWCoordsSwissGridPlusState extends State<_GCWCoordsSwissGridPlus> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(SwissGridPlus(_currentEasting.value, _currentNorthing.value));
+    widget.onChanged(SwissGridPlusCoordinate(_currentEasting.value, _currentNorthing.value));
   }
 }

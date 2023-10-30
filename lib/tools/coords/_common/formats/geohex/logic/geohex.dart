@@ -7,27 +7,27 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/external_libs/chsh.geohex4j/geohex.dart';
 
-class GeoHex extends BaseCoordinate {
+class GeoHexCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHEX);
   String text;
 
-  GeoHex(this.text);
+  GeoHexCoordinate(this.text);
 
   @override
   LatLng? toLatLng() {
     return _geoHexToLatLon(this);
   }
 
-  static GeoHex fromLatLon(LatLng coord, [int precision = 20]) {
+  static GeoHexCoordinate fromLatLon(LatLng coord, [int precision = 20]) {
     return _latLonToGeoHex(coord, precision);
   }
 
-  static GeoHex? parse(String input) {
+  static GeoHexCoordinate? parse(String input) {
     return _parseGeoHex(input);
   }
 
-  static GeoHex get emptyCoordinate => GeoHex('');
+  static GeoHexCoordinate get defaultCoordinate => GeoHexCoordinate('');
 
   @override
   String toString([int? precision]) {
@@ -35,7 +35,7 @@ class GeoHex extends BaseCoordinate {
   }
 }
 
-LatLng? _geoHexToLatLon(GeoHex geoHex) {
+LatLng? _geoHexToLatLon(GeoHexCoordinate geoHex) {
   try {
     _Zone zone = _getZoneByCode(geoHex.text);
     return LatLng(zone.lat, zone.lon);
@@ -44,15 +44,15 @@ LatLng? _geoHexToLatLon(GeoHex geoHex) {
   return null;
 }
 
-GeoHex? _parseGeoHex(String input) {
+GeoHexCoordinate? _parseGeoHex(String input) {
   input = input.trim();
   if (input == '') return null;
 
-  var _geoHex = GeoHex(input);
+  var _geoHex = GeoHexCoordinate(input);
   return _geoHexToLatLon(_geoHex) == null ? null : _geoHex;
 }
 
-GeoHex _latLonToGeoHex(LatLng coord, int precision) {
+GeoHexCoordinate _latLonToGeoHex(LatLng coord, int precision) {
   _Zone zone = _getZoneByLocation(coord.latitude, coord.longitude, precision);
-  return GeoHex(zone.code);
+  return GeoHexCoordinate(zone.code);
 }

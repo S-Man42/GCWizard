@@ -16,7 +16,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
-        var _actual = ReverseWherigoDay1976.fromLatLon(elem['coord'] as LatLng);
+        var _actual = ReverseWherigoDay1976Coordinate.fromLatLon(elem['coord'] as LatLng);
         expect(_actual.s, (elem['expectedOutput'] as List<String>)[0]);
         expect(_actual.t, (elem['expectedOutput'] as List<String>)[1]);
       });
@@ -35,7 +35,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = ReverseWherigoDay1976.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1])?.toLatLng();
+        var _actual = ReverseWherigoDay1976Coordinate.parse((elem['input'] as List<String>)[0] + " " + (elem['input'] as List<String>)[1])?.toLatLng();
         expect((_actual!.latitude - (elem['expectedOutput'] as LatLng).latitude).abs() < 1e-3, true);
         expect((_actual.longitude - (elem['expectedOutput'] as LatLng).longitude).abs() < 1e-3, true);
       });
@@ -51,7 +51,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = ReverseWherigoDay1976.parse(elem['text'] as String)?.toLatLng();
+        var _actual = ReverseWherigoDay1976Coordinate.parse(elem['text'] as String)?.toLatLng();
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {

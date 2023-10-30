@@ -10,7 +10,7 @@ import 'package:latlong2/latlong.dart';
 String digraphLettersEast = "ABCDEFGHJKLMNPQRSTUVWXYZ"; //without I and O
 String digraphLettersNorth = "ABCDEFGHJKLMNPQRSTUV";
 
-class MGRS extends BaseCoordinate {
+class MGRSCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MGRS);
   UTMZone utmZone;
@@ -18,7 +18,7 @@ class MGRS extends BaseCoordinate {
   double easting;
   double northing;
 
-  MGRS(this.utmZone, this.digraph, this.easting, this.northing);
+  MGRSCoordinate(this.utmZone, this.digraph, this.easting, this.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -26,15 +26,15 @@ class MGRS extends BaseCoordinate {
     return _mgrsToLatLon(this, ells);
   }
 
-  static MGRS fromLatLon(LatLng coord, Ellipsoid ells) {
+  static MGRSCoordinate fromLatLon(LatLng coord, Ellipsoid ells) {
     return _latLonToMGRS(coord, ells);
   }
 
-  static MGRS? parse(String text) {
+  static MGRSCoordinate? parse(String text) {
     return _parseMGRS(text);
   }
 
-  static MGRS get emptyCoordinate => MGRS(UTMZone(0, 0, 'A'), 'AA', 0, 0);
+  static MGRSCoordinate get defaultCoordinate => MGRSCoordinate(UTMZone(0, 0, 'A'), 'AA', 0, 0);
 
   @override
   String toString([int? precision]) {
@@ -58,15 +58,15 @@ String _constructDigraph(int zone, double easting, double northing) {
   return _digraph + digraphLettersNorth[_letter];
 }
 
-MGRS _latLonToMGRS(LatLng coord, Ellipsoid ells) {
-  UTMREF _utm = UTMREF.fromLatLon(coord, ells);
+MGRSCoordinate _latLonToMGRS(LatLng coord, Ellipsoid ells) {
+  UTMREFCoordinate _utm = UTMREFCoordinate.fromLatLon(coord, ells);
 
   var _digraph = _constructDigraph(_utm.zone.lonZone, _utm.easting / 100000.0, _utm.northing / 100000.0);
 
   var _easting = _utm.easting - 100000 * (_utm.easting / 100000.0).floor();
   var _northing = _utm.northing - 100000 * (_utm.northing / 100000.0).floor();
 
-  return MGRS(_utm.zone, _digraph, _easting, _northing);
+  return MGRSCoordinate(_utm.zone, _digraph, _easting, _northing);
 }
 
 List<List<num>> _latitudeBandConstants = [
@@ -93,7 +93,7 @@ List<List<num>> _latitudeBandConstants = [
 ];
 
 // ported from NASA Worldwind
-UTMREF _convertMGRSToUTM(MGRS mgrs) {
+UTMREFCoordinate _convertMGRSToUTM(MGRSCoordinate mgrs) {
   String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   double grid_easting; /* Easting for 100,000 meter grid square      */
@@ -166,15 +166,15 @@ UTMREF _convertMGRSToUTM(MGRS mgrs) {
   easting = grid_easting + mgrs.easting;
   northing = grid_northing + mgrs.northing;
 
-  return UTMREF(mgrs.utmZone, easting, northing);
+  return UTMREFCoordinate(mgrs.utmZone, easting, northing);
 }
 
-LatLng _mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
+LatLng _mgrsToLatLon(MGRSCoordinate mgrs, Ellipsoid ells) {
   var utm = _convertMGRSToUTM(mgrs);
   return UTMREFtoLatLon(utm, ells);
 }
 
-MGRS? _parseMGRS(String input) {
+MGRSCoordinate? _parseMGRS(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([\d.]+)\s+([\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _lonZoneString = '';
@@ -225,7 +225,7 @@ MGRS? _parseMGRS(String input) {
   _northing = fillUpNumber(_northing, _northingString, 5);
 
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
-  var mgrs = MGRS(zone, _digraph, _easting, _northing);
+  var mgrs = MGRSCoordinate(zone, _digraph, _easting, _northing);
 
   return mgrs;
 }

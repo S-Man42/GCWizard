@@ -71,11 +71,11 @@ Geohashing? parseGeohashing(String input) {
   if (regExp.hasMatch(input)) {
     var match = regExp.firstMatch(input);
     var decString = input.substring(0, match!.start);
-    var dec = DEC.parse(decString, wholeString: false); // test before date
+    var dec = DECCoordinate.parse(decString, wholeString: false); // test before date
 
     if (dec == null) {
       decString = input.substring(match.end);
-      dec = DEC.parse(decString, wholeString: false); // test after date
+      dec = DECCoordinate.parse(decString, wholeString: false); // test after date
     }
     if (dec != null) {
       return Geohashing(DateTime(int.parse(match.group(1)!), int.parse(match.group(2)!), int.parse(match.group(3)!)),

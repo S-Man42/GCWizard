@@ -4,23 +4,23 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
-class ReverseWherigoWaldmeister extends BaseCoordinate {
+class ReverseWherigoWaldmeisterCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);
   int a, b, c;
 
-  ReverseWherigoWaldmeister(this.a, this.b, this.c);
+  ReverseWherigoWaldmeisterCoordinate(this.a, this.b, this.c);
 
   @override
   LatLng toLatLng() {
     return _reverseWIGWaldmeisterToLatLon(this);
   }
 
-  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+  static ReverseWherigoWaldmeisterCoordinate fromLatLon(LatLng coord) {
     return _latLonToReverseWIGWaldmeister(coord);
   }
 
-  static ReverseWherigoWaldmeister? parse(String input) {
+  static ReverseWherigoWaldmeisterCoordinate? parse(String input) {
     return _parseReverseWherigoWaldmeister(input);
   }
 
@@ -28,7 +28,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
     return x.toString().padLeft(6, '0');
   }
 
-  static ReverseWherigoWaldmeister get emptyCoordinate => ReverseWherigoWaldmeister(0, 0, 0);
+  static ReverseWherigoWaldmeisterCoordinate get defaultCoordinate => ReverseWherigoWaldmeisterCoordinate(0, 0, 0);
 
   @override
   String toString([int? precision]) {
@@ -36,7 +36,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   }
 }
 
-LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
+LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldmeister) {
   var a = waldmeister.a;
   var b = waldmeister.b;
   var c = waldmeister.c;
@@ -97,10 +97,10 @@ LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
             (b % 100000 - b % 10000) / 10000 * 1.0E-5));
   }
 
-  return decToLatLon(DEC(_lat, _lon));
+  return decToLatLon(DECCoordinate(_lat, _lon));
 }
 
-ReverseWherigoWaldmeister _latLonToReverseWIGWaldmeister(LatLng coord) {
+ReverseWherigoWaldmeisterCoordinate _latLonToReverseWIGWaldmeister(LatLng coord) {
   var _lat = coord.latitude;
   var _lon = coord.longitude;
 
@@ -239,10 +239,10 @@ ReverseWherigoWaldmeister _latLonToReverseWIGWaldmeister(LatLng coord) {
         ((_lon % 10000000 - _lon % 1000000) ~/ 1000000).toString();
   }
 
-  return ReverseWherigoWaldmeister(int.parse(a), int.parse(b), int.parse(c));
+  return ReverseWherigoWaldmeisterCoordinate(int.parse(a), int.parse(b), int.parse(c));
 }
 
-ReverseWherigoWaldmeister? _parseReverseWherigoWaldmeister(String input) {
+ReverseWherigoWaldmeisterCoordinate? _parseReverseWherigoWaldmeister(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)(\s*,\s*|\s+)(\d+)(\s*,\s*|\s+)(\d+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.isEmpty) return null;
@@ -259,5 +259,5 @@ ReverseWherigoWaldmeister? _parseReverseWherigoWaldmeister(String input) {
 
   if (a == null || b == null || c == null) return null;
 
-  return ReverseWherigoWaldmeister(a, b, c);
+  return ReverseWherigoWaldmeisterCoordinate(a, b, c);
 }

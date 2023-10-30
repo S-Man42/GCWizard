@@ -20,7 +20,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = SwissGrid.parse(elem['text'] as String)?.toLatLng(ells: ells);
+        var _actual = SwissGridCoordinate.parse(elem['text'] as String)?.toLatLng(ells: ells);
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {

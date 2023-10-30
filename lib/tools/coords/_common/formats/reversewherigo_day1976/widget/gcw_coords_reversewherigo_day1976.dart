@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
-  final void Function(ReverseWherigoDay1976?) onChanged;
-  final ReverseWherigoDay1976 coordinates;
+  final void Function(ReverseWherigoDay1976Coordinate?) onChanged;
+  final ReverseWherigoDay1976Coordinate coordinates;
   final bool initialize;
 
   const _GCWCoordsReverseWherigoDay1976(
@@ -76,6 +76,6 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(ReverseWherigoDay1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
+    widget.onChanged(ReverseWherigoDay1976Coordinate.parse(_currentA.toString() + '\n' + _currentB.toString()));
   }
 }

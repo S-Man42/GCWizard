@@ -4,27 +4,27 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong2/latlong.dart';
 
-class Maidenhead extends BaseCoordinate {
+class MaidenheadCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);
   String text;
 
-  Maidenhead(this.text);
+  MaidenheadCoordinate(this.text);
 
   @override
   LatLng? toLatLng() {
     return _maidenheadToLatLon(this);
   }
 
-  static Maidenhead fromLatLon(LatLng coord) {
+  static MaidenheadCoordinate fromLatLon(LatLng coord) {
     return _latLonToMaidenhead(coord);
   }
 
-  static Maidenhead? parse(String input) {
+  static MaidenheadCoordinate? parse(String input) {
     return _parseMaidenhead(input);
   }
 
-  static Maidenhead get emptyCoordinate => Maidenhead('');
+  static MaidenheadCoordinate get defaultCoordinate => MaidenheadCoordinate('');
 
   @override
   String toString([int? precision]) {
@@ -32,7 +32,7 @@ class Maidenhead extends BaseCoordinate {
   }
 }
 
-LatLng? _maidenheadToLatLon(Maidenhead maidenhead) {
+LatLng? _maidenheadToLatLon(MaidenheadCoordinate maidenhead) {
   var _maidenhead = maidenhead.text;
   if (_maidenhead.isEmpty) return null;
   _maidenhead = _maidenhead.toUpperCase();
@@ -76,15 +76,15 @@ LatLng? _maidenheadToLatLon(Maidenhead maidenhead) {
   return LatLng(lat, lon);
 }
 
-Maidenhead? _parseMaidenhead(String input) {
+MaidenheadCoordinate? _parseMaidenhead(String input) {
   input = input.trim();
   if (input.isEmpty) return null;
 
-  var _maidenhead = Maidenhead(input);
+  var _maidenhead = MaidenheadCoordinate(input);
   return _maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;
 }
 
-Maidenhead _latLonToMaidenhead(LatLng coord) {
+MaidenheadCoordinate _latLonToMaidenhead(LatLng coord) {
   var lon = coord.longitude + 180.0;
   var lat = coord.latitude + 90.0;
 
@@ -144,5 +144,5 @@ Maidenhead _latLonToMaidenhead(LatLng coord) {
     ++i;
   }
 
-  return Maidenhead(out);
+  return MaidenheadCoordinate(out);
 }

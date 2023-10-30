@@ -17,7 +17,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = SlippyMap.parse(elem['text'] as String)?.toLatLng();
+        var _actual = SlippyMapCoordinate.parse(elem['text'] as String)?.toLatLng();
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {

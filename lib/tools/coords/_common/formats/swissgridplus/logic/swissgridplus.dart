@@ -5,11 +5,11 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
-class SwissGridPlus extends SwissGrid {
+class SwissGridPlusCoordinate extends SwissGridCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS);
 
-  SwissGridPlus(double easting, double northing) : super(easting, northing);
+  SwissGridPlusCoordinate(double easting, double northing) : super(easting, northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -17,30 +17,30 @@ class SwissGridPlus extends SwissGrid {
     return _swissGridPlusToLatLon(this, ells);
   }
 
-  static SwissGridPlus fromLatLon(LatLng coord, Ellipsoid ells) {
+  static SwissGridPlusCoordinate fromLatLon(LatLng coord, Ellipsoid ells) {
     return _latLonToSwissGridPlus(coord, ells);
   }
 
-  static SwissGridPlus? parse(String input) {
+  static SwissGridPlusCoordinate? parse(String input) {
     return _parseSwissGridPlus(input);
   }
 
-  static SwissGridPlus get emptyCoordinate => SwissGridPlus(0, 0);
+  static SwissGridPlusCoordinate get defaultCoordinate => SwissGridPlusCoordinate(0, 0);
 }
 
-SwissGridPlus _latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = SwissGrid.fromLatLon(coord, ells);
+SwissGridPlusCoordinate _latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
+  SwissGridCoordinate swissGrid = SwissGridCoordinate.fromLatLon(coord, ells);
 
-  return SwissGridPlus(swissGrid.easting + 2000000, swissGrid.northing + 1000000);
+  return SwissGridPlusCoordinate(swissGrid.easting + 2000000, swissGrid.northing + 1000000);
 }
 
-LatLng _swissGridPlusToLatLon(SwissGridPlus coord, Ellipsoid ells) {
-  var swissGripPlus = SwissGrid(coord.easting - 2000000, coord.northing - 1000000);
+LatLng _swissGridPlusToLatLon(SwissGridPlusCoordinate coord, Ellipsoid ells) {
+  var swissGripPlus = SwissGridCoordinate(coord.easting - 2000000, coord.northing - 1000000);
 
   return swissGridToLatLon(swissGripPlus, ells);
 }
 
-SwissGridPlus? _parseSwissGridPlus(String input) {
-  var swissGrid = SwissGrid.parse(input);
-  return swissGrid == null ? null : SwissGridPlus(swissGrid.easting, swissGrid.northing);
+SwissGridPlusCoordinate? _parseSwissGridPlus(String input) {
+  var swissGrid = SwissGridCoordinate.parse(input);
+  return swissGrid == null ? null : SwissGridPlusCoordinate(swissGrid.easting, swissGrid.northing);
 }

@@ -4,27 +4,27 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
-class ReverseWherigoDay1976 extends BaseCoordinate {
+class ReverseWherigoDay1976Coordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_DAY1976);
   String s, t;
 
-  ReverseWherigoDay1976(this.s, this.t);
+  ReverseWherigoDay1976Coordinate(this.s, this.t);
 
   @override
   LatLng toLatLng() {
     return _reverseWIGDay1976ToLatLon(this);
   }
 
-  static ReverseWherigoDay1976 fromLatLon(LatLng coord) {
+  static ReverseWherigoDay1976Coordinate fromLatLon(LatLng coord) {
     return _latLonToReverseWIGDay1976(coord);
   }
 
-  static ReverseWherigoDay1976? parse(String input) {
+  static ReverseWherigoDay1976Coordinate? parse(String input) {
     return _parseReverseWherigoDay1976(input);
   }
 
-  static ReverseWherigoDay1976 get emptyCoordinate => ReverseWherigoDay1976('00000', '00000');
+  static ReverseWherigoDay1976Coordinate get defaultCoordinate => ReverseWherigoDay1976Coordinate('00000', '00000');
 
   @override
   String toString([int? precision]) {
@@ -192,7 +192,7 @@ int _letterToValue(String letter) {
   }
 }
 
-LatLng _reverseWIGDay1976ToLatLon(ReverseWherigoDay1976 day1976) {
+LatLng _reverseWIGDay1976ToLatLon(ReverseWherigoDay1976Coordinate day1976) {
   // function _YvIY7()
 
   String a = day1976.s[0];
@@ -228,10 +228,10 @@ LatLng _reverseWIGDay1976ToLatLon(ReverseWherigoDay1976 day1976) {
   lat = lat - 90;
   long = long - 180;
 
-  return decToLatLon(DEC(lat, long));
+  return decToLatLon(DECCoordinate(lat, long));
 }
 
-ReverseWherigoDay1976 _latLonToReverseWIGDay1976(LatLng coord) {
+ReverseWherigoDay1976Coordinate _latLonToReverseWIGDay1976(LatLng coord) {
   // function _6u3VL()
 
   int lat = ((coord.latitude + 90) * 100000).floor();
@@ -268,10 +268,10 @@ ReverseWherigoDay1976 _latLonToReverseWIGDay1976(LatLng coord) {
   String _5mF = _valueToLetter(_QWQ);
   String _tFCg = _valueToLetter(_ErSZ);
 
-  return ReverseWherigoDay1976(a + b + c + d + e, _vZmW2 + _2kSJl + _5mF + _tFCg + _vRGT);
+  return ReverseWherigoDay1976Coordinate(a + b + c + d + e, _vZmW2 + _2kSJl + _5mF + _tFCg + _vRGT);
 }
 
-ReverseWherigoDay1976? _parseReverseWherigoDay1976(String input) {
+ReverseWherigoDay1976Coordinate? _parseReverseWherigoDay1976(String input) {
   input = input.toLowerCase();
   RegExp regExp = RegExp(r'^\s*([\da-z]+)(\s*,\s*|\s+)([\da-z]+)\s*$');
   var matches = regExp.allMatches(input);
@@ -284,5 +284,5 @@ ReverseWherigoDay1976? _parseReverseWherigoDay1976(String input) {
 
   if (a == null || b == null || a.length < 5 || b.length < 5) return null;
 
-  return ReverseWherigoDay1976(a, b);
+  return ReverseWherigoDay1976Coordinate(a, b);
 }

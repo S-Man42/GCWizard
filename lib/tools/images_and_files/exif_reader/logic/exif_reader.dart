@@ -82,7 +82,7 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       if (_lat == 0 && _lng == 0) return null;
 
       // DEC should be the pivot format from EXIF
-      return decToLatLon(DEC(_lat, _lng));
+      return decToLatLon(DECCoordinate(_lat, _lng));
     }
   } catch (error) {}
 

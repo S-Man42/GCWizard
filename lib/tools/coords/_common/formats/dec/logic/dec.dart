@@ -10,11 +10,11 @@ import 'package:latlong2/latlong.dart';
 const LETTER = '[A-ZÄÖÜ]';
 var regexEnd = '';
 
-class DEC extends BaseCoordinate {
+class DECCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DEC);
 
-  DEC([double? latitude, double? longitude]) : super(latitude, longitude) {
+  DECCoordinate([double? latitude, double? longitude]) : super(latitude, longitude) {
     this.latitude = latitude ?? defaultCoordinate.latitude;
     this.longitude = longitude ?? defaultCoordinate.longitude;
   }
@@ -24,15 +24,15 @@ class DEC extends BaseCoordinate {
     return decToLatLon(this);
   }
 
-  static DEC fromLatLon(LatLng coord) {
+  static DECCoordinate fromLatLon(LatLng coord) {
     return _latLonToDEC(coord);
   }
 
-  static DEC? parse(String input, {bool wholeString = false}) {
+  static DECCoordinate? parse(String input, {bool wholeString = false}) {
     return _parseDEC(input, wholeString: wholeString);
   }
 
-  static DEC get emptyCoordinate => DEC(0.0, 0.0);
+  static DECCoordinate get defaultCoordinate => DECCoordinate(0.0, 0.0);
 
   @override
   String toString([int? precision]) {
@@ -43,12 +43,12 @@ class DEC extends BaseCoordinate {
   }
 }
 
-LatLng decToLatLon(DEC dec) {
+LatLng decToLatLon(DECCoordinate dec) {
   return normalizeLatLon(dec.latitude, dec.longitude);
 }
 
-DEC _latLonToDEC(LatLng coord) {
-  return DEC(coord.latitude, coord.longitude);
+DECCoordinate _latLonToDEC(LatLng coord) {
+  return DECCoordinate(coord.latitude, coord.longitude);
 }
 
 int latLngPartSign(String? text) {
@@ -72,7 +72,7 @@ String? prepareInput(String text, {bool wholeString = false}) {
   return text;
 }
 
-DEC? _parseDEC(String input, {bool wholeString = false}) {
+DECCoordinate? _parseDEC(String input, {bool wholeString = false}) {
   var _input = prepareInput(input, wholeString: wholeString);
   if (_input == null) return null;
 
@@ -118,13 +118,13 @@ DEC? _parseDEC(String input, {bool wholeString = false}) {
 
     var lonDegrees = lonSign * _lonDegrees;
 
-    return DEC(latDegrees, lonDegrees);
+    return DECCoordinate(latDegrees, lonDegrees);
   }
 
   return null;
 }
 
-DEC? _parseDECTrailingSigns(String text) {
+DECCoordinate? _parseDECTrailingSigns(String text) {
   RegExp regex = RegExp(_PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
@@ -163,7 +163,7 @@ DEC? _parseDECTrailingSigns(String text) {
 
     var lonDegrees = lonSign * _lonDegrees;
 
-    return DEC(latDegrees, lonDegrees);
+    return DECCoordinate(latDegrees, lonDegrees);
   }
 
   return null;

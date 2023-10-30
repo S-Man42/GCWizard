@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMGRS extends StatefulWidget {
-  final void Function(MGRS) onChanged;
-  final MGRS coordinates;
+  final void Function(MGRSCoordinate) onChanged;
+  final MGRSCoordinate coordinates;
   final bool initialize;
 
   const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
@@ -170,7 +170,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
 
     var _lonZone = _currentLonZone.value;
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
-    var mgrs = MGRS(zone, _currentDigraphEasting + _currentDigraphNorthing, easting, northing);
+    var mgrs = MGRSCoordinate(zone, _currentDigraphEasting + _currentDigraphNorthing, easting, northing);
 
     widget.onChanged(mgrs);
   }

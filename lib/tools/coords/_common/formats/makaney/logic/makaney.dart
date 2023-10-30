@@ -7,27 +7,27 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/external_libs/net.makaney/makaney.dart';
 
-class Makaney extends BaseCoordinate {
+class MakaneyCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAKANEY);
   String text;
 
-  Makaney(this.text);
+  MakaneyCoordinate(this.text);
 
   @override
   LatLng? toLatLng() {
     return __makaneyToLatLon(this);
   }
 
-  static Makaney fromLatLon(LatLng coord) {
+  static MakaneyCoordinate fromLatLon(LatLng coord) {
     return __latLonToMakaney(coord);
   }
 
-  static Makaney? parse(String input) {
+  static MakaneyCoordinate? parse(String input) {
     return _parseMakaney(input);
   }
 
-  static Makaney get emptyCoordinate => Makaney('');
+  static MakaneyCoordinate get defaultCoordinate => MakaneyCoordinate('');
 
   @override
   String toString([int? precision]) {
@@ -35,7 +35,7 @@ class Makaney extends BaseCoordinate {
   }
 }
 
-LatLng? __makaneyToLatLon(Makaney makaney) {
+LatLng? __makaneyToLatLon(MakaneyCoordinate makaney) {
   if (makaney.text.isEmpty) return null;
 
   var _text = makaney.text.toLowerCase();
@@ -55,11 +55,11 @@ LatLng? __makaneyToLatLon(Makaney makaney) {
   }
 }
 
-Makaney __latLonToMakaney(LatLng latLon) {
-  return Makaney(_latLonToMakaney(latLon.latitude, latLon.longitude).toUpperCase());
+MakaneyCoordinate __latLonToMakaney(LatLng latLon) {
+  return MakaneyCoordinate(_latLonToMakaney(latLon.latitude, latLon.longitude).toUpperCase());
 }
 
-Makaney? _parseMakaney(String input) {
-  var makaney = Makaney(input);
+MakaneyCoordinate? _parseMakaney(String input) {
+  var makaney = MakaneyCoordinate(input);
   return __makaneyToLatLon(makaney) == null ? null : makaney;
 }

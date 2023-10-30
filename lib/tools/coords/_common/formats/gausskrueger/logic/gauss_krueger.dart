@@ -11,7 +11,7 @@ import 'package:latlong2/latlong.dart';
 
 const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 
-class GaussKrueger extends BaseCoordinateWithSubtypes {
+class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
   @override
   CoordinateFormat get format => _format;
@@ -20,7 +20,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
 
   static const String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
 
-  GaussKrueger(this.easting, this.northing,CoordinateFormatKey subtypeKey) {
+  GaussKruegerCoordinate(this.easting, this.northing,CoordinateFormatKey subtypeKey) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -34,7 +34,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
     return _gaussKruegerToLatLon(this, ells);
   }
 
-  static GaussKrueger fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
+  static GaussKruegerCoordinate fromLatLon(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -42,7 +42,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
     return _latLonToGaussKrueger(coord, subtype, ells);
   }
 
-  static GaussKrueger? parse(String input, {CoordinateFormatKey subtype = _defaultGaussKruegerType}) {
+  static GaussKruegerCoordinate? parse(String input, {CoordinateFormatKey subtype = _defaultGaussKruegerType}) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -50,7 +50,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
     return _parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
 
-  static GaussKrueger get emptyCoordinate => GaussKrueger(0, 0, _defaultGaussKruegerType);
+  static GaussKruegerCoordinate get defaultCoordinate => GaussKruegerCoordinate(0, 0, _defaultGaussKruegerType);
   @override
   CoordinateFormatKey get defaultSubtype => _defaultGaussKruegerType;
 
@@ -60,7 +60,7 @@ class GaussKrueger extends BaseCoordinateWithSubtypes {
   }
 }
 
-GaussKrueger _latLonToGaussKrueger(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
+GaussKruegerCoordinate _latLonToGaussKrueger(LatLng coord, CoordinateFormatKey subtype, Ellipsoid ells) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtype)) {
     subtype = _defaultGaussKruegerType;
   }
@@ -133,10 +133,10 @@ GaussKrueger _latLonToGaussKrueger(LatLng coord, CoordinateFormatKey subtype, El
 
   double R = p2 + q2 + 500000 + L0 / 3.0 * 1000000;
 
-  return GaussKrueger(R, H, subtype);
+  return GaussKruegerCoordinate(R, H, subtype);
 }
 
-LatLng _gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
+LatLng _gaussKruegerToLatLon(GaussKruegerCoordinate gaussKrueger, Ellipsoid ells) {
   Ellipsoid ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841)!;
 
   var R = gaussKrueger.easting;
@@ -207,7 +207,7 @@ LatLng _gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
   return coord;
 }
 
-GaussKrueger? _parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerCode = _defaultGaussKruegerType}) {
+GaussKruegerCoordinate? _parseGaussKrueger(String input, {CoordinateFormatKey gaussKruegerCode = _defaultGaussKruegerType}) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';
@@ -239,5 +239,5 @@ GaussKrueger? _parseGaussKrueger(String input, {CoordinateFormatKey gaussKrueger
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  return GaussKrueger(_easting, _northing, gaussKruegerCode);
+  return GaussKruegerCoordinate(_easting, _northing, gaussKruegerCode);
 }

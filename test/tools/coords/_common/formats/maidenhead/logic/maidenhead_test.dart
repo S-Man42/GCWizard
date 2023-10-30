@@ -15,7 +15,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
-        var _actual = Maidenhead.fromLatLon(elem['coord'] as LatLng).toString();
+        var _actual = MaidenheadCoordinate.fromLatLon(elem['coord'] as LatLng).toString();
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -37,7 +37,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('coord: ${elem['coord']}', () {
-        var _actual = Maidenhead.parse(elem['coord'] as String)?.toLatLng();
+        var _actual = MaidenheadCoordinate.parse(elem['coord'] as String)?.toLatLng();
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {

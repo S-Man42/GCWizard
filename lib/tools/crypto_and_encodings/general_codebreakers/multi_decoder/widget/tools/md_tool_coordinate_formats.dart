@@ -54,73 +54,73 @@ class MultiDecoderToolCoordinateFormats extends AbstractMultiDecoderTool {
                 var coordinateFormatKey = _getCoordinateFormatKey(options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
                 switch (coordinateFormatKey) {
                   case CoordinateFormatKey.DEC:
-                    coords = DEC.parse(input, wholeString: true);
+                    coords = DECCoordinate.parse(input, wholeString: true);
                     break;
                   case CoordinateFormatKey.DMM:
-                    coords = DMM.parse(input, wholeString: true);
+                    coords = DMMCoordinate.parse(input, wholeString: true);
                     break;
                   case CoordinateFormatKey.DMS:
-                    coords = DMS.parse(input, wholeString: true);
+                    coords = DMSCoordinate.parse(input, wholeString: true);
                     break;
                   case CoordinateFormatKey.UTM:
-                    coords = UTMREF.parse(input);
+                    coords = UTMREFCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.MGRS:
-                    coords = MGRS.parse(input);
+                    coords = MGRSCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.XYZ:
-                    coords = XYZ.parse(input);
+                    coords = XYZCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.SWISS_GRID:
-                    coords = SwissGrid.parse(input);
+                    coords = SwissGridCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.SWISS_GRID_PLUS:
-                    coords = SwissGridPlus.parse(input);
+                    coords = SwissGridPlusCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.GAUSS_KRUEGER:
-                    coords = GaussKrueger.parse(input);
+                    coords = GaussKruegerCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.LAMBERT:
-                    coords = Lambert.parse(input);
+                    coords = LambertCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.DUTCH_GRID:
-                    coords = DutchGrid.parse(input);
+                    coords = DutchGridCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.MAIDENHEAD:
-                    coords = Maidenhead.parse(input);
+                    coords = MaidenheadCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.MERCATOR:
-                    coords = Mercator.parse(input);
+                    coords = MercatorCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.NATURAL_AREA_CODE:
-                    coords = NaturalAreaCode.parse(input);
+                    coords = NaturalAreaCodeCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.GEOHASH:
-                    coords = Geohash.parse(input);
+                    coords = GeohashCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.GEOHEX:
-                    coords = GeoHex.parse(input);
+                    coords = GeoHexCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.GEO3X3:
-                    coords = Geo3x3.parse(input);
+                    coords = Geo3x3Coordinate.parse(input);
                     break;
                   case CoordinateFormatKey.OPEN_LOCATION_CODE:
-                    coords = OpenLocationCode.parse(input);
+                    coords = OpenLocationCodeCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.QUADTREE:
-                    coords = Quadtree.parse(input);
+                    coords = QuadtreeCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
-                    coords = ReverseWherigoWaldmeister.parse(input);
+                    coords = ReverseWherigoWaldmeisterCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.REVERSE_WIG_DAY1976:
-                    coords = ReverseWherigoDay1976.parse(input);
+                    coords = ReverseWherigoDay1976Coordinate.parse(input);
                     break;
                   case CoordinateFormatKey.SLIPPY_MAP:
-                    coords = SlippyMap.parse(input);
+                    coords = SlippyMapCoordinate.parse(input);
                     break;
                   case CoordinateFormatKey.MAKANEY:
-                    coords = Makaney.parse(input);
+                    coords = MakaneyCoordinate.parse(input);
                     break;
                   default:
                     coords = null;

@@ -14,14 +14,14 @@ const double _drad = pi / 180.0;
 const String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
-class UTMREF extends BaseCoordinate {
+class UTMREFCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.UTM);
   UTMZone zone;
   double easting;
   double northing;
 
-  UTMREF(this.zone, this.easting, this.northing);
+  UTMREFCoordinate(this.zone, this.easting, this.northing);
 
   HemisphereLatitude get hemisphere {
     return 'NPQRSTUVWXYZ'.contains(zone.latZone) ? HemisphereLatitude.North : HemisphereLatitude.South;
@@ -33,15 +33,15 @@ class UTMREF extends BaseCoordinate {
     return UTMREFtoLatLon(this, ells);
   }
 
-  static UTMREF fromLatLon(LatLng coord, Ellipsoid ells) {
+  static UTMREFCoordinate fromLatLon(LatLng coord, Ellipsoid ells) {
     return _latLonToUTM(coord, ells);
   }
 
-  static UTMREF? parse(String input) {
+  static UTMREFCoordinate? parse(String input) {
     return _parseUTM(input);
   }
 
-  static UTMREF get emptyCoordinate => UTMREF(UTMZone(0, 0, 'U'), 0, 0);
+  static UTMREFCoordinate get defaultCoordinate => UTMREFCoordinate(UTMZone(0, 0, 'U'), 0, 0);
 
   @override
   String toString([int? precision]) {
@@ -57,7 +57,7 @@ class UTMZone {
   UTMZone(this.lonZoneRegular, this.lonZone, this.latZone);
 }
 
-UTMREF _latLonToUTM(LatLng coord, Ellipsoid ells) {
+UTMREFCoordinate _latLonToUTM(LatLng coord, Ellipsoid ells) {
   double a = ells.a;
   double b = ells.b;
   double e = ells.e;
@@ -103,10 +103,10 @@ UTMREF _latLonToUTM(LatLng coord, Ellipsoid ells) {
     northing = 10000000.0 + northing;
   }
 
-  return UTMREF(utmZone, easting, northing);
+  return UTMREFCoordinate(utmZone, easting, northing);
 }
 
-LatLng UTMREFtoLatLon(UTMREF coord, Ellipsoid ells) {
+LatLng UTMREFtoLatLon(UTMREFCoordinate coord, Ellipsoid ells) {
   double a = ells.a;
   double b = ells.b;
   double e = ells.e;
@@ -196,7 +196,7 @@ UTMZone _getZone(LatLng coord) {
   return UTMZone(lonZoneRegular, lonZone, latZone);
 }
 
-UTMREF? _parseUTM(String input) {
+UTMREFCoordinate? _parseUTM(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([\d\.]+)\s+([\d\.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _lonZoneString = '';
@@ -272,7 +272,7 @@ UTMREF? _parseUTM(String input) {
   if (_northing == null) return null;
 
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
-  var utm = UTMREF(zone, _easting, _northing);
+  var utm = UTMREFCoordinate(zone, _easting, _northing);
 
   return utm;
 }

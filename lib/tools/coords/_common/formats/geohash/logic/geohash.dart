@@ -41,27 +41,27 @@ const List<Map<String, String>> _alphabet = [
 
 const _binaryLength = 5;
 
-class Geohash extends BaseCoordinate {
+class GeohashCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHASH);
   String text;
 
-  Geohash(this.text);
+  GeohashCoordinate(this.text);
 
   @override
   LatLng? toLatLng() {
     return _geohashToLatLon(this);
   }
 
-  static Geohash fromLatLon(LatLng coord, [int geohashLength = 14]) {
+  static GeohashCoordinate fromLatLon(LatLng coord, [int geohashLength = 14]) {
     return _latLonToGeohash(coord, geohashLength);
   }
 
-  static Geohash? parse(String input) {
+  static GeohashCoordinate? parse(String input) {
     return _parseGeohash(input);
   }
 
-  static Geohash get emptyCoordinate => Geohash('');
+  static GeohashCoordinate get defaultCoordinate => GeohashCoordinate('');
 
   @override
   String toString([int? precision]) {
@@ -115,7 +115,7 @@ String _generateBinaryFromCoord(double coord, double lowerBound, double upperBou
   return binaryOut;
 }
 
-Geohash _latLonToGeohash(LatLng coords, int geohashLength) {
+GeohashCoordinate _latLonToGeohash(LatLng coords, int geohashLength) {
   int binaryCoordLength = (geohashLength / 2).floor() * _binaryLength;
 
   String latBinaryOut = _generateBinaryFromCoord(coords.latitude, -90.0, 90.0, binaryCoordLength);
@@ -128,13 +128,13 @@ Geohash _latLonToGeohash(LatLng coords, int geohashLength) {
     i++;
   }
 
-  return Geohash(_splitIntoBinaryChunks(binary)
+  return GeohashCoordinate(_splitIntoBinaryChunks(binary)
       .map((chunk) => _getCharacterByBinary(chunk))
       .where((element) => element != null)
       .join());
 }
 
-LatLng? _geohashToLatLon(Geohash geohash) {
+LatLng? _geohashToLatLon(GeohashCoordinate geohash) {
   try {
     var _geohash = geohash.text.toLowerCase();
     var binary = _geohash
@@ -164,11 +164,11 @@ LatLng? _geohashToLatLon(Geohash geohash) {
   return null;
 }
 
-Geohash? _parseGeohash(String input) {
+GeohashCoordinate? _parseGeohash(String input) {
   input = input.trim();
   if (input == '') return null;
 
-  var _geohash = Geohash(input);
+  var _geohash = GeohashCoordinate(input);
   return _geohashToLatLon(_geohash) == null ? null : _geohash;
 }
 

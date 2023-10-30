@@ -9,27 +9,27 @@ import 'package:latlong2/latlong.dart';
 var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;
 
-class Quadtree extends BaseCoordinate {
+class QuadtreeCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.QUADTREE);
   List<int> coords;
 
-  Quadtree(this.coords);
+  QuadtreeCoordinate(this.coords);
 
   @override
   LatLng toLatLng() {
     return _quadtreeToLatLon(this);
   }
 
-  static Quadtree? parse(String input) {
+  static QuadtreeCoordinate? parse(String input) {
     return _parseQuadtree(input);
   }
 
-  static Quadtree fromLatLon(LatLng coord, [int precision = 40]) {
+  static QuadtreeCoordinate fromLatLon(LatLng coord, [int precision = 40]) {
     return _latLonToQuadtree(coord, precision: precision);
   }
 
-  static Quadtree get emptyCoordinate => Quadtree([]);
+  static QuadtreeCoordinate get defaultCoordinate => QuadtreeCoordinate([]);
 
   @override
   String toString([int? precision]) {
@@ -37,7 +37,7 @@ class Quadtree extends BaseCoordinate {
   }
 }
 
-Quadtree _latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
+QuadtreeCoordinate _latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
   var x = (_TILESIZE / 2.0) + coord.longitude * (_TILESIZE / 360.0);
 
   var siny = sin(degreesToRadian(coord.latitude));
@@ -58,10 +58,10 @@ Quadtree _latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRECISION}) {
     tileY = (tileY / 2).floor();
   }
 
-  return Quadtree(out.reversed.toList());
+  return QuadtreeCoordinate(out.reversed.toList());
 }
 
-LatLng _quadtreeToLatLon(Quadtree quadtree) {
+LatLng _quadtreeToLatLon(QuadtreeCoordinate quadtree) {
   var tileX = 0;
   var tileY = 0;
 
@@ -83,10 +83,10 @@ LatLng _quadtreeToLatLon(Quadtree quadtree) {
   return LatLng(lat, lon);
 }
 
-Quadtree? _parseQuadtree(String input) {
+QuadtreeCoordinate? _parseQuadtree(String input) {
   if (input.isEmpty) return null;
 
   if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length) return null;
 
-  return Quadtree(input.split('').map((character) => int.parse(character)).toList());
+  return QuadtreeCoordinate(input.split('').map((character) => int.parse(character)).toList());
 }

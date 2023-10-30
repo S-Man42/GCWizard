@@ -7,13 +7,13 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
-class Mercator extends BaseCoordinate {
+class MercatorCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MERCATOR);
   double easting;
   double northing;
 
-  Mercator(this.easting, this.northing);
+  MercatorCoordinate(this.easting, this.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -21,15 +21,15 @@ class Mercator extends BaseCoordinate {
     return _mercatorToLatLon(this, ells);
   }
 
-  static Mercator fromLatLon(LatLng coord, Ellipsoid ells) {
+  static MercatorCoordinate fromLatLon(LatLng coord, Ellipsoid ells) {
     return _latLonToMercator(coord, ells);
   }
 
-  static Mercator? parse(String input) {
+  static MercatorCoordinate? parse(String input) {
     return _parseMercator(input);
   }
 
-  static Mercator get emptyCoordinate => Mercator(0, 0);
+  static MercatorCoordinate get defaultCoordinate => MercatorCoordinate(0, 0);
 
   @override
   String toString([int? precision]) {
@@ -37,7 +37,7 @@ class Mercator extends BaseCoordinate {
   }
 }
 
-LatLng _mercatorToLatLon(Mercator mercator, Ellipsoid ells) {
+LatLng _mercatorToLatLon(MercatorCoordinate mercator, Ellipsoid ells) {
   var y = mercator.easting;
   var x = mercator.northing;
 
@@ -47,14 +47,14 @@ LatLng _mercatorToLatLon(Mercator mercator, Ellipsoid ells) {
   return LatLng(lat, lon);
 }
 
-Mercator _latLonToMercator(LatLng coord, Ellipsoid ells) {
+MercatorCoordinate _latLonToMercator(LatLng coord, Ellipsoid ells) {
   var x = coord.longitude * (2 * pi * ells.a / 2.0) / 180.0;
   var y = (log(tan((90 + coord.latitude) * pi / 360.0)) / (pi / 180.0)) * (2 * pi * ells.a / 2.0) / 180.0;
 
-  return Mercator(y, x);
+  return MercatorCoordinate(y, x);
 }
 
-Mercator? _parseMercator(String input) {
+MercatorCoordinate? _parseMercator(String input) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
 
@@ -87,5 +87,5 @@ Mercator? _parseMercator(String input) {
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  return Mercator(_easting, _northing);
+  return MercatorCoordinate(_easting, _northing);
 }

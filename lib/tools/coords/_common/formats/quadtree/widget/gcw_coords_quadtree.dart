@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsQuadtree extends StatefulWidget {
-  final void Function(Quadtree?) onChanged;
+  final void Function(QuadtreeCoordinate?) onChanged;
   final BaseCoordinate coordinates;
   final bool initialize;
 
@@ -54,7 +54,7 @@ class _GCWCoordsQuadtreeState extends State<_GCWCoordsQuadtree> {
 
   void _setCurrentValueAndEmitOnChange() {
     try {
-      widget.onChanged(Quadtree.parse(_currentCoord));
+      widget.onChanged(QuadtreeCoordinate.parse(_currentCoord));
     } catch (e) {}
   }
 }

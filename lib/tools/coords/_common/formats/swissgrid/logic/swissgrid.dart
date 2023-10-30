@@ -10,13 +10,13 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 
-class SwissGrid extends BaseCoordinate {
+class SwissGridCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.SWISS_GRID);
   double easting;
   double northing;
 
-  SwissGrid(this.easting, this.northing);
+  SwissGridCoordinate(this.easting, this.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {
@@ -24,15 +24,15 @@ class SwissGrid extends BaseCoordinate {
     return swissGridToLatLon(this, ells);
   }
 
-  static SwissGrid fromLatLon(LatLng coord, Ellipsoid ells) {
+  static SwissGridCoordinate fromLatLon(LatLng coord, Ellipsoid ells) {
     return _latLonToSwissGrid(coord, ells);
   }
 
-  static SwissGrid? parse(String input) {
+  static SwissGridCoordinate? parse(String input) {
     return _parseSwissGrid(input);
   }
 
-  static SwissGrid get emptyCoordinate => SwissGrid(0, 0);
+  static SwissGridCoordinate get defaultCoordinate => SwissGridCoordinate(0, 0);
 
   @override
   String toString([int? precision]) {
@@ -40,7 +40,7 @@ class SwissGrid extends BaseCoordinate {
   }
 }
 
-SwissGrid _latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
+SwissGridCoordinate _latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   int x = -1;
 
   switch (ells.name) {
@@ -101,10 +101,10 @@ SwissGrid _latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   Y += 600000;
   X += 200000;
 
-  return SwissGrid(Y, X);
+  return SwissGridCoordinate(Y, X);
 }
 
-LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
+LatLng swissGridToLatLon(SwissGridCoordinate coord, Ellipsoid ells) {
   var y = coord.easting - 600000;
   var x = coord.northing - 200000;
 
@@ -167,7 +167,7 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-SwissGrid? _parseSwissGrid(String input) {
+SwissGridCoordinate? _parseSwissGrid(String input) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*\,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _eastingString = '';
@@ -199,7 +199,7 @@ SwissGrid? _parseSwissGrid(String input) {
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  return SwissGrid(_easting, _northing);
+  return SwissGridCoordinate(_easting, _northing);
 }
 
 

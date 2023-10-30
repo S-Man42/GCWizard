@@ -100,28 +100,28 @@ class DMSLongitude extends _DMSPart {
   }
 }
 
-class DMS extends BaseCoordinate {
+class DMSCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DMS);
   late final DMSLatitude dmsLatitude;
   late final DMSLongitude dmsLongitude;
 
-  DMS(this.dmsLatitude, this.dmsLongitude);
+  DMSCoordinate(this.dmsLatitude, this.dmsLongitude);
 
   @override
   LatLng toLatLng() {
     return _dmsToLatLon(this);
   }
 
-  static DMS fromLatLon(LatLng coord) {
+  static DMSCoordinate fromLatLon(LatLng coord) {
     return _latLonToDMS(coord);
   }
 
-  static DMS? parse(String input, {bool wholeString = false}) {
+  static DMSCoordinate? parse(String input, {bool wholeString = false}) {
     return parseDMS(input, wholeString: wholeString);
   }
 
-  static DMS get emptyCoordinate => DMS(DMSLatitude(0, 0, 0, 0), DMSLongitude(0, 0, 0, 0));
+  static DMSCoordinate get defaultCoordinate => DMSCoordinate(DMSLatitude(0, 0, 0, 0), DMSLongitude(0, 0, 0, 0));
 
   @override
   String toString([int? precision]) {
@@ -130,32 +130,32 @@ class DMS extends BaseCoordinate {
   }
 }
 
-LatLng _dmsToLatLon(DMS dms) {
+LatLng _dmsToLatLon(DMSCoordinate dms) {
   return decToLatLon(_DMSToDEC(dms));
 }
 
-DEC _DMSToDEC(DMS coord) {
+DECCoordinate _DMSToDEC(DMSCoordinate coord) {
   var lat = _DMSPartToDouble(coord.dmsLatitude);
   var lon = _DMSPartToDouble(coord.dmsLongitude);
 
-  return DEC.fromLatLon(normalizeLatLon(lat, lon));
+  return DECCoordinate.fromLatLon(normalizeLatLon(lat, lon));
 }
 
 double _DMSPartToDouble(_DMSPart dmsPart) {
   return dmsPart.sign * (dmsPart.degrees.abs() + dmsPart.minutes / 60.0 + dmsPart.seconds / 60.0 / 60.0);
 }
 
-DMS _latLonToDMS(LatLng coord) {
-  return _DECToDMS(DEC.fromLatLon(coord));
+DMSCoordinate _latLonToDMS(LatLng coord) {
+  return _DECToDMS(DECCoordinate.fromLatLon(coord));
 }
 
-DMS _DECToDMS(DEC coord) {
+DMSCoordinate _DECToDMS(DECCoordinate coord) {
   var normalizedCoord = normalizeLatLon(coord.latitude, coord.longitude);
 
   var lat = DMSLatitude.from(doubleToDMSPart(normalizedCoord.latitude));
   var lon = DMSLongitude.from(doubleToDMSPart(normalizedCoord.longitude));
 
-  return DMS(lat, lon);
+  return DMSCoordinate(lat, lon);
 }
 
 _DMSPart doubleToDMSPart(double value) {
@@ -170,11 +170,11 @@ _DMSPart doubleToDMSPart(double value) {
   return _DMSPart(_sign, _degrees, _minutes, _seconds);
 }
 
-DMS normalize(DMS coord) {
+DMSCoordinate normalize(DMSCoordinate coord) {
   return _DECToDMS(_DMSToDEC(coord));
 }
 
-DMS? parseDMS(String input, {bool wholeString = false}) {
+DMSCoordinate? parseDMS(String input, {bool wholeString = false}) {
   var _input = prepareInput(input, wholeString: wholeString);
   if (_input == null) return null;
 
@@ -231,13 +231,13 @@ DMS? parseDMS(String input, {bool wholeString = false}) {
 
     var lon = DMSLongitude(lonSign, lonDegrees, lonMinutes, lonSeconds);
 
-    return DMS(lat, lon);
+    return DMSCoordinate(lat, lon);
   }
 
   return null;
 }
 
-DMS? _parseDMSTrailingSigns(String text) {
+DMSCoordinate? _parseDMSTrailingSigns(String text) {
   RegExp regex = RegExp(_PATTERN_DMS_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
@@ -288,7 +288,7 @@ DMS? _parseDMSTrailingSigns(String text) {
 
     var lon = DMSLongitude(lonSign, lonDegrees, lonMinutes, lonSeconds);
 
-    return DMS(lat, lon);
+    return DMSCoordinate(lat, lon);
   }
 
   return null;

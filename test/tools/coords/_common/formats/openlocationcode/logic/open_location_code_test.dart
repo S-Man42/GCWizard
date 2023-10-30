@@ -27,7 +27,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = OpenLocationCode.parse(elem['text'] as String)?.toLatLng();
+        var _actual = OpenLocationCodeCoordinate.parse(elem['text'] as String)?.toLatLng();
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {

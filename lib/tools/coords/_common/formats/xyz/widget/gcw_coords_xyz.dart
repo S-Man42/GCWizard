@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsXYZ extends StatefulWidget {
-  final void Function(XYZ) onChanged;
+  final void Function(XYZCoordinate) onChanged;
   final BaseCoordinate coordinates;
   final bool initialize;
 
@@ -40,9 +40,9 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var xyz = widget.coordinates is XYZ
-          ? widget.coordinates as XYZ
-          : XYZ.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      var xyz = widget.coordinates is XYZCoordinate
+          ? widget.coordinates as XYZCoordinate
+          : XYZCoordinate.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
       _currentX = xyz.x;
       _currentY = xyz.y;
       _currentZ = xyz.z;
@@ -90,6 +90,6 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
+    widget.onChanged(XYZCoordinate(_currentX, _currentY, _currentZ));
   }
 }

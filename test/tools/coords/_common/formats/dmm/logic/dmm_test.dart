@@ -74,7 +74,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}', () {
-        var _actual = DMM.parse(elem['text'] as String)?.toLatLng();
+        var _actual = DMMCoordinate.parse(elem['text'] as String)?.toLatLng();
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {
@@ -138,7 +138,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('text: ${elem['text']}, leftPadMilliMinutes: ${elem['leftPadMilliMinutes']}', () {
-        var _actual = DMM.parse(elem['text'] as String, leftPadMilliMinutes: elem['leftPadMilliMinutes'] as bool)?.toLatLng();
+        var _actual = DMMCoordinate.parse(elem['text'] as String, leftPadMilliMinutes: elem['leftPadMilliMinutes'] as bool)?.toLatLng();
         expect((_actual!.latitude - (((elem['expectedOutput'] as Map<String, Object>)['coordinate']) as LatLng).latitude).abs() < 1e-8, true);
         expect((_actual.longitude - (((elem['expectedOutput'] as Map<String, Object>)['coordinate']) as LatLng).longitude).abs() < 1e-8, true);
       });

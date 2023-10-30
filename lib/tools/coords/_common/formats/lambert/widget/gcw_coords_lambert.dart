@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsLambert extends StatefulWidget {
-  final void Function(Lambert) onChanged;
-  final Lambert coordinates;
+  final void Function(LambertCoordinate) onChanged;
+  final LambertCoordinate coordinates;
   final bool initialize;
 
   const _GCWCoordsLambert({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
@@ -19,7 +19,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  var _currentSubtype = Lambert.emptyCoordinate.defaultSubtype;
+  var _currentSubtype = LambertCoordinate.defaultCoordinate.defaultSubtype;
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    var lambert = Lambert(_currentEasting.value, _currentNorthing.value, _currentSubtype);
+    var lambert = LambertCoordinate(_currentEasting.value, _currentNorthing.value, _currentSubtype);
     widget.onChanged(lambert);
   }
 }

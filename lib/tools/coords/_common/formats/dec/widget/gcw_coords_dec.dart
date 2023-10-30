@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDEC extends StatefulWidget {
-  final void Function(DEC) onChanged;
-  DEC coordinates;
+  final void Function(DECCoordinate) onChanged;
+  DECCoordinate coordinates;
   final bool initialize;
 
   _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
@@ -199,6 +199,6 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
     _degreesD = double.parse('$_degrees.$_currentLonMilliDegrees');
     double _currentLon = _currentLonSign * _degreesD;
 
-    widget.onChanged(DEC(_currentLat, _currentLon));
+    widget.onChanged(DECCoordinate(_currentLat, _currentLon));
   }
 }

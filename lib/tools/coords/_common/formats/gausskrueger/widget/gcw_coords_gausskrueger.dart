@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsGaussKrueger extends StatefulWidget {
-  final void Function(GaussKrueger) onChanged;
-  GaussKrueger coordinates;
+  final void Function(GaussKruegerCoordinate) onChanged;
+  GaussKruegerCoordinate coordinates;
   final bool initialize;
 
   _GCWCoordsGaussKrueger({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
@@ -19,7 +19,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  CoordinateFormatKey _currentSubtype = GaussKrueger.emptyCoordinate.defaultSubtype;
+  CoordinateFormatKey _currentSubtype = GaussKruegerCoordinate.defaultCoordinate.defaultSubtype;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
 
   void _setCurrentValueAndEmitOnChange() {
     var subtype = _currentSubtype;
-    var gaussKrueger = GaussKrueger(_currentEasting.value, _currentNorthing.value, subtype);
+    var gaussKrueger = GaussKruegerCoordinate(_currentEasting.value, _currentNorthing.value, subtype);
 
     widget.onChanged(gaussKrueger);
   }

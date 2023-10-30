@@ -12,7 +12,7 @@ import 'package:latlong2/latlong.dart';
 
 class _ParsedCoordinates {
   BaseCoordinate coordinate;
-  DMM? leftPadCoordinate;
+  DMMCoordinate? leftPadCoordinate;
 
   _ParsedCoordinates(this.coordinate);
 }
@@ -24,7 +24,7 @@ _ParsedCoordinates? _parseCoordText(String text) {
   var out = _ParsedCoordinates(parsedCoord.first);
 
   if (parsedCoord.first.format.type == CoordinateFormatKey.DMM) {
-    out.leftPadCoordinate = DMM.parse(text, leftPadMilliMinutes: true);
+    out.leftPadCoordinate = DMMCoordinate.parse(text, leftPadMilliMinutes: true);
   }
 
   return out;

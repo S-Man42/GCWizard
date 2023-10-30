@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsDMM extends StatefulWidget {
-  final void Function(DMM) onChanged;
-  final DMM coordinates;
+  final void Function(DMMCoordinate) onChanged;
+  final DMMCoordinate coordinates;
   final bool initialize;
 
   const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates, this.initialize = true})
@@ -256,6 +256,6 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
     _minutesD = double.parse('$_minutes.$_currentLonMilliMinutes');
     var _currentLon = DMMLongitude(_currentLonSign, _degrees, _minutesD);
 
-    widget.onChanged(DMM(_currentLat, _currentLon));
+    widget.onChanged(DMMCoordinate(_currentLat, _currentLon));
   }
 }

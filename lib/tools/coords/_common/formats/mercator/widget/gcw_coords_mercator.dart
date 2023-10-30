@@ -1,8 +1,8 @@
 part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 
 class _GCWCoordsMercator extends StatefulWidget {
-  final void Function(Mercator) onChanged;
-  final Mercator coordinates;
+  final void Function(MercatorCoordinate) onChanged;
+  final MercatorCoordinate coordinates;
   final bool initialize;
 
   const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
@@ -67,7 +67,7 @@ class _GCWCoordsMercatorState extends State<_GCWCoordsMercator> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    var mercator = Mercator(_currentEasting.value, _currentNorthing.value);
+    var mercator = MercatorCoordinate(_currentEasting.value, _currentNorthing.value);
 
     widget.onChanged(mercator);
   }

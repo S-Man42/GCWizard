@@ -34,23 +34,23 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
     BaseCoordinate? coord = parseStandardFormats(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
     
-    coord = UTMREF.parse(text);
+    coord = UTMREFCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = MGRS.parse(text);
+    coord = MGRSCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = ReverseWherigoWaldmeister.parse(text);
+    coord = ReverseWherigoWaldmeisterCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = ReverseWherigoDay1976.parse(text);
+    coord = ReverseWherigoDay1976Coordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = XYZ.parse(text);
+    coord = XYZCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = SwissGrid.parse(text);
-    var swissGripPlus = SwissGridPlus.parse(text);
+    coord = SwissGridCoordinate.parse(text);
+    var swissGripPlus = SwissGridPlusCoordinate.parse(text);
     if (swissGripPlus != null &&
         (swissGripPlus.easting.toInt().toString().length == 7 ||
             swissGripPlus.northing.toInt().toString().length == 7)) {
@@ -60,43 +60,43 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
       if (coord != null) coords.add(coord);
     }
 
-    coord = GaussKrueger.parse(text);
+    coord = GaussKruegerCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Lambert.parse(text);
+    coord = LambertCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = DutchGrid.parse(text);
+    coord = DutchGridCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Maidenhead.parse(text);
+    coord = MaidenheadCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Mercator.parse(text);
+    coord = MercatorCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = NaturalAreaCode.parse(text);
+    coord = NaturalAreaCodeCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Geohash.parse(text);
+    coord = GeohashCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = GeoHex.parse(text);
+    coord = GeoHexCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Geo3x3.parse(text);
+    coord = Geo3x3Coordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = OpenLocationCode.parse(text);
+    coord = OpenLocationCodeCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Makaney.parse(text);
+    coord = MakaneyCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Quadtree.parse(text);
+    coord = QuadtreeCoordinate.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = SlippyMap.parse(text);
+    coord = SlippyMapCoordinate.parse(text);
     if (coord != null) coords.add(coord);
   } catch (e) {}
 
@@ -106,14 +106,14 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 BaseCoordinate? parseStandardFormats(String text, {bool wholeString = false}) {
-  LatLng? coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return DMS.fromLatLon(coord);
+  LatLng? coord = DMSCoordinate.parse(text, wholeString: wholeString)?.toLatLng();
+  if (coord != null) return DMSCoordinate.fromLatLon(coord);
 
-  coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return DMM.fromLatLon(coord);
+  coord = DMMCoordinate.parse(text, wholeString: wholeString)?.toLatLng();
+  if (coord != null) return DMMCoordinate.fromLatLon(coord);
 
-  coord = DEC.parse(text, wholeString: wholeString)?.toLatLng();
-  if (coord != null) return DEC.fromLatLon(coord);
+  coord = DECCoordinate.parse(text, wholeString: wholeString)?.toLatLng();
+  if (coord != null) return DECCoordinate.fromLatLon(coord);
 
   return null;
 }

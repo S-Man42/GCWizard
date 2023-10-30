@@ -7,28 +7,28 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/external_libs/djvanderlaan.rijksdriehoek/rijksdriehoek_js.dart';
 
-class DutchGrid extends BaseCoordinate {
+class DutchGridCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);
   double x;
   double y;
 
-  DutchGrid(this.x, this.y);
+  DutchGridCoordinate(this.x, this.y);
 
   @override
   LatLng toLatLng() {
     return _dutchGridToLatLon(this);
   }
 
-  static DutchGrid fromLatLon(LatLng coord) {
+  static DutchGridCoordinate fromLatLon(LatLng coord) {
     return latLonToDutchGrid(coord);
   }
 
-  static DutchGrid? parse(String input) {
+  static DutchGridCoordinate? parse(String input) {
     return parseDutchGrid(input);
   }
 
-  static DutchGrid get emptyCoordinate => DutchGrid(0, 0);
+  static DutchGridCoordinate get defaultCoordinate => DutchGridCoordinate(0, 0);
 
   @override
   String toString([int? precision]) {
@@ -36,17 +36,17 @@ class DutchGrid extends BaseCoordinate {
   }
 }
 
-DutchGrid latLonToDutchGrid(LatLng coord) {
+DutchGridCoordinate latLonToDutchGrid(LatLng coord) {
   var dutchGrid = _rijksdriehoek(coord.longitude, coord.latitude);
-  return DutchGrid(dutchGrid[0], dutchGrid[1]);
+  return DutchGridCoordinate(dutchGrid[0], dutchGrid[1]);
 }
 
-LatLng _dutchGridToLatLon(DutchGrid dutchGrid) {
+LatLng _dutchGridToLatLon(DutchGridCoordinate dutchGrid) {
   var latLon = _rijksdriehoekInverse(dutchGrid.x, dutchGrid.y);
   return LatLng(latLon[1], latLon[0]);
 }
 
-DutchGrid? parseDutchGrid(String input) {
+DutchGridCoordinate? parseDutchGrid(String input) {
   RegExp regExp = RegExp(r'^\s*([\-\d.]+)(\s*,\s*|\s+)([\-\d.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? _xString = '';
@@ -76,5 +76,5 @@ DutchGrid? parseDutchGrid(String input) {
   var y = double.tryParse(_yString);
   if (y == null) return null;
 
-  return DutchGrid(x, y);
+  return DutchGridCoordinate(x, y);
 }
