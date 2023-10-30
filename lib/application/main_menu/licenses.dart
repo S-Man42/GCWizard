@@ -23,6 +23,7 @@ class _LicensesState extends State<Licenses> {
         ['base32', 'MIT License'],
         ['cached_network_image', 'MIT License'],
         ['code_text_field', 'MIT License'],
+        ['device_info_plus', 'BSD-3-Clause License'],
         ['diacritic', 'BSD-3-Clause License'],
         ['encrypt', 'BSD-3-Clause License'],
         ['exif', 'MIT License'],
@@ -31,7 +32,6 @@ class _LicensesState extends State<Licenses> {
         ['flutter_map', 'BSD-3-Clause License'],
         ['flutter_map_marker_popup', 'BSD-3-Clause License'],
         ['flutter_map_tappable_polyline', 'MIT License'],
-        ['fluttertoast', 'MIT License'],
         ['http', 'BSD-3-Clause License'],
         ['http_parser', 'BSD-3-Clause License'],
         ['image', 'Apache 2.0 License'],
@@ -100,6 +100,10 @@ class _LicensesState extends State<Licenses> {
         ['Vigenère Breaker', 'Jens Guballa (guballa.de)', 'Personal Permission'],
         ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
         ['Wherigo Analyzer', 'WFoundation\ngithub.com/WFoundation', ''],
+      ]),
+      GCWTextDivider(text: i18n(context, 'licenses_used_apis')),
+      const GCWColumnedMultilineOutput(data: [
+        ['Geohashing', 'http://geo.crox.net/djia/{yyyy-MM-dd}'],
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),
       GCWColumnedMultilineOutput(data: [
