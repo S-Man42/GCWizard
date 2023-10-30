@@ -1,5 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 
 class CoordinateFormat {
@@ -21,6 +22,16 @@ class CoordinateFormat {
   String toString() {
     return 'type: $type; subtype: $subtype';
   }
+}
+
+abstract class AbstractCoordinateFormatDefinition {
+  late final CoordinateFormatKey type;
+  late final BaseCoordinate defaultCoordinate;
+  late final String key;
+}
+
+abstract class AbstractCoordinateFormatWithSubtypesDefinition extends AbstractCoordinateFormatDefinition {
+  late final List<CoordinateFormatKey> subtypes;
 }
 
 bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {

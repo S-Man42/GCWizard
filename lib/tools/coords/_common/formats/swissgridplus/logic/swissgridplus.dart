@@ -9,7 +9,7 @@ class SwissGridPlusCoordinate extends SwissGridCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.SWISS_GRID_PLUS);
 
-  SwissGridPlusCoordinate(double easting, double northing) : super(easting, northing);
+  SwissGridPlusCoordinate(super.easting, super.northing);
 
   @override
   LatLng toLatLng({Ellipsoid? ells}) {

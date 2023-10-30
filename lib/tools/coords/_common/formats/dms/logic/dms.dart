@@ -69,7 +69,7 @@ class _DMSPart {
 }
 
 class DMSLatitude extends _DMSPart {
-  DMSLatitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
+  DMSLatitude(super.sign, super.degrees, super.minutes, super.seconds);
 
   static DMSLatitude from(_DMSPart dmsPart) {
     return DMSLatitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);
@@ -85,7 +85,7 @@ class DMSLatitude extends _DMSPart {
 }
 
 class DMSLongitude extends _DMSPart {
-  DMSLongitude(int sign, int degrees, int minutes, double seconds) : super(sign, degrees, minutes, seconds);
+  DMSLongitude(super.sign, super.degrees, super.minutes, super.seconds);
 
   static DMSLongitude from(_DMSPart dmsPart) {
     return DMSLongitude(dmsPart.sign, dmsPart.degrees, dmsPart.minutes, dmsPart.seconds);

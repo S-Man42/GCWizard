@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
 class _Geo3x3TextInputFormatter extends TextInputFormatter {
   final RegExp _exp = RegExp('^([EeWw]|[EeWw][1-9]*)?\$');

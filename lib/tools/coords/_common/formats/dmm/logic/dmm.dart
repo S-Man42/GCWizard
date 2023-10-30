@@ -60,7 +60,7 @@ class _DMMPart {
 }
 
 class DMMLatitude extends _DMMPart {
-  DMMLatitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
+  DMMLatitude(super.sign, super.degrees, super.minutes);
 
   static DMMLatitude from(_DMMPart dmmPart) {
     return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
@@ -76,7 +76,7 @@ class DMMLatitude extends _DMMPart {
 }
 
 class DMMLongitude extends _DMMPart {
-  DMMLongitude(int sign, int degrees, double minutes) : super(sign, degrees, minutes);
+  DMMLongitude(super.sign, super.degrees, super.minutes);
 
   static DMMLongitude from(_DMMPart dmmPart) {
     return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);

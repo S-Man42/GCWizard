@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
 class _GCWCoordsGeo3x3 extends StatefulWidget {
   final void Function(Geo3x3Coordinate?) onChanged;
