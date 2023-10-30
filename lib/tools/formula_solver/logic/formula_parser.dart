@@ -492,7 +492,7 @@ class FormulaParser {
 
       String safedTexts;
       String safedFormulas;
-      if (element.type == FormulaValueType.FIXED) {
+      if (element.type == null || element.type == FormulaValueType.FIXED) {
         safedTexts = _safeTexts(value);
         value = safedTexts;
 

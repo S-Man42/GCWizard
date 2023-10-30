@@ -239,6 +239,10 @@ void main() {
         FormulaValue('A', 'sqrt(121)', type: FormulaValueType.FIXED),
         FormulaValue('D', 'cs(A)', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.414213562373', 'state': 'ok'}]}},
+      {'formula' : '(a*b)', 'values': [
+        FormulaValue('A', 'bww("vga")', type: FormulaValueType.FIXED),
+        FormulaValue('B', 'bww("usb")', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1260', 'state': 'ok'}]}},
     ];
 
     for (var elem in _inputsToExpected) {
