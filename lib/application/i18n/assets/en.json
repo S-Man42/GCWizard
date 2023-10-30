@@ -4016,6 +4016,8 @@
   "rotation_general_title": "Rotation",
   "rotation_general_description": "Shifts letters by arbitrary n",
   "rotation_general_reverse": "Reverse",
+  "rotation_weird_title": "weird Rotation",
+  "rotation_weird_description": "Shifts letters by different arbitrary n",
   "rsa_n": "N",
   "rsa_phi": "φ(N)",
   "rsa_primep": "Prime Number p",

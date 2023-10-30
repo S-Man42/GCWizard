@@ -225,6 +225,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot18/widget/rot18
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot47/widget/rot47.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot5/widget/rot5.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/widget/rotation_general.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_weird/widget/rotation_weird.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa/widget/rsa.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_d_calculator/widget/rsa_d_calculator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_d_checker/widget/rsa_d_checker.dart';
@@ -3586,6 +3587,13 @@ void initializeRegistry(BuildContext context) {
       'rotation',
       'rot',
       'rotx'
+    ]),
+    GCWTool(tool: RotationWeird(), id: 'rotation_weird', searchKeys: const [
+      'rotation',
+    ], deeplinkAlias: const [
+      'rotationweird',
+      'rotweird',
+      'rot?'
     ]),
 
     // RSA *******************************************************************************************************
