@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
@@ -66,7 +66,7 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
           try {
             Clipboard.getData('text/plain').then((ClipboardData? data) {
               if (data == null || data.text == null || data.text!.isEmpty) {
-                showToast(i18n(context, 'common_clipboard_notextdatafound'));
+                showSnackBar(i18n(context, 'common_clipboard_notextdatafound'), context);
                 return;
               }
 

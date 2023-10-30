@@ -11,7 +11,7 @@ import 'package:latlong2/latlong.dart';
 const _VALID_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _domain = 'http://geo.crox.net/djia';
 
-enum ErrorCode{Ok, futureDate, invalidDate}
+enum ErrorCode { Ok, futureDate, invalidDate }
 
 class Geohashing {
   int latitude;
@@ -47,7 +47,7 @@ Future<LatLng?> geohashingToLatLon(Geohashing geohashing) async {
     if (_validDate(_date) != ErrorCode.Ok && _date.weekday >= 6) {
       _date = _date.add(Duration(days: (_date.weekday == 6 ? -1 : -2)));
     }
-    var dji =  await dowJonesIndex(_date);
+    var dji = await dowJonesIndex(_date);
     geohashing.dowJonesIndex = dji ?? 0;
     if (dji == null) {
       geohashing.errorCode = _validDate(_date) != ErrorCode.Ok ? ErrorCode.futureDate : ErrorCode.invalidDate;

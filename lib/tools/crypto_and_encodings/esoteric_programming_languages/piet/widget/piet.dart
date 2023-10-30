@@ -5,7 +5,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -81,7 +81,7 @@ class _PietState extends State<Piet> {
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile? value) {
             if (value == null || !_validateData(value.bytes)) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
             setState(() {

@@ -58,7 +58,7 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
   bool validInput() {
     if (_currentType == FormulaValueType.INTERPOLATED) {
       if (!VARIABLESTRING.hasMatch(currentValue.toLowerCase())) {
-        showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+        showSnackBar(i18n(context, 'formulasolver_values_novalidinterpolated'), context);
         return false;
       }
     }

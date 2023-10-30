@@ -7,16 +7,17 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_slider.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -28,14 +29,13 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substi
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/quadgram_loader.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/widget/substitution_breaker_items.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/logic/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_manual_control.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:tuple/tuple.dart';
 
 class SymbolReplacer extends StatefulWidget {
@@ -93,7 +93,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
           if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           }
 
@@ -477,7 +477,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
     if (quadgrams == null) return null;
 
     if (_symbolImage!.symbolGroups.length > quadgrams.alphabet.length) {
-      showToast(i18n(context, 'symbol_replacer_automatic_groups'));
+      showSnackBar(i18n(context, 'symbol_replacer_automatic_groups'), context);
       return null;
     }
 

@@ -8,9 +8,9 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_textviewer.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
@@ -76,7 +76,7 @@ class _HexViewerState extends State<HexViewer> {
           onLoaded: (GCWFile? value) {
             _currentLines = 0;
             if (value == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 

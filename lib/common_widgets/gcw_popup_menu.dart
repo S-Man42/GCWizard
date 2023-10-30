@@ -32,7 +32,8 @@ class GCWPopupMenu extends StatefulWidget {
     this.onBeforePressed,
     this.isTextSelectionToolBarButton = false,
     this.textSelectionToolBarButtonPadding,
-    this.textSelectionToolBarButtonLabel, this.buttonNoBorder,
+    this.textSelectionToolBarButtonLabel,
+    this.buttonNoBorder,
   }) : super(key: key);
 
   @override

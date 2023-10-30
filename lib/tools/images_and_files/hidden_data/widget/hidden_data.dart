@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_files_output.dart';
@@ -87,7 +87,7 @@ class _HiddenDataState extends State<HiddenData> {
           file: _publicFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 
@@ -120,7 +120,7 @@ class _HiddenDataState extends State<HiddenData> {
             file: _secretFile,
             onLoaded: (_openedFile) {
               if (_openedFile == null) {
-                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                 return;
               }
 
@@ -160,7 +160,7 @@ class _HiddenDataState extends State<HiddenData> {
           file: _unHideFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 
@@ -202,7 +202,7 @@ class _HiddenDataState extends State<HiddenData> {
 
   Future<void> _exportFile(BuildContext context, GCWFile? file) async {
     if (file?.bytes == null) {
-      showToast(i18n(context, 'hiddendata_datanotreadable'));
+      showSnackBar(i18n(context, 'hiddendata_datanotreadable'), context);
       return;
     }
 
