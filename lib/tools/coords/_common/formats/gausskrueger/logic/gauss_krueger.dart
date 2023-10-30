@@ -9,6 +9,14 @@ import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_trans
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:latlong2/latlong.dart';
 
+const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
+  1: CoordinateFormatKey.GAUSS_KRUEGER_GK1,
+  2: CoordinateFormatKey.GAUSS_KRUEGER_GK2,
+  3: CoordinateFormatKey.GAUSS_KRUEGER_GK3,
+  4: CoordinateFormatKey.GAUSS_KRUEGER_GK4,
+  5: CoordinateFormatKey.GAUSS_KRUEGER_GK5,
+};
+
 const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 
 class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {

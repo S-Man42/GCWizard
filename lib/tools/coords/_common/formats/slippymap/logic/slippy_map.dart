@@ -9,6 +9,40 @@ import 'package:latlong2/latlong.dart';
 
 // Source: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 
+const Map<int, CoordinateFormatKey> SLIPPY_MAP_ZOOM = {
+  0: CoordinateFormatKey.SLIPPYMAP_0,
+  1: CoordinateFormatKey.SLIPPYMAP_1,
+  2: CoordinateFormatKey.SLIPPYMAP_2,
+  3: CoordinateFormatKey.SLIPPYMAP_3,
+  4: CoordinateFormatKey.SLIPPYMAP_4,
+  5: CoordinateFormatKey.SLIPPYMAP_5,
+  6: CoordinateFormatKey.SLIPPYMAP_6,
+  7: CoordinateFormatKey.SLIPPYMAP_7,
+  8: CoordinateFormatKey.SLIPPYMAP_8,
+  9: CoordinateFormatKey.SLIPPYMAP_9,
+  10: CoordinateFormatKey.SLIPPYMAP_10,
+  11: CoordinateFormatKey.SLIPPYMAP_11,
+  12: CoordinateFormatKey.SLIPPYMAP_12,
+  13: CoordinateFormatKey.SLIPPYMAP_13,
+  14: CoordinateFormatKey.SLIPPYMAP_14,
+  15: CoordinateFormatKey.SLIPPYMAP_15,
+  16: CoordinateFormatKey.SLIPPYMAP_16,
+  17: CoordinateFormatKey.SLIPPYMAP_17,
+  18: CoordinateFormatKey.SLIPPYMAP_18,
+  19: CoordinateFormatKey.SLIPPYMAP_19,
+  20: CoordinateFormatKey.SLIPPYMAP_20,
+  21: CoordinateFormatKey.SLIPPYMAP_21,
+  22: CoordinateFormatKey.SLIPPYMAP_22,
+  23: CoordinateFormatKey.SLIPPYMAP_23,
+  24: CoordinateFormatKey.SLIPPYMAP_24,
+  25: CoordinateFormatKey.SLIPPYMAP_25,
+  26: CoordinateFormatKey.SLIPPYMAP_26,
+  27: CoordinateFormatKey.SLIPPYMAP_27,
+  28: CoordinateFormatKey.SLIPPYMAP_28,
+  29: CoordinateFormatKey.SLIPPYMAP_29,
+  30: CoordinateFormatKey.SLIPPYMAP_30
+};
+
 const _defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
 
 class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {
