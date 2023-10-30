@@ -10,13 +10,13 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
-class CompassDirection {
+class _CompassDirection {
   String symbol;
   String name;
   double value;
   int level;
 
-  CompassDirection({
+  _CompassDirection({
     required this.symbol,
     required this.name,
     required this.value,
@@ -26,61 +26,61 @@ class CompassDirection {
 
 const _NO_COMPASS_DIRECTION = '-';
 
-final List<CompassDirection> _COMPASS_ROSE = [
-  CompassDirection(symbol: _NO_COMPASS_DIRECTION, name: _NO_COMPASS_DIRECTION, value: double.nan, level: -1),
-  CompassDirection(symbol: 'common_compassrose_n_symbol', name: 'common_compassrose_n_name', value: 0.0, level: 0),
-  CompassDirection(
+final List<_CompassDirection> _COMPASS_ROSE = [
+  _CompassDirection(symbol: _NO_COMPASS_DIRECTION, name: _NO_COMPASS_DIRECTION, value: double.nan, level: -1),
+  _CompassDirection(symbol: 'common_compassrose_n_symbol', name: 'common_compassrose_n_name', value: 0.0, level: 0),
+  _CompassDirection(
       symbol: 'common_compassrose_nbe_symbol', name: 'common_compassrose_nbe_name', value: 11.25, level: 3),
-  CompassDirection(symbol: 'common_compassrose_nne_symbol', name: 'common_compassrose_nne_name', value: 22.5, level: 2),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_nne_symbol', name: 'common_compassrose_nne_name', value: 22.5, level: 2),
+  _CompassDirection(
       symbol: 'common_compassrose_nebn_symbol', name: 'common_compassrose_nebn_name', value: 33.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_ne_symbol', name: 'common_compassrose_ne_name', value: 45.0, level: 1),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_ne_symbol', name: 'common_compassrose_ne_name', value: 45.0, level: 1),
+  _CompassDirection(
       symbol: 'common_compassrose_nebe_symbol', name: 'common_compassrose_nebe_name', value: 56.25, level: 3),
-  CompassDirection(symbol: 'common_compassrose_ene_symbol', name: 'common_compassrose_ene_name', value: 67.5, level: 2),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_ene_symbol', name: 'common_compassrose_ene_name', value: 67.5, level: 2),
+  _CompassDirection(
       symbol: 'common_compassrose_ebn_symbol', name: 'common_compassrose_ebn_name', value: 78.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_e_symbol', name: 'common_compassrose_e_name', value: 90.0, level: 0),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_e_symbol', name: 'common_compassrose_e_name', value: 90.0, level: 0),
+  _CompassDirection(
       symbol: 'common_compassrose_ebs_symbol', name: 'common_compassrose_ebs_name', value: 101.25, level: 3),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_ese_symbol', name: 'common_compassrose_ese_name', value: 112.5, level: 2),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_sebe_symbol', name: 'common_compassrose_sebe_name', value: 123.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_se_symbol', name: 'common_compassrose_se_name', value: 135.0, level: 1),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_se_symbol', name: 'common_compassrose_se_name', value: 135.0, level: 1),
+  _CompassDirection(
       symbol: 'common_compassrose_sebs_symbol', name: 'common_compassrose_sebs_name', value: 146.25, level: 3),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_sse_symbol', name: 'common_compassrose_sse_name', value: 157.5, level: 2),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_sbe_symbol', name: 'common_compassrose_sbe_name', value: 168.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_s_symbol', name: 'common_compassrose_s_name', value: 180.0, level: 0),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_s_symbol', name: 'common_compassrose_s_name', value: 180.0, level: 0),
+  _CompassDirection(
       symbol: 'common_compassrose_sbw_symbol', name: 'common_compassrose_sbw_name', value: 191.25, level: 3),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_ssw_symbol', name: 'common_compassrose_ssw_name', value: 202.5, level: 2),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_swbs_symbol', name: 'common_compassrose_swbs_name', value: 213.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_sw_symbol', name: 'common_compassrose_sw_name', value: 225.0, level: 1),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_sw_symbol', name: 'common_compassrose_sw_name', value: 225.0, level: 1),
+  _CompassDirection(
       symbol: 'common_compassrose_swbw_symbol', name: 'common_compassrose_swbw_name', value: 236.25, level: 3),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_wsw_symbol', name: 'common_compassrose_wsw_name', value: 247.5, level: 2),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_wbs_symbol', name: 'common_compassrose_wbs_name', value: 258.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_w_symbol', name: 'common_compassrose_w_name', value: 270.0, level: 0),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_w_symbol', name: 'common_compassrose_w_name', value: 270.0, level: 0),
+  _CompassDirection(
       symbol: 'common_compassrose_wbn_symbol', name: 'common_compassrose_wbn_name', value: 281.25, level: 3),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_wnw_symbol', name: 'common_compassrose_wnw_name', value: 292.5, level: 2),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_nwbw_symbol', name: 'common_compassrose_nwbw_name', value: 303.75, level: 3),
-  CompassDirection(symbol: 'common_compassrose_nw_symbol', name: 'common_compassrose_nw_name', value: 315.0, level: 1),
-  CompassDirection(
+  _CompassDirection(symbol: 'common_compassrose_nw_symbol', name: 'common_compassrose_nw_name', value: 315.0, level: 1),
+  _CompassDirection(
       symbol: 'common_compassrose_nwbn_symbol', name: 'common_compassrose_nwbn_name', value: 326.25, level: 3),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_nnw_symbol', name: 'common_compassrose_nnw_name', value: 337.5, level: 2),
-  CompassDirection(
+  _CompassDirection(
       symbol: 'common_compassrose_nbw_symbol', name: 'common_compassrose_nbw_name', value: 348.75, level: 3),
 ];
 
