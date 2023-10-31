@@ -32,15 +32,15 @@ CoordinateFormat get defaultCoordinateFormat {
   if (formatStr.isEmpty) {
     format = _fallbackDefaultCoordFormatKey;
   } else {
-    var _format = coordinateFormatMetadataByPersistenceKey(formatStr);
+    var _format = coordinateFormatDefinitionByPersistenceKey(formatStr);
     format = (_format == null) ? _fallbackDefaultCoordFormatKey : _format.type;
   }
 
   return CoordinateFormat(format, defaultCoordinateFormatSubtypeForFormat(format));
 }
 
-CoordinateFormatMetadata get _defaultCoordinateFormat {
-  return coordinateFormatMetadataByKey(_fallbackDefaultCoordFormatKey);
+AbstractCoordinateFormatDefinition get _defaultCoordinateFormat {
+  return coordinateFormatDefinitionByPersistenceKey(_fallbackDefaultCoordFormatKey);
 }
 
 String get defaultCoordinateFormatPersistenceKey {

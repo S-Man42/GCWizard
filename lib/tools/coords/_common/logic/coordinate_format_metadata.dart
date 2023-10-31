@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
 class CoordinateFormatMetadata {
@@ -130,6 +131,10 @@ const CoordinateFormatMetadataALL = CoordinateFormatMetadata(CoordinateFormatKey
 
 CoordinateFormatMetadata? coordinateFormatMetadataByPersistenceKey(String key) {
   return allCoordinateFormatMetadata.firstWhereOrNull((format) => format.persistenceKey == key);
+}
+
+AbstractCoordinateFormatDefinition? coordinateFormatDefinitionByPersistenceKey(String key) {
+  return allCoordinateFormatDefinitions.firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
 CoordinateFormatMetadata? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {

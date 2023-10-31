@@ -10,7 +10,7 @@ class CoordinateFormat {
   CoordinateFormat(this.type, [this.subtype]);
 
   static CoordinateFormat fromPersistenceKey(String persistenceKey) {
-    var coordFormat = coordinateFormatMetadataByPersistenceKey(persistenceKey);
+    var coordFormat = coordinateFormatDefinitionByPersistenceKey(persistenceKey);
     if (coordFormat == null) {
       return defaultCoordinateFormat;
     } else {

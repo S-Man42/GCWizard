@@ -79,7 +79,7 @@ class FormatConverterAPIMapper extends APIMapper {
 }
 
 CoordinateFormatKey _getCoordinateFormatKey(String key) {
-  var formatKey = coordinateFormatMetadataByPersistenceKey(key)?.type;
+  var formatKey = coordinateFormatDefinitionByPersistenceKey(key)?.type;
   if (formatKey != null) return formatKey;
 
   return defaultCoordinateFormat.type;

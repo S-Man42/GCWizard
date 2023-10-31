@@ -44,7 +44,7 @@ const Map<int, CoordinateFormatKey> SLIPPY_MAP_ZOOM = {
 };
 
 const _defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
-const slippymapKey = 'coords_slippymap';
+const slippyMapKey = 'coords_slippymap';
 
 class SlippyMapFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefinition {
   @override
@@ -67,7 +67,7 @@ class SlippyMapFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefi
   BaseCoordinate defaultCoordinate = SlippyMapCoordinate.defaultCoordinate;
 
   @override
-  String persistenceKey = slippymapKey;
+  String persistenceKey = slippyMapKey;
 }
 
 class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {
