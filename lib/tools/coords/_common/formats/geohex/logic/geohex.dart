@@ -7,6 +7,19 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/external_libs/chsh.geohex4j/geohex.dart';
 
+const geoHexKey = 'coords_geohex';
+
+class GeoHexFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.GEOHEX;
+
+  @override
+  BaseCoordinate defaultCoordinate = GeoHexCoordinate.defaultCoordinate;
+
+  @override
+  String key = geoHexKey;
+}
+
 class GeoHexCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEOHEX);

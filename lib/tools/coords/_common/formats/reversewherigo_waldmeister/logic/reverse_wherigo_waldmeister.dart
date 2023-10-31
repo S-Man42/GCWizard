@@ -4,6 +4,19 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
+const reversewhereigo_waldmeisterKey = 'coords_reversewhereigo_waldmeister'; /* typo known. DO NOT change!*/
+
+class ReverseWherigoWaldmeisterFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.REVERSE_WIG_WALDMEISTER;
+
+  @override
+  BaseCoordinate defaultCoordinate = ReverseWherigoWaldmeisterCoordinate.defaultCoordinate;
+
+  @override
+  String key = reversewhereigo_waldmeisterKey;
+}
+
 class ReverseWherigoWaldmeisterCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER);

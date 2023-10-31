@@ -5,6 +5,19 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/logic/external_libs/taisukef.geo3x3/geo3x3.dart';
 
+const geo3x3Key = 'coords_geo3x3';
+
+class Geo3x3FormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.GEO3X3;
+
+  @override
+  BaseCoordinate defaultCoordinate = Geo3x3Coordinate.defaultCoordinate;
+
+  @override
+  String key = geo3x3Key;
+}
+
 class Geo3x3Coordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.GEO3X3);

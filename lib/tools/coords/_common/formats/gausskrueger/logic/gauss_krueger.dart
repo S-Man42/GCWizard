@@ -18,6 +18,22 @@ const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
 };
 
 const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
+const gausKruegerKey = 'coords_gausskrueger';
+
+class GaussKruegerFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.GAUSS_KRUEGER;
+
+  @override
+  List<CoordinateFormatKey> subtypes = [CoordinateFormatKey.GAUSS_KRUEGER_GK1, CoordinateFormatKey.GAUSS_KRUEGER_GK2,
+    CoordinateFormatKey.GAUSS_KRUEGER_GK3, CoordinateFormatKey.GAUSS_KRUEGER_GK4, CoordinateFormatKey.GAUSS_KRUEGER_GK5];
+
+  @override
+  BaseCoordinate defaultCoordinate = GaussKruegerCoordinate.defaultCoordinate;
+
+  @override
+  String key = gausKruegerKey;
+}
 
 class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;

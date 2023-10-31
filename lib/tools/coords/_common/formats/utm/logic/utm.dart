@@ -12,6 +12,18 @@ import 'package:latlong2/latlong.dart';
 const double _k0 = 0.9996;
 const double _drad = pi / 180.0;
 const String latZones = 'CDEFGHJKLMNPQRSTUVWX';
+const utmKey = 'coords_utm';
+
+class UTMREFFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.UTM;
+
+  @override
+  BaseCoordinate defaultCoordinate = UTMREFCoordinate.defaultCoordinate;
+
+  @override
+  String key = utmKey;
+}
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
 class UTMREFCoordinate extends BaseCoordinate {

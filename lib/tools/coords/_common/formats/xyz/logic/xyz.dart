@@ -10,6 +10,19 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
+const xyzKey = 'coords_xyz';
+
+class XYZFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.XYZ;
+
+  @override
+  BaseCoordinate defaultCoordinate = XYZCoordinate.defaultCoordinate;
+
+  @override
+  String key = xyzKey;
+}
+
 class XYZCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.XYZ);

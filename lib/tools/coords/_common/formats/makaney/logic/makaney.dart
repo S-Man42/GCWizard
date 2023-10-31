@@ -7,6 +7,19 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/external_libs/net.makaney/makaney.dart';
 
+const makaneyKey = 'coords_makaney';
+
+class MakaneyFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.MAKANEY;
+
+  @override
+  BaseCoordinate defaultCoordinate = MakaneyCoordinate.defaultCoordinate;
+
+  @override
+  String key = makaneyKey;
+}
+
 class MakaneyCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAKANEY);

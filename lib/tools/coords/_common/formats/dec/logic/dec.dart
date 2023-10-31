@@ -7,7 +7,19 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 const LETTER = '[A-ZÄÖÜ]';
+const decKey = 'coords_dec';
 var regexEnd = '';
+
+class DECFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.DEC;
+
+  @override
+  BaseCoordinate defaultCoordinate = DECCoordinate.defaultCoordinate;
+
+  @override
+  String key = decKey;
+}
 
 class DECCoordinate extends BaseCoordinate {
   @override

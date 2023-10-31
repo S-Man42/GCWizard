@@ -23,6 +23,21 @@ import 'package:latlong2/latlong.dart';
 // }
 
 const _defaultLambertType = CoordinateFormatKey.LAMBERT93;
+const lambertKey = 'coords_lambert';
+
+class LambertFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.LAMBERT93;
+
+  @override
+  List<CoordinateFormatKey> subtypes = _LambertDefinitions.keys.toList();
+
+  @override
+  BaseCoordinate defaultCoordinate = LambertCoordinate.defaultCoordinate;
+
+  @override
+  String key = lambertKey;
+}
 
 class LambertCoordinate extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;

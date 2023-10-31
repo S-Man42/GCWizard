@@ -21,6 +21,19 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
+const openlocationcodeKey = 'coords_openlocationcode';
+
+class OpenLocationCodeFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.OPEN_LOCATION_CODE;
+
+  @override
+  BaseCoordinate defaultCoordinate = OpenLocationCodeCoordinate.defaultCoordinate;
+
+  @override
+  String key = openlocationcodeKey;
+}
+
 class OpenLocationCodeCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.OPEN_LOCATION_CODE);

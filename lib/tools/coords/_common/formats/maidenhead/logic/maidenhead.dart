@@ -4,6 +4,19 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong2/latlong.dart';
 
+const maidenheadKey = 'coords_maidenhead';
+
+class MaidenheadFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.MAIDENHEAD;
+
+  @override
+  BaseCoordinate defaultCoordinate = MaidenheadCoordinate.defaultCoordinate;
+
+  @override
+  String key = maidenheadKey;
+}
+
 class MaidenheadCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAIDENHEAD);

@@ -7,6 +7,19 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/external_libs/djvanderlaan.rijksdriehoek/rijksdriehoek_js.dart';
 
+const dutchGridKey = 'coords_dutchgrid';
+
+class DutchGridFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.DUTCH_GRID;
+
+  @override
+  BaseCoordinate defaultCoordinate = DutchGridCoordinate.defaultCoordinate;
+
+  @override
+  String key = dutchGridKey;
+}
+
 class DutchGridCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.DUTCH_GRID);

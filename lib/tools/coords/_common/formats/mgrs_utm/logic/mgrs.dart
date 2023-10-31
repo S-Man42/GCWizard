@@ -10,6 +10,19 @@ import 'package:latlong2/latlong.dart';
 String digraphLettersEast = "ABCDEFGHJKLMNPQRSTUVWXYZ"; //without I and O
 String digraphLettersNorth = "ABCDEFGHJKLMNPQRSTUV";
 
+const mgrsKey = 'coords_mgrs';
+
+class MGRSFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.MGRS;
+
+  @override
+  BaseCoordinate defaultCoordinate = MGRSCoordinate.defaultCoordinate;
+
+  @override
+  String key = mgrsKey;
+}
+
 class MGRSCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MGRS);

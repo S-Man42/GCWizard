@@ -10,6 +10,19 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
+const dmsKey = 'coords_dms';
+
+class DMSFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.DMS;
+
+  @override
+  BaseCoordinate defaultCoordinate = DMSCoordinate.defaultCoordinate;
+
+  @override
+  String key = dmsKey;
+}
+
 class _FormattedDMSPart {
   IntegerText sign;
   String degrees, minutes, seconds;

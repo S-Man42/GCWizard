@@ -5,8 +5,6 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-const int _DEFAULT_PRECISION = 8;
-
 const _BASE30 = [
   '0',
   '1',
@@ -39,6 +37,19 @@ const _BASE30 = [
   'X',
   'Z'
 ];
+const int _DEFAULT_PRECISION = 8;
+const naturalareacodeKey = 'coords_naturalareacode';
+
+class NaturalAreaCodeFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.NATURAL_AREA_CODE;
+
+  @override
+  BaseCoordinate defaultCoordinate = NaturalAreaCodeCoordinate.defaultCoordinate;
+
+  @override
+  String key = naturalareacodeKey;
+}
 
 class NaturalAreaCodeCoordinate extends BaseCoordinate {
   @override

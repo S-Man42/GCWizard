@@ -9,6 +9,18 @@ import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_trans
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
+const swissgridKey = 'coords_swissgrid';
+
+class SwissGridFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.SWISS_GRID;
+
+  @override
+  BaseCoordinate defaultCoordinate = SwissGridCoordinate.defaultCoordinate;
+
+  @override
+  String key = swissgridKey;
+}
 
 class SwissGridCoordinate extends BaseCoordinate {
   @override

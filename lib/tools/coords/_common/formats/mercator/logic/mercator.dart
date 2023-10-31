@@ -7,6 +7,19 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
+const mercatorKey = 'coords_mercator';
+
+class MercatorFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.MERCATOR;
+
+  @override
+  BaseCoordinate defaultCoordinate = MercatorCoordinate.defaultCoordinate;
+
+  @override
+  String key = mercatorKey;
+}
+
 class MercatorCoordinate extends BaseCoordinate {
   @override
   CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MERCATOR);

@@ -8,6 +8,18 @@ import 'package:latlong2/latlong.dart';
 
 var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;
+const quadtreeKey = 'coords_quadtree';
+
+class QuadtreeFormatDefinition extends AbstractCoordinateFormatDefinition {
+  @override
+  CoordinateFormatKey type = CoordinateFormatKey.QUADTREE;
+
+  @override
+  BaseCoordinate defaultCoordinate = QuadtreeCoordinate.defaultCoordinate;
+
+  @override
+  String key = quadtreeKey;
+}
 
 class QuadtreeCoordinate extends BaseCoordinate {
   @override
