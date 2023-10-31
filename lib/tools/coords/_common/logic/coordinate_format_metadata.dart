@@ -129,15 +129,15 @@ const List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
 ];
 
 final CoordinateFormatDefinitionALL = CoordinateFormatDefinition(
-    CoordinateFormatKey.ALL, BaseCoordinate.emptyCoordinate, '');
+    CoordinateFormatKey.ALL, BaseCoordinate.defaultCoordinate, '');
 
-CoordinateFormatMetadata? coordinateFormatMetadataByPersistenceKey(String key) {
-  return allCoordinateFormatMetadata.firstWhereOrNull((format) => format.persistenceKey == key);
+CoordinateFormatDefinition? coordinateFormatDefinitionByPersistenceKey(String key) {
+  return allCoordinateFormatDefinitions.firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
-CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
-  return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
-}
+// CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
+//   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
+// }
 
 // CoordinateFormatMetadata? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
 //   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
@@ -153,13 +153,13 @@ CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey(Stri
 //     return value;
 //   });
 // }
-CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey1(String key) {
+CoordinateFormatDefinition? coordinateFormatDefinitionSubtypeByPersistenceKey(String key) {
   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
 List<CoordinateFormatDefinition> _getAllSubtypeCoordinateFormats() {
   var subtypeFormats =
-  formatList.whereType<CoordinateFormatWithSubtypesDefinition>().toList();
+  allCoordinateFormatDefinitions.whereType<CoordinateFormatWithSubtypesDefinition>().toList();
 
   return subtypeFormats.fold(<CoordinateFormatDefinition>[],
           (List<CoordinateFormatDefinition> value, CoordinateFormatWithSubtypesDefinition element) {
@@ -172,7 +172,7 @@ CoordinateFormatDefinition coordinateFormatDefinitionByKey(CoordinateFormatKey k
   if (key == CoordinateFormatDefinitionALL.type) {
     return CoordinateFormatDefinitionALL;
   }
-  var allFormats = List<CoordinateFormatDefinition>.from(formatList);
+  var allFormats = List<CoordinateFormatDefinition>.from(allCoordinateFormatDefinitions);
   allFormats.addAll(_getAllSubtypeCoordinateFormats());
 
   return allFormats.firstWhere((format) => format.type == key);

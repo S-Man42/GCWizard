@@ -32,7 +32,7 @@ CoordinateFormat get defaultCoordinateFormat {
   if (formatStr.isEmpty) {
     format = _fallbackDefaultCoordFormatKey;
   } else {
-    var _format = coordinateFormatMetadataByPersistenceKey(formatStr);
+    var _format = coordinateFormatDefinitionByPersistenceKey(formatStr);
     format = (_format == null) ? _fallbackDefaultCoordFormatKey : _format.type;
   }
 
@@ -67,7 +67,7 @@ CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey
   if (subtypeStr.isEmpty) {
     subtype = getDefaultSubtypeForFormat(format)!;
   } else {
-    var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey1(subtypeStr);
+    var _subtype = coordinateFormatDefinitionSubtypeByPersistenceKey(subtypeStr);
     subtype = (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type))
         ? getDefaultSubtypeForFormat(format)!
         : _subtype.type;

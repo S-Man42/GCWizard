@@ -164,9 +164,9 @@ class _MultiDecoderToolCoordinateFormatsState extends State<MultiDecoderToolCoor
 CoordinateFormatKey _getCoordinateFormatKey(Map<String, Object?> options, String option) {
   var key = checkStringFormatOrDefaultOption(
       MDT_INTERNALNAMES_COORDINATEFORMATS, options, MDT_COORDINATEFORMATS_OPTION_FORMAT);
-  var formatKey = coordinateFormatMetadataByPersistenceKey(key)?.type;
+  var formatKey = coordinateFormatDefinitionByPersistenceKey(key)?.type;
   if (formatKey != null) return formatKey;
 
   key = toStringOrNull(getDefaultValue(MDT_INTERNALNAMES_COORDINATEFORMATS, MDT_COORDINATEFORMATS_OPTION_FORMAT)) ?? '';
-  return coordinateFormatMetadataByPersistenceKey(key)?.type ?? defaultCoordinateFormat.type;
+  return coordinateFormatDefinitionByPersistenceKey(key)?.type ?? defaultCoordinateFormat.type;
 }
