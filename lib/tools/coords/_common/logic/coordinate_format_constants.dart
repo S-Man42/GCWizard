@@ -1,3 +1,27 @@
+import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/geo3x3/logic/geo3x3.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/geohash/logic/geohash.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/geohex.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/lambert/logic/lambert.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/maidenhead/logic/maidenhead.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/makaney.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mercator/logic/mercator.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/logic/natural_area_code.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/openlocationcode/logic/open_location_code.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/quadtree/logic/quadtree.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/logic/reverse_wherigo_day1976.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/logic/reverse_wherigo_waldmeister.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
+
 enum CoordinateFormatKey {
   ALL,
   DEC,
@@ -76,5 +100,32 @@ enum CoordinateFormatKey {
   SLIPPYMAP_29,
   SLIPPYMAP_30
 }
+
+final formatList = [
+  DECFormatDefinition(),
+  DMMFormatDefinition(),
+  DMSFormatDefinition(),
+  UTMREFFormatDefinition(),
+  MGRSFormatDefinition(),
+  XYZFormatDefinition(),
+  SwissGridFormatDefinition(),
+  SwissGridPlusFormatDefinition(),
+  GaussKruegerFormatDefinition(),
+  LambertFormatDefinition(),
+  DutchGridFormatDefinition(),
+  MaidenheadFormatDefinition(),
+  MercatorFormatDefinition(),
+  NaturalAreaCodeFormatDefinition(),
+  OpenLocationCodeFormatDefinition(),
+  SlippyMapFormatDefinition(),
+  ReverseWherigoWaldmeisterFormatDefinition(),
+  ReverseWherigoDay1976FormatDefinition(),
+  GeohashFormatDefinition(),
+  QuadtreeFormatDefinition(),
+  MakaneyFormatDefinition(),
+  GeoHexFormatDefinition(),
+  Geo3x3FormatDefinition()
+];
+
 
 
