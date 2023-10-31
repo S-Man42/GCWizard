@@ -11,16 +11,8 @@ import 'package:latlong2/latlong.dart';
 
 const swissgridKey = 'coords_swissgrid';
 
-class SwissGridFormatDefinition extends AbstractCoordinateFormatDefinition {
-  @override
-  CoordinateFormatKey type = CoordinateFormatKey.SWISS_GRID;
-
-  @override
-  BaseCoordinate defaultCoordinate = SwissGridCoordinate.defaultCoordinate;
-
-  @override
-  String persistenceKey = swissgridKey;
-}
+final SwissGridFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.SWISS_GRID, SwissGridCoordinate.defaultCoordinate, swissgridKey);
 
 class SwissGridCoordinate extends BaseCoordinate {
   @override

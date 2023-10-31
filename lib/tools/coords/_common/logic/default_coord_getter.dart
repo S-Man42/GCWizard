@@ -32,15 +32,15 @@ CoordinateFormat get defaultCoordinateFormat {
   if (formatStr.isEmpty) {
     format = _fallbackDefaultCoordFormatKey;
   } else {
-    var _format = coordinateFormatDefinitionByPersistenceKey(formatStr);
+    var _format = coordinateFormatMetadataByPersistenceKey(formatStr);
     format = (_format == null) ? _fallbackDefaultCoordFormatKey : _format.type;
   }
 
   return CoordinateFormat(format, defaultCoordinateFormatSubtypeForFormat(format));
 }
 
-AbstractCoordinateFormatDefinition get _defaultCoordinateFormat {
-  return coordinateFormatDefinitionByPersistenceKey(_fallbackDefaultCoordFormatKey);
+CoordinateFormatDefinition get _defaultCoordinateFormat {
+  return coordinateFormatDefinitionByKey(_fallbackDefaultCoordFormatKey);
 }
 
 String get defaultCoordinateFormatPersistenceKey {
@@ -53,7 +53,7 @@ String? get defaultCoordinateFormatSubtypePersistenceKey {
     return null;
   }
 
-  return coordinateFormatMetadataByKey(defaultSubtype).persistenceKey;
+  return coordinateFormatDefinitionByKey(defaultSubtype).persistenceKey;
 }
 
 CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey format) {
@@ -67,13 +67,13 @@ CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey
   if (subtypeStr.isEmpty) {
     subtype = getDefaultSubtypeForFormat(format)!;
   } else {
-    var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey(subtypeStr);
+    var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey1(subtypeStr);
     subtype = (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type))
         ? getDefaultSubtypeForFormat(format)!
         : _subtype.type;
   }
 
-  var persistenceKeyForSubtype = coordinateFormatMetadataByKey(subtype).persistenceKey;
+  var persistenceKeyForSubtype = coordinateFormatDefinitionByKey(subtype).persistenceKey;
   Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, persistenceKeyForSubtype);
 
   return subtype;

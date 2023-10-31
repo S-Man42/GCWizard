@@ -101,30 +101,30 @@ enum CoordinateFormatKey {
   SLIPPYMAP_30
 }
 
-final allCoordinateFormatDefinitions = [
-  DECFormatDefinition(),
-  DMMFormatDefinition(),
-  DMSFormatDefinition(),
-  UTMREFFormatDefinition(),
-  MGRSFormatDefinition(),
-  XYZFormatDefinition(),
-  SwissGridFormatDefinition(),
-  SwissGridPlusFormatDefinition(),
-  GaussKruegerFormatDefinition(),
-  LambertFormatDefinition(),
-  DutchGridFormatDefinition(),
-  MaidenheadFormatDefinition(),
-  MercatorFormatDefinition(),
-  NaturalAreaCodeFormatDefinition(),
-  OpenLocationCodeFormatDefinition(),
-  SlippyMapFormatDefinition(),
-  ReverseWherigoWaldmeisterFormatDefinition(),
-  ReverseWherigoDay1976FormatDefinition(),
-  GeohashFormatDefinition(),
-  QuadtreeFormatDefinition(),
-  MakaneyFormatDefinition(),
-  GeoHexFormatDefinition(),
-  Geo3x3FormatDefinition()
+final formatList = [
+  DECFormatDefinition,
+  DMMFormatDefinition,
+  DMSFormatDefinition,
+  UTMREFFormatDefinition,
+  MGRSFormatDefinition,
+  XYZFormatDefinition,
+  SwissGridFormatDefinition,
+  SwissGridPlusFormatDefinition,
+  GaussKruegerFormatDefinition,
+  LambertFormatDefinition,
+  DutchGridFormatDefinition,
+  MaidenheadFormatDefinition,
+  MercatorFormatDefinition,
+  NaturalAreaCodeFormatDefinition,
+  OpenLocationCodeFormatDefinition,
+  SlippyMapFormatDefinition,
+  ReverseWherigoWaldmeisterFormatDefinition,
+  ReverseWherigoDay1976FormatDefinition,
+  GeohashFormatDefinition,
+  QuadtreeFormatDefinition,
+  MakaneyFormatDefinition,
+  GeoHexFormatDefinition,
+  Geo3x3FormatDefinition
 ];
 
 

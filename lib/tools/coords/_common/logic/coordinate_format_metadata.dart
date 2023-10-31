@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 
 class CoordinateFormatMetadata {
   final CoordinateFormatKey type;
@@ -127,41 +128,56 @@ const List<CoordinateFormatMetadata> allCoordinateFormatMetadata = [
   CoordinateFormatMetadata(CoordinateFormatKey.GEO3X3, 'coords_geo3x3', 'Geo3x3', 'W7392967941169'),
 ];
 
-const CoordinateFormatMetadataALL = CoordinateFormatMetadata(CoordinateFormatKey.ALL, '', '', '');
+final CoordinateFormatDefinitionALL = CoordinateFormatDefinition(
+    CoordinateFormatKey.ALL, BaseCoordinate.emptyCoordinate, '');
 
 CoordinateFormatMetadata? coordinateFormatMetadataByPersistenceKey(String key) {
   return allCoordinateFormatMetadata.firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
-AbstractCoordinateFormatDefinition? coordinateFormatDefinitionByPersistenceKey(String key) {
-  return allCoordinateFormatDefinitions.firstWhereOrNull((format) => format.persistenceKey == key);
-}
-
-CoordinateFormatMetadata? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
+CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
-List<CoordinateFormatMetadata> _getAllSubtypeCoordinateFormats() {
-  var subtypeFormats =
-      allCoordinateFormatMetadata.where((format) => format.subtypes != null && format.subtypes!.isNotEmpty).toList();
+// CoordinateFormatMetadata? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
+//   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
+// }
 
-  return subtypeFormats.fold(<CoordinateFormatMetadata>[],
-      (List<CoordinateFormatMetadata> value, CoordinateFormatMetadata element) {
-    value.addAll(element.subtypes!);
-    return value;
-  });
+// List<CoordinateFormatMetadata> _getAllSubtypeCoordinateFormats() {
+//   var subtypeFormats =
+//       allCoordinateFormatMetadata.where((format) => format.subtypes != null && format.subtypes!.isNotEmpty).toList();
+//
+//   return subtypeFormats.fold(<CoordinateFormatMetadata>[],
+//       (List<CoordinateFormatMetadata> value, CoordinateFormatMetadata element) {
+//     value.addAll(element.subtypes!);
+//     return value;
+//   });
+// }
+CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey1(String key) {
+  return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
-CoordinateFormatMetadata coordinateFormatMetadataByKey(CoordinateFormatKey key) {
-  if (key == CoordinateFormatMetadataALL.type) {
-    return CoordinateFormatMetadataALL;
+List<CoordinateFormatDefinition> _getAllSubtypeCoordinateFormats() {
+  var subtypeFormats =
+  formatList.whereType<CoordinateFormatWithSubtypesDefinition>().toList();
+
+  return subtypeFormats.fold(<CoordinateFormatDefinition>[],
+          (List<CoordinateFormatDefinition> value, CoordinateFormatWithSubtypesDefinition element) {
+        value.addAll(element.subtypes);
+        return value;
+      });
+}
+
+CoordinateFormatDefinition coordinateFormatDefinitionByKey(CoordinateFormatKey key) {
+  if (key == CoordinateFormatDefinitionALL.type) {
+    return CoordinateFormatDefinitionALL;
   }
-  var allFormats = List<CoordinateFormatMetadata>.from(allCoordinateFormatMetadata);
+  var allFormats = List<CoordinateFormatDefinition>.from(formatList);
   allFormats.addAll(_getAllSubtypeCoordinateFormats());
 
   return allFormats.firstWhere((format) => format.type == key);
 }
 
 String persistenceKeyByCoordinateFormatKey(CoordinateFormatKey key) {
-  return coordinateFormatMetadataByKey(key).persistenceKey;
+  return coordinateFormatDefinitionByKey(key).persistenceKey;
 }

@@ -6,16 +6,9 @@ import 'package:latlong2/latlong.dart';
 
 const reversewhereigo_day1976Key = 'coords_reversewhereigo_day1976';
 
-class ReverseWherigoDay1976FormatDefinition extends AbstractCoordinateFormatDefinition {
-  @override
-  CoordinateFormatKey type = CoordinateFormatKey.REVERSE_WIG_DAY1976;
-
-  @override
-  BaseCoordinate defaultCoordinate = ReverseWherigoDay1976Coordinate.defaultCoordinate;
-
-  @override
-  String persistenceKey = reversewhereigo_day1976Key;
-}
+final ReverseWherigoDay1976FormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.REVERSE_WIG_DAY1976, ReverseWherigoDay1976Coordinate.defaultCoordinate,
+  reversewhereigo_day1976Key);
 
 class ReverseWherigoDay1976Coordinate extends BaseCoordinate {
   @override

@@ -71,7 +71,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
       case CoordinateFormatKey.LAMBERT:
         return GCWDropDown<CoordinateFormatKey>(
           value: _currentSubtype!,
-          items: coordinateFormatMetadataByKey(format).subtypes!.map((subtype) {
+          items: coordinateFormatDefinitionByKey(format).subtypes!.map((subtype) {
             return GCWDropDownMenuItem(
               value: subtype.type,
               child: i18n(context, subtype.name),

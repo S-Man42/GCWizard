@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart' as defaultCoord;
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
@@ -27,16 +27,14 @@ import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:latlong2/latlong.dart';
 
-//abstract class BaseCoordFormatKey {}
-
 abstract class BaseCoordinate {
   CoordinateFormat get format;
   late double latitude;
   late double longitude;
 
   BaseCoordinate([double? latitude, double? longitude]) {
-    this.latitude = latitude ?? defaultCoordinate.latitude;
-    this.longitude = longitude ?? defaultCoordinate.longitude;
+    this.latitude = latitude ?? defaultCoord.defaultCoordinate.latitude;
+    this.longitude = longitude ?? defaultCoord.defaultCoordinate.longitude;
   }
 
   // TODO: Make this null-safe. Some inheriting CoordFormats may return null here. This shall be avoided.
@@ -44,7 +42,7 @@ abstract class BaseCoordinate {
     return LatLng(latitude, longitude);
   }
 
-  static BaseCoordinate get emptyCoordinate => buildDefaultCoordinateByCoordinates(defaultCoordinate);
+  static BaseCoordinate get defaultCoordinate => buildDefaultCoordinateByCoordinates(defaultCoord.defaultCoordinate);
 
   @override
   String toString([int? precision]) {
@@ -123,22 +121,22 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976Coordinate.defaultCoordinate;
     default:
-      return buildDefaultCoordinateByCoordinates(defaultCoordinate);
+      return buildDefaultCoordinateByCoordinates(defaultCoord.defaultCoordinate);
   }
 }
 
 BaseCoordinate buildDefaultCoordinateByCoordinates(LatLng coords) {
-  return buildCoordinate(defaultCoordinateFormat, coords, defaultEllipsoid);
+  return buildCoordinate(defaultCoord.defaultCoordinateFormat, coords, defaultCoord.defaultEllipsoid);
 }
 
 BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoid? ellipsoid]) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
-      format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
+      format.subtype = defaultCoord.defaultCoordinateFormatSubtypeForFormat(format.type);
     }
   }
 
-  ellipsoid ??= defaultEllipsoid;
+  ellipsoid ??= defaultCoord.defaultEllipsoid;
 
   switch (format.type) {
     case CoordinateFormatKey.DEC:

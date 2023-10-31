@@ -1,23 +1,14 @@
 import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
 const swissgridplusKey = 'coords_swissgridplus';
 
-class SwissGridPlusFormatDefinition extends AbstractCoordinateFormatDefinition {
-  @override
-  CoordinateFormatKey type = CoordinateFormatKey.SWISS_GRID_PLUS;
-
-  @override
-  BaseCoordinate defaultCoordinate = SwissGridPlusCoordinate.defaultCoordinate;
-
-  @override
-  String persistenceKey = swissgridplusKey;
-}
+final SwissGridPlusFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.SWISS_GRID_PLUS, SwissGridPlusCoordinate.defaultCoordinate, swissgridplusKey);
 
 class SwissGridPlusCoordinate extends SwissGridCoordinate {
   @override

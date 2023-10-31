@@ -119,7 +119,7 @@ class _FormatConverterState extends State<FormatConverter> {
             var format = CoordinateFormat(coordFormat.type);
             var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
             if (format.subtype != null) {
-              var subtypeMetadata = coordinateFormatMetadataByKey(format.subtype!);
+              var subtypeMetadata = coordinateFormatDefinitionByKey(format.subtype!);
               var subtypeName = i18n(context, subtypeMetadata.name);
               if (subtypeName.isNotEmpty) {
                 name += '\n' + subtypeName;

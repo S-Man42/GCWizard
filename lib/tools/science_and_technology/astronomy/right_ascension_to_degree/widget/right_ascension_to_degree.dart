@@ -205,15 +205,15 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
         items: [
           GCWDropDownMenuItem(
             value: CoordinateFormatKey.DEC,
-            child: coordinateFormatMetadataByKey(CoordinateFormatKey.DEC).name,
+            child: coordinateFormatDefinitionByKey(CoordinateFormatKey.DEC).name,
           ),
           GCWDropDownMenuItem(
             value: CoordinateFormatKey.DMM,
-            child: coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).name,
+            child: coordinateFormatDefinitionByKey(CoordinateFormatKey.DMM).name,
           ),
           GCWDropDownMenuItem(
             value: CoordinateFormatKey.DMS,
-            child: coordinateFormatMetadataByKey(CoordinateFormatKey.DMS).name,
+            child: coordinateFormatDefinitionByKey(CoordinateFormatKey.DMS).name,
           ),
         ],
       ),
@@ -530,9 +530,9 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
       var dms = DMSLatitude.from(doubleToDMSPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
       var rows = [
-        [coordinateFormatMetadataByKey(CoordinateFormatKey.DEC).name, output.toString() + '°'],
-        [coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).name, dmm],
-        [coordinateFormatMetadataByKey(CoordinateFormatKey.DMS).name, dms],
+        [coordinateFormatDefinitionByKey(CoordinateFormatKey.DEC).name, output.toString() + '°'],
+        [coordinateFormatDefinitionByKey(CoordinateFormatKey.DMM).name, dmm],
+        [coordinateFormatDefinitionByKey(CoordinateFormatKey.DMS).name, dms],
       ];
       return GCWDefaultOutput(child: GCWColumnedMultilineOutput(data: rows));
     }
