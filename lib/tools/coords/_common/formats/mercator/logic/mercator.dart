@@ -17,7 +17,7 @@ class MercatorFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = MercatorCoordinate.defaultCoordinate;
 
   @override
-  String key = mercatorKey;
+  String persistenceKey = mercatorKey;
 }
 
 class MercatorCoordinate extends BaseCoordinate {

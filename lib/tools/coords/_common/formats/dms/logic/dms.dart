@@ -20,7 +20,7 @@ class DMSFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = DMSCoordinate.defaultCoordinate;
 
   @override
-  String key = dmsKey;
+  String persistenceKey = dmsKey;
 }
 
 class _FormattedDMSPart {

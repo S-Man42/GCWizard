@@ -14,7 +14,7 @@ class ReverseWherigoDay1976FormatDefinition extends AbstractCoordinateFormatDefi
   BaseCoordinate defaultCoordinate = ReverseWherigoDay1976Coordinate.defaultCoordinate;
 
   @override
-  String key = reversewhereigo_day1976Key;
+  String persistenceKey = reversewhereigo_day1976Key;
 }
 
 class ReverseWherigoDay1976Coordinate extends BaseCoordinate {

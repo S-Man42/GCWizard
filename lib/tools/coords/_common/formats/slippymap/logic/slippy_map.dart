@@ -67,7 +67,7 @@ class SlippyMapFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefi
   BaseCoordinate defaultCoordinate = SlippyMapCoordinate.defaultCoordinate;
 
   @override
-  String key = slippymapKey;
+  String persistenceKey = slippymapKey;
 }
 
 class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {

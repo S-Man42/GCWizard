@@ -48,7 +48,7 @@ class NaturalAreaCodeFormatDefinition extends AbstractCoordinateFormatDefinition
   BaseCoordinate defaultCoordinate = NaturalAreaCodeCoordinate.defaultCoordinate;
 
   @override
-  String key = naturalareacodeKey;
+  String persistenceKey = naturalareacodeKey;
 }
 
 class NaturalAreaCodeCoordinate extends BaseCoordinate {

@@ -17,7 +17,7 @@ class DutchGridFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = DutchGridCoordinate.defaultCoordinate;
 
   @override
-  String key = dutchGridKey;
+  String persistenceKey = dutchGridKey;
 }
 
 class DutchGridCoordinate extends BaseCoordinate {

@@ -36,7 +36,7 @@ class LambertFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefini
   BaseCoordinate defaultCoordinate = LambertCoordinate.defaultCoordinate;
 
   @override
-  String key = lambertKey;
+  String persistenceKey = lambertKey;
 }
 
 class LambertCoordinate extends BaseCoordinateWithSubtypes {

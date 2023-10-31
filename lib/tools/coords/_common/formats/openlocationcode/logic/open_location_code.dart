@@ -31,7 +31,7 @@ class OpenLocationCodeFormatDefinition extends AbstractCoordinateFormatDefinitio
   BaseCoordinate defaultCoordinate = OpenLocationCodeCoordinate.defaultCoordinate;
 
   @override
-  String key = openlocationcodeKey;
+  String persistenceKey = openlocationcodeKey;
 }
 
 class OpenLocationCodeCoordinate extends BaseCoordinate {

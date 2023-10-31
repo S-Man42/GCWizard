@@ -17,7 +17,7 @@ class GeoHexFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = GeoHexCoordinate.defaultCoordinate;
 
   @override
-  String key = geoHexKey;
+  String persistenceKey = geoHexKey;
 }
 
 class GeoHexCoordinate extends BaseCoordinate {

@@ -19,7 +19,7 @@ class SwissGridFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = SwissGridCoordinate.defaultCoordinate;
 
   @override
-  String key = swissgridKey;
+  String persistenceKey = swissgridKey;
 }
 
 class SwissGridCoordinate extends BaseCoordinate {

@@ -21,7 +21,7 @@ class DMMFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = DMMCoordinate.defaultCoordinate;
 
   @override
-  String key = dmmKey;
+  String persistenceKey = dmmKey;
 }
 
 class _FormattedDMMPart {

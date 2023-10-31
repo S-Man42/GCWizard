@@ -20,7 +20,7 @@ class XYZFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = XYZCoordinate.defaultCoordinate;
 
   @override
-  String key = xyzKey;
+  String persistenceKey = xyzKey;
 }
 
 class XYZCoordinate extends BaseCoordinate {

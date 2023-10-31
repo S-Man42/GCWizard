@@ -20,7 +20,7 @@ class MGRSFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = MGRSCoordinate.defaultCoordinate;
 
   @override
-  String key = mgrsKey;
+  String persistenceKey = mgrsKey;
 }
 
 class MGRSCoordinate extends BaseCoordinate {

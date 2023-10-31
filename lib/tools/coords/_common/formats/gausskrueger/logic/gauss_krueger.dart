@@ -32,7 +32,7 @@ class GaussKruegerFormatDefinition extends AbstractCoordinateFormatWithSubtypesD
   BaseCoordinate defaultCoordinate = GaussKruegerCoordinate.defaultCoordinate;
 
   @override
-  String key = gausKruegerKey;
+  String persistenceKey = gausKruegerKey;
 }
 
 class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {

@@ -18,7 +18,7 @@ class DECFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = DECCoordinate.defaultCoordinate;
 
   @override
-  String key = decKey;
+  String persistenceKey = decKey;
 }
 
 class DECCoordinate extends BaseCoordinate {

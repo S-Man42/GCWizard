@@ -14,7 +14,7 @@ class ReverseWherigoWaldmeisterFormatDefinition extends AbstractCoordinateFormat
   BaseCoordinate defaultCoordinate = ReverseWherigoWaldmeisterCoordinate.defaultCoordinate;
 
   @override
-  String key = reversewhereigo_waldmeisterKey;
+  String persistenceKey = reversewhereigo_waldmeisterKey;
 }
 
 class ReverseWherigoWaldmeisterCoordinate extends BaseCoordinate {

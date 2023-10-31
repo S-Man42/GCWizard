@@ -27,7 +27,7 @@ class CoordinateFormat {
 abstract class AbstractCoordinateFormatDefinition {
   late final CoordinateFormatKey type;
   late final BaseCoordinate defaultCoordinate;
-  late final String key;
+  late final String persistenceKey;
 }
 
 abstract class AbstractCoordinateFormatWithSubtypesDefinition extends AbstractCoordinateFormatDefinition {

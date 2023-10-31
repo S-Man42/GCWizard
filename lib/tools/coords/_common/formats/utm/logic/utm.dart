@@ -22,7 +22,7 @@ class UTMREFFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = UTMREFCoordinate.defaultCoordinate;
 
   @override
-  String key = utmKey;
+  String persistenceKey = utmKey;
 }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S

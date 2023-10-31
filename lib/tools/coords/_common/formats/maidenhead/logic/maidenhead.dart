@@ -14,7 +14,7 @@ class MaidenheadFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = MaidenheadCoordinate.defaultCoordinate;
 
   @override
-  String key = maidenheadKey;
+  String persistenceKey = maidenheadKey;
 }
 
 class MaidenheadCoordinate extends BaseCoordinate {

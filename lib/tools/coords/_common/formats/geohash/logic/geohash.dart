@@ -50,7 +50,7 @@ class GeohashFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = GeohashCoordinate.defaultCoordinate;
 
   @override
-  String key = geohashKey;
+  String persistenceKey = geohashKey;
 }
 
 class GeohashCoordinate extends BaseCoordinate {

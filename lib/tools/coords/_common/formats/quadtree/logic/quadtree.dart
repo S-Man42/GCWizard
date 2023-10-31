@@ -18,7 +18,7 @@ class QuadtreeFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = QuadtreeCoordinate.defaultCoordinate;
 
   @override
-  String key = quadtreeKey;
+  String persistenceKey = quadtreeKey;
 }
 
 class QuadtreeCoordinate extends BaseCoordinate {

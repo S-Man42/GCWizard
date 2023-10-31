@@ -15,7 +15,7 @@ class Geo3x3FormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = Geo3x3Coordinate.defaultCoordinate;
 
   @override
-  String key = geo3x3Key;
+  String persistenceKey = geo3x3Key;
 }
 
 class Geo3x3Coordinate extends BaseCoordinate {

@@ -17,7 +17,7 @@ class MakaneyFormatDefinition extends AbstractCoordinateFormatDefinition {
   BaseCoordinate defaultCoordinate = MakaneyCoordinate.defaultCoordinate;
 
   @override
-  String key = makaneyKey;
+  String persistenceKey = makaneyKey;
 }
 
 class MakaneyCoordinate extends BaseCoordinate {
