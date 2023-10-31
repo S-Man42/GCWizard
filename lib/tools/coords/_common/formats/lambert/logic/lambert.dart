@@ -25,19 +25,24 @@ import 'package:latlong2/latlong.dart';
 const _defaultLambertType = CoordinateFormatKey.LAMBERT93;
 const lambertKey = 'coords_lambert';
 
-class LambertFormatDefinition extends AbstractCoordinateFormatWithSubtypesDefinition {
-  @override
-  CoordinateFormatKey type = CoordinateFormatKey.LAMBERT93;
+final LambertFormatDefinition = CoordinateFormatWithSubtypesDefinition(
+  CoordinateFormatKey.LAMBERT93, LambertCoordinate.defaultCoordinate, lambertKey,
+  [
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93, LambertCoordinate.defaultCoordinate, 'coords_lambert_93'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT2008, LambertCoordinate.defaultCoordinate, 'coords_lambert_2008'),
+    CoordinateFormatDefinition(CoordinateFormatKey.ETRS89LCC, LambertCoordinate.defaultCoordinate, 'coords_lambert_etrs89lcc'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT72, LambertCoordinate.defaultCoordinate, 'coords_lambert_72',),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC42, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc42'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC43, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc43'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC44, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc44'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC45, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc45'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC46, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc46'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC47, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc47'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC48, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc48'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC49, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc49'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC50, LambertCoordinate.defaultCoordinate, 'coords_lambert_93_cc50')
+  ]);
 
-  @override
-  List<CoordinateFormatKey> subtypes = _LambertDefinitions.keys.toList();
-
-  @override
-  BaseCoordinate defaultCoordinate = LambertCoordinate.defaultCoordinate;
-
-  @override
-  String key = lambertKey;
-}
 
 class LambertCoordinate extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;

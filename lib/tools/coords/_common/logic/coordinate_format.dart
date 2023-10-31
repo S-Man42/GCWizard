@@ -24,14 +24,19 @@ class CoordinateFormat {
   }
 }
 
-abstract class AbstractCoordinateFormatDefinition {
-  late final CoordinateFormatKey type;
-  late final BaseCoordinate defaultCoordinate;
-  late final String key;
+class CoordinateFormatDefinition {
+  final CoordinateFormatKey type;
+  final BaseCoordinate defaultCoordinate;
+  final String persintenceKey;
+
+  CoordinateFormatDefinition(this.type, this.defaultCoordinate, this.persintenceKey);
 }
 
-abstract class AbstractCoordinateFormatWithSubtypesDefinition extends AbstractCoordinateFormatDefinition {
-  late final List<CoordinateFormatKey> subtypes;
+class CoordinateFormatWithSubtypesDefinition extends CoordinateFormatDefinition {
+  final List<CoordinateFormatDefinition> subtypes;
+
+  CoordinateFormatWithSubtypesDefinition(super.type, super.defaultCoordinate,
+      super.persintenceKey, this.subtypes);
 }
 
 bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
 class CoordinateFormatMetadata {
@@ -145,6 +146,20 @@ List<CoordinateFormatMetadata> _getAllSubtypeCoordinateFormats() {
     value.addAll(element.subtypes!);
     return value;
   });
+}
+CoordinateFormatMetadata? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
+  return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
+}
+
+List<CoordinateFormatKey> _getAllSubtypeCoordinateFormats1() {
+  var subtypeFormats =
+  formatList.whereType<CoordinateFormatWithSubtypesDefinition>().toList();
+
+  return subtypeFormats.fold(<CoordinateFormatKey>[],
+          (List<CoordinateFormatKey> value, CoordinateFormatWithSubtypesDefinition element) {
+        value.addAll(element.subtypes);
+        return value;
+      });
 }
 
 CoordinateFormatMetadata coordinateFormatMetadataByKey(CoordinateFormatKey key) {

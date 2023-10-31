@@ -14,16 +14,8 @@ const double _drad = pi / 180.0;
 const String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 const utmKey = 'coords_utm';
 
-class UTMREFFormatDefinition extends AbstractCoordinateFormatDefinition {
-  @override
-  CoordinateFormatKey type = CoordinateFormatKey.UTM;
-
-  @override
-  BaseCoordinate defaultCoordinate = UTMREFCoordinate.defaultCoordinate;
-
-  @override
-  String key = utmKey;
-}
+final UTMREFFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.UTM, UTMREFCoordinate.defaultCoordinate, utmKey);
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
 class UTMREFCoordinate extends BaseCoordinate {
