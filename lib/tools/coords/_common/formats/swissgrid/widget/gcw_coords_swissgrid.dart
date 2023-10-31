@@ -34,9 +34,7 @@ class _GCWCoordsSwissGridState extends State<_GCWCoordsSwissGrid> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var swissGrid = widget.coordinates is SwissGridCoordinate
-          ? widget.coordinates as SwissGridCoordinate
-          : SwissGridCoordinate.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      var swissGrid = widget.coordinates as SwissGridCoordinate;
       _currentEasting.value = swissGrid.easting;
       _currentNorthing.value = swissGrid.northing;
 

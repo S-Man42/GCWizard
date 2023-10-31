@@ -54,7 +54,7 @@ class _GCWCoordsDECState extends State<_GCWCoordsDEC> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var dec = widget.coordinates;
+      var dec = widget.coordinates as DECCoordinate;
       _currentLatDegrees = dec.latitude.abs().floor().toString();
       _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
       _currentLatSign = sign(dec.latitude);

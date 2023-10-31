@@ -38,9 +38,7 @@ class _GCWCoordsXYZState extends State<_GCWCoordsXYZ> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var xyz = widget.coordinates is XYZCoordinate
-          ? widget.coordinates as XYZCoordinate
-          : XYZCoordinate.fromLatLon(widget.coordinates.toLatLng() ?? defaultCoordinate, defaultEllipsoid);
+      var xyz = widget.coordinates as XYZCoordinate;
       _currentX = xyz.x;
       _currentY = xyz.y;
       _currentZ = xyz.z;
