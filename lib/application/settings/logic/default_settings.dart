@@ -142,7 +142,7 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
               'coords_deg' //backward compatibility: old name for DMM until v1.1.0
       ) {
     Prefs.setString(
-        PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).persistenceKey);
+        PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatDefinitionByKey(CoordinateFormatKey.DMM).persistenceKey);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE ||

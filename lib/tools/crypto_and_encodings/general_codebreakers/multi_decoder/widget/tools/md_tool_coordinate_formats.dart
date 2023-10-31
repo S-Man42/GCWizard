@@ -146,7 +146,7 @@ class _MultiDecoderToolCoordinateFormatsState extends State<MultiDecoderToolCoor
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_COORDINATEFORMATS_OPTION_FORMAT] =
-                coordinateFormatMetadataByKey(newValue).persistenceKey;
+                coordinateFormatDefinitionByKey(newValue).persistenceKey;
           });
         },
         items:

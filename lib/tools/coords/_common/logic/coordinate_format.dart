@@ -27,16 +27,16 @@ class CoordinateFormat {
 class CoordinateFormatDefinition {
   final CoordinateFormatKey type;
   final BaseCoordinate defaultCoordinate;
-  final String persintenceKey;
+  final String persistenceKey;
 
-  CoordinateFormatDefinition(this.type, this.defaultCoordinate, this.persintenceKey);
+  CoordinateFormatDefinition(this.type, this.defaultCoordinate, this.persistenceKey);
 }
 
 class CoordinateFormatWithSubtypesDefinition extends CoordinateFormatDefinition {
   final List<CoordinateFormatDefinition> subtypes;
 
   CoordinateFormatWithSubtypesDefinition(super.type, super.defaultCoordinate,
-      super.persintenceKey, this.subtypes);
+      super.persistenceKey, this.subtypes);
 }
 
 bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {
@@ -44,15 +44,15 @@ bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {
 }
 
 bool isCoordinateFormatWithSubtype(CoordinateFormatKey format) {
-  var coordFormat = coordinateFormatMetadataByKey(format);
-  return coordFormat.subtypes != null;
+  var coordFormat = coordinateFormatDefinitionByKey(format);
+  return coordFormat is CoordinateFormatWithSubtypesDefinition;
 }
 
 bool isSubtypeOfCoordinateFormat(CoordinateFormatKey baseFormat, CoordinateFormatKey typeToCheck) {
-  var coordFormat = coordinateFormatMetadataByKey(baseFormat);
-  if (coordFormat.subtypes == null) {
+  var coordFormat = coordinateFormatDefinitionByKey(baseFormat);
+  if (coordFormat is! CoordinateFormatWithSubtypesDefinition) {
     return false;
   }
 
-  return coordFormat.subtypes!.map((CoordinateFormatMetadata _format) => _format.type).contains(typeToCheck);
+  return coordFormat.subtypes.map((CoordinateFormatDefinition _format) => _format.type).contains(typeToCheck);
 }
