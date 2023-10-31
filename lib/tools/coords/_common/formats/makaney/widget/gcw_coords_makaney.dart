@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsMakaney extends StatefulWidget {
-  final void Function(MakaneyCoordinate?) onChanged;
-  final MakaneyCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsMakaney extends _GCWCoordWidget {
 
-  const _GCWCoordsMakaney({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsMakaney({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is MakaneyCoordinate ? coordinates : MakaneyCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.MAKANEY, i18nKey: makaneyKey);
 
   @override
   _GCWCoordsMakaneyState createState() => _GCWCoordsMakaneyState();
@@ -31,7 +29,7 @@ class _GCWCoordsMakaneyState extends State<_GCWCoordsMakaney> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var makaney = widget.coordinates;
+      var makaney = widget.coordinates as MakaneyCoordinate;
       _currentCoord = makaney.toString();
 
       _controller.text = _currentCoord;

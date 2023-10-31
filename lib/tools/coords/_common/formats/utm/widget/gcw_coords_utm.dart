@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsUTM extends StatefulWidget {
-  final void Function(UTMREFCoordinate) onChanged;
-  final BaseCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsUTM extends _GCWCoordWidget {
 
-  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.UTM, i18nKey: utmKey);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();

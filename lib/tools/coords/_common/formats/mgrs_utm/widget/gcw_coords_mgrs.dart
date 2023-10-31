@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsMGRS extends StatefulWidget {
-  final void Function(MGRSCoordinate) onChanged;
-  final MGRSCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsMGRS extends _GCWCoordWidget {
 
-  const _GCWCoordsMGRS({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsMGRS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is MGRSCoordinate ? coordinates : MGRSCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.MGRS, i18nKey: mgrsKey);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();
@@ -45,7 +43,7 @@ class _GCWCoordsMGRSState extends State<_GCWCoordsMGRS> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var mgrs = widget.coordinates;
+      var mgrs = widget.coordinates as MGRSCoordinate;
       _currentEasting.value = mgrs.easting;
       _currentNorthing.value = mgrs.northing;
 

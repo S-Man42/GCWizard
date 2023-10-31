@@ -1,13 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsOpenLocationCode extends StatefulWidget {
-  final void Function(OpenLocationCodeCoordinate?) onChanged;
-  final OpenLocationCodeCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsOpenLocationCode extends _GCWCoordWidget {
 
-  const _GCWCoordsOpenLocationCode(
-      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsOpenLocationCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is OpenLocationCodeCoordinate ? coordinates : OpenLocationCodeCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.OPEN_LOCATION_CODE, i18nKey: openLocationCodeKey);
 
   @override
   _GCWCoordsOpenLocationCodeState createState() => _GCWCoordsOpenLocationCodeState();
@@ -36,7 +33,7 @@ class _GCWCoordsOpenLocationCodeState extends State<_GCWCoordsOpenLocationCode> 
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var openLocationCode = widget.coordinates;
+      var openLocationCode = widget.coordinates as OpenLocationCodeCoordinate;
       _currentCoord = openLocationCode.text;
 
       _controller.text = _currentCoord;

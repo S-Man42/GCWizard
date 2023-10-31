@@ -1,13 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsReverseWherigoWaldmeister extends StatefulWidget {
-  final void Function(ReverseWherigoWaldmeisterCoordinate?) onChanged;
-  final ReverseWherigoWaldmeisterCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsReverseWherigoWaldmeister extends _GCWCoordWidget {
 
-  const _GCWCoordsReverseWherigoWaldmeister(
-      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ? coordinates : ReverseWherigoWaldmeisterCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, i18nKey: reverseWhereigoWaldmeisterKey);
 
   @override
   _GCWCoordsReverseWherigoWaldmeisterState createState() => _GCWCoordsReverseWherigoWaldmeisterState();
@@ -51,7 +48,7 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var waldmeister = widget.coordinates;
+      var waldmeister = widget.coordinates as ReverseWherigoWaldmeisterCoordinate;
       _currentA = waldmeister.a;
       _currentB = waldmeister.b;
       _currentC = waldmeister.c;

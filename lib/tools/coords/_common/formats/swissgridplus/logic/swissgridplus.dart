@@ -5,10 +5,10 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
-const swissgridplusKey = 'coords_swissgridplus';
+const swissGridPlusKey = 'coords_swissgridplus';
 
 final SwissGridPlusFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.SWISS_GRID_PLUS, SwissGridPlusCoordinate.defaultCoordinate, swissgridplusKey);
+  CoordinateFormatKey.SWISS_GRID_PLUS, SwissGridPlusCoordinate.defaultCoordinate, swissGridPlusKey);
 
 class SwissGridPlusCoordinate extends SwissGridCoordinate {
   @override

@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsMaidenhead extends StatefulWidget {
-  final void Function(MaidenheadCoordinate?) onChanged;
-  final MaidenheadCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsMaidenhead extends _GCWCoordWidget {
 
-  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsMaidenhead({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is MaidenheadCoordinate ? coordinates : MaidenheadCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.MAIDENHEAD, i18nKey: maidenheadKey);
 
   @override
   _GCWCoordsMaidenheadState createState() => _GCWCoordsMaidenheadState();
@@ -31,7 +29,7 @@ class _GCWCoordsMaidenheadState extends State<_GCWCoordsMaidenhead> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var maidenhead = widget.coordinates;
+      var maidenhead = widget.coordinates as MaidenheadCoordinate;
       _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;

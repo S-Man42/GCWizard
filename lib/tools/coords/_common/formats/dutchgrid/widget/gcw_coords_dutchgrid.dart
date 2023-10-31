@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsDutchGrid extends StatefulWidget {
-  final void Function(DutchGridCoordinate) onChanged;
-  final DutchGridCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsDutchGrid extends _GCWCoordWidget {
 
-  const _GCWCoordsDutchGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsDutchGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is DutchGridCoordinate ? coordinates : DutchGridCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.DUTCH_GRID, i18nKey: dutchGridKey);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();
@@ -37,7 +35,7 @@ class _GCWCoordsDutchGridState extends State<_GCWCoordsDutchGrid> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var dutchGrid = widget.coordinates;
+      var dutchGrid = widget.coordinates as DutchGridCoordinate;
       _currentX.value = dutchGrid.x;
       _currentY.value = dutchGrid.y;
 

@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsDEC extends StatefulWidget {
-  final void Function(DECCoordinate) onChanged;
-  DECCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsDEC extends _GCWCoordWidget {
 
-  _GCWCoordsDEC({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsDEC({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is DECCoordinate ? coordinates : DECCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.DEC, i18nKey: decKey);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();

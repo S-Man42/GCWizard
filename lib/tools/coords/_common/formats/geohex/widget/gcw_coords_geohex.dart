@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsGeoHex extends StatefulWidget {
-  final void Function(GeoHexCoordinate?) onChanged;
-  final GeoHexCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsGeoHex extends _GCWCoordWidget {
 
-  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.GEOHEX, i18nKey: geoHexKey);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();
@@ -31,7 +29,7 @@ class _GCWCoordsGeoHexState extends State<_GCWCoordsGeoHex> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var geohHex = widget.coordinates;
+      var geohHex = widget.coordinates as GeoHexCoordinate;
       _currentCoord = geohHex.text;
 
       _controller.text = _currentCoord;

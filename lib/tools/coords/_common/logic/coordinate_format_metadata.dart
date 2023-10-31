@@ -135,24 +135,6 @@ CoordinateFormatDefinition? coordinateFormatDefinitionByPersistenceKey(String ke
   return allCoordinateFormatDefinitions.firstWhereOrNull((format) => format.persistenceKey == key);
 }
 
-// CoordinateFormatDefinition? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
-//   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
-// }
-
-// CoordinateFormatMetadata? coordinateFormatMetadataSubtypeByPersistenceKey(String key) {
-//   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
-// }
-
-// List<CoordinateFormatMetadata> _getAllSubtypeCoordinateFormats() {
-//   var subtypeFormats =
-//       allCoordinateFormatMetadata.where((format) => format.subtypes != null && format.subtypes!.isNotEmpty).toList();
-//
-//   return subtypeFormats.fold(<CoordinateFormatMetadata>[],
-//       (List<CoordinateFormatMetadata> value, CoordinateFormatMetadata element) {
-//     value.addAll(element.subtypes!);
-//     return value;
-//   });
-// }
 CoordinateFormatDefinition? coordinateFormatDefinitionSubtypeByPersistenceKey(String key) {
   return _getAllSubtypeCoordinateFormats().firstWhereOrNull((format) => format.persistenceKey == key);
 }

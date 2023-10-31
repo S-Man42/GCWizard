@@ -9,10 +9,10 @@ import 'package:gc_wizard/tools/coords/ellipsoid_transform/logic/ellipsoid_trans
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
-const swissgridKey = 'coords_swissgrid';
+const swissGridKey = 'coords_swissgrid';
 
 final SwissGridFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.SWISS_GRID, SwissGridCoordinate.defaultCoordinate, swissgridKey);
+  CoordinateFormatKey.SWISS_GRID, SwissGridCoordinate.defaultCoordinate, swissGridKey);
 
 class SwissGridCoordinate extends BaseCoordinate {
   @override

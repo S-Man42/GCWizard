@@ -1,13 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
-  final void Function(ReverseWherigoDay1976Coordinate?) onChanged;
-  final ReverseWherigoDay1976Coordinate coordinates;
-  final bool initialize;
+class _GCWCoordsReverseWherigoDay1976 extends _GCWCoordWidget {
 
-  const _GCWCoordsReverseWherigoDay1976(
-      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsReverseWherigoDay1976({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is ReverseWherigoDay1976Coordinate ? coordinates : ReverseWherigoDay1976Coordinate.defaultCoordinate,
+          type: CoordinateFormatKey.REVERSE_WIG_DAY1976, i18nKey: reverseWhereigoDay1976Key);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();
@@ -43,7 +40,7 @@ class _GCWCoordsReverseWherigoDay1976State extends State<_GCWCoordsReverseWherig
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var day1976 = widget.coordinates;
+      var day1976 = widget.coordinates as ReverseWherigoDay1976Coordinate;
       _currentA = day1976.s;
       _currentB = day1976.t;
 

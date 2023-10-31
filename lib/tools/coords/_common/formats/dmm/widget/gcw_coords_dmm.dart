@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsDMM extends StatefulWidget {
-  final void Function(DMMCoordinate) onChanged;
-  final DMMCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsDMM extends _GCWCoordWidget {
 
-  const _GCWCoordsDMM({Key? key, required this.onChanged, required this.coordinates, this.initialize = true})
-      : super(key: key);
+  _GCWCoordsDMM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is DMMCoordinate ? coordinates : DMMCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.DMM, i18nKey: dmmKey);
 
   @override
   _GCWCoordsDMMState createState() => _GCWCoordsDMMState();
@@ -68,7 +66,7 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var dmm = widget.coordinates;
+      var dmm = widget.coordinates as DMMCoordinate;
       var lat = dmm.dmmLatitude.formatParts(10);
       var lon = dmm.dmmLongitude.formatParts(10);
 

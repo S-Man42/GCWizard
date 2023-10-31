@@ -44,10 +44,10 @@ const Map<int, CoordinateFormatKey> SLIPPY_MAP_ZOOM = {
 };
 
 const _defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
-const slippymapKey = 'coords_slippymap';
+const slippyMapKey = 'coords_slippymap';
 
 final SlippyMapFormatDefinition = CoordinateFormatWithSubtypesDefinition(
-  CoordinateFormatKey.SLIPPY_MAP, SlippyMapCoordinate.defaultCoordinate, slippymapKey,
+  CoordinateFormatKey.SLIPPY_MAP, SlippyMapCoordinate.defaultCoordinate, slippyMapKey,
   [
     CoordinateFormatDefinition(CoordinateFormatKey.SLIPPYMAP_0, SlippyMapCoordinate.defaultCoordinate, ''),
     CoordinateFormatDefinition(CoordinateFormatKey.SLIPPYMAP_1, SlippyMapCoordinate.defaultCoordinate, ''),

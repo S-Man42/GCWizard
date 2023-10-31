@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsGaussKrueger extends StatefulWidget {
-  final void Function(GaussKruegerCoordinate) onChanged;
-  GaussKruegerCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsGaussKrueger extends _GCWCoordWidget {
 
-  _GCWCoordsGaussKrueger({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.GAUSS_KRUEGER, i18nKey: gausKruegerKey);
 
   @override
   _GCWCoordsGaussKruegerState createState() => _GCWCoordsGaussKruegerState();
@@ -44,7 +42,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     } else if (widget.initialize) {
-      var gausskrueger = widget.coordinates;
+      var gausskrueger = widget.coordinates as GaussKruegerCoordinate;
       _currentEasting.value = gausskrueger.easting;
       _currentNorthing.value = gausskrueger.northing;
 

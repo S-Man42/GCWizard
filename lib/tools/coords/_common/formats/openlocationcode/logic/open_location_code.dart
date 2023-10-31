@@ -21,10 +21,10 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-const openlocationcodeKey = 'coords_openlocationcode';
+const openLocationCodeKey = 'coords_openlocationcode';
 
 final OpenLocationCodeFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.OPEN_LOCATION_CODE, OpenLocationCodeCoordinate.defaultCoordinate, openlocationcodeKey);
+  CoordinateFormatKey.OPEN_LOCATION_CODE, OpenLocationCodeCoordinate.defaultCoordinate, openLocationCodeKey);
 
 class OpenLocationCodeCoordinate extends BaseCoordinate {
   @override

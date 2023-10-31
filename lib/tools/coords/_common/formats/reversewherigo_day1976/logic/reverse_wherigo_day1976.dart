@@ -4,11 +4,11 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
-const reversewhereigo_day1976Key = 'coords_reversewhereigo_day1976';
+const reverseWhereigoDay1976Key = 'coords_reversewhereigo_day1976';
 
 final ReverseWherigoDay1976FormatDefinition = CoordinateFormatDefinition(
   CoordinateFormatKey.REVERSE_WIG_DAY1976, ReverseWherigoDay1976Coordinate.defaultCoordinate,
-  reversewhereigo_day1976Key);
+  reverseWhereigoDay1976Key);
 
 class ReverseWherigoDay1976Coordinate extends BaseCoordinate {
   @override

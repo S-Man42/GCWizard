@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsSwissGrid extends StatefulWidget {
-  final void Function(SwissGridCoordinate) onChanged;
-  final BaseCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsSwissGrid extends _GCWCoordWidget {
 
-  const _GCWCoordsSwissGrid({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsSwissGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is SwissGridCoordinate ? coordinates : SwissGridCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.SWISS_GRID, i18nKey: swissGridKey);
 
   @override
   _GCWCoordsSwissGridState createState() => _GCWCoordsSwissGridState();

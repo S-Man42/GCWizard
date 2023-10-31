@@ -1,12 +1,10 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsSlippyMap extends StatefulWidget {
-  final void Function(SlippyMapCoordinate?) onChanged;
-  final SlippyMapCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordsSlippyMap extends _GCWCoordWidget {
 
-  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+        super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapCoordinate.defaultCoordinate,
+          type: CoordinateFormatKey.SLIPPY_MAP, i18nKey: slippyMapKey);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();
@@ -45,7 +43,7 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
       _currentZoom = _slippyMapZoom();
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     } else if (widget.initialize) {
-      var slippyMap = widget.coordinates;
+      var slippyMap = widget.coordinates as SlippyMapCoordinate;
       _currentX.value = slippyMap.x;
       _currentY.value = slippyMap.y;
 
