@@ -3,6 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/logic/maya_calendar.dart';
 import 'package:prefs/prefs.dart';
 
@@ -14,6 +15,24 @@ class ToolSettings extends StatefulWidget {
 }
 
 class _ToolSettingsState extends State<ToolSettings> {
+
+  late TextEditingController _chatGPTAPIKeyController;
+  String _chatgpt_api_key = Prefs.get(PREFERENCE_CHATGPT_API_KEY).toString();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _chatGPTAPIKeyController = TextEditingController(text: _chatgpt_api_key);
+  }
+
+  @override
+  void dispose() {
+    _chatGPTAPIKeyController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,6 +58,18 @@ class _ToolSettingsState extends State<ToolSettings> {
               child: mode.value,
             );
           }).toList(),
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_chatgpt_title'),
+        ),
+        GCWTextField(
+          controller: _chatGPTAPIKeyController,
+          onChanged: (text) {
+            setState(() {
+              _chatgpt_api_key = text;
+              Prefs.setString(PREFERENCE_CHATGPT_API_KEY, _chatgpt_api_key);
+            });
+          },
         ),
       ],
     );
