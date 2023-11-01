@@ -584,6 +584,7 @@
   "chatgpt_title": "ChatGPT",
   "chatgpt_description": "ChatGPT client",
   "chatgpt_prompt": "Prompt",
+  "chatgpt_temperature": "Temperature",
   "chatgpt_image": "Image",
   "chatgpt_text": "Text",
   "chef_title": "Chef",
