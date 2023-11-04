@@ -3629,10 +3629,10 @@ void initializeRegistry(BuildContext context) {
       'gcwizard_script',
     ]),
 
-    GCWTool(tool: const ChatGPT(), id: 'chatgpt', isBeta: true, categories: const [
+    GCWTool(tool: const ChatGPT(), id: 'chatgpt.dart', isBeta: true, categories: const [
       ToolCategory.MISCELLANEOUS
     ], searchKeys: const [
-      'chatgpt',
+      'chatgpt.dart',
     ]),
 
     //Segments Display *******************************************************************************************
