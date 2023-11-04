@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -45,11 +44,10 @@ class _ChatGPTState extends State<ChatGPT> {
   String _currentAPIkey = Prefs.getString(PREFERENCE_CHATGPT_API_KEY);
   double _currentTemperature = 0.0;
   String _currentOutput = '';
-  String _currentModel = 'text-davinci-003';
+  String _currentModel = 'gpt-3.5-turbo-instruct';
   String _currentImageData = '';
 
   bool _loadFile = false;
-  bool _loadModels = false;
 
   Widget _outputWidget = Container();
 
@@ -61,7 +59,13 @@ class _ChatGPTState extends State<ChatGPT> {
   void initState() {
     super.initState();
 
-    OpenAI.apiKey = _currentAPIkey;
+    //for (String model in MODELS_CHAT) {
+    //  _modelIDs[model] = model;
+    //}
+    for (String model in MODELS_COMPLETIONS) {
+      _modelIDs[model] = model;
+    }
+
     _promptController = TextEditingController(text: _currentPrompt);
     _modelController = TextEditingController(text: _currentModel);
   }
@@ -78,7 +82,6 @@ class _ChatGPTState extends State<ChatGPT> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        if (_loadModels)
           GCWDropDown<String>(
             value: _currentModel,
             items: _modelIDs.entries.map((mode) {
@@ -93,37 +96,6 @@ class _ChatGPTState extends State<ChatGPT> {
               });
             },
           ),
-        if (!_loadModels)
-          Row(children: [
-            Expanded(
-              child: Container(
-                  margin: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                  child: GCWTextField(
-                    //title: i18n(context, 'chatgpt_prompt'),
-                    controller: _modelController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentModel = text;
-                      });
-                    },
-                  )),
-              flex: 4,
-            ),
-            Expanded(
-              child: Container(
-                  margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                  child: GCWButton(
-                    //text: i18n(context, 'common_start'),
-                    text: i18n(context, 'chatgpt_button_models'),
-                    onPressed: () {
-                      setState(() {
-                        _getChatGPTmodelList();
-                      });
-                    },
-                  )),
-              flex: 3,
-            ),
-          ]),
         GCWTextDivider(
           text: i18n(context, 'chatgpt_prompt'),
           suppressTopSpace: true,
@@ -200,6 +172,7 @@ class _ChatGPTState extends State<ChatGPT> {
           text: i18n(context, 'common_start'),
           onPressed: () {
             setState(() {
+              _getChatGPTtextList();
               _calcOutput();
             });
           },
@@ -258,8 +231,7 @@ class _ChatGPTState extends State<ChatGPT> {
     if (value) showExportedFileDialog(context);
   }
 
-
-  void _getChatGPTmodelList() async {
+  void _getChatGPTtextList() async {
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -268,10 +240,10 @@ class _ChatGPTState extends State<ChatGPT> {
           child: SizedBox(
             height: 220,
             width: 150,
-            child: GCWAsyncExecuter<ChatGPTmodelOutput>(
-              isolatedFunction: ChatGPTgetModelListAsync,
-              parameter: _buildChatGPTgetModelListJobData,
-              onReady: (data) => _showChatGPTgetModelListOutput(data),
+            child: GCWAsyncExecuter<ChatGPTtextOutput>(
+              isolatedFunction: ChatGPTgetTextAsync,
+              parameter: _buildChatGPTgetTextJobData,
+              onReady: (data) => _showChatGPTgetTextOutput(data),
               isOverlay: true,
             ),
           ),
@@ -280,19 +252,19 @@ class _ChatGPTState extends State<ChatGPT> {
     );
   }
 
-  Future<GCWAsyncExecuterParameters> _buildChatGPTgetModelListJobData() async {
-    return GCWAsyncExecuterParameters(ChatGPTgetModelListJobData(
+  Future<GCWAsyncExecuterParameters> _buildChatGPTgetTextJobData() async {
+    return GCWAsyncExecuterParameters(ChatGPTgetChatJobData(
       chatgpt_api_key: _currentAPIkey,
+      chatgpt_model: _currentModel,
+      chatgpt_prompt: _currentPrompt,
+      chatgpt_temperature: _currentTemperature,
+
     ));
   }
 
-  void _showChatGPTgetModelListOutput(ChatGPTmodelOutput output) {
+  void _showChatGPTgetTextOutput(ChatGPTtextOutput output) {
     if (output.status == ChatGPTstatus.OK) {
-      //showSnackBar(i18n(context, 'wtf_result_ok'), context);
-      output.models.forEach((model) {
-        _modelIDs[model] = model;
-      });
-      _loadModels = true;
+print(output.textData);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
