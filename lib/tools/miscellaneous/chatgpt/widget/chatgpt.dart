@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -37,8 +38,6 @@ class ChatGPT extends StatefulWidget {
 
 class _ChatGPTState extends State<ChatGPT> {
   late TextEditingController _promptController;
-  late TextEditingController _modelController;
-  late TextEditingController _temperatureController;
 
   String _currentPrompt = '';
   String _currentAPIkey = Prefs.getString(PREFERENCE_CHATGPT_API_KEY);
@@ -54,26 +53,25 @@ class _ChatGPTState extends State<ChatGPT> {
   Map<String, String> _modelIDs = {};
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentImageMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
 
-    //for (String model in MODELS_CHAT) {
-    //  _modelIDs[model] = model;
-    //}
+    for (String model in MODELS_CHAT) {
+      _modelIDs[model] = model;
+    }
     for (String model in MODELS_COMPLETIONS) {
       _modelIDs[model] = model;
     }
 
     _promptController = TextEditingController(text: _currentPrompt);
-    _modelController = TextEditingController(text: _currentModel);
   }
 
   @override
   void dispose() {
     _promptController.dispose();
-    _modelController.dispose();
 
     super.dispose();
   }
@@ -168,11 +166,22 @@ class _ChatGPTState extends State<ChatGPT> {
             });
           },
         ),
+        _currentMode == GCWSwitchPosition.right
+          ? GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'chatgpt_image_url'),
+          rightValue: i18n(context, 'chatgpt_image'),
+          value: _currentImageMode,
+          onChanged: (value) {
+            setState(() {
+              _currentImageMode = value;
+            });
+          },
+        )
+          : Container(),
         GCWButton(
           text: i18n(context, 'common_start'),
           onPressed: () {
             setState(() {
-              _getChatGPTtextList();
               _calcOutput();
             });
           },
@@ -182,41 +191,30 @@ class _ChatGPTState extends State<ChatGPT> {
     );
   }
 
-  Future<void> _calcOutput() async {
+  void _calcOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      try {
-        final completion = await OpenAI.instance.completion.create(
-          model: _currentModel,
-          prompt: _currentPrompt,
-          temperature: _currentTemperature,
-          maxTokens: 1000,
-        );
-        _currentOutput = completion.choices[0].text;
-        _outputWidget = GCWDefaultOutput(child: _currentOutput);
-      } on RequestFailedException catch (e) {
-        _outputWidget = GCWDefaultOutput(child: 'Statuscode ' + e.statusCode.toString() + '\n' + e.message);
-      }
+      _getChatGPTtext();
+      _outputWidget = GCWDefaultOutput(child: _currentOutput);
     } else {
+      _getChatGPTimage();
       // Generate an image from a prompt.
-      try {
-        final image = await OpenAI.instance.image.create(
-          prompt: _currentPrompt,
-          size: OpenAIImageSize.size256,
-          //responseFormat: OpenAIImageResponseFormat.url,
-          responseFormat: OpenAIImageResponseFormat.b64Json,
-          n: 1,
-        );
-        //_currentURL = image.data.first.url!;
-        _currentImageData = image.data.first.data!;
-        _currentImageData = decodeBase64(_currentImageData);
-        _currentImageData = asciiToHexString(_currentImageData);
-        var fileData = hexstring2file(_currentImageData);
-        //_outputWidget = GCWDefaultOutput(child: _currentImageData);
-        //_outputWidget = hexDataOutput(context, <Uint8List>[fileData!]);
-        _outputWidget = GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)));
-      } on RequestFailedException catch (e) {
-        _outputWidget = GCWDefaultOutput(child: 'Statuscode ' + e.statusCode.toString() + '\n' + e.message);
-      }
+      // try {
+      //   final image = await OpenAI.instance.image.create(
+      //     prompt: _currentPrompt,
+      //     size: OpenAIImageSize.size256,
+      //     //responseFormat: OpenAIImageResponseFormat.url,
+      //     responseFormat: OpenAIImageResponseFormat.b64Json,
+      //     n: 1,
+      //   );
+      //   //_currentURL = image.data.first.url!;
+      //   _currentImageData = image.data.first.data!;
+      //   _currentImageData = decodeBase64(_currentImageData);
+      //   _currentImageData = asciiToHexString(_currentImageData);
+      //   var fileData = hexstring2file(_currentImageData);
+      //   _outputWidget = GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)));
+      // } on RequestFailedException catch (e) {
+      //   _outputWidget = GCWDefaultOutput(child: 'Statuscode ' + e.statusCode.toString() + '\n' + e.message);
+      // }
     }
     setState(() {});
   }
@@ -231,7 +229,7 @@ class _ChatGPTState extends State<ChatGPT> {
     if (value) showExportedFileDialog(context);
   }
 
-  void _getChatGPTtextList() async {
+  void _getChatGPTtext() async {
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -242,7 +240,7 @@ class _ChatGPTState extends State<ChatGPT> {
             width: 150,
             child: GCWAsyncExecuter<ChatGPTtextOutput>(
               isolatedFunction: ChatGPTgetTextAsync,
-              parameter: _buildChatGPTgetTextJobData,
+              parameter: _buildChatGPTgetJobData,
               onReady: (data) => _showChatGPTgetTextOutput(data),
               isOverlay: true,
             ),
@@ -252,25 +250,63 @@ class _ChatGPTState extends State<ChatGPT> {
     );
   }
 
-  Future<GCWAsyncExecuterParameters> _buildChatGPTgetTextJobData() async {
+  Future<GCWAsyncExecuterParameters> _buildChatGPTgetJobData() async {
     return GCWAsyncExecuterParameters(ChatGPTgetChatJobData(
       chatgpt_api_key: _currentAPIkey,
       chatgpt_model: _currentModel,
       chatgpt_prompt: _currentPrompt,
       chatgpt_temperature: _currentTemperature,
-
+      chatgpt_image_url: _currentImageMode == GCWSwitchPosition.left,
     ));
   }
 
   void _showChatGPTgetTextOutput(ChatGPTtextOutput output) {
     if (output.status == ChatGPTstatus.OK) {
-print(output.textData);
+      var outputMap = jsonDecode(output.textData);
+      _currentOutput = outputMap['choices'][0]['text'].toString();
+      setState(() {});
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
       if (output.status == ChatGPTstatus.ERROR) {
-        showSnackBar(i18n(context, 'wtf_result_error_2') + '\n' + output.httpCode + '\n' + output.httpMessage, context);
+        _currentOutput =  i18n(context, 'chatgpt_error') + '\n' + output.httpCode + '\n' + output.httpMessage + '\n' + output.textData;
+      }
+    });
+  }
+
+  void _getChatGPTimage() async {
+    await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: SizedBox(
+            height: 220,
+            width: 150,
+            child: GCWAsyncExecuter<ChatGPTimageOutput>(
+              isolatedFunction: ChatGPTgetImageAsync,
+              parameter: _buildChatGPTgetJobData,
+              onReady: (data) => _showChatGPTgetImageOutput(data),
+              isOverlay: true,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showChatGPTgetImageOutput(ChatGPTimageOutput output) {
+    if (output.status == ChatGPTstatus.OK) {
+      var outputMap = jsonDecode(output.imageData);
+      _currentOutput = outputMap['choices'][0]['text'].toString();
+      setState(() {});
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+      if (output.status == ChatGPTstatus.ERROR) {
+        _currentOutput =  i18n(context, 'chatgpt_error') + '\n' + output.httpCode + '\n' + output.httpMessage + '\n' + output.imageData;
       }
     });
   }
