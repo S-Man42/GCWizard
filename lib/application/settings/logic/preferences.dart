@@ -2,6 +2,7 @@ const PREFERENCE_ALPHABET_CUSTOM_ALPHABETS = 'alphabetvalues_custom_alphabets';
 const PREFERENCE_ALPHABET_DEFAULT_ALPHABET = 'alphabetvalues_default_alphabet';
 const PREFERENCE_APP_COUNT_OPENED = 'app_count_opened';
 const PREFERENCE_CHANGELOG_DISPLAYED = 'changelog_displayed';
+const PREFERENCE_CHATGPT_API_KEY = 'chatgpt_api_key';
 const PREFERENCE_CLIPBOARD_MAX_ITEMS = 'clipboard_max_items';
 const PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS = 'clipboard_keep_entries_in_days';
 const PREFERENCE_CLIPBOARD_ITEMS = 'clipboard_items';

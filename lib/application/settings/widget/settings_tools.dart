@@ -15,19 +15,25 @@ class ToolSettings extends StatefulWidget {
 }
 
 class _ToolSettingsState extends State<ToolSettings> {
-
   late TextEditingController _inputControllerW3WApiKey;
   String _currentInputW3WApiKey = Prefs.get(PREFERENCE_COORD_DEFAULT_W3W_APIKEY).toString();
+
+  late TextEditingController _chatGPTAPIKeyController;
+  String _chatgpt_api_key = Prefs.get(PREFERENCE_CHATGPT_API_KEY).toString();
 
   @override
   void initState() {
     super.initState();
+
     _inputControllerW3WApiKey = TextEditingController(text: _currentInputW3WApiKey);
+    _chatGPTAPIKeyController = TextEditingController(text: _chatgpt_api_key);
   }
 
   @override
   void dispose() {
     _inputControllerW3WApiKey.dispose();
+    _chatGPTAPIKeyController.dispose();
+
     super.dispose();
   }
 
@@ -61,12 +67,23 @@ class _ToolSettingsState extends State<ToolSettings> {
           text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
         ),
         GCWTextField(
-          title: i18n(context, 'settings_coordinates_defaultw3wapikey'),
           controller: _inputControllerW3WApiKey,
           onChanged: (text) {
             setState(() {
               _currentInputW3WApiKey = text;
               Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, text);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_chatgpt_title'),
+        ),
+        GCWTextField(
+          controller: _chatGPTAPIKeyController,
+          onChanged: (text) {
+            setState(() {
+              _chatgpt_api_key = text;
+              Prefs.setString(PREFERENCE_CHATGPT_API_KEY, _chatgpt_api_key);
             });
           },
         ),
