@@ -142,218 +142,6 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   @override
   Widget build(BuildContext context) {
-    final List<_GCWCoordWidget> _coordsWidgets = [
-      _GCWCoordsDEC(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsDMM(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsDMS(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsUTM(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsMGRS(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsXYZ(
-        initialize: _resetCoords,
-        coordinates: _currentCoords is XYZCoordinate
-            ? _currentCoords as XYZCoordinate
-            : XYZCoordinate.defaultCoordinate,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsSwissGrid(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsSwissGridPlus(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsGaussKrueger(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsLambert(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsDutchGrid(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsMaidenhead(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsMercator(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsNaturalAreaCode(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsSlippyMap(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsMakaney(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsGeohash(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsGeoHex(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsGeo3x3(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsOpenLocationCode(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsQuadtree(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsReverseWherigoWaldmeister(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-      _GCWCoordsReverseWherigoDay1976(
-        initialize: _resetCoords,
-        coordinates: _currentCoords,
-        onChanged: (newValue) {
-          setState(() {
-            _setCurrentValueAndEmitOnChange(newValue);
-          });
-        },
-      ),
-    ];
-
     _resetCoords = false;
 
     Column _widget;
@@ -379,13 +167,19 @@ class _GCWCoordsState extends State<GCWCoords> {
       );
     }
 
-    var rawWidget = _coordsWidgets
-        .firstWhereOrNull((_GCWCoordWidget entry) => entry.type == _currentCoords.format.type);
-    if (rawWidget == null) {
-      _currentWidget = _coordsWidgets.first;
-    } else {
-      _currentWidget = rawWidget;
-    }
+    var rawWidget = coordWidgetInfoList
+        .firstWhereOrNull((_GCWCoordWidgetInfo entry) => entry.type == _currentCoords.format.type);
+    rawWidget ??= coordWidgetInfoList.first;
+
+    _currentWidget = rawWidget.mainWidget(
+        initialize: _resetCoords,
+        coordinates: _currentCoords,
+        onChanged: (newValue) {
+          setState(() {
+            _setCurrentValueAndEmitOnChange(newValue);
+          });
+        }
+    );
 
     _widget.children.add(_currentWidget!);
 
@@ -513,17 +307,59 @@ class _GCWCoordsState extends State<GCWCoords> {
 }
 
 abstract class _GCWCoordWidget extends StatefulWidget{
-  final CoordinateFormatKey type;
-  final String i18nKey;
   final bool initialize;
   final BaseCoordinate coordinates;
   final void Function(BaseCoordinate?) onChanged;
 
   const _GCWCoordWidget({
       super.key,
-      required this.type,
-      required this.i18nKey,
       this.initialize = false,
       required this.coordinates,
-      required this.onChanged});
+      required this.onChanged
+  });
 }
+
+abstract class _GCWCoordWidgetInfo {
+  CoordinateFormatKey get type;
+  String get i18nKey;
+  String get name;
+  String get example;
+
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize
+  });
+}
+
+abstract class _GCWCoordWidgetWithSubtypeInfo extends _GCWCoordWidgetInfo {
+  Widget inputWidget();
+  Widget outputWidget();
+}
+
+var coordWidgetInfoList = [
+  _GCWCoordWidgetInfoDEC(),
+  _GCWCoordWidgetInfoDMM(),
+  _GCWCoordWidgetInfoDMS(),
+  _GCWCoordWidgetInfoUTM(),
+  _GCWCoordWidgetInfoMGRS(),
+  _GCWCoordWidgetInfoXYZ(),
+  _GCWCoordWidgetInfoSwissGrid(),
+  _GCWCoordWidgetInfoSwissGridPlus(),
+  _GCWCoordWidgetInfoGaussKrueger(),
+  _GCWCoordWidgetInfoLambert(),
+  _GCWCoordWidgetInfoDutchGrid(),
+  _GCWCoordWidgetInfoMaidenhead(),
+  _GCWCoordWidgetInfoMercator(),
+  _GCWCoordWidgetInfoNaturalAreaCode(),
+  _GCWCoordWidgetInfoOpenLocationCode(),
+  _GCWCoordWidgetInfoSlippyMap(),
+  _GCWCoordWidgetInfoReverseWherigoWaldmeister(),
+  _GCWCoordWidgetInfoReverseWherigoDay1976(),
+  _GCWCoordWidgetInfoGeohash(),
+  _GCWCoordWidgetInfoQuadtree(),
+  _GCWCoordWidgetInfoMakaney(),
+  _GCWCoordWidgetInfoGeoHex(),
+  _GCWCoordWidgetInfoGeo3x3(),
+];

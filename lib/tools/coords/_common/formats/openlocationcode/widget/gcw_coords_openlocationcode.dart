@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoOpenLocationCode extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.OPEN_LOCATION_CODE;
+  @override
+  String get i18nKey => openLocationCodeKey;
+  @override
+  String get name => 'OpenLocationCode (OLC, PlusCode)';
+  @override
+  String get example => '84QV7HRP+CM3';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsOpenLocationCode(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsOpenLocationCode extends _GCWCoordWidget {
 
   _GCWCoordsOpenLocationCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is OpenLocationCodeCoordinate ? coordinates : OpenLocationCodeCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.OPEN_LOCATION_CODE, i18nKey: openLocationCodeKey);
+        super(coordinates: coordinates is OpenLocationCodeCoordinate ? coordinates : OpenLocationCodeCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsOpenLocationCodeState createState() => _GCWCoordsOpenLocationCodeState();

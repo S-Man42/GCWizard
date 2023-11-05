@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoDutchGrid extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.DUTCH_GRID;
+  @override
+  String get i18nKey => dutchGridKey;
+  @override
+  String get name => 'RD (Rijksdriehoeks, DutchGrid)';
+  @override
+  String get example => 'X: 221216.7, Y: 550826.2';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsDutchGrid(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsDutchGrid extends _GCWCoordWidget {
 
   _GCWCoordsDutchGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is DutchGridCoordinate ? coordinates : DutchGridCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.DUTCH_GRID, i18nKey: dutchGridKey);
+        super(coordinates: coordinates is DutchGridCoordinate ? coordinates : DutchGridCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();

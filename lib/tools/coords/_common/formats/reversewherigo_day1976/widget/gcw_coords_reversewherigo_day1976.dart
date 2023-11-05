@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoReverseWherigoDay1976 extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.REVERSE_WIG_DAY1976;
+  @override
+  String get i18nKey => reverseWhereigoDay1976Key;
+  @override
+  String get name => 'Reverse Wherigo (Day1976)';
+  @override
+  String get example => '3f8f1, z4ee4';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsReverseWherigoDay1976(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsReverseWherigoDay1976 extends _GCWCoordWidget {
 
   _GCWCoordsReverseWherigoDay1976({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is ReverseWherigoDay1976Coordinate ? coordinates : ReverseWherigoDay1976Coordinate.defaultCoordinate,
-          type: CoordinateFormatKey.REVERSE_WIG_DAY1976, i18nKey: reverseWhereigoDay1976Key);
+        super(coordinates: coordinates is ReverseWherigoDay1976Coordinate ? coordinates : ReverseWherigoDay1976Coordinate.defaultCoordinate);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();

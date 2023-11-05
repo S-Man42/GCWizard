@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoMercator extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.MERCATOR;
+  @override
+  String get i18nKey => mercatorKey;
+  @override
+  String get name => 'Mercator';
+  @override
+  String get example => 'Y: 5667450.4, X: -13626989.9';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsMercator(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsMercator extends _GCWCoordWidget {
 
   _GCWCoordsMercator({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is MercatorCoordinate ? coordinates : MercatorCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.MERCATOR, i18nKey: mercatorKey);
+        super(coordinates: coordinates is MercatorCoordinate ? coordinates : MercatorCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsMercatorState createState() => _GCWCoordsMercatorState();

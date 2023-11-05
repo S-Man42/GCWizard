@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoNaturalAreaCode extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.NATURAL_AREA_CODE;
+  @override
+  String get i18nKey => naturalAreaCodeKey;
+  @override
+  String get name => 'Natural Area Code (NAC)';
+  @override
+  String get example => 'X: 4RZ000, Y: QJFMGZ';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsNaturalAreaCode(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsNaturalAreaCode extends _GCWCoordWidget {
 
   _GCWCoordsNaturalAreaCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is NaturalAreaCodeCoordinate ? coordinates : NaturalAreaCodeCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.NATURAL_AREA_CODE, i18nKey: naturalAreaCodeKey);
+        super(coordinates: coordinates is NaturalAreaCodeCoordinate ? coordinates : NaturalAreaCodeCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsNaturalAreaCodeState createState() => _GCWCoordsNaturalAreaCodeState();

@@ -1,10 +1,42 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoGaussKrueger extends _GCWCoordWidgetWithSubtypeInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.GAUSS_KRUEGER;
+  @override
+  String get i18nKey => gausKruegerKey;
+  @override
+  String get name => 'coords_formatconverter_gausskrueger';
+  @override
+  String get example => 'R: 8837763.4, H: 5978799.1';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsGaussKrueger(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+
+  @override
+  Widget inputWidget() {
+    // TODO: implement inputWidget
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget outputWidget() {
+    // TODO: implement outputWidget
+    throw UnimplementedError();
+  }
+}
+
 class _GCWCoordsGaussKrueger extends _GCWCoordWidget {
 
   _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.GAUSS_KRUEGER, i18nKey: gausKruegerKey);
+        super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsGaussKruegerState createState() => _GCWCoordsGaussKruegerState();

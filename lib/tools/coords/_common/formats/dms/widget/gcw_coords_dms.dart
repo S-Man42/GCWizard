@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoDMS extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.DMS;
+  @override
+  String get i18nKey => dmsKey;
+  @override
+  String get name => 'DMS: DD° MM\' SS.SS"';
+  @override
+  String get example => 'N 45° 17\' 27.60" W 122° 24\' 48.00"';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsDMS(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsDMS extends _GCWCoordWidget {
 
   _GCWCoordsDMS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is DMSCoordinate ? coordinates : DMSCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.DMS, i18nKey: dmsKey);
+        super(coordinates: coordinates is DMSCoordinate ? coordinates : DMSCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsDMSState createState() => _GCWCoordsDMSState();

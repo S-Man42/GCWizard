@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoGeoHex extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.GEOHEX;
+  @override
+  String get i18nKey => geoHexKey;
+  @override
+  String get name => 'GeoHex';
+  @override
+  String get example => 'RU568425483853568';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsGeoHex(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsGeoHex extends _GCWCoordWidget {
 
   _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.GEOHEX, i18nKey: geoHexKey);
+        super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();

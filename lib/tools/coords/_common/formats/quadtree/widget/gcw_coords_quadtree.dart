@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoQuadtree extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.QUADTREE;
+  @override
+  String get i18nKey => quadtreeKey;
+  @override
+  String get name => 'Quadtree';
+  @override
+  String get example => '021230223311203323';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsQuadtree(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsQuadtree extends _GCWCoordWidget {
 
   _GCWCoordsQuadtree({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is QuadtreeCoordinate ? coordinates : QuadtreeCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.QUADTREE, i18nKey: quadtreeKey);
+        super(coordinates: coordinates is QuadtreeCoordinate ? coordinates : QuadtreeCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsQuadtreeState createState() => _GCWCoordsQuadtreeState();

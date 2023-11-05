@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoSwissGrid extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.SWISS_GRID;
+  @override
+  String get i18nKey => swissGridKey;
+  @override
+  String get name => 'SwissGrid (CH1903/LV03)';
+  @override
+  String get example => 'Y: 720660.2, X: 167765.3';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsSwissGrid(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsSwissGrid extends _GCWCoordWidget {
 
   _GCWCoordsSwissGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is SwissGridCoordinate ? coordinates : SwissGridCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.SWISS_GRID, i18nKey: swissGridKey);
+        super(coordinates: coordinates is SwissGridCoordinate ? coordinates : SwissGridCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsSwissGridState createState() => _GCWCoordsSwissGridState();

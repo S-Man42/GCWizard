@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoUTM extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.UTM;
+  @override
+  String get i18nKey => utmKey;
+  @override
+  String get name => 'UTM';
+  @override
+  String get example => '10 N 546003.6 5015445.0';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsUTM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsUTM extends _GCWCoordWidget {
 
   _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.UTM, i18nKey: utmKey);
+        super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();

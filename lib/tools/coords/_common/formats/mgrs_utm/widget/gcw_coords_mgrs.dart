@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoMGRS extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.MGRS;
+  @override
+  String get i18nKey => mgrsKey;
+  @override
+  String get name => 'MGRS';
+  @override
+  String get example => '10T ER 46003.6 15445.0';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsMGRS(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsMGRS extends _GCWCoordWidget {
 
   _GCWCoordsMGRS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is MGRSCoordinate ? coordinates : MGRSCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.MGRS, i18nKey: mgrsKey);
+        super(coordinates: coordinates is MGRSCoordinate ? coordinates : MGRSCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();

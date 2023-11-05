@@ -1,10 +1,42 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoLambert extends _GCWCoordWidgetWithSubtypeInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.LAMBERT;
+  @override
+  String get i18nKey => lambertKey;
+  @override
+  String get name => 'coords_formatconverter_lambert';
+  @override
+  String get example => 'X: 8837763.4, Y: 5978799.1';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsLambert(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+
+  @override
+  Widget inputWidget() {
+    // TODO: implement inputWidget
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget outputWidget() {
+    // TODO: implement outputWidget
+    throw UnimplementedError();
+  }
+}
+
 class _GCWCoordsLambert extends _GCWCoordWidget {
 
   _GCWCoordsLambert({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is LambertCoordinate ? coordinates : LambertCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.LAMBERT, i18nKey: lambertKey);
+        super(coordinates: coordinates is LambertCoordinate ? coordinates : LambertCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsLambertState createState() => _GCWCoordsLambertState();

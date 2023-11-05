@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoReverseWherigoWaldmeister extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.REVERSE_WIG_WALDMEISTER;
+  @override
+  String get i18nKey => reverseWhereigoWaldmeisterKey;
+  @override
+  String get name => 'Reverse Wherigo (Waldmeister)';
+  @override
+  String get example => '042325, 436113, 935102';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsReverseWherigoWaldmeister(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsReverseWherigoWaldmeister extends _GCWCoordWidget {
 
   _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ? coordinates : ReverseWherigoWaldmeisterCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, i18nKey: reverseWhereigoWaldmeisterKey);
+        super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ? coordinates : ReverseWherigoWaldmeisterCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsReverseWherigoWaldmeisterState createState() => _GCWCoordsReverseWherigoWaldmeisterState();

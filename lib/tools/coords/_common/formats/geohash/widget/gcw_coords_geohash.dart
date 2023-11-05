@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoGeohash extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.GEOHASH;
+  @override
+  String get i18nKey => geohashKey;
+  @override
+  String get name => 'Geohash';
+  @override
+  String get example => 'c20cwkvr4';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsGeohash(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsGeohash extends _GCWCoordWidget {
 
   _GCWCoordsGeohash({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is GeohashCoordinate ? coordinates : GeohashCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.GEOHASH, i18nKey: geohashKey);
+        super(coordinates: coordinates is GeohashCoordinate ? coordinates : GeohashCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsGeohashState createState() => _GCWCoordsGeohashState();

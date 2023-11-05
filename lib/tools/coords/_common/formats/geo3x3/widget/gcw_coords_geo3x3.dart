@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoGeo3x3 extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.GEO3X3;
+  @override
+  String get i18nKey => geo3x3Key;
+  @override
+  String get name => 'Geo3x3';
+  @override
+  String get example => 'W7392967941169';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsGeo3x3(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsGeo3x3 extends _GCWCoordWidget {
 
   _GCWCoordsGeo3x3({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is Geo3x3Coordinate ? coordinates : Geo3x3Coordinate.defaultCoordinate,
-          type: CoordinateFormatKey.GEO3X3, i18nKey: geo3x3Key);
+        super(coordinates: coordinates is Geo3x3Coordinate ? coordinates : Geo3x3Coordinate.defaultCoordinate);
 
   @override
   _GCWCoordsGeo3x3State createState() => _GCWCoordsGeo3x3State();

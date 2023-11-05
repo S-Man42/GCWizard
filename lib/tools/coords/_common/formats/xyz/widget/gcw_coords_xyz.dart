@@ -1,10 +1,30 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoXYZ extends _GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.XYZ;
+  @override
+  String get i18nKey => xyzKey;
+  @override
+  String get name => 'XYZ (ECEF)';
+  @override
+  String get example => 'X: -2409244, Y: -3794410, Z: 4510158';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsXYZ(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+}
+
 class _GCWCoordsXYZ extends _GCWCoordWidget {
 
   _GCWCoordsXYZ({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is XYZCoordinate ? coordinates : XYZCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.XYZ, i18nKey: xyzKey);
+        super(coordinates: coordinates is XYZCoordinate ? coordinates : XYZCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsXYZState createState() => _GCWCoordsXYZState();

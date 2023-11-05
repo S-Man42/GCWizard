@@ -1,10 +1,42 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+class _GCWCoordWidgetInfoSlippyMap extends _GCWCoordWidgetWithSubtypeInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.SLIPPY_MAP;
+  @override
+  String get i18nKey => slippyMapKey;
+  @override
+  String get name => 'Slippy Map Tiles';
+  @override
+  String get example => 'Z: 15, X: 5241, Y: 11749';
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize,
+  }) {
+    return _GCWCoordsSlippyMap(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+  }
+
+  @override
+  Widget inputWidget() {
+    // TODO: implement inputWidget
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget outputWidget() {
+    // TODO: implement outputWidget
+    throw UnimplementedError();
+  }
+}
+
 class _GCWCoordsSlippyMap extends _GCWCoordWidget {
 
   _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
-        super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapCoordinate.defaultCoordinate,
-          type: CoordinateFormatKey.SLIPPY_MAP, i18nKey: slippyMapKey);
+        super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();
