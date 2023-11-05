@@ -88,14 +88,14 @@ Future<ChatGPTtextOutput> _ChatGPTgetTextAsync(String APIkey, String model, Stri
   }
   try {
     uri = ENDPOINTS[model]!;
-    final http.Response response = await http.post(
+    final http.Response responseChat = await http.post(
       Uri.parse(uri),
       headers: CHATGPT_MODEL_HEADERS,
       body: body,
     );
-    httpCode = response.statusCode.toString();
-    httpMessage = response.reasonPhrase.toString();
-    textData = response.body;
+    httpCode = responseChat.statusCode.toString();
+    httpMessage = responseChat.reasonPhrase.toString();
+    textData = responseChat.body;
     if (httpCode != '200') {
       print('ERROR    ----------------------------------------------------------------');
       print(httpCode);

@@ -591,6 +591,7 @@
   "chatgpt_text": "Text",
   "chatgpt_button_models": "Load Models",
   "chatgpt_error": "Error",
+  "chatgpt_size": "Size",
   "chef_title": "Chef",
   "chef_description": "Esoteric Programming language looking like a recipe",
   "chef_refrigerator": "Refrigerator (Input)",

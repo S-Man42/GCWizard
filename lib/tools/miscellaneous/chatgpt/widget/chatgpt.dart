@@ -13,6 +13,7 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
@@ -20,7 +21,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:dart_openai/dart_openai.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
 import 'package:gc_wizard/tools/miscellaneous/chatgpt/logic/chatgpt.dart';
@@ -45,6 +45,7 @@ class _ChatGPTState extends State<ChatGPT> {
   String _currentOutput = '';
   String _currentModel = 'gpt-3.5-turbo-instruct';
   String _currentImageData = '';
+  String _currentImageSize = '256x256';
 
   bool _loadFile = false;
 
@@ -80,20 +81,20 @@ class _ChatGPTState extends State<ChatGPT> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-          GCWDropDown<String>(
-            value: _currentModel,
-            items: _modelIDs.entries.map((mode) {
-              return GCWDropDownMenuItem(
-                value: mode.key,
-                child: mode.value,
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentModel = value;
-              });
-            },
-          ),
+        GCWDropDown<String>(
+          value: _currentModel,
+          items: _modelIDs.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentModel = value;
+            });
+          },
+        ),
         GCWTextDivider(
           text: i18n(context, 'chatgpt_prompt'),
           suppressTopSpace: true,
@@ -139,7 +140,6 @@ class _ChatGPTState extends State<ChatGPT> {
                 _loadFile = !_loadFile;
                 return;
               }
-
               _currentPrompt = String.fromCharCodes(_file.bytes);
               _loadFile = !_loadFile;
               setState(() {});
@@ -167,17 +167,34 @@ class _ChatGPTState extends State<ChatGPT> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-          ? GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'chatgpt_image_url'),
-          rightValue: i18n(context, 'chatgpt_image'),
-          value: _currentImageMode,
-          onChanged: (value) {
-            setState(() {
-              _currentImageMode = value;
-            });
-          },
-        )
-          : Container(),
+            ? Column(children: <Widget>[
+                GCWDropDown<String>(
+                  title: i18n(context, 'chatgpt_size'),
+                  value: _currentImageSize,
+                  items: IMAGE_SIZE.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode.key,
+                      child: mode.value,
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentImageSize = value;
+                    });
+                  },
+                ),
+                GCWTwoOptionsSwitch(
+                  leftValue: i18n(context, 'chatgpt_image_url'),
+                  rightValue: i18n(context, 'chatgpt_image'),
+                  value: _currentImageMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentImageMode = value;
+                    });
+                  },
+                ),
+              ])
+            : Container(),
         GCWButton(
           text: i18n(context, 'common_start'),
           onPressed: () {
@@ -194,29 +211,10 @@ class _ChatGPTState extends State<ChatGPT> {
   void _calcOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       _getChatGPTtext();
-      _outputWidget = GCWDefaultOutput(child: _currentOutput);
+      setState(() {});
     } else {
       _getChatGPTimage();
-      // Generate an image from a prompt.
-      // try {
-      //   final image = await OpenAI.instance.image.create(
-      //     prompt: _currentPrompt,
-      //     size: OpenAIImageSize.size256,
-      //     //responseFormat: OpenAIImageResponseFormat.url,
-      //     responseFormat: OpenAIImageResponseFormat.b64Json,
-      //     n: 1,
-      //   );
-      //   //_currentURL = image.data.first.url!;
-      //   _currentImageData = image.data.first.data!;
-      //   _currentImageData = decodeBase64(_currentImageData);
-      //   _currentImageData = asciiToHexString(_currentImageData);
-      //   var fileData = hexstring2file(_currentImageData);
-      //   _outputWidget = GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)));
-      // } on RequestFailedException catch (e) {
-      //   _outputWidget = GCWDefaultOutput(child: 'Statuscode ' + e.statusCode.toString() + '\n' + e.message);
-      // }
     }
-    setState(() {});
   }
 
   void _exportFile(
@@ -256,6 +254,7 @@ class _ChatGPTState extends State<ChatGPT> {
       chatgpt_model: _currentModel,
       chatgpt_prompt: _currentPrompt,
       chatgpt_temperature: _currentTemperature,
+      chatgpt_image_size: _currentImageSize,
       chatgpt_image_url: _currentImageMode == GCWSwitchPosition.left,
     ));
   }
@@ -263,14 +262,20 @@ class _ChatGPTState extends State<ChatGPT> {
   void _showChatGPTgetTextOutput(ChatGPTtextOutput output) {
     if (output.status == ChatGPTstatus.OK) {
       var outputMap = jsonDecode(output.textData);
-      _currentOutput = outputMap['choices'][0]['text'].toString();
-      setState(() {});
+      _currentOutput = outputMap['choices'][0]['text'] as String;
+      _outputWidget = GCWDefaultOutput(child: _currentOutput);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
       if (output.status == ChatGPTstatus.ERROR) {
-        _currentOutput =  i18n(context, 'chatgpt_error') + '\n' + output.httpCode + '\n' + output.httpMessage + '\n' + output.textData;
+        _currentOutput = i18n(context, 'chatgpt_error') +
+            '\n' +
+            output.httpCode +
+            '\n' +
+            output.httpMessage +
+            '\n' +
+            output.textData;
       }
     });
   }
@@ -299,14 +304,39 @@ class _ChatGPTState extends State<ChatGPT> {
   void _showChatGPTgetImageOutput(ChatGPTimageOutput output) {
     if (output.status == ChatGPTstatus.OK) {
       var outputMap = jsonDecode(output.imageData);
-      _currentOutput = outputMap['choices'][0]['text'].toString();
-      setState(() {});
+      if (_currentImageMode == GCWSwitchPosition.left) {
+        _currentOutput = outputMap['data'][0]['url'] as String;
+        _outputWidget = GCWDefaultOutput(child: _currentOutput);
+      } else {
+        _currentOutput = outputMap['data'][0]['b64_json'] as String;
+        _currentImageData = decodeBase64(_currentOutput);
+        _currentImageData = asciiToHexString(_currentImageData);
+        var fileData = hexstring2file(_currentImageData);
+        _outputWidget = Column(
+          children: <Widget>[
+            GCWExpandableTextDivider(
+              expanded: false,
+              text: 'BASE64',
+              child: GCWDefaultOutput(
+                child: _currentOutput,
+              )
+            ),
+            GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)))
+          ],
+        );
+      }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
       if (output.status == ChatGPTstatus.ERROR) {
-        _currentOutput =  i18n(context, 'chatgpt_error') + '\n' + output.httpCode + '\n' + output.httpMessage + '\n' + output.imageData;
+        _currentOutput = i18n(context, 'chatgpt_error') +
+            '\n' +
+            output.httpCode +
+            '\n' +
+            output.httpMessage +
+            '\n' +
+            output.imageData;
       }
     });
   }
