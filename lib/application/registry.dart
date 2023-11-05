@@ -3986,10 +3986,19 @@ void initializeRegistry(BuildContext context) {
       'barcodes',
       'barcode39',
     ]),
+    GCWSymbolTableTool(symbolKey: 'base16', symbolSearchStrings: const [
+      'symbol_base16',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'base16_02', symbolSearchStrings: const [
+      'symbol_base16_02',
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'baudot_1888', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(
         symbolKey: 'baudot_54123', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'bibibinary', symbolSearchStrings: const [
+      'symbol_bibibinary',
+    ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: const [
       'symbol_birds_on_a_wire',
     ]),
