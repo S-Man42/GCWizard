@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:prefs/prefs.dart';
 
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-
-import 'package:gc_wizard/tools/crypto_and_encodings/upsidedown/logic/upsidedown.dart';
 
 class UpsideDown extends StatefulWidget {
   const UpsideDown({Key? key}) : super(key: key);
@@ -17,9 +17,10 @@ class UpsideDownState extends State<UpsideDown> {
   late TextEditingController _inputControllerDecode;
   late TextEditingController _inputControllerEncode;
 
-  var _currentInputEncode = '';
-  var _currentInputDecode = '';
-  var _currentMode = GCWSwitchPosition.right;
+  String _currentInputEncode = '';
+  String _currentInputDecode = '';
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  double _fontSize = Prefs.getDouble(PREFERENCE_THEME_FONT_SIZE);
 
   @override
   void initState() {
@@ -50,47 +51,42 @@ class UpsideDownState extends State<UpsideDown> {
         ),
         _currentMode == GCWSwitchPosition.right
             ? GCWTextField(
-            controller: _inputControllerDecode,
-            style: const TextStyle(fontFamily: 'Quirkus', fontSize: 16.0),
-            onChanged: (text) {
-              setState(() {
-                _currentInputDecode = text;
-              });
-            })
+                controller: _inputControllerDecode,
+                style: TextStyle(fontFamily: 'Quirkus', fontSize: _fontSize),
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputDecode = text;
+                  });
+                })
             : GCWTextField(
-            controller: _inputControllerEncode,
-            onChanged: (text) {
-              setState(() {
-                _currentInputEncode = text;
-              });
-            }),
+                controller: _inputControllerEncode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputEncode = text;
+                  });
+                }),
         _buildOutput(),
       ],
     );
   }
 
   Widget _buildOutput() {
-    if ( _currentMode == GCWSwitchPosition.right) { // decode
+    if (_currentMode == GCWSwitchPosition.right) {
+      // decode
       return GCWDefaultOutput(
-          child: decodeUpsideDownText(_currentInputDecode),
+        child: _currentInputDecode.split('').reversed.toList().join(''),
       );
-    } else {// encode
+    } else {
+      // encode
       return GCWDefaultOutput(
-        child: Text(
-          encodeUpsideDownText(_currentInputEncode),
-          style: const TextStyle(fontFamily: 'Quirkus', fontSize: 16.0),
-        )
+            child: Text(
+              _currentInputEncode.split('').reversed.toList().join(''),
+              style: TextStyle(
+                  fontFamily: 'Quirkus',
+                  fontSize: _fontSize,
+                  letterSpacing: 1),
+            )
       );
     }
-    // var rows = <Widget>[];
-    // var textOutput = _currentMode == GCWSwitchPosition.right
-    //     ? decodeUpsideDownText(_currentInputDecode)
-    //     : encodeUpsideDownText(_currentInputEncode);
-    //
-    // rows.add(GCWDefaultOutput(child: textOutput));
-    //
-    // return Column(
-    //   children: rows,
-    // );
-    }
+  }
 }
