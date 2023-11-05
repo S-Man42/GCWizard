@@ -51,6 +51,7 @@ class UpsideDownState extends State<UpsideDown> {
         _currentMode == GCWSwitchPosition.right
             ? GCWTextField(
             controller: _inputControllerDecode,
+            style: const TextStyle(fontFamily: 'Quirkus', fontSize: 16.0),
             onChanged: (text) {
               setState(() {
                 _currentInputDecode = text;
@@ -69,15 +70,27 @@ class UpsideDownState extends State<UpsideDown> {
   }
 
   Widget _buildOutput() {
-    var rows = <Widget>[];
-    var textOutput = _currentMode == GCWSwitchPosition.right
-        ? decodeUpsideDownText(_currentInputDecode)
-        : encodeUpsideDownText(_currentInputEncode);
-
-    rows.add(GCWDefaultOutput(child: textOutput));
-
-    return Column(
-      children: rows,
-    );
-  }
+    if ( _currentMode == GCWSwitchPosition.right) { // decode
+      return GCWDefaultOutput(
+          child: decodeUpsideDownText(_currentInputDecode),
+      );
+    } else {// encode
+      return GCWDefaultOutput(
+        child: Text(
+          encodeUpsideDownText(_currentInputEncode),
+          style: const TextStyle(fontFamily: 'Quirkus', fontSize: 16.0),
+        )
+      );
+    }
+    // var rows = <Widget>[];
+    // var textOutput = _currentMode == GCWSwitchPosition.right
+    //     ? decodeUpsideDownText(_currentInputDecode)
+    //     : encodeUpsideDownText(_currentInputEncode);
+    //
+    // rows.add(GCWDefaultOutput(child: textOutput));
+    //
+    // return Column(
+    //   children: rows,
+    // );
+    }
 }

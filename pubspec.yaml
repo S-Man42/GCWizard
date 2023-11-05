@@ -82,6 +82,9 @@ flutter:
         - asset: lib/application/_common/assets/fonts/Roboto/Roboto-BoldItalic.ttf
         - asset: lib/application/_common/assets/fonts/Roboto/Roboto-Italic.ttf
         - asset: lib/application/_common/assets/fonts/Roboto/Roboto-Regular.ttf
+    - family: Quirkus
+      fonts:
+        - asset: lib/application/_common/assets/fonts/Quirkus_UpsideDown/quirkus_upside_down.ttf
   uses-material-design: true
   assets:
     - assets/logo/
