@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -84,6 +85,7 @@ class _RotationWeirdState extends State<RotationWeird> {
       children: <Widget>[
         GCWTextField(
           controller: _controller,
+          hintText: i18n(context, 'rotation_weird_text'),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),],
           onChanged: (text) {
             setState(() {
@@ -93,6 +95,7 @@ class _RotationWeirdState extends State<RotationWeird> {
         ),
         GCWTextField(
           controller: _rotateController,
+          hintText: i18n(context, 'rotation_weird_rotation'),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
           onChanged: (text) {
             setState(() {
@@ -115,9 +118,18 @@ class _RotationWeirdState extends State<RotationWeird> {
 
     _currentInput = _currentInput.replaceAll(' ', '');
 
-    if (_currentInput.length != rotateData.length) return const GCWDefaultOutput();
-
     String result = '';
+    if (_currentInput.length != rotateData.length) {
+      if (_currentInput.length > rotateData.length) {
+        result = i18n(context, 'rotation_weird_text_g_rotation');
+      } else {
+        result = i18n(context, 'rotation_weird_text_g_rotation');
+      }
+      return GCWDefaultOutput(
+        child: result,
+      );
+    }
+
     for (int i = 0; i < _currentInput.length; i++){
       if (i < rotateData.length && rotateData[i] != null) {
         result = result + Rotator().rotate(_currentInput[i], rotateData[i]!);
