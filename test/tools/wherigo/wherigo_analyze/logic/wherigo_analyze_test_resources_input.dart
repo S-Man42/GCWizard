@@ -1,6 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
+WherigoInputData testOutputINPUTGC = const WherigoInputData(
+  InputLUAName: 'zinputFinal',
+  InputID: 'bc3d7e27b2632afb762386925af7ef65',
+  InputVariableID: 'dc0ed01b5e82aeaeaf245a2b4080c929',
+  InputName: 'Final',
+  InputDescription: '',
+  InputVisible: 'false',
+  InputMedia: 'zmedialogo',
+  InputIcon: '',
+  InputType: 'Text',
+  InputText: 'Welches \'Tier\' ist über dem Gold-Final?',
+  InputChoices: [],
+  InputAnswers: [],
+);
+
 WherigoInputData testOutputINPUT = const WherigoInputData(
   InputLUAName: 'objPortal2',
   InputID: '58b21b46-f71b-424f-829e-32d0b8268f34',
@@ -15,6 +30,17 @@ WherigoInputData testOutputINPUT = const WherigoInputData(
   InputChoices: ['Industrieland', 'Schwellenland', 'Entwicklungsland', 'Raus', 'Hilfe'],
   InputAnswers: [],
 );
+
+String testInputINPUTGC = '''
+zinputFinal = Wherigo.ZInput(cartILuebeck)
+zinputFinal.Id = "bc3d7e27b2632afb762386925af7ef65"
+zinputFinal.Name = "Final"
+zinputFinal.InputType = "Text"
+zinputFinal.Text = WWB_multiplatform_string("Welches 'Tier' ist über dem Gold-Final?")
+zinputFinal.Visible = false
+zinputFinal.InputVariableId = "dc0ed01b5e82aeaeaf245a2b4080c929"
+zinputFinal.Media = zmedialogo
+''';
 
 String testInputINPUT = 'objPortal2 = Wherigo.ZInput(objKlausdenktnach)\n'+
 'objPortal2.Id = "58b21b46-f71b-424f-829e-32d0b8268f34"\n'+

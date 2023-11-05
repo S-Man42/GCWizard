@@ -6,14 +6,11 @@ class EnigmaRotorDropDown extends StatefulWidget {
   final int position;
 
   const EnigmaRotorDropDown(
-      {Key? key,
-      required this.position,
-      this.type = EnigmaRotorType.STANDARD,
-      required this.onChanged})
+      {Key? key, required this.position, this.type = EnigmaRotorType.STANDARD, required this.onChanged})
       : super(key: key);
 
   @override
- _EnigmaRotorDropDownState createState() => _EnigmaRotorDropDownState();
+  _EnigmaRotorDropDownState createState() => _EnigmaRotorDropDownState();
 }
 
 class _EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
@@ -50,9 +47,7 @@ class _EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
                 padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: GCWDropDown<String>(
                   value: _currentRotor,
-                  items: allEnigmaRotors
-                      .where((rotor) => rotor.type == widget.type)
-                      .map((rotor) {
+                  items: allEnigmaRotors.where((rotor) => rotor.type == widget.type).map((rotor) {
                     return GCWDropDownMenuItem(
                       value: rotor.name,
                       child: rotor.name,
@@ -102,12 +97,9 @@ class _EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(Tuple2<int, EnigmaRotorConfiguration> (
-      widget.position,
-      EnigmaRotorConfiguration(
-          getEnigmaRotorByName(_currentRotor),
-          offset: _currentOffset,
-          setting: _currentSetting)
-    ));
+    widget.onChanged(Tuple2<int, EnigmaRotorConfiguration>(
+        widget.position,
+        EnigmaRotorConfiguration(getEnigmaRotorByName(_currentRotor),
+            offset: _currentOffset, setting: _currentSetting)));
   }
 }

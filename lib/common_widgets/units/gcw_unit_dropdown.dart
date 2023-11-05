@@ -12,8 +12,12 @@ class GCWUnitDropDown<T extends Unit> extends StatefulWidget {
   final bool onlyShowSymbols;
 
   const GCWUnitDropDown(
-      {Key? key, required this.onChanged, required this.value, this.unitList,
-        this.onlyShowSymbols = true, this.unitCategory})
+      {Key? key,
+      required this.onChanged,
+      required this.value,
+      this.unitList,
+      this.onlyShowSymbols = true,
+      this.unitCategory})
       : super(key: key);
 
   @override
@@ -38,9 +42,7 @@ class GCWUnitDropDownState<T extends Unit> extends State<GCWUnitDropDown<T>> {
         items: _currentUnitList.map((unit) {
           return GCWDropDownMenuItem<T>(
               value: unit,
-              child: widget.onlyShowSymbols
-                  ? unit.symbol
-                  : (i18n(context, unit.name) + ' (${unit.symbol})'));
+              child: widget.onlyShowSymbols ? unit.symbol : (i18n(context, unit.name) + ' (${unit.symbol})'));
         }).toList());
   }
 }

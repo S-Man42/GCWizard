@@ -11,7 +11,7 @@ class NumberSequenceCheckNumber extends StatefulWidget {
   const NumberSequenceCheckNumber({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
- _NumberSequenceCheckNumberState createState() => _NumberSequenceCheckNumberState();
+  _NumberSequenceCheckNumberState createState() => _NumberSequenceCheckNumberState();
 }
 
 class _NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {

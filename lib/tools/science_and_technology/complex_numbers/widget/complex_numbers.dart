@@ -14,7 +14,7 @@ class ComplexNumbers extends StatefulWidget {
   const ComplexNumbers({Key? key}) : super(key: key);
 
   @override
- _ComplexNumbersState createState() => _ComplexNumbersState();
+  _ComplexNumbersState createState() => _ComplexNumbersState();
 }
 
 class _ComplexNumbersState extends State<ComplexNumbers> {
@@ -131,12 +131,11 @@ class _ComplexNumbersState extends State<ComplexNumbers> {
     }
 
     return GCWDefaultOutput(
-        child: GCWColumnedMultilineOutput(
-            data: coordinates.entries.where((entry) => entry.key.isNotEmpty).map((entry) {
-                    return [i18n(context, entry.key), entry.value];
-                  }).toList(),
-            flexValues: const [1, 1]
-            ),
+      child: GCWColumnedMultilineOutput(
+          data: coordinates.entries.where((entry) => entry.key.isNotEmpty).map((entry) {
+            return [i18n(context, entry.key), entry.value];
+          }).toList(),
+          flexValues: const [1, 1]),
     );
   }
 }

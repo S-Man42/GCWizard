@@ -12,7 +12,8 @@ String formatCoordOutput(LatLng _coords, CoordinateFormat _outputFormat, [Ellips
     case CoordinateFormatKey.DMM:
       precision = Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
       break;
-    default: break;
+    default:
+      break;
   }
 
   return buildCoordinate(_outputFormat, _coords, ells).toString(precision);

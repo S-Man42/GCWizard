@@ -10,7 +10,7 @@ class EarwigoTextDeobfuscation extends StatefulWidget {
   const EarwigoTextDeobfuscation({Key? key}) : super(key: key);
 
   @override
- _EarwigoTextDeobfuscationState createState() => _EarwigoTextDeobfuscationState();
+  _EarwigoTextDeobfuscationState createState() => _EarwigoTextDeobfuscationState();
 }
 
 class _EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {

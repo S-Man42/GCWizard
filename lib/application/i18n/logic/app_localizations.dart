@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
-import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
@@ -99,7 +99,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {List<dynamic> parameters = const [], bool useDefaultLanguage = false, String ifTranslationNotExists = ''}) {
+String i18n(BuildContext context, String key,
+    {List<dynamic> parameters = const [], bool useDefaultLanguage = false, String ifTranslationNotExists = ''}) {
   Map<String, String> parametersMap = {};
   for (int i = parameters.length; i >= 1; i--) {
     parametersMap.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());

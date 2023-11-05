@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:latlong2/latlong.dart';
@@ -60,10 +60,7 @@ DMS? parseDMS(String input, {bool wholeString = false}) {
   if (regex.hasMatch(_input)) {
     RegExpMatch matches = regex.firstMatch(_input)!;
 
-    if (matches.group(2) == null
-        || matches.group(3) == null
-        || matches.group(4) == null
-    ) {
+    if (matches.group(2) == null || matches.group(3) == null || matches.group(4) == null) {
       return null;
     }
 
@@ -86,10 +83,7 @@ DMS? parseDMS(String input, {bool wholeString = false}) {
 
     var lat = DMSLatitude(latSign, latDegrees, latMinutes, latSeconds);
 
-    if (matches.group(7) == null
-        || matches.group(8) == null
-        || matches.group(9) == null
-    ) {
+    if (matches.group(7) == null || matches.group(8) == null || matches.group(9) == null) {
       return null;
     }
 
@@ -123,10 +117,7 @@ DMS? _parseDMSTrailingSigns(String text) {
   if (regex.hasMatch(text)) {
     RegExpMatch matches = regex.firstMatch(text)!;
 
-    if (matches.group(2) == null
-        || matches.group(3) == null
-        || matches.group(5) == null
-    ) {
+    if (matches.group(2) == null || matches.group(3) == null || matches.group(5) == null) {
       return null;
     }
 
@@ -149,10 +140,7 @@ DMS? _parseDMSTrailingSigns(String text) {
 
     var lat = DMSLatitude(latSign, latDegrees, latMinutes, latSeconds);
 
-    if (matches.group(7) == null
-        || matches.group(8) == null
-        || matches.group(10) == null
-    ) {
+    if (matches.group(7) == null || matches.group(8) == null || matches.group(10) == null) {
       return null;
     }
 

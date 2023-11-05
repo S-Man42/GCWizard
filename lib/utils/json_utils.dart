@@ -1,4 +1,4 @@
-enum JsonType {MAP, ARRAY, SIMPLE_TYPE}
+enum JsonType { MAP, ARRAY, SIMPLE_TYPE }
 
 JsonType? getJsonType(Object? decodedJson) {
   if (decodedJson == null) {
@@ -9,7 +9,7 @@ JsonType? getJsonType(Object? decodedJson) {
     return JsonType.MAP;
   }
 
-  if (isJsonArray(decodedJson)){
+  if (isJsonArray(decodedJson)) {
     return JsonType.ARRAY;
   }
 

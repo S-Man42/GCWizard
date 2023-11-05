@@ -16,17 +16,14 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_onlydigitsandcomma_textinputformatter.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values_key_value_input.dart';
@@ -34,42 +31,42 @@ part 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphab
 
 const String _apiSpecification = '''
 {
-	"/alphabet_values" : {
-		"get": {
-			"summary": "Alphabet Values Tool",
-			"responses": {
-				"204": {
-					"description": "Tool loaded. No response data."
-				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for encoding or decoding text",
-				"schema": {
-					"type": "string"
-				}
-			},
-			{
-				"in": "query",
-				"name": "mode",
-				"description": "Defines encoding or decoding mode",
-				"schema": {
-					"type": "string",
-					"enum": [
-						"encode",
-						"decode"
-					],
-					"default": "encode"
-				}
-			}
-		]
-	}
+  "/alphabetvalues" : {
+    "alternative_paths": ["alphabet_values", "av", "buchstabenwerte", "bww"],
+    "get": {
+      "summary": "Alphabet Values Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for encoding or decoding text",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "mode",
+          "description": "Defines encoding or decoding mode; 'encode' is for letters to values, 'decode' is for values to letters",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "encode",
+              "decode"
+            ],
+            "default": "encode"
+          }
+        }
+      ] 
+    }
+  }
 }
-
 ''';
 
 class AlphabetValues extends GCWWebStatefulWidget {
@@ -82,11 +79,9 @@ class AlphabetValues extends GCWWebStatefulWidget {
 class _AlphabetValuesState extends State<AlphabetValues> {
   late List<Alphabet> _alphabets;
 
-  late TextEditingController _encodeController;
-  late TextEditingController _decodeController;
+  late TextEditingController _controller;
 
-  var _currentEncodeInput = '';
-  var _currentDecodeInput = defaultIntegerListText;
+  var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   late String _currentAlphabetKey;
@@ -107,22 +102,14 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      if (widget.getWebParameter(WEBPARAMETER.mode) == enumName(MODE.decode.toString())) {
+      if (widget.getWebParameter('mode') == 'decode') {
         _currentMode = GCWSwitchPosition.right;
       }
-      if (_currentMode == GCWSwitchPosition.left) {
-        _currentEncodeInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentEncodeInput;
-      } else {
-        var webInput = widget.getWebParameter(WEBPARAMETER.input);
-        _currentDecodeInput = webInput == null
-            ? _currentDecodeInput
-            : IntegerListText(webInput, textToIntList(webInput));
-      }
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
       widget.webParameter = null;
     }
 
-    _encodeController = TextEditingController(text: _currentEncodeInput);
-    _decodeController = TextEditingController(text: _currentDecodeInput.text);
+    _controller = TextEditingController(text: _currentInput);
 
     _storedAlphabets = Prefs.getStringList(PREFERENCE_ALPHABET_CUSTOM_ALPHABETS);
     _alphabets = List<Alphabet>.from(ALL_ALPHABETS);
@@ -132,8 +119,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
           key: toStringOrDefault(alphabet['key'], ''),
           name: toStringOrNull(alphabet['name']),
           type: AlphabetType.CUSTOM,
-          alphabet: toStringMapOrNull(asJsonMapOrNull(alphabet['alphabet'])) ?? {}
-      );
+          alphabet: toStringMapOrNull(asJsonMapOrNull(alphabet['alphabet'])) ?? {});
     }).toList());
 
     _currentAlphabetKey = Prefs.getString(PREFERENCE_ALPHABET_DEFAULT_ALPHABET);
@@ -142,8 +128,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
 
   @override
   void dispose() {
-    _encodeController.dispose();
-    _decodeController.dispose();
+    _controller.dispose();
 
     super.dispose();
   }
@@ -172,10 +157,8 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     var firstValue = _setValueOffset(firstEntry.value);
     var lastValue = _setValueOffset(lastEntry.value);
 
-    _reverseSwitchTitleLeft =
-        firstEntry.key + '-' + lastEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
-    _reverseSwitchTitleRight =
-        lastEntry.key + '-' + firstEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
+    _reverseSwitchTitleLeft = firstEntry.key + '-' + lastEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
+    _reverseSwitchTitleRight = lastEntry.key + '-' + firstEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
   }
 
   String _setValueOffset(String value) {
@@ -218,28 +201,18 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     return _convertToEditingAlphabet(reversedMap);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                controller: _encodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEncodeInput = text;
-                  });
-                },
-              )
-            : GCWIntegerListTextField(
-                controller: _decodeController,
-                onChanged: (values) {
-                  setState(() {
-                    _currentDecodeInput = values;
-                  });
-                },
-              ),
+        GCWTextField(
+          controller: _controller,
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          },
+        ),
         Column(
           children: [
             Row(
@@ -250,7 +223,9 @@ class _AlphabetValuesState extends State<AlphabetValues> {
                     items: _alphabets.map((Alphabet alphabet) {
                       return GCWDropDownMenuItem(
                           value: alphabet.key,
-                          child: (alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name) ?? '',
+                          child:
+                              (alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name) ??
+                                  '',
                           subtitle: _generateItemDescription(alphabet));
                     }).toList(),
                     onChanged: (value) {
@@ -344,7 +319,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
   }
 
   Map<String, String> _convertFromEditingAlphabet(List<KeyValueBase> alphabet) {
-    return { for (var entry in alphabet) entry.key : entry.value };
+    return {for (var entry in alphabet) entry.key: entry.value};
   }
 
   Widget _buildEditingAlphabetCustomizing() {
@@ -385,14 +360,14 @@ class _AlphabetValuesState extends State<AlphabetValues> {
         ),
         const SizedBox(height: 10),
         GCWKeyValueEditor(
-            keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
-            valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
-            valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
-            entries: _currentCustomizedAlphabet ?? [],
-            editAllowed: false,
-            addOnDispose: false,
-            onCreateInput: (Key? key) => _AlphabetValuesKeyValueInput(key: key),
-            onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
+          keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
+          valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
+          valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
+          entries: _currentCustomizedAlphabet ?? [],
+          editAllowed: false,
+          addOnDispose: false,
+          onCreateInput: (Key? key) => _AlphabetValuesKeyValueInput(key: key),
+          onCreateNewItem: (entry, odd) => _createNewItem(entry, odd),
         ),
         const GCWDivider()
       ],
@@ -518,14 +493,16 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      var alphabetValues = logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true);
+      var alphabetValues =
+          logic.AlphabetValues(alphabet: alphabet).textToValues(_currentInput, keepNumbers: true);
 
       return CrosstotalOutput(
-          text: _currentEncodeInput,
-          values: List<int>.from(alphabetValues.where((value) => value != null)));
+          text: _currentInput, values: List<int>.from(alphabetValues.where((value) => value != null)));
     } else {
-      var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(_currentDecodeInput.value);
-      return CrosstotalOutput(text: text, values: _currentDecodeInput.value);
+      var _currentDecodeInput = textToIntList(_currentInput);
+
+      var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(_currentDecodeInput);
+      return CrosstotalOutput(text: text, values: _currentDecodeInput);
     }
   }
 
@@ -534,17 +511,18 @@ class _AlphabetValuesState extends State<AlphabetValues> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       return intListToString(
-          logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true),
+          logic.AlphabetValues(alphabet: alphabet).textToValues(_currentInput, keepNumbers: true),
           delimiter: ' ');
     } else {
-      return logic.AlphabetValues(alphabet: alphabet).valuesToText(_currentDecodeInput.value);
+      var _currentDecodeInput = textToIntList(_currentInput);
+      return logic.AlphabetValues(alphabet: alphabet).valuesToText(_currentDecodeInput);
     }
   }
 
   GCWKeyValueItem _createNewItem(KeyValueBase entry, bool odd) {
     return _AlphabetValuesKeyValueItem(
-        keyValueEntry: entry,
-        odd: odd,
+      keyValueEntry: entry,
+      odd: odd,
     );
   }
 }

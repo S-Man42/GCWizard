@@ -98,7 +98,7 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
     interpreter.run();
 
     return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(_code));
-  } on FormatException catch(e) {
+  } on FormatException catch (e) {
     if (e.message == _inputRequired) {
       var state = WhitespaceState();
       state.storeState(-4); //2 commands back ('\t\n': 'IO' and '\t ': 'input_char' or '\t\t': 'input_num')
@@ -106,11 +106,7 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
           output: _output, code: _clean(_code), input_expected: _input_required, finished: false, state: state);
     } else {
       return WhitespaceResult(
-          output: _output,
-          code: _clean(_code),
-          input_expected: _input_required,
-          error: true,
-          errorText: e.message);
+          output: _output, code: _clean(_code), input_expected: _input_required, error: true, errorText: e.message);
     }
   }
 }
@@ -846,7 +842,7 @@ Tuple2<int, int> _num_parameter() {
 /// Converts the Whitespace representation of a number to an integer.
 int _whitespaceToInt(String code) {
   var num = 0;
-  if (code.length == 1) {
+  if (code.length <= 1) {
     num = 0;
     return num;
   }

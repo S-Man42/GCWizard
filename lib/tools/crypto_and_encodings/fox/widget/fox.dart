@@ -8,7 +8,7 @@ class Fox extends StatefulWidget {
   const Fox({Key? key}) : super(key: key);
 
   @override
- _FoxState createState() => _FoxState();
+  _FoxState createState() => _FoxState();
 }
 
 class _FoxState extends State<Fox> {

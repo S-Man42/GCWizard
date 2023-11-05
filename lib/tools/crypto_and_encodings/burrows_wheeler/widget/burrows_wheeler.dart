@@ -15,7 +15,7 @@ class BurrowsWheeler extends StatefulWidget {
   const BurrowsWheeler({Key? key}) : super(key: key);
 
   @override
- _BurrowsWheelerState createState() => _BurrowsWheelerState();
+  _BurrowsWheelerState createState() => _BurrowsWheelerState();
 }
 
 class _BurrowsWheelerState extends State<BurrowsWheeler> {
@@ -32,7 +32,7 @@ class _BurrowsWheelerState extends State<BurrowsWheeler> {
   int currentIndexPosition = 1;
   int currentInputLen = 0;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
+  final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
 
   @override
   void initState() {

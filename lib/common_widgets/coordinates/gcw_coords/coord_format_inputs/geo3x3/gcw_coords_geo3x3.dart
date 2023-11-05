@@ -3,9 +3,10 @@ part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart
 class _GCWCoordsGeo3x3 extends StatefulWidget {
   final void Function(Geo3x3?) onChanged;
   final Geo3x3 coordinates;
-  final bool isDefault;
+  final bool initialize;
 
-  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
+      : super(key: key);
 
   @override
   _GCWCoordsGeo3x3State createState() => _GCWCoordsGeo3x3State();
@@ -14,8 +15,6 @@ class _GCWCoordsGeo3x3 extends StatefulWidget {
 class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
   late TextEditingController _controller;
   var _currentCoord = '';
-
-  bool _initialized = false;
 
   @override
   void initState() {
@@ -31,13 +30,11 @@ class _GCWCoordsGeo3x3State extends State<_GCWCoordsGeo3x3> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isDefault && !_initialized) {
+    if (widget.initialize) {
       var geo3x3 = widget.coordinates;
       _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;
-
-      _initialized = true;
     }
 
     return Column(children: <Widget>[

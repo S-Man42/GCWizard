@@ -23,7 +23,7 @@ class SegmentDisplay extends StatefulWidget {
   const SegmentDisplay({Key? key, required this.type}) : super(key: key);
 
   @override
- _SegmentDisplayState createState() => _SegmentDisplayState();
+  _SegmentDisplayState createState() => _SegmentDisplayState();
 }
 
 class _SegmentDisplayState extends State<SegmentDisplay> {
@@ -101,42 +101,38 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
             )
           : Container(),
       _currentMode == GCWSwitchPosition.left // encrypt
-          ? (_currentEncryptMode == GCWSwitchPosition.left
-              ? _buildEncrypt()
-              : _buildVisualEncryption())
+          ? (_currentEncryptMode == GCWSwitchPosition.left ? _buildEncrypt() : _buildVisualEncryption())
           : _buildDecrypt(),
       _buildOutput(),
     ]);
   }
 
   Widget _buildEncrypt() {
-    return Column(
-        children: <Widget>[
-          GCWTextField(
-            controller: _inputEncodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentEncodeInput = text;
-              });
-            },
-          ),
-          _buildDropDown()
-        ]);
+    return Column(children: <Widget>[
+      GCWTextField(
+        controller: _inputEncodeController,
+        onChanged: (text) {
+          setState(() {
+            _currentEncodeInput = text;
+          });
+        },
+      ),
+      _buildDropDown()
+    ]);
   }
 
   Widget _buildDecrypt() {
-    return Column(
-        children: <Widget>[
-          GCWTextField(
-            controller: _inputDecodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentDecodeInput = text;
-              });
-            },
-          ),
-          _buildDropDown()
-        ]);
+    return Column(children: <Widget>[
+      GCWTextField(
+        controller: _inputDecodeController,
+        onChanged: (text) {
+          setState(() {
+            _currentDecodeInput = text;
+          });
+        },
+      ),
+      _buildDropDown()
+    ]);
   }
 
   Widget _buildVisualEncryption() {
@@ -178,7 +174,7 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
       case SegmentDisplayType.SIXTEEN:
         displayWidget = SixteenSegmentDisplay(
           segments: currentDisplay,
-         // type: _currentDecryptType,
+          // type: _currentDecryptType,
           onChanged: onChanged,
         );
         break;
@@ -229,10 +225,11 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         GCWTextDivider(text: i18n(context, 'segmentdisplay_encodemode_visualsegments_input')),
         GCWText(
             text: decodeSegment(
-                _currentDisplays.displays.map((character) {
-                  return character.join();
-                }).join(' '),
-                _currentDecryptType).text)
+                    _currentDisplays.displays.map((character) {
+                      return character.join();
+                    }).join(' '),
+                    _currentDecryptType)
+                .text)
       ],
     );
   }
@@ -322,8 +319,10 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
           _addDropDownEntry(directory + '7segment_auto.png', i18n(context, 'segmentdisplay_automatic'),
               i18n(context, 'segmentdisplay_automatic_description'), SegmentDisplayType.SEVENAUTO);
         }
-        _addDropDownEntry(directory + '7segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → abdeg', SegmentDisplayType.SEVEN);
-        _addDropDownEntry(directory + '7segment_12345678.png', '12345678', '2 → 12457', SegmentDisplayType.SEVEN12345678);
+        _addDropDownEntry(directory + '7segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → abdeg',
+            SegmentDisplayType.SEVEN);
+        _addDropDownEntry(directory + '7segment_12345678.png', '12345678', '2 → 12457',
+            SegmentDisplayType.SEVEN12345678);
         break;
       case SegmentDisplayType.FOURTEEN:
         var directory = '14_segment_display/assets/';
@@ -331,29 +330,37 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
           _addDropDownEntry(directory + '14segment_auto.png', i18n(context, 'segmentdisplay_automatic'),
               i18n(context, 'segmentdisplay_automatic_description'), SegmentDisplayType.FOURTEENAUTO);
         }
-        _addDropDownEntry(directory + '14segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → abdeg1g2', SegmentDisplayType.FOURTEEN);
-        _addDropDownEntry(directory + '14segment_hij_g1g2_mlk.png', 'HIJ G1G2 MLK', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK);
-        _addDropDownEntry(directory + '14segment_pgh_nj_mlk.png', 'PGH NJ MLK', '2 → abdenj', SegmentDisplayType.FOURTEEN_PGH_NJ_MLK);
-        _addDropDownEntry(directory + '14segment_kmn_g1g2_rst.png', 'KMN G1G2 RST', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_KMN_G1G2_RST);
-        _addDropDownEntry(directory + '14segment_ghj_pk_nmi.png', 'GHJ PK NMI', '2 → abdepk', SegmentDisplayType.FOURTEEN_GHJ_PK_NMI);
-        _addDropDownEntry(directory + '14segment_hjk_g1g2_nml.png', 'HJK G1G2 NML', '2 → abdeg1g2', SegmentDisplayType.FOURTEEN_HJK_G1G2_NML);
-        _addDropDownEntry(directory + '14segment_hjk_gm_qpn.png', 'HJK GM QPN', '2 → abdegm', SegmentDisplayType.FOURTEEN_HJK_GM_QPN);
+        _addDropDownEntry(directory + '14segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → abdeg1g2',
+            SegmentDisplayType.FOURTEEN);
+        _addDropDownEntry(directory + '14segment_hij_g1g2_mlk.png', 'HIJ G1G2 MLK', '2 → abdeg1g2',
+            SegmentDisplayType.FOURTEEN_HIJ_G1G2_MLK);
+        _addDropDownEntry(directory + '14segment_pgh_nj_mlk.png', 'PGH NJ MLK', '2 → abdenj',
+            SegmentDisplayType.FOURTEEN_PGH_NJ_MLK);
+        _addDropDownEntry(directory + '14segment_kmn_g1g2_rst.png', 'KMN G1G2 RST', '2 → abdeg1g2',
+            SegmentDisplayType.FOURTEEN_KMN_G1G2_RST);
+        _addDropDownEntry(directory + '14segment_ghj_pk_nmi.png', 'GHJ PK NMI', '2 → abdepk',
+            SegmentDisplayType.FOURTEEN_GHJ_PK_NMI);
+        _addDropDownEntry(directory + '14segment_hjk_g1g2_nml.png', 'HJK G1G2 NML', '2 → abdeg1g2',
+            SegmentDisplayType.FOURTEEN_HJK_G1G2_NML);
+        _addDropDownEntry(directory + '14segment_hjk_gm_qpn.png', 'HJK GM QPN', '2 → abdegm',
+            SegmentDisplayType.FOURTEEN_HJK_GM_QPN);
         break;
       case SegmentDisplayType.SIXTEEN:
         var directory = '16_segment_display/assets/';
         _addDropDownEntry(directory + '16segment_auto.png', i18n(context, 'segmentdisplay_automatic'),
             i18n(context, 'segmentdisplay_automatic_description'), SegmentDisplayType.SIXTEENAUTO);
-        _addDropDownEntry(directory + '16segment_default.png', i18n(context, 'segmentdisplay_default'), '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN);
-        _addDropDownEntry(directory + '16segment_kmn_up_tsr.png', 'KMN UP TSR', '2 → abcefgup', SegmentDisplayType.SIXTEEN_KMN_UP_TSR);
+        _addDropDownEntry(directory + '16segment_default.png', i18n(context, 'segmentdisplay_default'),
+            '2 → a1a2bd1d1eg1g2', SegmentDisplayType.SIXTEEN);
+        _addDropDownEntry(directory + '16segment_kmn_up_tsr.png', 'KMN UP TSR', '2 → abcefgup',
+            SegmentDisplayType.SIXTEEN_KMN_UP_TSR);
         break;
-      default: break;
+      default:
+        break;
     }
   }
 
   void _addDropDownEntry(String iconName, String label, String? description, SegmentDisplayType type) {
-    _dropDownList.add(GCWDropDownMenuItem(
-        value: type,
-        child: _buildDropDownMenuItem(iconName, label, description)));
+    _dropDownList.add(GCWDropDownMenuItem(value: type, child: _buildDropDownMenuItem(iconName, label, description)));
 
     _selectedItemList.add(_buildDropDownSelectedItem(iconName, label, description));
   }
@@ -375,16 +382,13 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: gcwTextStyle()),
-                (description != null) ? Text(description, style: gcwDescriptionTextStyle()) : Container(),
-              ]))
+            Text(label, style: gcwTextStyle()),
+            (description != null) ? Text(description, style: gcwDescriptionTextStyle()) : Container(),
+          ]))
     ]);
   }
 
   Widget _buildDropDownSelectedItem(String iconName, String label, String? description) {
-    return Align(
-        alignment: Alignment.centerLeft,
-        child: Text(label, style: gcwTextStyle())
-    );
+    return Align(alignment: Alignment.centerLeft, child: Text(label, style: gcwTextStyle()));
   }
 }

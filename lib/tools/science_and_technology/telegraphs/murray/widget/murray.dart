@@ -20,7 +20,7 @@ class MurrayTelegraph extends StatefulWidget {
   const MurrayTelegraph({Key? key}) : super(key: key);
 
   @override
- _MurrayTelegraphState createState() => _MurrayTelegraphState();
+  _MurrayTelegraphState createState() => _MurrayTelegraphState();
 }
 
 class _MurrayTelegraphState extends State<MurrayTelegraph> {
@@ -57,9 +57,7 @@ class _MurrayTelegraphState extends State<MurrayTelegraph> {
         },
         items: MURRAY_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value.title),
-              subtitle: i18n(context, mode.value.subtitle));
+              value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
