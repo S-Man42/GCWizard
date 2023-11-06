@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:prefs/prefs.dart';
 
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -21,6 +23,7 @@ class UpsideDownState extends State<UpsideDown> {
   String _currentInputDecode = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   double _fontSize = Prefs.getDouble(PREFERENCE_THEME_FONT_SIZE);
+  GCWSwitchPosition _currentFlipMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -49,6 +52,16 @@ class UpsideDownState extends State<UpsideDown> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'upsidedown_flip_mode_flip'),
+          rightValue: i18n(context, 'upsidedown_flip_mode_fliprotate'),
+          value: _currentFlipMode,
+          onChanged: (value) {
+            setState(() {
+              _currentFlipMode = value;
+            });
+          },
+        ),
         _currentMode == GCWSwitchPosition.right
             ? GCWTextField(
                 controller: _inputControllerDecode,
@@ -73,17 +86,25 @@ class UpsideDownState extends State<UpsideDown> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       // decode
+      String result = _currentInputDecode;
+      if (_currentFlipMode == GCWSwitchPosition.right) {
+        result  = _currentInputDecode.split('').reversed.toList().join('');
+      }
       return GCWDefaultOutput(
-        child: _currentInputDecode.split('').reversed.toList().join(''),
+        child: result, 
       );
     } else {
       // encode
+      String result = _currentInputEncode;
+      if (_currentFlipMode == GCWSwitchPosition.right) {
+        result  = _currentInputEncode.split('').reversed.toList().join('');
+      }
       return GCWDefaultOutput(
-            child: Text(
-              _currentInputEncode.split('').reversed.toList().join(''),
+            child: GCWOutputText(
+              text: result,
               style: TextStyle(
                   fontFamily: 'Quirkus',
-                  fontSize: _fontSize,
+                  fontSize: _fontSize + 4,
                   letterSpacing: 1),
             )
       );
