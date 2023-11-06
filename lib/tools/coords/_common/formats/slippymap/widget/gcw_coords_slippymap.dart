@@ -11,7 +11,7 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
   String get example => 'Z: 15, X: 5241, Y: 11749';
 
   @override
-  var subtypes = [
+  List<_GCWCoordWidgetSubtypeInfo> get subtypes => [
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_0, '0'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '1'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '2'),

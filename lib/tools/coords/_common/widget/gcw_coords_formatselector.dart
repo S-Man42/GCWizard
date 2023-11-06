@@ -68,7 +68,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
       }
     }
 
-    var widgetInfo = coordinateWidgetInfoByKey(format);
+    var widgetInfo = coordinateWidgetInfoByType(format);
     if (widgetInfo is GCWCoordWidgetWithSubtypeInfo) {
       return widget.input
           ? widgetInfo.inputWidget(

@@ -11,7 +11,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
   String get example => 'R: 8837763.4, H: 5978799.1';
 
   @override
-  var subtypes = [
+  List<_GCWCoordWidgetSubtypeInfo> get subtypes => [
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_formatconverter_gausskrueger_gk1'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_formatconverter_gausskrueger_gk2'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_formatconverter_gausskrueger_gk3'),

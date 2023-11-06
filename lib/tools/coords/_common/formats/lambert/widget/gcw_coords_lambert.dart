@@ -11,7 +11,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
   String get example => 'X: 8837763.4, Y: 5978799.1';
 
   @override
-  var subtypes = [
+  List<_GCWCoordWidgetSubtypeInfo> get subtypes => [
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93, 'coords_formatconverter_lambert_93'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT2008, 'coords_formatconverter_lambert_2008'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.ETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc'),

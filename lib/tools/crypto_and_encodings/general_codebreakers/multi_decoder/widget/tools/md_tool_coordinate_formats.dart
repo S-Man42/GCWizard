@@ -25,10 +25,11 @@ import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swiss
 import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
@@ -150,7 +151,7 @@ class _MultiDecoderToolCoordinateFormatsState extends State<MultiDecoderToolCoor
           });
         },
         items:
-            allCoordinateFormatMetadata.where((format) => format.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
+          allCoordinateWidgetInfos.where((widgetInfo) => widgetInfo.type != CoordinateFormatKey.SLIPPY_MAP).map((format) {
           return GCWDropDownMenuItem<CoordinateFormatKey>(
             value: format.type,
             child: i18n(context, format.name, ifTranslationNotExists: format.name),

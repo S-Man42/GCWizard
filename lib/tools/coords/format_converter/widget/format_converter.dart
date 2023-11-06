@@ -115,17 +115,17 @@ class _FormatConverterState extends State<FormatConverter> {
     List<List<String>> children = _currentCoords.toLatLng() == null
         ? []
         : allCoordinateWidgetInfos.map((coordFormat) {
-            //var format = coordinateWidgetInfoByKey(coordFormat.type);
+            var format = CoordinateFormat(coordFormat.type);
             var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
             if (coordFormat is GCWCoordWidgetWithSubtypeInfo) {
-              var subtypeWidgetInfo = coordFormat.subtypes(format.subtype!);
-              var subtypeName = i18n(context, subtypeWidgetInfo.name);
+              var subtypeWidgetInfo = coordinateWidgetSubtypeInfoByType(coordFormat, format.subtype!);
+              var subtypeName = i18n(context, subtypeWidgetInfo!.name);
               if (subtypeName.isNotEmpty) {
                 name += '\n' + subtypeName;
               }
             }
 
-            return [name, formatCoordOutput(_currentCoords.toLatLng()!, coordFormat, ellipsoid)];
+            return [name, formatCoordOutput(_currentCoords.toLatLng()!, format, ellipsoid)];
           }).toList();
 
     return GCWDefaultOutput(child: GCWColumnedMultilineOutput(data: children));

@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
@@ -336,7 +337,7 @@ abstract class GCWCoordWidgetInfo {
 }
 
 abstract class GCWCoordWidgetWithSubtypeInfo extends GCWCoordWidgetInfo {
-  List<_GCWCoordWidgetSubtypeInfo> subtypes = [];
+  List<_GCWCoordWidgetSubtypeInfo> get subtypes;
 
   Widget inputWidget({
     required BuildContext context,
@@ -356,8 +357,24 @@ class _GCWCoordWidgetSubtypeInfo {
   const _GCWCoordWidgetSubtypeInfo(this.type, this.name);
 }
 
-GCWCoordWidgetInfo coordinateWidgetInfoByKey(CoordinateFormatKey type) {
-  return allCoordinateWidgetInfos.firstWhere((format) => format.type == type);
+GCWCoordWidgetInfo? coordinateWidgetInfoByType(CoordinateFormatKey type) {
+  return allCoordinateWidgetInfos.firstWhereOrNull((format) => format.type == type);
+}
+
+GCWCoordWidgetInfo? coordinateWidgetInfoByByPersistenceKey(String key) {
+  var type = coordinateFormatDefinitionByPersistenceKey(key)?.type;
+  if (type != null) {
+    return coordinateWidgetInfoByType(type);
+  }
+  return null;
+}
+
+_GCWCoordWidgetSubtypeInfo? coordinateWidgetSubtypeInfoByType(GCWCoordWidgetInfo widgetInfo, CoordinateFormatKey subtype) {
+  if (widgetInfo is GCWCoordWidgetWithSubtypeInfo) {
+    return widgetInfo.subtypes.firstWhere((subtypeInfo) => subtypeInfo.type == subtype);
+  } else {
+    return null;
+  }
 }
 
 var allCoordinateWidgetInfos = [
