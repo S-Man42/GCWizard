@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoQuadtree extends _GCWCoordWidgetInfo {
+class _GCWCoordWidgetInfoQuadtree extends GCWCoordWidgetInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.QUADTREE;
   @override

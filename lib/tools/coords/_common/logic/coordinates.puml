@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+abstract class "coordinates.dart::BaseCoordinate" {
+  +double latitude
+  +double longitude
+  +CoordinateFormat format
+  {static} +BaseCoordinate defaultCoordinate
+  +LatLng? toLatLng()
+  +String toString()
+}
+
+abstract class "coordinates.dart::BaseCoordinateWithSubtypes" {
+  +CoordinateFormatKey? defaultSubtype
+}
+
+"coordinates.dart::BaseCoordinateWithSubtypes" o-- "coordinate_format_constants.dart::CoordinateFormatKey"
+"coordinates.dart::BaseCoordinate" <|-- "coordinates.dart::BaseCoordinateWithSubtypes"
+"coordinate_format.dart::CoordinateFormat" o-- "coordinate_format_constants.dart::CoordinateFormatKey"
+
+
+@enduml

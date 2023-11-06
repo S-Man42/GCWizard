@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoOpenLocationCode extends _GCWCoordWidgetInfo {
+class _GCWCoordWidgetInfoOpenLocationCode extends GCWCoordWidgetInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.OPEN_LOCATION_CODE;
   @override

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoReverseWherigoDay1976 extends _GCWCoordWidgetInfo {
+class _GCWCoordWidgetInfoReverseWherigoDay1976 extends GCWCoordWidgetInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.REVERSE_WIG_DAY1976;
   @override

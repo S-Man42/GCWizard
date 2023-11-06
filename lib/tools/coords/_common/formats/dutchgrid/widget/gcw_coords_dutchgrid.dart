@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoDutchGrid extends _GCWCoordWidgetInfo {
+class _GCWCoordWidgetInfoDutchGrid extends GCWCoordWidgetInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.DUTCH_GRID;
   @override

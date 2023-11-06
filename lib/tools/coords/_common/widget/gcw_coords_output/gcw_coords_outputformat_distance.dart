@@ -42,6 +42,7 @@ class _GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDis
                   padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   child: GCWCoordsFormatSelector(
                     format: widget.coordFormat,
+                    input: false,
                     onChanged: (value) {
                       setState(() {
                         _currentCoordFormat = value;

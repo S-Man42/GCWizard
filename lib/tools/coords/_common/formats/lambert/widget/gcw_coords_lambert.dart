@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoLambert extends _GCWCoordWidgetWithSubtypeInfo {
+class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.LAMBERT;
   @override
@@ -9,6 +9,23 @@ class _GCWCoordWidgetInfoLambert extends _GCWCoordWidgetWithSubtypeInfo {
   String get name => 'coords_formatconverter_lambert';
   @override
   String get example => 'X: 8837763.4, Y: 5978799.1';
+
+  @override
+  var subtypes = [
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93, 'coords_formatconverter_lambert_93'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT2008, 'coords_formatconverter_lambert_2008'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.ETRS89LCC, 'coords_formatconverter_lambert_etrs89lcc'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT72, 'coords_formatconverter_lambert_72'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC42, 'coords_formatconverter_lambert_l93cc42'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC43, 'coords_formatconverter_lambert_l93cc43'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC44, 'coords_formatconverter_lambert_l93cc44'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC45, 'coords_formatconverter_lambert_l93cc45'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC46, 'coords_formatconverter_lambert_l93cc46'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC47, 'coords_formatconverter_lambert_l93cc47'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC48, 'coords_formatconverter_lambert_l93cc48'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC49, 'coords_formatconverter_lambert_l93cc49'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.LAMBERT93_CC50, 'coords_formatconverter_lambert_l93cc50')
+  ];
 
   @override
   _GCWCoordWidget mainWidget({
@@ -21,15 +38,46 @@ class _GCWCoordWidgetInfoLambert extends _GCWCoordWidgetWithSubtypeInfo {
   }
 
   @override
-  Widget inputWidget() {
-    // TODO: implement inputWidget
-    throw UnimplementedError();
+  Widget inputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildSubtypeWidget(
+        context: context,
+        value: value,
+        onChanged: onChanged
+    );
   }
 
   @override
-  Widget outputWidget() {
-    // TODO: implement outputWidget
-    throw UnimplementedError();
+  Widget outputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildSubtypeWidget(
+        context: context,
+        value: value,
+        onChanged: onChanged
+    );
+  }
+
+  Widget _buildSubtypeWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return GCWDropDown<CoordinateFormatKey>(
+      value: value,
+      items: subtypes.map((subtype) {
+        return GCWDropDownMenuItem(
+          value: subtype.type,
+          child: i18n(context, subtype.name),
+        );
+        }).toList(),
+       onChanged: (value) => onChanged,
+    );
   }
 }
 

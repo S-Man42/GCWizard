@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoSlippyMap extends _GCWCoordWidgetWithSubtypeInfo {
+class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.SLIPPY_MAP;
   @override
@@ -10,6 +10,41 @@ class _GCWCoordWidgetInfoSlippyMap extends _GCWCoordWidgetWithSubtypeInfo {
   @override
   String get example => 'Z: 15, X: 5241, Y: 11749';
 
+  @override
+  var subtypes = [
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_0, '0'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '1'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '2'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_3, '3'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_4, '4'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_5, '5'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_6, '6'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_7, '7'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_8, '8'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_9, '9'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '10'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '11'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '12'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '13'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '14'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '15'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '16'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '17'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '18'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '19'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '20'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '21'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '22'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '23'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '24'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '25'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '26'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '27'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '28'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '29'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_3, '30'),
+  ];
+  
   @override
   _GCWCoordWidget mainWidget({
     Key? key,
@@ -21,15 +56,43 @@ class _GCWCoordWidgetInfoSlippyMap extends _GCWCoordWidgetWithSubtypeInfo {
   }
 
   @override
-  Widget inputWidget() {
-    // TODO: implement inputWidget
-    throw UnimplementedError();
+  Widget inputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildSubtypeWidget(
+        context: context,
+        value: value,
+        onChanged: onChanged
+    );
   }
 
   @override
-  Widget outputWidget() {
-    // TODO: implement outputWidget
-    throw UnimplementedError();
+  Widget outputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildSubtypeWidget(
+        context: context,
+        value: value,
+        onChanged: onChanged
+    );
+  }
+
+  Widget _buildSubtypeWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return GCWIntegerSpinner(
+      min: 0,
+      max: 30,
+      title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
+      value: switchMapKeyValue(SLIPPY_MAP_ZOOM)[value]!,
+      onChanged: (value) => onChanged,
+    );
   }
 }
 

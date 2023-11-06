@@ -150,16 +150,16 @@ List<CoordinateFormatDefinition> _getAllSubtypeCoordinateFormats() {
       });
 }
 
-CoordinateFormatDefinition coordinateFormatDefinitionByKey(CoordinateFormatKey key) {
-  if (key == CoordinateFormatDefinitionALL.type) {
+CoordinateFormatDefinition coordinateFormatDefinitionByKey(CoordinateFormatKey type) {
+  if (type == CoordinateFormatDefinitionALL.type) {
     return CoordinateFormatDefinitionALL;
   }
   var allFormats = List<CoordinateFormatDefinition>.from(allCoordinateFormatDefinitions);
   allFormats.addAll(_getAllSubtypeCoordinateFormats());
 
-  return allFormats.firstWhere((format) => format.type == key);
+  return allFormats.firstWhere((format) => format.type == type);
 }
 
-String persistenceKeyByCoordinateFormatKey(CoordinateFormatKey key) {
-  return coordinateFormatDefinitionByKey(key).persistenceKey;
+String persistenceKeyByCoordinateFormatKey(CoordinateFormatKey type) {
+  return coordinateFormatDefinitionByKey(type).persistenceKey;
 }

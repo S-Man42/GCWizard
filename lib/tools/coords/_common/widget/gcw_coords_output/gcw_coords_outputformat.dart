@@ -26,6 +26,7 @@ class _GCWCoordsOutputFormatState extends State<GCWCoordsOutputFormat> {
       ),
       GCWCoordsFormatSelector(
         format: widget.coordFormat,
+        input: false,
         onChanged: (value) {
           setState(() {
             _currentFormat = value;

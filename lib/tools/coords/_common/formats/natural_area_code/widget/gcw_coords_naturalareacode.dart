@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoNaturalAreaCode extends _GCWCoordWidgetInfo {
+class _GCWCoordWidgetInfoNaturalAreaCode extends GCWCoordWidgetInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.NATURAL_AREA_CODE;
   @override

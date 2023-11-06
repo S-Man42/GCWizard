@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoGaussKrueger extends _GCWCoordWidgetWithSubtypeInfo {
+class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.GAUSS_KRUEGER;
   @override
@@ -9,6 +9,15 @@ class _GCWCoordWidgetInfoGaussKrueger extends _GCWCoordWidgetWithSubtypeInfo {
   String get name => 'coords_formatconverter_gausskrueger';
   @override
   String get example => 'R: 8837763.4, H: 5978799.1';
+
+  @override
+  var subtypes = [
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_formatconverter_gausskrueger_gk1'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_formatconverter_gausskrueger_gk2'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_formatconverter_gausskrueger_gk3'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK4, 'coords_formatconverter_gausskrueger_gk4'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.GAUSS_KRUEGER_GK5, 'coords_formatconverter_gausskrueger_gk5'),
+  ];
 
   @override
   _GCWCoordWidget mainWidget({
@@ -21,15 +30,46 @@ class _GCWCoordWidgetInfoGaussKrueger extends _GCWCoordWidgetWithSubtypeInfo {
   }
 
   @override
-  Widget inputWidget() {
-    // TODO: implement inputWidget
-    throw UnimplementedError();
+  Widget inputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildSubtypeWidget(
+        context: context,
+        value: value,
+        onChanged: onChanged
+    );
   }
 
   @override
-  Widget outputWidget() {
-    // TODO: implement outputWidget
-    throw UnimplementedError();
+  Widget outputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildSubtypeWidget(
+        context: context,
+        value: value,
+        onChanged: onChanged
+    );
+  }
+
+  Widget _buildSubtypeWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return GCWDropDown<CoordinateFormatKey>(
+      value: value,
+      items: subtypes.map((subtype) {
+        return GCWDropDownMenuItem(
+          value: subtype.type,
+          child: i18n(context, subtype.name),
+        );
+      }).toList(),
+      onChanged: (value) => onChanged,
+    );
   }
 }
 

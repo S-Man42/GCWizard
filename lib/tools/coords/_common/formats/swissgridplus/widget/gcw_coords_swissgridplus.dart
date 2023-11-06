@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordWidgetInfoSwissGridPlus extends _GCWCoordWidgetInfo {
+class _GCWCoordWidgetInfoSwissGridPlus extends GCWCoordWidgetInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.SWISS_GRID_PLUS;
   @override
