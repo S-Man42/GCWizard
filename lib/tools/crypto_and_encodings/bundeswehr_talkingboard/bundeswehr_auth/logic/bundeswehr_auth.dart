@@ -44,10 +44,13 @@ class BundeswehrTalkingBoard {
   Map<String, dynamic> toJson() =>
       {'xAxis': xAxisNumeralCode, 'yAxis': yAxisNumeralCode, 'AuthentificationCode': AuthentificationCode};
 
-  BundeswehrTalkingBoard.fromJson(Map<String, String> json)
-      : xAxisNumeralCode = json['xAxisNumeralCode']!.split(''),
-        yAxisNumeralCode = json['yAxisNumeralCode']!.split(''),
-        AuthentificationCode = json['AuthentificationCode']!.split(' ');
+  BundeswehrTalkingBoard.fromJson(Map<String, dynamic> json)
+      //: xAxisNumeralCode = json['xAxisNumeralCode']!.split(''),
+      //  yAxisNumeralCode = json['yAxisNumeralCode']!.split(''),
+      //  AuthentificationCode = json['AuthentificationCode']!.split(' ');
+      : xAxisNumeralCode = (json['xAxisNumeralCode']! as String).split(''),
+  yAxisNumeralCode = (json['yAxisNumeralCode']! as String).split(''),
+  AuthentificationCode = (json['AuthentificationCode']! as String).split(' ');
 }
 
 class BundeswehrTalkingBoardAuthentificationTable {
@@ -62,6 +65,7 @@ class BundeswehrTalkingBoardAuthentificationTable {
 
 class BundeswehrTalkingBoardAuthentificationOutput {
   // TODO Thomas: Why is ResponseCode a List, not a simple String?
+  // because there are a couple of errors which can be returned to the user
   final List<String> ResponseCode;
   final List<String>? Tupel1;
   final List<String>? Tupel2;
