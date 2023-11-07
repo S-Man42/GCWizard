@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
     required BaseCoordinate coordinates,
-    bool? initialize,
+    bool? initialize
   }) {
     return _GCWCoordsGaussKrueger(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
   }
