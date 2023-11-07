@@ -2046,6 +2046,7 @@ class _GCWizardSCriptInterpreter {
     if ((state.tokenType == DELIMITER) && state.token == "+" || state.token == "-" || state.token == "~") {
       op = state.token;
       getToken();
+      if (state.tokenType == 0) return op;
     }
     if (state.tokenType == FUNCTION) {
       result = executeFunction(state.token, state.tokenType);

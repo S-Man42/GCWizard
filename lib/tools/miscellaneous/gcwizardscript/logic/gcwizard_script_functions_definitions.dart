@@ -118,6 +118,7 @@ const List<String> _Functions_7 = [
   'ISPRIME(',
   'LISTADD(',
   'LISTGET(',
+  'PADLEFT(',
   'WPTSADD(',
   'WPTSLAT(',
   'WPTSLON(',
@@ -138,10 +139,12 @@ const List<String> _Functions_8 = [
   'ISSTRING(',
   'LISTSORT(',
   'LISTFROM(',
+  'PADRIGHT(',
 ];
 const List<String> _Functions_9 = [
   'CONVERTTO(',
   'LISTCLEAR(',
+  'PADCENTER(',
   'WPTSCLEAR(',
   'WPTSCOUNT(',
 ];
@@ -278,6 +281,9 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LEFT': _GCWizardScriptClassFunctionDefinition(_left, 2),
   'RIGHT': _GCWizardScriptClassFunctionDefinition(_right, 2),
   'MID': _GCWizardScriptClassFunctionDefinition(_mid, 3),
+  'PADLEFT': _GCWizardScriptClassFunctionDefinition(_padleft, 3),
+  'PADRIGHT': _GCWizardScriptClassFunctionDefinition(_padright, 3),
+  'PADCENTER': _GCWizardScriptClassFunctionDefinition(_padcenter, 3),
 
   // geocaching
   'DECTOROMAN': _GCWizardScriptClassFunctionDefinition(
