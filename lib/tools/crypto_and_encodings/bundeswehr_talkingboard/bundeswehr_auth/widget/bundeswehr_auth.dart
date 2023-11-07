@@ -160,55 +160,6 @@ class _BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalki
                   });
                 },
               ),
-        GCWTextDivider(
-          text: i18n(context, 'bundeswehr_talkingboard_create_tables'),
-          trailing: Row(
-            children: [
-              GCWIconButton(
-                icon: Icons.create,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _tableSource = TABLE_SOURCE.CUSTOM;
-                    // _buildAuthTable(context,
-                    //     custom: _tableSource == TABLE_SOURCE.CUSTOM, authTable: _currentAuthTableCustom);
-                    // _buildNumeralCode(context,
-                    //     custom: _tableSource == TABLE_SOURCE.CUSTOM,
-                    //     xAxis: _currentNumeralCodeXaxisCustom,
-                    //     yAxis: _currentNumeralCodeYaxisCustom);
-                  });
-                },
-              ),
-              GCWIconButton(
-                icon: Icons.quiz,
-                size: IconButtonSize.SMALL,
-                iconColor: _currentMode == GCWSwitchPosition.left ? Colors.grey[100] : Colors.grey[700],
-                onPressed: () {
-                  setState(() {
-                    if (_currentMode == GCWSwitchPosition.left) {
-                      _tableSource = TABLE_SOURCE.RANDOM;
-                      _contentToSave = true;
-                      _buildAuthTable(custom: _tableSource == TABLE_SOURCE.CUSTOM, authTable: _currentAuthTableCustom);
-                      _buildNumeralCode(
-                          custom: _tableSource == TABLE_SOURCE.CUSTOM,
-                          xAxis: _currentNumeralCodeXaxisCustom,
-                          yAxis: _currentNumeralCodeYaxisCustom);
-                    }
-                  });
-                },
-              ),
-              GCWIconButton(
-                icon: Icons.file_open,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _tableSource = TABLE_SOURCE.FILE;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
         (_tableSource == TABLE_SOURCE.FILE)
             ? GCWOpenFile(
                 title: i18n(context, 'common_exportfile_openfile'),
@@ -242,6 +193,53 @@ class _BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalki
         GCWExpandableTextDivider(
             text: i18n(context, 'bundeswehr_talkingboard_tables'),
             expanded: false,
+            suppressTopSpace: false,
+            trailing: Row(
+              children: [
+                GCWIconButton(
+                  icon: Icons.create,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _tableSource = TABLE_SOURCE.CUSTOM;
+                      // _buildAuthTable(context,
+                      //     custom: _tableSource == TABLE_SOURCE.CUSTOM, authTable: _currentAuthTableCustom);
+                      // _buildNumeralCode(context,
+                      //     custom: _tableSource == TABLE_SOURCE.CUSTOM,
+                      //     xAxis: _currentNumeralCodeXaxisCustom,
+                      //     yAxis: _currentNumeralCodeYaxisCustom);
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.quiz,
+                  size: IconButtonSize.SMALL,
+                  iconColor: _currentMode == GCWSwitchPosition.left ? Colors.grey[100] : Colors.grey[700],
+                  onPressed: () {
+                    setState(() {
+                      if (_currentMode == GCWSwitchPosition.left) {
+                        _tableSource = TABLE_SOURCE.RANDOM;
+                        _contentToSave = true;
+                        _buildAuthTable(custom: _tableSource == TABLE_SOURCE.CUSTOM, authTable: _currentAuthTableCustom);
+                        _buildNumeralCode(
+                            custom: _tableSource == TABLE_SOURCE.CUSTOM,
+                            xAxis: _currentNumeralCodeXaxisCustom,
+                            yAxis: _currentNumeralCodeYaxisCustom);
+                      }
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.file_open,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    setState(() {
+                      _tableSource = TABLE_SOURCE.FILE;
+                    });
+                  },
+                ),
+              ],
+            ),
             child: Column(children: <Widget>[
               GCWTextDivider(
                 trailing: Row(children: <Widget>[
