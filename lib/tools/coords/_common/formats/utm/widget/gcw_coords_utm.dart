@@ -15,7 +15,7 @@ class _GCWCoordWidgetInfoUTM extends GCWCoordWidgetInfo {
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
     required BaseCoordinate coordinates,
-    bool? initialize,
+    bool? initialize
   }) {
     return _GCWCoordsUTM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
   }

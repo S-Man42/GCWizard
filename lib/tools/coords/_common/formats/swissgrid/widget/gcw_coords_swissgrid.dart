@@ -15,7 +15,7 @@ class _GCWCoordWidgetInfoSwissGrid extends GCWCoordWidgetInfo {
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
     required BaseCoordinate coordinates,
-    bool? initialize,
+    bool? initialize
   }) {
     return _GCWCoordsSwissGrid(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
   }

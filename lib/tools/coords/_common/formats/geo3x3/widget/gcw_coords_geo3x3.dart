@@ -15,7 +15,7 @@ class _GCWCoordWidgetInfoGeo3x3 extends GCWCoordWidgetInfo {
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
     required BaseCoordinate coordinates,
-    bool? initialize,
+    bool? initialize
   }) {
     return _GCWCoordsGeo3x3(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
   }

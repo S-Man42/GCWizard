@@ -32,7 +32,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
     required BaseCoordinate coordinates,
-    bool? initialize,
+    bool? initialize
   }) {
     return _GCWCoordsLambert(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
   }
