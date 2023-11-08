@@ -11,7 +11,7 @@ const int _DEFAULT_PRECISION = 40;
 const quadtreeKey = 'coords_quadtree';
 
 final QuadtreeFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.QUADTREE, QuadtreeCoordinate.defaultCoordinate, quadtreeKey);
+  CoordinateFormatKey.QUADTREE, quadtreeKey);
 
 class QuadtreeCoordinate extends BaseCoordinate {
   @override

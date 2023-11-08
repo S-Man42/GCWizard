@@ -21,13 +21,13 @@ const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 const gausKruegerKey = 'coords_gausskrueger';
 
 final GaussKruegerFormatDefinition = CoordinateFormatWithSubtypesDefinition(
-  CoordinateFormatKey.GAUSS_KRUEGER, GaussKruegerCoordinate.defaultCoordinate, gausKruegerKey,
+  CoordinateFormatKey.GAUSS_KRUEGER, gausKruegerKey,
   [
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK1, GaussKruegerCoordinate.defaultCoordinate, 'coords_gausskrueger_gk1'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK2, GaussKruegerCoordinate.defaultCoordinate, 'coords_gausskrueger_gk2'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK3, GaussKruegerCoordinate.defaultCoordinate, 'coords_gausskrueger_gk3'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK4, GaussKruegerCoordinate.defaultCoordinate, 'coords_gausskrueger_gk4'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK5, GaussKruegerCoordinate.defaultCoordinate, 'coords_gausskrueger_gk5')
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_gausskrueger_gk1'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_gausskrueger_gk2'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_gausskrueger_gk3'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK4, 'coords_gausskrueger_gk4'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK5, 'coords_gausskrueger_gk5')
   ]);
 
 class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
@@ -39,7 +39,7 @@ class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
 
   static const String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
 
-  GaussKruegerCoordinate(this.easting, this.northing,CoordinateFormatKey subtypeKey) {
+  GaussKruegerCoordinate(this.easting, this.northing, CoordinateFormatKey subtypeKey) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }

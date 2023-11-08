@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 
 class CoordinateFormatMetadata {
   final CoordinateFormatKey type;
@@ -129,7 +128,7 @@ class CoordinateFormatMetadata {
 // ];
 
 final CoordinateFormatDefinitionALL = CoordinateFormatDefinition(
-    CoordinateFormatKey.ALL, BaseCoordinate.defaultCoordinate, '');
+    CoordinateFormatKey.ALL, '');
 
 CoordinateFormatDefinition? coordinateFormatDefinitionByPersistenceKey(String key) {
   return allCoordinateFormatDefinitions.firstWhereOrNull((format) => format.persistenceKey == key);

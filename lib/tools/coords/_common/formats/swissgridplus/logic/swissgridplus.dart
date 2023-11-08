@@ -8,7 +8,7 @@ import 'package:latlong2/latlong.dart';
 const swissGridPlusKey = 'coords_swissgridplus';
 
 final SwissGridPlusFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.SWISS_GRID_PLUS, SwissGridPlusCoordinate.defaultCoordinate, swissGridPlusKey);
+  CoordinateFormatKey.SWISS_GRID_PLUS, swissGridPlusKey);
 
 class SwissGridPlusCoordinate extends SwissGridCoordinate {
   @override

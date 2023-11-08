@@ -57,7 +57,7 @@ String? get defaultCoordinateFormatSubtypePersistenceKey {
 }
 
 CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey format) {
-  if (!(isCoordinateFormatWithSubtype(format))) {
+  if (!isCoordinateFormatWithSubtype(format)) {
     return null;
   }
 

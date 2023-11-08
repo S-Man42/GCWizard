@@ -7,8 +7,7 @@ import 'package:latlong2/latlong.dart';
 const reverseWhereigoWaldmeisterKey = 'coords_reversewhereigo_waldmeister'; /* typo known. DO NOT change!*/
 
 final ReverseWherigoWaldmeisterFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, ReverseWherigoWaldmeisterCoordinate.defaultCoordinate,
-  reverseWhereigoWaldmeisterKey);
+  CoordinateFormatKey.REVERSE_WIG_WALDMEISTER, reverseWhereigoWaldmeisterKey);
 
 
 class ReverseWherigoWaldmeisterCoordinate extends BaseCoordinate {

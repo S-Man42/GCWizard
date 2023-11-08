@@ -14,7 +14,7 @@ import 'package:prefs/prefs.dart';
 const dmmKey = 'coords_dmm';
 
 final DMMFormatDefinition = CoordinateFormatDefinition(
-    CoordinateFormatKey.DMM, DMMCoordinate.defaultCoordinate, dmmKey);
+    CoordinateFormatKey.DMM, dmmKey);
 
 class _FormattedDMMPart {
   IntegerText sign;

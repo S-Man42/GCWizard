@@ -42,7 +42,7 @@ abstract class BaseCoordinate {
     return LatLng(latitude, longitude);
   }
 
-  static BaseCoordinate get defaultCoordinate => DMMCoordinate.defaultCoordinate; // buildDefaultCoordinateByCoordinates(defaultCoord.defaultCoordinate);
+  static BaseCoordinate get defaultCoordinate => DMMCoordinate.defaultCoordinate;
 
   @override
   String toString([int? precision]) {
