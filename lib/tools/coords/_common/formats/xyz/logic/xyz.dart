@@ -12,8 +12,8 @@ import 'package:latlong2/latlong.dart';
 
 const xyzKey = 'coords_xyz';
 
-final XYZFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.XYZ, xyzKey);
+const XYZFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.XYZ, xyzKey, xyzKey);
 
 class XYZCoordinate extends BaseCoordinate {
   @override

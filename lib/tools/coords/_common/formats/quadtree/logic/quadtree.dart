@@ -10,8 +10,8 @@ var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;
 const quadtreeKey = 'coords_quadtree';
 
-final QuadtreeFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.QUADTREE, quadtreeKey);
+const QuadtreeFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.QUADTREE, quadtreeKey, quadtreeKey);
 
 class QuadtreeCoordinate extends BaseCoordinate {
   @override

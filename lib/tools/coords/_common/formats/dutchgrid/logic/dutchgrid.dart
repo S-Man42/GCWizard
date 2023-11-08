@@ -9,8 +9,8 @@ part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/external_li
 
 const dutchGridKey = 'coords_dutchgrid';
 
-final DutchGridFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.DUTCH_GRID, dutchGridKey);
+const DutchGridFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.DUTCH_GRID, dutchGridKey, dutchGridKey);
 
 class DutchGridCoordinate extends BaseCoordinate {
   @override

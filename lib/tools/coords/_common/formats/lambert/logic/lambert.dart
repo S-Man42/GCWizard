@@ -25,22 +25,22 @@ import 'package:latlong2/latlong.dart';
 const _defaultLambertType = CoordinateFormatKey.LAMBERT93;
 const lambertKey = 'coords_lambert';
 
-final LambertFormatDefinition = CoordinateFormatWithSubtypesDefinition(
-  CoordinateFormatKey.LAMBERT, lambertKey,
+const LambertFormatDefinition = CoordinateFormatWithSubtypesDefinition(
+  CoordinateFormatKey.LAMBERT, lambertKey, lambertKey,
   [
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93, 'coords_lambert_93'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT2008, 'coords_lambert_2008'),
-    CoordinateFormatDefinition(CoordinateFormatKey.ETRS89LCC, 'coords_lambert_etrs89lcc'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT72, 'coords_lambert_72',),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC42, 'coords_lambert_93_cc42'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC43, 'coords_lambert_93_cc43'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC44, 'coords_lambert_93_cc44'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC45, 'coords_lambert_93_cc45'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC46, 'coords_lambert_93_cc46'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC47, 'coords_lambert_93_cc47'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC48, 'coords_lambert_93_cc48'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC49, 'coords_lambert_93_cc49'),
-    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC50, 'coords_lambert_93_cc50')
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93, 'coords_lambert_93', 'coords_lambert_93'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT2008, 'coords_lambert_2008', 'coords_lambert_2008'),
+    CoordinateFormatDefinition(CoordinateFormatKey.ETRS89LCC, 'coords_lambert_etrs89lcc', 'coords_lambert_etrs89lcc'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT72, 'coords_lambert_72', 'coords_lambert_72'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC42, 'coords_lambert_93_cc42', 'coords_lambert_93_cc42'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC43, 'coords_lambert_93_cc43', 'coords_lambert_93_cc43'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC44, 'coords_lambert_93_cc44', 'coords_lambert_93_cc44'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC45, 'coords_lambert_93_cc45', 'coords_lambert_93_cc45'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC46, 'coords_lambert_93_cc46', 'coords_lambert_93_cc46'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC47, 'coords_lambert_93_cc47', 'coords_lambert_93_cc47'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC48, 'coords_lambert_93_cc48', 'coords_lambert_93_cc48'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC49, 'coords_lambert_93_cc49', 'coords_lambert_93_cc49'),
+    CoordinateFormatDefinition(CoordinateFormatKey.LAMBERT93_CC50, 'coords_lambert_93_cc50', 'coords_lambert_93_cc50')
   ]);
 
 

@@ -68,6 +68,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
     required CoordinateFormatKey value,
     required void Function(CoordinateFormatKey) onChanged}) {
 
+    var _onChanged = onChanged;
     return GCWDropDown<CoordinateFormatKey>(
       value: value,
       items: subtypes.map((subtype) {
@@ -76,7 +77,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
           child: i18n(context, subtype.name),
         );
         }).toList(),
-       onChanged: (value) => onChanged,
+       onChanged: (value) => _onChanged(value),
     );
   }
 }

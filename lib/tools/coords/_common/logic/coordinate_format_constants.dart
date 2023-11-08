@@ -101,7 +101,7 @@ enum CoordinateFormatKey {
   SLIPPYMAP_30
 }
 
-final allCoordinateFormatDefinitions = [
+const allCoordinateFormatDefinitions = [
   DECFormatDefinition,
   DMMFormatDefinition,
   DMSFormatDefinition,

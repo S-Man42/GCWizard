@@ -10,8 +10,8 @@ const LETTER = '[A-ZÄÖÜ]';
 const decKey = 'coords_dec';
 var regexEnd = '';
 
-final  DECFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.DEC, decKey);
+const DECFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.DEC, decKey, decKey);
 
 class DECCoordinate extends BaseCoordinate {
   @override

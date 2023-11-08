@@ -86,12 +86,13 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
     required CoordinateFormatKey value,
     required void Function(CoordinateFormatKey) onChanged}) {
 
+    var _onChanged = onChanged;
     return GCWIntegerSpinner(
       min: 0,
       max: 30,
       title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
       value: switchMapKeyValue(SLIPPY_MAP_ZOOM)[value]!,
-      onChanged: (value) => onChanged,
+      onChanged: (value) => _onChanged(SLIPPY_MAP_ZOOM[value]!),
     );
   }
 }

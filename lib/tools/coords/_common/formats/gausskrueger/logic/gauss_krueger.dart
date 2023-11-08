@@ -20,14 +20,14 @@ const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
 const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 const gausKruegerKey = 'coords_gausskrueger';
 
-final GaussKruegerFormatDefinition = CoordinateFormatWithSubtypesDefinition(
-  CoordinateFormatKey.GAUSS_KRUEGER, gausKruegerKey,
+const GaussKruegerFormatDefinition = CoordinateFormatWithSubtypesDefinition(
+  CoordinateFormatKey.GAUSS_KRUEGER, gausKruegerKey, gausKruegerKey,
   [
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_gausskrueger_gk1'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_gausskrueger_gk2'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_gausskrueger_gk3'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK4, 'coords_gausskrueger_gk4'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK5, 'coords_gausskrueger_gk5')
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_gausskrueger_gk1', 'coords_gausskrueger_gk1'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_gausskrueger_gk2', 'coords_gausskrueger_gk2'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_gausskrueger_gk3', 'coords_gausskrueger_gk3'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK4, 'coords_gausskrueger_gk4', 'coords_gausskrueger_gk4'),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK5, 'coords_gausskrueger_gk5', 'coords_gausskrueger_gk5')
   ]);
 
 class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {

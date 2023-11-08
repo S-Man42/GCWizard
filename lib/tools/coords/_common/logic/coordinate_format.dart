@@ -26,17 +26,15 @@ class CoordinateFormat {
 class CoordinateFormatDefinition {
   final CoordinateFormatKey type;
   final String persistenceKey;
-  late String apiKey;
+  final String apiKey;
 
-  CoordinateFormatDefinition(this.type, this.persistenceKey) {
-    apiKey = persistenceKey;
-  }
+  const CoordinateFormatDefinition(this.type, this.persistenceKey, this.apiKey);
 }
 
 class CoordinateFormatWithSubtypesDefinition extends CoordinateFormatDefinition {
   final List<CoordinateFormatDefinition> subtypes;
 
-  CoordinateFormatWithSubtypesDefinition(super.type, super.persistenceKey, this.subtypes);
+  const CoordinateFormatWithSubtypesDefinition(super.type, super.persistenceKey, super.apiKey, this.subtypes);
 }
 
 bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {

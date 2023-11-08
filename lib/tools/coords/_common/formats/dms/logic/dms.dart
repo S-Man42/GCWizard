@@ -12,8 +12,8 @@ import 'package:latlong2/latlong.dart';
 
 const dmsKey = 'coords_dms';
 
-final DMSFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.DMS, dmsKey);
+const DMSFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.DMS, dmsKey, dmsKey);
 
 class _FormattedDMSPart {
   IntegerText sign;
