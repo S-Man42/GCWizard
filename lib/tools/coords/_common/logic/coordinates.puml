@@ -38,7 +38,7 @@ abstract class "coordinates.BaseCoordinateWithSubtypes" {
 "coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormatDefinition"
 "coordinate_format_constants.CoordinateFormatKey" o-- "coordinates.BaseCoordinateWithSubtypes"
 
-"coordinate_format_constants.allCoordinateFormatDefinitions[]" --o "coordinate_format.CoordinateFormatDefinition"
+"coordinate_format_constants.List<allCoordinateFormatDefinitions>" --o "coordinate_format.CoordinateFormatDefinition"
 
 
 

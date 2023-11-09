@@ -44,7 +44,7 @@ class "gcw_coords.GCWCoords" {
   +bool? notitle
 }
 
-"gcw_coords.allCoordinateWidgetInfos[]" --o "gcw_coords.GCWCoordWidgetInfo"
-"gcw_coords.allCoordinateWidgetInfos[]" o-- "gcw_coords_formatselector.GCWCoordsFormatSelector"
+"gcw_coords.List<allCoordinateWidgetInfos>" --o "gcw_coords.GCWCoordWidgetInfo"
+"gcw_coords.List<allCoordinateWidgetInfos>" o-- "gcw_coords_formatselector.GCWCoordsFormatSelector"
 "gcw_coords.GCWCoordWidgetInfo" --o "gcw_coords.GCWCoordWidget"
 @enduml
