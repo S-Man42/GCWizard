@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoMercator extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsMercator(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsMercator(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsMercator extends _GCWCoordWidget {
 
-  _GCWCoordsMercator({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsMercator({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is MercatorCoordinate ? coordinates : MercatorCoordinate.defaultCoordinate);
 
   @override

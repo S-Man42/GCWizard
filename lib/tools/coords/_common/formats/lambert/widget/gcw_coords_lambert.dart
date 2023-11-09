@@ -34,7 +34,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsLambert(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsLambert(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 
   @override
@@ -84,7 +84,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsLambert extends _GCWCoordWidget {
 
-  _GCWCoordsLambert({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsLambert({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is LambertCoordinate ? coordinates : LambertCoordinate.defaultCoordinate);
 
   @override

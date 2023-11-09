@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoReverseWherigoDay1976 extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsReverseWherigoDay1976(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsReverseWherigoDay1976(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsReverseWherigoDay1976 extends _GCWCoordWidget {
 
-  _GCWCoordsReverseWherigoDay1976({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsReverseWherigoDay1976({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is ReverseWherigoDay1976Coordinate ? coordinates : ReverseWherigoDay1976Coordinate.defaultCoordinate);
 
   @override

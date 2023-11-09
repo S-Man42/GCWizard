@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoXYZ extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsXYZ(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsXYZ(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsXYZ extends _GCWCoordWidget {
 
-  _GCWCoordsXYZ({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsXYZ({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is XYZCoordinate ? coordinates : XYZCoordinate.defaultCoordinate);
 
   @override

@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoReverseWherigoWaldmeister extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsReverseWherigoWaldmeister(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsReverseWherigoWaldmeister(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsReverseWherigoWaldmeister extends _GCWCoordWidget {
 
-  _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ? coordinates : ReverseWherigoWaldmeisterCoordinate.defaultCoordinate);
 
   @override

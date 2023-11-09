@@ -144,7 +144,6 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   @override
   Widget build(BuildContext context) {
-    _resetCoords = false;
 
     Column _widget;
     if (widget.notitle != null && widget.notitle! && widget.title != null && widget.title!.isNotEmpty) {
@@ -183,6 +182,7 @@ class _GCWCoordsState extends State<GCWCoords> {
         }
     );
 
+    _resetCoords = false;
     _widget.children.add(_currentWidget!);
 
     return _widget;

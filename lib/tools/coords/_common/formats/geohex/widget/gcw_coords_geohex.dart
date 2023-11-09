@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoGeoHex extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsGeoHex(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsGeoHex(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsGeoHex extends _GCWCoordWidget {
 
-  _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexCoordinate.defaultCoordinate);
 
   @override

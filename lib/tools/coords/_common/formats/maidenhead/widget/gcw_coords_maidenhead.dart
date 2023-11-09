@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoMaidenhead extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsMaidenhead(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsMaidenhead(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsMaidenhead extends _GCWCoordWidget {
 
-  _GCWCoordsMaidenhead({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsMaidenhead({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is MaidenheadCoordinate ? coordinates : MaidenheadCoordinate.defaultCoordinate);
 
   @override

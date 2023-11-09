@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoDutchGrid extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsDutchGrid(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsDutchGrid(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsDutchGrid extends _GCWCoordWidget {
 
-  _GCWCoordsDutchGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsDutchGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is DutchGridCoordinate ? coordinates : DutchGridCoordinate.defaultCoordinate);
 
   @override

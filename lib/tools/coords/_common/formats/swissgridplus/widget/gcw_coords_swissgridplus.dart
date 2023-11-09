@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoSwissGridPlus extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsSwissGridPlus(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsSwissGridPlus(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsSwissGridPlus extends _GCWCoordWidget {
 
-  _GCWCoordsSwissGridPlus({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsSwissGridPlus({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is SwissGridPlusCoordinate ? coordinates : SwissGridPlusCoordinate.defaultCoordinate);
 
   @override

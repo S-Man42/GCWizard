@@ -17,14 +17,14 @@ class _GCWCoordWidgetInfoDEC extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsDEC(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsDEC(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsDEC extends _GCWCoordWidget {
 
-  _GCWCoordsDEC({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false})
-      : super(coordinates: coordinates is DECCoordinate ? coordinates : DECCoordinate.defaultCoordinate);
+  _GCWCoordsDEC({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+        super(coordinates: coordinates is DECCoordinate ? coordinates : DECCoordinate.defaultCoordinate);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();

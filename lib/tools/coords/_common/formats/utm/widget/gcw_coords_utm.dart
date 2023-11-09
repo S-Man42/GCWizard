@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoUTM extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsUTM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsUTM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsUTM extends _GCWCoordWidget {
 
-  _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFCoordinate.defaultCoordinate);
 
   @override

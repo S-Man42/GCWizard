@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoQuadtree extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsQuadtree(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsQuadtree(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsQuadtree extends _GCWCoordWidget {
 
-  _GCWCoordsQuadtree({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsQuadtree({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is QuadtreeCoordinate ? coordinates : QuadtreeCoordinate.defaultCoordinate);
 
   @override

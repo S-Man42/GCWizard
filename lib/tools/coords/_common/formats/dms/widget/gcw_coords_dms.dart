@@ -17,13 +17,13 @@ class _GCWCoordWidgetInfoDMS extends GCWCoordWidgetInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsDMS(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsDMS(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsDMS extends _GCWCoordWidget {
 
-  _GCWCoordsDMS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsDMS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is DMSCoordinate ? coordinates : DMSCoordinate.defaultCoordinate);
 
   @override

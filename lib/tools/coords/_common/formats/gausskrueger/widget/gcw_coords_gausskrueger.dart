@@ -26,7 +26,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
     required BaseCoordinate coordinates,
     bool? initialize
   }) {
-    return _GCWCoordsGaussKrueger(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize = false);
+    return _GCWCoordsGaussKrueger(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 
   @override
@@ -76,7 +76,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsGaussKrueger extends _GCWCoordWidget {
 
-  _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize = false}) :
+  _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
         super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerCoordinate.defaultCoordinate);
 
   @override
