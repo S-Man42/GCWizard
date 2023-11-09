@@ -17,6 +17,8 @@ class "coordinate_format.CoordinateFormatDefinition" {
 class "coordinate_format.CoordinateFormatWithSubtypesDefinition" {
   +List<CoordinateFormatDefinition> subtypes
 }
+"coordinate_format.CoordinateFormatDefinition" <|.. "coordinate_format.CoordinateFormatWithSubtypesDefinition"
+
 
 abstract class "coordinates.BaseCoordinate" {
   +double latitude
@@ -30,17 +32,13 @@ abstract class "coordinates.BaseCoordinate" {
 abstract class "coordinates.BaseCoordinateWithSubtypes" {
   +CoordinateFormatKey? defaultSubtype
 }
+"coordinates.BaseCoordinate" <|.. "coordinates.BaseCoordinateWithSubtypes"
 
-"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormat.type"
-"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormat.subtype"
+"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormat"
+"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormatDefinition"
+"coordinate_format_constants.CoordinateFormatKey" o-- "coordinates.BaseCoordinateWithSubtypes"
 
-
-"coordinates.BaseCoordinateWithSubtypes" o-- "coordinate_format_constants.CoordinateFormatKey"
-"coordinates.BaseCoordinate" <|-- "coordinates.BaseCoordinateWithSubtypes"
-"coordinate_format.CoordinateFormat" o-- "coordinate_format_constants.CoordinateFormatKey"
-
-"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format_constants.CoordinateFormatKey"
-"Enum" <|-- "coordinate_format_constants.CoordinateFormatKey"
+"coordinate_format_constants.allCoordinateFormatDefinitions[]" --o "coordinate_format.CoordinateFormatDefinition"
 
 
 
