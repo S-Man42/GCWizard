@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class "gcw_coords_formatselector.GCWCoordsFormatSelector" {
+  +void Function(CoordinateFormat) onChanged
+  +CoordinateFormat format
+  +_GCWCoordsFormatSelectorState createState()
+  +List<GCWDropDownMenuItem<CoordinateFormatKey>> getDropDownItems()
+}
+
+abstract class "gcw_coords.GCWCoordWidget" {
+  +CoordinateFormatKey coordinateFormatKey
+  +CoordinateFormatMetadata coordinateFormatMetadata
+  +Widget inputSubtypeWidget
+  +Widget mainWidget
+  +Widget outputSubtypeWidget
+
+  'get String i18nKey {
+
+  '}
+}
+
+class "coordinate_format_metadata.CoordinateFormatMetadata" {
+  +CoordinateFormatKey type
+  +String persistenceKey
+  +String name
+  +List<CoordinateFormatMetadata>? subtypes
+  +String example
+}
+
+"coordinate_format_metadata.CoordinateFormatMetadata" o-- "coordinate_format_constants.CoordinateFormatKey"
+'"GCWCoordsGaussKrueger.GCWCoordsGaussKrueger" o-- "coordinate_format_constants.CoordinateFormatKey"
+"GCWCoordsGaussKrueger.GCWCoordsGaussKrueger" --|> "gcw_coords.GCWCoordWidget"
+"gcw_coords.GCWCoordWidget[]" o-- "GCWCoordsGaussKrueger.GCWCoordsGaussKrueger"
+"gcw_coords_formatselector.getDropDownItems" o-- "gcw_coords.GCWCoordWidget[]"
+"GCWCoordsGaussKrueger.coordinateFormatMetadata" o-- "coordinate_format_metadata.CoordinateFormatMetadata"
+"gcw_coords.GCWCoordWidget" o-- "coordinate_format_metadata.CoordinateFormatMetadata"
+
+
+'"gcw_coords_formatselector.dart::getDropDownItems" o-- "coordinate_format_metadata.dart::CoordinateFormatMetadata"
+'"gcw_coords_formatselector.dart::getDropDownItems" o-- "coordinate_format_metadata.dart::CoordinateFormatMetadata"
+'"gcw_coords_formatselector.dart::_buildSubtype" o-- "coordinate_format_constants.dart::CoordinateFormatKey"
+@enduml

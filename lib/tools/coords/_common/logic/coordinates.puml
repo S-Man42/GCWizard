@@ -1,7 +1,24 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-abstract class "coordinates.dart::BaseCoordinate" {
+class "coordinate_format.CoordinateFormat" {
+  +CoordinateFormatKey type
+  +CoordinateFormatKey? subtype
+  {static} +CoordinateFormat fromPersistenceKey()
+  +String toString()
+}
+
+class "coordinate_format.CoordinateFormatDefinition" {
+  +CoordinateFormatKey type
+  +String persistenceKey
+  +String apiKey
+}
+
+class "coordinate_format.CoordinateFormatWithSubtypesDefinition" {
+  +List<CoordinateFormatDefinition> subtypes
+}
+
+abstract class "coordinates.BaseCoordinate" {
   +double latitude
   +double longitude
   +CoordinateFormat format
@@ -10,13 +27,21 @@ abstract class "coordinates.dart::BaseCoordinate" {
   +String toString()
 }
 
-abstract class "coordinates.dart::BaseCoordinateWithSubtypes" {
+abstract class "coordinates.BaseCoordinateWithSubtypes" {
   +CoordinateFormatKey? defaultSubtype
 }
 
-"coordinates.dart::BaseCoordinateWithSubtypes" o-- "coordinate_format_constants.dart::CoordinateFormatKey"
-"coordinates.dart::BaseCoordinate" <|-- "coordinates.dart::BaseCoordinateWithSubtypes"
-"coordinate_format.dart::CoordinateFormat" o-- "coordinate_format_constants.dart::CoordinateFormatKey"
+"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormat.type"
+"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormat.subtype"
+
+
+"coordinates.BaseCoordinateWithSubtypes" o-- "coordinate_format_constants.CoordinateFormatKey"
+"coordinates.BaseCoordinate" <|-- "coordinates.BaseCoordinateWithSubtypes"
+"coordinate_format.CoordinateFormat" o-- "coordinate_format_constants.CoordinateFormatKey"
+
+"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format_constants.CoordinateFormatKey"
+"Enum" <|-- "coordinate_format_constants.CoordinateFormatKey"
+
 
 
 @enduml
