@@ -1127,9 +1127,15 @@ class _GCWizardSCriptInterpreter {
 
       state.variables[stckvar.loopVariable] = (state.variables[stckvar.loopVariable] as num) + stckvar.stepValue;
       if (stckvar.descending) {
-        if ((state.variables[stckvar.loopVariable] as num) < stckvar.targetValue) return;
+        if ((state.variables[stckvar.loopVariable] as num) < stckvar.targetValue) {
+          findEOL();
+          return;
+        }
       } else {
-        if ((state.variables[stckvar.loopVariable] as num) > stckvar.targetValue) return;
+        if ((state.variables[stckvar.loopVariable] as num) > stckvar.targetValue) {
+          findEOL();
+          return;
+        }
       }
       state.forStack.push(stckvar);
       state.scriptIndex = stckvar.loopStart;
