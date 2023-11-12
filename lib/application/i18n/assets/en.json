@@ -1322,6 +1322,7 @@
   "common_numeralbase_vigesimal": "Vigesimal",
   "common_numeralbase_sexagesimal": "Sexagesimal",
   "common_please_wait": "Please wait...",
+  "common_programming_error_aborted_program": "Program aborted at runtime",
   "common_programming_error_invalid_program": "ERROR - INVALID PROGRAM",
   "common_programming_error_runtime": "ERROR - RUNTIME ERROR",
   "common_programming_error_invalid_character": "ERROR: Invalid Character found",

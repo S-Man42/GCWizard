@@ -245,18 +245,24 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Widget _builOutputGraphics() {
     if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
         _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
-      return GCWDefaultOutput(
-        child: (_outGraphicData.isNotEmpty)
-            ? GCWImageView(
-                imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
-                suppressOpenInTool: const {
-                  GCWImageViewOpenInTools.METADATA,
-                  GCWImageViewOpenInTools.HIDDENDATA,
-                  GCWImageViewOpenInTools.HEXVIEW
-                },
-              )
-            : Container(),
-      );
+      return Column(children: <Widget>[
+        GCWTextDivider(
+          suppressTopSpace: false,
+            text: i18n(context, 'gcwizard_script_help_graphics'),
+        ),
+        GCWDefaultOutput(
+          child: (_outGraphicData.isNotEmpty)
+              ? GCWImageView(
+                  imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
+                  suppressOpenInTool: const {
+                    GCWImageViewOpenInTools.METADATA,
+                    GCWImageViewOpenInTools.HIDDENDATA,
+                    GCWImageViewOpenInTools.HEXVIEW
+                  },
+                )
+              : Container(),
+        )
+      ]);
     } else {
       return Container();
     }
@@ -266,6 +272,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     if (_currentOutput.Points.isNotEmpty) {
       return Column(children: <Widget>[
         GCWTextDivider(
+          suppressTopSpace: false,
           trailing: Row(
             children: <Widget>[
               GCWIconButton(
@@ -325,19 +332,21 @@ class GCWizardScriptState extends State<GCWizardScript> {
     } else {
       return Column(
         children: <Widget>[
+          GCWTextDivider(
+            suppressTopSpace: false,
+            text: i18n(context, 'common_programming_error_aborted_program'),
+          ),
           GCWOutputText(
             style: gcwMonotypeTextStyle(),
-            text: _currentOutput.STDOUT +
-                '\n' +
-                i18n(context, _currentOutput.ErrorMessage) +
-                '\n' +
-                i18n(context, 'gcwizard_script_error_line') +
-                ' ' +
-                _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
+            text: i18n(context, _currentOutput.ErrorMessage) +
                 '\n' +
                 i18n(context, 'gcwizard_script_error_position') +
-                ' ' +
+                ': ' +
                 _currentOutput.ErrorPosition.toString() +
+                '\n' +
+                i18n(context, 'gcwizard_script_error_line') +
+                ': ' +
+                _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
                 '\n' +
                 '=> ' +
                 _printFaultyProgram(_currentProgram, _currentOutput.ErrorPosition),
