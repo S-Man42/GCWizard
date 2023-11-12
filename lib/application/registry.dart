@@ -4220,6 +4220,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: const [
       'symbol_magicode',
     ]),
+    GCWSymbolTableTool(symbolKey: 'malachim', symbolSearchStrings: const [
+      'symbol_malachim',
+    ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
     ]),
