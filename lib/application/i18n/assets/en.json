@@ -2238,7 +2238,7 @@
   "gcwizard_script_division_by_zero" :  "RUNTIME ERROR: DIVISION BY ZERO",
   "gcwizard_script_equal_sign_expected" :  "SYNTAX ERROR: EQUAL SIGN EXPECTED",
   "gcwizard_script_not_a_variable" :  "NOT A VARIABLE",
-  "gcwizard_script_label_table_full" :  "SYNTAX ERROR: TO MANY LABELS",
+  "gcwizard_script_label_table_full" :  "SYNTAX ERROR: TOO MANY LABELS",
   "gcwizard_script_duplicate_label" :  "SYNTAX ERROR: DUPLICATE LABEL",
   "gcwizard_script_undefined_label" :  "SYNTAX ERROR: UNDEFINED LABEL",
   "gcwizard_script_then_expected" :  "SYNTAX ERROR: THEN EXPECTED",
