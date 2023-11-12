@@ -52,7 +52,7 @@ const _OSM_URL = 'coords_mapview_osm_url';
 const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
-final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
+final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
 const _BUTTONGROUP_MARGIN = 30.0;
 
@@ -205,6 +205,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
+                  absorbPanEventsOnScrollables: false,
 
                   /// IMPORTANT for dragging
                   bounds: _getBounds(),
@@ -301,15 +302,13 @@ class _GCWMapViewState extends State<GCWMapView> {
           _showPolylineDialog(polylines.first as _GCWTappablePolyline);
         },
       ),
-      PopupMarkerLayer(
+      PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
         markers: _markers,
+        popupSnap: PopupSnap.markerTop,
         popupController: _popupLayerController.popupController,
-        markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero),
-        popupDisplayOptions: PopupDisplayOptions(
-          builder: (BuildContext _, Marker marker) => _buildPopup(marker),
-          snap: PopupSnap.markerTop,
-        ),
+        popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
+        markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero)
       )),
     ]);
 
@@ -528,7 +527,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
         Offset delta = details.delta;
         LatLng pointToLatLng =
-            const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
+            const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom)!;
 
         point.point = pointToLatLng;
 
@@ -1029,8 +1028,8 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
 
 class CachedNetworkTileProvider extends TileProvider {
   @override
-  ImageProvider getImage(TileCoordinates coordinates, TileLayer options) {
-    return CachedNetworkImageProvider(getTileUrl(coordinates, options));
+  ImageProvider getImage(Coords<num> coords, TileLayer options) {
+    return CachedNetworkImageProvider(getTileUrl(coords, options));
   }
 }
 
