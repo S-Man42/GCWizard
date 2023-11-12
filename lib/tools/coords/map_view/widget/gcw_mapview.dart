@@ -85,6 +85,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   bool _manuallyToggledPosition = false;
 
   var _isPolylineDrawing = false;
+  var _isPointsHidden = false;
 
   MapViewPersistenceAdapter? _persistanceAdapter;
 
@@ -214,7 +215,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                   maxZoom: 18.0,
                   interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
                   onTap: (_, __) => _popupLayerController.hidePopup(),
-                  onLongPress: widget.isEditable // == _persistanceAdapter is set
+                  onLongPress: widget.isEditable && !_isPointsHidden // == _persistanceAdapter is set
                       ? (_, LatLng coordinate) {
                           setState(() {
                             if (_persistanceAdapter != null) {
@@ -483,6 +484,10 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   List<_GCWMarker> _buildMarkers() {
+    if (_isPointsHidden) {
+      return <_GCWMarker>[];
+    }
+
     var points = List<GCWMapPoint>.from(widget.points.where((point) => point.isVisible));
 
     // Add User Position
@@ -589,6 +594,10 @@ class _GCWMapViewState extends State<GCWMapView> {
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
         onPressed: () {
+          if (_isPointsHidden) {
+            return;
+          }
+
           setState(() {
             if (_persistanceAdapter != null) {
               _persistanceAdapter!.addMapPoint(_mapController.center);
@@ -597,7 +606,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         },
       ),
       GCWIconButton(
-        backgroundColor: _isPolylineDrawing ? COLOR_MAP_DRAWLINE_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
+        backgroundColor: _isPolylineDrawing ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _isPolylineDrawing
             ? _createIconButtonIcons(Icons.timeline, stacked: Icons.priority_high)
             : _createIconButtonIcons(Icons.timeline, stacked: Icons.add),
@@ -612,6 +621,15 @@ class _GCWMapViewState extends State<GCWMapView> {
                 _persistanceAdapter!.createMapPolyline();
               }
             }
+          });
+        },
+      ),
+      GCWIconButton(
+        backgroundColor: _isPointsHidden ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.location_disabled),
+        onPressed: () {
+          setState(() {
+            _isPointsHidden = !_isPointsHidden;
           });
         },
       ),
