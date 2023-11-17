@@ -2,6 +2,8 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 
+import 'coordinates.dart';
+
 class CoordinateFormat {
   final CoordinateFormatKey type;
   CoordinateFormatKey? subtype;
@@ -27,8 +29,10 @@ class CoordinateFormatDefinition {
   final CoordinateFormatKey type;
   final String persistenceKey;
   final String apiKey;
+  final BaseCoordinate? Function(String) parseCoordinate;
+  final BaseCoordinate defaultCoordinate;
 
-  const CoordinateFormatDefinition(this.type, this.persistenceKey, this.apiKey);
+  const CoordinateFormatDefinition(this.type, this.persistenceKey, this.apiKey, this.parseCoordinate, this.defaultCoordinate);
 }
 
 class CoordinateFormatWithSubtypesDefinition extends CoordinateFormatDefinition {

@@ -27,6 +27,8 @@ import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'coordinate_format_definition.dart';
+
 abstract class BaseCoordinate {
   CoordinateFormat get format;
   late double latitude;
@@ -43,6 +45,10 @@ abstract class BaseCoordinate {
   }
 
   static BaseCoordinate get defaultCoordinate => DMMCoordinate.defaultCoordinate;
+
+  static BaseCoordinate? parse(String input) {
+    return null;
+  }
 
   @override
   String toString([int? precision]) {
@@ -71,7 +77,11 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
   return _sign;
 }
 
-BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
+BaseCoordinate? buildUninitializedCoordinateByFormat(CoordinateFormat format) {
+
+  var def = coordinateFormatDefinitionByKey(format.type);
+
+  return def.defaultCoordinate;
 
   switch (format.type) {
     case CoordinateFormatKey.DEC:

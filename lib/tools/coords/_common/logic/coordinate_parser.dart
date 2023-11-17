@@ -50,11 +50,11 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
     if (coord != null) coords.add(coord);
 
     coord = SwissGridCoordinate.parse(text);
-    var swissGripPlus = SwissGridPlusCoordinate.parse(text);
-    if (swissGripPlus != null &&
-        (swissGripPlus.easting.toInt().toString().length == 7 ||
-            swissGripPlus.northing.toInt().toString().length == 7)) {
-      if (coord != null) coords.add(swissGripPlus);
+    var swissGridPlus = SwissGridPlusCoordinate.parse(text);
+    if (swissGridPlus != null &&
+        (swissGridPlus.easting.toInt().toString().length == 7 ||
+            swissGridPlus.northing.toInt().toString().length == 7)) {
+      if (coord != null) coords.add(swissGridPlus);
       if (coord != null) coords.add(coord);
     } else {
       if (coord != null) coords.add(coord);

@@ -34,11 +34,11 @@ abstract class "coordinates.BaseCoordinateWithSubtypes" {
 }
 "coordinates.BaseCoordinate" <|.. "coordinates.BaseCoordinateWithSubtypes"
 
-"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormat"
-"coordinate_format_constants.CoordinateFormatKey" o-- "coordinate_format.CoordinateFormatDefinition"
-"coordinate_format_constants.CoordinateFormatKey" o-- "coordinates.BaseCoordinateWithSubtypes"
+"coordinate_format_constants.CoordinateFormatKey" <-- "coordinate_format.CoordinateFormat"
+"coordinate_format_constants.CoordinateFormatKey" <-- "coordinate_format.CoordinateFormatDefinition"
+"coordinate_format_constants.CoordinateFormatKey" <-- "coordinates.BaseCoordinateWithSubtypes"
 
-"coordinate_format_constants.List<allCoordinateFormatDefinitions>" --o "coordinate_format.CoordinateFormatDefinition"
+"coordinate_format_constants.List<allCoordinateFormatDefinitions>" --> "coordinate_format.CoordinateFormatDefinition"
 
 
 

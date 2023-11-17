@@ -38,31 +38,6 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
   }
 
   @override
-  Widget inputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildSubtypeWidget(
-        context: context,
-        value: value,
-        onChanged: onChanged
-    );
-  }
-
-  @override
-  Widget outputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildSubtypeWidget(
-        context: context,
-        value: value,
-        onChanged: onChanged
-    );
-  }
-
   Widget _buildSubtypeWidget({
     required BuildContext context,
     required CoordinateFormatKey value,

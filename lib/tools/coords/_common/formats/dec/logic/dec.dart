@@ -31,8 +31,13 @@ class DECCoordinate extends BaseCoordinate {
     return _latLonToDEC(coord);
   }
 
-  static DECCoordinate? parse(String input, {bool wholeString = false}) {
-    return _parseDEC(input, wholeString: wholeString);
+  @override
+  static DECCoordinate? parse(String input/*, {bool wholeString = false}*/) {
+    return _parseDEC(input, wholeString: false);
+  }
+
+  static DECCoordinate? parseWholeString(String input/*, {bool wholeString = false}*/) {
+    return _parseDEC(input, wholeString: true);
   }
 
   static BaseCoordinate get defaultCoordinate => DECCoordinate(0.0, 0.0);
