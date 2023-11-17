@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoMercator extends GCWCoordWidgetInfo {
 class _GCWCoordsMercator extends _GCWCoordWidget {
 
   _GCWCoordsMercator({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is MercatorCoordinate ? coordinates : MercatorCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is MercatorCoordinate ? coordinates : MercatorFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsMercatorState createState() => _GCWCoordsMercatorState();

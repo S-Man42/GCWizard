@@ -32,13 +32,15 @@ class CoordinateFormatDefinition {
   final BaseCoordinate? Function(String) parseCoordinate;
   final BaseCoordinate defaultCoordinate;
 
-  const CoordinateFormatDefinition(this.type, this.persistenceKey, this.apiKey, this.parseCoordinate, this.defaultCoordinate);
+  CoordinateFormatDefinition(this.type, this.persistenceKey, this.apiKey,
+      this.parseCoordinate, this.defaultCoordinate);
 }
 
 class CoordinateFormatWithSubtypesDefinition extends CoordinateFormatDefinition {
   final List<CoordinateFormatDefinition> subtypes;
 
-  const CoordinateFormatWithSubtypesDefinition(super.type, super.persistenceKey, super.apiKey, this.subtypes);
+  CoordinateFormatWithSubtypesDefinition(super.type, super.persistenceKey, super.apiKey, this.subtypes,
+      super.parseCoordinate, super.defaultCoordinate);
 }
 
 bool equalsCoordinateFormats(CoordinateFormat a, CoordinateFormat b) {

@@ -24,7 +24,8 @@ class _GCWCoordWidgetInfoReverseWherigoWaldmeister extends GCWCoordWidgetInfo {
 class _GCWCoordsReverseWherigoWaldmeister extends _GCWCoordWidget {
 
   _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ? coordinates : ReverseWherigoWaldmeisterCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ?
+          coordinates : ReverseWherigoWaldmeisterFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsReverseWherigoWaldmeisterState createState() => _GCWCoordsReverseWherigoWaldmeisterState();

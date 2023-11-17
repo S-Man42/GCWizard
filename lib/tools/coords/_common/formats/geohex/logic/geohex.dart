@@ -9,8 +9,9 @@ part 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/external_libs/
 
 const geoHexKey = 'coords_geohex';
 
-const GeoHexFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.GEOHEX, geoHexKey, geoHexKey);
+final GeoHexFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.GEOHEX, geoHexKey, geoHexKey,
+  GeoHexCoordinate.parse, GeoHexCoordinate(''));
 
 class GeoHexCoordinate extends BaseCoordinate {
   @override
@@ -31,8 +32,6 @@ class GeoHexCoordinate extends BaseCoordinate {
   static GeoHexCoordinate? parse(String input) {
     return _parseGeoHex(input);
   }
-
-  static GeoHexCoordinate get defaultCoordinate => GeoHexCoordinate('');
 
   @override
   String toString([int? precision]) {

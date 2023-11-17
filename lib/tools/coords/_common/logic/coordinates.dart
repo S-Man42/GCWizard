@@ -44,8 +44,6 @@ abstract class BaseCoordinate {
     return LatLng(latitude, longitude);
   }
 
-  static BaseCoordinate get defaultCoordinate => DMMCoordinate.defaultCoordinate;
-
   static BaseCoordinate? parse(String input) {
     return null;
   }
@@ -79,60 +77,7 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
 
 BaseCoordinate? buildUninitializedCoordinateByFormat(CoordinateFormat format) {
 
-  var def = coordinateFormatDefinitionByKey(format.type);
-
-  return def.defaultCoordinate;
-
-  switch (format.type) {
-    case CoordinateFormatKey.DEC:
-      return DECCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.DMM:
-      return DMMCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.DMS:
-      return DMSCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.UTM:
-      return UTMREFCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.MGRS:
-      return MGRSCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.XYZ:
-      return XYZCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.SWISS_GRID:
-      return SwissGridCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.SWISS_GRID_PLUS:
-      return SwissGridPlusCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.DUTCH_GRID:
-      return DutchGridCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.GAUSS_KRUEGER:
-      return GaussKruegerCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.LAMBERT:
-      return LambertCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.MAIDENHEAD:
-      return MaidenheadCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.MERCATOR:
-      return MercatorCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.NATURAL_AREA_CODE:
-      return NaturalAreaCodeCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.SLIPPY_MAP:
-      return SlippyMapCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.GEOHASH:
-      return GeohashCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.GEO3X3:
-      return Geo3x3Coordinate.defaultCoordinate;
-    case CoordinateFormatKey.GEOHEX:
-      return GeoHexCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.OPEN_LOCATION_CODE:
-      return OpenLocationCodeCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.MAKANEY:
-      return MakaneyCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.QUADTREE:
-      return QuadtreeCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
-      return ReverseWherigoWaldmeisterCoordinate.defaultCoordinate;
-    case CoordinateFormatKey.REVERSE_WIG_DAY1976:
-      return ReverseWherigoDay1976Coordinate.defaultCoordinate;
-    default:
-      return buildDefaultCoordinateByCoordinates(defaultCoord.defaultCoordinate);
-  }
+  return coordinateFormatDefinitionByKey(format.type).defaultCoordinate;
 }
 
 BaseCoordinate buildDefaultCoordinateByCoordinates(LatLng coords) {

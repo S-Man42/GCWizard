@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoNaturalAreaCode extends GCWCoordWidgetInfo {
 class _GCWCoordsNaturalAreaCode extends _GCWCoordWidget {
 
   _GCWCoordsNaturalAreaCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is NaturalAreaCodeCoordinate ? coordinates : NaturalAreaCodeCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is NaturalAreaCodeCoordinate ? coordinates : NaturalAreaCodeFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsNaturalAreaCodeState createState() => _GCWCoordsNaturalAreaCodeState();

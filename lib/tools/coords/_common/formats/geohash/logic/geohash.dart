@@ -42,8 +42,9 @@ const List<Map<String, String>> _alphabet = [
 const _binaryLength = 5;
 const geohashKey = 'coords_geohash';
 
-const GeohashFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.GEOHASH, geohashKey, geohashKey);
+final GeohashFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.GEOHASH, geohashKey, geohashKey,
+  GeohashCoordinate.parse, GeohashCoordinate(''));
 
 class GeohashCoordinate extends BaseCoordinate {
   @override
@@ -64,8 +65,6 @@ class GeohashCoordinate extends BaseCoordinate {
   static GeohashCoordinate? parse(String input) {
     return _parseGeohash(input);
   }
-
-  static GeohashCoordinate get defaultCoordinate => GeohashCoordinate('');
 
   @override
   String toString([int? precision]) {

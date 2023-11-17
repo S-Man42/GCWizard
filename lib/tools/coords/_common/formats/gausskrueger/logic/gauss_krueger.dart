@@ -19,16 +19,23 @@ const Map<int, CoordinateFormatKey> GAUSS_KRUEGER_CODE = {
 
 const _defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 const gausKruegerKey = 'coords_gausskrueger';
+final _defaultCoordinate = GaussKruegerCoordinate(0, 0, _defaultGaussKruegerType);
 
-const GaussKruegerFormatDefinition = CoordinateFormatWithSubtypesDefinition(
+final GaussKruegerFormatDefinition = CoordinateFormatWithSubtypesDefinition(
   CoordinateFormatKey.GAUSS_KRUEGER, gausKruegerKey, gausKruegerKey,
   [
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_gausskrueger_gk1', 'coords_gausskrueger_gk1'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_gausskrueger_gk2', 'coords_gausskrueger_gk2'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_gausskrueger_gk3', 'coords_gausskrueger_gk3'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK4, 'coords_gausskrueger_gk4', 'coords_gausskrueger_gk4'),
-    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK5, 'coords_gausskrueger_gk5', 'coords_gausskrueger_gk5')
-  ]);
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK1, 'coords_gausskrueger_gk1', 'coords_gausskrueger_gk1',
+        GaussKruegerCoordinate.parse, _defaultCoordinate),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK2, 'coords_gausskrueger_gk2', 'coords_gausskrueger_gk2',
+        GaussKruegerCoordinate.parse, _defaultCoordinate),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK3, 'coords_gausskrueger_gk3', 'coords_gausskrueger_gk3',
+        GaussKruegerCoordinate.parse, _defaultCoordinate),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK4, 'coords_gausskrueger_gk4', 'coords_gausskrueger_gk4',
+        GaussKruegerCoordinate.parse, _defaultCoordinate),
+    CoordinateFormatDefinition(CoordinateFormatKey.GAUSS_KRUEGER_GK5, 'coords_gausskrueger_gk5', 'coords_gausskrueger_gk5',
+        GaussKruegerCoordinate.parse, _defaultCoordinate),
+  ],
+    GaussKruegerCoordinate.parse, _defaultCoordinate);
 
 class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
@@ -69,7 +76,6 @@ class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
     return _parseGaussKrueger(input, gaussKruegerCode: subtype);
   }
 
-  static GaussKruegerCoordinate get defaultCoordinate => GaussKruegerCoordinate(0, 0, _defaultGaussKruegerType);
   @override
   CoordinateFormatKey get defaultSubtype => _defaultGaussKruegerType;
 

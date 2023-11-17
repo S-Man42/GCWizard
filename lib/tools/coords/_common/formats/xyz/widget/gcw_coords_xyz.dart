@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoXYZ extends GCWCoordWidgetInfo {
 class _GCWCoordsXYZ extends _GCWCoordWidget {
 
   _GCWCoordsXYZ({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is XYZCoordinate ? coordinates : XYZCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is XYZCoordinate ? coordinates : XYZFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsXYZState createState() => _GCWCoordsXYZState();

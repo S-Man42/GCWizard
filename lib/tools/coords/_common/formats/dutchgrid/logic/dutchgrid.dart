@@ -9,8 +9,9 @@ part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/external_li
 
 const dutchGridKey = 'coords_dutchgrid';
 
-const DutchGridFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.DUTCH_GRID, dutchGridKey, dutchGridKey);
+final DutchGridFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.DUTCH_GRID, dutchGridKey, dutchGridKey,
+  DutchGridCoordinate.parse, DutchGridCoordinate(0, 0));
 
 class DutchGridCoordinate extends BaseCoordinate {
   @override
@@ -32,8 +33,6 @@ class DutchGridCoordinate extends BaseCoordinate {
   static DutchGridCoordinate? parse(String input) {
     return parseDutchGrid(input);
   }
-
-  static DutchGridCoordinate get defaultCoordinate => DutchGridCoordinate(0, 0);
 
   @override
   String toString([int? precision]) {

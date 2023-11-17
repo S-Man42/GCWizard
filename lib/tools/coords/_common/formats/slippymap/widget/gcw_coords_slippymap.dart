@@ -75,7 +75,7 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
 class _GCWCoordsSlippyMap extends _GCWCoordWidget {
 
   _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();

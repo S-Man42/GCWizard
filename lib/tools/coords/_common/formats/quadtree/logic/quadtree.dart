@@ -10,8 +10,9 @@ var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;
 const quadtreeKey = 'coords_quadtree';
 
-const QuadtreeFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.QUADTREE, quadtreeKey, quadtreeKey);
+final QuadtreeFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.QUADTREE, quadtreeKey, quadtreeKey,
+  QuadtreeCoordinate.parse, QuadtreeCoordinate([]));
 
 class QuadtreeCoordinate extends BaseCoordinate {
   @override
@@ -32,8 +33,6 @@ class QuadtreeCoordinate extends BaseCoordinate {
   static QuadtreeCoordinate fromLatLon(LatLng coord, [int precision = 40]) {
     return _latLonToQuadtree(coord, precision: precision);
   }
-
-  static QuadtreeCoordinate get defaultCoordinate => QuadtreeCoordinate([]);
 
   @override
   String toString([int? precision]) {

@@ -52,7 +52,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
 class _GCWCoordsGaussKrueger extends _GCWCoordWidget {
 
   _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsGaussKruegerState createState() => _GCWCoordsGaussKruegerState();
@@ -65,7 +65,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  CoordinateFormatKey _currentSubtype = GaussKruegerCoordinate.defaultCoordinate.defaultSubtype;
+  CoordinateFormatKey _currentSubtype = GaussKruegerFormatDefinition.defaultCoordinate.defaultSubtype;
 
   @override
   void initState() {

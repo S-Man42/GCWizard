@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoUTM extends GCWCoordWidgetInfo {
 class _GCWCoordsUTM extends _GCWCoordWidget {
 
   _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();

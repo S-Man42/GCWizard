@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoReverseWherigoDay1976 extends GCWCoordWidgetInfo {
 class _GCWCoordsReverseWherigoDay1976 extends _GCWCoordWidget {
 
   _GCWCoordsReverseWherigoDay1976({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is ReverseWherigoDay1976Coordinate ? coordinates : ReverseWherigoDay1976Coordinate.defaultCoordinate);
+        super(coordinates: coordinates is ReverseWherigoDay1976Coordinate ? coordinates : ReverseWherigoDay1976FormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsReverseWherigoDay1976State createState() => _GCWCoordsReverseWherigoDay1976State();

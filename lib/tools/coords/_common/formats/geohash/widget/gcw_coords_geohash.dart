@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoGeohash extends GCWCoordWidgetInfo {
 class _GCWCoordsGeohash extends _GCWCoordWidget {
 
   _GCWCoordsGeohash({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is GeohashCoordinate ? coordinates : GeohashCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is GeohashCoordinate ? coordinates : GeohashFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsGeohashState createState() => _GCWCoordsGeohashState();

@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoDutchGrid extends GCWCoordWidgetInfo {
 class _GCWCoordsDutchGrid extends _GCWCoordWidget {
 
   _GCWCoordsDutchGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is DutchGridCoordinate ? coordinates : DutchGridCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is DutchGridCoordinate ? coordinates : DutchGridFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsDutchGridState createState() => _GCWCoordsDutchGridState();

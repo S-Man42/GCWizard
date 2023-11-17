@@ -9,8 +9,9 @@ part 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/external_libs
 
 const makaneyKey = 'coords_makaney';
 
-const MakaneyFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.MAKANEY, makaneyKey, makaneyKey);
+final MakaneyFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.MAKANEY, makaneyKey, makaneyKey,
+  MakaneyCoordinate.parse, MakaneyCoordinate(''));
 
 class MakaneyCoordinate extends BaseCoordinate {
   @override
@@ -31,8 +32,6 @@ class MakaneyCoordinate extends BaseCoordinate {
   static MakaneyCoordinate? parse(String input) {
     return _parseMakaney(input);
   }
-
-  static MakaneyCoordinate get defaultCoordinate => MakaneyCoordinate('');
 
   @override
   String toString([int? precision]) {

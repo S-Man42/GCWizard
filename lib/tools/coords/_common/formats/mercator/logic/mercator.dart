@@ -9,8 +9,9 @@ import 'package:latlong2/latlong.dart';
 
 const mercatorKey = 'coords_mercator';
 
-const MercatorFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.MERCATOR, mercatorKey, mercatorKey);
+final MercatorFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.MERCATOR, mercatorKey, mercatorKey,
+  MercatorCoordinate.parse, MercatorCoordinate(0, 0));
 
 class MercatorCoordinate extends BaseCoordinate {
   @override
@@ -33,8 +34,6 @@ class MercatorCoordinate extends BaseCoordinate {
   static MercatorCoordinate? parse(String input) {
     return _parseMercator(input);
   }
-
-  static MercatorCoordinate get defaultCoordinate => MercatorCoordinate(0, 0);
 
   @override
   String toString([int? precision]) {

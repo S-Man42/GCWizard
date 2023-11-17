@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoDEC extends GCWCoordWidgetInfo {
 class _GCWCoordsDEC extends _GCWCoordWidget {
 
   _GCWCoordsDEC({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is DECCoordinate ? coordinates : DECCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is DECCoordinate ? coordinates : DECFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsDECState createState() => _GCWCoordsDECState();

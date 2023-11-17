@@ -1,8 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 
-const CoordinateFormatDefinitionALL = CoordinateFormatDefinition(CoordinateFormatKey.ALL, '', '');
+final CoordinateFormatDefinitionALL = CoordinateFormatDefinition(CoordinateFormatKey.ALL, '', '',
+    (String input) => null, DMMFormatDefinition.defaultCoordinate);
 
 CoordinateFormatDefinition? coordinateFormatDefinitionByPersistenceKey(String key) {
   return allCoordinateFormatDefinitions.firstWhereOrNull((format) => format.persistenceKey == key);

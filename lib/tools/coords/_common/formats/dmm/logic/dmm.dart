@@ -13,8 +13,9 @@ import 'package:prefs/prefs.dart';
 
 const dmmKey = 'coords_dmm';
 
-const DMMFormatDefinition = CoordinateFormatDefinition(
-    CoordinateFormatKey.DMM, dmmKey, dmmKey);
+final DMMFormatDefinition = CoordinateFormatDefinition(
+    CoordinateFormatKey.DMM, dmmKey, dmmKey, DMMCoordinate.parse,
+    DMMCoordinate(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0)));
 
 class _FormattedDMMPart {
   IntegerText sign;
@@ -116,8 +117,6 @@ class DMMCoordinate extends BaseCoordinate {
   static DMMCoordinate? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
     return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
-
-  static DMMCoordinate get defaultCoordinate => DMMCoordinate(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0));
 
   @override
   String toString([int? precision]) {

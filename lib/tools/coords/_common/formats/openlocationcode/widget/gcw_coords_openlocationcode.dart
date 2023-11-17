@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoOpenLocationCode extends GCWCoordWidgetInfo {
 class _GCWCoordsOpenLocationCode extends _GCWCoordWidget {
 
   _GCWCoordsOpenLocationCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is OpenLocationCodeCoordinate ? coordinates : OpenLocationCodeCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is OpenLocationCodeCoordinate ? coordinates : OpenLocationCodeFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsOpenLocationCodeState createState() => _GCWCoordsOpenLocationCodeState();

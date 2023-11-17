@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoMakaney extends GCWCoordWidgetInfo {
 class _GCWCoordsMakaney extends _GCWCoordWidget {
 
   _GCWCoordsMakaney({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is MakaneyCoordinate ? coordinates : MakaneyCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is MakaneyCoordinate ? coordinates : MakaneyFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsMakaneyState createState() => _GCWCoordsMakaneyState();

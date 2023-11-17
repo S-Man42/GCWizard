@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoDMM extends GCWCoordWidgetInfo {
 class _GCWCoordsDMM extends _GCWCoordWidget {
 
   _GCWCoordsDMM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is DMMCoordinate ? coordinates : DMMCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is DMMCoordinate ? coordinates : DMMFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsDMMState createState() => _GCWCoordsDMMState();

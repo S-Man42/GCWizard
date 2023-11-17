@@ -6,8 +6,9 @@ import 'package:latlong2/latlong.dart';
 
 const maidenheadKey = 'coords_maidenhead';
 
-const MaidenheadFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.MAIDENHEAD, maidenheadKey, maidenheadKey);
+final MaidenheadFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.MAIDENHEAD, maidenheadKey, maidenheadKey,
+  MaidenheadCoordinate.parse, MaidenheadCoordinate(''));
 
 class MaidenheadCoordinate extends BaseCoordinate {
   @override
@@ -28,8 +29,6 @@ class MaidenheadCoordinate extends BaseCoordinate {
   static MaidenheadCoordinate? parse(String input) {
     return _parseMaidenhead(input);
   }
-
-  static MaidenheadCoordinate get defaultCoordinate => MaidenheadCoordinate('');
 
   @override
   String toString([int? precision]) {

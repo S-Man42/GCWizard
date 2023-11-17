@@ -12,8 +12,9 @@ String digraphLettersNorth = "ABCDEFGHJKLMNPQRSTUV";
 
 const mgrsKey = 'coords_mgrs';
 
-const MGRSFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.MGRS, mgrsKey, mgrsKey);
+final MGRSFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.MGRS, mgrsKey, mgrsKey,
+  MGRSCoordinate.parse, MGRSCoordinate(UTMZone(0, 0, 'A'), 'AA', 0, 0));
 
 class MGRSCoordinate extends BaseCoordinate {
   @override
@@ -38,8 +39,6 @@ class MGRSCoordinate extends BaseCoordinate {
   static MGRSCoordinate? parse(String text) {
     return _parseMGRS(text);
   }
-
-  static MGRSCoordinate get defaultCoordinate => MGRSCoordinate(UTMZone(0, 0, 'A'), 'AA', 0, 0);
 
   @override
   String toString([int? precision]) {

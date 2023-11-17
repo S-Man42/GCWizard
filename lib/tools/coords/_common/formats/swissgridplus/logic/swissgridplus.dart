@@ -7,8 +7,9 @@ import 'package:latlong2/latlong.dart';
 
 const swissGridPlusKey = 'coords_swissgridplus';
 
-const SwissGridPlusFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.SWISS_GRID_PLUS, swissGridPlusKey, swissGridPlusKey);
+final SwissGridPlusFormatDefinition = CoordinateFormatDefinition(
+  CoordinateFormatKey.SWISS_GRID_PLUS, swissGridPlusKey, swissGridPlusKey,
+  SwissGridPlusCoordinate.parse, SwissGridPlusCoordinate(0, 0));
 
 class SwissGridPlusCoordinate extends SwissGridCoordinate {
   @override
@@ -27,10 +28,11 @@ class SwissGridPlusCoordinate extends SwissGridCoordinate {
   }
 
   static SwissGridPlusCoordinate? parse(String input) {
-    return _parseSwissGridPlus(input);
+    var coords = _parseSwissGridPlus(input);
+    if (8)coords
+    (swissGridPlus.easting.toInt().toString().length == 7 ||
+        swissGridPlus.northing.toInt().toString().length == 7))
   }
-
-  static SwissGridPlusCoordinate get defaultCoordinate => SwissGridPlusCoordinate(0, 0);
 }
 
 SwissGridPlusCoordinate _latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
@@ -47,5 +49,10 @@ LatLng _swissGridPlusToLatLon(SwissGridPlusCoordinate coord, Ellipsoid ells) {
 
 SwissGridPlusCoordinate? _parseSwissGridPlus(String input) {
   var swissGrid = SwissGridCoordinate.parse(input);
+  if (swissGrid != null) {
+    swissGrid = (swissGrid.easting.toInt().toString().length == 7 || swissGrid.northing.toInt().toString().length == 7)
+                ? swissGrid : null;
+  }
+
   return swissGrid == null ? null : SwissGridPlusCoordinate(swissGrid.easting, swissGrid.northing);
 }

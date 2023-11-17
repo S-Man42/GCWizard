@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoMGRS extends GCWCoordWidgetInfo {
 class _GCWCoordsMGRS extends _GCWCoordWidget {
 
   _GCWCoordsMGRS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is MGRSCoordinate ? coordinates : MGRSCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is MGRSCoordinate ? coordinates : MGRSFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsMGRSState createState() => _GCWCoordsMGRSState();

@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoGeoHex extends GCWCoordWidgetInfo {
 class _GCWCoordsGeoHex extends _GCWCoordWidget {
 
   _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();

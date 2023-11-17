@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoGeo3x3 extends GCWCoordWidgetInfo {
 class _GCWCoordsGeo3x3 extends _GCWCoordWidget {
 
   _GCWCoordsGeo3x3({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is Geo3x3Coordinate ? coordinates : Geo3x3Coordinate.defaultCoordinate);
+        super(coordinates: coordinates is Geo3x3Coordinate ? coordinates : Geo3x3FormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsGeo3x3State createState() => _GCWCoordsGeo3x3State();

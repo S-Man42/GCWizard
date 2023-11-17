@@ -24,7 +24,7 @@ class _GCWCoordWidgetInfoSwissGrid extends GCWCoordWidgetInfo {
 class _GCWCoordsSwissGrid extends _GCWCoordWidget {
 
   _GCWCoordsSwissGrid({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
-        super(coordinates: coordinates is SwissGridCoordinate ? coordinates : SwissGridCoordinate.defaultCoordinate);
+        super(coordinates: coordinates is SwissGridCoordinate ? coordinates : SwissGridFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsSwissGridState createState() => _GCWCoordsSwissGridState();
