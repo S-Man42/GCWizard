@@ -65,7 +65,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  CoordinateFormatKey _currentSubtype = GaussKruegerFormatDefinition.defaultCoordinate.defaultSubtype;
+  var _currentSubtype = (GaussKruegerFormatDefinition.defaultCoordinate as BaseCoordinateWithSubtypes).defaultSubtype;
 
   @override
   void initState() {

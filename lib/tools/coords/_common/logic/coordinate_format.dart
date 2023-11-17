@@ -34,6 +34,10 @@ class CoordinateFormatDefinition {
 
   CoordinateFormatDefinition(this.type, this.persistenceKey, this.apiKey,
       this.parseCoordinate, this.defaultCoordinate);
+
+  BaseCoordinate? parseCoordinateWholeString(String input) {
+    return parseCoordinate(input);
+  }
 }
 
 class CoordinateFormatWithSubtypesDefinition extends CoordinateFormatDefinition {

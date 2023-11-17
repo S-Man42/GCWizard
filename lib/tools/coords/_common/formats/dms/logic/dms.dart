@@ -12,7 +12,17 @@ import 'package:latlong2/latlong.dart';
 
 const dmsKey = 'coords_dms';
 
-final DMSFormatDefinition = CoordinateFormatDefinition(
+class CoordinateFormatDefinitionDMS extends CoordinateFormatDefinition {
+  CoordinateFormatDefinitionDMS(super.type, super.persistenceKey, super.apiKey,
+      super.parseCoordinate, super.defaultCoordinate);
+
+  @override
+  BaseCoordinate? parseCoordinateWholeString(String input) {
+    return DMSCoordinate.parseWholeString(input);
+  }
+}
+
+final DMSFormatDefinition = CoordinateFormatDefinitionDMS(
   CoordinateFormatKey.DMS, dmsKey, dmsKey, DMSCoordinate.parse,
   DMSCoordinate(DMSLatitude(0, 0, 0, 0), DMSLongitude(0, 0, 0, 0)));
 
@@ -123,11 +133,12 @@ class DMSCoordinate extends BaseCoordinate {
     return _latLonToDMS(coord);
   }
 
-  static DMSCoordinate? parse(String input, {bool wholeString = false}) {
-    return parseDMS(input, wholeString: wholeString);
+  static DMSCoordinate? parse(String input) {
+    return parseDMS(input);
   }
-
-  static DMSCoordinate get defaultCoordinate => DMSCoordinate(DMSLatitude(0, 0, 0, 0), DMSLongitude(0, 0, 0, 0));
+  static DMSCoordinate? parseWholeString(String input) {
+    return parseDMS(input, wholeString: true);
+  }
 
   @override
   String toString([int? precision]) {

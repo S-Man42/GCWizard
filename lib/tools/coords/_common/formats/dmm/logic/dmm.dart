@@ -13,7 +13,17 @@ import 'package:prefs/prefs.dart';
 
 const dmmKey = 'coords_dmm';
 
-final DMMFormatDefinition = CoordinateFormatDefinition(
+class CoordinateFormatDefinitionDMM extends CoordinateFormatDefinition {
+  CoordinateFormatDefinitionDMM(super.type, super.persistenceKey, super.apiKey,
+      super.parseCoordinate, super.defaultCoordinate);
+
+  @override
+  BaseCoordinate? parseCoordinateWholeString(String input) {
+    return DMMCoordinate.parseWholeString(input);
+  }
+}
+
+final DMMFormatDefinition = CoordinateFormatDefinitionDMM(
     CoordinateFormatKey.DMM, dmmKey, dmmKey, DMMCoordinate.parse,
     DMMCoordinate(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0)));
 
@@ -113,9 +123,13 @@ class DMMCoordinate extends BaseCoordinate {
   static DMMCoordinate fromLatLon(LatLng coord) {
     return _latLonToDMM(coord);
   }
-
+  @override
   static DMMCoordinate? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
     return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
+  }
+  @override
+  static DMMCoordinate? parseWholeString(String input) {
+    return _parseDMM(input, wholeString: true);
   }
 
   @override

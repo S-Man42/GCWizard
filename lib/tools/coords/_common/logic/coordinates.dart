@@ -48,6 +48,10 @@ abstract class BaseCoordinate {
     return null;
   }
 
+  static BaseCoordinate? parseWholeString(String input) {
+    return parse(input);
+  }
+
   @override
   String toString([int? precision]) {
     return LatLng(latitude, longitude).toString();
@@ -56,7 +60,7 @@ abstract class BaseCoordinate {
 
 abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {
 
-  CoordinateFormatKey? get defaultSubtype => null;
+  CoordinateFormatKey get defaultSubtype;
 }
 
 enum HemisphereLatitude { North, South }
@@ -75,7 +79,7 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
   return _sign;
 }
 
-BaseCoordinate? buildUninitializedCoordinateByFormat(CoordinateFormat format) {
+BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
 
   return coordinateFormatDefinitionByKey(format.type).defaultCoordinate;
 }

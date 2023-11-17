@@ -28,10 +28,7 @@ class SwissGridPlusCoordinate extends SwissGridCoordinate {
   }
 
   static SwissGridPlusCoordinate? parse(String input) {
-    var coords = _parseSwissGridPlus(input);
-    if (8)coords
-    (swissGridPlus.easting.toInt().toString().length == 7 ||
-        swissGridPlus.northing.toInt().toString().length == 7))
+    return _parseSwissGridPlus(input);
   }
 }
 

@@ -73,7 +73,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   var _currentEasting = defaultDoubleText;
   var _currentNorthing = defaultDoubleText;
 
-  var _currentSubtype = LambertCoordinate.defaultCoordinate.defaultSubtype;
+  var _currentSubtype = (LambertFormatDefinition.defaultCoordinate as BaseCoordinateWithSubtypes).defaultSubtype;
 
   @override
   void initState() {
