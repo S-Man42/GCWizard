@@ -33,7 +33,7 @@ abstract class "gcw_coords.GCWCoordWidgetWithSubtypeInfo" {
   +Widget outputWidget()
 }
 "gcw_coords.GCWCoordWidgetInfo" <|.. "gcw_coords.GCWCoordWidgetWithSubtypeInfo"
-"gcw_coords.GCWCoordWidgetWithSubtypeInfo" --o "gcw_coords.GCWCoordWidgetSubtypeInfo"
+"gcw_coords.GCWCoordWidgetWithSubtypeInfo" <-- "gcw_coords.GCWCoordWidgetSubtypeInfo"
 
 
 class "gcw_coords.GCWCoords" {
@@ -44,7 +44,7 @@ class "gcw_coords.GCWCoords" {
   +bool? notitle
 }
 
-"gcw_coords.List<allCoordinateWidgetInfos>" --o "gcw_coords.GCWCoordWidgetInfo"
-"gcw_coords.List<allCoordinateWidgetInfos>" o-- "gcw_coords_formatselector.GCWCoordsFormatSelector"
-"gcw_coords.GCWCoordWidgetInfo" --o "gcw_coords.GCWCoordWidget"
+"gcw_coords.List<allCoordinateWidgetInfos>" --> "gcw_coords.GCWCoordWidgetInfo"
+"gcw_coords.List<allCoordinateWidgetInfos>" <-- "gcw_coords_formatselector.GCWCoordsFormatSelector"
+"gcw_coords.GCWCoordWidgetInfo" <-- "gcw_coords.GCWCoordWidget"
 @enduml

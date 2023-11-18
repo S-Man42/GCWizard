@@ -12,6 +12,9 @@ class "coordinate_format.CoordinateFormatDefinition" {
   +CoordinateFormatKey type
   +String persistenceKey
   +String apiKey
+  +BaseCoordinate defaultCoordinate
+  +BaseCoordinate? parseCoordinate(String);
+  +BaseCoordinate? parseCoordinateWholeString(String);
 }
 
 class "coordinate_format.CoordinateFormatWithSubtypesDefinition" {
@@ -24,7 +27,6 @@ abstract class "coordinates.BaseCoordinate" {
   +double latitude
   +double longitude
   +CoordinateFormat format
-  {static} +BaseCoordinate defaultCoordinate
   +LatLng? toLatLng()
   +String toString()
 }
