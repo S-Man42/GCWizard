@@ -123,11 +123,10 @@ class DMMCoordinate extends BaseCoordinate {
   static DMMCoordinate fromLatLon(LatLng coord) {
     return _latLonToDMM(coord);
   }
-  @override
+
   static DMMCoordinate? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
     return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
-  @override
   static DMMCoordinate? parseWholeString(String input) {
     return _parseDMM(input, wholeString: true);
   }

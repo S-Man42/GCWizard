@@ -69,7 +69,7 @@ class LambertCoordinate extends BaseCoordinateWithSubtypes {
   static const String _ERROR_INVALID_SUBTYPE = 'No valid Lambert subtype given.';
 
   LambertCoordinate(this.easting, this.northing, CoordinateFormatKey subtypeKey) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey)) {
+    if (subtypeKey != _defaultLambertType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.LAMBERT, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 

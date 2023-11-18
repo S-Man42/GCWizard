@@ -102,9 +102,9 @@ enum CoordinateFormatKey {
 }
 
 final allCoordinateFormatDefinitions = [
-  DECFormatDefinition,
-  DMMFormatDefinition,
   DMSFormatDefinition,
+  DMMFormatDefinition,
+  DECFormatDefinition,
   UTMREFFormatDefinition,
   MGRSFormatDefinition,
   XYZFormatDefinition,

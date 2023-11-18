@@ -42,11 +42,9 @@ class DECCoordinate extends BaseCoordinate {
     return _latLonToDEC(coord);
   }
 
-  @override
   static DECCoordinate? parse(String input) {
     return _parseDEC(input, wholeString: false);
   }
-  @override
   static DECCoordinate? parseWholeString(String input) {
     return _parseDEC(input, wholeString: true);
   }

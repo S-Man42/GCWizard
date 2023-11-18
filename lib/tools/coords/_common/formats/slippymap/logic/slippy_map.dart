@@ -125,7 +125,7 @@ class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {
   static const String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
 
   SlippyMapCoordinate(this.x, this.y, CoordinateFormatKey subtypeKey) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey)) {
+    if (subtypeKey != _defaultSlippyMapType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 

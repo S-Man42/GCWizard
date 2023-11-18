@@ -47,7 +47,7 @@ class GaussKruegerCoordinate extends BaseCoordinateWithSubtypes {
   static const String _ERROR_INVALID_SUBTYPE = 'No valid GaussKrueger subtype given.';
 
   GaussKruegerCoordinate(this.easting, this.northing, CoordinateFormatKey subtypeKey) {
-    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey)) {
+    if (subtypeKey != _defaultGaussKruegerType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.GAUSS_KRUEGER, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 
