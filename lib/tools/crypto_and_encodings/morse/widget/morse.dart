@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
@@ -66,6 +67,8 @@ class _MorseState extends State<Morse> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
+  MORSE_CODE _currentCode = MORSE_CODE.MORSE_ITU;
+
   @override
   void initState() {
     super.initState();
@@ -98,6 +101,18 @@ class _MorseState extends State<Morse> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWDropDown<MORSE_CODE>(
+            value: _currentCode,
+            items: MORSE_CODES.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                  value: mode.key, child: mode.value);
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _currentCode = value;
+              });
+            },
+        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -211,11 +226,11 @@ class _MorseState extends State<Morse> {
 
     var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeMorse(_currentEncodeInput);
+      output = encodeMorse(_currentEncodeInput, _currentCode);
       textStyle =
           TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
     } else {
-      output = decodeMorse(_currentDecodeInput);
+      output = decodeMorse(_currentDecodeInput, _currentCode);
     }
 
     return GCWOutputText(text: output, style: textStyle);

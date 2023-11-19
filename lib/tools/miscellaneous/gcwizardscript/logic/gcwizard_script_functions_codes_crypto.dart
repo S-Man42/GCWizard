@@ -62,19 +62,33 @@ String _avemaria(Object text, Object mode) {
   return output;
 }
 
-String _morse(Object text, Object mode) {
-  if (_isNotAString(text) || _isNotAInt(mode)) {
+String _morse(Object text, Object mode, Object code) {
+  if (_isNotAString(text) || _isNotAInt(mode) || _isNotAInt(code)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
+
+  final Map<int, MORSE_CODE> CODETABLE = {
+    0: MORSE_CODE.MORSE_ITU,
+    1: MORSE_CODE.AMERICAN,
+    2: MORSE_CODE.GERKE,
+    3: MORSE_CODE.STEINHEIL,
+  };
+
   String output = '';
+
+  if (CODETABLE[code as int] == null) {
+    return '';
+  }
+
   switch (mode) {
     case _DECODE:
-      output = decodeMorse(text as String);
+      output = decodeMorse(text as String, CODETABLE[code]!);
       break;
     case _ENCODE:
-      output = encodeMorse(text as String);
+      output = encodeMorse(text as String, CODETABLE[code]!);
       break;
+    default: return '';
   }
   return output;
 }

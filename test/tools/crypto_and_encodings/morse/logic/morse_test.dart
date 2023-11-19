@@ -14,7 +14,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeMorse(elem['input'] as String);
+        var _actual = encodeMorse(elem['input'] as String, MORSE_CODE.MORSE_ITU);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -34,7 +34,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeMorse(elem['input'] as String);
+        var _actual = decodeMorse(elem['input'] as String, MORSE_CODE.MORSE_ITU);
         expect(_actual, elem['expectedOutput']);
       });
     }

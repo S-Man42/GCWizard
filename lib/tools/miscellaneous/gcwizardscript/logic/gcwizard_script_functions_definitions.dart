@@ -303,7 +303,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ENCLOSEDAREAS': _GCWizardScriptClassFunctionDefinition(_enclosedAreas, 3),
   'GCCODE': _GCWizardScriptClassFunctionDefinition(_GCCode, 2),
   'HASH': _GCWizardScriptClassFunctionDefinition(_hash, 5),
-  'MORSE': _GCWizardScriptClassFunctionDefinition(_morse, 2),
+  'MORSE': _GCWizardScriptClassFunctionDefinition(_morse, 3),
 
   // coordinates
   'GETLAT': _GCWizardScriptClassFunctionDefinition(_getLat, 0),

@@ -4270,6 +4270,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
     ]),
+    GCWSymbolTableTool(symbolKey: 'morse_gerke', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_original', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_steinheil', symbolSearchStrings: const [
+      'morse',
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
     ]),

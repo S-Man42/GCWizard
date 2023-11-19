@@ -253,6 +253,9 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/moon/
     - lib/tools/symbol_tables/_common/assets/moon_phases/
     - lib/tools/symbol_tables/_common/assets/morse/
+    - lib/tools/symbol_tables/_common/assets/morse_gerke/
+    - lib/tools/symbol_tables/_common/assets/morse_original/
+    - lib/tools/symbol_tables/_common/assets/morse_steinheil/
     - lib/tools/symbol_tables/_common/assets/murray/
     - lib/tools/symbol_tables/_common/assets/murray_v2_fischer_corrected/
     - lib/tools/symbol_tables/_common/assets/murray_v3_navy_1796/

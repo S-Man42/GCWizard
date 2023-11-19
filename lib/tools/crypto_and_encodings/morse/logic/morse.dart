@@ -1,47 +1,50 @@
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-const Map<String, String> _AZToMorse = {
-  'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
-  'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--',
-  'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-',
-  'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
-  '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
-  '9': '----.', '0': '-----',
-  '\u00C5': '.--.-', //Å
-  '\u00C0': '.--.-', //À
-  '\u00C4': '.-.-', //Ä
-  '\u00C8': '.-..-', //È
-  '\u00C9': '..-..', //É
-  '\u00D6': '---.', //Ö
-  '\u00DC': '..--', //Ü
-  '\u00DF': '...--..', //ß
-  '\u00D1': '--.--', //Ñ
-  'CH': '----', '.': '.-.-.-', ',': '--..--', ':': '---...', ';': '-.-.-.', '?': '..--..', '@': '.--.-.',
-  '-': '-....-', '_': '..--.-', '(': '-.--.', ')': '-.--.-', '\'': '.----.', '=': '-...-', '+': '.-.-.', '/': '-..-.',
-  '!': '-.-.--'
+part 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse_data.dart';
+
+enum MORSE_CODE {MORSE_ITU, AMERICAN, STEINHEIL, GERKE}
+
+final Map<MORSE_CODE, String> MORSE_CODES = {
+  MORSE_CODE.MORSE_ITU: 'Morse (ITU)',
+  MORSE_CODE.AMERICAN: 'Morse',
+  MORSE_CODE.GERKE: 'Gerke',
+  MORSE_CODE.STEINHEIL: 'Steinheil',
 };
 
-// Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
-final _MorseToAZ = switchMapKeyValue(_AZToMorse);
+final Map<MORSE_CODE, Map<String, String>> _AZTO_MORSE_CODE = {
+  MORSE_CODE.MORSE_ITU: _AZToMorse,
+  MORSE_CODE.AMERICAN: _AZToMorseOriginal,
+  MORSE_CODE.GERKE: _AZToGerke,
+  MORSE_CODE.STEINHEIL: _AZToSteinheil,
+};
 
-String encodeMorse(String input) {
+final Map<MORSE_CODE, Map<String, String>> _MORSE_CODETOAZ = {
+  MORSE_CODE.MORSE_ITU: _MorseToAZ,
+  MORSE_CODE.AMERICAN: _MorseOriginalToAZ,
+  MORSE_CODE.GERKE: _GerkeToAZ,
+  MORSE_CODE.STEINHEIL: _SteinheilToAZ,
+};
+
+
+
+String encodeMorse(String input, MORSE_CODE code) {
   if (input.isEmpty) return '';
 
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return '|';
 
-    var morse = _AZToMorse[character];
+    var morse = _AZTO_MORSE_CODE[code]?[character];
     return morse ?? '';
   }).join(String.fromCharCode(8195)); // using wide space
 }
 
-String decodeMorse(String input) {
+String decodeMorse(String input, MORSE_CODE code) {
   if (input.isEmpty) return '';
 
   return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';
 
-    var character = _MorseToAZ[morse];
+    var character = _MORSE_CODETOAZ[code]?[morse];
     return character ?? '';
   }).join();
 }
