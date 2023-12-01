@@ -28,6 +28,7 @@ class _BowlingState extends State<Bowling> {
   int _currentThrow1 = 0;
   int _currentThrow2 = 0;
   int _currentThrow3 = 0;
+  int _currentHDCP = 0;
 
   double _cellWidth = 0;
   final BorderSide _border = const BorderSide(width: 1.0, color: Colors.black87);
@@ -49,6 +50,20 @@ class _BowlingState extends State<Bowling> {
 
     return Column(
       children: <Widget>[
+        GCWIntegerSpinner(
+          title: i18n(context, 'bowling_hdcp'),
+          layout: SpinnerLayout.HORIZONTAL,
+          value: _currentHDCP,
+          min: 0,
+          max: 100,
+          onChanged: (value) {
+            setState(() {
+              _currentHDCP = value;
+
+              _calculateAndSetScore();
+            });
+          },
+        ),
         Row(
           children: <Widget>[
             GCWIconButton(
@@ -141,7 +156,7 @@ class _BowlingState extends State<Bowling> {
                       layout: SpinnerLayout.VERTICAL,
                       value: _currentThrow3,
                       min: 0,
-                      max: _currentThrow1 == 10 ? 10 - _currentThrow2 : 10,
+                      max: 10,
                       onChanged: (value) {
                         setState(() {
                           _currentThrow3 = value;
@@ -211,7 +226,7 @@ class _BowlingState extends State<Bowling> {
             ? _currentBowlingScore[i].three
             : null,
         _currentFrameTotals[i],
-        bowlingTotalAfterFrames(i, _currentFrameTotals)
+        bowlingTotalAfterFrames(i, _currentFrameTotals) + _currentHDCP
       ]);
     }
     return result;
