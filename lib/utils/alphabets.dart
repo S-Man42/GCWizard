@@ -385,38 +385,6 @@ const letterFrequencyAlphabetGerman1 = {
   'Y': 1,
   'Z': 1
 };
-const letterFrequencyAlphabetDanish = {
-  // https://www.sttmedia.de/buchstabenhaeufigkeit-daenisch
-  'A': 6,
-  'Å': 1,
-  'Æ': 1,
-  'B': 2,
-  'C': 1,
-  'D': 7,
-  'E': 16,
-  'F': 2,
-  'G': 5,
-  'H': 2,
-  'I': 6,
-  'J': 1,
-  'K': 3,
-  'L': 5,
-  'M': 3,
-  'N': 7,
-  'O': 4,
-  'Ø': 1,
-  'P': 1,
-  'Q': 1,
-  'R': 8,
-  'S': 5,
-  'T': 7,
-  'U': 24,
-  'V': 3,
-  'W': 1,
-  'X': 1,
-  'Y': 1,
-  'Z': 1
-};
 const letterFrequencyAlphabetEnglish1 = {
   'A': 8,
   'B': 2,
