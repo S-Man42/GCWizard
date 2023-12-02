@@ -52,12 +52,16 @@ String bowlingBuildDataRow1(int frame, int count, List<BowlingFrame> bowlingScor
   String result = '';
   switch (count) {
     case 1:
-      result = bowlingScore[frame].one == 10 ? 'X' : bowlingScore[frame].one.toString();
+      if (frame == 9) {
+        result = bowlingScore[frame].one == 10 ? 'X' : bowlingScore[frame].one.toString();
+      } else {
+        result = bowlingScore[frame].one == 10 ? ' ' : bowlingScore[frame].one.toString();
+      }
       break;
     case 2:
       if (bowlingScore[frame].one == 10) {
         if (frame != 9) {
-          result = ' ';
+          result = 'X';
         } else {
           result = bowlingScore[frame].two == 10 ? 'X' : bowlingScore[frame].two.toString();
         }

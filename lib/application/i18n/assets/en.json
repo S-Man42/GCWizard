@@ -393,6 +393,7 @@
   "bowling_total": "Points",
   "bowling_wholetotal": "Total",
   "bowling_scoreboard": "Scoreboard",
+  "bowling_hdcp": "Handicap",
   "braille_selection_title" : "Braille",
   "braille_selection_description" : "Encoding/decoding of Braille (Tactiles)",
   "braille_title" : "Braille",
