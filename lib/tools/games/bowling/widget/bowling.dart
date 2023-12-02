@@ -64,6 +64,10 @@ class _BowlingState extends State<Bowling> {
             });
           },
         ),
+        const GCWTextDivider(text: '',
+        suppressTopSpace: true,
+        suppressBottomSpace: true,
+        ),
         Row(
           children: <Widget>[
             GCWIconButton(
