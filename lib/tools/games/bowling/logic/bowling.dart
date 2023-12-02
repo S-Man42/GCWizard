@@ -40,12 +40,12 @@ List<int> bowlingCalcFrameTotals(List<BowlingFrame> bowlingScore) {
   return total;
 }
 
-int bowlingTotalAfterFrames(int frame, List<int> total) {
+int bowlingTotalAfterFrames(int frame, List<int> total, {int HDCP = 0}) {
   int result = 0;
   for (int i = 0; i <= frame; i++) {
     result = result + total[i];
   }
-  return result;
+  return result + HDCP;
 }
 
 String bowlingBuildDataRow1(int frame, int count, List<BowlingFrame> bowlingScore) {

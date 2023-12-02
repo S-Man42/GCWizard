@@ -230,7 +230,7 @@ class _BowlingState extends State<Bowling> {
             ? _currentBowlingScore[i].three
             : null,
         _currentFrameTotals[i],
-        bowlingTotalAfterFrames(i, _currentFrameTotals) + _currentHDCP,
+        bowlingTotalAfterFrames(i, _currentFrameTotals, HDCP: _currentHDCP),
       ]);
     }
     return result;
@@ -242,6 +242,7 @@ class _BowlingState extends State<Bowling> {
     var scoreRow0 = <Widget>[];
     var scoreRow1 = <Widget>[];
     var scoreRow2 = <Widget>[];
+    var scoreRow3 = <Widget>[];
 
     scoreRow0.add(_buildCellRow0(1));
     scoreRow0.add(_buildCellRow0(2));
@@ -263,6 +264,12 @@ class _BowlingState extends State<Bowling> {
     }
     score.add(Row(
       children: scoreRow2,
+    ));
+
+    scoreRow3.add(_buildCellRow3(1));
+    scoreRow3.add(_buildCellRow3(2));
+    score.add(Row(
+      children: scoreRow3,
     ));
 
     return score;
@@ -328,7 +335,7 @@ class _BowlingState extends State<Bowling> {
         children: [
           Expanded(
               child: AutoSizeText(
-            bowlingTotalAfterFrames(frame, _currentFrameTotals).toString(),
+            bowlingTotalAfterFrames(frame, _currentFrameTotals,).toString(),
             style: gcwTextStyle().copyWith(color: Colors.black),
             minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
@@ -355,6 +362,32 @@ class _BowlingState extends State<Bowling> {
             minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
           )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCellRow3(int count){
+    return Container(
+      height: defaultFontSize() * 1.5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: _border, left: count == 1 ? _border : BorderSide.none, right: count == 1 ? BorderSide.none : _border, bottom: BorderSide.none),
+      ),
+      width: count == 1 ? _cellWidth * 18 : _cellWidth * 3,
+      child: Column(
+        children: [
+          Expanded(
+              child: Align(
+                  alignment: count == 1 ? Alignment.centerRight : Alignment.center,
+                  child: AutoSizeText(
+                    count == 1 ? i18n(context, 'bowling_totalscore') : bowlingTotalAfterFrames(9, _currentFrameTotals, HDCP: _currentHDCP).toString(),
+                    style: gcwTextStyle().copyWith(color: Colors.black),
+                    minFontSize: AUTO_FONT_SIZE_MIN,
+                    maxLines: 1,
+                  )
+              )
+          ),
         ],
       ),
     );
