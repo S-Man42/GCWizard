@@ -41,23 +41,23 @@ class _HexadecimalState extends State<Hexadecimal> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-                inputFormatters: [GCWOnlyDigitsAndSpaceInputFormatter()],
-                controller: _decimalController,
-                onChanged: (value) {
-                  setState(() {
-                    _currentDecimalValue = value;
-                  });
-                },
-              )
+          inputFormatters: [GCWOnlyDigitsAndSpaceInputFormatter()],
+          controller: _decimalController,
+          onChanged: (value) {
+            setState(() {
+              _currentDecimalValue = value;
+            });
+          },
+        )
             : GCWTextField(
-                inputFormatters: [GCWOnlyHexDigitsAndSpaceInputFormatter()],
-                controller: _hexController,
-                onChanged: (value) {
-                  setState(() {
-                    _currentHexValue = value;
-                  });
-                },
-              ),
+          inputFormatters: [GCWOnlyHexDigitsAndSpaceInputFormatter()],
+          controller: _hexController,
+          onChanged: (value) {
+            setState(() {
+              _currentHexValue = value;
+            });
+          },
+        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
