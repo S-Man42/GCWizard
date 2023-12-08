@@ -67,8 +67,8 @@ void main() {
       //variables with names which are included in other variable names
       {'formula' : 'A1 + A10', 'values': {'A1': '1', 'A10': '3'}, 'expectedOutput' : 'rrrbbrrr'},
       {'formula' : 'A10 + A1', 'values': {'A1': '1', 'A10': '3'}, 'expectedOutput' : 'rrrrbbrr'},
-      {'formula' : 'A1 + A10', 'values': {'A10': '3'}, 'expectedOutput' : 'RRRbbrrr'},
-      {'formula' : 'A1 + A10', 'values': {'A1': '1'}, 'expectedOutput' : 'rrrbbrrR'},
+      {'formula' : 'A1 + A10', 'values': {'A10': '3'}, 'expectedOutput' : 'RGGbbrrr'},
+      {'formula' : 'A1 + A10', 'values': {'A1': '1'}, 'expectedOutput' : 'rrrbbrrG'},
       {'formula' : 'A1 + A10', 'values': {'A10': '3', 'A1': '1'}, 'expectedOutput' : 'rrrbbrrr'},
       {'formula' : 'BC + ABCD', 'values': {'ABCD': '3', 'BC': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
       {'formula' : 'BC + ABCD', 'values': {'BC': '1', 'ABCD': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
