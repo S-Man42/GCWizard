@@ -64,6 +64,20 @@ void main() {
       {'formula' : 'A + B]', 'values': values, 'expectedOutput' : 'rrbbrB'},
       {'formula' : '[A + B', 'values': values, 'expectedOutput' : 'Brrbbr'},
 
+      //variables with names which are included in other variable names
+      {'formula' : 'A1 + A10', 'values': {'A1': '1', 'A10': '3'}, 'expectedOutput' : 'rrrbbrrr'},
+      {'formula' : 'A10 + A1', 'values': {'A1': '1', 'A10': '3'}, 'expectedOutput' : 'rrrrbbrr'},
+      {'formula' : 'A1 + A10', 'values': {'A10': '3'}, 'expectedOutput' : 'RRRbbrrr'},
+      {'formula' : 'A1 + A10', 'values': {'A1': '1'}, 'expectedOutput' : 'rrrbbrrR'},
+      {'formula' : 'A1 + A10', 'values': {'A10': '3', 'A1': '1'}, 'expectedOutput' : 'rrrbbrrr'},
+      {'formula' : 'BC + ABCD', 'values': {'ABCD': '3', 'BC': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'BC + ABCD', 'values': {'BC': '1', 'ABCD': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'Bc + ABCD', 'values': {'ABCD': '3', 'bc': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'BC + AbcD', 'values': {'ABCD': '3', 'bc': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'bc + ABCD', 'values': {'BC': '1', 'AbcD': '3'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'ABCD + bc', 'values': {'BC': '1', 'AbcD': '3'}, 'expectedOutput' : 'rrrrrbbrr'},
+      {'formula' : 'ABCD + bc', 'values': {'BD': '1', 'AbcD': '3'}, 'expectedOutput' : 'rrrrrbbRR'},
+
       //Trim empty space
       {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgbb'},
 
