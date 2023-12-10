@@ -226,6 +226,7 @@ import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
 import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
+import 'package:gc_wizard/tools/science_and_technology/ieee754/widget/ieee754.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
@@ -608,6 +609,7 @@ void _initStaticToolList() {
         ConstellationName: 'Andromeda',
       )),
       className(const IceCodesSelection()),
+      className(const IEEE754()),
       className(const ILLIAC()),
       className(const ImageColorCorrections()),
       className(const ImageFlipRotate()),
