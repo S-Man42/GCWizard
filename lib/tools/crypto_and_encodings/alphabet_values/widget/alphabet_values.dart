@@ -362,7 +362,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
         GCWKeyValueEditor(
           keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
           valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
-          valueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
+          addValueInputFormatters: [GCWOnlyDigitsAndCommaInputFormatter()],
           entries: _currentCustomizedAlphabet ?? [],
           editAllowed: false,
           addOnDispose: false,

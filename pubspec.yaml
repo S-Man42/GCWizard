@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.0.2+176
+version: 3.0.3+178
 publish_to: none
 
 environment:
@@ -25,15 +25,15 @@ dependencies:
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^5.0.0
-  flutter_map_marker_popup: ^5.2.0
-  flutter_map_tappable_polyline: ^5.0.0
+  flutter_map: ^3.1.0
+  flutter_map_marker_popup: ^4.0.3
+  flutter_map_tappable_polyline: ^4.0.0+1
   highlight: ^0.7.0
-  http: ^1.1.0
+  http: ^0.13.5
   http_parser: ^4.0.2
   image: ^4.1.2
   intl: ^0.18.0
-  latlong2: ^0.9.0
+  latlong2: ^0.8.2
   location: ^5.0.1
   mask_text_input_formatter: ^2.5.0
   math_expressions: ^2.4.0
