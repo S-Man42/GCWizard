@@ -21,8 +21,6 @@ class _IEEE754State extends State<IEEE754> {
   String _currentEncodeInput = '';
   String _currentDecodeInput = '';
 
-  GCWSwitchPosition _currentBit = GCWSwitchPosition.left;
-
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentBitMode = GCWSwitchPosition.right;
 

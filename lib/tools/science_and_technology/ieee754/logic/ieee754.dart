@@ -2,14 +2,14 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
-String encodeIEEE754(String float, bool bitLength32 ){
-  if (double.tryParse(float) == null) return '';
+String encodeIEEE754(String number, bool bitLength32 ){
+  if (double.tryParse(number) == null) return '';
 
   var byteData = ByteData(8);
   if (bitLength32) {
-    byteData.setFloat32(0, double.parse(float));
+    byteData.setFloat32(0, double.parse(number));
   } else {
-    byteData.setFloat64(0, double.parse(float));
+    byteData.setFloat64(0, double.parse(number));
   }
   var bytes = byteData.buffer.asUint8List();
   String result = bytes.map((b) => b.toRadixString(2).padLeft(8, '0')).join();
@@ -48,6 +48,7 @@ String _decode(String binary, int eBits, int mBits) {
   num b = pow(2, eBits - 1) - 1;
   num e = int.parse(convertBase(binary.substring(1, eBits + 1), 2, 10)) - b;
   num m = int.parse(convertBase(binary.substring(eBits), 2, 10)) / pow(2, mBits);
+  if (m < 1) m = m + 1;
 
   result = s * pow(2, e) * m;
   
