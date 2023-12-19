@@ -14,36 +14,36 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 // GC4TKB5 => calculate checkDigit
 
 
-CheckDigitOutput CheckIBANNumber(String number){
+CheckDigitOutput _CheckIBANNumber(String number){
   number = number.toUpperCase();
   if (number == '' || number.length < 5) {
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
   }
-  if (checkNumber(number, checkIBAN)) {
+  if (_checkNumber(number, _checkIBAN)) {
     return CheckDigitOutput(true, '', ['']);
   } else {
-    return CheckDigitOutput(false, CalculateNumber(number, CalculateIBANNumber), CalculateGlitch(number, checkIBAN));
+    return CheckDigitOutput(false, _CalculateNumber(number, _CalculateIBANNumber), _CalculateGlitch(number, _checkIBAN));
   }
 }
 
-String CalculateIBANNumber(String number){
+String _CalculateIBANNumber(String number){
   if (number.length < 5) {
     return ('checkdigits_invalid_length');
   } else {
-    return number.substring(0, 2) + calculateIBANCheckDigit(number) + number.substring(4);
+    return number.substring(0, 2) + _calculateIBANCheckDigit(number) + number.substring(4);
   }
 }
 
-List<String> CalculateIBANDigits(String number){
-  return CalculateDigits(number, checkIBAN);
+List<String> _CalculateIBANDigits(String number){
+  return _CalculateDigits(number, _checkIBAN);
 }
 
-bool checkIBAN(String number) {
+bool _checkIBAN(String number) {
   number = number.substring(4) + ID_LETTERCODE[number[0]].toString() + ID_LETTERCODE[number[1]].toString() + number[2] + number[3];
   return (BigInt.parse(number) % BigInt.from(97) == BigInt.one);
 }
 
-String calculateIBANCheckDigit(String number) {
+String _calculateIBANCheckDigit(String number) {
   number = number.substring(4) + ID_LETTERCODE[number[0]].toString() + ID_LETTERCODE[number[1]].toString() + '00';
   BigInt checkDigit = BigInt.from(98) - BigInt.parse(number) % BigInt.from(97);
   if (checkDigit < BigInt.from(10)) {

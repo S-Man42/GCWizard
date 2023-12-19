@@ -1,37 +1,37 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
-CheckDigitOutput CheckUICNumber(String number){
+CheckDigitOutput _CheckUICNumber(String number){
   if (number.length == 12) {
-    if (checkNumber(number, checkUIC)) {
+    if (_checkNumber(number, _checkUIC)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateUICNumber), CalculateGlitch(number, checkUIC));
+      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateUICNumber), _CalculateGlitch(number, _checkUIC));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
-String CalculateUICNumber(String number){
+String _CalculateUICNumber(String number){
   if (number.length == 11) {
-    return number + calculateUICCheckDigit(number);
+    return number + _calculateUICCheckDigit(number);
   }
   return 'checkdigits_invalid_length';
 }
 
-List<String> CalculateUICDigits(String number){
+List<String> _CalculateUICDigits(String number){
   if (number.length == 12 && int.tryParse(number[number.length - 1]) != null) {
-    return CalculateDigits(number, checkUIC);
+    return _CalculateDigits(number, _checkUIC);
   } else {
     return ['checkdigits_invalid_length'];
   }
 }
 
 
-bool checkUIC(String number) {
-  return (number[11] == calculateUICCheckDigit(number.substring(0, number.length - 1)));
+bool _checkUIC(String number) {
+  return (number[11] == _calculateUICCheckDigit(number.substring(0, number.length - 1)));
 }
 
-String  calculateUICCheckDigit(String number) {
+String  _calculateUICCheckDigit(String number) {
   int sum = 0;
   int product = 0;
   String digits = '';

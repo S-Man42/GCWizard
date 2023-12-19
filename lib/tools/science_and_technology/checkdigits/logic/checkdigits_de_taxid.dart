@@ -1,38 +1,38 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
-CheckDigitOutput CheckDETaxIDNumber(String number){
+CheckDigitOutput _CheckDETaxIDNumber(String number){
   if (number.length == 11) {
-    if (checkDETaxID(number)) {
+    if (_checkDETaxID(number)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateDETaxIDNumber), CalculateGlitch(number, checkDETaxID));
+      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateDETaxIDNumber), _CalculateGlitch(number, _checkDETaxID));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
-String CalculateDETaxIDNumber(String number){
+String _CalculateDETaxIDNumber(String number){
   if (number.length == 10) {
-    return number + calculateDETaxIDCheckDigit(number);
+    return number + _calculateDETaxIDCheckDigit(number);
   }
   return 'checkdigits_invalid_length';
 }
 
-List<String> CalculateDETaxIDDigits(String number){
+List<String> _CalculateDETaxIDDigits(String number){
   if (number.length == 11) {
-    return CalculateDigits(number, checkDETaxID);
+    return _CalculateDigits(number, _checkDETaxID);
   } else {
     return ['checkdigits_invalid_length'];
   }
 }
 
 
-bool checkDETaxID(String number) {
-  return (number[10] == calculateDETaxIDCheckDigit(number.substring(0, number.length - 1)));
+bool _checkDETaxID(String number) {
+  return (number[10] == _calculateDETaxIDCheckDigit(number.substring(0, number.length - 1)));
 }
 
 
-String  calculateDETaxIDCheckDigit(String number) {
+String  _calculateDETaxIDCheckDigit(String number) {
   int product = 10;
   int sum = 0;
   int pz = 0;

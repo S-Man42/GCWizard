@@ -9,6 +9,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/braille_sele
 import 'package:gc_wizard/application/category_views/selector_lists/bundeswehr_talkingboard.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_ean_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_euro_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_iban_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_imei_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
@@ -297,6 +298,7 @@ import 'package:gc_wizard/tools/science_and_technology/binary/widget/binary.dart
 import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/widget/blood_alcohol_content.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_de_taxid.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_ean.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_euro.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_iban.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_imei.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_isbn.dart';
@@ -1592,6 +1594,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const CheckDigitsIBANSelection(), id: 'checkdigits_iban_selection', searchKeys: const []),
     GCWTool(tool: const CheckDigitsIMEISelection(), id: 'checkdigits_imei_selection', searchKeys: const []),
     GCWTool(tool: const CheckDigitsISBNSelection(), id: 'checkdigits_isbn_selection', searchKeys: const []),
+    GCWTool(tool: const CheckDigitsEUROSelection(), id: 'checkdigits_euro_selection', searchKeys: const []),
 
     //CheckDigitsDETINSelection  ********************************************************************************************
     GCWTool(tool: const CheckDigitsDETaxIDCheckNumber(), id: 'checkdigits_de_taxid_checknumber', searchKeys: const [
@@ -1617,6 +1620,20 @@ void initializeRegistry(BuildContext context) {
       'checkdigits_ean',
     ]),
     GCWTool(tool: const CheckDigitsEANCalculateMissingDigit(), id: 'checkdigits_ean_calculate_number', searchKeys: const [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+
+    //CheckDigitsEUROSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsEUROCheckNumber(), id: 'checkdigits_euro_checknumber', searchKeys: const [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+    GCWTool(tool: const CheckDigitsEUROCalculateCheckDigit(), id: 'checkdigits_euro_calculate_digit', searchKeys: const [
+      'checkdigits',
+      'checkdigits_ean',
+    ]),
+    GCWTool(tool: const CheckDigitsEUROCalculateMissingDigit(), id: 'checkdigits_euro_calculate_number', searchKeys: const [
       'checkdigits',
       'checkdigits_ean',
     ]),

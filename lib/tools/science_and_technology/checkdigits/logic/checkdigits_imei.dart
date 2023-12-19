@@ -1,37 +1,37 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
-CheckDigitOutput CheckIMEINumber(String number){
+CheckDigitOutput _CheckIMEINumber(String number){
   if (number.length == 15) {
-    if (checkNumber(number, checkIMEI)) {
+    if (_checkNumber(number, _checkIMEI)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateIMEINumber), CalculateGlitch(number, checkIMEI));
+      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateIMEINumber), _CalculateGlitch(number, _checkIMEI));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
-String CalculateIMEINumber(String number){
+String _CalculateIMEINumber(String number){
   if (number.length == 14) {
-    return number + calculateIMEICheckDigit(number);
+    return number + _calculateIMEICheckDigit(number);
   }
   return 'checkdigits_invalid_length';
 }
 
-List<String> CalculateIMEIDigits(String number){
+List<String> _CalculateIMEIDigits(String number){
   if (number.length == 15 && int.tryParse(number[number.length - 1]) != null) {
-    return CalculateDigits(number, checkIMEI);
+    return _CalculateDigits(number, _checkIMEI);
   } else {
     return ['checkdigits_invalid_length'];
   }
 }
 
 
-bool checkIMEI(String number) {
-  return (number[14] == calculateIMEICheckDigit(number.substring(0, number.length - 1)));
+bool _checkIMEI(String number) {
+  return (number[14] == _calculateIMEICheckDigit(number.substring(0, number.length - 1)));
 }
 
-String  calculateIMEICheckDigit(String number) {
+String  _calculateIMEICheckDigit(String number) {
   int sum = 0;
   int product = 0;
   for (int i = 0; i < number.length; i++) {

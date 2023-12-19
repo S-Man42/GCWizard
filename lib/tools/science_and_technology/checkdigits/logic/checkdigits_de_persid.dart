@@ -4,28 +4,28 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 
-CheckDigitOutput CheckDEPersIDNumber(String number){
+CheckDigitOutput _CheckDEPersIDNumber(String number){
   if (number.length == 25) {
-    if (checkNumber(number, checkDEPersID)) {
+    if (_checkNumber(number, _checkDEPersID)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateDEPersIDNumber), CalculateGlitch(number, checkDEPersID));
+      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateDEPersIDNumber), _CalculateGlitch(number, _checkDEPersID));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
-String CalculateDEPersIDNumber(String number){
+String _CalculateDEPersIDNumber(String number){
 
   return '';
 }
 
-List<String> CalculateDEPersIDDigits(String number){
+List<String> _CalculateDEPersIDDigits(String number){
 
   return [''];
 }
 
-bool checkDEPersID(String number) {
+bool _checkDEPersID(String number) {
   String cdSerial = _calcCD(number.substring(0, 10));
   String cdDateBirth = _calcCD(number.substring(10, 16));
   String cdDateValid = _calcCD(number.substring(17, 23));

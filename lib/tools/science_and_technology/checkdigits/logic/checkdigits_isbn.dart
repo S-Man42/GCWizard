@@ -1,30 +1,30 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
-CheckDigitOutput CheckISBNNumber(String number){
+CheckDigitOutput _CheckISBNNumber(String number){
   number = number.replaceAll('#', '').toUpperCase();
   if (number == '') {
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
   }
 
   if (number.length == 10 || number.length == 13) {
-    if (checkNumber(number, checkISBN)) {
+    if (_checkNumber(number, _checkISBN)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateISBNNumber), CalculateGlitch(number, checkISBN));
+      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateISBNNumber), _CalculateGlitch(number, _checkISBN));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
-String CalculateISBNNumber(String number){
+String _CalculateISBNNumber(String number){
   if (number.length == 9) {
-    return number + calculateCheckDigit(number, calculateISBNCheckDigit);
+    return number + _calculateCheckDigit(number, _calculateISBNCheckDigit);
   } else {
     if (number.length == 12) {
       if (int.tryParse(number) == null) {
         return 'checkdigits_invalid_format';
       } else {
-        return number + calculateCheckDigit(number, calculateEANCheckDigit);
+        return number + _calculateCheckDigit(number, _calculateEANCheckDigit);
       }
     } else {
       return 'checkdigits_invalid_length';
@@ -32,26 +32,26 @@ String CalculateISBNNumber(String number){
   }
 }
 
-List<String> CalculateISBNDigits(String number){
+List<String> _CalculateISBNDigits(String number){
   number = number.toUpperCase();
   if (number.length == 10 || number.length == 13 && (int.tryParse(number[number.length - 1]) != null || number[number.length - 1] == 'X')) {
-    return CalculateDigits(number, checkISBN);
+    return _CalculateDigits(number, _checkISBN);
   } else {
     return ['checkdigits_invalid_length'];
   }
 }
 
 
-bool checkISBN(String number) {
+bool _checkISBN(String number) {
   if (number.length > 10 && int.tryParse(number) == null) {
     return false;
   } else {
     return (number[number.length - 1] ==
-        calculateCheckDigit(number.substring(0, number.length - 1), calculateISBNCheckDigit));
+        _calculateCheckDigit(number.substring(0, number.length - 1), _calculateISBNCheckDigit));
   }
 }
 
-String  calculateISBNCheckDigit(String number) {
+String  _calculateISBNCheckDigit(String number) {
   if(number.length == 9) {
     int sum = 0;
     for (int i = 1; i < 10; i++) {
@@ -73,7 +73,7 @@ String  calculateISBNCheckDigit(String number) {
     if (int.tryParse(number) == null) {
       return '';
     } else {
-      return calculateCheckDigit(number, calculateEANCheckDigit);
+      return _calculateCheckDigit(number, _calculateEANCheckDigit);
     }
   }
 }
