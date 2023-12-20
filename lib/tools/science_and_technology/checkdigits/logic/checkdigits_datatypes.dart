@@ -38,6 +38,7 @@ enum CheckDigitsMode {
   IMEI,
   ISBN,
   UIC,
+  GTIN,
 }
 
 final MaskTextInputFormatter MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@§##########", filter: {"@": RegExp(r'[A-Za-z?]'), "§": RegExp(r'[A-Za-z0-9?]'),"#": RegExp(r'[0-9?]')});

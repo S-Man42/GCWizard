@@ -13,6 +13,8 @@ import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_iban_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_imei_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_uic_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_gtin_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cistercian_numbers_selection.dart';
@@ -299,9 +301,11 @@ import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/wid
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_de_taxid.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_ean.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_euro.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_gtin.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_iban.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_imei.dart';
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_isbn.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_uic.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/widget/pantone_color_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/ral_color_codes/widget/ral_color_codes.dart';
@@ -1595,6 +1599,8 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const CheckDigitsIMEISelection(), id: 'checkdigits_imei_selection', searchKeys: const []),
     GCWTool(tool: const CheckDigitsISBNSelection(), id: 'checkdigits_isbn_selection', searchKeys: const []),
     GCWTool(tool: const CheckDigitsEUROSelection(), id: 'checkdigits_euro_selection', searchKeys: const []),
+    GCWTool(tool: const CheckDigitsGTINSelection(), id: 'checkdigits_gtin_selection', searchKeys: const []),
+    GCWTool(tool: const CheckDigitsUICSelection(), id: 'checkdigits_uic_selection', searchKeys: const []),
 
     //CheckDigitsDETINSelection  ********************************************************************************************
     GCWTool(tool: const CheckDigitsDETaxIDCheckNumber(), id: 'checkdigits_de_taxid_checknumber', searchKeys: const [
@@ -1679,6 +1685,35 @@ void initializeRegistry(BuildContext context) {
       'checkdigits',
       'checkdigits_isbn',
     ]),
+
+    //CheckDigitsGTINSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsGTINCheckNumber(), id: 'checkdigits_gtin_checknumber', searchKeys: const [
+      'checkdigits',
+      'checkdigits_gtin',
+    ]),
+    GCWTool(tool: const CheckDigitsGTINCalculateCheckDigit(), id: 'checkdigits_gtin_calculate_digit', searchKeys: const [
+      'checkdigits',
+      'checkdigits_gtin',
+    ]),
+    GCWTool(tool: const CheckDigitsGTINCalculateMissingDigit(), id: 'checkdigits_gtin_calculate_number', searchKeys: const [
+      'checkdigits',
+      'checkdigits_gtin',
+    ]),
+
+    //CheckDigitsUICSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsUICCheckNumber(), id: 'checkdigits_uic_checknumber', searchKeys: const [
+      'checkdigits',
+      'checkdigits_uic',
+    ]),
+    GCWTool(tool: const CheckDigitsUICCalculateCheckDigit(), id: 'checkdigits_uic_calculate_digit', searchKeys: const [
+      'checkdigits',
+      'checkdigits_uic',
+    ]),
+    GCWTool(tool: const CheckDigitsUICCalculateMissingDigit(), id: 'checkdigits_uic_calculate_number', searchKeys: const [
+      'checkdigits',
+      'checkdigits_uic',
+    ]),
+
 
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: const CistercianNumbers(), id: 'cistercian', searchKeys: const [
