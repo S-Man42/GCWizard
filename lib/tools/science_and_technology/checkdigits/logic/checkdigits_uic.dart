@@ -1,5 +1,9 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
+// https://de.wikipedia.org/wiki/UIC-Kennzeichnung_der_Triebfahrzeuge
+// https://de.wikipedia.org/wiki/UIC-L%C3%A4ndercode
+
+
 CheckDigitOutput _CheckUICNumber(String number){
   if (number.length == 12) {
     if (_checkNumber(number, _checkUIC)) {
@@ -37,14 +41,14 @@ String  _calculateUICCheckDigit(String number) {
   String digits = '';
   for (int i = 0; i < number.length; i++) {
     if (i % 2 == 0) {
-      product = 1 * int.parse(number[i]);
-    } else {
       product = 2 * int.parse(number[i]);
+    } else {
+      product = 1 * int.parse(number[i]);
     }
     digits = digits + product.toString();
   }
   for (int i = 0; i < digits.length; i++) {
     sum = sum + int.parse(digits[i]);
   }
-  return (10 * (sum /~ 10 + 1) - sum).toString();
+  return (10 * (sum ~/ 10 + 1) - sum).toString();
 }

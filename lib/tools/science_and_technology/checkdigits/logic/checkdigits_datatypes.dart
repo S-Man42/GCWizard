@@ -50,7 +50,8 @@ final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_DATE = MaskTextInputFor
 final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_DIGIT = MaskTextInputFormatter(mask: "#", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "###########-#", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "############", filter: {"#": RegExp(r'[0-9?]')});
 
 Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.ISBN : MASKINPUTFORMATTER_ISBN,
@@ -65,11 +66,13 @@ Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.IBAN : "AA00000000000000000000000000000000",
   CheckDigitsMode.EURO : "A@0000000000",
   CheckDigitsMode.DEPERSID : "0000000000@<<0000000<0000000<<<<<<<0",
-  CheckDigitsMode.UIC : "00000000000-0",
+  CheckDigitsMode.UIC : "000000000000",
 };
 
 final Map<CheckDigitsMode, int> maxInt = {
   CheckDigitsMode.EAN     : 999999999999999999, // 18 digits
+  CheckDigitsMode.UIC     : 999999999999,       // 12 digits
+  CheckDigitsMode.GTIN    : 999999999999999999, // 18 digits
   CheckDigitsMode.IMEI    : 999999999999999,    // 15 digits
   CheckDigitsMode.DETAXID : 99999999999,        // 11 digits
 };
@@ -81,3 +84,4 @@ class CheckDigitOutput{
 
   CheckDigitOutput(this.correct, this.correctDigit, this.correctNumbers);
 }
+

@@ -1,6 +1,10 @@
+import 'dart:isolate';
+
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
+import 'package:http/http.dart' as http;
 
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_datatypes.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_banknumber_data.dart';

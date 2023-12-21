@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -12,7 +15,10 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdi
 class CheckDigitsCheckNumber extends StatefulWidget {
   final CheckDigitsMode mode;
 
-  const CheckDigitsCheckNumber({Key? key, required this.mode,}) : super(key: key);
+  const CheckDigitsCheckNumber({
+    Key? key,
+    required this.mode,
+  }) : super(key: key);
 
   @override
   CheckDigitsCheckNumberState createState() => CheckDigitsCheckNumberState();
@@ -24,6 +30,10 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   String _currentInputNStringDateBirth = '';
   String _currentInputNStringDateValid = '';
   String _currentInputNStringCheckDigit = '';
+
+  String _currentGTINOutput = '';
+  Widget _outputDetailWidget = Container();
+
   int _currentInputNInt = 0;
   int _currentInputNIntCheckDigit = 0;
   int _currentInputNIntDateBirth = 0;
@@ -110,6 +120,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
               ])
             : Container(),
         (widget.mode == CheckDigitsMode.EAN ||
+                widget.mode == CheckDigitsMode.UIC ||
                 widget.mode == CheckDigitsMode.DETAXID ||
                 widget.mode == CheckDigitsMode.IMEI)
             ? GCWIntegerSpinner(
@@ -153,8 +164,21 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     CheckDigitOutput checked = checkDigitsCheckNumber(widget.mode, _currentInputNString);
 
     if (checked.correct) {
-      return GCWDefaultOutput(
-        child: i18n(context, 'checkdigits_checknumber_correct_yes'),
+      return Column(
+        children: <Widget>[
+          GCWDefaultOutput(
+            child: i18n(context, 'checkdigits_checknumber_correct_yes'),
+          ),
+          widget.mode == CheckDigitsMode.EAN ?
+          GCWButton(
+            text: i18n(context, 'checkdigits_ean_get_details'),
+            onPressed: () {
+              _getOpenGTINDBtask();
+              setState(() {});
+            },
+          ): Container(),
+          widget.mode == CheckDigitsMode.EAN ? _outputDetailWidget : Container(),
+        ],
       );
     }
 
@@ -193,7 +217,72 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
               return [entry.key, entry.value];
             }).toList(),
             flexValues: const [1, 5]),
-      )
+      ),
     ]);
+  }
+
+  void _getOpenGTINDBtask() async {
+    await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: SizedBox(
+            height: 220,
+            width: 150,
+            child: GCWAsyncExecuter<OpenGTINDBOutput>(
+              isolatedFunction: OpenGTINDBrunTaskAsync,
+              parameter: _buildGTINDBgetJobData,
+              onReady: (data) => _showOpenGTINDBOutput(data),
+              isOverlay: true,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildGTINDBgetJobData() async {
+    return GCWAsyncExecuterParameters(OpenGTINDBgetJobData(
+      ean: _currentInputNString,
+    ));
+  }
+
+  void _showOpenGTINDBOutput(OpenGTINDBOutput output) {
+    List<List<String>> data = [];
+    if (output.status == OPENGTINDB_STATUS.OK) {
+      _currentGTINOutput = output.eanData;
+      List<String> lineElements = [];
+      for (String line in _currentGTINOutput.split('\n')) {
+        if (!line.startsWith('---')) {
+          lineElements = line.split('=');
+          if (lineElements.length == 2) {
+            if (lineElements[0] == 'content') {
+              data.add([lineElements[0], OPENGTINDB_CONTENTS[lineElements[1]].toString()]);
+            }
+            else if (lineElements[0] == 'packs') {
+              data.add([lineElements[0], OPENGTINDB_PACKS[lineElements[1]].toString()]);
+            }
+            else {
+              data.add([lineElements[0], lineElements[1]]);
+            }
+          }
+        }
+      }
+
+    } else {
+      data.add(['', output.httpCode]);
+      data.add(['', output.httpMessage]);
+      data.add([i18n(context,'checkdigits_error_error'), i18n(context, output.eanData)]);
+    }
+    _outputDetailWidget = GCWColumnedMultilineOutput(
+      data: data,
+      flexValues: [2, 4],
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+ //     _currentGTINOutput = output.eanData;
+ //     _outputDetailWidget = GCWDefaultOutput(child: _currentGTINOutput);
+      setState(() {});
+    });
   }
 }
