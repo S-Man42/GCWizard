@@ -4,7 +4,7 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 // https://kryptografie.de/kryptografie/chiffre/euro-banknote.htm
 // http://www.pruefziffernberechnung.de/B/Banknoten-EUR.shtml
 
-final _billData = {
+final EUROBILLDATA = {
   1: {
     'B': ['', 'common_country_Lithuania'],
     'C': ['', 'common_country_Latvia'],
@@ -54,7 +54,7 @@ bool _isLetter(String letter) {
   return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.contains(letter.toUpperCase());
 }
 
-int _checkEuroSeries(String number) {
+int checkEuroSeries(String number) {
   if (_isLetter(number[0]) && _isLetter(number[1])) {
     return 2;
   } else {
@@ -63,6 +63,10 @@ int _checkEuroSeries(String number) {
 }
 
 CheckDigitOutput _CheckEURONumber(String number) {
+  if (number == '') {
+    return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
+  }
+
   if (number.length == 12) {
     if (_checkNumber(number, _checkEURO)) {
       return CheckDigitOutput(true, '', ['']);
@@ -71,7 +75,7 @@ CheckDigitOutput _CheckEURONumber(String number) {
           _CalculateGlitch(number, _checkEURO));
     }
   }
-  return CheckDigitOutput(false, '', ['']);
+  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
 String _CalculateEURONumber(String number) {
@@ -99,7 +103,7 @@ List<String> _CalculateEURODigits(String number) {
 }
 
 bool _checkEURO(String number) {
-  if (_billData[_checkEuroSeries(number)]![number[0]] == null) {
+  if (EUROBILLDATA[checkEuroSeries(number)]![number[0]] == null) {
     return false;
   } else{
     return (number[number.length - 1] == _calculateEUROCheckDigit(number.substring(0, number.length - 1)));
@@ -109,7 +113,7 @@ bool _checkEURO(String number) {
 String _calculateEUROCheckDigit(String number) {
   String result = '';
   int qSum = 0;
-  switch (_checkEuroSeries(number)) {
+  switch (checkEuroSeries(number)) {
     case 1:
       int n1 = alphabet_AZ[number[0].toUpperCase()]!;
       qSum = sum([int.parse(n1.toString() + number.substring(1, number.length))]).toInt();

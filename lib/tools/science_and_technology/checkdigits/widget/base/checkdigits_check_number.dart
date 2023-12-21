@@ -169,15 +169,31 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           GCWDefaultOutput(
             child: i18n(context, 'checkdigits_checknumber_correct_yes'),
           ),
-          widget.mode == CheckDigitsMode.EAN ?
-          GCWButton(
-            text: i18n(context, 'checkdigits_ean_get_details'),
-            onPressed: () {
-              _getOpenGTINDBtask();
-              setState(() {});
-            },
-          ): Container(),
-          widget.mode == CheckDigitsMode.EAN ? _outputDetailWidget : Container(),
+          widget.mode == CheckDigitsMode.EAN
+              ? Column(children: <Widget>[
+                  GCWButton(
+                    text: i18n(context, 'checkdigits_ean_get_details'),
+                    onPressed: () {
+                      _getOpenGTINDBtask();
+                      setState(() {});
+                    },
+                  ),
+                  _outputDetailWidget
+                ])
+              : Container(),
+          widget.mode == CheckDigitsMode.EURO
+              ? GCWDefaultOutput(
+                  child: _billData(_currentInputNString),
+                )
+              : Container(),
+          widget.mode == CheckDigitsMode.UIC
+              ? GCWDefaultOutput(
+                  child: GCWColumnedMultilineOutput(
+                    data: _UICData(_currentInputNString),
+                    flexValues: [4, 2, 4],
+                  ),
+                )
+              : Container()
         ],
       );
     }
@@ -259,30 +275,66 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           if (lineElements.length == 2) {
             if (lineElements[0] == 'content') {
               data.add([lineElements[0], OPENGTINDB_CONTENTS[lineElements[1]].toString()]);
-            }
-            else if (lineElements[0] == 'packs') {
+            } else if (lineElements[0] == 'packs') {
               data.add([lineElements[0], OPENGTINDB_PACKS[lineElements[1]].toString()]);
-            }
-            else {
+            } else {
               data.add([lineElements[0], lineElements[1]]);
             }
           }
         }
       }
-
     } else {
       data.add(['', output.httpCode]);
       data.add(['', output.httpMessage]);
-      data.add([i18n(context,'checkdigits_error_error'), i18n(context, output.eanData)]);
+      data.add([i18n(context, 'checkdigits_error_error'), i18n(context, output.eanData)]);
     }
     _outputDetailWidget = GCWColumnedMultilineOutput(
       data: data,
       flexValues: [2, 4],
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
- //     _currentGTINOutput = output.eanData;
- //     _outputDetailWidget = GCWDefaultOutput(child: _currentGTINOutput);
+      //     _currentGTINOutput = output.eanData;
+      //     _outputDetailWidget = GCWDefaultOutput(child: _currentGTINOutput);
       setState(() {});
     });
+  }
+
+  String _billData(String number) {
+    if (checkEuroSeries(number) == 1) {
+      return i18n(context, EUROBILLDATA[1]![number[0]]![1]);
+    } else {
+      return EUROBILLDATA[2]![number[0]]![0] + '\n' + i18n(context, EUROBILLDATA[2]![number[0]]![1]);
+    }
+  }
+
+  List<List<String>> _UICData(String number) {
+    return [
+      [
+        i18n(context, 'checkdigits_uic_interoperability_code'),
+        number.substring(0, 2),
+        _UICTypeCode(number.substring(0, 2))
+      ],
+      [
+        i18n(context, 'checkdigits_uic_country_code'),
+        number.substring(2, 4),
+        i18n(context, UIC_COUNTRY_CODE[number.substring(2, 4)]!)
+      ],
+      [i18n(context, 'checkdigits_uic_vehicle_type'), number.substring(4, 8), ''],
+      [i18n(context, 'checkdigits_uic_running_number'), number.substring(8, 11), ''],
+      [i18n(context, 'checkdigits_uic_check_digit'), number.substring(11), ''],
+    ];
+  }
+
+  String _UICTypeCode(String typeCode) {
+    int type = int.parse(typeCode);
+    if (type >= 90) {
+      return i18n(context, 'checkdigits_uic_typecode_locomotive');
+    } else if (type >= 80) {
+      return i18n(context, 'checkdigits_uic_typecode_freightwagon');
+    } else if (type >= 50) {
+      return i18n(context, 'checkdigits_uic_typecode_passengercoach');
+    } else {
+      return i18n(context, 'checkdigits_uic_typecode_freightwagon');
+    }
   }
 }
