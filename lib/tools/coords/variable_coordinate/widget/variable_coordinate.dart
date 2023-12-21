@@ -210,13 +210,17 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     return GCWKeyValueEditor(
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-      valueInputFormatters: [VariableStringTextInputFormatter()],
+      addValueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
       onNewEntryChanged: _updateNewEntry,
       entries: widget.formula.values,
       onAddEntry: (entry) => _addEntry(entry),
       onUpdateEntry: (entry) => _updateEntry(entry),
       addOnDispose: true,
+      validateEditedValue: (String input) {
+        return VARIABLESTRING.hasMatch(input);
+      },
+      invalidEditedValueMessage: i18n(context, 'formulasolver_values_novalidinterpolated'),
     );
   }
 
