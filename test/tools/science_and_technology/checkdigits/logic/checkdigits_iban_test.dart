@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 void main() {
-  group("uic.checkNumber", () {
+  group("iban.checkNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
@@ -36,7 +36,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCheckNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCheckNumber(CheckDigitsMode.IBAN, elem['number'] as String);
         expect(_actual.correct, (elem['expectedOutput'] as CheckDigitOutput).correct);
         expect(_actual.correctDigit, (elem['expectedOutput'] as CheckDigitOutput).correctDigit);
         expect(_actual.correctNumbers, (elem['expectedOutput'] as CheckDigitOutput).correctNumbers);
@@ -44,7 +44,7 @@ void main() {
     }
   });
 
-  group("uic.calculateCheckDigit", () {
+  group("iban.calculateCheckDigit", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
@@ -58,13 +58,13 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.IBAN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
   });
 
-  group("uic.calculateNumber", () {
+  group("iban.calculateNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'number': '', 'expectedOutput': ['checkdigits_invalid_length']},
       {'number': '1?345678?901', 'expectedOutput': [
@@ -82,7 +82,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.IBAN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

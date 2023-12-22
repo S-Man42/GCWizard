@@ -122,7 +122,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
               ])
             : Container(),
         (widget.mode == CheckDigitsMode.ISBN ||
-                widget.mode == CheckDigitsMode.EURO ||
+            widget.mode == CheckDigitsMode.IBAN ||
+            widget.mode == CheckDigitsMode.EURO ||
                 widget.mode == CheckDigitsMode.EAN ||
                 widget.mode == CheckDigitsMode.UIC ||
                 widget.mode == CheckDigitsMode.DETAXID ||
@@ -217,6 +218,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         return _detailsIMEIWidget();
       case CheckDigitsMode.ISBN:
         return _detailsISBNWidget();
+      case CheckDigitsMode.IBAN:
+        return _detailsIBANWidget();
       default:
         return Container();
     }
@@ -266,6 +269,16 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       child: GCWColumnedMultilineOutput(
         copyColumn: 1,
         data: _ISBNData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+        flexValues: [4, 2, 4],
+      ),
+    );
+  }
+
+  Widget _detailsIBANWidget() {
+    return GCWDefaultOutput(
+      child: GCWColumnedMultilineOutput(
+        copyColumn: 1,
+        data: _IBANData(checkDigitsNormalizeNumber(_currentInputNumberString)),
         flexValues: [4, 2, 4],
       ),
     );
@@ -424,4 +437,24 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       return i18n(context, 'checkdigits_uic_typecode_freightwagon');
     }
   }
+
+  List<List<String>> _IBANData(String number) {
+    List<List<String>> result = [];
+    List<Map<String, Object>>? country = IBAN_DATA[number.substring(0,2)];
+    result.add([i18n(context, 'checkdigits_uic_country_code'), number.substring(0,2), i18n(context, country?[0]['country'] as String)]);
+    result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2,4), '']);
+    int index = 4;
+    int digits = 0;
+    country?.forEach((element) {
+      for (var element in element.entries) {
+        if (element.key != 'country') {
+          digits = element.value as int;
+          result.add([i18n(context, IBAN_DATA_MEANING[element.key]!), number.substring(index, index + digits), '']);
+          index = index + digits;
+        }
+      }
+    });
+    return result;
+  }
+
 }
