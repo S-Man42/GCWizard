@@ -2,41 +2,42 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 void main() {
-  group("uic.checkNumber", () {
+  group("isbn.checkNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
         'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
       },
       {
-        'number': '218099039149',
+        'number': '9783446469471',
         'expectedOutput': CheckDigitOutput(true, '', [''])
       },
       {
-        'number': '318166502860',
-        'expectedOutput': CheckDigitOutput(true, '', [''])
+        'number': '9783446469470',
+        'expectedOutput': CheckDigitOutput(false, '9783446469471', [])
       },
       {
-        'number': '123456789012',
-        'expectedOutput': CheckDigitOutput(false, '123456789015', [
-          '723456789012',
-          '153456789012',
-          '129456789012',
-          '123756789012',
-          '123426789012',
-          '123459789012',
-          '123456489012',
-          '123456719012',
-          '123456781012',
-          '123456789312',
-          '123456789072',
+        'number': '9783446469472',
+        'expectedOutput': CheckDigitOutput(false, '9783446469471', [
+          '8783446469472',
+          '9083446469472',
+          '9773446469472',
+          '9786446469472',
+          '9783346469472',
+          '9783476469472',
+          '9783445469472',
+          '9783446769472',
+          '9783446459472',
+          '9783446462472',
+          '9783446469372',
+          '9783446469402',
         ])
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCheckNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCheckNumber(CheckDigitsMode.ISBN, elem['number'] as String);
         expect(_actual.correct, (elem['expectedOutput'] as CheckDigitOutput).correct);
         expect(_actual.correctDigit, (elem['expectedOutput'] as CheckDigitOutput).correctDigit);
         expect(_actual.correctNumbers, (elem['expectedOutput'] as CheckDigitOutput).correctNumbers);
@@ -44,45 +45,45 @@ void main() {
     }
   });
 
-  group("uic.calculateCheckDigit", () {
+  group("isbn.calculateCheckDigit", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
         'expectedOutput': 'checkdigits_invalid_length'
       },
       {
-        'number': '12345678901',
-        'expectedOutput': '123456789015'
+        'number': '978344646947',
+        'expectedOutput': '9783446469471'
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.ISBN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
   });
 
-  group("uic.calculateNumber", () {
+  group("isbn.calculateNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'number': '', 'expectedOutput': ['checkdigits_invalid_length']},
-      {'number': '1?345678?901', 'expectedOutput': [
-        '103456784901',
-        '113456788901',
-        '123456783901',
-        '133456787901',
-        '143456782901',
-        '153456786901',
-        '163456781901',
-        '173456785901',
-        '183456780901',
+      {'number': '978?44646947?', 'expectedOutput': [
+        '9781446469477',
+        '9782446469474',
+        '9783446469471',
+        '9784446469478',
+        '9785446469475',
+        '9786446469472',
+        '9787446469479',
+        '9788446469476',
+        '9789446469473',
       ]},
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.ISBN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

@@ -19,7 +19,7 @@ String _CalculateIMEINumber(String number){
 }
 
 List<String> _CalculateIMEIDigits(String number){
-  if (number.length == 15 && int.tryParse(number[number.length - 1]) != null) {
+  if (number.length == 15) {
     return _CalculateDigits(number, _checkIMEI);
   } else {
     return ['checkdigits_invalid_length'];

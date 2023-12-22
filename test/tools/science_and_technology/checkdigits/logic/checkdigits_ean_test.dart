@@ -57,21 +57,21 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
-        'expectedOutput': ['checkdigits_invalid_length']
+        'expectedOutput': 'checkdigits_invalid_length'
       },
       {
         'number': '123456789012',
-        'expectedOutput': ['1234567890128']
+        'expectedOutput': '1234567890128'
       },
       {
         'number': '1234567',
-        'expectedOutput': ['12345678']
+        'expectedOutput': '12345678'
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.EAN, elem['number'] as String);
+        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.EAN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

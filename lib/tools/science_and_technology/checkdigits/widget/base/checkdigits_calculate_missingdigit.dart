@@ -19,14 +19,14 @@ class CheckDigitsCalculateMissingDigits extends StatefulWidget {
 }
 
 class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateMissingDigits> {
-  String _currentInputN = '';
+  String _currentInputNumberString = '';
   late TextEditingController currentInputController;
   List<String> _numbers = <String>[];
 
   @override
   void initState() {
     super.initState();
-    currentInputController = TextEditingController(text: _currentInputN);
+    currentInputController = TextEditingController(text: _currentInputNumberString);
   }
 
   @override
@@ -41,16 +41,18 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
       children: <Widget>[
         GCWTextField(
           controller: currentInputController,
+          inputFormatters: [INPUTFORMATTERS[widget.mode]!],
+          hintText: INPUTFORMATTERS_HINT[widget.mode]!,
           onChanged: (text) {
             setState(() {
-              _currentInputN = text;
+              _currentInputNumberString = text;
             });
           },
         ),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
-              _numbers = checkDigitsCalculateDigits(widget.mode, _currentInputN);
+              _numbers = checkDigitsCalculateDigits(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
             });
           },
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -11,6 +12,7 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
+import 'package:prefs/prefs.dart';
 
 class CheckDigitsCheckNumber extends StatefulWidget {
   final CheckDigitsMode mode;
@@ -25,7 +27,7 @@ class CheckDigitsCheckNumber extends StatefulWidget {
 }
 
 class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
-  String _currentInputNString = '';
+  String _currentInputNumberString = '';
   String _currentInputNStringID = '';
   String _currentInputNStringDateBirth = '';
   String _currentInputNStringDateValid = '';
@@ -48,7 +50,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   @override
   void initState() {
     super.initState();
-    currentInputController = TextEditingController(text: _currentInputNString);
+    currentInputController = TextEditingController(text: _currentInputNumberString);
     currentInputControllerID = TextEditingController(text: _currentInputNStringID);
     currentInputControllerDateBirth = TextEditingController(text: _currentInputNStringDateBirth);
     currentInputControllerDateValid = TextEditingController(text: _currentInputNStringDateValid);
@@ -119,31 +121,19 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
                 )
               ])
             : Container(),
-        (widget.mode == CheckDigitsMode.EAN ||
+        (widget.mode == CheckDigitsMode.ISBN ||
+                widget.mode == CheckDigitsMode.EURO ||
+                widget.mode == CheckDigitsMode.EAN ||
                 widget.mode == CheckDigitsMode.UIC ||
                 widget.mode == CheckDigitsMode.DETAXID ||
                 widget.mode == CheckDigitsMode.IMEI)
-            ? GCWIntegerSpinner(
-                min: 0,
-                max: (maxInt[widget.mode]!),
-                value: _currentInputNInt,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputNInt = value;
-                    _currentInputNString = _currentInputNInt.toString();
-                  });
-                },
-              )
-            : Container(),
-        (widget.mode == CheckDigitsMode.ISBN || widget.mode == CheckDigitsMode.EURO)
             ? GCWTextField(
-                // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
                 controller: currentInputController,
                 inputFormatters: [INPUTFORMATTERS[widget.mode]!],
                 hintText: INPUTFORMATTERS_HINT[widget.mode]!,
                 onChanged: (text) {
                   setState(() {
-                    _currentInputNString = text;
+                    _currentInputNumberString = checkDigitsNormalizeNumber(text);
                   });
                 },
               )
@@ -155,13 +145,14 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   Widget _buildOutput() {
     if (widget.mode == CheckDigitsMode.DEPERSID) {
-      _currentInputNString = _currentInputNStringID +
+      _currentInputNumberString = _currentInputNStringID +
           _currentInputNStringDateBirth +
           _currentInputNStringDateValid +
           _currentInputNStringCheckDigit;
     }
 
-    CheckDigitOutput checked = checkDigitsCheckNumber(widget.mode, _currentInputNString);
+    CheckDigitOutput checked =
+        checkDigitsCheckNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
 
     if (checked.correct) {
       return Column(
@@ -169,31 +160,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           GCWDefaultOutput(
             child: i18n(context, 'checkdigits_checknumber_correct_yes'),
           ),
-          widget.mode == CheckDigitsMode.EAN
-              ? Column(children: <Widget>[
-                  GCWButton(
-                    text: i18n(context, 'checkdigits_ean_get_details'),
-                    onPressed: () {
-                      _getOpenGTINDBtask();
-                      setState(() {});
-                    },
-                  ),
-                  _outputDetailWidget
-                ])
-              : Container(),
-          widget.mode == CheckDigitsMode.EURO
-              ? GCWDefaultOutput(
-                  child: _billData(_currentInputNString),
-                )
-              : Container(),
-          widget.mode == CheckDigitsMode.UIC
-              ? GCWDefaultOutput(
-                  child: GCWColumnedMultilineOutput(
-                    data: _UICData(_currentInputNString),
-                    flexValues: [4, 2, 4],
-                  ),
-                )
-              : Container()
+          _detailsWidget(),
         ],
       );
     }
@@ -210,6 +177,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     }
 
     String title = i18n(context, 'checkdigits_checknumber_correct_assume_check');
+
     if (output.isEmpty) {
       title = title + '\n' + i18n(context, 'checkdigits_checknumber_correct_no_number');
     } else {
@@ -237,6 +205,72 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     ]);
   }
 
+  Widget _detailsWidget() {
+    switch (widget.mode) {
+      case CheckDigitsMode.EAN:
+        return _detailsEANWidget();
+      case CheckDigitsMode.EURO:
+        return _detailsEUROWidget();
+      case CheckDigitsMode.UIC:
+        return _detailsUICWidget();
+      case CheckDigitsMode.IMEI:
+        return _detailsIMEIWidget();
+      case CheckDigitsMode.ISBN:
+        return _detailsISBNWidget();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _detailsEANWidget() {
+    return Column(children: <Widget>[
+      GCWButton(
+        text: i18n(context, 'checkdigits_ean_get_details'),
+        onPressed: () {
+          _getOpenGTINDBtask();
+          setState(() {});
+        },
+      ),
+      _outputDetailWidget
+    ]);
+  }
+
+  Widget _detailsUICWidget() {
+    return GCWDefaultOutput(
+      child: GCWColumnedMultilineOutput(
+        copyColumn: 1,
+        data: _UICData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+        flexValues: [4, 2, 4],
+      ),
+    );
+  }
+
+  Widget _detailsEUROWidget() {
+    return GCWDefaultOutput(
+      child: _EUROData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+    );
+  }
+
+  Widget _detailsIMEIWidget() {
+    return GCWDefaultOutput(
+      child: GCWColumnedMultilineOutput(
+        copyColumn: 1,
+        data: _IMEIData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+        flexValues: [4, 2, 4],
+      ),
+    );
+  }
+
+  Widget _detailsISBNWidget() {
+    return GCWDefaultOutput(
+      child: GCWColumnedMultilineOutput(
+        copyColumn: 1,
+        data: _ISBNData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+        flexValues: [4, 2, 4],
+      ),
+    );
+  }
+
   void _getOpenGTINDBtask() async {
     await showDialog<bool>(
       context: context,
@@ -260,7 +294,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   Future<GCWAsyncExecuterParameters> _buildGTINDBgetJobData() async {
     return GCWAsyncExecuterParameters(OpenGTINDBgetJobData(
-      ean: _currentInputNString,
+      ean: checkDigitsNormalizeNumber(_currentInputNumberString),
+      apikey: Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString(),
     ));
   }
 
@@ -284,9 +319,9 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         }
       }
     } else {
-      data.add(['', output.httpCode]);
-      data.add(['', output.httpMessage]);
-      data.add([i18n(context, 'checkdigits_error_error'), i18n(context, output.eanData)]);
+      data.add([i18n(context, 'checkdigits_ean_server_error_code'), output.httpCode]);
+      data.add([i18n(context, 'checkdigits_ean_server_error_message'), output.httpMessage]);
+      data.add([i18n(context, 'checkdigits_ean_error_error'), i18n(context, output.eanData)]);
     }
     _outputDetailWidget = GCWColumnedMultilineOutput(
       data: data,
@@ -299,12 +334,64 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     });
   }
 
-  String _billData(String number) {
+  String _EUROData(String number) {
     if (checkEuroSeries(number) == 1) {
       return i18n(context, EUROBILLDATA[1]![number[0]]![1]);
     } else {
       return EUROBILLDATA[2]![number[0]]![0] + '\n' + i18n(context, EUROBILLDATA[2]![number[0]]![1]);
     }
+  }
+
+  List<List<String>> _IMEIData(String number) {
+    return [
+      [i18n(context, 'checkdigits_imei_reporting_body_identifier'), number.substring(0, 2), ''],
+      [i18n(context, 'checkdigits_imei_type_allocation_code'), number.substring(2, 8), ''],
+      [i18n(context, 'checkdigits_uic_running_number'), number.substring(8, 14), ''],
+      [i18n(context, 'checkdigits_uic_check_digit'), number.substring(14), ''],
+    ];
+  }
+
+  List<List<String>> _ISBNData(String number) {
+    String prefix = '';
+    String group = '';
+    String publisher = '';
+    String checkdigit = '';
+    if (number.length == 13) {
+      prefix = number.substring(0,3);
+      number = number.substring(3);
+    }
+    if (number[0] == '0' || number[0] == '1' || number[0] == '2' || number[0] == '3' || number[0] == '4' || number[0] == '5' || number[0] == '7') {
+      group = number[0];
+      publisher = number.substring(2, 9);
+    } else if (number[0] == '8' || (number[0] == '9' && (number[1] == '0' || number[1] == '1' || number[1] == '2' || number[1] == '3' || number[1] == '4'))) {
+      group = number.substring(0, 2);
+      publisher = number.substring(2, 9);
+    } else {
+      int groupNumber = int.parse(number.substring(0, 3));
+      if ((600 <= groupNumber && groupNumber <= 649) || (950 <= groupNumber && groupNumber <= 989)) {
+        group = number.substring(0, 3);
+        publisher = number.substring(3, 9);
+      } else {
+        int groupNumber = int.parse(number.substring(0, 4));
+        if ((9900 <= groupNumber && groupNumber <= 9989)) {
+          group = number.substring(0, 4);
+          publisher = number.substring(4, 9);
+        } else {
+          int groupNumber = int.parse(number.substring(0, 5));
+          if ((99900 <= groupNumber && groupNumber <= 99999)) {
+            group = number.substring(0, 5);
+            publisher = number.substring(5, 9);
+          }        }
+      }
+    }
+
+    checkdigit = number.substring(9);
+    return [
+      [i18n(context, 'checkdigits_isbn_prefix'), prefix, ''],
+      [i18n(context, 'checkdigits_isbn_group'), group, ''],
+      [i18n(context, 'checkdigits_isbn_publisher'), publisher, ''],
+      [i18n(context, 'checkdigits_uic_check_digit'), checkdigit, ''],
+    ];
   }
 
   List<List<String>> _UICData(String number) {

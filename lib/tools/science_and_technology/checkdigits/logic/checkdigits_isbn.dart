@@ -34,7 +34,8 @@ String _CalculateISBNNumber(String number){
 
 List<String> _CalculateISBNDigits(String number){
   number = number.toUpperCase();
-  if (number.length == 10 || number.length == 13 && (int.tryParse(number[number.length - 1]) != null || number[number.length - 1] == 'X')) {
+  print(number);
+  if (number.length == 10 || number.length == 13) {
     return _CalculateDigits(number, _checkISBN);
   } else {
     return ['checkdigits_invalid_length'];

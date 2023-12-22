@@ -2,41 +2,36 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 void main() {
-  group("uic.checkNumber", () {
+  group("de_taxid.checkNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
         'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
       },
       {
-        'number': '218099039149',
+        'number': '12345678903',
         'expectedOutput': CheckDigitOutput(true, '', [''])
       },
       {
-        'number': '318166502860',
-        'expectedOutput': CheckDigitOutput(true, '', [''])
-      },
-      {
-        'number': '123456789012',
-        'expectedOutput': CheckDigitOutput(false, '123456789015', [
-          '723456789012',
-          '153456789012',
-          '129456789012',
-          '123756789012',
-          '123426789012',
-          '123459789012',
-          '123456489012',
-          '123456719012',
-          '123456781012',
-          '123456789312',
-          '123456789072',
+        'number': '12345678901',
+        'expectedOutput': CheckDigitOutput(false, '12345678903', [
+          '02345678901',
+          '19345678901',
+          '12745678901',
+          '12325678901',
+          '12342678901',
+          '12345178901',
+          '12345688901',
+          '12345671901',
+          '12345678501',
+          '12345678911',
         ])
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCheckNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCheckNumber(CheckDigitsMode.DETAXID, elem['number'] as String);
         expect(_actual.correct, (elem['expectedOutput'] as CheckDigitOutput).correct);
         expect(_actual.correctDigit, (elem['expectedOutput'] as CheckDigitOutput).correctDigit);
         expect(_actual.correctNumbers, (elem['expectedOutput'] as CheckDigitOutput).correctNumbers);
@@ -44,45 +39,46 @@ void main() {
     }
   });
 
-  group("uic.calculateCheckDigit", () {
+  group("de_taxid.calculateCheckDigit", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
         'expectedOutput': 'checkdigits_invalid_length'
       },
       {
-        'number': '12345678901',
-        'expectedOutput': '123456789015'
+        'number': '1234567890',
+        'expectedOutput': '12345678903'
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.DETAXID, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
   });
 
-  group("uic.calculateNumber", () {
+  group("de_taxid.calculateNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'number': '', 'expectedOutput': ['checkdigits_invalid_length']},
-      {'number': '1?345678?901', 'expectedOutput': [
-        '103456784901',
-        '113456788901',
-        '123456783901',
-        '133456787901',
-        '143456782901',
-        '153456786901',
-        '163456781901',
-        '173456785901',
-        '183456780901',
+      {'number': '12?4567890?', 'expectedOutput': [
+        '12045678909',
+        '12145678904',
+        '12245678900',
+        '12345678903',
+        '12445678907',
+        '12545678906',
+        '12645678905',
+        '12745678901',
+        '12845678902',
+        '12945678908',
       ]},
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.DETAXID, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

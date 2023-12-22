@@ -84,6 +84,10 @@ final iterateAlphanumeric = [
   '9',
 ];
 
+String checkDigitsNormalizeNumber(String number){
+  return number.replaceAll(' ', '').replaceAll('-', '');
+}
+
 CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number) {
   if (number == '') {
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
@@ -208,7 +212,6 @@ List<String> _CalculateGlitch(String number, Function f) {
       }
     } // for testDigit
   } // for index
-  if (result.isEmpty) result.add('');
   return result;
 }
 

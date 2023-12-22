@@ -41,8 +41,9 @@ class OpenGTINDBOutput {
 
 class OpenGTINDBgetJobData {
   final String ean;
+  final String apikey;
 
-  OpenGTINDBgetJobData({required this.ean});
+  OpenGTINDBgetJobData({required this.ean, required this.apikey});
 }
 
 final EMPTY_OPENGTINDB_TASK_OUTPUT = OpenGTINDBOutput(
@@ -104,34 +105,39 @@ Future<OpenGTINDBOutput> OpenGTINDBrunTaskAsync(GCWAsyncExecuterParameters? jobD
   }
   var OpenGTINDBJob = jobData!.parameters as OpenGTINDBgetJobData;
 
-  OpenGTINDBOutput output = await _OpenGTINDBgetTextAsync(OpenGTINDBJob.ean, sendAsyncPort: jobData.sendAsyncPort);
+  OpenGTINDBOutput output = await _OpenGTINDBgetTextAsync(OpenGTINDBJob.ean, OpenGTINDBJob.apikey, sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
 
   return output;
 }
 
-Future<OpenGTINDBOutput> _OpenGTINDBgetTextAsync(String ean, {SendPort? sendAsyncPort}) async {
+Future<OpenGTINDBOutput> _OpenGTINDBgetTextAsync(String ean, String APIKey, {SendPort? sendAsyncPort}) async {
   String eanData = '';
   String httpMessage = '';
   int httpCode = 0;
   OPENGTINDB_STATUS status = OPENGTINDB_STATUS.ERROR;
+  String address = 'http://opengtindb.org/?ean=' + ean + '&cmd=query&queryid=';
+
+  if (APIKey == '' || APIKey == 'null') {
+    address = address + '400000000';
+  } else {
+    address = address + APIKey;
+  }
 
   try {
-    String address = 'http://opengtindb.org/?ean=' + ean + '&cmd=query&queryid=400000000';
     var uri = Uri.parse(address);
     http.Response response = await http.get(uri);
     httpCode = response.statusCode;
     httpMessage = response.reasonPhrase ?? '';
-
     if (httpCode == 200) {
       eanData = response.body;
       if (eanData.trim().startsWith('error=0')) {
         status = OPENGTINDB_STATUS.OK;
       } else {
         status = OPENGTINDB_STATUS.ERROR;
-        eanData = OPENGTINDEB_ERRORCODES[eanData.replaceAll('error=', '').replaceAll('\n', '').replaceAll('---', '')]
-            .toString();
+        eanData = eanData.replaceAll('error=', '').replaceAll('\n', '').replaceAll('---', '');
+        eanData = OPENGTINDEB_ERRORCODES[eanData].toString();
       }
     } else {
       eanData = httpMessage;
@@ -170,7 +176,7 @@ CheckDigitOutput _CheckEANNumber(String number) {
 
 String _CalculateEANNumber(String number) {
   if (number == '') {
-    return 'checkdigits_invalid_length';
+    return number + 'checkdigits_invalid_length';
   }
 
   if (number.length == 7 || number.length == 12 || number.length == 13 || number.length == 17) {
@@ -188,7 +194,7 @@ List<String> _CalculateEANDigits(String number) {
   if (number.length == 8 ||
       number.length == 13 ||
       number.length == 14 ||
-      number.length == 18 && int.tryParse(number[number.length - 1]) != null) {
+      number.length == 18) {
     return _CalculateDigits(number, _checkEAN);
   } else {
     return ['checkdigits_invalid_length'];

@@ -2,41 +2,40 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 void main() {
-  group("uic.checkNumber", () {
+  group("imei.checkNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
         'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
       },
       {
-        'number': '218099039149',
+        'number': '352099001761481',
         'expectedOutput': CheckDigitOutput(true, '', [''])
       },
       {
-        'number': '318166502860',
-        'expectedOutput': CheckDigitOutput(true, '', [''])
-      },
-      {
-        'number': '123456789012',
-        'expectedOutput': CheckDigitOutput(false, '123456789015', [
-          '723456789012',
-          '153456789012',
-          '129456789012',
-          '123756789012',
-          '123426789012',
-          '123459789012',
-          '123456489012',
-          '123456719012',
-          '123456781012',
-          '123456789312',
-          '123456789072',
+        'number': '352099001761482',
+        'expectedOutput': CheckDigitOutput(false, '352099001761481', [
+          '252099001761482',
+          '302099001761482',
+          '351099001761482',
+          '352999001761482',
+          '352089001761482',
+          '352094001761482',
+          '352099901761482',
+          '352099091761482',
+          '352099000761482',
+          '352099001261482',
+          '352099001751482',
+          '352099001765482',
+          '352099001761382',
+          '352099001761432',
         ])
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCheckNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCheckNumber(CheckDigitsMode.IMEI, elem['number'] as String);
         expect(_actual.correct, (elem['expectedOutput'] as CheckDigitOutput).correct);
         expect(_actual.correctDigit, (elem['expectedOutput'] as CheckDigitOutput).correctDigit);
         expect(_actual.correctNumbers, (elem['expectedOutput'] as CheckDigitOutput).correctNumbers);
@@ -44,45 +43,45 @@ void main() {
     }
   });
 
-  group("uic.calculateCheckDigit", () {
+  group("imei.calculateCheckDigit", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {
         'number': '',
         'expectedOutput': 'checkdigits_invalid_length'
       },
       {
-        'number': '12345678901',
-        'expectedOutput': '123456789015'
+        'number': '35209900176148',
+        'expectedOutput': '352099001761481'
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.IMEI, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
   });
 
-  group("uic.calculateNumber", () {
+  group("imei.calculateNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'number': '', 'expectedOutput': ['checkdigits_invalid_length']},
-      {'number': '1?345678?901', 'expectedOutput': [
-        '103456784901',
-        '113456788901',
-        '123456783901',
-        '133456787901',
-        '143456782901',
-        '153456786901',
-        '163456781901',
-        '173456785901',
-        '183456780901',
+      {'number': '35?09900176148?', 'expectedOutput': [
+        '350099001761483',
+        '351099001761482',
+        '352099001761481',
+        '354099001761489',
+        '355099001761488',
+        '356099001761487',
+        '357099001761486',
+        '358099001761485',
+        '359099001761484',
       ]},
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.UIC, elem['number'] as String);
+        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.IMEI, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
