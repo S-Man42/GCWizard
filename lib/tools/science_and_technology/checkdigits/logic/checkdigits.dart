@@ -17,7 +17,7 @@ part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigi
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_euro.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_uic.dart';
 
-final iterateAlpha = [
+final _ITERATE_ALPHA = [
   'A',
   'B',
   'C',
@@ -45,7 +45,17 @@ final iterateAlpha = [
   'Y',
   'Z',
 ];
-final iterateAlphanumeric = [
+final _ITERATE_ALPHANUMERIC = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
   'A',
   'B',
   'C',
@@ -72,6 +82,8 @@ final iterateAlphanumeric = [
   'X',
   'Y',
   'Z',
+];
+final _ITERATE_NUMERIC = [
   '0',
   '1',
   '2',
@@ -83,8 +95,13 @@ final iterateAlphanumeric = [
   '8',
   '9',
 ];
+final _LOOP_DATA = {
+  IBAN_IDENTIFIER_TYPES.ALPHA: _ITERATE_ALPHA,
+  IBAN_IDENTIFIER_TYPES.ALPHANUMERIC: _ITERATE_ALPHANUMERIC,
+  IBAN_IDENTIFIER_TYPES.NUMERIC: _ITERATE_NUMERIC,
+};
 
-String checkDigitsNormalizeNumber(String number){
+String checkDigitsNormalizeNumber(String number) {
   return number.replaceAll(' ', '').replaceAll('-', '');
 }
 
@@ -217,32 +234,15 @@ List<String> _CalculateGlitch(String number, Function f) {
 
 List<String> _CalculateDigits(String number, Function f) {
   List<String> result = <String>[];
-  List<String> iterate = iterateAlpha;
-  String headToCheck = '';
-  if (f == _checkIBAN ) {
 
-  }
-  else if (f == _checkEURO) {
-    String head = number.substring(0, 2);
-    String tail = number.substring(2);
-
-    for (String headI in iterateAlpha) {
-      for (String headJ in iterateAlphanumeric) {
-        if (head[0] == '?') {
-          headToCheck = headI;
-        } else {
-          headToCheck = head[0];
-        }
-        if (head[1] == '?') {
-          headToCheck = headToCheck + headJ;
-        } else {
-          headToCheck = headToCheck + head[1];
-        }
-        for (String number in _CalculateDigitsOnlyNumbers(tail, f, head: headToCheck)) {
-          if (!result.contains(number)) {result.add(number);}
-        }
-      }
+  if (f == _checkIBAN) {
+    if (IBAN_NUMERIC.contains(number.substring(0, 2))) {
+      result = _calculateAlphaNumeric(_ITERATE_ALPHA, _ITERATE_ALPHA, number, f);
+    } else {
+      result = _calculateMixedIBAN(number);
     }
+  } else if (f == _checkEURO) {
+    result = _calculateAlphaNumeric(_ITERATE_ALPHA, _ITERATE_ALPHANUMERIC, number, f);
   } else {
     result = _CalculateDigitsOnlyNumbers(number, f);
   }
@@ -278,13 +278,130 @@ List<String> _CalculateDigitsOnlyNumbers(String number, Function f, {String head
         }
       }
       if (_checkNumber(head + numberToCheck, f)) {
-        if (!result.contains(head + numberToCheck)) {result.add(head + numberToCheck);}
+        if (!result.contains(head + numberToCheck)) {
+          result.add(head + numberToCheck);
+        }
       }
     }
   } else {
     if (_checkNumber(head + number, f)) {
-      if (!result.contains(head + number)) {result.add(head + number);}
+      if (!result.contains(head + number)) {
+        result.add(head + number);
+      }
     }
   }
   return result;
+}
+
+List<String> _calculateAlphaNumeric(List<String> letterSetOne, List<String> letterSetTwo, String number, Function f) {
+  String head = number.substring(0, 2);
+  String tail = number.substring(2);
+  String headToCheck = '';
+  List<String> result = <String>[];
+
+  for (String headI in letterSetOne) {
+    for (String headJ in letterSetTwo) {
+      if (head[0] == '?') {
+        headToCheck = headI;
+      } else {
+        headToCheck = head[0];
+      }
+      if (head[1] == '?') {
+        headToCheck = headToCheck + headJ;
+      } else {
+        headToCheck = headToCheck + head[1];
+      }
+      for (String number in _CalculateDigitsOnlyNumbers(tail, f, head: headToCheck)) {
+        if (!result.contains(number)) {
+          result.add(number);
+        }
+      }
+    }
+  }
+  return result;
+}
+
+List<String> _calculateMixedIBAN(String number) {
+  List<String> result = [];
+
+  List<int> bases = [];
+  int blocks = 1;
+  List<List<String>> loops = [];
+  String block = '';
+
+  List<Map<String, Object>> countryData = [];
+
+  if (IBAN_DATA[number.substring(0, 2)] != null) {
+    countryData = IBAN_DATA[number.substring(0, 2)]!;
+    blocks = (countryData.length - 2) ~/ 2;
+  } else {
+    countryData = [
+      {'country': 'common_country_unknown'},
+      {'length': 33},
+      {'b': 33},
+      {'type': IBAN_IDENTIFIER_TYPES.ALPHANUMERIC},
+    ];
+  }
+
+  int index = 4;
+  for (int i = 0; i < blocks; i++) {
+    List<int> digits = countryData[2 + i].entries.map((entry) => (entry.value as int)).toList();
+    block = number.substring(index, index + digits[0]);
+    index = index + digits[0];
+    for (int j = 0; j < block.length; j++) {
+      if (block[j] == '?') {
+        List<IBAN_IDENTIFIER_TYPES> bankIdentifiers =
+            countryData[2 + i + blocks].entries.map((entry) => (entry.value as IBAN_IDENTIFIER_TYPES)).toList();
+        loops.add(_LOOP_DATA[bankIdentifiers[0]]!);
+        bases.add(_LOOP_DATA[bankIdentifiers[0]]!.length);
+      }
+    }
+  }
+  List<int> convertBases = [0];
+  convertBases = bases.reversed.toList();
+
+  int maxLoops = 1;
+  for (int i = 0; i < loops.length; i++) {
+    maxLoops = maxLoops * loops[i].length;
+  }
+
+  print(loops);
+  print(bases);
+  print(convertBases);
+  print(maxLoops);
+  print(number);
+  print('------------------------------------------------------------------------------------------------------------');
+  String testPattern = '';
+  String numberToCheck = '';
+  for (int i = 0; i < maxLoops; i++) {
+    testPattern = _getPattern(i, bases, convertBases, loops);
+    index = 0;
+    numberToCheck = '';
+    for (int j = 0; j < number.length; j++) {
+      if (number[j] == '?') {
+        numberToCheck = numberToCheck + testPattern[index];
+        index++;
+      } else {
+        numberToCheck = numberToCheck + number[j];
+      }
+    }
+    print('indexToCheck '+i.toString()+' => '+testPattern+' => '+numberToCheck);
+    if (_checkIBAN(numberToCheck)) {
+      result.add(numberToCheck);
+    }
+  }
+
+  return result;
+}
+
+String _getPattern(int indexToCheck, List<int> bases, List<int> convertBases, List<List<String>> loops) {
+  String pattern = '';
+  int loopIndex = 0;
+  for (int i = 0; i < bases.length - 1; i++) {
+    loopIndex = indexToCheck ~/ convertBases[i];
+    pattern = pattern + loops[i][loopIndex];
+    indexToCheck = indexToCheck % convertBases[i];
+  }
+  pattern = pattern + loops[bases.length - 1][indexToCheck];
+  return pattern;
 }
