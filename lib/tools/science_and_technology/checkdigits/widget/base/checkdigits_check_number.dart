@@ -440,20 +440,38 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   List<List<String>> _IBANData(String number) {
     List<List<String>> result = [];
-    List<Map<String, Object>>? country = IBAN_DATA[number.substring(0,2)];
-    result.add([i18n(context, 'checkdigits_uic_country_code'), number.substring(0,2), i18n(context, country?[0]['country'] as String)]);
-    result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2,4), '']);
-    int index = 4;
-    int digits = 0;
-    country?.forEach((element) {
-      for (var element in element.entries) {
-        if (element.key != 'country') {
-          digits = element.value as int;
-          result.add([i18n(context, IBAN_DATA_MEANING[element.key]!), number.substring(index, index + digits), '']);
-          index = index + digits;
+    if (IBAN_DATA[number.substring(0,2)] == null) {
+      result.add([
+        i18n(context, 'checkdigits_uic_country_code'),
+        number.substring(0, 2),
+        i18n(context, 'checkdigits_iban_country_code_unknown')
+      ]);
+    } else {
+      List<Map<String, Object>> country = IBAN_DATA[number.substring(0, 2)]!;
+      result.add([
+        i18n(context, 'checkdigits_uic_country_code'),
+        number.substring(0, 2),
+        i18n(context, country[0]['country'] as String)
+      ]);
+      result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2, 4), '']);
+      int index = 4;
+      int digits = 0;
+      country.forEach((element) {
+        for (var element in element.entries) {
+          if (element.key == 'b' ||
+              element.key == 's' ||
+              element.key == 'k' ||
+              element.key == 'K' ||
+              element.key == 'd' ||
+              element.key == 'X' ||
+              element.key == 'r') {
+            digits = element.value as int;
+            result.add([i18n(context, IBAN_DATA_MEANING[element.key]!), number.substring(index, index + digits), '']);
+            index = index + digits;
+          }
         }
-      }
-    });
+      });
+    }
     return result;
   }
 
