@@ -50,7 +50,7 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
   }
 
   Widget _buildOutput() {
-    String output = checkDigitsCalculateNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNString));
+    String output = checkDigitsCalculateCheckDigitAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNString));
     if (output.startsWith('check')) {
       output = i18n(context, output);
     }

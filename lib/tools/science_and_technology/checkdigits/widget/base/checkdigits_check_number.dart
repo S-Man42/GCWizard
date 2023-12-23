@@ -278,7 +278,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
         copyColumn: 1,
-        data: _IBANData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+        data: _IBANData(checkDigitsNormalizeNumber(_currentInputNumberString.toUpperCase())),
         flexValues: [4, 2, 4],
       ),
     );

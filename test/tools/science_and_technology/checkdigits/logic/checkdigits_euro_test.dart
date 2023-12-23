@@ -86,7 +86,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.EURO, elem['number'] as String);
+        var _actual = checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode.EURO, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -136,7 +136,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.EURO, elem['number'] as String);
+        var _actual = checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode.EURO, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

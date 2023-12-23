@@ -9,27 +9,26 @@ void main() {
         'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
       },
       {
-        'number': '218099039149',
+        'number': 'GB29NWBK60161331926819', // Great Britain
         'expectedOutput': CheckDigitOutput(true, '', [''])
       },
       {
-        'number': '318166502860',
+        'number': 'HR1210010051863000160', //Croatia
         'expectedOutput': CheckDigitOutput(true, '', [''])
       },
       {
-        'number': '123456789012',
-        'expectedOutput': CheckDigitOutput(false, '123456789015', [
-          '723456789012',
-          '153456789012',
-          '129456789012',
-          '123756789012',
-          '123426789012',
-          '123459789012',
-          '123456489012',
-          '123456719012',
-          '123456781012',
-          '123456789312',
-          '123456789072',
+        'number': 'BE68539007547034', //Belgium
+        'expectedOutput': CheckDigitOutput(true, '', [''])
+      },
+      {
+        'number': 'NO9386011117947', //Norway
+        'expectedOutput': CheckDigitOutput(true, '', [''])
+      },
+
+      {
+        'number': 'NO9386011117946',
+        'expectedOutput': CheckDigitOutput(false, 'NO2386011117946', [
+          'NO9386611117946',
         ])
       },
     ];
@@ -51,14 +50,18 @@ void main() {
         'expectedOutput': 'checkdigits_invalid_length'
       },
       {
-        'number': '12345678901',
-        'expectedOutput': '123456789015'
+        'number': 'NO86011117947',
+        'expectedOutput': 'NO9386011117947'
+      },
+      {
+        'number': 'PKSCBL0000001123456702',
+        'expectedOutput': 'PK36SCBL0000001123456702'
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.IBAN, elem['number'] as String);
+        var _actual = checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode.IBAN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -67,22 +70,19 @@ void main() {
   group("iban.calculateNumber", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'number': '', 'expectedOutput': ['checkdigits_invalid_length']},
-      {'number': '1?345678?901', 'expectedOutput': [
-        '103456784901',
-        '113456788901',
-        '123456783901',
-        '133456787901',
-        '143456782901',
-        '153456786901',
-        '163456781901',
-        '173456785901',
-        '183456780901',
+      {'number': 'NO?38601111794?', 'expectedOutput': [
+        'NO2386011117946',
+        'NO9386011117947',
+      ]},
+      {'number': 'PKS?BL000000112345670?', 'expectedOutput': [
+        'PKSCBL0000001123456702',
+        'PKSCBL0000001123456702',
       ]},
     ];
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.IBAN, elem['number'] as String);
+        var _actual = checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode.IBAN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

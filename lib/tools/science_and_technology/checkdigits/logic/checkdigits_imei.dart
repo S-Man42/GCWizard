@@ -5,7 +5,7 @@ CheckDigitOutput _CheckIMEINumber(String number){
     if (_checkNumber(number, _checkIMEI)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateIMEINumber), _CalculateGlitch(number, _checkIMEI));
+      return CheckDigitOutput(false, _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateIMEINumber), _CalculateGlitch(number, _checkIMEI));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);

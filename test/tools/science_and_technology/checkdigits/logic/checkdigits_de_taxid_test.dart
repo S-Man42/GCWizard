@@ -53,7 +53,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.DETAXID, elem['number'] as String);
+        var _actual = checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode.DETAXID, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -78,7 +78,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.DETAXID, elem['number'] as String);
+        var _actual = checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode.DETAXID, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

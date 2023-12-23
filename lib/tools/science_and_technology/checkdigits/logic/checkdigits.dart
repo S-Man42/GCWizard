@@ -116,7 +116,7 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number) {
   }
 }
 
-String checkDigitsCalculateNumber(CheckDigitsMode mode, String number) {
+String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String number) {
   if (number == '') {
     return 'checkdigits_invalid_length';
   }
@@ -124,27 +124,27 @@ String checkDigitsCalculateNumber(CheckDigitsMode mode, String number) {
   number = number.toUpperCase();
   switch (mode) {
     case CheckDigitsMode.EAN:
-      return _CalculateNumber(number, _CalculateEANNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateEANNumber);
     case CheckDigitsMode.DEPERSID:
-      return _CalculateNumber(number, _CalculateDEPersIDNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateDEPersIDNumber);
     case CheckDigitsMode.DETAXID:
-      return _CalculateNumber(number, _CalculateDETaxIDNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateDETaxIDNumber);
     case CheckDigitsMode.EURO:
-      return _CalculateNumber(number, _CalculateEURONumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateEURONumber);
     case CheckDigitsMode.IBAN:
-      return _CalculateNumber(number, _CalculateIBANNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateIBANNumber);
     case CheckDigitsMode.IMEI:
-      return _CalculateNumber(number, _CalculateIMEINumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateIMEINumber);
     case CheckDigitsMode.ISBN:
-      return _CalculateNumber(number, _CalculateISBNNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateISBNNumber);
     case CheckDigitsMode.UIC:
-      return _CalculateNumber(number, _CalculateUICNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateUICNumber);
     default:
       return '';
   }
 }
 
-List<String> checkDigitsCalculateDigits(CheckDigitsMode mode, String number) {
+List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, String number) {
   if (number == '') {
     return ['checkdigits_invalid_length'];
   }
@@ -180,7 +180,7 @@ String _calculateCheckDigit(String number, Function f) {
   return f(number) as String;
 }
 
-String _CalculateNumber(String number, Function f) {
+String _CalculateCheckDigitAndNumber(String number, Function f) {
   return f(number) as String;
 }
 
@@ -219,13 +219,15 @@ List<String> _CalculateDigits(String number, Function f) {
   List<String> result = <String>[];
   List<String> iterate = iterateAlpha;
   String headToCheck = '';
-  if (f == _checkIBAN || f == _checkEURO) {
+  if (f == _checkIBAN ) {
+
+  }
+  else if (f == _checkEURO) {
     String head = number.substring(0, 2);
     String tail = number.substring(2);
-    if (f == _checkEURO) {iterate = iterateAlphanumeric;}
 
     for (String headI in iterateAlpha) {
-      for (String headJ in iterate) {
+      for (String headJ in iterateAlphanumeric) {
         if (head[0] == '?') {
           headToCheck = headI;
         } else {

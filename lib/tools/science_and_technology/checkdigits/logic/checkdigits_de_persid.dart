@@ -9,7 +9,7 @@ CheckDigitOutput _CheckDEPersIDNumber(String number){
     if (_checkNumber(number, _checkDEPersID)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateDEPersIDNumber), _CalculateGlitch(number, _checkDEPersID));
+      return CheckDigitOutput(false, _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateDEPersIDNumber), _CalculateGlitch(number, _checkDEPersID));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);

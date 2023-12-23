@@ -79,7 +79,7 @@ CheckDigitOutput _CheckUICNumber(String number){
     if (_checkNumber(number, _checkUIC)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateUICNumber), _CalculateGlitch(number, _checkUIC));
+      return CheckDigitOutput(false, _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateUICNumber), _CalculateGlitch(number, _checkUIC));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);

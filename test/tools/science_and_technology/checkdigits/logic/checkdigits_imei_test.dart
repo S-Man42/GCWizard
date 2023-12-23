@@ -57,7 +57,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateNumber(CheckDigitsMode.IMEI, elem['number'] as String);
+        var _actual = checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode.IMEI, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -81,7 +81,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateDigits(CheckDigitsMode.IMEI, elem['number'] as String);
+        var _actual = checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode.IMEI, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

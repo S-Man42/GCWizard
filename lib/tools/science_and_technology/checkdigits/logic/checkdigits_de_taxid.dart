@@ -5,7 +5,7 @@ CheckDigitOutput _CheckDETaxIDNumber(String number){
     if (_checkDETaxID(number)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateDETaxIDNumber), _CalculateGlitch(number, _checkDETaxID));
+      return CheckDigitOutput(false, _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateDETaxIDNumber), _CalculateGlitch(number, _checkDETaxID));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);

@@ -52,7 +52,7 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
         GCWSubmitButton(
           onPressed: () {
             setState(() {
-              _numbers = checkDigitsCalculateDigits(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
+              _numbers = checkDigitsCalculateMissingDigitsAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
             });
           },
         ),
@@ -99,7 +99,7 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
             suppressCopyButton: true,
             child: i18n(context, 'checkdigits_iban_hint'),
           ),
-          _showInvalidBankNumbers(),
+          (_currentInputNumberString.length > 2 && _currentInputNumberString.toUpperCase().substring(0,2) == 'DE') ? _showInvalidBankNumbers() : Container(),
         ],
       );
     } else {

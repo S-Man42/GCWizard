@@ -10,7 +10,7 @@ CheckDigitOutput _CheckISBNNumber(String number){
     if (_checkNumber(number, _checkISBN)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
-      return CheckDigitOutput(false, _CalculateNumber(number.substring(0, number.length - 1), _CalculateISBNNumber), _CalculateGlitch(number, _checkISBN));
+      return CheckDigitOutput(false, _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateISBNNumber), _CalculateGlitch(number, _checkISBN));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
