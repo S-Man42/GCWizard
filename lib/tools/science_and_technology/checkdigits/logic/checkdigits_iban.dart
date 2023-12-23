@@ -13,19 +13,6 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 //         => calculate Number
 // GC4TKB5 => calculate checkDigit
 
-CheckDigitOutput _CheckIBANNumber(String number) {
-  number = number.toUpperCase();
-  if (number == '' || number.length < 5) {
-    return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
-  }
-  if (_checkNumber(number, _checkIBAN)) {
-    return CheckDigitOutput(true, '', ['']);
-  } else {
-    return CheckDigitOutput(
-        false, _CalculateNumber(number, _CalculateIBANNumber), _CalculateGlitch(number, _checkIBAN));
-  }
-}
-
 final IBAN_DATA_MEANING = {
   'b': 'checkdigits_iban_data_b_bank_number',
   's': 'checkdigits_iban_data_s_branch_code',
@@ -721,11 +708,43 @@ final IBAN_DATA = {
   ],
 };
 
+const IBAN_LENGTH_UNKNOWN_COUNTRY = 4;
+
+CheckDigitOutput _CheckIBANNumber(String number) {
+  number = number.toUpperCase();
+  int length = IBAN_LENGTH_UNKNOWN_COUNTRY;
+  if (number == '' || number.length < 2) {
+    return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
+  } else {
+    if (IBAN_DATA[number.substring(0,2)] != null) {
+      length = IBAN_DATA[number.substring(0,2)]![1]['length'] as int;
+    }
+    if (number.length < length) {
+      return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
+    } else {
+      if (_checkNumber(number, _checkIBAN)) {
+        return CheckDigitOutput(true, '', ['']);
+      } else {
+        return CheckDigitOutput(
+            false, _CalculateNumber(number, _CalculateIBANNumber), _CalculateGlitch(number, _checkIBAN));
+      }
+    }
+  }
+}
+
 String _CalculateIBANNumber(String number) {
-  if (number.length < 5) {
+  int length = IBAN_LENGTH_UNKNOWN_COUNTRY;
+  if (number.length < 2) {
     return ('checkdigits_invalid_length');
   } else {
-    return number.substring(0, 2) + _calculateIBANCheckDigit(number) + number.substring(4);
+    if (IBAN_DATA[number.substring(0,2)] != null) {
+      length = IBAN_DATA[number.substring(0,2)]![1]['length'] as int;
+    }
+    if (number.length < length) {
+      return ('checkdigits_invalid_length');
+    } else {
+      return number.substring(0, 2) + _calculateIBANCheckDigit(number) + number.substring(4);
+    }
   }
 }
 

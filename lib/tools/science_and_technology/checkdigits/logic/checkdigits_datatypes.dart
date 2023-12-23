@@ -42,7 +42,7 @@ enum CheckDigitsMode {
 }
 
 final MaskTextInputFormatter MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@§##########", filter: {"@": RegExp(r'[A-Za-z?]'), "§": RegExp(r'[A-Za-z0-9?]'),"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", filter: {"A": RegExp(r'[A-Za-z?]'), "@": RegExp(r'[A-Za-z0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", filter: {"A": RegExp(r'[A-Za-z?]'), "@": RegExp(r'[A-Za-z0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "@#########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
@@ -67,7 +67,7 @@ Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
 
 Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.ISBN : "000000000@000",
-  CheckDigitsMode.IBAN : "AA00000000000000000000000000000000",
+  CheckDigitsMode.IBAN : "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   CheckDigitsMode.EURO : "A@0000000000",
   CheckDigitsMode.DEPERSID : "0000000000@<<0000000<0000000<<<<<<<0",
   CheckDigitsMode.UIC : "00 00 000 0 000-0",
