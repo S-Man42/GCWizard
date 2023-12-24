@@ -8,7 +8,6 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
@@ -28,18 +27,8 @@ class CheckDigitsCheckNumber extends StatefulWidget {
 
 class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   String _currentInputNumberString = '';
-  String _currentInputNStringID = '';
-  String _currentInputNStringDateBirth = '';
-  String _currentInputNStringDateValid = '';
-  String _currentInputNStringCheckDigit = '';
-
   String _currentGTINOutput = '';
   Widget _outputDetailWidget = Container();
-
-  int _currentInputNInt = 0;
-  int _currentInputNIntCheckDigit = 0;
-  int _currentInputNIntDateBirth = 0;
-  int _currentInputNIntDateValid = 0;
 
   late TextEditingController currentInputController;
   late TextEditingController currentInputControllerID;
@@ -51,19 +40,11 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   void initState() {
     super.initState();
     currentInputController = TextEditingController(text: _currentInputNumberString);
-    currentInputControllerID = TextEditingController(text: _currentInputNStringID);
-    currentInputControllerDateBirth = TextEditingController(text: _currentInputNStringDateBirth);
-    currentInputControllerDateValid = TextEditingController(text: _currentInputNStringDateValid);
-    currentInputControllerCheckDigit = TextEditingController(text: _currentInputNStringCheckDigit);
   }
 
   @override
   void dispose() {
     currentInputController.dispose();
-    currentInputControllerID.dispose();
-    currentInputControllerDateBirth.dispose();
-    currentInputControllerDateValid.dispose();
-    currentInputControllerCheckDigit.dispose();
     super.dispose();
   }
 
@@ -71,56 +52,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        (widget.mode == CheckDigitsMode.DEPERSID)
-            ? Column(children: <Widget>[
-                GCWTextField(
-                  hintText: i18n(context, 'checkdigits_de_persid_serial'),
-                  inputFormatters: [MASKINPUTFORMATTER_DEPERSID_SERIAL],
-                  controller: currentInputControllerID,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentInputNStringID = text;
-                    });
-                  },
-                ),
-                GCWIntegerSpinner(
-                  title: i18n(context, 'checkdigits_de_persid_date_birth'),
-                  min: 0,
-                  max: 9999999,
-                  value: _currentInputNIntDateBirth,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentInputNIntDateBirth = value;
-                      _currentInputNStringDateBirth = _currentInputNIntDateBirth.toString();
-                    });
-                  },
-                ),
-                GCWIntegerSpinner(
-                  title: i18n(context, 'checkdigits_de_persid_date_valid'),
-                  min: 0,
-                  max: 9999999,
-                  value: _currentInputNIntDateValid,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentInputNIntDateValid = value;
-                      _currentInputNStringDateValid = _currentInputNIntDateValid.toString();
-                    });
-                  },
-                ),
-                GCWIntegerSpinner(
-                  title: i18n(context, 'checkdigits_de_persid_checkdigit'),
-                  min: 0,
-                  max: 9,
-                  value: _currentInputNIntCheckDigit,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentInputNIntCheckDigit = value;
-                      _currentInputNStringCheckDigit = _currentInputNIntCheckDigit.toString();
-                    });
-                  },
-                )
-              ])
-            : Container(),
+
         (widget.mode == CheckDigitsMode.ISBN ||
             widget.mode == CheckDigitsMode.IBAN ||
             widget.mode == CheckDigitsMode.EURO ||
@@ -145,12 +77,6 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   Widget _buildOutput() {
-    if (widget.mode == CheckDigitsMode.DEPERSID) {
-      _currentInputNumberString = _currentInputNStringID +
-          _currentInputNStringDateBirth +
-          _currentInputNStringDateValid +
-          _currentInputNStringCheckDigit;
-    }
 
     CheckDigitOutput checked =
         checkDigitsCheckNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
