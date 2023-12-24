@@ -31,7 +31,6 @@ final Map<String, String> ID_LETTERCODE = {
 
 enum CheckDigitsMode {
   EAN,
-  DEPERSID,
   DETAXID,
   EURO,
   IBAN,
@@ -45,10 +44,6 @@ final MaskTextInputFormatter MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(ma
 final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", filter: {"A": RegExp(r'[A-Za-z?]'), "@": RegExp(r'[A-Za-z0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "@#########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_SERIAL = MaskTextInputFormatter(mask: "@@@@@@@@@@", filter: {"@": RegExp(r'[A-Za-z0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_DATE = MaskTextInputFormatter(mask: "#######", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_DIGIT = MaskTextInputFormatter(mask: "#", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
@@ -58,7 +53,6 @@ Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.ISBN : MASKINPUTFORMATTER_ISBN,
   CheckDigitsMode.IBAN : MASKINPUTFORMATTER_IBAN,
   CheckDigitsMode.EURO : MASKINPUTFORMATTER_EURO,
-  CheckDigitsMode.DEPERSID : MASKINPUTFORMATTER_DEPERSID,
   CheckDigitsMode.DETAXID : MASKINPUTFORMATTER_DETAXID,
   CheckDigitsMode.UIC : MASKINPUTFORMATTER_UIC,
   CheckDigitsMode.EAN : MASKINPUTFORMATTER_EAN,
@@ -69,7 +63,6 @@ Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.ISBN : "000000000@000",
   CheckDigitsMode.IBAN : "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   CheckDigitsMode.EURO : "A@0000000000",
-  CheckDigitsMode.DEPERSID : "0000000000@<<0000000<0000000<<<<<<<0",
   CheckDigitsMode.UIC : "00 00 000 0 000-0",
   CheckDigitsMode.EAN : "00000000000000",
   CheckDigitsMode.IMEI : "00000000000000",

@@ -114,8 +114,6 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number) {
   switch (mode) {
     case CheckDigitsMode.EAN:
       return _CheckEANNumber(number);
-    case CheckDigitsMode.DEPERSID:
-      return _CheckDEPersIDNumber(number);
     case CheckDigitsMode.DETAXID:
       return _CheckDETaxIDNumber(number);
     case CheckDigitsMode.EURO:
@@ -142,8 +140,6 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
   switch (mode) {
     case CheckDigitsMode.EAN:
       return _CalculateCheckDigitAndNumber(number, _CalculateEANNumber);
-    case CheckDigitsMode.DEPERSID:
-      return _CalculateCheckDigitAndNumber(number, _CalculateDEPersIDNumber);
     case CheckDigitsMode.DETAXID:
       return _CalculateCheckDigitAndNumber(number, _CalculateDETaxIDNumber);
     case CheckDigitsMode.EURO:
@@ -170,8 +166,6 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
   switch (mode) {
     case CheckDigitsMode.EAN:
       return _CalculateEANDigits(number);
-    case CheckDigitsMode.DEPERSID:
-      return _CalculateDEPersIDDigits(number);
     case CheckDigitsMode.DETAXID:
       return _CalculateDETaxIDDigits(number);
     case CheckDigitsMode.EURO:
@@ -365,12 +359,6 @@ List<String> _calculateMixedIBAN(String number) {
     maxLoops = maxLoops * loops[i].length;
   }
 
-  print(loops);
-  print(bases);
-  print(convertBases);
-  print(maxLoops);
-  print(number);
-  print('------------------------------------------------------------------------------------------------------------');
   String testPattern = '';
   String numberToCheck = '';
   for (int i = 0; i < maxLoops; i++) {
@@ -385,7 +373,6 @@ List<String> _calculateMixedIBAN(String number) {
         numberToCheck = numberToCheck + number[j];
       }
     }
-    print('indexToCheck '+i.toString()+' => '+testPattern+' => '+numberToCheck);
     if (_checkIBAN(numberToCheck)) {
       result.add(numberToCheck);
     }

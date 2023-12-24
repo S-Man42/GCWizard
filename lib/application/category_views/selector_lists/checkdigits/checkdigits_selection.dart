@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_de_persid_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_ean_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_euro_selection.dart';
@@ -25,7 +24,6 @@ class CheckDigitsSelection extends GCWSelection {
         className(const CheckDigitsIMEISelection()),
         className(const CheckDigitsISBNSelection()),
         className(const CheckDigitsEUROSelection()),
-        className(const CheckDigitsDEPersIDSelection()),
         className(const CheckDigitsDETaxIDSelection()),
         className(const CheckDigitsUICSelection()),
       ].contains(className(element.tool));
