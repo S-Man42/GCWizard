@@ -34,7 +34,6 @@ String _CalculateISBNNumber(String number){
 
 List<String> _CalculateISBNDigits(String number){
   number = number.toUpperCase();
-  print(number);
   if (number.length == 10 || number.length == 13) {
     return _CalculateDigits(number, _checkISBN);
   } else {
@@ -53,7 +52,7 @@ bool _checkISBN(String number) {
 }
 
 String  _calculateISBNCheckDigit(String number) {
-  if(number.length == 9) {
+  if (number.length == 9) {
     int sum = 0;
     for (int i = 1; i < 10; i++) {
       sum = sum + i * int.parse(number[i]);

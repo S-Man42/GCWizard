@@ -86,7 +86,6 @@ CheckDigitOutput _CheckUICNumber(String number){
 }
 
 String _CalculateUICNumber(String number){
-  print(number);
   if (number.length == 11) {
     return number + _calculateUICCheckDigit(number);
   }
