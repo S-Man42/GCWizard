@@ -6,13 +6,13 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/base/c
 
 
 class CheckDigitsEANCheckNumber extends CheckDigitsCheckNumber {
-  const CheckDigitsEANCheckNumber({Key? key}) : super(key: key, mode: CheckDigitsMode.EAN);
+  const CheckDigitsEANCheckNumber({Key? key}) : super(key: key, mode: CheckDigitsMode.EAN_GTIN);
 }
 
 class CheckDigitsEANCalculateCheckDigit extends CheckDigitsCalculateCheckDigit {
-  const CheckDigitsEANCalculateCheckDigit({Key? key}) : super(key: key, mode: CheckDigitsMode.EAN);
+  const CheckDigitsEANCalculateCheckDigit({Key? key}) : super(key: key, mode: CheckDigitsMode.EAN_GTIN);
 }
 
 class CheckDigitsEANCalculateMissingDigit extends CheckDigitsCalculateMissingDigits {
-  const CheckDigitsEANCalculateMissingDigit({Key? key}) : super(key: key, mode: CheckDigitsMode.EAN);
+  const CheckDigitsEANCalculateMissingDigit({Key? key}) : super(key: key, mode: CheckDigitsMode.EAN_GTIN);
 }

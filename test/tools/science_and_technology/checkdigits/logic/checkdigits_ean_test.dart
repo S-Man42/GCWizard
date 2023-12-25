@@ -45,7 +45,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCheckNumber(CheckDigitsMode.EAN, elem['number'] as String);
+        var _actual = checkDigitsCheckNumber(CheckDigitsMode.EAN_GTIN, elem['number'] as String);
         expect(_actual.correct, (elem['expectedOutput'] as CheckDigitOutput).correct);
         expect(_actual.correctDigit, (elem['expectedOutput'] as CheckDigitOutput).correctDigit);
         expect(_actual.correctNumbers, (elem['expectedOutput'] as CheckDigitOutput).correctNumbers);
@@ -71,7 +71,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode.EAN, elem['number'] as String);
+        var _actual = checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode.EAN_GTIN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -96,7 +96,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('number: ${elem['number']}', () {
-        var _actual = checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode.EAN, elem['number'] as String);
+        var _actual = checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode.EAN_GTIN, elem['number'] as String);
         expect(_actual, elem['expectedOutput']);
       });
     }

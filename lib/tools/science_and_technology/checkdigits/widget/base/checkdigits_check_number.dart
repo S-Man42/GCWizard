@@ -52,13 +52,13 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-
         (widget.mode == CheckDigitsMode.ISBN ||
-            widget.mode == CheckDigitsMode.IBAN ||
-            widget.mode == CheckDigitsMode.EURO ||
-                widget.mode == CheckDigitsMode.EAN ||
+                widget.mode == CheckDigitsMode.IBAN ||
+                widget.mode == CheckDigitsMode.EURO ||
+                widget.mode == CheckDigitsMode.EAN_GTIN ||
                 widget.mode == CheckDigitsMode.UIC ||
                 widget.mode == CheckDigitsMode.DETAXID ||
+                widget.mode == CheckDigitsMode.CREDITCARD ||
                 widget.mode == CheckDigitsMode.IMEI)
             ? GCWTextField(
                 controller: currentInputController,
@@ -77,7 +77,6 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   Widget _buildOutput() {
-
     CheckDigitOutput checked =
         checkDigitsCheckNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
 
@@ -134,7 +133,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   Widget _detailsWidget() {
     switch (widget.mode) {
-      case CheckDigitsMode.EAN:
+      case CheckDigitsMode.EAN_GTIN:
         return _detailsEANWidget();
       case CheckDigitsMode.EURO:
         return _detailsEUROWidget();
@@ -146,6 +145,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         return _detailsISBNWidget();
       case CheckDigitsMode.IBAN:
         return _detailsIBANWidget();
+      case CheckDigitsMode.CREDITCARD:
+        return _detailsCreditCardWidget();
       default:
         return Container();
     }
@@ -205,6 +206,16 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       child: GCWColumnedMultilineOutput(
         copyColumn: 1,
         data: _IBANData(checkDigitsNormalizeNumber(_currentInputNumberString.toUpperCase())),
+        flexValues: [4, 2, 4],
+      ),
+    );
+  }
+
+  Widget _detailsCreditCardWidget() {
+    return GCWDefaultOutput(
+      child: GCWColumnedMultilineOutput(
+        copyColumn: 1,
+        data: _CreditCardData(checkDigitsNormalizeNumber(_currentInputNumberString.toUpperCase())),
         flexValues: [4, 2, 4],
       ),
     );
@@ -290,19 +301,48 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     ];
   }
 
+  List<List<String>> _CreditCardData(String number) {
+    print(number);
+    return [
+      [i18n(context, 'checkdigits_creditcard_issuer_identification_number'), number.substring(0, 6), ''],
+      [
+        i18n(context, 'checkdigits_creditcard_major_industry_identifier'),
+        number.substring(0, 1),
+        i18n(context, CHECKDIGITS_CREDITCARD_MMI[number.substring(0, 1)]!)
+      ],
+      [
+        i18n(context, 'checkdigits_creditcard_issuer'),
+        number.substring(0, 2),
+        (CHECKDIGITS_CREDITCARD_PREFIX[number.substring(0, 2)]) != null ? CHECKDIGITS_CREDITCARD_PREFIX[number.substring(0, 2)]! : i18n(context, 'checkdigits_creditcard_issuer_unknown'),
+      ],
+      [i18n(context, 'checkdigits_creditcard_type_of_card_i'), number.substring(4, 5), ''],
+      [i18n(context, 'checkdigits_creditcard_type_of_card_ii'), number.substring(5, 6), ''],
+      [i18n(context, 'checkdigits_creditcard_account_number'), number.substring(6, number.length - 1), ''],
+      [i18n(context, 'checkdigits_uic_check_digit'), number.substring(number.length - 1), ''],
+    ];
+  }
+
   List<List<String>> _ISBNData(String number) {
     String prefix = '';
     String group = '';
     String publisher = '';
     String checkdigit = '';
     if (number.length == 13) {
-      prefix = number.substring(0,3);
+      prefix = number.substring(0, 3);
       number = number.substring(3);
     }
-    if (number[0] == '0' || number[0] == '1' || number[0] == '2' || number[0] == '3' || number[0] == '4' || number[0] == '5' || number[0] == '7') {
+    if (number[0] == '0' ||
+        number[0] == '1' ||
+        number[0] == '2' ||
+        number[0] == '3' ||
+        number[0] == '4' ||
+        number[0] == '5' ||
+        number[0] == '7') {
       group = number[0];
       publisher = number.substring(2, 9);
-    } else if (number[0] == '8' || (number[0] == '9' && (number[1] == '0' || number[1] == '1' || number[1] == '2' || number[1] == '3' || number[1] == '4'))) {
+    } else if (number[0] == '8' ||
+        (number[0] == '9' &&
+            (number[1] == '0' || number[1] == '1' || number[1] == '2' || number[1] == '3' || number[1] == '4'))) {
       group = number.substring(0, 2);
       publisher = number.substring(2, 9);
     } else {
@@ -320,7 +360,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           if ((99900 <= groupNumber && groupNumber <= 99999)) {
             group = number.substring(0, 5);
             publisher = number.substring(5, 9);
-          }        }
+          }
+        }
       }
     }
 
@@ -366,7 +407,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   List<List<String>> _IBANData(String number) {
     List<List<String>> result = [];
-    if (IBAN_DATA[number.substring(0,2)] == null) {
+    if (IBAN_DATA[number.substring(0, 2)] == null) {
       result.add([
         i18n(context, 'checkdigits_uic_country_code'),
         number.substring(0, 2),
@@ -400,5 +441,4 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     }
     return result;
   }
-
 }

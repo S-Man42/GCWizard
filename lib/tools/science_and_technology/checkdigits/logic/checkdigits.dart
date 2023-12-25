@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_datatypes.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_banknumber_data.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_ean.dart';
-part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_persid.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_creditcard.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_taxid.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_iban.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_imei.dart';
@@ -112,7 +112,7 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number) {
 
   number = number.toUpperCase();
   switch (mode) {
-    case CheckDigitsMode.EAN:
+    case CheckDigitsMode.EAN_GTIN:
       return _CheckEANNumber(number);
     case CheckDigitsMode.DETAXID:
       return _CheckDETaxIDNumber(number);
@@ -126,6 +126,8 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number) {
       return _CheckISBNNumber(number);
     case CheckDigitsMode.UIC:
       return _CheckUICNumber(number);
+    case CheckDigitsMode.CREDITCARD:
+      return _CheckCreditCardNumber(number);
     default:
       return CheckDigitOutput(false, '', ['']);
   }
@@ -138,7 +140,7 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
 
   number = number.toUpperCase();
   switch (mode) {
-    case CheckDigitsMode.EAN:
+    case CheckDigitsMode.EAN_GTIN:
       return _CalculateCheckDigitAndNumber(number, _CalculateEANNumber);
     case CheckDigitsMode.DETAXID:
       return _CalculateCheckDigitAndNumber(number, _CalculateDETaxIDNumber);
@@ -152,6 +154,8 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
       return _CalculateCheckDigitAndNumber(number, _CalculateISBNNumber);
     case CheckDigitsMode.UIC:
       return _CalculateCheckDigitAndNumber(number, _CalculateUICNumber);
+    case CheckDigitsMode.CREDITCARD:
+      return _CalculateCheckDigitAndNumber(number, _CalculateUICNumber);
     default:
       return '';
   }
@@ -164,7 +168,7 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
 
   number = number.toUpperCase();
   switch (mode) {
-    case CheckDigitsMode.EAN:
+    case CheckDigitsMode.EAN_GTIN:
       return _CalculateEANDigits(number);
     case CheckDigitsMode.DETAXID:
       return _CalculateDETaxIDDigits(number);
@@ -178,6 +182,8 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
       return _CalculateISBNDigits(number);
     case CheckDigitsMode.UIC:
       return _CalculateUICDigits(number);
+    case CheckDigitsMode.CREDITCARD:
+      return _CalculateCreditCardDigits(number);
     default:
       return [''];
   }

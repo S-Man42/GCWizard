@@ -30,21 +30,22 @@ final Map<String, String> ID_LETTERCODE = {
 };
 
 enum CheckDigitsMode {
-  EAN,
+  EAN_GTIN,
   DETAXID,
   EURO,
   IBAN,
   IMEI,
   ISBN,
   UIC,
-  GTIN,
+  CREDITCARD,
 }
 
 final MaskTextInputFormatter MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@§##########", filter: {"@": RegExp(r'[A-Za-z?]'), "§": RegExp(r'[A-Za-z0-9?]'),"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", filter: {"A": RegExp(r'[A-Za-z?]'), "@": RegExp(r'[A-Za-z0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "AA@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @", filter: {"A": RegExp(r'[A-Za-z?]'), "@": RegExp(r'[A-Za-z0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_CREDITCARD = MaskTextInputFormatter(mask: "#### #### #### ####", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "## ## ### # ###-#", filter: {"#": RegExp(r'[0-9?]')});
@@ -55,8 +56,9 @@ Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.EURO : MASKINPUTFORMATTER_EURO,
   CheckDigitsMode.DETAXID : MASKINPUTFORMATTER_DETAXID,
   CheckDigitsMode.UIC : MASKINPUTFORMATTER_UIC,
-  CheckDigitsMode.EAN : MASKINPUTFORMATTER_EAN,
+  CheckDigitsMode.EAN_GTIN : MASKINPUTFORMATTER_EAN,
   CheckDigitsMode.IMEI : MASKINPUTFORMATTER_IMEI,
+  CheckDigitsMode.CREDITCARD : MASKINPUTFORMATTER_CREDITCARD,
 };
 
 Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
@@ -64,8 +66,9 @@ Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.IBAN : "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   CheckDigitsMode.EURO : "A@0000000000",
   CheckDigitsMode.UIC : "00 00 000 0 000-0",
-  CheckDigitsMode.EAN : "00000000000000",
+  CheckDigitsMode.EAN_GTIN : "00000000000000",
   CheckDigitsMode.IMEI : "00000000000000",
+  CheckDigitsMode.CREDITCARD : "0000 0000 0000 0000",
   CheckDigitsMode.DETAXID : "00000000000",
 };
 

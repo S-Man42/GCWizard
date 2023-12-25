@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_euro_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_iban_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_imei_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_creditcard_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_uic_selection.dart';
 import 'package:gc_wizard/application/registry.dart';
@@ -19,11 +20,12 @@ class CheckDigitsSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
+        className(const CheckDigitsCreditCardSelection()),
         className(const CheckDigitsEANSelection()),
+        className(const CheckDigitsEUROSelection()),
         className(const CheckDigitsIBANSelection()),
         className(const CheckDigitsIMEISelection()),
         className(const CheckDigitsISBNSelection()),
-        className(const CheckDigitsEUROSelection()),
         className(const CheckDigitsDETaxIDSelection()),
         className(const CheckDigitsUICSelection()),
       ].contains(className(element.tool));
