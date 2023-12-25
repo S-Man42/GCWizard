@@ -23,6 +23,15 @@ final Map<String, String> CHECKDIGITS_CREDITCARD_MMI = {
 };
 
 final Map<String, String> CHECKDIGITS_CREDITCARD_PREFIX = {
+  '22': 'MasterCard, MIR, PayPak',
+  '23': 'MasterCard',
+  '24': 'MasterCard',
+  '25': 'MasterCard',
+  '26': 'MasterCard',
+  '27': 'MasterCard',
+  '30': 'Diners Club, Japan Credit Bureau, etc.',
+  '31': 'Japan Credit Bureau',
+  '33': 'Japan Credit Bureau',
   '34': 'American Express',
   '35': 'Japan Credit Bureau',
   '36': 'Diners Club',
@@ -38,21 +47,84 @@ final Map<String, String> CHECKDIGITS_CREDITCARD_PREFIX = {
   '47': 'Visa',
   '48': 'Visa',
   '49': 'Visa',
-  '51': 'Mastercard',
-  '52': 'Mastercard',
-  '53': 'Mastercard',
-  '54': 'Mastercard',
-  '55': 'Mastercard',
-  '60': 'Merchandising-Cards (International)',
+  '50': 'MasterCard Maestro, Verve, EBT, Dankort, Meeza',
+  '51': 'MasterCard',
+  '52': 'MasterCard',
+  '53': 'MasterCard',
+  '54': 'MasterCard',
+  '55': 'MasterCard',
+  '56': 'EFTPOS',
+  '57': 'EFTPOS',
+  '60': 'Discover Cards, RuPay, Cabal, Hipercardetc.',
   '61': 'Merchandising-Cards (International)',
   '62': 'China Union Pay',
-  '63': 'Merchandising-Cards (International)',
+  '63': 'ComproCard',
   '64': 'Merchandising-Cards (International)',
-  '65': 'Merchandising-Cards (International)',
+  '65': 'RuPay, BC Card, Verve etc.',
   '66': 'Merchandising-Cards (International)',
   '67': 'Merchandising-Cards (International)',
   '68': 'Merchandising-Cards (International)',
   '69': 'Merchandising-Cards (International)',
+  '81': 'China Union Pay',
+  '90': 'Arca, etc.',
+  '91': 'BelCart, etc.',
+  '94': 'BC Card, Elcart, etc.',
+  '97': 'Troy, ICA, etc.',
+  '98': 'DinaCard, NSMEP, etc.',
+};
+
+final Map<int, List<Object>> CHECKDIGITS_CREDITCARD_CARDSCHEMES = {
+  //https://www.bindb.com/card-schemes
+  220000: [220499, 'MIR'],
+  220500: [220599, 'PayPak'],
+  222100: [272099, 'MasterCard'],
+  300000: [309599, 'Diners Club'],
+  309500: [309599, 'Diners Club'],
+  308800: [310299, 'Japan Credit Bureau'],
+  311200: [312099, 'Japan Credit Bureau'],
+  315800: [315999, 'Japan Credit Bureau'],
+  333700: [334999, 'Japan Credit Bureau'],
+  340000: [349999, 'American Express'],
+  352800: [358999, 'Japan Credit Bureau'],
+  360000: [369999, 'Diners Club'],
+  370000: [379999, 'American Express'],
+  380000: [399999, 'Diners Club'],
+  400000: [499999, 'Visa'],
+  500000: [509999, 'MasterCard'],
+  501900: [501999, 'MasterCard Dankort'],
+  506099: [506198, 'MasterCard Verve'],
+  507600: [507699, 'MasterCard EBT'],
+  507800: [507899, 'MasterCard Meeza'],
+  510000: [559999, 'MasterCard'],
+  560200: [560299, 'Electronic funds transfer at point of sale'],
+  579900: [579999, 'MasterCard'],
+  601100: [601103, 'Discover Cards'],
+  606000: [608000, 'Rupay'],
+  601105: [601109, 'Discover Cards'],
+  601120: [601149, 'Discover Cards'],
+  601174: [601174, 'Discover Cards'],
+  601177: [601179, 'Discover Cards'],
+  601186: [601199, 'Discover Cards'],
+  604200: [604299, 'Cabal'],
+  606282: [606282, 'Hipercart'],
+  622126: [622925, 'China Union Pay'],
+  624000: [626999, 'China Union Pay'],
+  628200: [628899, 'China Union Pay'],
+  630000: [639999, 'MasterCard Maestro'],
+  639200: [639299, 'ComproCard'],
+  644000: [659999, 'Discover Cards'],
+  650002: [650027, 'Verve'],
+  652100: [654399, 'RuPay'],
+  655600: [655699, 'BC Card'],
+  670000: [679999, 'MasterCard Maestro'],
+  810000: [817199, 'China Union Pay'],
+  905100: [905199, 'Arca'],
+  911200: [911299, 'BelCart'],
+  941700: [941799, 'Elcart'],
+  975200: [975299, 'ICA'],
+  979200: [979289, 'Troy'],
+  980400: [980499, 'NSMEP'],
+  989100: [989199, 'DinaCard'],
 };
 
 final Map<String, int> CHECKDIGITS_CREDITCARD_LENGTH = {
@@ -62,8 +134,163 @@ final Map<String, int> CHECKDIGITS_CREDITCARD_LENGTH = {
   '38': 14,
 };
 
+class BINIINDetail {
+  final String number_length;
+  final String scheme;
+  final String type;
+  final String brand;
+  final String prepaid;
+  final String country_numeric;
+  final String country_alpha2;
+  final String country_name;
+  final String bank_name;
+  final String bank_url;
+  final String bank_phone;
+  final String bank_city;
+
+  BINIINDetail(this.number_length, this.scheme, this.type, this.brand, this.prepaid, this.country_numeric,
+      this.country_alpha2, this.country_name, this.bank_name, this.bank_url, this.bank_phone, this.bank_city);
+}
+
+enum OPENBINIINDB_STATUS { OK, ERROR }
+
+class OpenBINIINDBOutput {
+  final OPENBINIINDB_STATUS status;
+  final String httpCode;
+  final String httpMessage;
+  final BINIINDetail BINIINData;
+
+  OpenBINIINDBOutput({
+    required this.status,
+    required this.httpCode,
+    required this.httpMessage,
+    required this.BINIINData,
+  });
+}
+
+class OpenBINIINDBgetJobData {
+  final String biniin;
+
+  OpenBINIINDBgetJobData({required this.biniin});
+}
+
+final EMPTY_OPENBINIINDB_TASK_OUTPUT = OpenBINIINDBOutput(
+  status: OPENBINIINDB_STATUS.ERROR,
+  httpCode: '',
+  httpMessage: '',
+  BINIINData: BINIINDetail(
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ),
+);
+
+Future<OpenBINIINDBOutput> OpenBINIINDBrunTaskAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! OpenBINIINDBgetJobData) {
+    return Future.value(EMPTY_OPENBINIINDB_TASK_OUTPUT);
+  }
+  var OpenBINIINDBJob = jobData!.parameters as OpenBINIINDBgetJobData;
+
+  OpenBINIINDBOutput output =
+      await _OpenBINIINDBgetTextAsync(OpenBINIINDBJob.biniin, sendAsyncPort: jobData.sendAsyncPort);
+
+  jobData.sendAsyncPort?.send(output);
+
+  return output;
+}
+
+Future<OpenBINIINDBOutput> _OpenBINIINDBgetTextAsync(String biniin, {SendPort? sendAsyncPort}) async {
+  String httpMessage = '';
+  int httpCode = 0;
+  BINIINDetail BINIINData = BINIINDetail(
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  );
+  OPENBINIINDB_STATUS status = OPENBINIINDB_STATUS.ERROR;
+  Uri address = Uri.parse('https://lookup.binlist.net/' + biniin.substring(0, 6));
+
+  try {
+    final http.Response response = await http.post(
+      address,
+      headers: <String, String>{
+        'Accept-Version': '3',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    httpCode = response.statusCode;
+    httpMessage = response.reasonPhrase ?? '';
+    if (httpCode == 200) {
+      var BINIINDataJSON = jsonDecode(response.body);
+      status = OPENBINIINDB_STATUS.OK;
+      BINIINData = BINIINDetail(
+        BINIINDataJSON['number'].toString() != 'null' ? BINIINDataJSON['number']['length'].toString() : 'null',
+        BINIINDataJSON['scheme'].toString(),
+        BINIINDataJSON['type'].toString(),
+        BINIINDataJSON['brand'].toString(),
+        BINIINDataJSON['prepaid'].toString(),
+        BINIINDataJSON['country'].toString() != 'null' ? BINIINDataJSON['country']['numeric'].toString() : 'null',
+        BINIINDataJSON['country'].toString() != 'null' ? BINIINDataJSON['country']['alpha2'].toString() : 'null',
+        BINIINDataJSON['country'].toString() != 'null' ? BINIINDataJSON['country']['name'].toString() : 'null',
+        BINIINDataJSON['bank'].toString() != 'null' ? BINIINDataJSON['bank']['name'].toString() : 'null',
+        BINIINDataJSON['bank'].toString() != 'null' ? BINIINDataJSON['bank']['url'].toString() : 'null',
+        BINIINDataJSON['bank'].toString() != 'null' ? BINIINDataJSON['bank']['phone'].toString() : 'null',
+        BINIINDataJSON['bank'].toString() != 'null' ? BINIINDataJSON['bank']['city'].toString() : 'null',
+      );
+    } else {
+      status = OPENBINIINDB_STATUS.ERROR;
+    }
+  } catch (exception) {
+    //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
+    httpCode = 503;
+    httpMessage = exception.toString();
+    status = OPENBINIINDB_STATUS.ERROR;
+  } // end catch exception
+  return OpenBINIINDBOutput(
+    status: status,
+    httpCode: httpCode.toString(),
+    httpMessage: httpMessage,
+    BINIINData: BINIINData,
+  );
+}
+
+final OPENBINIINEB_ERRORCODES = {
+  '0': 'checkdigits_ean_error_ok',
+  '1': 'checkdigits_ean_error_ean_not_found',
+  '2': 'checkdigits_ean_error_ean_checksum_error',
+  '3': 'checkdigits_ean_error_ean_format_error',
+  '4': 'checkdigits_ean_error_not_a_global-unique_ean',
+  '5': 'checkdigits_ean_error_access_limit_exceeded',
+  '6': 'checkdigits_ean_error_no_product_name',
+  '7': 'checkdigits_ean_error_product_name_too_long',
+  '8': 'checkdigits_ean_error_no_or_wrong_main_category_id',
+  '9': 'checkdigits_ean_error_no_or_wrong_sub_category_id',
+  '10': 'checkdigits_ean_error_illegal_data_in_vendor_field',
+  '11': 'checkdigits_ean_error_illegal_data_in_description_field',
+  '12': 'checkdigits_ean_error_data_already_submitted',
+  '13': 'checkdigits_ean_error_queryid_missing_or_wrong',
+  '14': 'checkdigits_ean_error_unknown_command',
+};
+
 CheckDigitOutput _CheckCreditCardNumber(String number) {
-  print(number);
   if (_checkCreditCardNumberLength(number)) {
     if (_checkNumber(number, _checkCreditCard)) {
       return CheckDigitOutput(true, '', ['']);
@@ -121,7 +348,6 @@ bool _checkCreditCardNumberLength(String number) {
       return ((13 <= number.length) && (number.length <= 16));
     } else {
       if (CHECKDIGITS_CREDITCARD_LENGTH[number.substring(0, 2)] == null) {
-        print(number);
         return (number.length == 16);
       } else {
         return (number.length == CHECKDIGITS_CREDITCARD_LENGTH[number.substring(0, 2)]);
