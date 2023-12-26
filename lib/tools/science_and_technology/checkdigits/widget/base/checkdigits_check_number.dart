@@ -397,7 +397,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   String _showBINIINData(String data) {
     if (data == 'null') {
-      return i18n(context, 'checkdigits_creditcard_error_error_404');
+      return i18n(context, 'checkdigits_creditcard_get_details_unknown');
     }
     return data;
   }
@@ -428,7 +428,9 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     ]);
     result.add([i18n(context, 'checkdigits_creditcard_issuer_identification_number'), number.substring(0, 6), '']);
     List<String> binData = _CreditCardSchemeData(number);
-    result.add(binData);
+    if (binData.isNotEmpty) {
+      result.add(binData);
+    }
     if (binData.isEmpty) {
       result.add([
         i18n(context, 'checkdigits_creditcard_issuer'),

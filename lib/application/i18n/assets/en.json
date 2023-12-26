@@ -718,6 +718,7 @@
   "checkdigits_creditcard_get_details_bank_url": "Url",
   "checkdigits_creditcard_get_details_bank_phone": "Phone",
   "checkdigits_creditcard_get_details_bank_city": "City",
+  "checkdigits_creditcard_get_details_unknown": "No data available",
   "checkdigits_creditcard_error_ok": "OK",
   "checkdigits_creditcard_server_error_code": "Server Code",
   "checkdigits_creditcard_server_error_message": "Server Message",

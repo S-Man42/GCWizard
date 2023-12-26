@@ -138,7 +138,6 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
   if (number == '') {
     return 'checkdigits_invalid_length';
   }
-
   number = number.toUpperCase();
   switch (mode) {
     case CheckDigitsMode.EAN_GTIN:
@@ -156,7 +155,7 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
     case CheckDigitsMode.UIC:
       return _CalculateCheckDigitAndNumber(number, _CalculateUICNumber);
     case CheckDigitsMode.CREDITCARD:
-      return _CalculateCheckDigitAndNumber(number, _CalculateUICNumber);
+      return _CalculateCheckDigitAndNumber(number, _CalculateCreditCardNumber);
     default:
       return '';
   }

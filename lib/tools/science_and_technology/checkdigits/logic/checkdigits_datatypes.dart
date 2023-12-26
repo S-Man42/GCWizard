@@ -45,7 +45,7 @@ final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(ma
 final MaskTextInputFormatter MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_CREDITCARD = MaskTextInputFormatter(mask: "#### #### #### ####", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_CREDITCARD = MaskTextInputFormatter(mask: "#### #### #### #### ###", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "## ## ### # ###-#", filter: {"#": RegExp(r'[0-9?]')});
@@ -68,7 +68,7 @@ Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.UIC : "00 00 000 0 000-0",
   CheckDigitsMode.EAN_GTIN : "00000000000000",
   CheckDigitsMode.IMEI : "00000000000000",
-  CheckDigitsMode.CREDITCARD : "0000 0000 0000 0000",
+  CheckDigitsMode.CREDITCARD : "0000 0000 0000 0000 000",
   CheckDigitsMode.DETAXID : "00000000000",
 };
 

@@ -127,13 +127,6 @@ final Map<int, List<Object>> CHECKDIGITS_CREDITCARD_CARDSCHEMES = {
   989100: [989199, 'DinaCard'],
 };
 
-final Map<String, int> CHECKDIGITS_CREDITCARD_LENGTH = {
-  '34': 15,
-  '37': 15,
-  '36': 14,
-  '38': 14,
-};
-
 class BINIINDetail {
   final String number_length;
   final String scheme;
@@ -272,26 +265,8 @@ Future<OpenBINIINDBOutput> _OpenBINIINDBgetTextAsync(String biniin, {SendPort? s
   );
 }
 
-final OPENBINIINEB_ERRORCODES = {
-  '0': 'checkdigits_ean_error_ok',
-  '1': 'checkdigits_ean_error_ean_not_found',
-  '2': 'checkdigits_ean_error_ean_checksum_error',
-  '3': 'checkdigits_ean_error_ean_format_error',
-  '4': 'checkdigits_ean_error_not_a_global-unique_ean',
-  '5': 'checkdigits_ean_error_access_limit_exceeded',
-  '6': 'checkdigits_ean_error_no_product_name',
-  '7': 'checkdigits_ean_error_product_name_too_long',
-  '8': 'checkdigits_ean_error_no_or_wrong_main_category_id',
-  '9': 'checkdigits_ean_error_no_or_wrong_sub_category_id',
-  '10': 'checkdigits_ean_error_illegal_data_in_vendor_field',
-  '11': 'checkdigits_ean_error_illegal_data_in_description_field',
-  '12': 'checkdigits_ean_error_data_already_submitted',
-  '13': 'checkdigits_ean_error_queryid_missing_or_wrong',
-  '14': 'checkdigits_ean_error_unknown_command',
-};
-
 CheckDigitOutput _CheckCreditCardNumber(String number) {
-  if (_checkCreditCardNumberLength(number)) {
+  if (12 <= number.length && number.length <= 19) {
     if (_checkNumber(number, _checkCreditCard)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
@@ -305,14 +280,14 @@ CheckDigitOutput _CheckCreditCardNumber(String number) {
 }
 
 String _CalculateCreditCardNumber(String number) {
-  if (_checkCreditCardNumberLengthWithoutCD(number)) {
+  if (11 <= number.length && number.length <= 18 ) {
     return number + _calculateCreditCardCheckDigit(number);
   }
   return 'checkdigits_invalid_length';
 }
 
 List<String> _CalculateCreditCardDigits(String number) {
-  if (_checkCreditCardNumberLength(number)) {
+  if (12 <= number.length && number.length <= 19 ) {
     return _CalculateDigits(number, _checkCreditCard);
   } else {
     return ['checkdigits_invalid_length'];
@@ -326,48 +301,24 @@ bool _checkCreditCard(String number) {
 String _calculateCreditCardCheckDigit(String number) {
   int sum = 0;
   int product = 0;
-  for (int i = 0; i < number.length; i++) {
-    if (i % 2 == 0) {
+  bool two = true;
+
+  for (int i = number.length - 1; i >= 0; i--) {
+    if (two) {
       product = 2 * int.parse(number[i]);
-    } else {
+    }  else {
       product = 1 * int.parse(number[i]);
     }
     sum = sum + product ~/ 10 + product % 10;
+    two = !two;
   }
+
   if (sum >= 100) {
     sum = sum % 100;
   }
   sum = sum % 10;
   sum = 10 - sum;
+
   return sum.toString();
 }
 
-bool _checkCreditCardNumberLength(String number) {
-  if (number.length >= 2) {
-    if (number.substring(0, 1) == '4') {
-      return ((13 <= number.length) && (number.length <= 16));
-    } else {
-      if (CHECKDIGITS_CREDITCARD_LENGTH[number.substring(0, 2)] == null) {
-        return (number.length == 16);
-      } else {
-        return (number.length == CHECKDIGITS_CREDITCARD_LENGTH[number.substring(0, 2)]);
-      }
-    }
-  }
-  return false;
-}
-
-bool _checkCreditCardNumberLengthWithoutCD(String number) {
-  if (number.length >= 2) {
-    if (number.substring(0, 1) == '4') {
-      return ((13 <= number.length) && (number.length <= 15));
-    } else {
-      if (CHECKDIGITS_CREDITCARD_LENGTH[number.substring(0, 2)] == null) {
-        return (number.length == 15);
-      } else {
-        return (number.length == CHECKDIGITS_CREDITCARD_LENGTH[number.substring(0, 2)]! - 1);
-      }
-    }
-  }
-  return false;
-}
