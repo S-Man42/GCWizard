@@ -104,16 +104,21 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           ),
           _detailsWidget(),
           if (_currentInputNumberString.toUpperCase().substring(0,2) == 'DE' && deBankAccountDoesNotExist)
-            GCWOutput(
-              title: i18n(context, 'checkdigits_hint'),
-              suppressCopyButton: true,
-              child: i18n(context, 'checkdigits_iban_hint_iban_de_invalid_banknumber'),
+            Column(
+              children: <Widget>[
+                GCWOutput(
+                  title: i18n(context, 'checkdigits_hint'),
+                  suppressCopyButton: true,
+                  child: i18n(context, 'checkdigits_iban_hint_iban_de_invalid_banknumber'),
+                ),
+                GCWOutput(
+                  title: i18n(context, 'checkdigits_hint'),
+                  suppressCopyButton: true,
+                  child: i18n(context, 'checkdigits_iban_hint_iban_single'),
+                ),
+              ],
             ),
-          GCWOutput(
-            title: i18n(context, 'checkdigits_hint'),
-            suppressCopyButton: true,
-            child: i18n(context, 'checkdigits_iban_hint_iban_single'),
-          ),
+          _detailsBankData(),
         ],
       );
     }
@@ -155,7 +160,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             }).toList(),
             flexValues: const [1, 5]),
       ),
-      widget.mode == CheckDigitsMode.IBAN
+      (widget.mode == CheckDigitsMode.IBAN &&  checkDigitsIBANDEBankNumberDoesNotExist(_currentInputNumberString))
       ? GCWOutput(
         title: i18n(context, 'checkdigits_hint'),
         suppressCopyButton: true,
@@ -163,6 +168,28 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       )
       : Container(),
     ]);
+  }
+
+  Widget _detailsBankData(){
+    Widget result = Container();
+    List<Map<String, String>> bankData = [];
+    if (CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))] != null) {
+      bankData = CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))]!;
+      result = GCWOutput(
+          title: i18n(context, 'checkdigits_iban_data_details'),
+          suppressCopyButton: true,
+          child: GCWColumnedMultilineOutput(
+              copyColumn: 1,
+              data: [
+                [i18n(context, 'checkdigits_iban_data_details_name'), bankData[1]['Bezeichnung']],
+                [i18n(context, 'checkdigits_iban_data_details_city'), bankData[2]['PLZ']! + ' ' + bankData[3]['Ort']!],
+                [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[6]['BIC']],
+              ],
+            flexValues: [2, 4],
+          ),
+      );
+    }
+    return result;
   }
 
   Widget _detailsWidget() {
@@ -571,6 +598,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         number.substring(0, 2),
         i18n(context, 'checkdigits_iban_country_code_unknown')
       ]);
+      result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2, 4), '']);
+      result.add(['', number.substring(4, ), '']);
     } else {
       List<Map<String, Object>> countryData = IBAN_DATA[number.substring(0, 2)]!;
       result.add([
