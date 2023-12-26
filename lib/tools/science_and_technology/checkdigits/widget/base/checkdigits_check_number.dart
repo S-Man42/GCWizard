@@ -94,6 +94,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     CheckDigitOutput checked =
         checkDigitsCheckNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
 
+    bool deBankAccountDoesNotExist = checkDigitsIBANDEBankNumberDoesNotExist(_currentInputNumberString);
+
     if (checked.correct) {
       return Column(
         children: <Widget>[
@@ -101,6 +103,17 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             child: i18n(context, 'checkdigits_checknumber_correct_yes'),
           ),
           _detailsWidget(),
+          if (_currentInputNumberString.toUpperCase().substring(0,2) == 'DE' && deBankAccountDoesNotExist)
+            GCWOutput(
+              title: i18n(context, 'checkdigits_hint'),
+              suppressCopyButton: true,
+              child: i18n(context, 'checkdigits_iban_hint_iban_de_invalid_banknumber'),
+            ),
+          GCWOutput(
+            title: i18n(context, 'checkdigits_hint'),
+            suppressCopyButton: true,
+            child: i18n(context, 'checkdigits_iban_hint_iban_single'),
+          ),
         ],
       );
     }
@@ -142,6 +155,13 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             }).toList(),
             flexValues: const [1, 5]),
       ),
+      widget.mode == CheckDigitsMode.IBAN
+      ? GCWOutput(
+        title: i18n(context, 'checkdigits_hint'),
+        suppressCopyButton: true,
+        child: i18n(context, 'checkdigits_iban_hint_iban_single'),
+      )
+      : Container(),
     ]);
   }
 

@@ -5,10 +5,6 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 // https://en.wikipedia.org/wiki/International_Bank_Account_Number
 // https://web.archive.org/web/20171220203336/http://www.europebanks.info/ibanguide.php#5
 
-// https://www.bundesbank.de/de/aufgaben/unbarer-zahlungsverkehr/serviceangebot/pruefzifferberechnung/pruefzifferberechnung-fuer-kontonummern-603282
-// https://www.bundesbank.de/resource/blob/603320/16a80c739bbbae592ca575905975c2d0/mL/pruefzifferberechnungsmethoden-data.pdf
-// https://www.bundesbank.de/de/aufgaben/unbarer-zahlungsverkehr/serviceangebot/bankleitzahlen/download-bankleitzahlen-602592
-
 // GC7DCXZ => calculate checkDigit
 //         => calculate Number
 // GC4TKB5 => calculate checkDigit

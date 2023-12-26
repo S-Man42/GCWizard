@@ -7,8 +7,9 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 import 'package:http/http.dart' as http;
 
-part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_datatypes.dart';
-part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_banknumber_data.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits__datatypes.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_iban_de.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_iban_de_banknumber_data.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_ean.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_creditcard.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_taxid.dart';
