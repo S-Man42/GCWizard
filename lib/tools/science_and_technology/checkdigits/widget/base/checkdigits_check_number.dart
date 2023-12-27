@@ -172,7 +172,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   Widget _detailsBankData(){
     Widget result = Container();
-    List<Map<String, String>> bankData = [];
+    List<String> bankData = [];
     if (CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))] != null) {
       bankData = CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))]!;
       result = GCWOutput(
@@ -181,9 +181,9 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           child: GCWColumnedMultilineOutput(
               copyColumn: 1,
               data: [
-                [i18n(context, 'checkdigits_iban_data_details_name'), bankData[1]['Bezeichnung']],
-                [i18n(context, 'checkdigits_iban_data_details_city'), bankData[2]['PLZ']! + ' ' + bankData[3]['Ort']!],
-                [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[6]['BIC']],
+                [i18n(context, 'checkdigits_iban_data_details_name'), bankData[0]],
+                [i18n(context, 'checkdigits_iban_data_details_city'), bankData[1] + ' ' + bankData[2]],
+                [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[3]],
               ],
             flexValues: [2, 4],
           ),
