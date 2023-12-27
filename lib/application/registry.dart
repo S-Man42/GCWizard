@@ -3886,6 +3886,18 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: const [
       'cistercian',
     ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_2_1', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_2_2', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_3', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: const [
       'color',
       'symbol_color_add',
