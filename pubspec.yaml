@@ -5,7 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=2.19.0 <3.0.0"
-asdasdasdas
+
 dependencies:
   archive: ^3.4.2
   audioplayers: ^5.0.0
