@@ -104,13 +104,8 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
                 (_lon % 10000 - _lon % 1000) / 1000 * 9 +
                 (_lat % 100000 - _lat % 10000) / 10000 * 7) %
             11);
-    if (_tempb3 == 10) {
-      _b3 = 0;
-    } else if (_tempb3 == 11) {
-      _b3 = 5;
-    } else {
-      _b3 = _tempb3;
-    }
+
+    _b3 = _transformCheckSum(_tempb3);
 
     _tempc3 = (11 -
         ((_lon % 100000 - _lon % 10000) / 10000 * 8 +
@@ -123,13 +118,8 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
                 (_lon % 1000000 - _lon % 100000) / 100000 * 7) %
             11);
 
-    if (_tempc3 == 10) {
-      _c3 = 0;
-    } else if (_tempc3 == 11) {
-      _c3 = 5;
-    } else {
-      _c3 = _tempc3;
-    }
+    _c3 = _transformCheckSum(_tempc3);
+
     a = ((_lat % 1000 - _lat % 100) ~/ 100).toString() +
         ((_lon % 100000000 - _lon % 10000000) ~/ 10000000).toString() +
         ((_lat % 10000000 - _lat % 1000000) ~/ 1000000).toString() +
@@ -160,13 +150,8 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
                 _lon % 10 * 7) %
             11);
 
-    if (_tempb3 == 10) {
-      _b3 = 0;
-    } else if (_tempb3 == 11) {
-      _b3 = 5;
-    } else {
-      _b3 = _tempb3;
-    }
+    _b3 = _transformCheckSum(_tempb3);
+
     _tempc3 = (11 -
         ((_lon % 10000 - _lon % 1000) / 1000 * 8 +
                 (_lon % 100000000 - _lon % 10000000) / 10000000 * 6 +
@@ -178,13 +163,7 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
                 (_lon % 10000000 - _lon % 1000000) / 1000000 * 7) %
             11);
 
-    if (_tempc3 == 10) {
-      _c3 = 0;
-    } else if (_tempc3 == 11) {
-      _c3 = 5;
-    } else {
-      _c3 = _tempc3;
-    }
+    _c3 = _transformCheckSum(_tempc3);
 
     a = (_lat % 10).toInt().toString() +
         ((_lon % 100000 - _lon % 10000) ~/ 10000).toString() +
@@ -207,6 +186,16 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
   }
 
   return ReverseWherigoWaldmeister(int.parse(a), int.parse(b), int.parse(c));
+}
+
+double _transformCheckSum(double value) {
+  if (value == 10) {
+    return 0;
+  } else if (value == 11) {
+    return 5;
+  } else {
+    return value;
+  }
 }
 
 ReverseWherigoWaldmeister? parseReverseWherigoWaldmeister(String input) {
@@ -247,7 +236,7 @@ bool _checkSumTest(ReverseWherigoWaldmeister waldmeister) {
   const int eLength = 8;
   const int wLength = 6;
 
-  if (_numberAtBackPosition(a, wLength - 2) + _numberAtBackPosition(c, wLength - 4) % 2 == 0) {
+  if ((_numberAtBackPosition(c, wLength - 2) + _numberAtBackPosition(c, wLength - 5)) % 2 == 0) {
     //b3 = 11 – ((2*a4 + 4*n1 + 7*n3 + 8*n5 + 5*n7 + 6*e1 + 9*e5 + 3*e6) mod 11)
     b3Calc = 11 - ((
         2 * _numberAtBackPosition(a, wLength - 4) +
@@ -290,6 +279,9 @@ bool _checkSumTest(ReverseWherigoWaldmeister waldmeister) {
         4 * _numberAtBackPosition(e, eLength - 6) +
         3 * _numberAtBackPosition(e, eLength - 7)) % 11);
   }
+  b3Calc = _transformCheckSum(b3Calc.toDouble()).toInt();
+  c3Calc = c3Calc == 10 ? 0 : c3Calc == 11 ? 5 : c3Calc;
+
   var b3Ref = _numberAtBackPosition(b, wLength - 3);
   var c3Ref = _numberAtBackPosition(c, wLength - 3);
 
