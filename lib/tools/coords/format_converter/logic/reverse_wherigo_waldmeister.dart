@@ -3,6 +3,8 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
+const int _wLength = 6;
+
 LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
   var a = waldmeister.a;
   var b = waldmeister.b;
@@ -26,42 +28,46 @@ LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
     _lonSign = -1;
   }
 
-  if (((c % 100000 - c % 10000) / 10000 + (c % 100 - c % 10) / 10) % 2 == 0) {
+  if ((_numberAtBackPosition(c, _wLength - 2) + _numberAtBackPosition(c, _wLength - 5)) % 2 == 0) {
+    // a3 b5 . b2 c4 a1 c5 a6
     _lat = (_latSign *
-        ((a % 10000 - a % 1000) / 1000 * 10 +
-            (b % 100 - b % 10) / 10 +
-            (b % 100000 - b % 10000) / 10000 * 0.1 +
-            (c % 1000 - c % 100) / 100 * 0.01 +
-            (a % 1000000 - a % 100000) / 100000 * 0.001 +
-            (c % 100 - c % 10) / 10 * 1.0E-4 +
-            a % 10 * 1.0E-5));
+        (_numberAtBackPosition(a, _wLength - 3) * 10 +
+          _numberAtBackPosition(b, _wLength - 5) +
+          _numberAtBackPosition(b, _wLength - 2) * 0.1 +
+          _numberAtBackPosition(c, _wLength - 4) * 0.01 +
+          _numberAtBackPosition(a, _wLength - 1) * 0.001 +
+          _numberAtBackPosition(c, _wLength - 5) * 1.0E-4 +
+          _numberAtBackPosition(a, _wLength - 6) * 1.0E-5));
+    // a2 c1 c6 . b4 b1 a5 c2 b6
     _lon = (_lonSign *
-        ((a % 100000 - a % 10000) / 10000 * 100 +
-            (c % 1000000 - c % 100000) / 100000 * 10 +
-            c % 10 +
-            (b % 1000 - b % 100) / 100 * 0.1 +
-            (b % 1000000 - b % 100000) / 100000 * 0.01 +
-            (a % 100 - a % 10) / 10 * 0.001 +
-            (c % 100000 - c % 10000) / 10000 * 1.0E-4 +
-            b % 10 * 1.0E-5));
+        (_numberAtBackPosition(a, _wLength - 2) * 100 +
+          _numberAtBackPosition(c, _wLength - 1) * 10 +
+          _numberAtBackPosition(c, _wLength - 6) +
+          _numberAtBackPosition(b, _wLength - 4) * 0.1 +
+          _numberAtBackPosition(b, _wLength - 1) * 0.01 +
+          _numberAtBackPosition(a, _wLength - 5) * 0.001 +
+          _numberAtBackPosition(c, _wLength - 2) * 1.0E-4 +
+          _numberAtBackPosition(b, _wLength - 6) * 1.0E-5));
   } else {
+    // b1 a6 . a3 c1 c4 c5 a1
     _lat = (_latSign *
-        ((b % 1000000 - b % 100000) / 100000 * 10 +
-            a % 10 +
-            (a % 10000 - a % 1000) / 1000 * 0.1 +
-            (c % 1000000 - c % 100000) / 100000 * 0.01 +
-            (c % 1000 - c % 100) / 100 * 0.001 +
-            (c % 100 - c % 10) / 10 * 1.0E-4 +
-            (a % 1000000 - a % 100000) / 100000 * 1.0E-5));
+        (_numberAtBackPosition(b, _wLength - 1) * 10 +
+          _numberAtBackPosition(a, _wLength - 6) +
+          _numberAtBackPosition(a, _wLength - 3) * 0.1 +
+          _numberAtBackPosition(c, _wLength - 1) * 0.01 +
+          _numberAtBackPosition(c, _wLength - 4) * 0.001 +
+          _numberAtBackPosition(c, _wLength - 5) * 1.0E-4 +
+          _numberAtBackPosition(a, _wLength - 1) * 1.0E-5));
+    // b5 c6 a5 . a2 b4 b6 c2 b2
     _lon = (_lonSign *
-        ((b % 100 - b % 10) / 10 * 100 +
-            c % 10 * 10 +
-            (a % 100 - a % 10) / 10 +
-            (a % 100000 - a % 10000) / 10000 * 0.1 +
-            (b % 1000 - b % 100) / 100 * 0.01 +
-            b % 10 * 0.001 +
-            (c % 100000 - c % 10000) / 10000 * 1.0E-4 +
-            (b % 100000 - b % 10000) / 10000 * 1.0E-5));
+        (_numberAtBackPosition(b, _wLength - 5) * 100 +
+          _numberAtBackPosition(c, _wLength - 6) * 10 +
+          _numberAtBackPosition(a, _wLength - 5) +
+          _numberAtBackPosition(a, _wLength - 2) * 0.1 +
+          _numberAtBackPosition(b, _wLength - 4) * 0.01 +
+          _numberAtBackPosition(b, _wLength - 6) * 0.001 +
+          _numberAtBackPosition(c, _wLength - 2) * 1.0E-4 +
+          _numberAtBackPosition(b, _wLength - 2) * 1.0E-5));
   }
 
   return decToLatLon(DEC(_lat, _lon));
@@ -232,58 +238,58 @@ bool _checkSumTest(ReverseWherigoWaldmeister waldmeister) {
   var n = (latlng.latitude.abs() * 100000).round();
   var e = (latlng.longitude.abs() * 100000).round();
 
-  const int nLength = 7;
-  const int eLength = 8;
-  const int wLength = 6;
+  const int _nLength = 7;
+  const int _eLength = 8;
 
-  if ((_numberAtBackPosition(c, wLength - 2) + _numberAtBackPosition(c, wLength - 5)) % 2 == 0) {
+
+  if ((_numberAtBackPosition(c, _wLength - 2) + _numberAtBackPosition(c, _wLength - 5)) % 2 == 0) {
     //b3 = 11 – ((2*a4 + 4*n1 + 7*n3 + 8*n5 + 5*n7 + 6*e1 + 9*e5 + 3*e6) mod 11)
     b3Calc = 11 - ((
-        2 * _numberAtBackPosition(a, wLength - 4) +
-        4 * _numberAtBackPosition(n, nLength - 1) +
-        7 * _numberAtBackPosition(n, nLength - 3) +
-        8 * _numberAtBackPosition(n, nLength - 5) +
-        5 * _numberAtBackPosition(n, nLength - 7) +
-        6 * _numberAtBackPosition(e, eLength - 1) +
-        9 * _numberAtBackPosition(e, eLength - 5) +
-        3 * _numberAtBackPosition(e, eLength - 6)) % 11);
+        2 * _numberAtBackPosition(a, _wLength - 4) +
+        4 * _numberAtBackPosition(n, _nLength - 1) +
+        7 * _numberAtBackPosition(n, _nLength - 3) +
+        8 * _numberAtBackPosition(n, _nLength - 5) +
+        5 * _numberAtBackPosition(n, _nLength - 7) +
+        6 * _numberAtBackPosition(e, _eLength - 1) +
+        9 * _numberAtBackPosition(e, _eLength - 5) +
+        3 * _numberAtBackPosition(e, _eLength - 6)) % 11);
     //c3 = 11 – ((6*n2 + 5*n4 + 9*n6 + 2*e2 + 7*e3 + 8*e4 + 3*e7 + 4*e8) mod 11)
     c3Calc = 11 - ((
-        6 * _numberAtBackPosition(n, nLength - 2) +
-        5 * _numberAtBackPosition(n, nLength - 4) +
-        9 * _numberAtBackPosition(n, nLength - 6) +
-        2 * _numberAtBackPosition(e, eLength - 2) +
-        7 * _numberAtBackPosition(e, eLength - 3) +
-        8 * _numberAtBackPosition(e, eLength - 4) +
-        3 * _numberAtBackPosition(e, eLength - 7) +
-        4 * _numberAtBackPosition(e, eLength - 8)) % 11);
+        6 * _numberAtBackPosition(n, _nLength - 2) +
+        5 * _numberAtBackPosition(n, _nLength - 4) +
+        9 * _numberAtBackPosition(n, _nLength - 6) +
+        2 * _numberAtBackPosition(e, _eLength - 2) +
+        7 * _numberAtBackPosition(e, _eLength - 3) +
+        8 * _numberAtBackPosition(e, _eLength - 4) +
+        3 * _numberAtBackPosition(e, _eLength - 7) +
+        4 * _numberAtBackPosition(e, _eLength - 8)) % 11);
   } else {
     //b3 = 11 – ((2*a4 + 9*n1 + 5*n2 + 4*n3 + 8*n7 + 3*e3 + 6*e4 + 7*e8) mod 11)
     b3Calc = 11 - ((
-        2 * _numberAtBackPosition(a, wLength - 4) +
-        9 * _numberAtBackPosition(n, nLength - 1) +
-        5 * _numberAtBackPosition(n, nLength - 2) +
-        4 * _numberAtBackPosition(n, nLength - 3) +
-        8 * _numberAtBackPosition(n, nLength - 7) +
-        3 * _numberAtBackPosition(e, eLength - 3) +
-        6 * _numberAtBackPosition(e, eLength - 4) +
-        7 * _numberAtBackPosition(e, eLength - 8)) % 11);
+        2 * _numberAtBackPosition(a, _wLength - 4) +
+        9 * _numberAtBackPosition(n, _nLength - 1) +
+        5 * _numberAtBackPosition(n, _nLength - 2) +
+        4 * _numberAtBackPosition(n, _nLength - 3) +
+        8 * _numberAtBackPosition(n, _nLength - 7) +
+        3 * _numberAtBackPosition(e, _eLength - 3) +
+        6 * _numberAtBackPosition(e, _eLength - 4) +
+        7 * _numberAtBackPosition(e, _eLength - 8)) % 11);
     //c3 = 11 – ((2*n4 + 5*n5 + 9*n6 + 6*e1 + 7*e2 + 8*e5 + 4*e6 + 3*e7) mod 11)
     c3Calc = 11 - ((
-        2 * _numberAtBackPosition(n, nLength - 4) +
-        5 * _numberAtBackPosition(n, nLength - 5) +
-        9 * _numberAtBackPosition(n, nLength - 6) +
-        6 * _numberAtBackPosition(e, eLength - 1) +
-        7 * _numberAtBackPosition(e, eLength - 2) +
-        8 * _numberAtBackPosition(e, eLength - 5) +
-        4 * _numberAtBackPosition(e, eLength - 6) +
-        3 * _numberAtBackPosition(e, eLength - 7)) % 11);
+        2 * _numberAtBackPosition(n, _nLength - 4) +
+        5 * _numberAtBackPosition(n, _nLength - 5) +
+        9 * _numberAtBackPosition(n, _nLength - 6) +
+        6 * _numberAtBackPosition(e, _eLength - 1) +
+        7 * _numberAtBackPosition(e, _eLength - 2) +
+        8 * _numberAtBackPosition(e, _eLength - 5) +
+        4 * _numberAtBackPosition(e, _eLength - 6) +
+        3 * _numberAtBackPosition(e, _eLength - 7)) % 11);
   }
   b3Calc = _transformCheckSum(b3Calc.toDouble()).toInt();
   c3Calc = c3Calc == 10 ? 0 : c3Calc == 11 ? 5 : c3Calc;
 
-  var b3Ref = _numberAtBackPosition(b, wLength - 3);
-  var c3Ref = _numberAtBackPosition(c, wLength - 3);
+  var b3Ref = _numberAtBackPosition(b, _wLength - 3);
+  var c3Ref = _numberAtBackPosition(c, _wLength - 3);
 
   return b3Calc == b3Ref && c3Calc == c3Ref;
 }
