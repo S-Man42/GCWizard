@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
@@ -225,5 +226,76 @@ ReverseWherigoWaldmeister? parseReverseWherigoWaldmeister(String input) {
 
   if (a == null || b == null || c == null) return null;
 
-  return ReverseWherigoWaldmeister(a, b, c);
+  var waldmeister = ReverseWherigoWaldmeister(a, b, c);
+
+  if (!_checkSumTest(waldmeister)) return null;
+  return waldmeister;
+}
+
+bool _checkSumTest(ReverseWherigoWaldmeister waldmeister) {
+  var a = waldmeister.a;
+  var b = waldmeister.b;
+  var c = waldmeister.c;
+  var b3Calc = 0;
+  var c3Calc = 0;
+
+  var latlng = reverseWIGWaldmeisterToLatLon(waldmeister);
+  var n = (latlng.latitude.abs() * 100000).round();
+  var e = (latlng.longitude.abs() * 100000).round();
+
+  const int nLength = 7;
+  const int eLength = 8;
+  const int wLength = 6;
+
+  if (_numberAtBackPosition(a, wLength - 2) + _numberAtBackPosition(c, wLength - 4) % 2 == 0) {
+    //b3 = 11 – ((2*a4 + 4*n1 + 7*n3 + 8*n5 + 5*n7 + 6*e1 + 9*e5 + 3*e6) mod 11)
+    b3Calc = 11 - ((
+        2 * _numberAtBackPosition(a, wLength - 4) +
+        4 * _numberAtBackPosition(n, nLength - 1) +
+        7 * _numberAtBackPosition(n, nLength - 3) +
+        8 * _numberAtBackPosition(n, nLength - 5) +
+        5 * _numberAtBackPosition(n, nLength - 7) +
+        6 * _numberAtBackPosition(e, eLength - 1) +
+        9 * _numberAtBackPosition(e, eLength - 5) +
+        3 * _numberAtBackPosition(e, eLength - 6)) % 11);
+    //c3 = 11 – ((6*n2 + 5*n4 + 9*n6 + 2*e2 + 7*e3 + 8*e4 + 3*e7 + 4*e8) mod 11)
+    c3Calc = 11 - ((
+        6 * _numberAtBackPosition(n, nLength - 2) +
+        5 * _numberAtBackPosition(n, nLength - 4) +
+        9 * _numberAtBackPosition(n, nLength - 6) +
+        2 * _numberAtBackPosition(e, eLength - 2) +
+        7 * _numberAtBackPosition(e, eLength - 3) +
+        8 * _numberAtBackPosition(e, eLength - 4) +
+        3 * _numberAtBackPosition(e, eLength - 7) +
+        4 * _numberAtBackPosition(e, eLength - 8)) % 11);
+  } else {
+    //b3 = 11 – ((2*a4 + 9*n1 + 5*n2 + 4*n3 + 8*n7 + 3*e3 + 6*e4 + 7*e8) mod 11)
+    b3Calc = 11 - ((
+        2 * _numberAtBackPosition(a, wLength - 4) +
+        9 * _numberAtBackPosition(n, nLength - 1) +
+        5 * _numberAtBackPosition(n, nLength - 2) +
+        4 * _numberAtBackPosition(n, nLength - 3) +
+        8 * _numberAtBackPosition(n, nLength - 7) +
+        3 * _numberAtBackPosition(e, eLength - 3) +
+        6 * _numberAtBackPosition(e, eLength - 4) +
+        7 * _numberAtBackPosition(e, eLength - 8)) % 11);
+    //c3 = 11 – ((2*n4 + 5*n5 + 9*n6 + 6*e1 + 7*e2 + 8*e5 + 4*e6 + 3*e7) mod 11)
+    c3Calc = 11 - ((
+        2 * _numberAtBackPosition(n, nLength - 4) +
+        5 * _numberAtBackPosition(n, nLength - 5) +
+        9 * _numberAtBackPosition(n, nLength - 6) +
+        6 * _numberAtBackPosition(e, eLength - 1) +
+        7 * _numberAtBackPosition(e, eLength - 2) +
+        8 * _numberAtBackPosition(e, eLength - 5) +
+        4 * _numberAtBackPosition(e, eLength - 6) +
+        3 * _numberAtBackPosition(e, eLength - 7)) % 11);
+  }
+  var b3Ref = _numberAtBackPosition(b, wLength - 3);
+  var c3Ref = _numberAtBackPosition(c, wLength - 3);
+
+  return b3Calc == b3Ref && c3Calc == c3Ref;
+}
+
+int _numberAtBackPosition(int number, int position) {
+  return ((number % pow(10, position + 1) - number % pow(10, position)) / pow(10, position)).toInt();
 }
