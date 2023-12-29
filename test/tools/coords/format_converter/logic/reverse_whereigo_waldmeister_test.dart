@@ -72,4 +72,21 @@ void main() {
       });
     }
   });
+
+  group("Converter.reverseWherigooWaldmeister.checkSumTest:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'expectedOutput': null, 'input': ['580498', '850012', '847837']},
+      {'expectedOutput': null, 'input': ['580597', '860012', '847837']},
+      {'expectedOutput': null, 'input': ['580497', '851012', '847937']},
+      {'expectedOutput': null, 'input': ['580497', '850013', '847837']},
+      {'expectedOutput': null, 'input': ['580497', '850012', '857837']},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>).join(' '))?.toLatLng();
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
 }
