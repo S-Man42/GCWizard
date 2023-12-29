@@ -21,7 +21,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:utility/utility.dart';
 
 part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams.dart';
-part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ndata.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/ndata.dart';
 
 const _iso3166alpha = [
   'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',

@@ -1,14 +1,27 @@
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/mapcode.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/mapcode.dart';
 import 'package:latlong2/latlong.dart';
 
-class MapCode extends BaseCoordinate {
+const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
+  0: CoordinateFormatKey.MAPCODE_LOCAL,
+  1: CoordinateFormatKey.MAPCODE_INTERNATIONAL,
+};
+const int _DEFAULT_PRECISION = 0;
+const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
+
+class MapCode extends BaseCoordinateWithSubtypes {
+  late CoordinateFormat _format;
   List<McInfo> coords;
 
-  MapCode(this.coords) {
-    _format = CoordinateFormat(CoordinateFormatKey.MAPCODE);
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid MapCode subtype given.';
+
+  @override
+  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAPCODE);
+
+  MapCode(this.coords, CoordinateFormatKey subtypeKey) {
+    _format = CoordinateFormat(CoordinateFormatKey.MAPCODE, subtypeKey);
   }
 
   @override
@@ -16,8 +29,12 @@ class MapCode extends BaseCoordinate {
     return MapCodeToLatLon(this);
   }
 
-  static MapCode fromLatLon(LatLng coord, [int precision = 2]) {
-    return latLonToMapCode(coord);
+  static MapCode fromLatLon(LatLng coord, CoordinateFormatKey subtype, [int precision = _DEFAULT_PRECISION]) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.MAPCODE, subtype)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
+    return latLonToMapCode(coord, subtype: subtype, precision: precision);
   }
 
   static MapCode? parse(String input) {
@@ -30,13 +47,6 @@ class MapCode extends BaseCoordinate {
   }
 }
 
-const int _DEFAULT_PRECISION = 0;
-const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
-
-const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
-  0: CoordinateFormatKey.MAPCODE_LOCAL,
-  1: CoordinateFormatKey.MAPCODE_INTERNATIONAL,
-};
 
 MapCode latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int precision = _DEFAULT_PRECISION}) {
   if (subtype == CoordinateFormatKey.MAPCODE_INTERNATIONAL) {
