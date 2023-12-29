@@ -30,7 +30,7 @@ LatLng reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeister waldmeister) {
     _lonSign = -1;
   }
 
-  if ((_numberAtBackPosition(c, _wLength - 2) + _numberAtBackPosition(c, _wLength - 5)) % 2 == 0) {
+  if (__variante1(c)) {
     // a3 b5 . b2 c4 a1 c5 a6
     _lat = (_latSign * (
           _numberAtBackPosition(a, _wLength - 3) * 10 +
@@ -79,7 +79,7 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
   var __lat = coord.latitude;
   var __lon = coord.longitude;
 
-  late double _a4, _b3, _c3;
+  double _a4 = 0;
   String a, b, c;
 
   if (__lat < 0 && __lon < 0) {
@@ -101,10 +101,10 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
   int _lat = (__lat * _latLonFactor - __lat * _latLonFactor % 1).toInt();
   int _lon = (__lon * _latLonFactor - __lon * _latLonFactor % 1).toInt();
 
-  if (_variante1(_lat, _lon)) {
-    _b3 = _b3CheckSum(_lat, _lon, _a4);
-    _c3 = _c3CheckSum(_lat, _lon);
+  var _b3 = _b3CheckSum(_lat, _lon, _a4);
+  var _c3 = _c3CheckSum(_lat, _lon);
 
+  if (_variante1(_lat, _lon)) {
     a = _numberAtBackPosition(_lat, 2).toString() +
         _numberAtBackPosition(_lon, 7).toString() +
         _numberAtBackPosition(_lat, 6).toString() +
@@ -124,9 +124,6 @@ ReverseWherigoWaldmeister latLonToReverseWIGWaldmeister(LatLng coord) {
         _numberAtBackPosition(_lat, 1).toString() +
         _numberAtBackPosition(_lon, 5).toString();
   } else {
-    _b3 = _b3CheckSum(_lat, _lon, _a4);
-    _c3 = _c3CheckSum(_lat, _lon);
-
     a = _numberAtBackPosition(_lat, 0).toString() +
         _numberAtBackPosition(_lon, 4).toString() +
         _numberAtBackPosition(_lat, 4).toString() +
@@ -154,6 +151,10 @@ bool _variante1(int lat, int lon) {
   return (((_numberAtBackPosition(lon, 1) + _numberAtBackPosition(lat, 1)) % 2) == 0);
 }
 
+bool __variante1(int c) {
+  return (_numberAtBackPosition(c, _wLength - 2) + _numberAtBackPosition(c, _wLength - 5)) % 2 == 0;
+}
+
 double _b3CheckSum(int _lat, int _lon, double _a4) {
   double _tempb3 = 0;
 
@@ -165,7 +166,6 @@ double _b3CheckSum(int _lat, int _lon, double _a4) {
         _numberAtBackPosition(_lat, 4) * 7 +
         _numberAtBackPosition(_lat, 2) * 8 +
         _numberAtBackPosition(_lat, 0) * 5 +
-
         _numberAtBackPosition(_lon, 7) * 6 +
         _numberAtBackPosition(_lon, 3) * 9 +
         _numberAtBackPosition(_lon, 2) * 3) % 11);
@@ -255,8 +255,8 @@ bool _checkSumTest(ReverseWherigoWaldmeister waldmeister) {
   var _lat = (latlng.latitude.abs() * _latLonFactor).round();
   var _lon = (latlng.longitude.abs() * _latLonFactor).round();
 
-  var b3Calc = _b3CheckSum(_lat , _lon, _numberAtBackPosition(a, _wLength - 4).toDouble()).toInt();
-  var c3Calc = _c3CheckSum(_lat , _lon).toInt();
+  var b3Calc = _b3CheckSum(_lat, _lon, _numberAtBackPosition(a, _wLength - 4).toDouble()).toInt();
+  var c3Calc = _c3CheckSum(_lat, _lon).toInt();
 
   var b3Ref = _numberAtBackPosition(b, _wLength - 3);
   var c3Ref = _numberAtBackPosition(c, _wLength - 3);
