@@ -1,12 +1,55 @@
-part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsMapCode extends StatefulWidget {
-  final void Function(MapCode?) onChanged;
-  final BaseCoordinate coordinates;
-  final bool initialize;
+class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.MAPCODE;
+  @override
+  String get i18nKey => mapCodeKey;
+  @override
+  String get name => 'coords_formatconverter_mapcode';
+  @override
+  String get example => 'VJMM4.DTYX';
 
-  const _GCWCoordsMapCode({Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  @override
+  List<_GCWCoordWidgetSubtypeInfo> get subtypes => [
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_formatconverter_mapcode_local'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.MAPCODE_INTERNATIONAL, 'coords_formatconverter_mapcode_international'),
+  ];
+
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize
+  }) {
+    return _GCWCoordsMapCode(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
+  }
+
+  @override
+  Widget _buildSubtypeWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    var _onChanged = onChanged;
+    return GCWDropDown<CoordinateFormatKey>(
+      value: value,
+      items: subtypes.map((subtype) {
+        return GCWDropDownMenuItem(
+          value: subtype.type,
+          child: i18n(context, subtype.name),
+        );
+      }).toList(),
+      onChanged: (value) => _onChanged(value),
+    );
+  }
+}
+
+class _GCWCoordsMapCode extends _GCWCoordWidget {
+
+  _GCWCoordsMapCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+        super(coordinates: coordinates is MapCode ? coordinates : MapCodeFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsMapCodeState createState() => _GCWCoordsMapCodeState();

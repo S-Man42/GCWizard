@@ -17,13 +17,13 @@
  */
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/ctrynams_short.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:utility/utility.dart';
 
-part 'package:gc_wizard/tools/coords/format_converter/logic/external_libs/mapcode/ctrynams.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/ndata.dart';
 
-const _iso3166alpha = [
+const iso3166alpha = [
   'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
   'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
   'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM',
@@ -211,7 +211,7 @@ String _alias2iso(String territoryAlphaCode) {
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
 int _findISO(String territoryAlphaCode) {
-  return _iso3166alpha.indexOf(territoryAlphaCode);
+  return iso3166alpha.indexOf(territoryAlphaCode);
 }
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
@@ -298,9 +298,9 @@ int? _iso2ccode(String territoryAlphaCode) {
     }
     // find in ANY context
     var hyphenated = '-' + territoryAlphaCode;
-    for (i = 0; i < _iso3166alpha.length; i++) {
-      if (_iso3166alpha[i].indexOf(hyphenated) > 0) {
-        if (_iso3166alpha[i].substring(_iso3166alpha[i].indexOf(hyphenated)) == hyphenated) {
+    for (i = 0; i < iso3166alpha.length; i++) {
+      if (iso3166alpha[i].indexOf(hyphenated) > 0) {
+        if (iso3166alpha[i].substring(iso3166alpha[i].indexOf(hyphenated)) == hyphenated) {
           return i;
         }
       }
@@ -325,7 +325,7 @@ int? _iso2ccode(String territoryAlphaCode) {
 int? _getTerritoryNumber(String territoryAlphaCode, {String? contextTerritory}) {
   if (contextTerritory != null) {
     var contextTerritoryNumber = _getTerritoryNumber(contextTerritory);
-    _set_disambiguate(_iso3166alpha[contextTerritoryNumber!]);
+    _set_disambiguate(iso3166alpha[contextTerritoryNumber!]);
   }
   return _iso2ccode(territoryAlphaCode);
 }
@@ -336,11 +336,11 @@ String? _getTerritoryFullname(String territory) {
   if (territoryNumber == null || territoryNumber < 0 || territoryNumber > _ccode_earth) {
     return null;
   }
-  var idx = _isofullname[territoryNumber].indexOf(' (');
+  var idx = isofullname[territoryNumber].indexOf(' (');
   if (idx > 0) {
-    return _isofullname[territoryNumber].substring(0, idx);
+    return isofullname[territoryNumber].substring(0, idx);
   }
-  return _isofullname[territoryNumber];
+  return isofullname[territoryNumber];
 }
 
 /// PUBLIC return parent country of subdivision (negative if territory is not a subdivision)
@@ -435,7 +435,7 @@ String _getTerritoryAlphaCode(String territory, int? format) {
   if (territoryNumber == null || territoryNumber < 0 || territoryNumber > _ccode_earth) {
     return '';
   }
-  var full = _iso3166alpha[territoryNumber];
+  var full = iso3166alpha[territoryNumber];
   var hyphen = full.indexOf("-");
   if (format == 1 || hyphen <= 0) {
     return full;
@@ -451,9 +451,9 @@ String _getTerritoryAlphaCode(String territory, int? format) {
   if (i >= 0) {
     count = 2;
   } else {
-    for (i = 0; i < _iso3166alpha.length; i++) {
-      var pos = _iso3166alpha[i].indexOf("-" + short);
-      if ((pos >= 0) && (_iso3166alpha[i].substring(pos + 1) == short)) {
+    for (i = 0; i < iso3166alpha.length; i++) {
+      var pos = iso3166alpha[i].indexOf("-" + short);
+      if ((pos >= 0) && (iso3166alpha[i].substring(pos + 1) == short)) {
         count++;
       }
     }
@@ -1681,10 +1681,10 @@ _enc _getEncodeRec(double lat, double lon) {
   return _enc(coord32: _coord(y: lat32, x: lon32), fraclat: fraclat, fraclon: fraclon);
 }
 
-List<mcInfoC> _mapcoderEngine(_enc enc, int? tn, bool getshortest, int state_override, int extraDigits) {
-  var results = <mcInfoC>[];
+List<McInfo> _mapcoderEngine(_enc enc, int? tn, bool getshortest, int state_override, int extraDigits) {
+  var results = <McInfo>[];
 
-  var mcInfo = mcInfoC();
+  var mcInfo = McInfo();
 
   var fromTerritory = 0;
   var uptoTerritory = _ccode_earth;
@@ -1743,7 +1743,7 @@ List<mcInfoC> _mapcoderEngine(_enc enc, int? tn, bool getshortest, int state_ove
               storecode = state_override;
             }
 
-            mcInfo = mcInfoC();
+            mcInfo = McInfo();
             mcInfo.mapcode = r;
 
             mcInfo.territoryAlphaCode = _getTerritoryAlphaCode(storecode.toString(), null);
@@ -1976,7 +1976,7 @@ String _ccode2iso(String territoryNumber, int? format) {
 
 String? _fullname(int territoryNumber, bool keepindex) {
   if (keepindex) {
-    return _isofullname[territoryNumber];
+    return isofullname[territoryNumber];
   }
   return _getTerritoryFullname(territoryNumber.toString());
 }
@@ -2053,28 +2053,12 @@ LatLng? decode(String mapcodeString, String territory) {
 /// the International variants only return the 9-letter "international" mapcode
 /// the WithPrecision variants produce mapcodes extended with high-precision letters (the parameter specifies how many letters: 0, 1, or 2).
 
-List<mcInfoC> encodeWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, String territory) {
+List<McInfo> encodeWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, String territory) {
   return _mapcoderEngine(_getEncodeRec(latitudeDegrees, longitudeDegrees), _getTerritoryNumber(territory), false/*getshortest*/, -1/*override*/, precision);
 }
 
-List<mcInfoC> _encode(double latitudeDegrees, double longitudeDegrees, String territory) {
-  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory);
-}
-
-List<mcInfoC> _encodeInternational(double latitudeDegrees, double longitudeDegrees) {
-  return encodeWithPrecision(latitudeDegrees, longitudeDegrees, 0, _ccode_earth.toString());
-}
-
-List<mcInfoC> _encodeInternationalWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision) {
+List<McInfo> encodeInternationalWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision) {
   return encodeWithPrecision(latitudeDegrees, longitudeDegrees, precision, _ccode_earth.toString());
-}
-
-List<mcInfoC> _encodeShortestWithPrecision(double latitudeDegrees, double longitudeDegrees, int precision, String territory) {
-  return _mapcoderEngine(_getEncodeRec(latitudeDegrees, longitudeDegrees), _getTerritoryNumber(territory), true/*getshortest*/, -1/*override*/, precision);
-}
-
-List<mcInfoC> _encodeShortest(double latitudeDegrees, double longitudeDegrees, String territory) {
-  return _encodeShortestWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory);
 }
 
 // returns true iff coordinate is near more than one territory border
@@ -2330,7 +2314,7 @@ class _enc {
   _enc({required this.coord32, required this.fraclat, required this.fraclon});
 }
 
-class mcInfoC {
+class McInfo {
   String mapcode = '';
   String territoryAlphaCode = '';
   String fullmapcode = '';

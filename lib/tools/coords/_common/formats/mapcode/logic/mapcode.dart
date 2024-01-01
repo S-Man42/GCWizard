@@ -10,17 +10,33 @@ const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
 };
 const int _DEFAULT_PRECISION = 0;
 const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
+const mapCodeKey = 'coords_mapcode';
+final _defaultCoordinate = MapCode.fromLatLon(const LatLng(0, 0), defaultMapCodeType);
+
+final MapCodeFormatDefinition = CoordinateFormatWithSubtypesDefinition(
+    CoordinateFormatKey.MAPCODE, mapCodeKey, mapCodeKey,
+    [
+      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_mapcode_local', 'coords_mapcode_local',
+          MapCode.parse, _defaultCoordinate),
+      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_INTERNATIONAL, 'coords_mapcode_international', 'coords_mapcode_international',
+          MapCode.parse, _defaultCoordinate),
+    ],
+    MapCode.parse, _defaultCoordinate);
 
 class MapCode extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
+  @override
+  CoordinateFormat get format => _format;
+
   List<McInfo> coords;
 
   static const String _ERROR_INVALID_SUBTYPE = 'No valid MapCode subtype given.';
-
-  @override
-  CoordinateFormat get format => CoordinateFormat(CoordinateFormatKey.MAPCODE);
-
+  
   MapCode(this.coords, CoordinateFormatKey subtypeKey) {
+    if (subtypeKey != defaultMapCodeType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.MAPCODE, subtypeKey)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+
     _format = CoordinateFormat(CoordinateFormatKey.MAPCODE, subtypeKey);
   }
 
@@ -37,9 +53,12 @@ class MapCode extends BaseCoordinateWithSubtypes {
     return latLonToMapCode(coord, subtype: subtype, precision: precision);
   }
 
-  static MapCode? parse(String input) {
-    return parseMapCode(input);
+  static MapCode? parse(String input, {String territory = ''}) {
+    return parseMapCode(input, territory: territory);
   }
+
+  @override
+  CoordinateFormatKey get defaultSubtype => defaultMapCodeType;
 
   @override
   String toString([int? precision]) {
@@ -105,9 +124,3 @@ String _regexString() {
   return rx;
 }
 
-class McInfo {
-  String mapcode = '';
-  String territoryAlphaCode = '';
-  String fullmapcode = '';
-  int territoryNumber = 0;
-}
