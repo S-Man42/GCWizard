@@ -129,5 +129,6 @@ final allCoordinateFormatDefinitions = [
   QuadtreeFormatDefinition,
   MakaneyFormatDefinition,
   GeoHexFormatDefinition,
-  Geo3x3FormatDefinition
+  Geo3x3FormatDefinition,
+  MapCodeFormatDefinition
 ];

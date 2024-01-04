@@ -31,7 +31,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
   List<McInfo> coords;
 
   static const String _ERROR_INVALID_SUBTYPE = 'No valid MapCode subtype given.';
-  
+
   MapCode(this.coords, CoordinateFormatKey subtypeKey) {
     if (subtypeKey != defaultMapCodeType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.MAPCODE, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);

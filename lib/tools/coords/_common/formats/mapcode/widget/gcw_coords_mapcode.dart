@@ -1,6 +1,8 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
 class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
+  var _currentTerritory = '';
+
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.MAPCODE;
   @override
@@ -27,22 +29,47 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
   }
 
   @override
-  Widget _buildSubtypeWidget({
+  Widget inputWidget({
     required BuildContext context,
     required CoordinateFormatKey value,
     required void Function(CoordinateFormatKey) onChanged}) {
 
     var _onChanged = onChanged;
-    return GCWDropDown<CoordinateFormatKey>(
-      value: value,
-      items: subtypes.map((subtype) {
+    return GCWDropDown<String>(
+      value: _currentTerritory,
+      items: _buildTerritorysList().map((entry) {
         return GCWDropDownMenuItem(
-          value: subtype.type,
-          child: i18n(context, subtype.name),
+          value: entry.key,
+          child: entry.value,
         );
       }).toList(),
-      onChanged: (value) => _onChanged(value),
+      onChanged: (value) {
+        setState(() {
+          _currentTerritory = value;
+          _setCurrentValueAndEmitOnChange();
+        });
+      },
     );
+  }
+
+  @override
+  Widget outputWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    return _buildTerritorysDropDown();
+  }
+
+
+  List<MapEntry<String, String>> _buildTerritorysList() {
+    var list = iso3166alpha.mapIndexed((index, entry) =>
+        MapEntry(entry, entry + ' (' + isofullname[index].replaceAll(RegExp(r"\(.*\)"), '').trim() + ')'))
+        .toList();
+    list.sort((e1, e2) => e1.key.compareTo(e2.key));
+    list.insert(0, const MapEntry<String, String>('',''));
+
+    return list;
   }
 }
 
@@ -58,7 +85,6 @@ class _GCWCoordsMapCode extends _GCWCoordWidget {
 class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
   late TextEditingController _controller;
   var _currentCoord = '';
-  var _currentTerritory = '';
   CoordinateFormatKey _currentSubtype = defaultMapCodeType;
 
   @override
@@ -87,7 +113,6 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
     }
 
     return Column(children: <Widget>[
-      _buildTerritorysDropDown(),
       GCWTextField(
           controller: _controller,
           onChanged: (ret) {
@@ -107,34 +132,6 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
     try {
       widget.onChanged(MapCode.parse(_currentCoord, territory: _currentTerritory));
     } catch (e) {}
-  }
-
-  Widget _buildTerritorysDropDown() {
-    return GCWDropDown<String>(
-      value: _currentTerritory,
-      items: _buildTerritorysList().map((entry) {
-        return GCWDropDownMenuItem(
-          value: entry.key,
-          child: entry.value,
-        );
-      }).toList(),
-      onChanged: (value) {
-        setState(() {
-          _currentTerritory = value;
-          _setCurrentValueAndEmitOnChange();
-        });
-      },
-    );
-  }
-
-  List<MapEntry<String, String>> _buildTerritorysList() {
-    var list = iso3166alpha.mapIndexed((index, entry) => 
-        MapEntry(entry, entry + ' (' + isofullname[index].replaceAll(RegExp(r"\(.*\)"), '').trim() + ')'))
-        .toList();
-    list.sort((e1, e2) => e1.key.compareTo(e2.key));
-    list.insert(0, const MapEntry<String, String>('',''));
-
-    return list;
   }
 }
 
