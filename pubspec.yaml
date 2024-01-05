@@ -136,6 +136,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/christmas/
     - lib/tools/symbol_tables/_common/assets/cirth_erebor/
     - lib/tools/symbol_tables/_common/assets/cistercian/
+    - lib/tools/symbol_tables/_common/assets/clocks_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_2/
+    - lib/tools/symbol_tables/_common/assets/clocks_3/
     - lib/tools/symbol_tables/_common/assets/color_add/
     - lib/tools/symbol_tables/_common/assets/color_code/
     - lib/tools/symbol_tables/_common/assets/color_honey/
