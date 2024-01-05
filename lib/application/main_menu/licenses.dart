@@ -131,6 +131,7 @@ class _LicensesState extends State<Licenses> {
           i18n(context, 'symboltables_matoran_title'),
           'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
         ],
+        [i18n(context, 'symboltables_maya_numbers_glyphs_title'), 'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reporductions of this educational item are allowed. www.unitycorps.org)'],
         [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
         [
           i18n(context, 'symboltables_ninjargon_title'),
