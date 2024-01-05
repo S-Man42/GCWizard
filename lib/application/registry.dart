@@ -3990,6 +3990,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: const [
       'symbol_enochian',
     ]),
+    GCWSymbolTableTool(symbolKey: 'eternity_code', symbolSearchStrings: const [
+      'symbol_eternity_code',
+    ]),
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: const [
       'symbol_eurythmy',
     ]),
