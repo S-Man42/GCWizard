@@ -333,6 +333,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/telegraph_pasley/
     - lib/tools/symbol_tables/_common/assets/telegraph_popham/
     - lib/tools/symbol_tables/_common/assets/telegraph_prussia/
+    - lib/tools/symbol_tables/_common/assets/telegraph_schmidt/
     - lib/tools/symbol_tables/_common/assets/templers/
     - lib/tools/symbol_tables/_common/assets/tenctonese_cursive/
     - lib/tools/symbol_tables/_common/assets/tenctonese_printed/
