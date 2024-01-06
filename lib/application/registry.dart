@@ -3886,6 +3886,18 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: const [
       'cistercian',
     ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_2_1', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_2_2', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'clocks_3', symbolSearchStrings: const [
+      'symbol_clocks',
+    ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: const [
       'color',
       'symbol_color_add',
@@ -3989,6 +4001,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: const [
       'symbol_enochian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'eternity_code', symbolSearchStrings: const [
+      'symbol_eternity_code',
     ]),
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: const [
       'symbol_eurythmy',
@@ -4220,6 +4235,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: const [
       'symbol_magicode',
     ]),
+    GCWSymbolTableTool(symbolKey: 'malachim', symbolSearchStrings: const [
+      'symbol_malachim',
+    ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
     ]),
@@ -4252,8 +4270,12 @@ void initializeRegistry(BuildContext context) {
       'calendar',
       'symbol_maya_calendar_tzolkin',
     ]),
+    GCWSymbolTableTool(symbolKey: 'maya_numbers_glyphs', symbolSearchStrings: const [
+      'mayanumbers',
+    ]),
     GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: const [
       'mayanumbers',
+      'symbol_maya_number_glyphys',
     ]),
     GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: const [
       'symbol_maze',
@@ -4525,6 +4547,10 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: const [
       'telegraph',
       'telegraph_prussia',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_schmidt', symbolSearchStrings: const [
+      'telegraph',
+      'telegraph_schmidt',
     ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: const [
       'symbol_templers',

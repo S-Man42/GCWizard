@@ -136,6 +136,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/christmas/
     - lib/tools/symbol_tables/_common/assets/cirth_erebor/
     - lib/tools/symbol_tables/_common/assets/cistercian/
+    - lib/tools/symbol_tables/_common/assets/clocks_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_2/
+    - lib/tools/symbol_tables/_common/assets/clocks_3/
     - lib/tools/symbol_tables/_common/assets/color_add/
     - lib/tools/symbol_tables/_common/assets/color_code/
     - lib/tools/symbol_tables/_common/assets/color_honey/
@@ -166,6 +170,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/egyptian_numerals/
     - lib/tools/symbol_tables/_common/assets/elia/
     - lib/tools/symbol_tables/_common/assets/enochian/
+    - lib/tools/symbol_tables/_common/assets/eternity_code/
     - lib/tools/symbol_tables/_common/assets/eurythmy/
     - lib/tools/symbol_tables/_common/assets/face_it/
     - lib/tools/symbol_tables/_common/assets/fakoo/
@@ -238,6 +243,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/linear_b/
     - lib/tools/symbol_tables/_common/assets/lorm/
     - lib/tools/symbol_tables/_common/assets/magicode/
+    - lib/tools/symbol_tables/_common/assets/malachim/
     - lib/tools/symbol_tables/_common/assets/mandalorian/
     - lib/tools/symbol_tables/_common/assets/marain/
     - lib/tools/symbol_tables/_common/assets/marain_v2/
@@ -247,6 +253,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/maya_calendar_longcount/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_codices/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_inscripts/
+    - lib/tools/symbol_tables/_common/assets/maya_numbers_glyphs/
     - lib/tools/symbol_tables/_common/assets/maya_numerals/
     - lib/tools/symbol_tables/_common/assets/maze/
     - lib/tools/symbol_tables/_common/assets/minimoys/
@@ -333,6 +340,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/telegraph_pasley/
     - lib/tools/symbol_tables/_common/assets/telegraph_popham/
     - lib/tools/symbol_tables/_common/assets/telegraph_prussia/
+    - lib/tools/symbol_tables/_common/assets/telegraph_schmidt/
     - lib/tools/symbol_tables/_common/assets/templers/
     - lib/tools/symbol_tables/_common/assets/tenctonese_cursive/
     - lib/tools/symbol_tables/_common/assets/tenctonese_printed/
