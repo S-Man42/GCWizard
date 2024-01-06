@@ -223,43 +223,45 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   Widget build(BuildContext context) {
     // https://www.kindacode.com/article/flutter-ask-for-confirmation-when-back-button-pressed/
-    return WillPopScope(
-        onWillPop: () async {
-          bool willLeave = false;
-          // show the confirm dialog
-          await showDialog<bool>(
-              context: context,
-              builder: (_) => AlertDialog(
-                    title: Text(i18n(context, 'wherigo_exit_title')),
-                    titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-                    content: Text(i18n(context, 'wherigo_exit_message')),
-                    contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
-                    backgroundColor: themeColors().dialog(),
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            willLeave = true;
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(i18n(context, 'common_yes'))),
-                      ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
-                    ],
-                  ));
-          return willLeave;
-        },
-        child: Column(
-          children: <Widget>[
-            _widgetOpenGWCFile(context),
+    // https://stackoverflow.com/questions/77500680/willpopscope-is-deprecated-after-flutter-3-12
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
+        // show the confirm dialog
+        await showDialog<bool>(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text(i18n(context, 'wherigo_exit_title')),
+              titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+              content: Text(i18n(context, 'wherigo_exit_message')),
+              contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
+              backgroundColor: themeColors().dialog(),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(i18n(context, 'common_yes'))),
+                ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
+              ],
+            ));
+        return;
+      },
+      child: Column(
+        children: <Widget>[
+          _widgetOpenGWCFile(context),
 
-            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetOpenLUAFile(context),
+          if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetOpenLUAFile(context),
 
-            // show dropdown if files are loaded
-            if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetShowDropDown(context),
+          // show dropdown if files are loaded
+          if (_fileLoadedState != WHERIGO_FILE_LOAD_STATE.NULL) _widgetShowDropDown(context),
 
-            _buildOutput(context)
-          ],
-        ));
+          _buildOutput(context)
+        ],
+      ),
+
+    );
   }
 
   Widget _widgetShowDropDown(BuildContext context) {
