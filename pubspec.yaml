@@ -241,6 +241,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/klingon_klinzhai/
     - lib/tools/symbol_tables/_common/assets/krempel/
     - lib/tools/symbol_tables/_common/assets/krypton/
+    - lib/tools/symbol_tables/_common/assets/kurrent/
     - lib/tools/symbol_tables/_common/assets/la_buse/
     - lib/tools/symbol_tables/_common/assets/linear_b/
     - lib/tools/symbol_tables/_common/assets/lorm/

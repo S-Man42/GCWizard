@@ -4223,6 +4223,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: const [
       'symbol_krypton',
     ]),
+    GCWSymbolTableTool(symbolKey: 'kurrent', symbolSearchStrings: const [
+      'symbol_kurrent',
+    ]),
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
       'symbol_la_buse',
