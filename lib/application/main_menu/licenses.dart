@@ -130,10 +130,12 @@ class _LicensesState extends State<Licenses> {
         ],
         [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
         [i18n(context, 'symboltables_kabouter_abc_title'), 'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'],
+        [i18n(context, 'symboltables_kurrent_title'), 'https://commons.wikimedia.org/wiki/File:Deutsche_Kurrentschrift.jpg (Public Domain)'],
         [
           i18n(context, 'symboltables_matoran_title'),
           'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
         ],
+        [i18n(context, 'symboltables_maya_numbers_glyphs_title'), 'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reporductions of this educational item are allowed. www.unitycorps.org)'],
         [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
         [
           i18n(context, 'symboltables_ninjargon_title'),
@@ -146,10 +148,11 @@ class _LicensesState extends State<Licenses> {
         [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
         [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
         [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
+        [i18n(context, 'symboltables_tifinagh_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
         [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
         [
           i18n(context, 'symboltables_steinheil_title'),
-          'hhttps://de.wikipedia.org/wiki/Steinheilschrift (Wiki Commons)'
+          'https://de.wikipedia.org/wiki/Steinheilschrift (Wiki Commons)'
         ],
         [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
       ], flexValues: const [
