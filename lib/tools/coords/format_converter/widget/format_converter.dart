@@ -51,10 +51,10 @@ class _FormatConverterState extends State<FormatConverter> {
         GCWCoords(
           title: i18n(context, 'coords_formatconverter_coord'),
           coordsFormat: _currentCoords.format,
-          onChanged: (BaseCoordinate ret) {
+          onChanged: (ret) {
             setState(() {
-              if (ret.toLatLng() != null) {
-                _currentCoords = ret;
+              if (ret?.toLatLng() != null) {
+                _currentCoords = ret!;
               }
             });
           },

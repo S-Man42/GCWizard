@@ -39,7 +39,9 @@ class _DMMOffsetState extends State<DMMOffset> {
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              if (ret != null) {
+                _currentCoords = ret;
+              }
 
               _calculateOutput();
             });
