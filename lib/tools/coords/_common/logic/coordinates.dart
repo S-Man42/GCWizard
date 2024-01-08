@@ -697,7 +697,8 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
 
   @override
   String toString([int? precision]) {
-    return [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
+    var output = [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
+    return parse(output)  != null ? output : '';
   }
 }
 
