@@ -5,10 +5,10 @@ part 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse_data.dart';
 enum MORSE_CODE {MORSE_ITU, AMERICAN, STEINHEIL, GERKE}
 
 final Map<MORSE_CODE, String> MORSE_CODES = {
-  MORSE_CODE.MORSE_ITU: 'Morse (ITU)',
-  MORSE_CODE.AMERICAN: 'Morse',
-  MORSE_CODE.GERKE: 'Gerke',
-  MORSE_CODE.STEINHEIL: 'Steinheil',
+  MORSE_CODE.MORSE_ITU: 'symboltables_morse',
+  MORSE_CODE.AMERICAN: 'symboltables_morse_original',
+  MORSE_CODE.GERKE: 'symboltables_morse_gerke',
+  MORSE_CODE.STEINHEIL: 'symboltables_morse_steinheil',
 };
 
 final Map<MORSE_CODE, Map<String, String>> _AZTO_MORSE_CODE = {

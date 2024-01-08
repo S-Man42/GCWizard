@@ -105,7 +105,10 @@ class _MorseState extends State<Morse> {
             value: _currentCode,
             items: MORSE_CODES.entries.map((mode) {
               return GCWDropDownMenuItem(
-                  value: mode.key, child: mode.value);
+                  value: mode.key,
+                child: i18n(context, mode.value + '_title'),
+                subtitle: i18n(context, mode.value + '_description')
+              );
             }).toList(),
             onChanged: (value) {
               setState(() {
