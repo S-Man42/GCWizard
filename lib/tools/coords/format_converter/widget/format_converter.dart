@@ -53,8 +53,8 @@ class _FormatConverterState extends State<FormatConverter> {
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
-              if (ret?.toLatLng() != null) {
-                _currentCoords = ret!;
+              if (ret != null) {
+                _currentCoords = ret;
               }
             });
           },
@@ -96,8 +96,9 @@ class _FormatConverterState extends State<FormatConverter> {
   }
 
   void _calculateOutput(BuildContext context) {
-    if (_currentCoords.toLatLng() != null) {
-      _currentOutput = formatCoordOutput(_currentCoords.toLatLng()!, _currentOutputFormat);
+    var outputLatLng = _currentCoords.toLatLng();
+    if (outputLatLng != null) {
+      _currentOutput = formatCoordOutput(outputLatLng, _currentOutputFormat);
       _currentMapPoint = GCWMapPoint(point: _currentCoords.toLatLng()!);
     } else {
       _currentOutput = '';
