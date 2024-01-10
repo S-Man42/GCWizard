@@ -99,7 +99,7 @@ class _FormatConverterState extends State<FormatConverter> {
     var outputLatLng = _currentCoords.toLatLng();
     if (outputLatLng != null) {
       _currentOutput = formatCoordOutput(outputLatLng, _currentOutputFormat);
-      _currentMapPoint = GCWMapPoint(point: _currentCoords.toLatLng()!);
+      _currentMapPoint = GCWMapPoint(point: outputLatLng);
     } else {
       _currentOutput = '';
       _currentMapPoint = GCWMapPoint(point: defaultCoordinate);
