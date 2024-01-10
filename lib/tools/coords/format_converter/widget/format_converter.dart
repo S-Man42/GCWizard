@@ -101,7 +101,7 @@ class _FormatConverterState extends State<FormatConverter> {
       _currentOutput = formatCoordOutput(outputLatLng, _currentOutputFormat);
       _currentMapPoint = GCWMapPoint(point: outputLatLng);
     } else {
-      _currentOutput = '';
+      _currentOutput = i18n(context, 'coords_formatconverter_invalid_coordinate');
       _currentMapPoint = GCWMapPoint(point: defaultCoordinate);
     }
 
