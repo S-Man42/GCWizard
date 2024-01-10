@@ -93,7 +93,7 @@ class DEC extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return decToLatLon(this);
   }
 
@@ -203,7 +203,7 @@ class DMM extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return dmmToLatLon(this);
   }
 
@@ -321,7 +321,7 @@ class DMS extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return dmsToLatLon(this);
   }
 
@@ -473,7 +473,7 @@ class DutchGrid extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return dutchGridToLatLon(this);
   }
 
@@ -612,7 +612,7 @@ class NaturalAreaCode extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return naturalAreaCodeToLatLon(this);
   }
 
@@ -645,7 +645,7 @@ class SlippyMap extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return slippyMapToLatLon(this);
   }
 
@@ -679,7 +679,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return reverseWIGWaldmeisterToLatLon(this);
   }
 
@@ -698,6 +698,7 @@ class ReverseWherigoWaldmeister extends BaseCoordinate {
   @override
   String toString([int? precision]) {
     var output = [a, b, c].map((e) => _leftPadComponent(e)).join('\n');
+    var res = parse(output);
     return parse(output)  != null ? output : '';
   }
 }
@@ -710,7 +711,7 @@ class ReverseWherigoDay1976 extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return reverseWIGDay1976ToLatLon(this);
   }
 
@@ -920,7 +921,7 @@ class Quadtree extends BaseCoordinate {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return quadtreeToLatLon(this);
   }
 
