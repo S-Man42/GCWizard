@@ -312,17 +312,6 @@ ReverseWherigoWaldmeister? parseReverseWherigoWaldmeister(String input) {
 }
 
 bool _checkSumTest(ReverseWherigoWaldmeister waldmeister) {
-  // var a = waldmeister.a;
-  // var b = waldmeister.b;
-  // var c = waldmeister.c;
-
-  // var latlng = reverseWIGWaldmeisterToLatLon(waldmeister);
-  // var _lat = (latlng!.latitude.abs() * _latLonFactor).round();
-  // var _lon = (latlng.longitude.abs() * _latLonFactor).round();
-  //
-  // var _b3Calc = _b3CheckSum(_lat, _lon, _numberAtBackPosition(a, _wLength - 4).toDouble()).toInt();
-  // var _c3Calc = _c3CheckSum(_lat, _lon).toInt();
-
   var b3Calc = __b3CheckSum(waldmeister).toInt();
   var c3Calc = __c3CheckSum(waldmeister).toInt();
 
