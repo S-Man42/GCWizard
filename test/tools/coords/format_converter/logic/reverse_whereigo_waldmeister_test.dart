@@ -40,6 +40,8 @@ void main() {
       {'expectedOutput': LatLng(-13.44442, 118.51471), 'input': ['254283', '115114', '470441']},
       {'expectedOutput': LatLng(-18.86006, 176.54396), 'input': ['658268', '168413', '695007']},
       {'expectedOutput': LatLng(89.67067, 179.13098), 'input': ['716199', '889310', '792067']},
+      {'expectedOutput': LatLng(50.65646, 10.99135), 'input': ['696100', '551901', '538641']},
+      {'expectedOutput': LatLng(50.6607, 10.98846), 'input': ['096100', '569808', '648071']},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -67,6 +69,23 @@ void main() {
           expect((_actual.latitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).latitude).abs() < 1e-8, true);
           expect((_actual.longitude - ((elem['expectedOutput'] as Map<String, Object>)['coordinate'] as LatLng).longitude).abs() < 1e-8, true);
         }
+      });
+    }
+  });
+
+  group("Converter.reverseWherigooWaldmeister.checkSumTest:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'expectedOutput': null, 'input': ['580498', '850012', '847837']},
+      {'expectedOutput': null, 'input': ['580597', '860012', '847837']},
+      {'expectedOutput': null, 'input': ['580497', '851012', '847937']},
+      {'expectedOutput': null, 'input': ['580497', '850013', '847837']},
+      {'expectedOutput': null, 'input': ['580497', '850012', '857837']},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>).join(' '))?.toLatLng();
+        expect(_actual, elem['expectedOutput']);
       });
     }
   });
