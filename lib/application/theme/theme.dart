@@ -93,13 +93,16 @@ ThemeData buildTheme() {
       indicatorColor: themeColors().secondary(),
       tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(),
           labelColor: colors.mainFont(),
-          dividerHeight: 0,
           unselectedLabelColor: colors.mainFont(),
-          indicatorSize: TabBarIndicatorSize.tab),
+          indicatorSize: TabBarIndicatorSize.tab,
+          dividerHeight: 0),
       appBarTheme: AppBarTheme(backgroundColor: colors.primaryBackground(), foregroundColor: colors.mainFont()),
       cardColor: colors.messageBackground(),
       colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground()))
-          .copyWith(secondary: colors.secondary(), brightness: base.brightness));
+          .copyWith(secondary: colors.secondary(), brightness: base.brightness),
+      dividerTheme: DividerThemeData(thickness: 0, color: colors.gridBackground()),
+      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor)
+  );
 }
 
 // https://medium.com/@morgenroth/using-flutters-primary-swatch-with-a-custom-materialcolor-c5e0f18b95b0
