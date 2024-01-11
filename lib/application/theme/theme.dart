@@ -91,7 +91,11 @@ ThemeData buildTheme() {
       ),
       unselectedWidgetColor: colors.secondary(),
       indicatorColor: themeColors().secondary(),
-      tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(), labelColor: colors.mainFont()),
+      tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(),
+          labelColor: colors.mainFont(),
+          dividerHeight: 0,
+          unselectedLabelColor: colors.mainFont(),
+          indicatorSize: TabBarIndicatorSize.tab),
       appBarTheme: AppBarTheme(backgroundColor: colors.primaryBackground(), foregroundColor: colors.mainFont()),
       cardColor: colors.messageBackground(),
       colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground()))
