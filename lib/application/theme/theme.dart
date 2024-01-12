@@ -101,7 +101,9 @@ ThemeData buildTheme() {
       colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground()))
           .copyWith(secondary: colors.secondary(), brightness: base.brightness),
       dividerTheme: DividerThemeData(thickness: 0, color: colors.gridBackground()),
-      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor)
+      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor,
+          shape: const LinearBorder()),
+      switchTheme: const SwitchThemeData(trackOutlineWidth: MaterialStatePropertyAll(0))
   );
 }
 
