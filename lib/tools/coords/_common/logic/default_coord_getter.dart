@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-const defaultCoordinate = LatLng(0.0, 0.0);
+final defaultCoordinate = LatLng(0.0, 0.0);
 
 CoordinateFormatKey? getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   if (isCoordinateFormatWithSubtype(format)) {
