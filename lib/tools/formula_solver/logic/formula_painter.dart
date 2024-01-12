@@ -705,7 +705,7 @@ class FormulaPainter {
   }
 
   List<FormulaValue> _variablesSort(List<FormulaValue> list) {
-    list.sort((a, b) => b.key.length.compareTo(b.key.length));
+    list.sort((a, b) => b.key.length.compareTo(a.key.length));
     return list;
   }
 
