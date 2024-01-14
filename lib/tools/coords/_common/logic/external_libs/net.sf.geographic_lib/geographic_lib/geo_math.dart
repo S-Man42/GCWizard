@@ -25,6 +25,38 @@ class _GeoMath {
    **********************************************************************/
   static const int digits = 53;
 
+  /**
+   * The constants defining the meaning of degrees, minutes, and seconds, for
+   * angles.  Read the
+   * constants as follows (for example): \e ms = 60 is the ratio 1 minute / 1
+   * second.  The abbreviations are
+   * - \e t a whole turn (360&deg;)
+   * - \e h a half turn (180&deg;)
+   * - \e q a quarter turn (a right angle = 90&deg;)
+   * - \e d a degree
+   * - \e m a minute
+   * - \e s a second
+   * .
+   * Note that degree() is ratio 1 degree / 1 radian, thus, for example,
+   * Math::degree() * Math::qd is the ratio 1 quarter turn / 1 radian =
+   * &pi;/2.
+   *
+   * Defining all these in one place would mean that it's simple to convert
+   * to the centesimal system for measuring angles.  The DMS class assumes
+   * that Math::dm and Math::ms are less than or equal to 100 (so that two
+   * digits suffice for the integer parts of the minutes and degrees
+   * components of an angle).  Switching to the centesimal convention will
+   * break most of the tests.  Also the normal degree definition is baked
+   * into some classes, e.g., UTMUPS, MGRS, Georef, Geohash, etc.
+   **********************************************************************/
+
+  static const int qd = 90;                  ///< degrees per quarter turn
+  static const int dm = 60;                  ///< minutes per degree
+  static const int ms = 60;                  ///< seconds per minute
+  static const int hd = 2 * qd;              ///< degrees per half turn
+  static const int td = 2 * hd;              ///< degrees per turn
+  static const int ds = dm * ms;             ///< seconds per degree
+
   /*
    * Square a number.
    * <p>
@@ -372,5 +404,21 @@ class _GeoMath {
    **********************************************************************/
   static bool isfinite(double x) {
     return x.abs() <= double.maxFinite;
+  }
+
+  static double tand(double x) {
+    double overflow = 1 / sq(double.minPositive);
+    _Pair p = _Pair();
+    sincosd(p, x);
+    double s = p.first; double c = p.second;
+    // http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1950.pdf
+    double r = s / c;  // special values from F.10.1.14
+    // With C++17 this becomes clamp(s / c, -overflow, overflow);
+    // Use max/min here (instead of fmax/fmin) to preserve NaN
+    return min(max(r, -overflow), overflow);
+  }
+
+  static double eatanhe(double x, double es)  {
+    return es > 0 ? es * atanh(es * x) : -es * atan(es * x);
   }
 }
