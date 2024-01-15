@@ -94,6 +94,7 @@ ThemeData buildTheme() {
       tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(),
           labelColor: colors.mainFont(),
           unselectedLabelColor: colors.mainFont().withOpacity(0.7),
+          overlayColor: MaterialStatePropertyAll(colors.mainFont().withOpacity(0.05)),
           dividerColor: base.primaryColorDark,
           indicatorSize: TabBarIndicatorSize.tab),
       appBarTheme: AppBarTheme(backgroundColor: colors.primaryBackground(), foregroundColor: colors.mainFont()),
