@@ -219,7 +219,8 @@ namespace GC_Wizard_SymbolTables_Pdf
         {
             PointF offset;
             var languagefile = File.ReadAllText(languageFileName(path));
-            var licenseEntries = getLicenseEntries(File.ReadAllText(licenseFileName(path)), languagefile);
+            var languagefileEn = File.ReadAllText(languageFileNameEn(path));
+            var licenseEntries = getLicenseEntries(File.ReadAllText(licenseFileName(path)));
 
             ProjectPath = path;
             PdfPage page = null;
@@ -235,12 +236,12 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             Outline = document.Outlines.Add(contentTableName, page, true, PdfOutlineStyle.Bold, XColors.Black);
 
-            var directorys = createDirectoryList(path, languagefile);
+            var directorys = createDirectoryList(path, languagefile, languagefileEn);
             var progress_offset = directorys.Any() ? (100.0 / directorys.Count()) : 100;
             foreach (var entry in directorys)
             {
                 //Debug.Print(entry.Value);
-                offset = drawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, licenseEntries);
+                offset = drawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, languagefileEn, licenseEntries);
 
                 offset.X = BorderWidthLeft;
                 offset.Y += ImageSize + 20;
@@ -265,10 +266,11 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// <param name="page"></param>
         /// <param name="gfx"></param>
         /// <param name="offset"></param>
-        /// <param name="languagefile"></param>
+        /// <param name="languagefile">language file</param>
+        /// <param name="languagefileEn">english language file (backup)</param>
         /// <param name="licenseEntries"></param>
         /// <returns></returns>
-        private PointF drawSymbolTable(String path, String name, String folder, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
+        private PointF drawSymbolTable(String path, String name, String folder, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, String languagefileEn, Dictionary<string, string> licenseEntries)
         {
             var description = getEntryValue(languagefile, "symboltables_" + folder + "_description");
             var license = "";
@@ -281,7 +283,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             if (name == null)
                 name = folder;
 
-            var symbolList = createSymbolList(path, folder, languagefile);
+            var symbolList = createSymbolList(path, folder, languagefile, languagefileEn);
             offset = drawName(name, description, license, symbolList.Count(), document, ref page, ref gfx, offset);
             SymbolTablesCount += 1;
 
@@ -300,9 +302,10 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// </summary>
         /// <param name="path"></param>
         /// <param name="_symbolKey"></param>
-        /// <param name="languagefile"></param>
+        /// <param name="languagefile">language file</param>
+        /// <param name="languagefileEn">english language file (backup)</param>
         /// <returns></returns>
-        private IEnumerable<KeyValuePair<String, SymbolInfo>> createSymbolList(String path, String _symbolKey, String languagefile)
+        private IEnumerable<KeyValuePair<String, SymbolInfo>> createSymbolList(String path, String _symbolKey, String languagefile, String languagefileEn)
         {
             var list = new Dictionary<String, SymbolInfo>();
             var overlay = String.Empty;
@@ -342,7 +345,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                         var symbol = entry.FullName;
                         if (ignoreList == null || ignoreList.Count == 0 || !ignoreList.Contains(Path.GetFileNameWithoutExtension(symbol)))
                         {
-                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables, translationPrefixConfig);
+                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, languagefileEn, translateList, mappingList, caseSensitive, ref translateables, translationPrefixConfig);
                             var stream = new MemoryStream();
                             entry.Open().CopyTo(stream);
 
@@ -1028,7 +1031,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// </summary>
         /// <param name="fileContent"></param>
         /// <returns></returns>
-        private Dictionary<String, String> getLicenseEntries(String fileContent, String languagefile)
+        private Dictionary<String, String> getLicenseEntries(String fileContent)
         {
             var start = false;
             var startChildren = false;
@@ -1103,15 +1106,16 @@ namespace GC_Wizard_SymbolTables_Pdf
         ///  list of symbol-tables directorys
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="languagefile"></param>
+        /// <param name="languagefile">language file</param>
+        /// <param name="languagefileEn">english language file (backup)</param>
         /// <returns></returns>
-        private IEnumerable<KeyValuePair<String, String>> createDirectoryList(String path, String languagefile)
+        private IEnumerable<KeyValuePair<String, String>> createDirectoryList(String path, String languagefile, String languagefileEn)
         {
             var list = new Dictionary<String, String>();
             foreach (var directory in Directory.GetDirectories(symbolTablesDirectory(path)))
             {
                 var folder = @directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-                var name = getSymbolTableName(folder, languagefile);
+                var name = getSymbolTableName(folder, languagefile) ?? getSymbolTableName(folder, languagefileEn);
 
                 if (name != null && directory != "backlog")
                     list.Add(folder, name);
@@ -1152,6 +1156,11 @@ namespace GC_Wizard_SymbolTables_Pdf
             return Path.Combine(languageFileDirectory(path), Language + @".json");
         }
 
+        private String languageFileNameEn(String path)
+        {
+            return Path.Combine(languageFileDirectory(path), "en" + @".json");
+        }
+
         private static String versionFileName(String path)
         {
             return Path.Combine(path, "pubspec.yaml");
@@ -1178,14 +1187,15 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// </summary>
         /// <param name="symbolPath"></param>
         /// <param name="folder"></param>
-        /// <param name="languagefile"></param>
+        /// <param name="languagefile">language file</param>
+        /// <param name="languagefileEn">english language file (backup)</param>
         /// <param name="translateList"></param>
         /// <param name="mappingList"></param>
         /// <param name="caseSensitive"></param>
         /// <param name="translateables"></param>
         /// <param name="translationPrefix"></param>
         /// <returns></returns>
-        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, String languagefileEn, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
         {
             var fileName = Path.GetFileNameWithoutExtension(symbolPath);
             var overlay = fileName;
@@ -1196,10 +1206,12 @@ namespace GC_Wizard_SymbolTables_Pdf
                 overlay = mappingList[overlay];
             else if (translateList != null && translateList.Contains(overlay))
             {
+                var entry = translationPrefix + overlay;
                 if (String.IsNullOrEmpty(translationPrefix))
-                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay) ?? overlay;
-                else
-                    overlay = getEntryValue(languagefile, translationPrefix + overlay) ?? overlay;
+                {
+                     entry = "symboltables_" + folder + "_" + overlay;
+                }
+                overlay = getEntryValue(languagefile, entry) ?? getEntryValue(languagefileEn, entry) ?? overlay;
                 translateables.Add(overlay);
             }
 
