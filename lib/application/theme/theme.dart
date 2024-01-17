@@ -63,6 +63,7 @@ ThemeData buildTheme() {
   final ThemeColors colors = themeColors();
   final ThemeData base = colors.base();
   return ThemeData(
+      useMaterial3: false,
       fontFamily: 'Roboto',
       scaffoldBackgroundColor: colors.primaryBackground(),
       textTheme: base.textTheme,
@@ -94,7 +95,6 @@ ThemeData buildTheme() {
       tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(),
           labelColor: colors.mainFont(),
           unselectedLabelColor: colors.mainFont().withOpacity(0.7),
-          overlayColor: MaterialStatePropertyAll(colors.mainFont().withOpacity(0.05)),
           dividerHeight: 0,
           indicatorSize: TabBarIndicatorSize.tab),
       appBarTheme: AppBarTheme(backgroundColor: colors.primaryBackground(), foregroundColor: colors.mainFont()),
