@@ -1,13 +1,31 @@
-part of 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
-class _GCWCoordsReverseWherigoWaldmeister extends StatefulWidget {
-  final void Function(ReverseWherigoWaldmeister?) onChanged;
-  final ReverseWherigoWaldmeister coordinates;
-  final bool initialize;
+class _GCWCoordWidgetInfoReverseWherigoWaldmeister extends GCWCoordWidgetInfo {
+  @override
+  CoordinateFormatKey get type => CoordinateFormatKey.REVERSE_WIG_WALDMEISTER;
+  @override
+  String get i18nKey => reverseWhereigoWaldmeisterKey;
+  @override
+  String get name => 'Reverse Wherigo (Waldmeister)';
+  @override
+  String get example => '042325, 436113, 935102';
 
-  const _GCWCoordsReverseWherigoWaldmeister(
-      {Key? key, required this.onChanged, required this.coordinates, this.initialize = false})
-      : super(key: key);
+  @override
+  _GCWCoordWidget mainWidget({
+    Key? key,
+    required void Function(BaseCoordinate?) onChanged,
+    required BaseCoordinate coordinates,
+    bool? initialize
+  }) {
+    return _GCWCoordsReverseWherigoWaldmeister(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
+  }
+}
+
+class _GCWCoordsReverseWherigoWaldmeister extends _GCWCoordWidget {
+
+  _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+        super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ?
+      coordinates : ReverseWherigoWaldmeisterFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsReverseWherigoWaldmeisterState createState() => _GCWCoordsReverseWherigoWaldmeisterState();
@@ -51,7 +69,7 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
-      var waldmeister = widget.coordinates;
+      var waldmeister = widget.coordinates as ReverseWherigoWaldmeisterCoordinate;
       _currentA = waldmeister.a;
       _currentB = waldmeister.b;
       _currentC = waldmeister.c;
@@ -97,6 +115,6 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(ReverseWherigoWaldmeister(_currentA, _currentB, _currentC));
+    widget.onChanged(ReverseWherigoWaldmeisterCoordinate(_currentA, _currentB, _currentC));
   }
 }
