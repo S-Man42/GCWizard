@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.0.2+176
+version: 3.0.3+178
 publish_to: none
 
 environment:
@@ -25,15 +25,15 @@ dependencies:
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^5.0.0
-  flutter_map_marker_popup: ^5.2.0
-  flutter_map_tappable_polyline: ^5.0.0
+  flutter_map: ^3.1.0
+  flutter_map_marker_popup: ^4.0.3
+  flutter_map_tappable_polyline: ^4.0.0+1
   highlight: ^0.7.0
-  http: ^1.1.0
+  http: ^0.13.5
   http_parser: ^4.0.2
   image: ^4.1.2
   intl: ^0.18.0
-  latlong2: ^0.9.0
+  latlong2: ^0.8.2
   location: ^5.0.1
   mask_text_input_formatter: ^2.5.0
   math_expressions: ^2.4.0
@@ -115,8 +115,11 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/ballet/
     - lib/tools/symbol_tables/_common/assets/barbier/
     - lib/tools/symbol_tables/_common/assets/barcode39/
+    - lib/tools/symbol_tables/_common/assets/base16_02/
+    - lib/tools/symbol_tables/_common/assets/base16/
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
+    - lib/tools/symbol_tables/_common/assets/bibibinary/
     - lib/tools/symbol_tables/_common/assets/birds_on_a_wire/
     - lib/tools/symbol_tables/_common/assets/blox/
     - lib/tools/symbol_tables/_common/assets/blue_monday/
@@ -136,6 +139,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/christmas/
     - lib/tools/symbol_tables/_common/assets/cirth_erebor/
     - lib/tools/symbol_tables/_common/assets/cistercian/
+    - lib/tools/symbol_tables/_common/assets/clocks_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_2/
+    - lib/tools/symbol_tables/_common/assets/clocks_3/
     - lib/tools/symbol_tables/_common/assets/color_add/
     - lib/tools/symbol_tables/_common/assets/color_code/
     - lib/tools/symbol_tables/_common/assets/color_honey/
@@ -166,6 +173,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/egyptian_numerals/
     - lib/tools/symbol_tables/_common/assets/elia/
     - lib/tools/symbol_tables/_common/assets/enochian/
+    - lib/tools/symbol_tables/_common/assets/eternity_code/
     - lib/tools/symbol_tables/_common/assets/eurythmy/
     - lib/tools/symbol_tables/_common/assets/face_it/
     - lib/tools/symbol_tables/_common/assets/fakoo/
@@ -234,10 +242,12 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/klingon_klinzhai/
     - lib/tools/symbol_tables/_common/assets/krempel/
     - lib/tools/symbol_tables/_common/assets/krypton/
+    - lib/tools/symbol_tables/_common/assets/kurrent/
     - lib/tools/symbol_tables/_common/assets/la_buse/
     - lib/tools/symbol_tables/_common/assets/linear_b/
     - lib/tools/symbol_tables/_common/assets/lorm/
     - lib/tools/symbol_tables/_common/assets/magicode/
+    - lib/tools/symbol_tables/_common/assets/malachim/
     - lib/tools/symbol_tables/_common/assets/mandalorian/
     - lib/tools/symbol_tables/_common/assets/marain/
     - lib/tools/symbol_tables/_common/assets/marain_v2/
@@ -247,6 +257,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/maya_calendar_longcount/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_codices/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_inscripts/
+    - lib/tools/symbol_tables/_common/assets/maya_numbers_glyphs/
     - lib/tools/symbol_tables/_common/assets/maya_numerals/
     - lib/tools/symbol_tables/_common/assets/maze/
     - lib/tools/symbol_tables/_common/assets/minimoys/
@@ -333,6 +344,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/telegraph_pasley/
     - lib/tools/symbol_tables/_common/assets/telegraph_popham/
     - lib/tools/symbol_tables/_common/assets/telegraph_prussia/
+    - lib/tools/symbol_tables/_common/assets/telegraph_schmidt/
     - lib/tools/symbol_tables/_common/assets/templers/
     - lib/tools/symbol_tables/_common/assets/tenctonese_cursive/
     - lib/tools/symbol_tables/_common/assets/tenctonese_printed/

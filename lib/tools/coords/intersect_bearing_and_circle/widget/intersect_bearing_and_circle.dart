@@ -51,7 +51,9 @@ class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> 
           coordsFormat: _currentCoordsStart.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsStart = ret;
+              if (ret != null) {
+                _currentCoordsStart = ret;
+              }
             });
           },
         ),
@@ -67,7 +69,9 @@ class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> 
           coordsFormat: _currentCoordsCircle.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsCircle = ret;
+              if (ret != null) {
+                _currentCoordsCircle = ret;
+              }
             });
           },
         ),

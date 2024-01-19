@@ -1,22 +1,29 @@
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-const defaultCoordinate = LatLng(0.0, 0.0);
+const defaultLambertType = CoordinateFormatKey.LAMBERT93;
+const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
+const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
 
-CoordinateFormatKey? getDefaultSubtypeForFormat(CoordinateFormatKey format) {
-  if (isCoordinateFormatWithSubtype(format)) {
-    var emptyCoords = buildUninitializedCoordinateByFormat(CoordinateFormat(format));
-    if (emptyCoords is BaseCoordinateWithSubtypes) {
-      return emptyCoords.defaultSubtype;
-    }
+final defaultCoordinate = LatLng(0.0, 0.0);
+
+CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
+  switch (format) {
+    case CoordinateFormatKey.GAUSS_KRUEGER:
+      return defaultGaussKruegerType;
+    case CoordinateFormatKey.LAMBERT:
+      return defaultLambertType;
+    case CoordinateFormatKey.SLIPPY_MAP:
+      return defaultSlippyMapType;
+    default:
+      return null;
   }
-  return null;
 }
 
 BaseCoordinate get defaultBaseCoordinate {
@@ -32,15 +39,15 @@ CoordinateFormat get defaultCoordinateFormat {
   if (formatStr.isEmpty) {
     format = _fallbackDefaultCoordFormatKey;
   } else {
-    var _format = coordinateFormatDefinitionByPersistenceKey(formatStr);
+    var _format = coordinateFormatMetadataByPersistenceKey(formatStr);
     format = (_format == null) ? _fallbackDefaultCoordFormatKey : _format.type;
   }
 
   return CoordinateFormat(format, defaultCoordinateFormatSubtypeForFormat(format));
 }
 
-CoordinateFormatDefinition get _defaultCoordinateFormat {
-  return coordinateFormatDefinitionByKey(_fallbackDefaultCoordFormatKey);
+CoordinateFormatMetadata get _defaultCoordinateFormat {
+  return coordinateFormatMetadataByKey(_fallbackDefaultCoordFormatKey);
 }
 
 String get defaultCoordinateFormatPersistenceKey {
@@ -53,11 +60,11 @@ String? get defaultCoordinateFormatSubtypePersistenceKey {
     return null;
   }
 
-  return coordinateFormatDefinitionByKey(defaultSubtype).persistenceKey;
+  return coordinateFormatMetadataByKey(defaultSubtype).persistenceKey;
 }
 
 CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey format) {
-  if (!isCoordinateFormatWithSubtype(format)) {
+  if (!(isCoordinateFormatWithSubtype(format))) {
     return null;
   }
 
@@ -65,15 +72,15 @@ CoordinateFormatKey? defaultCoordinateFormatSubtypeForFormat(CoordinateFormatKey
 
   var subtypeStr = Prefs.getString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
   if (subtypeStr.isEmpty) {
-    subtype = getDefaultSubtypeForFormat(format)!;
+    subtype = _getDefaultSubtypeForFormat(format)!;
   } else {
-    var _subtype = coordinateFormatDefinitionSubtypeByPersistenceKey(subtypeStr);
+    var _subtype = coordinateFormatMetadataSubtypeByPersistenceKey(subtypeStr);
     subtype = (_subtype == null || !isSubtypeOfCoordinateFormat(format, _subtype.type))
-        ? getDefaultSubtypeForFormat(format)!
+        ? _getDefaultSubtypeForFormat(format)!
         : _subtype.type;
   }
 
-  var persistenceKeyForSubtype = coordinateFormatDefinitionByKey(subtype).persistenceKey;
+  var persistenceKeyForSubtype = coordinateFormatMetadataByKey(subtype).persistenceKey;
   Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, persistenceKeyForSubtype);
 
   return subtype;

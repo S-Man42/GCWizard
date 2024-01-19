@@ -171,7 +171,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
             coordsFormat: _currentCoords.format,
             onChanged: (ret) {
               setState(() {
-                _currentCoords = ret;
+                if (ret != null) {
+                  _currentCoords = ret;
+                }
               });
             },
           ),

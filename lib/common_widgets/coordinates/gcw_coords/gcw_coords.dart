@@ -73,7 +73,7 @@ part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_input
 part 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/natural_area_code/naturalareacode_textinputformatter.dart';
 
 class GCWCoords extends StatefulWidget {
-  final void Function(BaseCoordinate) onChanged;
+  final void Function(BaseCoordinate?) onChanged;
   final LatLng? coordinates;
   final CoordinateFormat coordsFormat;
   final String? title;
@@ -93,7 +93,8 @@ class GCWCoords extends StatefulWidget {
 }
 
 class _GCWCoordsState extends State<GCWCoords> {
-  BaseCoordinate _currentCoords = defaultBaseCoordinate;
+  BaseCoordinate? _currentCoords = defaultBaseCoordinate;
+  var _currentCoordinateFormat = defaultCoordinateFormat;
   bool _hasSetCoords = false;
   bool _resetCoords = false;
 
@@ -115,8 +116,8 @@ class _GCWCoordsState extends State<GCWCoords> {
   }
 
   BaseCoordinate _buildCoord(CoordinateFormat format) {
-    if (_hasSetCoords && _currentCoords.toLatLng() != null) {
-      return buildCoordinate(format, _currentCoords.toLatLng()!);
+    if (_hasSetCoords && _currentCoords?.toLatLng() != null) {
+      return buildCoordinate(format, _currentCoords!.toLatLng()!);
     } else {
       return buildUninitializedCoordinateByFormat(format);
     }
@@ -495,7 +496,7 @@ class _GCWCoordsState extends State<GCWCoords> {
     }
 
     var rawWidget = _coordsWidgets
-        .firstWhereOrNull((_GCWCoordWidget entry) => entry.coordinateFormatKey == _currentCoords.format.type);
+        .firstWhereOrNull((_GCWCoordWidget entry) => entry.coordinateFormatKey == _currentCoordinateFormat.type);
     if (rawWidget == null) {
       _currentWidget = _coordsWidgets.first.widget;
     } else {
@@ -509,21 +510,22 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   GCWCoordsFormatSelector _buildInputFormatSelector() {
     return GCWCoordsFormatSelector(
-      format: _currentCoords.format,
+      format: _currentCoordinateFormat,
       onChanged: (CoordinateFormat newFormat) {
         setState(() {
-          if (equalsCoordinateFormats(_currentCoords.format, newFormat)) {
+          if (equalsCoordinateFormats(_currentCoordinateFormat, newFormat)) {
             return;
           }
 
-          if (_currentCoords.format.type != newFormat.type) {
+          _currentCoordinateFormat = newFormat;
+          if (_currentCoords?.format.type != newFormat.type) {
             _currentCoords = _buildCoord(newFormat);
-          } else if (_currentCoords.format.subtype != newFormat.subtype) {
-            _currentCoords.format.subtype = newFormat.subtype;
+          } else if (_currentCoords != null && _currentCoords?.format.subtype != newFormat.subtype) {
+            _currentCoords!.format.subtype = newFormat.subtype;
           }
 
           _resetCoords = true;
-          _setCurrentValueAndEmitOnChange();
+          _setCurrentValueAndEmitOnChange(_currentCoords);
 
           FocusScope.of(context).requestFocus(FocusNode()); //Release focus from previously edited field
         });
@@ -538,10 +540,12 @@ class _GCWCoordsState extends State<GCWCoords> {
             icon: Icons.copy,
             size: IconButtonSize.SMALL,
             onPressed: () {
+              var _currentCoordsLatLng = _currentCoords?.toLatLng();
               insertIntoGCWClipboard(
                   context,
-                  formatCoordOutput(
-                      _currentCoords.toLatLng() ?? defaultCoordinate, _currentCoords.format, defaultEllipsoid));
+                  _currentCoordsLatLng != null
+                    ? formatCoordOutput(_currentCoordsLatLng, _currentCoordinateFormat, defaultEllipsoid)
+                    : '');
             }),
         Container(width: DEFAULT_MARGIN),
         GCWIconButton(
@@ -557,21 +561,21 @@ class _GCWCoordsState extends State<GCWCoords> {
     );
   }
 
-  void _setCurrentValueAndEmitOnChange([BaseCoordinate? newValue]) {
-    if (newValue != null) {
+  void _setCurrentValueAndEmitOnChange(BaseCoordinate? newValue) {
+    //if (newValue != null) {
       _currentCoords = newValue;
-    }
+    //}
 
-    if (_currentCoords.toLatLng() != null) {
+    //if (_currentCoords.toLatLng() != null) {
       widget.onChanged(_currentCoords);
-    }
+    //}
   }
 
   void _setCoords(List<BaseCoordinate> pastedCoords) {
     if (pastedCoords.isEmpty) return;
 
     var _coordsForCurrentFormat =
-        pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoords.format.type);
+        pastedCoords.firstWhereOrNull((BaseCoordinate coords) => coords.format.type == _currentCoordinateFormat.type);
     _coordsForCurrentFormat ??= pastedCoords.first;
     if (isCoordinateFormatWithSubtype(_coordsForCurrentFormat.format.type)) {
       _coordsForCurrentFormat.format.subtype =
@@ -579,10 +583,11 @@ class _GCWCoordsState extends State<GCWCoords> {
     }
 
     _currentCoords = _coordsForCurrentFormat;
+    _currentCoordinateFormat = _coordsForCurrentFormat.format;
     _hasSetCoords = true;
     _resetCoords = true;
 
-    _setCurrentValueAndEmitOnChange();
+    _setCurrentValueAndEmitOnChange(_currentCoords);
   }
 
   void _setUserLocationCoords() {
@@ -614,12 +619,12 @@ class _GCWCoordsState extends State<GCWCoords> {
         } else {
           _coords = LatLng(locationData.latitude!, locationData.longitude!);
         }
-        _currentCoords = buildCoordinate(_currentCoords.format, _coords);
+        _currentCoords = buildCoordinate(_currentCoordinateFormat, _coords);
         _hasSetCoords = true;
         _resetCoords = true;
 
         _isOnLocationAccess = false;
-        _setCurrentValueAndEmitOnChange();
+        _setCurrentValueAndEmitOnChange(_currentCoords);
       });
     });
   }

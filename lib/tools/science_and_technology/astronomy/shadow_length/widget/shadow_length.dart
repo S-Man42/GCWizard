@@ -42,7 +42,9 @@ class _ShadowLengthState extends State<ShadowLength> {
           coordsFormat: _currentInputCoords.format,
           onChanged: (ret) {
             setState(() {
-              _currentInputCoords = ret;
+              if (ret != null) {
+                _currentInputCoords = ret;
+              }
             });
           },
         ),

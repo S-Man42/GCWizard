@@ -7,9 +7,9 @@ void main() {
   group("Parser.geohash.parseLatLon:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
-      {'text': 'ö84nys2q8rm9j3', 'expectedOutput': {'format': CoordinateFormatKey.GEOHEX, 'coordinate': const LatLng(12.394024736713618, -170.31180599005893)}},
-      {'text': 'u84nys2q8rm9j3', 'expectedOutput': {'format': CoordinateFormatKey.GEOHEX, 'coordinate': const LatLng(46.211024251, 025.5985061856)}},
-      {'text': 'U84nys2q8rm9j3', 'expectedOutput': {'format': CoordinateFormatKey.GEOHEX, 'coordinate': const LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'ö84nys2q8rm9j3', 'expectedOutput': {'format': CoordinateFormatKey.GEOHEX, 'coordinate': LatLng(12.394024736713618, -170.31180599005893)}},
+      {'text': 'u84nys2q8rm9j3', 'expectedOutput': {'format': CoordinateFormatKey.GEOHEX, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'U84nys2q8rm9j3', 'expectedOutput': {'format': CoordinateFormatKey.GEOHEX, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
     ];
 
     for (var elem in _inputsToExpected) {
