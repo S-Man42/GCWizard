@@ -97,7 +97,7 @@ part 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/widget/gc
 part 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/widget/naturalareacode_textinputformatter.dart';
 
 class GCWCoords extends StatefulWidget {
-  final void Function(BaseCoordinate) onChanged;
+  final void Function(BaseCoordinate?) onChanged;
   final LatLng? coordinates;
   final CoordinateFormat coordsFormat;
   final String? title;
