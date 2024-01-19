@@ -51,9 +51,9 @@ class _FormatConverterState extends State<FormatConverter> {
         GCWCoords(
           title: i18n(context, 'coords_formatconverter_coord'),
           coordsFormat: _currentCoords.format,
-          onChanged: (BaseCoordinate ret) {
+          onChanged: (ret) {
             setState(() {
-              if (ret.toLatLng() != null) {
+              if (ret != null) {
                 _currentCoords = ret;
               }
             });
@@ -96,11 +96,12 @@ class _FormatConverterState extends State<FormatConverter> {
   }
 
   void _calculateOutput(BuildContext context) {
-    if (_currentCoords.toLatLng() != null) {
-      _currentOutput = formatCoordOutput(_currentCoords.toLatLng()!, _currentOutputFormat);
-      _currentMapPoint = GCWMapPoint(point: _currentCoords.toLatLng()!);
+    var outputLatLng = _currentCoords.toLatLng();
+    if (outputLatLng != null) {
+      _currentOutput = formatCoordOutput(outputLatLng, _currentOutputFormat);
+      _currentMapPoint = GCWMapPoint(point: outputLatLng);
     } else {
-      _currentOutput = '';
+      _currentOutput = i18n(context, 'coords_formatconverter_invalid_coordinate');
       _currentMapPoint = GCWMapPoint(point: defaultCoordinate);
     }
 

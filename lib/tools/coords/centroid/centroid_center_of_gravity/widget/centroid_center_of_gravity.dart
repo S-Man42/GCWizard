@@ -38,7 +38,9 @@ class _CentroidCenterOfGravityState extends State<CentroidCenterOfGravity> {
               coordsFormat: _currentCoords[index].format,
               onChanged: (ret) {
                 setState(() {
-                  _currentCoords[index] = ret;
+                  if (ret != null) {
+                    _currentCoords[index] = ret;
+                  }
                 });
               },
             ));

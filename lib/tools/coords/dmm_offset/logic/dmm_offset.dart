@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng addIntegersToDMM(LatLng coord, Map<String, int> valuesToAdd) {
+LatLng? addIntegersToDMM(LatLng coord, Map<String, int> valuesToAdd) {
   DMM dmm = DMM.fromLatLon(coord);
   DMMLatitude lat = dmm.latitude;
   DMMLongitude lon = dmm.longitude;
