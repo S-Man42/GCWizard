@@ -46,10 +46,12 @@ class ReverseWherigoWaldmeisterCoordinate extends BaseCoordinate {
 const int _wLength = 6;
 const int _latLonFactor = 100000;
 
-LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldmeister) {
+LatLng? _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldmeister) {
   var a = waldmeister.a;
   var b = waldmeister.b;
   var c = waldmeister.c;
+
+  if (!_checkSumTest(waldmeister)) return null;
 
   int _latSign = 1;
   int _lonSign = 1;
@@ -74,7 +76,7 @@ LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldme
     // a3 b5 . b2 c4 a1 c5 a6
     _lat = (_latSign * (
           _numberAtBackPosition(a, _wLength - 3) * 10 +
-          _numberAtBackPosition(b, _wLength - 5) +
+          _numberAtBackPosition(b, _wLength - 5) * 1 +
           _numberAtBackPosition(b, _wLength - 2) * 0.1 +
           _numberAtBackPosition(c, _wLength - 4) * 0.01 +
           _numberAtBackPosition(a, _wLength - 1) * 0.001 +
@@ -84,7 +86,7 @@ LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldme
     _lon = (_lonSign * (
           _numberAtBackPosition(a, _wLength - 2) * 100 +
           _numberAtBackPosition(c, _wLength - 1) * 10 +
-          _numberAtBackPosition(c, _wLength - 6) +
+          _numberAtBackPosition(c, _wLength - 6) * 1 +
           _numberAtBackPosition(b, _wLength - 4) * 0.1 +
           _numberAtBackPosition(b, _wLength - 1) * 0.01 +
           _numberAtBackPosition(a, _wLength - 5) * 0.001 +
@@ -94,7 +96,7 @@ LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldme
     // b1 a6 . a3 c1 c4 c5 a1
     _lat = (_latSign * (
           _numberAtBackPosition(b, _wLength - 1) * 10 +
-          _numberAtBackPosition(a, _wLength - 6) +
+          _numberAtBackPosition(a, _wLength - 6) * 1 +
           _numberAtBackPosition(a, _wLength - 3) * 0.1 +
           _numberAtBackPosition(c, _wLength - 1) * 0.01 +
           _numberAtBackPosition(c, _wLength - 4) * 0.001 +
@@ -104,7 +106,7 @@ LatLng _reverseWIGWaldmeisterToLatLon(ReverseWherigoWaldmeisterCoordinate waldme
     _lon = (_lonSign * (
           _numberAtBackPosition(b, _wLength - 5) * 100 +
           _numberAtBackPosition(c, _wLength - 6) * 10 +
-          _numberAtBackPosition(a, _wLength - 5) +
+          _numberAtBackPosition(a, _wLength - 5) * 1 +
           _numberAtBackPosition(a, _wLength - 2) * 0.1 +
           _numberAtBackPosition(b, _wLength - 4) * 0.01 +
           _numberAtBackPosition(b, _wLength - 6) * 0.001 +
@@ -224,6 +226,38 @@ double _b3CheckSum(int _lat, int _lon, double _a4) {
   return _transformCheckSum(_tempb3);
 }
 
+double __b3CheckSum(ReverseWherigoWaldmeisterCoordinate waldmeister) {
+  var a = waldmeister.a;
+  var b = waldmeister.b;
+  var c = waldmeister.c;
+  double _tempb3 = 0;
+
+  if (__variante1(c)) {
+    //b3 = 11 – ((2*a4 + 4*n1 + 7*n3 + 8*n5 + 5*n7 + 6*e1 + 9*e5 + 3*e6) mod 11)
+    _tempb3 = (11 - (
+        _numberAtBackPosition(a, _wLength - 4) * 2 +
+        _numberAtBackPosition(a, _wLength - 3) * 4 +
+        _numberAtBackPosition(b, _wLength - 2) * 7 +
+        _numberAtBackPosition(a, _wLength - 1) * 8 +
+        _numberAtBackPosition(a, _wLength - 6) * 5 +
+        _numberAtBackPosition(a, _wLength - 2) * 6 +
+        _numberAtBackPosition(b, _wLength - 1) * 9 +
+        _numberAtBackPosition(a, _wLength - 5) * 3) % 11);
+  } else {
+    //b3 = 11 – ((2*a4 + 9*n1 + 5*n2 + 4*n3 + 8*n7 + 3*e3 + 6*e4 + 7*e8) mod 11)
+    _tempb3 = (11 - (
+        _numberAtBackPosition(a, _wLength - 4) * 2 +
+        _numberAtBackPosition(b, _wLength - 1) * 9 +
+        _numberAtBackPosition(a, _wLength - 6) * 5 +
+        _numberAtBackPosition(a, _wLength - 3) * 4 +
+        _numberAtBackPosition(a, _wLength - 1) * 8 +
+        _numberAtBackPosition(a, _wLength - 5) * 3 +
+        _numberAtBackPosition(a, _wLength - 2) * 6 +
+        _numberAtBackPosition(b, _wLength - 2) * 7) % 11);
+  }
+  return _transformCheckSum(_tempb3);
+}
+
 double _c3CheckSum(int _lat, int _lon) {
   double _tempc3 = 0;
 
@@ -249,6 +283,37 @@ double _c3CheckSum(int _lat, int _lon) {
         _numberAtBackPosition(_lon, 3) * 8 +
         _numberAtBackPosition(_lon, 2) * 4 +
         _numberAtBackPosition(_lon, 1) * 3) % 11);
+  }
+  return _transformCheckSum(_tempc3);
+}
+
+double __c3CheckSum(ReverseWherigoWaldmeisterCoordinate waldmeister) {
+  var b = waldmeister.b;
+  var c = waldmeister.c;
+  double _tempc3 = 0;
+
+  if (__variante1(c)) {
+    //c3 = 11 – ((6*n2 + 5*n4 + 9*n6 + 2*e2 + 7*e3 + 8*e4 + 3*e7 + 4*e8) mod 11)
+    _tempc3 = (11 - (
+        _numberAtBackPosition(b, _wLength - 5) * 6 +
+        _numberAtBackPosition(c, _wLength - 4) * 5 +
+        _numberAtBackPosition(c, _wLength - 5) * 9 +
+        _numberAtBackPosition(c, _wLength - 1) * 2 +
+        _numberAtBackPosition(c, _wLength - 6) * 7 +
+        _numberAtBackPosition(b, _wLength - 4) * 8 +
+        _numberAtBackPosition(c, _wLength - 2) * 3 +
+        _numberAtBackPosition(b, _wLength - 6) * 4) % 11);
+  } else {
+    //c3 = 11 – ((2*n4 + 5*n5 + 9*n6 + 6*e1 + 7*e2 + 8*e5 + 4*e6 + 3*e7) mod 11)
+    _tempc3 = (11 - (
+        _numberAtBackPosition(c, _wLength - 1) * 2 +
+        _numberAtBackPosition(c, _wLength - 4) * 5 +
+        _numberAtBackPosition(c, _wLength - 5) * 9 +
+        _numberAtBackPosition(b, _wLength - 5) * 6 +
+        _numberAtBackPosition(c, _wLength - 6) * 7 +
+        _numberAtBackPosition(b, _wLength - 4) * 8 +
+        _numberAtBackPosition(b, _wLength - 6) * 4 +
+        _numberAtBackPosition(c, _wLength - 2) * 3) % 11);
   }
   return _transformCheckSum(_tempc3);
 }
@@ -287,19 +352,11 @@ ReverseWherigoWaldmeisterCoordinate? _parseReverseWherigoWaldmeister(String inpu
 }
 
 bool _checkSumTest(ReverseWherigoWaldmeisterCoordinate waldmeister) {
-  var a = waldmeister.a;
-  var b = waldmeister.b;
-  var c = waldmeister.c;
+  var b3Calc = __b3CheckSum(waldmeister).toInt();
+  var c3Calc = __c3CheckSum(waldmeister).toInt();
 
-  var latlng = _reverseWIGWaldmeisterToLatLon(waldmeister);
-  var _lat = (latlng.latitude.abs() * _latLonFactor).round();
-  var _lon = (latlng.longitude.abs() * _latLonFactor).round();
-
-  var b3Calc = _b3CheckSum(_lat, _lon, _numberAtBackPosition(a, _wLength - 4).toDouble()).toInt();
-  var c3Calc = _c3CheckSum(_lat, _lon).toInt();
-
-  var b3Ref = _numberAtBackPosition(b, _wLength - 3);
-  var c3Ref = _numberAtBackPosition(c, _wLength - 3);
+  var b3Ref = _numberAtBackPosition(waldmeister.b, _wLength - 3);
+  var c3Ref = _numberAtBackPosition(waldmeister.c, _wLength - 3);
 
   return b3Calc == b3Ref && c3Calc == c3Ref;
 }

@@ -9,7 +9,6 @@ import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coor
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
@@ -43,9 +42,11 @@ class _WaypointProjectionState extends State<WaypointProjection> {
         GCWCoords(
           title: i18n(context, 'coords_waypointprojection_start'),
           coordsFormat: _currentCoords.format,
-          onChanged: (BaseCoordinate ret) {
+          onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              if (ret != null) {
+                _currentCoords = ret;
+              }
             });
           },
         ),

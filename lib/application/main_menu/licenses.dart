@@ -110,7 +110,10 @@ class _LicensesState extends State<Licenses> {
         const ['several', 'myGeoTools'],
         const ['several', 'Wikipedia'],
         [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
-        [i18n(context, 'symboltables_bibibinary_title'), 'https://en.wikipedia.org/wiki/Bibi-binary (Wiki Commons)'],
+        [i18n(context, 'symboltables_base16_title'), 'https://web.archive.org/web/20221224135846/https://patentimages.storage.googleapis.com/88/54/da/d88ca78fe93623/US3974444.pdf'],
+        [i18n(context, 'symboltables_base16_02_title'), 'https://dl.acm.org/doi/pdf/10.1145/364096.364107'],
+        [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
+        [i18n(context, 'symboltables_bibibinary_title'), 'https://en.wikipedia.org/wiki/Bibi-binary#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg (CC BY-SA 4.0)'],
         [
           i18n(context, 'symboltables_blue_monday_title'),
           'adopted from https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/; (Personal Use)'

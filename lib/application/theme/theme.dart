@@ -63,6 +63,7 @@ ThemeData buildTheme() {
   final ThemeColors colors = themeColors();
   final ThemeData base = colors.base();
   return ThemeData(
+      useMaterial3: false,
       fontFamily: 'Roboto',
       scaffoldBackgroundColor: colors.primaryBackground(),
       textTheme: base.textTheme,
@@ -93,16 +94,15 @@ ThemeData buildTheme() {
       indicatorColor: themeColors().secondary(),
       tabBarTheme: TabBarTheme(indicatorColor: themeColors().secondary(),
           labelColor: colors.mainFont(),
-          unselectedLabelColor: colors.mainFont(),
-          indicatorSize: TabBarIndicatorSize.tab,
-          dividerHeight: 0),
+          unselectedLabelColor: colors.mainFont().withOpacity(0.7),
+          dividerHeight: 0,
+          indicatorSize: TabBarIndicatorSize.tab),
       appBarTheme: AppBarTheme(backgroundColor: colors.primaryBackground(), foregroundColor: colors.mainFont()),
       cardColor: colors.messageBackground(),
       colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground()))
-          .copyWith(secondary: colors.secondary(), brightness: base.brightness),
-      dividerTheme: DividerThemeData(thickness: 0, color: colors.gridBackground()),
-      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor)
-  );
+          .copyWith(secondary: colors.secondary(), brightness: base.brightness, surfaceVariant: colors.gridBackground()),
+      dividerTheme: const DividerThemeData().copyWith(thickness: 0, color: colors.gridBackground()),
+      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor));
 }
 
 // https://medium.com/@morgenroth/using-flutters-primary-swatch-with-a-custom-materialcolor-c5e0f18b95b0

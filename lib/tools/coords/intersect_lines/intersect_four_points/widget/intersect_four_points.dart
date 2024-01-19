@@ -42,7 +42,9 @@ class _IntersectFourPointsState extends State<IntersectFourPoints> {
           coordsFormat: _currentCoords11.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords11 = ret;
+              if (ret != null) {
+                _currentCoords11 = ret;
+              }
             });
           },
         ),
@@ -51,7 +53,9 @@ class _IntersectFourPointsState extends State<IntersectFourPoints> {
           coordsFormat: _currentCoords12.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords12 = ret;
+              if (ret != null) {
+                _currentCoords12 = ret;
+              }
             });
           },
         ),
@@ -60,7 +64,9 @@ class _IntersectFourPointsState extends State<IntersectFourPoints> {
           coordsFormat: _currentCoords21.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords21 = ret;
+              if (ret != null) {
+                _currentCoords21 = ret;
+              }
             });
           },
         ),
@@ -69,7 +75,9 @@ class _IntersectFourPointsState extends State<IntersectFourPoints> {
           coordsFormat: _currentCoords22.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords22 = ret;
+              if (ret != null) {
+                _currentCoords22 = ret;
+              }
             });
           },
         ),

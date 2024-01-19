@@ -39,7 +39,9 @@ class _CentroidArithmeticMeanState extends State<CentroidArithmeticMean> {
               coordsFormat: _currentCoords[index].format,
               onChanged: (ret) {
                 setState(() {
-                  _currentCoords[index] = ret;
+                  if (ret != null) {
+                    _currentCoords[index] = ret;
+                  }
                 });
               },
             ));

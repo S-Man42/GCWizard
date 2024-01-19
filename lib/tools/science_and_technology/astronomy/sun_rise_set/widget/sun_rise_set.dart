@@ -30,7 +30,9 @@ class _SunRiseSetState extends State<SunRiseSet> {
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              if (ret != null) {
+                _currentCoords = ret;
+              }
             });
           },
         ),

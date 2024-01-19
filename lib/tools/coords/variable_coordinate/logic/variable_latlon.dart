@@ -142,9 +142,10 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
           parsedCoord.coordinate.toLatLng() == null) continue;
 
       coords.add(VariableCoordinateSingleResult(parsedCoord.coordinate.toLatLng()!, expandedText.variables));
-      if (parsedCoord.leftPadCoordinate != null) {
+      var latLng = parsedCoord.leftPadCoordinate?.toLatLng();
+      if (latLng != null) {
         leftPadCoords
-            .add(VariableCoordinateSingleResult(parsedCoord.leftPadCoordinate!.toLatLng(), expandedText.variables));
+            .add(VariableCoordinateSingleResult(latLng, expandedText.variables));
       }
     }
   }

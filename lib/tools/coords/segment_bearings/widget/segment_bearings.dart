@@ -58,7 +58,9 @@ class _SegmentBearingsState extends State<SegmentBearings> {
           coordsFormat: _currentCoordsStart.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoordsStart = ret;
+              if (ret != null) {
+                _currentCoordsStart = ret;
+              }
             });
           },
         ),
@@ -89,7 +91,9 @@ class _SegmentBearingsState extends State<SegmentBearings> {
                 coordsFormat: _currentCoords1.format,
                 onChanged: (ret) {
                   setState(() {
-                    _currentCoords1 = ret;
+                    if (ret != null) {
+                      _currentCoords1 = ret;
+                    }
                   });
                 },
               ),
@@ -120,7 +124,9 @@ class _SegmentBearingsState extends State<SegmentBearings> {
                 coordsFormat: _currentCoords2.format,
                 onChanged: (ret) {
                   setState(() {
-                    _currentCoords2 = ret;
+                    if (ret != null) {
+                      _currentCoords2 = ret;
+                    }
                   });
                 },
               ),

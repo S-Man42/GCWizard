@@ -115,7 +115,6 @@ class _GCWCoordsReverseWherigoWaldmeisterState extends State<_GCWCoordsReverseWh
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(ReverseWherigoWaldmeisterCoordinate.parse(
-        _currentA.toString() + '\n' + _currentB.toString() + '\n' + _currentC.toString()));
+    widget.onChanged(ReverseWherigoWaldmeisterCoordinate(_currentA, _currentB, _currentC));
   }
 }
