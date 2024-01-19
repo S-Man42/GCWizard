@@ -101,12 +101,15 @@ enum CoordinateFormatKey {
   SLIPPYMAP_30
 }
 
+/// sorted by priority (parse coordinates)
 final allCoordinateFormatDefinitions = [
   DMSFormatDefinition,
   DMMFormatDefinition,
   DECFormatDefinition,
   UTMREFFormatDefinition,
   MGRSFormatDefinition,
+  ReverseWherigoWaldmeisterFormatDefinition,
+  ReverseWherigoDay1976FormatDefinition,
   XYZFormatDefinition,
   SwissGridFormatDefinition,
   SwissGridPlusFormatDefinition,
@@ -116,15 +119,13 @@ final allCoordinateFormatDefinitions = [
   MaidenheadFormatDefinition,
   MercatorFormatDefinition,
   NaturalAreaCodeFormatDefinition,
-  OpenLocationCodeFormatDefinition,
-  SlippyMapFormatDefinition,
-  ReverseWherigoWaldmeisterFormatDefinition,
-  ReverseWherigoDay1976FormatDefinition,
   GeohashFormatDefinition,
-  QuadtreeFormatDefinition,
-  MakaneyFormatDefinition,
   GeoHexFormatDefinition,
-  Geo3x3FormatDefinition
+  Geo3x3FormatDefinition,
+  OpenLocationCodeFormatDefinition,
+  MakaneyFormatDefinition,
+  QuadtreeFormatDefinition,
+  SlippyMapFormatDefinition,
 ];
 
 
