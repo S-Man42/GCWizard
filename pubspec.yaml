@@ -115,6 +115,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/ballet/
     - lib/tools/symbol_tables/_common/assets/barbier/
     - lib/tools/symbol_tables/_common/assets/barcode39/
+    - lib/tools/symbol_tables/_common/assets/base16_02/
     - lib/tools/symbol_tables/_common/assets/base16/
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/

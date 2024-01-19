@@ -4374,6 +4374,8 @@
   "symboltables_barbier_description": "Tactiles signs for blind people, alternative for braille code",
   "symboltables_barcode39_title": "Barcode 39",
   "symboltables_barcode39_description": "Barcode 39",
+  "symboltables_base16_02_title": "Hexadecimal Digits",
+  "symboltables_base16_02_description": "Notation proposed by Bruce A. Martin, 1968",
   "symboltables_base16_title" : "Base-16 digits",
   "symboltables_base16_description" : "Machine-readable font for hexidecimal digits (proposed by R. O. Whittaker in a letter to Datamation, January 1972",
   "symboltables_baudot_1888_title": "Baudot Code, 1988, US Patent",
