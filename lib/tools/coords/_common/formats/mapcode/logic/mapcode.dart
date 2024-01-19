@@ -11,7 +11,7 @@ const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
 const int _DEFAULT_PRECISION = 0;
 const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
 const mapCodeKey = 'coords_mapcode';
-final _defaultCoordinate = MapCode.fromLatLon(const LatLng(0, 0), defaultMapCodeType);
+final _defaultCoordinate = MapCode.fromLatLon(LatLng(0, 0), defaultMapCodeType);
 
 final MapCodeFormatDefinition = CoordinateFormatWithSubtypesDefinition(
     CoordinateFormatKey.MAPCODE, mapCodeKey, mapCodeKey,

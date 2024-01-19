@@ -425,5 +425,5 @@ var allCoordinateWidgetInfos = [
   _GCWCoordWidgetInfoMakaney(),
   _GCWCoordWidgetInfoGeoHex(),
   _GCWCoordWidgetInfoGeo3x3(),
-  _GCWCoordWidgetInfoMapCode(),
+  //_GCWCoordWidgetInfoMapCode(),
 ];

@@ -28,6 +28,7 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
     return _GCWCoordsMapCode(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 
+  /// TerritorysDropDown
   @override
   Widget inputWidget({
     required BuildContext context,
@@ -44,21 +45,10 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
         );
       }).toList(),
       onChanged: (value) {
-        setState(() {
-          _currentTerritory = value;
-          _setCurrentValueAndEmitOnChange();
-        });
-      },
+        _currentTerritory = value;
+        _onChanged(CoordinateFormatKey.MAPCODE_LOCAL);
+      }
     );
-  }
-
-  @override
-  Widget outputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildTerritorysDropDown();
   }
 
 
@@ -70,6 +60,26 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
     list.insert(0, const MapEntry<String, String>('',''));
 
     return list;
+  }
+
+
+  @override
+  Widget _buildSubtypeWidget({
+    required BuildContext context,
+    required CoordinateFormatKey value,
+    required void Function(CoordinateFormatKey) onChanged}) {
+
+    var _onChanged = onChanged;
+    return GCWDropDown<CoordinateFormatKey>(
+      value: value,
+      items: subtypes.map((subtype) {
+        return GCWDropDownMenuItem(
+          value: subtype.type,
+          child: i18n(context, subtype.name),
+        );
+      }).toList(),
+      onChanged: (value) => _onChanged(value),
+    );
   }
 }
 
@@ -130,7 +140,10 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
 
   void _setCurrentValueAndEmitOnChange() {
     try {
-      widget.onChanged(MapCode.parse(_currentCoord, territory: _currentTerritory));
+      //var subtype = _currentSubtype;
+      var mapCode = (MapCode.parse(_currentCoord, territory: ''));
+
+      widget.onChanged(mapCode);
     } catch (e) {}
   }
 }
