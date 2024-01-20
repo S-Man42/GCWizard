@@ -41,9 +41,8 @@ String encodeMorse(String input, MORSE_CODE code) {
 String decodeMorse(String input, MORSE_CODE code) {
   if (input.isEmpty) return '';
 
-  return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
+  return input.split(RegExp(r'[^\.\-–·―\u202F/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';
-
     var character = _MORSE_CODETOAZ[code]?[morse];
     return character ?? '';
   }).join();
