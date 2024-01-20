@@ -24,8 +24,39 @@ const Map<String, String> _AZToMorse = {
 // Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
 final _MorseToAZ = switchMapKeyValue(_AZToMorse);
 
+const Map<String, String> _AZToMorse1838 = {
+// https://en.wikipedia.org/wiki/American_Morse_code
+  'A': '...',
+  'B': '..\u202F..',
+  'C': '.\u202F..',
+  'D': '...\u202F.',
+  'E': '.',
+  'F': '.\u202F...',
+  'G': '..\u202F.',
+  'H': '....',
+  'I': '.-',
+  'J': '..\u202F.',
+  'K': '-.-',
+  'L': '–',
+  'M': '-..',
+  'N': '-.',
+  'O': '..',
+  'P': '.....',
+  'Q': '..-.',
+  'R': '.\u202F.',
+  'S': '.-.',
+  'T': '--.',
+  'U': '.--',
+  'V': '-',
+  'W': '..-',
+  'X': '--',
+  'Y': '.-',
+  'Z': '.-.',
+};
 
-const Map<String, String> _AZToMorseOriginal = {
+final _Morse1838ToAZ = switchMapKeyValue(_AZToMorse1838);
+
+const Map<String, String> _AZToMorse1844 = {
 // https://en.wikipedia.org/wiki/American_Morse_code
   'A': '.-',
   'B': '-...',
@@ -78,7 +109,7 @@ const Map<String, String> _AZToMorseOriginal = {
   '!': '---.'
 };
 
-final _MorseOriginalToAZ = switchMapKeyValue(_AZToMorseOriginal);
+final _Morse1844ToAZ = switchMapKeyValue(_AZToMorse1844);
 
 
 const Map<String, String> _AZToSteinheil = {

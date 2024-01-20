@@ -70,7 +70,8 @@ String _morse(Object text, Object mode, Object code) {
 
   final Map<int, MORSE_CODE> CODETABLE = {
     0: MORSE_CODE.MORSE_ITU,
-    1: MORSE_CODE.AMERICAN,
+    10: MORSE_CODE.MORSE1838,
+    11: MORSE_CODE.MORSE1844,
     2: MORSE_CODE.GERKE,
     3: MORSE_CODE.STEINHEIL,
   };

@@ -158,10 +158,11 @@ class _MorseState extends State<Morse> {
 
     switch (_currentCode) {
       case MORSE_CODE.MORSE_ITU:
-        morseButtons = _buildMorseButtonsMorse(context);
+        morseButtons = _buildMorseButtonsMorseStandard(context);
         break;
-      case MORSE_CODE.AMERICAN:
-        morseButtons = _buildMorseButtonsAmerican(context);
+      case MORSE_CODE.MORSE1838:
+      case MORSE_CODE.MORSE1844:
+        morseButtons = _buildMorseButtonsMorseAmerican(context);
         break;
       case MORSE_CODE.GERKE:
         morseButtons = _buildMorseButtonsGerke(context);
@@ -220,7 +221,7 @@ class _MorseState extends State<Morse> {
     ]);
   }
 
-  Widget _buildMorseButtonsMorse(BuildContext context) {
+  Widget _buildMorseButtonsMorseStandard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
       child: Row(
@@ -259,7 +260,7 @@ class _MorseState extends State<Morse> {
     );
   }
 
-  Widget _buildMorseButtonsAmerican(BuildContext context) {
+  Widget _buildMorseButtonsMorseAmerican(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
       child: Row(

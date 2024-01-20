@@ -2,25 +2,28 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse_data.dart';
 
-enum MORSE_CODE {MORSE_ITU, AMERICAN, STEINHEIL, GERKE}
+enum MORSE_CODE {MORSE_ITU, MORSE1838, MORSE1844, STEINHEIL, GERKE}
 
 final Map<MORSE_CODE, String> MORSE_CODES = {
   MORSE_CODE.MORSE_ITU: 'symboltables_morse',
-  MORSE_CODE.AMERICAN: 'symboltables_morse_original',
+  MORSE_CODE.MORSE1838: 'symboltables_morse_1838',
+  MORSE_CODE.MORSE1844: 'symboltables_morse_1844',
   MORSE_CODE.GERKE: 'symboltables_morse_gerke',
   MORSE_CODE.STEINHEIL: 'symboltables_morse_steinheil',
 };
 
 final Map<MORSE_CODE, Map<String, String>> _AZTO_MORSE_CODE = {
   MORSE_CODE.MORSE_ITU: _AZToMorse,
-  MORSE_CODE.AMERICAN: _AZToMorseOriginal,
+  MORSE_CODE.MORSE1838: _AZToMorse1838,
+  MORSE_CODE.MORSE1844: _AZToMorse1844,
   MORSE_CODE.GERKE: _AZToGerke,
   MORSE_CODE.STEINHEIL: _AZToSteinheil,
 };
 
 final Map<MORSE_CODE, Map<String, String>> _MORSE_CODETOAZ = {
   MORSE_CODE.MORSE_ITU: _MorseToAZ,
-  MORSE_CODE.AMERICAN: _MorseOriginalToAZ,
+  MORSE_CODE.MORSE1838: _Morse1838ToAZ,
+  MORSE_CODE.MORSE1844: _Morse1844ToAZ,
   MORSE_CODE.GERKE: _GerkeToAZ,
   MORSE_CODE.STEINHEIL: _SteinheilToAZ,
 };
