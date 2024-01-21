@@ -53,7 +53,7 @@ final EMPTY_OPENGTINDB_TASK_OUTPUT = OpenGTINDBOutput(
   eanData: '',
 );
 
-final OPENGTINDEB_ERRORCODES = {
+const OPENGTINDEB_ERRORCODES = {
   '0': 'checkdigits_ean_error_ok',
   '1': 'checkdigits_ean_error_ean_not_found',
   '2': 'checkdigits_ean_error_ean_checksum_error',
@@ -71,7 +71,7 @@ final OPENGTINDEB_ERRORCODES = {
   '14': 'checkdigits_ean_error_unknown_command',
 };
 
-final OPENGTINDB_CONTENTS = {
+const OPENGTINDB_CONTENTS = {
   1: 'laktosefrei',
   2: 'koffeeinfrei',
   4: 'diätetisches Lebensmittel',
@@ -86,7 +86,7 @@ final OPENGTINDB_CONTENTS = {
   2048: 'Warnung vor Nikotin',
 };
 
-final OPENGTINDB_PACKS = {
+const OPENGTINDB_PACKS = {
   1: 'die Verpackung besteht überwiegend aus Plastik',
   2: 'die Verpackung besteht überwiegend aus Verbundmaterial',
   4: 'die Verpackung besteht überwiegend aus Papier/Pappe',

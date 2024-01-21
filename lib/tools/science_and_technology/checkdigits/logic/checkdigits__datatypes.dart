@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
-final Map<String, String> ID_LETTERCODE = {
+const Map<String, String> ID_LETTERCODE = {
   'A' : '10',
   'B' : '11',
   'C' : '12',
@@ -50,7 +50,7 @@ final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mas
 final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "## ## ### # ###-#", filter: {"#": RegExp(r'[0-9?]')});
 
-Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
+final Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.ISBN : MASKINPUTFORMATTER_ISBN,
   CheckDigitsMode.IBAN : MASKINPUTFORMATTER_IBAN,
   CheckDigitsMode.EURO : MASKINPUTFORMATTER_EURO,
@@ -61,7 +61,7 @@ Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.CREDITCARD : MASKINPUTFORMATTER_CREDITCARD,
 };
 
-Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
+final Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.ISBN : "000000000@000",
   CheckDigitsMode.IBAN : "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   CheckDigitsMode.EURO : "A@0000000000",

@@ -4,7 +4,7 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 // https://kryptografie.de/kryptografie/chiffre/euro-banknote.htm
 // http://www.pruefziffernberechnung.de/B/Banknoten-EUR.shtml
 
-final EUROBILLDATA = {
+const EUROBILLDATA = {
   1: {
     'B': ['', 'common_country_Lithuania'],
     'C': ['', 'common_country_Latvia'],

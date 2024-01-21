@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
-final Map<int, List<String>> CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA = {
+const Map<int, List<String>> CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA = {
   10000000 : [
     "Bundesbank",
     "10591",

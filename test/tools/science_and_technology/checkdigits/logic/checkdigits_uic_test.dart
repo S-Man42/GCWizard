@@ -9,6 +9,18 @@ void main() {
         'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
       },
       {
+        'number': '91806193296', // to short
+        'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
+      },
+      {
+        'number': '9180619329610', // to long
+        'expectedOutput': CheckDigitOutput(false, 'checkdigits_invalid_length', [''])
+      },
+      {
+        'number': '918061932961',
+        'expectedOutput': CheckDigitOutput(true, '', [''])
+      },
+      {
         'number': '218099039149',
         'expectedOutput': CheckDigitOutput(true, '', [''])
       },

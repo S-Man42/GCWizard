@@ -6,7 +6,7 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 // https://de.wikipedia.org/wiki/UIC-Kennzeichnung_der_Triebfahrzeuge
 // https://de.wikipedia.org/wiki/UIC-L%C3%A4ndercode
 
-final UIC_COUNTRY_CODE = {
+const UIC_COUNTRY_CODE = {
   '10':	'common_country_Finland',
   '20':	'common_country_Russia',
   '21':	'common_country_Belarus',

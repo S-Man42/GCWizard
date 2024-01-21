@@ -9,7 +9,7 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 
 // http://www.pruefziffernberechnung.de/K/Kreditkarten.shtml
 
-final Map<String, String> CHECKDIGITS_CREDITCARD_MMI = {
+const Map<String, String> CHECKDIGITS_CREDITCARD_MMI = {
   '0': 'checkdigits_creditcard_major_industry_identifier_0',
   '1': 'checkdigits_creditcard_major_industry_identifier_1',
   '2': 'checkdigits_creditcard_major_industry_identifier_2',
@@ -22,7 +22,7 @@ final Map<String, String> CHECKDIGITS_CREDITCARD_MMI = {
   '9': 'checkdigits_creditcard_major_industry_identifier_9',
 };
 
-final Map<String, String> CHECKDIGITS_CREDITCARD_PREFIX = {
+const Map<String, String> CHECKDIGITS_CREDITCARD_PREFIX = {
   '22': 'MasterCard, MIR, PayPak',
   '23': 'MasterCard',
   '24': 'MasterCard',
@@ -73,7 +73,7 @@ final Map<String, String> CHECKDIGITS_CREDITCARD_PREFIX = {
   '98': 'DinaCard, NSMEP, etc.',
 };
 
-final Map<int, List<Object>> CHECKDIGITS_CREDITCARD_CARDSCHEMES = {
+const Map<int, List<Object>> CHECKDIGITS_CREDITCARD_CARDSCHEMES = {
   //https://www.bindb.com/card-schemes
   220000: [220499, 'MIR'],
   220500: [220599, 'PayPak'],

@@ -642,7 +642,10 @@ void initializeRegistry(BuildContext context) {
       'cipherwheel',
     ]),
     GCWTool(
-        tool: const CheckDigitsSelection(), id: 'checkdigits_selection', categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: const []),
+        tool: const CheckDigitsSelection(),
+        id: 'checkdigits_selection',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: const []),
     GCWTool(
         tool: const CistercianNumbersSelection(),
         id: 'cistercian_selection',
@@ -1593,127 +1596,91 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //CheckDigitsSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsCreditCardSelection(), id: 'checkdigits_creditcard_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsDETaxIDSelection(), id: 'checkdigits_de_taxid_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsEANSelection(), id: 'checkdigits_ean_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsIBANSelection(), id: 'checkdigits_iban_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsIMEISelection(), id: 'checkdigits_imei_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsISBNSelection(), id: 'checkdigits_isbn_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsEUROSelection(), id: 'checkdigits_euro_selection', searchKeys: const []),
-    GCWTool(tool: const CheckDigitsUICSelection(), id: 'checkdigits_uic_selection', searchKeys: const []),
+    GCWTool(tool: const CheckDigitsCreditCardSelection(), id: 'checkdigits_creditcard_selection', searchKeys: const ['checkdigits', '']),
+    GCWTool(tool: const CheckDigitsDETaxIDSelection(), id: 'checkdigits_de_taxid_selection', searchKeys: const ['checkdigits',  'checkdigits_de_taxid']),
+    GCWTool(tool: const CheckDigitsEANSelection(), id: 'checkdigits_ean_selection', searchKeys: const ['checkdigits',  'checkdigits_ean']),
+    GCWTool(tool: const CheckDigitsIBANSelection(), id: 'checkdigits_iban_selection', searchKeys: const ['checkdigits',  'checkdigits_iban']),
+    GCWTool(tool: const CheckDigitsIMEISelection(), id: 'checkdigits_imei_selection', searchKeys: const ['checkdigits',  'checkdigits_imei']),
+    GCWTool(tool: const CheckDigitsISBNSelection(), id: 'checkdigits_isbn_selection', searchKeys: const ['checkdigits',  'checkdigits_isbn']),
+    GCWTool(tool: const CheckDigitsEUROSelection(), id: 'checkdigits_euro_selection', searchKeys: const ['checkdigits',  'checkdigits_euro']),
+    GCWTool(tool: const CheckDigitsUICSelection(), id: 'checkdigits_uic_selection', searchKeys: const ['checkdigits',  'checkdigits_uic']),
 
     //CheckDigitsCreditCardSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsCreditCardCheckNumber(), id: 'checkdigits_creditcard_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_creaditcard',
-    ]),
-    GCWTool(tool: const CheckDigitsCreditCardCalculateCheckDigit(), id: 'checkdigits_creditcard_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_creaditcard',
-    ]),
-    GCWTool(tool: const CheckDigitsCreditCardCalculateMissingDigit(), id: 'checkdigits_creditcard_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_creaditcard',
-    ]),
+    GCWTool(
+        tool: const CheckDigitsCreditCardCheckNumber(), id: 'checkdigits_creditcard_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsCreditCardCalculateCheckDigit(),
+        id: 'checkdigits_creditcard_calculate_digit',
+        searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsCreditCardCalculateMissingDigit(),
+        id: 'checkdigits_creditcard_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsDETINSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsDETaxIDCheckNumber(), id: 'checkdigits_de_taxid_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_de_tin',
-    ]),
-    GCWTool(tool: const CheckDigitsDETaxIDCalculateCheckDigit(), id: 'checkdigits_de_taxid_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_de_tin',
-    ]),
-    GCWTool(tool: const CheckDigitsDETaxIDCalculateMissingDigit(), id: 'checkdigits_de_taxid_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_de_tin',
-    ]),
+    GCWTool(tool: const CheckDigitsDETaxIDCheckNumber(), id: 'checkdigits_de_taxid_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsDETaxIDCalculateCheckDigit(),
+        id: 'checkdigits_de_taxid_calculate_digit',
+        searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsDETaxIDCalculateMissingDigit(),
+        id: 'checkdigits_de_taxid_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsEANSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsEANCheckNumber(), id: 'checkdigits_ean_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_ean',
-    ]),
-    GCWTool(tool: const CheckDigitsEANCalculateCheckDigit(), id: 'checkdigits_ean_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_ean',
-    ]),
-    GCWTool(tool: const CheckDigitsEANCalculateMissingDigit(), id: 'checkdigits_ean_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_ean',
-    ]),
+    GCWTool(tool: const CheckDigitsEANCheckNumber(), id: 'checkdigits_ean_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEANCalculateCheckDigit(), id: 'checkdigits_ean_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEANCalculateMissingDigit(),
+        id: 'checkdigits_ean_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsEUROSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsEUROCheckNumber(), id: 'checkdigits_euro_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_euro',
-    ]),
-    GCWTool(tool: const CheckDigitsEUROCalculateCheckDigit(), id: 'checkdigits_euro_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_euro',
-    ]),
-    GCWTool(tool: const CheckDigitsEUROCalculateMissingDigit(), id: 'checkdigits_euro_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_euro',
-    ]),
+    GCWTool(tool: const CheckDigitsEUROCheckNumber(), id: 'checkdigits_euro_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEUROCalculateCheckDigit(), id: 'checkdigits_euro_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEUROCalculateMissingDigit(),
+        id: 'checkdigits_euro_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsIBANSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsIBANCheckNumber(), id: 'checkdigits_iban_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_iban',
-    ]),
-    GCWTool(tool: const CheckDigitsIBANCalculateCheckDigit(), id: 'checkdigits_iban_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_iban',
-    ]),
-    GCWTool(tool: const CheckDigitsIBANCalculateMissingDigit(), id: 'checkdigits_iban_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_iban',
-    ]),
+    GCWTool(tool: const CheckDigitsIBANCheckNumber(), id: 'checkdigits_iban_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIBANCalculateCheckDigit(), id: 'checkdigits_iban_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIBANCalculateMissingDigit(),
+        id: 'checkdigits_iban_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsIMEISelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsIMEICheckNumber(), id: 'checkdigits_imei_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_imei',
-    ]),
-    GCWTool(tool: const CheckDigitsIMEICalculateCheckDigit(), id: 'checkdigits_imei_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_imei',
-    ]),
-    GCWTool(tool: const CheckDigitsIMEICalculateMissingDigit(), id: 'checkdigits_imei_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_imei',
-    ]),
+    GCWTool(tool: const CheckDigitsIMEICheckNumber(), id: 'checkdigits_imei_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIMEICalculateCheckDigit(), id: 'checkdigits_imei_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIMEICalculateMissingDigit(),
+        id: 'checkdigits_imei_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsISBNSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsISBNCheckNumber(), id: 'checkdigits_isbn_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_isbn',
-    ]),
-    GCWTool(tool: const CheckDigitsISBNCalculateCheckDigit(), id: 'checkdigits_isbn_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_isbn',
-    ]),
-    GCWTool(tool: const CheckDigitsISBNCalculateMissingDigit(), id: 'checkdigits_isbn_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_isbn',
-    ]),
+    GCWTool(tool: const CheckDigitsISBNCheckNumber(), id: 'checkdigits_isbn_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsISBNCalculateCheckDigit(), id: 'checkdigits_isbn_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsISBNCalculateMissingDigit(),
+        id: 'checkdigits_isbn_calculate_number',
+        searchKeys: const []),
 
     //CheckDigitsUICSelection  ********************************************************************************************
-    GCWTool(tool: const CheckDigitsUICCheckNumber(), id: 'checkdigits_uic_checknumber', searchKeys: const [
-      'checkdigits',
-      'checkdigits_uic',
-    ]),
-    GCWTool(tool: const CheckDigitsUICCalculateCheckDigit(), id: 'checkdigits_uic_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_uic',
-    ]),
-    GCWTool(tool: const CheckDigitsUICCalculateMissingDigit(), id: 'checkdigits_uic_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_uic',
-    ]),
-
+    GCWTool(tool: const CheckDigitsUICCheckNumber(), id: 'checkdigits_uic_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsUICCalculateCheckDigit(), id: 'checkdigits_uic_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsUICCalculateMissingDigit(),
+        id: 'checkdigits_uic_calculate_number',
+        searchKeys: const []),
 
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: const CistercianNumbers(), id: 'cistercian', searchKeys: const [

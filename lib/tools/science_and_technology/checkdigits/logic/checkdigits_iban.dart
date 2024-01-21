@@ -9,7 +9,7 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 //         => calculate Number
 // GC4TKB5 => calculate checkDigit
 
-final Map<String, String> IBAN_DATA_MEANING = {
+const Map<String, String> IBAN_DATA_MEANING = {
   'b': 'checkdigits_iban_data_b_bank_number',
   's': 'checkdigits_iban_data_s_branch_code',
   'k': 'checkdigits_iban_data_k_account_number',
@@ -22,7 +22,7 @@ final Map<String, String> IBAN_DATA_MEANING = {
 
 enum IBAN_IDENTIFIER_TYPES {ALPHA, ALPHANUMERIC, NUMERIC}
 
-final Map<String, List<Map<String, Object>>>IBAN_DATA = {
+const Map<String, List<Map<String, Object>>>IBAN_DATA = {
   // https://en.wikipedia.org/wiki/International_Bank_Account_Number
   // https://de.wikipedia.org/w/index.php?title=Internationale_Bankkontonummer&stable=0
   // https://www.swift.com/standards/data-standards/iban
@@ -1042,7 +1042,7 @@ final Map<String, List<Map<String, Object>>>IBAN_DATA = {
   ],
 };
 
-final List<String> IBAN_NUMERIC = [
+const List<String> IBAN_NUMERIC = [
   'AD', 'AE', 'AL', 'AT', 'AO', 'BA', 'BE', 'BJ', 'BF', 'BI', 'CI', 'CF', 'CG', 'CM', 'CR', 'CV', 'CZ', 'DE', 'DJ', 'DK', 'DZ', 'EE', 'EG', 'ES', 'FI', 'FO', 'GA', 'GL', 'HR', 'HU', 'IL', 'IR', 'IS', 'LT', 'LY', 'ME', 'MG', 'ML', 'MN', 'MR', 'MZ', 'NO', 'PL', 'PT', 'RS', 'RU', 'SD', 'SE', 'SI', 'SK', 'SN', 'SO', 'ST', 'TL', 'TN', 'VA', 'XK',
 ];
 
