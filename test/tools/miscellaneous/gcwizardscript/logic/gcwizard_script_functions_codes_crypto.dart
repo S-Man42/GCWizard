@@ -32,6 +32,15 @@ List<Map<String, Object?>> _inputsCryptoToExpected = [
   {'code' : 'print morse("hallo", 1, 0)', 'expectedOutput' : '.... .- .-.. .-.. ---'},
   {'code' : 'print morse("1234", 1, 0)\nmorse("1234", 1, 1)\nmorse("1234", 1, 2)\nmorse("1234", 1, 3)', 'expecteOutput' : ''},
   {'code' : 'print morse(".... .- .-.. .-.. ---", 0)', 'expectedOutput' : 'HALLO'},
+  {'code' : 'PRINT MORSE("HALLO", 1, 0)\n'+
+            'PRINT MORSE("HALLO", 1, 10)\n'+
+            'PRINT MORSE("HALLO", 1, 11)\n'+
+            'PRINT MORSE("HALLO", 1, 2)\n'+
+            'PRINT MORSE("HALLO", 1, 3)', 'expectedOutput' : '.... .- .-.. .-.. ---\n'+
+                                                            '.... ... – – ..\n'+
+                                                            '.... .- – – . .\n'+
+                                                            '.... .- .-.. .-.. .-...\n'+
+                                                            '···· .·. ·.. ·.. ...'}
 
   {'code' : 'print enclosedareas("HALLO 9876543210 MEINS", 0, 0)', 'expectedOutput' : '2 5 0'},
   {'code' : 'print enclosedareas("HALLO 9876543210 MEINS", 0, 1)', 'expectedOutput' : '2 6 0'},
