@@ -40,7 +40,7 @@ List<Map<String, Object?>> _inputsCryptoToExpected = [
                                                             '.... ... – – ..\n'+
                                                             '.... .- – – . .\n'+
                                                             '.... .- .-.. .-.. .-...\n'+
-                                                            '···· .·. ·.. ·.. ...'}
+                                                            '···· .·. ·.. ·.. ...'},
 
   {'code' : 'print enclosedareas("HALLO 9876543210 MEINS", 0, 0)', 'expectedOutput' : '2 5 0'},
   {'code' : 'print enclosedareas("HALLO 9876543210 MEINS", 0, 1)', 'expectedOutput' : '2 6 0'},
