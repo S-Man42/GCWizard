@@ -45,6 +45,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   );
   Widget _outputBINIINDetailWidget = Container();
 
+  UIC_TYPE _UICType = UIC_TYPE.NONE;
+
   late TextEditingController currentInputController;
   late TextEditingController currentInputControllerID;
   late TextEditingController currentInputControllerDateBirth;
@@ -593,7 +595,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         number.substring(2, 4),
         i18n(context, UIC_COUNTRY_CODE[number.substring(2, 4)]!)
       ],
-      [i18n(context, 'checkdigits_uic_vehicle_type'), number.substring(4, 8), ''],
+      [i18n(context, 'checkdigits_uic_vehicle_type'), number.substring(4, 8), i18n(context, UIC_CODE_CATEGORY[_UICType]![number.substring(4, 5)]!)],
       [i18n(context, 'checkdigits_uic_running_number'), number.substring(8, 11), ''],
       [i18n(context, 'checkdigits_uic_check_digit'), number.substring(11), ''],
     ];
@@ -602,12 +604,16 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   String _UICTypeCode(String typeCode) {
     int type = int.parse(typeCode);
     if (type >= 90) {
-      return i18n(context, 'checkdigits_uic_typecode_locomotive');
+      _UICType = UIC_TYPE.LOCOMOTIVE;
+      return i18n(context, 'checkdigits_uic_typecode_locomotive') + '\n' + i18n(context, UIC_LOCOMOTIVE_CODE[typeCode]!);
     } else if (type >= 80) {
+      _UICType = UIC_TYPE.FREIGHTWAGON;
       return i18n(context, 'checkdigits_uic_typecode_freightwagon');
     } else if (type >= 50) {
+      _UICType = UIC_TYPE.PASSENGERCOACH;
       return i18n(context, 'checkdigits_uic_typecode_passengercoach');
     } else {
+      _UICType = UIC_TYPE.FREIGHTWAGON;
       return i18n(context, 'checkdigits_uic_typecode_freightwagon');
     }
   }

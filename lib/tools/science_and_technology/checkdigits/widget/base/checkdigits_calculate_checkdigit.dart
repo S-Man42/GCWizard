@@ -66,17 +66,22 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
       case CheckDigitsMode.EURO:
       case CheckDigitsMode.IMEI:
       case CheckDigitsMode.ISBN:
-      case CheckDigitsMode.UIC:
-        return output;
+      return output;
       case CheckDigitsMode.IBAN:
+        return _formatOutput_IBAN(output);
+      case CheckDigitsMode.UIC:
+        return _formatOutput_UIC(output);
       case CheckDigitsMode.CREDITCARD:
-        return _formatOutput_IBAN_Creditcard(output);
+        return _formatOutput_Creditcard(output);
       default:
         return '';
     }
   }
 
-  String _formatOutput_IBAN_Creditcard(String output){
+  String _formatOutput_IBAN(String output){
+    if (BigInt.tryParse(output.substring(2)) == null) {
+      return output;
+    }
     String result = '';
     for (int i = 0; i < output.length; i++) {
       result = result + output[i];
@@ -85,6 +90,27 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
       }
     }
     return result;
+  }
+
+  String _formatOutput_Creditcard(String output){
+    if (int.tryParse(output) == null) {
+      return output;
+    }
+    String result = '';
+    for (int i = 0; i < output.length; i++) {
+      result = result + output[i];
+      if ((i + 1) % 4 == 0) {
+        result = result + ' ';
+      }
+    }
+    return result;
+  }
+
+  String _formatOutput_UIC(String output){
+    if (int.tryParse(output) == null) {
+      return output;
+    }
+    return output.substring(0, 2) + ' ' + output.substring(2, 4) + ' ' + output.substring(4, 8) + ' ' + output.substring(8, 11) + '-' + output[11];
   }
 
 }

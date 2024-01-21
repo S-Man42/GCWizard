@@ -48,7 +48,7 @@ final MaskTextInputFormatter MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(ma
 final MaskTextInputFormatter MASKINPUTFORMATTER_CREDITCARD = MaskTextInputFormatter(mask: "#### #### #### #### ###", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "## ## ### # ###-#", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "## ## #### ###-#", filter: {"#": RegExp(r'[0-9?]')});
 
 final Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.ISBN : MASKINPUTFORMATTER_ISBN,
