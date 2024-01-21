@@ -55,7 +55,36 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
       output = i18n(context, output);
     }
     return GCWDefaultOutput(
-      child: output,
+      child: _formatOutput(output, widget.mode),
     );
   }
+
+  String _formatOutput(String output, CheckDigitsMode mode){
+    switch (mode) {
+      case CheckDigitsMode.EAN_GTIN:
+      case CheckDigitsMode.DETAXID:
+      case CheckDigitsMode.EURO:
+      case CheckDigitsMode.IMEI:
+      case CheckDigitsMode.ISBN:
+      case CheckDigitsMode.UIC:
+        return output;
+      case CheckDigitsMode.IBAN:
+      case CheckDigitsMode.CREDITCARD:
+        return _formatOutput_IBAN_Creditcard(output);
+      default:
+        return '';
+    }
+  }
+
+  String _formatOutput_IBAN_Creditcard(String output){
+    String result = '';
+    for (int i = 0; i < output.length; i++) {
+      result = result + output[i];
+      if ((i + 1) % 4 == 0) {
+        result = result + ' ';
+      }
+    }
+    return result;
+  }
+
 }

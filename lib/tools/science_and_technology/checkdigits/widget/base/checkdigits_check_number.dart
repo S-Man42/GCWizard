@@ -5,6 +5,7 @@ import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -218,7 +219,18 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       GCWButton(
         text: i18n(context, 'checkdigits_ean_get_details'),
         onPressed: () {
-          _getOpenGTINDBtask();
+          showGCWDialog(context, i18n(context, 'checkdigits_ean_get_details'),
+              SizedBox(width: 300, height: 130, child: Text(i18n(context, 'checkdigits_ean_get_details_allow'))), [
+                GCWDialogButton(
+                  text: i18n(context, 'common_ok'),
+                  onPressed: () {
+                    setState(() {
+                      _getOpenGTINDBtask();
+                    });
+                  },
+                )
+              ]);
+
           setState(() {});
         },
       ),
@@ -232,7 +244,17 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       GCWButton(
         text: i18n(context, 'checkdigits_creditcard_get_details'),
         onPressed: () {
-          _getOpenBINIINDBtask();
+          showGCWDialog(context, i18n(context, 'checkdigits_creditcard_get_details'),
+              SizedBox(width: 300, height: 130, child: Text(i18n(context, 'checkdigits_creditcard_get_details_allow'))), [
+                GCWDialogButton(
+                  text: i18n(context, 'common_ok'),
+                  onPressed: () {
+                    setState(() {
+                      _getOpenBINIINDBtask();
+                    });
+                  },
+                )
+              ]);
           setState(() {});
         },
       ),
@@ -291,7 +313,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       child: GCWColumnedMultilineOutput(
         copyColumn: 1,
         data: _CreditCardData(checkDigitsNormalizeNumber(_currentInputNumberString.toUpperCase())),
-        flexValues: const [4, 2, 4],
+        flexValues: const [5, 3, 4],
       ),
     );
   }

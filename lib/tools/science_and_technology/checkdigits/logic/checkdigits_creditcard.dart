@@ -266,6 +266,10 @@ Future<OpenBINIINDBOutput> _OpenBINIINDBgetTextAsync(String biniin, {SendPort? s
 }
 
 CheckDigitOutput _CheckCreditCardNumber(String number) {
+  if (int.tryParse(number) == null) {
+    return CheckDigitOutput(false, 'checkdigits_invalid_format', ['']);
+  }
+
   if (12 <= number.length && number.length <= 19) {
     if (_checkNumber(number, _checkCreditCard)) {
       return CheckDigitOutput(true, '', ['']);

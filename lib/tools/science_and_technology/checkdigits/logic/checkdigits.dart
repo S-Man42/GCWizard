@@ -167,6 +167,10 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
     return ['checkdigits_invalid_length'];
   }
 
+  if (number.length == number.replaceAll('?', '').length) {
+    return ['checkdigits_nothing_to_calculate'];
+  }
+
   number = number.toUpperCase();
   switch (mode) {
     case CheckDigitsMode.EAN_GTIN:
@@ -184,6 +188,7 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
     case CheckDigitsMode.UIC:
       return _CalculateUICDigits(number);
     case CheckDigitsMode.CREDITCARD:
+      print('_CalculateCreditCardDigits '+number);
       return _CalculateCreditCardDigits(number);
     default:
       return [''];
@@ -235,7 +240,6 @@ List<String> _CalculateGlitch(String number, Function f) {
 
 List<String> _CalculateDigits(String number, Function f) {
   List<String> result = <String>[];
-
   if (f == _checkIBAN) {
     if (IBAN_NUMERIC.contains(number.substring(0, 2))) {
       result = _calculateAlphaNumeric(_ITERATE_ALPHA, _ITERATE_ALPHA, number, f);
@@ -291,6 +295,9 @@ List<String> _CalculateDigitsOnlyNumbers(String number, Function f, {String head
       }
     }
   }
+  print('done _CalculateDigitsOnlyNumbers');
+  print('result');
+  print(result);
   return result;
 }
 
