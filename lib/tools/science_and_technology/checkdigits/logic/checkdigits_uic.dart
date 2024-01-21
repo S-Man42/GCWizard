@@ -94,7 +94,25 @@ const UIC_LOCOMOTIVE_CODE = {
 const UIC_PASSENGERCOACH_CODE = {
   // https://de.wikipedia.org/wiki/Code_f%C3%BCr_das_Austauschverfahren
   // https://www.dansk-jernbanearkiv.dk/uic438/u438.htm
-  '': '',
+  '50': "checkdigits_uic_typecode_passengercoach_50",
+  '51': "checkdigits_uic_typecode_passengercoach_51",
+  '52': "checkdigits_uic_typecode_passengercoach_52",
+  '54': "checkdigits_uic_typecode_passengercoach_53",
+  '56': "checkdigits_uic_typecode_passengercoach_56",
+  '57': "checkdigits_uic_typecode_passengercoach_57",
+  '60': "checkdigits_uic_typecode_passengercoach_60",
+  '61': "checkdigits_uic_typecode_passengercoach_61",
+  '62': "checkdigits_uic_typecode_passengercoach_62",
+  '63': "checkdigits_uic_typecode_passengercoach_63",
+  '64': "checkdigits_uic_typecode_passengercoach_64",
+  '65': "checkdigits_uic_typecode_passengercoach_65",
+  '66': "checkdigits_uic_typecode_passengercoach_66",
+  '67': "checkdigits_uic_typecode_passengercoach_66",
+  '68': "checkdigits_uic_typecode_passengercoach_66",
+  '69': "checkdigits_uic_typecode_passengercoach_66",
+  '70': "checkdigits_uic_typecode_passengercoach_70",
+  '71': "checkdigits_uic_typecode_passengercoach_71",
+  '73': "checkdigits_uic_typecode_passengercoach_73",
 };
 
 const UIC_FREIGHTWAGON_CODE = {
@@ -106,7 +124,8 @@ const UIC_FREIGHTWAGON_CODE = {
 const Map<UIC_TYPE, Map<String, String>> UIC_CODE_CATEGORY = {
   // https://en.wikipedia.org/wiki/UIC_classification_of_goods_wagons
   // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen#Gattungsbuchstaben
-  UIC_TYPE.LOCOMOTIVE: { // checkdigits_uic_typecode_locomotive_category_
+  UIC_TYPE.LOCOMOTIVE: {
+    // checkdigits_uic_typecode_locomotive_category_
     '0': '',
     '1': '',
     '2': '',
@@ -119,6 +138,8 @@ const Map<UIC_TYPE, Map<String, String>> UIC_CODE_CATEGORY = {
     '9': '',
   },
   UIC_TYPE.FREIGHTWAGON: {
+    // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen
+    // https://en.wikipedia.org/wiki/UIC_classification_of_goods_wagons
     '0': 'checkdigits_uic_typecode_freightwagon_category_0',
     '1': 'checkdigits_uic_typecode_freightwagon_category_1',
     '2': 'checkdigits_uic_typecode_freightwagon_category_2',
@@ -130,17 +151,20 @@ const Map<UIC_TYPE, Map<String, String>> UIC_CODE_CATEGORY = {
     '8': 'checkdigits_uic_typecode_freightwagon_category_8',
     '9': 'checkdigits_uic_typecode_freightwagon_category_9',
   },
-  UIC_TYPE.PASSENGERCOACH: { // checkdigits_uic_typecode_passengercoach_category_
-    '0': '',
-    '1': '',
-    '2': '',
-    '3': '',
-    '4': '',
-    '5': '',
-    '6': '',
-    '7': '',
-    '8': '',
-    '9': '',
+  UIC_TYPE.PASSENGERCOACH: {
+    // checkdigits_uic_typecode_passengercoach_category_
+    // https://en.wikipedia.org/wiki/UIC_classification_of_railway_coaches
+    // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_Reisezugwagen
+    '0': 'checkdigits_uic_typecode_passengercoach_category_0',
+    '1': 'checkdigits_uic_typecode_passengercoach_category_1',
+    '2': 'checkdigits_uic_typecode_passengercoach_category_2',
+    '3': 'checkdigits_uic_typecode_passengercoach_category_3',
+    '4': 'checkdigits_uic_typecode_passengercoach_category_4',
+    '5': 'checkdigits_uic_typecode_passengercoach_category_5',
+    '6': 'checkdigits_uic_typecode_passengercoach_category_6',
+    '7': 'checkdigits_uic_typecode_passengercoach_category_7',
+    '8': 'checkdigits_uic_typecode_passengercoach_category_8',
+    '9': 'checkdigits_uic_typecode_passengercoach_category_9',
   },
 };
 
