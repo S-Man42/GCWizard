@@ -6,8 +6,8 @@ enum MORSE_CODE {MORSE_ITU, MORSE1838, MORSE1844, STEINHEIL, GERKE}
 
 final Map<MORSE_CODE, String> MORSE_CODES = {
   MORSE_CODE.MORSE_ITU: 'symboltables_morse',
-  MORSE_CODE.MORSE1838: 'symboltables_morse_1838',
-  MORSE_CODE.MORSE1844: 'symboltables_morse_1844',
+  MORSE_CODE.MORSE1838: 'symboltables_morse_1838_patent',
+  MORSE_CODE.MORSE1844: 'symboltables_morse_1844_vail',
   MORSE_CODE.GERKE: 'symboltables_morse_gerke',
   MORSE_CODE.STEINHEIL: 'symboltables_morse_steinheil',
 };
