@@ -102,7 +102,8 @@ ThemeData buildTheme() {
       colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground()))
           .copyWith(secondary: colors.secondary(), brightness: base.brightness, surfaceVariant: colors.gridBackground()),
       dividerTheme: const DividerThemeData().copyWith(thickness: 0, color: colors.gridBackground()),
-      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor));
+      drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor)
+  );
 }
 
 // https://medium.com/@morgenroth/using-flutters-primary-swatch-with-a-custom-materialcolor-c5e0f18b95b0
