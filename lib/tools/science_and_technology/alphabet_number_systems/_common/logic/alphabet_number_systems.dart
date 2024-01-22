@@ -16,7 +16,7 @@ Map<int, String> _buildCode(ALPHABET_NUMBER_SYSTEMS alphabetNumberSystem){
 String encodeNumberToNumeralWord(int number, ALPHABET_NUMBER_SYSTEMS alphabetNumberSystem){
   Map<int, String> CODE = _buildCode(alphabetNumberSystem);
 
-  return CODE[(number ~/ 100)]! + CODE[((number % 100) ~/ 10) * 10]! + CODE[number %10]!;
+  return CODE[(number - number % 100)]! + CODE[((number % 100) ~/ 10) * 10]! + CODE[number %10]!;
 }
 
 String decodeNumeralWordToNumber(String numeralWord){
