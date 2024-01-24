@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoDMM extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsDMM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoDMM extends GCWCoordWidgetInfo {
 
 class _GCWCoordsDMM extends _GCWCoordWidget {
 
-  _GCWCoordsDMM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsDMM({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is DMMCoordinate ? coordinates : DMMFormatDefinition.defaultCoordinate);
 
   @override

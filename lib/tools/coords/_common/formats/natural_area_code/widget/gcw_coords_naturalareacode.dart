@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoNaturalAreaCode extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsNaturalAreaCode(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoNaturalAreaCode extends GCWCoordWidgetInfo {
 
 class _GCWCoordsNaturalAreaCode extends _GCWCoordWidget {
 
-  _GCWCoordsNaturalAreaCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsNaturalAreaCode({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is NaturalAreaCodeCoordinate ? coordinates : NaturalAreaCodeFormatDefinition.defaultCoordinate);
 
   @override

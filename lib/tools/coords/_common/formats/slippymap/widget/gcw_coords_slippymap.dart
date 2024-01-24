@@ -4,6 +4,8 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.SLIPPY_MAP;
   @override
+  CoordinateFormatKey get subtype => defaultSlippyMapType;
+  @override
   String get i18nKey => slippyMapKey;
   @override
   String get name => 'Slippy Map Tiles';
@@ -22,34 +24,34 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_7, '7'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_8, '8'),
     const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_9, '9'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '10'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '11'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '12'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '13'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '14'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '15'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '16'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '17'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '18'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_1, '19'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '20'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '21'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '22'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '23'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '24'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '25'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '26'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '27'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '28'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_2, '29'),
-    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_3, '30'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_10, '10'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_11, '11'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_12, '12'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_13, '13'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_14, '14'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_15, '15'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_16, '16'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_17, '17'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_18, '18'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_19, '19'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_20, '20'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_21, '21'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_22, '22'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_23, '23'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_24, '24'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_25, '25'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_26, '26'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_27, '27'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_28, '28'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_29, '29'),
+    const _GCWCoordWidgetSubtypeInfo(CoordinateFormatKey.SLIPPYMAP_30, '30'),
   ];
   
   @override
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsSlippyMap(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -74,7 +76,7 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsSlippyMap extends _GCWCoordWidget {
 
-  _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapFormatDefinition.defaultCoordinate);
 
   @override
@@ -151,10 +153,10 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
   }
 
   int _slippyMapZoom() {
-    return switchMapKeyValue(SLIPPY_MAP_ZOOM)[widget.coordinates.format.subtype!]!;
+    return switchMapKeyValue(SLIPPY_MAP_ZOOM)[widget.coordinates?.format.subtype ?? defaultSlippyMapType]!;
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(SlippyMapCoordinate(_currentX.value, _currentY.value, widget.coordinates.format.subtype!));
+    widget.onChanged(SlippyMapCoordinate(_currentX.value, _currentY.value, widget.coordinates?.format.subtype ?? defaultSlippyMapType));
   }
 }

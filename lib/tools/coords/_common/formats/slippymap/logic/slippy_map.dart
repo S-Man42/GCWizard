@@ -43,9 +43,9 @@ const Map<int, CoordinateFormatKey> SLIPPY_MAP_ZOOM = {
   30: CoordinateFormatKey.SLIPPYMAP_30
 };
 
-const _defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
+const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
 const slippyMapKey = 'coords_slippymap';
-final _defaultCoordinate = SlippyMapCoordinate(0, 0, _defaultSlippyMapType);
+final _defaultCoordinate = SlippyMapCoordinate(0, 0, defaultSlippyMapType);
 
 final SlippyMapFormatDefinition = CoordinateFormatWithSubtypesDefinition(
   CoordinateFormatKey.SLIPPY_MAP, slippyMapKey, slippyMapKey,
@@ -125,7 +125,7 @@ class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {
   static const String _ERROR_INVALID_SUBTYPE = 'No valid SlippyMap subtype given.';
 
   SlippyMapCoordinate(this.x, this.y, CoordinateFormatKey subtypeKey) {
-    if (subtypeKey != _defaultSlippyMapType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey)) {
+    if (subtypeKey != defaultSlippyMapType && !isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtypeKey)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 
@@ -145,7 +145,7 @@ class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {
     return _latLonToSlippyMap(coord, subtype);
   }
 
-  static SlippyMapCoordinate? parse(String input, {CoordinateFormatKey subtype = _defaultSlippyMapType}) {
+  static SlippyMapCoordinate? parse(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
     if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
@@ -154,7 +154,7 @@ class SlippyMapCoordinate extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  CoordinateFormatKey get defaultSubtype => _defaultSlippyMapType;
+  CoordinateFormatKey get defaultSubtype => defaultSlippyMapType;
 
   @override
   String toString([int? precision]) {
@@ -174,7 +174,7 @@ LatLng _slippyMapToLatLon(SlippyMapCoordinate slippyMap) {
 
 SlippyMapCoordinate _latLonToSlippyMap(LatLng coords, CoordinateFormatKey subtype) {
   if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.SLIPPY_MAP, subtype)) {
-    subtype = _defaultSlippyMapType;
+    subtype = defaultSlippyMapType;
   }
 
   int zoom = switchMapKeyValue(SLIPPY_MAP_ZOOM)[subtype]!;
@@ -187,7 +187,7 @@ SlippyMapCoordinate _latLonToSlippyMap(LatLng coords, CoordinateFormatKey subtyp
   return SlippyMapCoordinate(x, y, subtype);
 }
 
-SlippyMapCoordinate? _parseSlippyMap(String input, {CoordinateFormatKey subtype = _defaultSlippyMapType}) {
+SlippyMapCoordinate? _parseSlippyMap(String input, {CoordinateFormatKey subtype = defaultSlippyMapType}) {
   RegExp regExp = RegExp(r'^\s*([\0-9.]+)(\s*,\s*|\s+)([\0-9.]+)\s*$');
   var matches = regExp.allMatches(input);
   String? xString = '';

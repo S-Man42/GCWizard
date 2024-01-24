@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoUTM extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsUTM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoUTM extends GCWCoordWidgetInfo {
 
 class _GCWCoordsUTM extends _GCWCoordWidget {
 
-  _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsUTM({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is UTMREFCoordinate ? coordinates : UTMREFFormatDefinition.defaultCoordinate);
 
   @override

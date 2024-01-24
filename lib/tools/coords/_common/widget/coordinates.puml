@@ -10,7 +10,7 @@ class "gcw_coords_formatselector.GCWCoordsFormatSelector" {
 
 abstract class "gcw_coords.GCWCoordWidget" {
   +bool initialize
-  +BaseCoordinate coordinates
+  +BaseCoordinate? coordinates
   +void Function(BaseCoordinate?) onChanged
 }
 
@@ -28,6 +28,7 @@ class "gcw_coords.GCWCoordWidgetSubtypeInfo" {
 }
 
 abstract class "gcw_coords.GCWCoordWidgetWithSubtypeInfo" {
+  +CoordinateFormatKey subtype
   +List<_GCWCoordWidgetSubtypeInfo> subtypes
   +Widget inputWidget()
   +Widget outputWidget()

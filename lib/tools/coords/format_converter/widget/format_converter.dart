@@ -102,6 +102,8 @@ class _FormatConverterState extends State<FormatConverter> {
     } else {
       _currentOutput = i18n(context, 'coords_formatconverter_invalid_coordinate');
       _currentMapPoint = GCWMapPoint(point: defaultCoordinate);
+      _currentAllOutput = GCWCoordsOutput(outputs: [_currentOutput], points: [_currentMapPoint]);
+      return;
     }
 
     if (_currentOutputFormat.type == CoordinateFormatKey.ALL) {
@@ -118,7 +120,8 @@ class _FormatConverterState extends State<FormatConverter> {
             var format = CoordinateFormat(coordFormat.type);
             var name = i18n(context, coordFormat.name, ifTranslationNotExists: coordFormat.name);
             if (coordFormat is GCWCoordWidgetWithSubtypeInfo) {
-              var subtypeWidgetInfo = coordinateWidgetSubtypeInfoByType(coordFormat, format.subtype!);
+              format = CoordinateFormat(coordFormat.type, coordFormat.subtype);
+              var subtypeWidgetInfo = coordinateWidgetSubtypeInfoByType(coordFormat, coordFormat.subtype);
               var subtypeName = i18n(context, subtypeWidgetInfo!.name);
               if (subtypeName.isNotEmpty) {
                 name += '\n' + subtypeName;
