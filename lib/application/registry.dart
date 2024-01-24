@@ -270,6 +270,8 @@ import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
 import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
+import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/milesian/widget/milesian_number_system.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
@@ -789,6 +791,10 @@ void initializeRegistry(BuildContext context) {
         id: 'hashes_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
+    GCWTool(tool: const HebrewNumberSystem(), id: 'hebrew_numbers', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: const [
+      'hebrew_numbers',
+    ]),
     GCWTool(tool: const Hexadecimal(), id: 'hexadecimal', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -924,6 +930,10 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'cipherwheel',
       'mexicanarmycipherwheel',
+    ]),
+    GCWTool(tool: const MilesianNumberSystem(), id: 'milesian_numbers', categories: const [
+    ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: const [
+      'milesian_numbers',
     ]),
     GCWTool(
         tool: const MorseSelection(),
@@ -3816,6 +3826,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
       'barcode39',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'base16_02', symbolSearchStrings: const [
+      'symbol_base16_02',
     ]),
     GCWSymbolTableTool(symbolKey: 'base16', symbolSearchStrings: const ['base16']),
     GCWSymbolTableTool(
