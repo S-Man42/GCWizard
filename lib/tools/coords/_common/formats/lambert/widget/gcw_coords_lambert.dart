@@ -4,6 +4,8 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.LAMBERT;
   @override
+  CoordinateFormatKey get subtype => defaultLambertType;
+  @override
   String get i18nKey => lambertKey;
   @override
   String get name => 'coords_formatconverter_lambert';

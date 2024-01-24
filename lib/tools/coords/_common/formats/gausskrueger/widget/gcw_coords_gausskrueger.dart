@@ -4,6 +4,8 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.GAUSS_KRUEGER;
   @override
+  CoordinateFormatKey get subtype => defaultGaussKruegerType;
+  @override
   String get i18nKey => gausKruegerKey;
   @override
   String get name => 'coords_formatconverter_gausskrueger';

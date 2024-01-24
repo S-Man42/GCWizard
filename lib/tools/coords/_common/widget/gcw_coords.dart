@@ -338,6 +338,7 @@ abstract class GCWCoordWidgetInfo {
 }
 
 abstract class GCWCoordWidgetWithSubtypeInfo extends GCWCoordWidgetInfo {
+  CoordinateFormatKey get subtype;
   List<_GCWCoordWidgetSubtypeInfo> get subtypes;
 
   Widget inputWidget({
