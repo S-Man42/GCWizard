@@ -4,6 +4,8 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.LAMBERT;
   @override
+  CoordinateFormatKey get subtype => defaultLambertType;
+  @override
   String get i18nKey => lambertKey;
   @override
   String get name => 'coords_formatconverter_lambert';
@@ -31,7 +33,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsLambert(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -59,7 +61,7 @@ class _GCWCoordWidgetInfoLambert extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsLambert extends _GCWCoordWidget {
 
-  _GCWCoordsLambert({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsLambert({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is LambertCoordinate ? coordinates : LambertFormatDefinition.defaultCoordinate);
 
   @override
@@ -93,7 +95,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
 
   @override
   Widget build(BuildContext context) {
-    _currentSubtype = widget.coordinates.format.subtype!;
+    _currentSubtype = widget.coordinates?.format.subtype ?? defaultLambertType;
 
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
@@ -129,7 +131,7 @@ class _GCWCoordsLambertState extends State<_GCWCoordsLambert> {
   }
 
   bool _subtypeChanged() {
-    return _currentSubtype != widget.coordinates.format.subtype;
+    return _currentSubtype != widget.coordinates?.format.subtype;
   }
 
   void _setCurrentValueAndEmitOnChange() {

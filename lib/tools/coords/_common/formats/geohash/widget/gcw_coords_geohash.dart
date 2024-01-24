@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoGeohash extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsGeohash(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoGeohash extends GCWCoordWidgetInfo {
 
 class _GCWCoordsGeohash extends _GCWCoordWidget {
 
-  _GCWCoordsGeohash({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsGeohash({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is GeohashCoordinate ? coordinates : GeohashFormatDefinition.defaultCoordinate);
 
   @override

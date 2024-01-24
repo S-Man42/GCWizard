@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoMaidenhead extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsMaidenhead(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoMaidenhead extends GCWCoordWidgetInfo {
 
 class _GCWCoordsMaidenhead extends _GCWCoordWidget {
 
-  _GCWCoordsMaidenhead({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsMaidenhead({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is MaidenheadCoordinate ? coordinates : MaidenheadFormatDefinition.defaultCoordinate);
 
   @override
