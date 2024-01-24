@@ -43,7 +43,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
 
   @override
   LatLng? toLatLng() {
-    return MapCodeToLatLon(this);
+    return _MapCodeToLatLon(this);
   }
 
   static MapCode fromLatLon(LatLng coord, CoordinateFormatKey subtype, [int precision = _DEFAULT_PRECISION]) {
@@ -51,11 +51,11 @@ class MapCode extends BaseCoordinateWithSubtypes {
       throw Exception(_ERROR_INVALID_SUBTYPE);
     }
 
-    return latLonToMapCode(coord, subtype: subtype, precision: precision);
+    return _latLonToMapCode(coord, subtype: subtype, precision: precision);
   }
 
   static MapCode? parse(String input, {String territory = ''}) {
-    return parseMapCode(input, territory: territory);
+    return _parseMapCode(input, territory: territory);
   }
 
   @override
@@ -68,7 +68,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
 }
 
 
-MapCode latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int precision = _DEFAULT_PRECISION}) {
+MapCode _latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int precision = _DEFAULT_PRECISION}) {
   if (subtype == CoordinateFormatKey.MAPCODE_INTERNATIONAL) {
     return MapCode(encodeInternationalWithPrecision(coord.latitude, coord.longitude, precision), subtype);
   } else {
@@ -76,12 +76,12 @@ MapCode latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int
   }
 }
 
-LatLng? MapCodeToLatLon(MapCode mapcode) {
+LatLng? _MapCodeToLatLon(MapCode mapcode) {
   if (mapcode.coords.isEmpty) return null;
   return decode(mapcode.coords.first.fullmapcode, '');
 }
 
-MapCode? parseMapCode(String input, {String territory = ''}) {
+MapCode? _parseMapCode(String input, {String territory = ''}) {
   var match = RegExp(_regexString()).firstMatch(input);
   if (match == null) return null;
 
@@ -113,14 +113,7 @@ String _regexString() {
     rx += "|" + element;
   }
   const letter = r"[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnpqrstuvwxyz\d]";
-  // var rx1 = "";
-  // for (var element in isofullname) {
-  //   rx1 += element + "|";
-  // }
-  //rx1 = rx1.replaceAll( "(", '').replaceAll( ")", '');
-  // rx1 = rx1.substring(0, rx1.length-1);
-  // rx += rx1;
-  //rx = rx.substring(0, rx.length-1);
+
   rx += r")\s*)?" + letter + r"{2,}\." + letter + r"{2,}(-\d{1,8})?";
   return rx;
 }

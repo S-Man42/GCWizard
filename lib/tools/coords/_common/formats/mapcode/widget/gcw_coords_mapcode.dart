@@ -6,6 +6,8 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.MAPCODE;
   @override
+  CoordinateFormatKey get subtype => defaultMapCodeType;
+  @override
   String get i18nKey => mapCodeKey;
   @override
   String get name => 'coords_formatconverter_mapcode';
@@ -22,7 +24,7 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsMapCode(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -85,7 +87,7 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsMapCode extends _GCWCoordWidget {
 
-  _GCWCoordsMapCode({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsMapCode({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is MapCode ? coordinates : MapCodeFormatDefinition.defaultCoordinate);
 
   @override
@@ -111,7 +113,7 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
 
   @override
   Widget build(BuildContext context) {
-    _currentSubtype = widget.coordinates.format.subtype!;
+    _currentSubtype = widget.coordinates?.format.subtype ?? defaultMapCodeType;
 
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
@@ -135,7 +137,7 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
   }
 
   bool _subtypeChanged() {
-    return _currentSubtype != widget.coordinates.format.subtype;
+    return _currentSubtype != widget.coordinates?.format.subtype;
   }
 
   void _setCurrentValueAndEmitOnChange() {
