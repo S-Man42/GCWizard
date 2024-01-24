@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoReverseWherigoWaldmeister extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsReverseWherigoWaldmeister(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoReverseWherigoWaldmeister extends GCWCoordWidgetInfo {
 
 class _GCWCoordsReverseWherigoWaldmeister extends _GCWCoordWidget {
 
-  _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsReverseWherigoWaldmeister({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is ReverseWherigoWaldmeisterCoordinate ?
           coordinates : ReverseWherigoWaldmeisterFormatDefinition.defaultCoordinate);
 

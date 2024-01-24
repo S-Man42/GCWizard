@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsGaussKrueger(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -51,7 +51,7 @@ class _GCWCoordWidgetInfoGaussKrueger extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsGaussKrueger extends _GCWCoordWidget {
 
-  _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsGaussKrueger({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is GaussKruegerCoordinate ? coordinates : GaussKruegerFormatDefinition.defaultCoordinate);
 
   @override
@@ -85,7 +85,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
 
   @override
   Widget build(BuildContext context) {
-    _currentSubtype = widget.coordinates.format.subtype!;
+    _currentSubtype = widget.coordinates?.format.subtype ?? defaultGaussKruegerType;
 
     if (_subtypeChanged()) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
@@ -121,7 +121,7 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
   }
 
   bool _subtypeChanged() {
-    return _currentSubtype != widget.coordinates.format.subtype;
+    return _currentSubtype != widget.coordinates?.format.subtype;
   }
 
   void _setCurrentValueAndEmitOnChange() {

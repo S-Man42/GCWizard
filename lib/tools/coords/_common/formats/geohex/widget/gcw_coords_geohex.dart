@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoGeoHex extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsGeoHex(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoGeoHex extends GCWCoordWidgetInfo {
 
 class _GCWCoordsGeoHex extends _GCWCoordWidget {
 
-  _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsGeoHex({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is GeoHexCoordinate ? coordinates : GeoHexFormatDefinition.defaultCoordinate);
 
   @override

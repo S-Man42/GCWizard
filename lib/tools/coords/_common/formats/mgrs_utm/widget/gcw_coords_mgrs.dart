@@ -14,7 +14,7 @@ class _GCWCoordWidgetInfoMGRS extends GCWCoordWidgetInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsMGRS(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -23,7 +23,7 @@ class _GCWCoordWidgetInfoMGRS extends GCWCoordWidgetInfo {
 
 class _GCWCoordsMGRS extends _GCWCoordWidget {
 
-  _GCWCoordsMGRS({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsMGRS({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is MGRSCoordinate ? coordinates : MGRSFormatDefinition.defaultCoordinate);
 
   @override

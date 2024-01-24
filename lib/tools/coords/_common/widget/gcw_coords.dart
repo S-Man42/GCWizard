@@ -312,7 +312,7 @@ class _GCWCoordsState extends State<GCWCoords> {
 
 abstract class _GCWCoordWidget extends StatefulWidget{
   final bool initialize;
-  final BaseCoordinate coordinates;
+  final BaseCoordinate? coordinates;
   final void Function(BaseCoordinate?) onChanged;
 
   const _GCWCoordWidget({

@@ -49,7 +49,7 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
   _GCWCoordWidget mainWidget({
     Key? key,
     required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate coordinates,
+    required BaseCoordinate? coordinates,
     bool? initialize
   }) {
     return _GCWCoordsSlippyMap(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
@@ -74,7 +74,7 @@ class _GCWCoordWidgetInfoSlippyMap extends GCWCoordWidgetWithSubtypeInfo {
 
 class _GCWCoordsSlippyMap extends _GCWCoordWidget {
 
-  _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate coordinates, super.initialize}) :
+  _GCWCoordsSlippyMap({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
         super(coordinates: coordinates is SlippyMapCoordinate ? coordinates : SlippyMapFormatDefinition.defaultCoordinate);
 
   @override
@@ -151,10 +151,10 @@ class _GCWCoordsSlippyMapState extends State<_GCWCoordsSlippyMap> {
   }
 
   int _slippyMapZoom() {
-    return switchMapKeyValue(SLIPPY_MAP_ZOOM)[widget.coordinates.format.subtype!]!;
+    return switchMapKeyValue(SLIPPY_MAP_ZOOM)[widget.coordinates?.format.subtype ?? defaultSlippyMapType]!;
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(SlippyMapCoordinate(_currentX.value, _currentY.value, widget.coordinates.format.subtype!));
+    widget.onChanged(SlippyMapCoordinate(_currentX.value, _currentY.value, widget.coordinates?.format.subtype ?? defaultSlippyMapType));
   }
 }
