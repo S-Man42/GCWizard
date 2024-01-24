@@ -1555,7 +1555,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         } else {
           _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          showSnackBar(toastMessage, duration: toastDuration, context);
+          //showSnackBar(toastMessage, duration: toastDuration, context);
 
           _updateOutput();
         }
@@ -1679,7 +1679,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
     _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
 
-    showSnackBar(toastMessage, duration: toastDuration, context);
+    //showSnackBar(toastMessage, duration: toastDuration, context);
 
     _updateOutput();
     // outData != null
