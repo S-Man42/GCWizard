@@ -161,8 +161,10 @@ class _MorseState extends State<Morse> {
         morseButtons = _buildMorseButtonsMorseStandard(context);
         break;
       case MORSE_CODE.MORSE1838:
-      case MORSE_CODE.MORSE1844:
-        morseButtons = _buildMorseButtonsMorseAmerican(context);
+        morseButtons = _buildMorseButtonsMorseAmerican1838(context);
+        break;
+        case MORSE_CODE.MORSE1844:
+        morseButtons = _buildMorseButtonsMorseAmerican1844(context);
         break;
       case MORSE_CODE.GERKE:
         morseButtons = _buildMorseButtonsGerke(context);
@@ -260,7 +262,60 @@ class _MorseState extends State<Morse> {
     );
   }
 
-  Widget _buildMorseButtonsMorseAmerican(BuildContext context) {
+  Widget _buildMorseButtonsMorseAmerican1838(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+      child: Row(
+        children: [
+          Expanded(
+            child: GCWIconButton(
+              customIcon: Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
+              onPressed: () {
+                setState(() {
+                  _addCharacter('.');
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              customIcon: Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
+              onPressed: () {
+                setState(() {
+                  _addCharacter('-');
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              customIcon: Icon(Icons.remove, size: 30, color: themeColors().mainFont()),
+              onPressed: () {
+                setState(() {
+                  _addCharacter('–');
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              customIcon: Icon(Icons.space_bar, size: 15, color: themeColors().mainFont()),
+              onPressed: () {
+                setState(() {
+                  _addCharacter('\u202F');
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMorseButtonsMorseAmerican1844(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
       child: Row(
