@@ -42,7 +42,7 @@ const Map<String, int> _MILESIANNUMBERS_H = {
   'χ': 600,
   'ψ': 700,
   'ω': 800,
-  'ϡ': 900,
+  '\u03E1': 900, // ϡ
   '' : 0,
 };
 const Map<String, int> _MILESIANNUMBERS_T = {
@@ -54,7 +54,7 @@ const Map<String, int> _MILESIANNUMBERS_T = {
   'ξ': 60,
   'ο': 70,
   'π': 80,
-  'ϟ': 90,
+  '\u03DF': 90, // ϟ
   '' : 0,
 };
 const Map<String, int> _MILESIANNUMBERS_O = {
@@ -63,7 +63,7 @@ const Map<String, int> _MILESIANNUMBERS_O = {
   'γ': 3,
   'δ': 4,
   'ε': 5,
-  'ϝ': 6,
+  '\u03C2': 6, // ς
   'ζ': 7,
   'η': 8,
   'θ': 9,
