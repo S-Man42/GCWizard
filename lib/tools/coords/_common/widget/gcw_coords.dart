@@ -240,13 +240,9 @@ class _GCWCoordsState extends State<GCWCoords> {
   }
 
   void _setCurrentValueAndEmitOnChange([BaseCoordinate? newValue]) {
-    if (newValue != null) {
-      _currentCoords = newValue;
-    }
+    _currentCoords = newValue ?? _currentCoords;
 
-    if (_currentCoords.toLatLng() != null) {
-      widget.onChanged(_currentCoords);
-    }
+    widget.onChanged(_currentCoords.toLatLng() == null ? null : _currentCoords);
   }
 
   void _setCoords(List<BaseCoordinate> pastedCoords) {
@@ -398,9 +394,9 @@ _GCWCoordWidgetSubtypeInfo? coordinateWidgetSubtypeInfoByType(GCWCoordWidgetInfo
 }
 
 var allCoordinateWidgetInfos = [
-  _GCWCoordWidgetInfoDEC(),
-  _GCWCoordWidgetInfoDMM(),
   _GCWCoordWidgetInfoDMS(),
+  _GCWCoordWidgetInfoDMM(),
+  _GCWCoordWidgetInfoDEC(),
   _GCWCoordWidgetInfoUTM(),
   _GCWCoordWidgetInfoMGRS(),
   _GCWCoordWidgetInfoXYZ(),
