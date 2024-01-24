@@ -8,6 +8,7 @@ const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
   0: CoordinateFormatKey.MAPCODE_LOCAL,
   1: CoordinateFormatKey.MAPCODE_INTERNATIONAL,
 };
+
 const int _DEFAULT_PRECISION = 0;
 const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
 const mapCodeKey = 'coords_mapcode';
