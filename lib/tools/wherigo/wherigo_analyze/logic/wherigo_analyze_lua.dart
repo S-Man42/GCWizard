@@ -472,7 +472,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         InputText: _cartridgeInputs[i].InputText,
         InputChoices: _cartridgeInputs[i].InputChoices,
         InputAnswers: _Answers.isEmpty ? [] : _Answers[i].InputAnswers));
-  }
+   }
   _cartridgeInputs = _resultInputs;
 
   // ----------------------------------------------------------------------------------------------------------------
