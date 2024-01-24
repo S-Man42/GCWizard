@@ -17,10 +17,10 @@ final _defaultCoordinate = MapCode.fromLatLon(LatLng(0, 0), defaultMapCodeType);
 final MapCodeFormatDefinition = CoordinateFormatWithSubtypesDefinition(
     CoordinateFormatKey.MAPCODE, mapCodeKey, mapCodeKey,
     [
-      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_mapcode_local', 'coords_mapcode_local',
-          MapCode.parse, _defaultCoordinate),
-      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_INTERNATIONAL, 'coords_mapcode_international', 'coords_mapcode_international',
-          MapCode.parse, _defaultCoordinate),
+      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_mapcode_local',
+          'coords_mapcode_local', MapCode.parse, _defaultCoordinate),
+      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_INTERNATIONAL, 'coords_mapcode_international',
+          'coords_mapcode_international', MapCode.parse, _defaultCoordinate),
     ],
     MapCode.parse, _defaultCoordinate);
 

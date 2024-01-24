@@ -147,7 +147,7 @@ const _ccode_rus = 496;
 const _ccode_earth = 532;
 
 const _parents3 = "USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,";
-const parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
+const _parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 // const _ccode_start = 112; // NLD
 // const _mapcode_cversion = "2.0.2";
@@ -163,7 +163,7 @@ String _trim(String str) {
 /// PRIVATE return 2-letter parent country abbreviation (disam in range 1..8)
 String _parentname2(int disam) {
   var start = disam * 3 - 3;
-  return parents2.substring(start, start + 2);
+  return _parents2.substring(start, start + 2);
 }
 
 /// PRIVATE given a parent country abbreviation, return disam (in range 1-8) or negative if error
@@ -172,7 +172,7 @@ int _parentletter(String territoryAlphaCode) {
   var srch = territoryAlphaCode.toUpperCase() + ',';
   var len = srch.length;
   if (len == 3) {
-    p = parents2.indexOf(srch);
+    p = _parents2.indexOf(srch);
   } else if (len == 4) {
     p = _parents3.indexOf(srch);
   }
