@@ -84,7 +84,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
-        var _actual = ReverseWherigoWaldmeister.parse((elem['input'] as List<String>).join(' '))?.toLatLng();
+        var _actual = ReverseWherigoWaldmeisterCoordinate.parse((elem['input'] as List<String>).join(' '))?.toLatLng();
         expect(_actual, elem['expectedOutput']);
       });
     }
