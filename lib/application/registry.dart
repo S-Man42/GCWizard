@@ -4310,6 +4310,18 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
     ]),
+    GCWSymbolTableTool(symbolKey: 'morse_gerke', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_1838_patent', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_1844_vail', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_steinheil', symbolSearchStrings: const [
+      'morse',
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
     ]),
