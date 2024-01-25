@@ -1,7 +1,8 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
+var _currentTerritory = '';
+
 class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
-  var _currentTerritory = '';
 
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.MAPCODE;
@@ -142,8 +143,7 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
 
   void _setCurrentValueAndEmitOnChange() {
     try {
-      //var subtype = _currentSubtype;
-      var mapCode = (MapCode.parse(_currentCoord, territory: ''));
+      var mapCode = MapCode.parse(_currentCoord, territory: _currentTerritory);
 
       widget.onChanged(mapCode);
     } catch (e) {}
