@@ -225,29 +225,42 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   Widget build(BuildContext context) {
     // https://www.kindacode.com/article/flutter-ask-for-confirmation-when-back-button-pressed/
     // https://stackoverflow.com/questions/77500680/willpopscope-is-deprecated-after-flutter-3-12
+    // https://api.flutter.dev/flutter/widgets/PopScope-class.html
     return PopScope(
-      canPop: true,
-      onPopInvoked: (didPop) async {
+      canPop: false,
+      onPopInvoked: (didPop)  {
         // show the confirm dialog
-        await showDialog<bool>(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: Text(i18n(context, 'wherigo_exit_title')),
-              titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-              content: Text(i18n(context, 'wherigo_exit_message')),
-              contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
-              backgroundColor: themeColors().dialog(),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(i18n(context, 'common_yes'))),
-                ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
-              ],
-            ));
-        return;
+        if (didPop) {
+          return;
+        } else {
+           showDialog<bool>(
+              context: context,
+              builder: (_) => AlertDialog(
+                    title: Text(i18n(context, 'wherigo_exit_title')),
+                    titleTextStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold),
+                    content: Text(i18n(context, 'wherigo_exit_message')),
+                    contentTextStyle:
+                        const TextStyle(color: Colors.black, fontSize: 16.0),
+                    backgroundColor: themeColors().dialog(),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                          child: Text(i18n(context, 'common_yes'))),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(i18n(context, 'common_no')))
+                    ],
+                  ));
+          return;
+        }
       },
       child: Column(
         children: <Widget>[
