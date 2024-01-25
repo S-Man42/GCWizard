@@ -15,3 +15,4 @@ part 'package:gc_wizard/tools/coords/_common/logic//external_libs/net.sf.geograp
 part 'package:gc_wizard/tools/coords/_common/logic//external_libs/net.sf.geographic_lib/geographic_lib/pair.dart';
 part 'package:gc_wizard/tools/coords/_common/logic//external_libs/net.sf.geographic_lib/geographic_lib/rhumb.dart';
 part 'package:gc_wizard/tools/coords/_common/logic//external_libs/net.sf.geographic_lib/geographic_lib/ellipsoid.dart';
+part 'package:gc_wizard/tools/coords/_common/logic//external_libs/net.sf.geographic_lib/geographic_lib/elliptic_function.dart';

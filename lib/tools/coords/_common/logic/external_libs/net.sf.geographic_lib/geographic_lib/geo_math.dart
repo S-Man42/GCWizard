@@ -343,6 +343,17 @@ class _GeoMath {
     p.second = cosx;
   }
 
+  /**
+   * Evaluate the atan function with the result in degrees
+   *
+   * @tparam T the type of the argument and the returned value.
+   * @param[in] x
+   * @return atan(<i>x</i>) in degrees.
+   **********************************************************************/
+  static double atand(double x) {
+    return atan2d(x, 1.0);
+  }
+
   /*
    * Evaluate the atan2 function with the result in degrees
    *

@@ -53,8 +53,8 @@ class _Ellipsoid {
   //  ???
   // }
 
-  double get _ell {
-    return -_e12;
+  _EllipticFunction get _ell {
+    return _EllipticFunction(-_e12);
   }
 
   // // , _au(_a, _f, real(0), real(1), real(0), real(1), real(1))
@@ -68,5 +68,18 @@ class _Ellipsoid {
     (_e2 == 0 ? 1 :
     (_e2 > 0 ? _GeoMath.atanh(sqrt(_e2)) : atan(sqrt(-_e2))) /
     sqrt(_e2.abs())))/2);
+  }
+
+  double _QuarterMeridian() {
+    return _b * _ell.E0();
+  }
+
+  double _InverseParametricLatitude(double beta) {
+    return _GeoMath.atand(_GeoMath.tand(_GeoMath.LatFix(beta)) / _f1);
+  }
+
+  double _InverseRectifyingLatitude(double mu) {
+    if ((mu).abs() == _GeoMath.qd) return mu;
+    return _InverseParametricLatitude(_ell.Einv(mu * _ell.E0() / _GeoMath.qd) / _GeoMath.degree());
   }
 }
