@@ -10,7 +10,7 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
   @override
   String get i18nKey => mapCodeKey;
   @override
-  String get name => 'coords_formatconverter_mapcode';
+  String get name => 'MapCode';
   @override
   String get example => 'VJMM4.DTYX';
 
