@@ -204,24 +204,24 @@ double _b3CheckSum(int _lat, int _lon, double _a4) {
     //b3 = 11 – ((2*a4 + 4*n1 + 7*n3 + 8*n5 + 5*n7 + 6*e1 + 9*e5 + 3*e6) mod 11)
     _tempb3 = (11 - (
         _a4 * 2 +
-            _numberAtBackPosition(_lat, 6) * 4 +
-            _numberAtBackPosition(_lat, 4) * 7 +
-            _numberAtBackPosition(_lat, 2) * 8 +
-            _numberAtBackPosition(_lat, 0) * 5 +
-            _numberAtBackPosition(_lon, 7) * 6 +
-            _numberAtBackPosition(_lon, 3) * 9 +
-            _numberAtBackPosition(_lon, 2) * 3) % 11);
+        _numberAtBackPosition(_lat, 6) * 4 +
+        _numberAtBackPosition(_lat, 4) * 7 +
+        _numberAtBackPosition(_lat, 2) * 8 +
+        _numberAtBackPosition(_lat, 0) * 5 +
+        _numberAtBackPosition(_lon, 7) * 6 +
+        _numberAtBackPosition(_lon, 3) * 9 +
+        _numberAtBackPosition(_lon, 2) * 3) % 11);
   } else {
     //b3 = 11 – ((2*a4 + 9*n1 + 5*n2 + 4*n3 + 8*n7 + 3*e3 + 6*e4 + 7*e8) mod 11)
     _tempb3 = (11 - (
         _a4 * 2 +
-            _numberAtBackPosition(_lat, 6) * 9 +
-            _numberAtBackPosition(_lat, 5) * 5 +
-            _numberAtBackPosition(_lat, 4) * 4 +
-            _numberAtBackPosition(_lat, 0) * 8 +
-            _numberAtBackPosition(_lon, 5) * 3 +
-            _numberAtBackPosition(_lon, 4) * 6 +
-            _numberAtBackPosition(_lon, 0) * 7) % 11);
+        _numberAtBackPosition(_lat, 6) * 9 +
+        _numberAtBackPosition(_lat, 5) * 5 +
+        _numberAtBackPosition(_lat, 4) * 4 +
+        _numberAtBackPosition(_lat, 0) * 8 +
+        _numberAtBackPosition(_lon, 5) * 3 +
+        _numberAtBackPosition(_lon, 4) * 6 +
+        _numberAtBackPosition(_lon, 0) * 7) % 11);
   }
   return _transformCheckSum(_tempb3);
 }
@@ -236,24 +236,24 @@ double __b3CheckSum(ReverseWherigoWaldmeisterCoordinate waldmeister) {
     //b3 = 11 – ((2*a4 + 4*n1 + 7*n3 + 8*n5 + 5*n7 + 6*e1 + 9*e5 + 3*e6) mod 11)
     _tempb3 = (11 - (
         _numberAtBackPosition(a, _wLength - 4) * 2 +
-            _numberAtBackPosition(a, _wLength - 3) * 4 +
-            _numberAtBackPosition(b, _wLength - 2) * 7 +
-            _numberAtBackPosition(a, _wLength - 1) * 8 +
-            _numberAtBackPosition(a, _wLength - 6) * 5 +
-            _numberAtBackPosition(a, _wLength - 2) * 6 +
-            _numberAtBackPosition(b, _wLength - 1) * 9 +
-            _numberAtBackPosition(a, _wLength - 5) * 3) % 11);
+        _numberAtBackPosition(a, _wLength - 3) * 4 +
+        _numberAtBackPosition(b, _wLength - 2) * 7 +
+        _numberAtBackPosition(a, _wLength - 1) * 8 +
+        _numberAtBackPosition(a, _wLength - 6) * 5 +
+        _numberAtBackPosition(a, _wLength - 2) * 6 +
+        _numberAtBackPosition(b, _wLength - 1) * 9 +
+        _numberAtBackPosition(a, _wLength - 5) * 3) % 11);
   } else {
     //b3 = 11 – ((2*a4 + 9*n1 + 5*n2 + 4*n3 + 8*n7 + 3*e3 + 6*e4 + 7*e8) mod 11)
     _tempb3 = (11 - (
         _numberAtBackPosition(a, _wLength - 4) * 2 +
-            _numberAtBackPosition(b, _wLength - 1) * 9 +
-            _numberAtBackPosition(a, _wLength - 6) * 5 +
-            _numberAtBackPosition(a, _wLength - 3) * 4 +
-            _numberAtBackPosition(a, _wLength - 1) * 8 +
-            _numberAtBackPosition(a, _wLength - 5) * 3 +
-            _numberAtBackPosition(a, _wLength - 2) * 6 +
-            _numberAtBackPosition(b, _wLength - 2) * 7) % 11);
+        _numberAtBackPosition(b, _wLength - 1) * 9 +
+        _numberAtBackPosition(a, _wLength - 6) * 5 +
+        _numberAtBackPosition(a, _wLength - 3) * 4 +
+        _numberAtBackPosition(a, _wLength - 1) * 8 +
+        _numberAtBackPosition(a, _wLength - 5) * 3 +
+        _numberAtBackPosition(a, _wLength - 2) * 6 +
+        _numberAtBackPosition(b, _wLength - 2) * 7) % 11);
   }
   return _transformCheckSum(_tempb3);
 }
@@ -265,24 +265,24 @@ double _c3CheckSum(int _lat, int _lon) {
     //c3 = 11 – ((6*n2 + 5*n4 + 9*n6 + 2*e2 + 7*e3 + 8*e4 + 3*e7 + 4*e8) mod 11)
     _tempc3 = (11 - (
         _numberAtBackPosition(_lat, 5) * 6 +
-            _numberAtBackPosition(_lat, 3) * 5 +
-            _numberAtBackPosition(_lat, 1) * 9 +
-            _numberAtBackPosition(_lon, 6) * 2 +
-            _numberAtBackPosition(_lon, 5) * 7 +
-            _numberAtBackPosition(_lon, 4) * 8 +
-            _numberAtBackPosition(_lon, 1) * 3 +
-            _numberAtBackPosition(_lon, 0) * 4) % 11);
+        _numberAtBackPosition(_lat, 3) * 5 +
+        _numberAtBackPosition(_lat, 1) * 9 +
+        _numberAtBackPosition(_lon, 6) * 2 +
+        _numberAtBackPosition(_lon, 5) * 7 +
+        _numberAtBackPosition(_lon, 4) * 8 +
+        _numberAtBackPosition(_lon, 1) * 3 +
+        _numberAtBackPosition(_lon, 0) * 4) % 11);
   } else {
     //c3 = 11 – ((2*n4 + 5*n5 + 9*n6 + 6*e1 + 7*e2 + 8*e5 + 4*e6 + 3*e7) mod 11)
     _tempc3 = (11 - (
         _numberAtBackPosition(_lat, 3) * 2 +
-            _numberAtBackPosition(_lat, 2) * 5 +
-            _numberAtBackPosition(_lat, 1) * 9 +
-            _numberAtBackPosition(_lon, 7) * 6 +
-            _numberAtBackPosition(_lon, 6) * 7 +
-            _numberAtBackPosition(_lon, 3) * 8 +
-            _numberAtBackPosition(_lon, 2) * 4 +
-            _numberAtBackPosition(_lon, 1) * 3) % 11);
+        _numberAtBackPosition(_lat, 2) * 5 +
+        _numberAtBackPosition(_lat, 1) * 9 +
+        _numberAtBackPosition(_lon, 7) * 6 +
+        _numberAtBackPosition(_lon, 6) * 7 +
+        _numberAtBackPosition(_lon, 3) * 8 +
+        _numberAtBackPosition(_lon, 2) * 4 +
+        _numberAtBackPosition(_lon, 1) * 3) % 11);
   }
   return _transformCheckSum(_tempc3);
 }
@@ -296,24 +296,24 @@ double __c3CheckSum(ReverseWherigoWaldmeisterCoordinate waldmeister) {
     //c3 = 11 – ((6*n2 + 5*n4 + 9*n6 + 2*e2 + 7*e3 + 8*e4 + 3*e7 + 4*e8) mod 11)
     _tempc3 = (11 - (
         _numberAtBackPosition(b, _wLength - 5) * 6 +
-            _numberAtBackPosition(c, _wLength - 4) * 5 +
-            _numberAtBackPosition(c, _wLength - 5) * 9 +
-            _numberAtBackPosition(c, _wLength - 1) * 2 +
-            _numberAtBackPosition(c, _wLength - 6) * 7 +
-            _numberAtBackPosition(b, _wLength - 4) * 8 +
-            _numberAtBackPosition(c, _wLength - 2) * 3 +
-            _numberAtBackPosition(b, _wLength - 6) * 4) % 11);
+        _numberAtBackPosition(c, _wLength - 4) * 5 +
+        _numberAtBackPosition(c, _wLength - 5) * 9 +
+        _numberAtBackPosition(c, _wLength - 1) * 2 +
+        _numberAtBackPosition(c, _wLength - 6) * 7 +
+        _numberAtBackPosition(b, _wLength - 4) * 8 +
+        _numberAtBackPosition(c, _wLength - 2) * 3 +
+        _numberAtBackPosition(b, _wLength - 6) * 4) % 11);
   } else {
     //c3 = 11 – ((2*n4 + 5*n5 + 9*n6 + 6*e1 + 7*e2 + 8*e5 + 4*e6 + 3*e7) mod 11)
     _tempc3 = (11 - (
         _numberAtBackPosition(c, _wLength - 1) * 2 +
-            _numberAtBackPosition(c, _wLength - 4) * 5 +
-            _numberAtBackPosition(c, _wLength - 5) * 9 +
-            _numberAtBackPosition(b, _wLength - 5) * 6 +
-            _numberAtBackPosition(c, _wLength - 6) * 7 +
-            _numberAtBackPosition(b, _wLength - 4) * 8 +
-            _numberAtBackPosition(b, _wLength - 6) * 4 +
-            _numberAtBackPosition(c, _wLength - 2) * 3) % 11);
+        _numberAtBackPosition(c, _wLength - 4) * 5 +
+        _numberAtBackPosition(c, _wLength - 5) * 9 +
+        _numberAtBackPosition(b, _wLength - 5) * 6 +
+        _numberAtBackPosition(c, _wLength - 6) * 7 +
+        _numberAtBackPosition(b, _wLength - 4) * 8 +
+        _numberAtBackPosition(b, _wLength - 6) * 4 +
+        _numberAtBackPosition(c, _wLength - 2) * 3) % 11);
   }
   return _transformCheckSum(_tempc3);
 }
