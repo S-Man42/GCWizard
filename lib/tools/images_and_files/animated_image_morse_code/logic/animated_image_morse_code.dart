@@ -71,7 +71,7 @@ Future<Uint8List?> _createImage(Uint8List highImage, Uint8List lowImage, String 
   if (input.isEmpty) return null;
   if (ditDuration <= 0) return null;
 
-  input = encodeMorse(input);
+  input = encodeMorse(input, MORSE_CODE.MORSE_ITU);
 
   try {
     var _highImage = Image.decodeImage(highImage);
@@ -174,7 +174,7 @@ MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal) {
     }
   }
 
-  return MorseCodeOutput(out, decodeMorse(out));
+  return MorseCodeOutput(out, decodeMorse(out, MORSE_CODE.MORSE_ITU));
 }
 
 List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal) {

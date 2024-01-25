@@ -111,6 +111,7 @@ Actual Release:
 	- Android:
 		- Promote open test version to public
 		- Save -> Send for review -> Start roll-out
+		- Update Rollout Settings from 20 to 100%
 		- Reviewing may take a few days
 	- iOS:
 		- Go to normal AppStore
@@ -217,6 +218,11 @@ Xcode 10: unable to attach DB error
 --------------
 Could not find a file named"pubspec.yaml"in
 -> dart pub get
+--------------
+Xcode 14 beta error: Stored properties cannot be marked potentially unavailable with '@available'
+-> Navigate to ios folder and run following commands:
+-> pod install
+-> pod update
 
 
 ========
