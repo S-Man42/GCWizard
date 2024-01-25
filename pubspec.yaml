@@ -70,6 +70,9 @@ dev_dependencies:
 
 flutter:
   fonts:
+    - family: MyFlutterApp
+      fonts:
+        - asset: lib/application/_common/assets/fonts/Icons/MyFlutterApp.ttf
     - family: Courier
       fonts:
         - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-Bold.ttf
@@ -264,6 +267,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/moon/
     - lib/tools/symbol_tables/_common/assets/moon_phases/
     - lib/tools/symbol_tables/_common/assets/morse/
+    - lib/tools/symbol_tables/_common/assets/morse_gerke/
+    - lib/tools/symbol_tables/_common/assets/morse_1838_patent/
+    - lib/tools/symbol_tables/_common/assets/morse_1844_vail/
+    - lib/tools/symbol_tables/_common/assets/morse_steinheil/
     - lib/tools/symbol_tables/_common/assets/murray/
     - lib/tools/symbol_tables/_common/assets/murray_v2_fischer_corrected/
     - lib/tools/symbol_tables/_common/assets/murray_v3_navy_1796/
