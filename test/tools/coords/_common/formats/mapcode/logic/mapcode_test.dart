@@ -99,7 +99,7 @@ void main() {
                 // see if decode encodes back to the same solution
                 var parent = getParentOf(r[i].territoryAlphaCode);
                 var r2 = encodeWithPrecision(p.latitude, p.longitude, precision, r[i].territoryAlphaCode);
-                var r3 = <mcInfoC>[];
+                var r3 = <McInfo>[];
                 var found = 0;
                 for (var i2 = 0; i2 < r2.length; i2++) {
                   if (r2[i2].fullmapcode == str) {
@@ -217,7 +217,7 @@ void main() {
 
 
 
-void printGeneratedMapcodes(List<mcInfoC> r, String name) {
+void printGeneratedMapcodes(List<McInfo> r, String name) {
   var n = r.length;
   var t = ' &nbsp; ' + n.toString() + ' results generated (' + name + '):';
   for (var i = 0; i < n; i++) {
