@@ -266,7 +266,7 @@ class _AboutState extends State<About> {
                     'Vyrembi',
                     'waldstadt',
                     'WeinWalker',
-                    'WingsAndTales,
+                    'WingsAndTales',
                     'zoRRo'
                   ].join(', '))
                 ], style: gcwTextStyle()),
