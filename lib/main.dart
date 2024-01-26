@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gc_wizard/application/_common/package_info.dart';
 import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/i18n/logic/app_language.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -10,6 +11,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
@@ -21,15 +23,20 @@ void main() async {
   await appLanguage.fetchLocale();
   initializePreferences();
 
+  GCWPackageInfo packageInfo = GCWPackageInfo();
+  await packageInfo.init();
+
   runApp(App(
     appLanguage: appLanguage,
+    packageInfo: packageInfo,
   ));
 }
 
 class App extends StatelessWidget {
   final AppLanguage appLanguage;
+  final GCWPackageInfo packageInfo;
 
-  const App({Key? key, required this.appLanguage}) : super(key: key);
+  const App({Key? key, required this.appLanguage, required this.packageInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
