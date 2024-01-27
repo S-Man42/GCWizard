@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/json_provider.dart';
