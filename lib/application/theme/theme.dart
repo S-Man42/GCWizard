@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:prefs/prefs.dart';
 
 const FONT_SIZE_MIN = 10;
@@ -16,8 +15,6 @@ const DOUBLE_DEFAULT_MARGIN = 2 * DEFAULT_MARGIN;
 const DEFAULT_DESCRIPTION_MARGIN = 10.0;
 
 const DEFAULT_LISTITEM_SIZE = 42.0;
-
-String _appLogoPath = '';
 
 double fontSizeSmall() {
   return defaultFontSize() - 4;
@@ -166,10 +163,10 @@ String applogoFilename() {
   const resolution = 128;
   var logoId = '';
 
-  var info = GCWPackageInfo().info; // TODO: Mache GCWPackageInfo zu einem Singleton... Das wird einmal beim AppStart initialisiert. Auf diese Instanz muss zugegriffen werden...
-  switch (info.packageName.split('.')[2]) {
-    case 'gcwizard_alpha': logoId += '_nightly'; break;
-    case 'gcwizard_gold': logoId += '_gold'; break;
+  var pkgInfo = GCWPackageInfo.getInstance();
+  switch (pkgInfo.packageName.split('.')[2]) {
+    case 'gc_wizard_alpha': logoId += '_nightly'; break;
+    case 'gc_wizard_gold': logoId += '_gold'; break;
     default: break;
   }
 
