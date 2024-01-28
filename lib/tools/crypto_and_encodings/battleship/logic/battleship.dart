@@ -32,7 +32,23 @@ String _intToExcelMode(int number){
   }
 }
 
+List<String> _splitPair(String pair){
+  List<String> result = [];
+  String part = '';
+  for (int i = 0; i < pair.length; i++) {
+    if (int.tryParse(pair[i]) == null) {
+      part = part + pair[i];
+    }
+  }
+  result.add(part);
+  result.add(pair.substring(part.length));
+  return result;
+}
+
 String decodeBattleship(String text, bool numberMode) {
+
+  if (text.isEmpty) return '';
+
   bool absoluteError = false;
   int column = 0;
   int maxColumn = 0;
@@ -40,11 +56,16 @@ String decodeBattleship(String text, bool numberMode) {
   int maxRow = 0;
   Map<String, String> world = {};
   String faultyTupel = '';
+  List<String> tupel = [];
 
   _normalizeInput(text.toUpperCase()).split(' ').forEach((pair) {
-    List<String> tupel = pair.split(',');
-    if (tupel.length != 2) {
 
+    if (numberMode) {
+      tupel = pair.split(',');
+    } else {
+      tupel = _splitPair(pair);
+    }
+    if (tupel.length != 2) {
       absoluteError = true;
     } else {
       if (isInteger(tupel[0])) {
@@ -98,6 +119,9 @@ String decodeBattleship(String text, bool numberMode) {
 }
 
 String encodeBattleship(String text, bool textmode, bool numberMode) {
+
+  if (text.isEmpty) return '';
+
   List<String> result = [];
 
   if (textmode) {
@@ -111,7 +135,7 @@ String encodeBattleship(String text, bool textmode, bool numberMode) {
         if (numberMode) {
           result.add((column + 1).toString() + ',' + (row + 1).toString());
         } else {
-          result.add(_intToExcelMode(column + 1) + ',' + (row + 1).toString());
+          result.add(_intToExcelMode(column + 1) + (row + 1).toString());
         }
       }
     }

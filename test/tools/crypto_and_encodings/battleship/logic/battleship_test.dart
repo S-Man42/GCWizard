@@ -31,12 +31,12 @@ void main() {
       {
         'input': 'hallo',
         'expectedOutput':
-            'C,1 P,1 V,1 C,2 P,2 V,2 C,3 D,3 J,3 K,3 P,3 V,3 AB,3 C,4 E,4 I,4 K,4 P,4 V,4 AA,4 AC,4 C,5 E,5 I,5 K,5 P,5 V,5 AA,5 AC,5 C,6 E,6 I,6 K,6 P,6 V,6 AA,6 AC,6 C,7 E,7 I,7 J,7 K,7 L,7 Q,7 W,7 AB,7'
+            'C1 P1 V1 C2 P2 V2 C3 D3 J3 K3 P3 V3 AB3 C4 E4 I4 K4 P4 V4 AA4 AC4 C5 E5 I5 K5 P5 V5 AA5 AC5 C6 E6 I6 K6 P6 V6 AA6 AC6 C7 E7 I7 J7 K7 L7 Q7 W7 AB7'
       },
       {
         'input': 'HALLO',
         'expectedOutput':
-            'B,1 F,1 J,1 N,1 T,1 AA,1 AB,1 AC,1 B,2 F,2 I,2 K,2 N,2 T,2 Z,2 AD,2 B,3 F,3 H,3 L,3 N,3 T,3 Z,3 AD,3 B,4 C,4 D,4 E,4 F,4 H,4 I,4 J,4 K,4 L,4 N,4 T,4 Z,4 AD,4 B,5 F,5 H,5 L,5 N,5 T,5 Z,5 AD,5 B,6 F,6 H,6 L,6 N,6 T,6 Z,6 AD,6 B,7 F,7 H,7 L,7 N,7 O,7 P,7 Q,7 R,7 T,7 U,7 V,7 W,7 X,7 AA,7 AB,7 AC,7'
+            'B1 F1 J1 N1 T1 AA1 AB1 AC1 B2 F2 I2 K2 N2 T2 Z2 AD2 B3 F3 H3 L3 N3 T3 Z3 AD3 B4 C4 D4 E4 F4 H4 I4 J4 K4 L4 N4 T4 Z4 AD4 B5 F5 H5 L5 N5 T5 Z5 AD5 B6 F6 H6 L6 N6 T6 Z6 AD6 B7 F7 H7 L7 N7 O7 P7 Q7 R7 T7 U7 V7 W7 X7 AA7 AB7 AC7'
       },
     ];
 
@@ -84,7 +84,7 @@ void main() {
             ' #   # #   # #     #     #   #\n' +
             ' #   # #   # ##### #####  ### ',
         'expectedOutput':
-            'B,1 F,1 J,1 N,1 T,1 AA,1 AB,1 AC,1 B,2 F,2 I,2 K,2 N,2 T,2 Z,2 AD,2 B,3 F,3 H,3 L,3 N,3 T,3 Z,3 AD,3 B,4 C,4 D,4 E,4 F,4 H,4 I,4 J,4 K,4 L,4 N,4 T,4 Z,4 AD,4 B,5 F,5 H,5 L,5 N,5 T,5 Z,5 AD,5 B,6 F,6 H,6 L,6 N,6 T,6 Z,6 AD,6 B,7 F,7 H,7 L,7 N,7 O,7 P,7 Q,7 R,7 T,7 U,7 V,7 W,7 X,7 AA,7 AB,7 AC,7'
+            'B1 F1 J1 N1 T1 AA1 AB1 AC1 B2 F2 I2 K2 N2 T2 Z2 AD2 B3 F3 H3 L3 N3 T3 Z3 AD3 B4 C4 D4 E4 F4 H4 I4 J4 K4 L4 N4 T4 Z4 AD4 B5 F5 H5 L5 N5 T5 Z5 AD5 B6 F6 H6 L6 N6 T6 Z6 AD6 B7 F7 H7 L7 N7 O7 P7 Q7 R7 T7 U7 V7 W7 X7 AA7 AB7 AC7'
       },
     ];
 
@@ -98,7 +98,7 @@ void main() {
 
   group("Battleship.decodeNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': '', 'expectedOutput': 'battleship_error_invalid_pair\n' + '\n' + ''},
+      {'input': '', 'expectedOutput': ''},
       {
         'expectedOutput': '  #            #     #       \n' +
             '  #            #     #       \n' +
@@ -133,7 +133,7 @@ void main() {
 
   group("Battleship.decodeExcel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': '', 'expectedOutput': 'battleship_error_invalid_pair\n' + '\n' + ''},
+      {'input': '', 'expectedOutput': ''},
       {
         'expectedOutput': '  #            #     #       \n' +
             '  #            #     #       \n' +
@@ -143,7 +143,7 @@ void main() {
             '  # #   # #    #     #    # #\n' +
             '  # #   ####    #     #    # ',
         'input':
-            'C,1 P,1 V,1 C,2 P,2 V,2 C,3 D,3 J,3 K,3 P,3 V,3 AB,3 C,4 E,4 I,4 K,4 P,4 V,4 AA,4 AC,4 C,5 E,5 I,5 K,5 P,5 V,5 AA,5 AC,5 C,6 E,6 I,6 K,6 P,6 V,6 AA,6 AC,6 C,7 E,7 I,7 J,7 K,7 L,7 Q,7 W,7 AB,7'
+            'C1 P1 V1 C2 P2 V2 C3 D3 J3 K3 P3 V3 AB3 C4 E4 I4 K4 P4 V4 AA4 AC4 C5 E5 I5 K5 P5 V5 AA5 AC5 C6 E6 I6 K6 P6 V6 AA6 AC6 C7 E7 I7 J7 K7 L7 Q7 W7 AB7'
       },
       {
         'expectedOutput': ' #   #   #   #     #      ### \n' +
@@ -154,7 +154,7 @@ void main() {
             ' #   # #   # #     #     #   #\n' +
             ' #   # #   # ##### #####  ### ',
         'input':
-            'B,1 F,1 J,1 N,1 T,1 AA,1 AB,1 AC,1 B,2 F,2 I,2 K,2 N,2 T,2 Z,2 AD,2 B,3 F,3 H,3 L,3 N,3 T,3 Z,3 AD,3 B,4 C,4 D,4 E,4 F,4 H,4 I,4 J,4 K,4 L,4 N,4 T,4 Z,4 AD,4 B,5 F,5 H,5 L,5 N,5 T,5 Z,5 AD,5 B,6 F,6 H,6 L,6 N,6 T,6 Z,6 AD,6 B,7 F,7 H,7 L,7 N,7 O,7 P,7 Q,7 R,7 T,7 U,7 V,7 W,7 X,7 AA,7 AB,7 AC,7'
+            'B1 F1 J1 N1 T1 AA1 AB1 AC1 B2 F2 I2 K2 N2 T2 Z2 AD2 B3 F3 H3 L3 N3 T3 Z3 AD3 B4 C4 D4 E4 F4 H4 I4 J4 K4 L4 N4 T4 Z4 AD4 B5 F5 H5 L5 N5 T5 Z5 AD5 B6 F6 H6 L6 N6 T6 Z6 AD6 B7 F7 H7 L7 N7 O7 P7 Q7 R7 T7 U7 V7 W7 X7 AA7 AB7 AC7'
       },
     ];
 
