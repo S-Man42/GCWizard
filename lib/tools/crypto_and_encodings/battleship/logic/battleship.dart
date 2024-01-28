@@ -21,7 +21,6 @@ int _excelModeToInt(String excelNumber){
       }
     }
   }
-  print(excelNumber+' '+result.toString());
   return result;
 }
 
@@ -102,7 +101,7 @@ String encodeBattleship(String text, bool textmode, bool numberMode) {
   List<String> result = [];
 
   if (textmode) {
-    text = _convertTextToGraphic(text.toUpperCase());
+    text = _convertTextToGraphic(text);
   }
 
   List<String> lines = text.split('\n');
@@ -135,14 +134,14 @@ String _convertTextToGraphic(String text){
 
 String _convertLineToGraphic(String textLine){
   List<String> result = [];
-  List<String> lines = [' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  List<String> lines = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
   for (int i = 0; i < textLine.length; i++){
-    for (int j = 0; j < 7; j++){
+    for (int j = 0; j < 9; j++){
       lines[j] = lines[j] + BATTLESHIP_ALPHABET[textLine[i]]![j] + ' ';
     }
   }
-  for (int j = 0; j < 7; j++){
+  for (int j = 0; j < 9; j++){
     result.add(lines[j]);
   }
 
