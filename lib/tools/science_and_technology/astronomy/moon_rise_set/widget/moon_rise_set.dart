@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -30,7 +30,9 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              if (ret != null) {
+                _currentCoords = ret;
+              }
             });
           },
         ),

@@ -222,6 +222,7 @@ class _AboutState extends State<About> {
                     'Don Rodolphos',
                     'Headbanger-Berlin',
                     'Felix Z.',
+                    'ferrrix',
                     'Filu \'Aye, Käppn!\' 43 & Stormi \'Aaarrh\' 2061',
                     'finding tresor',
                     'Flosphor',
@@ -265,6 +266,7 @@ class _AboutState extends State<About> {
                     'Vyrembi',
                     'waldstadt',
                     'WeinWalker',
+                    'WingsAndTales',
                     'zoRRo'
                   ].join(', '))
                 ], style: gcwTextStyle()),

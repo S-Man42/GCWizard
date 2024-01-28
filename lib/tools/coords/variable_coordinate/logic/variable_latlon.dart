@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -11,7 +12,7 @@ import 'package:latlong2/latlong.dart';
 
 class _ParsedCoordinates {
   BaseCoordinate coordinate;
-  DMM? leftPadCoordinate;
+  DMMCoordinate? leftPadCoordinate;
 
   _ParsedCoordinates(this.coordinate);
 }
@@ -23,7 +24,7 @@ _ParsedCoordinates? _parseCoordText(String text) {
   var out = _ParsedCoordinates(parsedCoord.first);
 
   if (parsedCoord.first.format.type == CoordinateFormatKey.DMM) {
-    out.leftPadCoordinate = DMM.parse(text, leftPadMilliMinutes: true);
+    out.leftPadCoordinate = DMMCoordinate.parse(text, leftPadMilliMinutes: true);
   }
 
   return out;
@@ -141,9 +142,10 @@ VariableCoordinateResults parseVariableLatLon(String coordinate, Map<String, Str
           parsedCoord.coordinate.toLatLng() == null) continue;
 
       coords.add(VariableCoordinateSingleResult(parsedCoord.coordinate.toLatLng()!, expandedText.variables));
-      if (parsedCoord.leftPadCoordinate != null) {
+      var latLng = parsedCoord.leftPadCoordinate?.toLatLng();
+      if (latLng != null) {
         leftPadCoords
-            .add(VariableCoordinateSingleResult(parsedCoord.leftPadCoordinate!.toLatLng(), expandedText.variables));
+            .add(VariableCoordinateSingleResult(latLng, expandedText.variables));
       }
     }
   }

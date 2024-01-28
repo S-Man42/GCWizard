@@ -20,7 +20,7 @@ void main() {
       // {'point': LatLng(-2.0, -2.0), 'expectedOutput': [0, 360]},
       //
       // //Point on edges
-      {'point': const LatLng(10.0, 2.0), 'expectedOutput': [270, 448]},
+      {'point': LatLng(10.0, 2.0), 'expectedOutput': [270, 448]},
       // {'point': LatLng(10.0, -2.0), 'expectedOutput': [271, 449]},
       // {'point': LatLng(10.0, 0.0), 'expectedOutput': [270, 449]},
       // {'point': LatLng(-10.0, 2.0), 'expectedOutput': [91, 269]},
