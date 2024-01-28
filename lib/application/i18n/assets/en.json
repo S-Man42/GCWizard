@@ -261,6 +261,8 @@
   "battleship_input_mode": "Input Mode",
   "battleship_input_text": "Text",
   "battleship_input_graphic": "Graphic",
+  "battleship_input_numbers": "Numbers",
+  "battleship_input_excel": "Excel-Scheme",
   "bcd_selection_title": "BCD Encodings",
   "bcd_selection_description": "Encodes numbers digit per digit to several binary representations (0 or 1)",
   "bcd_original_title": "BCD",

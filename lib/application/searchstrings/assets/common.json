@@ -38,6 +38,7 @@
   "base85": "base85 ascii85",
   "base91": "base91 joachimhenke",
   "base122": "base122 kevinalbertson",
+  "battleship": "microsoftexcel",
   "bcd": "bcd hamming",
   "bcd1of10": "",
   "bcd2of5": "",

@@ -23,6 +23,7 @@ class Battleship extends StatefulWidget {
 class BattleshipState extends State<Battleship> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentEncryptMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentNumberMode = GCWSwitchPosition.left;
 
   late CodeController _encodeGraphicController;
   late TextEditingController _encodeTextController;
@@ -66,6 +67,16 @@ class BattleshipState extends State<Battleship> {
         onChanged: (value) {
           setState(() {
             _currentMode = value;
+          });
+        },
+      ),
+      GCWTwoOptionsSwitch(
+        value: _currentNumberMode,
+        leftValue: i18n(context, 'battleship_input_numbers'),
+        rightValue: i18n(context, 'battleship_input_excel'),
+        onChanged: (value) {
+          setState(() {
+            _currentNumberMode = value;
           });
         },
       ),
@@ -128,12 +139,12 @@ class BattleshipState extends State<Battleship> {
   void _calcOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentEncryptMode == GCWSwitchPosition.left) {
-        _encodeOutput = encodeBattleship(_currentTextEncode, _TEXTMODE);
+        _encodeOutput = encodeBattleship(_currentTextEncode, _TEXTMODE, (_currentNumberMode == GCWSwitchPosition.left));
       } else {
-        _encodeOutput = encodeBattleship(_encodeGraphicController.text, _GRAPHICMODE);
+        _encodeOutput = encodeBattleship(_encodeGraphicController.text, _GRAPHICMODE, (_currentNumberMode == GCWSwitchPosition.left));
       }
     } else {
-      _decodeOutput = decodeBattleship(_currentDecode);
+      _decodeOutput = decodeBattleship(_currentDecode, (_currentNumberMode == GCWSwitchPosition.left));
     }
     setState(() {});
   }
@@ -141,7 +152,7 @@ class BattleshipState extends State<Battleship> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       if (_decodeOutput.startsWith('battleship')) {
-        _decodeOutput = i18n(context, BATTLESHIP_ERROR_INVALID_PAIR) + '\n\n' + _decodeOutput.substring(29);
+        _decodeOutput = i18n(context, BATTLESHIP_ERROR_INVALID_PAIR) + ': ' + _decodeOutput.substring(29);
       }
       _plainGenerateController.text = _decodeOutput;
       return GCWDefaultOutput(

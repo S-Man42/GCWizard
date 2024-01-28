@@ -1,38 +1,76 @@
+import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/data_type_utils/integer_type_utils.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/battleship/logic/battleship_data.dart';
 
-String decodeBattleship(String text) {
-  bool localError = false;
+String _normalizeInput(String text){
+  return text.replaceAll(RegExp(r'\s*,\s*'), ',');
+}
+
+int _excelModeToInt(String excelNumber){
+  int result = -1;
+
+  for (int i = 0; i < excelNumber.length; i++) {
+    if (int.tryParse(excelNumber[i]) != null) {
+      return -1;
+    } else {
+      if (i == 0) {
+        result = (excelNumber.codeUnitAt(i) - 64);
+      } else {
+        result = result * 26 + (excelNumber.codeUnitAt(1) - 64);
+      }
+    }
+  }
+  print(excelNumber+' '+result.toString());
+  return result;
+}
+
+String _intToExcelMode(int number){
+  if (number < 27) {
+    return String.fromCharCode(number + 64);
+  } else {
+    return String.fromCharCode(number ~/ 26 + 64) + String.fromCharCode(number % 26 + 64);
+  }
+}
+
+String decodeBattleship(String text, bool numberMode) {
   bool absoluteError = false;
   int column = 0;
   int maxColumn = 0;
   int row = 0;
   int maxRow = 0;
   Map<String, String> world = {};
+  String faultyTupel = '';
 
-  text.split(', ').forEach((pair) {
-    List<String> tupel = pair.split(' ');
+  _normalizeInput(text.toUpperCase()).split(' ').forEach((pair) {
+    List<String> tupel = pair.split(',');
     if (tupel.length != 2) {
-      localError = true;
+
+      absoluteError = true;
     } else {
       if (isInteger(tupel[0])) {
-        column = int.parse(tupel[0]);
+         column = int.parse(tupel[0]);
       } else {
-        localError = true;
+        if (numberMode) {
+          column = int.parse(convertBase(tupel[0], 36, 10).trim());
+        } else {
+          column = _excelModeToInt(tupel[0]);
+          if (column == -1){
+            faultyTupel = tupel[0];
+            absoluteError = true;
+          }
+        }
       }
       if (isInteger(tupel[1])) {
         row = int.parse(tupel[1]);
       } else {
-        localError = true;
+        row = int.parse(convertBase(tupel[1], 36, 10));
       }
-      if (!localError) {
+
+      if (!absoluteError) {
         if (column > maxColumn) maxColumn = column;
         if (row > maxRow) maxRow = row;
-        world[tupel[0] + '|' + tupel[1]] = '#';
-      } else {
-        absoluteError = true;
-        localError = false;
+        world[column.toString() + '|' + row.toString()] = '#';
       }
     }
   });
@@ -54,13 +92,13 @@ String decodeBattleship(String text) {
     output.add(outputLine);
   }
   if (absoluteError) {
-    return BATTLESHIP_ERROR_INVALID_PAIR + output.join('\n');
+    return BATTLESHIP_ERROR_INVALID_PAIR + faultyTupel + '\n\n' + output.join('\n');
   } else {
     return output.join('\n');
   }
 }
 
-String encodeBattleship(String text, bool textmode) {
+String encodeBattleship(String text, bool textmode, bool numberMode) {
   List<String> result = [];
 
   if (textmode) {
@@ -71,12 +109,16 @@ String encodeBattleship(String text, bool textmode) {
   for (int row = 0; row < lines.length; row++) {
     for (int column = 0; column < lines[row].length; column++) {
       if (lines[row][column] != ' ') {
-        result.add((column + 1).toString() + ' ' + (row + 1).toString());
+        if (numberMode) {
+          result.add((column + 1).toString() + ',' + (row + 1).toString());
+        } else {
+          result.add(_intToExcelMode(column + 1) + ',' + (row + 1).toString());
+        }
       }
     }
   }
 
-  return result.join(', ');
+  return result.join(' ');
 }
 
 String _convertTextToGraphic(String text){
