@@ -37,12 +37,12 @@ String _abaddon(Object text, Object mode) {
   return output;
 }
 
-String _atbash(Object text) {
-  if (_isNotAString(text)) {
+String _atbash(Object text, Object mode) {
+  if (_isNotAString(text) || _isNotANumber(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
-  return atbash(text as String);
+  return atbash(text as String, historicHebrew: (mode as int) == 0);
 }
 
 String _avemaria(Object text, Object mode) {

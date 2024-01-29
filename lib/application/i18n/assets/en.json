@@ -221,6 +221,8 @@
   "astronomy_seasons_distance": "Distance",
   "atbash_title": "Atbash",
   "atbash_example": "ABC → ZYX",
+  "atbash_mode_original": "Historic, Hebrew",
+  "atbash_mode_modern": "Modern, Latin",
   "atomicnumberstotext_title": "Atomic Numbers to Text",
   "atomicnumberstotext_description": "Converts a list of atomic numbers into their related chemical symbols",
   "atomicnumberstotext_example": "32 8 20 6 2 → GeOCaCHe",
