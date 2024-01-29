@@ -294,7 +294,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ROT18': _GCWizardScriptClassFunctionDefinition(_rot18, 1),
   'ROT47': _GCWizardScriptClassFunctionDefinition(_rot47, 1),
   'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
-  'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
+  'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 2),
   'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
   'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
   'BCD': _GCWizardScriptClassFunctionDefinition(_bcd, 3),

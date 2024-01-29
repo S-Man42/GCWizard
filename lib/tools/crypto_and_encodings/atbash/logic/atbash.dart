@@ -1,7 +1,7 @@
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-final Map<String, String> HISTORICHEBREW = {
+const Map<String, String> HISTORICHEBREW = {
   'A' : 'T',
   'B' : 'S',
   'C' : '',
@@ -24,7 +24,7 @@ final Map<String, String> HISTORICHEBREW = {
   'Z' : 'Z',
   "'" : 'Z',
 };
-String atbash(String input, {bool historicHebrew = true}) {
+String atbash(String input, {bool historicHebrew = false}) {
   if (input.isEmpty) return '';
 
   input = removeAccents(input).toUpperCase();
