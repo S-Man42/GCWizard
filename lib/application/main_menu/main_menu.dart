@@ -33,7 +33,7 @@ Drawer buildMainMenu(BuildContext context) {
               shape: BoxShape.circle,
             ),
             child: Image.asset(
-              'assets/logo/circle_border_128.png',
+              applogoFilename(),
             ),
           ),
           Padding(

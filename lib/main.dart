@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/i18n/logic/app_language.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -21,8 +22,10 @@ void main() async {
   await appLanguage.fetchLocale();
   initializePreferences();
 
+  await GCWPackageInfo.init();
+
   runApp(App(
-    appLanguage: appLanguage,
+    appLanguage: appLanguage
   ));
 }
 
@@ -38,7 +41,7 @@ class App extends StatelessWidget {
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return AppBuilder(builder: (context) {
             return MaterialApp(
-                title: 'GC Wizard',
+                title: GCWPackageInfo.getInstance().appName,
                 supportedLocales: SUPPORTED_LOCALES.keys,
                 locale: model.appLocal,
                 localizationsDelegates: const [
