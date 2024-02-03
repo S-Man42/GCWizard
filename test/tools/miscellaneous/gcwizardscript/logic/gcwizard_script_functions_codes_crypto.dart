@@ -4,8 +4,11 @@ List<Map<String, Object?>> _inputsCryptoToExpected = [
   {'code' : 'a="HALLO"\nprint ABADDON(a, 1)', 'expectedOutput' : 'þµ¥¥¥µµ¥¥µ¥¥þþþ'},
   {'code' : 'a="þµ¥¥¥µµ¥¥µ¥¥þþþ"\nprint ABADDON(a, 0)', 'expectedOutput' : 'HALLO'},
 
-  {'code' : 'a="HALLO"\nprint ATBASH(a)', 'expectedOutput' : 'SZOOL'},
-  {'code' : 'a="SZOOL"\nprint ATBASH(a)', 'expectedOutput' : 'HALLO'},
+  {'code' : 'a="HALLO"\nprint ATBASH(a, 0)', 'expectedOutput' : '(Z|O)TKKH)'},
+  {'code' : 'a="ZTKKH"\nprint ATBASH(a, 0)', 'expectedOutput' : 'Z(A|N)HALL(Z|O)'},
+  {'code' : 'a="OTKKH"\nprint ATBASH(a, 0)', 'expectedOutput' : 'H(A|N)LL(Z|O)'},
+  {'code' : 'a="HALLO"\nprint ATBASH(a, 1)', 'expectedOutput' : 'SZOOL'},
+  {'code' : 'a="SZOOL"\nprint ATBASH(a, 1)', 'expectedOutput' : 'HALLO'},
 
   // It does not mak sense to test a function which is based on a random function
   // {'code' : 'a="HALLO"\nprint AVEMARIA(a, 1)', 'expectedOutput' : 'arbiter clemens immortalis immortalis gloriosus'},

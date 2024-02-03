@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
@@ -9,10 +10,8 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
-const _ABOUT_PACKAGE_INFO_UNKNOWN = 'unknown';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
@@ -22,14 +21,8 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-  PackageInfo _packageInfo = PackageInfo(
-    appName: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    packageName: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    version: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    buildNumber: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    buildSignature: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    installerStore: _ABOUT_PACKAGE_INFO_UNKNOWN,
-  );
+
+  late GCWPackageInfo _packageInfo;
 
   @override
   void initState() {
@@ -37,11 +30,8 @@ class _AboutState extends State<About> {
     _initPackageInfo();
   }
 
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    setState(() {
-      _packageInfo = info;
-    });
+  void _initPackageInfo() {
+    _packageInfo = GCWPackageInfo.getInstance();
   }
 
   Container _buildUrl(String key) {
@@ -67,7 +57,7 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     var content = Column(
       children: <Widget>[
-        Text('GC Wizard - Geocache Wizard', style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
+        Text(GCWPackageInfo.getInstance().appName, style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
         const GCWDivider(),
         Container(
             padding: const EdgeInsets.only(top: 15),
@@ -246,6 +236,7 @@ class _AboutState extends State<About> {
                     'Michael St.',
                     'Mondlinger',
                     'MrDosinger & MsDosinger',
+                    'musketon',
                     'Nebelsturm',
                     'Niki R.',
                     'Palk \'geogedoens.de\'',

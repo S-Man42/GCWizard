@@ -65,7 +65,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #flutter_launcher_icons: 0.12.0
+  #flutter_launcher_icons: 0.13.1
   flutter_lints: ^2.0.1
 
 flutter:
@@ -400,6 +400,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/zodiac_z408/
 
 flutter_icons:
-  image_path: "assets/logo/circle_border_1024_gold.png"
+  image_path: "assets/logo/circle_border_nightly.png"
   android: true
   ios: true
