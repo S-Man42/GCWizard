@@ -2286,6 +2286,7 @@
   "gcwizard_script_syntax_error_invalid_number_of_parameters": "ERROR: INVALID NUMBER OF PARAMETERS",
   "gcwizard_script_runtime_error_eof_exceeded": "ERROR: EOF EXCEEDED",
   "gcwizard_script_unknown_parameter": "ERROR: UNKNOWN PARAMETER VALUE",
+  "gcwizard_script_invalid_alphabet": "ERROR: INVALID ALPHABET",
   "gcwtool_weblink": "Web Link",
   "gcwtool_copyweblink": "Copy Web Link",
   "gcwtool_help": "Help",

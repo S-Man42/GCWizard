@@ -215,6 +215,10 @@ const Map<int, String> _key = {
   6: '123456'
 };
 
+bool _invalidAlphabet(String alphabet){
+  return incompleteCustomAlphabet(alphabet);
+}
+
 Object _bifid(Object text, Object key, Object mode, Object polybiosMode, Object alphabet, Object modification) {
   if (_isNotAInt(mode) || _isNotAInt(key) || _isNotAInt(polybiosMode) || _isNotAInt(modification) || _isNotAString(text) || _isNotAString(alphabet)) {
     _handleError(_INVALIDTYPECAST);
@@ -254,7 +258,7 @@ Object _trifid(Object text, Object blockSize, Object mode, Object polybiosMode, 
     return '';
   }
 
-  if (polybiosMode as int < 0 || polybiosMode > 4) {
+  if (polybiosMode as int < 0 || polybiosMode > 2) {
     _handleError(_UNKNOWNPARAMETER);
     return '';
   }

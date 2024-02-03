@@ -10,7 +10,7 @@ List<Map<String, Object?>> _inputsCryptoToExpected = [
   {'code' : 'a="HALLO"\nprint ATBASH(a, 1)', 'expectedOutput' : 'SZOOL'},
   {'code' : 'a="SZOOL"\nprint ATBASH(a, 1)', 'expectedOutput' : 'HALLO'},
 
-  // It does not mak sense to test a function which is based on a random function
+  // It does not make sense to test a function which is based on a random function
   // {'code' : 'a="HALLO"\nprint AVEMARIA(a, 1)', 'expectedOutput' : 'arbiter clemens immortalis immortalis gloriosus'},
   {'code' : 'a="arbiter clemens immortalis immortalis gloriosus"\nprint AVEMARIA(a, 0)', 'expectedOutput' : 'HALLO'},
 
@@ -53,6 +53,18 @@ List<Map<String, Object?>> _inputsCryptoToExpected = [
   {'code' : 'print bcd("1234567890", 1, 0)', 'expectedOutput' : '0001 0010 0011 0100 0101 0110 0111 1000 1001 0000'},
   {'code' : 'print bcd(1234567890, 1, 0)', 'expectedOutput' : '0001 0010 0011 0100 0101 0110 0111 1000 1001 0000'},
   {'code' : 'print bcd("0001 0010 0011 0100 0101 0110 0111 1000 1001 0000", 0, 0)', 'expectedOutput' : '1234567890'},
+
+  {'code' : 'print bifid("ZBDH", 5, 0, 0, "", 1)', 'expectedOutput' : 'VYBH'},
+  {'code' : 'print bifid("ZBDH", 6, 0, 0, "", 1)', 'expectedOutput' : 'YJBH'},
+
+  {'code' : 'print trifid("ZBDH", 2, 0, 1, "")', 'expectedOutput' : 'VTCK'},
+  {'code' : 'print trifid("ZBDH", 3, 0, 1, "")', 'expectedOutput' : 'STMH'},
+  {'code' : 'print trifid("ZBDH", 4, 0, 1, "")', 'expectedOutput' : 'SVLE'},
+  {'code' : 'print trifid("ZBDH", 2, 1, 1, "")', 'expectedOutput' : 'UEBT'},
+  {'code' : 'print trifid("ZBDH", 3, 2, 1, "")', 'expectedOutput' : 'STMH'},
+  {'code' : 'print trifid("ZBDH", 4, 2, 1, "")', 'expectedOutput' : 'SGQK'},
+  {'code' : 'print trifid("ZBDH", 4, 0, 0, "QWERTZUIOPASDFGHJKLYXCVBNM,")', 'expectedOutput' : 'RJBC'},
+  {'code' : 'print trifid("ZBDH", 4, 0, 0, "QWERTZUIOPASDFGHJKLYXCVBN,")', 'expectedOutput' : 'trifid_error_alphabet'},
 
 
 ];
