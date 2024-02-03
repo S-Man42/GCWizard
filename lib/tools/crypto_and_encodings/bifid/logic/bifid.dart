@@ -50,7 +50,13 @@ BifidOutput decryptBifid(String input, String key,
     {PolybiosMode mode = PolybiosMode.AZ09,
     String? alphabet,
     AlphabetModificationMode alphabetMode = AlphabetModificationMode.J_TO_I}) {
-  int dim = key.length;
+print(input);
+print(key);
+print(mode);
+print(alphabet);
+print(alphabetMode);
+
+int dim = key.length;
   if (dim != 5 && dim != 6) {
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
   }

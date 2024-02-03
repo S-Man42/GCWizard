@@ -80,6 +80,7 @@ const List<String> _Functions_4 = [
 ];
 const List<String> _Functions_5 = [
   'BACON(',
+  'BIFID(',
   'BOGEN(',
   'COLOR(',
   'DATUM(',
@@ -110,6 +111,7 @@ const List<String> _Functions_6 = [
   'SETLAT(',
   'SETLON(',
   'STROKE(',
+  'TRIFID(',
 ];
 const List<String> _Functions_7 = [
   'ABADDON(',
@@ -303,6 +305,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 2),
   'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
   'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
+  'BIFID': _GCWizardScriptClassFunctionDefinition(_bifid, 6),
   'BCD': _GCWizardScriptClassFunctionDefinition(_bcd, 3),
   'BWW': _GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': _GCWizardScriptClassFunctionDefinition(_base, 3),
@@ -310,6 +313,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'GCCODE': _GCWizardScriptClassFunctionDefinition(_GCCode, 2),
   'HASH': _GCWizardScriptClassFunctionDefinition(_hash, 5),
   'MORSE': _GCWizardScriptClassFunctionDefinition(_morse, 3),
+  'TRIFID': _GCWizardScriptClassFunctionDefinition(_trifid, 5),
 
   // coordinates
   'GETLAT': _GCWizardScriptClassFunctionDefinition(_getLat, 0),
