@@ -5,6 +5,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/base_selecti
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cryptography_selection.dart';
@@ -18,6 +19,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/imagesandfil
 import 'package:gc_wizard/application/category_views/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/numeral_words_selection.dart';
@@ -275,10 +277,8 @@ import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
-import 'selector_lists/checkdigits/checkdigits_selection.dart';
 
-import 'selector_lists/miscellaneous_selection.dart';
+import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
   MainView({Key? key, Map<String, String>? webParameter})
