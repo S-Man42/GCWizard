@@ -45,23 +45,23 @@ class _BinaryState extends State<Binary> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-                inputFormatters: [GCWOnlyDigitsAndSpaceInputFormatter()],
-                controller: _decimalController,
-                onChanged: (value) {
-                  setState(() {
-                    _currentDecimalValue = value;
-                  });
-                },
-              )
+          inputFormatters: [GCWOnlyDigitsAndSpaceInputFormatter()],
+          controller: _decimalController,
+          onChanged: (value) {
+            setState(() {
+              _currentDecimalValue = value;
+            });
+          },
+        )
             : GCWTextField(
-                inputFormatters: [GCWOnly01AndSpaceInputFormatter()],
-                controller: _binaryController,
-                onChanged: (value) {
-                  setState(() {
-                    _currentBinaryValue = value;
-                  });
-                },
-              ),
+          inputFormatters: [GCWOnly01AndSpaceInputFormatter()],
+          controller: _binaryController,
+          onChanged: (value) {
+            setState(() {
+              _currentBinaryValue = value;
+            });
+          },
+        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -71,7 +71,7 @@ class _BinaryState extends State<Binary> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-          ? GCWIntegerSpinner(
+            ? GCWIntegerSpinner(
             title: i18n(context, 'binary_length'),
             onChanged: (int value) {
               setState(() {
@@ -79,7 +79,7 @@ class _BinaryState extends State<Binary> {
               });
             },
             value: _lengthBinary)
-          : Container(),
+            : Container(),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
@@ -96,4 +96,5 @@ class _BinaryState extends State<Binary> {
   String _padLeftZero(int length, String text){
     return text.padLeft(length, '0');
   }
+
 }

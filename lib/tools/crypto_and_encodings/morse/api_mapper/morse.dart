@@ -58,9 +58,9 @@ class MorseAPIMapper extends APIMapper {
     }
 
     if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
-      return encodeMorse(input);
+      return encodeMorse(input, MORSE_CODE.MORSE_ITU);
     } else {
-      return decodeMorse(input);
+      return decodeMorse(input, MORSE_CODE.MORSE_ITU);
     }
   }
 

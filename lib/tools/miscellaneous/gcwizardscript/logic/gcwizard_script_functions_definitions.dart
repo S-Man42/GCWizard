@@ -300,7 +300,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ROT18': _GCWizardScriptClassFunctionDefinition(_rot18, 1),
   'ROT47': _GCWizardScriptClassFunctionDefinition(_rot47, 1),
   'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
-  'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 1),
+  'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 2),
   'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
   'BACON': _GCWizardScriptClassFunctionDefinition(_bacon, 2),
   'BCD': _GCWizardScriptClassFunctionDefinition(_bcd, 3),
@@ -309,7 +309,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ENCLOSEDAREAS': _GCWizardScriptClassFunctionDefinition(_enclosedAreas, 3),
   'GCCODE': _GCWizardScriptClassFunctionDefinition(_GCCode, 2),
   'HASH': _GCWizardScriptClassFunctionDefinition(_hash, 5),
-  'MORSE': _GCWizardScriptClassFunctionDefinition(_morse, 2),
+  'MORSE': _GCWizardScriptClassFunctionDefinition(_morse, 3),
 
   // coordinates
   'GETLAT': _GCWizardScriptClassFunctionDefinition(_getLat, 0),
