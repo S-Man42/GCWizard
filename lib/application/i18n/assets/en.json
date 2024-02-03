@@ -2287,6 +2287,7 @@
   "gcwizard_script_runtime_error_eof_exceeded": "ERROR: EOF EXCEEDED",
   "gcwizard_script_unknown_parameter": "ERROR: UNKNOWN PARAMETER VALUE",
   "gcwizard_script_invalid_alphabet": "ERROR: INVALID ALPHABET",
+  "gcwizard_script_invalid_list": "ERROR: NO LIST TO WORK WITH",
   "gcwtool_weblink": "Web Link",
   "gcwtool_copyweblink": "Copy Web Link",
   "gcwtool_help": "Help",

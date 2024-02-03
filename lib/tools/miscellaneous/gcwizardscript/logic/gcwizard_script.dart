@@ -53,6 +53,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/polybios/logic/polybios.dar
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/logic/text_analysis.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/logic/trifid.dart';
 import 'package:gc_wizard/tools/science_and_technology/complex_numbers/logic/complex_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';

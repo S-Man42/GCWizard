@@ -51,6 +51,7 @@ const _FILESAVING = 46;
 const _INVALIDTARGETVALUE = 47;
 const _UNKNOWNPARAMETER = 48;
 const _INVALIDALPHABET = 49;
+const _INVALIDLIST = 50;
 
 Map<int, String> _errorMessages = {
   _SYNTAXERROR: "gcwizard_script_syntax_error",
@@ -102,6 +103,7 @@ Map<int, String> _errorMessages = {
   _INVALIDTARGETVALUE: "gcwizard_script_for_loop_invalid_target_value",
   _UNKNOWNPARAMETER: "gcwizard_script_unknown_parameter",
   _INVALIDALPHABET: "gcwizard_script_invalid_alphabet",
+  _INVALIDLIST: "gcwizard_script_invalid_list",
 };
 
 void _resetErrors() {

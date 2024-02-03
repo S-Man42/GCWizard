@@ -171,6 +171,7 @@ const List<String> _Functions_11 = [
 const List<String> _Functions_12 = [
   'LISTTOSTRING(',
   'READFROMFILE(',
+  'TEXTANALYSIS(',
 ];
 const List<String> _Functions_13 = [
   'ENCLOSEDAREAS(',
@@ -301,6 +302,9 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ROT13': _GCWizardScriptClassFunctionDefinition(_rot13, 1),
   'ROT18': _GCWizardScriptClassFunctionDefinition(_rot18, 1),
   'ROT47': _GCWizardScriptClassFunctionDefinition(_rot47, 1),
+  'TEXTANALYSIS': _GCWizardScriptClassFunctionDefinition(_textanalysis, 3),
+
+  // crypto
   'ABADDON': _GCWizardScriptClassFunctionDefinition(_abaddon, 2),
   'ATBASH': _GCWizardScriptClassFunctionDefinition(_atbash, 2),
   'AVEMARIA': _GCWizardScriptClassFunctionDefinition(_avemaria, 2),
