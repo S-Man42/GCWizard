@@ -50,12 +50,24 @@ class _GeoMath {
    * into some classes, e.g., UTMUPS, MGRS, Georef, Geohash, etc.
    **********************************************************************/
 
-  static const int qd = 90;                  ///< degrees per quarter turn
-  static const int dm = 60;                  ///< minutes per degree
-  static const int ms = 60;                  ///< seconds per minute
-  static const int hd = 2 * qd;              ///< degrees per half turn
-  static const int td = 2 * hd;              ///< degrees per turn
-  static const int ds = dm * ms;             ///< seconds per degree
+  static const int qd = 90;
+
+  ///< degrees per quarter turn
+  static const int dm = 60;
+
+  ///< minutes per degree
+  static const int ms = 60;
+
+  ///< seconds per minute
+  static const int hd = 2 * qd;
+
+  ///< degrees per half turn
+  static const int td = 2 * hd;
+
+  ///< degrees per turn
+  static const int ds = dm * ms;
+
+  ///< seconds per degree
 
   /*
    * Square a number.
@@ -165,7 +177,8 @@ class _GeoMath {
   static double hypot(double x, double y) {
     x = x.abs();
     y = y.abs();
-    double a = max(x, y), b = min(x, y) / (a != 0.0 ? a : 1);
+    double a = max(x, y),
+        b = min(x, y) / (a != 0.0 ? a : 1);
     return a * sqrt(1 + b * b);
   }
 
@@ -178,7 +191,8 @@ class _GeoMath {
    * @return exp(\e x) - 1.
    **********************************************************************/
   static double expm1(double x) {
-    double y = exp(x), z = y - 1;
+    double y = exp(x),
+        z = y - 1;
     // The reasoning here is similar to that for log1p.  The expression
     // mathematically reduces to exp(x) - 1, and the factor z/log(y) = (y -
     // 1)/log(y) is a slowly varying quantity near y = 1 and is accurately
@@ -186,8 +200,8 @@ class _GeoMath {
     return x.abs() > 1
         ? z
         : z == 0
-            ? x
-            : x * z / log(y);
+        ? x
+        : x * z / log(y);
   }
 
   /*
@@ -290,7 +304,8 @@ class _GeoMath {
    **********************************************************************/
   static void AngDiff(_Pair p, double x, double y) {
     sum(p, AngNormalize(-x), AngNormalize(y));
-    double d = AngNormalize(p.first), t = p.second;
+    double d = AngNormalize(p.first),
+        t = p.second;
     sum(p, d == 180 && t > 0 ? -180 : d, t);
   }
 
@@ -315,7 +330,8 @@ class _GeoMath {
     // now abs(r) <= 45
     r = _toRadians(r);
     // Possibly could call the gnu extension sincos
-    double s = sin(r), c = cos(r);
+    double s = sin(r),
+        c = cos(r);
     double sinx, cosx;
     switch (q & 3) {
       case 0:
@@ -386,12 +402,12 @@ class _GeoMath {
     // here x >= 0 and x >= abs(y), so angle is in [-pi/4, pi/4]
     double ang = _toDegrees(atan2(y, x));
     switch (q) {
-      // Note that atan2d(-0.0, 1.0) will return -0.  However, we expect that
-      // atan2d will not be called with y = -0.  If need be, include
-      //
-      //   case 0: ang = 0 + ang; break;
-      //
-      // and handle mpfr as in AngRound.
+    // Note that atan2d(-0.0, 1.0) will return -0.  However, we expect that
+    // atan2d will not be called with y = -0.  If need be, include
+    //
+    //   case 0: ang = 0 + ang; break;
+    //
+    // and handle mpfr as in AngRound.
       case 1:
         ang = (y >= 0 ? 180 : -180) - ang;
         break;
@@ -421,15 +437,44 @@ class _GeoMath {
     double overflow = 1 / sq(double.minPositive);
     _Pair p = _Pair();
     sincosd(p, x);
-    double s = p.first; double c = p.second;
+    double s = p.first;
+    double c = p.second;
     // http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1950.pdf
-    double r = s / c;  // special values from F.10.1.14
+    double r = s / c; // special values from F.10.1.14
     // With C++17 this becomes clamp(s / c, -overflow, overflow);
     // Use max/min here (instead of fmax/fmin) to preserve NaN
     return min(max(r, -overflow), overflow);
   }
 
-  static double eatanhe(double x, double es)  {
+  static double eatanhe(double x, double es) {
     return es > 0 ? es * atanh(es * x) : -es * atan(es * x);
+  }
+
+  /**
+   * tan&chi; in terms of tan&phi;
+   *
+   * @tparam T the type of the argument and the returned value.
+   * @param[in] tau &tau; = tan&phi;
+   * @param[in] es the signed eccentricity = sign(<i>e</i><sup>2</sup>)
+   *   sqrt(|<i>e</i><sup>2</sup>|)
+   * @return &tau;&prime; = tan&chi;
+   *
+   * See Eqs. (7--9) of
+   * C. F. F. Karney,
+   * <a href="https://doi.org/10.1007/s00190-011-0445-3">
+   * Transverse Mercator with an accuracy of a few nanometers,</a>
+   * J. Geodesy 85(8), 475--485 (Aug. 2011)
+   * (preprint
+   * <a href="https://arxiv.org/abs/1002.1417">arXiv:1002.1417</a>).
+   **********************************************************************/
+  static double taupf(double tau, double es) {
+    // Need this test, otherwise tau = +/-inf gives taup = nan.
+    if (isfinite(tau)) {
+      double tau1 = hypot(1.0, tau),
+          sig = sinh(eatanhe(tau / tau1, es));
+      return hypot(1.0, sig) * tau - sig * tau1;
+    } else {
+      return tau;
+    }
   }
 }

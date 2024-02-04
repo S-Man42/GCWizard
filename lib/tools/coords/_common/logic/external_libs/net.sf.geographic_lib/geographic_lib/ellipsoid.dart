@@ -48,10 +48,9 @@ class _Ellipsoid {
     return _a * _f1;
   }
 
-  // // , _tm(_a, _f, real(1))
-  // double get _tm {
-  //  ???
-  // }
+  _TransverseMercator get _tm {
+    return _TransverseMercator(_a, _f, 1.0);
+  }
 
   _EllipticFunction get _ell {
     return _EllipticFunction(-_e12);
@@ -81,5 +80,9 @@ class _Ellipsoid {
   double _InverseRectifyingLatitude(double mu) {
     if ((mu).abs() == _GeoMath.qd) return mu;
     return _InverseParametricLatitude(_ell.Einv(mu * _ell.E0() / _GeoMath.qd) / _GeoMath.degree());
+  }
+
+  List<double> RectifyingToConformalCoeffs() {
+    return _tm._bet;
   }
 }

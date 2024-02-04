@@ -432,7 +432,51 @@ class _EllipticFunction {
     (4084080 * mul * An * sqrt(An)) + 3 * s;
   }
 
-  double E(double sn, double cn, double dn) {
+  /**
+   * The periodic incomplete integral of the second kind.
+   *
+   * @param[in] sn = sin&phi;.
+   * @param[in] cn = cos&phi;.
+   * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
+   *   sin<sup>2</sup>&phi;).
+   * @return the periodic function &pi; \e E(&phi;, \e k) / (2 \e E(\e k)) -
+   *   &phi;.
+   **********************************************************************/
+  double deltaE(double sn, double cn, double dn)  {
+  // Function is periodic with period pi
+  if (cn < 0) { cn = -cn; sn = -sn; }
+    return E3(sn, cn, dn) * ( _GeoMath.pi()/2) / E0() - atan2(sn, cn);
+  }
+
+  /**
+   * The incomplete integral of the second kind.
+   *
+   * @param[in] phi
+   * @return \e E(&phi;, \e k).
+   *
+   * \e E(&phi;, \e k) is defined in https://dlmf.nist.gov/19.2.E5
+   * \f[
+   *   E(\phi, k) = \int_0^\phi \sqrt{1-k^2\sin^2\theta}\,d\theta.
+   * \f]
+   **********************************************************************/
+  double E1(double phi) {
+    double sn = sin(phi), cn = cos(phi), dn = Delta(sn, cn);
+    return (phi).abs() < _GeoMath.pi()
+        ? E3(sn, cn, dn)
+        : (deltaE(sn, cn, dn) + phi) * E0() / (_GeoMath.pi()/2);
+  }
+
+  /**
+   * The incomplete integral of the second kind in terms of Jacobi elliptic
+   * functions.
+   *
+   * @param[in] sn = sin&phi;.
+   * @param[in] cn = cos&phi;.
+   * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
+   *   sin<sup>2</sup>&phi;).
+   * @return \e E(&phi;, \e k) as though &phi; &isin; (&minus;&pi;, &pi;].
+   **********************************************************************/
+  double E3(double sn, double cn, double dn) {
     double
     cn2 = cn*cn, dn2 = dn*dn, sn2 = sn*sn,
     ei = cn2 != 0.0 ?
@@ -487,575 +531,24 @@ class _EllipticFunction {
       sn = sin(phi),
       cn = cos(phi),
       dn = Delta(sn, cn),
-      err = (E(sn, cn, dn) - x)/dn;
+      err = (E3(sn, cn, dn) - x)/dn;
       phi -= err;
       if (!((err).abs() > tolJAC)) break;
     }
     return n * _GeoMath.pi() + phi;
   }
 
-  //
-  // ///@}
-  //
-  // /** \name Inspector functions.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * @return the square of the modulus <i>k</i><sup>2</sup>.
-  //  **********************************************************************/
-  // Math::double k2() const { return _k2; }
-  //
-  // /**
-  //  * @return the square of the complementary modulus <i>k'</i><sup>2</sup> =
-  //  *   1 &minus; <i>k</i><sup>2</sup>.
-  //  **********************************************************************/
-  // Math::double kp2() const { return _kp2; }
-  //
-  // /**
-  //  * @return the parameter &alpha;<sup>2</sup>.
-  //  **********************************************************************/
-  // Math::double alpha2() const { return _alpha2; }
-  //
-  // /**
-  //  * @return the complementary parameter &alpha;'<sup>2</sup> = 1 &minus;
-  //  *   &alpha;<sup>2</sup>.
-  //  **********************************************************************/
-  // Math::double alphap2() const { return _alphap2; }
-  // ///@}
-  //
-  // /** \name Complete elliptic integrals.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * The complete integral of the first kind.
-  //  *
-  //  * @return \e K(\e k).
-  //  *
-  //  * \e K(\e k) is defined in https://dlmf.nist.gov/19.2.E4
-  //  * \f[
-  //  *   K(k) = \int_0^{\pi/2} \frac1{\sqrt{1-k^2\sin^2\phi}}\,d\phi.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double K() const { return _kKc; }
-  //
-  // /**
-  //  * The complete integral of the second kind.
-  //  *
-  //  * @return \e E(\e k).
-  //  *
-  //  * \e E(\e k) is defined in https://dlmf.nist.gov/19.2.E5
-  //  * \f[
-  //  *   E(k) = \int_0^{\pi/2} \sqrt{1-k^2\sin^2\phi}\,d\phi.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double E() const { return _eEc; }
-  //
-  // /**
-  //  * Jahnke's complete integral.
-  //  *
-  //  * @return \e D(\e k).
-  //  *
-  //  * \e D(\e k) is defined in https://dlmf.nist.gov/19.2.E6
-  //  * \f[
-  //  *   D(k) =
-  //  *   \int_0^{\pi/2} \frac{\sin^2\phi}{\sqrt{1-k^2\sin^2\phi}}\,d\phi.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double D() const { return _dDc; }
-  //
-  // /**
-  //  * The difference between the complete integrals of the first and second
-  //  * kinds.
-  //  *
-  //  * @return \e K(\e k) &minus; \e E(\e k).
-  //  **********************************************************************/
-  // Math::double KE() const { return _k2 * _dDc; }
-  //
-  // /**
-  //  * The complete integral of the third kind.
-  //  *
-  //  * @return &Pi;(&alpha;<sup>2</sup>, \e k).
-  //  *
-  //  * &Pi;(&alpha;<sup>2</sup>, \e k) is defined in
-  //  * https://dlmf.nist.gov/19.2.E7
-  //  * \f[
-  //  *   \Pi(\alpha^2, k) = \int_0^{\pi/2}
-  //  *     \frac1{\sqrt{1-k^2\sin^2\phi}(1 - \alpha^2\sin^2\phi)}\,d\phi.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double Pi() const { return _pPic; }
-  //
-  // /**
-  //  * Legendre's complete geodesic longitude integral.
-  //  *
-  //  * @return \e G(&alpha;<sup>2</sup>, \e k).
-  //  *
-  //  * \e G(&alpha;<sup>2</sup>, \e k) is given by
-  //  * \f[
-  //  *   G(\alpha^2, k) = \int_0^{\pi/2}
-  //  *     \frac{\sqrt{1-k^2\sin^2\phi}}{1 - \alpha^2\sin^2\phi}\,d\phi.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double G() const { return _gGc; }
-  //
-  // /**
-  //  * Cayley's complete geodesic longitude difference integral.
-  //  *
-  //  * @return \e H(&alpha;<sup>2</sup>, \e k).
-  //  *
-  //  * \e H(&alpha;<sup>2</sup>, \e k) is given by
-  //  * \f[
-  //  *   H(\alpha^2, k) = \int_0^{\pi/2}
-  //  *     \frac{\cos^2\phi}{(1-\alpha^2\sin^2\phi)\sqrt{1-k^2\sin^2\phi}}
-  //  *     \,d\phi.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double H() const { return _hHc; }
-  // ///@}
-  //
-  // /** \name Incomplete elliptic integrals.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * The incomplete integral of the first kind.
-  //  *
-  //  * @param[in] phi
-  //  * @return \e F(&phi;, \e k).
-  //  *
-  //  * \e F(&phi;, \e k) is defined in https://dlmf.nist.gov/19.2.E4
-  //  * \f[
-  //  *   F(\phi, k) = \int_0^\phi \frac1{\sqrt{1-k^2\sin^2\theta}}\,d\theta.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double F(double phi) const;
-  //
-  // /**
-  //  * The incomplete integral of the second kind.
-  //  *
-  //  * @param[in] phi
-  //  * @return \e E(&phi;, \e k).
-  //  *
-  //  * \e E(&phi;, \e k) is defined in https://dlmf.nist.gov/19.2.E5
-  //  * \f[
-  //  *   E(\phi, k) = \int_0^\phi \sqrt{1-k^2\sin^2\theta}\,d\theta.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double E(double phi) const;
-  //
-  // /**
-  //  * The incomplete integral of the second kind with the argument given in
-  //  * degrees.
-  //  *
-  //  * @param[in] ang in <i>degrees</i>.
-  //  * @return \e E(&pi; <i>ang</i>/180, \e k).
-  //  **********************************************************************/
-  // Math::double Ed(double ang) const;
-  //
-  // /**
-  //  * The inverse of the incomplete integral of the second kind.
-  //  *
-  //  * @param[in] x
-  //  * @return &phi; = <i>E</i><sup>&minus;1</sup>(\e x, \e k); i.e., the
-  //  *   solution of such that \e E(&phi;, \e k) = \e x.
-  //  **********************************************************************/
-  // Math::double Einv(double x) const;
-  //
-  // /**
-  //  * The incomplete integral of the third kind.
-  //  *
-  //  * @param[in] phi
-  //  * @return &Pi;(&phi;, &alpha;<sup>2</sup>, \e k).
-  //  *
-  //  * &Pi;(&phi;, &alpha;<sup>2</sup>, \e k) is defined in
-  //  * https://dlmf.nist.gov/19.2.E7
-  //  * \f[
-  //  *   \Pi(\phi, \alpha^2, k) = \int_0^\phi
-  //  *     \frac1{\sqrt{1-k^2\sin^2\theta}(1 - \alpha^2\sin^2\theta)}\,d\theta.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double Pi(double phi) const;
-  //
-  // /**
-  //  * Jahnke's incomplete elliptic integral.
-  //  *
-  //  * @param[in] phi
-  //  * @return \e D(&phi;, \e k).
-  //  *
-  //  * \e D(&phi;, \e k) is defined in https://dlmf.nist.gov/19.2.E4
-  //  * \f[
-  //  *   D(\phi, k) = \int_0^\phi
-  //  *    \frac{\sin^2\theta}{\sqrt{1-k^2\sin^2\theta}}\,d\theta.
-  //  * \f]
-  //  **********************************************************************/
-  // Math::double D(double phi) const;
-  //
-  // /**
-  //  * Legendre's geodesic longitude integral.
-  //  *
-  //  * @param[in] phi
-  //  * @return \e G(&phi;, &alpha;<sup>2</sup>, \e k).
-  //  *
-  //  * \e G(&phi;, &alpha;<sup>2</sup>, \e k) is defined by
-  //  * \f[
-  //  *   \begin{align}
-  //  *   G(\phi, \alpha^2, k) &=
-  //  *   \frac{k^2}{\alpha^2} F(\phi, k) +
-  //  *      \biggl(1 - \frac{k^2}{\alpha^2}\biggr) \Pi(\phi, \alpha^2, k) \\
-  //  *    &= \int_0^\phi
-  //  *     \frac{\sqrt{1-k^2\sin^2\theta}}{1 - \alpha^2\sin^2\theta}\,d\theta.
-  //  *   \end{align}
-  //  * \f]
-  //  *
-  //  * Legendre expresses the longitude of a point on the geodesic in terms of
-  //  * this combination of elliptic integrals in Exercices de Calcul
-  //  * Int&eacute;gral, Vol. 1 (1811), p. 181,
-  //  * https://books.google.com/books?id=riIOAAAAQAAJ&pg=PA181.
-  //  *
-  //  * See \ref geodellip for the expression for the longitude in terms of this
-  //  * function.
-  //  **********************************************************************/
-  // Math::double G(double phi) const;
-  //
-  // /**
-  //  * Cayley's geodesic longitude difference integral.
-  //  *
-  //  * @param[in] phi
-  //  * @return \e H(&phi;, &alpha;<sup>2</sup>, \e k).
-  //  *
-  //  * \e H(&phi;, &alpha;<sup>2</sup>, \e k) is defined by
-  //  * \f[
-  //  *   \begin{align}
-  //  *   H(\phi, \alpha^2, k) &=
-  //  *   \frac1{\alpha^2} F(\phi, k) +
-  //  *        \biggl(1 - \frac1{\alpha^2}\biggr) \Pi(\phi, \alpha^2, k) \\
-  //  *   &= \int_0^\phi
-  //  *     \frac{\cos^2\theta}
-  //  *          {(1-\alpha^2\sin^2\theta)\sqrt{1-k^2\sin^2\theta}}
-  //  *     \,d\theta.
-  //  *   \end{align}
-  //  * \f]
-  //  *
-  //  * Cayley expresses the longitude difference of a point on the geodesic in
-  //  * terms of this combination of elliptic integrals in Phil. Mag. <b>40</b>
-  //  * (1870), p. 333, https://books.google.com/books?id=Zk0wAAAAIAAJ&pg=PA333.
-  //  *
-  //  * See \ref geodellip for the expression for the longitude in terms of this
-  //  * function.
-  //  **********************************************************************/
-  // Math::double H(double phi) const;
-  // ///@}
-  //
-  // /** \name Incomplete integrals in terms of Jacobi elliptic functions.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * The incomplete integral of the first kind in terms of Jacobi elliptic
-  //  * functions.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return \e F(&phi;, \e k) as though &phi; &isin; (&minus;&pi;, &pi;].
-  //  **********************************************************************/
-  // Math::double F(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * The incomplete integral of the second kind in terms of Jacobi elliptic
-  //  * functions.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return \e E(&phi;, \e k) as though &phi; &isin; (&minus;&pi;, &pi;].
-  //  **********************************************************************/
-  // Math::double E(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * The incomplete integral of the third kind in terms of Jacobi elliptic
-  //  * functions.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return &Pi;(&phi;, &alpha;<sup>2</sup>, \e k) as though &phi; &isin;
-  //  *   (&minus;&pi;, &pi;].
-  //  **********************************************************************/
-  // Math::double Pi(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * Jahnke's incomplete elliptic integral in terms of Jacobi elliptic
-  //  * functions.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return \e D(&phi;, \e k) as though &phi; &isin; (&minus;&pi;, &pi;].
-  //  **********************************************************************/
-  // Math::double D(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * Legendre's geodesic longitude integral in terms of Jacobi elliptic
-  //  * functions.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return \e G(&phi;, &alpha;<sup>2</sup>, \e k) as though &phi; &isin;
-  //  *   (&minus;&pi;, &pi;].
-  //  **********************************************************************/
-  // Math::double G(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * Cayley's geodesic longitude difference integral in terms of Jacobi
-  //  * elliptic functions.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return \e H(&phi;, &alpha;<sup>2</sup>, \e k) as though &phi; &isin;
-  //  *   (&minus;&pi;, &pi;].
-  //  **********************************************************************/
-  // Math::double H(double sn, double cn, double dn) const;
-  // ///@}
-  //
-  // /** \name Periodic versions of incomplete elliptic integrals.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * The periodic incomplete integral of the first kind.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return the periodic function &pi; \e F(&phi;, \e k) / (2 \e K(\e k)) -
-  //  *   &phi;.
-  //  **********************************************************************/
-  // Math::double deltaF(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * The periodic incomplete integral of the second kind.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return the periodic function &pi; \e E(&phi;, \e k) / (2 \e E(\e k)) -
-  //  *   &phi;.
-  //  **********************************************************************/
-  // Math::double deltaE(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * The periodic inverse of the incomplete integral of the second kind.
-  //  *
-  //  * @param[in] stau = sin&tau;.
-  //  * @param[in] ctau = sin&tau;.
-  //  * @return the periodic function <i>E</i><sup>&minus;1</sup>(&tau; (2 \e
-  //  *   E(\e k)/&pi;), \e k) - &tau;.
-  //  **********************************************************************/
-  // Math::double deltaEinv(double stau, double ctau) const;
-  //
-  // /**
-  //  * The periodic incomplete integral of the third kind.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return the periodic function &pi; &Pi;(&phi;, &alpha;<sup>2</sup>,
-  //  *   \e k) / (2 &Pi;(&alpha;<sup>2</sup>, \e k)) - &phi;.
-  //  **********************************************************************/
-  // Math::double deltaPi(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * The periodic Jahnke's incomplete elliptic integral.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return the periodic function &pi; \e D(&phi;, \e k) / (2 \e D(\e k)) -
-  //  *   &phi;.
-  //  **********************************************************************/
-  // Math::double deltaD(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * Legendre's periodic geodesic longitude integral.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return the periodic function &pi; \e G(&phi;, \e k) / (2 \e G(\e k)) -
-  //  *   &phi;.
-  //  **********************************************************************/
-  // Math::double deltaG(double sn, double cn, double dn) const;
-  //
-  // /**
-  //  * Cayley's periodic geodesic longitude difference integral.
-  //  *
-  //  * @param[in] sn = sin&phi;.
-  //  * @param[in] cn = cos&phi;.
-  //  * @param[in] dn = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  * @return the periodic function &pi; \e H(&phi;, \e k) / (2 \e H(\e k)) -
-  //  *   &phi;.
-  //  **********************************************************************/
-  // Math::double deltaH(double sn, double cn, double dn) const;
-  // ///@}
-  //
-  // /** \name Elliptic functions.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * The Jacobi elliptic functions.
-  //  *
-  //  * @param[in] x the argument.
-  //  * @param[out] sn sn(\e x, \e k).
-  //  * @param[out] cn cn(\e x, \e k).
-  //  * @param[out] dn dn(\e x, \e k).
-  //  **********************************************************************/
-  // void sncndn(double x, double& sn, double& cn, double& dn) const;
-  //
-  // /**
-  //  * The &Delta; amplitude function.
-  //  *
-  //  * @param[in] sn sin&phi;.
-  //  * @param[in] cn cos&phi;.
-  //  * @return &Delta; = sqrt(1 &minus; <i>k</i><sup>2</sup>
-  //  *   sin<sup>2</sup>&phi;).
-  //  **********************************************************************/
-  // Math::double Delta(double sn, double cn) const {
-  // using std::sqrt;
-  // return sqrt(_k2 < 0 ? 1 - _k2 * sn*sn : _kp2 + _k2 * cn*cn);
-  // }
-  // ///@}
-  //
-  // /** \name Symmetric elliptic integrals.
-  //  **********************************************************************/
-  // ///@{
-  // /**
-  //  * Symmetric integral of the first kind <i>R</i><sub><i>F</i></sub>.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @param[in] z
-  //  * @return <i>R</i><sub><i>F</i></sub>(\e x, \e y, \e z).
-  //  *
-  //  * <i>R</i><sub><i>F</i></sub> is defined in https://dlmf.nist.gov/19.16.E1
-  //  * \f[ R_F(x, y, z) = \frac12
-  //  *       \int_0^\infty\frac1{\sqrt{(t + x) (t + y) (t + z)}}\, dt, \f]
-  //  * where at most one of arguments, \e x, \e y, \e z, can be zero and those
-  //  * arguments that are nonzero must be positive.  If one of the arguments is
-  //  * zero, it is more efficient to call the two-argument version of this
-  //  * function with the non-zero arguments.
-  //  **********************************************************************/
-  // static double RF(double x, double y, double z);
-  //
-  // /**
-  //  * Complete symmetric integral of the first kind,
-  //  * <i>R</i><sub><i>F</i></sub> with one argument zero.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @return <i>R</i><sub><i>F</i></sub>(\e x, \e y, 0).
-  //  *
-  //  * The arguments \e x and \e y must be positive.
-  //  **********************************************************************/
-  // static double RF(double x, double y);
-  //
-  // /**
-  //  * Degenerate symmetric integral of the first kind
-  //  * <i>R</i><sub><i>C</i></sub>.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @return <i>R</i><sub><i>C</i></sub>(\e x, \e y) =
-  //  *   <i>R</i><sub><i>F</i></sub>(\e x, \e y, \e y).
-  //  *
-  //  * <i>R</i><sub><i>C</i></sub> is defined in https://dlmf.nist.gov/19.2.E17
-  //  * \f[ R_C(x, y) = \frac12
-  //  *       \int_0^\infty\frac1{\sqrt{t + x}(t + y)}\,dt, \f]
-  //  * where \e x &ge; 0 and \e y > 0.
-  //  **********************************************************************/
-  // static double RC(double x, double y);
-  //
-  // /**
-  //  * Symmetric integral of the second kind <i>R</i><sub><i>G</i></sub>.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @param[in] z
-  //  * @return <i>R</i><sub><i>G</i></sub>(\e x, \e y, \e z).
-  //  *
-  //  * <i>R</i><sub><i>G</i></sub> is defined in Carlson, eq 1.5
-  //  * \f[ R_G(x, y, z) = \frac14
-  //  *       \int_0^\infty[(t + x) (t + y) (t + z)]^{-1/2}
-  //  *        \biggl(
-  //  *             \frac x{t + x} + \frac y{t + y} + \frac z{t + z}
-  //  *        \biggr)t\,dt, \f]
-  //  * where at most one of arguments, \e x, \e y, \e z, can be zero and those
-  //  * arguments that are nonzero must be positive.  See also
-  //  * https://dlmf.nist.gov/19.23.E6_5.  If one of the arguments is zero, it
-  //  * is more efficient to call the two-argument version of this function with
-  //  * the non-zero arguments.
-  //  **********************************************************************/
-  // static double RG(double x, double y, double z);
-  //
-  // /**
-  //  * Complete symmetric integral of the second kind,
-  //  * <i>R</i><sub><i>G</i></sub> with one argument zero.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @return <i>R</i><sub><i>G</i></sub>(\e x, \e y, 0).
-  //  *
-  //  * The arguments \e x and \e y must be positive.
-  //  **********************************************************************/
-  // static double RG(double x, double y);
-  //
-  // /**
-  //  * Symmetric integral of the third kind <i>R</i><sub><i>J</i></sub>.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @param[in] z
-  //  * @param[in] p
-  //  * @return <i>R</i><sub><i>J</i></sub>(\e x, \e y, \e z, \e p).
-  //  *
-  //  * <i>R</i><sub><i>J</i></sub> is defined in https://dlmf.nist.gov/19.16.E2
-  //  * \f[ R_J(x, y, z, p) = \frac32
-  //  *       \int_0^\infty
-  //  *       [(t + x) (t + y) (t + z)]^{-1/2} (t + p)^{-1}\, dt, \f]
-  //  * where \e p > 0, and \e x, \e y, \e z are nonnegative with at most one of
-  //  * them being 0.
-  //  **********************************************************************/
-  // static double RJ(double x, double y, double z, double p);
-  //
-  // /**
-  //  * Degenerate symmetric integral of the third kind
-  //  * <i>R</i><sub><i>D</i></sub>.
-  //  *
-  //  * @param[in] x
-  //  * @param[in] y
-  //  * @param[in] z
-  //  * @return <i>R</i><sub><i>D</i></sub>(\e x, \e y, \e z) =
-  //  *   <i>R</i><sub><i>J</i></sub>(\e x, \e y, \e z, \e z).
-  //  *
-  //  * <i>R</i><sub><i>D</i></sub> is defined in https://dlmf.nist.gov/19.16.E5
-  //  * \f[ R_D(x, y, z) = \frac32
-  //  *       \int_0^\infty[(t + x) (t + y)]^{-1/2} (t + z)^{-3/2}\, dt, \f]
-  //  * where \e x, \e y, \e z are positive except that at most one of \e x and
-  //  * \e y can be 0.
-  //  **********************************************************************/
-  // static double RD(double x, double y, double z);
-  // ///@}
-  //
-  // };
+
+  ///@}
+
+  /** \name Inspector functions.
+   **********************************************************************/
+  ///@{
+  /**
+   * @return the square of the modulus <i>k</i><sup>2</sup>.
+   **********************************************************************/
+  double k2() {
+    return _k2;
+  }
+
 } // namespace GeographicLib

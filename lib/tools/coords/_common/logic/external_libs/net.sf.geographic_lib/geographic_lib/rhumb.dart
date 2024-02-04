@@ -15,7 +15,6 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
 
 class _PolygonAreaT<T>{}
 
-const int _GEOGRAPHICLIB_TRANSVERSEMERCATOR_ORDER = 8;
 const int _GEOGRAPHICLIB_RHUMBAREA_ORDER = 8;
 
 class _Rhumb {
@@ -24,7 +23,7 @@ class _Rhumb {
   late double _c2;
   static const int _tm_maxord = _GEOGRAPHICLIB_TRANSVERSEMERCATOR_ORDER;
   static const int _maxpow_ = _GEOGRAPHICLIB_RHUMBAREA_ORDER;
-  List<double?> _rR = List<double?>.generate(_maxpow_ + 1, (index) => null);
+  List<double> _rR = List<double>.generate(_maxpow_ + 1, (index) => 0.0);
 
   /**
    * Constructor for an ellipsoid with
@@ -359,6 +358,145 @@ class _Rhumb {
   _RhumbLatLonAreaReturn GenDirect(double lat1, double lon1, double azi12, double s12, int outmask) {
     return Line(lat1, lon1, azi12).GenPosition(s12, outmask, lat2, lon2, S12);
   }
+
+  double DE(double x, double y) {
+    _EllipticFunction ei = _ell._ell;
+    double d = x - y;
+    if (x * y <= 0) {
+      return d != 0 ? (ei.E1(x) - ei.E1(y)) / d : 1;
+    }
+    // See DLMF: Eqs (19.11.2) and (19.11.4) letting
+    // theta -> x, phi -> -y, psi -> z
+    //
+    // (E(x) - E(y)) / d = E(z)/d - k2 * sin(x) * sin(y) * sin(z)/d
+    //
+    // tan(z/2) = (sin(x)*Delta(y) - sin(y)*Delta(x)) / (cos(x) + cos(y))
+    //          = d * Dsin(x,y) * (sin(x) + sin(y))/(cos(x) + cos(y)) /
+    //             (sin(x)*Delta(y) + sin(y)*Delta(x))
+    //          = t = d * Dt
+    // sin(z) = 2*t/(1+t^2); cos(z) = (1-t^2)/(1+t^2)
+    // Alt (this only works for |z| <= pi/2 -- however, this conditions holds
+    // if x*y > 0):
+    // sin(z) = d * Dsin(x,y) * (sin(x) + sin(y))/
+    //          (sin(x)*cos(y)*Delta(y) + sin(y)*cos(x)*Delta(x))
+    // cos(z) = sqrt((1-sin(z))*(1+sin(z)))
+    double sx = sin(x), sy = sin(y), cx = cos(x), cy = cos(y);
+    double Dt = Dsin(x, y) * (sx + sy) /
+    ((cx + cy) * (sx * ei.Delta(sy, cy) + sy * ei.Delta(sx, cx))),
+    t = d * Dt, Dsz = 2 * Dt / (1 + t*t),
+    sz = d * Dsz, cz = (1 - t) * (1 + t) / (1 + t*t);
+    return ((sz != 0 ? ei.E3(sz, cz, ei.Delta(sz, cz)) / sz : 1)
+      - ei.k2() * sx * sy) * Dsz;
+  }
+
+  double DRectifyingToIsometric(double mux, double muy) {
+    double
+    latx = _ell._InverseRectifyingLatitude(mux/_GeoMath.degree()),
+    laty = _ell._InverseRectifyingLatitude(muy/_GeoMath.degree());
+    return _exact ?
+      DIsometric(latx, laty) / DRectifying(latx, laty) :
+      Dgdinv(_GeoMath.taupf(_GeoMath.tand(latx), _ell._es),
+      _GeoMath.taupf(_GeoMath.tand(laty), _ell._es)) *
+      DRectifyingToConformal(mux, muy);
+  }
+
+  double DRectifyingToConformal(double mux, double muy) {
+    return 1 - SinCosSeries(true, mux, muy,
+      _ell.RectifyingToConformalCoeffs(), _tm_maxord);
+  }
+
+  double DRectifying(double latx, double laty) {
+    double
+    tbetx = _ell._f1 *_GeoMath.tand(latx),
+    tbety = _ell._f1 * _GeoMath.tand(laty);
+    return (_GeoMath.pi()/2) * _ell._b * _ell._f1 * DE(atan(tbetx), atan(tbety))
+    * Dtan(latx, laty) * Datan(tbetx, tbety) / _ell._QuarterMeridian();
+  }
+
+  double DIsometric(double latx, double laty) {
+    double
+    phix = latx * _GeoMath.degree(), tx = _GeoMath.tand(latx),
+    phiy = laty * _GeoMath.degree(), ty = _GeoMath.tand(laty);
+    return Dasinh(tx, ty) * Dtan(latx, laty)
+    - Deatanhe(sin(phix), sin(phiy)) * Dsin(phix, phiy);
+  }
+
+  double SinCosSeries(bool sinp, double x, double y, List<double> c, int n) {
+    // N.B. n >= 0 and c[] has n+1 elements 0..n, of which c[0] is ignored.
+    //
+    // Use Clenshaw summation to evaluate
+    //   m = (g(x) + g(y)) / 2         -- mean value
+    //   s = (g(x) - g(y)) / (x - y)   -- average slope
+    // where
+    //   g(x) = sum(c[j]*SC(2*j*x), j = 1..n)
+    //   SC = sinp ? sin : cos
+    //   CS = sinp ? cos : sin
+    //
+    // This function returns only s; m is discarded.
+    //
+    // Write
+    //   t = [m; s]
+    //   t = sum(c[j] * f[j](x,y), j = 1..n)
+    // where
+    //   f[j](x,y) = [ (SC(2*j*x)+SC(2*j*y))/2 ]
+    //               [ (SC(2*j*x)-SC(2*j*y))/d ]
+    //
+    //             = [       cos(j*d)*SC(j*p)    ]
+    //               [ +/-(2/d)*sin(j*d)*CS(j*p) ]
+    // (+/- = sinp ? + : -) and
+    //    p = x+y, d = x-y
+    //
+    //   f[j+1](x,y) = A * f[j](x,y) - f[j-1](x,y)
+    //
+    //   A = [  2*cos(p)*cos(d)      -sin(p)*sin(d)*d]
+    //       [ -4*sin(p)*sin(d)/d   2*cos(p)*cos(d)  ]
+    //
+    // Let b[n+1] = b[n+2] = [0 0; 0 0]
+    //     b[j] = A * b[j+1] - b[j+2] + c[j] * I for j = n..1
+    //    t =  (c[0] * I  - b[2]) * f[0](x,y) + b[1] * f[1](x,y)
+    // c[0] is not accessed for s = t[2]
+    double p = x + y, d = x - y,
+    cp = cos(p), cd =          cos(d),
+    sp = sin(p), sd = d != 0 ? sin(d)/d : 1,
+    m = 2 * cp * cd, s = sp * sd;
+    // 2x2 matrices stored in row-major order
+    List<double> a = [m, -s * d * d, -4 * s, m];
+    List<double> ba = [0, 0, 0, 0];
+    List<double> bb = [0, 0, 0, 0];
+    List<double> b1 = List<double>.from(ba);
+    List<double> b2 = List<double>.from(bb);
+    if (n > 0) b1[0] = b1[3] = c[n];
+    for (int j = n - 1; j > 0; --j) { // j = n-1 .. 1
+      var _temp = b1;
+      b1 = b2;
+      b2 = _temp;
+      // b1 = A * b2 - b1 + c[j] * I
+      b1[0] = a[0] * b2[0] + a[1] * b2[2] - b1[0] + c[j];
+      b1[1] = a[0] * b2[1] + a[1] * b2[3] - b1[1];
+      b1[2] = a[2] * b2[0] + a[3] * b2[2] - b1[2];
+      b1[3] = a[2] * b2[1] + a[3] * b2[3] - b1[3] + c[j];
+    }
+    // Here are the full expressions for m and s
+    // m =   (c[0] - b2[0]) * f01 - b2[1] * f02 + b1[0] * f11 + b1[1] * f12;
+    // s = - b2[2] * f01 + (c[0] - b2[3]) * f02 + b1[2] * f11 + b1[3] * f12;
+    if (sinp) {
+      // double f01 = 0, f02 = 0;
+      double f11 = cd * sp, f12 = 2 * sd * cp;
+      // m = b1[0] * f11 + b1[1] * f12;
+      s = b1[2] * f11 + b1[3] * f12;
+    } else {
+      // double f01 = 1, f02 = 0;
+      double f11 = cd * cp, f12 = - 2 * sd * sp;
+      // m = c[0] - b2[0] + b1[0] * f11 + b1[1] * f12;
+      s = - b2[2] + b1[2] * f11 + b1[3] * f12;
+    }
+    return s;
+  }
+
+  double MeanSinXi(double psix, double psiy) {
+    return Dlog(cosh(psix), cosh(psiy)) * Dcosh(psix, psiy)
+        + SinCosSeries(false, gd(psix), gd(psiy), _rR, _maxpow_) * Dgd(psix, psiy);
+  }
 }
 
 class _RhumbLatLonAreaReturn{
@@ -372,155 +510,6 @@ class _RhumbLatLonAreaReturn{
   _RhumbLatLonAreaReturn(this.lat2, this.lon2, this.S12);
 }
 
-// /**
-//  * Solve the direct rhumb problem without the area.
-//  **********************************************************************/
-// void Direct(double lat1, double lon1, double azi12, double s12,
-// real& lat2, real& lon2) const {
-// double t;
-// GenDirect(lat1, lon1, azi12, s12, LATITUDE | LONGITUDE, lat2, lon2, t);
-// }
-//
-// /**
-//  * The general direct rhumb problem.  Rhumb::Direct is defined in terms
-//  * of this function.
-//  *
-//  * @param[in] lat1 latitude of point 1 (degrees).
-//  * @param[in] lon1 longitude of point 1 (degrees).
-//  * @param[in] azi12 azimuth of the rhumb line (degrees).
-//  * @param[in] s12 distance between point 1 and point 2 (meters); it can be
-//  *   negative.
-//  * @param[in] outmask a bitor'ed combination of Rhumb::mask values
-//  *   specifying which of the following parameters should be set.
-//  * @param[out] lat2 latitude of point 2 (degrees).
-//  * @param[out] lon2 longitude of point 2 (degrees).
-//  * @param[out] S12 area under the rhumb line (meters<sup>2</sup>).
-//  *
-//  * The Rhumb::mask values possible for \e outmask are
-//  * - \e outmask |= Rhumb::LATITUDE for the latitude \e lat2;
-//  * - \e outmask |= Rhumb::LONGITUDE for the latitude \e lon2;
-//  * - \e outmask |= Rhumb::AREA for the area \e S12;
-//  * - \e outmask |= Rhumb::ALL for all of the above;
-//  * - \e outmask |= Rhumb::LONG_UNROLL to unroll \e lon2 instead of wrapping
-//  *   it into the range [&minus;180&deg;, 180&deg;].
-//  * .
-//  * With the Rhumb::LONG_UNROLL bit set, the quantity \e lon2 &minus;
-//  * \e lon1 indicates how many times and in what sense the rhumb line
-//  * encircles the ellipsoid.
-//  **********************************************************************/
-// void GenDirect(double lat1, double lon1, double azi12, double s12,
-// unsigned outmask, real& lat2, real& lon2, real& S12) const;
-//
-// /**
-//  * Solve the inverse rhumb problem returning also the area.
-//  *
-//  * @param[in] lat1 latitude of point 1 (degrees).
-//  * @param[in] lon1 longitude of point 1 (degrees).
-//  * @param[in] lat2 latitude of point 2 (degrees).
-//  * @param[in] lon2 longitude of point 2 (degrees).
-//  * @param[out] s12 rhumb distance between point 1 and point 2 (meters).
-//  * @param[out] azi12 azimuth of the rhumb line (degrees).
-//  * @param[out] S12 area under the rhumb line (meters<sup>2</sup>).
-//  *
-//  * The shortest rhumb line is found.  If the end points are on opposite
-//  * meridians, there are two shortest rhumb lines and the east-going one is
-//  * chosen.  \e lat1 and \e lat2 should be in the range [&minus;90&deg;,
-//  * 90&deg;].  The value of \e azi12 returned is in the range
-//  * [&minus;180&deg;, 180&deg;].
-//  *
-//  * If either point is a pole, the cosine of its latitude is taken to be
-//  * 1/&epsilon;<sup>2</sup> (where &epsilon; is 2<sup>-52</sup>).  This
-//  * position, which is extremely close to the actual pole, allows the
-//  * calculation to be carried out in finite terms.
-//  **********************************************************************/
-// void Inverse(double lat1, double lon1, double lat2, double lon2,
-// real& s12, real& azi12, real& S12) const {
-// GenInverse(lat1, lon1, lat2, lon2,
-// DISTANCE | AZIMUTH | AREA, s12, azi12, S12);
-// }
-//
-// /**
-//  * Solve the inverse rhumb problem without the area.
-//  **********************************************************************/
-// void Inverse(double lat1, double lon1, double lat2, double lon2,
-// real& s12, real& azi12) const {
-// double t;
-// GenInverse(lat1, lon1, lat2, lon2, DISTANCE | AZIMUTH, s12, azi12, t);
-// }
-//
-// /**
-//  * The general inverse rhumb problem.  Rhumb::Inverse is defined in terms
-//  * of this function.
-//  *
-//  * @param[in] lat1 latitude of point 1 (degrees).
-//  * @param[in] lon1 longitude of point 1 (degrees).
-//  * @param[in] lat2 latitude of point 2 (degrees).
-//  * @param[in] lon2 longitude of point 2 (degrees).
-//  * @param[in] outmask a bitor'ed combination of Rhumb::mask values
-//  *   specifying which of the following parameters should be set.
-//  * @param[out] s12 rhumb distance between point 1 and point 2 (meters).
-//  * @param[out] azi12 azimuth of the rhumb line (degrees).
-//  * @param[out] S12 area under the rhumb line (meters<sup>2</sup>).
-//  *
-//  * The Rhumb::mask values possible for \e outmask are
-//  * - \e outmask |= Rhumb::DISTANCE for the latitude \e s12;
-//  * - \e outmask |= Rhumb::AZIMUTH for the latitude \e azi12;
-//  * - \e outmask |= Rhumb::AREA for the area \e S12;
-//  * - \e outmask |= Rhumb::ALL for all of the above;
-//  **********************************************************************/
-// void GenInverse(double lat1, double lon1, double lat2, double lon2,
-// unsigned outmask,
-// real& s12, real& azi12, real& S12) const;
-//
-// /**
-//  * Set up to compute several points on a single rhumb line.
-//  *
-//  * @param[in] lat1 latitude of point 1 (degrees).
-//  * @param[in] lon1 longitude of point 1 (degrees).
-//  * @param[in] azi12 azimuth of the rhumb line (degrees).
-//  * @return a RhumbLine object.
-//  *
-//  * \e lat1 should be in the range [&minus;90&deg;, 90&deg;].
-//  *
-//  * If point 1 is a pole, the cosine of its latitude is taken to be
-//  * 1/&epsilon;<sup>2</sup> (where &epsilon; is 2<sup>-52</sup>).  This
-//  * position, which is extremely close to the actual pole, allows the
-//  * calculation to be carried out in finite terms.
-//  **********************************************************************/
-// RhumbLine Line(double lat1, double lon1, double azi12) const;
-//
-// /** \name Inspector functions.
-//  **********************************************************************/
-// ///@{
-//
-// /**
-//  * @return \e a the equatorial radius of the ellipsoid (meters).  This is
-//  *   the value used in the constructor.
-//  **********************************************************************/
-// Math::double EquatorialRadius() const { return _ell.EquatorialRadius(); }
-//
-// /**
-//  * @return \e f the  flattening of the ellipsoid.  This is the
-//  *   value used in the constructor.
-//  **********************************************************************/
-// Math::double Flattening() const { return _ell.Flattening(); }
-//
-// /**
-//  * @return total area of ellipsoid in meters<sup>2</sup>.  The area of a
-//  *   polygon encircling a pole can be found by adding
-//  *   Geodesic::EllipsoidArea()/2 to the sum of \e S12 for each side of the
-//  *   polygon.
-//  **********************************************************************/
-// Math::double EllipsoidArea() const { return _ell.Area(); }
-// ///@}
-//
-// /**
-//  * A global instantiation of Rhumb with the parameters for the WGS84
-//  * ellipsoid.
-//  **********************************************************************/
-// static const Rhumb& WGS84();
-// };
-//
 /**
  * \brief Find a sequence of points on a single rhumb line.
  *
@@ -543,6 +532,7 @@ class RhumbLine {
   final _Rhumb _rh;
   final double _lat1, _lon1, _azi12;
   late final double _salp, _calp, _mu1, _psi1, _r1;
+
   // copy assignment not allowed
   // RhumbLine& operator=(const RhumbLine&) = delete;
   RhumbLine(this._rh, this._lat1, this._lon1, this._azi12);
@@ -564,6 +554,7 @@ class RhumbLine {
   _RhumbLatLonAreaReturn Position(double s12) {
     return GenPosition(s12, _Rhumb._MASK_LATITUDE | _Rhumb._MASK_LONGITUDE | _Rhumb._MASK_AREA);
   }
+
 //
 // /**
 //  * Compute the position of point 2 which is a distance \e s12 (meters) from
@@ -604,439 +595,46 @@ class RhumbLine {
    **********************************************************************/
   _RhumbLatLonAreaReturn GenPosition(double s12, int outmask) {
     double mu12 = s12 * _calp * _GeoMath.qd / _rh._ell._QuarterMeridian(),
-    mu2 = _mu1 + mu12;
+        mu2 = _mu1 + mu12;
     double psi2, lat2x, lon2x;
+    double S12 = double.nan;
+
     if ((mu2).abs() <= _GeoMath.qd) {
-    if (_calp != 0) {
+      if (_calp != 0) {
+        lat2x = _rh._ell._InverseRectifyingLatitude(mu2);
+        double psi12 = _rh.DRectifyingToIsometric(mu2 * _GeoMath.degree(),
+            _mu1 * _GeoMath.degree()) * mu12;
+        lon2x = _salp * psi12 / _calp;
+        psi2 = _psi1 + psi12;
+      } else {
+        lat2x = _lat1;
+        lon2x = _salp * s12 / (_r1 * _GeoMath.degree());
+        psi2 = _psi1;
+      }
+
+      if (outmask & _Rhumb._MASK_AREA != 0) {
+        S12 = _rh._c2 * lon2x *
+            _rh.MeanSinXi(_psi1 * _GeoMath.degree(), psi2 * _GeoMath.degree());
+      }
+      lon2x = outmask & _Rhumb._MASK_LONG_UNROLL != 0 ? _lon1 + lon2x : _GeoMath.AngNormalize(_GeoMath.AngNormalize(_lon1) + lon2x);
+    } else {
+      // Reduce to the interval [-180, 180)
+      mu2 = _GeoMath.AngNormalize(mu2);
+      // Deal with points on the anti-meridian
+      if (mu2.abs() > _GeoMath.qd) {
+        mu2 = _GeoMath.AngNormalize(_GeoMath.hd - mu2);
+      }
       lat2x = _rh._ell._InverseRectifyingLatitude(mu2);
-      double psi12 = _rh.DRectifyingToIsometric(  mu2 * _GeoMath.degree(),
-      _mu1 * _GeoMath.degree()) * mu12;
-      lon2x = _salp * psi12 / _calp;
-      psi2 = _psi1 + psi12;
-    } else {
-      lat2x = _lat1;
-      lon2x = _salp * s12 / (_r1 * _GeoMath.degree());
-      psi2 = _psi1;
+      lon2x = double.nan;
+      if (outmask & _Rhumb._MASK_AREA != 0) {
+        S12 = double.nan;
+      }
     }
-    if (outmask & AREA)
-    S12 = _rh._c2 * lon2x *
-    _rh.MeanSinXi(_psi1 * Math::degree(), psi2 * Math::degree());
-    lon2x = outmask & LONG_UNROLL ? _lon1 + lon2x :
-    Math::AngNormalize(Math::AngNormalize(_lon1) + lon2x);
-    } else {
-    // Reduce to the interval [-180, 180)
-    mu2 = Math::AngNormalize(mu2);
-    // Deal with points on the anti-meridian
-    if (fabs(mu2) > Math::qd) mu2 = Math::AngNormalize(Math::hd - mu2);
-    lat2x = _rh._ell.InverseRectifyingLatitude(mu2);
-    lon2x = Math::NaN();
-    if (outmask & AREA)
-    S12 = Math::NaN();
-    }
-    if (outmask & LATITUDE) lat2 = lat2x;
-    if (outmask & LONGITUDE) lon2 = lon2x;
+    double lat2 = double.nan, lon2 = double.nan;
+
+    if (outmask & _Rhumb._MASK_LATITUDE != 0) lat2 = lat2x;
+    if (outmask & _Rhumb._MASK_LONGITUDE != 0) lon2 = lon2x;
+
+    return _RhumbLatLonAreaReturn(lat2, lon2, S12);
   }
-//
-// /** \name Inspector functions
-//  **********************************************************************/
-// ///@{
-//
-// /**
-//  * @return \e lat1 the latitude of point 1 (degrees).
-//  **********************************************************************/
-// Math::double Latitude() const { return _lat1; }
-//
-// /**
-//  * @return \e lon1 the longitude of point 1 (degrees).
-//  **********************************************************************/
-// Math::double Longitude() const { return _lon1; }
-//
-// /**
-//  * @return \e azi12 the azimuth of the rhumb line (degrees).
-//  **********************************************************************/
-// Math::double Azimuth() const { return  _azi12; }
-//
-// /**
-//  * @return \e a the equatorial radius of the ellipsoid (meters).  This is
-//  *   the value inherited from the Rhumb object used in the constructor.
-//  **********************************************************************/
-// Math::double EquatorialRadius() const { return _rh.EquatorialRadius(); }
-//
-// /**
-//  * @return \e f the flattening of the ellipsoid.  This is the value
-//  *   inherited from the Rhumb object used in the constructor.
-//  **********************************************************************/
-// Math::double Flattening() const { return _rh.Flattening(); }
-// };
-//
-} // namespace GeographicLib
-//
-// namespace GeographicLib {
-//
-// using namespace std;
-//
-// Rhumb::Rhumb(double a, double f, bool exact)
-//     : _ell(a, f)
-// , _exact(exact)
-// , _c2(_ell.Area() / (2 * Math::td))
-// {
-// // Generated by Maxima on 2015-05-15 08:24:04-04:00
-// #if GEOGRAPHICLIB_RHUMBAREA_ORDER == 4
-// static const double coeff[] = {
-// // R[0]/n^0, polynomial in n of order 4
-// 691, 7860, -20160, 18900, 0, 56700,
-// // R[1]/n^1, polynomial in n of order 3
-// 1772, -5340, 6930, -4725, 14175,
-// // R[2]/n^2, polynomial in n of order 2
-// -1747, 1590, -630, 4725,
-// // R[3]/n^3, polynomial in n of order 1
-// 104, -31, 315,
-// // R[4]/n^4, polynomial in n of order 0
-// -41, 420,
-// };  // count = 20
-// #elif GEOGRAPHICLIB_RHUMBAREA_ORDER == 5
-// static const double coeff[] = {
-// // R[0]/n^0, polynomial in n of order 5
-// -79036, 22803, 259380, -665280, 623700, 0, 1871100,
-// // R[1]/n^1, polynomial in n of order 4
-// 41662, 58476, -176220, 228690, -155925, 467775,
-// // R[2]/n^2, polynomial in n of order 3
-// 18118, -57651, 52470, -20790, 155925,
-// // R[3]/n^3, polynomial in n of order 2
-// -23011, 17160, -5115, 51975,
-// // R[4]/n^4, polynomial in n of order 1
-// 5480, -1353, 13860,
-// // R[5]/n^5, polynomial in n of order 0
-// -668, 5775,
-// };  // count = 27
-// #elif GEOGRAPHICLIB_RHUMBAREA_ORDER == 6
-// static const double coeff[] = {
-// // R[0]/n^0, polynomial in n of order 6
-// 128346268, -107884140, 31126095, 354053700, -908107200, 851350500, 0,
-// 2554051500LL,
-// // R[1]/n^1, polynomial in n of order 5
-// -114456994, 56868630, 79819740, -240540300, 312161850, -212837625,
-// 638512875,
-// // R[2]/n^2, polynomial in n of order 4
-// 51304574, 24731070, -78693615, 71621550, -28378350, 212837625,
-// // R[3]/n^3, polynomial in n of order 3
-// 1554472, -6282003, 4684680, -1396395, 14189175,
-// // R[4]/n^4, polynomial in n of order 2
-// -4913956, 3205800, -791505, 8108100,
-// // R[5]/n^5, polynomial in n of order 1
-// 1092376, -234468, 2027025,
-// // R[6]/n^6, polynomial in n of order 0
-// -313076, 2027025,
-// };  // count = 35
-// #elif GEOGRAPHICLIB_RHUMBAREA_ORDER == 7
-// static const double coeff[] = {
-// // R[0]/n^0, polynomial in n of order 7
-// -317195588, 385038804, -323652420, 93378285, 1062161100, -2724321600LL,
-// 2554051500LL, 0, 7662154500LL,
-// // R[1]/n^1, polynomial in n of order 6
-// 258618446, -343370982, 170605890, 239459220, -721620900, 936485550,
-// -638512875, 1915538625,
-// // R[2]/n^2, polynomial in n of order 5
-// -248174686, 153913722, 74193210, -236080845, 214864650, -85135050,
-// 638512875,
-// // R[3]/n^3, polynomial in n of order 4
-// 114450437, 23317080, -94230045, 70270200, -20945925, 212837625,
-// // R[4]/n^4, polynomial in n of order 3
-// 15445736, -103193076, 67321800, -16621605, 170270100,
-// // R[5]/n^5, polynomial in n of order 2
-// -27766753, 16385640, -3517020, 30405375,
-// // R[6]/n^6, polynomial in n of order 1
-// 4892722, -939228, 6081075,
-// // R[7]/n^7, polynomial in n of order 0
-// -3189007, 14189175,
-// };  // count = 44
-// #elif GEOGRAPHICLIB_RHUMBAREA_ORDER == 8
-// static const double coeff[] = {
-// // R[0]/n^0, polynomial in n of order 8
-// 71374704821LL, -161769749880LL, 196369790040LL, -165062734200LL,
-// 47622925350LL, 541702161000LL, -1389404016000LL, 1302566265000LL, 0,
-// 3907698795000LL,
-// // R[1]/n^1, polynomial in n of order 7
-// -13691187484LL, 65947703730LL, -87559600410LL, 43504501950LL,
-// 61062101100LL, -184013329500LL, 238803815250LL, -162820783125LL,
-// 488462349375LL,
-// // R[2]/n^2, polynomial in n of order 6
-// 30802104839LL, -63284544930LL, 39247999110LL, 18919268550LL,
-// -60200615475LL, 54790485750LL, -21709437750LL, 162820783125LL,
-// // R[3]/n^3, polynomial in n of order 5
-// -8934064508LL, 5836972287LL, 1189171080, -4805732295LL, 3583780200LL,
-// -1068242175, 10854718875LL,
-// // R[4]/n^4, polynomial in n of order 4
-// 50072287748LL, 3938662680LL, -26314234380LL, 17167059000LL,
-// -4238509275LL, 43418875500LL,
-// // R[5]/n^5, polynomial in n of order 3
-// 359094172, -9912730821LL, 5849673480LL, -1255576140, 10854718875LL,
-// // R[6]/n^6, polynomial in n of order 2
-// -16053944387LL, 8733508770LL, -1676521980, 10854718875LL,
-// // R[7]/n^7, polynomial in n of order 1
-// 930092876, -162639357, 723647925,
-// // R[8]/n^8, polynomial in n of order 0
-// -673429061, 1929727800,
-// };  // count = 54
-// #else
-// #error "Bad value for GEOGRAPHICLIB_RHUMBAREA_ORDER"
-// #endif
-// static_assert(sizeof(coeff) / sizeof(real) ==
-// ((maxpow_ + 1) * (maxpow_ + 4))/2,
-// "Coefficient array size mismatch for Rhumb");
-// double d = 1;
-// int o = 0;
-// for (int l = 0; l <= maxpow_; ++l) {
-// int m = maxpow_ - l;
-// // R[0] is just an integration constant so it cancels when evaluating a
-// // definite integral.  So don't bother computing it.  It won't be used
-// // when invoking SinCosSeries.
-// if (l)
-// _rR[l] = d * Math::polyval(m, coeff + o, _ell._n) / coeff[o + m + 1];
-// o += m + 2;
-// d *= _ell._n;
-// }
-// // Post condition: o == sizeof(alpcoeff) / sizeof(real)
-// }
-//
-// const Rhumb& Rhumb::WGS84() {
-// static const Rhumb
-// wgs84(Constants::WGS84_a(), Constants::WGS84_f(), false);
-// return wgs84;
-// }
-//
-// void Rhumb::GenInverse(double lat1, double lon1, double lat2, double lon2,
-// unsigned outmask,
-// real& s12, real& azi12, real& S12) const {
-// real
-// lon12 = Math::AngDiff(lon1, lon2),
-// psi1 = _ell.IsometricLatitude(lat1),
-// psi2 = _ell.IsometricLatitude(lat2),
-// psi12 = psi2 - psi1,
-// h = hypot(lon12, psi12);
-// if (outmask & AZIMUTH)
-// azi12 = Math::atan2d(lon12, psi12);
-// if (outmask & DISTANCE) {
-// double dmudpsi = DIsometricToRectifying(psi2, psi1);
-// s12 = h * dmudpsi * _ell.QuarterMeridian() / Math::qd;
-// }
-// if (outmask & AREA)
-// S12 = _c2 * lon12 *
-// MeanSinXi(psi2 * Math::degree(), psi1 * Math::degree());
-// }
-//
-// RhumbLine Rhumb::Line(double lat1, double lon1, double azi12) const
-// { return RhumbLine(*this, lat1, lon1, azi12); }
-//
-// void Rhumb::GenDirect(double lat1, double lon1, double azi12, double s12,
-// unsigned outmask,
-// real& lat2, real& lon2, real& S12) const
-// { Line(lat1, lon1, azi12).GenPosition(s12, outmask, lat2, lon2, S12); }
-//
-// Math::double Rhumb::DE(double x, double y) const {
-// const EllipticFunction& ei = _ell._ell;
-// double d = x - y;
-// if (x * y <= 0)
-// return d != 0 ? (ei.E(x) - ei.E(y)) / d : 1;
-// // See DLMF: Eqs (19.11.2) and (19.11.4) letting
-// // theta -> x, phi -> -y, psi -> z
-// //
-// // (E(x) - E(y)) / d = E(z)/d - k2 * sin(x) * sin(y) * sin(z)/d
-// //
-// // tan(z/2) = (sin(x)*Delta(y) - sin(y)*Delta(x)) / (cos(x) + cos(y))
-// //          = d * Dsin(x,y) * (sin(x) + sin(y))/(cos(x) + cos(y)) /
-// //             (sin(x)*Delta(y) + sin(y)*Delta(x))
-// //          = t = d * Dt
-// // sin(z) = 2*t/(1+t^2); cos(z) = (1-t^2)/(1+t^2)
-// // Alt (this only works for |z| <= pi/2 -- however, this conditions holds
-// // if x*y > 0):
-// // sin(z) = d * Dsin(x,y) * (sin(x) + sin(y))/
-// //          (sin(x)*cos(y)*Delta(y) + sin(y)*cos(x)*Delta(x))
-// // cos(z) = sqrt((1-sin(z))*(1+sin(z)))
-// double sx = sin(x), sy = sin(y), cx = cos(x), cy = cos(y);
-// double Dt = Dsin(x, y) * (sx + sy) /
-// ((cx + cy) * (sx * ei.Delta(sy, cy) + sy * ei.Delta(sx, cx))),
-// t = d * Dt, Dsz = 2 * Dt / (1 + t*t),
-// sz = d * Dsz, cz = (1 - t) * (1 + t) / (1 + t*t);
-// return ((sz != 0 ? ei.E(sz, cz, ei.Delta(sz, cz)) / sz : 1)
-// - ei.k2() * sx * sy) * Dsz;
-// }
-//
-// Math::double Rhumb::DRectifying(double latx, double laty) const {
-// real
-// tbetx = _ell._f1 * Math::tand(latx),
-// tbety = _ell._f1 * Math::tand(laty);
-// return (Math::pi()/2) * _ell._b * _ell._f1 * DE(atan(tbetx), atan(tbety))
-// * Dtan(latx, laty) * Datan(tbetx, tbety) / _ell.QuarterMeridian();
-// }
-//
-// Math::double Rhumb::DIsometric(double latx, double laty) const {
-// real
-// phix = latx * Math::degree(), tx = Math::tand(latx),
-// phiy = laty * Math::degree(), ty = Math::tand(laty);
-// return Dasinh(tx, ty) * Dtan(latx, laty)
-// - Deatanhe(sin(phix), sin(phiy)) * Dsin(phix, phiy);
-// }
-//
-// Math::double Rhumb::SinCosSeries(bool sinp,
-// double x, double y, const double c[], int n) {
-// // N.B. n >= 0 and c[] has n+1 elements 0..n, of which c[0] is ignored.
-// //
-// // Use Clenshaw summation to evaluate
-// //   m = (g(x) + g(y)) / 2         -- mean value
-// //   s = (g(x) - g(y)) / (x - y)   -- average slope
-// // where
-// //   g(x) = sum(c[j]*SC(2*j*x), j = 1..n)
-// //   SC = sinp ? sin : cos
-// //   CS = sinp ? cos : sin
-// //
-// // This function returns only s; m is discarded.
-// //
-// // Write
-// //   t = [m; s]
-// //   t = sum(c[j] * f[j](x,y), j = 1..n)
-// // where
-// //   f[j](x,y) = [ (SC(2*j*x)+SC(2*j*y))/2 ]
-// //               [ (SC(2*j*x)-SC(2*j*y))/d ]
-// //
-// //             = [       cos(j*d)*SC(j*p)    ]
-// //               [ +/-(2/d)*sin(j*d)*CS(j*p) ]
-// // (+/- = sinp ? + : -) and
-// //    p = x+y, d = x-y
-// //
-// //   f[j+1](x,y) = A * f[j](x,y) - f[j-1](x,y)
-// //
-// //   A = [  2*cos(p)*cos(d)      -sin(p)*sin(d)*d]
-// //       [ -4*sin(p)*sin(d)/d   2*cos(p)*cos(d)  ]
-// //
-// // Let b[n+1] = b[n+2] = [0 0; 0 0]
-// //     b[j] = A * b[j+1] - b[j+2] + c[j] * I for j = n..1
-// //    t =  (c[0] * I  - b[2]) * f[0](x,y) + b[1] * f[1](x,y)
-// // c[0] is not accessed for s = t[2]
-// double p = x + y, d = x - y,
-// cp = cos(p), cd =          cos(d),
-// sp = sin(p), sd = d != 0 ? sin(d)/d : 1,
-// m = 2 * cp * cd, s = sp * sd;
-// // 2x2 matrices stored in row-major order
-// const double a[4] = {m, -s * d * d, -4 * s, m};
-// double ba[4] = {0, 0, 0, 0};
-// double bb[4] = {0, 0, 0, 0};
-// real* b1 = ba;
-// real* b2 = bb;
-// if (n > 0) b1[0] = b1[3] = c[n];
-// for (int j = n - 1; j > 0; --j) { // j = n-1 .. 1
-// swap(b1, b2);
-// // b1 = A * b2 - b1 + c[j] * I
-// b1[0] = a[0] * b2[0] + a[1] * b2[2] - b1[0] + c[j];
-// b1[1] = a[0] * b2[1] + a[1] * b2[3] - b1[1];
-// b1[2] = a[2] * b2[0] + a[3] * b2[2] - b1[2];
-// b1[3] = a[2] * b2[1] + a[3] * b2[3] - b1[3] + c[j];
-// }
-// // Here are the full expressions for m and s
-// // m =   (c[0] - b2[0]) * f01 - b2[1] * f02 + b1[0] * f11 + b1[1] * f12;
-// // s = - b2[2] * f01 + (c[0] - b2[3]) * f02 + b1[2] * f11 + b1[3] * f12;
-// if (sinp) {
-// // double f01 = 0, f02 = 0;
-// double f11 = cd * sp, f12 = 2 * sd * cp;
-// // m = b1[0] * f11 + b1[1] * f12;
-// s = b1[2] * f11 + b1[3] * f12;
-// } else {
-// // double f01 = 1, f02 = 0;
-// double f11 = cd * cp, f12 = - 2 * sd * sp;
-// // m = c[0] - b2[0] + b1[0] * f11 + b1[1] * f12;
-// s = - b2[2] + b1[2] * f11 + b1[3] * f12;
-// }
-// return s;
-// }
-//
-// Math::double Rhumb::DConformalToRectifying(double chix, double chiy) const {
-// return 1 + SinCosSeries(true, chix, chiy,
-// _ell.ConformalToRectifyingCoeffs(), tm_maxord);
-// }
-//
-// Math::double Rhumb::DRectifyingToConformal(double mux, double muy) const {
-// return 1 - SinCosSeries(true, mux, muy,
-// _ell.RectifyingToConformalCoeffs(), tm_maxord);
-// }
-//
-// Math::double Rhumb::DIsometricToRectifying(double psix, double psiy) const {
-// if (_exact) {
-// real
-// latx = _ell.InverseIsometricLatitude(psix),
-// laty = _ell.InverseIsometricLatitude(psiy);
-// return DRectifying(latx, laty) / DIsometric(latx, laty);
-// } else {
-// psix *= Math::degree();
-// psiy *= Math::degree();
-// return DConformalToRectifying(gd(psix), gd(psiy)) * Dgd(psix, psiy);
-// }
-// }
-//
-// Math::double Rhumb::DRectifyingToIsometric(double mux, double muy) const {
-// real
-// latx = _ell.InverseRectifyingLatitude(mux/Math::degree()),
-// laty = _ell.InverseRectifyingLatitude(muy/Math::degree());
-// return _exact ?
-// DIsometric(latx, laty) / DRectifying(latx, laty) :
-// Dgdinv(Math::taupf(Math::tand(latx), _ell._es),
-// Math::taupf(Math::tand(laty), _ell._es)) *
-// DRectifyingToConformal(mux, muy);
-// }
-//
-// Math::double Rhumb::MeanSinXi(double psix, double psiy) const {
-// return Dlog(cosh(psix), cosh(psiy)) * Dcosh(psix, psiy)
-// + SinCosSeries(false, gd(psix), gd(psiy), _rR, maxpow_) * Dgd(psix, psiy);
-// }
-//
-// RhumbLine::RhumbLine(const Rhumb& rh, double lat1, double lon1, double azi12)
-//     : _rh(rh)
-// , _lat1(Math::LatFix(lat1))
-// , _lon1(lon1)
-// , _azi12(Math::AngNormalize(azi12))
-// {
-// double alp12 = _azi12 * Math::degree();
-// _salp =      _azi12  == -Math::hd ? 0 : sin(alp12);
-// _calp = fabs(_azi12) ==  Math::qd ? 0 : cos(alp12);
-// _mu1 = _rh._ell.RectifyingLatitude(lat1);
-// _psi1 = _rh._ell.IsometricLatitude(lat1);
-// _r1 = _rh._ell.CircleRadius(lat1);
-// }
-//
-// void RhumbLine::GenPosition(double s12, unsigned outmask,
-// real& lat2, real& lon2, real& S12) const {
-// real
-// mu12 = s12 * _calp * Math::qd / _rh._ell.QuarterMeridian(),
-// mu2 = _mu1 + mu12;
-// double psi2, lat2x, lon2x;
-// if (fabs(mu2) <= Math::qd) {
-// if (_calp != 0) {
-// lat2x = _rh._ell.InverseRectifyingLatitude(mu2);
-// double psi12 = _rh.DRectifyingToIsometric(  mu2 * Math::degree(),
-// _mu1 * Math::degree()) * mu12;
-// lon2x = _salp * psi12 / _calp;
-// psi2 = _psi1 + psi12;
-// } else {
-// lat2x = _lat1;
-// lon2x = _salp * s12 / (_r1 * Math::degree());
-// psi2 = _psi1;
-// }
-// if (outmask & AREA)
-// S12 = _rh._c2 * lon2x *
-// _rh.MeanSinXi(_psi1 * Math::degree(), psi2 * Math::degree());
-// lon2x = outmask & LONG_UNROLL ? _lon1 + lon2x :
-// Math::AngNormalize(Math::AngNormalize(_lon1) + lon2x);
-// } else {
-// // Reduce to the interval [-180, 180)
-// mu2 = Math::AngNormalize(mu2);
-// // Deal with points on the anti-meridian
-// if (fabs(mu2) > Math::qd) mu2 = Math::AngNormalize(Math::hd - mu2);
-// lat2x = _rh._ell.InverseRectifyingLatitude(mu2);
-// lon2x = Math::NaN();
-// if (outmask & AREA)
-// S12 = Math::NaN();
-// }
-// if (outmask & LATITUDE) lat2 = lat2x;
-// if (outmask & LONGITUDE) lon2 = lon2x;
-// }
-//
-// } // namespace GeographicLib
+}
