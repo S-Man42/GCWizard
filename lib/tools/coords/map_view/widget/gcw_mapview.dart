@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -198,11 +198,13 @@ class _GCWMapViewState extends State<GCWMapView> {
         ? TileLayer(
             urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
             additionalOptions: {'accessToken': _mapBoxToken!},
-            tileProvider: CachedNetworkTileProvider())
+            //tileProvider: CachedNetworkTileProvider()
+    )
         : TileLayer(
             urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             subdomains: const ['a', 'b', 'c'],
-            tileProvider: CachedNetworkTileProvider());
+            //tileProvider: CachedNetworkTileProvider()
+    );
 
     var layers = <Widget>[tileLayer];
     layers.addAll(_buildLinesAndMarkersLayers());
@@ -214,14 +216,12 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                  absorbPanEventsOnScrollables: false,
-
+                  //absorbPanEventsOnScrollables: false,
+                  initialCameraFit: CameraFit.bounds(bounds: _getBounds(), padding: const EdgeInsets.all(30.0)),
                   /// IMPORTANT for dragging
-                  bounds: _getBounds(),
-                  boundsOptions: const FitBoundsOptions(padding: EdgeInsets.all(30.0)),
                   minZoom: 1.0,
                   maxZoom: 18.0,
-                  interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
+                  interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate), // suppress rotation
                   onTap: (_, __) => _popupLayerController.hidePopup(),
                   onLongPress: widget.isEditable && !_isPointsHidden // == _persistanceAdapter is set
                       ? (_, LatLng coordinate) {
@@ -312,13 +312,17 @@ class _GCWMapViewState extends State<GCWMapView> {
           _showPolylineDialog(polylines.first as _GCWTappablePolyline);
         },
       ),
-      PopupMarkerLayerWidget(
+      PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
-              markers: _markers,
-              popupSnap: PopupSnap.markerTop,
-              popupController: _popupLayerController.popupController,
-              popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
-              markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero))),
+            markers: _markers,
+
+            popupController: _popupLayerController.popupController,
+            markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero),
+            popupDisplayOptions: PopupDisplayOptions(
+              builder: (BuildContext _, Marker marker) => _buildPopup(marker),
+              snap: PopupSnap.markerTop,
+            ),
+      )),
     ]);
 
     return layers;
@@ -529,7 +533,7 @@ class _GCWMapViewState extends State<GCWMapView> {
           width: 28.3,
           height: 28.3,
           mapPoint: _point,
-          builder: (context) => marker);
+          child: marker);
     }).toList();
   }
 
@@ -541,7 +545,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
         Offset delta = details.delta;
         LatLng pointToLatLng =
-            const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom)!;
+            const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
 
         point.point = pointToLatLng;
 
@@ -1019,10 +1023,10 @@ class _GCWMarker extends Marker {
     this.coordinateText,
     this.coordinateDescription,
     required this.mapPoint,
-    required WidgetBuilder builder,
+    required Widget child,
     required double width,
     required double height,
-  }) : super(point: mapPoint.point, builder: builder, width: width, height: height);
+  }) : super(point: mapPoint.point, child: child, width: width, height: height);
 }
 
 class _GCWTappablePolyline extends TaggedPolyline {
@@ -1056,12 +1060,12 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
             coordinateFormat: defaultCoordinateFormat);
 }
 
-class CachedNetworkTileProvider extends TileProvider {
-  @override
-  ImageProvider getImage(Coords<num> coords, TileLayer options) {
-    return CachedNetworkImageProvider(getTileUrl(coords, options));
-  }
-}
+// class CachedNetworkTileProvider extends TileProvider {
+//   @override
+//   ImageProvider getImageWithCancelLoadingSupport(Invali coords, TileLayer options) {
+//     return CachedNetworkImageProvider(getTileUrl(coords, options));
+//   }
+// }
 
 void openInMap(BuildContext context, List<GCWMapPoint> mapPoints,
     {List<GCWMapPolyline>? mapPolylines, bool freeMap = false}) {
