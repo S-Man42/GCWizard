@@ -59,12 +59,13 @@ String decodeBattleship(String text, bool numberMode) {
   List<String> tupel = [];
 
   _normalizeInput(text.toUpperCase()).split(' ').forEach((pair) {
-
+print(pair);
     if (numberMode) {
       tupel = pair.split(',');
     } else {
       tupel = _splitPair(pair);
     }
+
     if (tupel.length != 2) {
       absoluteError = true;
     } else {
@@ -84,7 +85,13 @@ String decodeBattleship(String text, bool numberMode) {
       if (isInteger(tupel[1])) {
         row = int.parse(tupel[1]);
       } else {
-        row = int.parse(convertBase(tupel[1], 36, 10));
+        String h = convertBase(tupel[1], 36, 10);
+        if (int.tryParse(h) != null) {
+          row = int.parse(convertBase(tupel[1], 36, 10));
+        } else {
+          faultyTupel = tupel[1];
+          absoluteError = true;
+        }
       }
 
       if (!absoluteError) {
