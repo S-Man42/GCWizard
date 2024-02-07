@@ -99,6 +99,7 @@ void main() {
   group("Battleship.decodeNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': '', 'expectedOutput': ''},
+      {'input': 'MIKE', 'expectedOutput': 'battleship_error_invalid_pair\n\n'},
       {
         'expectedOutput': '  #            #     #       \n' +
             '  #            #     #       \n' +
@@ -134,6 +135,7 @@ void main() {
   group("Battleship.decodeExcel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': '', 'expectedOutput': ''},
+      {'input': 'MIKE', 'expectedOutput': 'battleship_error_invalid_pair\n\n'},
       {
         'expectedOutput': '  #            #     #       \n' +
             '  #            #     #       \n' +

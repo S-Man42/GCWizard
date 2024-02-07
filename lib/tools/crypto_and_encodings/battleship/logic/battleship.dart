@@ -59,7 +59,6 @@ String decodeBattleship(String text, bool numberMode) {
   List<String> tupel = [];
 
   _normalizeInput(text.toUpperCase()).split(' ').forEach((pair) {
-print(pair);
     if (numberMode) {
       tupel = pair.split(',');
     } else {
