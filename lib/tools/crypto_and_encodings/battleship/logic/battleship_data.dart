@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/battleship/logic/battleshi
 
 const BATTLESHIP_ERROR_INVALID_PAIR = 'battleship_error_invalid_pair';
 const BATTLESHIP_EMPTY_LINE = '                                                           ';
-final Map<String, List<String>> BATTLESHIP_ALPHABET = {
+const Map<String, List<String>> BATTLESHIP_ALPHABET = {
   ' ': ['     ', '     ', '     ', '     ', '     ', '     ', '     ', '     ', '     '],
   '°': ['  #  ', ' # # ', '  #  ', '     ', '     ', '     ', '     ', '     ', '     '],
   '^': ['  #  ', ' # # ', '     ', '     ', '     ', '     ', '     ', '     ', '     '],
