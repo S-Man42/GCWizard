@@ -1,8 +1,15 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/battleship/logic/battleship.dart';
 
 const BATTLESHIP_ERROR_INVALID_PAIR = 'battleship_error_invalid_pair';
-const BATTLESHIP_EMPTY_LINE = '                                                           ';
-const Map<String, List<String>> BATTLESHIP_ALPHABET = {
+const BATTLESHIP_ERROR_TO_MANY_COLUMS = 'battleship_error_to_many_colums';
+const BATTLESHIP_ERROR_TO_MANY_ROWS = 'battleship_error_to_many_rows';
+
+const _BATTLESHIP_MAX_COLUMNS = 999;
+const _BATTLESHIP_MAX_ROWS = 999;
+
+const _BATTLESHIP_EMPTY_LINE = '                                                           ';
+
+const Map<String, List<String>> _BATTLESHIP_ALPHABET = {
   ' ': ['     ', '     ', '     ', '     ', '     ', '     ', '     ', '     ', '     '],
   '°': ['  #  ', ' # # ', '  #  ', '     ', '     ', '     ', '     ', '     ', '     '],
   '^': ['  #  ', ' # # ', '     ', '     ', '     ', '     ', '     ', '     ', '     '],

@@ -149,10 +149,25 @@ class BattleshipState extends State<Battleship> {
     setState(() {});
   }
 
+  String _anaylzeDecodeError(String text){
+    List<String> result = [];
+    text.split('\n').forEach((line) {
+      if (line.startsWith(BATTLESHIP_ERROR_INVALID_PAIR)){
+        line = line.replaceAll(BATTLESHIP_ERROR_INVALID_PAIR, i18n(context, BATTLESHIP_ERROR_INVALID_PAIR));
+      } else if (line.startsWith(BATTLESHIP_ERROR_TO_MANY_COLUMS)){
+        line = line.replaceAll(BATTLESHIP_ERROR_TO_MANY_COLUMS, i18n(context, BATTLESHIP_ERROR_TO_MANY_COLUMS));
+      } else if (line.startsWith(BATTLESHIP_ERROR_TO_MANY_ROWS)){
+        line = line.replaceAll(BATTLESHIP_ERROR_TO_MANY_ROWS, i18n(context, BATTLESHIP_ERROR_TO_MANY_ROWS));
+      }
+      result.add(line);
+    });
+    return result.join('\n');
+  }
+
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       if (_decodeOutput.startsWith('battleship')) {
-        _decodeOutput = i18n(context, BATTLESHIP_ERROR_INVALID_PAIR) + ': ' + _decodeOutput.substring(29);
+        _decodeOutput = _anaylzeDecodeError(_decodeOutput); // + ': ' + _decodeOutput.substring(29);
       }
       _plainGenerateController.text = _decodeOutput;
       return GCWDefaultOutput(

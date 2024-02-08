@@ -50,12 +50,16 @@ String decodeBattleship(String text, bool numberMode) {
   if (text.isEmpty) return '';
 
   bool absoluteError = false;
+  bool rowsError = false;
+  bool columnsError = false;
   int column = 0;
   int maxColumn = 0;
   int row = 0;
   int maxRow = 0;
   Map<String, String> world = {};
   String faultyTupel = '';
+  String faultyColumnsTupel = '';
+  String faultyRowsTupel = '';
   List<String> tupel = [];
 
   _normalizeInput(text.toUpperCase()).split(' ').forEach((pair) {
@@ -64,9 +68,9 @@ String decodeBattleship(String text, bool numberMode) {
     } else {
       tupel = _splitPair(pair);
     }
-
     if (tupel.length != 2) {
       absoluteError = true;
+      faultyTupel = '( ' + tupel.toString() + ' )';
     } else {
       if (isInteger(tupel[0])) {
          column = int.parse(tupel[0]);
@@ -76,11 +80,17 @@ String decodeBattleship(String text, bool numberMode) {
         } else {
           column = _excelModeToInt(tupel[0]);
           if (column == -1){
-            faultyTupel = tupel[0];
+            faultyTupel = '( ' + tupel[0] + ',' + tupel[1] + ' )';
             absoluteError = true;
           }
         }
       }
+      if (column > _BATTLESHIP_MAX_COLUMNS) {
+        columnsError = true;
+        faultyColumnsTupel = '( ' + tupel[0] + ',' + tupel[1] + ' )';
+        maxColumn = _BATTLESHIP_MAX_COLUMNS;
+      }
+
       if (isInteger(tupel[1])) {
         row = int.parse(tupel[1]);
       } else {
@@ -88,24 +98,43 @@ String decodeBattleship(String text, bool numberMode) {
         if (int.tryParse(h) != null) {
           row = int.parse(convertBase(tupel[1], 36, 10));
         } else {
-          faultyTupel = tupel[1];
+          faultyTupel = '( ' + tupel[0] + ',' + tupel[1] + ' )';
           absoluteError = true;
         }
+      }
+      if (row > _BATTLESHIP_MAX_ROWS) {
+        rowsError = true;
+        faultyRowsTupel = '( ' + tupel[0] + ',' + tupel[1] + ' )';
+        maxRow = _BATTLESHIP_MAX_ROWS;
       }
 
       if (!absoluteError) {
         if (column > maxColumn) maxColumn = column;
         if (row > maxRow) maxRow = row;
+        if (maxColumn > _BATTLESHIP_MAX_COLUMNS) {
+          columnsError = true;
+        }
+        if (maxRow > _BATTLESHIP_MAX_ROWS) {
+          rowsError = true;
+        }
         world[column.toString() + '|' + row.toString()] = '#';
       }
+      if (rowsError) {
+        maxRow = _BATTLESHIP_MAX_ROWS;
+      }
+      if (columnsError) {
+        maxColumn = _BATTLESHIP_MAX_COLUMNS;
+      }
+
     }
   });
-
   List<List<String>> binaryWorld = List.generate(maxColumn, (y) => List.generate(maxRow, (x) => ' ', growable: false), growable: false);
   world.forEach((key, value) {
     column = int.parse(key.split('|')[0]) - 1;
     row = int.parse(key.split('|')[1]) - 1;
-    binaryWorld[column][row] = value;
+    if (column < _BATTLESHIP_MAX_COLUMNS && row < _BATTLESHIP_MAX_ROWS) {
+      binaryWorld[column][row] = value;
+    }
   });
 
   String outputLine = '';
@@ -117,11 +146,24 @@ String decodeBattleship(String text, bool numberMode) {
     }
     output.add(outputLine);
   }
+
+  outputLine = '';
   if (absoluteError) {
-    return BATTLESHIP_ERROR_INVALID_PAIR + faultyTupel + '\n\n' + output.join('\n');
-  } else {
-    return output.join('\n');
+    outputLine = BATTLESHIP_ERROR_INVALID_PAIR + ' ' + faultyTupel + '\n';
   }
+  if (columnsError) {
+    outputLine = outputLine + BATTLESHIP_ERROR_TO_MANY_COLUMS + ' ' +  faultyColumnsTupel + '\n';
+  }
+  if (rowsError) {
+    outputLine = outputLine + BATTLESHIP_ERROR_TO_MANY_ROWS + ' ' + faultyRowsTupel + '\n';
+  }
+
+  if (outputLine.isEmpty) {
+    outputLine = output.join('\n');
+  } else {
+    outputLine = outputLine + '\n\n' + output.join('\n');
+  }
+  return outputLine;
 }
 
 String encodeBattleship(String text, bool textmode, bool numberMode) {
@@ -155,7 +197,7 @@ String _convertTextToGraphic(String text){
 
   while (text.length > 10) {
     result.add(_convertLineToGraphic(text.substring(0,10)));
-    result.add(BATTLESHIP_EMPTY_LINE);
+    result.add(_BATTLESHIP_EMPTY_LINE);
     text = text.substring(10);
   }
   result.add(_convertLineToGraphic(text));
@@ -168,7 +210,7 @@ String _convertLineToGraphic(String textLine){
 
   for (int i = 0; i < textLine.length; i++){
     for (int j = 0; j < 9; j++){
-      lines[j] = lines[j] + BATTLESHIP_ALPHABET[textLine[i]]![j] + ' ';
+      lines[j] = lines[j] + _BATTLESHIP_ALPHABET[textLine[i]]![j] + ' ';
     }
   }
   for (int j = 0; j < 9; j++){
