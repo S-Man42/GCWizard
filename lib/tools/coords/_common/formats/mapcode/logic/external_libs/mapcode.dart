@@ -17,7 +17,6 @@
  */
 import 'dart:math';
 
-import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/ctrynams_short.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:utility/utility.dart';
 
@@ -330,19 +329,6 @@ int? _getTerritoryNumber(String territoryAlphaCode, {String? contextTerritory}) 
   return _iso2ccode(territoryAlphaCode);
 }
 
-/// PUBLIC return full name of territory
-String? _getTerritoryFullname(String territory) {
-  var territoryNumber = _getTerritoryNumber(territory);
-  if (territoryNumber == null || territoryNumber < 0 || territoryNumber > _ccode_earth) {
-    return null;
-  }
-  var idx = isofullname[territoryNumber].indexOf(' (');
-  if (idx > 0) {
-    return isofullname[territoryNumber].substring(0, idx);
-  }
-  return isofullname[territoryNumber];
-}
-
 /// PUBLIC return parent country of subdivision (negative if territory is not a subdivision)
 int getParentOf(String territory) {
   var territoryNumber = _getTerritoryNumber(territory);
@@ -379,12 +365,6 @@ bool _isSubdivision(String territory) {
   return getParentOf(territory) >= 0;
 }
 
-/// PUBLIC returns true iff territoryNumber is a country that has states
-bool _hasSubdivision(String territory) {
-  var territoryNumber = _getTerritoryNumber(territory);
-  if (territoryNumber == null) return false;
-  return _parents3.contains(_getTerritoryAlphaCode(territoryNumber.toString(), 0));
-}
 
 /// PRIVATE returns true iff x in range (all values in millionths)
 bool _isInRangeX(int x, int minx, int maxx) {
@@ -1075,70 +1055,6 @@ const _asc2lan = [
   [0x0AB3, 0x0A97, 0x0A9C, 0x0AA1, 0x0A87, 0x0AA6, 0x0AAC, 0x0A95, 0x0049, 0x0A9A, 0x0A9F, 0x0AA4, 0x0AAA, 0x0AA0, 0x004f, 0x0AB0, 0x0AB5, 0x0A9E, 0x0AAE, 0x0AAB, 0x0A89, 0x0AB7, 0x0AA8, 0x0A9D, 0x0AA2, 0x0AAD, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Gujarati
 ];
 
-
-// *UI*
-const _lannam = [
-  ["Roman"],
-  ["Greek"],
-  ["Cyrillic"],
-  ["Hebrew"],
-  ["Devanagari"],
-  ["Malayalam"],
-  ["Georgian"],
-  ["Katakana"],
-  ["Thai"],
-  ["Lao"],
-  ["Armenian"],
-  ["Bengali"],
-  ["Gurmukhi"],
-  ["Tibetan"],
-  ["Arabic"],
-  ["Korean"],
-  ["Burmese"],
-  ["Khmer"],
-  ["Sinhalese"],
-  ["Thaana"],
-  ["Chinese"],
-  ["Tifinagh"],
-  ["Tamil"],
-  ["Amharic"],
-  ["Telugu"],
-  ["Odia"],
-  ["Kannada"],
-  ["Gujarati"]
-];
-
-// *UI*
-const _lanlannam = [
-  ["Roman"],
-  ["&#949;&#955;&#955;&#951;&#957;&#953;&#954;&#940;"],
-  ["&#1082;&#1080;&#1088;&#1080;&#1083;&#1083;&#1080;&#1094;&#1072;"],
-  ["&#1506;&#1460;&#1489;&#1456;&#1512;&#1460;&#1497;&#1514;"],
-  ["&#2342;&#2375;&#2357;&#2344;&#2366;&#2327;&#2352;&#2368;"],  // Devanagari
-  ["&#3374;&#3378;&#3375;&#3390;&#3379;&#3330;"], // Malayalam
-  ["&#4325;&#4304;&#4320;&#4311;&#4323;&#4314;&#4312;"],
-  ["&#12459;&#12479;&#12459;&#12490;"],
-  ["&#3616;&#3634;&#3625;&#3634;&#3652;&#3607;&#3618;"],
-  ["&#3742;&#3762;&#3754;&#3762;&#3749;&#3762;&#3751;"],
-  ["&#1392;&#1377;&#1397;&#1381;&#1408;&#1381;&#1398;"],
-  ["&#2476;&#2494;&#2434;&#2482;&#2494;"],
-  ["&#2583;&#2625;&#2608;&#2606;&#2625;&#2582;&#2624;"],
-  ["&#3921;&#3926;&#3956;&#3851;&#3909;&#3923;&#3851;"],
-  ["&#1575;&#1604;&#1593;&#1614;&#1585;&#1614;&#1576;&#1616;&#1610;&#1614;&#1617;&#1577;"],
-  ["&#51312;&#49440;&#44544;/&#54620;&#44544;"], // Korean (Choson'gul / Hangul )
-  ["&#4121;&#4156;&#4116;&#4154;&#4121;&#4140;&#4129;&#4096;&#4153;&#4097;&#4123;&#4140;"], // Burmese
-  ["&#6050;&#6016;&#6098;&#6047;&#6042;&#6017;&#6098;&#6040;&#6082;&#6042;"], // Khmer script
-  ['&#3523;&#3538;&#3458;&#3524;&#3517; &#3461;&#3482;&#3530;&#3522;&#3515; &#3512;&#3535;&#3517;&#3535;&#3520;'], // Sinhalese
-  ["&#1932;&#1959;&#1922;&#1958;"], // Thaana (Maldivan)
-  ["&#12549;&#12550;&#12551;&#12552;"], // Chinese (bopomofo) // &#27880;&#38899;&#31526;&#34399;,
-  ["&#11612;&#11593;&#11580;&#11593;&#11599;&#11568;&#11606"], // Tifinagh (Berber)
-  ["&#2980;&#2990;&#3007;&#2996;&#3021;"], // Tamil
-  ["&#4771;&#4635;&#4653;&#4763;"], // Amharic
-  ["&#3108;&#3142;&#3122;&#3137;&#3095;&#3137;"], // Telugu
-  ["&#2835;&#2849;&#2876;&#2879;&#2822;"], // Odia
-  ["&#3221;&#3240;&#3277;&#3240;&#3233;"], // Kannada
-  ["&#2711;&#2753;&#2716;&#2736;&#2750;&#2724;&#2752;"] // Gujarati
-];
 
 /// PRIVATE substitute characters in str with characters form the specified language (pass asHTML=1 to explicitly HTML-encode characters)
 String _showinlan(String str, int lan, bool asHTML) {
@@ -1958,29 +1874,6 @@ LatLng? _master_decode(String mapcode, int territoryNumber) { // returns object 
 
 // ******************** legacy interface *****************
 
-bool _hasStates(String territoryNumber) {
-  return _hasSubdivision(territoryNumber);
-}
-
-bool _isState(String territoryNumber) {
-  return _isSubdivision(territoryNumber);
-}
-
-int _StateParent(String territoryNumber) {
-  return getParentOf(territoryNumber);
-}
-
-String _ccode2iso(String territoryNumber, int? format) {
-  return _getTerritoryAlphaCode(territoryNumber, format);
-}
-
-String? _fullname(int territoryNumber, bool keepindex) {
-  if (keepindex) {
-    return isofullname[territoryNumber];
-  }
-  return _getTerritoryFullname(territoryNumber.toString());
-}
-
 const _maxErrorInMetersForDigits = [
   7.49,
   1.39,
@@ -2014,13 +1907,6 @@ double distanceInMeters(double latDeg1, double lonDeg1, double latDeg2, double l
 /// returns: string
 String convertToAlphabet(String mapcode, int targetAlphabet) {
   return _showinlan(mapcode, targetAlphabet, false);
-}
-
-/// PUBLIC convert a mapcode (skipping the territory abbreviation) into a particular alphabet
-/// targetAlphabet: 0=roman, 1=greek etc.
-/// returns: HTML-encoded string
-String _convertToAlphabetAsHTML(String mapcode, int targetAlphabet) {
-  return _showinlan(mapcode, targetAlphabet, true);
 }
 
 /// PUBLIC decode a string (which may contain a full mapcode, including a territory)

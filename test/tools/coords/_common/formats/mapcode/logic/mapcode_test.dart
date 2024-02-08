@@ -25,7 +25,6 @@ void main() {
       test('string: ${greek_versions[t]}', () {
         // see if alphabets (re)convert as expected
         var str = greek_versions[t];
-        var expected = greek_versions[t + 1];
         var enc = convertToAlphabet(str, 1); // to greek
 
         expect(str, enc);
@@ -123,14 +122,14 @@ void main() {
                   if (!multipleBordersNearby(p.latitude, p.longitude, r[i].territoryAlphaCode))  // should re-encode
                       {
                     nrWarnings++;
-                    print('*** WARNING *** decode(' + str + ') = (' + p.latitude.toStringAsFixed(15) + ', ' + p.longitude.toStringAsFixed(15) + ') does not re-encode from (' + y.toStringAsFixed(15) + ', ' + x.toStringAsFixed(15) + ')' + r[i].territoryAlphaCode);
-                    printGeneratedMapcodes(r, "global");
-                    printGeneratedMapcodes(r2, r[i].territoryAlphaCode);
-                    printGeneratedMapcodes(r3, (parent < 0) ? "no parent" : parent.toString());
+                    // print('*** WARNING *** decode(' + str + ') = (' + p.latitude.toStringAsFixed(15) + ', ' + p.longitude.toStringAsFixed(15) + ') does not re-encode from (' + y.toStringAsFixed(15) + ', ' + x.toStringAsFixed(15) + ')' + r[i].territoryAlphaCode);
+                    // printGeneratedMapcodes(r, "global");
+                    // printGeneratedMapcodes(r2, r[i].territoryAlphaCode);
+                    // printGeneratedMapcodes(r3, (parent < 0) ? "no parent" : parent.toString());
                   }
                 }
               } else {
-                printGeneratedMapcodes(r, "global");
+                // printGeneratedMapcodes(r, "global");
               }
             }
           }
@@ -217,14 +216,14 @@ void main() {
 
 
 
-void printGeneratedMapcodes(List<McInfo> r, String name) {
-  var n = r.length;
-  var t = ' &nbsp; ' + n.toString() + ' results generated (' + name + '):';
-  for (var i = 0; i < n; i++) {
-    t += ' (' + r[i].fullmapcode + ')';
-  }
-  print(t);
-}
+// void printGeneratedMapcodes(List<McInfo> r, String name) {
+//   var n = r.length;
+//   var t = ' &nbsp; ' + n.toString() + ' results generated (' + name + '):';
+//   for (var i = 0; i < n; i++) {
+//     t += ' (' + r[i].fullmapcode + ')';
+//   }
+//   print(t);
+// }
 
 var testdata = [
 
