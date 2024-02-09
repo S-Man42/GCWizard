@@ -17,10 +17,9 @@ class _BaconState extends State<Bacon> {
   late TextEditingController _controller;
 
   var _currentInput = '';
-  GCWSwitchPosition _currentVersion = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentIJUVVersion = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentEncryptDecryptMode = GCWSwitchPosition.right;
   GCWSwitchPosition _binaryMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _typeMode = GCWSwitchPosition.left;
   bool _inversMode = false;
 
   String _output = '';
@@ -50,20 +49,20 @@ class _BaconState extends State<Bacon> {
           },
         ),
         GCWTwoOptionsSwitch(
-          value: _currentMode,
+          value: _currentEncryptDecryptMode,
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentEncryptDecryptMode = value;
             });
           },
         ),
         GCWTwoOptionsSwitch(
-          value: _currentVersion,
+          value: _currentIJUVVersion,
           leftValue: 'I=J, U=V',
           rightValue: 'I, J, U, V',
           onChanged: (value) {
             setState(() {
-              _currentVersion = value;
+              _currentIJUVVersion = value;
             });
           },
         ),
@@ -79,7 +78,9 @@ class _BaconState extends State<Bacon> {
           },
         ),
         GCWOnOffSwitch(
-          title: _binaryMode == GCWSwitchPosition.left ? 'AAAAB → BBBBA' : '00001 → 11110',
+          title: _binaryMode == GCWSwitchPosition.left
+              ? 'AAAAB → BBBBA'
+              : '00001 → 11110',
           value: _inversMode,
           onChanged: (value) {
             setState(() {
@@ -93,12 +94,21 @@ class _BaconState extends State<Bacon> {
   }
 
   Widget _buildOutput() {
-    var type = _typeMode == GCWSwitchPosition.left ? BaconType.ORIGINAL : BaconType.FULL;
+    var type = _currentIJUVVersion == GCWSwitchPosition.left
+        ? BaconType.ORIGINAL
+        : BaconType.FULL;
 
-    if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
+    if (_currentEncryptDecryptMode == GCWSwitchPosition.left) {
+      _output = encodeBacon(_currentInput,
+          inverse: _inversMode,
+          binary: _binaryMode == GCWSwitchPosition.right,
+          type: type);
     } else {
-      _output = decodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right, _currentVersion == GCWSwitchPosition.left);
+      _output = decodeBacon(
+          _currentInput,
+          inverse: _inversMode,
+          binary: _binaryMode == GCWSwitchPosition.right,
+          type: type);
     }
 
     return GCWDefaultOutput(child: _output);
