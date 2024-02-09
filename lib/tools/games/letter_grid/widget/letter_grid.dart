@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +13,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/battleship/logic/battleship.dart';
+import 'package:gc_wizard/tools/games/letter_grid/logic/letter_grid.dart';
 
 class LetterGrid extends StatefulWidget {
   const LetterGrid({Key? key}) : super(key: key);
@@ -33,18 +35,12 @@ class LetterGridState extends State<LetterGrid> {
   String _currentDecode = '';
   String _currentTextEncode = '';
 
-  String _encodeOutput = '';
   String _decodeOutput = '';
-
-  final bool _TEXTMODE = true;
-  final bool _GRAPHICMODE = false;
 
   @override
   void initState() {
     super.initState();
-    _encodeGraphicController = CodeController(
-      text: _encodeOutput,
-    );
+
     _encodeTextController = TextEditingController(text: _currentTextEncode);
     _decodeController = TextEditingController(text: _currentDecode);
     _plainGenerateController = TextEditingController(text: _decodeOutput);
@@ -62,61 +58,59 @@ class LetterGridState extends State<LetterGrid> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWTwoOptionsSwitch(
-        value: _currentEncryptDecryptMode,
-        onChanged: (value) {
-          setState(() {
-            _currentEncryptDecryptMode = value;
-          });
-        },
-      ),
-      GCWTwoOptionsSwitch(
-        value: _currentNumberExcelMode,
-        leftValue: i18n(context, 'battleship_input_numbers'),
-        rightValue: i18n(context, 'battleship_input_excel'),
-        onChanged: (value) {
-          setState(() {
-            _currentNumberExcelMode = value;
-          });
-        },
-      ),
-      _currentEncryptDecryptMode == GCWSwitchPosition.left // encrypt
-          ? Column(children: <Widget>[
-              GCWTwoOptionsSwitch(
-                title: i18n(context, 'battleship_input_mode'),
-                leftValue: i18n(context, 'battleship_input_text'),
-                rightValue: i18n(context, 'battleship_input_graphic'),
-                value: _currentTextGraphicMode,
-                onChanged: (value) {
-                  setState(() {
-                    _currentTextGraphicMode = value;
-                  });
-                },
-              ),
-              _currentTextGraphicMode == GCWSwitchPosition.left // text
-                  ? GCWTextField(
+      // GCWTwoOptionsSwitch(
+      //   value: _currentEncryptDecryptMode,
+      //   onChanged: (value) {
+      //     setState(() {
+      //       _currentEncryptDecryptMode = value;
+      //     });
+      //   },
+      // ),
+      // GCWTwoOptionsSwitch(
+      //   value: _currentNumberExcelMode,
+      //   leftValue: i18n(context, 'battleship_input_numbers'),
+      //   rightValue: i18n(context, 'battleship_input_excel'),
+      //   onChanged: (value) {
+      //     setState(() {
+      //       _currentNumberExcelMode = value;
+      //     });
+      //   },
+      // ),
+      // _currentEncryptDecryptMode == GCWSwitchPosition.left // encrypt
+      //      Column(children: <Widget>[
+              // GCWTwoOptionsSwitch(
+              //   title: i18n(context, 'battleship_input_mode'),
+              //   leftValue: i18n(context, 'battleship_input_text'),
+              //   rightValue: i18n(context, 'battleship_input_graphic'),
+              //   value: _currentTextGraphicMode,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       _currentTextGraphicMode = value;
+              //     });
+              //   },
+              // ),
+              // _currentTextGraphicMode == GCWSwitchPosition.left // text
+                  GCWTextField(
                       controller: _encodeTextController,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9 a-zA-Z^°!"§$%&/()=?\\{}\[\]<>|,;.:-_#+~]')),
-                      ],
                       onChanged: (text) {
+                        style: gcwMonotypeTextStyle();
                         setState(() {
                           _currentTextEncode = text;
                         });
                       },
-                    )
-                  : CodeField(
-                      controller: _encodeGraphicController,
-                      textStyle: gcwMonotypeTextStyle(),
-                      lineNumbers: false,
-                      lineNumberStyle: const LineNumberStyle(
-                        width: 0.0,
-                        margin: 0.0,
-                        textStyle: TextStyle(fontSize: 0.0),
-                      ),
-                    )
-            ])
-          : GCWTextField(
+                    ),
+                  // : CodeField(
+                  //     controller: _encodeGraphicController,
+                  //     textStyle: gcwMonotypeTextStyle(),
+                  //     lineNumbers: false,
+                  //     lineNumberStyle: const LineNumberStyle(
+                  //       width: 0.0,
+                  //       margin: 0.0,
+                  //       textStyle: TextStyle(fontSize: 0.0),
+                  //     ),
+                  //   )
+            // ]),
+           GCWTextField(
               controller: _decodeController,
               onChanged: (text) {
                 setState(() {
@@ -124,51 +118,25 @@ class LetterGridState extends State<LetterGrid> {
                 });
               },
             ),
-      GCWButton(
-        text: i18n(context, 'common_start'),
-        onPressed: () {
-          setState(() {
-            _calcOutput();
-          });
-        },
-      ),
-      _buildOutput(),
+            GCWButton(
+              text: i18n(context, 'common_start'),
+              onPressed: () {
+                setState(() {
+                  _calcOutput();
+                });
+              },
+            ),
+            _buildOutput(),
     ]);
   }
 
   void _calcOutput() {
-    if (_currentEncryptDecryptMode == GCWSwitchPosition.left) {
-      if (_currentTextGraphicMode == GCWSwitchPosition.left) {
-        _encodeOutput = encodeBattleship(_currentTextEncode, _TEXTMODE, (_currentNumberExcelMode == GCWSwitchPosition.left));
-      } else {
-        _encodeOutput = encodeBattleship(_encodeGraphicController.text, _GRAPHICMODE, (_currentNumberExcelMode == GCWSwitchPosition.left));
-      }
-    } else {
-      _decodeOutput = decodeBattleship(_currentDecode, (_currentNumberExcelMode == GCWSwitchPosition.left));
-    }
+    _decodeOutput = searchWordList(_currentTextEncode, _currentDecode);
+    print(_decodeOutput);
     setState(() {});
   }
 
-  String _anaylzeDecodeError(String text){
-    List<String> result = [];
-    text.split('\n').forEach((line) {
-      if (line.startsWith(BATTLESHIP_ERROR_INVALID_PAIR)){
-        line = line.replaceAll(BATTLESHIP_ERROR_INVALID_PAIR, i18n(context, BATTLESHIP_ERROR_INVALID_PAIR));
-      } else if (line.startsWith(BATTLESHIP_ERROR_TO_MANY_COLUMS)){
-        line = line.replaceAll(BATTLESHIP_ERROR_TO_MANY_COLUMS, i18n(context, BATTLESHIP_ERROR_TO_MANY_COLUMS));
-      } else if (line.startsWith(BATTLESHIP_ERROR_TO_MANY_ROWS)){
-        line = line.replaceAll(BATTLESHIP_ERROR_TO_MANY_ROWS, i18n(context, BATTLESHIP_ERROR_TO_MANY_ROWS));
-      }
-      result.add(line);
-    });
-    return result.join('\n');
-  }
-
   Widget _buildOutput() {
-    if (_currentEncryptDecryptMode == GCWSwitchPosition.right) {
-      if (_decodeOutput.startsWith('battleship')) {
-        _decodeOutput = _anaylzeDecodeError(_decodeOutput); // + ': ' + _decodeOutput.substring(29);
-      }
       _plainGenerateController.text = _decodeOutput;
       return GCWDefaultOutput(
         trailing: Row(
@@ -186,16 +154,46 @@ class LetterGridState extends State<LetterGrid> {
         ),
         child: GCWCodeTextField(
           controller: _plainGenerateController,
+          patternMap: _numeralWordsHiglightMap(),
         ),
       );
-    } else {
-      return Column(
-        children: <Widget>[
-          GCWDefaultOutput(
-            child: _encodeOutput,
-          ),
-        ],
-      );
-    }
+  }
+
+  Map<String, TextStyle> _numeralWordsHiglightMap() {
+    Map<String, TextStyle> result = {};
+
+    List<String> lines = const LineSplitter().convert(_currentDecode.toUpperCase());
+    lines.forEach((line) {
+      result.addAll({line.trim().split('').map((char) => char).join(' '): const TextStyle(color: Colors.red)});
+    });
+
+    // if (NUMERAL_WORDS_ACCENTS[_currentLanguage] != null) {
+    //   for (var element in NUMERAL_WORDS_ACCENTS[_currentLanguage]!) {
+    //     if ((int.tryParse(NUMERAL_WORDS[_currentLanguage]![removeAccents(element)] ?? '') ?? 0) < 10) {
+    //       result[r'' + element + ''] = const TextStyle(color: Colors.red);
+    //       result[r'' + removeAccents(element) + ''] = const TextStyle(color: Colors.red);
+    //     } else {
+    //       result[r'' + element + ''] = const TextStyle(color: Colors.orange);
+    //       result[r'' + removeAccents(element) + ''] = const TextStyle(color: Colors.orange);
+    //     }
+    //   }
+    // }
+    //
+    // NUMERAL_WORDS[_currentLanguage]!.forEach((key, value) {
+    //   if (int.tryParse(value) == null) {
+    //     if (value.startsWith('numeral')) {
+    //       result[r'' + key + ''] = const TextStyle(color: Colors.blue);
+    //     } else {
+    //       result[r'' + key + ''] = const TextStyle(color: Colors.green);
+    //     }
+    //   } else if (int.parse(value) < 10) {
+    //     result[r'' + key + ''] = const TextStyle(color: Colors.red);
+    //   } else if (int.parse(value) < 100) {
+    //     result[r'' + key + ''] = const TextStyle(color: Colors.orange);
+    //   } else {
+    //     result[r'' + key + ''] = const TextStyle(color: Colors.yellow);
+    //   }
+    // });
+    return result;
   }
 }

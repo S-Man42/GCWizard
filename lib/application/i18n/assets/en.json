@@ -2970,6 +2970,8 @@
   "lcm_title": "Least Common Multiple (LCM)",
   "lcm_description": "Calculates the LCM of two Numbers",
   "lcm_example": "24, 36 → 72",
+  "letter_grid_title": "Letter Grid",
+  "letter_grid_description": "Word search in a letter grid",
   "licenses_title": "Licenses",
   "licenses_usedflutterlibraries": "Used Code Libraries (Flutter/Dart)",
   "licenses_additionalcode": "Additional Code",
