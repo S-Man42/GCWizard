@@ -12,6 +12,9 @@
  **********************************************************************/
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 
+const bool _GEOGRAPHICLIB_PANIC = false;
+const int _GEOGRAPHICLIB_PRECISION = 3;
+
 /*
  * Mathematical functions needed by GeographicLib.
  * <p>
@@ -154,17 +157,18 @@ class _GeoMath {
    * <p>
    * See D. E. Knuth, TAOCP, Vol 2, 4.2.2, Theorem B.
    **********************************************************************/
-  static void sum(_Pair p, double u, double v) {
+  static _Pair sum(double u, double v, double t) {
     double s = u + v;
     double up = s - v;
     double vpp = s - up;
     up -= u;
     vpp -= v;
-    double t = -(up + vpp);
+    // if s = 0, then t = 0 and give t the same sign as s
+    // mpreal needs T(0) here
+    t = s != 0 ? 0.0 - (up + vpp) : s;
     // u + v =       s      + t
     //       = round(u + v) + t
-    p.first = s;
-    p.second = t;
+    return _Pair(s, t);
   }
 
   /*
@@ -288,25 +292,57 @@ class _GeoMath {
     return x.abs() > 90 ? double.nan : x;
   }
 
-  /*
-   * The exact difference of two angles reduced to (&minus;180&deg;, 180&deg;].
-   * <p>
-   * @param x the first angle in degrees.
-   * @param y the second angle in degrees.
-   * @param p output Pair(<i>d</i>, <i>e</i>) with <i>d</i> being the rounded
-   *   difference and <i>e</i> being the error.
-   * <p>
-   * The computes <i>z</i> = <i>y</i> &minus; <i>x</i> exactly, reduced to
-   * (&minus;180&deg;, 180&deg;]; and then sets <i>z</i> = <i>d</i> + <i>e</i>
-   * where <i>d</i> is the nearest representable number to <i>z</i> and
-   * <i>e</i> is the truncation error.  If <i>d</i> = &minus;180, then <i>e</i>
-   * &gt; 0; If <i>d</i> = 180, then <i>e</i> &le; 0.
+  /**
+   * The exact difference of two angles reduced to
+   * [&minus;180&deg;, 180&deg;].
+   *
+   * @tparam T the type of the arguments and returned value.
+   * @param[in] x the first angle in degrees.
+   * @param[in] y the second angle in degrees.
+   * @param[out] e the error term in degrees.
+   * @return \e d, the truncated value of \e y &minus; \e x.
+   *
+   * This computes \e z = \e y &minus; \e x exactly, reduced to
+   * [&minus;180&deg;, 180&deg;]; and then sets \e z = \e d + \e e where \e d
+   * is the nearest representable number to \e z and \e e is the truncation
+   * error.  If \e z = &plusmn;0&deg; or &plusmn;180&deg;, then the sign of
+   * \e d is given by the sign of \e y &minus; \e x.  The maximum absolute
+   * value of \e e is 2<sup>&minus;26</sup> (for doubles).
    **********************************************************************/
-  static void AngDiff(_Pair p, double x, double y) {
-    sum(p, AngNormalize(-x), AngNormalize(y));
-    double d = AngNormalize(p.first),
-        t = p.second;
-    sum(p, d == 180 && t > 0 ? -180 : d, t);
+  static _Pair AngDiffError(double x, double y) {
+    // Use remainder instead of AngNormalize, since we treat boundary cases
+    // later taking account of the error
+    var _d = sum(remainder(-x, td.toDouble()), remainder( y, td.toDouble()), double.nan);
+    double d = _d.first;
+    double e = _d.second;
+    // This second sum can only change d if abs(d) < 128, so don't need to
+    // apply remainder yet again.
+    _d = sum(remainder(d, td.toDouble()), e, e);
+    d = _d.first;
+    e = _d.second;
+    // Fix the sign if d = -180, 0, 180.
+    if (d == 0 || d.abs() == hd) {
+      // If e == 0, take sign from y - x
+      // else (e != 0, implies d = +/-180), d and e must have opposite signs
+      d = _copySign(d, e == 0 ? y - x : -e);
+    }
+    return _Pair(d, e);
+  }
+
+  /**
+   * Difference of two angles reduced to [&minus;180&deg;, 180&deg;]
+   *
+   * @tparam T the type of the arguments and returned value.
+   * @param[in] x the first angle in degrees.
+   * @param[in] y the second angle in degrees.
+   * @return \e y &minus; \e x, reduced to the range [&minus;180&deg;,
+   *   180&deg;].
+   *
+   * The result is equivalent to computing the difference exactly, reducing
+   * it to [&minus;180&deg;, 180&deg;] and rounding the result.
+   **********************************************************************/
+  static double AngDiff(double x, double y) {
+    return AngDiffError(x, y).first;
   }
 
   /*
@@ -389,10 +425,9 @@ class _GeoMath {
     // quadrant.
     int q = 0;
     if (y.abs() > x.abs()) {
-      double t;
-      t = x;
+      double _h = x;
       x = y;
-      y = t;
+      y = _h;
       q = 2;
     }
     if (x < 0) {
@@ -400,7 +435,7 @@ class _GeoMath {
       ++q;
     }
     // here x >= 0 and x >= abs(y), so angle is in [-pi/4, pi/4]
-    double ang = _toDegrees(atan2(y, x));
+    double ang = atan2(y, x) / degree();
     switch (q) {
     // Note that atan2d(-0.0, 1.0) will return -0.  However, we expect that
     // atan2d will not be called with y = -0.  If need be, include
@@ -409,13 +444,13 @@ class _GeoMath {
     //
     // and handle mpfr as in AngRound.
       case 1:
-        ang = (y >= 0 ? 180 : -180) - ang;
+        ang = _copySign(hd.toDouble(), y) - ang;
         break;
       case 2:
-        ang = 90 - ang;
+        ang = qd - ang;
         break;
       case 3:
-        ang = -90 + ang;
+        ang = -qd + ang;
         break;
       default:
         break;
@@ -434,7 +469,7 @@ class _GeoMath {
   }
 
   static double tand(double x) {
-    double overflow = 1 / sq(double.minPositive);
+    double overflow = 1 / sq(positiveDoublePrecision);
     _Pair p = _Pair();
     sincosd(p, x);
     double s = p.first;
@@ -476,5 +511,54 @@ class _GeoMath {
     } else {
       return tau;
     }
+  }
+
+  /**
+   * tan&phi; in terms of tan&chi;
+   *
+   * @tparam T the type of the argument and the returned value.
+   * @param[in] taup &tau;&prime; = tan&chi;
+   * @param[in] es the signed eccentricity = sign(<i>e</i><sup>2</sup>)
+   *   sqrt(|<i>e</i><sup>2</sup>|)
+   * @return &tau; = tan&phi;
+   *
+   * See Eqs. (19--21) of
+   * C. F. F. Karney,
+   * <a href="https://doi.org/10.1007/s00190-011-0445-3">
+   * Transverse Mercator with an accuracy of a few nanometers,</a>
+   * J. Geodesy 85(8), 475--485 (Aug. 2011)
+   * (preprint
+   * <a href="https://arxiv.org/abs/1002.1417">arXiv:1002.1417</a>).
+   **********************************************************************/
+  static double tauf(double taup, double es) {
+    const int numit = 5;
+    // min iterations = 1, max iterations = 2; mean = 1.95
+    double tol = sqrt(positiveDoublePrecision) / 10;
+    double taumax = 2 / sqrt(positiveDoublePrecision);
+    double e2m = 1 - sq(es),
+    // To lowest order in e^2, taup = (1 - e^2) * tau = _e2m * tau; so use
+    // tau = taup/e2m as a starting guess. Only 1 iteration is needed for
+    // |lat| < 3.35 deg, otherwise 2 iterations are needed.  If, instead, tau
+    // = taup is used the mean number of iterations increases to 1.999 (2
+    // iterations are needed except near tau = 0).
+    //
+    // For large tau, taup = exp(-es*atanh(es)) * tau.  Use this as for the
+    // initial guess for |taup| > 70 (approx |phi| > 89deg).  Then for
+    // sufficiently large tau (such that sqrt(1+tau^2) = |tau|), we can exit
+    // with the intial guess and avoid overflow problems.  This also reduces
+    // the mean number of iterations slightly from 1.963 to 1.954.
+    tau = taup.abs() > 70 ? taup * exp(eatanhe(1.0, es)) : taup/e2m,
+    stol = tol * max<double>(1.0, taup.abs());
+    if (!(tau.abs() < taumax)) return tau; // handles +/-inf and nan
+    for (int i = 0; i < numit || _GEOGRAPHICLIB_PANIC; ++i) {
+      double taupa = taupf(tau, es),
+      dtau = (taup - taupa) * (1 + e2m * sq(tau)) /
+      ( e2m * hypot(1.0, tau) * hypot(1.0, taupa) );
+      tau += dtau;
+      if (!(dtau.abs() >= stol)) {
+        break;
+      }
+    }
+    return tau;
   }
 }

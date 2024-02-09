@@ -57,3 +57,16 @@ double _hypot(double x, double y) {
 double _cbrt(double x) {
   return pow(x.abs(), 1.0 / 3.0) * x.sign;
 }
+
+double _logBase(double a, double base) {
+  return log(a) / log(base);
+}
+
+double _log2(double a) {
+  return _logBase(a, 2);
+}
+
+double _exp2(double a) {
+  return pow(2.0, a).toDouble();
+}
+

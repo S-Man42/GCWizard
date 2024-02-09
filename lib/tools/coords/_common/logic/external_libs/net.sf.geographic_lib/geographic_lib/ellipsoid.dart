@@ -14,11 +14,10 @@
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 
 class _Ellipsoid {
-  // : stol_(real(0.01) * sqrt(numeric_limits<real>::epsilon()))
-  late double _a;
-  late double _f;
+  late final double _a;
+  late final double _f;
 
-  _Ellipsoid(double _a, double _f);
+  _Ellipsoid(this._a, this._f);
 
   double get _f1 {
     return 1 - _f;
@@ -84,5 +83,17 @@ class _Ellipsoid {
 
   List<double> RectifyingToConformalCoeffs() {
     return _tm._bet;
+  }
+
+  List<double> ConformalToRectifyingCoeffs() {
+    return _tm._alp;
+  }
+
+  double IsometricLatitude(double phi) {
+    return _GeoMath.asinh(_GeoMath.taupf(_GeoMath.tand(_GeoMath.LatFix(phi)), _es)) /_GeoMath.degree();
+  }
+
+  double InverseIsometricLatitude(double psi) {
+    return _GeoMath.atand(_GeoMath.tauf(sinh(psi * _GeoMath.degree()), _es));
   }
 }

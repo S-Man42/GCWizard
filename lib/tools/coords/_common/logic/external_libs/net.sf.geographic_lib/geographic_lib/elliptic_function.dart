@@ -197,7 +197,7 @@ class _EllipticFunction {
     if (_k2 != 0) {
       // Complete elliptic integral K(k), Carlson eq. 4.1
       // https://dlmf.nist.gov/19.25.E1
-      _kKc = _kp2 != 0 ? RF(_kp2, 1) : double.infinity;
+      _kKc = _kp2 != 0 ? RF2(_kp2, 1) : double.infinity;
       // Complete elliptic integral E(k), Carlson eq. 4.2
       // https://dlmf.nist.gov/19.25.E1
       _eEc = _kp2 != 0 ? 2 * RG(_kp2, 1) : 1;
@@ -247,9 +247,9 @@ class _EllipticFunction {
    *   Numerical Algorithms 10, 13-26 (1995)
    */
 
-  double RF3(double x, double y, double z) {
+  static double RF3(double x, double y, double z) {
     // Carlson, eqs 2.2 - 2.7
-    num tolRF = pow(3 * double.minPositive * 0.01, 1/8.0);
+    num tolRF = pow(3 * positiveDoublePrecision * 0.01, 1/8.0);
     double
     A0 = (x + y + z)/3,
     An = A0,
@@ -273,6 +273,7 @@ class _EllipticFunction {
     Z = - (X + Y),
     E2 = X*Y - Z*Z,
     E3 = X*Y*Z;
+
     // https://dlmf.nist.gov/19.36.E1
     // Polynomial is
     // (1 - E2/10 + E3/14 + E2^2/24 - 3*E2*E3/44
@@ -283,9 +284,9 @@ class _EllipticFunction {
     (240240 * sqrt(An));
   }
   
-  double RF(double x, double y) {
+  static double RF2(double x, double y) {
     // Carlson, eqs 2.36 - 2.38
-    double tolRG0 = 2.7 * sqrt((double.minPositive * 0.01));
+    double tolRG0 = 2.7 * sqrt((positiveDoublePrecision * 0.01));
     double xn = sqrt(x), yn = sqrt(y);
     if (xn < yn) {
       var _h = xn;
@@ -301,9 +302,9 @@ class _EllipticFunction {
     return _GeoMath.pi() / (xn + yn);
   }
 
-  double RJ(double  x, double  y, double  z, double  p) {
+  static double RJ(double  x, double  y, double  z, double  p) {
     // Carlson, eqs 2.17 - 2.25
-    num tolRD = pow(0.2 * (double.minPositive * 0.01), 1/8.0);
+    num tolRD = pow(0.2 * (positiveDoublePrecision * 0.01), 1/8.0);
     double
     A0 = (x + y + z + 2*p)/5,
         An = A0,
@@ -352,8 +353,8 @@ class _EllipticFunction {
         E2 * ((417690 - 255255 * E2) * E2 - 875160) + 4084080) /
         (4084080 * mul * An * sqrt(An)) + 6 * s;
   }
-  
-  double RC(double x, double y) {
+
+  static double RC(double x, double y) {
     // Defined only for y != 0 and x >= 0.
     return ( !(x >= y) ?        // x < y  and catch nans
       // https://dlmf.nist.gov/19.2.E18
@@ -370,9 +371,9 @@ class _EllipticFunction {
     );
   }
 
-  double RG(double x, double y) {
+  static double RG(double x, double y) {
     // Carlson, eqs 2.36 - 2.39
-    double tolRG0 = 2.7 * sqrt((double.minPositive * 0.01));
+    double tolRG0 = 2.7 * sqrt((positiveDoublePrecision * 0.01));
     double x0 = sqrt(max<double>(x, y)),
     y0 = sqrt(min<double>(x, y)),
     xn = x0,
@@ -391,18 +392,18 @@ class _EllipticFunction {
     return (_GeoMath.sq( (x0 + y0)/2 ) - s) * _GeoMath.pi() / (2 * (xn + yn));
   }
 
-  double RD(double x, double y, double z) {
+  static double RD(double x, double y, double z) {
     // Carlson, eqs 2.28 - 2.34
-    num tolRD = pow(0.2 * (double.minPositive * 0.01),  1/8.0);
+    num tolRD = pow(0.2 * (positiveDoublePrecision * 0.01),  1/8.0);
     double A0 = (x + y + 3*z)/5,
     An = A0,
-    Q = max<double>(max<double>((A0-x).abs(), (A0-y).abs()), (A0-z).abs()) / tolRD,
+    Q = max<double>(max<double>(A0-x.abs(), A0-y.abs()), A0-z.abs()) / tolRD,
     x0 = x,
     y0 = y,
     z0 = z,
     mul = 1,
     s = 0;
-    while (Q >= mul * (An).abs()) {
+    while (Q >= mul * An.abs()) {
       // Max 7 trips
       double lam = sqrt(x0)*sqrt(y0) + sqrt(y0)*sqrt(z0) + sqrt(z0)*sqrt(x0);
       s += 1/(mul * sqrt(z0) * (z0 + lam));
@@ -513,7 +514,7 @@ class _EllipticFunction {
   }
 
   double Einv(double x) {
-    double tolJAC = sqrt(double.minPositive * 0.01);
+    double tolJAC = sqrt(positiveDoublePrecision * 0.01);
     double n = (x / (2.0 * _eEc) + 0.5).floor().toDouble();
     x -= 2 * _eEc * n;                      // x now in [-ec, ec)
     // Linear approximation
