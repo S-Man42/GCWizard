@@ -33,7 +33,7 @@ Drawer buildMainMenu(BuildContext context) {
               shape: BoxShape.circle,
             ),
             child: Image.asset(
-              'assets/logo/circle_border_128.png',
+              applogoFilename(),
             ),
           ),
           Padding(
@@ -92,17 +92,17 @@ Drawer buildMainMenu(BuildContext context) {
   );
 
   return Drawer(
-      child: Column(
-    children: <Widget>[
-      header,
-      Expanded(
-        child: ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.zero, // Remove any padding from the ListView.
-            children: menuEntries),
-      ),
-      footer,
-    ],
+    child: Column(
+      children: <Widget>[
+        header,
+        Expanded(
+          child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.zero, // Remove any padding from the ListView.
+              children: menuEntries),
+        ),
+          footer,
+      ],
   ));
 }
 

@@ -50,8 +50,9 @@ class _FormulaSolverFormulaValuesState extends State<_FormulaSolverFormulaValues
         return;
       }
 
-      var newEntry = FormulaValue(entry.key, entry.value);
-      insertFormulaValue(newEntry, widget.group);
+      if (entry is FormulaValue) {
+        insertFormulaValue(entry, widget.group);
+      }
       _newKeyController.text = _maxLetter();
     }
   }

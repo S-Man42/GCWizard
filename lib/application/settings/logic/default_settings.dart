@@ -5,7 +5,7 @@ import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/persistence/json_provider.dart';
@@ -142,7 +142,7 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
               'coords_deg' //backward compatibility: old name for DMM until v1.1.0
       ) {
     Prefs.setString(
-        PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).persistenceKey);
+        PREFERENCE_COORD_DEFAULT_FORMAT, coordinateFormatDefinitionByKey(CoordinateFormatKey.DMM).persistenceKey);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE ||

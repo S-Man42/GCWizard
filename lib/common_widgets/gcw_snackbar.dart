@@ -11,11 +11,11 @@ void showSnackBar(String text, BuildContext context, {int duration = 3}) {
       style: gcwTextStyle().copyWith(color: themeColors().primaryBackground(), fontSize: defaultFontSize()),
     ),
     duration: Duration(seconds: duration),
-    backgroundColor: themeColors().mainFont(),
+    backgroundColor: themeColors().mainFont().withAlpha(235),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
+      borderRadius: BorderRadius.circular(2 * ROUNDED_BORDER_RADIUS),
     ),
-    width: maxScreenWidth(context) * 0.75,
+    width: maxScreenWidth(context) * 0.70,
     behavior: SnackBarBehavior.floating,
   ));
 }
