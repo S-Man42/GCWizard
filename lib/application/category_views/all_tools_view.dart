@@ -83,6 +83,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/battleship/widget/battleship.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/widget/beghilos.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bifid/widget/bifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/book_cipher/widget/book_cipher.dart';
@@ -513,6 +514,7 @@ void _initStaticToolList() {
       className(const BabylonNumbersSelection()),
       className(const Bacon()),
       className(const BaseSelection()),
+      className(const Battleship()),
       className(const BCDSelection()),
       className(const Beatnik()),
       className(const BeaufortSelection()),

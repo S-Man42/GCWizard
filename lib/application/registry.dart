@@ -136,6 +136,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/base/base58/widget/base58.d
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base64/widget/base64.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base85/widget/base85.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base91/widget/base91.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/battleship/widget/battleship.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd1of10/widget/bcd1of10.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd20f5postnet/widget/bcd20f5postnet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd2of5/widget/bcd2of5.dart';
@@ -541,6 +542,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'binary',
+    ]),
+    GCWTool(tool: const Battleship(), id: 'battleship', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'battleship',
     ]),
     GCWTool(tool: const BloodAlcoholContent(), id: 'bloodalcoholcontent', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
