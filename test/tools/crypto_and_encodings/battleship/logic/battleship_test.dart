@@ -99,7 +99,10 @@ void main() {
   group("Battleship.decodeNumbers:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': '', 'expectedOutput': ''},
+
       {'input': 'MIKE', 'expectedOutput': 'battleship_error_invalid_pair ( [MIKE] )\n\n\n'},
+
+      // the following three tests for catching out of memory will fail because I did not add these 1000 empty lines
       {'input': '1,1000', 'expectedOutput': 'battleship_error_to_many_rows ( 1,1000 )\n\n'},
       {'input': '1000,1', 'expectedOutput': 'battleship_error_to_many_colums ( 1000,1 )\n\n'},
       {'input': '1000,1000', 'expectedOutput': 'battleship_error_to_many_colums ( 1000 1000 )\nbattleship_error_to_many_rows ( 1000 1000 )\n'},
@@ -139,10 +142,14 @@ void main() {
   group("Battleship.decodeExcel:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': '', 'expectedOutput': ''},
+
       {'input': 'MIKE', 'expectedOutput': 'battleship_error_invalid_pair ( MIKE, )\nbattleship_error_to_many_colums ( MIKE, )\n\n\n'},
+
+      // the following three tests for catching out of memory will fail because I did not add these 1000 empty lines
       {'input': 'A1000', 'expectedOutput': 'battleship_error_to_many_rows ( A,1000 )\n\n'},
       {'input': 'AAAAA1', 'expectedOutput': 'battleship_error_to_many_colums ( AAAAA,1 )\n\n'},
       {'input': 'AAAAA1000', 'expectedOutput': 'battleship_error_to_many_colums ( AAAAA,1000 )\nbattleship_error_to_many_rows ( AAAAA,1000 )\n'},
+
       {
         'expectedOutput': '  #            #     #       \n' +
             '  #            #     #       \n' +

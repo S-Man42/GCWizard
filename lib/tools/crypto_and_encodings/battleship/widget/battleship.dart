@@ -21,9 +21,9 @@ class Battleship extends StatefulWidget {
 }
 
 class BattleshipState extends State<Battleship> {
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentEncryptMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentNumberMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentEncryptDecryptMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentTextGraphicMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentNumberExcelMode = GCWSwitchPosition.left;
 
   late CodeController _encodeGraphicController;
   late TextEditingController _encodeTextController;
@@ -63,37 +63,37 @@ class BattleshipState extends State<Battleship> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
-        value: _currentMode,
+        value: _currentEncryptDecryptMode,
         onChanged: (value) {
           setState(() {
-            _currentMode = value;
+            _currentEncryptDecryptMode = value;
           });
         },
       ),
       GCWTwoOptionsSwitch(
-        value: _currentNumberMode,
+        value: _currentNumberExcelMode,
         leftValue: i18n(context, 'battleship_input_numbers'),
         rightValue: i18n(context, 'battleship_input_excel'),
         onChanged: (value) {
           setState(() {
-            _currentNumberMode = value;
+            _currentNumberExcelMode = value;
           });
         },
       ),
-      _currentMode == GCWSwitchPosition.left // encrypt
+      _currentEncryptDecryptMode == GCWSwitchPosition.left // encrypt
           ? Column(children: <Widget>[
               GCWTwoOptionsSwitch(
                 title: i18n(context, 'battleship_input_mode'),
                 leftValue: i18n(context, 'battleship_input_text'),
                 rightValue: i18n(context, 'battleship_input_graphic'),
-                value: _currentEncryptMode,
+                value: _currentTextGraphicMode,
                 onChanged: (value) {
                   setState(() {
-                    _currentEncryptMode = value;
+                    _currentTextGraphicMode = value;
                   });
                 },
               ),
-              _currentEncryptMode == GCWSwitchPosition.left // text
+              _currentTextGraphicMode == GCWSwitchPosition.left // text
                   ? GCWTextField(
                       controller: _encodeTextController,
                       inputFormatters: [
@@ -137,14 +137,14 @@ class BattleshipState extends State<Battleship> {
   }
 
   void _calcOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentEncryptMode == GCWSwitchPosition.left) {
-        _encodeOutput = encodeBattleship(_currentTextEncode, _TEXTMODE, (_currentNumberMode == GCWSwitchPosition.left));
+    if (_currentEncryptDecryptMode == GCWSwitchPosition.left) {
+      if (_currentTextGraphicMode == GCWSwitchPosition.left) {
+        _encodeOutput = encodeBattleship(_currentTextEncode, _TEXTMODE, (_currentNumberExcelMode == GCWSwitchPosition.left));
       } else {
-        _encodeOutput = encodeBattleship(_encodeGraphicController.text, _GRAPHICMODE, (_currentNumberMode == GCWSwitchPosition.left));
+        _encodeOutput = encodeBattleship(_encodeGraphicController.text, _GRAPHICMODE, (_currentNumberExcelMode == GCWSwitchPosition.left));
       }
     } else {
-      _decodeOutput = decodeBattleship(_currentDecode, (_currentNumberMode == GCWSwitchPosition.left));
+      _decodeOutput = decodeBattleship(_currentDecode, (_currentNumberExcelMode == GCWSwitchPosition.left));
     }
     setState(() {});
   }
@@ -165,7 +165,7 @@ class BattleshipState extends State<Battleship> {
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.right) {
+    if (_currentEncryptDecryptMode == GCWSwitchPosition.right) {
       if (_decodeOutput.startsWith('battleship')) {
         _decodeOutput = _anaylzeDecodeError(_decodeOutput); // + ': ' + _decodeOutput.substring(29);
       }
