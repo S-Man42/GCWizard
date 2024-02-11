@@ -41,8 +41,8 @@ LatLng _antipodes(LatLng coord) {
 void main() {
   var ellipsoid = Ellipsoid.WGS84;
 
-  // var coords1 = LatLng(40.6, -73.8);
-  // var coords2 = LatLng(49.01666666666666666667, 2.55);
+  // var coords2 = LatLng(53, 12);
+  // var coords1 = LatLng(52, 13);
   // print(DateTime.now());
   // var db = distanceBearing(coords1, coords2, ellipsoid);
   // print(DateTime.now());
@@ -62,7 +62,7 @@ void main() {
   // print(pro.longitude);
 
   var coords = [LatLng(-42, -173), LatLng(52, 13), LatLng(0,0), LatLng(90,0), LatLng(-90,-180)];
-  // var coords = [LatLng(0,0)];
+  // var coords = [LatLng(52,13)];
   for (LatLng coord in coords) {
     void _do(LatLng coords1, LatLng coords2) {
       print('');
@@ -89,6 +89,6 @@ void main() {
     }
 
     _do(coord, _antipodes(coord));
-    // _do(coord, coord);
+    _do(coord, coord);
   }
 }

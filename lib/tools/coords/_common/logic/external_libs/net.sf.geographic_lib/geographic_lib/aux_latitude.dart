@@ -115,8 +115,8 @@ class _AuxLatitude {
 
   _AuxLatitude( double a, double f) {
     tol_ = sqrt(positiveDoublePrecision);
-    bmin_ = _log2(double.maxFinite);
-    bmax_ = _log2(double.minPositive);
+    bmin_ = _log2(double.minPositive);
+    bmax_ = _log2(double.maxFinite);
 
     _a = a;
     _f = f;
@@ -134,6 +134,11 @@ class _AuxLatitude {
 
     _c = List<double>.generate(Lmax * _AUXNUMBER * _AUXNUMBER, (index) => double.nan);
   }
+
+  /**
+   * @return \e f, the flattening of the ellipsoid.
+   **********************************************************************/
+  double Flattening() { return _f; }
 
   _AuxAngle Convert(int auxin, int auxout, _AuxAngle zeta, bool exact) {
     int k = ind(auxout, auxin);
@@ -465,7 +470,7 @@ class _AuxLatitude {
   
     // Drop through to solution by Newton's method
     double tzeta = zeta.tan().abs(), ltzeta = _log2(tzeta);
-    if (!ltzeta.isInfinite) {
+    if (!ltzeta.isFinite) {
       return _AuxAngleNiter(zeta, niter);
     }
     tphi = tzeta / tphi;
