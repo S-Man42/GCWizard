@@ -250,7 +250,6 @@
   "languagegames_robberlanguage": "robberlanguage",
   "languagegames_spoonlanguage": "spoonlanguage spoonspeak",
   "lcm": "lcm leastcommonmultiplier",
-  "letter_grid": "letter grid word search",
   "licenses": "licenses licences library libraries",
   "magic_eye": "3dstereograms autostereograms 3dpictures 3dimages",
   "mathematical_constants": "plastic imaginaryunit imaginarynumber unity constants numbers reciprocal universalparabolicconstant twinprimes circlenumber thehitchhikersguidetothegalaxy theanswertotlifeuniverseandeverything",
@@ -658,6 +657,7 @@
   "weather_w": "past",
   "weather_ww": "present current forecast",
   "window": "windows",
+  "word_search": "word search letter grid",
   "z22": "",
   "zelda": "hylians marks goddesses races emblems forests water shadows spirits sights triangles eyes temples",
   "zigzag": "zigzaglines zig-zag"

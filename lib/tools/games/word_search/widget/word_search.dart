@@ -11,18 +11,17 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/games/letter_grid/logic/letter_grid.dart';
+import 'package:gc_wizard/tools/games/word_search/logic/word_search.dart';
 
-class LetterGrid extends StatefulWidget {
-  const LetterGrid({Key? key}) : super(key: key);
+class WordSearch extends StatefulWidget {
+  const WordSearch({Key? key}) : super(key: key);
 
   @override
-  LetterGridState createState() => LetterGridState();
+  WordSearchState createState() => WordSearchState();
 }
 
-class LetterGridState extends State<LetterGrid> {
+class WordSearchState extends State<WordSearch> {
   GCWSwitchPosition _currentEncryptDecryptMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentTextGraphicMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentNumberExcelMode = GCWSwitchPosition.left;

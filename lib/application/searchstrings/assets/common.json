@@ -251,7 +251,6 @@
   "languagegames_piglatin": " ay",
   "languagegames_robberlanguage": "astrid lindgren kalle blomquist",
   "languagegames_spoonlanguage": "",
-  "letter_grid": "",
   "licenses": "",
   "magic_eye": "magiceyes 3d",
   "mathematical_constants": "73 42 pi phi euler platin siegel napier brun erdos borwein fibonacci feigenbaum ramanujan soldner conway apery legendre sheldon douglasadams douglasnoeladams drsheldoncooper thebigbangtheory pythagoras theodorus archimedes",
@@ -656,6 +655,7 @@
   "weather_ch": "ch",
   "weather_ww": "ww",
   "window": "johannes balthasar friderici cryptographia",
+  "word_search": "",
   "z22": "konrad zuse z22",
   "zc1" : "zc1 bs3 tns440 tr440 aegtelefunken 2N0812511 centralcode1",
   "zelda": "hyrule thelegendofzelda link triforce farore crest nayru kokiri goron zora gerudo sheikah agahnim"
