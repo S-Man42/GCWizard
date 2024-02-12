@@ -9,6 +9,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -33,6 +34,10 @@ class WordSearchState extends State<WordSearch> {
 
   String _currentDecode = '';
   String _currentTextEncode = '';
+
+  var _currentInputExpanded = true;
+  var _currentWordsExpanded = true;
+  var _currentOptionsExpanded = false;
 
   List<Uint8List> _decodeOutput = [];
 
@@ -89,27 +94,33 @@ class WordSearchState extends State<WordSearch> {
               //   },
               // ),
               // _currentTextGraphicMode == GCWSwitchPosition.left // text
-                  GCWTextField(
-                      controller: _encodeTextController,
-                      onChanged: (text) {
-                        style: gcwMonotypeTextStyle();
-                        setState(() {
-                          _currentTextEncode = text;
-                        });
-                      },
-                    ),
-                  // : CodeField(
-                  //     controller: _encodeGraphicController,
-                  //     textStyle: gcwMonotypeTextStyle(),
-                  //     lineNumbers: false,
-                  //     lineNumberStyle: const LineNumberStyle(
-                  //       width: 0.0,
-                  //       margin: 0.0,
-                  //       textStyle: TextStyle(fontSize: 0.0),
-                  //     ),
-                  //   )
-            // ]),
-           GCWTextField(
+        GCWExpandableTextDivider(
+          text: i18n(context, 'common_input'),
+          expanded: _currentInputExpanded,
+          onChanged: (value) {
+            setState(() {
+              _currentInputExpanded = value;
+            });
+          },
+          child: GCWTextField(
+              controller: _encodeTextController,
+              style: gcwMonotypeTextStyle(),
+              onChanged: (text) {
+                setState(() {
+                  _currentTextEncode = text;
+                });
+              },
+            )
+        ),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'common_search'),
+          expanded: _currentWordsExpanded,
+          onChanged: (value) {
+            setState(() {
+              _currentWordsExpanded = value;
+            });
+          },
+          child: GCWTextField(
               controller: _decodeController,
               onChanged: (text) {
                 setState(() {
@@ -117,20 +128,34 @@ class WordSearchState extends State<WordSearch> {
                 });
               },
             ),
-            GCWButton(
-              text: i18n(context, 'common_start'),
-              onPressed: () {
-                setState(() {
-                  _calcOutput();
-                });
-              },
-            ),
-            _buildOutput(),
+        ),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'common_options'),
+          expanded: _currentOptionsExpanded,
+          onChanged: (value) {
+            setState(() {
+              _currentOptionsExpanded = value;
+            });
+          },
+        ),
+        GCWButton(
+          text: i18n(context, 'common_start'),
+          onPressed: () {
+            setState(() {
+              _calcOutput();
+            });
+          },
+        ),
+        _buildOutput(),
     ]);
   }
 
   void _calcOutput() {
-    _decodeOutput = searchWordList(_currentTextEncode, _currentDecode);
+    var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL) |
+                          SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
+                          SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
+                          SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
+    _decodeOutput = searchWordList(_currentTextEncode, _currentDecode, searchDirection);
     print(_decodeOutput);
     setState(() {});
   }
@@ -171,19 +196,24 @@ class WordSearchState extends State<WordSearch> {
     var lastColor = _getTextColorValue(founds.first.first);
     var actText = '';
 
-    for (var row=0; row< text.length; row++) {
+    for (var row = 0; row < text.length; row++) {
       if (row > 0) actText += '\n';
-      for (var column=0; row< text[row].length; column++) {
+      for (var column = 0; column < text[row].length; column++) {
         var actColor = _getTextColorValue(founds[row][column]);
-        if (actColor != lastColor) {
-          actTextSpan = TextSpan(style: gcwTextStyle());
-          switch (actColor) {
-            case 1: actTextSpan = TextSpan(text: actText, style: gcwTextStyle().copyWith(color: Colors.red)); break;
-            case 2: actTextSpan = TextSpan(text: actText,style: gcwTextStyle().copyWith(color: Colors.green)); break;
-            case 3: actTextSpan = TextSpan(text: actText,style: gcwTextStyle().copyWith(color: Colors.blue)); break;
-            default: actTextSpan = TextSpan(text: actText,style: gcwTextStyle());
+        var lastEntry = (row == text.length - 1 && column == text[row].length - 1);
+        if (actColor != lastColor || lastEntry) {
+          if (lastEntry) {
+            actText += text[row][column] + ' ';
+          }
+          switch (lastColor) {
+            case 1: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle().copyWith(color: Colors.red)); break;
+            case 2: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle().copyWith(color: Colors.green)); break;
+            case 3: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle().copyWith(color: Colors.blue)); break;
+            default: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle());
           }
           textSpan.add(actTextSpan);
+          actText = '';
+          lastColor = actColor;
         }
         actText += text[row][column] + ' ';
       }
