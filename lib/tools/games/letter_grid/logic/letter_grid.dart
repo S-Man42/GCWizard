@@ -1,8 +1,18 @@
 // import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 // import 'package:gc_wizard/utils/data_type_utils/integer_type_utils.dart';
 
+import 'dart:convert';
+import 'dart:math';
+import 'dart:typed_data';
+
+import 'package:collection/collection.dart';
+
 String _normalizeInput(String text){
   return text.replaceAll(RegExp(r'[\f\t ]'), '');
+}
+
+List<String> normalizeAndSplitInput(String text) {
+  return const LineSplitter().convert(_normalizeInput(text));
 }
 
 
@@ -19,22 +29,9 @@ List<String> _splitPair(String pair){
   return result;
 }
 
-String searchWordList(String text, String wordList) {
+List<Uint8List> searchWordList(String text, String wordList) {
 
-  if (text.isEmpty) return '';
-
-  bool absoluteError = false;
-  bool rowsError = false;
-  bool columnsError = false;
-  int column = 0;
-  int maxColumn = 0;
-  int row = 0;
-  int maxRow = 0;
-  Map<String, String> world = {};
-  String faultyTupel = '';
-  String faultyColumnsTupel = '';
-  String faultyRowsTupel = '';
-  List<String> tupel = [];
+  if (text.isEmpty) return [];
 
   wordList = wordList.toUpperCase();
 //print(text);
@@ -42,10 +39,52 @@ String searchWordList(String text, String wordList) {
   //print(text);
 
   var result = text.split('').map((char) => char == '\r' || char == '\n' ? char : char + ' ').join();
-  return result;
+  return _searchHorizontal(text, const LineSplitter().convert(wordList));
 }
 
+List<Uint8List> _searchHorizontal(String text, List<String> wordList) {
+  var matrix = _buildResultMatrix(text);
+  var regex = RegExp('[' + wordList.join('|') + ']');
 
+  const LineSplitter().convert(text).forEachIndexed((index, line) {
+    var matches = regex.allMatches(text);
+    for (var match in matches) {
+      matrix[index] = _setResults(matrix[index], match.group(0)., match.end ,1);
+    }
+    matrix.add(Uint8List(line.length));
+  });
+  return matrix;
+}
+
+List<Uint8List> _searchHorizontalReverse(String text, List<String> wordList) {
+  var reverseWordList = wordList.map((word) => word.split('').reversed.join()).toList();
+
+  return _searchHorizontal(text, reverseWordList);
+}
+
+Uint8List _setResults(Uint8List line, int start, int end, int value ) {
+  line.setRange(start, end, List<int>.generate(end-start, (index) => value));
+  return line;
+}
+
+List<Uint8List> _combineResultMatrix(List<Uint8List> baseMatrix, List<Uint8List> newMatrix) {
+
+  for (var row=0; row< min(baseMatrix.length, newMatrix.length); row++) {
+    for (var column=0; row< min(baseMatrix[row].length, newMatrix[row].length); column++) {
+      baseMatrix[row][column] = baseMatrix[row][column] | newMatrix[row][column];
+    }
+  }
+  return baseMatrix;
+}
+
+List<Uint8List> _buildResultMatrix(String text) {
+  var matrix = <Uint8List>[];
+
+  const LineSplitter().convert(text).forEach((line) {
+    matrix.add(Uint8List(line.length));
+  });
+  return matrix;
+}
 
 // String encodeBattleship(String text, bool textmode, bool numberMode) {
 //

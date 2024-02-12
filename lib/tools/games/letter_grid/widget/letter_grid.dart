@@ -35,7 +35,7 @@ class LetterGridState extends State<LetterGrid> {
   String _currentDecode = '';
   String _currentTextEncode = '';
 
-  String _decodeOutput = '';
+  List<Uint8List> _decodeOutput = [];
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class LetterGridState extends State<LetterGrid> {
 
     _encodeTextController = TextEditingController(text: _currentTextEncode);
     _decodeController = TextEditingController(text: _currentDecode);
-    _plainGenerateController = TextEditingController(text: _decodeOutput);
+    //_plainGenerateController = TextEditingController(text: _decodeOutput);
   }
 
   @override
@@ -51,7 +51,7 @@ class LetterGridState extends State<LetterGrid> {
     _encodeGraphicController.dispose();
     _encodeTextController.dispose();
     _decodeController.dispose();
-    _plainGenerateController.dispose();
+    //_plainGenerateController.dispose();
     super.dispose();
   }
 
@@ -137,7 +137,7 @@ class LetterGridState extends State<LetterGrid> {
   }
 
   Widget _buildOutput() {
-      _plainGenerateController.text = _decodeOutput;
+      //_plainGenerateController.text = _decodeOutput;
       return GCWDefaultOutput(
         trailing: Row(
           children: <Widget>[
@@ -152,12 +152,55 @@ class LetterGridState extends State<LetterGrid> {
             ),
           ],
         ),
-        child: GCWCodeTextField(
-          controller: _plainGenerateController,
-          patternMap: _numeralWordsHiglightMap(),
+        // child: GCWCodeTextField(
+        //   controller: _plainGenerateController,
+        //   patternMap: _numeralWordsHiglightMap(),
+        // ),
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(children: _buildRtfOutput(normalizeAndSplitInput(_currentTextEncode), _decodeOutput),
+              style: gcwTextStyle()),
         ),
       );
   }
+
+  List<TextSpan> _buildRtfOutput(List<String> text, List<Uint8List> founds) {
+    var textSpan = <TextSpan>[];
+    TextSpan actTextSpan;
+
+    if (text.isEmpty || text.first.isEmpty || founds.isEmpty || founds.first.isEmpty) return textSpan;
+    var lastColor = _getTextColorValue(founds.first.first);
+    var actText = '';
+
+    for (var row=0; row< text.length; row++) {
+      if (row > 0) actText += '\n';
+      for (var column=0; row< text[row].length; column++) {
+        var actColor = _getTextColorValue(founds[row][column]);
+        if (actColor != lastColor) {
+          actTextSpan = TextSpan(style: gcwTextStyle());
+          switch (actColor) {
+            case 1: actTextSpan = TextSpan(text: actText, style: gcwTextStyle().copyWith(color: Colors.red)); break;
+            case 2: actTextSpan = TextSpan(text: actText,style: gcwTextStyle().copyWith(color: Colors.green)); break;
+            case 3: actTextSpan = TextSpan(text: actText,style: gcwTextStyle().copyWith(color: Colors.blue)); break;
+            default: actTextSpan = TextSpan(text: actText,style: gcwTextStyle());
+          }
+          textSpan.add(actTextSpan);
+        }
+        actText += text[row][column] + ' ';
+      }
+    }
+    return textSpan;
+  }
+
+  int _getTextColorValue(int value) {
+    if (value == 0) return 0;
+    if (value & 1 == 1) return 1;
+    if (value & 2 == 2) return 2;
+    if (value & 4 == 4) return 3;
+    return 0;
+  }
+
+
 
   Map<String, TextStyle> _numeralWordsHiglightMap() {
     Map<String, TextStyle> result = {};
