@@ -19,17 +19,9 @@ enum SearchDirectionFlags { //} implements Comparable<SearchDirection> {
   static int setFlag(int value, SearchDirectionFlags flag) {
     return value | (1 << flag.index);
   }
-  // const SearchDirection(this.value);
-  //
-  // final int value;
-  //
-  // bool hasFlag(SearchDirection flag) => value & flag.value != 0;
-  // SearchDirection setFlag(SearchDirection flag) => value | flag.value;
-  //
-  // SearchDirection operator |(SearchDirection other) => value | other.value
-  //
-  // @override
-  // int compareTo(SearchDirection other) => value & other.value;
+  static int resetFlag(int value, SearchDirectionFlags flag) {
+    return value & ~(1 << flag.index);
+  }
 }
 
 String _normalizeInput(String text){
@@ -40,20 +32,6 @@ List<String> normalizeAndSplitInput(String text) {
   return const LineSplitter().convert(_normalizeInput(text));
 }
 
-
-List<String> _splitPair(String pair){
-  List<String> result = [];
-  String part = '';
-  for (int i = 0; i < pair.length; i++) {
-    if (int.tryParse(pair[i]) == null) {
-      part = part + pair[i];
-    }
-  }
-  result.add(part);
-  result.add(pair.substring(part.length));
-  return result;
-}
-
 List<String> _splitLines(String text){
   return const LineSplitter().convert(text);
 }
@@ -61,10 +39,10 @@ List<String> _splitLines(String text){
 List<Uint8List> searchWordList(String text, String wordList, int searchDirection) {
   if (text.isEmpty) return [];
 
-//print(text);
   text = _normalizeInput(text.toUpperCase());
+  wordList = wordList.replaceAll(RegExp(r'\s'), '\n');
   var wordLines = _splitLines(wordList.toUpperCase());
-  //print(text);
+  wordLines.removeWhere((line) => line.isEmpty);
 
   var result = _buildResultMatrix(text);
   if ((SearchDirectionFlags.hasFlag(searchDirection, SearchDirectionFlags.HORIZONTAL)) ) {
@@ -145,7 +123,7 @@ List<Uint8List> _searchVerticalReverse(String text, List<String> wordList) {
 List<Uint8List> _searchDiagonal(String text, List<String> wordList) {
   var lines = _splitLines(text);
   int maxRowLength = _maxRowLength(lines);
-  var diagonalText = List<String>.generate(_getVerticalRowIndex(lines.length, 0, maxRowLength), (index) => '');
+  var diagonalText = List<String>.generate(_getDiagonalRowIndex(lines.length, 0, maxRowLength), (index) => '');
 
   lines.forEachIndexed((rowIndex, line) {
     if (line.length < maxRowLength) {
@@ -154,7 +132,7 @@ List<Uint8List> _searchDiagonal(String text, List<String> wordList) {
       }
     }
     line.split('').forEachIndexed((columnIndex, char) {
-      diagonalText[_getVerticalRowIndex(rowIndex, columnIndex, maxRowLength)] += char;
+      diagonalText[_getDiagonalRowIndex(rowIndex, columnIndex, maxRowLength)] += char;
     });
   });
 
@@ -174,7 +152,11 @@ List<Uint8List> _searchDiagonalReverse(String text, List<String> wordList) {
   return _searchDiagonal(text, _reversedWordList(wordList));
 }
 
-int _getVerticalRowIndex(int rowIndex, int columnIndex, int columnCount) {
+int _getDiagonalRowIndex(int rowIndex, int columnIndex, int columnCount) {
+  return columnIndex - rowIndex >= 0 ? columnIndex - rowIndex : columnCount - (columnIndex - rowIndex);
+}
+
+int _getDiagonalColumnIndex(int rowIndex, int columnIndex, int columnCount) {
   return columnIndex - rowIndex >= 0 ? columnIndex - rowIndex : columnCount - (columnIndex - rowIndex);
 }
 
@@ -213,57 +195,3 @@ List<Uint8List> _buildResultMatrix(String text) {
   });
   return matrix;
 }
-
-// String encodeBattleship(String text, bool textmode, bool numberMode) {
-//
-//   if (text.isEmpty) return '';
-//
-//   List<String> result = [];
-//
-//   if (textmode) {
-//     text = _convertTextToGraphic(text);
-//   }
-//
-//   List<String> lines = text.split('\n');
-//   for (int row = 0; row < lines.length; row++) {
-//     for (int column = 0; column < lines[row].length; column++) {
-//       if (lines[row][column] != ' ') {
-//         if (numberMode) {
-//           result.add((column + 1).toString() + ',' + (row + 1).toString());
-//         } else {
-//           result.add(_intToExcelMode(column + 1) + (row + 1).toString());
-//         }
-//       }
-//     }
-//   }
-//
-//   return result.join(' ');
-// }
-//
-// String _convertTextToGraphic(String text){
-//   List<String> result = [];
-//
-//   while (text.length > 10) {
-//     result.add(_convertLineToGraphic(text.substring(0,10)));
-//     result.add(_BATTLESHIP_EMPTY_LINE);
-//     text = text.substring(10);
-//   }
-//   result.add(_convertLineToGraphic(text));
-//   return result.join('\n');
-// }
-//
-// String _convertLineToGraphic(String textLine){
-//   List<String> result = [];
-//   List<String> lines = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-//
-//   for (int i = 0; i < textLine.length; i++){
-//     for (int j = 0; j < 9; j++){
-//       lines[j] = lines[j] + _BATTLESHIP_ALPHABET[textLine[i]]![j] + ' ';
-//     }
-//   }
-//   for (int j = 0; j < 9; j++){
-//     result.add(lines[j]);
-//   }
-//
-//   return result.join('\n');
-// }
