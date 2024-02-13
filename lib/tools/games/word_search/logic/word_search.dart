@@ -6,7 +6,7 @@ import 'package:collection/collection.dart';
 
 const _emptyChar = '\t';
 
-enum SearchDirectionFlags { //} implements Comparable<SearchDirection> {
+enum SearchDirectionFlags {
   HORIZONTAL,
   VERTICAL,
   DIAGONAL,
@@ -58,9 +58,11 @@ List<Uint8List> searchWordList(String text, String wordList, int searchDirection
     }
   }
   if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.DIAGONAL)) ) {
-    result = _combineResultMatrix(result, _searchDiagonal(text, wordLines) );
+    result = _combineResultMatrix(result, _searchDiagonalLR(text, wordLines) );
+    result = _combineResultMatrix(result, _searchDiagonalRL(text, wordLines) );
     if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE)) ) {
-      result = _combineResultMatrix(result, _searchDiagonalReverse(text, wordLines) );
+      result = _combineResultMatrix(result, _searchDiagonalReverseLR(text, wordLines) );
+      result = _combineResultMatrix(result, _searchDiagonalReverseRL(text, wordLines) );
     }
   }
   return result;
@@ -75,7 +77,6 @@ List<Uint8List> _searchWords(String text, List<String> wordList, int id) {
     for (var match in matches) {
       matrix[index] = _setResults(matrix[index], match.start, match.end , id);
     }
-    //matrix.add(Uint8List(line.length));
   });
   return matrix;
 }
@@ -104,7 +105,8 @@ List<Uint8List> _searchVertical(String text, List<String> wordList) {
     });
   }
 
-  var result = _searchWords(verticalText.join('\n'), wordList, SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL));
+  var result = _searchWords(verticalText.join('\n'), wordList,
+      SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL));
   var matrix = _buildResultMatrix(text);
 
   lines.forEachIndexed((rowIndex, line) {
@@ -120,10 +122,11 @@ List<Uint8List> _searchVerticalReverse(String text, List<String> wordList) {
   return _searchVertical(text, _reversedWordList(wordList));
 }
 
-List<Uint8List> _searchDiagonal(String text, List<String> wordList) {
+List<Uint8List> _searchDiagonalLR(String text, List<String> wordList) {
   var lines = _splitLines(text);
   int maxRowLength = _maxRowLength(lines);
-  var diagonalText = List<String>.generate(_getDiagonalRowIndex(lines.length, 0, maxRowLength), (index) => '');
+  var diagonalText = List<String>.generate(_getDiagonalRowIndexLR(lines.length, 0, maxRowLength), (index) => '');
+  var diagonalTextMap = List<List<Point<int>>>.generate(diagonalText.length, (index) => <Point<int>>[]);
 
   lines.forEachIndexed((rowIndex, line) {
     if (line.length < maxRowLength) {
@@ -132,32 +135,73 @@ List<Uint8List> _searchDiagonal(String text, List<String> wordList) {
       }
     }
     line.split('').forEachIndexed((columnIndex, char) {
-      diagonalText[_getDiagonalRowIndex(rowIndex, columnIndex, maxRowLength)] += char;
+      var row = _getDiagonalRowIndexLR(rowIndex, columnIndex, maxRowLength);
+      diagonalTextMap[row].add(Point<int>(columnIndex, rowIndex));
+      diagonalText[row] += char;
     });
   });
 
-  var result = _searchWords(diagonalText.join('\n'), wordList, SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL));
+  var result = _searchWords(diagonalText.join('\n'), wordList,
+      SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL));
   var matrix = _buildResultMatrix(text);
 
-  // lines.forEachIndexed((rowIndex, line) {
-  //   line.split('').forEachIndexed((columnIndex, char) {
-  //     matrix[rowIndex][columnIndex] = result[_getVerticalRowIndex(rowIndex, columnIndex, maxRowLength)][rowIndex];
-  //   });
-  // });
+  result.forEachIndexed((rowIndex, line) {
+    line.forEachIndexed((columnIndex, value) {
+      var cell = diagonalTextMap[rowIndex][columnIndex];
+      matrix[cell.y][cell.x] = value;
+    });
+  });
 
   return matrix;
 }
 
-List<Uint8List> _searchDiagonalReverse(String text, List<String> wordList) {
-  return _searchDiagonal(text, _reversedWordList(wordList));
+List<Uint8List> _searchDiagonalReverseLR(String text, List<String> wordList) {
+  return _searchDiagonalLR(text, _reversedWordList(wordList));
 }
 
-int _getDiagonalRowIndex(int rowIndex, int columnIndex, int columnCount) {
+List<Uint8List> _searchDiagonalRL(String text, List<String> wordList) {
+  var lines = _splitLines(text);
+  int maxRowLength = _maxRowLength(lines);
+  var diagonalText = List<String>.generate(_getDiagonalRowIndexRL(lines.length, 0, maxRowLength), (index) => '');
+  var diagonalTextMap = List<List<Point<int>>>.generate(diagonalText.length, (index) => <Point<int>>[]);
+
+  lines.forEachIndexed((rowIndex, line) {
+    if (line.length < maxRowLength) {
+      for (var columnIndex = line.length; columnIndex < maxRowLength; columnIndex ++) {
+        line += _emptyChar;
+      }
+    }
+    line.split('').forEachIndexed((columnIndex, char) {
+      var row = _getDiagonalRowIndexRL(rowIndex, columnIndex, maxRowLength);
+      diagonalTextMap[row].add(Point<int>(columnIndex, rowIndex));
+      diagonalText[row] += char;
+    });
+  });
+
+  var result = _searchWords(diagonalText.join('\n'), wordList,
+      SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL));
+  var matrix = _buildResultMatrix(text);
+
+  result.forEachIndexed((rowIndex, line) {
+    line.forEachIndexed((columnIndex, value) {
+      var cell = diagonalTextMap[rowIndex][columnIndex];
+      matrix[cell.y][cell.x] = value;
+    });
+  });
+
+  return matrix;
+}
+
+List<Uint8List> _searchDiagonalReverseRL(String text, List<String> wordList) {
+  return _searchDiagonalRL(text, _reversedWordList(wordList));
+}
+
+int _getDiagonalRowIndexLR(int rowIndex, int columnIndex, int columnCount) {
   return columnIndex - rowIndex >= 0 ? columnIndex - rowIndex : columnCount - (columnIndex - rowIndex);
 }
 
-int _getDiagonalColumnIndex(int rowIndex, int columnIndex, int columnCount) {
-  return columnIndex - rowIndex >= 0 ? columnIndex - rowIndex : columnCount - (columnIndex - rowIndex);
+int _getDiagonalRowIndexRL(int rowIndex, int columnIndex, int columnCount) {
+  return columnIndex - rowIndex <= 0 ? rowIndex - columnIndex : columnIndex + rowIndex;
 }
 
 int _maxRowLength(List<String> lines) {
