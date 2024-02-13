@@ -9,6 +9,10 @@ void main() {
         'searchWords' : 'otto',
         'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
+      {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN\nTSSEIDARAP\nETUEHOWEFE\n',
+        'searchWords' : 'Ast Vogel Höhlen Wander',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -77,6 +81,10 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'uewoe\npotto\nojftj\njfjoh',
         'searchWords' : 'otto',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
+      {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
+        'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
         'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
     ];

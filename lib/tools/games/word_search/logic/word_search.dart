@@ -162,7 +162,7 @@ List<Uint8List> _searchDiagonalReverseLR(String text, List<String> wordList) {
 List<Uint8List> _searchDiagonalRL(String text, List<String> wordList) {
   var lines = _splitLines(text);
   int maxRowLength = _maxRowLength(lines);
-  var diagonalText = List<String>.generate(_getDiagonalRowIndexRL(lines.length, 0, maxRowLength), (index) => '');
+  var diagonalText = List<String>.generate(_getDiagonalRowIndexRL(lines.length - 1, maxRowLength, maxRowLength), (index) => '');
   var diagonalTextMap = List<List<Point<int>>>.generate(diagonalText.length, (index) => <Point<int>>[]);
 
   lines.forEachIndexed((rowIndex, line) {
@@ -197,11 +197,11 @@ List<Uint8List> _searchDiagonalReverseRL(String text, List<String> wordList) {
 }
 
 int _getDiagonalRowIndexLR(int rowIndex, int columnIndex, int columnCount) {
-  return columnIndex - rowIndex >= 0 ? columnIndex - rowIndex : columnCount - (columnIndex - rowIndex);
+  return columnIndex - rowIndex >= 0 ? columnIndex - rowIndex : columnCount - (columnIndex - rowIndex) - 1;
 }
 
 int _getDiagonalRowIndexRL(int rowIndex, int columnIndex, int columnCount) {
-  return columnIndex - rowIndex <= 0 ? rowIndex - columnIndex : columnIndex + rowIndex;
+  return rowIndex + columnIndex;
 }
 
 int _maxRowLength(List<String> lines) {
