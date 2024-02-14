@@ -5,18 +5,27 @@ import 'package:gc_wizard/tools/games/word_search/logic/word_search.dart';
 void main() {
   group("wordSearch.searchHorizontal:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewhe\npotto\nojffj\njfjkh',
-        'searchWords' : 'otto',
+      {'input' : 'uewhe\npotti\nojffj\njfjkh',
+        'searchWords' : 'otti',
         'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
       {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN\nTSSEIDARAP\nETUEHOWEFE\n',
         'searchWords' : 'Ast Vogel Höhlen Wander',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'expectedOutput' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
       },
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
         expect(_actual, elem['expectedOutput']);
@@ -26,14 +35,29 @@ void main() {
 
   group("wordSearch.searchHorizontalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewhe\npotto\nojffj\njfjkh',
-        'searchWords' : 'otto',
+      {'input' : 'uewhe\npotti\nojffj\njfjkh',
+        'searchWords' : 'otti',
         'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
+      {'input' : 'uewhe\npitto\nojffj\njfjkh',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
+      {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
+        'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
+        'expectedOutput' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+                            [0, 0, 1, 1, 1, 1, 1, 0, 0, 0]],
       },
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL) |
             SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
@@ -44,6 +68,10 @@ void main() {
 
   group("wordSearch.searchVertical:", () {
     List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'searchWords' : 'otto',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
       {'input' : 'uewoe\npotto\nojftj\njfjoh',
         'searchWords' : 'otto',
         'expectedOutput' : [[0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0]],
@@ -51,7 +79,7 @@ void main() {
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
         expect(_actual, elem['expectedOutput']);
@@ -61,14 +89,18 @@ void main() {
 
   group("wordSearch.searchVerticalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewoe\npotto\nojftj\njfjoh',
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
         'searchWords' : 'otto',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'searchWords' : 'otti',
         'expectedOutput' : [[0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0]],
       },
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
@@ -81,16 +113,31 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'uewoe\npotto\nojftj\njfjoh',
         'searchWords' : 'otto',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
+      {'input' : 'uewoe\npotto\notftj\nifjoh',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 4, 0], [0, 0, 4, 0, 0], [0, 4, 0, 0, 0], [4, 0, 0, 0, 0]],
+      },
+      {'input' : 'uowoe\npotto\nojftj\njfjoi',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
       },
       {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
         'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'expectedOutput' : [[0, 0, 4, 0, 0, 0, 0, 4, 0, 0],
+                            [0, 4, 0, 0, 0, 0, 0, 0, 4, 0],
+                            [4, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 4, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 4, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 4]],
       },
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
         expect(_actual, elem['expectedOutput']);
@@ -100,14 +147,29 @@ void main() {
 
   group("wordSearch.searchDiagonalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewoe\npotto\nojftj\njfjoh',
-        'searchWords' : 'otto',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input' : 'uowoe\npotto\nojftj\njfjio',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
+      {'input' : 'uiwoe\npotto\nojftj\njfjoo',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+      },
+      {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
+        'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
+        'expectedOutput' : [[0, 0, 4, 0, 0, 0, 0, 4, 0, 0],
+                            [0, 4, 0, 0, 0, 0, 0, 0, 4, 0],
+                            [4, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 4, 0, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 4, 0],
+                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 4]],
       },
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);

@@ -187,7 +187,6 @@ class WordSearchState extends State<WordSearch> {
 
   List<TextSpan> _buildRtfOutput(List<String> text, List<Uint8List> founds) {
     var textSpan = <TextSpan>[];
-    TextSpan actTextSpan;
 
     if (text.isEmpty || text.first.isEmpty || founds.isEmpty || founds.first.isEmpty) return textSpan;
     var lastColor = _getTextColorValue(founds.first.first);
@@ -198,17 +197,17 @@ class WordSearchState extends State<WordSearch> {
       for (var column = 0; column < text[row].length; column++) {
         var actColor = _getTextColorValue(founds[row][column]);
         var lastEntry = (row == text.length - 1 && column == text[row].length - 1);
-        if (actColor != lastColor || lastEntry) {
+        if (lastEntry || actColor != lastColor) {
           if (lastEntry) {
+            if (actColor != lastColor) {
+              textSpan.add(_createTextSpan(actText, lastColor));
+              actText = '';
+              lastColor = actColor;
+            }
             actText += text[row][column] + ' ';
           }
-          switch (lastColor) {
-            case 1: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle().copyWith(color: Colors.red)); break;
-            case 2: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle().copyWith(color: Colors.green)); break;
-            case 3: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle().copyWith(color: Colors.blue)); break;
-            default: actTextSpan = TextSpan(text: actText, style: gcwMonotypeTextStyle());
-          }
-          textSpan.add(actTextSpan);
+
+          textSpan.add(_createTextSpan(actText, lastColor));
           actText = '';
           lastColor = actColor;
         }
@@ -216,6 +215,15 @@ class WordSearchState extends State<WordSearch> {
       }
     }
     return textSpan;
+  }
+
+  TextSpan _createTextSpan(String text, int color) {
+    switch (color) {
+      case 1: return TextSpan(text: text, style: gcwMonotypeTextStyle().copyWith(color: Colors.red));
+      case 2: return TextSpan(text: text, style: gcwMonotypeTextStyle().copyWith(color: Colors.green));
+      case 3: return TextSpan(text: text, style: gcwMonotypeTextStyle().copyWith(color: Colors.blue));
+      default: return TextSpan(text: text, style: gcwMonotypeTextStyle());
+    }
   }
 
   int _getTextColorValue(int value) {
