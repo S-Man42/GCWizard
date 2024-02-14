@@ -5,6 +5,10 @@ import 'package:gc_wizard/tools/games/word_search/logic/word_search.dart';
 void main() {
   group("wordSearch.searchHorizontal:", () {
     List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
       {'input' : 'uewhe\npotti\nojffj\njfjkh',
         'searchWords' : 'otti',
         'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
@@ -22,6 +26,10 @@ void main() {
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
       },
+      {'input' : 'uewh\npotti\nojffj\njfjk',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0]],
+      },
     ];
 
     for (var elem in _inputsToExpected) {
@@ -35,6 +43,10 @@ void main() {
 
   group("wordSearch.searchHorizontalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      },
       {'input' : 'uewhe\npotti\nojffj\njfjkh',
         'searchWords' : 'otti',
         'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
@@ -53,6 +65,10 @@ void main() {
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
                             [0, 0, 1, 1, 1, 1, 1, 0, 0, 0]],
+      },
+      {'input' : 'uewh\npotti\nojffj\njfjk',
+        'searchWords' : 'otti',
+        'expectedOutput' : [[0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0]],
       },
     ];
 

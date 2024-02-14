@@ -29,7 +29,9 @@ String _normalizeInput(String text){
 }
 
 List<String> normalizeAndSplitInput(String text) {
-  return const LineSplitter().convert(_normalizeInput(text));
+  var lines = const LineSplitter().convert(_normalizeInput(text));
+  var maxRowLength = _maxRowLength(lines);
+  return lines.map((line) => _fillupLine(line, maxRowLength).replaceAll('\t', '  ')).toList();
 }
 
 List<String> _splitLines(String text){
@@ -95,11 +97,7 @@ List<Uint8List> _searchVertical(String text, List<String> wordList) {
   var verticalText = List<String>.generate(maxRowLength, (index) => '');
 
   for (var line in lines) {
-    if (line.length < maxRowLength) {
-      for (var columnIndex = line.length; columnIndex < maxRowLength; columnIndex ++) {
-        line += _emptyChar;
-      }
-    }
+    line = _fillupLine(line, maxRowLength);
     line.split('').forEachIndexed((columnIndex, char) {
       verticalText[columnIndex] += char;
     });
@@ -129,11 +127,7 @@ List<Uint8List> _searchDiagonalLR(String text, List<String> wordList) {
   var diagonalTextMap = List<List<Point<int>>>.generate(diagonalText.length, (index) => <Point<int>>[]);
 
   lines.forEachIndexed((rowIndex, line) {
-    if (line.length < maxRowLength) {
-      for (var columnIndex = line.length; columnIndex < maxRowLength; columnIndex ++) {
-        line += _emptyChar;
-      }
-    }
+    line = _fillupLine(line, maxRowLength);
     line.split('').forEachIndexed((columnIndex, char) {
       var row = _getDiagonalRowIndexLR(rowIndex, columnIndex, maxRowLength);
       diagonalTextMap[row].add(Point<int>(columnIndex, rowIndex));
@@ -166,11 +160,7 @@ List<Uint8List> _searchDiagonalRL(String text, List<String> wordList) {
   var diagonalTextMap = List<List<Point<int>>>.generate(diagonalText.length, (index) => <Point<int>>[]);
 
   lines.forEachIndexed((rowIndex, line) {
-    if (line.length < maxRowLength) {
-      for (var columnIndex = line.length; columnIndex < maxRowLength; columnIndex ++) {
-        line += _emptyChar;
-      }
-    }
+    line = _fillupLine(line, maxRowLength);
     line.split('').forEachIndexed((columnIndex, char) {
       var row = _getDiagonalRowIndexRL(rowIndex, columnIndex, maxRowLength);
       diagonalTextMap[row].add(Point<int>(columnIndex, rowIndex));
@@ -202,6 +192,15 @@ int _getDiagonalRowIndexLR(int rowIndex, int columnIndex, int columnCount) {
 
 int _getDiagonalRowIndexRL(int rowIndex, int columnIndex, int columnCount) {
   return rowIndex + columnIndex;
+}
+
+String _fillupLine(String line, int maxRowLength) {
+  if (line.length < maxRowLength) {
+    for (var columnIndex = line.length; columnIndex < maxRowLength; columnIndex++) {
+      line += _emptyChar;
+    }
+  }
+  return line;
 }
 
 int _maxRowLength(List<String> lines) {
