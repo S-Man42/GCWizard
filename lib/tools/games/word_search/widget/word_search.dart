@@ -163,7 +163,7 @@ class WordSearchState extends State<WordSearch> {
   }
 
   Widget _buildOutput() {
-    var normalizedInput = normalizeAndSplitInput(_currentInput);
+    var normalizedInput = normalizeAndSplitInputForView(_currentInput);
     return GCWDefaultOutput(
       trailing: Row(
         children: <Widget>[
@@ -195,7 +195,10 @@ class WordSearchState extends State<WordSearch> {
     for (var row = 0; row < text.length; row++) {
       if (row > 0) actText += '\n';
       for (var column = 0; column < text[row].length; column++) {
-        var actColor = _getTextColorValue(founds[row][column]);
+        var actColor = lastColor;
+        if (founds.length > row && founds[row].length > column) {
+          actColor = _getTextColorValue(founds[row][column]);
+        }
         var lastEntry = (row == text.length - 1 && column == text[row].length - 1);
         if (lastEntry || actColor != lastColor) {
           if (lastEntry) {

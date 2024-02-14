@@ -28,10 +28,10 @@ String _normalizeInput(String text){
   return text.replaceAll(RegExp(r'[\f\t ]'), '');
 }
 
-List<String> normalizeAndSplitInput(String text) {
-  var lines = const LineSplitter().convert(_normalizeInput(text));
+List<String> normalizeAndSplitInputForView(String text) {
+  var lines = _splitLines(_normalizeInput(text));
   var maxRowLength = _maxRowLength(lines);
-  return lines.map((line) => _fillupLine(line, maxRowLength).replaceAll('\t', '  ')).toList();
+  return lines.map((line) => _fillupLine(line, maxRowLength).replaceAll('\t', '_')).toList();
 }
 
 List<String> _splitLines(String text){
@@ -137,16 +137,8 @@ List<Uint8List> _searchDiagonalLR(String text, List<String> wordList) {
 
   var result = _searchWords(diagonalText.join('\n'), wordList,
       SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL));
-  var matrix = _buildResultMatrix(text);
 
-  result.forEachIndexed((rowIndex, line) {
-    line.forEachIndexed((columnIndex, value) {
-      var cell = diagonalTextMap[rowIndex][columnIndex];
-      matrix[cell.y][cell.x] = value;
-    });
-  });
-
-  return matrix;
+  return _buildDiagonalResultMatrix(text, result, diagonalTextMap);
 }
 
 List<Uint8List> _searchDiagonalReverseLR(String text, List<String> wordList) {
@@ -170,20 +162,26 @@ List<Uint8List> _searchDiagonalRL(String text, List<String> wordList) {
 
   var result = _searchWords(diagonalText.join('\n'), wordList,
       SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL));
+
+  return _buildDiagonalResultMatrix(text, result, diagonalTextMap);
+}
+
+List<Uint8List> _searchDiagonalReverseRL(String text, List<String> wordList) {
+  return _searchDiagonalRL(text, _reversedWordList(wordList));
+}
+
+List<Uint8List> _buildDiagonalResultMatrix(String text, List<Uint8List> result, List<List<Point<int>>> diagonalTextMap) {
   var matrix = _buildResultMatrix(text);
 
   result.forEachIndexed((rowIndex, line) {
     line.forEachIndexed((columnIndex, value) {
       var cell = diagonalTextMap[rowIndex][columnIndex];
-      matrix[cell.y][cell.x] = value;
+      if (matrix.length > cell.y && matrix[cell.y].length > cell.x) {
+        matrix[cell.y][cell.x] = value;
+      }
     });
   });
-
   return matrix;
-}
-
-List<Uint8List> _searchDiagonalReverseRL(String text, List<String> wordList) {
-  return _searchDiagonalRL(text, _reversedWordList(wordList));
 }
 
 int _getDiagonalRowIndexLR(int rowIndex, int columnIndex, int columnCount) {
