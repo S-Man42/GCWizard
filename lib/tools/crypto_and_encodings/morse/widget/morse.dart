@@ -176,7 +176,7 @@ class _MorseState extends State<Morse> {
         morseButtons = Container();
     }
 
-    return GCWToolBar(flexValues: [
+    return GCWToolBar(flexValues: const [
       5,
       2,
       1,
