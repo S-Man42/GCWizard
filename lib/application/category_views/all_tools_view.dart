@@ -278,8 +278,8 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-import '../theme/theme.dart';
-import 'selector_lists/miscellaneous_selection.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 
 class MainView extends GCWWebStatefulWidget {
   MainView({Key? key, Map<String, String>? webParameter})
