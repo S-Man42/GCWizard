@@ -43,6 +43,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
 
   @override
   LatLng? toLatLng() {
+    if (coords.isEmpty || coords.first.fullmapcode.isEmpty) return null;
     return _MapCodeToLatLon(this);
   }
 
