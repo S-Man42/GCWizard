@@ -13,87 +13,68 @@
 
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _Ellipsoid {
-  late final double _a;
-  late final double _f;
+  late final double a;
+  late final double f;
 
-  _Ellipsoid(this._a, this._f);
+  _Ellipsoid(this.a, this.f);
 
-  double get _f1 {
-    return 1 - _f;
+  double get f1 {
+    return 1 - f;
   }
 
-  double get _f12 {
-    return _GeoMath.sq(_f1);
+  double get e2 {
+    return f * (2 - f);
   }
 
-  double get _e2 {
-    return _f * (2 - _f);
+  double get es {
+    return (f < 0 ? -1 : 1) * sqrt(e2.abs());
   }
 
-  double get _es {
-    return (_f < 0 ? -1 : 1) * sqrt(_e2.abs());
+  double get e12 {
+    return e2 / (1 - e2);
   }
 
-  double get _e12 {
-    return _e2 / (1 - _e2);
+  double get b {
+    return a * f1;
   }
 
-  double get _n {
-    return _f / (2  - _f);
+  _TransverseMercator get tm {
+    return _TransverseMercator(a, f, 1.0);
   }
 
-  double get _b {
-    return _a * _f1;
+  _EllipticFunction get ell {
+    return _EllipticFunction(-e12);
   }
 
-  _TransverseMercator get _tm {
-    return _TransverseMercator(_a, _f, 1.0);
+  double QuarterMeridian() {
+    return b * ell.E0();
   }
 
-  _EllipticFunction get _ell {
-    return _EllipticFunction(-_e12);
+  double InverseParametricLatitude(double beta) {
+    return _GeoMath.atand(_GeoMath.tand(_GeoMath.LatFix(beta)) / f1);
   }
 
-  // // , _au(_a, _f, real(0), real(1), real(0), real(1), real(1))
-  // double get _au {
-  //   ???
-  // }
-
-  double _Area() {
-    return 4 * _GeoMath.pi() *
-    ((_GeoMath.sq(_a) + _GeoMath.sq(_b) *
-    (_e2 == 0 ? 1 :
-    (_e2 > 0 ? _GeoMath.atanh(sqrt(_e2)) : atan(sqrt(-_e2))) /
-    sqrt(_e2.abs())))/2);
-  }
-
-  double _QuarterMeridian() {
-    return _b * _ell.E0();
-  }
-
-  double _InverseParametricLatitude(double beta) {
-    return _GeoMath.atand(_GeoMath.tand(_GeoMath.LatFix(beta)) / _f1);
-  }
-
-  double _InverseRectifyingLatitude(double mu) {
+  double InverseRectifyingLatitude(double mu) {
     if ((mu).abs() == _GeoMath.qd) return mu;
-    return _InverseParametricLatitude(_ell.Einv(mu * _ell.E0() / _GeoMath.qd) / _GeoMath.degree());
+    return InverseParametricLatitude(ell.Einv(mu * ell.E0() / _GeoMath.qd) / _GeoMath.degree());
   }
 
   List<double> RectifyingToConformalCoeffs() {
-    return _tm._bet;
+    return tm._bet;
   }
 
   List<double> ConformalToRectifyingCoeffs() {
-    return _tm._alp;
+    return tm._alp;
   }
 
   double IsometricLatitude(double phi) {
-    return _GeoMath.asinh(_GeoMath.taupf(_GeoMath.tand(_GeoMath.LatFix(phi)), _es)) /_GeoMath.degree();
+    return _GeoMath.asinh(_GeoMath.taupf(_GeoMath.tand(_GeoMath.LatFix(phi)), es)) /_GeoMath.degree();
   }
 
   double InverseIsometricLatitude(double psi) {
-    return _GeoMath.atand(_GeoMath.tauf(sinh(psi * _GeoMath.degree()), _es));
+    return _GeoMath.atand(_GeoMath.tauf(sinh(psi * _GeoMath.degree()), es));
   }
 }

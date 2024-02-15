@@ -14,6 +14,8 @@
 
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _DAuxLatitude extends _AuxLatitude {
   double y = 0;
   double x = 1;
@@ -139,8 +141,7 @@ class _DAuxLatitude extends _AuxLatitude {
     sx = Xn.y(), sy = Yn.y(), cx = Xn.x(), cy = Yn.x(),
     k2;
     // Switch prolate to oblate; we then can use the formulas for k2 < 0
-    // MAL 02/2024: What the fuck... If FALSE AND SOMETHING... Is always false... But part of the original code
-    if (false && _f < 0) {
+    if (_f < 0) {
       d = -d;
       var _h = sx;
       sx = cx;
@@ -189,37 +190,6 @@ class _DAuxLatitude extends _AuxLatitude {
     return 1 + DClenshaw(true, zeta2n.radians0() - zeta1n.radians0(),
     zeta1n.y(), zeta1n.x(), zeta2n.y(), zeta2n.x(),
     _c.sublist(_AuxLatitude.Lmax * k), _AuxLatitude.Lmax);
-  }
-
-  static double Dp0Dpsi(double x, double y) {
-    return x == y ? _AuxLatitude.sn(x) :
-    ((x + y).isNaN ? x + y : // N.B. nan for inf-inf
-    (x.isInfinite ? _copySign(1.0, x) :
-    (y.isInfinite ? _copySign(1.0, y) :
-    Dasinh(_h(x), _h(y)) * Dh(x, y) / Dasinh(x, y))));
-  }
-
-  static double _h(double x) { return x * _AuxLatitude.sn(x) / 2; }
-
-  static double Dh(double x, double y) {
-    if ((x + y).isNaN) {
-      return x + y;
-    }// N.B. nan for inf-inf
-    if (x.isInfinite) {
-      return _copySign(1 / 2.0, x);
-    }
-    if (y.isInfinite) {
-      return _copySign(1 / 2.0, y);
-    }
-    double sx = _AuxLatitude.sn(x), sy = _AuxLatitude.sn(y), d = sx*x + sy*y;
-    if (d / 2 == 0) {
-      return (x + y) / 2; // Handle underflow
-    }
-    if (x * y <= 0) {
-      return (_h(y) - _h(x)) / (y - x); // Does not include x = y = 0
-    }
-    double scx = _AuxLatitude.sc(x), scy = _AuxLatitude.sc(y);
-    return ((x + y) / (2 * d)) * (_GeoMath.sq(sx*sy) + _GeoMath.sq(sy/scx) + _GeoMath.sq(sx/scy));
   }
   
   static double DClenshaw(bool sinp, double Delta, double szeta1, double czeta1, double szeta2, double czeta2, List<double> c, int K) {

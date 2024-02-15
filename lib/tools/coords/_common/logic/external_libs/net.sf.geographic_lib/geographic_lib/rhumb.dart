@@ -13,8 +13,8 @@
 
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 
-const int _GEOGRAPHICLIB_RHUMBAREA_ORDER = (_GEOGRAPHICLIB_PRECISION == 2 ? 6 : (_GEOGRAPHICLIB_PRECISION == 1 ? 4 : 8));
-
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class Rhumb {
   late final _Rhumb rhumb;
 
@@ -23,11 +23,11 @@ class Rhumb {
   }
 
   RhumbInverseReturn inverse(double lat1, double lon1, double lat2, double lon2) {
-    return rhumb.Inverse(lat1, lon1, lat2, lon2);
+    return rhumb._Inverse(lat1, lon1, lat2, lon2);
   }
 
   RhumbDirectReturn direct(double lat1, double lon1, double azi12, double s12) {
-    return rhumb.Direct(lat1, lon1, azi12, s12);
+    return rhumb._Direct(lat1, lon1, azi12, s12);
   }
 }
 
@@ -36,11 +36,7 @@ class _Rhumb {
   bool _exact = true;
   // late double _c2;
   static const int _tm_maxord = _GEOGRAPHICLIB_TRANSVERSEMERCATOR_ORDER;
-  static const int _maxpow_ = _GEOGRAPHICLIB_RHUMBAREA_ORDER;
   late _DAuxLatitude _aux;
-  // late int _lL;             // N.B. names of the form _[A-Z].* are reserved in C++
-  // late List<double> _pP;      // The Fourier coefficients P_l
-  static const int Lmax_ = _GEOGRAPHICLIB_RHUMBAREA_ORDER;
   late double _rm;
 
   /**
@@ -62,134 +58,39 @@ class _Rhumb {
     _aux = _DAuxLatitude(a, f);
     _ell = _Ellipsoid(a, f);
     _exact = exact;
-    // _c2 = _ell._Area() / (2 * _GeoMath.td);
-    // _lL = _exact ? 8 : Lmax_; // 8 is starting size for DFT fit
-    // _pP = List<double>.filled(_lL, 0);
     _rm = _aux.RectifyingRadius(_exact);
-
-    // AreaCoeffs();
   }
 
-  // void AreaCoeffs() {
-  //   List<double> coeff = [];
-  //
-  //   // Set up coefficients for area calculation
-  //   if (_exact) {
-  //     // Compute coefficients by Fourier transform of integrand
-  //     double eps = positiveDoublePrecision/2;
-  //     qIntegrand f = qIntegrand(_aux);
-  //     int L = 4;
-  //     List<double> c = [];
-  //     DST fft(L); fft.transform(f, c.data()); L *= 2;
-  //     // For |n| <= 0.99, actual max for doubles is 2163.  This scales as
-  //     // Math::digits() and for long doubles (GEOGRAPHICLIB_PRECISION = 3,
-  //     // digits = 64), this becomes 2163 * 64 / 53 = 2612.  Round this up to
-  //     // 2^12 = 4096 and scale this by Math::digits()/64 if digits() > 64.
-  //     //
-  //     // 64 = digits for long double, 6 = 12 - log2(64)
-  //     int Lmax = 1<<(int(ceil(log2(max(Math::digits(), 64)))) + 6);
-  //     for (_lL = 0; L <= Lmax && _lL == 0; L *=2) {
-  //     fft.reset(L/2); c.resize(L); fft.refine(f, c.data());
-  //     _pP.resize(L);
-  //     for (int l = 0, k = -1; l < L; ++l) {
-  //     // Compute Fourier coefficients of integral
-  //     _pP[l] = (c[l] + (l+1 < L ? c[l+1] : 0)) / (-4 * (l+1));
-  //     if (fabs(_pP[l]) <= eps) {
-  //     if (k < 0) k = l;   // mark as first small value
-  //     } else
-  //     k = -1;             // run interrupted
-  //     if (k >= 0 && l - k + 1 >= (l + 1 + 7) / 8) {
-  //     // run of small values of at least l/8?
-  //     _lL = l + 1; _pP.resize(_lL); break;
-  //     }
-  //     }
-  //     // loop exits if _lL > 0
-  //     }
-  //     if (_lL == 0)          // Hasn't converged -- just use the values we have
-  //     _lL = int(_pP.size());
-  //   }
-  //
-  //   // static_assert(sizeof(coeff) / sizeof(double) ==
-  //   //     ((maxpow_ + 1) * (maxpow_ + 4))/2,
-  //   //     "Coefficient array size mismatch for Rhumb");
-  //   double d = 1;
-  //   int o = 0;
-  //   for (int l = 0; l <= _maxpow_; ++l) {
-  //     int m = _maxpow_ - l;
-  //     // R[0] is just an integration constant so it cancels when evaluating a
-  //     // definite integral.  So don't bother computing it.  It won't be used
-  //     // when invoking SinCosSeries.
-  //     if (l != 0) {
-  //       _rR[l] = d * _GeoMath.polyval(m, coeff.sublist(o), 0, _ell._n) / coeff[o + m + 1];
-  //     }
-  //     o += m + 2;
-  //     d *= _ell._n;
-  //   }
-  // }
-
-  static double gd(double x) {
+  static double _gd(double x) {
     return atan(sinh(x));
   }
 
-  // Use divided differences to determine (mu2 - mu1) / (psi2 - psi1)
-  // accurately
-  //
-  // Definition: Df(x,y,d) = (f(x) - f(y)) / (x - y)
-  // See:
-  //   W. M. Kahan and R. J. Fateman,
-  //   Symbolic computation of divided differences,
-  //   SIGSAM Bull. 33(3), 7-28 (1999)
-  //   https://doi.org/10.1145/334714.334716
-  //   http://www.cs.berkeley.edu/~fateman/papers/divdiff.pdf
-
-  static double Dlog(double x, double y) {
-    double t = x - y;
-    // Change
-    //
-    //   atanh(t / (x + y))
-    //
-    // to
-    //
-    //   asinh(t / (2 * sqrt(x*y)))
-    //
-    // to avoid taking atanh(1) when x is large and y is 1.  N.B., this
-    // routine is invoked with positive x and y, so no need to guard against
-    // taking the sqrt of a negative quantity.  This fixes bogus results for
-    // the area being returning when an endpoint is at a pole.
-    return t != 0 ? 2 * _GeoMath.asinh(t / (2 * sqrt(x*y))) / t : 1 / x;
-  }
-
   // N.B., x and y are in degrees
-  static double Dtan(double x, double y) {
+  static double _Dtan(double x, double y) {
     double d = x - y, tx = _GeoMath.tand(x), ty = _GeoMath.tand(y), txy = tx * ty;
     return d != 0 ?
       (2 * txy > -1 ? (1 + txy) * _GeoMath.tand(d) : tx - ty) / (d *_GeoMath.degree()) :
       1 + txy;
   }
 
-  static double Datan(double x, double y) {
+  static double _Datan(double x, double y) {
     double d = x - y, xy = x * y;
     return d != 0 ?
       (2 * xy > -1 ? atan( d / (1 + xy) ) : atan(x) - atan(y)) / d :
       1 / (1 + xy);
   }
 
-  static double Dsin(double x, double y) {
+  static double _Dsin(double x, double y) {
     double d = (x - y) / 2;
     return cos((x + y)/2) * (d != 0 ? sin(d) / d : 1);
   }
 
-  static double Dsinh(double x, double y) {
+  static double _Dsinh(double x, double y) {
     double d = (x - y) / 2;
     return cosh((x + y) / 2) * (d != 0 ? sinh(d) / d : 1);
   }
 
-  static double Dcosh(double x, double y) {
-    double d = (x - y) / 2;
-    return sinh((x + y) / 2) * (d != 0 ? sinh(d) / d : 1);
-  }
-
-  static double Dasinh(double x, double y) {
+  static double _Dasinh(double x, double y) {
     double d = x - y,
     hx = _GeoMath.hypot(1.0, x), hy = _GeoMath.hypot(1.0, y);
     return d != 0 ?
@@ -198,19 +99,19 @@ class _Rhumb {
   }
 
   static double Dgd(double x, double y) {
-    return Datan(sinh(x), sinh(y)) * Dsinh(x, y);
+    return _Datan(sinh(x), sinh(y)) * _Dsinh(x, y);
   }
 
   // N.B., x and y are the tangents of the angles
-  static double Dgdinv(double x, double y) {
-    return Dasinh(x, y) / Datan(x, y);
+  static double _Dgdinv(double x, double y) {
+    return _Dasinh(x, y) / _Datan(x, y);
   }
 
   // Copied from LambertConformalConic...
   // Deatanhe(x,y) = eatanhe((x-y)/(1-e^2*x*y))/(x-y)
-  double Deatanhe(double x, double y) {
-    double t = x - y, d = 1 - _ell._e2 * x * y;
-    return t != 0 ? _GeoMath.eatanhe(t / d, _ell._es) / t : _ell._e2 / d;
+  double _Deatanhe(double x, double y) {
+    double t = x - y, d = 1 - _ell.e2 * x * y;
+    return t != 0 ? _GeoMath.eatanhe(t / d, _ell.es) / t : _ell.e2 / d;
   }
 
   // // (E(x) - E(y)) / (x - y) -- E = incomplete elliptic integral of 2nd kind
@@ -315,16 +216,16 @@ class _Rhumb {
    * enough that the rhumb line crosses a pole, the longitude of point 2
    * is indeterminate (a NaN is returned for \e lon2 and \e S12).
    **********************************************************************/
-  RhumbDirectReturn Direct(double lat1, double lon1, double azi12, double s12) {
-    return GenDirect(lat1, lon1, azi12, s12, _MASK_LATITUDE | _MASK_LONGITUDE/* | _MASK_AREA*/);
+  RhumbDirectReturn _Direct(double lat1, double lon1, double azi12, double s12) {
+    return _GenDirect(lat1, lon1, azi12, s12, _MASK_LATITUDE | _MASK_LONGITUDE/* | _MASK_AREA*/);
   }
 
-  RhumbDirectReturn GenDirect(double lat1, double lon1, double azi12, double s12, int outmask) {
-    return Line(lat1, lon1, azi12).GenPosition(s12, outmask);
+  RhumbDirectReturn _GenDirect(double lat1, double lon1, double azi12, double s12, int outmask) {
+    return _Line(lat1, lon1, azi12)._GenPosition(s12, outmask);
   }
 
-  RhumbLine Line(double lat1, double lon1, double azi12) {
-    return RhumbLine(this, lat1, lon1, azi12);
+  _RhumbLine _Line(double lat1, double lon1, double azi12) {
+    return _RhumbLine(this, lat1, lon1, azi12);
   }
 
   /**
@@ -349,11 +250,11 @@ class _Rhumb {
    * position, which is extremely close to the actual pole, allows the
    * calculation to be carried out in finite terms.
    **********************************************************************/
-  RhumbInverseReturn Inverse(double lat1, double lon1, double lat2, double lon2) {
-    return GenInverse(lat1, lon1, lat2, lon2, _MASK_DISTANCE | _MASK_AZIMUTH | _MASK_AREA);
+  RhumbInverseReturn _Inverse(double lat1, double lon1, double lat2, double lon2) {
+    return _GenInverse(lat1, lon1, lat2, lon2, _MASK_DISTANCE | _MASK_AZIMUTH | _MASK_AREA);
   }
 
-  RhumbInverseReturn GenInverse(double lat1, double lon1, double lat2, double lon2, int outmask) {
+  RhumbInverseReturn _GenInverse(double lat1, double lon1, double lat2, double lon2, int outmask) {
     _AuxAngle phi1 = _AuxAngle.degrees(lat1), phi2 = _AuxAngle.degrees(lat2),
     chi1 = _aux.Convert(_AuxLatitude._PHI,_AuxLatitude._CHI, phi1, _exact),
     chi2 = _aux.Convert(_AuxLatitude._PHI, _AuxLatitude._CHI, phi2, _exact);
@@ -380,33 +281,30 @@ class _Rhumb {
         s12 = h * dmudpsi * _rm;
       }
     }
-    // if (outmask & _MASK_AREA != 0) {
-    //   S12 = _c2 * lon12 * MeanSinXi(chi1, chi2);
-    // }
 
     return RhumbInverseReturn(s12, azi12, S12);
   }
 
-  double DIsometricToRectifying(double psix, double psiy) {
+  double _DIsometricToRectifying(double psix, double psiy) {
     if (_exact) {
       double
       latx = _ell.InverseIsometricLatitude(psix),
       laty = _ell.InverseIsometricLatitude(psiy);
-      return DRectifying(latx, laty) / DIsometric(latx, laty);
+      return _DRectifying(latx, laty) / _DIsometric(latx, laty);
     } else {
       psix *= _GeoMath.degree();
       psiy *= _GeoMath.degree();
-      return DConformalToRectifying(gd(psix), gd(psiy)) * Dgd(psix, psiy);
+      return _DConformalToRectifying(_gd(psix), _gd(psiy)) * Dgd(psix, psiy);
     }
   }
 
-  double DConformalToRectifying(double chix, double chiy) {
-    return 1 + SinCosSeries(true, chix, chiy,
+  double _DConformalToRectifying(double chix, double chiy) {
+    return 1 + _SinCosSeries(true, chix, chiy,
     _ell.ConformalToRectifyingCoeffs(), _tm_maxord);
   }
 
-  double DE(double x, double y) {
-    _EllipticFunction ei = _ell._ell;
+  double _DE(double x, double y) {
+    _EllipticFunction ei = _ell.ell;
     double d = x - y;
     if (x * y <= 0) {
       return d != 0 ? (ei.E1(x) - ei.E1(y)) / d : 1;
@@ -427,7 +325,7 @@ class _Rhumb {
     //          (sin(x)*cos(y)*Delta(y) + sin(y)*cos(x)*Delta(x))
     // cos(z) = sqrt((1-sin(z))*(1+sin(z)))
     double sx = sin(x), sy = sin(y), cx = cos(x), cy = cos(y);
-    double Dt = Dsin(x, y) * (sx + sy) /
+    double Dt = _Dsin(x, y) * (sx + sy) /
     ((cx + cy) * (sx * ei.Delta(sy, cy) + sy * ei.Delta(sx, cx))),
     t = d * Dt, Dsz = 2 * Dt / (1 + t*t),
     sz = d * Dsz, cz = (1 - t) * (1 + t) / (1 + t*t);
@@ -435,39 +333,39 @@ class _Rhumb {
       - ei.k2() * sx * sy) * Dsz;
   }
 
-  double DRectifyingToIsometric(double mux, double muy) {
+  double _DRectifyingToIsometric(double mux, double muy) {
     double
-    latx = _ell._InverseRectifyingLatitude(mux/_GeoMath.degree()),
-    laty = _ell._InverseRectifyingLatitude(muy/_GeoMath.degree());
+    latx = _ell.InverseRectifyingLatitude(mux/_GeoMath.degree()),
+    laty = _ell.InverseRectifyingLatitude(muy/_GeoMath.degree());
     return _exact ?
-      DIsometric(latx, laty) / DRectifying(latx, laty) :
-      Dgdinv(_GeoMath.taupf(_GeoMath.tand(latx), _ell._es),
-      _GeoMath.taupf(_GeoMath.tand(laty), _ell._es)) *
-      DRectifyingToConformal(mux, muy);
+      _DIsometric(latx, laty) / _DRectifying(latx, laty) :
+      _Dgdinv(_GeoMath.taupf(_GeoMath.tand(latx), _ell.es),
+      _GeoMath.taupf(_GeoMath.tand(laty), _ell.es)) *
+      _DRectifyingToConformal(mux, muy);
   }
 
-  double DRectifyingToConformal(double mux, double muy) {
-    return 1 - SinCosSeries(true, mux, muy,
+  double _DRectifyingToConformal(double mux, double muy) {
+    return 1 - _SinCosSeries(true, mux, muy,
       _ell.RectifyingToConformalCoeffs(), _tm_maxord);
   }
 
-  double DRectifying(double latx, double laty) {
+  double _DRectifying(double latx, double laty) {
     double
-    tbetx = _ell._f1 *_GeoMath.tand(latx),
-    tbety = _ell._f1 * _GeoMath.tand(laty);
-    return (_GeoMath.pi()/2) * _ell._b * _ell._f1 * DE(atan(tbetx), atan(tbety))
-    * Dtan(latx, laty) * Datan(tbetx, tbety) / _ell._QuarterMeridian();
+    tbetx = _ell.f1 *_GeoMath.tand(latx),
+    tbety = _ell.f1 * _GeoMath.tand(laty);
+    return (_GeoMath.pi()/2) * _ell.b * _ell.f1 * _DE(atan(tbetx), atan(tbety))
+    * _Dtan(latx, laty) * _Datan(tbetx, tbety) / _ell.QuarterMeridian();
   }
 
-  double DIsometric(double latx, double laty) {
+  double _DIsometric(double latx, double laty) {
     double
     phix = latx * _GeoMath.degree(), tx = _GeoMath.tand(latx),
     phiy = laty * _GeoMath.degree(), ty = _GeoMath.tand(laty);
-    return Dasinh(tx, ty) * Dtan(latx, laty)
-    - Deatanhe(sin(phix), sin(phiy)) * Dsin(phix, phiy);
+    return _Dasinh(tx, ty) * _Dtan(latx, laty)
+    - _Deatanhe(sin(phix), sin(phiy)) * _Dsin(phix, phiy);
   }
 
-  double SinCosSeries(bool sinp, double x, double y, List<double> c, int n) {
+  double _SinCosSeries(bool sinp, double x, double y, List<double> c, int n) {
     // N.B. n >= 0 and c[] has n+1 elements 0..n, of which c[0] is ignored.
     //
     // Use Clenshaw summation to evaluate
@@ -538,18 +436,6 @@ class _Rhumb {
     }
     return s;
   }
-
-  // double MeanSinXi(_AuxAngle chix, _AuxAngle chiy) {
-  //   _AuxAngle phix = _aux.Convert(_AuxLatitude._CHI, _AuxLatitude._PHI , chix, _exact);
-  //   _AuxAngle phiy = _aux.Convert(_AuxLatitude._CHI, _AuxLatitude._PHI , chiy, _exact);
-  //   _AuxAngle betax = _aux.Convert(_AuxLatitude._PHI, _AuxLatitude._BETA, phix, _exact).normalized();
-  //   _AuxAngle betay = _aux.Convert(_AuxLatitude._PHI, _AuxLatitude._BETA, phiy, _exact).normalized();
-  //   double DpbetaDbeta = _DAuxLatitude.DClenshaw(false, betay.radians0() - betax.radians0(),  betax.y(), betax.x(), betay.y(), betay.x(),_pP, _lL);
-  //   double tx = chix.tan();
-  //   double ty = chiy.tan();
-  //   double DbetaDpsi = _exact ? _aux.DParametric(phix, phiy) / _aux.DIsometric(phix, phiy) : _aux.DConvert(_AuxLatitude._CHI, _AuxLatitude._BETA, chix, chiy) / _DAuxLatitude.Dlam(tx, ty);
-  //   return _DAuxLatitude.Dp0Dpsi(tx, ty) + DpbetaDbeta * DbetaDpsi;
-  // }
 }
 
 class RhumbDirectReturn {
@@ -593,7 +479,7 @@ class RhumbInverseReturn {
  * \include example-RhumbLine.cpp
  **********************************************************************/
 
-class RhumbLine {
+class _RhumbLine {
   late final _Rhumb _rh;
   late final double _lat1, _lon1, _azi12;
   late final double _salp, _calp, _mu1, _psi1, _r1;
@@ -602,7 +488,7 @@ class RhumbLine {
 
   // copy assignment not allowed
   // RhumbLine& operator=(const RhumbLine&) = delete;
-  RhumbLine(_Rhumb rh, double lat1, double lon1, double azi12) {
+  _RhumbLine(_Rhumb rh, double lat1, double lon1, double azi12) {
     _rh = rh;
     _lat1 = _GeoMath.LatFix(lat1);
     _lon1 = lon1;
@@ -616,24 +502,6 @@ class RhumbLine {
     _mu1 = _rh._aux.Convert(_AuxLatitude._PHI, _AuxLatitude._MU, _phi1, _rh._exact).degrees0();
     _chi1 = _rh._aux.Convert(_AuxLatitude._PHI, _AuxLatitude._CHI, _phi1, _rh._exact);
     _psi1 = _chi1.lam();
-  }
-
-  /**
-   * Compute the position of point 2 which is a distance \e s12 (meters) from
-   * point 1.  The area is also computed.
-   *
-   * @param[in] s12 distance between point 1 and point 2 (meters); it can be
-   *   negative.
-   *
-   * The value of \e lon2 returned is in the range [&minus;180&deg;,
-   * 180&deg;].
-   *
-   * If \e s12 is large enough that the rhumb line crosses a pole, the
-   * longitude of point 2 is indeterminate (a NaN is returned for \e lon2 and
-   * \e S12).
-   **********************************************************************/
-  RhumbDirectReturn Position(double s12) {
-    return GenPosition(s12, _Rhumb._MASK_LATITUDE | _Rhumb._MASK_LONGITUDE/* | _Rhumb._MASK_AREA*/);
   }
 
   /**
@@ -664,7 +532,7 @@ class RhumbLine {
    * longitude of point 2 is indeterminate (a NaN is returned for \e lon2 and
    * \e S12).
    **********************************************************************/
-  RhumbDirectReturn GenPosition(double s12, int outmask) {
+  RhumbDirectReturn _GenPosition(double s12, int outmask) {
     double
     r12 = s12 / (_rh._rm * _GeoMath.degree()), // scaled distance in degrees
     mu12 = r12 * _calp,
@@ -681,10 +549,6 @@ class RhumbLine {
         _rh._aux.DRectifying(_phi1, phi2) / _rh._aux.DIsometric(_phi1, phi2) :
         _rh._aux.DConvert(_AuxLatitude._CHI, _AuxLatitude._MU, _chi1, chi2) / _DAuxLatitude.Dlam(_chi1.tan(), chi2.tan());
       lon2x = r12 * _salp / dmudpsi;
-
-      // if (outmask & _Rhumb._MASK_AREA != 0) {
-      //   S12 = _rh._c2 * lon2x * _rh.MeanSinXi(_chi1, chi2);
-      // }
       lon2x = outmask & _Rhumb._MASK_LONG_UNROLL != 0 ? _lon1 + lon2x : _GeoMath.AngNormalize(_GeoMath.AngNormalize(_lon1) + lon2x);
     } else {
       // Reduce to the interval [-180, 180)
@@ -705,44 +569,5 @@ class RhumbLine {
     if (outmask & _Rhumb._MASK_LONGITUDE != 0) lon2 = lon2x;
 
     return RhumbDirectReturn(lat2, lon2, S12);
-  }
-}
-
-class qIntegrand {
-  final _AuxLatitude _aux;
-  qIntegrand(this._aux);
-
-  double call(double beta) {
-    // pbeta(beta) = integrate(q(beta), beta)
-    //   q(beta) = (1-f) * (sin(xi) - sin(chi)) / cos(phi)
-    //           = (1-f) * (cos(chi) - cos(xi)) / cos(phi) *
-    //   (cos(xi) + cos(chi)) / (sin(xi) + sin(chi))
-    // Fit q(beta)/cos(beta) with Fourier transform
-    //   q(beta)/cos(beta) = sum(c[k] * sin((2*k+1)*beta), k, 0, K-1)
-    // then the integral is
-    //   pbeta = sum(d[k] * cos((2*k+2)*beta), k, 0, K-1)
-    // where
-    //   d[k] = -1/(4*(k+1)) * (c[k] + c[k+1]) for k in 0..K-2
-    //   d[K-1] = -1/(4*K) * c[K-1]
-    _AuxAngle betaa = _AuxAngle.radians(beta),
-    phia = _aux.Convert(_AuxLatitude._BETA, _AuxLatitude._PHI, betaa, true).normalized(),
-    chia = _aux.Convert(_AuxLatitude._PHI , _AuxLatitude._CHI, phia , true).normalized(),
-    xia = _aux.Convert(_AuxLatitude._PHI , _AuxLatitude._XI, phia , true).normalized();
-    double schi = chia.y(), cchi = chia.x(), sxi = xia.y(), cxi = xia.x(), cphi = phia.x(), cbeta = betaa.x();
-    return (1 - _aux.Flattening()) *
-    ( schi.abs() < cchi.abs() ? sxi - schi : (cchi - cxi) *  (cxi + cchi) / (sxi + schi) ) / (cphi * cbeta);
-      // Value for beta = pi/2.  This isn't needed because beta is given in
-      // radians and cos(pi/2) is never exactly 0.  See formulas in the auxlat
-      // paper for tan(chi)/tan(phi) and tan(xi)/tan(phi) in the limit phi ->
-      // pi/2.
-      //
-      // n = 1/2;
-      // e = 2*sqrt(n) / (1 + n);
-      // e1 = 2*sqrt(n) / (1 - n);
-      // at = f == 0 ? 1 : (f < 0 ? atan(|e|)/|e| : asinh(e1)/e);
-      // q1 = at + 1 / (1 - e^2);
-      // s1 = sinh(e^2 * at);
-      // h1 = f < 0 ? hypot(1, s1) -  s1 : 1/(hypot(1, s1) + s1);
-      // v = (1 - e^2) / (2 * h1^2) - 1 / ((1 - e^2) * q1);
   }
 }

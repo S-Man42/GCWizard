@@ -59,12 +59,15 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
  * Example of use:
  * \include example-EllipticFunction.cpp
  **********************************************************************/
+
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _EllipticFunction {
   final int num_ = 13;
 
   late double _k2, _kp2, _alpha2, _alphap2, _eps;
   late double _kKc, _eEc, _dDc, _pPic, _gGc, _hHc;
-  // public:
+
   /** \name Constructor
    **********************************************************************/
   ///@{

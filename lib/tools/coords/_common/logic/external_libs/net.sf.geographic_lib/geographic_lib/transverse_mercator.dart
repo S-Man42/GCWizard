@@ -13,14 +13,16 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
 
 const int _GEOGRAPHICLIB_TRANSVERSEMERCATOR_ORDER = 8;
 
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _TransverseMercator {
   final int maxpow_ = _GEOGRAPHICLIB_TRANSVERSEMERCATOR_ORDER;
   final int numit_ = 5;
   late double _a, _f, _k0, _e2, _es, _e2m,  _c, _n;
   late double _a1, _b1;
   // _alp[0] and _bet[0] unused
-  List<double> _alp = [0.0];
-  List<double> _bet = [0.0];
+  final List<double> _alp = [0.0];
+  final List<double> _bet = [0.0];
 
   /**
    * Constructor for an eipsoid with

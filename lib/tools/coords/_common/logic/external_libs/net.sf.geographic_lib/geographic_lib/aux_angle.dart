@@ -21,6 +21,8 @@
 
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
 
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _AuxAngle {
   double _y;
   double _x;

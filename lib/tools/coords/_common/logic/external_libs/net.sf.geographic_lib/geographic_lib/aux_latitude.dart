@@ -31,6 +31,8 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
 
 const int _GEOGRAPHICLIB_AUXLATITUDE_ORDER = (_GEOGRAPHICLIB_PRECISION == 2 || _GEOGRAPHICLIB_PRECISION == 5 ? 6 : (_GEOGRAPHICLIB_PRECISION == 1 ? 4 : 8));
 
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _AuxLatitude {
   // Maximum number of iterations for Newton's method
   static const int numit_ = 1000;
