@@ -20,7 +20,7 @@ String normalizeMorseCharacters(String morse) {
   }).join();
 }
 
-final Map<MorseType, String> MORSE_CODES = {
+const Map<MorseType, String> MORSE_CODES = {
   MorseType.MORSE_ITU: 'symboltables_morse',
   MorseType.MORSE1838: 'symboltables_morse_1838_patent',
   MorseType.MORSE1844: 'symboltables_morse_1844_vail',
@@ -28,7 +28,7 @@ final Map<MorseType, String> MORSE_CODES = {
   MorseType.STEINHEIL: 'symboltables_morse_steinheil',
 };
 
-final Map<MorseType, Map<String, String>> _AZTO_MORSE_CODE = {
+const Map<MorseType, Map<String, String>> _AZTO_MORSE_CODE = {
   MorseType.MORSE_ITU: _AZToMorse,
   MorseType.MORSE1838: _AZToMorse1838,
   MorseType.MORSE1844: _AZToMorse1844,
