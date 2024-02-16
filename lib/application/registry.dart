@@ -101,7 +101,7 @@ import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/widget/
 import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/widget/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/tools/coords/coordinate_averaging/widget/coordinate_averaging.dart';
 import 'package:gc_wizard/tools/coords/cross_bearing/widget/cross_bearing.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/widget/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/widget/distancebearing_geodetic.dart';
 import 'package:gc_wizard/tools/coords/dmm_offset/widget/dmm_offset.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/widget/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/equilateral_triangle/widget/equilateral_triangle.dart';
@@ -115,10 +115,12 @@ import 'package:gc_wizard/tools/coords/intersect_two_circles/widget/intersect_tw
 import 'package:gc_wizard/tools/coords/intersection/widget/intersection.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
+import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
+import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
 import 'package:gc_wizard/tools/coords/segment_bearings/widget/segment_bearings.dart';
 import 'package:gc_wizard/tools/coords/segment_line/widget/segment_line.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
-import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection.dart';
+import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
@@ -1609,7 +1611,7 @@ void initializeRegistry(BuildContext context) {
 
     //CoordsSelection **********************************************************************************************
     GCWTool(
-        tool: const WaypointProjection(),
+        tool: const WaypointProjectionGeodetic(),
         id: 'coords_waypointprojection',
         iconPath: 'lib/tools/coords/_common/assets/icons/icon_waypoint_projection.png',
         categories: const [
@@ -1619,9 +1621,10 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_compassrose',
           'coordinates_waypointprojection',
+          'coordinates_geodetic',
         ]),
     GCWTool(
-        tool: const DistanceBearing(),
+        tool: const DistanceBearingGeodetic(),
         id: 'coords_distancebearing',
         iconPath: 'lib/tools/coords/_common/assets/icons/icon_distance_and_bearing.png',
         categories: const [
@@ -1630,6 +1633,7 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_distancebearing',
+          'coordinates_geodetic',
         ]),
     GCWTool(
         tool: const FormatConverter(),
@@ -1868,6 +1872,30 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_equilateraltriangle',
+        ]),
+    GCWTool(
+        tool: const WaypointProjectionRhumbline(),
+        id: 'coords_rhumbline_projection',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_waypoint_projection.png',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'coordinates',
+          'coordinates_waypointprojection',
+          'coordinates_rhumbline',
+        ]),
+    GCWTool(
+        tool: const DistanceBearingRhumbline(),
+        id: 'coords_rhumbline_distancebearing',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_distance_and_bearing.png',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'coordinates',
+          'coordinates_distancebearing',
+          'coordinates_rhumbline',
         ]),
     GCWTool(
         tool: const EllipsoidTransform(),

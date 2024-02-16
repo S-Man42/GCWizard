@@ -44,6 +44,10 @@ LatLng projection(LatLng coord, double bearingDeg, double distance, Ellipsoid el
   return LatLng(lat, lon);
 }
 
+List<LatLng> reverseProjection(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
+  return <LatLng>[projection(coord, normalizeBearing(bearing + 180.0), distance, ellipsoid)];
+}
+
 // LatLng _antipodes(LatLng coord) {
 //   var lat = coord.latitude;
 //   var lon = coord.longitude;

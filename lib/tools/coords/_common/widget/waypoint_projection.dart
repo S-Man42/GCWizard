@@ -11,13 +11,17 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
 class WaypointProjection extends StatefulWidget {
-  const WaypointProjection({Key? key}) : super(key: key);
+  final GCWMapLineType type;
+  final LatLng Function(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) calculate;
+  final List<LatLng> Function(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) calculateReverse;
+
+  const WaypointProjection({Key? key, required this.type, required this.calculate, required this.calculateReverse}) : super(key: key);
 
   @override
   _WaypointProjectionState createState() => _WaypointProjectionState();
@@ -103,7 +107,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
       }
 
       _currentValues =
-          reverseProjection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
+          widget.calculateReverse(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
       if (_currentValues.isEmpty) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;
@@ -131,7 +135,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
       }
     } else {
       _currentValues = [
-        projection(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid)
+        widget.calculate(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid)
       ];
 
       _currentMapPoints = [
@@ -147,7 +151,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
       ];
 
       _currentMapPolylines = [
-        GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]])
+        GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]], type: widget.type)
       ];
     }
 

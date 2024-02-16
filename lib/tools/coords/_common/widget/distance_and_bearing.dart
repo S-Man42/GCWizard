@@ -8,15 +8,19 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 class DistanceBearing extends StatefulWidget {
-  const DistanceBearing({Key? key}) : super(key: key);
+  final GCWMapLineType type;
+  final DistanceBearingData Function(LatLng coord1, LatLng coord2, Ellipsoid ellipsoid) calculate;
+
+  const DistanceBearing({Key? key, required this.type, required this.calculate}) : super(key: key);
 
   @override
   _DistanceBearingState createState() => _DistanceBearingState();
@@ -94,7 +98,7 @@ class _DistanceBearingState extends State<DistanceBearing> {
   void _calculateOutput(BuildContext context) {
     final doubleFormatCopy = NumberFormat('0.0#######');
 
-    _currentValue = distanceBearing(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, defaultEllipsoid);
+    _currentValue = widget.calculate(_currentCoords1.toLatLng()!, _currentCoords2.toLatLng()!, defaultEllipsoid);
 
     _currentOutput = [];
     _currentOutput.add(GCWOutputText(
@@ -125,7 +129,7 @@ class _DistanceBearingState extends State<DistanceBearing> {
     _currentMapPoints = [mapPoint1, mapPoint2];
 
     _currentMapPolylines = [
-      GCWMapPolyline(points: [mapPoint1, mapPoint2])
+      GCWMapPolyline(points: [mapPoint1, mapPoint2], type: widget.type)
     ];
   }
 }

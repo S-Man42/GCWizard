@@ -27,16 +27,7 @@ class _MapPolylineEditorState extends State<MapPolylineEditor> {
   late HSVColor _currentColorPickerColor;
   late GCWMapLineType _currentLineType;
 
-  final _lineTypes = <GCWMapLineType, _LineAttributes>{
-    GCWMapLineType.GEODETIC: _LineAttributes(
-      name: 'Geodetic',
-      explanation: 'Geodetic Stuff'
-    ),
-    GCWMapLineType.RHUMB: _LineAttributes(
-        name: 'Rhumb',
-        explanation: 'Rhumb Stuff'
-    ),
-  };
+  Map<GCWMapLineType, _LineAttributes> _lineTypes = {};
 
   @override
   void initState() {
@@ -48,6 +39,19 @@ class _MapPolylineEditorState extends State<MapPolylineEditor> {
 
   @override
   Widget build(BuildContext context) {
+    if (_lineTypes.isEmpty) {
+      _lineTypes = <GCWMapLineType, _LineAttributes>{
+        GCWMapLineType.GEODETIC: _LineAttributes(
+            name: i18n(context, 'coords_openmap_lineeditor_line_type_geodetic_title'),
+            explanation: i18n(context, 'coords_openmap_lineeditor_line_type_geodetic_description')
+        ),
+        GCWMapLineType.RHUMB: _LineAttributes(
+            name: i18n(context, 'coords_openmap_lineeditor_line_type_rhumb_title'),
+            explanation: i18n(context, 'coords_openmap_lineeditor_line_type_rhumb_description')
+        ),
+      };
+    }
+
     return Column(children: [
       GCWTextDivider(text: i18n(context, 'coords_openmap_lineeditor_line_color')),
       Container(
@@ -63,7 +67,7 @@ class _MapPolylineEditorState extends State<MapPolylineEditor> {
         ),
       ),
       GCWTextDivider(
-        text: 'Type of Line',
+        text: i18n(context, 'coords_openmap_lineeditor_line_type'),
       ),
       GCWDropDown<GCWMapLineType>(
         value: _currentLineType,
