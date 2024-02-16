@@ -32,7 +32,7 @@ dependencies:
   highlight: ^0.7.0
   http: ^0.13.5
   http_parser: ^4.0.2
-  image: ^4.1.2
+  image: ^4.1.7
   intl: ^0.18.0
   latlong2: ^0.8.2
   location: ^5.0.1
@@ -66,11 +66,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #flutter_launcher_icons: 0.12.0
+  #flutter_launcher_icons: 0.13.1
   flutter_lints: ^2.0.1
 
 flutter:
   fonts:
+    - family: MyFlutterApp
+      fonts:
+        - asset: lib/application/_common/assets/fonts/Icons/MyFlutterApp.ttf
     - family: Courier
       fonts:
         - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-Bold.ttf
@@ -116,6 +119,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/ballet/
     - lib/tools/symbol_tables/_common/assets/barbier/
     - lib/tools/symbol_tables/_common/assets/barcode39/
+    - lib/tools/symbol_tables/_common/assets/base16_02/
     - lib/tools/symbol_tables/_common/assets/base16/
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
@@ -264,6 +268,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/moon/
     - lib/tools/symbol_tables/_common/assets/moon_phases/
     - lib/tools/symbol_tables/_common/assets/morse/
+    - lib/tools/symbol_tables/_common/assets/morse_gerke/
+    - lib/tools/symbol_tables/_common/assets/morse_1838_patent/
+    - lib/tools/symbol_tables/_common/assets/morse_1844_vail/
+    - lib/tools/symbol_tables/_common/assets/morse_steinheil/
     - lib/tools/symbol_tables/_common/assets/murray/
     - lib/tools/symbol_tables/_common/assets/murray_v2_fischer_corrected/
     - lib/tools/symbol_tables/_common/assets/murray_v3_navy_1796/
@@ -393,6 +401,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/zodiac_z408/
 
 flutter_icons:
-  image_path: "assets/logo/circle_border_1024_gold.png"
+  image_path: "assets/logo/circle_border_nightly.png"
   android: true
   ios: true

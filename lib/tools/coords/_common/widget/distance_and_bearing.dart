@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
@@ -54,7 +54,9 @@ class _DistanceBearingState extends State<DistanceBearing> {
           coordsFormat: _currentCoords1.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords1 = ret;
+              if (ret != null) {
+                _currentCoords1 = ret;
+              }
             });
           },
         ),
@@ -63,7 +65,9 @@ class _DistanceBearingState extends State<DistanceBearing> {
           coordsFormat: _currentCoords2.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords2 = ret;
+              if (ret != null) {
+                _currentCoords2 = ret;
+              }
             });
           },
         ),
