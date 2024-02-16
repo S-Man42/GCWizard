@@ -129,10 +129,12 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/wi
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_time_pad.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
@@ -644,6 +646,7 @@ void _initStaticToolList() {
       className(const MilesianNumberSystem()),
       className(const MoonPosition()),
       className(const MoonRiseSet()),
+      className(const Morbit()),
       className(const MorseSelection()),
       className(const MurrayTelegraph()),
       className(const MusicNotes()),
@@ -671,6 +674,7 @@ void _initStaticToolList() {
       className(const PigLatin()),
       className(Playfair()),
       className(const Pokemon()),
+      className(const Pollux()),
       className(const Polybios()),
       className(const PredatorSelection()),
       className(const PrimeAlphabet()),
