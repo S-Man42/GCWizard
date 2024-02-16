@@ -325,8 +325,6 @@ class _GCWMapViewState extends State<GCWMapView> {
         DoubleText(
             i18n(context, 'unitconverter_category_length') + ': ${_formatLengthOutput(child.length)}', child.length),
         DoubleText(
-            i18n(context, 'unitconverter_category_length') + ': ${_formatLengthOutput(child.length)}', child.length),
-        DoubleText(
             i18n(context, 'coords_map_view_linedialog_section_bearing_ab') +
                 ': ${_formatBearingOutput(child.bearingAB)}',
             child.bearingAB),
@@ -761,7 +759,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     var coordinateFormat = defaultCoordinateFormat;
     if (point.coordinateFormat != null) coordinateFormat = point.coordinateFormat!;
 
-    return formatCoordOutput(point.point, coordinateFormat, getEllipsoidByName(ELLIPSOID_NAME_WGS84)!);
+    return formatCoordOutput(point.point, coordinateFormat, Ellipsoid.WGS84);
   }
 
   String? _buildPopupCoordinateDescription(GCWMapPoint point) {
