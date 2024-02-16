@@ -81,7 +81,7 @@ class _AuxAngle {
   }
 
   double lam() {
-    return asinh(tan());
+    return _asinh(tan());
   }
 
   _AuxAngle normalized() {

@@ -88,9 +88,9 @@ class _DAuxLatitude extends _AuxLatitude {
     // but this has problem if x*y overflows to -inf
     return x == y ? 1 / hx :
     (d.isInfinite ? 0 :
-    (xy > 0 ? asinh(d * (x*y < 1 ? (x + y) / (x*hy + y*hx) :
+    (xy > 0 ? _asinh(d * (x*y < 1 ? (x + y) / (x*hy + y*hx) :
     (1/x + 1/y) / (hy/y + hx/x))) :
-    asinh(y) - asinh(x)) / d);
+    _asinh(y) - _asinh(x)) / d);
   }
 
   double DParametric(_AuxAngle phi1, _AuxAngle phi2) {

@@ -228,8 +228,8 @@ class Geodesic {
   // Underflow guard.  We require
   //   tiny_ * epsilon() > 0
   //   tiny_ + epsilon() == epsilon()
-  static final double tiny_ = sqrt(positiveDoublePrecision);
-  static double _tol0_ = positiveDoublePrecision;
+  static final double tiny_ = sqrt(practical_epsilon);
+  static double _tol0_ = practical_epsilon;
   // Increase multiplier in defn of tol1_ from 100 to 200 to fix inverse case
   // 52.784459512564 0 -52.784459512563990912 179.634407464943777557
   // which otherwise failed for Visual Studio 10 (Release and Debug)
