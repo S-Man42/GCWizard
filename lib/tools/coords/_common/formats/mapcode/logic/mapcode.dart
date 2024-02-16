@@ -88,7 +88,7 @@ MapCode? _parseMapCode(String input, {String territory = ''}) {
 
   var mapCode = match.group(0).toString();
   if (territory.trim().isEmpty) {
-    territory = match.group(1).toString();
+    territory = (match.group(1) == null || match.group(1)!.isEmpty) ? '' : match.group(1).toString();
   }
   if (match.group(1) != null) {
     mapCode = mapCode.replaceFirst(match.group(1)!, '');
@@ -100,9 +100,9 @@ MapCode? _parseMapCode(String input, {String territory = ''}) {
   } else {
     var coords = <McInfo>[];
     var mcInfo = McInfo();
-    mcInfo.mapcode = input;
+    mcInfo.mapcode = mapCode.trim();
     mcInfo.territoryAlphaCode = territory.trim();
-    mcInfo.fullmapcode = mcInfo.territoryAlphaCode + ' ' + mapCode;
+    mcInfo.fullmapcode = (mcInfo.territoryAlphaCode.isNotEmpty ? mcInfo.territoryAlphaCode + ' ' : '') + mapCode;
     coords.add(mcInfo);
 
     return MapCode(coords, defaultMapCodeType);
