@@ -156,7 +156,7 @@ const _parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 String _trim(String str) {
-  return str.replaceAll(RegExp(r'/^\s+|\s+$/g'), '');
+  return str.replaceAll(RegExp(r'/^\s+|\s+$/g'), '').trim();
 }
 
 /// PRIVATE return 2-letter parent country abbreviation (disam in range 1..8)
@@ -1914,7 +1914,7 @@ String convertToAlphabet(String mapcode, int targetAlphabet) {
 /// returns coordinate, or false.
 LatLng? decode(String mapcodeString, String territory) {
   mapcodeString = _trim(mapcodeString);
-  var contextTerritoryNumber = _getTerritoryNumber(territory);
+  var contextTerritoryNumber = _getTerritoryNumber(_trim(territory));
   contextTerritoryNumber ??= _ccode_earth;
   var parts = mapcodeString.split(RegExp(r'\s+'));
   LatLng? dec;

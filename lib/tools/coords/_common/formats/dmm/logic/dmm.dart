@@ -116,7 +116,7 @@ class DMMCoordinate extends BaseCoordinate {
   DMMCoordinate(this.dmmLatitude, this.dmmLongitude);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return _dmmToLatLon(this);
   }
 
