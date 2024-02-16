@@ -38,11 +38,11 @@ void main() {
       var nrWarnings = 0;
 
       test('string: ${testdata[i]}', () {
-        var str = testdata[i] as String;
-        var y = testdata[i + 1] as double;
-        var x = testdata[i + 2] as double;
-        var localsolutions = testdata[i + 3] as int;
-        var globalsolutions = testdata[i + 4] as int;
+        var str = testdata[i].toString();
+        var y = double.tryParse(testdata[i + 1].toString()) ?? 0;
+        var x = double.tryParse(testdata[i + 2].toString()) ?? 0;
+        var localsolutions = double.tryParse(testdata[i + 3].toString())?.toInt();
+        var globalsolutions = double.tryParse(testdata[i + 4].toString())?.toInt();
 
         str.trim();
 
