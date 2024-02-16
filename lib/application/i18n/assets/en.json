@@ -1859,7 +1859,7 @@
   "coords_openmap_lineeditor_line_color": "Line Color",
   "coords_openmap_lineeditor_line_type": "Line Type",
   "coords_openmap_lineeditor_line_type_geodetic_title": "Geodetic (Orthodrome)",
-  "coords_openmap_lineeditor_line_type_geodetic_description": "Shows real shortest way, looks curvy on map.",
+  "coords_openmap_lineeditor_line_type_geodetic_description": "Shows real shortest way, on map looks curvy at greater distances.",
   "coords_openmap_lineeditor_line_type_rhumb_title": "Rhumb Line (Loxodrome)",
   "coords_openmap_lineeditor_line_type_rhumb_description": "Shows visual straight connection on map. Actually longer than geodetic. Useful for coordinate interpolations between two points.",
   "coords_openmap_pointeditor_title": "Open Map: Point Editor",
