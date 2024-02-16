@@ -67,7 +67,7 @@ class _MorseState extends State<Morse> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  MORSE_CODE _currentCode = MORSE_CODE.MORSE_ITU;
+  MorseType _currentCode = MorseType.MORSE_ITU;
 
   static const _kFontFam = 'MyFlutterApp';
   static const String? _kFontPkg = null;
@@ -105,7 +105,7 @@ class _MorseState extends State<Morse> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown<MORSE_CODE>(
+        GCWDropDown<MorseType>(
           value: _currentCode,
           items: MORSE_CODES.entries.map((mode) {
             return GCWDropDownMenuItem(
@@ -157,19 +157,19 @@ class _MorseState extends State<Morse> {
     Widget morseButtons = Container();
 
     switch (_currentCode) {
-      case MORSE_CODE.MORSE_ITU:
+      case MorseType.MORSE_ITU:
         morseButtons = _buildMorseButtonsMorseStandard(context);
         break;
-      case MORSE_CODE.MORSE1838:
+      case MorseType.MORSE1838:
         morseButtons = _buildMorseButtonsMorseAmerican1838(context);
         break;
-        case MORSE_CODE.MORSE1844:
+        case MorseType.MORSE1844:
         morseButtons = _buildMorseButtonsMorseAmerican1844(context);
         break;
-      case MORSE_CODE.GERKE:
+      case MorseType.GERKE:
         morseButtons = _buildMorseButtonsGerke(context);
         break;
-      case MORSE_CODE.STEINHEIL:
+      case MorseType.STEINHEIL:
         morseButtons = _buildMorseButtonsSteinheil(context);
         break;
       default:
@@ -470,11 +470,11 @@ class _MorseState extends State<Morse> {
 
     var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeMorse(_currentEncodeInput, _currentCode);
+      output = encodeMorse(_currentEncodeInput, type: _currentCode, spaceCharacter: String.fromCharCode(8195));
       textStyle =
           TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
     } else {
-      output = decodeMorse(_currentDecodeInput, _currentCode);
+      output = decodeMorse(_currentDecodeInput, type: _currentCode);
     }
 
     return GCWOutputText(text: output, style: textStyle);

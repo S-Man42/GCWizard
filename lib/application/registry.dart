@@ -203,6 +203,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_langu
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/widget/morse.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words_converter/widget/numeral_words_converter.dart';
@@ -212,6 +213,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_time_pad.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/widget/predator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
@@ -943,6 +945,12 @@ void initializeRegistry(BuildContext context) {
     ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: const [
       'milesian_numbers',
     ]),
+    GCWTool(tool: const Morbit(), id: 'morbit', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'morbit',
+      'numbers'
+    ]),
     GCWTool(
         tool: const MorseSelection(),
         id: 'morse_selection',
@@ -994,6 +1002,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'onetimepad',
+      'numbers'
     ], deeplinkAlias: const [
       'otp',
       'one_time_pad'
@@ -1036,6 +1045,12 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'pokemon',
+    ]),
+    GCWTool(tool: const Pollux(), id: 'pollux', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'pollux',
+      'numbers'
     ]),
     GCWTool(tool: const Polybios(), id: 'polybios', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1222,6 +1237,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'tapir',
+      'numbers'
     ]),
     GCWTool(
         tool: const TelegraphSelection(),
