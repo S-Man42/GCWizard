@@ -62,7 +62,7 @@ class _Rhumb {
   }
 
   static double _gd(double x) {
-    return atan(sinh(x));
+    return atan(_sinh(x));
   }
 
   // N.B., x and y are in degrees
@@ -87,7 +87,7 @@ class _Rhumb {
 
   static double _Dsinh(double x, double y) {
     double d = (x - y) / 2;
-    return cosh((x + y) / 2) * (d != 0 ? sinh(d) / d : 1);
+    return _cosh((x + y) / 2) * (d != 0 ? _sinh(d) / d : 1);
   }
 
   static double _Dasinh(double x, double y) {
@@ -99,7 +99,7 @@ class _Rhumb {
   }
 
   static double Dgd(double x, double y) {
-    return _Datan(sinh(x), sinh(y)) * _Dsinh(x, y);
+    return _Datan(_sinh(x), _sinh(y)) * _Dsinh(x, y);
   }
 
   // N.B., x and y are the tangents of the angles

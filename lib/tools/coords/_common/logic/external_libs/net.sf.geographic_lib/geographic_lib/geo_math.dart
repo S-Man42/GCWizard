@@ -469,7 +469,7 @@ class _GeoMath {
   }
 
   static double tand(double x) {
-    double overflow = 1 / sq(positiveDoublePrecision);
+    double overflow = 1 / sq(practical_epsilon);
     _Pair p = _Pair();
     sincosd(p, x);
     double s = p.first;
@@ -506,7 +506,7 @@ class _GeoMath {
     // Need this test, otherwise tau = +/-inf gives taup = nan.
     if (isfinite(tau)) {
       double tau1 = hypot(1.0, tau),
-          sig = sinh(eatanhe(tau / tau1, es));
+          sig = _sinh(eatanhe(tau / tau1, es));
       return hypot(1.0, sig) * tau - sig * tau1;
     } else {
       return tau;
@@ -533,8 +533,8 @@ class _GeoMath {
   static double tauf(double taup, double es) {
     const int numit = 5;
     // min iterations = 1, max iterations = 2; mean = 1.95
-    double tol = sqrt(positiveDoublePrecision) / 10;
-    double taumax = 2 / sqrt(positiveDoublePrecision);
+    double tol = sqrt(practical_epsilon) / 10;
+    double taumax = 2 / sqrt(practical_epsilon);
     double e2m = 1 - sq(es),
     // To lowest order in e^2, taup = (1 - e^2) * tau = _e2m * tau; so use
     // tau = taup/e2m as a starting guess. Only 1 iteration is needed for

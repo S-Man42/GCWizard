@@ -116,7 +116,7 @@ class _AuxLatitude {
   static const _XI = _AUTHALIC;
 
   _AuxLatitude( double a, double f) {
-    tol_ = sqrt(positiveDoublePrecision);
+    tol_ = sqrt(practical_epsilon);
     bmin_ = _log2(double.minPositive);
     bmax_ = _log2(double.maxFinite);
 
@@ -132,7 +132,7 @@ class _AuxLatitude {
     _e = sqrt(_e2.abs());
     _e1 = sqrt(_e12.abs());
     _n2 = _n * _n;
-    _q = _e12p1 + (_f == 0 ? 1 : (_f > 0 ? asinh(_e1) : atan(_e)) / _e);
+    _q = _e12p1 + (_f == 0 ? 1 : (_f > 0 ? _asinh(_e1) : atan(_e)) / _e);
 
     _c = List<double>.generate(Lmax * _AUXNUMBER * _AUXNUMBER, (index) => double.nan);
   }
@@ -319,14 +319,14 @@ class _AuxLatitude {
     double s = _f <= 0 ? sn(tphi) : sn(_fm1 * tphi);
     return _f == 0 ? s :
     // atanh(e * sphi) = asinh(e' * sbeta)
-    (_f < 0 ? atan( _e * s ) : asinh( _e1 * s )) / _e;
+    (_f < 0 ? atan( _e * s ) : _asinh( _e1 * s )) / _e;
   }
 
   _AuxAngleDiff Conformal(_AuxAngle phi, double? diff) {
     double tphi = phi.tan().abs(), tchi = tphi;
     if ( !( !tphi.isFinite || tphi == 0 || _f == 0 ) ) {
       double scphi = sc(tphi),
-      sig = sinh(_e2 * atanhee(tphi) ),
+      sig = _sinh(_e2 * atanhee(tphi) ),
       scsig = sc(sig);
       if (_f <= 0) {
         tchi = tphi * scsig - sig * scphi;
@@ -352,13 +352,13 @@ class _AuxLatitude {
           //   sphi = tphi/sc(tphi)
           //   atanh(x) = asinh(x/sqrt(1-x^2))
           double em1 = _e2m1 / (1 + _e),              // 1 - e
-          atanhs = asinh(tphi),                // atanh(sphi)
+          atanhs = _asinh(tphi),                // atanh(sphi)
           scbeta = sc(_fm1 * tphi),            // sec(beta)
           scphibeta = sc(tphi) / scbeta,       // sec(phi)/sec(beta)
-          atanhes = asinh(_e * tphi / scbeta), // atanh(e * sphi)
+          atanhes = _asinh(_e * tphi / scbeta), // atanh(e * sphi)
           t1 = (atanhs - _e * atanhes)/2,
-          t2 = asinh(em1 * (tphi * scphibeta)) / em1,
-          Dg = cosh((atanhs + _e * atanhes)/2) * (sinh(t1) / t1)
+          t2 = _asinh(em1 * (tphi * scphibeta)) / em1,
+          Dg = _cosh((atanhs + _e * atanhes)/2) * (_sinh(t1) / t1)
           * ((atanhs + atanhes)/2 + (1 + _e)/2 * t2);
           tphimsig = em1 * Dg;  // tphi - sig
         }
@@ -373,7 +373,7 @@ class _AuxLatitude {
         cbeta = Parametric(phi).auxAngle.normalized().x();
         diff = _e2m1 * (cbeta / cchi) * (cbeta / cphi);
       } else {
-        double ss = _f > 0 ? sinh(_e * asinh(_e1)) : sinh(-_e * atan(_e));
+        double ss = _f > 0 ? _sinh(_e * _asinh(_e1)) : _sinh(-_e * atan(_e));
         diff = _f > 0 ? 1/( sc(ss) + ss ) : sc(ss) - ss;
       }
     }
@@ -404,7 +404,7 @@ class _AuxLatitude {
         // =
         double scbeta = sc(_fm1 * tphi);
         return (_f == 0 ? 1 :
-          (_f > 0 ? asinh(_e1 * d * scphi / scbeta) :
+          (_f > 0 ? _asinh(_e1 * d * scphi / scbeta) :
           atan(_e * d / (1 - _e2 * sphi))) / (_e * d)) +
               (_f > 0 ?
               ((scphi + _e2 * tphi) / (_e2m1 * scbeta)) * (scphi / scbeta) :

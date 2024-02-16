@@ -75,6 +75,6 @@ class _Ellipsoid {
   }
 
   double InverseIsometricLatitude(double psi) {
-    return _GeoMath.atand(_GeoMath.tauf(sinh(psi * _GeoMath.degree()), es));
+    return _GeoMath.atand(_GeoMath.tauf(_sinh(psi * _GeoMath.degree()), es));
   }
 }

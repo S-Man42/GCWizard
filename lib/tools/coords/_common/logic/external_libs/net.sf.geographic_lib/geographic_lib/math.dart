@@ -70,3 +70,27 @@ double _exp2(double a) {
   return pow(2.0, a).toDouble();
 }
 
+/// from dart_numerics: Hyperbolic Area Sine.
+double _asinh(double value) {
+  // asinh(x) = Sign(x) * ln(|x| + sqrt(x*x + 1))
+  // if |x| > huge, asinh(x) ~= Sign(x) * ln(2|x|)
+
+  if (value.abs() >= 268435456.0) {
+    // 2^28, taken from freeBSD
+    return value.sign * (log(value.abs()) + log(2.0));
+  }
+
+  return value.sign *
+      log(value.abs() + sqrt((value * value) + 1));
+}
+
+/// from dart_numerics: Hyperbolic Sine.
+double _sinh(double angle) {
+  return (exp(angle) - exp(-angle)) / 2;
+}
+
+/// from dart_numerics: Hyperbolic Cosine.
+double _cosh(double angle) {
+  return (exp(angle) + exp(-angle)) / 2;
+}
+

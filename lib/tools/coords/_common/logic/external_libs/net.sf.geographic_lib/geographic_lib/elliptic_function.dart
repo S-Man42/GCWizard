@@ -252,7 +252,7 @@ class _EllipticFunction {
 
   static double RF3(double x, double y, double z) {
     // Carlson, eqs 2.2 - 2.7
-    num tolRF = pow(3 * positiveDoublePrecision * 0.01, 1/8.0);
+    num tolRF = pow(3 * practical_epsilon * 0.01, 1/8.0);
     double
     A0 = (x + y + z)/3,
     An = A0,
@@ -289,7 +289,7 @@ class _EllipticFunction {
   
   static double RF2(double x, double y) {
     // Carlson, eqs 2.36 - 2.38
-    double tolRG0 = 2.7 * sqrt((positiveDoublePrecision * 0.01));
+    double tolRG0 = 2.7 * sqrt((practical_epsilon * 0.01));
     double xn = sqrt(x), yn = sqrt(y);
     if (xn < yn) {
       var _h = xn;
@@ -307,7 +307,7 @@ class _EllipticFunction {
 
   static double RJ(double  x, double  y, double  z, double  p) {
     // Carlson, eqs 2.17 - 2.25
-    num tolRD = pow(0.2 * (positiveDoublePrecision * 0.01), 1/8.0);
+    num tolRD = pow(0.2 * (practical_epsilon * 0.01), 1/8.0);
     double
     A0 = (x + y + z + 2*p)/5,
         An = A0,
@@ -376,7 +376,7 @@ class _EllipticFunction {
 
   static double RG(double x, double y) {
     // Carlson, eqs 2.36 - 2.39
-    double tolRG0 = 2.7 * sqrt((positiveDoublePrecision * 0.01));
+    double tolRG0 = 2.7 * sqrt((practical_epsilon * 0.01));
     double x0 = sqrt(max<double>(x, y)),
     y0 = sqrt(min<double>(x, y)),
     xn = x0,
@@ -397,7 +397,7 @@ class _EllipticFunction {
 
   static double RD(double x, double y, double z) {
     // Carlson, eqs 2.28 - 2.34
-    num tolRD = pow(0.2 * (positiveDoublePrecision * 0.01),  1/8.0);
+    num tolRD = pow(0.2 * (practical_epsilon * 0.01),  1/8.0);
     double A0 = (x + y + 3*z)/5,
     An = A0,
     Q = max<double>(max<double>(A0-x.abs(), A0-y.abs()), A0-z.abs()) / tolRD,
@@ -517,7 +517,7 @@ class _EllipticFunction {
   }
 
   double Einv(double x) {
-    double tolJAC = sqrt(positiveDoublePrecision * 0.01);
+    double tolJAC = sqrt(practical_epsilon * 0.01);
     double n = (x / (2.0 * _eEc) + 0.5).floor().toDouble();
     x -= 2 * _eEc * n;                      // x now in [-ec, ec)
     // Linear approximation
