@@ -3,6 +3,7 @@ import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart' as geodetic;
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/logic/rhumb_line.dart' as rhumbline;
@@ -73,35 +74,32 @@ class GCWMapLine extends GCWMapSimpleGeometry {
     shape.add(start.point);
     switch (type) {
       case GCWMapLineType.GEODETIC:
-        _calculateGeodetic(); break;
+        _calculateGeodeticShape(); break;
       case GCWMapLineType.RHUMB:
-        _calculateRhumb(); break;
+        _calculateRhumbShape(); break;
       default:
-        _calculateGeodetic(); break;
+        _calculateGeodeticShape(); break;
     }
   }
 
-  void _calculateRhumb() {
-    DistanceBearingData _distBear = rhumbline.distanceBearing(start.point, end!.point, defaultEllipsoid);
-    length = _distBear.distance;
-    bearingAB = _distBear.bearingAToB;
-    bearingBA = _distBear.bearingBToA;
-
-    shape.add(end!.point);
+  void _calculateRhumbShape() {
+    _calculateLineShape(rhumbline.projection, rhumbline.distanceBearing, 10000.0);
   }
 
-  void _calculateGeodetic() {
-    DistanceBearingData _distBear = geodetic.distanceBearing(start.point, end!.point, defaultEllipsoid);
+  void _calculateGeodeticShape() {
+    _calculateLineShape(projectionVincenty, geodetic.distanceBearingVincenty, 5000.0);
+  }
+
+  void _calculateLineShape(LatLng Function(LatLng, double, double, Ellipsoid) projection, DistanceBearingData Function(LatLng, LatLng, Ellipsoid) distanceBearing, double stepLengthInM) {
+    DistanceBearingData _distBear = distanceBearing(start.point, end!.point, defaultEllipsoid);
     length = _distBear.distance;
     bearingAB = _distBear.bearingAToB;
     bearingBA = _distBear.bearingBToA;
 
-    const _stepLength = 5000.0;
-
-    var _countSteps = (_distBear.distance / _stepLength).floor();
+    var _countSteps = (_distBear.distance / stepLengthInM).floor();
 
     for (int _i = 1; _i < _countSteps; _i++) {
-      var _nextPoint = projectionVincenty(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid);
+      var _nextPoint = projection(start.point, _distBear.bearingAToB, stepLengthInM * _i, defaultEllipsoid);
       shape.add(_nextPoint);
     }
 
