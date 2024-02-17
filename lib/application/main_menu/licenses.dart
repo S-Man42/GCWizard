@@ -103,7 +103,7 @@ class _LicensesState extends State<Licenses> {
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_used_apis')),
       GCWColumnedMultilineOutput(data: [
-        ['Geohashing', 'http://geo.crox.net/djia/{yyyy-MM-dd}'],
+        const ['Geohashing', 'http://geo.crox.net/djia/{yyyy-MM-dd}'],
         [i18n(context, 'checkdigits_ean_checknumber_title'), 'http://opengtindb.org/?ean={EAN}&cmd=query&queryid=400000000'],
         [i18n(context, 'checkdigits_creditcard_selection_title'), 'https://lookup.binlist.net/{BIN}'],
       ]),
