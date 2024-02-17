@@ -36,7 +36,7 @@ const Map<MorseType, Map<String, String>> _AZTO_MORSE_CODE = {
   MorseType.STEINHEIL: _AZToSteinheil,
 };
 
-final Map<MorseType, Map<String, String>> _MORSE_CODETOAZ = {
+const Map<MorseType, Map<String, String>> _MORSE_CODETOAZ = {
   MorseType.MORSE_ITU: _MorseToAZ,
   MorseType.MORSE1838: _Morse1838ToAZ,
   MorseType.MORSE1844: _Morse1844ToAZ,
