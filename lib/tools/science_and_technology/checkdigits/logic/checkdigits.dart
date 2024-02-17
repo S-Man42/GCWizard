@@ -188,7 +188,6 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
     case CheckDigitsMode.UIC:
       return _CalculateUICDigits(number);
     case CheckDigitsMode.CREDITCARD:
-      print('_CalculateCreditCardDigits '+number);
       return _CalculateCreditCardDigits(number);
     default:
       return [''];
@@ -295,9 +294,6 @@ List<String> _CalculateDigitsOnlyNumbers(String number, Function f, {String head
       }
     }
   }
-  print('done _CalculateDigitsOnlyNumbers');
-  print('result');
-  print(result);
   return result;
 }
 
