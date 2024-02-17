@@ -2982,7 +2982,7 @@
   "lcm_example": "24, 36 → 72",
   "licenses_title": "Licenses",
   "licenses_usedflutterlibraries": "Used Code Libraries (Flutter/Dart)",
-  "licenses_additionalcode": "Additional Code",
+  "licenses_additionalcode": "Code (External Sources)",
   "licenses_fonts": "Czcionki",
   "licenses_images": "Images",
   "licenses_used_apis": "Used APIs",
