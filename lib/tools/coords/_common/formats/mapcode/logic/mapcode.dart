@@ -43,6 +43,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
 
   @override
   LatLng? toLatLng() {
+    if (coords.isEmpty || coords.first.fullmapcode.isEmpty) return null;
     return _MapCodeToLatLon(this);
   }
 
@@ -55,7 +56,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
   }
 
   static MapCode? parse(String input, {String territory = ''}) {
-    return _parseMapCode(input, territory: territory);
+    return _parseMapCode(input, territory: territory) ?? MapCode([], defaultMapCodeType);
   }
 
   @override
@@ -78,7 +79,7 @@ MapCode _latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, in
 
 LatLng? _MapCodeToLatLon(MapCode mapcode) {
   if (mapcode.coords.isEmpty) return null;
-  return decode(mapcode.coords.first.fullmapcode, '');
+  return decode(mapcode.coords.first.fullmapcode, mapcode.coords.first.territoryAlphaCode);
 }
 
 MapCode? _parseMapCode(String input, {String territory = ''}) {
@@ -86,20 +87,22 @@ MapCode? _parseMapCode(String input, {String territory = ''}) {
   if (match == null) return null;
 
   var mapCode = match.group(0).toString();
-  if (territory.isNotEmpty) {
-    if (match.group(1) != null) {
-      mapCode = mapCode.replaceFirst(match.group(1)!, territory);
-    } else {
-      mapCode = territory + ' ' + mapCode;
-    }
+  if (territory.trim().isEmpty) {
+    territory = (match.group(1) == null || match.group(1)!.isEmpty) ? '' : match.group(1).toString();
   }
+  if (match.group(1) != null) {
+    mapCode = mapCode.replaceFirst(match.group(1)!, '');
+  }
+
   var latLon = decode(mapCode, territory);
   if (latLon == null) {
     return null;
   } else {
     var coords = <McInfo>[];
     var mcInfo = McInfo();
-    mcInfo.fullmapcode = mapCode;
+    mcInfo.mapcode = mapCode.trim();
+    mcInfo.territoryAlphaCode = territory.trim();
+    mcInfo.fullmapcode = (mcInfo.territoryAlphaCode.isNotEmpty ? mcInfo.territoryAlphaCode + ' ' : '') + mapCode;
     coords.add(mcInfo);
 
     return MapCode(coords, defaultMapCodeType);

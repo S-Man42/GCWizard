@@ -14,6 +14,7 @@ dependencies:
   cached_network_image: ^3.3.0
   code_text_field: ^1.1.0
   collection: ^1.17.1
+  #dart_numerics: DO NOT USE! CURRENT VERSION 0.0.6 NOT WEB COMPATIBLE (02/2024)
   device_info_plus: ^9.1.0
   diacritic: ^0.1.1
   encrypt: ^5.0.3
