@@ -660,7 +660,7 @@
   "checkdigits_euro_calculate_digit_description" : "Calculate the check digit of an Euro Bill Number",
   "checkdigits_euro_calculate_number_title" : "Calculate Euro Bill Number",
   "checkdigits_euro_calculate_number_description" : "Calculate missing digits of an Euro Bill Number",
-  "checkdigits_euro_issuing_country": "Issuing country",
+  "checkdigits_euro_issuing_country": "Issuing organization and country",
   "checkdigits_iban_selection_title" : "IBAN - International Bank Account Number",
   "checkdigits_iban_selection_description" : "Calculations for IBAN",
   "checkdigits_iban_hint_iban_single" : "Although this IBAN has a correct syntax it can be still invalid. Hence you have to check the bank number and account manually. E.g.The German Bundesbank lists about 3.500 valid Bank Numbers which more than 100 different algorithms to evaluate Bank Account Numbers.",
