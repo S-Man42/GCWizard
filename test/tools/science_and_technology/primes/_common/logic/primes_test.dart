@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/list_primes.dart';
+import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 
 void main() {
   group("Primes.getNthPrime:", () {
