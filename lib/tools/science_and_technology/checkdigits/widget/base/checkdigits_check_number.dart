@@ -56,7 +56,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   @override
   void initState() {
     super.initState();
-    currentInputController = TextEditingController(text: _currentInputNumberString);
+    currentInputController =
+        TextEditingController(text: _currentInputNumberString);
   }
 
   @override
@@ -83,7 +84,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
                 hintText: INPUTFORMATTERS_HINT[widget.mode]!,
                 onChanged: (text) {
                   setState(() {
-                    _currentInputNumberString = checkDigitsNormalizeNumber(text);
+                    _currentInputNumberString =
+                        checkDigitsNormalizeNumber(text);
                   });
                 },
               )
@@ -94,10 +96,11 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   Widget _buildOutput() {
-    CheckDigitOutput checked =
-        checkDigitsCheckNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
+    CheckDigitOutput checked = checkDigitsCheckNumber(
+        widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
 
-    bool deBankAccountDoesNotExist = checkDigitsIBANDEBankNumberDoesNotExist(_currentInputNumberString);
+    bool deBankAccountDoesNotExist =
+        checkDigitsIBANDEBankNumberDoesNotExist(_currentInputNumberString);
 
     if (checked.correct) {
       return Column(
@@ -106,13 +109,15 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             child: i18n(context, 'checkdigits_checknumber_correct_yes'),
           ),
           _detailsWidget(),
-          if (_currentInputNumberString.toUpperCase().substring(0,2) == 'DE' && deBankAccountDoesNotExist)
+          if (_currentInputNumberString.toUpperCase().substring(0, 2) == 'DE' &&
+              deBankAccountDoesNotExist)
             Column(
               children: <Widget>[
                 GCWOutput(
                   title: i18n(context, 'checkdigits_hint'),
                   suppressCopyButton: true,
-                  child: i18n(context, 'checkdigits_iban_hint_iban_de_invalid_banknumber'),
+                  child: i18n(context,
+                      'checkdigits_iban_hint_iban_de_invalid_banknumber'),
                 ),
                 GCWOutput(
                   title: i18n(context, 'checkdigits_hint'),
@@ -137,12 +142,17 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       output[(i + 1).toString() + '.'] = checked.correctNumbers[i];
     }
 
-    String title = i18n(context, 'checkdigits_checknumber_correct_assume_check');
+    String title =
+        i18n(context, 'checkdigits_checknumber_correct_assume_check');
 
     if (output.isEmpty) {
-      title = title + '\n' + i18n(context, 'checkdigits_checknumber_correct_no_number');
+      title = title +
+          '\n' +
+          i18n(context, 'checkdigits_checknumber_correct_no_number');
     } else {
-      title = title + '\n' + i18n(context, 'checkdigits_checknumber_correct_number');
+      title = title +
+          '\n' +
+          i18n(context, 'checkdigits_checknumber_correct_number');
     }
     return Column(children: [
       GCWDefaultOutput(
@@ -163,33 +173,41 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             }).toList(),
             flexValues: const [1, 5]),
       ),
-      (widget.mode == CheckDigitsMode.IBAN &&  checkDigitsIBANDEBankNumberDoesNotExist(_currentInputNumberString))
-      ? GCWOutput(
-        title: i18n(context, 'checkdigits_hint'),
-        suppressCopyButton: true,
-        child: i18n(context, 'checkdigits_iban_hint_iban_single'),
-      )
-      : Container(),
+      (widget.mode == CheckDigitsMode.IBAN &&
+              checkDigitsIBANDEBankNumberDoesNotExist(
+                  _currentInputNumberString))
+          ? GCWOutput(
+              title: i18n(context, 'checkdigits_hint'),
+              suppressCopyButton: true,
+              child: i18n(context, 'checkdigits_iban_hint_iban_single'),
+            )
+          : Container(),
     ]);
   }
 
-  Widget _detailsBankData(){
+  Widget _detailsBankData() {
     Widget result = Container();
     List<String> bankData = [];
-    if (CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))] != null) {
-      bankData = CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))]!;
+    if (CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[
+            int.parse(_currentInputNumberString.substring(4, 12))] !=
+        null) {
+      bankData = CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[
+          int.parse(_currentInputNumberString.substring(4, 12))]!;
       result = GCWOutput(
-          title: i18n(context, 'checkdigits_iban_data_details'),
-          suppressCopyButton: true,
-          child: GCWColumnedMultilineOutput(
-              copyColumn: 1,
-              data: [
-                [i18n(context, 'checkdigits_iban_data_details_name'), bankData[0]],
-                [i18n(context, 'checkdigits_iban_data_details_city'), bankData[1] + ' ' + bankData[2]],
-                [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[3]],
-              ],
-            flexValues: [2, 4],
-          ),
+        title: i18n(context, 'checkdigits_iban_data_details'),
+        suppressCopyButton: true,
+        child: GCWColumnedMultilineOutput(
+          copyColumn: 1,
+          data: [
+            [i18n(context, 'checkdigits_iban_data_details_name'), bankData[0]],
+            [
+              i18n(context, 'checkdigits_iban_data_details_city'),
+              bankData[1] + ' ' + bankData[2]
+            ],
+            [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[3]],
+          ],
+          flexValues: const [2, 4],
+        ),
       );
     }
     return result;
@@ -221,8 +239,15 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       GCWButton(
         text: i18n(context, 'checkdigits_ean_get_details'),
         onPressed: () {
-          showGCWDialog(context, i18n(context, 'checkdigits_ean_get_details'),
-              SizedBox(width: 300, height: 130, child: Text(i18n(context, 'checkdigits_ean_get_details_allow'))), [
+          showGCWDialog(
+              context,
+              i18n(context, 'checkdigits_ean_get_details'),
+              SizedBox(
+                  width: 300,
+                  height: 130,
+                  child:
+                      Text(i18n(context, 'checkdigits_ean_get_details_allow'))),
+              [
                 GCWDialogButton(
                   text: i18n(context, 'common_ok'),
                   onPressed: () {
@@ -246,8 +271,15 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       GCWButton(
         text: i18n(context, 'checkdigits_creditcard_get_details'),
         onPressed: () {
-          showGCWDialog(context, i18n(context, 'checkdigits_creditcard_get_details'),
-              SizedBox(width: 300, height: 130, child: Text(i18n(context, 'checkdigits_creditcard_get_details_allow'))), [
+          showGCWDialog(
+              context,
+              i18n(context, 'checkdigits_creditcard_get_details'),
+              SizedBox(
+                  width: 300,
+                  height: 130,
+                  child: Text(i18n(
+                      context, 'checkdigits_creditcard_get_details_allow'))),
+              [
                 GCWDialogButton(
                   text: i18n(context, 'common_ok'),
                   onPressed: () {
@@ -276,7 +308,11 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
   Widget _detailsEUROWidget() {
     return GCWDefaultOutput(
-      child: _EUROData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+      child: GCWColumnedMultilineOutput(
+        copyColumn: 1,
+        data: _EUROData(checkDigitsNormalizeNumber(_currentInputNumberString)),
+        flexValues: const [4, 2, 4],
+      ),
     );
   }
 
@@ -304,8 +340,9 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
         copyColumn: 1,
-        data: _IBANData(checkDigitsNormalizeNumber(_currentInputNumberString.toUpperCase())),
-        flexValues: const [4, 2, 4],
+        data: _IBANData(checkDigitsNormalizeNumber(
+            _currentInputNumberString.toUpperCase())),
+        flexValues: const [4, 4],
       ),
     );
   }
@@ -314,7 +351,8 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
         copyColumn: 1,
-        data: _CreditCardData(checkDigitsNormalizeNumber(_currentInputNumberString.toUpperCase())),
+        data: _CreditCardData(checkDigitsNormalizeNumber(
+            _currentInputNumberString.toUpperCase())),
         flexValues: const [5, 3, 4],
       ),
     );
@@ -358,9 +396,15 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           lineElements = line.split('=');
           if (lineElements.length == 2) {
             if (lineElements[0] == 'content') {
-              data.add([lineElements[0], OPENGTINDB_CONTENTS[lineElements[1]].toString()]);
+              data.add([
+                lineElements[0],
+                OPENGTINDB_CONTENTS[lineElements[1]].toString()
+              ]);
             } else if (lineElements[0] == 'packs') {
-              data.add([lineElements[0], OPENGTINDB_PACKS[lineElements[1]].toString()]);
+              data.add([
+                lineElements[0],
+                OPENGTINDB_PACKS[lineElements[1]].toString()
+              ]);
             } else {
               data.add([lineElements[0], lineElements[1]]);
             }
@@ -368,9 +412,18 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         }
       }
     } else {
-      data.add([i18n(context, 'checkdigits_ean_server_error_code'), output.httpCode]);
-      data.add([i18n(context, 'checkdigits_ean_server_error_message'), output.httpMessage]);
-      data.add([i18n(context, 'checkdigits_ean_error_error'), i18n(context, output.eanData)]);
+      data.add([
+        i18n(context, 'checkdigits_ean_server_error_code'),
+        output.httpCode
+      ]);
+      data.add([
+        i18n(context, 'checkdigits_ean_server_error_message'),
+        output.httpMessage
+      ]);
+      data.add([
+        i18n(context, 'checkdigits_ean_error_error'),
+        i18n(context, output.eanData)
+      ]);
     }
     _outputBINIINDetailWidget = GCWColumnedMultilineOutput(
       data: data,
@@ -418,13 +471,22 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         i18n(context, 'checkdigits_creditcard_get_details_number_length'),
         _showBINIINData(_currentBINIINOutput.number_length)
       ]);
-      data.add(
-          [i18n(context, 'checkdigits_creditcard_get_details_scheme'), _showBINIINData(_currentBINIINOutput.scheme)]);
-      data.add([i18n(context, 'checkdigits_creditcard_get_details_type'), _showBINIINData(_currentBINIINOutput.type)]);
-      data.add(
-          [i18n(context, 'checkdigits_creditcard_get_details_brand'), _showBINIINData(_currentBINIINOutput.brand)]);
-      data.add(
-          [i18n(context, 'checkdigits_creditcard_get_details_prepaid'), _showBINIINData(_currentBINIINOutput.prepaid)]);
+      data.add([
+        i18n(context, 'checkdigits_creditcard_get_details_scheme'),
+        _showBINIINData(_currentBINIINOutput.scheme)
+      ]);
+      data.add([
+        i18n(context, 'checkdigits_creditcard_get_details_type'),
+        _showBINIINData(_currentBINIINOutput.type)
+      ]);
+      data.add([
+        i18n(context, 'checkdigits_creditcard_get_details_brand'),
+        _showBINIINData(_currentBINIINOutput.brand)
+      ]);
+      data.add([
+        i18n(context, 'checkdigits_creditcard_get_details_prepaid'),
+        _showBINIINData(_currentBINIINOutput.prepaid)
+      ]);
       data.add([
         i18n(context, 'checkdigits_creditcard_get_details_country_numeric'),
         _showBINIINData(_currentBINIINOutput.country_numeric)
@@ -454,8 +516,14 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         _showBINIINData(_currentBINIINOutput.bank_city)
       ]);
     } else {
-      data.add([i18n(context, 'checkdigits_creditcard_server_error_code'), output.httpCode]);
-      data.add([i18n(context, 'checkdigits_creditcard_server_error_message'), output.httpMessage]);
+      data.add([
+        i18n(context, 'checkdigits_creditcard_server_error_code'),
+        output.httpCode
+      ]);
+      data.add([
+        i18n(context, 'checkdigits_creditcard_server_error_message'),
+        output.httpMessage
+      ]);
     }
     _outputBINIINDetailWidget = GCWColumnedMultilineOutput(
       data: data,
@@ -473,19 +541,37 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     return data;
   }
 
-  String _EUROData(String number) {
-    if (checkEuroSeries(number) == 1) {
-      return i18n(context, EUROBILLDATA[1]![number[0]]![1]);
-    } else {
-      return EUROBILLDATA[2]![number[0]]![0] + '\n' + i18n(context, EUROBILLDATA[2]![number[0]]![1]);
-    }
+  List<List<String>> _EUROData(String number) {
+    return [
+      [
+        i18n(context, 'checkdigits_euro_issuing_country'),
+        number[0],
+        checkEuroSeries(number) == 1
+            ? i18n(context, EUROBILLDATA[1]![number[0]]![1])
+            : EUROBILLDATA[2]![number[0]]![0] +
+                '\n' +
+                i18n(context, EUROBILLDATA[2]![number[0]]![1])
+      ],
+    ];
   }
 
   List<List<String>> _IMEIData(String number) {
     return [
-      [i18n(context, 'checkdigits_imei_reporting_body_identifier'), number.substring(0, 2), ''],
-      [i18n(context, 'checkdigits_imei_type_allocation_code'), number.substring(2, 8), ''],
-      [i18n(context, 'checkdigits_uic_running_number'), number.substring(8, 14), ''],
+      [
+        i18n(context, 'checkdigits_imei_reporting_body_identifier'),
+        number.substring(0, 2),
+        ''
+      ],
+      [
+        i18n(context, 'checkdigits_imei_type_allocation_code'),
+        number.substring(2, 8),
+        ''
+      ],
+      [
+        i18n(context, 'checkdigits_uic_running_number'),
+        number.substring(8, 14),
+        ''
+      ],
       [i18n(context, 'checkdigits_uic_check_digit'), number.substring(14), ''],
     ];
   }
@@ -497,7 +583,11 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       number.substring(0, 1),
       i18n(context, CHECKDIGITS_CREDITCARD_MMI[number.substring(0, 1)]!)
     ]);
-    result.add([i18n(context, 'checkdigits_creditcard_issuer_identification_number'), number.substring(0, 6), '']);
+    result.add([
+      i18n(context, 'checkdigits_creditcard_issuer_identification_number'),
+      number.substring(0, 6),
+      ''
+    ]);
     List<String> binData = _CreditCardSchemeData(number);
     if (binData.isNotEmpty) {
       result.add(binData);
@@ -511,10 +601,26 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             : i18n(context, 'checkdigits_creditcard_issuer_unknown'),
       ]);
     }
-    result.add([i18n(context, 'checkdigits_creditcard_type_of_card_i'), number.substring(4, 5), '']);
-    result.add([i18n(context, 'checkdigits_creditcard_type_of_card_ii'), number.substring(5, 6), '']);
-    result.add([i18n(context, 'checkdigits_creditcard_account_number'), number.substring(6, number.length - 1), '']);
-    result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(number.length - 1), '']);
+    result.add([
+      i18n(context, 'checkdigits_creditcard_type_of_card_i'),
+      number.substring(4, 5),
+      ''
+    ]);
+    result.add([
+      i18n(context, 'checkdigits_creditcard_type_of_card_ii'),
+      number.substring(5, 6),
+      ''
+    ]);
+    result.add([
+      i18n(context, 'checkdigits_creditcard_account_number'),
+      number.substring(6, number.length - 1),
+      ''
+    ]);
+    result.add([
+      i18n(context, 'checkdigits_uic_check_digit'),
+      number.substring(number.length - 1),
+      ''
+    ]);
     return result;
   }
 
@@ -551,12 +657,17 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       publisher = number.substring(2, 9);
     } else if (number[0] == '8' ||
         (number[0] == '9' &&
-            (number[1] == '0' || number[1] == '1' || number[1] == '2' || number[1] == '3' || number[1] == '4'))) {
+            (number[1] == '0' ||
+                number[1] == '1' ||
+                number[1] == '2' ||
+                number[1] == '3' ||
+                number[1] == '4'))) {
       group = number.substring(0, 2);
       publisher = number.substring(2, 9);
     } else {
       int groupNumber = int.parse(number.substring(0, 3));
-      if ((600 <= groupNumber && groupNumber <= 649) || (950 <= groupNumber && groupNumber <= 989)) {
+      if ((600 <= groupNumber && groupNumber <= 649) ||
+          (950 <= groupNumber && groupNumber <= 989)) {
         group = number.substring(0, 3);
         publisher = number.substring(3, 9);
       } else {
@@ -595,8 +706,16 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         number.substring(2, 4),
         i18n(context, UIC_COUNTRY_CODE[number.substring(2, 4)]!)
       ],
-      [i18n(context, 'checkdigits_uic_vehicle_type'), number.substring(4, 8), i18n(context, UIC_CODE_CATEGORY[_UICType]![number.substring(4, 5)]!)],
-      [i18n(context, 'checkdigits_uic_running_number'), number.substring(8, 11), ''],
+      [
+        i18n(context, 'checkdigits_uic_vehicle_type'),
+        number.substring(4, 8),
+        i18n(context, UIC_CODE_CATEGORY[_UICType]![number.substring(4, 5)]!)
+      ],
+      [
+        i18n(context, 'checkdigits_uic_running_number'),
+        number.substring(8, 11),
+        ''
+      ],
       [i18n(context, 'checkdigits_uic_check_digit'), number.substring(11), ''],
     ];
   }
@@ -605,7 +724,9 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     int type = int.parse(typeCode);
     if (type >= 90) {
       _UICType = UIC_TYPE.LOCOMOTIVE;
-      return i18n(context, 'checkdigits_uic_typecode_locomotive') + '\n' + i18n(context, UIC_LOCOMOTIVE_CODE[typeCode]!);
+      return i18n(context, 'checkdigits_uic_typecode_locomotive') +
+          '\n' +
+          i18n(context, UIC_LOCOMOTIVE_CODE[typeCode]!);
     } else if (type >= 80) {
       _UICType = UIC_TYPE.FREIGHTWAGON;
       return i18n(context, 'checkdigits_uic_typecode_freightwagon');
@@ -614,7 +735,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       return i18n(context, 'checkdigits_uic_typecode_passengercoach');
     } else {
       _UICType = UIC_TYPE.FREIGHTWAGON;
-      return i18n(context, 'checkdigits_uic_typecode_freightwagon');
+      return i18n(context, 'checkdigits_uic_type-code_freight wagon');
     }
   }
 
@@ -623,19 +744,35 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     if (IBAN_DATA[number.substring(0, 2)] == null) {
       result.add([
         i18n(context, 'checkdigits_uic_country_code'),
-        number.substring(0, 2),
-        i18n(context, 'checkdigits_iban_country_code_unknown')
+        number.substring(0, 2) +
+            '(' +
+            i18n(context, 'checkdigits_iban_country_code_unknown') +
+            ')'
       ]);
-      result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2, 4), '']);
-      result.add(['', number.substring(4, ), '']);
-    } else {
-      List<Map<String, Object>> countryData = IBAN_DATA[number.substring(0, 2)]!;
       result.add([
-        i18n(context, 'checkdigits_uic_country_code'),
-        number.substring(0, 2),
-        i18n(context, countryData[0]['country'] as String)
+        i18n(context, 'checkdigits_uic_check_digit'),
+        number.substring(2, 4)
       ]);
-      result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2, 4), '']);
+      result.add([
+        '',
+        number.substring(
+          4,
+        )
+      ]);
+    } else {
+      List<Map<String, Object>> countryData =
+          IBAN_DATA[number.substring(0, 2)]!;
+      result.add([
+        i18n(context, 'checkdigits_uic_country_code') +
+            number.substring(0, 2) +
+            '(' +
+            i18n(context, countryData[0]['country'] as String) +
+            ')'
+      ]);
+      result.add([
+        i18n(context, 'checkdigits_uic_check_digit'),
+        number.substring(2, 4)
+      ]);
       int index = 4;
       int digits = 0;
       for (var country in countryData) {
@@ -648,7 +785,10 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
               element.key == 'X' ||
               element.key == 'r') {
             digits = element.value as int;
-            result.add([i18n(context, IBAN_DATA_MEANING[element.key]!), number.substring(index, index + digits), '']);
+            result.add([
+              i18n(context, IBAN_DATA_MEANING[element.key]!),
+              number.substring(index, index + digits)
+            ]);
             index = index + digits;
           }
         }
