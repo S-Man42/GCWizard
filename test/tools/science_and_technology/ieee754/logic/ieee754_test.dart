@@ -1,6 +1,9 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/ieee754/logic/ieee754.dart';
 
+// https://zahlensysteme-rechner.de/ieee-754-konverter/
+// https://www.h-schmidt.net/FloatConverter/IEEE754.html
+
 void main() {
   group("ieee754.float2binary:", () {
     List<Map<String, Object?>> _inputsToExpected = [
@@ -12,6 +15,8 @@ void main() {
       {'input' : '-1.02', '32': true, 'expectedOutput' : '10111111100000101000111101011100'},
       {'input' : '54.23456', '32': true, 'expectedOutput' : '01000010010110001111000000110000'},
       {'input' : '-54.23456', '32': true, 'expectedOutput' : '11000010010110001111000000110000'},
+      {'input' : '0.2', '32': true, 'expectedOutput' : '00111110010011001100110011001101'},
+      {'input' : '0.2', '32': false, 'expectedOutput' : '0011111111001001100110011001100110011001100110011001100110011010'},
 
     ];
 
