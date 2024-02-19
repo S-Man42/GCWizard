@@ -56,9 +56,11 @@ abstract class _UniversalProductCodeEncoder {
 enum _UPCDecodeMode {PURE_NUMBERS, CORRECT_ENCODING, BINARY_CORRECT_ENCODING}
 
 abstract class _UniversalProductCodeDecoder {
-  final String _input;
+  late final String _input;
 
-  _UniversalProductCodeDecoder(this._input);
+  _UniversalProductCodeDecoder(String text) {
+    _input = text.replaceAll(RegExp(r'[^0-9]'), '');
+  }
 
   _UPCDecodeMode _checkMode();
   String _decodePureNumbers();
@@ -90,8 +92,6 @@ abstract class _UniversalProductCodeDecoder {
 
   String decode() {
     var mode = _checkMode();
-
-    print(mode);
 
     switch (mode) {
       case _UPCDecodeMode.PURE_NUMBERS: return _decodePureNumbers();
