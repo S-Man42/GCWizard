@@ -29,6 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    namespace 'de.sman42.gc_wizard'
     compileSdkVersion 33
 
     sourceSets {
