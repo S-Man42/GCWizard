@@ -228,12 +228,12 @@ class Geodesic {
   // Underflow guard.  We require
   //   tiny_ * epsilon() > 0
   //   tiny_ + epsilon() == epsilon()
-  static final double tiny_ = sqrt(practical_epsilon);
-  static double _tol0_ = practical_epsilon;
+  static final double tiny_ = sqrt(double.minPositive);
+  static const double _tol0_ = double.minPositive;
   // Increase multiplier in defn of tol1_ from 100 to 200 to fix inverse case
   // 52.784459512564 0 -52.784459512563990912 179.634407464943777557
   // which otherwise failed for Visual Studio 10 (Release and Debug)
-  static double _tol1_ = 200 * _tol0_;
+  static const double _tol1_ = 200 * _tol0_;
   static final double _tol2_ = sqrt(_tol0_);
   // Check on bisection interval
   static final double _tolb_ = _tol0_ * _tol2_;

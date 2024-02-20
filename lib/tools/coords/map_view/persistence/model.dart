@@ -45,8 +45,7 @@ class MapViewDAO {
       for (var element in polylinesRaw) {
         var polyline = asJsonMapOrNull(element);
         if (polyline == null) continue;
-
-        print(polyline);
+        
         polylines.add(MapPolylineDAO.fromJson(polyline));
       }
     }

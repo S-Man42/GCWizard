@@ -21,6 +21,8 @@ const int _GEOGRAPHICLIB_PRECISION = 3;
  * Define mathematical functions and constants so that any version of Java
  * can be used.
  **********************************************************************/
+// ignore_for_file: unused_field
+// ignore_for_file: unused_element
 class _GeoMath {
   /*
    * The number of binary digits in the fraction of a double precision
