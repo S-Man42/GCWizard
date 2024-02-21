@@ -1,6 +1,7 @@
 part of 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 
 var _currentTerritory = '';
+void Function()? _onChangedIntern ;
 
 class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
 
@@ -38,7 +39,6 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
     required CoordinateFormatKey value,
     required void Function(CoordinateFormatKey) onChanged}) {
 
-    var _onChanged = onChanged;
     return GCWDropDown<String>(
       value: _currentTerritory,
       items: _buildTerritorysList().map((entry) {
@@ -49,7 +49,9 @@ class _GCWCoordWidgetInfoMapCode extends GCWCoordWidgetWithSubtypeInfo {
       }).toList(),
       onChanged: (value) {
         _currentTerritory = value;
-        _onChanged(CoordinateFormatKey.MAPCODE_LOCAL);
+        if (_onChangedIntern != null) {
+          _onChangedIntern!();
+        }
       }
     );
   }
@@ -104,6 +106,7 @@ class _GCWCoordsMapCodeState extends State<_GCWCoordsMapCode> {
   void initState() {
     super.initState();
     _controller = TextEditingController(text: _currentCoord);
+    _onChangedIntern = _setCurrentValueAndEmitOnChange;
   }
 
   @override
