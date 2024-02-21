@@ -6,7 +6,7 @@ int hintSum(List<int> hints) {
   return hints.reduceIndexed((i, x, y) => x + y + (i != 0 ? 1 : 0));
 }
 
-_ShiftResult trimLine(List<int> line, List<int> hints) {
+ShiftResult trimLine(List<int> line, List<int> hints) {
 
   var minIndex = line.indexOf(0);
   if (minIndex == -1) {
@@ -60,30 +60,30 @@ _ShiftResult trimLine(List<int> line, List<int> hints) {
     throw FormatException('Impossible line $line, $hints');
   }
 
-  return _ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
-      _TrimInfo( line.sublist(0, minIndex), line.sublist(maxIndex + 1)));
+  return ShiftResult(line.sublist(minIndex, maxIndex + 1), clonedHints,
+      TrimInfo( line.sublist(0, minIndex), line.sublist(maxIndex + 1)));
 }
 
-List<int> restoreLine(List<int> line, _TrimInfo trimInfo) {
+List<int> restoreLine(List<int> line, TrimInfo trimInfo) {
   var _line = List<int>.from(trimInfo.left);
   _line.addAll(line);
   _line.addAll(trimInfo.right);
   return _line;
 }
 
-class _ShiftResult {
+class ShiftResult {
   List<int>? trimmedLine;
   List<int>? trimmedHints;
-  _TrimInfo? trimInfo;
+  TrimInfo? trimInfo;
 
-  _ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo);
+  ShiftResult(this.trimmedLine, this.trimmedHints, this.trimInfo);
 }
 
-class _TrimInfo {
+class TrimInfo {
   List<int> left;
   List<int> right;
 
-  _TrimInfo(this.left, this.right);
+  TrimInfo(this.left, this.right);
 }
 
 class LineMetaData {
