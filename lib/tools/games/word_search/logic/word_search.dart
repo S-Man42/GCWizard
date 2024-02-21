@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
+import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 
 const _emptyChar = '\t';
 
@@ -210,7 +211,7 @@ int _maxRowLength(List<String> lines) {
 }
 
 List<String> _reversedWordList(List<String> wordList) {
-  return wordList.map((word) => word.split('').reversed.join()).toList();
+  return wordList.map((word) => strUtils.reverse(word)).toList();
 }
 
 Uint8List _setResults(Uint8List line, int start, int end, int value ) {
