@@ -58,8 +58,8 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
 
-      {'input' : 'SOS', 'expectedOutput' : '..·· ... ..··'},
-      {'input' : 'ABc deF', 'expectedOutput' : '.·. .··. ..· | ·. . .··'},
+      {'input' : 'SOS', 'expectedOutput' : '..-- ... ..--'},
+      {'input' : 'ABc deF', 'expectedOutput' : '.-. .--. ..- | -. . .--'},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -131,10 +131,10 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
 
-      {'expectedOutput' : 'SEES', 'input' : '..·· . . ..··'},
-      {'expectedOutput' : 'T5W LE7', 'input' : '.· ·... ·.·. | ·.. . ..·.'},
-      {'expectedOutput' : 'T5W LE7', 'input' : '.· ·... ·.·. / ·.. . ..·.'},
-      {'expectedOutput' : 'T5W LE7', 'input' : '.·AB58·...    ·.·. |bbbb·..@. ..·.'},
+      {'expectedOutput' : 'SEES', 'input' : '..-- . . ..--'},
+      {'expectedOutput' : 'T5W LE7', 'input' : '.- -... -.-. | -.. . ..-.'},
+      {'expectedOutput' : 'T5W LE7', 'input' : '.- -... -.-. / -.. . ..-.'},
+      {'expectedOutput' : 'T5W LE7', 'input' : '.-AB58-...    -.-. |bbbb-..@. ..-.'},
     ];
 
     for (var elem in _inputsToExpected) {

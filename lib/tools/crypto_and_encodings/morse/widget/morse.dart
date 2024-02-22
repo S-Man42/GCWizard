@@ -471,10 +471,13 @@ class _MorseState extends State<Morse> {
     var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeMorse(_currentEncodeInput, type: _currentCode, spaceCharacter: String.fromCharCode(8195));
+      if (_currentCode == MorseType.STEINHEIL) {
+        output = output.replaceAll('-', '·');
+      }
       textStyle =
           TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
     } else {
-      output = decodeMorse(_currentDecodeInput, type: _currentCode);
+      output = decodeMorse(_currentCode == MorseType.STEINHEIL ? _currentDecodeInput.replaceAll('·', '-') : _currentDecodeInput, type: _currentCode);
     }
 
     return GCWOutputText(text: output, style: textStyle);

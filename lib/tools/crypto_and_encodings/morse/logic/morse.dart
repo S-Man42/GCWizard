@@ -5,7 +5,7 @@ part 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse_data.dart';
 
 enum MorseType {MORSE_ITU, MORSE1838, MORSE1844, STEINHEIL, GERKE}
 
-const String _MORSE_CHARACTER_DOTS = '\u2022\u00B7\u16EB\u2981\u25CF\u2218\u25E6';
+const String _MORSE_CHARACTER_DOTS = '.\u2022\u00B7\u16EB\u2981\u25CF\u2218\u25E6';
 //  \u2022  BULLET
 //  \u00B7  MIDDLE DOT
 //  \u16EB  RUNIC SINGLE PUNCTUATION
@@ -21,7 +21,7 @@ String normalizeMorseCharacters(String morse) {
 
   return normalizeCharacters(morse).split('').map((e) {
     if (_MORSE_CHARACTER_DOTS.contains(e)) {
-      return '·';
+      return '.';
     }
     return e;
   }).join();
