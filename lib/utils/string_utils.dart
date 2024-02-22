@@ -137,6 +137,12 @@ String removeControlCharacters(String input) {
   return String.fromCharCodes(removedCodes);
 }
 
+String reverse(String input) {
+  if (input.length < 2) return input;
+
+  return input.split('').reversed.join();
+}
+
 String normalizeCharacters(String input) {
   if (input.isEmpty) {
     return input;
@@ -207,4 +213,8 @@ String trimCharactersRight(String text, String characters) {
   }
 
   return text;
+}
+
+String trimCharacters(String text, String characters) {
+  return trimCharactersLeft(trimCharactersRight(text, characters), characters);
 }

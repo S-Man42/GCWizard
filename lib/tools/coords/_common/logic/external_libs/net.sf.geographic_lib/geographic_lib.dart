@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 
 // parts
 part 'package:gc_wizard/tools/coords/_common/logic//external_libs/net.sf.geographic_lib/geographic_lib/geo_math.dart';
