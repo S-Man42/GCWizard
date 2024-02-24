@@ -321,10 +321,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               .replaceAll('{', '')
               .replaceAll('}', '')
               .split(' = ');
-
-          _cartridgeVariables.add(WherigoVariableData(
-              VariableLUAName: _declaration[1].trim(), VariableName: _declaration[2].replaceAll('"', '')));
-          i++;
+          if (_declaration.length == 3) {
+            _cartridgeVariables.add(WherigoVariableData(
+                VariableLUAName: _declaration[1].trim(), VariableName: _declaration[2].replaceAll('"', '')));
+            i++;
+          }
         } else {
           i++;
           do {

@@ -301,6 +301,10 @@ void main() {
         'expectedOutput': emptyListVariable,
       },
       {
+        'input': testInputVARIABLEGC3897N,
+        'expectedOutput': emptyListVariable,
+      },
+      {
         'input': testInputVARIABLE_BUILDERVAR,
         'expectedOutput': testOutputVARIABLE_BUILDERVAR,
       },
