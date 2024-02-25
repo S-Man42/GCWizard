@@ -412,6 +412,15 @@ void main() {
         'input': testInputANSWERGC,
         'expectedOutput': testOutputANSWERGC,
       },
+      {
+        'input': testInputANSWERGCWandernMitWalter01,
+        'expectedOutput': testOutputANSWERGCWandernMitWalter01,
+      },
+      {
+        'input': testInputANSWERGCWandernMitWalter02,
+        'expectedOutput': testOutputANSWERGCWandernMitWalter02,
+      },
+
     ];
 
     for (var elem in _inputsToExpected) {

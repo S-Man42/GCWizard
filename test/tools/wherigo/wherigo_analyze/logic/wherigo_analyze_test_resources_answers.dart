@@ -13,6 +13,32 @@ WherigoAnswer testOutputANSWERGC = WherigoAnswer(InputFunction: 'zinputFinal', I
     ]),
 ]);
 
+WherigoAnswer testOutputANSWERGCWandernMitWalter01 = WherigoAnswer(InputFunction: '_U9jrC', InputAnswers: [
+  WherigoAnswerData(AnswerAnswer: '_xOfI', AnswerHash: '', AnswerActions: [
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Perfekt, dann können wir ja los.'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_jKUq'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'ShowScreen MAINSCREEN'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_fRPL.Active = true'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_fRPL.Visible = true'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Versuch es nochmal.'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_gPf'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'Wherigo.GetInput(_U9jrC)'),
+  ]),
+]);
+
+WherigoAnswer testOutputANSWERGCWandernMitWalter02 = WherigoAnswer(InputFunction: '_CCLU', InputAnswers: [
+  WherigoAnswerData(AnswerAnswer: '_ZA9h', AnswerHash: '', AnswerActions: [
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Absolut richtig! Weiter gehts.'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_jKUq'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'ShowScreen MAINSCREEN'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_YEA3.Active = true'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: '_YEA3.Visible = true'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Versuch es nochmal.'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: '_gPf'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: 'Wherigo.GetInput(_CCLU)'),
+  ]),
+]);
+
 WherigoAnswer testOutputANSWER = WherigoAnswer(InputFunction: '_Ejb_', InputAnswers: [
   WherigoAnswerData(AnswerAnswer: '491', AnswerHash: '', AnswerActions: [
     WherigoActionMessageElementData(
@@ -114,6 +140,73 @@ function zinputFinal:OnGetInput(input)
         Callback = cartILuebeck.MsgBoxCBFuncs.MsgBoxCB181
       })
     end
+  end
+end
+''';
+
+String testInputANSWERGCWandernMitWalter01 = '''
+function _U9jrC:OnGetInput(input)
+  if input == nil then
+    input = ""
+  end
+  if Wherigo.NoCaseEquals(_xOfI, input) then
+    _Urwigo.MessageBox({
+      Text = "Perfekt, dann können wir ja los.",
+      Media = _jKUq,
+      Callback = function(action)
+        if action ~= nil then
+          Wherigo.ShowScreen(Wherigo.MAINSCREEN)
+        end
+      end
+    })
+    _fRPL.Active = true
+    _fRPL.Visible = true
+  else
+    _Urwigo.MessageBox({
+      Text = "Versuch es nochmal.",
+      Media = _gPf,
+      Callback = function(action)
+        if action ~= nil then
+          _Urwigo.RunDialogs(function()
+            Wherigo.GetInput(_U9jrC)
+          end)
+        end
+      end
+    })
+  end
+end
+''';
+
+String testInputANSWERGCWandernMitWalter02 = '''
+function _CCLU:OnGetInput(input)
+  input = tonumber(input)
+  if input == nil then
+    return
+  end
+  if _ZA9h == input then
+    _Urwigo.MessageBox({
+      Text = "Absolut richtig! Weiter gehts.",
+      Media = _jKUq,
+      Callback = function(action)
+        if action ~= nil then
+          Wherigo.ShowScreen(Wherigo.MAINSCREEN)
+        end
+      end
+    })
+    _YEA3.Active = true
+    _YEA3.Visible = true
+  else
+    _Urwigo.MessageBox({
+      Text = "Versuch es nochmal.",
+      Media = _gPf,
+      Callback = function(action)
+        if action ~= nil then
+          _Urwigo.RunDialogs(function()
+            Wherigo.GetInput(_CCLU)
+          end)
+        end
+      end
+    })
   end
 end
 ''';

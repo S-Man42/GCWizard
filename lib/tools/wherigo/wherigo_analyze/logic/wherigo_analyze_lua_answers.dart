@@ -24,6 +24,8 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
       _answerVariable = onGetInputLines[i].trim().replaceAll(' = tonumber(input)', '');
     } else if (onGetInputLines[i].trim().endsWith(' = input')) {
       _answerVariable = onGetInputLines[i].trim().replaceAll(' = input', '');
+    } else if (onGetInputLines[i].trim().endsWith(' == input then')) {
+      _answerVariable = onGetInputLines[i].trim().replaceAll(' == input then', '').replaceAll('if ', '');
     } else if (onGetInputLines[i].trimLeft() == 'if input == nil then') {
       // suppress this
       //answer = 'NIL';
@@ -38,7 +40,8 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
       } while (!_sectionAnalysed); // end of section
     } // end of NIL
 
-    else if (_OnGetInputSectionEnd(onGetInputLines[i])) {
+    //else
+      if (_OnGetInputSectionEnd(onGetInputLines[i])) {
       // found Answer
       _answerActions = [];
       _answerAnswerList = _getAnswers(i, onGetInputLines[i], onGetInputLines[i - 1], _cartridgeVariables);
@@ -87,19 +90,23 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
 List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVariableData> variables) {
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('if input >= ') ||
+      line.trim().startsWith('if input > ') ||
+      line.trim().startsWith('if input < ') ||
       line.trim().startsWith('if input <= ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('elseif input >= ') ||
       line.trim().startsWith('elseif input <= ') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ') ||
       line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
-    if (line.contains('<=') && line.contains('>=')) {
+    if ((line.contains('<=') && line.contains('>=')) || (line.contains('<') && line.contains('>'))) {
       return [
         line
             .trimLeft()
             .replaceAll('if', '')
             .replaceAll('else', '')
-            .replaceAll('==', '')
+            .replaceAll('=', '')
+            .replaceAll('>', '')
+            .replaceAll('<', '')
             .replaceAll('then', '')
             .replaceAll(' ', '')
             .replaceAll('and', ' and ')
@@ -111,9 +118,11 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         .replaceAll('if', '')
         .replaceAll('else', '')
         .replaceAll('input', '')
-        .replaceAll('==', '')
+        .replaceAll('=', '')
+        .replaceAll('>', '')
+        .replaceAll('<', '')
         .replaceAll('then', '')
-        .replaceAll(_answerVariable, '')
+        //.replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .replaceAll('and', ' and ')
         .split(RegExp(r'(or)'));
