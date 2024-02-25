@@ -391,13 +391,14 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                       showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
                       return;
                     }
-
                     if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
                       showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_lua'), context);
                       return;
                     }
 
                     _setLUAData(_LUAfile.bytes);
+
+                    _getLUAOnline = false;
 
                     _resetIndices();
 
