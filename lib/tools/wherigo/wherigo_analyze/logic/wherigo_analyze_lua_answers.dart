@@ -113,7 +113,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
             .replaceAll('or', ' or ')
       ];
     }
-    return line
+    String answers = line
         .trimLeft()
         .replaceAll('if', '')
         .replaceAll('else', '')
@@ -124,8 +124,12 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         .replaceAll('then', '')
         //.replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
-        .replaceAll('and', ' and ')
-        .split(RegExp(r'(or)'));
+        .replaceAll('and', ' and ');
+    if (answers.length > _answerVariable.length) {
+      answers = answers.replaceAll(_answerVariable, '');
+    }
+
+    return answers.split(RegExp(r'(or)'));
   } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;

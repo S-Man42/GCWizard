@@ -13,6 +13,19 @@ WherigoAnswer testOutputANSWERGC = WherigoAnswer(InputFunction: 'zinputFinal', I
     ]),
 ]);
 
+WherigoAnswer testOutputANSWERGCMighla01 = WherigoAnswer(InputFunction: 'zinputHilfeKettenschlossAuflsung', InputAnswers: [
+  WherigoAnswerData(AnswerAnswer: '310', AnswerHash: '', AnswerActions: [
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Die Ersatzteile sind:'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: 'zmediaLsung'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON, ActionMessageContent: '"Code eingeben",'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON, ActionMessageContent: 'WWB_multiplatform_string("zurück", {PocketPC = 1})'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Auf Seite 45 musst Du die letzten Worte jeder Zeile von oben nach unten lesen. In der App sind die Zeilen mit einem Strich - am Anfang und Ende gekennzeichnet.'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE, ActionMessageContent: 'zmediaLsungFrage'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON, ActionMessageContent: '"Ja",'),
+    WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON, ActionMessageContent: '"neuer Versuch"'),
+  ]),
+]);
+
 WherigoAnswer testOutputANSWERGCWandernMitWalter01 = WherigoAnswer(InputFunction: '_U9jrC', InputAnswers: [
   WherigoAnswerData(AnswerAnswer: '_xOfI', AnswerHash: '', AnswerActions: [
     WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: 'Perfekt, dann können wir ja los.'),
@@ -207,6 +220,37 @@ function _CCLU:OnGetInput(input)
         end
       end
     })
+  end
+end
+''';
+
+String testInputANSWERGCMighla01 = '''
+function zinputHilfeKettenschlossAuflsung:OnGetInput(input)
+  var_Hilfe = tonumber(input)
+  if var_Hilfe ~= nil then
+    if var_Hilfe == 310 then
+      var_Anzahl_Hilfen_Kettenschloss = "6 Punkte Kettenschloss"
+      var_Anzahl_Hilfen_KettenschlossLsung = 6
+      Wherigo.MessageBox({
+        Text = WWB_multiplatform_string("Die Ersatzteile sind:\nDoppel-Glockenlager \nKurbelkeil\nLenkstange\nSattelstütze\nGlockenriemen \nKettenräder \nDreiradachse\nSattel\nDie Anzahl der gesuchten Buchstaben in den Ersatzteilen sind:\nR=7\nA=6\nD=4\nDer Code für das Kettenschloss lautet: 764", {PocketPC = 1}),
+        Media = zmediaLsung,
+        Buttons = {
+          "Code eingeben",
+          WWB_multiplatform_string("zurück", {PocketPC = 1})
+        },
+        Callback = cartMighlaTeil1v3.MsgBoxCBFuncs.MsgBoxCB171
+      })
+    else
+      Wherigo.MessageBox({
+        Text = WWB_multiplatform_string("Auf Seite 45 musst Du die letzten Worte jeder Zeile von oben nach unten lesen. In der App sind die Zeilen mit einem Strich "-" am Anfang und Ende gekennzeichnet.\nDie richtigen Buchstaben sind durch "R-A-D" vorgegeben. R,A,D groß oder klein ist egal. Die Ersatzteile sind umrandet oder in der App großgeschrieben.\n~\nMit dem Code 310 kannst Du Dir die Lösung anzeigen lassen. Möchtest Du das wirklich?\n", {PocketPC = 1}),
+        Media = zmediaLsungFrage,
+        Buttons = {
+          "Ja",
+          "neuer Versuch"
+        },
+        Callback = cartMighlaTeil1v3.MsgBoxCBFuncs.MsgBoxCB172
+      })
+    end
   end
 end
 ''';

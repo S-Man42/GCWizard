@@ -420,6 +420,10 @@ void main() {
         'input': testInputANSWERGCWandernMitWalter02,
         'expectedOutput': testOutputANSWERGCWandernMitWalter02,
       },
+      {
+        'input': testInputANSWERGCMighla01,
+        'expectedOutput': testOutputANSWERGCMighla01,
+      },
 
     ];
 
