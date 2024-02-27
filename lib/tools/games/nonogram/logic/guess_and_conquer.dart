@@ -7,12 +7,11 @@ import 'package:utility/utility.dart';
 
 const int _maxRecursionLevel = 0;
 
-int getNextIndex(List<int> zeroIndexes, bool randomize) {
+int _getNextIndex(List<int> zeroIndexes, bool randomize) {
   if (zeroIndexes.isEmpty) return 0;
   if (randomize) {
     var random = (Random().nextDouble() * zeroIndexes.length).floor();
-     zeroIndexes.removeAt(random);
-    return zeroIndexes.first;
+    return zeroIndexes.removeAt(random);
   }
   return zeroIndexes.removeFirst()!;
 }
@@ -55,7 +54,7 @@ Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionL
   }
 
   for (var i = 0;  i < min(maxGuessCount, zeroIndexes.length); i++) {
-    var index = getNextIndex(zeroIndexes, strategy.randomize);
+    var index = _getNextIndex(zeroIndexes, strategy.randomize);
     // try and set the 'index'th cell to 1, and create a new Puzzle from that
     snapshot[index] = 1;
     var trial = Puzzle(
@@ -64,11 +63,6 @@ Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionL
       content: snapshot
     );
 
-    // if (debugMode) {
-    //   console.log('*********************************************************');
-    //   console.log('Using trialAndError method on ${i}. zero (index ${index})');
-    //   console.log('*********************************************************');
-    // }
     // solve the trial puzzle
     try {
       strategy.solve(trial, withTrialAndError: false); // may throw an exception on contradiction

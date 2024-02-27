@@ -94,7 +94,6 @@ class bruteForce extends Solver {
     }
     var gapResult = gapDistributor(line, hints);
     if (gapResult == null || gapResult.distributions.isEmpty) {
-      print('Contradiction in line $line | $hints');
       throw FormatException('Contradiction in line $line | $hints');
     }
 
