@@ -25,8 +25,8 @@ class NonogramBoardState extends State<NonogramBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: max(_maxRowHintCount(widget.board) + widget.board.width, 1) /
-                                max(_maxColumnHintCount(widget.board) + widget.board.height, 1),
+                    aspectRatio: max(maxRowHintsCount(widget.board) + widget.board.width, 1) /
+                                max(maxColumnHintsCount(widget.board) + widget.board.height, 1),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
@@ -78,8 +78,8 @@ class NonogramBoardPainter extends CustomPainter {
     paintBackground.color = themeColors().gridBackground();
 
     const border = 5;
-    var maxRowHints = _maxRowHintCount(board);
-    var maxColumnHints = _maxColumnHintCount(board);
+    var maxRowHints = maxRowHintsCount(board);
+    var maxColumnHints = maxColumnHintsCount(board);
 
     double widthOuter = size.width - 2 * border;
     double xOuter = 1 * border.toDouble();
@@ -208,10 +208,10 @@ class NonogramBoardPainter extends CustomPainter {
   }
 }
 
-int _maxRowHintCount(Puzzle board) {
+int maxRowHintsCount(Puzzle board) {
   return board.rowHints.reduce((value, hints) => (hints.length > value.length ? hints : value)).length;
 }
 
-int _maxColumnHintCount(Puzzle board) {
+int maxColumnHintsCount(Puzzle board) {
   return board.columnHints.reduce((value, hints) => (hints.length > value.length ? hints : value)).length;
 }

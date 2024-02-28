@@ -26,7 +26,7 @@ class Puzzle {
     height = rowHints.length;
     width = columnHints.length;
     if (content != null) {
-      import(content);
+      _import(content);
     }
   }
 
@@ -100,7 +100,6 @@ class Puzzle {
     }
   }
 
-
   bool get isFinished {
     for (var row in rows) {
       if (row.any((item) => item == 0)) return false;
@@ -137,7 +136,7 @@ class Puzzle {
     return state;
   }
 
-  bool import(List<int> snapshot) {
+  bool _import(List<int> snapshot) {
     if (snapshot.length != width * height) return false;
     rows.clear();
     for (int i = 0; i < height; i++) {
@@ -182,7 +181,7 @@ class Puzzle {
 
     data = asJsonArrayOrNull(jsonMap[jsonContent]);
     if (data != null) {
-      puzzle.import(_jsonArrayToList(data));
+      puzzle._import(_jsonArrayToList(data));
     }
 
     return puzzle;
