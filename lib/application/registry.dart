@@ -336,6 +336,7 @@ import 'package:gc_wizard/tools/science_and_technology/guitar_strings/widget/gui
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/icecodes/widget/icecodes.dart';
+import 'package:gc_wizard/tools/science_and_technology/ieee754/widget/ieee754.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/e/widget/e.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/phi/widget/phi.dart';
@@ -854,6 +855,11 @@ void initializeRegistry(BuildContext context) {
       categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
       searchKeys: const [],
     ),
+    GCWTool(tool: const IEEE754(), id: 'ieee754', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'ieee754',
+    ]),
     GCWTool(tool: const ILLIAC(), id: 'illiac', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
