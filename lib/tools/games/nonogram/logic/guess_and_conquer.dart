@@ -5,8 +5,6 @@ import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:utility/utility.dart';
 
-const int _maxRecursionLevel = 0;
-
 int _getNextIndex(List<int> zeroIndexes, bool randomize) {
   if (zeroIndexes.isEmpty) return 0;
   if (randomize) {
@@ -16,15 +14,16 @@ int _getNextIndex(List<int> zeroIndexes, bool randomize) {
   return zeroIndexes.removeFirst()!;
 }
 
-Puzzle? recurse(Strategy strategy, int currentRecursionLevel, List<int> snapshot, int index, Puzzle trial) {
-  if (currentRecursionLevel >= _maxRecursionLevel) {
+Puzzle? _recurse(Strategy strategy, int currentRecursionLevel, int maxRecursionLevel, List<int> snapshot,
+    int index, Puzzle trial) {
+  if (currentRecursionLevel >= maxRecursionLevel) {
     // reset and just try the next index
     snapshot[index] = 0;
     return null;
   }
   // try recursion
   var anotherTry = Puzzle(trial.rowHints, trial.columnHints, content: snapshot);
-  var result = guessAndConquer(strategy, anotherTry, currentRecursionLevel: currentRecursionLevel + 1);
+  var result = guessAndConquer(strategy, anotherTry, maxRecursionLevel, currentRecursionLevel: currentRecursionLevel + 1);
 
   return result;
 }
@@ -35,13 +34,14 @@ Puzzle? recurse(Strategy strategy, int currentRecursionLevel, List<int> snapshot
  * @param {Puzzle} puzzle The puzzle to solve
  * @param {number} currentRecursionLevel (internal) keep track of recursion depth
  */
-Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionLevel = 0}) {
+Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, int maxRecursionLevel, {int currentRecursionLevel = 0}) {
   const int maxGuessCount = 100;
   if (puzzle.isFinished) {
     return puzzle.isSolved ? puzzle : null;
   }
   var snapshot = puzzle.snapshot;
   var zeroIndexes = <int>[];
+
   // find unsolved cells
   snapshot.forEachIndexed((i, x) {
     if (x == 0) {
@@ -65,7 +65,7 @@ Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionL
 
     // solve the trial puzzle
     try {
-      strategy.solve(trial, withTrialAndError: false); // may throw an exception on contradiction
+      strategy.solve(trial, maxRecursionLevel, withTrialAndError: false); // may throw an exception on contradiction
       if (trial.isFinished) {
         if (!trial.isSolved) {
           // This is a contradiction
@@ -75,7 +75,7 @@ Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, {int currentRecursionL
         return trial;
       }
       // No progress
-      var result = recurse(strategy, currentRecursionLevel, snapshot, index, trial);
+      var result = _recurse(strategy, currentRecursionLevel, maxRecursionLevel, snapshot, index, trial);
       if (result != null) {
         return result;
       }

@@ -11,8 +11,6 @@ import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
-part  'package:gc_wizard/tools/games/nonogram/logic/data.dart';
-
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
  */
@@ -32,7 +30,7 @@ class Strategy {
    * @param {Puzzle} puzzle The puzzle to solve
    * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
    */
-  Puzzle solve(Puzzle puzzle, {bool withTrialAndError = true}) {
+  Puzzle solve(Puzzle puzzle, int maxRecursionLevel, {bool withTrialAndError = true}) {
     try {
       Puzzle.generateRows(puzzle);
 
@@ -63,7 +61,7 @@ class Strategy {
 
       // no solution found… trial and error now
       if (withTrialAndError && !puzzle.isFinished) {
-        var deepResult = guessAndConquer(this, puzzle);
+        var deepResult = guessAndConquer(this, puzzle, maxRecursionLevel);
         if (deepResult != null) {
           puzzle.rows = deepResult.rows;
         }
@@ -87,15 +85,18 @@ class Strategy {
     var skip = false;
 
     // run on rows
-    _run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
+    skip = _run(puzzle.rows, puzzle.rowHints, true, solver, solverIndex, skip, skipEarly);
+    if (skip) {
+      return;
+    }
     // …and then on columns
     var lines = puzzle.columns;
-    _run(lines, puzzle.columnHints, false, solver, solverIndex, skip, skipEarly);
+    skip = _run(lines, puzzle.columnHints, false, solver, solverIndex, skip, skipEarly);
     puzzle.columns = lines;
   }
 
   // the actual execution
-  void _run(List<List<int>> lines, List<List<int>> hints, bool onRow, Solver solver, int solverIndex, bool skip, bool skipEarly) {
+  bool _run(List<List<int>> lines, List<List<int>> hints, bool onRow, Solver solver, int solverIndex, bool skip, bool skipEarly) {
     var visited = onRow ?
       _VisitedL(current: _visited.rows, other: _visited.columns) :
       _VisitedL(current: _visited.columns, other: _visited.rows);
@@ -114,6 +115,7 @@ class Strategy {
       var newLine = solver.solve(trimresult.trimmedLine!, trimresult.trimmedHints!);
 
       // now, restore the trimmed line and analyze the result
+      var hasChanged = false;
       if (newLine != null) { // the solver may return null to indicate no progress
         newLine = restoreLine(newLine, trimresult.trimInfo!);
         line.line.forEachIndexed((i, el) {
@@ -122,10 +124,13 @@ class Strategy {
             line.line[i] = newLine[i];
             // These perpendicular lines must be revisited
             visited.other[i].fillRange(0, visited.other[i].length, 0);
+            hasChanged = true;
           }
         });
+        skip = hasChanged && skipEarly;
       }
     }
+    return skip;
   }
 
   // Optimize iteration order

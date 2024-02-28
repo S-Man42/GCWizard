@@ -31,7 +31,14 @@ class Puzzle {
   }
 
   void solve() {
-    Strategy().solve(this);
+    var maxRecursionLevel = 0;
+    Strategy().solve(this, maxRecursionLevel);
+    if (!isSolved) {
+      // Increasing the recursion depth value may dramatically slow down or speed up the solution process, depending on the puzzle.
+      // It has no effect on puzzles that don't require trial and error
+      maxRecursionLevel = 3;
+      Strategy().solve(this, maxRecursionLevel);
+    }
   }
 
    static Puzzle generate(int height, int width) {
