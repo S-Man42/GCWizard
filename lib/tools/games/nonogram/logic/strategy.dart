@@ -11,8 +11,6 @@ import 'package:gc_wizard/tools/games/nonogram/logic/push_solver.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/util.dart';
 
-part  'package:gc_wizard/tools/games/nonogram/logic/data.dart';
-
 /**
  * Strategy for solving a puzzle by applying line solvers repeatedly
  */
@@ -32,7 +30,7 @@ class Strategy {
    * @param {Puzzle} puzzle The puzzle to solve
    * @param {boolean} withTrialAndError 'false' to stop without trial and error. Defaults to 'true'.
    */
-  Puzzle solve(Puzzle puzzle, {bool withTrialAndError = true}) {
+  Puzzle solve(Puzzle puzzle, int maxRecursionLevel, {bool withTrialAndError = true}) {
     try {
       Puzzle.generateRows(puzzle);
 
@@ -63,7 +61,7 @@ class Strategy {
 
       // no solution found… trial and error now
       if (withTrialAndError && !puzzle.isFinished) {
-        var deepResult = guessAndConquer(this, puzzle);
+        var deepResult = guessAndConquer(this, puzzle, maxRecursionLevel);
         if (deepResult != null) {
           puzzle.rows = deepResult.rows;
         }
