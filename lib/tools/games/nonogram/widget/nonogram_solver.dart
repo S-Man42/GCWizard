@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
@@ -17,6 +19,7 @@ import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/nonogram/widget/nonogram_board.dart';
@@ -145,6 +148,16 @@ class NonogramSolverState extends State<NonogramSolver> {
               )
             )
           ],
+        ),
+        GCWButton(
+          text: i18n(context, 'common_exportfile_saveoutput'),
+          onPressed: () {
+            _renderedImage().then((image) async {
+              image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                _exportFile(context, data?.buffer.asUint8List());
+              });
+            });
+          },
         )
       ],
     );
@@ -349,5 +362,27 @@ class NonogramSolverState extends State<NonogramSolver> {
       var controller = _getColumnController(i);
       controller.text = '';
     }
+  }
+
+  Future<void> _exportFile(BuildContext context, Uint8List? data) async {
+    if (data == null) return;
+    await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
+      if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
+    });
+  }
+
+  Future<ui.Image> _renderedImage() async {
+    const cellSize = 20.0;
+    final recorder = ui.PictureRecorder();
+    Canvas canvas = Canvas(recorder);
+    final size = context.size ?? Size(
+        (_currentBoard.columns.length + maxRowHintsCount(_currentBoard)) * cellSize,
+        (_currentBoard.rows.length + maxColumnHintsCount(_currentBoard)) * cellSize);
+
+    final painter = NonogramBoardPainter(context, _currentBoard, () => {});
+
+    canvas.save();
+    painter.paint(canvas, size);
+    return recorder.endRecording().toImage(size.width.floor(), size.height.floor());
   }
 }
