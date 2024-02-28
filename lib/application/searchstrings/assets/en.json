@@ -78,7 +78,7 @@
   "checkdigits_uic": "internationalunionofrailways",
   "checkdigits_iban": "",
   "checkdigits_isbn": "",
-  "checkdigits_euro": "bill banknote",
+  "checkdigits_euro": "moneybill banknote",
   "checkdigits_creditcard": "",
   "checkdigits_de_taxid": "germantaxid",
   "chronogram": "chronogram",

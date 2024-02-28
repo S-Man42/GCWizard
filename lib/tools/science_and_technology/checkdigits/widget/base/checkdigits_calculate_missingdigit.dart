@@ -52,7 +52,6 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
         GCWSubmitButton(
           onPressed: () {
             setState(() {
-              print('calculate '+_currentInputNumberString);
               _numbers = checkDigitsCalculateMissingDigitsAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
             });
           },
