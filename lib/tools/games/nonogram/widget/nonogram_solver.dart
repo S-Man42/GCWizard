@@ -382,15 +382,22 @@ class NonogramSolverState extends State<NonogramSolver> {
   }
 
   Future<ui.Image> _renderedImage() async {
-    const cellSize = 20.0;
+    const cellSize = 70.0;
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
-    final size = context.size ?? Size(
-        (_currentBoard.columns.length + maxRowHintsCount(_currentBoard)) * cellSize,
-        (_currentBoard.rows.length + maxColumnHintsCount(_currentBoard)) * cellSize);
+    final size = Size(
+        (_currentBoard.columns.length + _maxColumnHintsCount(_currentBoard)) * cellSize,
+        (_currentBoard.rows.length + _maxRowHintsCount(_currentBoard)) * cellSize);
 
-    final painter = NonogramBoardPainter(context, _currentBoard, () => {});
+    final painter = NonogramBoardPainter(context, _currentBoard, () => {},
+        line_color: Colors.black, hint_line_color: Colors.grey, full_color: Colors.black,
+        background_color: Colors.white, font_color: Colors.black);
 
+    var paint = Paint();
+    paint.style = PaintingStyle.fill;
+    paint.color = Colors.white;
+
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
     canvas.save();
     painter.paint(canvas, size);
     return recorder.endRecording().toImage(size.width.floor(), size.height.floor());
