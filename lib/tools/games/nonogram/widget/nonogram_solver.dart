@@ -139,6 +139,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                   onPressed: () {
                     setState(() {
                       _currentBoard = Puzzle.generate(_rowCount, _columnCount);
+                      _clearRowHints();
+                      _clearColumnHints();
                     });
                   },
                 ),
@@ -314,6 +316,14 @@ class NonogramSolverState extends State<NonogramSolver> {
       _columnController.add(TextEditingController());
     }
     return _columnController[index];
+  }
+
+  void _clearRowHints() {
+    for (var controler in _rowController) {controler.text = '';}
+  }
+
+  void _clearColumnHints() {
+    for (var controler in _columnController) {controler.text = '';}
   }
 
   void _importJsonFile(Uint8List bytes) {
