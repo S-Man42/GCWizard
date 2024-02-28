@@ -151,16 +151,38 @@ class NonogramSolverState extends State<NonogramSolver> {
             )
           ],
         ),
-        GCWButton(
-          text: i18n(context, 'common_exportfile_saveoutput'),
-          onPressed: () {
-            _renderedImage().then((image) async {
-              image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                _exportFile(context, data?.buffer.asUint8List());
-              });
-            });
-          },
-        )
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: GCWButton(
+                  text: i18n(context, 'common_exportfile_saveoutput'),
+                  onPressed: () {
+                    _renderedImage().then((image) async {
+                      image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                        _exportFile(context, data?.buffer.asUint8List());
+                      });
+                    });
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                  child: GCWButton(
+                    text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
+                    onPressed: () {
+                      setState(() {
+                        _exportJsonFile(context, _currentBoard.toJson());
+                      });
+                    },
+                  ),
+                )
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -346,6 +368,7 @@ class NonogramSolverState extends State<NonogramSolver> {
     } else if (_currentBoard.state != PuzzleState.Ok) {
       showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
     }
+
     _setControllerData();
   }
 
@@ -379,6 +402,11 @@ class NonogramSolverState extends State<NonogramSolver> {
     await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
       if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
+  }
+
+  Future<void> _exportJsonFile(BuildContext context, String? data) async {
+    if (data == null) return;
+    saveStringToFile(context, data, buildFileNameWithDate('nonogram_', FileType.JSON));
   }
 
   Future<ui.Image> _renderedImage() async {

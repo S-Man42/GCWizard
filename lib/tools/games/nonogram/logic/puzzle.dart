@@ -57,6 +57,10 @@ class Puzzle {
     data.columnHints = _cleanClone(data.columnHints);
     data.height = data.rowHints.length;
     data.width = data.columnHints.length;
+    if (data.height == 0 || data.width == 0) {
+      data.height = 10;
+      data.width = 10;
+    }
     data.rows = generateRows(data);
 
     _checkConsistency(data);
@@ -179,11 +183,14 @@ class Puzzle {
     }
     Puzzle.mapData(puzzle);
 
-    data = asJsonArrayOrNull(jsonMap[jsonContent]);
-    if (data != null) {
-      puzzle._import(_jsonArrayToList(data));
-    }
+    if (puzzle.state == PuzzleState.Ok) {
+      data = asJsonArrayOrNull(jsonMap[jsonContent]);
+      if (data != null) {
+        puzzle._import(_jsonArrayToList(data));
+      }
+    } else {
 
+    }
     return puzzle;
   }
 
@@ -205,6 +212,18 @@ class Puzzle {
       if (value != null) list.add(value);
     }
     return list;
+  }
+
+  String? toJson() {
+    if (columnHints.isEmpty && rowHints.isEmpty) return null;
+
+    var list = ({'columns': jsonEncode(columnHints), 'rows': jsonEncode(rowHints)});
+    if (rows.isNotEmpty) {
+      list.addAll({'content': jsonEncode(snapshot)});
+    }
+    if (list.isEmpty) return null;
+
+    return jsonEncode(list);
   }
 
   static void _checkConsistency(Puzzle data) {
