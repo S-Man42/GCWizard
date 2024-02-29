@@ -14,6 +14,7 @@ import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
@@ -32,43 +33,46 @@ class NonogramSolver extends StatefulWidget {
 }
 
 class NonogramSolverState extends State<NonogramSolver> {
-  late Puzzle _currentBoard;
-  var _currentSizeExpanded = false;
-  var _currentRowHintsExpanded = false;
-  var _currentColumnHintsExpanded = false;
-  late TextEditingController _rowCountController;
-  late TextEditingController _columnCountController;
-  final _rowController = <TextEditingController>[];
-  final _columnController = <TextEditingController>[];
-
-  var _rowCount = 10;
-  var _columnCount = 10;
-  double _scale = 1;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  late PuzzleWidgetValues _decryptPuzzle;
+  late PuzzleWidgetValues _encryptPuzzle;
 
   @override
   void initState() {
     super.initState();
 
-    _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-
-    _rowCountController = TextEditingController(text : _rowCount.toString());
-    _columnCountController = TextEditingController(text : _columnCount.toString());
-
-    Puzzle.mapData(_currentBoard);
+    _decryptPuzzle = PuzzleWidgetValues();
+    _encryptPuzzle = PuzzleWidgetValues();
   }
 
   @override
   void dispose() {
-    _rowCountController.dispose();
-    _columnCountController.dispose();
-    for (var controller in _rowController) {controller.dispose();}
-    for (var controller in _columnController) {controller.dispose();}
+    _decryptPuzzle.dispose();
+    _encryptPuzzle.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+          GCWTwoOptionsSwitch(
+            value: _currentMode,
+            onChanged: (value) {
+              setState(() {
+                _currentMode = value;
+              });
+            },
+          ),
+          _currentMode == GCWSwitchPosition.right
+            ? _puzzleWidget(_decryptPuzzle)
+            : _puzzleWidget(_encryptPuzzle)
+        ]
+    );
+  }
+
+  Widget _puzzleWidget(PuzzleWidgetValues puzzle) {
     return Column(
       children: <Widget>[
         GCWOpenFile(
@@ -78,27 +82,25 @@ class NonogramSolverState extends State<NonogramSolver> {
               showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
-
-            _importJsonFile(value.bytes);
-
+            _importJsonFile(value.bytes, puzzle);
             setState(() {});
           },
         ),
-        _puzzleSize(),
-        _rowHints(),
-        _columnwHints(),
+        _puzzleSize(puzzle),
+        _rowHints(puzzle),
+        _columnwHints(puzzle),
 
         Container(height: 10),
         GCWPainterContainer(
-          scale: _scale,
+          scale: puzzle.scale,
           suppressTopSpace: true,
           suppressBottomSpace: true,
-          onChanged: (value) {_scale = value;},
+          onChanged: (value) {puzzle.scale = value;},
           child: NonogramBoard(
-            board: _currentBoard,
+            board: puzzle.currentBoard,
             onChanged: (newBoard) {
               setState(() {
-                _currentBoard = newBoard;
+                puzzle.currentBoard = newBoard;
               });
             },
           ),
@@ -112,8 +114,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                   text: i18n(context, 'sudokusolver_solve'),
                   onPressed: () {
                     setState(() {
-                      _currentBoard.solve();
-                      if (_currentBoard.state != PuzzleState.Solved) {
+                      puzzle.currentBoard.solve();
+                      if (puzzle.currentBoard.state != PuzzleState.Solved) {
                         showSnackBar(i18n(context, 'sudokusolver_error'), context);
                       }
                     });
@@ -128,7 +130,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                   text: i18n(context, 'sudokusolver_clearcalculated'),
                   onPressed: () {
                     setState(() {
-                      _currentBoard.removeCalculated();
+                      puzzle.currentBoard.removeCalculated();
                     });
                   },
                 ),
@@ -141,9 +143,9 @@ class NonogramSolverState extends State<NonogramSolver> {
                   text: i18n(context, 'sudokusolver_clearall'),
                   onPressed: () {
                     setState(() {
-                      _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-                      _clearRowHints();
-                      _clearColumnHints();
+                      puzzle.currentBoard = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+                      puzzle.clearRowHints();
+                      puzzle.clearColumnHints();
                     });
                   },
                 ),
@@ -151,85 +153,54 @@ class NonogramSolverState extends State<NonogramSolver> {
             )
           ],
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                child: GCWButton(
-                  text: i18n(context, 'common_exportfile_saveoutput'),
-                  onPressed: () {
-                    _renderedImage().then((image) async {
-                      image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                        _exportFile(context, data?.buffer.asUint8List());
-                      });
-                    });
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                  child: GCWButton(
-                    text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
-                    onPressed: () {
-                      setState(() {
-                        _exportJsonFile(context, _currentBoard.toJson());
-                      });
-                    },
-                  ),
-                )
-            ),
-          ],
-        ),
+        _exportButtons(puzzle.currentBoard),
       ],
     );
   }
 
-  Widget _puzzleSize() {
+  Widget _puzzleSize(PuzzleWidgetValues puzzle) {
     return GCWExpandableTextDivider(
         text: i18n(context, 'gameoflife_size'),
-        expanded: _currentSizeExpanded,
+        expanded: puzzle.currentSizeExpanded,
         onChanged: (value) {
           setState(() {
-            _currentSizeExpanded = value;
+            puzzle.currentSizeExpanded = value;
           });
         },
-        child: _buildSizeSelection()
+        child: _buildSizeSelection(puzzle)
     );
   }
 
-  Widget _buildSizeSelection() {
+  Widget _buildSizeSelection(PuzzleWidgetValues puzzle) {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
           title: i18n(context, 'common_row_count'),
-          controller: _rowCountController,
-          value: _rowCount,
+          controller: puzzle.rowCountController,
+          value: puzzle.rowCount,
           min: 1,
           onChanged: (value) {
             setState(() {
-              _rowCount = value;
-              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * _rowCount), 1.0);
-              var tmpPuzzle = _currentBoard;
-              _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-              _currentBoard.importHints(tmpPuzzle);
+              puzzle.rowCount = value;
+              puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
+              var tmpPuzzle = puzzle.currentBoard;
+              puzzle.currentBoard = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+              puzzle.currentBoard.importHints(tmpPuzzle);
             });
           }
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'common_column_count'),
-          controller: _columnCountController,
-          value: _columnCount,
+          controller: puzzle.columnCountController,
+          value: puzzle.columnCount,
           min: 1,
           onChanged: (value) {
             setState(() {
-              _columnCount = value;
-              _scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * _rowCount), 1.0);
-              var tmpPuzzle = _currentBoard;
-              _currentBoard = Puzzle.generate(_rowCount, _columnCount);
-              _currentBoard.importHints(tmpPuzzle);
+              puzzle.columnCount = value;
+              puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
+              var tmpPuzzle = puzzle.currentBoard;
+              puzzle.currentBoard = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+              puzzle.currentBoard.importHints(tmpPuzzle);
             });
           }
         )
@@ -237,24 +208,24 @@ class NonogramSolverState extends State<NonogramSolver> {
     );
   }
 
-  Widget _rowHints() {
+  Widget _rowHints(PuzzleWidgetValues puzzle) {
     return GCWExpandableTextDivider(
         text: i18n(context, 'grid_rows'),
-        expanded: _currentRowHintsExpanded,
+        expanded: puzzle.currentRowHintsExpanded,
         onChanged: (value) {
           setState(() {
-            _currentRowHintsExpanded = value;
+            puzzle.currentRowHintsExpanded = value;
           });
         },
-        child: _buildRowHints()
+        child: _buildRowHints(puzzle)
     );
   }
 
-  Widget _buildRowHints() {
+  Widget _buildRowHints(PuzzleWidgetValues puzzle) {
     var list = <Widget>[];
 
-    for (var i = 0; i < _rowCount; i++ ) {
-      var controller = _getRowController(i);
+    for (var i = 0; i < puzzle.rowCount; i++ ) {
+      var controller = puzzle.getRowController(i);
       var row =  Row(
         children: <Widget>[
           Expanded(
@@ -269,8 +240,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                 setState(() {
                   var data = textToIntList(text, allowNegativeValues: true);
                   var dataBackup = data.sublist(0);
-                  data = Puzzle.cleanHints(data, _currentBoard.width);
-                  _currentBoard.rowHints[i] = data;
+                  data = Puzzle.cleanHints(data, puzzle.currentBoard.width);
+                  puzzle.currentBoard.rowHints[i] = data;
                   if (!listEquals(data, dataBackup)) {
                     showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
                   }
@@ -288,24 +259,24 @@ class NonogramSolverState extends State<NonogramSolver> {
     );
   }
 
-  Widget _columnwHints() {
+  Widget _columnwHints(PuzzleWidgetValues puzzle) {
     return GCWExpandableTextDivider(
         text: i18n(context, 'grid_columns'),
-        expanded: _currentColumnHintsExpanded,
+        expanded: puzzle.currentColumnHintsExpanded,
         onChanged: (value) {
           setState(() {
-            _currentColumnHintsExpanded = value;
+            puzzle.currentColumnHintsExpanded = value;
           });
         },
-        child: _buildColumnHints()
+        child: _buildColumnHints(puzzle)
     );
   }
 
-  Widget _buildColumnHints() {
+  Widget _buildColumnHints(PuzzleWidgetValues puzzle) {
     var list = <Widget>[];
 
-    for (var i = 0; i < _columnCount; i++ ) {
-      var controller = _getColumnController(i);
+    for (var i = 0; i < puzzle.columnCount; i++ ) {
+      var controller = puzzle.getColumnController(i);
       var row =  Row(
           children: <Widget>[
             Expanded(
@@ -320,8 +291,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                       setState(() {
                         var data = textToIntList(text, allowNegativeValues: true);
                         var dataBackup = data.sublist(0);
-                        data = Puzzle.cleanHints(data, _currentBoard.height);
-                        _currentBoard.columnHints[i] = data;
+                        data = Puzzle.cleanHints(data, puzzle.currentBoard.height);
+                        puzzle.currentBoard.columnHints[i] = data;
                         if (!listEquals(data, dataBackup)) {
                           showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
                         }
@@ -339,62 +310,51 @@ class NonogramSolverState extends State<NonogramSolver> {
     );
   }
 
-  TextEditingController _getRowController(int index) {
-    while (index >= _rowController.length) {
-      _rowController.add(TextEditingController());
-    }
-    return _rowController[index];
+  Widget _exportButtons(Puzzle puzzle) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: GCWButton(
+              text: i18n(context, 'common_exportfile_saveoutput'),
+              onPressed: () {
+                _renderedImage(puzzle).then((image) async {
+                  image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                    _exportFile(context, data?.buffer.asUint8List());
+                  });
+                });
+              },
+            ),
+          ),
+        ),
+        Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              child: GCWButton(
+                text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
+                onPressed: () {
+                  setState(() {
+                    _exportJsonFile(context, puzzle.toJson());
+                  });
+                },
+              ),
+            )
+        ),
+      ],
+    );
   }
 
-  TextEditingController _getColumnController(int index) {
-    while (index >= _columnController.length) {
-      _columnController.add(TextEditingController());
-    }
-    return _columnController[index];
-  }
 
-  void _clearRowHints() {
-    for (var controler in _rowController) {controler.text = '';}
-  }
-
-  void _clearColumnHints() {
-    for (var controler in _columnController) {controler.text = '';}
-  }
-
-  void _importJsonFile(Uint8List bytes) {
-    _currentBoard = Puzzle.parseJson(convertBytesToString(bytes));
-    if (_currentBoard.state == PuzzleState.InvalidHintData) {
+  void _importJsonFile(Uint8List bytes, PuzzleWidgetValues puzzle) {
+    puzzle.currentBoard = Puzzle.parseJson(convertBytesToString(bytes));
+    if (puzzle.currentBoard.state == PuzzleState.InvalidHintData) {
       showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
-    } else if (_currentBoard.state != PuzzleState.Ok) {
+    } else if (puzzle.currentBoard.state != PuzzleState.Ok) {
       showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
     }
 
-    _setControllerData();
-  }
-
-  void _setControllerData() {
-    _rowCount = _currentBoard.height;
-    _columnCount = _currentBoard.width;
-    _rowCountController.text = _rowCount.toString();
-    _columnCountController.text = _columnCount.toString();
-
-    for (var i = 0; i < _currentBoard.height; i++) {
-      var controller = _getRowController(i);
-      controller.text = _currentBoard.rowHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');
-    }
-    for (var i = _currentBoard.height; i < _rowController.length; i++) {
-      var controller = _getRowController(i);
-      controller.text = '';
-    }
-
-    for (var i = 0; i < _currentBoard.width; i++) {
-      var controller = _getColumnController(i);
-      controller.text = _currentBoard.columnHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');
-    }
-    for (var i = _currentBoard.width; i < _columnController.length; i++) {
-      var controller = _getColumnController(i);
-      controller.text = '';
-    }
+    puzzle.setControllerData();
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List? data) async {
@@ -409,15 +369,15 @@ class NonogramSolverState extends State<NonogramSolver> {
     saveStringToFile(context, data, buildFileNameWithDate('nonogram_', FileType.JSON));
   }
 
-  Future<ui.Image> _renderedImage() async {
+  Future<ui.Image> _renderedImage(Puzzle puzzle) async {
     const cellSize = 70.0;
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
     final size = Size(
-        (_currentBoard.columns.length + _maxColumnHintsCount(_currentBoard)) * cellSize,
-        (_currentBoard.rows.length + _maxRowHintsCount(_currentBoard)) * cellSize);
+        (puzzle.columns.length + _maxColumnHintsCount(puzzle)) * cellSize,
+        (puzzle.rows.length + _maxRowHintsCount(puzzle)) * cellSize);
 
-    final painter = NonogramBoardPainter(context, _currentBoard, () => {},
+    final painter = NonogramBoardPainter(context, puzzle, () => {},
         line_color: Colors.black, hint_line_color: Colors.grey, full_color: Colors.black,
         background_color: Colors.white, font_color: Colors.black);
 
@@ -431,3 +391,83 @@ class NonogramSolverState extends State<NonogramSolver> {
     return recorder.endRecording().toImage(size.width.floor(), size.height.floor());
   }
 }
+
+class PuzzleWidgetValues {
+  var rowCount = 10;
+  var columnCount = 10;
+  late Puzzle currentBoard;
+  var currentSizeExpanded = false;
+  var currentRowHintsExpanded = false;
+  var currentColumnHintsExpanded = false;
+  late TextEditingController rowCountController;
+  late TextEditingController columnCountController;
+  final rowController = <TextEditingController>[];
+  final columnController = <TextEditingController>[];
+  double scale = 1;
+
+  PuzzleWidgetValues() {
+    currentBoard = Puzzle.generate(rowCount, columnCount);
+
+    rowCountController = TextEditingController(text : rowCount.toString());
+    columnCountController = TextEditingController(text : columnCount.toString());
+
+    Puzzle.mapData(currentBoard);
+  }
+
+  void clearRowHints() {
+    for (var controler in rowController) {controler.text = '';}
+  }
+
+  void clearColumnHints() {
+    for (var controler in columnController) {controler.text = '';}
+  }
+
+  void setControllerData() {
+    rowCount = currentBoard.height;
+    columnCount = currentBoard.width;
+    rowCountController.text = rowCount.toString();
+    columnCountController.text = columnCount.toString();
+
+    for (var i = 0; i < currentBoard.height; i++) {
+      var controller = getRowController(i);
+      controller.text = currentBoard.rowHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');
+    }
+    for (var i = currentBoard.height; i < rowController.length; i++) {
+      var controller = getRowController(i);
+      controller.text = '';
+    }
+
+    for (var i = 0; i < currentBoard.width; i++) {
+      var controller = getColumnController(i);
+      controller.text = currentBoard.columnHints[i].toString().replaceFirst('[', '').replaceFirst(']', '');
+    }
+    for (var i = currentBoard.width; i < columnController.length; i++) {
+      var controller = getColumnController(i);
+      controller.text = '';
+    }
+  }
+
+  TextEditingController getRowController(int index) {
+    while (index >= rowController.length) {
+      rowController.add(TextEditingController());
+    }
+    return rowController[index];
+  }
+
+  TextEditingController getColumnController(int index) {
+    while (index >= columnController.length) {
+      columnController.add(TextEditingController());
+    }
+    return columnController[index];
+  }
+
+  void dispose() {
+    rowCountController.dispose();
+    columnCountController.dispose();
+    for (var controller in rowController) {controller.dispose();}
+    for (var controller in columnController) {controller.dispose();}
+  }
+}
+
+
+

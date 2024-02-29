@@ -6,9 +6,10 @@ const int _boldLineIntvervall = 5;
 class NonogramBoard extends StatefulWidget {
   final void Function(Puzzle) onChanged;
   final Puzzle board;
+  final void Function(int, int)? onTapped;
 
   const NonogramBoard({Key? key, required this.onChanged,
-    required this.board})
+    required this.board, this.onTapped})
       : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class NonogramBoardState extends State<NonogramBoard> {
                       gesturesToOverride: const [GestureType.onTapDown],
                       builder: (context) {
                         return CustomPaint(
-                            painter: NonogramBoardPainter(context, widget.board, _setState)
+                            painter: NonogramBoardPainter(context, widget.board, _setState, onTapped: widget.onTapped)
                         );
                       },
                     )
@@ -57,9 +58,11 @@ class NonogramBoardPainter extends CustomPainter {
   Color full_color = themeColors().secondary();
   Color background_color = themeColors().gridBackground();
   Color font_color = themeColors().mainFont();
+  final void Function(int, int)? onTapped;
 
   NonogramBoardPainter(this.context, this.board, this.setState,
-    {Color? line_color, Color?  hint_line_color, Color? full_color, Color? background_color, Color? font_color}) {
+    {Color? line_color, Color?  hint_line_color, Color? full_color, Color? background_color, Color? font_color,
+    this.onTapped}) {
     this.line_color = line_color ?? this.line_color;
     this.hint_line_color = hint_line_color ?? this.hint_line_color;
     this.full_color = full_color ?? this.full_color;
@@ -180,6 +183,9 @@ class NonogramBoardPainter extends CustomPainter {
         xInner = xInnerStart + x * widthInner + _lineOffset(x);
         for (int y = 0; y < board.height; y++) {
           var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner + _lineOffset(y), widthInner, heightInner);
+          if (onTapped != null) {
+            _touchCanvas.drawRect(rect, paintBackground, onTapDown: (tapDetail) {onTapped!(x, y);});
+          }
 
           var value = board.rows[y][x];
           if (value == 1) {
