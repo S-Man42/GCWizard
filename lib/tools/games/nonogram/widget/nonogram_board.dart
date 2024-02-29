@@ -78,6 +78,7 @@ class NonogramBoardPainter extends CustomPainter {
     var paintHintLine = Paint();
     var paintFull = Paint();
     var paintBackground = Paint();
+    var paintTransparent = Paint();
     paintLine.strokeWidth = 1;
     paintLine.style = PaintingStyle.stroke;
     paintLine.color = line_color;
@@ -91,6 +92,9 @@ class NonogramBoardPainter extends CustomPainter {
 
     paintBackground.style = PaintingStyle.fill;
     paintBackground.color = background_color;
+
+    paintTransparent.style = PaintingStyle.fill;
+    paintTransparent.color = Colors.transparent;
 
     const border = 5;
     var maxRowHints = _maxRowHintsCount(board);
@@ -183,17 +187,16 @@ class NonogramBoardPainter extends CustomPainter {
         xInner = xInnerStart + x * widthInner + _lineOffset(x);
         for (int y = 0; y < board.height; y++) {
           var rect = Rect.fromLTWH(xInner, yInnerStart + y * widthInner + _lineOffset(y), widthInner, heightInner);
-          if (onTapped != null) {
-            _touchCanvas.drawRect(rect, paintBackground, onTapDown: (tapDetail) {onTapped!(x, y);});
-          }
-
           var value = board.rows[y][x];
           if (value == 1) {
-            rect = Rect.fromLTWH(rect.left + fieldBorderOn, rect.top + fieldBorderOn,
-                                rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
-            _touchCanvas.drawRect(rect, paintFull);
+            var rectI = Rect.fromLTWH(rect.left + fieldBorderOn, rect.top + fieldBorderOn,
+                                      rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
+            _touchCanvas.drawRect(rectI, paintFull);
           } else if (value == 0 && (board.state == PuzzleState.Finished || board.state == PuzzleState.Solved)) {
             _paintText(canvas, rect, '?', fontSize * 3.2, paintFull.color);
+          }
+          if (onTapped != null) {
+            _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {onTapped!(y, x);});
           }
         }
       }

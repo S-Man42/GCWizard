@@ -158,33 +158,68 @@ class Puzzle {
     }
   }
 
+  Puzzle _calcHints() {
+    var clone = Puzzle(List<List<int>>.filled(rowHints.length, []),
+        List<List<int>>.filled(columnHints.length, []), content: snapshot);
+    var counter = 0;
+    clone.rows.forEachIndexed((index, row) {
+      counter = 0;
+      for (var cell in row) {
+        if (cell == 1) {
+          counter++;
+        } else if (counter > 0) {
+          clone.rowHints[index].add(counter);
+          counter = 0;
+        }
+      }
+      if (counter > 0) {
+        clone.rowHints[index].add(counter);
+      }
+    });
+    clone.columns.forEachIndexed((index, column) {
+      counter = 0;
+      for (var cell in column) {
+        if (cell == 1) {
+          counter++;
+        } else if (counter > 0) {
+          clone.columnHints[index].add(counter);
+          counter = 0;
+        }
+      }
+      if (counter > 0) {
+        clone.columnHints[index].add(counter);
+      }
+    });
+    return clone;
+  }
+
   void removeCalculated() {
     rows = generateRows(this);
     state = PuzzleState.Ok;
   }
 
+  static const String _jsonRows = 'rows';
+  static const String _jsonColumns = 'columns';
+  static const String _jsonContent = 'content'; //optional
+
   /// nonogram.org format (with 'rows' for row hints and 'columns' for column hints)
   static Puzzle parseJson(String jsonString) {
-    const String jsonRows = 'rows';
-    const String jsonColumns = 'columns';
-    const String jsonContent = 'content'; //optional
-
     var puzzle = Puzzle.generate(0, 0);
     var jsonMap = asJsonMap(json.decode(jsonString));
 
-    var data = asJsonArrayOrNull(jsonMap[jsonRows]);
+    var data = asJsonArrayOrNull(jsonMap[_jsonRows]);
     if (data != null) {
       puzzle.rowHints = _jsonArrayToArrayList(data);
     }
 
-    data = asJsonArrayOrNull(jsonMap[jsonColumns]);
+    data = asJsonArrayOrNull(jsonMap[_jsonColumns]);
     if (data != null) {
       puzzle.columnHints = _jsonArrayToArrayList(data);
     }
     Puzzle.mapData(puzzle);
 
     if (puzzle.state == PuzzleState.Ok) {
-      data = asJsonArrayOrNull(jsonMap[jsonContent]);
+      data = asJsonArrayOrNull(jsonMap[_jsonContent]);
       if (data != null) {
         puzzle._import(_jsonArrayToList(data));
       }
@@ -217,19 +252,42 @@ class Puzzle {
   String? toJson() {
     if (columnHints.isEmpty && rowHints.isEmpty) return null;
 
-    var list = ({'columns': jsonEncode(columnHints), 'rows': jsonEncode(rowHints)});
-    if (rows.isNotEmpty) {
-      list.addAll({'content': jsonEncode(snapshot)});
-    }
+    Map<String, Object> list = ({_jsonColumns: columnHints, _jsonRows: rowHints});
+    // if (rows.isNotEmpty) {
+    //   list.addAll({_jsonContent: snapshot});
+    // }
     if (list.isEmpty) return null;
 
     return jsonEncode(list);
+  }
+
+  String? contentToJson() {
+    var clone = _calcHints();
+
+    return clone.toJson();
   }
 
   static void _checkConsistency(Puzzle data) {
     if (data.rowHints.isEmpty || data.columnHints.isEmpty ||
         data.height == 0 || data.width == 0) {
       data.state = PuzzleState.InvalidContentData;
+      return;
+    }
+
+    if (data.rowHints.any((row) => row.sum > data.width)) {
+       data.state = PuzzleState.InvalidHintData;
+       return;
+    }
+    if (data.columnHints.any((column) => column.sum > data.height)) {
+      data.state = PuzzleState.InvalidHintData;
+      return;
+    }
+    if (data.rowHints.any((row) => row.any((hint) => hint < 0))) {
+      data.state = PuzzleState.InvalidHintData;
+      return;
+    }
+    if (data.columnHints.any((column) => column.any((hint) => hint < 0))) {
+      data.state = PuzzleState.InvalidHintData;
       return;
     }
 
