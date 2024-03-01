@@ -118,7 +118,8 @@ class NonogramSolverState extends State<NonogramSolver> {
             showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
             return;
           } else if (isImage(value.bytes)) {
-            _decryptPuzzle.board.importImage(value.bytes);
+            puzzle.board.rows[0][0] = 1;
+            puzzle.board.importImage(value.bytes);
           } else {
             _importJsonFile(value.bytes, puzzle);
           }
@@ -389,7 +390,7 @@ class NonogramSolverState extends State<NonogramSolver> {
   void _importJsonFile(Uint8List bytes, PuzzleWidgetValues puzzle) {
     puzzle.board = Puzzle.parseJson(convertBytesToString(bytes));
     if (puzzle.board.state == PuzzleState.InvalidHintData) {
-      var extendedInfo = puzzle.board.invalidHintDataInfo ?? '';
+      var extendedInfo = puzzle.board.invalidHintDataInfo;
       if (extendedInfo.isNotEmpty) extendedInfo = '\n' + extendedInfo;
       showSnackBar(i18n(context, 'nonogramsolver_hinterror') + extendedInfo, context);
     } else if (puzzle.board.state != PuzzleState.Ok) {
@@ -398,7 +399,8 @@ class NonogramSolverState extends State<NonogramSolver> {
 
     puzzle.setControllerData();
     if (puzzle.encryptVersion) {
-      // puzzle.board.clearHints();
+      puzzle.board.solve();
+      puzzle.board.clearHints();
     }
   }
 

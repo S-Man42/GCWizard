@@ -91,8 +91,8 @@ class Puzzle {
   }
 
   void clearHints() {
-    for (var hints in rowHints) { hints = []; }
-    for (var hints in columnHints) { hints = []; }
+    for (var hints in rowHints) { hints.clear(); }
+    for (var hints in columnHints) { hints.clear(); }
   }
 
   List<List<int>> get columns {
@@ -168,8 +168,8 @@ class Puzzle {
   }
 
   Puzzle calcHints() {
-    var clone = Puzzle(List<List<int>>.filled(rowHints.length, []),
-        List<List<int>>.filled(columnHints.length, []), content: snapshot);
+    var clone = Puzzle(List<List<int>>.generate(rowHints.length, (index) => []),
+        List<List<int>>.generate(columnHints.length, (index) => []), content: snapshot);
     var counter = 0;
     clone.rows.forEachIndexed((index, row) {
       counter = 0;
@@ -319,9 +319,9 @@ class Puzzle {
     if ( (rowSum != columnSum)) {
      data.state = PuzzleState.InvalidHintData;
      if (rowSum > columnSum) {
-       data.invalidHintDataInfo = 'sum rows > sum columns';
+       data.invalidHintDataInfo = 'more row as column points';
      } else {
-       data.invalidHintDataInfo = 'sum columns > sum rows';
+       data.invalidHintDataInfo = 'more column as row points';
      }
      return;
    }
@@ -339,25 +339,19 @@ class Puzzle {
     if (image == null) return;
     image = image.convert(numChannels: 1);
     if (image.width / width > image.height/ height) {
-      image = Image.copyResize(image, height: height);
+      image = Image.copyResize(image, height: height, interpolation: Image.Interpolation.average);
     } else {
-      image = Image.copyResize(image, width: width);
+      image = Image.copyResize(image, width: width, interpolation: Image.Interpolation.average);
     }
     rowOffset = max(((image.height - height)/ 2).truncate(), 0);
     columnOffset = max(((image.width - width)/ 2).truncate(), 0);
 
-    for (int row = 0; row < image.height; row++) {
-      for (int column = 0; column < image.width; column++) {
-        if (image.getPixel(row, column).luminance > 125) {
-          if ((row + rowOffset < rows.length) && (column + columnOffset < rows[row + rowOffset].length)) {
-            rows[row + rowOffset][column + columnOffset] = 1;
-          }
+    for (int row = 0; row < image.width; row++) {
+      for (int column = 0; column < image.height; column++) {
+        if ((row + rowOffset < rows.length) && (column + columnOffset < rows[row + rowOffset].length)) {
+          rows[row + rowOffset][column + columnOffset] = image.getPixel(column, row).r < 128  ? 1 : -1;
         }
       }
     }
-
-    var clone = calcHints();
-    rowHints = clone.rowHints;
-    columnHints = clone.columnHints;
   }
 }
