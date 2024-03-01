@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
+import 'package:image/image.dart' as Image;
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
 enum PuzzleState {
@@ -84,6 +87,11 @@ class Puzzle {
       }
     }
     return hints;
+  }
+
+  void clearHints() {
+    for (var hints in rowHints) { hints = []; }
+    for (var hints in columnHints) { hints = []; }
   }
 
   List<List<int>> get columns {
@@ -298,5 +306,36 @@ class Puzzle {
     var columnSum = data.columnHints.map((l) => l.sum).sum;
     data.state = (rowSum == columnSum) ? PuzzleState.Ok : PuzzleState.InvalidHintData;
     return;
+  }
+
+  void importImage(Uint8List data) {
+    removeCalculated();
+    var image = decodeImage4ChannelFormat(data);
+    var rowOffset = 0;
+    var columnOffset = 0;
+
+    if (image == null) return;
+    image = image.convert(numChannels: 1);
+    if (image.width / width > image.height/ height) {
+      image = Image.copyResize(image, height: height);
+    } else {
+      image = Image.copyResize(image, width: width);
+    }
+    rowOffset = max(((image.height - height)/ 2).truncate(), 0);
+    columnOffset = max(((image.width - width)/ 2).truncate(), 0);
+
+    for (int row = 0; row < image.height; row++) {
+      for (int column = 0; column < image.width; column++) {
+        if (image.getPixel(row, column).luminance > 125) {
+          if ((row + rowOffset < rows.length) && (column + columnOffset < rows[row + rowOffset].length)) {
+            rows[row + rowOffset][column + columnOffset] = 1;
+          }
+        }
+      }
+    }
+
+    var clone = calcHints();
+    rowHints = clone.rowHints;
+    columnHints = clone.columnHints;
   }
 }

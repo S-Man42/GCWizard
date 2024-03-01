@@ -108,18 +108,38 @@ class NonogramSolverState extends State<NonogramSolver> {
   }
 
   Widget _openFilButton(PuzzleWidgetValues puzzle) {
-    if (puzzle.encryptVersion) return Container();
-    return GCWOpenFile(
-      supportedFileTypes: const [FileType.TXT, FileType.JSON],
-      onLoaded: (GCWFile? value) {
-        if (value == null) {
-          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-          return;
-        }
-        _importJsonFile(value.bytes, puzzle);
-        setState(() {});
-      },
-    );
+    if (puzzle.encryptVersion) {
+      var fileTypes = [FileType.TXT, FileType.JSON];
+      fileTypes.addAll(SUPPORTED_IMAGE_TYPES);
+      return GCWOpenFile(
+        supportedFileTypes: fileTypes,
+        onLoaded: (GCWFile? value) {
+          if (value == null) {
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+            return;
+          } else if (isImage(value.bytes)) {
+            _decryptPuzzle.board.importImage(value.bytes);
+          } else {
+            _importJsonFile(value.bytes, puzzle);
+          }
+          setState(() {});
+        },
+      );
+
+
+    } else {
+      return GCWOpenFile(
+        supportedFileTypes: const [FileType.TXT, FileType.JSON],
+        onLoaded: (GCWFile? value) {
+          if (value == null) {
+            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+            return;
+          }
+          _importJsonFile(value.bytes, puzzle);
+          setState(() {});
+        },
+      );
+    }
   }
 
   Widget _puzzleSize(PuzzleWidgetValues puzzle) {
@@ -375,6 +395,9 @@ class NonogramSolverState extends State<NonogramSolver> {
     }
 
     puzzle.setControllerData();
+    if (puzzle.encryptVersion) {
+      // puzzle.board.clearHints();
+    }
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List? data) async {
