@@ -24,6 +24,7 @@ class Puzzle {
   int width = 0;
   var rows = <List<int>>[];
   PuzzleState state = PuzzleState.Ok;
+  var invalidHintDataInfo = "";
 
   Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
     height = rowHints.length;
@@ -285,26 +286,47 @@ class Puzzle {
       return;
     }
 
-    if (data.rowHints.any((row) => row.sum > data.width)) {
+    var test = data.rowHints.firstWhereOrNull((row) => row.sum > data.width);
+    if (test != null) {
        data.state = PuzzleState.InvalidHintData;
+       data.invalidHintDataInfo = 'invalid row ' + data.rowHints.indexOf(test).toString();
        return;
     }
-    if (data.columnHints.any((column) => column.sum > data.height)) {
+
+    test = data.columnHints.firstWhereOrNull((column) => column.sum > data.height);
+    if (test != null) {
       data.state = PuzzleState.InvalidHintData;
+      data.invalidHintDataInfo = 'invalid column ' + data.columnHints.indexOf(test).toString();
       return;
     }
-    if (data.rowHints.any((row) => row.any((hint) => hint < 0))) {
+
+    test = data.rowHints.firstWhereOrNull((row) => row.any((hint) => hint < 0));
+    if (test != null) {
       data.state = PuzzleState.InvalidHintData;
+      data.invalidHintDataInfo = 'invalid row ' + data.rowHints.indexOf(test).toString();
       return;
     }
-    if (data.columnHints.any((column) => column.any((hint) => hint < 0))) {
+
+    test = data.columnHints.firstWhereOrNull((row) => row.any((hint) => hint < 0));
+    if (test != null) {
       data.state = PuzzleState.InvalidHintData;
+      data.invalidHintDataInfo = 'invalid column ' + data.columnHints.indexOf(test).toString();
       return;
     }
 
     var rowSum = data.rowHints.map((l) => l.sum).sum;
     var columnSum = data.columnHints.map((l) => l.sum).sum;
-    data.state = (rowSum == columnSum) ? PuzzleState.Ok : PuzzleState.InvalidHintData;
+    if ( (rowSum != columnSum)) {
+     data.state = PuzzleState.InvalidHintData;
+     if (rowSum > columnSum) {
+       data.invalidHintDataInfo = 'sum rows > sum columns';
+     } else {
+       data.invalidHintDataInfo = 'sum columns > sum rows';
+     }
+     return;
+   }
+
+    data.state = PuzzleState.Ok;
     return;
   }
 

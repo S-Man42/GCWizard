@@ -362,7 +362,7 @@ class NonogramSolverState extends State<NonogramSolver> {
               onPressed: () {
                 _renderedImage(puzzle.board, puzzle.encryptVersion).then((image) async {
                   image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                    _exportFile(context, data?.buffer.asUint8List());
+                    _exportFile(context, data?.buffer.asUint8List(), puzzle);
                   });
                 });
               },
@@ -376,7 +376,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                 text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
                 onPressed: () {
                   setState(() {
-                    _exportJsonFile(context, puzzle.board.toJson(encryptVersion: puzzle.encryptVersion));
+                    _exportJsonFile(context, puzzle.board.toJson(encryptVersion: puzzle.encryptVersion), puzzle);
                   });
                 },
               ),
@@ -389,7 +389,9 @@ class NonogramSolverState extends State<NonogramSolver> {
   void _importJsonFile(Uint8List bytes, PuzzleWidgetValues puzzle) {
     puzzle.board = Puzzle.parseJson(convertBytesToString(bytes));
     if (puzzle.board.state == PuzzleState.InvalidHintData) {
-      showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
+      var extendedInfo = puzzle.board.invalidHintDataInfo ?? '';
+      if (extendedInfo.isNotEmpty) extendedInfo = '\n' + extendedInfo;
+      showSnackBar(i18n(context, 'nonogramsolver_hinterror') + extendedInfo, context);
     } else if (puzzle.board.state != PuzzleState.Ok) {
       showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
     }
@@ -400,14 +402,21 @@ class NonogramSolverState extends State<NonogramSolver> {
     }
   }
 
-  Future<void> _exportFile(BuildContext context, Uint8List? data) async {
+  Future<void> _exportFile(BuildContext context, Uint8List? data, PuzzleWidgetValues puzzle) async {
     if (data == null) return;
+    if (puzzle.encryptVersion) {
+      showSnackBar(i18n(context, 'nonogramsolver_createhint'), context);
+    }
+
     await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
       if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
   }
 
-  Future<void> _exportJsonFile(BuildContext context, String? data) async {
+  Future<void> _exportJsonFile(BuildContext context, String? data, PuzzleWidgetValues puzzle) async {
+    if (puzzle.encryptVersion) {
+      showSnackBar(i18n(context, 'nonogramsolver_createhint'), context);
+    }
     if (data == null) return;
     saveStringToFile(context, data, buildFileNameWithDate('nonogram_', FileType.JSON));
   }

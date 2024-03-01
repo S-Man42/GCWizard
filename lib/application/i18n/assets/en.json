@@ -3165,6 +3165,7 @@
   "nonogramsolver_description": "Creates a solution for a given Nonogram",
   "nonogramsolver_dataerror": "Error in the data",
   "nonogramsolver_hinterror": "Error in the hint data",
+  "nonogramsolver_createhint": "It cannot be guaranteed that the puzzle is unique. Check beforehand.",
   "numberpyramidsolver_title": "Number Pyramid Solver",
   "numberpyramidsolver_description": "Creates a solution for a given Number Pyramid",
   "numbersequence_title": "Number Sequences",
