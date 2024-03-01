@@ -340,7 +340,7 @@ class NonogramSolverState extends State<NonogramSolver> {
             child: GCWButton(
               text: i18n(context, 'common_exportfile_saveoutput'),
               onPressed: () {
-                _renderedImage(puzzle.board).then((image) async {
+                _renderedImage(puzzle.board, puzzle.encryptVersion).then((image) async {
                   image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                     _exportFile(context, data?.buffer.asUint8List());
                   });
@@ -356,8 +356,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                 text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
                 onPressed: () {
                   setState(() {
-                    _exportJsonFile(context, puzzle.encryptVersion
-                        ? puzzle.board.contentToJson() : puzzle.board.toJson());
+                    _exportJsonFile(context, puzzle.board.toJson(encryptVersion: puzzle.encryptVersion));
                   });
                 },
               ),
@@ -390,10 +389,18 @@ class NonogramSolverState extends State<NonogramSolver> {
     saveStringToFile(context, data, buildFileNameWithDate('nonogram_', FileType.JSON));
   }
 
-  Future<ui.Image> _renderedImage(Puzzle puzzle) async {
+  Future<ui.Image> _renderedImage(Puzzle puzzle, bool encryptVersion) async {
     const cellSize = 70.0;
     final recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
+
+    if (encryptVersion) {
+      var clone = puzzle.calcHints();
+      clone.removeCalculated();
+
+      puzzle = clone;
+    }
+
     final size = Size(
         (puzzle.columns.length + _maxColumnHintsCount(puzzle)) * cellSize,
         (puzzle.rows.length + _maxRowHintsCount(puzzle)) * cellSize);

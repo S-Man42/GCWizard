@@ -42,10 +42,10 @@ class Puzzle {
   }
 
    static Puzzle generate(int height, int width) {
-   var puzzle = Puzzle(List<List<int>>.generate(height, (index) => []),
-                 List<List<int>>.generate(width, (index) => []));
-   mapData(puzzle);
-   return puzzle;
+     var puzzle = Puzzle(List<List<int>>.generate(height, (index) => []),
+                   List<List<int>>.generate(width, (index) => []));
+     mapData(puzzle);
+     return puzzle;
   }
 
   static List<List<int>> generateRows(Puzzle data) {
@@ -158,7 +158,7 @@ class Puzzle {
     }
   }
 
-  Puzzle _calcHints() {
+  Puzzle calcHints() {
     var clone = Puzzle(List<List<int>>.filled(rowHints.length, []),
         List<List<int>>.filled(columnHints.length, []), content: snapshot);
     var counter = 0;
@@ -249,20 +249,23 @@ class Puzzle {
     return list;
   }
 
-  String? toJson() {
+  String? toJson({bool withContent = false, bool encryptVersion = false}) {
+    if (encryptVersion) {
+      return _contentToJson();
+    }
     if (columnHints.isEmpty && rowHints.isEmpty) return null;
 
     Map<String, Object> list = ({_jsonColumns: columnHints, _jsonRows: rowHints});
-    // if (rows.isNotEmpty) {
-    //   list.addAll({_jsonContent: snapshot});
-    // }
+    if (withContent && rows.isNotEmpty) {
+      list.addAll({_jsonContent: snapshot});
+    }
     if (list.isEmpty) return null;
 
     return jsonEncode(list);
   }
 
-  String? contentToJson() {
-    var clone = _calcHints();
+  String? _contentToJson() {
+    var clone = calcHints();
 
     return clone.toJson();
   }
@@ -291,14 +294,9 @@ class Puzzle {
       return;
     }
 
-    var rowSum = _sum(data.rowHints.map((l) => _sum(l)));
-    var columnSum = _sum(data.columnHints.map((l) => _sum(l)));
+    var rowSum = data.rowHints.map((l) => l.sum).sum;
+    var columnSum = data.columnHints.map((l) => l.sum).sum;
     data.state = (rowSum == columnSum) ? PuzzleState.Ok : PuzzleState.InvalidHintData;
     return;
-  }
-
-  static int _sum(Iterable<int> list) {
-    if (list.isEmpty) return 0;
-    return list.reduce((x, y) => x + y);
   }
 }
