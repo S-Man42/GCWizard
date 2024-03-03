@@ -3165,7 +3165,7 @@
   "navajo_source_dictionary": "whole Dictionary",
   "navajo_source_alphabet": "only Alphabet",
   "nonogramsolver_title": "Nonogram Solver",
-  "nonogramsolver_description": "Creates a solution for a given Nonogram",
+  "nonogramsolver_description": "Creates a solution for a given Nonogram (Japanese crosswords)",
   "nonogramsolver_dataerror": "Error in the data",
   "nonogramsolver_hinterror": "Error in the hint data",
   "nonogramsolver_createhint": "It cannot be guaranteed that the puzzle is unique. Check beforehand.",
