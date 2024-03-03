@@ -80,14 +80,8 @@ class Puzzle {
   }
 
   static List<int> cleanHints(List<int> hints, int size) {
-    for (var i = hints.length -1; i >= 0; i--) {
-      if (hints[i] <= 0) {
-        hints.removeAt(i);
-      } else if (hints[i] > size) {
-        hints[i] = size;
-      }
-    }
-    return hints;
+    hints.removeWhere((element) => element <= 0);
+    return hints.sublist(0, min(size, hints.length));
   }
 
   void clearHints() {
