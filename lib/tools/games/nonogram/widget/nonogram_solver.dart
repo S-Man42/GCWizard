@@ -550,7 +550,7 @@ class NonogramSolverState extends State<NonogramSolver> {
           child: Container(
             padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
             child: GCWButton(
-              text: i18n(context, 'common_exportfile_saveoutput'),
+              text: i18n(context, 'common_exportfile_saveoutput') + ' (' + i18n(context, 'common_image') + ')',
               onPressed: () {
                 _renderedImage(puzzle.board, puzzle.encryptVersion).then((image) async {
                   image.toByteData(format: ui.ImageByteFormat.png).then((data) {
@@ -565,7 +565,7 @@ class NonogramSolverState extends State<NonogramSolver> {
             child: Container(
               padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               child: GCWButton(
-                text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
+                text: i18n(context, 'common_exportfile_saveoutput') + ' (JSON)',
                 onPressed: () {
                   setState(() {
                     _exportJsonFile(context, puzzle.board.toJson(encryptVersion: puzzle.encryptVersion), puzzle);
