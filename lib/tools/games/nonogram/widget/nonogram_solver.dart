@@ -179,6 +179,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                     children: [
                       _drawNonogramm(puzzle),
                       _controlButtons(puzzle),
+                      _encryptPreview(puzzle),
                       _exportButtons(puzzle),
                     ],
                   )
@@ -223,6 +224,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                     children: [
                       _drawNonogramm(puzzle),
                       _controlButtons(puzzle),
+                      _encryptPreview(puzzle),
                       _exportButtons(puzzle),
                     ],
                   )
@@ -245,10 +247,9 @@ class NonogramSolverState extends State<NonogramSolver> {
             puzzle.board = newBoard;
           });
         },
-        onTapped: (rowX, column)
-        {
+        onTapped: (row, column) {
           puzzle.encryptVersion
-            ? setState(() {puzzle.onTapped(rowX, column);})
+            ? setState(() {puzzle.onTapped(row, column);})
             : null;
         },
       ),
@@ -565,6 +566,16 @@ class NonogramSolverState extends State<NonogramSolver> {
         )
       ],
     );
+  }
+
+  Widget _encryptPreview(PuzzleWidgetValues puzzle) {
+    if (!puzzle.encryptVersion) return Container();
+    return Column(
+      children: <Widget>[
+        NonogramBoard(
+          board: puzzle.board.calcHints(),
+          onChanged: (newBoard)  => {})
+      ]);
   }
 
   Widget _exportButtons(PuzzleWidgetValues puzzle) {
