@@ -983,7 +983,9 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.GAMES
     ], searchKeys: const [
       'games',
-      'games_nonogramsolver',
+      'nonogramsolver',
+      'grid',
+      'images'
     ]),
     GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
       ToolCategory.GAMES,

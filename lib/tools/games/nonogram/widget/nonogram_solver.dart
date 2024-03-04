@@ -7,8 +7,9 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -32,10 +33,21 @@ class NonogramSolver extends StatefulWidget {
   NonogramSolverState createState() => NonogramSolverState();
 }
 
+enum _DecryptWizardStep {FILE_OR_MANUAL, LOAD_JSON, SHOW_RESULT_FILE, DEFINE_SIZE, SET_ROW_VALUES, SET_COLUMN_VALUES, SHOW_RESULT_MANUAL}
+enum _EncryptWizardStep {FILE_OR_MANUAL, LOAD_JSON, DRAW_LOADED_JSON, LOAD_IMAGE, DRAW_LOADED_IMAGE, DEFINE_SIZE, DRAW_MANUALLY}
+
 class NonogramSolverState extends State<NonogramSolver> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   late PuzzleWidgetValues _decryptPuzzle;
   late PuzzleWidgetValues _encryptPuzzle;
+
+  int _currentRowCount = 10;
+  int _currentColumnCount = 10;
+  List<String> _encryptRowHints = [];
+  List<String> _encryptColumnHints = [];
+
+  _DecryptWizardStep _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL;
+  _EncryptWizardStep _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL;
 
   @override
   void initState() {
@@ -65,6 +77,54 @@ class NonogramSolverState extends State<NonogramSolver> {
               });
             },
           ),
+          _currentMode == GCWSwitchPosition.left ?
+            GCWTextDivider(
+              text: i18n(context, 'nonogramsolver_setup_generator'),
+              trailing: GCWIconButton(
+                iconColor: _currentEncryptStep == _EncryptWizardStep.FILE_OR_MANUAL ? themeColors().inActive() : null,
+                size: IconButtonSize.SMALL,
+                icon: Icons.undo, onPressed: () {
+                  if (_currentEncryptStep == _EncryptWizardStep.FILE_OR_MANUAL) {
+                    return;
+                  }
+
+                  setState(() {
+                    switch (_currentEncryptStep) {
+                      case _EncryptWizardStep.LOAD_JSON: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
+                      case _EncryptWizardStep.DRAW_LOADED_JSON: _currentEncryptStep = _EncryptWizardStep.LOAD_JSON; break;
+                      case _EncryptWizardStep.LOAD_IMAGE: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
+                      case _EncryptWizardStep.DRAW_LOADED_IMAGE: _currentEncryptStep = _EncryptWizardStep.LOAD_IMAGE; break;
+                      case _EncryptWizardStep.DEFINE_SIZE: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
+                      case _EncryptWizardStep.DRAW_MANUALLY: _currentEncryptStep = _EncryptWizardStep.DEFINE_SIZE; break;
+                      default: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
+                    }
+                  });
+                },
+              )
+            ) :
+            GCWTextDivider(
+                text: i18n(context, 'nonogramsolver_setup_solver'),
+                trailing: GCWIconButton(
+                  iconColor: _currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL ? themeColors().inActive() : null,
+                  size: IconButtonSize.SMALL,
+                  icon: Icons.undo, onPressed: () {
+                    if (_currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL) {
+                      return;
+                    }
+                    setState(() {
+                      switch (_currentDecryptStep) {
+                        case _DecryptWizardStep.LOAD_JSON: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
+                        case _DecryptWizardStep.SHOW_RESULT_FILE: _currentDecryptStep = _DecryptWizardStep.LOAD_JSON; break;
+                        case _DecryptWizardStep.DEFINE_SIZE: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
+                        case _DecryptWizardStep.SET_ROW_VALUES: _currentDecryptStep = _DecryptWizardStep.DEFINE_SIZE; break;
+                        case _DecryptWizardStep.SET_COLUMN_VALUES: _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES; break;
+                        case _DecryptWizardStep.SHOW_RESULT_MANUAL: _currentDecryptStep = _DecryptWizardStep.SET_COLUMN_VALUES; break;
+                        default: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
+                      }
+                    });
+                  },
+                )
+            ),
           _currentMode == GCWSwitchPosition.right
             ? _puzzleWidget(_decryptPuzzle)
             : _puzzleWidget(_encryptPuzzle)
@@ -75,135 +135,260 @@ class NonogramSolverState extends State<NonogramSolver> {
   Widget _puzzleWidget(PuzzleWidgetValues puzzle) {
     return Column(
       children: <Widget>[
-        _openFilButton(puzzle),
-        _puzzleSize(puzzle),
-        _rowHints(puzzle),
-        _columnwHints(puzzle),
-
-        Container(height: 10),
-        GCWPainterContainer(
-          scale: puzzle.scale,
-          suppressTopSpace: true,
-          suppressBottomSpace: true,
-          onChanged: (value) {puzzle.scale = value;},
-          child: NonogramBoard(
-            board: puzzle.board,
-            onChanged: (newBoard) {
-              setState(() {
-                puzzle.board = newBoard;
-              });
-            },
-            onTapped: (rowX, column)
-            {
-              puzzle.encryptVersion
-                ? setState(() {puzzle.onTapped(rowX, column);})
-                : null;
-            },
-          ),
-        ),
-        _controlButtons(puzzle),
-        _exportButtons(puzzle),
+        _currentMode == GCWSwitchPosition.left
+          ? Column(
+              children: [
+                if (_currentEncryptStep == _EncryptWizardStep.FILE_OR_MANUAL)
+                  Column(
+                    children: [
+                      GCWText(
+                          text: i18n(context, 'nonogramsolver_generator_loadfrom_hint')
+                      ),
+                      Container(height: DOUBLE_DEFAULT_MARGIN),
+                      Row(
+                        children: [
+                          Expanded(child: GCWButton(text: i18n(context, 'nonogramsolver_loadfromimage'), onPressed: () {
+                            setState(() {
+                              _currentEncryptStep = _EncryptWizardStep.LOAD_IMAGE;
+                            });
+                          })),
+                          Container(width: DOUBLE_DEFAULT_MARGIN),
+                          Expanded(child: GCWButton(text: i18n(context, 'nonogramsolver_loadfromjson'), onPressed: () {
+                            setState(() {
+                              _currentEncryptStep = _EncryptWizardStep.LOAD_JSON;
+                            });
+                          })),
+                          Container(width: DOUBLE_DEFAULT_MARGIN),
+                          Expanded(child: GCWButton(text: i18n(context, 'nonogramsolver_drawmanually'), onPressed: () {
+                            setState(() {
+                              _currentEncryptStep = _EncryptWizardStep.DEFINE_SIZE;
+                            });
+                          })),
+                        ],
+                      ),
+                    ],
+                  ),
+                if (_currentEncryptStep == _EncryptWizardStep.LOAD_JSON)
+                  _openFileButtonEncrypt(puzzle, _currentEncryptStep),
+                if (_currentEncryptStep == _EncryptWizardStep.LOAD_IMAGE)
+                  _openFileButtonEncrypt(puzzle, _currentEncryptStep),
+                if (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE)
+                  _buildSizeSelectionEncrypt(puzzle),
+                if ([_EncryptWizardStep.DRAW_LOADED_JSON, _EncryptWizardStep.DRAW_LOADED_IMAGE, _EncryptWizardStep.DRAW_MANUALLY].contains(_currentEncryptStep))
+                  Column(
+                    children: [
+                      _drawNonogramm(puzzle),
+                      _controlButtons(puzzle),
+                      _exportButtons(puzzle),
+                    ],
+                  )
+              ],
+            )
+          : Column(
+              children: [
+                if (_currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL)
+                  Column(
+                    children: [
+                      GCWText(
+                          text: i18n(context, 'nonogramsolver_solver_loadfrom_hint')
+                      ),
+                      Container(height: DOUBLE_DEFAULT_MARGIN),
+                      Row(
+                        children: [
+                          Expanded(child: GCWButton(text: i18n(context, 'nonogramsolver_loadfromjson'), onPressed: () {
+                            setState(() {
+                              _currentDecryptStep = _DecryptWizardStep.LOAD_JSON;
+                            });
+                          })),
+                          Container(width: DOUBLE_DEFAULT_MARGIN),
+                          Expanded(child: GCWButton(text: i18n(context, 'nonogramsolver_createmanually'), onPressed: () {
+                            setState(() {
+                              _currentDecryptStep = _DecryptWizardStep.DEFINE_SIZE;
+                            });
+                          })),
+                        ],
+                      ),
+                    ],
+                  ),
+                if (_currentDecryptStep == _DecryptWizardStep.LOAD_JSON)
+                  _openFileButtonDecrypt(puzzle),
+                if (_currentDecryptStep == _DecryptWizardStep.DEFINE_SIZE)
+                  _buildSizeSelectionDecrypt(puzzle),
+                if (_currentDecryptStep == _DecryptWizardStep.SET_ROW_VALUES)
+                  _buildRowHints(puzzle),
+                if (_currentDecryptStep == _DecryptWizardStep.SET_COLUMN_VALUES)
+                  _buildColumnHints(puzzle),
+                if ([_DecryptWizardStep.SHOW_RESULT_MANUAL, _DecryptWizardStep.SHOW_RESULT_FILE].contains(_currentDecryptStep))
+                  Column(
+                    children: [
+                      _drawNonogramm(puzzle),
+                      _controlButtons(puzzle),
+                      _exportButtons(puzzle),
+                    ],
+                  )
+              ],
+            )
       ],
     );
   }
 
-  Widget _openFilButton(PuzzleWidgetValues puzzle) {
-    if (puzzle.encryptVersion) {
-      var fileTypes = [FileType.TXT, FileType.JSON];
-      fileTypes.addAll(SUPPORTED_IMAGE_TYPES);
-      return GCWOpenFile(
-        supportedFileTypes: fileTypes,
-        onLoaded: (GCWFile? value) {
-          if (value == null) {
-            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-            return;
-          } else if (isImage(value.bytes)) {
-            puzzle.board.rows[0][0] = 1;
-            puzzle.board.importImage(value.bytes);
-          } else {
-            _importJsonFile(value.bytes, puzzle);
-          }
-          setState(() {});
-        },
-      );
-
-
-    } else {
-      return GCWOpenFile(
-        supportedFileTypes: const [FileType.TXT, FileType.JSON],
-        onLoaded: (GCWFile? value) {
-          if (value == null) {
-            showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-            return;
-          }
-          _importJsonFile(value.bytes, puzzle);
-          setState(() {});
-        },
-      );
-    }
-  }
-
-  Widget _puzzleSize(PuzzleWidgetValues puzzle) {
-    return GCWExpandableTextDivider(
-        text: i18n(context, 'gameoflife_size'),
-        expanded: puzzle.currentSizeExpanded,
-        onChanged: (value) {
+  Widget _drawNonogramm(PuzzleWidgetValues puzzle) {
+    return GCWPainterContainer(
+      scale: puzzle.scale,
+      suppressTopSpace: true,
+      suppressBottomSpace: true,
+      onChanged: (value) {puzzle.scale = value;},
+      child: NonogramBoard(
+        board: puzzle.board,
+        onChanged: (newBoard) {
           setState(() {
-            puzzle.currentSizeExpanded = value;
+            puzzle.board = newBoard;
           });
         },
-        child: _buildSizeSelection(puzzle)
+        onTapped: (rowX, column)
+        {
+          puzzle.encryptVersion
+            ? setState(() {puzzle.onTapped(rowX, column);})
+            : null;
+        },
+      ),
     );
   }
 
-  Widget _buildSizeSelection(PuzzleWidgetValues puzzle) {
+  Widget _openFileButtonEncrypt(PuzzleWidgetValues puzzle, _EncryptWizardStep type) {
+    var fileTypes = <FileType>[];
+    var title = '';
+
+    switch(type) {
+      case _EncryptWizardStep.LOAD_JSON:
+        fileTypes =  [FileType.TXT, FileType.JSON];
+        title = 'JSON/TXT';
+        break;
+      case _EncryptWizardStep.LOAD_IMAGE:
+        fileTypes = SUPPORTED_IMAGE_TYPES;
+        title = i18n(context, 'common_image');
+        break;
+      default: fileTypes =  [FileType.TXT, FileType.JSON]; break;
+    }
+
+    return GCWOpenFile(
+      title: title,
+      supportedFileTypes: fileTypes,
+      onLoaded: (GCWFile? value) {
+        if (value == null) {
+          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+          return;
+        } else if (isImage(value.bytes)) {
+          puzzle.board.rows[0][0] = 1;
+          puzzle.board.importImage(value.bytes);
+          _currentEncryptStep = _EncryptWizardStep.DRAW_LOADED_IMAGE;
+        } else {
+          _importJsonFile(value.bytes, puzzle);
+          _currentEncryptStep = _EncryptWizardStep.DRAW_LOADED_JSON;
+        }
+        setState(() {
+        });
+      }
+    );
+  }
+
+  Widget _openFileButtonDecrypt(PuzzleWidgetValues puzzle) {
+    return GCWOpenFile(
+      title: 'JSON/TXT',
+      supportedFileTypes: const [FileType.TXT, FileType.JSON],
+      onLoaded: (GCWFile? value) {
+        if (value == null) {
+          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+          return;
+        }
+        _importJsonFile(value.bytes, puzzle);
+        setState(() {
+          _currentDecryptStep = _DecryptWizardStep.SHOW_RESULT_FILE;
+        });
+      },
+    );
+  }
+
+  Widget _buildSizeSelectionDecrypt(PuzzleWidgetValues puzzle) {
+    return Column(
+        children: <Widget>[
+          GCWIntegerSpinner(
+              title: i18n(context, 'common_row_count'),
+              controller: puzzle.rowCountController,
+              value: _currentRowCount,
+              min: 1,
+              onChanged: (value) {
+                setState(() {
+                  _currentRowCount = value;
+                });
+              }
+          ),
+          GCWIntegerSpinner(
+              title: i18n(context, 'common_column_count'),
+              controller: puzzle.columnCountController,
+              value: _currentColumnCount,
+              min: 1,
+              onChanged: (value) {
+                setState(() {
+                  _currentColumnCount = value;
+                });
+              }
+          ),
+          GCWButton(text: i18n(context, 'common_next'), onPressed: () {
+            setState(() {
+              puzzle.rowCount = _currentRowCount;
+              puzzle.columnCount = _currentColumnCount;
+              puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
+              var tmpPuzzle = puzzle.board;
+              puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+              puzzle.board.importHints(tmpPuzzle);
+              _encryptRowHints = List<String>.generate(_currentRowCount, (index) => '');
+              _encryptColumnHints = List<String>.generate(_currentColumnCount, (index) => '');
+              _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES;
+            });
+          }),
+        ]
+    );
+  }
+
+  Widget _buildSizeSelectionEncrypt(PuzzleWidgetValues puzzle) {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
           title: i18n(context, 'common_row_count'),
           controller: puzzle.rowCountController,
-          value: puzzle.rowCount,
+          value: _currentRowCount,
           min: 1,
           onChanged: (value) {
             setState(() {
-              puzzle.rowCount = value;
-              puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
-              var tmpPuzzle = puzzle.board;
-              puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
-              puzzle.board.importHints(tmpPuzzle);
+              _currentRowCount = value;
             });
           }
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'common_column_count'),
           controller: puzzle.columnCountController,
-          value: puzzle.columnCount,
+          value: _currentColumnCount,
           min: 1,
           onChanged: (value) {
             setState(() {
-              puzzle.columnCount = value;
-              puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
-              var tmpPuzzle = puzzle.board;
-              puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
-              puzzle.board.importHints(tmpPuzzle);
+              _currentColumnCount = value;
             });
           }
-        )
-      ]
-    );
-  }
-
-  Widget _rowHints(PuzzleWidgetValues puzzle) {
-    if (puzzle.encryptVersion) return Container();
-    return GCWExpandableTextDivider(
-        text: i18n(context, 'grid_rows'),
-        expanded: puzzle.currentRowHintsExpanded,
-        onChanged: (value) {
+        ),
+        GCWButton(text: i18n(context, 'common_done'), onPressed: () {
           setState(() {
-            puzzle.currentRowHintsExpanded = value;
+            puzzle.rowCount = _currentRowCount;
+            puzzle.columnCount = _currentColumnCount;
+            puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
+            var tmpPuzzle = puzzle.board;
+            puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+            puzzle.board.importHints(tmpPuzzle);
+
+            _currentEncryptStep = _EncryptWizardStep.DRAW_MANUALLY;
           });
-        },
-        child: _buildRowHints(puzzle)
+        }),
+      ]
     );
   }
 
@@ -223,15 +408,7 @@ class NonogramSolverState extends State<NonogramSolver> {
             child: GCWTextField(
               controller: controller,
               onChanged: (text) {
-                setState(() {
-                  var data = textToIntList(text, allowNegativeValues: true);
-                  var dataBackup = data.sublist(0);
-                  data = Puzzle.cleanHints(data, puzzle.board.width);
-                  puzzle.board.rowHints[i] = data;
-                  if (!listEquals(data, dataBackup)) {
-                    showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
-                  }
-                });
+                _encryptRowHints[i] = text;
               }
             )
           )
@@ -240,22 +417,26 @@ class NonogramSolverState extends State<NonogramSolver> {
       list.add(row);
     }
 
+    list.add(GCWButton(text: i18n(context, 'common_next'), onPressed: () {
+      setState(() {
+        setState(() {
+          for (var i = 0; i < puzzle.rowCount; i++ ) {
+            var _encryptList = textToIntList(_encryptRowHints[i], allowNegativeValues: true);
+            var dataBackup = _encryptList.sublist(0);
+            var data = Puzzle.cleanHints(_encryptList, puzzle.board.width);
+            if (!listEquals(data, dataBackup)) {
+              showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
+            } else {
+              puzzle.board.rowHints[i] = data;
+              _currentDecryptStep = _DecryptWizardStep.SET_COLUMN_VALUES;
+            }
+          }
+        });
+      });
+    }));
+
     return Column(
       children: list,
-    );
-  }
-
-  Widget _columnwHints(PuzzleWidgetValues puzzle) {
-    if (puzzle.encryptVersion) return Container();
-    return GCWExpandableTextDivider(
-        text: i18n(context, 'grid_columns'),
-        expanded: puzzle.currentColumnHintsExpanded,
-        onChanged: (value) {
-          setState(() {
-            puzzle.currentColumnHintsExpanded = value;
-          });
-        },
-        child: _buildColumnHints(puzzle)
     );
   }
 
@@ -273,24 +454,34 @@ class NonogramSolverState extends State<NonogramSolver> {
             Expanded(
                 flex: 3,
                 child: GCWTextField(
-                    controller: controller,
-                    onChanged: (text) {
-                      setState(() {
-                        var data = textToIntList(text, allowNegativeValues: true);
-                        var dataBackup = data.sublist(0);
-                        data = Puzzle.cleanHints(data, puzzle.board.height);
-                        puzzle.board.columnHints[i] = data;
-                        if (!listEquals(data, dataBackup)) {
-                          showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
-                        }
-                      });
-                    }
+                  controller: controller,
+                  onChanged: (text) {
+                    _encryptColumnHints[i] = text;
+                  }
                 ),
             )
           ]
       );
       list.add(row);
     }
+
+    list.add(GCWButton(text: i18n(context, 'common_done'), onPressed: () {
+      setState(() {
+        setState(() {
+          for (var i = 0; i < puzzle.columnCount; i++ ) {
+            var _encryptList = textToIntList(_encryptColumnHints[i], allowNegativeValues: true);
+            var dataBackup = _encryptList.sublist(0);
+            var data = Puzzle.cleanHints(_encryptList, puzzle.board.width);
+            if (!listEquals(data, dataBackup)) {
+              showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
+            } else {
+              puzzle.board.columnHints[i] = data;
+              _currentDecryptStep = _DecryptWizardStep.SHOW_RESULT_MANUAL;
+            }
+          }
+        });
+      });
+    }));
 
     return Column(
       children: list,
@@ -359,7 +550,7 @@ class NonogramSolverState extends State<NonogramSolver> {
           child: Container(
             padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
             child: GCWButton(
-              text: i18n(context, 'common_exportfile_saveoutput'),
+              text: i18n(context, 'common_exportfile_saveoutput') + ' (' + i18n(context, 'common_image') + ')',
               onPressed: () {
                 _renderedImage(puzzle.board, puzzle.encryptVersion).then((image) async {
                   image.toByteData(format: ui.ImageByteFormat.png).then((data) {
@@ -374,7 +565,7 @@ class NonogramSolverState extends State<NonogramSolver> {
             child: Container(
               padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               child: GCWButton(
-                text: i18n(context, 'common_exportfile_saveoutput') + ' JSON',
+                text: i18n(context, 'common_exportfile_saveoutput') + ' (JSON)',
                 onPressed: () {
                   setState(() {
                     _exportJsonFile(context, puzzle.board.toJson(encryptVersion: puzzle.encryptVersion), puzzle);
