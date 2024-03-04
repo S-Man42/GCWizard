@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 
@@ -10,11 +11,9 @@ List<BaseCoordinate> parseCoordinates(String text, {bool wholeString = false}) {
     BaseCoordinate? coord;
     coord = parseStandardFormats(text, wholeString: wholeString);
     if (coord != null) coords.add(coord);
-    for (var format in allCoordinateFormatDefinitions) {
-      if (!standardCoordinateFormatDefinitions.contains(format)) {
-        coord = (wholeString ? format.parseCoordinateWholeString(text) : format.parseCoordinate(text));
-        if (coord != null) coords.add(coord);
-      }
+    for (var format in allCoordinateFormatDefinitions.whereNot((format) => standardCoordinateFormatDefinitions.contains(format))   ) {
+      coord = (wholeString ? format.parseCoordinateWholeString(text) : format.parseCoordinate(text));
+      if (coord != null) coords.add(coord);
     }
   } catch (e) {}
 
