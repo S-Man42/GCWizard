@@ -501,9 +501,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                     onPressed: () {
                       setState(() {
                         puzzle.board.solve();
-                        if (puzzle.board.state != PuzzleState.Solved) {
-                          showSnackBar(i18n(context, 'sudokusolver_error'), context);
-                        }
+                        _showSnackBar(puzzle.board);
                       });
                     },
                   ),
@@ -606,18 +604,24 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   void _importJsonFile(Uint8List bytes, PuzzleWidgetValues puzzle) {
     puzzle.board = Puzzle.parseJson(convertBytesToString(bytes));
-    if (puzzle.board.state == PuzzleState.InvalidHintData) {
-      var extendedInfo = puzzle.board.invalidHintDataInfo;
-      if (extendedInfo.isNotEmpty) extendedInfo = '\n' + extendedInfo;
-      showSnackBar(i18n(context, 'nonogramsolver_hinterror') + extendedInfo, context);
-    } else if (puzzle.board.state != PuzzleState.Ok) {
-      showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
-    }
+    _showSnackBar(puzzle.board);
 
     puzzle.setControllerData();
     if (puzzle.encryptVersion) {
       puzzle.board.solve();
       puzzle.board.clearHints();
+    }
+  }
+
+  void _showSnackBar(Puzzle board) {
+    if (board.state == PuzzleState.InvalidHintData) {
+      var extendedInfo = board.invalidHintDataInfo;
+      if (extendedInfo.isNotEmpty) extendedInfo = '\n' + extendedInfo;
+      showSnackBar(i18n(context, 'nonogramsolver_hinterror') + extendedInfo, context);
+    } else if (board.state != PuzzleState.Ok) {
+      showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
+    } else if (board.state != PuzzleState.Finished) {
+      showSnackBar(i18n(context, 'sudokusolver_error'), context);
     }
   }
 
@@ -653,8 +657,8 @@ class NonogramSolverState extends State<NonogramSolver> {
     }
 
     final size = Size(
-        (puzzle.columns.length + _maxColumnHintsCount(puzzle)) * cellSize,
-        (puzzle.rows.length + _maxRowHintsCount(puzzle)) * cellSize);
+        (puzzle.columns.length + _maxRowHintsCount(puzzle)) * cellSize,
+        (puzzle.rows.length + _maxColumnHintsCount(puzzle)) * cellSize);
 
     final painter = NonogramBoardPainter(context, puzzle, () => {},
         line_color: Colors.black, hint_line_color: Colors.grey, full_color: Colors.black,

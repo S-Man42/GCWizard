@@ -43,6 +43,11 @@ class Puzzle {
       maxRecursionLevel = 3;
       Strategy().solve(this, maxRecursionLevel);
     }
+    var stateTmp = state;
+    _checkConsistency(this);
+    if (state == PuzzleState.Ok) {
+      state = stateTmp;
+    }
   }
 
    static Puzzle generate(int height, int width) {
@@ -283,28 +288,28 @@ class Puzzle {
     var test = data.rowHints.firstWhereOrNull((row) => row.sum > data.width);
     if (test != null) {
        data.state = PuzzleState.InvalidHintData;
-       data.invalidHintDataInfo = 'invalid row ' + data.rowHints.indexOf(test).toString();
+       data.invalidHintDataInfo = 'invalid row ' + (data.rowHints.indexOf(test) + 1).toString();
        return;
     }
 
     test = data.columnHints.firstWhereOrNull((column) => column.sum > data.height);
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
-      data.invalidHintDataInfo = 'invalid column ' + data.columnHints.indexOf(test).toString();
+      data.invalidHintDataInfo = 'invalid column ' + (data.columnHints.indexOf(test) + 1).toString();
       return;
     }
 
     test = data.rowHints.firstWhereOrNull((row) => row.any((hint) => hint < 0));
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
-      data.invalidHintDataInfo = 'invalid row ' + data.rowHints.indexOf(test).toString();
+      data.invalidHintDataInfo = 'invalid row ' + (data.rowHints.indexOf(test) + 1).toString();
       return;
     }
 
     test = data.columnHints.firstWhereOrNull((row) => row.any((hint) => hint < 0));
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
-      data.invalidHintDataInfo = 'invalid column ' + data.columnHints.indexOf(test).toString();
+      data.invalidHintDataInfo = 'invalid column ' + (data.columnHints.indexOf(test) + 1).toString();
       return;
     }
 
@@ -321,7 +326,6 @@ class Puzzle {
    }
 
     data.state = PuzzleState.Ok;
-    return;
   }
 
   void importImage(Uint8List data) {
