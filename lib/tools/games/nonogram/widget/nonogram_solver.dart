@@ -530,11 +530,37 @@ class NonogramSolverState extends State<NonogramSolver> {
               child: GCWButton(
                 text: i18n(context, 'sudokusolver_clearall'),
                 onPressed: () {
-                  setState(() {
-                    puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
-                    puzzle.clearRowHints();
-                    puzzle.clearColumnHints();
-                  });
+                  showDialog<bool>(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text(i18n(context, 'nonogramsolver_title')),
+                        titleTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        content: Text(i18n(context, 'nonogramsolver_clear_all_data')),
+                        contentTextStyle:
+                        const TextStyle(color: Colors.black, fontSize: 16.0),
+                        backgroundColor: themeColors().dialog(),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+                                  puzzle.clearRowHints();
+                                  puzzle.clearColumnHints();
+                                  Navigator.pop(context);
+                                });
+                              },
+                              child: Text(i18n(context, 'common_yes'))),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(i18n(context, 'common_no')))
+                        ],
+                      ));
+
                 },
               ),
             )

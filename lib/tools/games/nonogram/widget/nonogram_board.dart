@@ -193,7 +193,7 @@ class NonogramBoardPainter extends CustomPainter {
                                       rect.width - 2 * fieldBorderOn, rect.height - 2 * fieldBorderOn);
             _touchCanvas.drawRect(rectI, paintFull);
           } else if (value == 0 && (board.state == PuzzleState.Finished || board.state == PuzzleState.Solved)) {
-            _paintText(canvas, rect, '?', fontSize * 3.2, paintFull.color);
+            _paintText(canvas, rect, '?', fontSize * 1.2, paintFull.color);
           }
           if (onTapped != null) {
             _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {onTapped!(y, x);});
