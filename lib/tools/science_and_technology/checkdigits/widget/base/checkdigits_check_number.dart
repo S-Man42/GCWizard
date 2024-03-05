@@ -80,7 +80,6 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             ? GCWTextField(
                 controller: currentInputController,
                 inputFormatters: [INPUTFORMATTERS[widget.mode]!],
-                hintText: INPUTFORMATTERS_HINT[widget.mode]!,
                 onChanged: (text) {
                   setState(() {
                     _currentInputNumberString = checkDigitsNormalizeNumber(text);
@@ -481,14 +480,12 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   List<List<String>> _EUROData(String number) {
+    var checkedNumber = checkEuroSeries(number);
+
     return [
-      [
-        i18n(context, 'checkdigits_euro_issuing_country'),
-        number[0],
-        checkEuroSeries(number) == 1
-            ? i18n(context, EUROBILLDATA[1]![number[0]]![1])
-            : EUROBILLDATA[2]![number[0]]![0] + '\n' + i18n(context, EUROBILLDATA[2]![number[0]]![1])
-      ],
+      [i18n(context, 'checkdigits_euro_countrycode'), number[0] + (checkedNumber != 1 ? number[1] : '')],
+      [i18n(context, 'checkdigits_euro_country'), i18n(context, checkedNumber == 1 ? EUROBANKNOTEDATA[1]![number[0]]!['country']! : EUROBANKNOTEDATA[2]![number[0]]!['country']!)],
+      if (checkedNumber != 1) [ i18n(context, 'checkdigits_euro_institute'), EUROBANKNOTEDATA[2]![number[0]]!['institute']!]
     ];
   }
 

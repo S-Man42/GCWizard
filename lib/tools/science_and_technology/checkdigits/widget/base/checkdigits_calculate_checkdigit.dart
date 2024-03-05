@@ -37,7 +37,6 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
         GCWTextField( // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
           controller: currentInputController,
           inputFormatters: [INPUTFORMATTERS[widget.mode]!],
-          hintText: INPUTFORMATTERS_HINT[widget.mode]!,
           onChanged: (text) {
             setState(() {
               _currentInputNString = text;

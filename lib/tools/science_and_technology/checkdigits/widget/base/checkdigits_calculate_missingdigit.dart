@@ -42,7 +42,6 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
         GCWTextField(
           controller: currentInputController,
           inputFormatters: [INPUTFORMATTERS[widget.mode]!],
-          hintText: INPUTFORMATTERS_HINT[widget.mode]!,
           onChanged: (text) {
             setState(() {
               _currentInputNumberString = text;

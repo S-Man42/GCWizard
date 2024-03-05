@@ -174,6 +174,12 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return formula;
   }
 
+  String _sanitizeFormulaReferences(String formula) {
+    return formula.replaceAllMapped(RegExp(r'{(.*?)}'), (match) => '{'
+        + match[1]!.toLowerCase().replaceAll(RegExp(r'\s'), '') + '}'
+    );
+  }
+
   Column _buildGroupList(BuildContext context) {
     var odd = true;
 
@@ -190,7 +196,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   the logic. It needs to be moved from the frontend part
                 )
            */
-          var formulaToParse = substitution(formula.formula, formulaReferences, caseSensitive: false);
+          var formulaToParse = substitution(_sanitizeFormulaReferences(formula.formula), formulaReferences, caseSensitive: false);
           FormulaSolverOutput calculated = formulaParser.parse(formulaToParse, widget.group.values);
 
           var resultType =
@@ -211,6 +217,10 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
 
           formulaReferences.putIfAbsent('{${index + 1}}',
               () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
+          if (formula.name.isNotEmpty) {
+            formulaReferences.putIfAbsent('{${formula.name.toLowerCase().replaceAll(RegExp(r'\s'), '')}}',
+                    () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
+          }
 
           Widget output;
 
