@@ -28,7 +28,6 @@ void main() {
         'rows': [[1],[0]],
         'expectedOutput': [[1, -1], [-1, -1]], 'expectedOutputSolved': true
       },
-
       { // easy
         'columns': [[1]],
         'rows': [[1]],
@@ -41,6 +40,10 @@ void main() {
       { 'columns': [[2],[0]],
         'rows': [[2],[0]],
         'expectedOutput': [[1, 1], [-1, -1]], 'expectedOutputSolved': false //unsolvable
+      },
+      { 'columns': [[2],[1],[1],[1],[1],[1],[1],[1],[1],[1]],
+        'rows': [[1],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1]],
+        'expectedOutput': [<int>[]], 'expectedOutputSolved': false //unsolvable
       },
     ];
 
