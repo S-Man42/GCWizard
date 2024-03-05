@@ -34,7 +34,7 @@ class NonogramSolver extends StatefulWidget {
 }
 
 enum _DecryptWizardStep {FILE_OR_MANUAL, LOAD_JSON, SHOW_RESULT_FILE, DEFINE_SIZE, SET_ROW_VALUES, SET_COLUMN_VALUES, SHOW_RESULT_MANUAL}
-enum _EncryptWizardStep {FILE_OR_MANUAL, LOAD_JSON, DRAW_LOADED_JSON, LOAD_IMAGE, DRAW_LOADED_IMAGE, DEFINE_SIZE, DRAW_MANUALLY}
+enum _EncryptWizardStep {FILE_OR_MANUAL, LOAD_JSON, DRAW_LOADED_JSON, DEFINE_SIZE_IMAGE, LOAD_IMAGE, DRAW_LOADED_IMAGE, DEFINE_SIZE, DRAW_MANUALLY}
 
 class NonogramSolverState extends State<NonogramSolver> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
@@ -92,7 +92,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                     switch (_currentEncryptStep) {
                       case _EncryptWizardStep.LOAD_JSON: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
                       case _EncryptWizardStep.DRAW_LOADED_JSON: _currentEncryptStep = _EncryptWizardStep.LOAD_JSON; break;
-                      case _EncryptWizardStep.LOAD_IMAGE: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
+                      case _EncryptWizardStep.DEFINE_SIZE_IMAGE: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
+                      case _EncryptWizardStep.LOAD_IMAGE: _currentEncryptStep = _EncryptWizardStep.DEFINE_SIZE_IMAGE; break;
                       case _EncryptWizardStep.DRAW_LOADED_IMAGE: _currentEncryptStep = _EncryptWizardStep.LOAD_IMAGE; break;
                       case _EncryptWizardStep.DEFINE_SIZE: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
                       case _EncryptWizardStep.DRAW_MANUALLY: _currentEncryptStep = _EncryptWizardStep.DEFINE_SIZE; break;
@@ -149,7 +150,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                         children: [
                           Expanded(child: GCWButton(text: i18n(context, 'nonogramsolver_loadfromimage'), onPressed: () {
                             setState(() {
-                              _currentEncryptStep = _EncryptWizardStep.LOAD_IMAGE;
+                              _currentEncryptStep = _EncryptWizardStep.DEFINE_SIZE_IMAGE;
                             });
                           })),
                           Container(width: DOUBLE_DEFAULT_MARGIN),
@@ -172,7 +173,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                   _openFileButtonEncrypt(puzzle, _currentEncryptStep),
                 if (_currentEncryptStep == _EncryptWizardStep.LOAD_IMAGE)
                   _openFileButtonEncrypt(puzzle, _currentEncryptStep),
-                if (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE)
+                if (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE || _currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE)
                   _buildSizeSelectionEncrypt(puzzle),
                 if ([_EncryptWizardStep.DRAW_LOADED_JSON, _EncryptWizardStep.DRAW_LOADED_IMAGE, _EncryptWizardStep.DRAW_MANUALLY].contains(_currentEncryptStep))
                   Column(
@@ -224,7 +225,6 @@ class NonogramSolverState extends State<NonogramSolver> {
                     children: [
                       _drawNonogramm(puzzle),
                       _controlButtons(puzzle),
-                      _encryptPreview(puzzle),
                       _exportButtons(puzzle),
                     ],
                   )
@@ -386,7 +386,9 @@ class NonogramSolverState extends State<NonogramSolver> {
             puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
             puzzle.board.importHints(tmpPuzzle);
 
-            _currentEncryptStep = _EncryptWizardStep.DRAW_MANUALLY;
+            _currentEncryptStep = _currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE
+              ? _EncryptWizardStep.LOAD_IMAGE
+              : _EncryptWizardStep.DRAW_MANUALLY;
           });
         }),
       ]
@@ -502,7 +504,11 @@ class NonogramSolverState extends State<NonogramSolver> {
                     onPressed: () {
                       setState(() {
                         puzzle.board.solve();
-                        _showSnackBar(puzzle.board);
+                        if (puzzle.board.state != PuzzleState.Solved) {
+                          if (!_showSnackBarDataError(puzzle.board)) {
+                            showSnackBar(i18n(context, 'sudokusolver_error'), context);
+                          }
+                        }
                       });
                     },
                   ),
@@ -559,7 +565,6 @@ class NonogramSolverState extends State<NonogramSolver> {
                               child: Text(i18n(context, 'common_no')))
                         ],
                       ));
-
                 },
               ),
             )
@@ -615,7 +620,11 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   void _importJsonFile(Uint8List bytes, PuzzleWidgetValues puzzle) {
     puzzle.board = Puzzle.parseJson(convertBytesToString(bytes));
-    _showSnackBar(puzzle.board);
+    if (puzzle.board.state != PuzzleState.Ok) {
+      if (!_showSnackBarDataError(puzzle.board)) {
+        showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
+      }
+    }
 
     puzzle.setControllerData();
     if (puzzle.encryptVersion) {
@@ -624,16 +633,14 @@ class NonogramSolverState extends State<NonogramSolver> {
     }
   }
 
-  void _showSnackBar(Puzzle board) {
+  bool _showSnackBarDataError(Puzzle board) {
     if (board.state == PuzzleState.InvalidHintData) {
       var extendedInfo = board.invalidHintDataInfo;
       if (extendedInfo.isNotEmpty) extendedInfo = '\n' + extendedInfo;
       showSnackBar(i18n(context, 'nonogramsolver_hinterror') + extendedInfo, context);
-    } else if (board.state != PuzzleState.Ok) {
-      showSnackBar(i18n(context, 'nonogramsolver_dataerror'), context);
-    } else if (board.state != PuzzleState.Finished) {
-      showSnackBar(i18n(context, 'sudokusolver_error'), context);
+      return true;
     }
+    return false;
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List? data, PuzzleWidgetValues puzzle) async {
