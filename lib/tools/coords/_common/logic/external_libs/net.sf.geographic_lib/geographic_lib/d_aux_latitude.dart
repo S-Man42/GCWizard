@@ -77,7 +77,7 @@ class _DAuxLatitude extends _AuxLatitude {
   
   static double Datan(double x, double y) {
     double d = y - x, xy = x*y;
-    return x == y ? 1 / (1 + xy) :
+    return doubleEquals(x, y, tolerance: 1e-15) ? 1 / (1 + xy) :
     (xy.isInfinite && xy > 0 ? 0 :
     (2 * xy > -1 ? atan( d / (1 + xy) ) : atan(y) - atan(x)) / d);
   }
@@ -86,7 +86,7 @@ class _DAuxLatitude extends _AuxLatitude {
     double d = y - x, xy = x*y, hx = _AuxLatitude.sc(x), hy = _AuxLatitude.sc(y);
     // KF formula for x*y < 0 is asinh(y*hx - x*hy) / (y - x)
     // but this has problem if x*y overflows to -inf
-    return x == y ? 1 / hx :
+    return doubleEquals(x, y, tolerance: 1e-15) ? 1 / hx :
     (d.isInfinite ? 0 :
     (xy > 0 ? _asinh(d * (x*y < 1 ? (x + y) / (x*hy + y*hx) :
     (1/x + 1/y) / (hy/y + hx/x))) :

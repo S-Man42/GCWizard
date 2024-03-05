@@ -139,6 +139,7 @@ class _GCWCoordsState extends State<GCWCoords> {
     }
 
     _currentCoords = buildCoordinate(widget.coordsFormat, widget.coordinates ?? defaultCoordinate);
+    _currentCoordinateFormat = widget.coordsFormat;
   }
 
   BaseCoordinate _buildCoord(CoordinateFormat format) {

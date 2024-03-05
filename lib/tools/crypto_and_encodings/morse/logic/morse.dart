@@ -6,10 +6,17 @@ part 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse_data.dart';
 enum MorseType {MORSE_ITU, MORSE1838, MORSE1844, STEINHEIL, GERKE}
 
 const String _MORSE_CHARACTER_DOTS = '.\u2022\u00B7\u16EB\u2981\u25CF\u2218\u25E6';
+//  \u2022  BULLET
+//  \u00B7  MIDDLE DOT
+//  \u16EB  RUNIC SINGLE PUNCTUATION
+//  \u2981  Z NOTATION SPOT
+//  \u25CF  BLACK CIRCLE
+//  \u2218  RING OPERATOR
+//  \u25E6  WHITE BULLET
 
 // normalizes dot, dash and space chars
 String normalizeMorseCharacters(String morse) {
-  //normalizeCharacters normalizes already ' ' and '-',
+  // normalizeCharacters normalizes already ' ' and '-',
   // but cannot normalize '.' because normally it is a common sentence char or digits delimiter
 
   return normalizeCharacters(morse).split('').map((e) {
@@ -57,8 +64,7 @@ String encodeMorse(String input, {MorseType type = MorseType.MORSE_ITU, String? 
 
 String decodeMorse(String input, {MorseType type = MorseType.MORSE_ITU}) {
   if (input.isEmpty) return '';
-
-  return normalizeMorseCharacters(input).split(RegExp(r'[^.\-/|]')).map((morse) {
+  return normalizeMorseCharacters(input).split(RegExp(r'[^.\-·/|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';
     var character = _MORSE_CODETOAZ[type]?[morse];
     return character ?? '';

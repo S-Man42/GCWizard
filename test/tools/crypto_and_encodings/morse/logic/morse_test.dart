@@ -42,8 +42,8 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : '', 'expectedOutput' : ''},
 
-      {'input' : 'SOS', 'expectedOutput' : '... . . ...'},
-      {'input' : 'ABc deF', 'expectedOutput' : '.- -... .. . | -.. . .-.'},
+      {'input' : 'SOS', 'expectedOutput' : '... . . ...'},
+      {'input' : 'ABc deF', 'expectedOutput' : '.- -... .. . | -.. . .-.'},
     ];
 
     for (var elem in _inputsToExpected) {

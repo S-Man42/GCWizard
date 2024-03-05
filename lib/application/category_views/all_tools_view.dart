@@ -5,6 +5,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/base_selecti
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cryptography_selection.dart';
@@ -18,6 +19,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/imagesandfil
 import 'package:gc_wizard/application/category_views/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/numeral_words_selection.dart';
@@ -46,6 +48,7 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -234,6 +237,7 @@ import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
 import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
+import 'package:gc_wizard/tools/science_and_technology/ieee754/widget/ieee754.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
@@ -281,14 +285,14 @@ import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+
 import 'package:prefs/prefs.dart';
 
-import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 
 class MainView extends GCWWebStatefulWidget {
   MainView({Key? key, Map<String, String>? webParameter})
       : super(key: key, webParameter: webParameter, apiSpecification: null);
+
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -546,6 +550,7 @@ void _initStaticToolList() {
       className(const CentroidCenterOfGravity()),
       className(const Chao()),
       className(const ChappeTelegraph()),
+      className(const CheckDigitsSelection()),
       className(const Chef()),
       className(const ChickenLanguage()),
       className(const Chronogram()),
@@ -620,6 +625,7 @@ void _initStaticToolList() {
         ConstellationName: 'Andromeda',
       )),
       className(const IceCodesSelection()),
+      className(const IEEE754()),
       className(const ILLIAC()),
       className(const ImageColorCorrections()),
       className(const ImageFlipRotate()),
