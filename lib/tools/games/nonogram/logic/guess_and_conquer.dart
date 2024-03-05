@@ -35,7 +35,7 @@ Puzzle? _recurse(Strategy strategy, int currentRecursionLevel, int maxRecursionL
  * @param {number} currentRecursionLevel (internal) keep track of recursion depth
  */
 Puzzle? guessAndConquer(Strategy strategy, Puzzle puzzle, int maxRecursionLevel, {int currentRecursionLevel = 0}) {
-  const int maxGuessCount = 100;
+  const int maxGuessCount = 20;
   if (puzzle.isFinished) {
     return puzzle.isSolved ? puzzle : null;
   }
