@@ -377,7 +377,10 @@ class NonogramSolverState extends State<NonogramSolver> {
             });
           }
         ),
-        GCWButton(text: i18n(context, 'common_done'), onPressed: () {
+        GCWButton(text: i18n(context,
+            (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE)
+                ? 'common_next'
+                : 'common_done'), onPressed: () {
           setState(() {
             puzzle.rowCount = _currentRowCount;
             puzzle.columnCount = _currentColumnCount;
