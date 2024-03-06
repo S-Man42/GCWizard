@@ -140,16 +140,16 @@ const Map<UIC_TYPE, Map<String, String>> UIC_CODE_CATEGORY = {
   UIC_TYPE.FREIGHTWAGON: {
     // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen
     // https://en.wikipedia.org/wiki/UIC_classification_of_goods_wagons
-    '0': 'checkdigits_uic_typecode_freightwagon_category_0',
-    '1': 'checkdigits_uic_typecode_freightwagon_category_1',
-    '2': 'checkdigits_uic_typecode_freightwagon_category_2',
-    '3': 'checkdigits_uic_typecode_freightwagon_category_3',
-    '4': 'checkdigits_uic_typecode_freightwagon_category_4',
-    '5': 'checkdigits_uic_typecode_freightwagon_category_5',
-    '6': 'checkdigits_uic_typecode_freightwagon_category_6',
-    '7': 'checkdigits_uic_typecode_freightwagon_category_7',
-    '8': 'checkdigits_uic_typecode_freightwagon_category_8',
-    '9': 'checkdigits_uic_typecode_freightwagon_category_9',
+    '0': 'checkdigits_uic_freight_category_0',
+    '1': 'checkdigits_uic_freight_category_1',
+    '2': 'checkdigits_uic_freight_category_2',
+    '3': 'checkdigits_uic_freight_category_3',
+    '4': 'checkdigits_uic_freight_category_4',
+    '5': 'checkdigits_uic_freight_category_5',
+    '6': 'checkdigits_uic_freight_category_6',
+    '7': 'checkdigits_uic_freight_category_7',
+    '8': 'checkdigits_uic_freight_category_8',
+    '9': 'checkdigits_uic_freight_category_9',
   },
   UIC_TYPE.PASSENGERCOACH: {
     // checkdigits_uic_typecode_passengercoach_category_
@@ -170,13 +170,13 @@ const Map<UIC_TYPE, Map<String, String>> UIC_CODE_CATEGORY = {
 
 CheckDigitOutput _CheckUICNumber(String number) {
   if (number.length == 12) {
-    if (_checkNumber(number, _checkUIC)) {
+    if (_checkNumber(number, isValidUICWagonCodeCheckDigit)) {
       return CheckDigitOutput(true, '', ['']);
     } else {
       return CheckDigitOutput(
           false,
           _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateUICNumber),
-          _CalculateGlitch(number, _checkUIC));
+          _CalculateGlitch(number, isValidUICWagonCodeCheckDigit));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
@@ -184,41 +184,15 @@ CheckDigitOutput _CheckUICNumber(String number) {
 
 String _CalculateUICNumber(String number) {
   if (number.length == 11) {
-    return number + _calculateUICCheckDigit(number);
+    return number + calculateUICWagonCodeCheckDigit(number);
   }
   return 'checkdigits_invalid_length';
 }
 
 List<String> _CalculateUICDigits(String number) {
   if (number.length == 12) {
-    return _CalculateDigits(number, _checkUIC);
+    return _CalculateDigits(number, isValidUICWagonCodeCheckDigit);
   } else {
     return ['checkdigits_invalid_length'];
-  }
-}
-
-bool _checkUIC(String number) {
-  return (number[11] == _calculateUICCheckDigit(number.substring(0, number.length - 1)));
-}
-
-String _calculateUICCheckDigit(String number) {
-  int sum = 0;
-  int product = 0;
-  String digits = '';
-  for (int i = 0; i < number.length; i++) {
-    if (i % 2 == 0) {
-      product = 2 * int.parse(number[i]);
-    } else {
-      product = 1 * int.parse(number[i]);
-    }
-    digits = digits + product.toString();
-  }
-  for (int i = 0; i < digits.length; i++) {
-    sum = sum + int.parse(digits[i]);
-  }
-  if (sum % 10 == 0) {
-    return '0';
-  } else {
-    return (10 * (sum ~/ 10 + 1) - sum).toString();
   }
 }

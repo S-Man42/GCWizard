@@ -275,6 +275,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
@@ -745,6 +746,7 @@ void _initStaticToolList() {
       className(const Trithemius()),
       className(const TTS()),
       className(const UFI()),
+      className(const UICWagonCode()),
       className(const UniversalProductCode()),
       className(const UnitConverter()),
       className(const UnixTime()),

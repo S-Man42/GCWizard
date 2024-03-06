@@ -1,341 +1,169 @@
 part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
 
+// https://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:280:0029:0058:de:PDF
 enum UICWagonCodeFreightGaugeType {FIXED, VARIABLE, BOTH_POSSIBLE, INVALID}
-enum UICWagonCodeFreightAxes {SINGLE, DREHGESTELLE, INVALID}
+enum UICWagonCodeFreightAxleType {SINGLE, BOGIE, INVALID}
 enum UICWagonCodeFreightTypes {NORMAL_PPW, NORMAL_TEN_RIV, NORMAL_TEN_INTERFRIGO, MAINTENANCE, MISC, NOT_IN_EU_REGISTERED, INVALID, FRIDGE_LEGACY}
-const Map<String, String> UICWagonCodeFreightCategory = {
-  // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen
-  // https://en.wikipedia.org/wiki/UIC_classification_of_goods_wagons
-  '0': 'uic_typecode_freightwagon_category_0',
-  '1': 'uic_typecode_freightwagon_category_1',
-  '2': 'uic_typecode_freightwagon_category_2',
-  '3': 'uic_typecode_freightwagon_category_3',
-  '4': 'uic_typecode_freightwagon_category_4',
-  '5': 'uic_typecode_freightwagon_category_5',
-  '6': 'uic_typecode_freightwagon_category_6',
-  '7': 'uic_typecode_freightwagon_category_7',
-  '8': 'uic_typecode_freightwagon_category_8',
-  '9': 'uic_typecode_freightwagon_category_9',
-};
 
-const Map<String, Map<String, List<String>>> UICWagonCodeFreightTechnicalDetails = {
-  'a': {
-    'uic_freight_codes_a_1': ['E', 'F', 'G', 'H', 'I', 'T', 'U', 'Z'],
-    'uic_freight_codes_a_2': ['L', 'O'],
-    'uic_freight_codes_a_3': ['S'],
-  },
-  'aa': {
-    'uic_freight_codes_aa_1': ['E', 'F', 'G', 'H', 'T', 'U', 'Z'],
-    'uic_freight_codes_aa_2': ['L'],
-    'uic_freight_codes_aa_3': ['S'],
-  },
-  'b': {
-    'uic_freight_codes_b_1': ['F'],
-    'uic_freight_codes_b_2': ['G'],
-    'uic_freight_codes_b_3': ['H'],
-    'uic_freight_codes_b_4': ['T'],
-    'uic_freight_codes_b_5': ['Ga', 'Ta'],
-    'uic_freight_codes_b_6': ['Ha'],
-    'uic_freight_codes_b_7': ['I'],
-    'uic_freight_codes_b_8': ['K'],
-    'uic_freight_codes_b_9': ['L', 'S'],
-  },
-  'bb': {
-    'uic_freight_codes_bb_1': ['H'],
-    'uic_freight_codes_bb_2': ['Ha'],
-    'uic_freight_codes_bb_3': ['I'],
-  },
-  'c': {
-    'uic_freight_codes_c_1': ['E'],
-    'uic_freight_codes_c_2': ['F'],
-    'uic_freight_codes_c_3': ['H', 'T'],
-    'uic_freight_codes_c_4': ['I'],
-    'uic_freight_codes_c_5': ['L', 'S'],
-    'uic_freight_codes_c_6': ['U', 'Z'],
-  },
-  'cc': {
-    'uic_freight_codes_cc_1': ['F'],
-    'uic_freight_codes_cc_2': ['H'],
-  },
-  'd': {
-    'uic_freight_codes_d_1': ['H'],
-    'uic_freight_codes_d_2': ['I'],
-    'uic_freight_codes_d_3': ['L', 'S'],
-    'uic_freight_codes_d_4': ['T', 'U'],
-  },
-  'dd': {
-    'uic_freight_codes_dd_1': ['T', 'U'],
-  },
-  'e': {
-    'uic_freight_codes_e_1': ['H'],
-    'uic_freight_codes_e_2': ['I'],
-    'uic_freight_codes_e_3': ['L', 'S'],
-    'uic_freight_codes_e_4': ['R'],
-    'uic_freight_codes_e_5': ['T'],
-    'uic_freight_codes_e_6': ['Z'],
-  },
-  'ee': {
-    'uic_freight_codes_ee_1': ['H'],
-  },
-  'f': {
-    'uic_freight_codes_f_1': [],
-  },
-  'ff': {
-    'uic_freight_codes_ff_1': [],
-  },
-  'fff': {
-    'uic_freight_codes_fff_1': [],
-  },
-  'g': {
-    'uic_freight_codes_g_1': ['G', 'H', 'T', 'U'],
-    'uic_freight_codes_g_2': ['I'],
-    'uic_freight_codes_g_3': ['K', 'L', 'R'],
-    'uic_freight_codes_g_4': ['S'],
-    'uic_freight_codes_g_5': ['Z'],
-  },
-  'gg': {
-    'uic_freight_codes_gg_1': ['I'],
-    'uic_freight_codes_gg_2': ['S'],
-  },
-  'h': {
-    'uic_freight_codes_h_1': ['G', 'H'],
-    'uic_freight_codes_h_2': ['I'],
-    'uic_freight_codes_h_3': ['L', 'R', 'S', 'T'],
-  },
-  'hh': {
-    'uic_freight_codes_hh_1': ['L', 'R', 'S', 'T'],
-  },
-  'i': {
-    'uic_freight_codes_i_1': ['H','T'],
-    'uic_freight_codes_i_2': ['I'],
-    'uic_freight_codes_i_3': ['K', 'L', 'R', 'S'],
-    'uic_freight_codes_i_4': ['U'],
-    'uic_freight_codes_i_5': ['Z'],
-  },
-  'ii': {
-    'uic_freight_codes_i_1': ['H'],
-    'uic_freight_codes_ii_2': ['I'],
-  },
-  'j': {
-    'uic_freight_codes_j_1': [],
-  },
-  'k': {
-    'uic_freight_codes_k_1': ['E', 'F', 'G', 'H', 'K', 'L', 'La', 'O', 'T', 'U', 'Z'],
-    'uic_freight_codes_k_2': ['Ea', 'Fa', 'Ga', 'Ha', 'Laa', 'R', 'S', 'Ta', 'Ua', 'Za'],
-    'uic_freight_codes_k_3': ['Eaa', 'Faa', 'Gaa', 'Haa', 'Sa', 'Saa', 'Taa', 'Uaa', 'Zaa'],
-    'uic_freight_codes_k_4': ['I'],
-    'uic_freight_codes_k_5': ['Ia'],
-  },
-  'kk': {
-    'uic_freight_codes_kk_1': ['E', 'F', 'G', 'H', 'K', 'L', 'La', 'O', 'T', 'U', 'Z'],
-    'uic_freight_codes_kk_2': ['Ea', 'Fa', 'Ga', 'Ha', 'Laa', 'R', 'S', 'Ta', 'Ua', 'Za'],
-    'uic_freight_codes_kk_3': ['Eaa', 'Faa', 'Gaa', 'Haa', 'Sa', 'Saa', 'Taa', 'Uaa', 'Zaa'],
-  },
-  'l': {
-    'uic_freight_codes_l_1': ['E'],
-    'uic_freight_codes_l_2': ['F', 'T', 'U'],
-    'uic_freight_codes_l_3': ['G'],
-    'uic_freight_codes_l_4': ['H'],
-    'uic_freight_codes_l_5': ['I'],
-    'uic_freight_codes_l_6': ['K', 'L', 'O', 'R', 'S'],
-  },
-  'll': {
-    'uic_freight_codes_ll_1': ['F','T','U'],
-    'uic_freight_codes_ll_2': ['H'],
-  },
-  'm': {
-    'uic_freight_codes_m_1': ['E'],
-    'uic_freight_codes_m_2': ['Ea', 'Eaa'],
-    'uic_freight_codes_m_3': ['G', 'H', 'T'],
-    'uic_freight_codes_m_4': ['Ga', 'Gaa', 'Ha', 'Haa', 'Ta', 'Taa'],
-    'uic_freight_codes_m_5': ['I'],
-    'uic_freight_codes_m_6': ['Ia'],
-    'uic_freight_codes_m_7': ['K', 'O', 'L'],
-    'uic_freight_codes_m_8': ['R', 'S'],
-    'uic_freight_codes_m_9': ['La', 'Laa', 'Sa', 'Saa'],
-    'uic_freight_codes_m_10': ['Sr'],
-  },
-  'mm': {
-    'uic_freight_codes_a_1': ['K', 'O', 'L'],
-    'uic_freight_codes_a_2': ['R', 'S'],
-    'uic_freight_codes_a_3': ['La', 'Laa', 'Sa', 'Saa'],
-  },
-  'n': {
-    'uic_freight_codes_n_1': ['I'],
-    'uic_freight_codes_n_2': ['H'],
-    'uic_freight_codes_n_3': ['E', 'G', 'K', 'L', 'O', 'T'],
-    'uic_freight_codes_n_4': ['F', 'U', 'Z'],
-    'uic_freight_codes_n_5': ['Ia', 'La', 'Oa'],
-    'uic_freight_codes_n_6': ['Ea', 'Fa', 'Ga', 'Ha', 'Laa', 'R', 'S', 'Ta', 'Ua', 'Za'],
-    'uic_freight_codes_n_7': ['Eaa', 'Faa', 'Gaa', 'Haa', 'Sa', 'Saa', 'Taa', 'Uaa', 'Zaa'],
-  },
-  'o': {
-    'uic_freight_codes_o_1': ['E'],
-    'uic_freight_codes_o_2': ['F', 'T', 'U'],
-    'uic_freight_codes_o_3': ['G', 'H'],
-    'uic_freight_codes_o_4': ['I'],
-    'uic_freight_codes_o_5': ['K'],
-    'uic_freight_codes_o_6': ['R'],
-    'uic_freight_codes_o_7': ['S'],
-  },
-  'oo': {
-    'uic_freight_codes_oo_1': ['F', 'T', 'U'],
-    'uic_freight_codes_oo_2': ['R'],
-  },
-  'p': {
-    'uic_freight_codes_p_1': ['F', 'T', 'U'],
-    'uic_freight_codes_p_2': ['I'],
-    'uic_freight_codes_p_3': ['K', 'L', 'S'],
-    'uic_freight_codes_p_4': ['R'],
-  },
-  'pp': {
-    'uic_freight_codes_pp_1': ['F', 'T', 'U'],
-    'uic_freight_codes_pp_2': ['K', 'R'],
-  },
-  'q': {
-    'uic_freight_codes_q_1': [],
-  },
-  'qq': {
-    'uic_freight_codes_qq_1': [],
-  },
-  'r': {
-    'uic_freight_codes_r_1': ['E', 'F', 'G', 'H', 'I', 'K', 'L', 'O', 'T', 'U', 'Z'],
-    'uic_freight_codes_r_2': ['S'],
-  },
-  'rr': {
-    'uic_freight_codes_rr_1': [],
-  },
-  's': {
-    'uic_freight_codes_s_1': [],
-  },
-  'ss': {
-    'uic_freight_codes_ss_1': [],
-  },
-};
+String freightTypeToText(UICWagonCodeFreightTypes type) {
+  switch (type) {
+    case UICWagonCodeFreightTypes.NORMAL_PPW: return 'uic_freight_freighttype_normal_ppw';
+    case UICWagonCodeFreightTypes.NORMAL_TEN_RIV: return 'uic_freight_freighttype_normal_ten_riv';
+    case UICWagonCodeFreightTypes.NORMAL_TEN_INTERFRIGO: return 'uic_freight_freighttype_normal_ten_interfrigo';
+    case UICWagonCodeFreightTypes.MAINTENANCE: return 'uic_freight_freighttype_maintenance';
+    case UICWagonCodeFreightTypes.MISC: return 'uic_freight_freighttype_misc';
+    case UICWagonCodeFreightTypes.NOT_IN_EU_REGISTERED: return 'uic_freight_freighttype_notineuregistered';
+    case UICWagonCodeFreightTypes.FRIDGE_LEGACY: return 'uic_freight_gfreighttype_fridgelegacy';
+    default: return 'uic_freight_freighttype_invalid';
+  }
+}
 
-const Map<String, Map<String, Map<String, List<String>>>> UICWagonCodeFreightTechnicalDetailsCountry = {
-  't': {
-    '50': {
-      'uic_freight_codes_50_t_1': ['Gbkl', 'Hkr'],
-    },
-    '80': {
-      'uic_freight_codes_80_t_1': ['H'],
-      'uic_freight_codes_80_t_2': ['L'],
-    },
-    '85': {
-      'uic_freight_codes_85_t_1': [],
-    },
-  },
-  'tt': {
-    '80': {
-      'uic_freight_codes_80_tt_1': ['H'],
-    },
-  },
-  'u': {
-    '50': {
-      'uic_freight_codes_50_u_1': ['E', 'G', 'K', 'R'],
-    },
-    '80': {
-      'uic_freight_codes_80_u_1': ['E', 'F', 'S'],
-      'uic_freight_codes_80_u_2': ['G', 'H', 'I', 'K', 'L', 'T']
-    },
-    '85': {
-      'uic_freight_codes_85_u_1': ['F'],
-      'uic_freight_codes_85_u_2': ['H']
-    },
-  },
-  'v': {
-    '50': {
-      'uic_freight_codes_50_v_1': ['E', 'T'],
-      'uic_freight_codes_50_v_2': ['G', 'H'],
-      'uic_freight_codes_50_v_3': ['U'],
-    },
-    '80': {
-      'uic_freight_codes_80_v_1': [],
-    },
-    '85': {
-      'uic_freight_codes_85_v_1': [],
-    },
-  },
-  'vv': {
-    '80': {
-      'uic_freight_codes_80_vv_1': [],
-    },
-  },
-  'w': {
-    '50': {
-      'uic_freight_codes_50_w_1': ['U'],
-      'uic_freight_codes_50_w_2': ['Z'],
-    },
-    '80': {
-      'uic_freight_codes_80_w_1': ['G', 'H', 'S'],
-    },
-    '85': {
-      'uic_freight_codes_85_w_1': ['R', 'S', 'U'],
-    },
-  },
-  'ww': {
-    '80': {
-      'uic_freight_codes_80_ww_1': [],
-    },
-    '85': {
-      'uic_freight_codes_85_ww_1': ['H'],
-    },
-  },
-  'x': {
-    '50': {
-      'uic_freight_codes_50_x_1': ['E'],
-      'uic_freight_codes_50_x_2': ['Uc'],
-    },
-    '80': {
-      'uic_freight_codes_80_x_1': ['U'],
-    },
-    '85': {
-      'uic_freight_codes_85_x_1': ['H'],
-      'uic_freight_codes_85_x_2': ['S', 'L'],
-    },
-  },
-  'y': {
-    '50': {
-      'uic_freight_codes_50_y_1': ['Uc'],
-      'uic_freight_codes_50_y_2': ['T', 'U', 'Z'],
-    },
-    '85': {
-      'uic_freight_codes_85_y_1': ['H'],
-      'uic_freight_codes_85_y_2': ['F'],
-      'uic_freight_codes_85_y_3': ['R', 'S'],
-    },
-  },
-  'z': {
-    '50': {
-      'uic_freight_codes_50_z_1': ['K', 'L', 'R', 'S'],
-      'uic_freight_codes_50_z_2': ['G', 'I'],
-    },
-    '80': {
-      'uic_freight_codes_80_z_1': ['F'],
-      'uic_freight_codes_80_z_2': ['H'],
-      'uic_freight_codes_80_z_3': ['T'],
-    },
-    '85': {
-      'uic_freight_codes_85_z_1': ['G', 'H'],
-    },
-  },
-  'zz': {
-    '50': {
-      'uic_freight_codes_50_zz_1': ['F'],
-    },
-    '80': {
-      'uic_freight_codes_80_zz_1': ['Fb'],
-    },
-  },
-};
+String gaugeTypeToText(UICWagonCodeFreightGaugeType type) {
+  switch (type) {
+    case UICWagonCodeFreightGaugeType.FIXED: return 'uic_freight_gaugetype_fixed';
+    case UICWagonCodeFreightGaugeType.VARIABLE: return 'uic_freight_gaugetype_variable';
+    case UICWagonCodeFreightGaugeType.BOTH_POSSIBLE: return 'uic_freight_gaugetype_bothpossible';
+    default: return 'uic_freight_gaugetype_invalid';
+  }
+}
 
-class UICWagonCodeFreight extends UICWagonCode {
-  late UICWagonCodeFreightGaugeType gaugeType;
-  late UICWagonCodeFreightAxes axes;
-  late UICWagonCodeFreightTypes type;
-  late String category;
-  late String gattung;
+String axleToText(UICWagonCodeFreightAxleType type) {
+  switch (type) {
+    case UICWagonCodeFreightAxleType.SINGLE: return 'uic_freight_axle_single';
+    case UICWagonCodeFreightAxleType.BOGIE: return 'uic_freight_axle_bogie';
+    default: return 'uic_freight_axle_invalid';
+  }
+}
+
+class UICWagenCodeFreightCategory {
+  late final String letterCode;
+  late final String numberCode;
+  late final String name;
+
+  String _getCategoryLetterCode(String number) {
+    var letterCodes = <String, String>{};
+    switch(number[4]) {
+      case '0': letterCodes = {'0': 'T', '1': 'T','2': 'T','3': 'T','4': 'T','5': 'T','6': 'T','7': 'T','8': 'T','9': 'T'}; break;
+      case '1': letterCodes = {'0': 'G', '1': 'G','2': 'G','3': 'G','4': 'G','5': 'G','6': 'G','7': 'G','8': 'G','9': 'G'}; break;
+      case '2': letterCodes = {'0': 'H', '1': 'H','2': 'H','3': 'H','4': 'H','5': 'H','6': 'H','7': 'H','8': 'H','9': 'H'}; break;
+      case '3': letterCodes = {'0': 'K', '1': 'K','2': 'K','3': 'K','4': 'K','5': 'R','6': 'R','7': 'O','8': 'R','9': 'R'}; break;
+      case '4': letterCodes = {'0': 'L', '1': 'L','2': 'L','3': 'L','4': 'L','5': 'S','6': 'S','7': 'S','8': 'S','9': 'S'}; break;
+      case '5': letterCodes = {'0': 'E', '1': 'E','2': 'E','3': 'E','4': 'E','5': 'E','6': 'E','7': 'E','8': 'E','9': 'E'}; break;
+      case '6': letterCodes = {'0': 'F', '1': 'F','2': 'F','3': 'F','4': 'F','5': 'F','6': 'F','7': 'F','8': 'F','9': 'F'}; break;
+      case '7': letterCodes = {'0': 'Z', '1': 'Z','2': 'Z','3': 'Z','4': 'Z','5': 'Z','6': 'Z','7': 'Z','8': 'Z','9': 'Z'}; break;
+      case '8': letterCodes = {'0': 'I', '1': 'I','2': 'I','3': 'I','4': 'I','5': 'I','6': 'I','7': 'I','8': 'I','9': 'I'}; break;
+      case '9': letterCodes = {'0': 'U', '1': 'U','2': 'U','3': 'U','4': 'U','5': 'U','6': 'U','7': 'U','8': 'U','9': 'U'}; break;
+      default: return '';
+    }
+
+    return letterCodes[number[5]]!;
+  }
+
+  UICWagenCodeFreightCategory(String number) {
+    numberCode = number[4];
+    letterCode = _getCategoryLetterCode(number);
+    name = UICWagonCodeFreightCategory[numberCode]!;
+  }
+}
+
+class UICWagenCodeFreightClassificationDescription {
+  late final String code;
+  late final String description;
+
+  UICWagenCodeFreightClassificationDescription(this.code, this.description);
+}
+
+class UICWagenCodeFreightClassification {
+  late final String uicNumberCode;
+  late final List<String> uicLetterCode;
+  late final Map<String, String> descriptions;
+
+  List<String> _getLetterCode(String uicNumberCode) {
+    var categoryNumberCode = uicNumberCode[0];
+    var classification1 = uicNumberCode.substring(2);
+    var classification2 = uicNumberCode.substring(1,2);
+
+    var classificationLetterCode_Lvl1 = UICWagonCodesFreightClassificationCodes[categoryNumberCode]![classification1];
+    if (classificationLetterCode_Lvl1 == null) {
+      return [];
+    }
+
+    var classificationLetterCode = classificationLetterCode_Lvl1[classification2];
+    if (classificationLetterCode == null) {
+      return [];
+    }
+
+    return splitGroupsOfSameCharacters(classificationLetterCode);
+  }
+
+  Map<String, Map<String, List<String>>> _joinDescriptionMapsAndFilterRelevantCodes(List<String> classificationLetterCode, String? countryCode) {
+    var descriptionMap = <String, Map<String, List<String>>>{};
+
+    for (var descriptions in UICWagonCodeFreightClassificationDescriptions.entries) {
+      if (classificationLetterCode.contains(descriptions.key)) {
+        descriptionMap.putIfAbsent(descriptions.key, () => descriptions.value);
+      }
+    }
+
+    if (countryCode != null && UICWagonCodeFreightClassificationDescriptionsCountry.containsKey(countryCode)) {
+      for (var description in UICWagonCodeFreightClassificationDescriptionsCountry[countryCode]!.entries) {
+        if (classificationLetterCode.contains(description.key)) {
+          descriptionMap.putIfAbsent(description.key, () => description.value);
+        }
+      }
+    }
+
+    return descriptionMap;
+  }
+
+  Map<String, String> _setDescriptions(Map<String, Map<String, List<String>>> descriptionMap, List<String> classificationLetterCode) {
+    var _descriptionMap = <String, String>{};
+
+    for (var descriptions in descriptionMap.entries) {
+      var _descriptions = <String, String>{};
+
+      for (var description in descriptions.value.entries) {
+        var categories = description.value;
+        for (var category in categories) {
+          var letterCodes = splitGroupsOfSameCharacters(category);
+          if (isSublist(classificationLetterCode, letterCodes)) {
+            _descriptions.putIfAbsent(category, () => description.key);
+          }
+        }
+      }
+
+      if (_descriptions.isNotEmpty) {
+        var categories = _descriptions.keys.toList();
+        categories.sort((String a, String b) => b.length.compareTo(a.length));
+        _descriptionMap.putIfAbsent(descriptions.key, () => _descriptions[categories.first]!);
+      }
+    }
+
+    return _descriptionMap;
+  }
+
+  Map<String, String> _getDescriptions(String categoryLetterCode, List<String> classificationLetterCode, String? countryCode) {
+    var descriptionMap = _joinDescriptionMapsAndFilterRelevantCodes(classificationLetterCode, countryCode);
+
+    var allLetters = List<String>.from(classificationLetterCode);
+    allLetters.add(categoryLetterCode);
+
+    return _setDescriptions(descriptionMap, allLetters);
+  }
+
+  UICWagenCodeFreightClassification(String number, UICWagenCodeFreightCategory category, String? countryCode) {
+    uicNumberCode = number.substring(4,8);
+    uicLetterCode = _getLetterCode(uicNumberCode);
+    descriptions = _getDescriptions(category.letterCode, uicLetterCode, countryCode);
+  }
+}
+
+class UICWagonCodeFreightWagon extends UICWagonCode {
+  late final UICWagonCodeFreightGaugeType gaugeType;
+  late final UICWagonCodeFreightAxleType axleType;
+  late final UICWagonCodeFreightTypes type;
+  late final UICWagenCodeFreightCategory category; //Gattung
+  late final UICWagenCodeFreightClassification classification;
 
   UICWagonCodeFreightTypes _getType(String number) {
     var number1 = int.parse(number[0]);
@@ -355,23 +183,7 @@ class UICWagonCodeFreight extends UICWagonCode {
     }
   }
 
-  String _getGattung(String number) {
-    switch(number[4]) {
-      case '0': return 'T';
-      case '1': return 'G';
-      case '2': return 'H';
-      case '3': return 'K, O, R';
-      case '4': return 'L, S';
-      case '5': return 'E';
-      case '6': return 'F';
-      case '7': return 'Z';
-      case '8': return 'I';
-      case '9': return 'U';
-      default: return '';
-    }
-  }
-
-  UICWagonCodeFreightGaugeType _getSpurweite(String number) {
+  UICWagonCodeFreightGaugeType _getGaugeType(String number) {
     var number1 = int.parse(number[0]);
     var number2 = int.parse(number[1]);
 
@@ -385,21 +197,35 @@ class UICWagonCodeFreight extends UICWagonCode {
     return UICWagonCodeFreightGaugeType.INVALID;
   }
 
-  UICWagonCodeFreightAxes _getAxes(String number) {
+  UICWagonCodeFreightAxleType _getAxleType(String number) {
     var number1 = int.parse(number[0]);
 
-    if ([0,2,4].contains(number1)) return UICWagonCodeFreightAxes.SINGLE;
-    if ([1, 3, 8].contains(number1)) return UICWagonCodeFreightAxes.DREHGESTELLE;
+    if ([0,2,4].contains(number1)) return UICWagonCodeFreightAxleType.SINGLE;
+    if ([1, 3, 8].contains(number1)) return UICWagonCodeFreightAxleType.BOGIE;
 
-    return UICWagonCodeFreightAxes.INVALID;
+    return UICWagonCodeFreightAxleType.INVALID;
   }
 
-  UICWagonCodeFreight(String number) : super(number) {
+  UICWagonCodeFreightWagon(String number) : super(number) {
     type = _getType(number);
-    gaugeType = _getSpurweite(number);
-    axes = _getAxes(number);
-    category = UICWagonCodeFreightCategory[number[4]]!;
-    gattung = _getGattung(number);
+    gaugeType = _getGaugeType(number);
+    axleType = _getAxleType(number);
+    category = UICWagenCodeFreightCategory(number);
+    classification = UICWagenCodeFreightClassification(number, category, countryCode);
   }
-
 }
+
+const Map<String, String> UICWagonCodeFreightCategory = {
+  // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen
+  // https://en.wikipedia.org/wiki/UIC_classification_of_goods_wagons
+  '0': 'uic_freight_category_0',
+  '1': 'uic_freight_category_1',
+  '2': 'uic_freight_category_2',
+  '3': 'uic_freight_category_3',
+  '4': 'uic_freight_category_4',
+  '5': 'uic_freight_category_5',
+  '6': 'uic_freight_category_6',
+  '7': 'uic_freight_category_7',
+  '8': 'uic_freight_category_8',
+  '9': 'uic_freight_category_9',
+};

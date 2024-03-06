@@ -649,6 +649,7 @@
   "trifid": "",
   "trithemius": "",
   "ufi": "vatin vatcountrycode companykey formulationnumber productnumber productidentifier vatnumber vatinnumber poisoncenters poisencentres toxicology toxicologicalriskassessment medical accidential emergency",
+  "uic_wagoncode": "uicwagoncode railway locomotives engines freightcars freighwagons passengercars coaches passengerwagons vehicles",
   "unitconverter": "units converter lengths accelerations gal standardgravity standardgravities speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields micro nano pico femto atto zepto yocto ronto quecto mega giga tera terra peta exa zetta yotta ronna quetta",
   "universalproductcode": "products",
   "urwigo_textdeobfuscation": "textobfuscation textobfuscator textobsfucator textobsfucation unreadable notreadable invisible",

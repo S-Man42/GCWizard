@@ -1,15 +1,26 @@
+import 'package:gc_wizard/utils/list_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_freight.dart';
-part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_freight_technicalcodes.dart';
+part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_freight_classification_codes.dart';
+part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_freight_classification_descriptions.dart';
+
 
 enum UICWagonType {INVALID, OUT_OF_ORDER, ENGINE, FREIGHT_WAGON, PASSENGER_WAGON}
 
 class UICWagonCode {
-  String? countryCode;
-  String? country;
+  late final String countryCode;
+  late final String country;
+  late final String runningNumber;
+  late final String checkDigit;
+  late final bool isValidCheckDigit;
 
   UICWagonCode(String number) {
     countryCode = _getCountryCode(number);
     country = _getCountry(countryCode);
+    runningNumber = number.substring(8, 11);
+    checkDigit = number[11];
+    isValidCheckDigit = isValidUICWagonCodeCheckDigit(number);
   }
 }
 
@@ -81,16 +92,12 @@ const Map<String, String> UICCountryCode = {
   '99': 'common_country_Iraq',
 };
 
-String? _getCountryCode(String number) {
-  var code = number.substring(2, 4);
-
-  if (UICCountryCode.containsKey(code)) return code;
-
-  return null;
+String _getCountryCode(String number) {
+  return number.substring(2, 4);
 }
 
-String? _getCountry(String? code) {
-  return UICCountryCode[code]!;
+String _getCountry(String? code) {
+  return UICCountryCode[code] ?? 'uic_countrycode_invalid';
 }
 
 const UIC_InteroperabilityCode_Freight = {
@@ -101,8 +108,6 @@ const UIC_InteroperabilityCode_Freight = {
   '4': 'Sonstige Güterwagen',
   '8': 'Sonstige Güterwagen',
 };
-
-//Einzelradsätze 0, 2, 4; Drehgestelle: 2
 
 String _sanitizeNumber(String number) {
   return number.replaceAll(RegExp(r'[^0-9]'), '');
@@ -125,6 +130,76 @@ UICWagonType _checkMainType(String number) {
     case '8': return UICWagonType.FREIGHT_WAGON;
     case '9': return UICWagonType.ENGINE;
     default: return UICWagonType.INVALID;
+  }
+}
+
+class UICWagonCodeReturn {
+  final UICWagonType type;
+  final UICWagonCode? details;
+
+  UICWagonCodeReturn(this.type, [this.details]);
+}
+
+UICWagonCodeReturn uicWagonCode(String number) {
+  number = _sanitizeNumber(number);
+  if (number.length != 12) {
+    throw const FormatException('uic_wagoncode_invalid_number');
+  }
+
+  late UICWagonCodeReturn out;
+
+  var mainType = _checkMainType(number);
+  switch(mainType) {
+    case UICWagonType.OUT_OF_ORDER:
+      out = UICWagonCodeReturn(UICWagonType.OUT_OF_ORDER);
+      break;
+    case UICWagonType.ENGINE:
+      break;
+    case UICWagonType.PASSENGER_WAGON:
+      break;
+    case UICWagonType.FREIGHT_WAGON:
+      out = UICWagonCodeReturn(UICWagonType.FREIGHT_WAGON, UICWagonCodeFreightWagon(number));
+      break;
+    default:
+      out = UICWagonCodeReturn(UICWagonType.OUT_OF_ORDER);
+      break;
+  }
+
+  return out;
+}
+
+bool isValidUICWagonCodeCheckDigit(String number) {
+  print(number);
+  number = _sanitizeNumber(number);
+  print(number);
+  if (number.length != 12) {
+    return false;
+  }
+
+  return (number[11] == calculateUICWagonCodeCheckDigit(number.substring(0, number.length - 1)));
+}
+
+String calculateUICWagonCodeCheckDigit(String number) {
+  number = _sanitizeNumber(number);
+
+  int sum = 0;
+  int product = 0;
+  String digits = '';
+  for (int i = 0; i < number.length; i++) {
+    if (i % 2 == 0) {
+      product = 2 * int.parse(number[i]);
+    } else {
+      product = 1 * int.parse(number[i]);
+    }
+    digits = digits + product.toString();
+  }
+  for (int i = 0; i < digits.length; i++) {
+    sum = sum + int.parse(digits[i]);
+  }
+  if (sum % 10 == 0) {
+    return '0';
+  } else {
+    return (10 * (sum ~/ 10 + 1) - sum).toString();
   }
 }
 

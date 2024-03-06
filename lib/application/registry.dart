@@ -443,6 +443,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/widget/vanity_multitap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
@@ -4880,6 +4881,13 @@ void initializeRegistry(BuildContext context) {
     // TomTomSelection *********************************************************************************************
     GCWTool(tool: const TomTom(), id: 'tomtom', searchKeys: const [
       'tomtom',
+    ]),
+
+    // UICWagonCodeSelection ***************************************************************************************
+    GCWTool(tool: const UICWagonCode(), id: 'uic_wagoncode', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'uic_wagoncode',
     ]),
 
     //VanitySelection **********************************************************************************************

@@ -1,6 +1,7 @@
 part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
 
-const Map<String, Map<String, Map<String, String>>> UICWagonCodesFreightTechnicalCodes =
+// original data from https://www.era.europa.eu/system/files/2023-03/Appendix_6_P9.xls
+const Map<String, Map<String, Map<String, String>>> UICWagonCodesFreightClassificationCodes =
 {
   "0": {
     "00": {
@@ -1582,1535 +1583,1535 @@ const Map<String, Map<String, Map<String, String>>> UICWagonCodesFreightTechnica
   },
   "3": {
     "00": {
-      "2 K": "km",
-      "3 K": "s",
-      "5 R": "bgns",
-      "6 R": "lmmnp",
-      "7 O": "s",
-      "9 R": "s"
+      "2": "km",
+      "3": "s",
+      "5": "bgns",
+      "6": "lmmnp",
+      "7": "s",
+      "9": "s"
     },
     "01": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bkks",
-      "6 R": "elmmnpp",
-      "7 O": "s",
-      "8 R": "s",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "4": "bkks",
+      "6": "elmmnpp",
+      "7": "s",
+      "8": "s",
+      "9": "s"
     },
     "02": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bkks",
-      "5 R": "bp",
-      "6 R": "boo",
-      "7 O": "s",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "4": "bkks",
+      "5": "bp",
+      "6": "boo",
+      "7": "s",
+      "9": "s"
     },
     "03": {
-      "3 K": "s",
-      "5 R": "bens",
-      "6 R": "emoss",
-      "7 O": "s",
-      "9 R": "s"
+      "3": "s",
+      "5": "bens",
+      "6": "emoss",
+      "7": "s",
+      "9": "s"
     },
     "04": {
-      "3 K": "s",
-      "4 K": "kks",
-      "5 R": "ns",
-      "6 R": "klps",
-      "7 O": "s",
-      "9 R": "s"
+      "3": "s",
+      "4": "kks",
+      "5": "ns",
+      "6": "klps",
+      "7": "s",
+      "9": "s"
     },
     "05": {
-      "2 K": "kkm",
-      "3 K": "s",
-      "4 K": "kkms",
-      "5 R": "ns",
-      "6 R": "kps",
-      "7 O": "s",
-      "9 R": "s"
+      "2": "kkm",
+      "3": "s",
+      "4": "kkms",
+      "5": "ns",
+      "6": "kps",
+      "7": "s",
+      "9": "s"
     },
     "06": {
-      "3 K": "s",
-      "4 K": "kkps",
-      "5 R": "ns",
-      "6 R": "klmps",
-      "7 O": "s",
-      "9 R": "s"
+      "3": "s",
+      "4": "kkps",
+      "5": "ns",
+      "6": "klmps",
+      "7": "s",
+      "9": "s"
     },
     "07": {
-      "3 K": "s",
-      "5 R": "bns",
-      "7 O": "s",
-      "9 R": "s"
+      "3": "s",
+      "5": "bns",
+      "7": "s",
+      "9": "s"
     },
     "08": {
-      "3 K": "s",
-      "5 R": "blps",
-      "7 O": "s",
-      "9 R": "s"
+      "3": "s",
+      "5": "blps",
+      "7": "s",
+      "9": "s"
     },
     "09": {
-      "3 K": "s",
-      "5 R": "bs",
-      "9 R": "s"
+      "3": "s",
+      "5": "bs",
+      "9": "s"
     },
     "10": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "5 R": "bs",
-      "6 R": "ekks",
-      "7 O": "ms",
-      "8 R": "kk",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "5": "bs",
+      "6": "ekks",
+      "7": "ms",
+      "8": "kk",
+      "9": "s"
     },
     "11": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "5 R": "bkks",
-      "7 O": "ms",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "5": "bkks",
+      "7": "ms",
+      "9": "s"
     },
     "12": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "5 R": "bss",
-      "7 O": "ms",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "5": "bss",
+      "7": "ms",
+      "9": "s"
     },
     "13": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "5 R": "bnpss",
-      "7 O": "ms",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "5": "bnpss",
+      "7": "ms",
+      "9": "s"
     },
     "14": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bkks",
-      "5 R": "bnss",
-      "7 O": "ms",
-      "8 R": "kkp",
-      "9 R": "s"
+      "2": "bkk",
+      "3": "s",
+      "4": "bkks",
+      "5": "bnss",
+      "7": "ms",
+      "8": "kkp",
+      "9": "s"
     },
     "15": {
-      "0 K": "kk",
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bkks",
-      "5 R": "bkkps",
-      "7 O": "ms",
-      "9 R": "s"
+      "0": "kk",
+      "2": "bkk",
+      "3": "s",
+      "4": "bkks",
+      "5": "bkkps",
+      "7": "ms",
+      "9": "s"
     },
     "16": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bkks",
-      "7 O": "ms",
-      "8 R": "gns",
-      "9 R": "gs"
+      "2": "bkk",
+      "3": "s",
+      "4": "bkks",
+      "7": "ms",
+      "8": "gns",
+      "9": "gs"
     },
     "17": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bkks",
-      "5 R": "nss",
-      "7 O": "ms",
-      "9 R": "gs"
+      "2": "bkk",
+      "3": "s",
+      "4": "bkks",
+      "5": "nss",
+      "7": "ms",
+      "9": "gs"
     },
     "18": {
-      "3 K": "s",
-      "4 K": "bkkpps",
-      "9 R": "gs"
+      "3": "s",
+      "4": "bkkpps",
+      "9": "gs"
     },
     "19": {
-      "2 K": "bkkm",
-      "3 K": "s",
-      "4 K": "bkkms",
-      "5 R": "kqss",
-      "9 R": "gs"
+      "2": "bkkm",
+      "3": "s",
+      "4": "bkkms",
+      "5": "kqss",
+      "9": "gs"
     },
     "20": {
-      "0 K": "kkp",
-      "2 K": "bkkmp",
-      "3 K": "s",
-      "5 R": "kqss",
-      "8 R": "gklos",
-      "9 R": "gs"
+      "0": "kkp",
+      "2": "bkkmp",
+      "3": "s",
+      "5": "kqss",
+      "8": "gklos",
+      "9": "gs"
     },
     "21": {
-      "0 K": "kklp",
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bms",
-      "5 R": "noos",
-      "8 R": "glnps",
-      "9 R": "gps"
+      "0": "kklp",
+      "2": "bkk",
+      "3": "s",
+      "4": "bms",
+      "5": "noos",
+      "8": "glnps",
+      "9": "gps"
     },
     "22": {
-      "2 K": "bkk",
-      "3 K": "s",
-      "4 K": "bps",
-      "5 R": "nooss",
-      "9 R": "egs"
+      "2": "bkk",
+      "3": "s",
+      "4": "bps",
+      "5": "nooss",
+      "9": "egs"
     },
     "23": {
-      "1 K": "bm",
-      "2 K": "bkm",
-      "3 K": "s",
-      "4 K": "bps",
-      "5 R": "noos",
-      "6 R": "fnoos",
-      "8 R": "p",
-      "9 R": "egs"
+      "1": "bm",
+      "2": "bkm",
+      "3": "s",
+      "4": "bps",
+      "5": "noos",
+      "6": "fnoos",
+      "8": "p",
+      "9": "egs"
     },
     "24": {
-      "2 K": "bkkmmps",
-      "3 K": "s",
-      "4 K": "bps",
-      "5 R": "noos",
-      "9 R": "egs"
+      "2": "bkkmmps",
+      "3": "s",
+      "4": "bps",
+      "5": "noos",
+      "9": "egs"
     },
     "25": {
-      "2 K": "bkmmpp",
-      "3 K": "ns",
-      "4 K": "bmps",
-      "5 R": "oos",
-      "8 R": "pss",
-      "9 R": "os"
+      "2": "bkmmpp",
+      "3": "ns",
+      "4": "bmps",
+      "5": "oos",
+      "8": "pss",
+      "9": "os"
     },
     "26": {
-      "3 K": "gmms",
-      "5 R": "oos",
-      "9 R": "ms"
+      "3": "gmms",
+      "5": "oos",
+      "9": "ms"
     },
     "27": {
-      "1 K": "bmp",
-      "3 K": "s",
-      "4 K": "lmos",
-      "5 R": "oos",
-      "9 R": "ms"
+      "1": "bmp",
+      "3": "s",
+      "4": "lmos",
+      "5": "oos",
+      "9": "ms"
     },
     "28": {
-      "3 K": "s",
-      "4 K": "lmos",
-      "5 R": "oos",
-      "8 R": "p"
+      "3": "s",
+      "4": "lmos",
+      "5": "oos",
+      "8": "p"
     },
     "29": {
-      "3 K": "gs",
-      "4 K": "lmmos",
-      "5 R": "oos",
-      "9 R": "pps"
+      "3": "gs",
+      "4": "lmmos",
+      "5": "oos",
+      "9": "pps"
     },
     "30": {
-      "1 K": "lm",
-      "2 K": "klm",
-      "3 K": "bs",
-      "4 K": "lms",
-      "5 R": "loos",
-      "7 O": "am",
-      "9 R": "kks"
+      "1": "lm",
+      "2": "klm",
+      "3": "bs",
+      "4": "lms",
+      "5": "loos",
+      "7": "am",
+      "9": "kks"
     },
     "31": {
-      "1 K": "lm",
-      "3 K": "bs",
-      "4 K": "lms",
-      "5 R": "loos",
-      "8 R": "lp",
-      "9 R": "bps"
+      "1": "lm",
+      "3": "bs",
+      "4": "lms",
+      "5": "loos",
+      "8": "lp",
+      "9": "bps"
     },
     "32": {
-      "1 K": "lm",
-      "3 K": "bs",
-      "5 R": "os",
-      "8 R": "lps",
-      "9 R": "bps"
+      "1": "lm",
+      "3": "bs",
+      "5": "os",
+      "8": "lps",
+      "9": "bps"
     },
     "33": {
-      "1 K": "lm",
-      "3 K": "bs",
-      "5 R": "eis",
-      "9 R": "ps"
+      "1": "lm",
+      "3": "bs",
+      "5": "eis",
+      "9": "ps"
     },
     "34": {
-      "1 K": "lm",
-      "3 K": "bs",
-      "8 R": "lmm",
-      "9 R": "pps"
+      "1": "lm",
+      "3": "bs",
+      "8": "lmm",
+      "9": "pps"
     },
     "35": {
-      "1 K": "lm",
-      "3 K": "bs",
-      "4 K": "lmms",
-      "5 R": "ijns",
-      "9 R": "pps"
+      "1": "lm",
+      "3": "bs",
+      "4": "lmms",
+      "5": "ijns",
+      "9": "pps"
     },
     "36": {
-      "3 K": "bs",
-      "4 K": "lms",
-      "5 R": "ijmmns",
-      "6 R": "ijmns",
-      "9 R": "es"
+      "3": "bs",
+      "4": "lms",
+      "5": "ijmmns",
+      "6": "ijmns",
+      "9": "es"
     },
     "37": {
-      "2 K": "klpss",
-      "3 K": "bs",
-      "4 K": "lmps",
-      "5 R": "ils",
-      "9 R": "es"
+      "2": "klpss",
+      "3": "bs",
+      "4": "lmps",
+      "5": "ils",
+      "9": "es"
     },
     "38": {
-      "2 K": "klmpp",
-      "3 K": "bs",
-      "5 R": "ils",
-      "9 R": "es"
+      "2": "klmpp",
+      "3": "bs",
+      "5": "ils",
+      "9": "es"
     },
     "39": {
-      "2 K": "kklm",
-      "3 K": "bs",
-      "4 K": "kklms",
-      "5 R": "is",
-      "9 R": "es"
+      "2": "kklm",
+      "3": "bs",
+      "4": "kklms",
+      "5": "is",
+      "9": "es"
     },
     "40": {
-      "2 K": "kklm",
-      "3 K": "bs",
-      "4 K": "kklms",
-      "5 R": "ils",
-      "6 R": "kkps",
-      "9 R": "es"
+      "2": "kklm",
+      "3": "bs",
+      "4": "kklms",
+      "5": "ils",
+      "6": "kkps",
+      "9": "es"
     },
     "41": {
-      "3 K": "bs",
-      "4 K": "kklms",
-      "5 R": "ils",
-      "6 R": "kklps",
-      "9 R": "es"
+      "3": "bs",
+      "4": "kklms",
+      "5": "ils",
+      "6": "kklps",
+      "9": "es"
     },
     "42": {
-      "3 K": "bs",
-      "4 K": "kklms",
-      "5 R": "ils",
-      "8 R": "mp",
-      "9 R": "es"
+      "3": "bs",
+      "4": "kklms",
+      "5": "ils",
+      "8": "mp",
+      "9": "es"
     },
     "43": {
-      "3 K": "bs",
-      "4 K": "kklms",
-      "5 R": "ils",
-      "9 R": "es"
+      "3": "bs",
+      "4": "kklms",
+      "5": "ils",
+      "9": "es"
     },
     "44": {
-      "3 K": "bs",
-      "4 K": "kklms",
-      "5 R": "ils",
-      "7 O": "kkms",
-      "8 R": "kkm",
-      "9 R": "es"
+      "3": "bs",
+      "4": "kklms",
+      "5": "ils",
+      "7": "kkms",
+      "8": "kkm",
+      "9": "es"
     },
     "45": {
-      "3 K": "bs",
-      "5 R": "ils",
-      "8 R": "kkmp",
-      "9 R": "es"
+      "3": "bs",
+      "5": "ils",
+      "8": "kkmp",
+      "9": "es"
     },
     "46": {
-      "2 K": "kklmpp",
-      "3 K": "bs",
-      "5 R": "ilns",
-      "9 R": "es"
+      "2": "kklmpp",
+      "3": "bs",
+      "5": "ilns",
+      "9": "es"
     },
     "47": {
-      "3 K": "bs",
-      "5 R": "ilnss",
-      "9 R": "es"
+      "3": "bs",
+      "5": "ilnss",
+      "9": "es"
     },
     "48": {
-      "3 K": "bs",
-      "5 R": "ilms",
-      "9 R": "emms"
+      "3": "bs",
+      "5": "ilms",
+      "9": "emms"
     },
     "49": {
-      "3 K": "bs",
-      "5 R": "ils",
-      "7 O": "kkm"
+      "3": "bs",
+      "5": "ils",
+      "7": "kkm"
     },
     "50": {
-      "3 K": "bs",
-      "5 R": "ilmms",
-      "8 R": "mm",
-      "9 R": "emms"
+      "3": "bs",
+      "5": "ilmms",
+      "8": "mm",
+      "9": "emms"
     },
     "51": {
-      "3 K": "bs",
-      "5 R": "hilmms",
-      "8 R": "mnps",
-      "9 R": "emms"
+      "3": "bs",
+      "5": "hilmms",
+      "8": "mnps",
+      "9": "emms"
     },
     "52": {
-      "2 K": "kkmm",
-      "3 K": "bps",
-      "4 K": "kkmms",
-      "5 R": "ilns",
-      "9 R": "emms"
+      "2": "kkmm",
+      "3": "bps",
+      "4": "kkmms",
+      "5": "ilns",
+      "9": "emms"
     },
     "53": {
-      "2 K": "kkmm",
-      "3 K": "bps",
-      "4 K": "kkmms",
-      "5 R": "ins",
-      "8 R": "mms"
+      "2": "kkmm",
+      "3": "bps",
+      "4": "kkmms",
+      "5": "ins",
+      "8": "mms"
     },
     "54": {
-      "2 K": "kkmm",
-      "3 K": "bps",
-      "4 K": "kkmms",
-      "5 R": "glns",
-      "9 R": "lmms "
+      "2": "kkmm",
+      "3": "bps",
+      "4": "kkmms",
+      "5": "glns",
+      "9": "lmms "
     },
     "55": {
-      "3 K": "bgs",
-      "5 R": "gs",
-      "8 R": "mmpps",
-      "9 R": "elmms"
+      "3": "bgs",
+      "5": "gs",
+      "8": "mmpps",
+      "9": "elmms"
     },
     "56": {
-      "3 K": "gs",
-      "5 R": "gs",
-      "9 R": "elmms"
+      "3": "gs",
+      "5": "gs",
+      "9": "elmms"
     },
     "57": {
-      "3 K": "bgns",
-      "5 R": "gs",
-      "9 R": "elmms"
+      "3": "bgns",
+      "5": "gs",
+      "9": "elmms"
     },
     "58": {
-      "3 K": "gps",
-      "4 K": "gps",
-      "5 R": "gs",
-      "9 R": "elmms"
+      "3": "gps",
+      "4": "gps",
+      "5": "gs",
+      "9": "elmms"
     },
     "59": {
-      "3 K": "bnps",
-      "4 K": "gns",
-      "5 R": "gls",
-      "9 R": "mms"
+      "3": "bnps",
+      "4": "gns",
+      "5": "gls",
+      "9": "mms"
     },
     "60": {
-      "1 K": "kklmm",
-      "2 K": "klmm",
-      "3 K": "ls",
-      "5 R": "gs",
-      "6 R": "mms",
-      "8 R": "em",
-      "9 R": "mms"
+      "1": "kklmm",
+      "2": "klmm",
+      "3": "ls",
+      "5": "gs",
+      "6": "mms",
+      "8": "em",
+      "9": "mms"
     },
     "61": {
-      "1 K": "kklmm",
-      "3 K": "ls",
-      "5 R": "gs",
-      "6 R": "mms",
-      "9 R": "mms"
+      "1": "kklmm",
+      "3": "ls",
+      "5": "gs",
+      "6": "mms",
+      "9": "mms"
     },
     "62": {
-      "1 K": "kklmm",
-      "3 K": "ls",
-      "5 R": "gs",
-      "6 R": "mmns",
-      "9 R": "mms"
+      "1": "kklmm",
+      "3": "ls",
+      "5": "gs",
+      "6": "mmns",
+      "9": "mms"
     },
     "63": {
-      "2 K": "klmmp",
-      "3 K": "ls",
-      "5 R": "egmms",
-      "9 R": "mms"
+      "2": "klmmp",
+      "3": "ls",
+      "5": "egmms",
+      "9": "mms"
     },
     "64": {
-      "1 K": "kklmm",
-      "3 K": "is",
-      "9 R": "mms"
+      "1": "kklmm",
+      "3": "is",
+      "9": "mms"
     },
     "65": {
-      "1 K": "kklmm",
-      "3 K": "ls",
-      "5 R": "gmmns",
-      "9 R": "mms"
+      "1": "kklmm",
+      "3": "ls",
+      "5": "gmmns",
+      "9": "mms"
     },
     "66": {
-      "3 K": "ls",
-      "5 R": "gs",
-      "9 R": "gmms"
+      "3": "ls",
+      "5": "gs",
+      "9": "gmms"
     },
     "67": {
-      "3 K": "ls",
-      "4 K": "ls",
-      "5 R": "gs",
-      "9 R": "gmms"
+      "3": "ls",
+      "4": "ls",
+      "5": "gs",
+      "9": "gmms"
     },
     "68": {
-      "3 K": "ls",
-      "4 K": "ls",
-      "9 R": "gmms"
+      "3": "ls",
+      "4": "ls",
+      "9": "gmms"
     },
     "69": {
-      "2 K": "klmmo",
-      "3 K": "ls",
-      "4 K": "ls",
-      "5 R": "glkkps",
-      "9 R": "gmms"
+      "2": "klmmo",
+      "3": "ls",
+      "4": "ls",
+      "5": "glkkps",
+      "9": "gmms"
     },
     "70": {
-      "1 K": "lmmo",
-      "3 K": "s",
-      "5 R": "lkkps",
-      "6 R": "mps",
-      "8 R": "kkmmp",
-      "9 R": "mmps"
+      "1": "lmmo",
+      "3": "s",
+      "5": "lkkps",
+      "6": "mps",
+      "8": "kkmmp",
+      "9": "mmps"
     },
     "71": {
-      "3 K": "s",
-      "5 R": "lms",
-      "6 R": "mss",
-      "9 R": "mmns"
+      "3": "s",
+      "5": "lms",
+      "6": "mss",
+      "9": "mmns"
     },
     "72": {
-      "3 K": "s",
-      "5 R": "lpss",
-      "9 R": "hlmms"
+      "3": "s",
+      "5": "lpss",
+      "9": "hlmms"
     },
     "73": {
-      "3 K": "bs",
-      "5 R": "ls",
-      "9 R": "gmms"
+      "3": "bs",
+      "5": "ls",
+      "9": "gmms"
     },
     "74": {
-      "1 K": "mnoss",
-      "3 K": "bs",
-      "5 R": "lns",
-      "9 R": "gmms"
+      "1": "mnoss",
+      "3": "bs",
+      "5": "lns",
+      "9": "gmms"
     },
     "75": {
-      "9 R": "hmmps"
+      "9": "hmmps"
     },
     "76": {
-      "8 R": "kmmo",
-      "9 R": "hmmps"
+      "8": "kmmo",
+      "9": "hmmps"
     },
     "77": {
-      "3 K": "is",
-      "9 R": "hmms"
+      "3": "is",
+      "9": "hmms"
     },
     "78": {
-      "9 R": "kkmmos"
+      "9": "kkmmos"
     },
     "79": {
-      "3 K": "ns",
-      "5 R": "emss",
-      "6 R": "emmns",
-      "9 R": "mmos"
+      "3": "ns",
+      "5": "emss",
+      "6": "emmns",
+      "9": "mmos"
     },
     "80": {
-      "3 K": "ils",
-      "6 R": "emmns",
-      "9 R": "lnps"
+      "3": "ils",
+      "6": "emmns",
+      "9": "lnps"
     },
     "81": {
-      "2 K": "ikkls",
-      "6 R": "emmos",
-      "8 R": "klmm",
-      "9 R": "nps"
+      "2": "ikkls",
+      "6": "emmos",
+      "8": "klmm",
+      "9": "nps"
     },
     "82": {
-      "2 K": "bikks",
-      "3 K": "bis",
-      "9 R": "emms"
+      "2": "bikks",
+      "3": "bis",
+      "9": "emms"
     },
     "83": {
-      "3 K": "ilns",
-      "5 R": "emms",
-      "6 R": "emos",
-      "9 R": "emms"
+      "3": "ilns",
+      "5": "emms",
+      "6": "emos",
+      "9": "emms"
     },
     "84": {
-      "3 K": "ijls",
-      "5 R": "emms",
-      "6 R": "eklmmpp",
-      "9 R": "emms"
+      "3": "ijls",
+      "5": "emms",
+      "6": "eklmmpp",
+      "9": "emms"
     },
     "85": {
-      "2 K": "kklmm",
-      "9 R": "emms"
+      "2": "kklmm",
+      "9": "emms"
     },
     "86": {
-      "2 K": "kklmm",
-      "9 R": "emms"
+      "2": "kklmm",
+      "9": "emms"
     },
     "87": {
-      "3 K": "lnoss",
-      "9 R": "emms"
+      "3": "lnoss",
+      "9": "emms"
     },
     "88": {
-      "2 K": "kklmmo",
-      "3 K": "kklmmos",
-      "9 R": "ens"
+      "2": "kklmmo",
+      "3": "kklmmos",
+      "9": "ens"
     },
     "89": {
-      "3 K": "gkklps",
-      "9 R": "ens"
+      "3": "gkklps",
+      "9": "ens"
     },
     "90": {
-      "3 K": "lps",
-      "6 R": "es",
-      "8 R": "lmmp",
-      "9 R": "enss"
+      "3": "lps",
+      "6": "es",
+      "8": "lmmp",
+      "9": "enss"
     },
     "91": {
-      "3 K": "glps",
-      "8 R": "lmmp",
-      "9 R": "ns"
+      "3": "glps",
+      "8": "lmmp",
+      "9": "ns"
     },
     "92": {
-      "3 K": "gls",
-      "8 R": "glmmns",
-      "9 R": "s"
+      "3": "gls",
+      "8": "glmmns",
+      "9": "s"
     },
     "93": {
-      "9 R": "s"
+      "9": "s"
     },
     "94": {
-      "9 R": "lmmps"
+      "9": "lmmps"
     },
     "95": {
-      "3 K": "ps",
-      "8 R": "lmmns",
-      "9 R": "lmmnps"
+      "3": "ps",
+      "8": "lmmns",
+      "9": "lmmnps"
     },
     "96": {
-      "3 K": "ps",
-      "9 R": "kkmms"
+      "3": "ps",
+      "9": "kkmms"
     },
     "97": {
-      "9 R": "es"
+      "9": "es"
     },
     "98": {
-      "9 R": "es"
+      "9": "es"
     },
     "99": {
-      "2 K": "nps",
-      "8 R": "klmmp",
-      "9 R": "es"
+      "2": "nps",
+      "8": "klmmp",
+      "9": "es"
     }
   },
   "4": {
     "00": {
-      "1 L": "jlmps",
-      "3 L": "aadrs",
-      "4 L": "gjss",
-      "5 S": "bgjmps",
-      "7 S": "s",
-      "8 S": "aaalmmnp",
-      "9 S": "kmmp"
+      "1": "jlmps",
+      "3": "aadrs",
+      "4": "gjss",
+      "5": "bgjmps",
+      "7": "s",
+      "8": "aaalmmnp",
+      "9": "kmmp"
     },
     "01": {
-      "1 L": "s",
-      "3 L": "aadgrs",
-      "4 L": "gjns",
-      "5 S": "gmrrss",
-      "6 S": "gmrrss",
-      "7 S": "s",
-      "8 S": "a",
-      "9 S": "fggmmss"
+      "1": "s",
+      "3": "aadgrs",
+      "4": "gjns",
+      "5": "gmrrss",
+      "6": "gmrrss",
+      "7": "s",
+      "8": "a",
+      "9": "fggmmss"
     },
     "02": {
-      "1 L": "is",
-      "5 S": "gmrrs",
-      "6 S": "aaadkp",
-      "7 S": "s",
-      "8 S": "gmmnss",
-      "9 S": "ggmqqrss "
+      "1": "is",
+      "5": "gmrrs",
+      "6": "aaadkp",
+      "7": "s",
+      "8": "gmmnss",
+      "9": "ggmqqrss "
     },
     "03": {
-      "0 L": "m",
-      "1 L": "imms",
-      "3 L": "aas",
-      "5 S": "gmns",
-      "6 S": "aaalmnp",
-      "7 S": "ms",
-      "8 S": "ggrss"
+      "0": "m",
+      "1": "imms",
+      "3": "aas",
+      "5": "gmns",
+      "6": "aaalmnp",
+      "7": "ms",
+      "8": "ggrss"
     },
     "04": {
-      "4 L": "gjs",
-      "5 S": "gms",
-      "6 S": "bmmns",
-      "7 S": "mms",
-      "8 S": "ggqrss",
-      "9 S": "ffhimmns"
+      "4": "gjs",
+      "5": "gms",
+      "6": "bmmns",
+      "7": "mms",
+      "8": "ggqrss",
+      "9": "ffhimmns"
     },
     "05": {
-      "0 L": "lmnp",
-      "1 L": "lmps",
-      "3 L": "aas",
-      "4 L": "gjs",
-      "5 S": "gmmns",
-      "6 S": "m",
-      "7 S": "mms",
-      "8 S": "ggqqrss",
-      "9 S": "dffgss"
+      "0": "lmnp",
+      "1": "lmps",
+      "3": "aas",
+      "4": "gjs",
+      "5": "gmmns",
+      "6": "m",
+      "7": "mms",
+      "8": "ggqqrss",
+      "9": "dffgss"
     },
     "06": {
-      "0 L": "lmmp",
-      "1 L": "lmmps",
-      "2 L": "as",
-      "3 L": "aars",
-      "4 L": "gjs",
-      "5 S": "dgnss",
-      "6 S": "mm",
-      "7 S": "mms",
-      "8 S": "lmns",
-      "9 S": "ffgmss"
+      "0": "lmmp",
+      "1": "lmmps",
+      "2": "as",
+      "3": "aars",
+      "4": "gjs",
+      "5": "dgnss",
+      "6": "mm",
+      "7": "mms",
+      "8": "lmns",
+      "9": "ffgmss"
     },
     "07": {
-      "2 L": "ails",
-      "3 L": "aails",
-      "4 L": "bgjs",
-      "5 S": "gmms",
-      "6 S": "mm",
-      "7 S": "mms",
-      "8 S": "am",
-      "9 S": "fgmmnss"
+      "2": "ails",
+      "3": "aails",
+      "4": "bgjs",
+      "5": "gmms",
+      "6": "mm",
+      "7": "mms",
+      "8": "am",
+      "9": "fgmmnss"
     },
     "08": {
-      "1 L": "flmps",
-      "2 L": "akklps",
-      "3 L": "aaps",
-      "4 L": "gjs",
-      "5 S": "gmmns",
-      "6 S": "cmmrs",
-      "7 S": "cmms",
-      "8 S": "agmms",
-      "9 S": "ffggmrrss"
+      "1": "flmps",
+      "2": "akklps",
+      "3": "aaps",
+      "4": "gjs",
+      "5": "gmmns",
+      "6": "cmmrs",
+      "7": "cmms",
+      "8": "agmms",
+      "9": "ffggmrrss"
     },
     "09": {
-      "0 L": "lmm",
-      "1 L": "bms",
-      "3 L": "aaps",
-      "4 L": "gjs",
-      "5 S": "dgkms",
-      "6 S": "cmmrss",
-      "7 S": "cmms",
-      "9 S": "ffggmrrss"
+      "0": "lmm",
+      "1": "bms",
+      "3": "aaps",
+      "4": "gjs",
+      "5": "dgkms",
+      "6": "cmmrss",
+      "7": "cmms",
+      "9": "ffggmrrss"
     },
     "10": {
-      "0 L": "b",
-      "1 L": "bms",
-      "4 L": "gkkmms",
-      "5 S": "dgkkms",
-      "6 S": "bgkkmm",
-      "7 S": "npss",
-      "9 S": "ffgns"
+      "0": "b",
+      "1": "bms",
+      "4": "gkkmms",
+      "5": "dgkkms",
+      "6": "bgkkmm",
+      "7": "npss",
+      "9": "ffgns"
     },
     "11": {
-      "1 L": "bms",
-      "2 L": "aklps",
-      "3 L": "aaklps",
-      "4 L": "g",
-      "5 S": "dgns",
-      "6 S": "bgkk",
-      "7 S": "ms",
-      "9 S": "ffgss"
+      "1": "bms",
+      "2": "aklps",
+      "3": "aaklps",
+      "4": "g",
+      "5": "dgns",
+      "6": "bgkk",
+      "7": "ms",
+      "9": "ffgss"
     },
     "12": {
-      "1 L": "bms",
-      "3 L": "aalps",
-      "4 L": "bgs",
-      "5 S": "dgmns",
-      "6 S": "c",
-      "7 S": "ns",
-      "9 S": "ffgms"
+      "1": "bms",
+      "3": "aalps",
+      "4": "bgs",
+      "5": "dgmns",
+      "6": "c",
+      "7": "ns",
+      "9": "ffgms"
     },
     "13": {
-      "1 L": "bs",
-      "2 L": "ads",
-      "3 L": "aads",
-      "4 L": "gm",
-      "5 S": "dggns",
-      "6 S": "cs",
-      "7 S": "lnps",
-      "9 S": "ffgmss"
+      "1": "bs",
+      "2": "ads",
+      "3": "aads",
+      "4": "gm",
+      "5": "dggns",
+      "6": "cs",
+      "7": "lnps",
+      "9": "ffgmss"
     },
     "14": {
-      "3 L": "aakklmmp",
-      "4 L": "gmm",
-      "5 S": "ggkks",
-      "6 S": "mmns",
-      "7 S": "dms"
+      "3": "aakklmmp",
+      "4": "gmm",
+      "5": "ggkks",
+      "6": "mmns",
+      "7": "dms"
     },
     "15": {
-      "2 L": "ais",
-      "3 L": "aakklmmps",
-      "4 L": "gmms",
-      "5 S": "gjkkmms",
-      "6 S": "mmnps",
-      "7 S": "ds",
-      "8 S": "almm",
-      "9 S": "fhimmnsu"
+      "2": "ais",
+      "3": "aakklmmps",
+      "4": "gmms",
+      "5": "gjkkmms",
+      "6": "mmnps",
+      "7": "ds",
+      "8": "almm",
+      "9": "fhimmnsu"
     },
     "16": {
-      "2 L": "ailps",
-      "3 L": "aaklmps",
-      "4 L": "gs",
-      "5 S": "gjkkmms",
-      "6 S": "mnps",
-      "7 S": "dmns",
-      "8 S": "almms"
+      "2": "ailps",
+      "3": "aaklmps",
+      "4": "gs",
+      "5": "gjkkmms",
+      "6": "mnps",
+      "7": "dmns",
+      "8": "almms"
     },
     "17": {
-      "0 L": "cmp",
-      "3 L": "aaijrs",
-      "4 L": "gkkmm",
-      "5 S": "dggns",
-      "6 S": "gkkmm",
-      "7 S": "ps"
+      "0": "cmp",
+      "3": "aaijrs",
+      "4": "gkkmm",
+      "5": "dggns",
+      "6": "gkkmm",
+      "7": "ps"
     },
     "18": {
-      "0 L": "cmp",
-      "1 L": "jlps",
-      "2 L": "aaiis",
-      "3 L": "aaips",
-      "4 L": "gkkmms",
-      "5 S": "gkkmmss",
-      "6 S": "ggkmmss",
-      "7 S": "ps",
-      "8 S": "amm"
+      "0": "cmp",
+      "1": "jlps",
+      "2": "aaiis",
+      "3": "aaips",
+      "4": "gkkmms",
+      "5": "gkkmmss",
+      "6": "ggkmmss",
+      "7": "ps",
+      "8": "amm"
     },
     "19": {
-      "0 L": "cmp",
-      "2 L": "adks",
-      "3 L": "aaips",
-      "4 L": "gkkm",
-      "5 S": "gkkmmss",
-      "6 S": "ps",
-      "7 S": "ps",
-      "8 S": "amm"
+      "0": "cmp",
+      "2": "adks",
+      "3": "aaips",
+      "4": "gkkm",
+      "5": "gkkmmss",
+      "6": "ps",
+      "7": "ps",
+      "8": "amm"
     },
     "20": {
-      "0 L": "c",
-      "2 L": "aaiis",
-      "3 L": "aains",
-      "4 L": "fgkkmm",
-      "5 S": "fgkmmss",
-      "6 S": "ps",
-      "7 S": "ps",
-      "8 S": "amm",
-      "9 S": "aac"
+      "0": "c",
+      "2": "aaiis",
+      "3": "aains",
+      "4": "fgkkmm",
+      "5": "fgkmmss",
+      "6": "ps",
+      "7": "ps",
+      "8": "amm",
+      "9": "aac"
     },
     "21": {
-      "2 L": "aaiikklps",
-      "4 L": "gkm",
-      "5 S": "fgmmss",
-      "6 S": "kklps",
-      "7 S": "mmnps",
-      "8 S": "ammp"
+      "2": "aaiikklps",
+      "4": "gkm",
+      "5": "fgmmss",
+      "6": "kklps",
+      "7": "mmnps",
+      "8": "ammp"
     },
     "22": {
-      "1 L": "ds",
-      "2 L": "aaiilps",
-      "3 L": "aaims",
-      "4 L": "dgs",
-      "5 S": "gkkms",
-      "6 S": "mmp",
-      "7 S": "mmps",
-      "8 S": "ammp",
-      "9 S": "iims"
+      "1": "ds",
+      "2": "aaiilps",
+      "3": "aaims",
+      "4": "dgs",
+      "5": "gkkms",
+      "6": "mmp",
+      "7": "mmps",
+      "8": "ammp",
+      "9": "iims"
     },
     "23": {
-      "2 L": "aaiims",
-      "4 L": "gs",
-      "5 S": "gkkmss",
-      "6 S": "mmp",
-      "7 S": "nps",
-      "8 S": "almmp",
-      "9 S": "ghmm"
+      "2": "aaiims",
+      "4": "gs",
+      "5": "gkkmss",
+      "6": "mmp",
+      "7": "nps",
+      "8": "almmp",
+      "9": "ghmm"
     },
     "24": {
-      "0 L": "dm",
-      "4 L": "fgs",
-      "5 S": "gnss",
-      "6 S": "mmp",
-      "7 S": "nps",
-      "9 S": "ghmmn"
+      "0": "dm",
+      "4": "fgs",
+      "5": "gnss",
+      "6": "mmp",
+      "7": "nps",
+      "9": "ghmmn"
     },
     "25": {
-      "1 L": "ls",
-      "3 L": "aabkkmms",
-      "4 L": "gs",
-      "5 S": "gkmmss",
-      "6 S": "nss",
-      "7 S": "nps",
-      "9 S": "ghmmns"
+      "1": "ls",
+      "3": "aabkkmms",
+      "4": "gs",
+      "5": "gkmmss",
+      "6": "nss",
+      "7": "nps",
+      "9": "ghmmns"
     },
     "26": {
-      "1 L": "lps",
-      "3 L": "aakmps",
-      "4 L": "gs",
-      "5 S": "dgnss",
-      "6 S": "nps",
-      "7 S": "lps",
-      "8 S": "ammnp",
-      "9 S": "glmmpss"
+      "1": "lps",
+      "3": "aakmps",
+      "4": "gs",
+      "5": "dgnss",
+      "6": "nps",
+      "7": "lps",
+      "8": "ammnp",
+      "9": "glmmpss"
     },
     "27": {
-      "0 L": "pss",
-      "1 L": "lps",
-      "3 L": "aakkps",
-      "4 L": "gs",
-      "5 S": "dggnqss",
-      "6 S": "lp",
-      "7 S": "lps",
-      "8 S": "ammnps",
-      "9 S": "aghmmns"
+      "0": "pss",
+      "1": "lps",
+      "3": "aakkps",
+      "4": "gs",
+      "5": "dggnqss",
+      "6": "lp",
+      "7": "lps",
+      "8": "ammnps",
+      "9": "aghmmns"
     },
     "28": {
-      "0 L": "p",
-      "1 L": "ps",
-      "4 L": "gs",
-      "5 S": "dggnss",
-      "6 S": "klp",
-      "7 S": "mmps",
-      "9 S": "mrrs"
+      "0": "p",
+      "1": "ps",
+      "4": "gs",
+      "5": "dggnss",
+      "6": "klp",
+      "7": "mmps",
+      "9": "mrrs"
     },
     "29": {
-      "0 L": "p",
-      "1 L": "nps",
-      "4 L": "gs",
-      "5 S": "dggqss",
-      "6 S": "fkmmss",
-      "7 S": "flps",
-      "9 S": "aap"
+      "0": "p",
+      "1": "nps",
+      "4": "gs",
+      "5": "dggqss",
+      "6": "fkmmss",
+      "7": "flps",
+      "9": "aap"
     },
     "30": {
-      "1 L": "ns",
-      "4 L": "gjns",
-      "5 S": "gjss",
-      "6 S": "flmmnps",
-      "7 S": "lnps",
-      "9 S": "dggmrrs"
+      "1": "ns",
+      "4": "gjns",
+      "5": "gjss",
+      "6": "flmmnps",
+      "7": "lnps",
+      "9": "dggmrrs"
     },
     "31": {
-      "1 L": "nps",
-      "4 L": "gjns",
-      "6 S": "imns    ",
-      "7 S": "mps",
-      "8 S": "amp",
-      "9 S": "ggmrrss"
+      "1": "nps",
+      "4": "gjns",
+      "6": "imns    ",
+      "7": "mps",
+      "8": "amp",
+      "9": "ggmrrss"
     },
     "32": {
-      "1 L": "ps",
-      "4 L": "gns",
-      "5 S": "gjnss",
-      "6 S": "lmmnps",
-      "7 S": "lmmnps",
-      "9 S": "ggmrrss"
+      "1": "ps",
+      "4": "gns",
+      "5": "gjnss",
+      "6": "lmmnps",
+      "7": "lmmnps",
+      "9": "ggmrrss"
     },
     "33": {
-      "3 L": "aadfs",
-      "4 L": "gnss",
-      "5 S": "gjmmss",
-      "6 S": "lmmp",
-      "7 S": "lmmps",
-      "8 S": "almmps",
-      "9 S": "dggmrrs"
+      "3": "aadfs",
+      "4": "gnss",
+      "5": "gjmmss",
+      "6": "lmmp",
+      "7": "lmmps",
+      "8": "almmps",
+      "9": "dggmrrs"
     },
     "34": {
-      "2 L": "adkks",
-      "3 L": "aadks",
-      "4 L": "gjs",
-      "6 S": "lmmpss",
-      "7 S": "lmmnps",
-      "8 S": "almmps",
-      "9 S": "ggmrrs"
+      "2": "adkks",
+      "3": "aadks",
+      "4": "gjs",
+      "6": "lmmpss",
+      "7": "lmmnps",
+      "8": "almmps",
+      "9": "ggmrrs"
     },
     "35": {
-      "0 L": "ds",
-      "3 L": "aads",
-      "4 L": "gns",
-      "5 S": "gjs",
-      "6 S": "lmps",
-      "7 S": "lmmps",
-      "8 S": "ams",
-      "9 S": "dmrrs"
+      "0": "ds",
+      "3": "aads",
+      "4": "gns",
+      "5": "gjs",
+      "6": "lmps",
+      "7": "lmmps",
+      "8": "ams",
+      "9": "dmrrs"
     },
     "36": {
-      "3 L": "aads",
-      "4 L": "ghns",
-      "5 S": "gjs",
-      "6 S": "ikkps",
-      "7 S": "fnps",
-      "8 S": "almmnps",
-      "9 S": "dmrrs"
+      "3": "aads",
+      "4": "ghns",
+      "5": "gjs",
+      "6": "ikkps",
+      "7": "fnps",
+      "8": "almmnps",
+      "9": "dmrrs"
     },
     "37": {
-      "4 L": "gss",
-      "5 S": "gjs",
-      "6 S": "iins",
-      "7 S": "fps",
-      "9 S": "dmrrss"
+      "4": "gss",
+      "5": "gjs",
+      "6": "iins",
+      "7": "fps",
+      "9": "dmrrss"
     },
     "38": {
-      "1 L": "fflps",
-      "3 L": "aakklps",
-      "4 L": "fgss",
-      "5 S": "gjs",
-      "6 S": "ins",
-      "7 S": "is",
-      "8 S": "ahlmmps",
-      "9 S": "fggmrrss"
+      "1": "fflps",
+      "3": "aakklps",
+      "4": "fgss",
+      "5": "gjs",
+      "6": "ins",
+      "7": "is",
+      "8": "ahlmmps",
+      "9": "fggmrrss"
     },
     "39": {
-      "0 L": "km",
-      "3 L": "aakklps",
-      "4 L": "gnss",
-      "5 S": "gjs",
-      "7 S": "fiss",
-      "8 S": "ahlmms",
-      "9 S": "fggmrrss"
+      "0": "km",
+      "3": "aakklps",
+      "4": "gnss",
+      "5": "gjs",
+      "7": "fiss",
+      "8": "ahlmms",
+      "9": "fggmrrss"
     },
     "40": {
-      "1 L": "fs",
-      "4 L": "gjnss",
-      "5 S": "gs",
-      "6 S": "fiimmns",
-      "7 S": "fmps",
-      "9 S": "fgmrrss"
+      "1": "fs",
+      "4": "gjnss",
+      "5": "gs",
+      "6": "fiimmns",
+      "7": "fmps",
+      "9": "fgmrrss"
     },
     "41": {
-      "1 L": "bfms",
-      "4 L": "ffgnss",
-      "5 S": "gs",
-      "7 S": "fins",
-      "9 S": "rrs"
+      "1": "bfms",
+      "4": "ffgnss",
+      "5": "gs",
+      "7": "fins",
+      "9": "rrs"
     },
     "42": {
-      "1 L": "fms",
-      "2 L": "almmp",
-      "3 L": "aaklm",
-      "4 L": "gjm",
-      "5 S": "gs",
-      "6 S": "iikmms",
-      "7 S": "fps",
-      "9 S": "ggmrrss"
+      "1": "fms",
+      "2": "almmp",
+      "3": "aaklm",
+      "4": "gjm",
+      "5": "gs",
+      "6": "iikmms",
+      "7": "fps",
+      "9": "ggmrrss"
     },
     "43": {
-      "2 L": "ammp",
-      "3 L": "aaklmp",
-      "4 L": "fgkkmms",
-      "5 S": "gns",
-      "7 S": "fims",
-      "9 S": "ffggmrrs"
+      "2": "ammp",
+      "3": "aaklmp",
+      "4": "fgkkmms",
+      "5": "gns",
+      "7": "fims",
+      "9": "ffggmrrs"
     },
     "44": {
-      "2 L": "ahmm",
-      "3 L": "aakmp",
-      "4 L": "gkks",
-      "5 S": "gjns",
-      "6 S": "imms",
-      "7 S": "fimms",
-      "9 S": "fggrr"
+      "2": "ahmm",
+      "3": "aakmp",
+      "4": "gkks",
+      "5": "gjns",
+      "6": "imms",
+      "7": "fimms",
+      "9": "fggrr"
     },
     "45": {
-      "1 L": "fls",
-      "3 L": "aadkk",
-      "4 L": "gkks",
-      "5 S": "gs",
-      "6 S": "imms",
-      "7 S": "kkmps",
-      "9 S": "orrs"
+      "1": "fls",
+      "3": "aadkk",
+      "4": "gkks",
+      "5": "gs",
+      "6": "imms",
+      "7": "kkmps",
+      "9": "orrs"
     },
     "46": {
-      "1 L": "kklps",
-      "3 L": "aakklms",
-      "4 L": "gmms",
-      "5 S": "ggps",
-      "6 S": "imns",
-      "7 S": "fis",
-      "8 S": "ggrrss",
-      "9 S": "drrs"
+      "1": "kklps",
+      "3": "aakklms",
+      "4": "gmms",
+      "5": "ggps",
+      "6": "imns",
+      "7": "fis",
+      "8": "ggrrss",
+      "9": "drrs"
     },
     "47": {
-      "0 L": "hm",
-      "4 L": "gmmns",
-      "5 S": "gs",
-      "6 S": "fns",
-      "7 S": "fs",
-      "9 S": "grrs"
+      "0": "hm",
+      "4": "gmmns",
+      "5": "gs",
+      "6": "fns",
+      "7": "fs",
+      "9": "grrs"
     },
     "48": {
-      "1 L": "kklmps",
-      "3 L": "aadkks",
-      "4 L": "gjnpss",
-      "5 S": "gss",
-      "7 S": "eks",
-      "8 S": "ammps",
-      "9 S": "ffggorrss"
+      "1": "kklmps",
+      "3": "aadkks",
+      "4": "gjnpss",
+      "5": "gss",
+      "7": "eks",
+      "8": "ammps",
+      "9": "ffggorrss"
     },
     "49": {
-      "0 L": "kkmp",
-      "3 L": "aaklms",
-      "4 L": "gks",
-      "5 S": "gss",
-      "6 S": "klmm",
-      "7 S": "klps",
-      "8 S": "ammps",
-      "9 S": "fmprrss"
+      "0": "kkmp",
+      "3": "aaklms",
+      "4": "gks",
+      "5": "gss",
+      "6": "klmm",
+      "7": "klps",
+      "8": "ammps",
+      "9": "fmprrss"
     },
     "50": {
-      "1 L": "ikkps",
-      "4 L": "fgnss",
-      "5 S": "gss",
-      "6 S": "klmmp",
-      "7 S": "eks",
-      "8 S": "ggrs",
-      "9 S": "ggrs"
+      "1": "ikkps",
+      "4": "fgnss",
+      "5": "gss",
+      "6": "klmmp",
+      "7": "eks",
+      "8": "ggrs",
+      "9": "ggrs"
     },
     "51": {
-      "0 L": "kklmp",
-      "1 L": "kklmmps",
-      "3 L": "aaes",
-      "5 S": "gmns",
-      "7 S": "ekqs",
-      "8 S": "ggrrs",
-      "9 S": "ggrs"
+      "0": "kklmp",
+      "1": "kklmmps",
+      "3": "aaes",
+      "5": "gmns",
+      "7": "ekqs",
+      "8": "ggrrs",
+      "9": "ggrs"
     },
     "52": {
-      "0 L": "kklmmp",
-      "3 L": "aaes",
-      "4 L": "gmqs",
-      "5 S": "gnss",
-      "6 S": "klp",
-      "7 S": "dkmms",
-      "8 S": "amms",
-      "9 S": "ggmrs"
+      "0": "kklmmp",
+      "3": "aaes",
+      "4": "gmqs",
+      "5": "gnss",
+      "6": "klp",
+      "7": "dkmms",
+      "8": "amms",
+      "9": "ggmrs"
     },
     "53": {
-      "1 L": "bkkms",
-      "2 L": "aekks",
-      "4 L": "gms",
-      "5 S": "gns",
-      "6 S": "klps",
-      "7 S": "dkms",
-      "8 S": "ggmrs",
-      "9 S": "ggmrs"
+      "1": "bkkms",
+      "2": "aekks",
+      "4": "gms",
+      "5": "gns",
+      "6": "klps",
+      "7": "dkms",
+      "8": "ggmrs",
+      "9": "ggmrs"
     },
     "54": {
-      "1 L": "bkkmms",
-      "2 L": "aekks",
-      "3 L": "aadrs",
-      "4 L": "gms",
-      "5 S": "gns",
-      "6 S": "kkms",
-      "7 S": "dkmms",
-      "8 S": "ggrrs",
-      "9 S": "ggmrs"
+      "1": "bkkmms",
+      "2": "aekks",
+      "3": "aadrs",
+      "4": "gms",
+      "5": "gns",
+      "6": "kkms",
+      "7": "dkmms",
+      "8": "ggrrs",
+      "9": "ggmrs"
     },
     "55": {
-      "1 L": "dkks",
-      "2 L": "aekks",
-      "5 S": "gns",
-      "7 S": "dfls",
-      "8 S": "ggrrs",
-      "9 S": "dggmrs"
+      "1": "dkks",
+      "2": "aekks",
+      "5": "gns",
+      "7": "dfls",
+      "8": "ggrrs",
+      "9": "dggmrs"
     },
     "56": {
-      "0 L": "bk",
-      "1 L": "bks",
-      "2 L": "aekks",
-      "3 L": "aaers",
-      "4 L": "agjmms",
-      "5 S": "gns",
-      "6 S": "dkkms",
-      "7 S": "kkmps",
-      "8 S": "aimms",
-      "9 S": "dggmrss"
+      "0": "bk",
+      "1": "bks",
+      "2": "aekks",
+      "3": "aaers",
+      "4": "agjmms",
+      "5": "gns",
+      "6": "dkkms",
+      "7": "kkmps",
+      "8": "aimms",
+      "9": "dggmrss"
     },
     "57": {
-      "1 L": "is",
-      "2 L": "aekks",
-      "3 L": "aaek",
-      "5 S": "gns",
-      "6 S": "ggmrrs",
-      "7 S": "ckkmms",
-      "8 S": "aimmns",
-      "9 S": "ggors"
+      "1": "is",
+      "2": "aekks",
+      "3": "aaek",
+      "5": "gns",
+      "6": "ggmrrs",
+      "7": "ckkmms",
+      "8": "aimmns",
+      "9": "ggors"
     },
     "58": {
-      "1 L": "ikks",
-      "3 L": "aaikks",
-      "4 L": "ags",
-      "5 S": "gns",
-      "6 S": "ggmmrrs",
-      "7 S": "kklmmps",
-      "8 S": "amms",
-      "9 S": "dggmrrss"
+      "1": "ikks",
+      "3": "aaikks",
+      "4": "ags",
+      "5": "gns",
+      "6": "ggmmrrs",
+      "7": "kklmmps",
+      "8": "amms",
+      "9": "dggmrrss"
     },
     "59": {
-      "1 L": "dks",
-      "2 L": "aekks",
-      "3 L": "aais",
-      "5 S": "gjns",
-      "7 S": "fkkmps",
-      "8 S": "ammns",
-      "9 S": "emrss"
+      "1": "dks",
+      "2": "aekks",
+      "3": "aais",
+      "5": "gjns",
+      "7": "fkkmps",
+      "8": "ammns",
+      "9": "emrss"
     },
     "60": {
-      "1 L": "bkmms",
-      "3 L": "aais",
-      "5 S": "ggs",
-      "6 S": "kkm",
-      "7 S": "kklmmps",
-      "8 S": "amms",
-      "9 S": "ggrss"
+      "1": "bkmms",
+      "3": "aais",
+      "5": "ggs",
+      "6": "kkm",
+      "7": "kklmmps",
+      "8": "amms",
+      "9": "ggrss"
     },
     "61": {
-      "1 L": "dks",
-      "2 L": "aekkqs",
-      "3 L": "aagss",
-      "5 S": "ggns",
-      "6 S": "kklm",
-      "8 S": "amms",
-      "9 S": "ggmrss"
+      "1": "dks",
+      "2": "aekkqs",
+      "3": "aagss",
+      "5": "ggns",
+      "6": "kklm",
+      "8": "amms",
+      "9": "ggmrss"
     },
     "62": {
-      "1 L": "ks",
-      "2 L": "aeqss",
-      "3 L": "aaekks",
-      "4 L": "aags",
-      "5 S": "gjmms",
-      "6 S": "kks",
-      "7 S": "kkmms",
-      "8 S": "amms",
-      "9 S": "ggmrss"
+      "1": "ks",
+      "2": "aeqss",
+      "3": "aaekks",
+      "4": "aags",
+      "5": "gjmms",
+      "6": "kks",
+      "7": "kkmms",
+      "8": "amms",
+      "9": "ggmrss"
     },
     "63": {
-      "1 L": "kls",
-      "2 L": "aess",
-      "3 L": "aaers",
-      "5 S": "gnss",
-      "6 S": "ggnss",
-      "7 S": "hs",
-      "8 S": "amms",
-      "9 S": "ggmrss"
+      "1": "kls",
+      "2": "aess",
+      "3": "aaers",
+      "5": "gnss",
+      "6": "ggnss",
+      "7": "hs",
+      "8": "amms",
+      "9": "ggmrss"
     },
     "64": {
-      "3 L": "aaeks",
-      "4 L": "aagns",
-      "5 S": "gns",
-      "6 S": "kmmss",
-      "7 S": "hmms",
-      "8 S": "amms",
-      "9 S": "ggmrs"
+      "3": "aaeks",
+      "4": "aagns",
+      "5": "gns",
+      "6": "kmmss",
+      "7": "hmms",
+      "8": "amms",
+      "9": "ggmrs"
     },
     "65": {
-      "0 L": "klmp",
-      "2 L": "aekkms",
-      "3 L": "aaeks",
-      "5 S": "gnss",
-      "6 S": "hmm",
-      "7 S": "hmms",
-      "8 S": "amms",
-      "9 S": "ggorss"
+      "0": "klmp",
+      "2": "aekkms",
+      "3": "aaeks",
+      "5": "gnss",
+      "6": "hmm",
+      "7": "hmms",
+      "8": "amms",
+      "9": "ggorss"
     },
     "66": {
-      "0 L": "klmp",
-      "1 L": "klmps",
-      "2 L": "aekkms",
-      "3 L": "aaeks",
-      "5 S": "gnss",
-      "6 S": "fhis",
-      "7 S": "hmmns",
-      "8 S": "amms",
-      "9 S": "dfggmrss"
+      "0": "klmp",
+      "1": "klmps",
+      "2": "aekkms",
+      "3": "aaeks",
+      "5": "gnss",
+      "6": "fhis",
+      "7": "hmmns",
+      "8": "amms",
+      "9": "dfggmrss"
     },
     "67": {
-      "0 L": "klmmp",
-      "1 L": "klmmps",
-      "2 L": "aekkms",
-      "3 L": "aaeks",
-      "4 L": "aagjs",
-      "5 S": "gmps",
-      "6 S": "fhimmns",
-      "7 S": "fhimms",
-      "8 S": "amms",
-      "9 S": "dggoorss"
+      "0": "klmmp",
+      "1": "klmmps",
+      "2": "aekkms",
+      "3": "aaeks",
+      "4": "aagjs",
+      "5": "gmps",
+      "6": "fhimmns",
+      "7": "fhimms",
+      "8": "amms",
+      "9": "dggoorss"
     },
     "68": {
-      "3 L": "aaekms",
-      "5 S": "gss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "8 S": "ahmms",
-      "9 S": "dfggoorss"
+      "3": "aaekms",
+      "5": "gss",
+      "6": "himmns",
+      "7": "himms",
+      "8": "ahmms",
+      "9": "dfggoorss"
     },
     "69": {
-      "1 L": "kkms",
-      "3 L": "aaekms",
-      "5 S": "gss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "8 S": "ahmms",
-      "9 S": "dffggoorss"
+      "1": "kkms",
+      "3": "aaekms",
+      "5": "gss",
+      "6": "himmns",
+      "7": "himms",
+      "8": "ahmms",
+      "9": "dffggoorss"
     },
     "70": {
-      "0 L": "kmmp",
-      "2 L": "aeks",
-      "3 L": "aaers",
-      "5 S": "gss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "8 S": "ahmms",
-      "9 S": "dggnqs"
+      "0": "kmmp",
+      "2": "aeks",
+      "3": "aaers",
+      "5": "gss",
+      "6": "himmns",
+      "7": "himms",
+      "8": "ahmms",
+      "9": "dggnqs"
     },
     "71": {
-      "1 L": "hms",
-      "2 L": "aeks",
-      "3 L": "aaers",
-      "5 S": "gss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "8 S": "ahmms",
-      "9 S": "efoorss"
+      "1": "hms",
+      "2": "aeks",
+      "3": "aaers",
+      "5": "gss",
+      "6": "himmns",
+      "7": "himms",
+      "8": "ahmms",
+      "9": "efoorss"
     },
     "72": {
-      "2 L": "aeks",
-      "3 L": "aaefrs",
-      "5 S": "gmss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "8 S": "ahmms",
-      "9 S": "efoors"
+      "2": "aeks",
+      "3": "aaefrs",
+      "5": "gmss",
+      "6": "himmns",
+      "7": "himms",
+      "8": "ahmms",
+      "9": "efoors"
     },
     "73": {
-      "2 L": "aeks",
-      "3 L": "aaefoos",
-      "5 S": "gnss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "9 S": "ggoorrss"
+      "2": "aeks",
+      "3": "aaefoos",
+      "5": "gnss",
+      "6": "himmns",
+      "7": "himms",
+      "9": "ggoorrss"
     },
     "74": {
-      "1 L": "klps",
-      "2 L": "aeks",
-      "3 L": "aagooss",
-      "5 S": "gmss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "9 S": "emrss"
+      "1": "klps",
+      "2": "aeks",
+      "3": "aagooss",
+      "5": "gmss",
+      "6": "himmns",
+      "7": "himms",
+      "9": "emrss"
     },
     "75": {
-      "3 L": "aaefooss",
-      "5 S": "gnss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "9 S": "ggrss"
+      "3": "aaefooss",
+      "5": "gnss",
+      "6": "himmns",
+      "7": "himms",
+      "9": "ggrss"
     },
     "76": {
-      "1 L": "efks",
-      "3 L": "aadfoors",
-      "5 S": "ggnss",
-      "6 S": "himmns",
-      "7 S": "himms",
-      "8 S": "ahimms",
-      "9 S": "drs"
+      "1": "efks",
+      "3": "aadfoors",
+      "5": "ggnss",
+      "6": "himmns",
+      "7": "himms",
+      "8": "ahimms",
+      "9": "drs"
     },
     "77": {
-      "1 L": "efkss",
-      "3 L": "aagrs",
-      "5 S": "ggnss",
-      "6 S": "himmns",
-      "7 S": "himmns",
-      "8 S": "ahimms",
-      "9 S": "dmrss"
+      "1": "efkss",
+      "3": "aagrs",
+      "5": "ggnss",
+      "6": "himmns",
+      "7": "himmns",
+      "8": "ahimms",
+      "9": "dmrss"
     },
     "78": {
-      "1 L": "eks",
-      "3 L": "aagrss",
-      "5 S": "gmnss",
-      "6 S": "fhiimmns",
-      "7 S": "himns",
-      "8 S": "dmrs",
-      "9 S": "dmrs"
+      "1": "eks",
+      "3": "aagrss",
+      "5": "gmnss",
+      "6": "fhiimmns",
+      "7": "himns",
+      "8": "dmrs",
+      "9": "dmrs"
     },
     "79": {
-      "1 L": "eks",
-      "3 L": "aagos",
-      "5 S": "fgmss",
-      "6 S": "himmnss",
-      "7 S": "hhimms",
-      "9 S": "dmmrs"
+      "1": "eks",
+      "3": "aagos",
+      "5": "fgmss",
+      "6": "himmnss",
+      "7": "hhimms",
+      "9": "dmmrs"
     },
     "80": {
-      "0 L": "ek",
-      "1 L": "eks",
-      "3 L": "aaeilprs",
-      "5 S": "fgnss",
-      "6 S": "himmns",
-      "7 S": "hhmms",
-      "9 S": "ggrss"
+      "0": "ek",
+      "1": "eks",
+      "3": "aaeilprs",
+      "5": "fgnss",
+      "6": "himmns",
+      "7": "hhmms",
+      "9": "ggrss"
     },
     "81": {
-      "1 L": "ekss",
-      "3 L": "aaeilprss",
-      "5 S": "gjnqss",
-      "6 S": "himnss",
-      "7 S": "hhmms",
-      "9 S": "aadkms"
+      "1": "ekss",
+      "3": "aaeilprss",
+      "5": "gjnqss",
+      "6": "himnss",
+      "7": "hhmms",
+      "9": "aadkms"
     },
     "82": {
-      "1 L": "efks",
-      "3 L": "aaeffrs(1)",
-      "5 S": "fgns",
-      "6 S": "immns",
-      "9 S": "aadkms"
+      "1": "efks",
+      "3": "aaeffrs(1)",
+      "5": "fgns",
+      "6": "immns",
+      "9": "aadkms"
     },
     "83": {
-      "3 L": "aaeors",
-      "5 S": "ggmss",
-      "6 S": "lms",
-      "7 S": "hhmms",
-      "8 S": "adkmms",
-      "9 S": "aadkms"
+      "3": "aaeors",
+      "5": "ggmss",
+      "6": "lms",
+      "7": "hhmms",
+      "8": "adkmms",
+      "9": "aadkms"
     },
     "84": {
-      "3 L": "aadffoos",
-      "5 S": "aaggs",
-      "6 S": "hhjmm",
-      "7 S": "hhmms",
-      "9 S": "aadkms"
+      "3": "aadffoos",
+      "5": "aaggs",
+      "6": "hhjmm",
+      "7": "hhmms",
+      "9": "aadkms"
     },
     "85": {
-      "1 L": "ekqss",
-      "3 L": "aadffs",
-      "5 S": "dgkks",
-      "6 S": "hhjmmns",
-      "7 S": "hmmns",
-      "9 S": "aadkkms"
+      "1": "ekqss",
+      "3": "aadffs",
+      "5": "dgkks",
+      "6": "hhjmmns",
+      "7": "hmmns",
+      "9": "aadkkms"
     },
     "86": {
-      "0 L": "dklp",
-      "3 L": "aaerss",
-      "5 S": "dgms",
-      "6 S": "hkkmm",
-      "7 S": "hkkmms",
-      "9 S": "aadkmms"
+      "0": "dklp",
+      "3": "aaerss",
+      "5": "dgms",
+      "6": "hkkmm",
+      "7": "hkkmms",
+      "9": "aadkmms"
     },
     "87": {
-      "1 L": "ekks",
-      "2 L": "adfs",
-      "5 S": "dgmnss",
-      "6 S": "hmmn",
-      "7 S": "hmms",
-      "9 S": "aaammnp"
+      "1": "ekks",
+      "2": "adfs",
+      "5": "dgmnss",
+      "6": "hmmn",
+      "7": "hmms",
+      "9": "aaammnp"
     },
     "88": {
-      "1 L": "ekks",
-      "2 L": "aefs",
-      "5 S": "gkks",
-      "6 S": "lmss",
-      "7 S": "hmms",
-      "9 S": "aaklmmps"
+      "1": "ekks",
+      "2": "aefs",
+      "5": "gkks",
+      "6": "lmss",
+      "7": "hmms",
+      "9": "aaklmmps"
     },
     "89": {
-      "1 L": "eks",
-      "2 L": "aefss",
-      "3 L": "aaess",
-      "5 S": "dgkkmss",
-      "6 S": "mnss",
-      "7 S": "hmmns",
-      "9 S": "aaacdgglnp"
+      "1": "eks",
+      "2": "aefss",
+      "3": "aaess",
+      "5": "dgkkmss",
+      "6": "mnss",
+      "7": "hmmns",
+      "9": "aaacdgglnp"
     },
     "90": {
-      "1 L": "eks",
-      "2 L": "adfss",
-      "3 L": "aaekss",
-      "5 S": "gmmss",
-      "6 S": "ekss",
-      "7 S": "ekqss",
-      "8 S": "ahimm",
-      "9 S": "aadkmss"
+      "1": "eks",
+      "2": "adfss",
+      "3": "aaekss",
+      "5": "gmmss",
+      "6": "ekss",
+      "7": "ekqss",
+      "8": "ahimm",
+      "9": "aadkmss"
     },
     "91": {
-      "1 L": "lnpss",
-      "5 S": "dgmss",
-      "7 S": "dkkmss",
-      "8 S": "ahimmn",
-      "9 S": "ggkkss"
+      "1": "lnpss",
+      "5": "dgmss",
+      "7": "dkkmss",
+      "8": "ahimmn",
+      "9": "ggkkss"
     },
     "92": {
-      "2 L": "aes",
-      "3 L": "aaefrss",
-      "5 S": "dgkmmss",
-      "6 S": "dgqqss",
-      "7 S": "dkmss",
-      "8 S": "aaacglmmmnp",
-      "9 S": "dggmrss"
+      "2": "aes",
+      "3": "aaefrss",
+      "5": "dgkmmss",
+      "6": "dgqqss",
+      "7": "dkmss",
+      "8": "aaacglmmmnp",
+      "9": "dggmrss"
     },
     "93": {
-      "2 L": "aes",
-      "3 L": "aaekqss",
-      "5 S": "dgkmss",
-      "6 S": "ggrrss",
-      "7 S": "dkmss",
-      "8 S": "lmnps",
-      "9 S": "dggmrs"
+      "2": "aes",
+      "3": "aaekqss",
+      "5": "dgkmss",
+      "6": "ggrrss",
+      "7": "dkmss",
+      "8": "lmnps",
+      "9": "dggmrs"
     },
     "94": {
-      "2 L": "aes",
-      "5 S": "gmmnss",
-      "6 S": "ggnss",
-      "7 S": "dkmmss",
-      "8 S": "aaadlmmn",
-      "9 S": "ggmrss"
+      "2": "aes",
+      "5": "gmmnss",
+      "6": "ggnss",
+      "7": "dkmmss",
+      "8": "aaadlmmn",
+      "9": "ggmrss"
     },
     "95": {
-      "1 L": "ss",
-      "3 L": "aaprs",
-      "5 S": "gjkkmmss",
-      "6 S": "dggqqs",
-      "7 S": "lgnpss",
-      "8 S": "bgm",
-      "9 S": "agkmmps"
+      "1": "ss",
+      "3": "aaprs",
+      "5": "gjkkmmss",
+      "6": "dggqqs",
+      "7": "lgnpss",
+      "8": "bgm",
+      "9": "agkmmps"
     },
     "96": {
-      "3 L": "aaprss",
-      "5 S": "aadggns",
-      "6 S": "hhhmmns",
-      "7 S": "lpss",
-      "8 S": "lmmps",
-      "9 S": "mmrrs"
+      "3": "aaprss",
+      "5": "aadggns",
+      "6": "hhhmmns",
+      "7": "lpss",
+      "8": "lmmps",
+      "9": "mmrrs"
     },
     "97": {
-      "5 S": "gjkkmmss",
-      "6 S": "hhhimnss",
-      "7 S": "dmnss",
-      "8 S": "ps",
-      "9 S": "aaggnss"
+      "5": "gjkkmmss",
+      "6": "hhhimnss",
+      "7": "dmnss",
+      "8": "ps",
+      "9": "aaggnss"
     },
     "98": {
-      "5 S": "gkmss",
-      "6 S": "hhhimmns",
-      "7 S": "dfkmss",
-      "8 S": "aaalp",
-      "9 S": "aagss"
+      "5": "gkmss",
+      "6": "hhhimmns",
+      "7": "dfkmss",
+      "8": "aaalp",
+      "9": "aagss"
     },
     "99": {
-      "4 L": "lnp(1)",
-      "5 S": "gqss",
-      "6 S": "hhhmnss",
-      "7 S": "dggmqqrss",
-      "8 S": "aaalmmn",
-      "9 S": "aaagmmns"
+      "4": "lnp(1)",
+      "5": "gqss",
+      "6": "hhhmnss",
+      "7": "dggmqqrss",
+      "8": "aaalmmn",
+      "9": "aaagmmns"
     }
   },
   "5": {

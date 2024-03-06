@@ -218,3 +218,15 @@ String trimCharactersRight(String text, String characters) {
 String trimCharacters(String text, String characters) {
   return trimCharactersLeft(trimCharactersRight(text, characters), characters);
 }
+
+List<String> splitGroupsOfSameCharacters(String text) {
+  var regex = RegExp(r'(.)\1*');
+  var matches = regex.allMatches(text);
+
+  List<String> out = [];
+  for (final Match m in matches) {
+    out.add(m[0]!);
+  }
+
+  return out;
+}
