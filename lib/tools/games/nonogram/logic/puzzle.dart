@@ -336,16 +336,16 @@ class Puzzle {
 
     if (image == null) return;
     image = image.convert(numChannels: 1);
-    if (image.width / width > image.height/ height) {
+    if (width/ image.width > height/ image.height) {
       image = Image.copyResize(image, height: height, interpolation: Image.Interpolation.average);
     } else {
       image = Image.copyResize(image, width: width, interpolation: Image.Interpolation.average);
     }
-    rowOffset = max(((image.height - height)/ 2).truncate(), 0);
-    columnOffset = max(((image.width - width)/ 2).truncate(), 0);
+    rowOffset = max((( height - image.height)/ 2).truncate(), 0);
+    columnOffset = max(((width - image.width)/ 2).truncate(), 0);
 
-    for (int row = 0; row < image.width; row++) {
-      for (int column = 0; column < image.height; column++) {
+    for (int row = 0; row < image.height; row++) {
+      for (int column = 0; column < image.width; column++) {
         if ((row + rowOffset < rows.length) && (column + columnOffset < rows[row + rowOffset].length)) {
           rows[row + rowOffset][column + columnOffset] = image.getPixel(column, row).r < 128  ? 1 : -1;
         }
