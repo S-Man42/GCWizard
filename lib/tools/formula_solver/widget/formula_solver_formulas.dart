@@ -301,7 +301,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                           children: [
                             SizedBox(width: 35, child: GCWText(text: (index + 1).toString() + '.')),
                             Flexible(
-                              child: _buildFormulaText(formula.formula, widget.group.values, index + 1),
+                              child: _buildFormulaText(formula.formula, widget.group.values, index + 1, widget.group.formulas),
                             )
                           ],
                         ),
@@ -640,17 +640,23 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                 suppressToolMargin: true)));
   }
 
-  Widget _buildFormulaText(String formula, List<FormulaValue> values, int formulaIndex) {
+  Widget _buildFormulaText(String formula, List<FormulaValue> values, int formulaIndex, List<Formula> formulas) {
     Map<String, String> vals = {};
+    List<String> formulaNames = [];
+    
     for (var value in values) {
       vals.putIfAbsent(value.key, () => value.value);
+    }
+
+    for (var formula in formulas) {
+      formulaNames.add(_sanitizeFormulaReferences(formula.name));
     }
 
     return SelectableText.rich(TextSpan(
         children: _buildTextSpans(
             formula,
             formulaPainter.paintFormula(
-                formula, values, formulaIndex, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
+                formula, values, formulaIndex, formulaNames, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {
