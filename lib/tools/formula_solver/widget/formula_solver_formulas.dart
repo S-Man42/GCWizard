@@ -649,7 +649,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     }
 
     for (var formula in formulas) {
-      formulaNames.add(_sanitizeFormulaReferences(formula.name));
+      formulaNames.add(formula.name);
     }
 
     return SelectableText.rich(TextSpan(
