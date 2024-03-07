@@ -133,7 +133,11 @@ class DMMCoordinate extends BaseCoordinate {
 
   @override
   String toString([int? precision]) {
-    precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
+    if (Prefs.initCalled()) {
+      precision = precision ?? Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
+    } else {
+      precision = 3;
+    }
     return '${dmmLatitude.format(precision)}\n${dmmLongitude.format(precision)}';
   }
 }
