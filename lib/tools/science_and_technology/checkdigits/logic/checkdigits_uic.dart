@@ -170,13 +170,15 @@ const Map<UIC_TYPE, Map<String, String>> UIC_CODE_CATEGORY = {
 
 CheckDigitOutput _CheckUICNumber(String number) {
   if (number.length == 12) {
-    if (_checkNumber(number, isValidUICWagonCodeCheckDigit)) {
+    var uicWagonCode = UICWagonCode.fromNumber(number);
+
+    if (uicWagonCode.hasValidCheckDigit) {
       return CheckDigitOutput(true, '', ['']);
     } else {
       return CheckDigitOutput(
           false,
           _CalculateCheckDigitAndNumber(number.substring(0, number.length - 1), _CalculateUICNumber),
-          _CalculateGlitch(number, isValidUICWagonCodeCheckDigit));
+          _CalculateGlitch(number, () => uicWagonCode.hasValidCheckDigit));
     }
   }
   return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
@@ -184,14 +186,14 @@ CheckDigitOutput _CheckUICNumber(String number) {
 
 String _CalculateUICNumber(String number) {
   if (number.length == 11) {
-    return number + calculateUICWagonCodeCheckDigit(number);
+    return number + UICWagonCode.calculateUICWagonCodeCheckDigit(number);
   }
   return 'checkdigits_invalid_length';
 }
 
 List<String> _CalculateUICDigits(String number) {
   if (number.length == 12) {
-    return _CalculateDigits(number, isValidUICWagonCodeCheckDigit);
+    return _CalculateDigits(number, () => UICWagonCode.fromNumber(number).hasValidCheckDigit);
   } else {
     return ['checkdigits_invalid_length'];
   }

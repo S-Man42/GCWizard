@@ -4,6 +4,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart' as logic;
 import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
 
 class UICWagonCode extends StatefulWidget {
@@ -47,9 +48,9 @@ class UICWagonCodeState extends State<UICWagonCode> {
   }
 
   Widget _buildOutput() {
-    late UICWagonCodeReturn data;
+    late logic.UICWagonCode data;
     try {
-      data = uicWagonCode(_currentUICCode);
+      data = logic.UICWagonCode.fromNumber(_currentUICCode);
     } on FormatException catch (e) {
       return GCWDefaultOutput(
         child: i18n(context, e.message)
@@ -57,7 +58,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
     }
     Widget out = Container();
 
-    switch(data.type.name) {
+    switch(data.wagonType.name) {
       case UICWagonTypes.OUT_OF_ORDER:
         break;
       case UICWagonTypes.ENGINE:
@@ -65,7 +66,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
       case UICWagonTypes.PASSENGER_WAGON:
         break;
       case UICWagonTypes.FREIGHT_WAGON:
-        var freightData = (data.details!) as UICWagonCodeFreightWagon;
+        var freightData = data as UICWagonCodeFreightWagon;
 
         var classificationData = [
           [i18n(context, 'uic_category_number'), freightData.classification.uicNumberCode],
@@ -78,7 +79,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
         out = Column(
           children: [
             GCWColumnedMultilineOutput(data: [
-              [i18n(context, 'uic_freight_freighttype_code'), data.type.code],
+              [i18n(context, 'uic_freight_freighttype_code'), data.wagonType.code],
               [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_freightwagon')],
             ]),
             GCWTextDivider(text: i18n(context, 'uic_interoperability')),
@@ -103,7 +104,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
             GCWTextDivider(text: i18n(context, 'uic_individual')),
             GCWColumnedMultilineOutput(data: [
               [i18n(context, 'uic_runningnumber'), freightData.runningNumber],
-              [i18n(context, 'uic_checkdigit'), freightData.checkDigit + ' (' + i18n(context, freightData.isValidCheckDigit ? 'common_valid' : 'common_invalid')+ ')'],
+              [i18n(context, 'uic_checkdigit'), freightData.checkDigit + ' (' + i18n(context, freightData.hasValidCheckDigit ? 'common_valid' : 'common_invalid')+ ')'],
             ]),
           ],
         );

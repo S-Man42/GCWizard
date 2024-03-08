@@ -1,19 +1,24 @@
 part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
 
 // https://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:280:0029:0058:de:PDF
+// https://www.lokifahrer.ch/Lukmanier/Rollmaterial/Bezeichnungen/Bez-Wagen-G.htm
+// https://de.wikipedia.org/wiki/UIC-Wagennummer#Beispiel_UIC-Entschl%C3%BCsselung
+// https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_für_Güterwagen
+
+
 enum UICWagonCodeFreightGaugeType {FIXED, VARIABLE, BOTH_POSSIBLE, INVALID}
 enum UICWagonCodeFreightAxleType {SINGLE, BOGIE, INVALID}
-enum UICWagonCodeFreightTypes {NORMAL_PPW, NORMAL_TEN_RIV, NORMAL_TEN_INTERFRIGO, MAINTENANCE, MISC, NOT_IN_EU_REGISTERED, INVALID, FRIDGE_LEGACY}
+enum UICWagonCodeFreightWagonTypes {NORMAL_PPW, NORMAL_TEN_RIV, NORMAL_TEN_INTERFRIGO, MAINTENANCE, MISC, NOT_IN_EU_REGISTERED, INVALID, FRIDGE_LEGACY}
 
-String freightTypeToText(UICWagonCodeFreightTypes type) {
+String freightTypeToText(UICWagonCodeFreightWagonTypes type) {
   switch (type) {
-    case UICWagonCodeFreightTypes.NORMAL_PPW: return 'uic_freight_freighttype_normal_ppw';
-    case UICWagonCodeFreightTypes.NORMAL_TEN_RIV: return 'uic_freight_freighttype_normal_ten_riv';
-    case UICWagonCodeFreightTypes.NORMAL_TEN_INTERFRIGO: return 'uic_freight_freighttype_normal_ten_interfrigo';
-    case UICWagonCodeFreightTypes.MAINTENANCE: return 'uic_freight_freighttype_maintenance';
-    case UICWagonCodeFreightTypes.MISC: return 'uic_freight_freighttype_misc';
-    case UICWagonCodeFreightTypes.NOT_IN_EU_REGISTERED: return 'uic_freight_freighttype_notineuregistered';
-    case UICWagonCodeFreightTypes.FRIDGE_LEGACY: return 'uic_freight_gfreighttype_fridgelegacy';
+    case UICWagonCodeFreightWagonTypes.NORMAL_PPW: return 'uic_freight_freighttype_normal_ppw';
+    case UICWagonCodeFreightWagonTypes.NORMAL_TEN_RIV: return 'uic_freight_freighttype_normal_ten_riv';
+    case UICWagonCodeFreightWagonTypes.NORMAL_TEN_INTERFRIGO: return 'uic_freight_freighttype_normal_ten_interfrigo';
+    case UICWagonCodeFreightWagonTypes.MAINTENANCE: return 'uic_freight_freighttype_maintenance';
+    case UICWagonCodeFreightWagonTypes.MISC: return 'uic_freight_freighttype_misc';
+    case UICWagonCodeFreightWagonTypes.NOT_IN_EU_REGISTERED: return 'uic_freight_freighttype_notineuregistered';
+    case UICWagonCodeFreightWagonTypes.FRIDGE_LEGACY: return 'uic_freight_gfreighttype_fridgelegacy';
     default: return 'uic_freight_freighttype_invalid';
   }
 }
@@ -62,7 +67,7 @@ class UICWagenCodeFreightCategory {
   UICWagenCodeFreightCategory(String number) {
     numberCode = number[4];
     letterCode = _getCategoryLetterCode(number);
-    name = UICWagonCodeFreightCategory[numberCode]!;
+    name = 'uic_freight_category_' + numberCode;
   }
 }
 
@@ -158,26 +163,25 @@ class UICWagenCodeFreightClassification {
   }
 }
 
-class UICWagonCodeFreightWagon extends UICWagonCode {
-  late final String interoperabilityCode;
+class UICWagonCodeFreightWagon extends UICWagonCodeWagon {
   late final UICWagonCodeFreightGaugeType gaugeType;
   late final UICWagonCodeFreightAxleType axleType;
-  late final UICWagonCodeFreightTypes freightWagonType;
+  late final UICWagonCodeFreightWagonTypes freightWagonType;
   late final UICWagenCodeFreightCategory category; //Gattung
   late final UICWagenCodeFreightClassification classification;
 
-  UICWagonCodeFreightTypes _getType(int number1, int number2) {
+  UICWagonCodeFreightWagonTypes _getType(int number1, int number2) {
     if ([0, 1, 2, 3].contains(number1)) {
-      if (number2 == 0) return UICWagonCodeFreightTypes.INVALID;
-      if ([0, 1].contains(number1) && [3, 4, 5, 6, 7, 8].contains(number2)) return UICWagonCodeFreightTypes.FRIDGE_LEGACY;
-      if (number2 == 9) return UICWagonCodeFreightTypes.NORMAL_PPW;
-      if ([0, 1].contains(number1)) return UICWagonCodeFreightTypes.NORMAL_TEN_INTERFRIGO;
-      if ([2, 3].contains(number1)) return UICWagonCodeFreightTypes.NORMAL_TEN_RIV;
-      return UICWagonCodeFreightTypes.INVALID;
+      if (number2 == 0) return UICWagonCodeFreightWagonTypes.INVALID;
+      if ([0, 1].contains(number1) && [3, 4, 5, 6, 7, 8].contains(number2)) return UICWagonCodeFreightWagonTypes.FRIDGE_LEGACY;
+      if (number2 == 9) return UICWagonCodeFreightWagonTypes.NORMAL_PPW;
+      if ([0, 1].contains(number1)) return UICWagonCodeFreightWagonTypes.NORMAL_TEN_INTERFRIGO;
+      if ([2, 3].contains(number1)) return UICWagonCodeFreightWagonTypes.NORMAL_TEN_RIV;
+      return UICWagonCodeFreightWagonTypes.INVALID;
     } else {
-      if (number2 == 0) return UICWagonCodeFreightTypes.MAINTENANCE;
-      if (number2 == 9) return UICWagonCodeFreightTypes.NOT_IN_EU_REGISTERED;
-      return UICWagonCodeFreightTypes.MISC;
+      if (number2 == 0) return UICWagonCodeFreightWagonTypes.MAINTENANCE;
+      if (number2 == 9) return UICWagonCodeFreightWagonTypes.NOT_IN_EU_REGISTERED;
+      return UICWagonCodeFreightWagonTypes.MISC;
     }
   }
 
@@ -200,7 +204,6 @@ class UICWagonCodeFreightWagon extends UICWagonCode {
   }
 
   UICWagonCodeFreightWagon(String number) : super(number) {
-    interoperabilityCode = number.substring(0, 2);
     var number1 = int.parse(interoperabilityCode[0]);
     var number2 = int.parse(interoperabilityCode[1]);
 
@@ -211,18 +214,3 @@ class UICWagonCodeFreightWagon extends UICWagonCode {
     classification = UICWagenCodeFreightClassification(number, category, countryCode);
   }
 }
-
-const Map<String, String> UICWagonCodeFreightCategory = {
-  // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen
-  // https://en.wikipedia.org/wiki/UIC_classification_of_goods_wagons
-  '0': 'uic_freight_category_0',
-  '1': 'uic_freight_category_1',
-  '2': 'uic_freight_category_2',
-  '3': 'uic_freight_category_3',
-  '4': 'uic_freight_category_4',
-  '5': 'uic_freight_category_5',
-  '6': 'uic_freight_category_6',
-  '7': 'uic_freight_category_7',
-  '8': 'uic_freight_category_8',
-  '9': 'uic_freight_category_9',
-};
