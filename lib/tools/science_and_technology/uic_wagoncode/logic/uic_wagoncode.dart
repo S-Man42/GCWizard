@@ -6,9 +6,10 @@ part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wag
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_freight_classification_descriptions.dart';
 
 
-enum UICWagonType {INVALID, OUT_OF_ORDER, ENGINE, FREIGHT_WAGON, PASSENGER_WAGON}
+enum UICWagonTypes {INVALID, OUT_OF_ORDER, ENGINE, FREIGHT_WAGON, PASSENGER_WAGON}
 
 class UICWagonCode {
+  late final UICWagonType wagonType;
   late final String countryCode;
   late final String country;
   late final String runningNumber;
@@ -113,24 +114,36 @@ String _sanitizeNumber(String number) {
   return number.replaceAll(RegExp(r'[^0-9]'), '');
 }
 
+class UICWagonType {
+  late final String code;
+  late final UICWagonTypes name;
+
+  UICWagonType(this.code, this.name);
+}
+
 UICWagonType _checkMainType(String number) {
   if (number.startsWith('00')) {
-    return UICWagonType.OUT_OF_ORDER;
+    return UICWagonType('00', UICWagonTypes.OUT_OF_ORDER);
   }
 
-  switch (number[0]) {
+  var code = number[0];
+  late UICWagonTypes type;
+
+  switch (code) {
     case '0':
     case '1':
     case '2':
     case '3':
-    case '4': return UICWagonType.FREIGHT_WAGON;
+    case '4': type = UICWagonTypes.FREIGHT_WAGON; break;
     case '5':
     case '6':
-    case '7': return UICWagonType.PASSENGER_WAGON;
-    case '8': return UICWagonType.FREIGHT_WAGON;
-    case '9': return UICWagonType.ENGINE;
-    default: return UICWagonType.INVALID;
+    case '7': type = UICWagonTypes.PASSENGER_WAGON; break;
+    case '8': type = UICWagonTypes.FREIGHT_WAGON; break;
+    case '9': type = UICWagonTypes.ENGINE; break;
+    default: type = UICWagonTypes.INVALID; break;
   }
+
+  return UICWagonType(code, type);
 }
 
 class UICWagonCodeReturn {
@@ -146,32 +159,28 @@ UICWagonCodeReturn uicWagonCode(String number) {
     throw const FormatException('uic_wagoncode_invalid_number');
   }
 
-  late UICWagonCodeReturn out;
+  UICWagonCode? details;
 
   var mainType = _checkMainType(number);
-  switch(mainType) {
-    case UICWagonType.OUT_OF_ORDER:
-      out = UICWagonCodeReturn(UICWagonType.OUT_OF_ORDER);
+  switch(mainType.name) {
+    case UICWagonTypes.OUT_OF_ORDER:
       break;
-    case UICWagonType.ENGINE:
+    case UICWagonTypes.ENGINE:
       break;
-    case UICWagonType.PASSENGER_WAGON:
+    case UICWagonTypes.PASSENGER_WAGON:
       break;
-    case UICWagonType.FREIGHT_WAGON:
-      out = UICWagonCodeReturn(UICWagonType.FREIGHT_WAGON, UICWagonCodeFreightWagon(number));
+    case UICWagonTypes.FREIGHT_WAGON:
+      details = UICWagonCodeFreightWagon(number);
       break;
     default:
-      out = UICWagonCodeReturn(UICWagonType.OUT_OF_ORDER);
       break;
   }
 
-  return out;
+  return UICWagonCodeReturn(mainType, details);
 }
 
 bool isValidUICWagonCodeCheckDigit(String number) {
-  print(number);
   number = _sanitizeNumber(number);
-  print(number);
   if (number.length != 12) {
     return false;
   }

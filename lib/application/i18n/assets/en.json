@@ -5881,6 +5881,8 @@
   "uic_wagoncode_example": "91 80 6193 296-1",
   "uic_wagoncode_invalid_number": "Invalid Number (must have exactly 12 digits)",
   "uic_vehicletype": "Vehicle Type",
+  "uic_interoperability": "Interoperability",
+  "uic_interoperability_code": "Interoperability Code",
   "uic_vehicletype_outoforder": "Out of order",
   "uic_vehicletype_invalid": "Invalid vehicle type",
   "uic_countrycode": "Country Code",

@@ -27,7 +27,7 @@ String gaugeTypeToText(UICWagonCodeFreightGaugeType type) {
   }
 }
 
-String axleToText(UICWagonCodeFreightAxleType type) {
+String axleTypeToText(UICWagonCodeFreightAxleType type) {
   switch (type) {
     case UICWagonCodeFreightAxleType.SINGLE: return 'uic_freight_axle_single';
     case UICWagonCodeFreightAxleType.BOGIE: return 'uic_freight_axle_bogie';
@@ -159,16 +159,14 @@ class UICWagenCodeFreightClassification {
 }
 
 class UICWagonCodeFreightWagon extends UICWagonCode {
+  late final String interoperabilityCode;
   late final UICWagonCodeFreightGaugeType gaugeType;
   late final UICWagonCodeFreightAxleType axleType;
-  late final UICWagonCodeFreightTypes type;
+  late final UICWagonCodeFreightTypes freightWagonType;
   late final UICWagenCodeFreightCategory category; //Gattung
   late final UICWagenCodeFreightClassification classification;
 
-  UICWagonCodeFreightTypes _getType(String number) {
-    var number1 = int.parse(number[0]);
-    var number2 = int.parse(number[1]);
-
+  UICWagonCodeFreightTypes _getType(int number1, int number2) {
     if ([0, 1, 2, 3].contains(number1)) {
       if (number2 == 0) return UICWagonCodeFreightTypes.INVALID;
       if ([0, 1].contains(number1) && [3, 4, 5, 6, 7, 8].contains(number2)) return UICWagonCodeFreightTypes.FRIDGE_LEGACY;
@@ -183,10 +181,7 @@ class UICWagonCodeFreightWagon extends UICWagonCode {
     }
   }
 
-  UICWagonCodeFreightGaugeType _getGaugeType(String number) {
-    var number1 = int.parse(number[0]);
-    var number2 = int.parse(number[1]);
-
+  UICWagonCodeFreightGaugeType _getGaugeType(int number1, int number2) {
     if ([4, 8].contains(number1) && [0, 9].contains(number2)) return UICWagonCodeFreightGaugeType.BOTH_POSSIBLE;
     if ([0, 1].contains(number1) && [9].contains(number2))  return UICWagonCodeFreightGaugeType.VARIABLE;
     if ([2, 3].contains(number1) && [9].contains(number2))  return UICWagonCodeFreightGaugeType.FIXED;
@@ -197,9 +192,7 @@ class UICWagonCodeFreightWagon extends UICWagonCode {
     return UICWagonCodeFreightGaugeType.INVALID;
   }
 
-  UICWagonCodeFreightAxleType _getAxleType(String number) {
-    var number1 = int.parse(number[0]);
-
+  UICWagonCodeFreightAxleType _getAxleType(int number1) {
     if ([0,2,4].contains(number1)) return UICWagonCodeFreightAxleType.SINGLE;
     if ([1, 3, 8].contains(number1)) return UICWagonCodeFreightAxleType.BOGIE;
 
@@ -207,9 +200,13 @@ class UICWagonCodeFreightWagon extends UICWagonCode {
   }
 
   UICWagonCodeFreightWagon(String number) : super(number) {
-    type = _getType(number);
-    gaugeType = _getGaugeType(number);
-    axleType = _getAxleType(number);
+    interoperabilityCode = number.substring(0, 2);
+    var number1 = int.parse(interoperabilityCode[0]);
+    var number2 = int.parse(interoperabilityCode[1]);
+
+    freightWagonType = _getType(number1, number2);
+    gaugeType = _getGaugeType(number1, number2);
+    axleType = _getAxleType(number1);
     category = UICWagenCodeFreightCategory(number);
     classification = UICWagenCodeFreightClassification(number, category, countryCode);
   }

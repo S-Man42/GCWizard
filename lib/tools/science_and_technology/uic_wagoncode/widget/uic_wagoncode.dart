@@ -57,14 +57,14 @@ class UICWagonCodeState extends State<UICWagonCode> {
     }
     Widget out = Container();
 
-    switch(data.type) {
-      case UICWagonType.OUT_OF_ORDER:
+    switch(data.type.name) {
+      case UICWagonTypes.OUT_OF_ORDER:
         break;
-      case UICWagonType.ENGINE:
+      case UICWagonTypes.ENGINE:
         break;
-      case UICWagonType.PASSENGER_WAGON:
+      case UICWagonTypes.PASSENGER_WAGON:
         break;
-      case UICWagonType.FREIGHT_WAGON:
+      case UICWagonTypes.FREIGHT_WAGON:
         var freightData = (data.details!) as UICWagonCodeFreightWagon;
 
         var classificationData = [
@@ -78,9 +78,14 @@ class UICWagonCodeState extends State<UICWagonCode> {
         out = Column(
           children: [
             GCWColumnedMultilineOutput(data: [
-              [i18n(context, 'uic_freight_freighttype_code'), _currentUICCode.substring(0, 2)],
+              [i18n(context, 'uic_freight_freighttype_code'), data.type.code],
               [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_freightwagon')],
-              [i18n(context, 'uic_freight_freighttype'), i18n(context, freightTypeToText(freightData.type))],
+            ]),
+            GCWTextDivider(text: i18n(context, 'uic_interoperability')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_interoperability_code'), freightData.interoperabilityCode],
+              [i18n(context, 'uic_freight_gaugetype'), i18n(context, gaugeTypeToText(freightData.gaugeType))],
+              [i18n(context, 'uic_freight_axle_type'), i18n(context, axleTypeToText(freightData.axleType))],
             ]),
             GCWTextDivider(text: i18n(context, 'common_country')),
             GCWColumnedMultilineOutput(data: [
