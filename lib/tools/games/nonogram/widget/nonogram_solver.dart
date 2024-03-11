@@ -42,11 +42,6 @@ class NonogramSolverState extends State<NonogramSolver> {
   late PuzzleWidgetValues _decryptPuzzle;
   late PuzzleWidgetValues _encryptPuzzle;
 
-  int _currentRowCount = 10;
-  int _currentColumnCount = 10;
-  List<String> _encryptRowHints = [];
-  List<String> _encryptColumnHints = [];
-
   _DecryptWizardStep _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL;
   _EncryptWizardStep _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL;
 
@@ -317,35 +312,33 @@ class NonogramSolverState extends State<NonogramSolver> {
           GCWIntegerSpinner(
               title: i18n(context, 'common_row_count'),
               controller: puzzle.rowCountController,
-              value: _currentRowCount,
+              value: puzzle.rowCount,
               min: 1,
               onChanged: (value) {
                 setState(() {
-                  _currentRowCount = value;
+                  puzzle.rowCount = value;
                 });
               }
           ),
           GCWIntegerSpinner(
               title: i18n(context, 'common_column_count'),
               controller: puzzle.columnCountController,
-              value: _currentColumnCount,
+              value: puzzle.columnCount,
               min: 1,
               onChanged: (value) {
                 setState(() {
-                  _currentColumnCount = value;
+                  puzzle.columnCount = value;
                 });
               }
           ),
           GCWButton(text: i18n(context, 'common_next'), onPressed: () {
             setState(() {
-              puzzle.rowCount = _currentRowCount;
-              puzzle.columnCount = _currentColumnCount;
               puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
               var tmpPuzzle = puzzle.board;
               puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
               puzzle.board.importHints(tmpPuzzle);
-              _encryptRowHints = List<String>.generate(_currentRowCount, (index) => '');
-              _encryptColumnHints = List<String>.generate(_currentColumnCount, (index) => '');
+              puzzle.clearRowHints();
+              puzzle.clearColumnHints();
               _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES;
             });
           }),
@@ -359,22 +352,22 @@ class NonogramSolverState extends State<NonogramSolver> {
         GCWIntegerSpinner(
           title: i18n(context, 'common_row_count'),
           controller: puzzle.rowCountController,
-          value: _currentRowCount,
+          value: puzzle.rowCount,
           min: 1,
           onChanged: (value) {
             setState(() {
-              _currentRowCount = value;
+              puzzle.rowCount = value;
             });
           }
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'common_column_count'),
           controller: puzzle.columnCountController,
-          value: _currentColumnCount,
+          value: puzzle.columnCount,
           min: 1,
           onChanged: (value) {
             setState(() {
-              _currentColumnCount = value;
+              puzzle.columnCount = value;
             });
           }
         ),
@@ -383,8 +376,6 @@ class NonogramSolverState extends State<NonogramSolver> {
                 ? 'common_next'
                 : 'common_done'), onPressed: () {
           setState(() {
-            puzzle.rowCount = _currentRowCount;
-            puzzle.columnCount = _currentColumnCount;
             puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
             var tmpPuzzle = puzzle.board;
             puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
@@ -414,9 +405,7 @@ class NonogramSolverState extends State<NonogramSolver> {
             flex: 3,
             child: GCWTextField(
               controller: controller,
-              onChanged: (text) {
-                _encryptRowHints[i] = text;
-              }
+              onChanged: (text) {}
             )
           )
         ]
@@ -428,7 +417,7 @@ class NonogramSolverState extends State<NonogramSolver> {
       setState(() {
         setState(() {
           for (var i = 0; i < puzzle.rowCount; i++ ) {
-            var _encryptList = textToIntList(_encryptRowHints[i], allowNegativeValues: true);
+            var _encryptList = textToIntList(puzzle.getRowController(i).text, allowNegativeValues: true);
             var dataBackup = _encryptList.sublist(0);
             var data = Puzzle.cleanHints(_encryptList, puzzle.board.width);
             if (!listEquals(data, dataBackup)) {
@@ -462,9 +451,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                 flex: 3,
                 child: GCWTextField(
                   controller: controller,
-                  onChanged: (text) {
-                    _encryptColumnHints[i] = text;
-                  }
+                  onChanged: (text) {}
                 ),
             )
           ]
@@ -476,7 +463,7 @@ class NonogramSolverState extends State<NonogramSolver> {
       setState(() {
         setState(() {
           for (var i = 0; i < puzzle.columnCount; i++ ) {
-            var _encryptList = textToIntList(_encryptColumnHints[i], allowNegativeValues: true);
+            var _encryptList = textToIntList(puzzle.getColumnController(i).text, allowNegativeValues: true);
             var dataBackup = _encryptList.sublist(0);
             var data = Puzzle.cleanHints(_encryptList, puzzle.board.width);
             if (!listEquals(data, dataBackup)) {
@@ -649,8 +636,6 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   Future<void> _exportFile(BuildContext context, Uint8List? data, PuzzleWidgetValues puzzle) async {
     if (data == null) return;
-    // if (puzzle.encryptVersion) {
-    //   showSnackBar(i18n(context, 'nonogramsolver_createhint'), context);
 
     if (puzzle.encryptVersion) {
       showGCWDialog(context, i18n(context, 'nonogramsolver_title'),
