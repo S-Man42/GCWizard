@@ -8,6 +8,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -648,22 +649,55 @@ class NonogramSolverState extends State<NonogramSolver> {
 
   Future<void> _exportFile(BuildContext context, Uint8List? data, PuzzleWidgetValues puzzle) async {
     if (data == null) return;
-    if (puzzle.encryptVersion) {
-      showSnackBar(i18n(context, 'nonogramsolver_createhint'), context);
-    }
+    // if (puzzle.encryptVersion) {
+    //   showSnackBar(i18n(context, 'nonogramsolver_createhint'), context);
 
+    if (puzzle.encryptVersion) {
+      showGCWDialog(context, i18n(context, 'nonogramsolver_title'),
+          SizedBox(width: 300, height: 130, child: Text(i18n(context, 'nonogramsolver_createhint'))), [
+            GCWDialogButton(
+              text: i18n(context, 'common_ok'),
+              onPressed: () {
+                setState(() {
+                  __exportFile(context, data, puzzle);
+                });
+              },
+            )
+          ]);
+    } else {
+      __exportFile(context, data, puzzle);
+    }
+  }
+
+  Future<void> __exportFile(BuildContext context, Uint8List data, PuzzleWidgetValues puzzle) async {
     await saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
       if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
     });
   }
 
   Future<void> _exportJsonFile(BuildContext context, String? data, PuzzleWidgetValues puzzle) async {
-    if (puzzle.encryptVersion) {
-      showSnackBar(i18n(context, 'nonogramsolver_createhint'), context);
-    }
     if (data == null) return;
+    if (puzzle.encryptVersion) {
+      showGCWDialog(context, i18n(context, 'nonogramsolver_title'),
+          SizedBox(width: 300, height: 130, child: Text(i18n(context, 'nonogramsolver_createhint'))), [
+            GCWDialogButton(
+              text: i18n(context, 'common_ok'),
+              onPressed: () {
+                setState(() {
+                  __exportJson(context, data, puzzle);
+                });
+              },
+            )
+          ]);
+    } else {
+      __exportJson(context, data, puzzle);
+    }
+  }
+
+  Future<void> __exportJson(BuildContext context, String data, PuzzleWidgetValues puzzle) async {
     saveStringToFile(context, data, buildFileNameWithDate('nonogram_', FileType.JSON));
   }
+
 
   Future<ui.Image> _renderedImage(Puzzle puzzle, bool encryptVersion) async {
     const cellSize = 70.0;
