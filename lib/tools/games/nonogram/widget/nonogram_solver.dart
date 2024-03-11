@@ -170,7 +170,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                 if (_currentEncryptStep == _EncryptWizardStep.LOAD_IMAGE)
                   _openFileButtonEncrypt(puzzle, _currentEncryptStep),
                 if (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE || _currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE)
-                  _buildSizeSelectionEncrypt(puzzle),
+                  _buildSizeSelection(puzzle),
                 if ([_EncryptWizardStep.DRAW_LOADED_JSON, _EncryptWizardStep.DRAW_LOADED_IMAGE, _EncryptWizardStep.DRAW_MANUALLY].contains(_currentEncryptStep))
                   Column(
                     children: [
@@ -211,7 +211,7 @@ class NonogramSolverState extends State<NonogramSolver> {
                 if (_currentDecryptStep == _DecryptWizardStep.LOAD_JSON)
                   _openFileButtonDecrypt(puzzle),
                 if (_currentDecryptStep == _DecryptWizardStep.DEFINE_SIZE)
-                  _buildSizeSelectionDecrypt(puzzle),
+                  _buildSizeSelection(puzzle),
                 if (_currentDecryptStep == _DecryptWizardStep.SET_ROW_VALUES)
                   _buildRowHints(puzzle),
                 if (_currentDecryptStep == _DecryptWizardStep.SET_COLUMN_VALUES)
@@ -306,7 +306,7 @@ class NonogramSolverState extends State<NonogramSolver> {
     );
   }
 
-  Widget _buildSizeSelectionDecrypt(PuzzleWidgetValues puzzle) {
+  Widget _buildSizeSelection(PuzzleWidgetValues puzzle) {
     return Column(
         children: <Widget>[
           GCWIntegerSpinner(
@@ -333,60 +333,23 @@ class NonogramSolverState extends State<NonogramSolver> {
           ),
           GCWButton(text: i18n(context, 'common_next'), onPressed: () {
             setState(() {
-              puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
+              puzzle.scale = 1.0;
               var tmpPuzzle = puzzle.board;
               puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
               puzzle.board.importHints(tmpPuzzle);
-              puzzle.clearRowHints();
-              puzzle.clearColumnHints();
-              _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES;
+
+              if (puzzle.encryptVersion) {
+                _currentEncryptStep = _currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE
+                    ? _EncryptWizardStep.LOAD_IMAGE
+                    : _EncryptWizardStep.DRAW_MANUALLY;
+              } else {
+                puzzle.clearRowHints();
+                puzzle.clearColumnHints();
+                _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES;
+              }
             });
           }),
         ]
-    );
-  }
-
-  Widget _buildSizeSelectionEncrypt(PuzzleWidgetValues puzzle) {
-    return Column(
-      children: <Widget>[
-        GCWIntegerSpinner(
-          title: i18n(context, 'common_row_count'),
-          controller: puzzle.rowCountController,
-          value: puzzle.rowCount,
-          min: 1,
-          onChanged: (value) {
-            setState(() {
-              puzzle.rowCount = value;
-            });
-          }
-        ),
-        GCWIntegerSpinner(
-          title: i18n(context, 'common_column_count'),
-          controller: puzzle.columnCountController,
-          value: puzzle.columnCount,
-          min: 1,
-          onChanged: (value) {
-            setState(() {
-              puzzle.columnCount = value;
-            });
-          }
-        ),
-        GCWButton(text: i18n(context,
-            (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE)
-                ? 'common_next'
-                : 'common_done'), onPressed: () {
-          setState(() {
-            puzzle.scale = min((maxScreenWidth(context) - 2 * DEFAULT_DESCRIPTION_MARGIN)/ (_fieldSize * puzzle.rowCount), 1.0);
-            var tmpPuzzle = puzzle.board;
-            puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
-            puzzle.board.importHints(tmpPuzzle);
-
-            _currentEncryptStep = _currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE
-              ? _EncryptWizardStep.LOAD_IMAGE
-              : _EncryptWizardStep.DRAW_MANUALLY;
-          });
-        }),
-      ]
     );
   }
 
