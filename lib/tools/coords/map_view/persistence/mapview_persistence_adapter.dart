@@ -61,7 +61,7 @@ class MapViewPersistenceAdapter {
 
   static MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
     return MapPolylineDAO(gcwMapPolyline.uuid!, gcwMapPolyline.points.map((GCWMapPoint point) => point.uuid!).toList(),
-        colorToHexString(gcwMapPolyline.color), lineTypeFromEnumValue(gcwMapPolyline.type));
+        colorToHexString(gcwMapPolyline.color), gcwMapLineTypeFromEnumValue(gcwMapPolyline.type));
   }
 
   GCWMapPolyline _mapPolylineDAOToGCWMapPolyline(MapPolylineDAO mapPolylineDAO) {
@@ -72,7 +72,7 @@ class MapViewPersistenceAdapter {
             .map((uuid) => mapWidget.points.firstWhere((GCWMapPoint point) => point.uuid == uuid))
             .toList(),
         color: hexStringToColor(mapPolylineDAO.color),
-        type: GCWMapLineType.values.firstWhere((element) => lineTypeFromEnumValue(element) == mapPolylineDAO.type, orElse: () => GCWMapLineType.GEODETIC)
+        type: GCWMapLineType.values.firstWhere((element) => gcwMapLineTypeFromEnumValue(element) == mapPolylineDAO.type, orElse: () => GCWMapLineType.GEODETIC)
     );
   }
 
@@ -172,7 +172,7 @@ class MapViewPersistenceAdapter {
     var mapPolylineDAO = _mapPolylineDAOByUUID(polyline.uuid!);
     mapPolylineDAO.pointUUIDs = polyline.points.map((GCWMapPoint point) => point.uuid!).toList();
     mapPolylineDAO.color = colorToHexString(polyline.color);
-    mapPolylineDAO.type = lineTypeFromEnumValue(polyline.type);
+    mapPolylineDAO.type = gcwMapLineTypeFromEnumValue(polyline.type);
 
     updateMapPolylineDAO(mapPolylineDAO, _mapViewDAO);
   }

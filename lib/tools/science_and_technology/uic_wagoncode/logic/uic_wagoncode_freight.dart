@@ -10,36 +10,6 @@ enum UICWagonCodeFreightGaugeType {FIXED, VARIABLE, BOTH_POSSIBLE, INVALID}
 enum UICWagonCodeFreightAxleType {SINGLE, BOGIE, INVALID}
 enum UICWagonCodeFreightWagonTypes {NORMAL_PPW, NORMAL_TEN_RIV, NORMAL_TEN_INTERFRIGO, MAINTENANCE, MISC, NOT_IN_EU_REGISTERED, INVALID, FRIDGE_LEGACY}
 
-String freightTypeToText(UICWagonCodeFreightWagonTypes type) {
-  switch (type) {
-    case UICWagonCodeFreightWagonTypes.NORMAL_PPW: return 'uic_freight_freighttype_normal_ppw';
-    case UICWagonCodeFreightWagonTypes.NORMAL_TEN_RIV: return 'uic_freight_freighttype_normal_ten_riv';
-    case UICWagonCodeFreightWagonTypes.NORMAL_TEN_INTERFRIGO: return 'uic_freight_freighttype_normal_ten_interfrigo';
-    case UICWagonCodeFreightWagonTypes.MAINTENANCE: return 'uic_freight_freighttype_maintenance';
-    case UICWagonCodeFreightWagonTypes.MISC: return 'uic_freight_freighttype_misc';
-    case UICWagonCodeFreightWagonTypes.NOT_IN_EU_REGISTERED: return 'uic_freight_freighttype_notineuregistered';
-    case UICWagonCodeFreightWagonTypes.FRIDGE_LEGACY: return 'uic_freight_gfreighttype_fridgelegacy';
-    default: return 'uic_freight_freighttype_invalid';
-  }
-}
-
-String gaugeTypeToText(UICWagonCodeFreightGaugeType type) {
-  switch (type) {
-    case UICWagonCodeFreightGaugeType.FIXED: return 'uic_freight_gaugetype_fixed';
-    case UICWagonCodeFreightGaugeType.VARIABLE: return 'uic_freight_gaugetype_variable';
-    case UICWagonCodeFreightGaugeType.BOTH_POSSIBLE: return 'uic_freight_gaugetype_bothpossible';
-    default: return 'uic_freight_gaugetype_invalid';
-  }
-}
-
-String axleTypeToText(UICWagonCodeFreightAxleType type) {
-  switch (type) {
-    case UICWagonCodeFreightAxleType.SINGLE: return 'uic_freight_axle_single';
-    case UICWagonCodeFreightAxleType.BOGIE: return 'uic_freight_axle_bogie';
-    default: return 'uic_freight_axle_invalid';
-  }
-}
-
 class UICWagenCodeFreightCategory {
   late final String letterCode;
   late final String numberCode;

@@ -20,8 +20,9 @@ class UICWagonType {
 }
 
 class UICWagonCode {
+
   late final UICWagonType wagonType;
-  late final String interoperabilityCode;
+
   late final String countryCode;
   late final String country;
   late final String runningNumber;
@@ -59,7 +60,7 @@ class UICWagonCode {
     switch(mainType.name) {
       case UICWagonTypes.OUT_OF_ORDER: return UICWagonCode(number);
       case UICWagonTypes.ENGINE:  return UICWagonCode(number);
-      case UICWagonTypes.PASSENGER_WAGON: return UICWagonCode(number);
+      case UICWagonTypes.PASSENGER_WAGON: return UICWagonCodePassengerWagon(number);
       case UICWagonTypes.FREIGHT_WAGON: return UICWagonCodeFreightWagon(number);
       default: return UICWagonCode(number);
     }
@@ -99,7 +100,7 @@ class UICWagonCode {
   }
 
   String _getCountry(String? code) {
-    return UICCountryCode[code] ?? 'uic_countrycode_invalid';
+    return UICCountryCode[code] == null ?  'uic_countrycode_invalid' : UICCountryCode[code]!['name']!;
   }
 
   String _getRunningNumber(String number) {

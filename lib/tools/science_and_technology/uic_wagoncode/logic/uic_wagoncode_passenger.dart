@@ -17,34 +17,45 @@ enum UICWagonCodePassengerCategoryCompartements {LESS_EQUAL_7, LESS_EQUAL_8, EQU
 enum UICWagonCodePassengerCategoryAxles {TWO, THREE, TWO_OR_THREE, UNDEFINED}
 enum UICWagonCodePassengerMaxSpeed {TO_120, TO_140, TO_160, GREATER_160, INVALID}
 
+// internationalUsage = _getInternationalUsage(interoperabilityCode);
+// passengerWagonType = _getType(interoperabilityCode);
+// airConditioned = _getAirConditioned(interoperabilityCode);
+// pressurized = _getPressurized(interoperabilityCode);
+// gaugeType = _getGaugeType(interoperabilityCode);
+// maxSpeed = _getMaxSpeed(number);
+// heatingSystems = _getHeatingSystems(number);
+
 class UICWagonCodePassengerWagonCategory {
+  late final String number;
   late final UICWagonCodePassengerCategoryType type;
   late final UICWagonCodePassengerCategoryClass clazz;
   late final UICWagonCodePassengerCategoryCompartements compartments;
   late final UICWagonCodePassengerCategoryAxles axles;
-  late final String? special;
+  late final bool? special;
   late final bool private;
 
   UICWagonCodePassengerWagonCategory(String number) {
+    this.number = number.substring(4, 6);
+
     var number5 = int.parse(number[4]);
     var number6 = int.parse(number[5]);
 
     type = _getType(number5, number6);
     if (type == UICWagonCodePassengerCategoryType.SPECIAL) {
-      special = _getSpecial(number.substring(4,6));
-      if (special == null) {
+      special = _getSpecial(this.number);
+      if (special != null && special == false) {
         type = UICWagonCodePassengerCategoryType.INVALID;
       }
     }
 
     clazz = _getClass(number5, number6);
     compartments = _getCompartements(number5, number6);
-    axles = _getAxles(number.substring(4,6));
+    axles = _getAxles(this.number);
     private = _getPrivate(number5, number6); // acc. to deutsche-reisezugwagen.de
   }
 
-  String? _getSpecial(String number) {
-    if ([
+  bool _getSpecial(String number) {
+    return [
       '00',
       '06',
       '07',
@@ -69,10 +80,7 @@ class UICWagonCodePassengerWagonCategory {
       '97',
       '98',
       '99',
-    ].contains(number)) {
-      return 'uic_wagoncode_passenger_specialcategory_' + number;
-    }
-    return null;
+    ].contains(number);
   }
 
   UICWagonCodePassengerCategoryAxles _getAxles(String number) {
@@ -213,9 +221,12 @@ class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
   late final bool pressurized; //druckdicht
   late final UICWagonCodePassengerAirConditioned airConditioned;
   late final UICWagonCodePassengerGaugeType gaugeType;
-  late final UICWagonCodePassengerCategoryType category;
+  late final UICWagonCodePassengerGaugeChangeMode gaugeChangeMode;
+  late final UICWagonCodePassengerWagonCategory category;
   late final UICWagonCodePassengerMaxSpeed maxSpeed;
+  late final String maxSpeedCode;
   late final List<UICWagonCodePassengerHeatingSystemValue>? heatingSystems;
+  late final String heatingSystemCode;
 
   UICWagonCodePassengerWagon(String number) : super(number) {
     internationalUsage = _getInternationalUsage(interoperabilityCode);
@@ -223,16 +234,32 @@ class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
     airConditioned = _getAirConditioned(interoperabilityCode);
     pressurized = _getPressurized(interoperabilityCode);
     gaugeType = _getGaugeType(interoperabilityCode);
+    gaugeChangeMode = _getGaugeChangeMode(interoperabilityCode);
+    maxSpeedCode = _getMaxSpeedCode(number);
     maxSpeed = _getMaxSpeed(number);
+    heatingSystemCode = _getHeatingSystemCode(number);
     heatingSystems = _getHeatingSystems(number);
+    category = _getCategory(number);
   }
 
-  List<UICWagonCodePassengerHeatingSystemValue>? _getHeatingSystems(String numbers) {
-    return UICWagonCodePassengerHeatingSystemValues[numbers.substring(6,8)];
+  UICWagonCodePassengerWagonCategory _getCategory(String number) {
+    return UICWagonCodePassengerWagonCategory(number);
+  }
+
+  String _getHeatingSystemCode(String number) {
+    return number.substring(6, 8);
+  }
+
+  List<UICWagonCodePassengerHeatingSystemValue>? _getHeatingSystems(String number) {
+    return UICWagonCodePassengerHeatingSystemValues[_getHeatingSystemCode(number)];
+  }
+
+  String _getMaxSpeedCode(String number) {
+    return number[6];
   }
 
   UICWagonCodePassengerMaxSpeed _getMaxSpeed(String number) {
-    switch (number[6]) {
+    switch (_getMaxSpeedCode(number)) {
       case '0':
       case '1':
       case '2': return UICWagonCodePassengerMaxSpeed.TO_120;
@@ -272,6 +299,16 @@ class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
       case '65':
       case '75': return UICWagonCodePassengerGaugeType.UNDEFINED;
       default: return UICWagonCodePassengerGaugeType.INVALID;
+    }
+  }
+
+  UICWagonCodePassengerGaugeChangeMode _getGaugeChangeMode(String code) {
+    switch (code) {
+      case '85':
+      case '86': return UICWagonCodePassengerGaugeChangeMode.BOGIE_CHANGE;
+      case '95':
+      case '96': return UICWagonCodePassengerGaugeChangeMode.AXLE_ADJUSTMENT;
+      default: return UICWagonCodePassengerGaugeChangeMode.UNDEFINED;
     }
   }
 

@@ -106,7 +106,7 @@ class MapPointDAO {
   }
 }
 
-String lineTypeFromEnumValue(GCWMapLineType type) {
+String gcwMapLineTypeFromEnumValue(GCWMapLineType type) {
   return enumName(type.toString()).toLowerCase();
 }
 
@@ -124,7 +124,7 @@ class MapPolylineDAO {
       : uuid = toStringOrNull(json['uuid']) ?? const Uuid().v4(),
         pointUUIDs = List<String>.from(toStringListOrNull(json['pointUUIDs']) ?? []),
         color = toStringOrNull(json['color']) ?? colorToHexString(COLOR_MAP_POLYLINE),
-        type = toStringOrNull(json['type']) ?? lineTypeFromEnumValue(GCWMapLineType.GEODETIC);
+        type = toStringOrNull(json['type']) ?? gcwMapLineTypeFromEnumValue(GCWMapLineType.GEODETIC);
 
   @override
   String toString() {

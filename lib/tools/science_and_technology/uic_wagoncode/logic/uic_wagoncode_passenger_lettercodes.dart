@@ -22,8 +22,8 @@ const Map<String, String> UICWagenCodesPassengerLetterCodesCategories = {
 };
 
 const Map<String, Map<String, String>> UICWagenCodesPassengeCategoriesCountries = {
-'50': {
-  'DD': 'Doppelstock-Gepäckwagen',
+  '50': {
+    'DD': 'Doppelstock-Gepäckwagen',
   },
   '74': {
     'F': 'Gepäckwagen',
@@ -53,7 +53,7 @@ const Map<String, Map<String, String>> UICWagenCodesPassengeCategoriesCountries 
 };
 
 const Map<String, Map<String, String>> UICWagenCodesPassengerLetterCodesClassifications = {
-  '50': {
+  'DR': {
     'b': 'Behelfsreisezugwagen der Baujahre 1943 bis 1945',
     'f': 'Behelfssteuerwagen (Befehlswagen) für den Wendezugbetrieb',
     'tr': 'Wagen mit Traglastenabteil',
@@ -61,7 +61,7 @@ const Map<String, Map<String, String>> UICWagenCodesPassengerLetterCodesClassifi
     'w': 'leichte Durchgangswagen bis 32 Tonnen Eigenmasse',
     'z': 'zweiteilige Doppelstockeinheit, vorher DB7',
   },
-  '80': {
+  'DB': {
     'a': 'Wagen ist für das technikbasierte Abfertigungsverfahren ausgerüstet.',
     'aa': 'zweiachsiger Reisezugwagen',
     'b': 'Wagen mit behindertengerechter Ausrüstung',
@@ -91,7 +91,7 @@ const Map<String, Map<String, String>> UICWagenCodesPassengerLetterCodesClassifi
     'y': 'Nahverkehrswagen mit einer Länge von mehr als 24,5 m, Großraum mit Mittelgang in der zweiten Klasse (elf fiktive Abteile), zwei Mitteleinstiegen, geeignet für Wendezugbetrieb (34-polige Steuerleitung)',
     'z': 'Wagen mit Energieversorgung aus der Zugsammelschiene (ohne Achsgeneratoren)',
   },
-  '81': {
+  'ÖBB': {
     'b': 'behindertengerecht(e Toilette)',
     'c': 'Liegewagen (Couchette)',
     'e': 'Gepäckwagen mit Seitengang',
