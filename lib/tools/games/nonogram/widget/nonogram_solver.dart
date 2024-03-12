@@ -276,7 +276,6 @@ class NonogramSolverState extends State<NonogramSolver> {
           showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
           return;
         } else if (isImage(value.bytes)) {
-          puzzle.board.rows[0][0] = 1;
           puzzle.board.importImage(value.bytes);
           _currentEncryptStep = _EncryptWizardStep.DRAW_LOADED_IMAGE;
         } else {
