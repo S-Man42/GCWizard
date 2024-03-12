@@ -326,11 +326,11 @@ class FormulaPainter {
   }
 
   List<String>? _isFormulaReference(String formula) {
-    RegExp regex = RegExp(r'^({\s*)(.*)(\s*})');
+    RegExp regex = RegExp(r'^({\s*)(.*?)(\s*})');
     var match = regex.firstMatch(formula);
 
     if (match != null) {
-      RegExp regex = RegExp(r'^({\s*)([1-9]\d*)(\s*})');
+      RegExp regex = RegExp(r'^({\s*)([1-9]\d*?)(\s*})');
       var match1 = regex.firstMatch(formula);
 
       if (match1 == null) {
@@ -338,22 +338,17 @@ class FormulaPainter {
         match1 = regex.firstMatch(formula);
       }
 
-      if (match1 == null) {
-        if (_isVariable(match.group(2)!) != null) {
-          match1 = match;
-        }
-      }
       return (match1 == null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];
     }
     return null;
   }
 
   List<String>? _isInvalidFormulaReference(String formula) {
-    RegExp regex = RegExp(r'^({\s*)(.*)(\s*})');
+    RegExp regex = RegExp(r'^({\s*)(.*?)(\s*})');
     var match = regex.firstMatch(formula);
 
     if (match != null) {
-      return (_isFormulaReference(formula) != null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];
+      return (_isFormulaReference(match.group(0)!) != null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];
     }
     return null;
   }
@@ -371,7 +366,7 @@ class FormulaPainter {
         result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
       } else {
         index = _formulaNames.indexOf(parts[1]);
-        if (index < _formulaId) {
+        if (index >= 0 && index < _formulaId) {
           result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
         } else {
           result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
