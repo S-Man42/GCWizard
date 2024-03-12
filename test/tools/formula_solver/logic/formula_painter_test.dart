@@ -12,6 +12,10 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
+      {'formula' : 'N [A].[{04}]', 'values': values, 'expectedOutput' : 'ttbrbtbbggbb'},
+
+      {'formula' : '{ Alpha }', 'values': <String, String>{'A': '1'}, 'formulaId': 2, 'formulaNames': ['form1', 'form2', '', 'form3' ], 'expectedOutput' : 'bbRRRRRrb'},
+
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
@@ -179,8 +183,8 @@ void main() {
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
       {'formula' : 'N [F', 'values': values, 'expectedOutput' : 'RRBR'},
       {'formula' : 'N [F]', 'values': values, 'expectedOutput' : 'ttbRb'},
-      {'formula' : 'N [A].[{B}]', 'values': values, 'expectedOutput' : 'ttbrbtbbrbb'},
-      {'formula' : 'N [A].[{H}]', 'values': values, 'expectedOutput' : 'ttbrbtbbRbb'},
+      {'formula' : 'N [A].[{B}]', 'values': values, 'expectedOutput' : 'ttbrbtbbbbb'},
+      {'formula' : 'N [A].[{H}]', 'values': values, 'expectedOutput' : 'ttbrbtbbBbb'},
       {'formula' : 'N [A].[{04}]', 'values': values, 'expectedOutput' : 'ttbrbtbbggbb'},
       {'formula' : 'N [A].[{(B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbbbrbbb'},
       {'formula' : 'N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbbBrbBb'},
@@ -274,6 +278,7 @@ void main() {
       {'formula' : '{1}+{form2}', 'values': <String, String>{'A': '1'}, 'formulaId': 2, 'formulaNames': ['form1', 'form2', '', 'form3' ], 'expectedOutput' : 'bbbbbbbbbbb'},
       {'formula' : '{1}+{ form2 }', 'values': <String, String>{'A': '1'}, 'formulaId': 2, 'formulaNames': ['form1', 'form2', '', 'form3' ], 'expectedOutput' : 'bbbbbbbbbbbbb'},
       {'formula' : '{1}+{ form3 }', 'values': <String, String>{'A': '1'}, 'formulaId': 2, 'formulaNames': ['form1', 'form2', '', 'form3' ], 'expectedOutput' : 'bbbbbbBBBBBbb'},
+      {'formula' : '{ Alpha }', 'values': <String, String>{'A': '1'}, 'formulaId': 2, 'formulaNames': ['form1', 'form2', '', 'form3' ], 'expectedOutput' : 'bbBBBBBBb'},
 
       // empty variable value
       {'formula' : '[A]', 'values': {'A':''}, 'expectedOutput' : 'bRb'},

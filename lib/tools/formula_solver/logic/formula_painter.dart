@@ -129,9 +129,12 @@ class FormulaPainter {
 
     // reference
     if (offset == 0) {
-      _parserResult = _isFormulaReference(formula);
+      _parserResult = _isInvalidFormulaReference(formula);
+      var hasError = _parserResult != null;
+      _parserResult ??= _isFormulaReference(formula);
+
       if (_parserResult != null) {
-        result = _coloredFormulaReference(result, _parserResult);
+        result = _coloredFormulaReference(result, _parserResult, hasError);
         offset = _calcOffset(_parserResult);
       } else if (onlyFormulaReference) {
         offset = 1;
@@ -323,31 +326,56 @@ class FormulaPainter {
   }
 
   List<String>? _isFormulaReference(String formula) {
-    RegExp regex = RegExp(r'^({\s*)([1-9]\d*)(\s*})');
+    RegExp regex = RegExp(r'^({\s*)(.*)(\s*})');
     var match = regex.firstMatch(formula);
 
-    if (match == null) {
-      regex = RegExp(r'^({\s*)(' + _formulaNamesRegEx + r')(\s*})');
-      match = regex.firstMatch(formula);
-    }
+    if (match != null) {
+      RegExp regex = RegExp(r'^({\s*)([1-9]\d*)(\s*})');
+      var match1 = regex.firstMatch(formula);
 
-    return (match == null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];
+      if (match1 == null) {
+        regex = RegExp(r'^({\s*)(' + _formulaNamesRegEx + r')(\s*})');
+        match1 = regex.firstMatch(formula);
+      }
+
+      if (match1 == null) {
+        if (_isVariable(match.group(2)!) != null) {
+          match1 = match;
+        }
+      }
+      return (match1 == null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];
+    }
+    return null;
   }
 
-  String _coloredFormulaReference(String result, List<String> parts) {
-    result = _replaceRange(result, 0, parts[0].length, OFRB);
-    var index = int.tryParse(parts[1]);
+  List<String>? _isInvalidFormulaReference(String formula) {
+    RegExp regex = RegExp(r'^({\s*)(.*)(\s*})');
+    var match = regex.firstMatch(formula);
 
-    if (index != null && index < _formulaId) {
-      result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
-    } else if (index != null) {
+    if (match != null) {
+      return (_isFormulaReference(formula) != null) ? null : [match.group(1)!, match.group(2)!, match.group(3)!];
+    }
+    return null;
+  }
+
+  String _coloredFormulaReference(String result, List<String> parts, bool hasError) {
+    result = _replaceRange(result, 0, parts[0].length, OFRB);
+
+    if (hasError) {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
     } else {
-      index = _formulaNames.indexOf(parts[1]);
-      if (index < _formulaId) {
+      var index = int.tryParse(parts[1]);
+      if (index != null && index < _formulaId) {
         result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
-      } else {
+      } else if (index != null) {
         result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
+      } else {
+        index = _formulaNames.indexOf(parts[1]);
+        if (index < _formulaId) {
+          result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRB);
+        } else {
+          result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, OFRBError);
+        }
       }
     }
     result = _replaceRange(result, _calcOffset(parts, count: 2), parts[2].length, OFRB);
