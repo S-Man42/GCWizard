@@ -2272,7 +2272,7 @@
   "dna_nucleicacidsequence_type": "Type",
   "dna_nucleicacidsequence_type_dna": "DNA (ACGT)",
   "dna_nucleicacidsequence_type_mrna": "mRNA (ACGU)",
-  "dna_nucleicacidsequence_notem": "'%s1' could be decoded as <START> sequence instead of 'M'.",
+  "dna_nucleicacidsequence_notem": "'%s1' could be decoded as <START> sequence instead of 'M':",
   "dna_aminoacids_title": "Amino Acid Symbols",
   "dna_aminoacids_description": "Encodes text as symbols of amino acids (3 letters code)",
   "dna_aminoacids_example": "AE → AlaGlu",
