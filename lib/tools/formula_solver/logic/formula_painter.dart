@@ -310,11 +310,13 @@ class FormulaPainter {
 
   String _buildRegExString(String value) {
     const replaceMap = {
-      "(": "\\(",
-      ")": "\\)",
-      ".": "\\.",
-      "+": "\\+",
-      "|": "\\|",
+      r"(": r"\(",
+      r")": r"\)",
+      r".": r"\.",
+      r"+": r"\+",
+      r"-": r"\-",
+      r"|": r"\|",
+      r"\": r"\\",
     };
     return substitution(value, replaceMap);
   }
