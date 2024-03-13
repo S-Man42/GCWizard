@@ -175,6 +175,37 @@ final _VOLUME_WASHINGMACHINE =
 final _VOLUME_NGOGN =
     Volume(name: 'common_unit_volume_ngogn_name', symbol: 'n', inCubicMeters: 0.022633 * 0.022633 * 0.022633);
 
+// https://de.wikipedia.org/wiki/Alte_Ma%C3%9Fe_und_Gewichte_(r%C3%B6mische_Antike)
+// https://en.wikipedia.org/wiki/Ancient_Roman_units_of_measurement
+double _sester = 0.296 * 0.296 * 0.296 / 48;
+//   Römische Flüssigmaße	 	 	 	                                  Sester
+//   ligula	    Löffelvoll	      =	¼	Dose	          ≈	11,25	ml	 	1/48
+//   cyathus	  Dose	            =	½	Sechstelsester	≈	45,0	ml	 	1/12
+//   acetabulum	        	        =	⅛	Sester	        ≈	67,5	ml	 	1/8
+//   sextans	  Sechstelsester  	=	1/6	Sester	      ≈	90,0	ml	 	1/6
+//   triens	    Drittelsester	    =	⅓	Sester	        ≈	180	ml	 	  1/3
+//   hemina	    Hemine, Hemina	  =	½	Sester	        ≈	270	ml	 	  1/2
+//   cheonix	  Cheonix	          =	2	Drittelsester	  ≈	360	ml	 	  2/3
+//   sextarius  Sester	          =	1/6	Kanne	        ≈	540[3]	ml	 	1
+//   congius	  Kanne	            =	¼	Urne	          ≈	3,24	l	 	  6
+//   urna	      Urne	            =	½	Amphore	        ≈	12,97	l	 	  24
+//   amphora	  Amphore	          =	1	Kubikfuß	      ≈	25,93	l	 	  48
+//   culleus	  Schlauch	        =	20	Amphoren	    ≈	518,69	l 	960
+
+final _VOLUME_ROMAN_LIGULA = Volume(name: 'common_unit_volume_roman_ligulum_name', symbol: '', inCubicMeters: _sester / 48);
+final _VOLUME_ROMAN_CYATHUS = Volume(name: 'common_unit_volume_roman_cyathus_name', symbol: '', inCubicMeters: _sester / 12);
+final _VOLUME_ROMAN_ACETABULUM = Volume(name: 'common_unit_volume_roman_acetabulum_name', symbol: '', inCubicMeters: _sester / 8);
+final _VOLUME_ROMAN_SEXTANS = Volume(name: 'common_unit_volume_roman_sextans_name', symbol: '', inCubicMeters: _sester / 6);
+final _VOLUME_ROMAN_TRIENS = Volume(name: 'common_unit_volume_roman_triens_name', symbol: '', inCubicMeters: _sester / 3);
+final _VOLUME_ROMAN_HEMINA = Volume(name: 'common_unit_volume_roman_hemina_name', symbol: '', inCubicMeters: _sester / 2);
+final _VOLUME_ROMAN_CHEONIX = Volume(name: 'common_unit_volume_roman_cheonix_name', symbol: '', inCubicMeters: _sester * 2 / 3);
+final _VOLUME_ROMAN_SEXTARIUS = Volume(name: 'common_unit_volume_roman_sextarius_name', symbol: '', inCubicMeters: _sester);
+final _VOLUME_ROMAN_CONGIUS = Volume(name: 'common_unit_volume_roman_congius_name', symbol: '', inCubicMeters: _sester * 6);
+final _VOLUME_ROMAN_URNA = Volume(name: 'common_unit_volume_roman_urna_name', symbol: '', inCubicMeters: _sester * 24);
+final _VOLUME_ROMAN_AMPHORA = Volume(name: 'common_unit_volume_roman_amphora_name', symbol: '', inCubicMeters: _sester * 48);
+final _VOLUME_ROMAN_CULLEUS = Volume(name: 'common_unit_volume_roman_culleus_name', symbol: '', inCubicMeters: _sester * 960);
+
+
 final List<Volume> volumes = [
   _VOLUME_CUBICMILLIMETER,
   _VOLUME_CUBICCENTIMETER,
