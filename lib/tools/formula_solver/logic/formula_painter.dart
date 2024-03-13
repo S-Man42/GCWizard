@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
@@ -54,12 +55,12 @@ class FormulaPainter {
     _variables = values.map((value) => FormulaValue(value.key.toUpperCase(), value.value, type: value.type)).toList();
 
     _variables = _variablesSort(_variables);
-    _variablesRegEx = _variables.map((variable) => variable.key).join('|');
+    _variablesRegEx = _variables.map((variable) => _buildRegExString(variable.key)).join('|');
 
     _formulaNames = formulaNames.map((name) => name.toUpperCase()).toList();
     formulaNames.removeWhere((name) => name.isEmpty);
     formulaNames.sort(); // not sort or remove _formulaNames
-    _formulaNamesRegEx = formulaNames.map((name) => name.toUpperCase()).join('|');
+    _formulaNamesRegEx = formulaNames.map((name) => _buildRegExString(name.toUpperCase())).join('|');
 
     formula = normalizeCharacters(formula);
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
@@ -305,6 +306,17 @@ class FormulaPainter {
     }
 
     return result;
+  }
+
+  String _buildRegExString(String value) {
+    const replaceMap = {
+      "(": "\\(",
+      ")": "\\)",
+      ".": "\\.",
+      "+": "\\+",
+      "|": "\\|",
+    };
+    return substitution(value, replaceMap);
   }
 
   List<String>? _isSpaces(String formula) {

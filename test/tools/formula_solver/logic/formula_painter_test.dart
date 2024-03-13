@@ -204,6 +204,7 @@ void main() {
       {'formula' : 'E(1', 'values': {'E':'1'}, 'expectedOutput' : 'rBG'},
       {'formula' : 'E(', 'values': <String, String>{}, 'expectedOutput' : 'RB'},
       {'formula' : 'E)', 'values': <String, String>{}, 'expectedOutput' : 'RB'},
+      {'formula' : '10  B (West) - 3  A (Ost) - 4  C (west)', 'values': <String, String>{'b (west)': '63', 'c (west)': '7', 'A (Ost)': '3'}, 'expectedOutput' : 'ggggrrrrrrrrrbbgggrrrrrrrrbbgggrrrrrrrr'},
 
       {'formula' : 'SIN(12)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbggb'},
       {'formula' : 'sin(12)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbggb'},
