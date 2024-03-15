@@ -686,7 +686,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
               size: IconButtonSize.SMALL,
               iconColor: themeColors().mainFont(),
               onPressed: () {
-                _exportFilesToZIP(context, '', _buildUint8ListFromMedia());
+                _exportFilesToZIP(context, '',);
               },
             )
           ]),
@@ -1916,14 +1916,21 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     }).toList();
   }
 
-  Future<void> _exportFilesToZIP(BuildContext context, String fileName, List<Uint8List> data) async {
-    createZipFile(fileName, '', data).then((bytes) async {
+  Future<void> _exportFilesToZIP(BuildContext context, String fileName, ) async {
+    createZipFile(fileName, '', _buildUint8ListFromMedia(), names: _buildNamesFromMedia()).then((bytes) async {
       await saveByteDataToFile(context, bytes, buildFileNameWithDate('media_', FileType.ZIP)).then((value) {
         if (value) showExportedFileDialog(context);
       });
     });
   }
 
+  List<String> _buildNamesFromMedia(){
+    List<String> names = [];
+    for (WherigoMediaData mediaFileContent in WherigoCartridgeLUAData.Media) {
+      names.add(mediaFileContent.MediaFilename);
+    }
+    return names;
+  }
   List<Uint8List> _buildUint8ListFromMedia(){
     List<Uint8List> data = [];
 

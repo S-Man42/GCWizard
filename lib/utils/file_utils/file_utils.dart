@@ -517,7 +517,7 @@ Future<bool> _deleteFile(String path) async {
   }
 }
 
-Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList) async {
+Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList, {List<String> names = const []}) async {
   try {
     String tmpDir = (await getTemporaryDirectory()).path;
     var counter = 0;
@@ -538,6 +538,9 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
 
       if (extension != '.luac') {
         counter++;
+        if (names.isNotEmpty) {
+          fileName = names[counter - 1];
+        }
         var fileNameZip = '$fileName' '_$counter$extension';
         var tmpPath = '$tmpDir/$fileNameZip';
         if (File(tmpPath).existsSync()) File(tmpPath).delete();
