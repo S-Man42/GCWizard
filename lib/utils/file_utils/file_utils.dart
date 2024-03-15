@@ -529,18 +529,26 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
     var encoder = ZipFileEncoder();
     encoder.create(zipPath);
 
+    bool mixed = (extension == '');
+
     for (Uint8List imageBytes in imageList) {
-      counter++;
-      var fileNameZip = '$fileName' '_$counter$extension';
-      var tmpPath = '$tmpDir/$fileNameZip';
-      if (File(tmpPath).existsSync()) File(tmpPath).delete();
+      if (mixed) {
+        extension = '.' + fileExtension(getFileType(imageBytes));
+      }
 
-      File imageFileTmp = File(tmpPath);
-      imageFileTmp = await imageFileTmp.create();
-      imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
+      if (extension != '.luac') {
+        counter++;
+        var fileNameZip = '$fileName' '_$counter$extension';
+        var tmpPath = '$tmpDir/$fileNameZip';
+        if (File(tmpPath).existsSync()) File(tmpPath).delete();
 
-      encoder.addFile(imageFileTmp, fileNameZip);
-      imageFileTmp.delete();
+        File imageFileTmp = File(tmpPath);
+        imageFileTmp = await imageFileTmp.create();
+        imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
+
+        encoder.addFile(imageFileTmp, fileNameZip);
+        imageFileTmp.delete();
+      }
     }
 
     encoder.close();

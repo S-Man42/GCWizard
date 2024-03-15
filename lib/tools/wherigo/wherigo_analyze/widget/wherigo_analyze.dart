@@ -679,7 +679,18 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     return Column(
       children: <Widget>[
-        const GCWDefaultOutput(),
+        GCWDefaultOutput(
+          trailing: Row(children: <Widget>[
+            GCWIconButton(
+              icon: Icons.save,
+              size: IconButtonSize.SMALL,
+              iconColor: themeColors().mainFont(),
+              onPressed: () {
+                _exportFilesToZIP(context, '', _buildUint8ListFromMedia());
+              },
+            )
+          ]),
+        ),
         Row(
           children: <Widget>[
             GCWIconButton(
@@ -1903,5 +1914,22 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         child: mode.key,
       );
     }).toList();
+  }
+
+  Future<void> _exportFilesToZIP(BuildContext context, String fileName, List<Uint8List> data) async {
+    createZipFile(fileName, '', data).then((bytes) async {
+      await saveByteDataToFile(context, bytes, buildFileNameWithDate('media_', FileType.ZIP)).then((value) {
+        if (value) showExportedFileDialog(context);
+      });
+    });
+  }
+
+  List<Uint8List> _buildUint8ListFromMedia(){
+    List<Uint8List> data = [];
+
+    for (WherigoMediaFileContent mediaFileContent in WherigoCartridgeGWCData.MediaFilesContents) {
+      data.add(mediaFileContent.MediaFileBytes);
+    }
+    return data;
   }
 }
