@@ -1325,7 +1325,18 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
 
     return Column(children: <Widget>[
-      const GCWDefaultOutput(),
+      GCWDefaultOutput(
+        trailing: Row(children: <Widget>[
+          GCWIconButton(
+            icon: Icons.save,
+            size: IconButtonSize.SMALL,
+            iconColor: themeColors().mainFont(),
+            onPressed: () {
+              _exportMessagesToFile(context);
+            },
+          )
+        ]),
+      ),
       Row(
         children: <Widget>[
           GCWIconButton(
@@ -1931,6 +1942,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
     return names;
   }
+
   List<Uint8List> _buildUint8ListFromMedia(){
     List<Uint8List> data = [];
 
@@ -1938,5 +1950,20 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       data.add(mediaFileContent.MediaFileBytes);
     }
     return data;
+  }
+
+  Future<void> _exportMessagesToFile(BuildContext context) async {
+    List<String> messages = [];
+    for (var message in WherigoCartridgeLUAData.Messages) {
+      for (var messageElement in message){
+        if (messageElement.ActionMessageType == WHERIGO_ACTIONMESSAGETYPE.TEXT) {
+          messages.add(messageElement.ActionMessageContent);
+        }
+      }
+      messages.add('');
+    }
+
+    _exportFile(context, Uint8List.fromList(messages.join('\n').codeUnits), 'Messages',
+        FileType.TXT);
   }
 }
