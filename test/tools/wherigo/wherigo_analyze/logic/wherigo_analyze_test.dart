@@ -424,6 +424,10 @@ void main() {
         'input': testInputANSWERGCMighla01,
         'expectedOutput': testOutputANSWERGCMighla01,
       },
+      {
+        'input': testInputANSWEREdersee_48h5,
+        'expectedOutput': testOutputANSWEREdersee_48h5,
+      },
 
     ];
 

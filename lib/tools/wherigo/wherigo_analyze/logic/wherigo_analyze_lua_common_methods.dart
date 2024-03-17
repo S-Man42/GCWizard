@@ -41,7 +41,8 @@ bool _isMessageActionElement(String line) {
       line.startsWith('Buttons = ') ||
       line.contains(':MoveTo') ||
       line.endsWith('= true') ||
-      line.endsWith('= false')) {
+      line.endsWith('= false') ||
+      line.trim() == 'else') {
     return true;
   } else {
     return false;
@@ -78,7 +79,8 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
   } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE, ActionMessageContent: line.trim());
-  } else {
+  }
+  else {
     String actionLine = '';
     // if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
     //   List<String> actions = line.trim().split('=');

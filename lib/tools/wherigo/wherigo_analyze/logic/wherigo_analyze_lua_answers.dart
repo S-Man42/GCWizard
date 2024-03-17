@@ -41,7 +41,7 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
     } // end of NIL
 
     //else
-      if (_OnGetInputSectionEnd(onGetInputLines[i])) {
+    if (_OnGetInputSectionEnd(onGetInputLines[i])) {
       // found Answer
       _answerActions = [];
       _answerAnswerList = _getAnswers(i, onGetInputLines[i], onGetInputLines[i - 1], _cartridgeVariables);
@@ -88,20 +88,23 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
 }
 
 List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVariableData> variables) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input > ') ||
-      line.trim().startsWith('if input < ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
+  line = line.trim();
+  line = line.replaceAll('tonumber', '').replaceAll('""', '').replaceAll('(', '').replaceAll(')', '');
+  if (line.startsWith('if input == ') ||
+      line.startsWith('if input >= ') ||
+      line.startsWith('if input > ') ||
+      line.startsWith('if input < ') ||
+      line.startsWith('if input <= ') ||
+      line.startsWith('elseif input == ') ||
+      line.startsWith('elseif input >= ') ||
+      line.startsWith('elseif input > ') ||
+      line.startsWith('elseif input < ') ||
+      line.startsWith('elseif input <= ') ||
+      line.startsWith('if ' + _answerVariable + ' == ') ||
+      line.startsWith('elseif ' + _answerVariable + ' == ')) {
     if ((line.contains('<=') && line.contains('>=')) || (line.contains('<') && line.contains('>'))) {
       return [
         line
-            .trimLeft()
             .replaceAll('if', '')
             .replaceAll('else', '')
             .replaceAll('=', '')
@@ -114,16 +117,16 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
       ];
     }
     String answers = line
-        .trimLeft()
         .replaceAll('if', '')
         .replaceAll('else', '')
         .replaceAll('input', '')
-        .replaceAll('=', '')
-        .replaceAll('>', '')
-        .replaceAll('<', '')
+        .replaceAll('==', '')
+        //.replaceAll('>', '')
+        //.replaceAll('<', '')
         .replaceAll('then', '')
         //.replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
+        .replaceAll('"', '')
         .replaceAll('and', ' and ');
     if (answers.length > _answerVariable.length) {
       answers = answers.replaceAll(_answerVariable, '');
@@ -166,8 +169,8 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
           breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
     });
     return results;
-  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
+  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals') ||
+      line.trim().startsWith('elseif Wherigo.NoCaseEquals')) {
     if (_answerVariable.isEmpty) _answerVariable = _getVariable(lineBefore);
     line = line
         .trim()
@@ -210,9 +213,13 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
 bool _OnGetInputSectionEnd(String line) {
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('if input >= ') ||
+      line.trim().startsWith('if input > ') ||
+      line.trim().startsWith('if input < ') ||
       line.trim().startsWith('if input <= ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('elseif input >= ') ||
+      line.trim().startsWith('elseif input > ') ||
+      line.trim().startsWith('elseif input < ') ||
       line.trim().startsWith('elseif input <= ') ||
       line.trim().startsWith('if _Urwigo.Hash(') ||
       line.trim().startsWith('if (_Urwigo.Hash(') ||
