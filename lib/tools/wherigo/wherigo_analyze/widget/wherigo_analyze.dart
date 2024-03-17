@@ -1048,7 +1048,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputMedia),
       GCWColumnedMultilineOutput(
           data: _buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
-          flexValues: const [1, 3]),
+          flexValues: const [3, 4]),
       if (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
         Column(children: <Widget>[
           Row(
@@ -1098,7 +1098,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
                   ),
                   copyColumn: 1,
-                  flexValues: const [2, 3, 3]),
+                  flexValues: const [3, 2, 2]),
               GCWExpandableTextDivider(
                 expanded: false,
                 text: i18n(context, 'wherigo_output_answeractions'),

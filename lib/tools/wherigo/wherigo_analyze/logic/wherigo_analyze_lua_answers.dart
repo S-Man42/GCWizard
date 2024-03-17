@@ -89,6 +89,9 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
 
 List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVariableData> variables) {
   line = line.trim();
+  if (line == 'else') {
+    return ['-<ELSE>-'];
+  }
   line = line.replaceAll('tonumber', '').replaceAll('""', '').replaceAll('(', '').replaceAll(')', '');
   if (line.startsWith('if input == ') ||
       line.startsWith('if input >= ') ||
@@ -107,13 +110,14 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         line
             .replaceAll('if', '')
             .replaceAll('else', '')
-            .replaceAll('=', '')
-            .replaceAll('>', '')
-            .replaceAll('<', '')
+            //.replaceAll('=', '')
+            //.replaceAll('>', '')
+            //.replaceAll('<', '')
+            .replaceAll('input', '')
             .replaceAll('then', '')
             .replaceAll(' ', '')
-            .replaceAll('and', ' and ')
-            .replaceAll('or', ' or ')
+            .replaceAll('and', ' && ')
+            .replaceAll('or', ' || ')
       ];
     }
     String answers = line
@@ -127,7 +131,8 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         //.replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .replaceAll('"', '')
-        .replaceAll('and', ' and ');
+        .replaceAll('and', ' && ')
+        .replaceAll('or', ' || ');
     if (answers.length > _answerVariable.length) {
       answers = answers.replaceAll(_answerVariable, '');
     }
@@ -211,24 +216,26 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
 }
 
 bool _OnGetInputSectionEnd(String line) {
-  if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('if input >= ') ||
-      line.trim().startsWith('if input > ') ||
-      line.trim().startsWith('if input < ') ||
-      line.trim().startsWith('if input <= ') ||
-      line.trim().startsWith('elseif input == ') ||
-      line.trim().startsWith('elseif input >= ') ||
-      line.trim().startsWith('elseif input > ') ||
-      line.trim().startsWith('elseif input < ') ||
-      line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if _Urwigo.Hash(') ||
-      line.trim().startsWith('if (_Urwigo.Hash(') ||
-      line.trim().startsWith('elseif _Urwigo.Hash(') ||
-      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
-      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
-      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
+  line = line.trim();
+  if (line.startsWith('if input == ') ||
+      line.startsWith('if input >= ') ||
+      line.startsWith('if input > ') ||
+      line.startsWith('if input < ') ||
+      line.startsWith('if input <= ') ||
+      line.startsWith('elseif input == ') ||
+      line.startsWith('elseif input >= ') ||
+      line.startsWith('elseif input > ') ||
+      line.startsWith('elseif input < ') ||
+      line.startsWith('elseif input <= ') ||
+      line.startsWith('if _Urwigo.Hash(') ||
+      line.startsWith('if (_Urwigo.Hash(') ||
+      line.startsWith('elseif _Urwigo.Hash(') ||
+      line.startsWith('elseif (_Urwigo.Hash(') ||
+      line.startsWith('if Wherigo.NoCaseEquals(') ||
+      line.startsWith('elseif Wherigo.NoCaseEquals(') ||
+      line.startsWith('if ' + _answerVariable + ' == ') ||
+      line.startsWith('elseif ' + _answerVariable + ' == ') ||
+      line.trim() == 'else') {
     return true;
   } else {
     return false;

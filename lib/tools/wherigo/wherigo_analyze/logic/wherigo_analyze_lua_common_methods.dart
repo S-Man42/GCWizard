@@ -53,35 +53,35 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: line.trim());
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: line);
   } else if (line.startsWith('Wherigo.ShowScreen')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-        ActionMessageContent: line.trim().replaceAll('Wherigo.', '').replaceAll('(', ' ').replaceAll(')', ''));
+        ActionMessageContent: line.replaceAll('Wherigo.', '').replaceAll('(', ' ').replaceAll(')', ''));
   } else if (line.startsWith('Wherigo.GetInput')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: line.trim());
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: line);
   } else if (line.startsWith('Text = ')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: getTextData(line));
   } else if (line.startsWith('Media = ')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE,
-        ActionMessageContent: line.trim().replaceAll('Media = ', '').replaceAll(',', ''));
+        ActionMessageContent: line.replaceAll('Media = ', '').replaceAll(',', ''));
   } else if (line.startsWith('Buttons = ')) {
     if (line.endsWith('}') || line.endsWith('},')) {
       // single line
       return WherigoActionMessageElementData(
           ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
           ActionMessageContent:
-              getTextData(line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', '')));
+              getTextData(line.replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', '')));
     }
   } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE, ActionMessageContent: line.trim());
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE, ActionMessageContent: line);
   }
   else {
-    String actionLine = '';
+    String actionLine = line.replaceAll('<BR>', '\n').replaceAll(']],', '');
     // if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
     //   List<String> actions = line.trim().split('=');
     //   if (actions.length == 2) {
@@ -102,8 +102,6 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
     //         actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
     //   }
     // } else
-    actionLine = line.trimLeft();
-    actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: actionLine);
   }

@@ -457,8 +457,6 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   // Save Answers to Input Objects
   //
   //for (var inputObject in _cartridgeInputs) {
-  //print(_cartridgeInputs.length);
-  //print(_Answers);
   for (int i = 0; i < _cartridgeInputs.length; i++) {
     _resultInputs.add(WherigoInputData(
         InputLUAName: _cartridgeInputs[i].InputLUAName,

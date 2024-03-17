@@ -6297,6 +6297,7 @@
   "wet_bulb_temperature_index_wbt_dark_red": "Very High risk - immediately stop working, cool down and drink a bottle of water per hour.",
   "wherigo_title" : "Wherigo Analyzer",
   "wherigo_description" : "Extracts several data from Wherigo Cartridges. Shows media file, message texts, zones and even possible dialog answers.",
+  "wherigo_answer_else" : "Other answers",
   "wherigo_decompile_button": "Get LUA",
   "wherigo_decompile_title": "IMPORTANT - How to decompile ...",
   "wherigo_decompile_message": "Unfortunately, the GC Wizard cannot extract the LUA code offline at the moment. If you like, the cartridge (and nothing else!) will be send to our server for analysis.\n\nAlternatively you can put manually decompiled LUA code directly into the tool from a file or an internet resource.\n\nMeanwhile we are searching for an offline solution.\n\nDo you want to proceed with online analysis?",

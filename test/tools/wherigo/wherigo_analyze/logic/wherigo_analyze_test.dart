@@ -428,6 +428,10 @@ void main() {
         'input': testInputANSWEREdersee_48h5,
         'expectedOutput': testOutputANSWEREdersee_48h5,
       },
+      {
+        'input': testInputANSWEREdersee_VKB,
+        'expectedOutput': testOutputANSWEREdersee_VKB,
+      },
 
     ];
 
