@@ -80,26 +80,6 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE, ActionMessageContent: line.trim());
   } else {
     String actionLine = '';
-    // if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-    //   List<String> actions = line.trim().split('=');
-    //   if (actions.length == 2) {
-    //     actionLine = actions[0].trim() +
-    //         ' = ' +
-    //         deobfuscateUrwigoText(
-    //             (actions[1].indexOf('")') > 0)
-    //                 ? actions[1]
-    //                 .substring(0, actions[1].indexOf('")'))
-    //                 .replaceAll(obfuscator, '')
-    //                 .replaceAll('("', '')
-    //                 .replaceAll('")', '')
-    //                 .trim()
-    //                 : actions[1].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
-    //             dtable);
-    //   } else {
-    //     actionLine = deobfuscateUrwigoText(
-    //         actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
-    //   }
-    // } else
     actionLine = line.trimLeft();
     actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
     return WherigoActionMessageElementData(

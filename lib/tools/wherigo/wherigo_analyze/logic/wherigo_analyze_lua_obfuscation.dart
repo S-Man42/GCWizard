@@ -8,21 +8,6 @@ void _deObfuscateAllTexts() {
     if (group == null) return;
     _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
   });
-
-  // RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-  //   var group = obfuscatedText.group(0);
-  //   if (group == null) return;
-  //
-  //   print(group+' '+'"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
-  //
-  //   _LUAFile = _LUAFile.replaceAll(
-  //       group,
-  //       '"' +
-  //           deObfuscateText(group.replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''), _obfuscatorFunction,
-  //               _obfuscatorTable) +
-  //           '"');
-  // });
-
 }
 
 void _checkAndGetObfuscatorURWIGO(List<String> lines) {

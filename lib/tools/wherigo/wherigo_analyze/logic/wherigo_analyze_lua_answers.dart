@@ -172,9 +172,6 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         .replaceAll('input', '')
         .replaceAll('Answer,', '')
         .trim();
-    //if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-    //  line = deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable);
-    //}
     line = line.split(' or ').map((element) {
       return element.trim();
     }).join('\n');
