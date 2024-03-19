@@ -18,13 +18,23 @@ Future<String?> scanBytes(Uint8List? bytes) async {
   return null;
 }
 
+Map<String, int> ErrorCorrectLevel() {
+  return Map.fromEntries(qr.QrErrorCorrectLevel.levels.map((level) =>
+      MapEntry(qr.QrErrorCorrectLevel.getName(level), level)));
+}
+
 /// Generating Bar Code
-DrawableImageData? generateBarCode(String code, {int moduleSize = 5, int border = 10}) {
+DrawableImageData? generateBarCode(String code,
+    {int moduleSize = 5, int border = 10, int errorCorrectLevel = qr.QrErrorCorrectLevel.L}) {
   if (code == '') return null;
+
+  if (!qr.QrErrorCorrectLevel.levels.contains(errorCorrectLevel)) {
+    errorCorrectLevel = qr.QrErrorCorrectLevel.L;
+  }
 
   var qrCode = qr.QrCode.fromData(
     data: code,
-    errorCorrectLevel: qr.QrErrorCorrectLevel.L,
+    errorCorrectLevel: errorCorrectLevel,
   );
   moduleSize = max(1, moduleSize);
   var _colorMap = {'0': COLOR_QR_BACKGROUND.value, '1': colorMap.values.elementAt(1)};
