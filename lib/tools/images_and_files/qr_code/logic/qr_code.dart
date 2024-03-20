@@ -8,6 +8,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/drawable_image_da
 import 'package:qr/qr.dart' as qr;
 import 'package:r_scan/r_scan.dart' as scan;
 
+const defaultErrorCorrectLevel = qr.QrErrorCorrectLevel.L;
+
 /// Parse to code string with Uint8list
 Future<String?> scanBytes(Uint8List? bytes) async {
   if (bytes == null) return null;
@@ -18,24 +20,36 @@ Future<String?> scanBytes(Uint8List? bytes) async {
   return null;
 }
 
-Map<String, int> ErrorCorrectLevel() {
+Map<int, String> errorCorrectLevel() {
   return Map.fromEntries(qr.QrErrorCorrectLevel.levels.map((level) =>
-      MapEntry(qr.QrErrorCorrectLevel.getName(level), level)));
+      MapEntry(level, qr.QrErrorCorrectLevel.getName(level))));
 }
 
 /// Generating Bar Code
 DrawableImageData? generateBarCode(String code,
-    {int moduleSize = 5, int border = 10, int errorCorrectLevel = qr.QrErrorCorrectLevel.L}) {
+    {int moduleSize = 5, int border = 10, int errorCorrectLevel = defaultErrorCorrectLevel, int version = 0}) {
   if (code == '') return null;
 
   if (!qr.QrErrorCorrectLevel.levels.contains(errorCorrectLevel)) {
     errorCorrectLevel = qr.QrErrorCorrectLevel.L;
   }
 
-  var qrCode = qr.QrCode.fromData(
-    data: code,
-    errorCorrectLevel: errorCorrectLevel,
-  );
+  if (version < 0 || version > 40) {
+    version = 0;
+  }
+
+  qr.QrCode qrCode;
+
+  if (version == 0) {
+    qrCode = qr.QrCode.fromData(
+      data: code,
+      errorCorrectLevel: errorCorrectLevel,
+    );
+  } else {
+    qrCode = qr.QrCode(version, errorCorrectLevel);
+    qrCode.addData(code);
+  }
+
   moduleSize = max(1, moduleSize);
   var _colorMap = {'0': COLOR_QR_BACKGROUND.value, '1': colorMap.values.elementAt(1)};
 

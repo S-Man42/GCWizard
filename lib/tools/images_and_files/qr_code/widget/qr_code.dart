@@ -5,8 +5,11 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -36,6 +39,9 @@ class _QrCodeState extends State<QrCode> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   static int maxLength = 2952;
   var lastCurrentInputLength = 0;
+  var _currentExpanded = false;
+  var _currentSize = 0;
+  var _currentErrorCorrectLevel = defaultErrorCorrectLevel;
 
   @override
   void initState() {
@@ -82,6 +88,9 @@ class _QrCodeState extends State<QrCode> {
                   });
                 },
               ),
+        _currentMode == GCWSwitchPosition.right
+            ? Container()
+            : _buildAdvancedWidget(),
         ((_currentMode == GCWSwitchPosition.right) && (_outData != null))
             ? Container(
                 padding: const EdgeInsets.symmetric(vertical: 20),
@@ -124,6 +133,93 @@ class _QrCodeState extends State<QrCode> {
     );
   }
 
+  Widget _buildAdvancedWidget() {
+    return Column(
+      children: [
+        GCWExpandableTextDivider(
+          text: i18n(context, 'common_mode_advanced'),
+          expanded: _currentExpanded,
+          onChanged: (value) {
+            setState(() {
+              _currentExpanded = value;
+            });
+          },
+          child: Column (
+            children: [
+
+              GCWIntegerSpinner(
+                title: i18n(context, 'common_size'),
+                min: 0,
+                max: 40,
+                value: _currentSize,
+                onChanged: (value) {
+                  setState(() {
+                    _currentSize = value;
+                  });
+                },
+              ),
+              Row(children: <Widget>[
+                Expanded(
+                  flex: 5,
+                  child: GCWText(text: i18n(context, 'common_size')),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: GCWDropDown<int>(
+                    value: _currentSize,
+                    onChanged: (int value) {
+                      setState(() {
+                        _currentSize = value;
+                      });
+                    },
+                    items: buildSizeList(),
+                  ),
+                )
+              ]),
+              Row(children: <Widget>[
+                Expanded(
+                  flex: 5,
+                  child: GCWText(text: i18n(context, 'qr_code_error_correct_level')),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: GCWDropDown<int>(
+                    value: _currentErrorCorrectLevel,
+                    onChanged: (int value) {
+                      setState(() {
+                        _currentErrorCorrectLevel = value;
+                      });
+                    },
+                    items: errorCorrectLevel().entries.map((set) {
+                      return GCWDropDownMenuItem(
+                        value: set.key,
+                        child: set.value,
+                      );
+                    }).toList(),
+                  ),
+                )
+            ])
+          ])
+        ),
+      ],
+    );
+  }
+
+  List<GCWDropDownMenuItem<int>> buildSizeList() {
+    List<GCWDropDownMenuItem<int>> list = [];
+    list.add(GCWDropDownMenuItem(
+      value: 0,
+      child: i18n(context, 'common_automatic'),
+    ));
+    for (int i = 1; i<= 40; i++) {
+      list.add(GCWDropDownMenuItem(
+        value: 1,
+        child: (17 + i * 4).toString() + ' x ' + (17 + i * 4).toString(),
+      ));
+    }
+    return list;
+  }
+
   Object? _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_outDataEncrypt == null) return null;
@@ -145,7 +241,10 @@ class _QrCodeState extends State<QrCode> {
         lastCurrentInputLength = _currentInput.length;
 
         _outDataEncrypt = null;
-        var qrCode = generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize);
+        var qrCode = generateBarCode(currentInput,
+            moduleSize: _currentModulSize, border: 2 * _currentModulSize,
+            errorCorrectLevel: _currentErrorCorrectLevel,
+            version: _currentSize);
         if (qrCode == null) return;
         input2Image(qrCode).then((qr_code) {
           setState(() {
