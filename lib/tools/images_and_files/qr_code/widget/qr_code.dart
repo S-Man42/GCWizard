@@ -34,6 +34,7 @@ class _QrCodeState extends State<QrCode> {
   var _currentModulSize = 5;
   Uint8List? _outData;
   Uint8List? _outDataEncrypt;
+  String? _outDataEncryptText;
   String? _outDataDecrypt;
   late TextEditingController _inputController;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
@@ -150,7 +151,7 @@ class _QrCodeState extends State<QrCode> {
           child: Column (
             children: [
               Row(children: <Widget>[
-                Expanded(child: GCWText(text: i18n(context, 'common_size'))),
+                Expanded(child: GCWText(text: i18n(context, 'qr_code_size_version'))),
                 Expanded(
                   child: GCWDropDown<int>(
                       value: _currentSize,
@@ -200,7 +201,7 @@ class _QrCodeState extends State<QrCode> {
       var size = (17 + i * 4).toString();
       list.add(GCWDropDownMenuItem(
         value: i,
-        child: size + ' x ' + size,
+        child: size + ' x ' + size + ' (v' + i.toString() + ')',
       ));
     }
     return list;
@@ -208,7 +209,8 @@ class _QrCodeState extends State<QrCode> {
 
   Object? _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_outDataEncrypt == null) return null;
+      if (_outDataEncrypt == null && _outDataEncryptText == null) return null;
+      if (_outDataEncryptText != null) return  _outDataEncryptText;
       return Image.memory(_outDataEncrypt!);
     } else {
       if (_outDataDecrypt == null) return null;
@@ -227,11 +229,16 @@ class _QrCodeState extends State<QrCode> {
         lastCurrentInputLength = _currentInput.length;
 
         _outDataEncrypt = null;
+        _outDataEncryptText = null;
         var qrCode = generateBarCode(currentInput,
             moduleSize: _currentModulSize, border: 2 * _currentModulSize,
             errorCorrectLevel: _currentErrorCorrectLevel,
             version: _currentSize);
         if (qrCode == null) return;
+        if (qrCode.lines.length == 2 && qrCode.lines.first == inputTooLongException) {
+          _outDataEncryptText = i18n(context, 'qr_code_size_error') + ' (' + qrCode.lines[1] + ')';
+          return;
+        }
         input2Image(qrCode).then((qr_code) {
           setState(() {
             _outDataEncrypt = qr_code;

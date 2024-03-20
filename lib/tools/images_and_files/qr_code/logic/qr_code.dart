@@ -9,6 +9,7 @@ import 'package:qr/qr.dart' as qr;
 import 'package:r_scan/r_scan.dart' as scan;
 
 const defaultErrorCorrectLevel = qr.QrErrorCorrectLevel.L;
+const inputTooLongException = 'InputTooLongException';
 
 /// Parse to code string with Uint8list
 Future<String?> scanBytes(Uint8List? bytes) async {
@@ -53,9 +54,14 @@ DrawableImageData? generateBarCode(String code,
   moduleSize = max(1, moduleSize);
   var _colorMap = {'0': COLOR_QR_BACKGROUND.value, '1': colorMap.values.elementAt(1)};
 
-  var qrImage = _createQrCode(qrCode);
-  if (qrImage == null) return null;
-  return DrawableImageData(qrImage, _colorMap, bounds: border, pointSize: moduleSize.toDouble());
+  try {
+    var qrImage = _createQrCode(qrCode);
+    if (qrImage == null) return null;
+    return DrawableImageData(qrImage, _colorMap, bounds: border, pointSize: moduleSize.toDouble());
+  } on qr.InputTooLongException catch (e) {
+    return DrawableImageData([inputTooLongException, e.providedInput.toString() + ' > ' + e.inputLimit.toString()], {});
+  } catch (e) {}
+  return null;
 }
 
 List<String>? _createQrCode(qr.QrCode qrCode) {

@@ -4012,6 +4012,8 @@
   "qr_code_nothingfound": "No QR code found.",
   "qr_code_modulsize": "Pixel size",
   "qr_code_length_limited": "The number of characters is limited to %s1",
+  "qr_code_size_error": "The size is too small for this text and error correct level",
+  "qr_code_size_version": "Size (Version)",
   "quadratic_equation_title" : "Quadratic Equation",
   "quadratic_equation_description" : "Solving Quadratic Equations ax² + bx + c = 0",
   "quadratic_equation_explanation" : "Solving ax² + bx + c = 0",
