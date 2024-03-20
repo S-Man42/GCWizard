@@ -17,14 +17,6 @@ enum UICWagonCodePassengerCategoryCompartements {LESS_EQUAL_7, LESS_EQUAL_8, EQU
 enum UICWagonCodePassengerCategoryAxles {TWO, THREE, TWO_OR_THREE, UNDEFINED}
 enum UICWagonCodePassengerMaxSpeed {TO_120, TO_140, TO_160, GREATER_160, INVALID}
 
-// internationalUsage = _getInternationalUsage(interoperabilityCode);
-// passengerWagonType = _getType(interoperabilityCode);
-// airConditioned = _getAirConditioned(interoperabilityCode);
-// pressurized = _getPressurized(interoperabilityCode);
-// gaugeType = _getGaugeType(interoperabilityCode);
-// maxSpeed = _getMaxSpeed(number);
-// heatingSystems = _getHeatingSystems(number);
-
 class UICWagonCodePassengerWagonCategory {
   late final String number;
   late final UICWagonCodePassengerCategoryType type;

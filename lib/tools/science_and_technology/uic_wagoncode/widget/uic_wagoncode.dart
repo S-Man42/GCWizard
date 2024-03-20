@@ -73,7 +73,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
         Widget heatingSystemOutput = Container();
         if (passengerData.heatingSystems != null) {
           var heatingSystems = [
-            [i18n(context, 'common_value'), 'D', 'I', '*']
+            [i18n(context, 'uic_passenger_heatingsystem_tension'), 'D', 'I', '*']
           ];
 
           for (var heatingSystem in passengerData.heatingSystems!) {
@@ -93,7 +93,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
                 ['D', i18n(context, 'uic_passenger_heatingsystem_onlydomestic')],
                 ['I', i18n(context, 'uic_passenger_heatingsystem_onlyinternational')],
                 ['*', i18n(context, 'uic_passenger_heatingsystem_voltage1000blablubb')],
-              ], suppressCopyButtons: true, fontSize: fontSizeSmall()),
+              ], suppressCopyButtons: true, fontSize: fontSizeSmall(), flexValues: [1,5],),
             ],
           );
         }
@@ -102,7 +102,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
           children: [
             GCWColumnedMultilineOutput(data: [
               [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
-              [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_passengerwagon')],
+              [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_passengercoach')],
             ]),
             GCWTextDivider(text: i18n(context, 'uic_interoperability')),
             GCWColumnedMultilineOutput(data: [
@@ -128,7 +128,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
             ]),
             GCWTextDivider(text: i18n(context, 'uic_classification')),
             GCWColumnedMultilineOutput(data: [
-              [i18n(context, 'uic_passenger_axles'), i18n(context, 'uic_passenger_axles_' + enumName(passengerData.category.axles.toString()).toLowerCase())],
+              if (passengerData.category.axles != UICWagonCodePassengerCategoryAxles.UNDEFINED) [i18n(context, 'uic_passenger_axles'), i18n(context, 'uic_passenger_axles_' + enumName(passengerData.category.axles.toString()).toLowerCase())],
               [i18n(context, 'uic_passenger_pressurized'), i18n(context, passengerData.pressurized ? 'common_yes' : 'common_no')],
               if (passengerData.airConditioned != UICWagonCodePassengerAirConditioned.UNDEFINED) [i18n(context, 'uic_passenger_airconditioned'), i18n(context, passengerData.airConditioned == UICWagonCodePassengerAirConditioned.YES ? 'common_yes' : 'common_no')],
               [i18n(context, 'uic_passenger_maxspeed_code'), passengerData.maxSpeedCode],
