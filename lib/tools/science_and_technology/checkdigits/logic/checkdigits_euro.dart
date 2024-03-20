@@ -4,49 +4,49 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 // https://kryptografie.de/kryptografie/chiffre/euro-banknote.htm
 // http://www.pruefziffernberechnung.de/B/Banknoten-EUR.shtml
 
-const EUROBILLDATA = {
+const EUROBANKNOTEDATA = {
   1: {
-    'B': ['', 'common_country_Lithuania'],
-    'C': ['', 'common_country_Latvia'],
-    'D': ['', 'common_country_Estonia'],
-    'E': ['', 'common_country_Slovakia'],
-    'F': ['', 'common_country_Malta'],
-    'G': ['', 'common_country_Cyprus'],
-    'H': ['', 'common_country_Slovenia'],
-    'J': ['', 'common_country_UnitedKingdom'],
-    'K': ['', 'common_country_Sweden'],
-    'L': ['', 'common_country_Finland'],
-    'M': ['', 'common_country_Portugal'],
-    'N': ['', 'common_country_Austria'],
-    'P': ['', 'common_country_Netherlands'],
-    'R': ['', 'common_country_Luxembourg'],
-    'S': ['', 'common_country_Italy'],
-    'T': ['', 'common_country_Ireland'],
-    'U': ['', 'common_country_France'],
-    'V': ['', 'common_country_Spain'],
-    'W': ['', 'common_country_Denmark'],
-    'X': ['', 'common_country_Germany'],
-    'Y': ['', 'common_country_Greece'],
-    'Z': ['', 'common_country_Belgium'],
+    'B': {'country': 'common_country_Lithuania'},
+    'C': {'country': 'common_country_Latvia'},
+    'D': {'country': 'common_country_Estonia'},
+    'E': {'country': 'common_country_Slovakia'},
+    'F': {'country': 'common_country_Malta'},
+    'G': {'country': 'common_country_Cyprus'},
+    'H': {'country': 'common_country_Slovenia'},
+    'J': {'country': 'common_country_UnitedKingdom'},
+    'K': {'country': 'common_country_Sweden'},
+    'L': {'country': 'common_country_Finland'},
+    'M': {'country': 'common_country_Portugal'},
+    'N': {'country': 'common_country_Austria'},
+    'P': {'country': 'common_country_Netherlands'},
+    'R': {'country': 'common_country_Luxembourg'},
+    'S': {'country': 'common_country_Italy'},
+    'T': {'country': 'common_country_Ireland'},
+    'U': {'country': 'common_country_France'},
+    'V': {'country': 'common_country_Spain'},
+    'W': {'country': 'common_country_Denmark'},
+    'X': {'country': 'common_country_Germany'},
+    'Y': {'country': 'common_country_Greece'},
+    'Z': {'country': 'common_country_Belgium'},
   },
   2: {
-    'D': ['Polska Wytwórnia Papierów Wartosciowych', 'common_country_Poland'],
-    'E': ['Francois Charles Oberthur Fiduciaire', 'common_country_France'],
-    'F': ['Oberthur Bulgarien', 'common_country_Bulgaria'],
-    'H': ['De La Rue Currency (Loughton)', 'common_country_UnitedKingdom'],
-    'J': ['De La Rue Currency (Gateshead)', 'common_country_UnitedKingdom'],
-    'M': ['Valora', 'common_country_Portugal'],
-    'N': ['Österreichische Banknoten- und Sicherheitsdruck GmbH', 'common_country_Austria'],
-    'P': ['Johan Enschede Security Printing BV', 'common_country_Netherlands'],
-    'R': ['Bundesdruckerei GmbH', 'common_country_Germany'],
-    'S': ['Banca d’Italia', 'common_country_Italy'],
-    'T': ['Central Bank of Ireland', 'common_country_Ireland'],
-    'U': ['Banque de France', 'common_country_France'],
-    'V': ['Fàbrica National de Mondea y Timbre', 'common_country_Spain'],
-    'W': ['Giesecke & Devrient (Leipzig)', 'common_country_Germany'],
-    'X': ['Giesecke & Devrient (München)', 'common_country_Germany'],
-    'Y': ['Bank of Greece', 'common_country_Greece'],
-    'Z': ['Banque Nationale de Belgique', 'common_country_Belgium'],
+    'D': {'institute': 'Polska Wytwórnia Papierów Wartosciowych', 'country': 'common_country_Poland'},
+    'E': {'institute': 'Francois Charles Oberthur Fiduciaire', 'country': 'common_country_France'},
+    'F': {'institute': 'Oberthur Bulgarien', 'country': 'common_country_Bulgaria'},
+    'H': {'institute': 'De La Rue Currency (Loughton)', 'country': 'common_country_UnitedKingdom'},
+    'J': {'institute': 'De La Rue Currency (Gateshead)', 'country': 'common_country_UnitedKingdom'},
+    'M': {'institute': 'Valora', 'country': 'common_country_Portugal'},
+    'N': {'institute': 'Österreichische Banknoten- und Sicherheitsdruck GmbH', 'country': 'common_country_Austria'},
+    'P': {'institute': 'Johan Enschede Security Printing BV', 'country': 'common_country_Netherlands'},
+    'R': {'institute': 'Bundesdruckerei GmbH', 'country': 'common_country_Germany'},
+    'S': {'institute': 'Banca d’Italia', 'country': 'common_country_Italy'},
+    'T': {'institute': 'Central Bank of Ireland', 'country': 'common_country_Ireland'},
+    'U': {'institute': 'Banque de France', 'country': 'common_country_France'},
+    'V': {'institute': 'Fàbrica National de Mondea y Timbre', 'country': 'common_country_Spain'},
+    'W': {'institute': 'Giesecke & Devrient (Leipzig)', 'country': 'common_country_Germany'},
+    'X': {'institute': 'Giesecke & Devrient (München)', 'country': 'common_country_Germany'},
+    'Y': {'institute': 'Bank of Greece', 'country': 'common_country_Greece'},
+    'Z': {'institute': 'Banque Nationale de Belgique', 'country': 'common_country_Belgium'},
   },
 };
 
@@ -103,7 +103,7 @@ List<String> _CalculateEURODigits(String number) {
 }
 
 bool _checkEURO(String number) {
-  if (EUROBILLDATA[checkEuroSeries(number)]![number[0]] == null) {
+  if (EUROBANKNOTEDATA[checkEuroSeries(number)]![number[0]] == null) {
     return false;
   } else{
     return (number[number.length - 1] == _calculateEUROCheckDigit(number.substring(0, number.length - 1)));
