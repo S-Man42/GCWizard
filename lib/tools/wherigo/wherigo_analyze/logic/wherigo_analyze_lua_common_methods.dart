@@ -79,29 +79,11 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
   } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE, ActionMessageContent: line);
-  }
-  else {
-    String actionLine = line.replaceAll('<BR>', '\n').replaceAll(']],', '');
-    // if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-    //   List<String> actions = line.trim().split('=');
-    //   if (actions.length == 2) {
-    //     actionLine = actions[0].trim() +
-    //         ' = ' +
-    //         deobfuscateUrwigoText(
-    //             (actions[1].indexOf('")') > 0)
-    //                 ? actions[1]
-    //                 .substring(0, actions[1].indexOf('")'))
-    //                 .replaceAll(obfuscator, '')
-    //                 .replaceAll('("', '')
-    //                 .replaceAll('")', '')
-    //                 .trim()
-    //                 : actions[1].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
-    //             dtable);
-    //   } else {
-    //     actionLine = deobfuscateUrwigoText(
-    //         actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
-    //   }
-    // } else
+  } else {
+    String actionLine = '';
+    actionLine = line.trimLeft();
+    actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
+
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: actionLine);
   }
