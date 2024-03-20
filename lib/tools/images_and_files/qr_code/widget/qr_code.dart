@@ -99,16 +99,19 @@ class _QrCodeState extends State<QrCode> {
             : Container(),
         _currentMode == GCWSwitchPosition.right
             ? Container()
-            : GCWIntegerSpinner(
-                title: i18n(context, 'qr_code_modulsize'),
-                value: _currentModulSize,
-                min: 1,
-                max: 100,
-                onChanged: (value) {
-                  _currentModulSize = value;
-                  _updateOutput();
-                },
-              ),
+            : Column(children: [
+                GCWIntegerSpinner(
+                  title: i18n(context, 'qr_code_modulsize'),
+                  flexValues: const [1, 1],
+                  value: _currentModulSize,
+                  min: 1,
+                  max: 100,
+                  onChanged: (value) {
+                    _currentModulSize = value;
+                    _updateOutput();
+                  },
+                ),
+              ]),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -147,46 +150,38 @@ class _QrCodeState extends State<QrCode> {
           child: Column (
             children: [
               Row(children: <Widget>[
+                Expanded(child: GCWText(text: i18n(context, 'common_size'))),
                 Expanded(
-                  flex: 5,
-                  child: GCWText(text: i18n(context, 'common_size')),
-                ),
-                Expanded(
-                  flex: 2,
                   child: GCWDropDown<int>(
-                    value: _currentSize,
-                    onChanged: (int value) {
-                      setState(() {
-                        _currentSize = value;
-                        _updateOutput();
-                      });
-                    },
-                    items: buildSizeList(),
+                      value: _currentSize,
+                      onChanged: (int value) {
+                        setState(() {
+                          _currentSize = value;
+                          _updateOutput();
+                        });
+                      },
+                      items: buildSizeList(),
+                      ),
                   ),
-                )
               ]),
               Row(children: <Widget>[
+                Expanded(child: GCWText(text: i18n(context, 'qr_code_error_correct_level'))),
                 Expanded(
-                  flex: 5,
-                  child: GCWText(text: i18n(context, 'qr_code_error_correct_level')),
-                ),
-                Expanded(
-                  flex: 2,
                   child: GCWDropDown<int>(
-                    value: _currentErrorCorrectLevel,
-                    onChanged: (int value) {
-                      setState(() {
-                        _currentErrorCorrectLevel = value;
-                        _updateOutput();
-                      });
-                    },
-                    items: errorCorrectLevel().entries.map((set) {
-                      return GCWDropDownMenuItem(
-                        value: set.key,
-                        child: set.value,
-                      );
-                    }).toList(),
-                  ),
+                      value: _currentErrorCorrectLevel,
+                      onChanged: (int value) {
+                        setState(() {
+                          _currentErrorCorrectLevel = value;
+                          _updateOutput();
+                        });
+                      },
+                      items: errorCorrectLevel().entries.map((set) {
+                          return GCWDropDownMenuItem(
+                            value: set.key,
+                            child: set.value,
+                          );
+                        }).toList(),
+                      ),
                 )
             ])
           ])
