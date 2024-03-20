@@ -146,30 +146,19 @@ class _QrCodeState extends State<QrCode> {
           },
           child: Column (
             children: [
-
-              GCWIntegerSpinner(
-                title: i18n(context, 'common_size'),
-                min: 0,
-                max: 40,
-                value: _currentSize,
-                onChanged: (value) {
-                  setState(() {
-                    _currentSize = value;
-                  });
-                },
-              ),
               Row(children: <Widget>[
                 Expanded(
                   flex: 5,
                   child: GCWText(text: i18n(context, 'common_size')),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: GCWDropDown<int>(
                     value: _currentSize,
                     onChanged: (int value) {
                       setState(() {
                         _currentSize = value;
+                        _updateOutput();
                       });
                     },
                     items: buildSizeList(),
@@ -182,12 +171,13 @@ class _QrCodeState extends State<QrCode> {
                   child: GCWText(text: i18n(context, 'qr_code_error_correct_level')),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: GCWDropDown<int>(
                     value: _currentErrorCorrectLevel,
                     onChanged: (int value) {
                       setState(() {
                         _currentErrorCorrectLevel = value;
+                        _updateOutput();
                       });
                     },
                     items: errorCorrectLevel().entries.map((set) {
@@ -211,10 +201,11 @@ class _QrCodeState extends State<QrCode> {
       value: 0,
       child: i18n(context, 'common_automatic'),
     ));
-    for (int i = 1; i<= 40; i++) {
+    for (int i = 1; i <= 40; i++) {
+      var size = (17 + i * 4).toString();
       list.add(GCWDropDownMenuItem(
-        value: 1,
-        child: (17 + i * 4).toString() + ' x ' + (17 + i * 4).toString(),
+        value: i,
+        child: size + ' x ' + size,
       ));
     }
     return list;
