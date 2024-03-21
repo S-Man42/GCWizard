@@ -6,6 +6,8 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 
 const _emptyChar = '\t';
+const _replaceCharacters = r'\f\t';
+const _replaceCharactersWithSpace = _replaceCharacters + ' ';
 
 enum SearchDirectionFlags {
   HORIZONTAL,
@@ -25,12 +27,13 @@ enum SearchDirectionFlags {
   }
 }
 
-String _normalizeInput(String text){
-  return text.replaceAll(RegExp(r'[\f\t ]'), '');
+String _normalizeInput(String text, {String replaceCharacters = _replaceCharactersWithSpace}){
+  return text.replaceAll(RegExp(r'['+ replaceCharacters +']'), '');
 }
 
-List<String> normalizeAndSplitInputForView(String text) {
-  var lines = _splitLines(_normalizeInput(text));
+List<String> normalizeAndSplitInputForView(String text, {bool noSpaces = true}) {
+  text = noSpaces ? _normalizeInput(text) : _normalizeInput(text, replaceCharacters: _replaceCharacters);
+  var lines = _splitLines(text);
   var maxRowLength = _maxRowLength(lines);
   return lines.map((line) => _fillupLine(line, maxRowLength).replaceAll('\t', '_')).toList();
 }
@@ -39,33 +42,34 @@ List<String> _splitLines(String text){
   return const LineSplitter().convert(text);
 }
 
-List<Uint8List> searchWordList(String text, String wordList, int searchDirection) {
+List<Uint8List> searchWordList(String text, String wordList, int searchDirection, {bool noSpaces = true}) {
   if (text.isEmpty) return [];
 
-  text = _normalizeInput(text.toUpperCase());
+  text = _normalizeInput(text.toUpperCase(),
+      replaceCharacters: noSpaces ? _replaceCharactersWithSpace : _replaceCharacters);
   wordList = wordList.replaceAll(RegExp(r'\s'), '\n');
   var wordLines = _splitLines(wordList.toUpperCase());
   wordLines.removeWhere((line) => line.isEmpty);
 
   var result = _buildResultMatrix(text);
-  if ((SearchDirectionFlags.hasFlag(searchDirection, SearchDirectionFlags.HORIZONTAL)) ) {
-    result = _combineResultMatrix(result, _searchHorizontal(text, wordLines) );
-    if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE)) ) {
-      result = _combineResultMatrix(result, _searchHorizontalReverse(text, wordLines) );
+  if ((SearchDirectionFlags.hasFlag(searchDirection, SearchDirectionFlags.HORIZONTAL))) {
+    result = _combineResultMatrix(result, _searchHorizontal(text, wordLines));
+    if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE))) {
+      result = _combineResultMatrix(result, _searchHorizontalReverse(text, wordLines));
     }
   }
-  if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.VERTICAL)) ) {
-    result = _combineResultMatrix(result, _searchVertical(text, wordLines) );
-    if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE)) ) {
-      result = _combineResultMatrix(result, _searchVerticalReverse(text, wordLines) );
+  if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.VERTICAL))) {
+    result = _combineResultMatrix(result, _searchVertical(text, wordLines));
+    if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE))) {
+      result = _combineResultMatrix(result, _searchVerticalReverse(text, wordLines));
     }
   }
-  if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.DIAGONAL)) ) {
-    result = _combineResultMatrix(result, _searchDiagonalLR(text, wordLines) );
-    result = _combineResultMatrix(result, _searchDiagonalRL(text, wordLines) );
-    if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE)) ) {
-      result = _combineResultMatrix(result, _searchDiagonalReverseLR(text, wordLines) );
-      result = _combineResultMatrix(result, _searchDiagonalReverseRL(text, wordLines) );
+  if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.DIAGONAL))) {
+    result = _combineResultMatrix(result, _searchDiagonalLR(text, wordLines));
+    result = _combineResultMatrix(result, _searchDiagonalRL(text, wordLines));
+    if ((SearchDirectionFlags.hasFlag(searchDirection,SearchDirectionFlags.REVERSE))) {
+      result = _combineResultMatrix(result, _searchDiagonalReverseLR(text, wordLines));
+      result = _combineResultMatrix(result, _searchDiagonalReverseRL(text, wordLines));
     }
   }
   return result;
@@ -221,8 +225,8 @@ Uint8List _setResults(Uint8List line, int start, int end, int value ) {
 
 List<Uint8List> _combineResultMatrix(List<Uint8List> baseMatrix, List<Uint8List> newMatrix) {
 
-  for (var row=0; row< min(baseMatrix.length, newMatrix.length); row++) {
-    for (var column=0; column< min(baseMatrix[row].length, newMatrix[row].length); column++) {
+  for (var row = 0; row< min(baseMatrix.length, newMatrix.length); row++) {
+    for (var column = 0; column< min(baseMatrix[row].length, newMatrix[row].length); column++) {
       baseMatrix[row][column] = baseMatrix[row][column] | newMatrix[row][column];
     }
   }
@@ -236,4 +240,47 @@ List<Uint8List> _buildResultMatrix(String text) {
     matrix.add(Uint8List(line.length));
   });
   return matrix;
+}
+
+List<String> deleteFallingDownLetters(String text, List<Uint8List> markedMatrix) {
+  var lines = _splitLines(_normalizeInput(text, replaceCharacters: _replaceCharacters));
+
+  lines = _deleteMarkedLetters(lines, markedMatrix);
+  lines = _fallingDownLetters(lines);
+  return lines;
+}
+
+List<String> _deleteMarkedLetters(List<String> lines, List<Uint8List> markedMatrix) {
+  for (var row = lines.length - 1; row >= 0; row--) {
+    for (var column = 0; column < lines[row].length; column++) {
+      if (row < markedMatrix.length && column < markedMatrix[row].length && markedMatrix[row][column] != 0) {
+        lines[row] = lines[row].replaceRange(column, column + 1, ' ');
+      }
+    }
+  }
+  return lines;
+}
+
+List<String> _fallingDownLetters(List<String> lines) {
+  for (var row = lines.length - 1; row >= 0; row--) {
+    for (var column = 0; column < lines[row].length; column++) {
+      if (lines[row][column] == ' ') {
+        lines = _fallingDownLetter (lines, row, column);
+      }
+    }
+  }
+  return lines;
+}
+
+List<String> _fallingDownLetter(List<String> lines, int row, int column) {
+  if (row > 0) {
+    if (row < lines.length && column < lines[row].length && lines[row][column] == ' ') {
+      if (column < lines[row - 1].length) {
+        lines[row] = lines[row].replaceRange(column, column + 1, lines[row - 1][column]);
+        lines[row - 1] = lines[row - 1].replaceRange(column, column + 1, ' ');
+        lines = _fallingDownLetter(lines, row - 1, column);
+      }
+    }
+  }
+  return lines;
 }

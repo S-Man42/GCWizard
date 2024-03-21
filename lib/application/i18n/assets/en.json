@@ -6526,6 +6526,8 @@
   "windchill_index_index_darkblue": "Frostbite within 5 min to be expected",
   "word_search_title": "Word search",
   "word_search_description": "Word search in a letter grid",
+  "word_search_delete_letters": "Delete marked letters",
+  "word_search_falling_down_mode": "Falling down mode",
   "word_search_horizontal": "Horizontal",
   "word_search_vertical": "Vertical",
   "word_search_diagonal": "Diagonal",

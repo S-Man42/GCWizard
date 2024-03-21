@@ -33,8 +33,10 @@ class WordSearchState extends State<WordSearch> {
   var _currentInputExpanded = true;
   var _currentWordsExpanded = true;
   var _currentOptionsExpanded = false;
+  var _currentFallingDownMode = false;
 
   List<Uint8List> _decodeOutput = [];
+  List<String> _viewOutput = [];
 
   @override
   void initState() {
@@ -89,81 +91,128 @@ class WordSearchState extends State<WordSearch> {
               },
             ),
         ),
-        GCWExpandableTextDivider(
-          text: i18n(context, 'common_options'),
-          expanded: _currentOptionsExpanded,
-          onChanged: (value) {
-            setState(() {
-              _currentOptionsExpanded = value;
-            });
-          },
-          child: Column(
-            children: <Widget>[
-              GCWOnOffSwitch(
-                title: i18n(context, 'word_search_horizontal'),
-                value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.HORIZONTAL),
-                onChanged: (value) {
-                  setState(() {
-                    _currentSearchDirection = value
-                        ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.HORIZONTAL)
-                        : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.HORIZONTAL);
-                  });
-                },
-              ),
-              GCWOnOffSwitch(
-                title: i18n(context, 'word_search_vertical'),
-                value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.VERTICAL),
-                onChanged: (value) {
-                  setState(() {
-                    _currentSearchDirection = value
-                        ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.VERTICAL)
-                        : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.VERTICAL);
-                  });
-                },
-              ),
-              GCWOnOffSwitch(
-                title: i18n(context, 'word_search_diagonal'),
-                value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.DIAGONAL),
-                onChanged: (value) {
-                  setState(() {
-                    _currentSearchDirection = value
-                        ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.DIAGONAL)
-                        : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.DIAGONAL);
-                  });
-                },
-              ),
-              GCWOnOffSwitch(
-                title: i18n(context, 'word_search_reverse'),
-                value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.REVERSE),
-                onChanged: (value) {
-                  setState(() {
-                    _currentSearchDirection = value
-                        ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.REVERSE)
-                        : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.REVERSE);
-                  });
-                },
-              ),
-          ]),
-        ),
-        GCWButton(
-          text: i18n(context, 'common_start'),
-          onPressed: () {
-            setState(() {
-              _calcOutput();
-            });
-          },
-        ),
+        _buildOptionWidget(),
+        _buildButtonRow(),
         _buildOutput(),
     ]);
   }
 
+  Widget _buildOptionWidget() {
+    return GCWExpandableTextDivider(
+      text: i18n(context, 'common_options'),
+      expanded: _currentOptionsExpanded,
+      onChanged: (value) {
+        setState(() {
+          _currentOptionsExpanded = value;
+        });
+      },
+      child: Column(
+        children: <Widget>[
+            GCWOnOffSwitch(
+              title: i18n(context, 'word_search_horizontal'),
+              value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.HORIZONTAL),
+              onChanged: (value) {
+                setState(() {
+                  _currentSearchDirection = value
+                      ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.HORIZONTAL)
+                      : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.HORIZONTAL);
+                });
+              },
+            ),
+            GCWOnOffSwitch(
+              title: i18n(context, 'word_search_vertical'),
+              value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.VERTICAL),
+              onChanged: (value) {
+                setState(() {
+                  _currentSearchDirection = value
+                      ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.VERTICAL)
+                      : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.VERTICAL);
+                });
+              },
+            ),
+            GCWOnOffSwitch(
+              title: i18n(context, 'word_search_diagonal'),
+              value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.DIAGONAL),
+              onChanged: (value) {
+                setState(() {
+                  _currentSearchDirection = value
+                      ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.DIAGONAL)
+                      : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.DIAGONAL);
+                });
+              },
+            ),
+            GCWOnOffSwitch(
+              title: i18n(context, 'word_search_reverse'),
+              value: SearchDirectionFlags.hasFlag(_currentSearchDirection, SearchDirectionFlags.REVERSE),
+              onChanged: (value) {
+                setState(() {
+                  _currentSearchDirection = value
+                      ? SearchDirectionFlags.setFlag(_currentSearchDirection, SearchDirectionFlags.REVERSE)
+                      : SearchDirectionFlags.resetFlag(_currentSearchDirection, SearchDirectionFlags.REVERSE);
+                });
+              },
+            ),
+            GCWOnOffSwitch(
+              title: i18n(context, 'word_search_falling_down_mode'),
+              value: _currentFallingDownMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentFallingDownMode = value;
+                });
+              },
+            ),
+          ]),
+    );
+  }
+
+  Widget _buildButtonRow() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: GCWButton(
+              text: i18n(context, 'common_start'),
+              onPressed: () {
+                setState(() {
+                  _calcOutput();
+                });
+              },
+            ),
+          ),
+        ),
+        (_currentFallingDownMode)
+          ? Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              child: GCWButton(
+                text: i18n(context, 'word_search_delete_letters'),
+                onPressed: () {
+                  setState(() {
+                    _deleteMarkedLetters();
+                  });
+                },
+              ),
+            )
+          )
+          : Container(),
+      ],
+    );
+  }
+
   void _calcOutput() {
     _decodeOutput = searchWordList(_currentInput, _currentWords, _currentSearchDirection);
+    _viewOutput = normalizeAndSplitInputForView(_currentInput);
+    setState(() {});
+  }
+
+  void _deleteMarkedLetters() {
+    _viewOutput = deleteFallingDownLetters(_currentInput, _decodeOutput);
+    _decodeOutput = searchWordList(_viewOutput.join('\r\n'), '', 0, noSpaces: false);
     setState(() {});
   }
 
   Widget _buildOutput() {
-    var normalizedInput = normalizeAndSplitInputForView(_currentInput);
     return GCWDefaultOutput(
       trailing: Row(
         children: <Widget>[
@@ -172,14 +221,14 @@ class WordSearchState extends State<WordSearch> {
             size: IconButtonSize.SMALL,
             icon: Icons.content_copy,
             onPressed: () {
-              insertIntoGCWClipboard(context, normalizedInput.join('\n'));
+              insertIntoGCWClipboard(context, _viewOutput.join('\n'));
             },
           ),
         ],
       ),
       child: RichText(
         textAlign: TextAlign.center,
-        text: TextSpan(children: _buildRtfOutput(normalizedInput, _decodeOutput),
+        text: TextSpan(children: _buildRtfOutput(_viewOutput, _decodeOutput),
             style: gcwTextStyle()),
       ),
     );
