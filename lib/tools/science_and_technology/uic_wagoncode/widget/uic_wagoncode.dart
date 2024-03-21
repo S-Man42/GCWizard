@@ -65,7 +65,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
     switch(data.wagonType.name) {
       case UICWagonTypes.OUT_OF_ORDER:
         break;
-      case UICWagonTypes.ENGINE:
+      case UICWagonTypes.TRACTIVE:
         break;
       case UICWagonTypes.PASSENGER_WAGON:
         var passengerData = data as UICWagonCodePassengerWagon;
@@ -123,7 +123,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
               [i18n(context, 'uic_passenger_category_type'), i18n(context, 'uic_passenger_category_type_' + enumName(passengerData.category.type.toString()).toLowerCase())],
               if (passengerData.category.clazz != UICWagonCodePassengerCategoryClass.UNDEFINED) [i18n(context, 'uic_passenger_category_class'), i18n(context, 'uic_passenger_category_class_' + enumName(passengerData.category.clazz.toString()).toLowerCase())],
               if (passengerData.category.compartments != UICWagonCodePassengerCategoryCompartements.UNDEFINED) [i18n(context, 'uic_passenger_category_compartements'), i18n(context, 'uic_passenger_category_compartements_' + enumName(passengerData.category.compartments.toString()).toLowerCase())],
-              if (passengerData.category.special != null) [i18n(context, 'uic_wagoncode_passenger_specialcategory'), i18n(context, 'uic_wagoncode_passenger_specialcategory_' + passengerData.category.number)],
+              if (passengerData.category.special != null) [i18n(context, 'uic_passenger_specialcategory'), i18n(context, 'uic_wpassenger_specialcategory_' + passengerData.category.number)],
               if (passengerData.category.private) [i18n(context, 'uic_passenger_private'), i18n(context, 'common_yes')],
             ]),
             GCWTextDivider(text: i18n(context, 'uic_classification')),

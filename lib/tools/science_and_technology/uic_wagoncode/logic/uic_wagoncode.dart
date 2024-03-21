@@ -8,9 +8,9 @@ part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wag
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_passenger.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_passenger_heatingsystem_values.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_wagon.dart';
+part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_tractiveunit.dart';
 
-
-enum UICWagonTypes {INVALID, OUT_OF_ORDER, ENGINE, FREIGHT_WAGON, PASSENGER_WAGON, SPECIAL}
+enum UICWagonTypes {INVALID, OUT_OF_ORDER, TRACTIVE, FREIGHT_WAGON, PASSENGER_WAGON, SPECIAL}
 
 class UICWagonType {
   late final String code;
@@ -59,7 +59,7 @@ class UICWagonCode {
     var mainType = _getWagonType(number);
     switch(mainType.name) {
       case UICWagonTypes.OUT_OF_ORDER: return UICWagonCode(number);
-      case UICWagonTypes.ENGINE:  return UICWagonCode(number);
+      case UICWagonTypes.TRACTIVE:  return UICWagonCodeTractiveUnit(number);
       case UICWagonTypes.PASSENGER_WAGON: return UICWagonCodePassengerWagon(number);
       case UICWagonTypes.FREIGHT_WAGON: return UICWagonCodeFreightWagon(number);
       default: return UICWagonCode(number);
@@ -88,7 +88,7 @@ class UICWagonCode {
       case '6':
       case '7': type = UICWagonTypes.PASSENGER_WAGON; break;
       case '8': type = UICWagonTypes.FREIGHT_WAGON; break;
-      case '9': type = UICWagonTypes.ENGINE; break;
+      case '9': type = UICWagonTypes.TRACTIVE; break;
       default: type = UICWagonTypes.INVALID; break;
     }
 
