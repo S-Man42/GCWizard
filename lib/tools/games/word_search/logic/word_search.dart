@@ -6,8 +6,6 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 
 const _emptyChar = '\t';
-const _replaceCharacters = r'\f\t';
-const _replaceCharactersWithSpace = _replaceCharacters + ' ';
 
 enum SearchDirectionFlags {
   HORIZONTAL,
@@ -27,13 +25,12 @@ enum SearchDirectionFlags {
   }
 }
 
-String _normalizeInput(String text, {String replaceCharacters = _replaceCharactersWithSpace}){
-  return text.replaceAll(RegExp(r'['+ replaceCharacters +']'), '');
+String _normalizeInput(String text, bool noSpaces){
+  return text.replaceAll(RegExp(r'['+ r'\f\t' + (noSpaces ? ' ]' : ']')), '');
 }
 
 List<String> normalizeAndSplitInputForView(String text, {bool noSpaces = true}) {
-  text = noSpaces ? _normalizeInput(text) : _normalizeInput(text, replaceCharacters: _replaceCharacters);
-  var lines = _splitLines(text);
+  var lines = _splitLines(_normalizeInput(text, noSpaces));
   var maxRowLength = _maxRowLength(lines);
   return lines.map((line) => _fillupLine(line, maxRowLength).replaceAll('\t', '_')).toList();
 }
@@ -45,8 +42,7 @@ List<String> _splitLines(String text){
 List<Uint8List> searchWordList(String text, String wordList, int searchDirection, {bool noSpaces = true}) {
   if (text.isEmpty) return [];
 
-  text = _normalizeInput(text.toUpperCase(),
-      replaceCharacters: noSpaces ? _replaceCharactersWithSpace : _replaceCharacters);
+  text = _normalizeInput(text.toUpperCase(), noSpaces);
   wordList = wordList.replaceAll(RegExp(r'\s'), '\n');
   var wordLines = _splitLines(wordList.toUpperCase());
   wordLines.removeWhere((line) => line.isEmpty);
@@ -243,7 +239,7 @@ List<Uint8List> _buildResultMatrix(String text) {
 }
 
 List<String> deleteFallingDownLetters(String text, List<Uint8List> markedMatrix) {
-  var lines = _splitLines(_normalizeInput(text, replaceCharacters: _replaceCharacters));
+  var lines = _splitLines(_normalizeInput(text, false));
 
   lines = _deleteMarkedLetters(lines, markedMatrix);
   lines = _fallingDownLetters(lines);

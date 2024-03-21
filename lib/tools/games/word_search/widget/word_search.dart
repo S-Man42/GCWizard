@@ -207,7 +207,8 @@ class WordSearchState extends State<WordSearch> {
   }
 
   void _deleteMarkedLetters() {
-    _viewOutput = deleteFallingDownLetters(_currentInput, _decodeOutput);
+    if (_viewOutput.isEmpty) return;
+    _viewOutput = deleteFallingDownLetters(_viewOutput.join('\r\n'), _decodeOutput);
     _decodeOutput = searchWordList(_viewOutput.join('\r\n'), '', 0, noSpaces: false);
     setState(() {});
   }
