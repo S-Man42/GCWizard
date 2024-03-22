@@ -204,8 +204,8 @@ void main() {
         'expectedOutput' : ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
       },
       {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
-        'searchWords' : 'Loch',
-        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
+        'searchWords' : 'Ski, Henmd',
+        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
         'expectedOutput' : ['KCETTEHA','NHHNNNSF','EKUWALKR','NONHFEIO','INEAEGNS','HCAGELEC','SMIETNEB','DMEHCKRI'],
       },
       {'input' : 'uewie\npotto\nojftj\njfjoh',
@@ -217,6 +217,11 @@ void main() {
         'searchWords' : 'otto',
         'markedMatrix' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
         'expectedOutput' : ['u    ','powie','ojfto','jfjoj'],
+      },
+      {'input' : 'S	S	U	N	E	Z	N	Ä	L	G\nS	T	N	E	S	I	W	B	S	Ü',
+        'searchWords' : 'nes',
+        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
+        'expectedOutput' : ['SS   ZNÄLG','STUNEIWBSÜ'],
       },
     ];
 

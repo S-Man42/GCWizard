@@ -217,6 +217,7 @@ class WordSearchState extends State<WordSearch> {
 
   void _calcOutput() {
     _decodeOutput = searchWordList(_currentInput, _currentWords, _currentSearchDirection);
+    print(_decodeOutput);
     _viewOutput = normalizeAndSplitInputForView(_currentInput);
     setState(() {});
   }

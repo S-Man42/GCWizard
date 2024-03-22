@@ -261,7 +261,13 @@ List<String> _fallingDownLetters(List<String> lines) {
   for (var row = lines.length - 1; row >= 0; row--) {
     for (var column = 0; column < lines[row].length; column++) {
       if (lines[row][column] == ' ') {
-        lines = _fallingDownLetter (lines, row, column);
+        lines = _fallingDownLetter(lines, row, column);
+
+        var maxLoops = row - 1;
+        while (lines[row][column] == ' ' && maxLoops > 0) {
+          lines = _fallingDownLetter(lines, row, column);
+          maxLoops--;
+        }
       }
     }
   }
