@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/games/word_search/logic/word_search.dart';
 
@@ -189,6 +191,46 @@ void main() {
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
         var _actual = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("wordSearch.fallingDownMode:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
+        'searchWords' : 'Schinken',
+        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
+        'expectedOutput' : ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
+      },
+      {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
+        'searchWords' : 'Loch',
+        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
+        'expectedOutput' : ['KCETTEHA','NHHNNNSF','EKUWALKR','NONHFEIO','INEAEGNS','HCAGELEC','SMIETNEB','DMEHCKRI'],
+      },
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'searchWords' : 'otto',
+        'markedMatrix' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'expectedOutput' : ['u    ','pewie','ojftj','jfjoh'],
+      },
+      {'input' : 'uowie\npotto\nojftj\njfjoo',
+        'searchWords' : 'otto',
+        'markedMatrix' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+        'expectedOutput' : ['u    ','powie','ojfto','jfjoj'],
+      },
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
+        //var searchDirection = 0;
+        var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
+        SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL) |
+        SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
+        SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
+        var _actual1 = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
+        print(_actual1);
+        var marked = (elem['markedMatrix'] as List<List<int>>).map((row) => Uint8List.fromList(row)).toList();
+        var _actual = deleteFallingDownLetters(elem['input'] as String, marked);
         expect(_actual, elem['expectedOutput']);
       });
     }

@@ -224,7 +224,6 @@ class WordSearchState extends State<WordSearch> {
   void _calcOutputWithLastResult() {
     if (_viewOutput.isEmpty) return;
     _decodeOutput = searchWordList(_viewOutput.join('\r\n'), _currentWords, _currentSearchDirection, noSpaces: false);
-    //_viewOutput = normalizeAndSplitInputForView(_viewOutput.join('\r\n'));
     setState(() {});
   }
 
