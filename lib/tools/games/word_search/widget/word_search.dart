@@ -232,7 +232,15 @@ class WordSearchState extends State<WordSearch> {
     if (_viewOutput.isEmpty) return;
     if (_decodeOutput.isEmpty) return;
     _viewOutput = deleteFallingDownLetters(_viewOutput.join('\r\n'), _decodeOutput);
+    //_viewOutput = normalizeAndSplitInputForView(_viewOutput.join('\r\n'));
+    _viewOutput = _viewOutput.map((line) {
+      if (line.endsWith(' ')) {
+        return line.replaceRange(line.length-1, line.length, '*');
+      }
+      return line;
+    }).toList();
     _decodeOutput = searchWordList(_viewOutput.join('\r\n'), '', 0, noSpaces: false);
+
     setState(() {});
   }
 
