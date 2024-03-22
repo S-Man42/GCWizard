@@ -186,6 +186,21 @@ class WordSearchState extends State<WordSearch> {
             child: Container(
               padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               child: GCWButton(
+                text: i18n(context, 'word_search_start_with_output'),
+                onPressed: () {
+                  setState(() {
+                    _calcOutputWithLastResult();
+                  });
+                },
+              ),
+            )
+          )
+            : Container(),
+        (_currentFallingDownMode)
+          ? Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              child: GCWButton(
                 text: i18n(context, 'word_search_delete_letters'),
                 onPressed: () {
                   setState(() {
@@ -206,8 +221,16 @@ class WordSearchState extends State<WordSearch> {
     setState(() {});
   }
 
+  void _calcOutputWithLastResult() {
+    if (_viewOutput.isEmpty) return;
+    _decodeOutput = searchWordList(_viewOutput.join('\r\n'), _currentWords, _currentSearchDirection, noSpaces: false);
+    //_viewOutput = normalizeAndSplitInputForView(_viewOutput.join('\r\n'));
+    setState(() {});
+  }
+
   void _deleteMarkedLetters() {
     if (_viewOutput.isEmpty) return;
+    if (_decodeOutput.isEmpty) return;
     _viewOutput = deleteFallingDownLetters(_viewOutput.join('\r\n'), _decodeOutput);
     _decodeOutput = searchWordList(_viewOutput.join('\r\n'), '', 0, noSpaces: false);
     setState(() {});
