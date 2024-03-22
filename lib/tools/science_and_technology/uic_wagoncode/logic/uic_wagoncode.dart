@@ -9,6 +9,7 @@ part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wag
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_passenger_heatingsystem_values.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_wagon.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_tractiveunit.dart';
+part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_special.dart';
 
 enum UICWagonTypes {INVALID, OUT_OF_ORDER, TRACTIVE, FREIGHT_WAGON, PASSENGER_WAGON, SPECIAL}
 
@@ -71,7 +72,7 @@ class UICWagonCode {
       return UICWagonType('00', UICWagonTypes.OUT_OF_ORDER);
     }
 
-    if (number.startsWith('99')) {
+    if (number.startsWith('99') && number[6] == '9') {
       return UICWagonType('99', UICWagonTypes.SPECIAL);
     }
 

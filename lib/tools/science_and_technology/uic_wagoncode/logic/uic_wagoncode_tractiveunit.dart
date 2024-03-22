@@ -1,5 +1,7 @@
 part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
 
+// https://www.0-gleich-dampflok.de/fotogalerie-db/die-umzeichnung-der-db-dampflokomotiven-1968-1969/
+
 const List<String> UICWagonCodesTractiveUnitCountrySpecificTypeCodes = ['80', '85'];
 
 class UICWagonCodeTractiveUnit extends UICWagonCode {
@@ -19,7 +21,7 @@ class UICWagonCodeTractiveUnit extends UICWagonCode {
 
   bool? _getOilBurner() {
     if (countryCode == '80' && typeCode == '90') {
-      return [12, 42, 43].contains(int.parse(clazzCode.substring(1)));
+      return [12, 42, 43, 59].contains(int.parse(clazzCode.substring(1)));
     }
 
     return null;
