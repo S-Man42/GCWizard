@@ -280,16 +280,15 @@ class WordSearchState extends State<WordSearch> {
               actText = '';
               lastColor = actColor;
             }
-            actText += text[row][column] + nonBreakingSpace;
+            actText += text[row][column] + ' ';
           }
 
           textSpan.add(_createTextSpan(actText, lastColor));
           actText = '';
           lastColor = actColor;
         }
-        actText += text[row][column] + nonBreakingSpace;
-        actText += text[row][column] + nonBreakingSpace;
-      }
+        actText += text[row][column] + ' ';
+       }
     }
     return textSpan;
   }

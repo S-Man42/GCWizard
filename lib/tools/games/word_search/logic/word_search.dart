@@ -33,7 +33,7 @@ String _normalizeInput(String text, bool noSpaces){
 List<String> normalizeAndSplitInputForView(String text, {bool noSpaces = true}) {
   var lines = _splitLines(_normalizeInput(text, noSpaces));
   var maxRowLength = _maxRowLength(lines);
-  lines = lines.map((line) => _fillupLine(line, maxRowLength).replaceAll('\t', nonBreakingSpace)).toList();
+  lines = lines.map((line) => _fillupLine(line, maxRowLength).replaceAll(_emptyChar, nonBreakingSpace)).toList();
   return lines;
 }
 
