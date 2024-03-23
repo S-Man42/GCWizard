@@ -617,7 +617,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     int type = int.parse(typeCode);
     if (type >= 90) {
       _UICType = UIC_TYPE.LOCOMOTIVE;
-      return i18n(context, 'uic_vehicletype_locomotive') +
+      return i18n(context, 'uic_vehicletype_tractiveunit') +
           '\n' +
           i18n(context, UIC_LOCOMOTIVE_CODE[typeCode]!);
     } else if (type >= 80) {

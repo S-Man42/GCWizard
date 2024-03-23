@@ -63,7 +63,7 @@ class UICWagonCodeTractiveUnit extends UICWagonCode {
   }
 
   String _getClassCode(String number) {
-    return number.substring(5, 9);
+    return number.substring(4, 8);
   }
 
   String _getTypeCode(String number) {
@@ -72,9 +72,9 @@ class UICWagonCodeTractiveUnit extends UICWagonCode {
 
   String _getType(String number) {
     if (UICWagonCodesTractiveUnitCountrySpecificTypeCodes.contains(countryCode)) {
-      return 'uic_tractiveunit_typecodes_' + countryCode + '_' + typeCode;
+      return 'uic_tractiveunit_typecode_' + countryCode + '_' + typeCode;
     } else {
-      return 'uic_tractiveunit_typecodes_' + typeCode;
+      return 'uic_tractiveunit_typecode_' + typeCode;
     }
   }
 }

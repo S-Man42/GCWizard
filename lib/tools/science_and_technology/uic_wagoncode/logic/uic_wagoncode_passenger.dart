@@ -38,6 +38,8 @@ class UICWagonCodePassengerWagonCategory {
       if (special != null && special == false) {
         type = UICWagonCodePassengerCategoryType.INVALID;
       }
+    } else {
+      special = null;
     }
 
     clazz = _getClass(number5, number6);

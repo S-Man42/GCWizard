@@ -64,8 +64,88 @@ class UICWagonCodeState extends State<UICWagonCode> {
 
     switch(data.wagonType.name) {
       case UICWagonTypes.OUT_OF_ORDER:
+        out = Column(
+          children: [
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
+              [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_outoforder')],
+            ]),
+            GCWTextDivider(text: i18n(context, 'common_country')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_countrycode'), data.countryCode],
+              [i18n(context, 'common_name'), i18n(context, data.country)],
+            ]),
+          ],
+        );
         break;
       case UICWagonTypes.TRACTIVE:
+        var tractiveData = data as UICWagonCodeTractiveUnit;
+
+        out = Column(
+          children: [
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
+              [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_tractiveunit')],
+            ]),
+            GCWTextDivider(text: i18n(context, 'common_country')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_countrycode'), tractiveData.countryCode],
+              [i18n(context, 'common_name'), i18n(context, tractiveData.country)],
+            ]),
+            GCWTextDivider(text: i18n(context, 'uic_category')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_type_code'), tractiveData.typeCode],
+              [i18n(context, 'uic_type'), i18n(context, tractiveData.type)],
+              [i18n(context, 'uic_tractiveunit_class_code'), tractiveData.clazzCode],
+              if (tractiveData.clazz != null) [i18n(context, 'uic_tractiveunit_class'), i18n(context, tractiveData.clazz!)],
+              if (tractiveData.oilBurner != null) [i18n(context, 'uic_tractiveunit_steam_oilburned'), i18n(context, tractiveData.oilBurner! ? 'common_yes' : 'common_no')],
+            ]),
+            GCWTextDivider(text: i18n(context, 'uic_individual')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_runningnumber'), tractiveData.runningNumber],
+              [i18n(context, 'uic_checkdigit'), tractiveData.checkDigit + ' (' + i18n(context, tractiveData.hasValidCheckDigit ? 'common_valid' : 'common_invalid')+ ')'],
+            ]),
+          ],
+        );
+
+        break;
+      case UICWagonTypes.SPECIAL:
+        var specialData = data as UICWagonCodeSpecialVehicle;
+
+        out = Column(
+          children: [
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
+              [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_specialvehicle')],
+            ]),
+            GCWTextDivider(text: i18n(context, 'common_country')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_countrycode'), specialData.countryCode],
+              [i18n(context, 'common_name'), i18n(context, specialData.country)],
+            ]),
+            GCWTextDivider(text: i18n(context, 'uic_category')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_type_code'), specialData.typeCode],
+              [i18n(context, 'uic_type'), i18n(context, specialData.type)],
+              [i18n(context, 'uic_subtype_code'), specialData.subTypeCode],
+              if (specialData.subType != null) [i18n(context, 'uic_subtype'), i18n(context, specialData.subType!)],
+            ]),
+            GCWTextDivider(text: i18n(context, 'uic_classification')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_specialvehicle_putableintotrains'), i18n(context, 'uic_specialvehicle_putableintotrains_' + enumName(specialData.putableIntoTrains.toString()).toLowerCase())],
+              [i18n(context, 'uic_specialvehicle_selfdriving'), i18n(context, specialData.selfDriving ? 'common_yes' : 'common_no')],
+              if (specialData.maxSpeedInSelfDrive != null) [i18n(context, 'uic_specialvehicle_maxspeedselfdrive'), i18n(context, 'uic_specialvehicle_maxspeedselfdrive_' + enumName(specialData.maxSpeedInSelfDrive.toString()).toLowerCase())],
+              [i18n(context, 'uic_tractiveunit_class_code'), i18n(context, specialData.railAndRoad ? 'common_yes' : 'common_no')],
+              if (specialData.railAndRoadDrive != null) [i18n(context, 'uic_specialvehicle_roadrail_drive'), i18n(context, 'uic_specialvehicle_roadrail_drive_' + enumName(specialData.railAndRoadDrive.toString()).toLowerCase())],
+            ]),
+            GCWTextDivider(text: i18n(context, 'uic_individual')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_runningnumber'), specialData.runningNumber],
+              [i18n(context, 'uic_checkdigit'), specialData.checkDigit + ' (' + i18n(context, specialData.hasValidCheckDigit ? 'common_valid' : 'common_invalid')+ ')'],
+            ]),
+          ],
+        );
+
         break;
       case UICWagonTypes.PASSENGER_WAGON:
         var passengerData = data as UICWagonCodePassengerWagon;
@@ -87,13 +167,13 @@ class UICWagonCodeState extends State<UICWagonCode> {
 
           heatingSystemOutput = Column(
             children: [
-              GCWColumnedMultilineOutput(data: heatingSystems, hasHeader: true, copyColumn: 0, flexValues: [3,1,1,1],),
+              GCWColumnedMultilineOutput(data: heatingSystems, hasHeader: true, copyColumn: 0, flexValues: const [3,1,1,1],),
               Container(height: 8 * DOUBLE_DEFAULT_MARGIN),
               GCWColumnedMultilineOutput(data: [
                 ['D', i18n(context, 'uic_passenger_heatingsystem_onlydomestic')],
                 ['I', i18n(context, 'uic_passenger_heatingsystem_onlyinternational')],
                 ['*', i18n(context, 'uic_passenger_heatingsystem_voltage1000blablubb')],
-              ], suppressCopyButtons: true, fontSize: fontSizeSmall(), flexValues: [1,5],),
+              ], suppressCopyButtons: true, fontSize: fontSizeSmall(), flexValues: const [1,5],),
             ],
           );
         }
@@ -104,6 +184,11 @@ class UICWagonCodeState extends State<UICWagonCode> {
               [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
               [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_passengercoach')],
             ]),
+            GCWTextDivider(text: i18n(context, 'common_country')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_countrycode'), passengerData.countryCode],
+              [i18n(context, 'common_name'), i18n(context, passengerData.country)],
+            ]),
             GCWTextDivider(text: i18n(context, 'uic_interoperability')),
             GCWColumnedMultilineOutput(data: [
               [i18n(context, 'uic_interoperability_code'), passengerData.interoperabilityCode],
@@ -112,18 +197,13 @@ class UICWagonCodeState extends State<UICWagonCode> {
               if (passengerData.gaugeType != UICWagonCodePassengerGaugeType.UNDEFINED) [i18n(context, 'uic_gaugetype'), i18n(context, 'uic_passenger_gaugetype_' + enumName(passengerData.gaugeType.toString()).toLowerCase())],
               if (passengerData.gaugeChangeMode != UICWagonCodePassengerGaugeChangeMode.UNDEFINED) [i18n(context, 'uic_gaugechangemode'), i18n(context, 'uic_passenger_gaugechangemode_' + enumName(passengerData.gaugeChangeMode.toString()).toLowerCase())],
             ]),
-            GCWTextDivider(text: i18n(context, 'common_country')),
-            GCWColumnedMultilineOutput(data: [
-              [i18n(context, 'uic_countrycode'), passengerData.countryCode],
-              [i18n(context, 'common_name'), i18n(context, passengerData.country)],
-            ]),
             GCWTextDivider(text: i18n(context, 'uic_category')),
             GCWColumnedMultilineOutput(data: [
               [i18n(context, 'uic_category_number'), passengerData.category.number],
               [i18n(context, 'uic_passenger_category_type'), i18n(context, 'uic_passenger_category_type_' + enumName(passengerData.category.type.toString()).toLowerCase())],
               if (passengerData.category.clazz != UICWagonCodePassengerCategoryClass.UNDEFINED) [i18n(context, 'uic_passenger_category_class'), i18n(context, 'uic_passenger_category_class_' + enumName(passengerData.category.clazz.toString()).toLowerCase())],
               if (passengerData.category.compartments != UICWagonCodePassengerCategoryCompartements.UNDEFINED) [i18n(context, 'uic_passenger_category_compartements'), i18n(context, 'uic_passenger_category_compartements_' + enumName(passengerData.category.compartments.toString()).toLowerCase())],
-              if (passengerData.category.special != null) [i18n(context, 'uic_passenger_specialcategory'), i18n(context, 'uic_wpassenger_specialcategory_' + passengerData.category.number)],
+              if (passengerData.category.special != null) [i18n(context, 'uic_passenger_specialcategory'), i18n(context, 'uic_passenger_specialcategory_' + passengerData.category.number)],
               if (passengerData.category.private) [i18n(context, 'uic_passenger_private'), i18n(context, 'common_yes')],
             ]),
             GCWTextDivider(text: i18n(context, 'uic_classification')),
@@ -155,8 +235,8 @@ class UICWagonCodeState extends State<UICWagonCode> {
         var freightData = data as UICWagonCodeFreightWagon;
 
         var classificationData = [
-          [i18n(context, 'uic_category_number'), freightData.classification.uicNumberCode],
-          [i18n(context, 'uic_category_letter'), freightData.classification.uicLetterCode.join()],
+          [i18n(context, 'uic_classification_number'), freightData.classification.uicNumberCode],
+          [i18n(context, 'uic_classification_letter'), freightData.category.letterCode + freightData.classification.uicLetterCode.join()],
         ];
         for (var description in freightData.classification.descriptions.entries) {
           classificationData.add([description.key, i18n(context, description.value)]);
@@ -168,17 +248,17 @@ class UICWagonCodeState extends State<UICWagonCode> {
               [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
               [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_freightwagon')],
             ]),
+            GCWTextDivider(text: i18n(context, 'common_country')),
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_countrycode'), freightData.countryCode],
+              [i18n(context, 'common_name'), i18n(context, freightData.country)],
+            ]),
             GCWTextDivider(text: i18n(context, 'uic_interoperability')),
             GCWColumnedMultilineOutput(data: [
               [i18n(context, 'uic_interoperability_code'), freightData.interoperabilityCode],
               [i18n(context, 'uic_freight_freighttype'), i18n(context, 'uic_freight_freighttype_' + enumName(freightData.freightWagonType.toString()).toLowerCase())],
               [i18n(context, 'uic_gaugetype'), i18n(context, 'uic_freight_gaugetype_' + enumName(freightData.gaugeType.toString()).toLowerCase())],
-              [i18n(context, 'uic_freight_axle_type'), i18n(context, 'uic_freight_axletype_' + enumName(freightData.axleType.toString()).toLowerCase())],
-            ]),
-            GCWTextDivider(text: i18n(context, 'common_country')),
-            GCWColumnedMultilineOutput(data: [
-              [i18n(context, 'uic_countrycode'), freightData.countryCode],
-              [i18n(context, 'common_name'), i18n(context, freightData.country)],
+              [i18n(context, 'uic_freight_axletype'), i18n(context, 'uic_freight_axletype_' + enumName(freightData.axleType.toString()).toLowerCase())],
             ]),
             GCWTextDivider(text: i18n(context, 'uic_category')),
             GCWColumnedMultilineOutput(data: [
@@ -197,6 +277,14 @@ class UICWagonCodeState extends State<UICWagonCode> {
         );
         break;
       default:
+        out = Column(
+          children: [
+            GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'uic_vehicletype_code'), data.wagonType.code],
+              [i18n(context, 'uic_vehicletype'), i18n(context, 'uic_vehicletype_invalid')],
+            ])
+          ],
+        );
         break;
     }
 
