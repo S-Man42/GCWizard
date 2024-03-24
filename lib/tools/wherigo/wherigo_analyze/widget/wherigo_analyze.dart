@@ -1941,7 +1941,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     List<Uint8List> data = [];
 
     for (WherigoMediaFileContent mediaFileContent in WherigoCartridgeGWCData.MediaFilesContents) {
-      if (fileExtension(getFileType(mediaFileContent.MediaFileBytes)) != '.luac') {
+      if (fileExtension(getFileType(mediaFileContent.MediaFileBytes)) != 'luac') {
         data.add(mediaFileContent.MediaFileBytes);
       }
     }
