@@ -12,6 +12,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
 import 'package:prefs/prefs.dart';
 
 class CheckDigitsCheckNumber extends StatefulWidget {
@@ -44,8 +45,6 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     '',
   );
   Widget _outputBINIINDetailWidget = Container();
-
-  UIC_TYPE _UICType = UIC_TYPE.NONE;
 
   late TextEditingController currentInputController;
   late TextEditingController currentInputControllerID;
@@ -267,13 +266,9 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   Widget _detailsUICWidget() {
-    return GCWDefaultOutput(
-      child: GCWColumnedMultilineOutput(
-        copyColumn: 1,
-        data: _UICData(checkDigitsNormalizeNumber(_currentInputNumberString)),
-        flexValues: const [4, 2, 4],
-      ),
-    );
+    return GCWButton(text: i18n(context, 'checkdigits_uic_openinuicwagoncode'), onPressed: () {
+      openInUICWagonCode(context, _currentInputNumberString);
+    });
   }
 
   Widget _detailsEUROWidget() {
@@ -589,47 +584,6 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       [i18n(context, 'checkdigits_isbn_publisher'), publisher, ''],
       [i18n(context, 'checkdigits_uic_check_digit'), checkdigit, ''],
     ];
-  }
-
-  List<List<String>> _UICData(String number) {
-    return [
-      [
-        i18n(context, 'checkdigits_uic_interoperability_code'),
-        number.substring(0, 2),
-        _UICTypeCode(number.substring(0, 2))
-      ],
-      [
-        i18n(context, 'uic_countrycode'),
-        number.substring(2, 4),
-        i18n(context, UIC_COUNTRY_CODE[number.substring(2, 4)]!)
-      ],
-      [
-        i18n(context, 'checkdigits_uic_vehicle_type'),
-        number.substring(4, 8),
-        i18n(context, UIC_CODE_CATEGORY[_UICType]![number.substring(4, 5)]!)
-      ],
-      [i18n(context, 'checkdigits_uic_running_number'), number.substring(8, 11), ''],
-      [i18n(context, 'checkdigits_uic_check_digit'), number.substring(11), ''],
-    ];
-  }
-
-  String _UICTypeCode(String typeCode) {
-    int type = int.parse(typeCode);
-    if (type >= 90) {
-      _UICType = UIC_TYPE.LOCOMOTIVE;
-      return i18n(context, 'uic_vehicletype_tractiveunit') +
-          '\n' +
-          i18n(context, UIC_LOCOMOTIVE_CODE[typeCode]!);
-    } else if (type >= 80) {
-      _UICType = UIC_TYPE.FREIGHTWAGON;
-      return i18n(context, 'uic_vehicletype_freightwagon');
-    } else if (type >= 50) {
-      _UICType = UIC_TYPE.PASSENGERCOACH;
-      return i18n(context, 'uic_vehicletype_passengercoach');
-    } else {
-      _UICType = UIC_TYPE.FREIGHTWAGON;
-      return i18n(context, 'uic_vehicletype_invalid');
-    }
   }
 
   List<List<String>> _IBANData(String number) {

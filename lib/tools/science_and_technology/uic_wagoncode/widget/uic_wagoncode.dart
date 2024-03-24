@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -10,14 +12,16 @@ import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_w
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class UICWagonCode extends StatefulWidget {
-  const UICWagonCode({Key? key}) : super(key: key);
+  final String? uicNumber;
+
+  const UICWagonCode({Key? key, this.uicNumber}) : super(key: key);
 
   @override
   UICWagonCodeState createState() => UICWagonCodeState();
 }
 
 class UICWagonCodeState extends State<UICWagonCode> {
-  var _currentUICCode = '';
+  String? _currentUICCode;
   late TextEditingController _uicCodeController;
 
   @override
@@ -34,6 +38,15 @@ class UICWagonCodeState extends State<UICWagonCode> {
 
   @override
   Widget build(BuildContext context) {
+    if (_currentUICCode == null) {
+      if (widget.uicNumber != null) {
+        _currentUICCode = widget.uicNumber;
+        _uicCodeController.text = _currentUICCode!;
+      } else {
+        _currentUICCode = '';
+      }
+    }
+
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -52,9 +65,7 @@ class UICWagonCodeState extends State<UICWagonCode> {
   Widget _buildOutput() {
     late logic.UICWagonCode data;
     try {
-      data = logic.UICWagonCode.fromNumber(_currentUICCode);
-
-
+      data = logic.UICWagonCode.fromNumber(_currentUICCode!);
     } on FormatException catch (e) {
       return GCWDefaultOutput(
         child: i18n(context, e.message)
@@ -292,4 +303,16 @@ class UICWagonCodeState extends State<UICWagonCode> {
       child: out,
     );
   }
+}
+
+void openInUICWagonCode(BuildContext context, String uicNumber) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute<GCWTool>(
+          builder: (context) => GCWTool(
+              tool: UICWagonCode(
+                uicNumber: uicNumber,
+              ),
+              toolName: i18n(context, 'uic_wagoncode_title'),
+              id: '')));
 }

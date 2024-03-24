@@ -137,6 +137,10 @@ const Map<String, Map<String, String>> UICWagenCodesPassengerLetterCodesClassifi
 };
 
 Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String letters) {
+  if (letters.isEmpty) {
+    return <String, String>{};
+  }
+
   var categories = Map<String, String>.from(UICWagenCodesPassengerLetterCodesCategories);
 
   if (UICWagenCodesPassengeCategoriesCountries.containsKey(countryCode)) {
@@ -153,7 +157,7 @@ Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String lett
 
   for (int i = 0; i < categoryKeys.length; i++) {
     var key = categoryKeys[i];
-    if (letters.startsWith(key)) {
+    if (letters.toLowerCase().startsWith(key.toLowerCase())) {
       out.putIfAbsent(key, () => categories[key]!);
       letters = letters.substring(key.length);
       break;
@@ -208,7 +212,7 @@ Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String lett
     var i = 0;
     while (i < keys.length && letterCodes.isNotEmpty) {
       var key = keys[i];
-      if (letterCodes.startsWith(key)) {
+      if (letterCodes.toLowerCase().startsWith(key.toLowerCase())) {
         output.putIfAbsent(prefix + key, () => classificationMap[prefix + key]!);
         letterCodes = letterCodes.substring(key.length);
         i = 0;

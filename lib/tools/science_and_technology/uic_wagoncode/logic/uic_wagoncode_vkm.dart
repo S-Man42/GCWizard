@@ -1,5 +1,3 @@
-part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
-
 // original data from https://www.era.europa.eu/domains/registers/vkm_en, (168st list, 2024-03-06)
 
 const List<Map<String, String>> UICWagonCodesVKM = [
