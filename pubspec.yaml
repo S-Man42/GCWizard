@@ -232,6 +232,11 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/intergalactic/
     - lib/tools/symbol_tables/_common/assets/interlac/
     - lib/tools/symbol_tables/_common/assets/iokharic/
+    - lib/tools/symbol_tables/_common/assets/iso7010_firesafety/
+    - lib/tools/symbol_tables/_common/assets/iso7010_mandatory/
+    - lib/tools/symbol_tables/_common/assets/iso7010_prohibition/
+    - lib/tools/symbol_tables/_common/assets/iso7010_safecondition/
+    - lib/tools/symbol_tables/_common/assets/iso7010_warning/
     - lib/tools/symbol_tables/_common/assets/ita1_1926/
     - lib/tools/symbol_tables/_common/assets/ita1_1929/
     - lib/tools/symbol_tables/_common/assets/ita2_1929/

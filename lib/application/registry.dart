@@ -4300,6 +4300,26 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_firesafety', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_firesafety'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_mandatory', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_mandatory'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_prohibition', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_prohibition'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_safecondition', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_safecondition'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_warning', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_warning'
+    ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const ['ccitt', 'symbol_murray', 'teletypewriter']),
