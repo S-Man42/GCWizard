@@ -49,7 +49,7 @@ class UICWagonCodePassengerWagonCategory {
   }
 
   bool _getSpecial(String number) {
-    return [
+    return const [
       '00',
       '06',
       '07',

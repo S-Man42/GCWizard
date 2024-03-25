@@ -96,11 +96,11 @@ class _UICWagonCodeVKMState extends State<UICWagonCodeVKM> {
       if (_currentInputName.isEmpty) return Container();
 
       var data =
-          UICWagonCodesVKM.where((Map<String, String> vkm) {
-            var vkmName = removeDiacritics(vkm['keeper_name']!.toLowerCase());
+          UICWagonCodesVKM.where((vkm) {
+            var vkmName = removeDiacritics(vkm.keeper_name.toLowerCase());
             var checkName = removeDiacritics(_currentInputName.toLowerCase());
             return vkmName.contains(checkName);
-          }).map((Map<String, String> vkm) => [vkm['keeper_name']!, vkm['vkm']!, vkm['country']!]).toList();
+          }).map((vkm) => [vkm.keeper_name, vkm.vkm, vkm.country]).toList();
 
       var flexValues = [2, 1, 1];
       data.sort((a, b) => a[0].compareTo(b[0]));
@@ -116,11 +116,11 @@ class _UICWagonCodeVKMState extends State<UICWagonCodeVKM> {
       if (_currentInputCode.isEmpty) return Container();
 
       var data =
-          UICWagonCodesVKM.where((Map<String, String> vkm) {
-            var vkmCode = removeDiacritics(vkm['vkm']!.toLowerCase());
+          UICWagonCodesVKM.where((vkm) {
+            var vkmCode = removeDiacritics(vkm.vkm.toLowerCase());
             var checkCode = removeDiacritics(_currentInputCode.toLowerCase());
             return vkmCode.startsWith(checkCode);
-          }).map((Map<String, String> vkm) => [vkm['vkm']!, vkm['keeper_name']!, vkm['country']!]).toList();
+          }).map((vkm) => [vkm.vkm, vkm.keeper_name, vkm.country]).toList();
 
       var flexValues = [1, 2, 1];
       data.sort((a, b) {

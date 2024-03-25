@@ -18,16 +18,16 @@ class UICWagenCodeFreightCategory {
   String _getCategoryLetterCode(String number) {
     var letterCodes = <String, String>{};
     switch(number[4]) {
-      case '0': letterCodes = {'0': 'T', '1': 'T','2': 'T','3': 'T','4': 'T','5': 'T','6': 'T','7': 'T','8': 'T','9': 'T'}; break;
-      case '1': letterCodes = {'0': 'G', '1': 'G','2': 'G','3': 'G','4': 'G','5': 'G','6': 'G','7': 'G','8': 'G','9': 'G'}; break;
-      case '2': letterCodes = {'0': 'H', '1': 'H','2': 'H','3': 'H','4': 'H','5': 'H','6': 'H','7': 'H','8': 'H','9': 'H'}; break;
-      case '3': letterCodes = {'0': 'K', '1': 'K','2': 'K','3': 'K','4': 'K','5': 'R','6': 'R','7': 'O','8': 'R','9': 'R'}; break;
-      case '4': letterCodes = {'0': 'L', '1': 'L','2': 'L','3': 'L','4': 'L','5': 'S','6': 'S','7': 'S','8': 'S','9': 'S'}; break;
-      case '5': letterCodes = {'0': 'E', '1': 'E','2': 'E','3': 'E','4': 'E','5': 'E','6': 'E','7': 'E','8': 'E','9': 'E'}; break;
-      case '6': letterCodes = {'0': 'F', '1': 'F','2': 'F','3': 'F','4': 'F','5': 'F','6': 'F','7': 'F','8': 'F','9': 'F'}; break;
-      case '7': letterCodes = {'0': 'Z', '1': 'Z','2': 'Z','3': 'Z','4': 'Z','5': 'Z','6': 'Z','7': 'Z','8': 'Z','9': 'Z'}; break;
-      case '8': letterCodes = {'0': 'I', '1': 'I','2': 'I','3': 'I','4': 'I','5': 'I','6': 'I','7': 'I','8': 'I','9': 'I'}; break;
-      case '9': letterCodes = {'0': 'U', '1': 'U','2': 'U','3': 'U','4': 'U','5': 'U','6': 'U','7': 'U','8': 'U','9': 'U'}; break;
+      case '0': letterCodes = const {'0': 'T', '1': 'T','2': 'T','3': 'T','4': 'T','5': 'T','6': 'T','7': 'T','8': 'T','9': 'T'}; break;
+      case '1': letterCodes = const {'0': 'G', '1': 'G','2': 'G','3': 'G','4': 'G','5': 'G','6': 'G','7': 'G','8': 'G','9': 'G'}; break;
+      case '2': letterCodes = const {'0': 'H', '1': 'H','2': 'H','3': 'H','4': 'H','5': 'H','6': 'H','7': 'H','8': 'H','9': 'H'}; break;
+      case '3': letterCodes = const {'0': 'K', '1': 'K','2': 'K','3': 'K','4': 'K','5': 'R','6': 'R','7': 'O','8': 'R','9': 'R'}; break;
+      case '4': letterCodes = const {'0': 'L', '1': 'L','2': 'L','3': 'L','4': 'L','5': 'S','6': 'S','7': 'S','8': 'S','9': 'S'}; break;
+      case '5': letterCodes = const {'0': 'E', '1': 'E','2': 'E','3': 'E','4': 'E','5': 'E','6': 'E','7': 'E','8': 'E','9': 'E'}; break;
+      case '6': letterCodes = const {'0': 'F', '1': 'F','2': 'F','3': 'F','4': 'F','5': 'F','6': 'F','7': 'F','8': 'F','9': 'F'}; break;
+      case '7': letterCodes = const {'0': 'Z', '1': 'Z','2': 'Z','3': 'Z','4': 'Z','5': 'Z','6': 'Z','7': 'Z','8': 'Z','9': 'Z'}; break;
+      case '8': letterCodes = const {'0': 'I', '1': 'I','2': 'I','3': 'I','4': 'I','5': 'I','6': 'I','7': 'I','8': 'I','9': 'I'}; break;
+      case '9': letterCodes = const {'0': 'U', '1': 'U','2': 'U','3': 'U','4': 'U','5': 'U','6': 'U','7': 'U','8': 'U','9': 'U'}; break;
       default: return '';
     }
 

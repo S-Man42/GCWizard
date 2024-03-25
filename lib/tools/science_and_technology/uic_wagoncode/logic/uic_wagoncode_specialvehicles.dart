@@ -96,7 +96,7 @@ class UICWagonCodeSpecialVehicle extends UICWagonCode {
     var subtypeCode = number.substring(6, 8);
 
     if (
-      [
+      const [
         '17', '18', '48', '49', '67', '68', '69', '88', '89', '97', '98', '99'
       ].contains(subtypeCode)
     ) return null;
