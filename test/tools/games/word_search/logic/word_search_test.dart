@@ -7,17 +7,17 @@ import 'package:gc_wizard/tools/games/word_search/logic/word_search.dart';
 void main() {
   group("wordSearch.searchHorizontal:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewie\npotto\nojftj\njfjoh',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'uewhe\npotti\nojffj\njfjkh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewhe\npotti\nojffj\njfjkh',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN\nTSSEIDARAP\nETUEHOWEFE\n',
-        'searchWords' : 'Ast Vogel Höhlen Wander',
-        'expectedOutput' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      {'input': 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN\nTSSEIDARAP\nETUEHOWEFE\n',
+        'searchWords': 'Ast Vogel Höhlen Wander',
+        'expectedOutput': [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -28,9 +28,9 @@ void main() {
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
       },
-      {'input' : 'uewh\npotti\nojffj\njfjk',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0]],
+      {'input': 'uewh\npotti\nojffj\njfjk',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0]],
       },
     ];
 
@@ -45,21 +45,21 @@ void main() {
 
   group("wordSearch.searchHorizontalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewie\npotto\nojftj\njfjoh',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'uewhe\npotti\nojffj\njfjkh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewhe\npotti\nojffj\njfjkh',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'uewhe\npitto\nojffj\njfjkh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewhe\npitto\nojffj\njfjkh',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
-        'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
-        'expectedOutput' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      {'input': 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
+        'searchWords': 'Ast Vogel Höhlen Wander utu ean hite',
+        'expectedOutput': [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -68,9 +68,9 @@ void main() {
                             [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
                             [0, 0, 1, 1, 1, 1, 1, 0, 0, 0]],
       },
-      {'input' : 'uewh\npotti\nojffj\njfjk',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0]],
+      {'input': 'uewh\npotti\nojffj\njfjk',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0]],
       },
     ];
 
@@ -86,13 +86,13 @@ void main() {
 
   group("wordSearch.searchVertical:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords' : 'otto',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewie\npotto\nojftj\njfjoh',
+        'searchWords': 'otto',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'uewoe\npotto\nojftj\njfjoh',
-        'searchWords' : 'otto',
-        'expectedOutput' : [[0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0]],
+      {'input': 'uewoe\npotto\nojftj\njfjoh',
+        'searchWords': 'otto',
+        'expectedOutput': [[0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0]],
       },
     ];
 
@@ -107,13 +107,13 @@ void main() {
 
   group("wordSearch.searchVerticalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords' : 'otto',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+      {'input': 'uewie\npotto\nojftj\njfjoh',
+        'searchWords': 'otto',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
-      {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0]],
+      {'input': 'uewie\npotto\nojftj\njfjoh',
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0], [0, 0, 0, 2, 0]],
       },
     ];
 
@@ -130,20 +130,20 @@ void main() {
   group("wordSearch.searchDiagonal:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'uewoe\npotto\nojftj\njfjoh',
-        'searchWords' : 'otto',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'searchWords': 'otto',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
       {'input' : 'uewoe\npotto\notftj\nifjoh',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 4, 0], [0, 0, 4, 0, 0], [0, 4, 0, 0, 0], [4, 0, 0, 0, 0]],
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 4, 0], [0, 0, 4, 0, 0], [0, 4, 0, 0, 0], [4, 0, 0, 0, 0]],
       },
       {'input' : 'uowoe\npotto\nojftj\njfjoi',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
       },
       {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
-        'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
-        'expectedOutput' : [[0, 0, 4, 0, 0, 0, 0, 4, 0, 0],
+        'searchWords': 'Ast Vogel Höhlen Wander utu ean hite',
+        'expectedOutput': [[0, 0, 4, 0, 0, 0, 0, 4, 0, 0],
                             [0, 4, 0, 0, 0, 0, 0, 0, 4, 0],
                             [4, 0, 0, 0, 0, 0, 0, 0, 0, 4],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -166,16 +166,16 @@ void main() {
   group("wordSearch.searchDiagonalReverse:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'uowoe\npotto\nojftj\njfjio',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
       },
       {'input' : 'uiwoe\npotto\nojftj\njfjoo',
-        'searchWords' : 'otti',
-        'expectedOutput' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+        'searchWords': 'otti',
+        'expectedOutput': [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
       },
       {'input' : 'SSUNEZNALG\nSTNESIWBSÜ\nUTEBLOWEGT\nCCIERFGEII\nHÖHLENEREG\nEHENLFWENK\nHGNUREDNAW\nIAVOGELKSN',
-        'searchWords' : 'Ast Vogel Höhlen Wander utu ean hite',
-        'expectedOutput' : [[0, 0, 4, 0, 0, 0, 0, 4, 0, 0],
+        'searchWords': 'Ast Vogel Höhlen Wander utu ean hite',
+        'expectedOutput': [[0, 0, 4, 0, 0, 0, 0, 4, 0, 0],
                             [0, 4, 0, 0, 0, 0, 0, 0, 4, 0],
                             [4, 0, 0, 0, 0, 0, 0, 0, 0, 4],
                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -199,45 +199,70 @@ void main() {
   group("wordSearch.fallingDownMode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
-        'searchWords' : 'Schinken',
+        'searchWords': 'Schinken',
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
-        'expectedOutput' : ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
+        'expectedOutput': ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
       },
       {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
-        'searchWords' : 'Ski, Henmd',
+        'searchWords': 'Ski, Henmd',
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
-        'expectedOutput' : ['KCETTEHA','NHHNNNSF','EKUWALKR','NONHFEIO','INEAEGNS','HCAGELEC','SMIETNEB','DMEHCKRI'],
+        'expectedOutput': ['KCETTEHA','NHHNNNSF','EKUWALKR','NONHFEIO','INEAEGNS','HCAGELEC','SMIETNEB','DMEHCKRI'],
       },
       {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords' : 'otto',
+        'searchWords': 'otto',
         'markedMatrix' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
-        'expectedOutput' : ['u    ','pewie','ojftj','jfjoh'],
+        'expectedOutput': ['u    ','pewie','ojftj','jfjoh'],
       },
       {'input' : 'uowie\npotto\nojftj\njfjoo',
-        'searchWords' : 'otto',
+        'searchWords': 'otto',
         'markedMatrix' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
-        'expectedOutput' : ['u    ','powie','ojfto','jfjoj'],
+        'expectedOutput': ['u    ','powie','ojfto','jfjoj'],
       },
       {'input' : 'S	S	U	N	E	Z	N	Ä	L	G\nS	T	N	E	S	I	W	B	S	Ü',
-        'searchWords' : 'nes',
+        'searchWords': 'nes',
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
-        'expectedOutput' : ['SS   ZNÄLG','STUNEIWBSÜ'],
+        'expectedOutput': ['SS   ZNÄLG','STUNEIWBSÜ'],
       },
     ];
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']} words: ${elem['searchWords']}', () {
-        //var searchDirection = 0;
         var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
         var _actual1 = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
-        print(_actual1);
+
         var marked = (elem['markedMatrix'] as List<List<int>>).map((row) => Uint8List.fromList(row)).toList();
         var _actual = deleteFallingDownLetters(elem['input'] as String, marked);
         expect(_actual, elem['expectedOutput']);
       });
     }
   });
+
+  group("wordSearch.normalizeAndSplitInputForView:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input': 'uewie\npotto\n\r\nojftj\njfjoh',
+        'expectedOutput': ['uewie', 'potto', 'ojftj', 'jfjoh'],
+      },
+      {'input': 'uewoe\npotto\nojftjr\njfjoh',
+        'expectedOutput': ['uewoe ', 'potto ', 'ojftjr', 'jfjoh '],
+      },
+      {'input' : 'uewoe\npotto\nojftjr\njf joh',
+        'expectedOutput': ['uewoe ', 'potto ', 'ojftjr', 'jfjoh '],
+      },
+      {'input' : 'uewoe\npotto\nojftjr\njf joh',
+        'noSpaces': false,
+        'expectedOutput': ['uewoe ', 'potto ', 'ojftjr', 'jf joh'],
+       },
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']} words: ${elem['noSpaces']}', () {
+        var _actual = normalizeAndSplitInputForView(elem['input'] as String, noSpaces: elem['noSpaces'] != null ? elem['noSpaces'] as bool : true);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
 }

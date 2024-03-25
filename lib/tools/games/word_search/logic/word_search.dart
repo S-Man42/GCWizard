@@ -27,7 +27,10 @@ enum SearchDirectionFlags {
 }
 
 String _normalizeInput(String text, bool noSpaces){
-  return text.replaceAll(RegExp(r'['+ r'\f\t' + (noSpaces ? ' ]' : ']')), '');
+  text = text.replaceAll(RegExp(r'['+ r'\f\t' + (noSpaces ? ' ]' : ']')), '');
+  var lines = _splitLines(text);
+  lines.removeWhere((line) => line.trim().isEmpty);
+  return lines.join('\r\n');
 }
 
 List<String> normalizeAndSplitInputForView(String text, {bool noSpaces = true}) {
