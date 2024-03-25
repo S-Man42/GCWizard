@@ -6,7 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 
 const _emptyChar = '\t';
-final nonBreakingSpace = String.fromCharCode(0160);
+final _nonBreakingSpace = String.fromCharCode(0160);
 
 enum SearchDirectionFlags {
   HORIZONTAL,
@@ -36,7 +36,7 @@ String _normalizeInput(String text, bool noSpaces){
 List<String> normalizeAndSplitInputForView(String text, {bool noSpaces = true}) {
   var lines = _splitLines(_normalizeInput(text, noSpaces));
   var maxRowLength = _maxRowLength(lines);
-  lines = lines.map((line) => _fillupLine(line, maxRowLength).replaceAll(_emptyChar, nonBreakingSpace)).toList();
+  lines = lines.map((line) => _fillupLine(line, maxRowLength).replaceAll(_emptyChar, _nonBreakingSpace)).toList();
   return lines;
 }
 
@@ -255,7 +255,7 @@ List<String> _deleteMarkedLetters(List<String> lines, List<Uint8List> markedMatr
   for (var row = lines.length - 1; row >= 0; row--) {
     for (var column = 0; column < lines[row].length; column++) {
       if (row < markedMatrix.length && column < markedMatrix[row].length && markedMatrix[row][column] != 0) {
-        lines[row] = lines[row].replaceRange(column, column + 1, nonBreakingSpace);
+        lines[row] = lines[row].replaceRange(column, column + 1, _nonBreakingSpace);
       }
     }
   }
@@ -265,11 +265,11 @@ List<String> _deleteMarkedLetters(List<String> lines, List<Uint8List> markedMatr
 List<String> _fallingDownLetters(List<String> lines) {
   for (var row = lines.length - 1; row >= 0; row--) {
     for (var column = 0; column < lines[row].length; column++) {
-      if (lines[row][column] == nonBreakingSpace) {
+      if (lines[row][column] == _nonBreakingSpace) {
         lines = _fallingDownLetter(lines, row, column);
 
         var maxLoops = row - 1;
-        while (lines[row][column] == nonBreakingSpace && maxLoops > 0) {
+        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
           lines = _fallingDownLetter(lines, row, column);
           maxLoops--;
         }
@@ -281,10 +281,10 @@ List<String> _fallingDownLetters(List<String> lines) {
 
 List<String> _fallingDownLetter(List<String> lines, int row, int column) {
   if (row > 0) {
-    if (row < lines.length && column < lines[row].length && lines[row][column] == nonBreakingSpace) {
+    if (row < lines.length && column < lines[row].length && lines[row][column] == _nonBreakingSpace) {
       if (column < lines[row - 1].length) {
         lines[row] = lines[row].replaceRange(column, column + 1, lines[row - 1][column]);
-        lines[row - 1] = lines[row - 1].replaceRange(column, column + 1, nonBreakingSpace);
+        lines[row - 1] = lines[row - 1].replaceRange(column, column + 1, _nonBreakingSpace);
         lines = _fallingDownLetter(lines, row - 1, column);
       }
     }

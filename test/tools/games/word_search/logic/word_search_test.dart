@@ -206,22 +206,22 @@ void main() {
       {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
         'searchWords': 'Ski, Henmd',
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
-        'expectedOutput': ['KCETTEHA','NHHNNNSF','EKUWALKR','NONHFEIO','INEAEGNS','HCAGELEC','SMIETNEB','DMEHCKRI'],
+        'expectedOutput': ['    TE A','KCETNN F','NHHNAL R','EKUWFEHO','NONHEGNS','INEAELEC','HCAGTNEB','SMIECKRI'],
       },
       {'input' : 'uewie\npotto\nojftj\njfjoh',
         'searchWords': 'otto',
         'markedMatrix' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
-        'expectedOutput': ['u    ','pewie','ojftj','jfjoh'],
+        'expectedOutput': ['u    ', 'pewie', 'ojftj', 'jfjoh'],
       },
       {'input' : 'uowie\npotto\nojftj\njfjoo',
         'searchWords': 'otto',
         'markedMatrix' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
-        'expectedOutput': ['u    ','powie','ojfto','jfjoj'],
+        'expectedOutput': ['u    ', 'powie', 'ojfto', 'jfjoj'],
       },
       {'input' : 'S	S	U	N	E	Z	N	Ä	L	G\nS	T	N	E	S	I	W	B	S	Ü',
         'searchWords': 'nes',
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
-        'expectedOutput': ['SS   ZNÄLG','STUNEIWBSÜ'],
+        'expectedOutput': ['SS   ZNÄLG', 'STUNEIWBSÜ'],
       },
     ];
 
@@ -231,7 +231,6 @@ void main() {
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
         SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
-        var _actual1 = searchWordList(elem['input'] as String, elem['searchWords'] as String, searchDirection);
 
         var marked = (elem['markedMatrix'] as List<List<int>>).map((row) => Uint8List.fromList(row)).toList();
         var _actual = deleteFallingDownLetters(elem['input'] as String, marked);
