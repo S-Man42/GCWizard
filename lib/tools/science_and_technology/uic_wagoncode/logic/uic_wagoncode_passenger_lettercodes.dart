@@ -1,4 +1,4 @@
-const Map<String, String> UICWagenCodesPassengerLetterCodesCategories = {
+const Map<String, String> _UICWagenCodesPassengerLetterCodesCategories = {
   'A': 'uic_passenger_letters_category_a',
   'B': 'uic_passenger_letters_category_b',
   'AB': 'uic_passenger_letters_category_ab',
@@ -21,7 +21,7 @@ const Map<String, String> UICWagenCodesPassengerLetterCodesCategories = {
   'Z': 'uic_passenger_letters_category_z',
 };
 
-const Map<String, Map<String, String>> UICWagenCodesPassengeCategoriesCountries = {
+const Map<String, Map<String, String>> _UICWagenCodesPassengeCategoriesCountries = {
   '50': {
     'DD': 'uic_passenger_letters_category_50_dd',
   },
@@ -52,7 +52,7 @@ const Map<String, Map<String, String>> UICWagenCodesPassengeCategoriesCountries 
   }
 };
 
-const Map<String, Map<String, String>> UICWagenCodesPassengerLetterCodesClassifications = {
+const Map<String, Map<String, String>> _UICWagenCodesPassengerLetterCodesClassifications = {
   '50': {
     'b': 'uic_passenger_letters_classification_dr_b',
     'f': 'uic_passenger_letters_classification_dr_f',
@@ -141,13 +141,13 @@ Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String lett
     return <String, String>{};
   }
 
-  var categories = Map<String, String>.from(UICWagenCodesPassengerLetterCodesCategories);
+  var categories = Map<String, String>.from(_UICWagenCodesPassengerLetterCodesCategories);
 
-  if (UICWagenCodesPassengeCategoriesCountries.containsKey(countryCode)) {
+  if (_UICWagenCodesPassengeCategoriesCountries.containsKey(countryCode)) {
     if (countryCode == '50') {
-      categories.addAll(UICWagenCodesPassengeCategoriesCountries['80']!);
+      categories.addAll(_UICWagenCodesPassengeCategoriesCountries['80']!);
     }
-    categories.addAll(UICWagenCodesPassengeCategoriesCountries[countryCode]!);
+    categories.addAll(_UICWagenCodesPassengeCategoriesCountries[countryCode]!);
   }
 
   var categoryKeys = List<String>.from(categories.keys);
@@ -157,7 +157,7 @@ Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String lett
 
   for (int i = 0; i < categoryKeys.length; i++) {
     var key = categoryKeys[i];
-    if (letters.toLowerCase().startsWith(key.toLowerCase())) {
+    if (letters.startsWith(key)) {
       out.putIfAbsent(key, () => categories[key]!);
       letters = letters.substring(key.length);
       break;
@@ -169,11 +169,11 @@ Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String lett
   var _letterHyphens = '';
   var _letterSlashes = '';
 
-  if (UICWagenCodesPassengerLetterCodesClassifications.containsKey(countryCode)) {
+  if (_UICWagenCodesPassengerLetterCodesClassifications.containsKey(countryCode)) {
     if (countryCode == '50') {
-      classifications.addAll(UICWagenCodesPassengerLetterCodesClassifications['80']!);
+      classifications.addAll(_UICWagenCodesPassengerLetterCodesClassifications['80']!);
     }
-    classifications.addAll(UICWagenCodesPassengerLetterCodesClassifications[countryCode]!);
+    classifications.addAll(_UICWagenCodesPassengerLetterCodesClassifications[countryCode]!);
 
     if (countryCode == '81') {
       var _lettersParts = _letters.split('-');
@@ -212,7 +212,7 @@ Map<String, String> uicPassengerWagonLetterCodes(String countryCode, String lett
     var i = 0;
     while (i < keys.length && letterCodes.isNotEmpty) {
       var key = keys[i];
-      if (letterCodes.toLowerCase().startsWith(key.toLowerCase())) {
+      if (letterCodes.startsWith(key)) {
         output.putIfAbsent(prefix + key, () => classificationMap[prefix + key]!);
         letterCodes = letterCodes.substring(key.length);
         i = 0;

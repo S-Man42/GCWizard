@@ -4313,6 +4313,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: const [
       'color',
       'barcodes',
+      'railways',
       'symbol_kartrak',
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const ['symbol_kaktovik', 'zigzag']),
@@ -4890,20 +4891,25 @@ void initializeRegistry(BuildContext context) {
 
     // UICWagonCodeSelection ***************************************************************************************
     GCWTool(tool: const UICWagonCode(), id: 'uic_wagoncode', searchKeys: const [
+      'railways', 'uic',
       'uic_wagoncode',
     ]),
     GCWTool(tool: const UICWagonCodeVKM(), id: 'uic_wagoncode_vkm', searchKeys: const [
+      'railways', 'uic',
       'uic_wagoncode',
       'uic_wagoncode_vkm',
     ]),
     GCWTool(tool: const UICWagonCodeCountryCodes(), id: 'uic_wagoncode_countrycodes', searchKeys: const [
+      'railways', 'uic',
       'uic_wagoncode',
       'countries',
     ]),
     GCWTool(tool: const UICWagonCodeFreightClassifications(), id: 'uic_wagoncode_freight_classification', searchKeys: const [
+      'railways', 'uic',
       'uic_wagoncode',
     ]),
     GCWTool(tool: const UICWagonCodePassengerLettercodes(), id: 'uic_wagoncode_passenger_lettercodes', searchKeys: const [
+      'railways', 'uic',
       'uic_wagoncode',
     ]),
 

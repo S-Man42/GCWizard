@@ -6,37 +6,37 @@ part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_
 // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_für_Reisezugwagen
 // https://www.deutsche-reisezugwagen.de/lexikon/aufbau-der-uic-wagennummer/
 
-enum UICWagonCodePassengerInternationalUsage {ONLY_DOMESTIC, INTERNATIONAL_WITH_SPECIALPERMISSION, TEN_AND_PPW, ONLY_PPW, ONLY_TEN, INVALID}
+enum _UICWagonCodePassengerInternationalUsage {ONLY_DOMESTIC, INTERNATIONAL_WITH_SPECIALPERMISSION, TEN_AND_PPW, ONLY_PPW, ONLY_TEN, INVALID}
 enum UICWagonCodePassengerGaugeType {FIXED, VARIABLE, VARIABLE_1435_1520, VARIABLE_1435_1668, INVALID, UNDEFINED}
 enum UICWagonCodePassengerGaugeChangeMode {UNDEFINED, BOGIE_CHANGE, AXLE_ADJUSTMENT, INVALID}
-enum UICWagonCodePassengerWagonTypes {NORMAL, MAINTENANCE, CAR_TRANSPORT, NORMAL_OR_CAR_TRANSPORT, HISTORIC, MISC, INVALID}
+enum _UICWagonCodePassengerWagonTypes {NORMAL, MAINTENANCE, CAR_TRANSPORT, NORMAL_OR_CAR_TRANSPORT, HISTORIC, MISC, INVALID}
 enum UICWagonCodePassengerAirConditioned {UNDEFINED, YES, NO}
-enum UICWagonCodePassengerCategoryType {SEATS, COUCHETTE, SLEEPING, SPECIAL, INVALID}
+enum _UICWagonCodePassengerCategoryType {SEATS, COUCHETTE, SLEEPING, SPECIAL, INVALID}
 enum UICWagonCodePassengerCategoryClass {FIRST, SECOND, FIRST_SECOND, INVALID, UNDEFINED}
 enum UICWagonCodePassengerCategoryCompartements {LESS_EQUAL_7, LESS_EQUAL_8, EQUAL_8, LESS_EQUAL_9, EQUAL_9, LESS_10, EQUAL_10, EQUAL_11, GREATER_EQUAL_11, EQUAL_12, GREATER_EQUAL_12, GREATER_12, DOUBLE_DECK, OSJD_DOUBLE_DECK, UNDEFINED, INVALID}
 enum UICWagonCodePassengerCategoryAxles {TWO, THREE, TWO_OR_THREE, UNDEFINED}
-enum UICWagonCodePassengerMaxSpeed {TO_120, TO_140, TO_160, GREATER_160, INVALID}
+enum _UICWagonCodePassengerMaxSpeed {TO_120, TO_140, TO_160, GREATER_160, INVALID}
 
-class UICWagonCodePassengerWagonCategory {
+class _UICWagonCodePassengerWagonCategory {
   late final String number;
-  late final UICWagonCodePassengerCategoryType type;
+  late final _UICWagonCodePassengerCategoryType type;
   late final UICWagonCodePassengerCategoryClass clazz;
   late final UICWagonCodePassengerCategoryCompartements compartments;
   late final UICWagonCodePassengerCategoryAxles axles;
   late final bool? special;
   late final bool private;
 
-  UICWagonCodePassengerWagonCategory(String number) {
+  _UICWagonCodePassengerWagonCategory(String number) {
     this.number = number.substring(4, 6);
 
     var number5 = int.parse(number[4]);
     var number6 = int.parse(number[5]);
 
     type = _getType(number5, number6);
-    if (type == UICWagonCodePassengerCategoryType.SPECIAL) {
+    if (type == _UICWagonCodePassengerCategoryType.SPECIAL) {
       special = _getSpecial(this.number);
       if (special != null && special == false) {
-        type = UICWagonCodePassengerCategoryType.INVALID;
+        type = _UICWagonCodePassengerCategoryType.INVALID;
       }
     } else {
       special = null;
@@ -157,30 +157,30 @@ class UICWagonCodePassengerWagonCategory {
     return true;
   }
 
-  UICWagonCodePassengerCategoryType _getType(int number5, int number6) {
+  _UICWagonCodePassengerCategoryType _getType(int number5, int number6) {
     switch (number5) {
       case 0:
         switch (number6) {
           case 1:
           case 2:
-          case 3: return UICWagonCodePassengerCategoryType.SEATS;
-          case 5: return UICWagonCodePassengerCategoryType.COUCHETTE;
+          case 3: return _UICWagonCodePassengerCategoryType.SEATS;
+          case 5: return _UICWagonCodePassengerCategoryType.COUCHETTE;
           case 6:
-          case 7: return UICWagonCodePassengerCategoryType.SLEEPING;
-          default: return UICWagonCodePassengerCategoryType.SPECIAL;
+          case 7: return _UICWagonCodePassengerCategoryType.SLEEPING;
+          default: return _UICWagonCodePassengerCategoryType.SPECIAL;
         }
       case 1:
       case 2:
-      case 3: return UICWagonCodePassengerCategoryType.SEATS;
+      case 3: return _UICWagonCodePassengerCategoryType.SEATS;
       case 4:
-      case 5: return UICWagonCodePassengerCategoryType.COUCHETTE;
-      case 6: return UICWagonCodePassengerCategoryType.INVALID;
-      case 7: return UICWagonCodePassengerCategoryType.SLEEPING;
+      case 5: return _UICWagonCodePassengerCategoryType.COUCHETTE;
+      case 6: return _UICWagonCodePassengerCategoryType.INVALID;
+      case 7: return _UICWagonCodePassengerCategoryType.SLEEPING;
       default:
         var numbers = '$number5$number6';
         switch(numbers) {
-          case '83': return UICWagonCodePassengerCategoryType.INVALID ;
-          default: return UICWagonCodePassengerCategoryType.SPECIAL;
+          case '83': return _UICWagonCodePassengerCategoryType.INVALID ;
+          default: return _UICWagonCodePassengerCategoryType.SPECIAL;
         }
     }
   }
@@ -210,16 +210,16 @@ class UICWagonCodePassengerWagonCategory {
 }
 
 class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
-  late final UICWagonCodePassengerInternationalUsage internationalUsage;
-  late final UICWagonCodePassengerWagonTypes passengerWagonType;
+  late final _UICWagonCodePassengerInternationalUsage internationalUsage;
+  late final _UICWagonCodePassengerWagonTypes passengerWagonType;
   late final bool pressurized; //druckdicht
   late final UICWagonCodePassengerAirConditioned airConditioned;
   late final UICWagonCodePassengerGaugeType gaugeType;
   late final UICWagonCodePassengerGaugeChangeMode gaugeChangeMode;
-  late final UICWagonCodePassengerWagonCategory category;
-  late final UICWagonCodePassengerMaxSpeed maxSpeed;
+  late final _UICWagonCodePassengerWagonCategory category;
+  late final _UICWagonCodePassengerMaxSpeed maxSpeed;
   late final String maxSpeedCode;
-  late final List<UICWagonCodePassengerHeatingSystemValue>? heatingSystems;
+  late final List<_UICWagonCodePassengerHeatingSystemValue>? heatingSystems;
   late final String heatingSystemCode;
 
   UICWagonCodePassengerWagon(String number) : super(number) {
@@ -236,35 +236,35 @@ class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
     category = _getCategory(number);
   }
 
-  UICWagonCodePassengerWagonCategory _getCategory(String number) {
-    return UICWagonCodePassengerWagonCategory(number);
+  _UICWagonCodePassengerWagonCategory _getCategory(String number) {
+    return _UICWagonCodePassengerWagonCategory(number);
   }
 
   String _getHeatingSystemCode(String number) {
     return number.substring(6, 8);
   }
 
-  List<UICWagonCodePassengerHeatingSystemValue>? _getHeatingSystems(String number) {
-    return UICWagonCodePassengerHeatingSystemValues[_getHeatingSystemCode(number)];
+  List<_UICWagonCodePassengerHeatingSystemValue>? _getHeatingSystems(String number) {
+    return _UICWagonCodePassengerHeatingSystemValues[_getHeatingSystemCode(number)];
   }
 
   String _getMaxSpeedCode(String number) {
     return number[6];
   }
 
-  UICWagonCodePassengerMaxSpeed _getMaxSpeed(String number) {
+  _UICWagonCodePassengerMaxSpeed _getMaxSpeed(String number) {
     switch (_getMaxSpeedCode(number)) {
       case '0':
       case '1':
-      case '2': return UICWagonCodePassengerMaxSpeed.TO_120;
+      case '2': return _UICWagonCodePassengerMaxSpeed.TO_120;
       case '3':
       case '4':
       case '5':
-      case '6': return UICWagonCodePassengerMaxSpeed.TO_140;
+      case '6': return _UICWagonCodePassengerMaxSpeed.TO_140;
       case '7':
-      case '8': return UICWagonCodePassengerMaxSpeed.TO_160;
-      case '9': return UICWagonCodePassengerMaxSpeed.GREATER_160;
-      default: return UICWagonCodePassengerMaxSpeed.INVALID;
+      case '8': return _UICWagonCodePassengerMaxSpeed.TO_160;
+      case '9': return _UICWagonCodePassengerMaxSpeed.GREATER_160;
+      default: return _UICWagonCodePassengerMaxSpeed.INVALID;
     }
   }
 
@@ -328,7 +328,7 @@ class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
     }
   }
 
-  UICWagonCodePassengerWagonTypes _getType(String code) {
+  _UICWagonCodePassengerWagonTypes _getType(String code) {
     switch (code) {
       case '50':
       case '52':
@@ -345,29 +345,29 @@ class UICWagonCodePassengerWagon extends UICWagonCodeWagon {
       case '68':
       case '69':
       case '70':
-      case '73': return UICWagonCodePassengerWagonTypes.NORMAL;
-      case '51': return UICWagonCodePassengerWagonTypes.NORMAL_OR_CAR_TRANSPORT;
-      case '55': return UICWagonCodePassengerWagonTypes.HISTORIC;
+      case '73': return _UICWagonCodePassengerWagonTypes.NORMAL;
+      case '51': return _UICWagonCodePassengerWagonTypes.NORMAL_OR_CAR_TRANSPORT;
+      case '55': return _UICWagonCodePassengerWagonTypes.HISTORIC;
       case '60':
-      case '63': return UICWagonCodePassengerWagonTypes.MAINTENANCE;
-      case '75': return UICWagonCodePassengerWagonTypes.MISC;
-      default: return UICWagonCodePassengerWagonTypes.INVALID;
+      case '63': return _UICWagonCodePassengerWagonTypes.MAINTENANCE;
+      case '75': return _UICWagonCodePassengerWagonTypes.MISC;
+      default: return _UICWagonCodePassengerWagonTypes.INVALID;
     }
   }
 
-  UICWagonCodePassengerInternationalUsage _getInternationalUsage(String code) {
+  _UICWagonCodePassengerInternationalUsage _getInternationalUsage(String code) {
     switch (code[1]) {
-      case '0': return UICWagonCodePassengerInternationalUsage.ONLY_DOMESTIC;
+      case '0': return _UICWagonCodePassengerInternationalUsage.ONLY_DOMESTIC;
       case '1':
       case '2':
       case '3':
-      case '4': return UICWagonCodePassengerInternationalUsage.TEN_AND_PPW;
-      case '5': return UICWagonCodePassengerInternationalUsage.INTERNATIONAL_WITH_SPECIALPERMISSION;
-      case '6': return UICWagonCodePassengerInternationalUsage.ONLY_TEN;
+      case '4': return _UICWagonCodePassengerInternationalUsage.TEN_AND_PPW;
+      case '5': return _UICWagonCodePassengerInternationalUsage.INTERNATIONAL_WITH_SPECIALPERMISSION;
+      case '6': return _UICWagonCodePassengerInternationalUsage.ONLY_TEN;
       case '7': // Wikipedia says 57 for OSShD, wherease the official EU document does not name it. So, taking the primary source into account, OSShD is currently not named here
       case '8':
-      case '9': return UICWagonCodePassengerInternationalUsage.ONLY_PPW;
-      default: return UICWagonCodePassengerInternationalUsage.INVALID;
+      case '9': return _UICWagonCodePassengerInternationalUsage.ONLY_PPW;
+      default: return _UICWagonCodePassengerInternationalUsage.INVALID;
     }
   }
 

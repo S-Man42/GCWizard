@@ -62,16 +62,16 @@ class _UICWagonCodeCountryCodesState extends State<UICWagonCodeCountryCodes> {
   }
 
   Widget _buildOutput() {
-    List<List<String>> data = UICCountryCode.entries.map((MapEntry<String, Map<String, String>> country) {
-      var name = i18n(context, country.value['name']!);
+    List<List<String>> data = UICCountryCodes.map((UICCountryCode country) {
+      var name = i18n(context, country.name);
 
       switch (_currentSortBy) {
         case _GCWWagonCodesCountryCodesSortBy.NUMBER_CODE:
-          return [country.key, name, country.value['code']!];
+          return [country.numberCode, name, country.letterCode];
         case _GCWWagonCodesCountryCodesSortBy.LETTER_CODE:
-          return [country.value['code']!, name, country.key];
+          return [country.letterCode, name, country.numberCode];
         case _GCWWagonCodesCountryCodesSortBy.NAME:
-          return [name, country.key, country.value['code']!];
+          return [name, country.numberCode, country.letterCode];
         default:
           return <String>[];
       }

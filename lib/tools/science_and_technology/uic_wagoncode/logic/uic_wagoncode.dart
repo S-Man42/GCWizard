@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/list_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
@@ -102,7 +103,8 @@ class UICWagonCode {
   }
 
   String _getCountry(String? code) {
-    return UICCountryCode[code] == null ?  'uic_countrycode_invalid' : UICCountryCode[code]!['name']!;
+    UICCountryCode? country = UICCountryCodes.firstWhereOrNull((element) => element.numberCode == code);
+    return country == null ?  'uic_countrycode_invalid' : country.name;
   }
 
   String _getRunningNumber(String number) {

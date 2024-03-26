@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode.dart';
 
 // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_f%C3%BCr_G%C3%BCterwagen#Kennbuchstaben
-const Map<String, Map<String, List<String>>> UICWagonCodeFreightClassificationDescriptions = {
+const Map<String, Map<String, List<String>>> _UICWagonCodeFreightClassificationDescriptions = {
   'a': {
     'uic_freight_codes_a_1': ['E', 'F', 'G', 'H', 'I', 'T', 'U', 'Z'],
     'uic_freight_codes_a_2': ['L', 'O'],

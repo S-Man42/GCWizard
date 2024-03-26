@@ -2,7 +2,7 @@ part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_
 
 // https://www.0-gleich-dampflok.de/fotogalerie-db/die-umzeichnung-der-db-dampflokomotiven-1968-1969/
 
-const List<String> UICWagonCodesTractiveUnitCountrySpecificTypeCodes = ['80', '85'];
+const List<String> _UICWagonCodesTractiveUnitCountrySpecificTypeCodes = ['80', '85'];
 
 class UICWagonCodeTractiveUnit extends UICWagonCode {
   late final String typeCode;
@@ -71,7 +71,7 @@ class UICWagonCodeTractiveUnit extends UICWagonCode {
   }
 
   String _getType(String number) {
-    if (UICWagonCodesTractiveUnitCountrySpecificTypeCodes.contains(countryCode)) {
+    if (_UICWagonCodesTractiveUnitCountrySpecificTypeCodes.contains(countryCode)) {
       return 'uic_tractiveunit_typecode_' + countryCode + '_' + typeCode;
     } else {
       return 'uic_tractiveunit_typecode_' + typeCode;

@@ -17,10 +17,10 @@ class UICWagonCode extends StatefulWidget {
   const UICWagonCode({Key? key, this.uicNumber}) : super(key: key);
 
   @override
-  UICWagonCodeState createState() => UICWagonCodeState();
+  _UICWagonCodeState createState() => _UICWagonCodeState();
 }
 
-class UICWagonCodeState extends State<UICWagonCode> {
+class _UICWagonCodeState extends State<UICWagonCode> {
   String? _currentUICCode;
   late TextEditingController _uicCodeController;
 

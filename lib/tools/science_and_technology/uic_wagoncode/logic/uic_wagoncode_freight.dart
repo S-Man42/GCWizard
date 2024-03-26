@@ -6,11 +6,11 @@ part of 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_
 // https://de.wikipedia.org/wiki/UIC-Bauart-Bezeichnungssystem_für_Güterwagen
 
 
-enum UICWagonCodeFreightGaugeType {FIXED, VARIABLE, BOTH_POSSIBLE, INVALID}
-enum UICWagonCodeFreightAxleType {SINGLE, BOGIE, INVALID}
-enum UICWagonCodeFreightWagonTypes {NORMAL_PPW, NORMAL_TEN_RIV, NORMAL_TEN_INTERFRIGO, MAINTENANCE, MISC, NOT_IN_EU_REGISTERED, INVALID, FRIDGE_LEGACY}
+enum _UICWagonCodeFreightGaugeType {FIXED, VARIABLE, BOTH_POSSIBLE, INVALID}
+enum _UICWagonCodeFreightAxleType {SINGLE, BOGIE, INVALID}
+enum _UICWagonCodeFreightWagonTypes {NORMAL_PPW, NORMAL_TEN_RIV, NORMAL_TEN_INTERFRIGO, MAINTENANCE, MISC, NOT_IN_EU_REGISTERED, INVALID, FRIDGE_LEGACY}
 
-class UICWagenCodeFreightCategory {
+class _UICWagenCodeFreightCategory {
   late final String letterCode;
   late final String numberCode;
   late final String name;
@@ -34,21 +34,21 @@ class UICWagenCodeFreightCategory {
     return letterCodes[number[5]]!;
   }
 
-  UICWagenCodeFreightCategory(String number) {
+  _UICWagenCodeFreightCategory(String number) {
     numberCode = number[4];
     letterCode = _getCategoryLetterCode(number);
     name = 'uic_freight_category_' + numberCode;
   }
 }
 
-class UICWagenCodeFreightClassificationDescription {
+class _UICWagenCodeFreightClassificationDescription {
   late final String code;
   late final String description;
 
-  UICWagenCodeFreightClassificationDescription(this.code, this.description);
+  _UICWagenCodeFreightClassificationDescription(this.code, this.description);
 }
 
-class UICWagenCodeFreightClassification {
+class _UICWagenCodeFreightClassification {
   late final String uicNumberCode;
   late final List<String> uicLetterCode;
   late final Map<String, String> descriptions;
@@ -74,7 +74,7 @@ class UICWagenCodeFreightClassification {
   Map<String, Map<String, List<String>>> _joinDescriptionMapsAndFilterRelevantCodes(List<String> classificationLetterCode, String? countryCode) {
     var descriptionMap = <String, Map<String, List<String>>>{};
 
-    for (var descriptions in UICWagonCodeFreightClassificationDescriptions.entries) {
+    for (var descriptions in _UICWagonCodeFreightClassificationDescriptions.entries) {
       if (classificationLetterCode.contains(descriptions.key)) {
         descriptionMap.putIfAbsent(descriptions.key, () => descriptions.value);
       }
@@ -126,7 +126,7 @@ class UICWagenCodeFreightClassification {
     return _setDescriptions(descriptionMap, allLetters);
   }
 
-  UICWagenCodeFreightClassification(String number, UICWagenCodeFreightCategory category, String? countryCode) {
+  _UICWagenCodeFreightClassification(String number, _UICWagenCodeFreightCategory category, String? countryCode) {
     uicNumberCode = number.substring(4,8);
     uicLetterCode = _getLetterCode(uicNumberCode);
     descriptions = _getDescriptions(category.letterCode, uicLetterCode, countryCode);
@@ -134,43 +134,43 @@ class UICWagenCodeFreightClassification {
 }
 
 class UICWagonCodeFreightWagon extends UICWagonCodeWagon {
-  late final UICWagonCodeFreightGaugeType gaugeType;
-  late final UICWagonCodeFreightAxleType axleType;
-  late final UICWagonCodeFreightWagonTypes freightWagonType;
-  late final UICWagenCodeFreightCategory category; //Gattung
-  late final UICWagenCodeFreightClassification classification;
+  late final _UICWagonCodeFreightGaugeType gaugeType;
+  late final _UICWagonCodeFreightAxleType axleType;
+  late final _UICWagonCodeFreightWagonTypes freightWagonType;
+  late final _UICWagenCodeFreightCategory category; //Gattung
+  late final _UICWagenCodeFreightClassification classification;
 
-  UICWagonCodeFreightWagonTypes _getType(int number1, int number2) {
+  _UICWagonCodeFreightWagonTypes _getType(int number1, int number2) {
     if ([0, 1, 2, 3].contains(number1)) {
-      if (number2 == 0) return UICWagonCodeFreightWagonTypes.INVALID;
-      if ([0, 1].contains(number1) && [3, 4, 5, 6, 7, 8].contains(number2)) return UICWagonCodeFreightWagonTypes.FRIDGE_LEGACY;
-      if (number2 == 9) return UICWagonCodeFreightWagonTypes.NORMAL_PPW;
-      if ([0, 1].contains(number1)) return UICWagonCodeFreightWagonTypes.NORMAL_TEN_INTERFRIGO;
-      if ([2, 3].contains(number1)) return UICWagonCodeFreightWagonTypes.NORMAL_TEN_RIV;
-      return UICWagonCodeFreightWagonTypes.INVALID;
+      if (number2 == 0) return _UICWagonCodeFreightWagonTypes.INVALID;
+      if ([0, 1].contains(number1) && [3, 4, 5, 6, 7, 8].contains(number2)) return _UICWagonCodeFreightWagonTypes.FRIDGE_LEGACY;
+      if (number2 == 9) return _UICWagonCodeFreightWagonTypes.NORMAL_PPW;
+      if ([0, 1].contains(number1)) return _UICWagonCodeFreightWagonTypes.NORMAL_TEN_INTERFRIGO;
+      if ([2, 3].contains(number1)) return _UICWagonCodeFreightWagonTypes.NORMAL_TEN_RIV;
+      return _UICWagonCodeFreightWagonTypes.INVALID;
     } else {
-      if (number2 == 0) return UICWagonCodeFreightWagonTypes.MAINTENANCE;
-      if (number2 == 9) return UICWagonCodeFreightWagonTypes.NOT_IN_EU_REGISTERED;
-      return UICWagonCodeFreightWagonTypes.MISC;
+      if (number2 == 0) return _UICWagonCodeFreightWagonTypes.MAINTENANCE;
+      if (number2 == 9) return _UICWagonCodeFreightWagonTypes.NOT_IN_EU_REGISTERED;
+      return _UICWagonCodeFreightWagonTypes.MISC;
     }
   }
 
-  UICWagonCodeFreightGaugeType _getGaugeType(int number1, int number2) {
-    if ([4, 8].contains(number1) && [0, 9].contains(number2)) return UICWagonCodeFreightGaugeType.BOTH_POSSIBLE;
-    if ([0, 1].contains(number1) && [9].contains(number2))  return UICWagonCodeFreightGaugeType.VARIABLE;
-    if ([2, 3].contains(number1) && [9].contains(number2))  return UICWagonCodeFreightGaugeType.FIXED;
+  _UICWagonCodeFreightGaugeType _getGaugeType(int number1, int number2) {
+    if ([4, 8].contains(number1) && [0, 9].contains(number2)) return _UICWagonCodeFreightGaugeType.BOTH_POSSIBLE;
+    if ([0, 1].contains(number1) && [9].contains(number2))  return _UICWagonCodeFreightGaugeType.VARIABLE;
+    if ([2, 3].contains(number1) && [9].contains(number2))  return _UICWagonCodeFreightGaugeType.FIXED;
 
-    if ([2,4,6,8].contains(number2)) return UICWagonCodeFreightGaugeType.VARIABLE;
-    if ([1, 3, 4, 5, 7].contains(number2)) return UICWagonCodeFreightGaugeType.FIXED;
+    if ([2,4,6,8].contains(number2)) return _UICWagonCodeFreightGaugeType.VARIABLE;
+    if ([1, 3, 4, 5, 7].contains(number2)) return _UICWagonCodeFreightGaugeType.FIXED;
 
-    return UICWagonCodeFreightGaugeType.INVALID;
+    return _UICWagonCodeFreightGaugeType.INVALID;
   }
 
-  UICWagonCodeFreightAxleType _getAxleType(int number1) {
-    if ([0,2,4].contains(number1)) return UICWagonCodeFreightAxleType.SINGLE;
-    if ([1, 3, 8].contains(number1)) return UICWagonCodeFreightAxleType.BOGIE;
+  _UICWagonCodeFreightAxleType _getAxleType(int number1) {
+    if ([0,2,4].contains(number1)) return _UICWagonCodeFreightAxleType.SINGLE;
+    if ([1, 3, 8].contains(number1)) return _UICWagonCodeFreightAxleType.BOGIE;
 
-    return UICWagonCodeFreightAxleType.INVALID;
+    return _UICWagonCodeFreightAxleType.INVALID;
   }
 
   UICWagonCodeFreightWagon(String number) : super(number) {
@@ -180,7 +180,7 @@ class UICWagonCodeFreightWagon extends UICWagonCodeWagon {
     freightWagonType = _getType(number1, number2);
     gaugeType = _getGaugeType(number1, number2);
     axleType = _getAxleType(number1);
-    category = UICWagenCodeFreightCategory(number);
-    classification = UICWagenCodeFreightClassification(number, category, countryCode);
+    category = _UICWagenCodeFreightCategory(number);
+    classification = _UICWagenCodeFreightClassification(number, category, countryCode);
   }
 }
