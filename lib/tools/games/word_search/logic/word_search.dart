@@ -285,18 +285,14 @@ List<String> _deleteMarkedLetters(List<String> lines, List<Uint8List> markedMatr
 List<String> _fillSpaceModeDown(List<String> lines) {
   for (var row = lines.length - 1; row > 0; row--) {
     for (var column = 0; column < lines[row].length; column++) {
-      if (lines[row][column] == _nonBreakingSpace) {
-        lines = _fillSpace(lines, row, column, row - 1, column);
-
-        var maxLoops = row;
-        var counter = 0;
-        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
-          counter++;
-          if (_isValidPosition(lines, row - counter, column)) {
-            lines = _fillSpace(lines, row, column, row - counter, column);
-            maxLoops--;
-          }
+      var maxLoops = row;
+      var counter = 0;
+      while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+        counter++;
+        if (_isValidPosition(lines, row - counter, column)) {
+          lines = _fillSpace(lines, row, column, row - counter, column);
         }
+        maxLoops--;
       }
     }
   }
@@ -306,18 +302,14 @@ List<String> _fillSpaceModeDown(List<String> lines) {
 List<String> _fillSpaceModeTop(List<String> lines) {
   for (var row = 0; row < lines.length - 1; row++) {
     for (var column = 0; column < lines[row].length; column++) {
-      if (lines[row][column] == _nonBreakingSpace) {
-        lines = _fillSpace(lines, row, column, row + 1, column);
-
-        var maxLoops = lines.length - row;
-        var counter = 0;
-        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
-          counter++;
-          if (_isValidPosition(lines, row + counter, column)) {
-            lines = _fillSpace(lines, row, column, row + counter, column);
-            maxLoops--;
-          }
+      var maxLoops = lines.length - row;
+      var counter = 0;
+      while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+        counter++;
+        if (_isValidPosition(lines, row + counter, column)) {
+          lines = _fillSpace(lines, row, column, row + counter, column);
         }
+        maxLoops--;
       }
     }
   }
@@ -327,18 +319,14 @@ List<String> _fillSpaceModeTop(List<String> lines) {
 List<String> _fillSpaceModeRight(List<String> lines) {
   for (var row = 0; row < lines.length; row++) {
     for (var column = lines[row].length - 1; column > 0; column--) {
-      if (lines[row][column] == _nonBreakingSpace) {
-        lines = _fillSpace(lines, row, column, row, column - 1);
-
-        var maxLoops = column;
-        var counter = 0;
-        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
-          counter++;
-          if (_isValidPosition(lines, row, column - counter)) {
-            lines = _fillSpace(lines, row, column, row, column - counter);
-            maxLoops--;
-          }
+      var maxLoops = column;
+      var counter = 0;
+      while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+        counter++;
+        if (_isValidPosition(lines, row, column - counter)) {
+          lines = _fillSpace(lines, row, column, row, column - counter);
         }
+        maxLoops--;
       }
     }
   }
@@ -348,18 +336,14 @@ List<String> _fillSpaceModeRight(List<String> lines) {
 List<String> _fillSpaceModeLeft(List<String> lines) {
   for (var row = 0; row < lines.length; row++) {
     for (var column = 0; column < lines[row].length - 1; column++) {
-      if (lines[row][column] == _nonBreakingSpace) {
-        lines = _fillSpace(lines, row, column, row, column + 1);
-
-        var maxLoops = lines.length - row;
-        var counter = 0;
-        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
-          counter++;
-          if (_isValidPosition(lines, row, column + counter)) {
-            lines = _fillSpace(lines, row, column, row, column + counter);
-            maxLoops--;
-          }
+      var maxLoops = lines.length - row;
+      var counter = 0;
+      while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+        counter++;
+        if (_isValidPosition(lines, row, column + counter)) {
+          lines = _fillSpace(lines, row, column, row, column + counter);
         }
+        maxLoops--;
       }
     }
   }
