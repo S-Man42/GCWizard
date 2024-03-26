@@ -196,44 +196,92 @@ void main() {
     }
   });
 
-  group("wordSearch.fallingDownMode:", () {
+  group("wordSearch.fillSpacesMode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
-        'searchWords': 'Schinken',
-        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
+        'fillSpacesMode': FillSpacesMode.NOMOVE,
+        'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
         'expectedOutput': ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
       },
       {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
-        'searchWords': 'Ski, Henmd',
-        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
+        'fillSpacesMode': FillSpacesMode.NOMOVE,
+        'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
+        'expectedOutput': ['KCETTEHA','NHHNNN F', 'EKUWAL R', 'NONHFE O', 'INEAEGNS', 'HCAGELEC', 'SMIETNEB', '    CKRI'],
+      },
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'fillSpacesMode': FillSpacesMode.NOMOVE,
+        'markedMatrix': [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'expectedOutput': ['uewie', 'p    ', 'ojftj', 'jfjoh'],
+      },
+      {'input' : 'uowie\npotto\nojftj\njfjoo',
+        'fillSpacesMode': FillSpacesMode.NOMOVE,
+        'markedMatrix': [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+        'expectedOutput': ['u wie', 'po to', 'ojf j', 'jfjo '],
+      },
+      {'input' : 'S	S	U	N	E	Z	N	Ä	L	G\nS	T	N	E	S	I	W	B	S	Ü',
+        'fillSpacesMode': FillSpacesMode.NOMOVE,
+        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
+        'expectedOutput': ['SSUNEZNÄLG', 'ST   IWBSÜ'],
+      },
+
+      {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
+        'fillSpacesMode': FillSpacesMode.DOWN,
+        'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
+        'expectedOutput': ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
+      },
+      {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
+        'fillSpacesMode': FillSpacesMode.DOWN,
+        'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
         'expectedOutput': ['    TE A','KCETNN F','NHHNAL R','EKUWFEHO','NONHEGNS','INEAELEC','HCAGTNEB','SMIECKRI'],
       },
       {'input' : 'uewie\npotto\nojftj\njfjoh',
-        'searchWords': 'otto',
-        'markedMatrix' : [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'fillSpacesMode': FillSpacesMode.DOWN,
+        'markedMatrix': [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
         'expectedOutput': ['u    ', 'pewie', 'ojftj', 'jfjoh'],
       },
       {'input' : 'uowie\npotto\nojftj\njfjoo',
-        'searchWords': 'otto',
-        'markedMatrix' : [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+        'fillSpacesMode': FillSpacesMode.DOWN,
+        'markedMatrix': [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
         'expectedOutput': ['u    ', 'powie', 'ojfto', 'jfjoj'],
       },
       {'input' : 'S	S	U	N	E	Z	N	Ä	L	G\nS	T	N	E	S	I	W	B	S	Ü',
-        'searchWords': 'nes',
+        'fillSpacesMode': FillSpacesMode.DOWN,
+        'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
+        'expectedOutput': ['SS   ZNÄLG', 'STUNEIWBSÜ'],
+      },
+
+      {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
+        'fillSpacesMode': FillSpacesMode.TOP,
+        'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
+        'expectedOutput': ['TCIPRAOE','SCLDIFSI','BOKRNFRS','SOHALERT','TBSEHHEH','ORFDCSVA','EBRULOLI','NAMEMSEB'],
+      },
+      {'input' : 'KCETTEHA\nNHHNNNSF\nEKUWALKR\nNONHFEIO\nINEAEGNS\nHCAGELEC\nSMIETNEB\nDMEHCKRI\n',
+        'fillSpacesMode': FillSpacesMode.TOP,
+        'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]],
+        'expectedOutput': ['    TE A','KCETNN F','NHHNAL R','EKUWFEHO','NONHEGNS','INEAELEC','HCAGTNEB','SMIECKRI'],
+      },
+      {'input' : 'uewie\npotto\nojftj\njfjoh',
+        'fillSpacesMode': FillSpacesMode.TOP,
+        'markedMatrix': [[0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+        'expectedOutput': ['u    ', 'pewie', 'ojftj', 'jfjoh'],
+      },
+      {'input' : 'uowie\npotto\nojftj\njfjoo',
+        'fillSpacesMode': FillSpacesMode.TOP,
+        'markedMatrix': [[0, 4, 0, 0, 0], [0, 0, 4, 0, 0], [0, 0, 0, 4, 0], [0, 0, 0, 0, 4]],
+        'expectedOutput': ['u    ', 'powie', 'ojfto', 'jfjoj'],
+      },
+      {'input' : 'S	S	U	N	E	Z	N	Ä	L	G\nS	T	N	E	S	I	W	B	S	Ü',
+        'fillSpacesMode': FillSpacesMode.TOP,
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
         'expectedOutput': ['SS   ZNÄLG', 'STUNEIWBSÜ'],
       },
     ];
 
     for (var elem in _inputsToExpected) {
-      test('input: ${elem['input']} words: ${elem['searchWords']}', () {
-        var searchDirection = SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
-        SearchDirectionFlags.setFlag(0, SearchDirectionFlags.HORIZONTAL) |
-        SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
-        SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
+      test('input: ${elem['input']} mode: ${elem['fillSpacesMode']}', () {
 
         var marked = (elem['markedMatrix'] as List<List<int>>).map((row) => Uint8List.fromList(row)).toList();
-        var _actual = deleteFallingDownLetters(elem['input'] as String, marked);
+        var _actual = fillSpaces(elem['input'] as String, marked, elem['fillSpacesMode'] as FillSpacesMode);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -241,7 +289,7 @@ void main() {
 
   group("wordSearch.normalizeAndSplitInputForView:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': 'uewie\npotto\n\r\nojftj\njfjoh',
+      {'input': 'uewie\npotto\n  \r\nojftj\njfjoh',
         'expectedOutput': ['uewie', 'potto', 'ojftj', 'jfjoh'],
       },
       {'input': 'uewoe\npotto\nojftjr\njfjoh',

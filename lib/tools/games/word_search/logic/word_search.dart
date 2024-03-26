@@ -8,6 +8,8 @@ import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 const _emptyChar = '\t';
 final _nonBreakingSpace = String.fromCharCode(0160);
 
+enum FillSpacesMode {OFF, DOWN, TOP, LEFT, RIGHT, NOMOVE}
+
 enum SearchDirectionFlags {
   HORIZONTAL,
   VERTICAL,
@@ -243,11 +245,29 @@ List<Uint8List> _buildResultMatrix(String text) {
   return matrix;
 }
 
-List<String> deleteFallingDownLetters(String text, List<Uint8List> markedMatrix) {
+List<String> fillSpaces(String text, List<Uint8List> markedMatrix, FillSpacesMode mode) {
   var lines = _splitLines(_normalizeInput(text, false));
 
   lines = _deleteMarkedLetters(lines, markedMatrix);
-  lines = _fallingDownLetters(lines);
+  switch (mode) {
+    case FillSpacesMode.NOMOVE:
+      return lines;
+    case FillSpacesMode.DOWN:
+      lines = _fillSpaceModeDown(lines);
+      break;
+    case FillSpacesMode.TOP:
+      lines = _fillSpaceModeTop(lines);
+      break;
+    case FillSpacesMode.RIGHT:
+      _fillSpaceModeRight(lines);
+      break;
+    case FillSpacesMode.LEFT:
+      lines = _fillSpaceModeLeft(lines);
+      break;
+    case FillSpacesMode.OFF:
+      break;
+  }
+
   return lines;
 }
 
@@ -262,16 +282,20 @@ List<String> _deleteMarkedLetters(List<String> lines, List<Uint8List> markedMatr
   return lines;
 }
 
-List<String> _fallingDownLetters(List<String> lines) {
-  for (var row = lines.length - 1; row >= 0; row--) {
+List<String> _fillSpaceModeDown(List<String> lines) {
+  for (var row = lines.length - 1; row > 0; row--) {
     for (var column = 0; column < lines[row].length; column++) {
       if (lines[row][column] == _nonBreakingSpace) {
-        lines = _fallingDownLetter(lines, row, column);
+        lines = _fillSpace(lines, row, column, row - 1, column);
 
-        var maxLoops = row - 1;
+        var maxLoops = row;
+        var counter = 0;
         while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
-          lines = _fallingDownLetter(lines, row, column);
-          maxLoops--;
+          counter++;
+          if (_isValidPosition(lines, row - counter, column)) {
+            lines = _fillSpace(lines, row, column, row - counter, column);
+            maxLoops--;
+          }
         }
       }
     }
@@ -279,15 +303,77 @@ List<String> _fallingDownLetters(List<String> lines) {
   return lines;
 }
 
-List<String> _fallingDownLetter(List<String> lines, int row, int column) {
-  if (row > 0) {
-    if (row < lines.length && column < lines[row].length && lines[row][column] == _nonBreakingSpace) {
-      if (column < lines[row - 1].length) {
-        lines[row] = lines[row].replaceRange(column, column + 1, lines[row - 1][column]);
-        lines[row - 1] = lines[row - 1].replaceRange(column, column + 1, _nonBreakingSpace);
-        lines = _fallingDownLetter(lines, row - 1, column);
+List<String> _fillSpaceModeTop(List<String> lines) {
+  for (var row = 0; row < lines.length - 1; row++) {
+    for (var column = 0; column < lines[row].length; column++) {
+      if (lines[row][column] == _nonBreakingSpace) {
+        lines = _fillSpace(lines, row, column, row + 1, column);
+
+        var maxLoops = lines.length - row;
+        var counter = 0;
+        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+          counter++;
+          if (_isValidPosition(lines, row + counter, column)) {
+            lines = _fillSpace(lines, row, column, row + counter, column);
+            maxLoops--;
+          }
+        }
       }
     }
   }
   return lines;
+}
+
+List<String> _fillSpaceModeRight(List<String> lines) {
+  for (var row = 0; row < lines.length; row++) {
+    for (var column = lines[row].length - 1; column > 0; column--) {
+      if (lines[row][column] == _nonBreakingSpace) {
+        lines = _fillSpace(lines, row, column, row, column - 1);
+
+        var maxLoops = column;
+        var counter = 0;
+        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+          counter++;
+          if (_isValidPosition(lines, row, column - counter)) {
+            lines = _fillSpace(lines, row, column, row, column - counter);
+            maxLoops--;
+          }
+        }
+      }
+    }
+  }
+  return lines;
+}
+
+List<String> _fillSpaceModeLeft(List<String> lines) {
+  for (var row = 0; row < lines.length; row++) {
+    for (var column = 0; column < lines[row].length - 1; column++) {
+      if (lines[row][column] == _nonBreakingSpace) {
+        lines = _fillSpace(lines, row, column, row, column + 1);
+
+        var maxLoops = lines.length - row;
+        var counter = 0;
+        while (lines[row][column] == _nonBreakingSpace && maxLoops > 0) {
+          counter++;
+          if (_isValidPosition(lines, row, column + counter)) {
+            lines = _fillSpace(lines, row, column, row, column + counter);
+            maxLoops--;
+          }
+        }
+      }
+    }
+  }
+  return lines;
+}
+
+List<String> _fillSpace(List<String> lines, int row, int column, int row2, int column2) {
+  if (_isValidPosition(lines, row, column) && _isValidPosition(lines, row2, column2)) {
+    lines[row] = lines[row].replaceRange(column, column + 1, lines[row2][column2]);
+    lines[row2] = lines[row2].replaceRange(column, column + 1, _nonBreakingSpace);
+  }
+  return lines;
+}
+
+bool _isValidPosition (List<String> lines, int row, int column) {
+  return (row >= 0 && row < lines.length && column >= 0 && column < lines[row].length );
 }
