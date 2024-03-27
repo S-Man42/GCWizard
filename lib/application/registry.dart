@@ -268,6 +268,7 @@ import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagrou
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
 import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life.dart';
+import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
@@ -1012,6 +1013,14 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'navajo',
+    ]),
+    GCWTool(tool: const NonogramSolver(), id: 'nonogramsolver', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'games',
+      'nonogramsolver',
+      'grid',
+      'images'
     ]),
     GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
       ToolCategory.GAMES,
@@ -4296,6 +4305,26 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_firesafety', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_firesafety'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_mandatory', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_mandatory'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_prohibition', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_prohibition'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_safecondition', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_safecondition'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_warning', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_warning'
     ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
