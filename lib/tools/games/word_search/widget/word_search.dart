@@ -156,6 +156,7 @@ class WordSearchState extends State<WordSearch> {
             ),
             GCWDropDown<FillGapMode>(
               title: i18n(context, 'word_search_fill_gap_mode'),
+              flexValues: const [1, 1],
               value: _currentFillGapMode,
               onChanged: (value) {
                 setState(() {
@@ -180,7 +181,7 @@ class WordSearchState extends State<WordSearch> {
   }
 
   Widget _buildButtonRow() {
-    return (_currentFillGapMode != FillGapMode.OFF)
+    return (_currentFillGapMode == FillGapMode.OFF)
       ? Row(
         children: <Widget>[
           Expanded(
