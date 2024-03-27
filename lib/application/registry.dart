@@ -1389,6 +1389,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.GAMES
     ], searchKeys: const [
       'word_search',
+      'grid'
     ]),
     GCWTool(tool: ZamonianNumbers(), autoScroll: false, id: 'zamoniannumbers', categories: const [
       ToolCategory.CRYPTOGRAPHY

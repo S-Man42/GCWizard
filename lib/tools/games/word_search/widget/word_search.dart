@@ -6,6 +6,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -33,7 +34,7 @@ class WordSearchState extends State<WordSearch> {
   var _currentInputExpanded = true;
   var _currentWordsExpanded = true;
   var _currentOptionsExpanded = false;
-  var _currentFallingDownMode = false;
+  var _currentFillGapMode = FillGapMode.OFF;
 
   List<Uint8List> _decodeOutput = [];
   List<String> _viewOutput = [];
@@ -57,7 +58,7 @@ class WordSearchState extends State<WordSearch> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
         GCWExpandableTextDivider(
-          text: i18n(context, 'common_input'),
+          text: i18n(context, 'word_search_input'),
           expanded: _currentInputExpanded,
           onChanged: (value) {
             setState(() {
@@ -100,6 +101,7 @@ class WordSearchState extends State<WordSearch> {
   Widget _buildOptionWidget() {
     return GCWExpandableTextDivider(
       text: i18n(context, 'common_options'),
+      suppressTopSpace: false,
       expanded: _currentOptionsExpanded,
       onChanged: (value) {
         setState(() {
@@ -152,52 +154,65 @@ class WordSearchState extends State<WordSearch> {
                 });
               },
             ),
-            GCWOnOffSwitch(
-              title: i18n(context, 'word_search_falling_down_mode'),
-              value: _currentFallingDownMode,
+            GCWDropDown<FillGapMode>(
+              title: i18n(context, 'word_search_fill_gap_mode'),
+              value: _currentFillGapMode,
               onChanged: (value) {
                 setState(() {
-                  _currentFallingDownMode = value;
+                  _currentFillGapMode = value;
                 });
               },
+              items: <FillGapMode, String>{
+                  FillGapMode.OFF: 'common_off',
+                  FillGapMode.DOWN: 'common_down',
+                  FillGapMode.TOP: 'common_top',
+                  FillGapMode.RIGHT: 'common_right',
+                  FillGapMode.LEFT: 'common_left',
+                  FillGapMode.NOMOVE: 'word_search_no_move',
+                }.map((key, value) {
+                  return MapEntry(key, GCWDropDownMenuItem(value: key, child: i18n(context, value)));
+                })
+                .values
+                .toList(),
             ),
           ]),
     );
   }
 
   Widget _buildButtonRow() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-            child: GCWButton(
-              text: i18n(context, 'common_start'),
-              onPressed: () {
-                setState(() {
-                  _calcOutput();
-                });
-              },
+    return (_currentFillGapMode != FillGapMode.OFF)
+      ? Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+              child: GCWButton(
+                text: i18n(context, 'common_start'),
+                onPressed: () {
+                  setState(() {
+                    _calcOutput();
+                  });
+                },
+              ),
             ),
           ),
-        ),
-        (_currentFallingDownMode)
-          ? Expanded(
+        ])
+     : Row(
+        children: <Widget>[
+          Expanded(
             child: Container(
               padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               child: GCWButton(
-                text: i18n(context, 'word_search_start_with_output'),
+                text: i18n(context, 'common_start'),
                 onPressed: () {
                   setState(() {
-                    _calcOutputWithLastResult();
+                    _calcOutputFillGapMode();
                   });
                 },
               ),
             )
-          )
-            : Container(),
-        (_currentFallingDownMode)
-          ? Expanded(
+          ),
+          Expanded(
             child: Container(
               padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               child: GCWButton(
@@ -209,9 +224,22 @@ class WordSearchState extends State<WordSearch> {
                 },
               ),
             )
-          )
-          : Container(),
-      ],
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+              child: GCWButton(
+                text: i18n(context, 'common_reset'),
+                onPressed: () {
+                  setState(() {
+                    _decodeOutput = [];
+                    _viewOutput = [];
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
     );
   }
 
@@ -221,16 +249,19 @@ class WordSearchState extends State<WordSearch> {
     setState(() {});
   }
 
-  void _calcOutputWithLastResult() {
-    if (_viewOutput.isEmpty) return;
-    _decodeOutput = searchWordList(_viewOutput.join('\r\n'), _currentWords, _currentSearchDirection, noSpaces: false);
-    setState(() {});
+  void _calcOutputFillGapMode() {
+    if (_viewOutput.isEmpty) {
+      _calcOutput();
+    } else {
+      _decodeOutput = searchWordList(_viewOutput.join('\r\n'), _currentWords, _currentSearchDirection, noSpaces: false);
+      setState(() {});
+    }
   }
 
   void _deleteMarkedLetters() {
     if (_viewOutput.isEmpty) return;
     if (_decodeOutput.isEmpty) return;
-    _viewOutput = fillSpaces(_viewOutput.join('\r\n'), _decodeOutput);
+    _viewOutput = fillSpaces(_viewOutput.join('\r\n'), _decodeOutput, _currentFillGapMode);
     _decodeOutput = searchWordList(_viewOutput.join('\r\n'), '', 0, noSpaces: false);
     setState(() {});
   }
