@@ -141,6 +141,5 @@ void openInBinary2Image(BuildContext context, String text) {
             tool: Binary2Image(barcodeBinary: text),
             toolName: i18n(context, 'binary2image_title'),
             id: '',
-            suppressHelpButton: true,
           )));
 }

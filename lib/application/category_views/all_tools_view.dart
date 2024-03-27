@@ -39,6 +39,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/sqrt5_select
 import 'package:gc_wizard/application/category_views/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/uic_wagoncode_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -745,6 +746,7 @@ void _initStaticToolList() {
       className(const Trithemius()),
       className(const TTS()),
       className(const UFI()),
+      className(const UICWagonCodeSelection()),
       className(const UniversalProductCode()),
       className(const UnitConverter()),
       className(const UnixTime()),

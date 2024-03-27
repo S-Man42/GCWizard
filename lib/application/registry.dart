@@ -90,9 +90,11 @@ import 'package:gc_wizard/application/category_views/selector_lists/symbol_table
 import 'package:gc_wizard/application/category_views/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/uic_wagoncode_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/zodiac_selection.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
@@ -444,6 +446,11 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_countrycodes.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_freight_classifications.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_passenger_lettercodes.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_vkm.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/widget/vanity_multitap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
@@ -1331,6 +1338,9 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'ufi',
     ]),
+    GCWTool(tool: const UICWagonCodeSelection(), id: 'uic_wagoncode_selection', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ]),
     GCWTool(tool: const UnitConverter(), id: 'unitconverter', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1394,6 +1404,9 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'zc1',
     ]),
+    GCWTool(tool: const ZodiacSelection(), id: 'zodiac_selection', categories: const [
+      ToolCategory.MISCELLANEOUS
+    ]),
 
     //ApparentTemperatureSelection  ********************************************************************************************
     GCWTool(tool: const HeatIndex(), id: 'heatindex', searchKeys: const [
@@ -1415,13 +1428,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const WetBulbTemperature(), id: 'wet_bulb_temperature', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_wet_bulb_temperature',
-    ]),
-
-    GCWTool(tool: const Zodiac(), id: 'zodiac', searchKeys: const [
-      'symbol_alchemy',
-      'symbol_planets',
-      'symbol_zodiacsigns',
-      'symbol_zodiacsigns_latin',
     ]),
 
     //AstronomySelection  ********************************************************************************************
@@ -4336,6 +4342,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: const [
       'color',
       'barcodes',
+      'railways',
       'symbol_kartrak',
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const ['symbol_kaktovik', 'zigzag']),
@@ -4911,6 +4918,30 @@ void initializeRegistry(BuildContext context) {
       'tomtom',
     ]),
 
+    // UICWagonCodeSelection ***************************************************************************************
+    GCWTool(tool: const UICWagonCode(), id: 'uic_wagoncode', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+    ]),
+    GCWTool(tool: const UICWagonCodeVKM(), id: 'uic_wagoncode_vkm', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+      'uic_wagoncode_vkm',
+    ]),
+    GCWTool(tool: const UICWagonCodeCountryCodes(), id: 'uic_wagoncode_countrycodes', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+      'countries',
+    ]),
+    GCWTool(tool: const UICWagonCodeFreightClassifications(), id: 'uic_wagoncode_freight_classification', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+    ]),
+    GCWTool(tool: const UICWagonCodePassengerLettercodes(), id: 'uic_wagoncode_passenger_lettercodes', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+    ]),
+
     //VanitySelection **********************************************************************************************
     GCWTool(tool: const VanitySingletap(), id: 'vanity_singletap', searchKeys: const [
       'vanity',
@@ -4953,7 +4984,7 @@ void initializeRegistry(BuildContext context) {
       'trithemius',
     ]),
 
-    //WherigoUrwigoSelection **************************************************************************************
+    // WherigoUrwigoSelection ************************************************************************************
     GCWTool(tool: const WherigoAnalyze(), id: 'wherigo', isBeta: true, categories: const [
       ToolCategory.IMAGES_AND_FILES,
       ToolCategory.GENERAL_CODEBREAKERS
@@ -4970,6 +5001,15 @@ void initializeRegistry(BuildContext context) {
         tool: const EarwigoTextDeobfuscation(),
         id: 'earwigo_textdeobfuscation',
         searchKeys: const ['wherigo', 'earwigo', 'urwigo_textdeobfuscation']),
+
+    // ZodiacSelection ******************************************************************************************
+    GCWTool(tool: const Zodiac(), id: 'zodiac', searchKeys: const [
+      'symbol_alchemy',
+      'symbol_planets',
+      'symbol_zodiacsigns',
+      'symbol_zodiacsigns_latin',
+    ]),
+
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.id + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.id + '_title', useDefaultLanguage: true);
