@@ -273,6 +273,7 @@ import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solve
 import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
@@ -1393,6 +1394,12 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'z22',
+    ]),
+    GCWTool(tool: const WordSearch(), id: 'word_search', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'word_search',
+      'grid'
     ]),
     GCWTool(tool: ZamonianNumbers(), autoScroll: false, id: 'zamoniannumbers', categories: const [
       ToolCategory.CRYPTOGRAPHY
