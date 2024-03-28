@@ -8,7 +8,7 @@ import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 const _emptyChar = '\t';
 final _nonBreakingSpace = String.fromCharCode(0160);
 
-enum FillGapMode {OFF, DOWN, TOP, LEFT, RIGHT, NOMOVE}
+enum FillGapMode {NOMOVE, DOWN, TOP, LEFT, RIGHT}
 
 enum SearchDirectionFlags {
   HORIZONTAL,

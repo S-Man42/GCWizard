@@ -34,7 +34,7 @@ class WordSearchState extends State<WordSearch> {
   var _currentInputExpanded = true;
   var _currentWordsExpanded = true;
   var _currentOptionsExpanded = false;
-  var _currentFillGapMode = FillGapMode.OFF;
+  var _currentFillGapMode = FillGapMode.NOMOVE;
 
   List<Uint8List> _decodeOutput = [];
   List<String> _viewOutput = [];
@@ -164,12 +164,11 @@ class WordSearchState extends State<WordSearch> {
                 });
               },
               items: <FillGapMode, String>{
-                  FillGapMode.OFF: 'common_off',
+                  FillGapMode.NOMOVE: 'word_search_no_move',
                   FillGapMode.DOWN: 'common_down',
                   FillGapMode.TOP: 'common_top',
                   FillGapMode.RIGHT: 'common_right',
                   FillGapMode.LEFT: 'common_left',
-                  FillGapMode.NOMOVE: 'word_search_no_move',
                 }.map((key, value) {
                   return MapEntry(key, GCWDropDownMenuItem(value: key, child: i18n(context, value)));
                 })
@@ -181,67 +180,49 @@ class WordSearchState extends State<WordSearch> {
   }
 
   Widget _buildButtonRow() {
-    return (_currentFillGapMode == FillGapMode.OFF)
-      ? Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-              child: GCWButton(
-                text: i18n(context, 'common_start'),
-                onPressed: () {
-                  setState(() {
-                    _calcOutput();
-                  });
-                },
-              ),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+            child: GCWButton(
+              text: i18n(context, 'common_start'),
+              onPressed: () {
+                setState(() {
+                  _calcOutputFillGapMode();
+                });
+              },
+            ),
+          )
+        ),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+            child: GCWButton(
+              text: i18n(context, 'word_search_delete_letters'),
+              onPressed: () {
+                setState(() {
+                  _deleteMarkedLetters();
+                });
+              },
+            ),
+          )
+        ),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: GCWButton(
+              text: i18n(context, 'common_reset'),
+              onPressed: () {
+                setState(() {
+                  _decodeOutput = [];
+                  _viewOutput = [];
+                });
+              },
             ),
           ),
-        ])
-     : Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-              child: GCWButton(
-                text: i18n(context, 'common_start'),
-                onPressed: () {
-                  setState(() {
-                    _calcOutputFillGapMode();
-                  });
-                },
-              ),
-            )
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-              child: GCWButton(
-                text: i18n(context, 'word_search_delete_letters'),
-                onPressed: () {
-                  setState(() {
-                    _deleteMarkedLetters();
-                  });
-                },
-              ),
-            )
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-              child: GCWButton(
-                text: i18n(context, 'common_reset'),
-                onPressed: () {
-                  setState(() {
-                    _decodeOutput = [];
-                    _viewOutput = [];
-                  });
-                },
-              ),
-            ),
-          ),
-        ],
-    );
+        ),
+    ]);
   }
 
   void _calcOutput() {
