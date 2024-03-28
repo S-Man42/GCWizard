@@ -8,7 +8,7 @@ import 'package:gc_wizard/utils/string_utils.dart' as strUtils;
 const _emptyChar = '\t';
 final _nonBreakingSpace = String.fromCharCode(0160);
 
-enum FillGapMode {NOMOVE, DOWN, TOP, LEFT, RIGHT}
+enum FillGapMode {OFF, DOWN, TOP, LEFT, RIGHT}
 
 enum SearchDirectionFlags {
   HORIZONTAL,
@@ -250,8 +250,6 @@ List<String> fillSpaces(String text, List<Uint8List> markedMatrix, FillGapMode m
 
   lines = _deleteMarkedLetters(lines, markedMatrix);
   switch (mode) {
-    case FillGapMode.NOMOVE:
-      return lines;
     case FillGapMode.DOWN:
       lines = _fillGapModeDown(lines);
       break;
@@ -264,7 +262,7 @@ List<String> fillSpaces(String text, List<Uint8List> markedMatrix, FillGapMode m
     case FillGapMode.LEFT:
       lines = _fillGapModeLeft(lines);
       break;
-    case FillGapMode.OFF:
+    default:
       break;
   }
 

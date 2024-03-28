@@ -34,7 +34,7 @@ class WordSearchState extends State<WordSearch> {
   var _currentInputExpanded = true;
   var _currentWordsExpanded = true;
   var _currentOptionsExpanded = false;
-  var _currentFillGapMode = FillGapMode.NOMOVE;
+  var _currentFillGapMode = FillGapMode.OFF;
 
   List<Uint8List> _decodeOutput = [];
   List<String> _viewOutput = [];
@@ -164,7 +164,7 @@ class WordSearchState extends State<WordSearch> {
                 });
               },
               items: <FillGapMode, String>{
-                  FillGapMode.NOMOVE: 'word_search_no_move',
+                  FillGapMode.OFF: 'common_off',
                   FillGapMode.DOWN: 'common_down',
                   FillGapMode.TOP: 'common_top',
                   FillGapMode.RIGHT: 'common_right',
