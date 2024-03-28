@@ -37,15 +37,8 @@ class _UICWagenCodeFreightCategory {
   _UICWagenCodeFreightCategory(String number) {
     numberCode = number[4];
     letterCode = _getCategoryLetterCode(number);
-    name = 'uic_freight_category_' + numberCode;
+    name = 'uic_freight_category_' + letterCode.toLowerCase();
   }
-}
-
-class _UICWagenCodeFreightClassificationDescription {
-  late final String code;
-  late final String description;
-
-  _UICWagenCodeFreightClassificationDescription(this.code, this.description);
 }
 
 class _UICWagenCodeFreightClassification {

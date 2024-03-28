@@ -12,6 +12,9 @@ const Map<String, Map<String, List<String>>> _UICWagonCodeFreightClassificationD
     'uic_freight_codes_aa_2': ['L'],
     'uic_freight_codes_aa_3': ['S'],
   },
+  'aaa': {
+    'uic_freight_codes_aaa_1': ['S']
+  },
   'b': {
     'uic_freight_codes_b_1': ['F'],
     'uic_freight_codes_b_2': ['G'],
