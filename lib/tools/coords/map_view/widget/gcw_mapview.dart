@@ -169,9 +169,18 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   String _formatLengthOutput(double length) {
-    return NumberFormat('0.00').format(defaultLengthUnitGCWMapView.fromMeter(length)) +
+    var lengthUnit = defaultLengthUnitGCWMapView;
+    var format = '0.00';
+    if (lengthUnit.symbol == 'm' && length >= 10000) {
+      lengthUnit = LENGTH_KM;
+      if (length < 100000) {
+        format = '0.000';
+      }
+    }
+
+    return NumberFormat(format).format(lengthUnit.fromMeter(length)) +
         ' ' +
-        defaultLengthUnitGCWMapView.symbol;
+        lengthUnit.symbol;
   }
 
   String _formatBearingOutput(double bearing) {
