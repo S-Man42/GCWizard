@@ -186,7 +186,7 @@ class WordSearchState extends State<WordSearch> {
           child: Container(
             padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
             child: GCWButton(
-              text: i18n(context, 'common_start'),
+              text: _viewOutput.isEmpty ? i18n(context, 'common_search') : i18n(context, 'word_search_search_more'),
               onPressed: () {
                 setState(() {
                   _calcOutputFillGapMode();
