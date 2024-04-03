@@ -6,6 +6,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -57,40 +58,28 @@ class WordSearchState extends State<WordSearch> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-        GCWExpandableTextDivider(
+        GCWTextDivider(
           text: i18n(context, 'word_search_input'),
-          expanded: _currentInputExpanded,
-          onChanged: (value) {
-            setState(() {
-              _currentInputExpanded = value;
-            });
-          },
-          child: GCWTextField(
-              controller: _inputController,
-              style: gcwMonotypeTextStyle(),
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            )
         ),
-        GCWExpandableTextDivider(
-          text: i18n(context, 'common_search'),
-          expanded: _currentWordsExpanded,
-          onChanged: (value) {
+        GCWTextField(
+          controller: _inputController,
+          style: gcwMonotypeTextStyle(),
+          onChanged: (text) {
             setState(() {
-              _currentWordsExpanded = value;
+              _currentInput = text;
             });
           },
-          child: GCWTextField(
-              controller: _wordsController,
-              onChanged: (text) {
-                setState(() {
-                  _currentWords = text;
-                });
-              },
-            ),
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'common_search'),
+        ),
+        GCWTextField(
+          controller: _wordsController,
+          onChanged: (text) {
+            setState(() {
+              _currentWords = text;
+            });
+          },
         ),
         _buildOptionWidget(),
         _buildButtonRow(),
