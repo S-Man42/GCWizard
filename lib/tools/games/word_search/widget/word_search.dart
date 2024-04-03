@@ -31,9 +31,7 @@ class WordSearchState extends State<WordSearch> {
                                 SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
                                 SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
                                 SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
-
-  var _currentInputExpanded = true;
-  var _currentWordsExpanded = true;
+  
   var _currentOptionsExpanded = false;
   var _currentFillGapMode = FillGapMode.OFF;
 
