@@ -1,6 +1,5 @@
 part of 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 
-const double _fieldSize = 20.0;
 const int _boldLineIntvervall = 5;
 
 class NonogramBoard extends StatefulWidget {
