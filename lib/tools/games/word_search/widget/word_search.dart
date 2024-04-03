@@ -31,7 +31,7 @@ class WordSearchState extends State<WordSearch> {
                                 SearchDirectionFlags.setFlag(0, SearchDirectionFlags.VERTICAL) |
                                 SearchDirectionFlags.setFlag(0, SearchDirectionFlags.DIAGONAL) |
                                 SearchDirectionFlags.setFlag(0, SearchDirectionFlags.REVERSE);
-  
+
   var _currentOptionsExpanded = false;
   var _currentFillGapMode = FillGapMode.OFF;
 
@@ -153,7 +153,7 @@ class WordSearchState extends State<WordSearch> {
               items: <FillGapMode, String>{
                   FillGapMode.OFF: 'common_off',
                   FillGapMode.DOWN: 'common_down',
-                  FillGapMode.TOP: 'common_top',
+                  FillGapMode.TOP: 'common_up',
                   FillGapMode.RIGHT: 'common_right',
                   FillGapMode.LEFT: 'common_left',
                 }.map((key, value) {

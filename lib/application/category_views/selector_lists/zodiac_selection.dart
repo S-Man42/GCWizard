@@ -14,7 +14,7 @@ class ZodiacSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       if (className(element.tool) == className(const SymbolTable()) &&
-          ['zodiac_signs', 'zodiac_signs_lating'].contains((element.tool as SymbolTable).symbolKey)) {
+          ['zodiac_signs', 'zodiac_signs_latin'].contains((element.tool as SymbolTable).symbolKey)) {
         return true;
       }
 

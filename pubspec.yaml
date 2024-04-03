@@ -194,6 +194,9 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/four_triangles/
     - lib/tools/symbol_tables/_common/assets/freemason/
     - lib/tools/symbol_tables/_common/assets/freemason_v2/
+    - lib/tools/symbol_tables/_common/assets/futhark_elder/
+    - lib/tools/symbol_tables/_common/assets/futhark_younger/
+    - lib/tools/symbol_tables/_common/assets/futhorc/
     - lib/tools/symbol_tables/_common/assets/futurama/
     - lib/tools/symbol_tables/_common/assets/futurama_2/
     - lib/tools/symbol_tables/_common/assets/gallifreyan/
@@ -269,6 +272,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/maya_numbers_glyphs/
     - lib/tools/symbol_tables/_common/assets/maya_numerals/
     - lib/tools/symbol_tables/_common/assets/maze/
+    - lib/tools/symbol_tables/_common/assets/medieval_runes/
     - lib/tools/symbol_tables/_common/assets/minimoys/
     - lib/tools/symbol_tables/_common/assets/moon/
     - lib/tools/symbol_tables/_common/assets/moon_phases/
@@ -330,7 +334,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/rm4scc/
     - lib/tools/symbol_tables/_common/assets/robots/
     - lib/tools/symbol_tables/_common/assets/romulan/
-    - lib/tools/symbol_tables/_common/assets/runes/
     - lib/tools/symbol_tables/_common/assets/sanluca/
     - lib/tools/symbol_tables/_common/assets/sarati/
     - lib/tools/symbol_tables/_common/assets/semaphore/

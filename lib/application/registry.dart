@@ -4186,6 +4186,19 @@ void initializeRegistry(BuildContext context) {
       'symbol_freemason',
     ]),
     GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: const ['symbol_freemason']),
+    GCWSymbolTableTool(symbolKey: 'futhark_elder', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'futhark_younger', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark',
+      'symbol_futhorc'
+    ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
     ]),
@@ -4432,6 +4445,10 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: const [
       'symbol_maze',
     ]),
+    GCWSymbolTableTool(symbolKey: 'medieval_runes', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark'
+    ]),
     GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: const [
       'symbol_minimoys',
     ]),
@@ -4630,10 +4647,6 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: const [
       'symbol_romulan',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: const [
-      'symbol_futhark',
-      'symbol_runes',
     ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
