@@ -614,7 +614,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'binary',
     ]),
-    GCWTool(tool: const Binary2Image(), id: 'binary2image', isBeta: true, categories: const [
+    GCWTool(tool: const Binary2Image(), id: 'binary2image', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'binary',
@@ -763,7 +763,7 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'esotericprogramminglanguage',
         ]),
-    GCWTool(tool: const ExifReader(), id: 'exif', isBeta: true, categories: const [
+    GCWTool(tool: const ExifReader(), id: 'exif', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'exif',
@@ -846,7 +846,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'hexadecimal',
     ]),
-    GCWTool(tool: const HexString2File(), id: 'hexstring2file', isBeta: true, categories: const [
+    GCWTool(tool: const HexString2File(), id: 'hexstring2file', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'hexadecimal',
@@ -906,7 +906,6 @@ void initializeRegistry(BuildContext context) {
         autoScroll: false,
         categories: const [ToolCategory.IMAGES_AND_FILES],
         id: 'image_colorcorrections',
-        isBeta: true,
         searchKeys: const [
           'images',
           'color',
@@ -1248,7 +1247,7 @@ void initializeRegistry(BuildContext context) {
       'sqrt',
       'irrationalnumbers',
     ]),
-    GCWTool(tool: const Stegano(), id: 'stegano', isBeta: true, categories: const [
+    GCWTool(tool: const Stegano(), id: 'stegano', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'stegano',
@@ -1381,7 +1380,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const VisualCryptography(),
         id: 'visual_cryptography',
-        isBeta: true,
         categories: const [ToolCategory.IMAGES_AND_FILES, ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['visualcryptography', 'images']),
     GCWTool(tool: const WASD(), id: 'wasd', categories: const [
@@ -5014,7 +5012,7 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     // WherigoUrwigoSelection ************************************************************************************
-    GCWTool(tool: const WherigoAnalyze(), id: 'wherigo', isBeta: true, categories: const [
+    GCWTool(tool: const WherigoAnalyze(), id: 'wherigo', categories: const [
       ToolCategory.IMAGES_AND_FILES,
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
