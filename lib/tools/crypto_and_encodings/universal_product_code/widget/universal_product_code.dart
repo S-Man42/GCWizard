@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -85,9 +86,16 @@ class _UniversalProductCodeState extends State<UniversalProductCode> {
           Column(
             children: [
               GCWText(text: i18n(context, 'universalproductcode_correct_bin')),
-              GCWButton(text: i18n(context, 'universalproductcode_openinbarcodetool'), onPressed: () {
-                openInBinary2Image(context, out.barcodeBinaryCorrectEncoding);
-              })
+              Row(
+                children: [
+                  Container(width: 2 * DOUBLE_DEFAULT_MARGIN),
+                  Expanded(child:
+                  GCWButton(text: i18n(context, 'universalproductcode_openinbarcodetool'), onPressed: () {
+                    openInBinary2Image(context, out.barcodeBinaryCorrectEncoding);
+                  })),
+                  Container(width: 2 * DOUBLE_DEFAULT_MARGIN),
+                ],
+              )
             ],
           ),
           out.barcodeBinaryCorrectEncoding

@@ -21,7 +21,6 @@ String _UPC_A_QUIET = '9';
 String _UPC_A_START_BIN = '101';
 String _UPC_A_END_BIN = '101';
 String _UPC_A_MIDDLE_BIN = '01010';
-String _UPC_A_QUIET_BIN = '0' * 9;
 
 class _UPCAEncoder extends _UniversalProductCodeEncoder {
   _UPCAEncoder(super.input);
