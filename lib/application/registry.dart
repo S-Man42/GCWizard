@@ -284,6 +284,7 @@ import 'package:gc_wizard/tools/images_and_files/hexstring2file/widget/hexstring
 import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.dart';
 import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/widget/image_colorcorrections.dart';
 import 'package:gc_wizard/tools/images_and_files/image_flip_rotate/widget/image_flip_rotate.dart';
+import 'package:gc_wizard/tools/images_and_files/image_stretch_shrink/widget/image_stretch_shrink.dart';
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_eye_solver.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
@@ -918,6 +919,14 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'images',
           'image_fliprotate',
+        ]),
+    GCWTool(
+        tool: const ImageStretchShrink(),
+        categories: const [ToolCategory.IMAGES_AND_FILES],
+        id: 'image_stretchshrink',
+        searchKeys: const [
+          'images',
+          'image_stretchshrink',
         ]),
     GCWTool(
         tool: const IPCodes(),

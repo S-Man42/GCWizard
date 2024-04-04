@@ -243,6 +243,7 @@
   "icecodes": "발트해 얼음 빙원 녹는눈 빙산 얼음코드",
   "image_colorcorrections": "색상 보정 조정 색조 채도 밝기 rgb 빨강 파랑 초록색 빨간색 파란색 녹색",
   "image_fliprotate": "거울 뒤집기 수평 수직 회전",
+  "image_stretchshrink": "stretches shrinks tilting shrinking stretching tilts",
   "images": "사진 이미지 그림 파일",
   "imagesandfilesselection": "분석",
   "stegano": "스테가노그래피",
