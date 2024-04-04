@@ -93,6 +93,7 @@ class _ImageStretchShrinkState extends State<ImageStretchShrink> {
                 onChanged: (value) {
                   setState(() {
                     _currentStretch = value;
+                    _resetInputs();
                   });
                 }
               ),
