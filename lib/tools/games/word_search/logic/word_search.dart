@@ -323,7 +323,7 @@ List<String> _fillGapModeLeft(List<String> lines) {
   for (var row = 0; row < lines.length; row++) {
     for (var column = 0; column < lines[row].length - 1; column++) {
       var counter = 0;
-      while (lines[row][column] == _nonBreakingSpace && counter < lines[row].length - counter) {
+      while (lines[row][column] == _nonBreakingSpace && counter < lines[row].length - column) {
         counter++;
         lines = _fillGap(lines, row, column, row, column + counter);
       }

@@ -196,6 +196,9 @@ void main() {
     }
   });
 
+  var bigMatrixInput = 'EMEEETREDEILFED\nBEEEEEZKRJFWEZA\nALTTFTEXPRRTBPR\nLIMREENTUTNSBEJ\nDSAEETNENORTIZE\nRSSSTDCCLEPWUBE\nIESSEHNYHLRVWYL\nANAITBEULEIEWFI\nNTWEACSXLTLMISN\nTETWMJIQMOUTANG\nEETSUKSIBIHJEKM\nEETRETUEARKQUER';
+  var bigMatrix = [[4,2,2,7,1,1,1,1,1,1,1,1,1,4,2],[2,6,2,2,4,4,0,0,0,0,4,0,4,0,2],[2,2,6,2,4,4,4,0,0,4,0,4,0,0,2],[2,2,2,6,2,4,4,4,4,0,4,0,0,0,2],[2,2,2,3,7,1,5,5,5,5,1,1,1,1,2],[2,2,2,2,2,4,4,4,4,4,0,0,0,0,2],[2,2,2,2,2,4,4,4,4,4,4,0,0,0,2],[2,2,2,2,6,0,4,4,0,4,4,4,0,0,2],[2,2,0,6,2,4,0,0,4,0,4,4,4,0,2],[2,2,4,2,2,0,0,0,0,4,0,4,4,4,2],[3,7,1,1,1,1,1,1,1,1,5,0,4,4,0],[7,1,1,1,1,1,1,1,1,1,1,0,0,4,0]];
+
   group("wordSearch.fillSpacesMode:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
@@ -223,6 +226,11 @@ void main() {
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
         'expectedOutput': ['SSUNEZNÄLG', 'ST   IWBSÜ'],
       },
+      {'input' : bigMatrixInput,
+        'fillSpacesMode': FillGapMode.OFF,
+        'markedMatrix' : bigMatrix,
+        'expectedOutput': ['               ','      ZKRJ W Z ','       XP R BP ','         T SBE ','               ','          PWUB ','           VWY ','     B  L   WF ','  W   SX T   S ','     JIQM U    ','           J  M','           QU R'],
+      },
 
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
         'fillSpacesMode': FillGapMode.DOWN,
@@ -248,6 +256,11 @@ void main() {
         'fillSpacesMode': FillGapMode.DOWN,
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
         'expectedOutput': ['SS   ZNÄLG', 'STUNEIWBSÜ'],
+      },
+      {'input' : bigMatrixInput,
+        'fillSpacesMode': FillGapMode.DOWN,
+        'markedMatrix' : bigMatrix,
+        'expectedOutput': ['               ','               ','               ','               ','               ','             Z ','           WBP ','           SBE ','       KR  WUB ','      ZXPJRVWY ','     BSXLTPJWFM','  W  JIQMTUQUSR']
       },
 
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
@@ -275,7 +288,12 @@ void main() {
         'markedMatrix' : [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
         'expectedOutput': ['SSUNEZNÄLG', 'ST   IWBSÜ'],
       },
-
+      {'input' : bigMatrixInput,
+        'fillSpacesMode': FillGapMode.TOP,
+        'markedMatrix' : bigMatrix,
+        'expectedOutput': ['  W  BZKRJRWBZM','     JSXPTPSBPR','      IXLTUWUE ','       QM  VWB ','           JWY ','           QUF ','             S ','               ','               ','               ','               ','               ']
+      },
+      
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
         'fillSpacesMode': FillGapMode.RIGHT,
         'markedMatrix': [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]],
@@ -300,6 +318,11 @@ void main() {
         'fillSpacesMode': FillGapMode.RIGHT,
         'markedMatrix' : [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
         'expectedOutput': [' SUNEZNÄLG', '   STIWBSÜ'],
+      },
+      {'input' : bigMatrixInput,
+        'fillSpacesMode': FillGapMode.RIGHT,
+        'markedMatrix' : bigMatrix,
+        'expectedOutput': ['               ','         ZKRJWZ','          XPRBP','           TSBE','               ','           PWUB','            VWY','           BLWF','          WSXTS','          JIQMU','             JM','            QUR']
       },
 
       {'input' : 'TCIPRAOE\nSCLDIFSI\nBOKRNFRS\nSOHALERT\nTBSEHHEH\nORFDCSVA\nEBRULOLI\nNAMEMSEB\n',
@@ -326,6 +349,11 @@ void main() {
         'fillSpacesMode': FillGapMode.LEFT,
         'markedMatrix' : [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]],
         'expectedOutput': ['SUNEZNÄLG ', 'STIWBSÜ   '],
+      },
+      {'input' : bigMatrixInput,
+        'fillSpacesMode': FillGapMode.LEFT,
+        'markedMatrix' : bigMatrix,
+        'expectedOutput': ['               ','ZKRJWZ         ','XPRBP          ','TSBE           ','               ','PWUB           ','VWY            ','BLWF           ','WSXTS          ','JIQMU          ','JM             ','QUR            ']
       },
     ];
 
