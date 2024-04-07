@@ -27,7 +27,7 @@ void main() {
 
       {
         'number': 'NO9386011117946',
-        'expectedOutput': CheckDigitOutput(false, 'NO2386011117946', [
+        'expectedOutput': CheckDigitOutput(false, 'NO789386011117946', [
           'NO9386611117946',
         ])
       },

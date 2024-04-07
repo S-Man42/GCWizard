@@ -119,6 +119,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
                 ),
               ],
             ),
+          if (_currentInputNumberString.toUpperCase().substring(0, 2) == 'DE' && deBankAccountDoesNotExist)
           _detailsBankData(),
         ],
       );
@@ -174,21 +175,23 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   Widget _detailsBankData() {
     Widget result = Container();
     List<String> bankData = [];
-    if (CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))] != null) {
-      bankData = CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))]!;
-      result = GCWOutput(
-        title: i18n(context, 'checkdigits_iban_data_details'),
-        suppressCopyButton: true,
-        child: GCWColumnedMultilineOutput(
-          copyColumn: 1,
-          data: [
-            [i18n(context, 'checkdigits_iban_data_details_name'), bankData[0]],
-            [i18n(context, 'checkdigits_iban_data_details_city'), bankData[1] + ' ' + bankData[2]],
-            [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[3]],
-          ],
-          flexValues: const [2, 4],
-        ),
-      );
+    if (_currentInputNumberString.length > 12) {
+      if (CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))] != null) {
+        bankData = CHECKDIGITS_IBAN_DE_BANK_ACCOUNT_DATA[int.parse(_currentInputNumberString.substring(4, 12))]!;
+        result = GCWOutput(
+          title: i18n(context, 'checkdigits_iban_data_details'),
+          suppressCopyButton: true,
+          child: GCWColumnedMultilineOutput(
+            copyColumn: 1,
+            data: [
+              [i18n(context, 'checkdigits_iban_data_details_name'), bankData[0]],
+              [i18n(context, 'checkdigits_iban_data_details_city'), bankData[1] + ' ' + bankData[2]],
+              [i18n(context, 'checkdigits_iban_data_details_bic'), bankData[3]],
+            ],
+            flexValues: const [2, 4],
+          ),
+        );
+      }
     }
     return result;
   }
@@ -582,7 +585,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       [i18n(context, 'checkdigits_isbn_prefix'), prefix, ''],
       [i18n(context, 'checkdigits_isbn_group'), group, ''],
       [i18n(context, 'checkdigits_isbn_publisher'), publisher, ''],
-      [i18n(context, 'checkdigits_uic_check_digit'), checkdigit, ''],
+      [i18n(context, 'checkdigits_isbn_check_digit'), checkdigit, ''],
     ];
   }
 
