@@ -163,6 +163,10 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
   }
 }
 
+bool _toManyNumbersToSearch(String number){
+  return ('?'.allMatches(number).length > 2);
+}
+
 List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, String number) {
   if (number == '') {
     return ['checkdigits_invalid_length'];
@@ -170,6 +174,10 @@ List<String> checkDigitsCalculateMissingDigitsAndNumber(CheckDigitsMode mode, St
 
   if (number.length == number.replaceAll('?', '').length) {
     return ['checkdigits_nothing_to_calculate'];
+  }
+
+  if (_toManyNumbersToSearch(number)) {
+    return ['checkdigits_to_many_numbers_to_search'];
   }
 
   number = number.toUpperCase();
