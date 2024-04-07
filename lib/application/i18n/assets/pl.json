@@ -553,6 +553,7 @@
   "ccitt_5_title": "CCITT IA-5",
   "ccitt_5_description": "Międzynarodowa alfabet nr 5, 7 bitowy",
   "ccitt_5_example": "CACHE → 1000011 1000001 1000011 1001000 1000101",
+  "changelog_3.1.0": "[new] Nonogram Solver\n[new] Map: Lines as Rhumb Lines\n[new] Rhumb Lines: Waypoint Projection\n[new] Rhumb Lines: Distance/Bearing\n[new] Battleship Code\n[new] Pollux Code\n[new] Morbit Code\n[new] Word Search/Letter Grid\n[new] UIC Tools\n[new] Coord System: MapCode\n[new] Morse: Gerke, Steinheil\n[new] Check Digits\n[new] UPC-A\n[new] Roman Units\n[new] Atbash: Historic\n[new] Milanesian Number System\n[new] Hebrew Number System\n[new] Formel Solver: Reference to Formula Names\n[new] IEEE754 Float Numbers\n[new] Stretch/Shrink Images\n[new] Numeral Words: Danish\n[new] QR: Expert Options\n[new] Many Symbol Tables\n[chg] Binary/Hexadecimal\n[fix] Coord System: Waldmeister\n[fix] Wherigo Analyzer (Thanks to all)\n[fix] Some Symbol Tables\n",
   "changelog_3.0.3": "[new] Język: Hiszpański (Dzięki, DrakeZero)\n[new] Otwarta Mapa: Ukryj Punkty\n[fix] Otwarta Mapa\n[fix] Znienne Współrzędne\n[fix] Kręgle (dzięki, ferrrix)\n[fix] Łamacz formuł",
   "changelog_3.0.2": "[fix] [Android 13] Zapisz/Wczytaj pliki",
   "changelog_3.0.1": "[fix] Kilka poprawek",
