@@ -553,6 +553,7 @@
   "ccitt_5_title": "CCITT IA-5",
   "ccitt_5_description": "Internationales Alphabet Nr. 5, 7 Bit Code",
   "ccitt_5_example": "CACHE → 1000011 1000001 1000011 1001000 1000101",
+  "changelog_3.1.0": "[new] Nonogramm-Löser\n[new] Karte: Linien als Loxodrome\n[new] Loxodrome: Wegpunktprojektion\n[new] Loxodrome: Distanz/Richtung\n[new] \"Schiffe versenken\"-Code\n[new] Pollux-Code\n[new] Morbit-Code\n[new] Wörtersuche/Buchstabensalat\n[new] UIC-Tools\n[new] Koordsystem: MapCode\n[new] Morse: Gerke, Steinheil\n[new] Checksummen\n[new] UPC-A\n[new] Römische Einheiten\n[new] Atbasch: Historisch\n[new] Milanesisches Zahlensystem\n[new] Hebräisches Zahlensystem\n[new] Formeleditor: Referenz zu Formelnamen\n[new] IEEE754-Fließkommazahlen\n[new] Bilder strecken/stauchen\n[new] Zahlwörter: Dänisch\n[new] QR: Expertenoptionen\n[new] Viele Symboltabellen\n[chg] Binär/Hexadezimal\n[fix] Koordsystem: Waldmeister\n[fix] Wherigo-Analysierer (Danke an alle)\n[fix] Einige Symboltabellen",
   "changelog_3.0.3": "[new] Sprache: Spanisch (Danke, DrakeZero)\n[new] Freie Karte: Punkte ausblenden\n[fix] Freie Karte\n[fix] Variable Koordinaten\n[fix] Bowling (Danke, ferrrix)\n[fix] Formelrechner",
   "changelog_3.0.2": "[fix] [Android 13] Speichern/Laden von Dateien",
   "changelog_3.0.1": "[fix] Einige Bugfixes",
