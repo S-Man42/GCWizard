@@ -323,6 +323,10 @@ String _calculateCreditCardCheckDigit(String number) {
   sum = sum % 10;
   sum = 10 - sum;
 
+  if (sum == 10) {
+    sum = 0;
+  }
+
   return sum.toString();
 }
 

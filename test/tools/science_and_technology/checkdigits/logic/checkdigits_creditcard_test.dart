@@ -16,6 +16,9 @@ void main() {
       {'number': '36123456700002', 'expectedOutput': CheckDigitOutput(true, '', [''])},
       {'number': '36133088888000', 'expectedOutput': CheckDigitOutput(true, '', [''])},
       {'number': '30535335735253', 'expectedOutput': CheckDigitOutput(true, '', [''])},
+      {'number': '38520000023237', 'expectedOutput': CheckDigitOutput(true, '', [''])},
+      {'number': '30569309025904', 'expectedOutput': CheckDigitOutput(true, '', [''])},
+      {'number': '36000000000008', 'expectedOutput': CheckDigitOutput(true, '', [''])},
 
       // Mastercard
       {'number': '2720997206529952', 'expectedOutput': CheckDigitOutput(true, '', [''])},
@@ -96,12 +99,13 @@ void main() {
         '0399000110003',
         '1399000110002',
         '2399000110001',
+        '3399000110000',
         '4399000110009',
         '5399000110008',
         '6399000110007',
         '7399000110006',
         '8399000110005',
-        '9399000110004',
+        '9399000110004'
       ]},
     ];
 
