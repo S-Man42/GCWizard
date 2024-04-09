@@ -169,7 +169,10 @@ import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zam
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
+import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
+import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -660,6 +663,8 @@ void _initStaticToolList() {
       className(const MorseSelection()),
       className(const MurrayTelegraph()),
       className(const MusicNotes()),
+      className(const NonogramSolver()),
+      className(const NumberPyramidSolver()),
       className(const Navajo()),
       className(const NumberSequenceSelection()),
       className(MultiDecoder()),
@@ -770,6 +775,7 @@ void _initStaticToolList() {
       className(const WhitespaceLanguage()),
       className(const WigWagSemaphoreTelegraph()),
       className(const Windchill()),
+      className(const WordSearch()),
       className(const Z22()),
       className(ZamonianNumbers()),
       className(const ZC1()),
