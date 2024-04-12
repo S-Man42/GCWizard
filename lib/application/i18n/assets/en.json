@@ -3981,7 +3981,7 @@
   "punchtape_algol_description" :  "Character Encoding, 5-Bit",
   "qr_code_title": "QR Code",
   "qr_code_description": "Recognize QR code from image files\nCreate QR codes",
-  "qr_code_error_correct_level": "Error correct level",
+  "qr_code_error_correct_level": "Error correction level",
   "qr_code_nothingfound": "No QR code found.",
   "qr_code_modulsize": "Pixel size",
   "qr_code_length_limited": "The number of characters is limited to %s1",
