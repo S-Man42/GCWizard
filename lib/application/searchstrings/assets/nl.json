@@ -241,6 +241,7 @@
   "iataicao": "vliegveldcodes luchtvaart vliegtuigen landingsbaan",
   "iau_constellation": "iau constellaties sterrenstelsels internationaal astronomen afbeeldingen",
   "icecodes": "Baltische zee ijs sneeuw ijsberg ijscodes waterlichamen nilas ijskorst zee-ijs zeeijs navigatie scheepvaart",
+  "ieee754": "floatingnumbers floatnumbers float32 float64 real",
   "image_colorcorrections": "kleurcorrecties kleuren aanpassingen hue verzadiging helderheid rgb rood blauw groen",
   "image_fliprotate": "spiegelen spiegeling spiegel spiegelbeeld horizontaal verticaal omdraaien roteren rotatie draaien omdraaien draaiing omkeren omkering",
   "image_stretchshrink": "stretches shrinks tilting shrinking stretching tilts",

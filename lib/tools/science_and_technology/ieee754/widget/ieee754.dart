@@ -101,8 +101,6 @@ class _IEEE754State extends State<IEEE754> {
   Widget _buildOutput(BuildContext context) {
     var output = '';
 
-    print('AAAA');
-
     if (_currentMode == GCWSwitchPosition.left) {
       var out = encodeIEEE754(_currentEncodeInput, _currentBitMode == GCWSwitchPosition.left);
       if (_currentEndian == GCWSwitchPosition.left) {
@@ -111,18 +109,13 @@ class _IEEE754State extends State<IEEE754> {
       }
       output = out;
     } else {
-      print('BBB');
       output = _currentDecodeInput;
       if (_currentEndian == GCWSwitchPosition.left) {
         output = insertEveryNthCharacter(output, 8, ' ');
         output = reverseBlocks(output).replaceAll(' ', '');
-        print(output);
       }
       output = decodeIEEE754(output);
-      print(output);
     }
-
-    print(output);
 
     return GCWDefaultOutput(
       child: output,

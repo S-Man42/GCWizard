@@ -603,7 +603,7 @@
   "checkdigits_invalid_length" : "Invalid length",
   "checkdigits_invalid_format" : "Invalid format",
   "checkdigits_nothing_to_calculate" : "Nothing to calculate",
-  "checkdigits_to_many_numbers_to_search": "To many '?' A maximum of three is allowed!",
+  "checkdigits_to_many_numbers_to_search": "Too many '?' A maximum of three is allowed!",
   "checkdigits_no_result" : "No result found",
   "checkdigits_checknumber_title" : "Check number",
   "checkdigits_checknumber_description" : "Check given number if correct",

@@ -241,6 +241,7 @@
   "iataicao": "flughafencodes flugplatzcodes landeplatz landeplaetze landeflaechen flugzeuge internationalezivilluftfahrtorganisation",
   "iau_constellation": "sterne sternbilder konstellationen",
   "icecodes": "ostsee eiscodes gewaesser schnee schnelzen eisberg",
+  "ieee754": "floatingnumbers floatnumbers float32 float64 real",
   "image_colorcorrections": "farbkorrekturen anpassen invertieren gammawert saettigung rgb helligkeit",
   "image_fliprotate": "spiegeln spiegelbild horizontales vertikales rotieren umdrehen rotationen umkehren",
   "image_stretchshrink": "streckend stauchend kippend gestrecktes gestauchtes gekipptes",
