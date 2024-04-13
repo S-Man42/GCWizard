@@ -2,14 +2,12 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
-String encodeIEEE754(String number, bool bitLength32 ){
-  if (double.tryParse(number) == null) return '';
-
+String encodeIEEE754(double number, bool bitLength32 ){
   var byteData = ByteData(8);
   if (bitLength32) {
-    byteData.setFloat32(0, double.parse(number));
+    byteData.setFloat32(0, number);
   } else {
-    byteData.setFloat64(0, double.parse(number));
+    byteData.setFloat64(0, number);
   }
   var bytes = byteData.buffer.asUint8List();
   String result = bytes.map((b) => b.toRadixString(2).padLeft(8, '0')).join();

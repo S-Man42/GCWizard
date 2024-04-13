@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart';
 import 'package:gc_wizard/tools/science_and_technology/ieee754/logic/ieee754.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 class IEEE754 extends StatefulWidget {
@@ -18,7 +21,7 @@ class _IEEE754State extends State<IEEE754> {
   late TextEditingController _encodeController;
   late TextEditingController _decodeController;
 
-  String _currentEncodeInput = '';
+  DoubleText _currentEncodeInput = defaultDoubleText;
   String _currentDecodeInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
@@ -28,7 +31,7 @@ class _IEEE754State extends State<IEEE754> {
   @override
   void initState() {
     super.initState();
-    _encodeController = TextEditingController(text: _currentEncodeInput);
+    _encodeController = TextEditingController(text: _currentEncodeInput.text);
     _decodeController = TextEditingController(text: _currentDecodeInput);
   }
 
@@ -64,24 +67,23 @@ class _IEEE754State extends State<IEEE754> {
         )
             : Container(),
         _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-          controller: _encodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9-+.,]')),],
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
-            : GCWTextField(
-          controller: _decodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[01]')),],
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-            });
-          },
-        ),
+          ? GCWDoubleTextField(
+              controller: _encodeController,
+              onChanged: (value) {
+                setState(() {
+                  _currentEncodeInput = value;
+                });
+              }
+            )
+          : GCWTextField(
+            controller: _decodeController,
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[01]')),],
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
         GCWTwoOptionsSwitch(
           title: 'Endian',
           leftValue: 'Little (LE)',
@@ -102,7 +104,7 @@ class _IEEE754State extends State<IEEE754> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      var out = encodeIEEE754(_currentEncodeInput, _currentBitMode == GCWSwitchPosition.left);
+      var out = encodeIEEE754(_currentEncodeInput.value, _currentBitMode == GCWSwitchPosition.left);
       if (_currentEndian == GCWSwitchPosition.left) {
         out = insertEveryNthCharacter(out, 8, ' ');
         out = reverseBlocks(out).replaceAll(' ', '');
