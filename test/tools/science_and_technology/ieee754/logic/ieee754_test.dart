@@ -7,7 +7,6 @@ import 'package:gc_wizard/tools/science_and_technology/ieee754/logic/ieee754.dar
 void main() {
   group("ieee754.float2binary:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : '', '32': true, 'expectedOutput' : ''},
       {'input' : '0.0', '32': true, 'expectedOutput' : '00000000000000000000000000000000'},
       {'input' : '1.0', '32': true, 'expectedOutput' : '00111111100000000000000000000000'},
       {'input' : '-1.0', '32': true, 'expectedOutput' : '10111111100000000000000000000000'},
@@ -22,7 +21,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, 32: ${elem['32']}', () {
-        var _actual = encodeIEEE754(elem['input'] as String, elem['32'] as bool);
+        var _actual = encodeIEEE754(double.parse(elem['input'] as String), elem['32'] as bool);
         expect(_actual, elem['expectedOutput']);
       });
     }

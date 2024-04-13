@@ -422,9 +422,9 @@ String _float2binary(Object number, Object? bitLength){
     _handleError(_INVALIDTYPECAST);
   } else {
     if (bitLength as int == 32) {
-      result = encodeIEEE754(number.toString(), true);
+      result = encodeIEEE754(number as double, true);
     } else if (bitLength == 64) {
-      result = encodeIEEE754(number.toString(), false);
+      result = encodeIEEE754(number as double, false);
     } else {
       result = '';
     }
