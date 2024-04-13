@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/reverse/logic/reverse.dart';
 import 'package:gc_wizard/tools/science_and_technology/ieee754/logic/ieee754.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 class IEEE754 extends StatefulWidget {
   const IEEE754({Key? key}) : super(key: key);
@@ -22,7 +22,8 @@ class _IEEE754State extends State<IEEE754> {
   String _currentDecodeInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
-  GCWSwitchPosition _currentBitMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentBitMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentEndian = GCWSwitchPosition.right;
 
   @override
   void initState() {
@@ -81,7 +82,17 @@ class _IEEE754State extends State<IEEE754> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_output')),
+        GCWTwoOptionsSwitch(
+          title: 'Endian',
+          leftValue: 'Little (LE)',
+          rightValue: 'Big (BE)',
+          value: _currentEndian,
+          onChanged: (value) {
+            setState(() {
+              _currentEndian = value;
+            });
+          }
+        ),
         _buildOutput(context)
       ],
     );
@@ -90,14 +101,31 @@ class _IEEE754State extends State<IEEE754> {
   Widget _buildOutput(BuildContext context) {
     var output = '';
 
+    print('AAAA');
+
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeIEEE754(_currentEncodeInput, _currentBitMode == GCWSwitchPosition.left);
+      var out = encodeIEEE754(_currentEncodeInput, _currentBitMode == GCWSwitchPosition.left);
+      if (_currentEndian == GCWSwitchPosition.left) {
+        out = insertEveryNthCharacter(out, 8, ' ');
+        out = reverseBlocks(out).replaceAll(' ', '');
+      }
+      output = out;
     } else {
-      output = decodeIEEE754(_currentDecodeInput);
+      print('BBB');
+      output = _currentDecodeInput;
+      if (_currentEndian == GCWSwitchPosition.left) {
+        output = insertEveryNthCharacter(output, 8, ' ');
+        output = reverseBlocks(output).replaceAll(' ', '');
+        print(output);
+      }
+      output = decodeIEEE754(output);
+      print(output);
     }
 
-    return GCWOutputText(
-      text: output,
+    print(output);
+
+    return GCWDefaultOutput(
+      child: output,
     );
   }
 }

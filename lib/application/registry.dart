@@ -890,6 +890,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const IEEE754(), id: 'ieee754', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
+      'binary',
       'ieee754',
     ]),
     GCWTool(tool: const ILLIAC(), id: 'illiac', categories: const [
