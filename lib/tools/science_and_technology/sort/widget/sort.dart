@@ -7,8 +7,9 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/sort/logic/sort.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
-enum _SortType{CHARACTERS, WORDS, LINES}
+enum _SortType{CHARACTERS, WORDS, LINES, CHARS_IN_WORDS}
 
 class Sort extends StatefulWidget {
   const Sort({Key? key}) : super(key: key);
@@ -53,14 +54,7 @@ class _SortState extends State<Sort> {
         GCWDropDown<_SortType>(
           value: _currentSortType,
           items: _SortType.values.map((type) {
-            var text = '';
-
-            switch (type) {
-              case _SortType.CHARACTERS: text = 'sort_modes_characters'; break;
-              case _SortType.WORDS: text = 'sort_modes_words'; break;
-              case _SortType.LINES: text = 'sort_modes_lines'; break;
-              default: break;
-            }
+            var text = 'sort_modes_' + enumName(type.toString()).toLowerCase();
 
             return GCWDropDownMenuItem(
               value: type,
@@ -106,8 +100,9 @@ class _SortState extends State<Sort> {
 
     switch (_currentSortType) {
       case _SortType.CHARACTERS: return sortTextASCII(sortInput, sortMode);
-      case _SortType.WORDS: return sortBlocks(sortInput.split(RegExp(r'\s+')).toList(), sortMode).join(' ');
-      case _SortType.LINES: return sortBlocks(sortInput.replaceAll('\r+', '').split(RegExp(r'\n+')).toList(), sortMode).join('\n');
+      case _SortType.WORDS: return sortList<String>(sortInput.split(RegExp(r'\s+')).toList(), sortMode).join(' ');
+      case _SortType.LINES: return sortList<String>(sortInput.replaceAll('\r+', '').split(RegExp(r'\n+')).toList(), sortMode).join('\n');
+      case _SortType.CHARS_IN_WORDS: return sortTextInBlocks(sortInput, sortMode);
       default: return _currentInput;
     }
   }
