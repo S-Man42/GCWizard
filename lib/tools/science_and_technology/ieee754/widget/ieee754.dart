@@ -116,7 +116,7 @@ class _IEEE754State extends State<IEEE754> {
         output = insertEveryNthCharacter(output, 8, ' ');
         output = reverseBlocks(output).replaceAll(' ', '');
       }
-      output = decodeIEEE754(output);
+      output = decodeIEEE754(output).toString();
     }
 
     return GCWDefaultOutput(

@@ -437,10 +437,7 @@ double _binary2float(Object? binary){
   if (_isNotAString(binary)) {
     _handleError(_INVALIDTYPECAST);
   } else {
-    String help = decodeIEEE754(binary as String);
-    if (help != '') {
-      result = double.parse(help);
-    }
+    result = decodeIEEE754(binary as String);
   }
   return result;
 }

@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/ieee754/logic/ieee754.dart';
+import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 
 // https://zahlensysteme-rechner.de/ieee-754-konverter/
 // https://www.h-schmidt.net/FloatConverter/IEEE754.html
@@ -29,31 +30,24 @@ void main() {
 
   group("ieee754.binary2float:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input' : '', 'expectedOutput' : ''},
-      {'input' : '00000000000000000000000000000000', 'expectedOutput' : '0.0'},
-      {'input' : '00111111100000000000000000000000', 'expectedOutput' : '1.0'},
-      {'input' : '10111111100000000000000000000000', 'expectedOutput' : '-1.0'},
-      {'input' : '00111111100000101000111101011100', 'expectedOutput' : '1.02'},
-      {'input' : '10111111100000101000111101011100', 'expectedOutput' : '-1.02'},
-      {'input' : '01000010010110001111000000110000', 'expectedOutput' : '54.23456'},
-      {'input' : '11000010010110001111000000110000', 'expectedOutput' : '-54.23456'},
+      {'input' : '', 'expectedOutput' : 0.0},
+      {'input' : '00000000000000000000000000000000', 'expectedOutput' : 0.0},
+      {'input' : '00111111100000000000000000000000', 'expectedOutput' : 1.0},
+      {'input' : '10111111100000000000000000000000', 'expectedOutput' : -1.0},
+      {'input' : '00111111100000101000111101011100', 'expectedOutput' : 1.02},
+      {'input' : '10111111100000101000111101011100', 'expectedOutput' : -1.02},
+      {'input' : '01000010010110001111000000110000', 'expectedOutput' : 54.23456},
+      {'input' : '11000010010110001111000000110000', 'expectedOutput' : -54.23456},
 
-      {'input' : '01000001100100110011001100110011', 'expectedOutput' : '18.4'},
+      {'input' : '01000001100100110011001100110011', 'expectedOutput' : 18.4},
 
     ];
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}', () {
         var _actual = decodeIEEE754(elem['input'] as String);
-        expect(_round(_actual, elem['expectedOutput'] as String), elem['expectedOutput']);
+        expect(doubleEquals(_actual, elem['expectedOutput'] as double, tolerance: 1e-5), true);
       });
     }
   });
-}
-
-String _round(String target, String template){
-  if (template.split('.').length == 2) {
-    return double.parse(target).toStringAsFixed(template.split('.')[1].length);
-  }
-  return target;
 }

@@ -19,8 +19,8 @@ String encodeIEEE754(double number, bool bitLength32 ){
   return result;
 }
 
-String decodeIEEE754(String binary){
-  String result = '';
+double decodeIEEE754(String binary){
+  num result;
 
   switch (binary.length) {
     case 16:
@@ -35,12 +35,12 @@ String decodeIEEE754(String binary){
     case 128:
       result = _decode(binary, 15, 112);
       break;
-    default: result = '';
+    default: result = 0.0;
   }
-  return result;
+  return result.toDouble();
 }
 
-String _decode(String binary, int eBits, int mBits) {
+num _decode(String binary, int eBits, int mBits) {
   num result = 0.0;
   int s = binary[0] == '1' ? -1 : 1;
   num b = pow(2, eBits - 1) - 1;
@@ -50,5 +50,5 @@ String _decode(String binary, int eBits, int mBits) {
 
   result = s * pow(2, e) * m;
   
-  return result.toString();
+  return result;
 }
