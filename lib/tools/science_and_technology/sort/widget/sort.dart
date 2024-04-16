@@ -91,7 +91,7 @@ class _SortState extends State<Sort> {
             });
           }
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        _buildOutput()
       ],
     );
   }
