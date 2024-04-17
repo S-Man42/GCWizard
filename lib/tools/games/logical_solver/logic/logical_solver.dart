@@ -65,8 +65,8 @@ class Logical {
 		_generateItems();
 
 		if (logical != null) {
-			for (var row = 0; row < min(logical.getRowsCount(), getRowsCount()); row++) {
-				for (var column = 0; column < getColumnsCount(row); column++) {
+			for (var row = 0; row < min(logical.getMaxLineLength(), getMaxLineLength()); row++) {
+				for (var column = 0; column < getLineLength(row); column++) {
 					if (logical.getValue(row, column) != null) {
 						setValue(column, row, logical.getValue(column, row),
 								logical.getFillType(column, row) ?? LogicPuzzleFillType.CALCULATED);
@@ -81,20 +81,32 @@ class Logical {
 		}
 	}
 
-	int getRowsCount() {
+	int getMaxLineLength() {
 	 	return (categoriesCount - 1) * itemsCount;
 	}
 
-	int getColumnsCount(int y) {
-		return (categoriesCount - 1 - (y / itemsCount).floor()) * itemsCount;
+	int getLineLength(int line) {
+		return (categoriesCount - 1 - (line / itemsCount).floor()) * itemsCount;
 	}
 
-	int getBlockRowsCount() {
+	int getMaxBlockLength() {
 		return categoriesCount - 1;
 	}
 
-	int getBlockColumnsCount(int y) {
-		return categoriesCount - y - 1;
+	int getBlockLength(int block) {
+		return categoriesCount - 1 - block;
+	}
+
+	int mapRowColumnBlockIndex(int block) {
+		return  categoriesCount - 2 - block;
+	}
+
+	int blockIndex(int line) {
+		return (line / itemsCount).floor();
+	}
+
+	int blockLine(int value) {
+		return value % itemsCount;
 	}
 
 	int? getValue(int x, int y) {
@@ -102,7 +114,7 @@ class Logical {
 			return null;
 		}
 
-		return blocks[blockIndex(y)][blockIndex(x)].getValue(blockItem(x), blockItem(y));
+		return blocks[blockIndex(y)][blockIndex(x)].getValue(blockLine(x), blockLine(y));
 	}
 
 	/// return valid change
@@ -111,7 +123,7 @@ class Logical {
 
 		var oldValue = getValue(x, y);
 
-		var result = blocks[blockIndex(y)][blockIndex(x)].setValue(blockItem(x), blockItem(y), value, type);
+		var result = blocks[blockIndex(y)][blockIndex(x)].setValue(blockLine(x), blockLine(y), value, type);
 		_cloneValues();
 		// if ((value == null && oldValue == plusValue) || (value == plusValue && oldValue == null)) {
 		// 	_setBlockPlusValue(x, y, value);
@@ -122,8 +134,8 @@ class Logical {
 
 	void _setBlockPlusValue(int x, int y, int? value) {
 		var block = blocks[blockIndex(y)][blockIndex(x)];
-		x = blockItem(x);
-		y = blockItem(y);
+		x = blockLine(x);
+		y = blockLine(y);
 
 		// row
 		for (var i = 0; i < itemsCount; i++) {
@@ -147,8 +159,8 @@ class Logical {
 			}
 		}
 
-		for (var y = 0; y < getRowsCount(); y++) {
-			for (var x = 0; x < getColumnsCount(y); x++) {
+		for (var y = 0; y < getMaxLineLength(); y++) {
+			for (var x = 0; x < getLineLength(y); x++) {
 				var _value = getValue(x, y);
 				if (_value == plusValue) {
 					_setBlockPlusValue(x, y, _value);
@@ -170,19 +182,19 @@ class Logical {
 	void _cloneBlocks(int x, int y) {
 		var xBlockIndex = blockIndex(x);
 		var yBlockIndex = blockIndex(y);
-		var xBlockItem = blockItem(x);
-		var yBlockItem = blockItem(y);
+		var xBlockItem = blockLine(x);
+		var yBlockItem = blockLine(y);
 
-		for (var row = 0; row < getBlockColumnsCount(xBlockIndex); row++) {
-			if (row != yBlockIndex && mapRowColumBlockIndex(yBlockIndex) < blocks[yBlockIndex].length) { //??
+		for (var row = 0; row < getBlockLength(xBlockIndex); row++) {
+			if (row != yBlockIndex && mapRowColumnBlockIndex(yBlockIndex) < blocks[yBlockIndex].length) { //??
 				_cloneBlockValues(xBlockItem, yBlockItem,
-						blocks[row][xBlockIndex], blocks[yBlockIndex][mapRowColumBlockIndex(row)]);
+						blocks[row][xBlockIndex], blocks[yBlockIndex][mapRowColumnBlockIndex(row)]);
 			}
 		}
-		for (var column = 0; column < getBlockColumnsCount(yBlockIndex); column++) {
-			if (column != xBlockIndex && mapRowColumBlockIndex(xBlockIndex) < blocks.length) { //??
+		for (var column = 0; column < getBlockLength(yBlockIndex); column++) {
+			if (column != xBlockIndex && mapRowColumnBlockIndex(xBlockIndex) < blocks.length) { //??
 				_cloneBlockValues(xBlockItem, yBlockItem,
-						blocks[yBlockIndex][column], blocks[mapRowColumBlockIndex(column)][yBlockIndex]);
+						blocks[yBlockIndex][column], blocks[mapRowColumnBlockIndex(column)][yBlockIndex]);
 			}
 		}
 	}
@@ -203,9 +215,6 @@ class Logical {
 		}
 	}
 
-	int mapRowColumBlockIndex(int value) {
-		return  categoriesCount - value - 2;
-	}
 
 	void _removeCalculatedValues(_LogicalBlock block) {
 		for (var x = 0; x < itemsCount; x++) {
@@ -221,8 +230,8 @@ class Logical {
 		if (value == null || value == minusValue ) return true;
 
 		var block = blocks[blockIndex(y)][blockIndex(x)];
-		x = blockItem(x);
-		y = blockItem(y);
+		x = blockLine(x);
+		y = blockLine(y);
 
 		// row
 		for (var i = 0; i < itemsCount; i++) {
@@ -236,22 +245,14 @@ class Logical {
 		return true;
 	}
 
-	int blockIndex(int value) {
-		return (value / itemsCount).floor();
-	}
-
-	int blockItem(int value) {
-		return value % itemsCount;
-	}
-
 	LogicPuzzleFillType? getFillType(int x, int y) {
 		if (!validPosition(x, y)) return null;
 
-		return blocks[blockIndex(y)][blockIndex(x)].getFillType(blockItem(x), blockItem(y));
+		return blocks[blockIndex(y)][blockIndex(x)].getFillType(blockLine(x), blockLine(y));
 	}
 
 	bool validPosition(int x, int y) {
-		return !(y < 0 || y >= getRowsCount() || x < 0 || x >= getColumnsCount(y));
+		return !(y < 0 || y >= getMaxLineLength() || x < 0 || x >= getLineLength(y));
 	}
 
 	void removeRelations() {
@@ -264,8 +265,8 @@ class Logical {
 
 	void _generateBlocks() {
 		blocks = List<List<_LogicalBlock>>.generate(
-				getBlockRowsCount(), (index) => List<_LogicalBlock>.generate(
-				getBlockColumnsCount(index), (index) => _LogicalBlock(itemsCount)));
+				getMaxBlockLength(), (index) => List<_LogicalBlock>.generate(
+				getBlockLength(index), (index) => _LogicalBlock(itemsCount)));
 	}
 
 	void _generateItems() {
