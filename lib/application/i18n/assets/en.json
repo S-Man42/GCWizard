@@ -600,6 +600,8 @@
   "checkdigits_selection_title" : "Check digits",
   "checkdigits_selection_description" : "Calculations for Numbers with Check Digits",
   "checkdigits_hint" : "Hint",
+  "checkdigits_checkdigit" : "Check Digit",
+  "checkdigits_country": "Country",
   "checkdigits_invalid_length" : "Invalid length",
   "checkdigits_invalid_format" : "Invalid format",
   "checkdigits_nothing_to_calculate" : "Nothing to calculate",

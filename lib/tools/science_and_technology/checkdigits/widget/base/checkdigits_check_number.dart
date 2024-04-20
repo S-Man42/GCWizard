@@ -520,7 +520,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     result.add([i18n(context, 'checkdigits_creditcard_type_of_card_i'), number.substring(4, 5), '']);
     result.add([i18n(context, 'checkdigits_creditcard_type_of_card_ii'), number.substring(5, 6), '']);
     result.add([i18n(context, 'checkdigits_creditcard_account_number'), number.substring(6, number.length - 1), '']);
-    result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(number.length - 1), '']);
+    result.add([i18n(context, 'checkdigits_checkdigit'), number.substring(number.length - 1), '']);
     return result;
   }
 
@@ -593,10 +593,10 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     List<List<String>> result = [];
     if (IBAN_DATA[number.substring(0, 2)] == null) {
       result.add([
-        i18n(context, 'uic_country_code'),
+        i18n(context, 'checkdigits_country'),
         number.substring(0, 2) + ' ' + '(' + i18n(context, 'checkdigits_iban_country_code_unknown') + ')'
       ]);
-      result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2, 4)]);
+      result.add([i18n(context, 'checkdigits_checkdigit'), number.substring(2, 4)]);
       result.add([
         '',
         number.substring(
@@ -606,10 +606,10 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     } else {
       List<Map<String, Object>> countryData = IBAN_DATA[number.substring(0, 2)]!;
       result.add([
-        i18n(context, 'uic_country_code'),
+        i18n(context, 'checkdigits_country'),
         number.substring(0, 2) + ' ' + '(' + i18n(context, countryData[0]['country'] as String) + ')'
       ]);
-      result.add([i18n(context, 'checkdigits_uic_check_digit'), number.substring(2, 4)]);
+      result.add([i18n(context, 'checkdigits_checkdigit'), number.substring(2, 4)]);
       int index = 4;
       int digits = 0;
       for (var country in countryData) {
