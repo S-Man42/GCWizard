@@ -64,7 +64,9 @@ String encodeMorse(String input, {MorseType type = MorseType.MORSE_ITU, String? 
 
 String decodeMorse(String input, {MorseType type = MorseType.MORSE_ITU}) {
   if (input.isEmpty) return '';
+  print(input);
   return normalizeMorseCharacters(input).split(RegExp(r'[^.\-·/|]')).map((morse) {
+    print(morse);
     if (morse == '|' || morse == '/') return ' ';
     var character = _MORSE_CODETOAZ[type]?[morse];
     return character ?? '';
