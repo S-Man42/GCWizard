@@ -25,7 +25,6 @@ const Map<String, String> _AZToMorse = {
 final _MorseToAZ = switchMapKeyValue(_AZToMorse);
 
 const Map<String, String> _AZToMorse1838 = {
-// https://en.wikipedia.org/wiki/American_Morse_code
 // https://patentimages.storage.googleapis.com/bb/4a/53/3d3b9d7e4c8619/US1647.pdf
   'A': '...',
   'B': '..\u202F..',

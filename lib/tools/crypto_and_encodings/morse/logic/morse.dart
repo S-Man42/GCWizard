@@ -63,6 +63,12 @@ String encodeMorse(String input, {MorseType type = MorseType.MORSE_ITU, String? 
 }
 
 String decodeMorse(String input, {MorseType type = MorseType.MORSE_ITU}) {
+  _Morse1838ToAZ['-'] = '5';
+  _Morse1838ToAZ['-.'] = '6';
+  _Morse1838ToAZ['-..'] = '7';
+  _Morse1838ToAZ['-...'] = '8';
+  _Morse1838ToAZ['-....'] = '9';
+  _Morse1838ToAZ['--'] = '0';
   if (input.isEmpty) return '';
   print(input);
   return normalizeMorseCharacters(input).split(RegExp(r'[^.\-·/|]')).map((morse) {
