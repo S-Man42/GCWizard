@@ -46,7 +46,7 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
                     aspectRatio: max(_maxRowItemsWidth(widget.board, fontSize) + widget.board.getLineLength(0) * boxSize, 1) / //ToDo FontSize
                         max(_maxColumnItemsWidth(widget.board, fontSize) + widget.board.getMaxLineLength() * boxSize, 1),
                     child: CanvasTouchDetector(
-                      gesturesToOverride: const [GestureType.onTapUp, GestureType.onLongPressEnd, GestureType.onTapDown], //ToDo onTapDown neccesery
+                      gesturesToOverride: const [GestureType.onTapUp, GestureType.onLongPressEnd], //ToDo onTapDown neccesery , GestureType.onTapDown
                       builder: (context) {
                         return CustomPaint(
                             painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
@@ -226,7 +226,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       _paintItemText(canvas, rect,
           board.logicalItems[blockIndex < 1
               ? blockIndex
-              : board.mapRowColumnBlockIndex(blockIndex)][board.blockLine(x)],
+              : board.mapColumn2RowBlockIndex(blockIndex)][board.blockLine(x)],
           fontSize, font_color);
     }
     canvas.restore();

@@ -108,8 +108,15 @@ class Logical {
 		return categoriesCount - 1 - block;
 	}
 
-	int mapRowColumnBlockIndex(int block) {
-		return  categoriesCount - 2 - block;
+	/// map row block index to column block index
+	////@yBlock block index (0 invalid ??)
+	int mapRow2ColumnBlockIndex(int yBlock) {
+		return categoriesCount - 1 - yBlock;
+	}
+
+	/// 0 invalid
+	int mapColumn2RowBlockIndex(int xBlock) {
+		return  categoriesCount - 1 - xBlock;
 	}
 
 	int blockIndex(int line) {
@@ -193,19 +200,29 @@ class Logical {
 	void _cloneBlocks(int x, int y) {
 		var xBlockIndex = blockIndex(x);
 		var yBlockIndex = blockIndex(y);
-		var xBlockItem = blockLine(x);
-		var yBlockItem = blockLine(y);
+		var xBlockLine = blockLine(x);
+		var yBlockline = blockLine(y);
 
-		for (var row = 0; row < getBlockLength(xBlockIndex); row++) {
-			if (row != yBlockIndex && mapRowColumnBlockIndex(yBlockIndex) < blocks[yBlockIndex].length) { //??
-				_cloneBlockValues(xBlockItem, yBlockItem,
-						blocks[row][xBlockIndex], blocks[yBlockIndex][mapRowColumnBlockIndex(row)]);
+		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
+			if (blockRow != yBlockIndex) {
+				if (blockRow < yBlockIndex) {
+					_cloneBlockValues(xBlockLine, yBlockline,
+							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRow2ColumnBlockIndex(yBlockIndex)]);
+				} else {
+					_cloneBlockValues(xBlockLine, yBlockline,
+							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRow2ColumnBlockIndex(blockRow)]);
+				}
 			}
 		}
-		for (var column = 0; column < getBlockLength(yBlockIndex); column++) {
-			if (column != xBlockIndex && mapRowColumnBlockIndex(xBlockIndex) < blocks.length) { //??
-				_cloneBlockValues(xBlockItem, yBlockItem,
-						blocks[yBlockIndex][column], blocks[mapRowColumnBlockIndex(column)][yBlockIndex]);
+		for (var blockColumn = 0; blockColumn < getBlockLength(yBlockIndex); blockColumn++) {
+			if (blockColumn != xBlockIndex) {
+				if (blockColumn < xBlockIndex) {
+					_cloneBlockValues(xBlockLine, yBlockline,
+							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(xBlockIndex)][blockColumn]);
+				} else {
+					_cloneBlockValues(xBlockLine, yBlockline,
+							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(blockColumn)][xBlockIndex]);
+				}
 			}
 		}
 	}
@@ -213,15 +230,15 @@ class Logical {
 	void _cloneBlockValues(int x, int y, _LogicalBlock xBlock, _LogicalBlock yBlock) {
 		for (var _y = 0; _y < itemsCount; _y++) {
 			var _value = xBlock.getValue(x, _y);
-			if (_value != null && yBlock.getFillType(_y, y) != LogicPuzzleFillType.USER_FILLED) {
-				yBlock.setValue(_y, y, _value, LogicPuzzleFillType.CALCULATED);
+			if (_value != null && yBlock.getFillType(x, _y) != LogicPuzzleFillType.USER_FILLED) {
+				yBlock.setValue(x, _y, _value, LogicPuzzleFillType.CALCULATED);
 			}
 		}
 
 		for (var _x = 0; _x < itemsCount; _x++) {
 			var _value = yBlock.getValue(_x, y);
-			if (_value != null && xBlock.getFillType(x, _x) != LogicPuzzleFillType.USER_FILLED) {
-				xBlock.setValue(x, _x, _value, LogicPuzzleFillType.CALCULATED);
+			if (_value != null && xBlock.getFillType(_x, y) != LogicPuzzleFillType.USER_FILLED) {
+				xBlock.setValue(_x, y, _value, LogicPuzzleFillType.CALCULATED);
 			}
 		}
 	}
@@ -375,8 +392,8 @@ class Logical {
 	String? toJson() {
 		var jsonDataMinus = <String>[];
 		var jsonDataPlus = <String>[];
-		for (var y = 0; y < blocks.length; y++) {
-			for (var x = 0; x < blocks[y].length; x++) {
+		for (var y = 0; y < getMaxLineLength(); y++) {
+			for (var x = 0; x < getLineLength(y); x++) {
 				if (getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
 					if (getValue(x, y) == minusValue) {
 						jsonDataMinus.add(_jsonValueToString(x, y, this));
@@ -399,14 +416,14 @@ class Logical {
 
 	static String _jsonValueToString(int x, int y, Logical logical) {
 		//ToDo Check Alphabet Length
-		return alphabet_AZIndexes[logical.blockIndex(y) + 2]! + logical.blockLine(y).toString() +
-					 alphabet_AZIndexes[logical.blockIndex(x) + 1]! + logical.blockLine(x).toString();
+		return alphabet_AZIndexes[logical.blockIndex(x) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
+					 alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
 	}
 
 	static Point<int>? _jsonValueFromString(String value, Logical logical) {
 		//ToDo Check Alphabet Length
-		return Point<int>(alphabet_AZ[value[2].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[3]) ?? 0),
-											alphabet_AZ[value[0].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[1]) ?? 0));
+		return Point<int>(alphabet_AZ[value[0].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[1]) ?? 0),
+											alphabet_AZ[value[2].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[3]) ?? 0));
 	}
 }
 
