@@ -1,7 +1,17 @@
+import 'dart:convert';
 import 'dart:math';
+
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/json_utils.dart';
 
 enum LogicPuzzleFillType { USER_FILLED, CALCULATED }
 
+enum LogicalState {
+	Ok, // no data errors
+	InvalidData, // data errors
+	InvalidItemData // Items data errors
+}
 
 class LogicalValue {
 	LogicPuzzleFillType type;
@@ -53,6 +63,7 @@ class Logical {
 	List<_LogicalSolverSolution>? solutions;
 	int categoriesCount = 4;
 	int itemsCount = 5;
+	LogicalState state = LogicalState.Ok;
 
 	static const plusValue = 1;
 	static const minusValue = -1;
@@ -283,6 +294,119 @@ class Logical {
 				setValue(x, y, solutions![solutionIndex].getValue(x, y), LogicPuzzleFillType.CALCULATED);
 			}
 		}
+	}
+	static const String _jsonItems = 'items';
+	static const String _jsonDataMinus = 'n';
+	static const String _jsonDataPlus = 'p';
+	static const String _jsonItemsCount = 'ni';
+	static const String _jsonCategoriesCount = 'nc';
+
+
+	static Logical parseJson(String jsonString) {
+		var logical = Logical(2, 2);
+		var jsonMap = asJsonMap(json.decode(jsonString));
+
+		var data = jsonMap[_jsonItems];
+		if (data is String) {
+			logical.itemsCount = int.tryParse(data) ?? 2;
+		} else {
+			logical.state = LogicalState.InvalidData;
+		}
+
+		data = jsonMap[_jsonCategoriesCount];
+		if (data is String) {
+			logical.categoriesCount = int.tryParse(data) ?? 2;
+		} else {
+			logical.state = LogicalState.InvalidData;
+		}
+
+	logical = Logical(logical.categoriesCount, logical.itemsCount);
+
+		var list = asJsonArrayOrNull(jsonMap[_jsonItems]);
+		if (list != null) {
+			logical.logicalItems = _jsonArrayToArrayList(list);
+		} else {
+			logical.state = LogicalState.InvalidItemData;
+		}
+
+		logical = _jsonImportData(jsonMap[_jsonDataPlus], plusValue, logical);
+		logical = _jsonImportData(jsonMap[_jsonDataMinus], minusValue, logical);
+
+		return logical;
+	}
+
+	static Logical _jsonImportData(Object? data, int values, Logical logical) {
+		var list = asJsonArrayOrNull(data);
+		if (list != null) {
+			for (var element in list) {
+				if (element is String) {
+					var entry = _jsonValueFromString(element, logical);
+					if (entry != null) {
+						logical.setValue(entry.x, entry.y, values, LogicPuzzleFillType.USER_FILLED);
+					} else {
+						logical.state = LogicalState.InvalidData;
+					}
+				}
+			}
+		}
+		return logical;
+	}
+
+	static List<List<String>> _jsonArrayToArrayList(List<Object?> jsonList) {
+		var list = <List<String>>[];
+		for (var entrys in jsonList) {
+			var subList = asJsonArrayOrNull(entrys);
+			if (subList != null) {
+				list.add(_jsonArrayToList(subList));
+			}
+		}
+		return list;
+	}
+
+	static List<String> _jsonArrayToList(List<Object?> jsonList) {
+		var list = <String>[];
+		for (var entry in jsonList) {
+			var value = toStringOrNull(entry);
+			if (value != null) list.add(value);
+		}
+		return list;
+	}
+
+	String? toJson() {
+		var jsonDataMinus = <String>[];
+		var jsonDataPlus = <String>[];
+		for (var y = 0; y < blocks.length; y++) {
+			for (var x = 0; x < blocks[y].length; x++) {
+				if (getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
+					if (getValue(x, y) == minusValue) {
+						jsonDataMinus.add(_jsonValueToString(x, y, this));
+					} else {
+						jsonDataPlus.add(_jsonValueToString(x, y, this));
+					}
+				}
+			}
+		}
+		Map<String, Object> list = ({
+			_jsonItems: logicalItems,
+			_jsonDataMinus: jsonDataMinus,
+			_jsonCategoriesCount: categoriesCount,
+			_jsonItemsCount: itemsCount,
+			_jsonDataPlus: _jsonDataPlus
+		});
+
+		return jsonEncode(list);
+	}
+
+	static String _jsonValueToString(int x, int y, Logical logical) {
+		//ToDo Check Alphabet Length
+		return alphabet_AZIndexes[logical.blockIndex(y) + 2]! + logical.blockLine(y).toString() +
+					 alphabet_AZIndexes[logical.blockIndex(x) + 1]! + logical.blockLine(x).toString();
+	}
+
+	static Point<int>? _jsonValueFromString(String value, Logical logical) {
+		//ToDo Check Alphabet Length
+		return Point<int>(alphabet_AZ[value[2].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[3]) ?? 0),
+											alphabet_AZ[value[0].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[1]) ?? 0));
 	}
 }
 
