@@ -3247,6 +3247,7 @@
   "logicalsolver_items": "Items",
   "logicalsolver_save_state": "Save",
   "logicalsolver_restore_state": "Restore",
+  "logicalsolver_dataerror": "Error in the data",
   "magic_eye_title": "Magic Eye Solver",
   "magic_eye_description": "Solves so-called autostereograms, known as 'Magic Eye' or '3D Stereogram' pictures",
   "magic_eye_hidden_image": "Hidden Image",

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -6,11 +7,15 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/logical_solver/logic/logical_solver.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:touchable/touchable.dart';
 
 part 'package:gc_wizard/tools/games/logical_solver/widget/logical_solver_board.dart';
@@ -109,6 +114,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                   text: i18n(context, 'logicalsolver_save_state'),
                   onPressed: () {
                     setState(() {
+                      _exportJsonFile(context, _currentBoard.toJson());
                     });
                   },
                 ),
@@ -117,11 +123,18 @@ class LogicalSolverState extends State<LogicalSolver> {
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                child: GCWButton(
-                  text: i18n(context, 'logicalsolver_restore_state'),
-                  onPressed: () {
-                    setState(() {
-                    });
+                child: GCWOpenFile(
+                  supportedFileTypes: const [FileType.TXT, FileType.JSON],
+                  title: i18n(context, 'logicalsolver_restore_state'),
+                  onLoaded: (GCWFile? value) {
+                    if (value == null) {
+                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+                      return;
+                    } else {
+                      setState(() {
+                        _importJsonFile(value.bytes, _currentBoard);
+                      });
+                    }
                   },
                 ),
               ),
@@ -201,5 +214,17 @@ class LogicalSolverState extends State<LogicalSolver> {
     } else if (y == -1 &&  _currentBoard.validPosition(x, -1)) {
 
     }
+  }
+
+  void _importJsonFile(Uint8List bytes, Logical logical) {
+    logical = Logical.parseJson(convertBytesToString(bytes));
+    if (logical.state != LogicalState.Ok) {
+      showSnackBar(i18n(context, 'logicalsolver_dataerror'), context);
+    }
+  }
+
+  Future<void> _exportJsonFile(BuildContext context, String? data) async {
+    if (data == null) return;
+    saveStringToFile(context, data, buildFileNameWithDate('logical_', FileType.JSON));
   }
 }
