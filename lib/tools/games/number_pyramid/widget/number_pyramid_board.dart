@@ -54,8 +54,9 @@ class NumberPyramidBoardState extends State<NumberPyramidBoard> {
                         painter:
                             NumberPyramidBoardPainter(context, widget.type, widget.board, _showInputTextBox, _setState));
                   },
-                )),
-            _editWidget()
+                )
+              ),
+              _editWidget()
       ]))
     ]);
   }

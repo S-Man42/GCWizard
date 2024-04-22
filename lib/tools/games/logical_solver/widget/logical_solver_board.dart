@@ -5,6 +5,9 @@ const fontSize = boxSize * 0.7;
 const blockMargin = boxSize/ 2;
 const itemTextOffsetStart = 3;
 const itemTextOffsetEnd = 10;
+Point<int>? _selectedBox;
+Rect? _selectedBoxRect;
+FocusNode? _valueFocusNode;
 
 class LogicPuzzleBoard extends StatefulWidget {
   final void Function(Logical) onChanged;
@@ -21,6 +24,16 @@ class LogicPuzzleBoard extends StatefulWidget {
 }
 
 class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
+  late TextEditingController _currentInputController;
+  final _currentValueFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _valueFocusNode = _currentValueFocusNode;
+    _currentInputController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +49,64 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
                       gesturesToOverride: const [GestureType.onTapUp, GestureType.onLongPressEnd],
                       builder: (context) {
                         return CustomPaint(
-                            painter: LogicPuzzleBoardPainter(context, widget.board, _setState,
+                            painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
                                 onTapped: widget.onTapped, onLongTapped: widget.onLongTapped)
                         );
                       },
                     )
                 ),
+                _editWidget()
               ])
           )
         ]);
+  }
+
+  Widget _editWidget() {
+    const int hightOffset = 4;
+    ThemeColors colors = themeColors();
+    if (_selectedBoxRect != null && _selectedBox != null) {
+      if (_selectedBox!.x < 0) {
+        _currentInputController.text = widget.board.logicalItems[
+            widget.board.blockIndex(_selectedBox!.y)][widget.board.blockLine(_selectedBox!.y)];
+      } else if (_selectedBox!.y < 0) {
+        _currentInputController.text = widget.board.logicalItems[
+            widget.board.blockIndex(_selectedBox!.x)][widget.board.blockLine(_selectedBox!.x)];
+      }
+      _currentInputController.selection = TextSelection.collapsed(offset: _currentInputController.text.length);
+
+      if (_selectedBoxRect!.height < 35) {
+        var offset = (35 - _selectedBoxRect!.height) / 2;
+        _selectedBoxRect = Rect.fromLTWH(_selectedBoxRect!.left - 2 * offset, _selectedBoxRect!.top - offset,
+            _selectedBoxRect!.width + 4 * offset, _selectedBoxRect!.height + 2 * offset);
+      }
+
+      return Positioned(
+          left: _selectedBoxRect!.left,
+          top: _selectedBoxRect!.top - hightOffset,
+          width: _selectedBoxRect!.width,
+          height: _selectedBoxRect!.height + 2 * hightOffset,
+          child: Container(
+              color: colors.gridBackground(),
+              child: GCWTextField(
+                  controller: _currentInputController,
+                  focusNode: _currentValueFocusNode,
+                  style: TextStyle(
+                    fontSize: _selectedBoxRect!.height * 0.5,
+                    color: themeColors().mainFont(),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      if (_selectedBox!.x < 0) {
+                        widget.board.logicalItems[widget.board.blockIndex(_selectedBox!.y)]
+                            [widget.board.blockLine(_selectedBox!.y)] = _currentInputController.text;
+                      } else if (_selectedBox!.y < 0) {
+                        widget.board.logicalItems[widget.board.blockIndex(_selectedBox!.x)]
+                            [widget.board.blockLine(_selectedBox!.x)] = _currentInputController.text;
+                      }
+                    });
+                  })));
+    }
+    return Container();
   }
 
   void _setState() {
@@ -52,10 +114,31 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
       setState(() {});
     });
   }
+
+  void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
+    setState(() {
+      if (showInputTextBox != null) {
+        _selectedBox = showInputTextBox;
+        _selectedBoxRect = selectedBoxRect;
+        _currentValueFocusNode.requestFocus();
+      } else {
+        _hideInputTextBox();
+      }
+    });
+  }
+}
+
+void _hideInputTextBox() {
+  _selectedBox = null;
+  _selectedBoxRect = null;
+  if (_valueFocusNode != null) {
+    _valueFocusNode!.unfocus();
+  }
 }
 
 class LogicPuzzleBoardPainter extends CustomPainter {
   final BuildContext context;
+  final void Function(Point<int>?, Rect?) showInputTextBox;
   final void Function() setState;
   final Logical board;
   Color line_color = themeColors().secondary();
@@ -66,7 +149,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
   final void Function(int, int) onTapped;
   final void Function(int, int) onLongTapped;
 
-  LogicPuzzleBoardPainter(this.context, this.board, this.setState,
+  LogicPuzzleBoardPainter(this.context, this.board, this.showInputTextBox, this.setState,
       {Color? line_color, Color?  hint_line_color, Color? full_color, Color? background_color, Color? font_color,
         required this.onTapped, required this.onLongTapped}) {
     this.line_color = line_color ?? this.line_color;
@@ -117,8 +200,10 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
       rect = Rect.fromLTWH(xOuter, yInner, maxRowItemsWidth, heightInner);
+      var rectTextBox = Rect.fromLTWH(xOuter, yInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
       _touchCanvas.drawRect(rect, paintItemLine,
-          onTapUp: (tapDetail) {onTapped(-1, y);}, onLongPressEnd: (tapDetail) {onLongTapped(-1, y);});
+          onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, y), rectTextBox);},
+          onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(-1, y), rectTextBox);});
       _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(y) + 1][board.blockLine(y)],
           fontSize, font_color);
     }
@@ -132,9 +217,11 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       //if (blockIndex == 1) continue;
       var xInner = x * widthInner + _lineOffset(x);
       rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
+      var rectTextBox = Rect.fromLTWH(xOuter, xInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
       if (x < board.itemsCount) {
         _touchCanvas.drawRect(rect, paintItemLine,
-            onTapUp: (tapDetail) {onTapped(x, -1);}, onLongPressEnd: (tapDetail) {onLongTapped(x, -1);});
+            onTapUp: (tapDetail) {showInputTextBox(Point<int>(x, -1), rectTextBox);},
+            onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(x, -1), rectTextBox);});
       }
       _paintItemText(canvas, rect,
           board.logicalItems[blockIndex < 1
