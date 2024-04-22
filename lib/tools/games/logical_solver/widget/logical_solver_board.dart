@@ -33,7 +33,7 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
                     aspectRatio: max(_maxRowItemsWidth(widget.board, fontSize) + widget.board.getLineLength(0) * boxSize, 1) / //ToDo FontSize
                         max(_maxColumnItemsWidth(widget.board, fontSize) + widget.board.getMaxLineLength() * boxSize, 1),
                     child: CanvasTouchDetector(
-                      gesturesToOverride: const [GestureType.onTapUp, GestureType.onLongPressEnd],
+                      gesturesToOverride: const [GestureType.onTapUp, GestureType.onLongPressEnd, GestureType.onTapDown], //ToDo onTapDown neccesery
                       builder: (context) {
                         return CustomPaint(
                             painter: LogicPuzzleBoardPainter(context, widget.board, _setState,
@@ -117,7 +117,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
       rect = Rect.fromLTWH(xOuter, yInner, maxRowItemsWidth, heightInner);
-      _touchCanvas.drawRect(rect, paintItemLine,
+      _touchCanvas.drawRect(rect, paintItemLine, onTapDown: (tapDetail) {onTapped(-1, y);},
           onTapUp: (tapDetail) {onTapped(-1, y);}, onLongPressEnd: (tapDetail) {onLongTapped(-1, y);});
       _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(y) + 1][board.blockLine(y)],
           fontSize, font_color);
@@ -133,7 +133,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       var xInner = x * widthInner + _lineOffset(x);
       rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
       if (x < board.itemsCount) {
-        _touchCanvas.drawRect(rect, paintItemLine,
+        _touchCanvas.drawRect(rect, paintItemLine, onTapDown: (tapDetail) {onTapped(x, -1);},
             onTapUp: (tapDetail) {onTapped(x, -1);}, onLongPressEnd: (tapDetail) {onLongTapped(x, -1);});
       }
       _paintItemText(canvas, rect,
