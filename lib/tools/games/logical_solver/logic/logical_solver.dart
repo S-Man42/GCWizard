@@ -207,10 +207,10 @@ class Logical {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRow2ColumnBlockIndex(yBlockIndex)]);
+							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRow2ColumnBlockIndex(yBlockIndex)], false);
 				} else {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRow2ColumnBlockIndex(blockRow)]);
+							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRow2ColumnBlockIndex(blockRow)], true);
 				}
 			}
 		}
@@ -218,27 +218,37 @@ class Logical {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(xBlockIndex)][blockColumn]);
+							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(xBlockIndex)][blockColumn], false);
 				} else {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(blockColumn)][xBlockIndex]);
+							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(blockColumn)][xBlockIndex], true);
 				}
 			}
 		}
 	}
 
-	void _cloneBlockValues(int x, int y, _LogicalBlock xBlock, _LogicalBlock yBlock) {
+	void _cloneBlockValues(int x, int y, _LogicalBlock xBlock, _LogicalBlock yBlock, bool useFoundLine) {
 		for (var _y = 0; _y < itemsCount; _y++) {
 			var _value = xBlock.getValue(x, _y);
 			if (_value != null && yBlock.getFillType(x, _y) != LogicPuzzleFillType.USER_FILLED) {
-				yBlock.setValue(x, _y, _value, LogicPuzzleFillType.CALCULATED);
+				if (useFoundLine) {
+					yBlock.setValue(x, y, _value, LogicPuzzleFillType.CALCULATED);
+
+				} else {
+					yBlock.setValue(x, _y, _value, LogicPuzzleFillType.CALCULATED);
+
+				}
 			}
 		}
 
 		for (var _x = 0; _x < itemsCount; _x++) {
 			var _value = yBlock.getValue(_x, y);
 			if (_value != null && xBlock.getFillType(_x, y) != LogicPuzzleFillType.USER_FILLED) {
-				xBlock.setValue(_x, y, _value, LogicPuzzleFillType.CALCULATED);
+				if (useFoundLine) {
+					xBlock.setValue(x, y, _value, LogicPuzzleFillType.CALCULATED);
+				} else {
+					xBlock.setValue(_x, y, _value, LogicPuzzleFillType.CALCULATED);
+				}
 			}
 		}
 	}
