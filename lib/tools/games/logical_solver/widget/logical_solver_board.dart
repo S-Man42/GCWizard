@@ -239,7 +239,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       _paintItemText(canvas, rect,
           board.logicalItems[blockIndex < 1
               ? blockIndex
-              : board.mapRowColumnBlockIndex(blockIndex)][board.blockLine(x)],
+              : board.mapRowColumnBlockIndex(blockIndex) + 1][board.blockLine(x)],
           fontSize, font_color);
     }
     canvas.restore();
