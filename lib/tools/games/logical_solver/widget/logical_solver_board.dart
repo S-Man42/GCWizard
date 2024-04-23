@@ -46,7 +46,7 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
                     aspectRatio: max(_maxRowItemsWidth(widget.board, fontSize) + widget.board.getLineLength(0) * boxSize, 1) / //ToDo FontSize
                         max(_maxColumnItemsWidth(widget.board, fontSize) + widget.board.getMaxLineLength() * boxSize, 1),
                     child: CanvasTouchDetector(
-                      gesturesToOverride: const [GestureType.onTapUp, GestureType.onLongPressEnd], //ToDo onTapDown neccesery , GestureType.onTapDown
+                      gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd], //ToDo onTapDown neccesery , GestureType.onTapDown
                       builder: (context) {
                         return CustomPaint(
                             painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
@@ -166,6 +166,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     var paintLine = Paint();
     var paintItemLine = Paint();
     var paintBackground = Paint();
+    var paintTransparent= Paint();
     paintLine.strokeWidth = 1;
     paintLine.style = PaintingStyle.stroke;
     paintLine.color = line_color;
@@ -176,6 +177,10 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
     paintBackground.style = PaintingStyle.fill;
     paintBackground.color = background_color;
+
+    paintTransparent.color = Colors.transparent;
+    paintTransparent.style = PaintingStyle.fill;
+
 
     const border = 5;
     var maxRowItemsWidth = _maxRowItemsWidth(board, fontSize);
@@ -196,12 +201,18 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
     var rect = Rect.zero;
 
+    rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {
+      showInputTextBox(null, null);
+    });
+
     // row item names
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
       rect = Rect.fromLTWH(xOuter, yInner, maxRowItemsWidth, heightInner);
       var rectTextBox = Rect.fromLTWH(xOuter, yInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
-      _touchCanvas.drawRect(rect, paintItemLine,
+      canvas.drawRect(rect, paintItemLine);
+      _touchCanvas.drawRect(rect, paintTransparent,
           onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, y), rectTextBox);},
           onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(-1, y), rectTextBox);});
       _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(y) + 1][board.blockLine(y)],
@@ -219,14 +230,16 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
       var rectTextBox = Rect.fromLTWH(xOuter, xInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
       if (x < board.itemsCount) {
-        _touchCanvas.drawRect(rect, paintItemLine,
+        canvas.drawRect(rect, paintItemLine);
+        _touchCanvas.drawRect(rect, paintTransparent,
             onTapUp: (tapDetail) {showInputTextBox(Point<int>(x, -1), rectTextBox);},
             onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(x, -1), rectTextBox);});
+
       }
       _paintItemText(canvas, rect,
           board.logicalItems[blockIndex < 1
               ? blockIndex
-              : board.mapColumn2RowBlockIndex(blockIndex)][board.blockLine(x)],
+              : board.mapRowColumnBlockIndex(blockIndex)][board.blockLine(x)],
           fontSize, font_color);
     }
     canvas.restore();

@@ -109,14 +109,9 @@ class Logical {
 	}
 
 	/// map row block index to column block index
-	////@yBlock block index (0 invalid ??)
-	int mapRow2ColumnBlockIndex(int yBlock) {
+	////@yBlock block index (0 invalid)
+	int mapRowColumnBlockIndex(int yBlock) {
 		return categoriesCount - 1 - yBlock;
-	}
-
-	/// 0 invalid
-	int mapColumn2RowBlockIndex(int xBlock) {
-		return  categoriesCount - 1 - xBlock;
 	}
 
 	int blockIndex(int line) {
@@ -131,7 +126,6 @@ class Logical {
 		if (!validPosition(x, y)) {
 			return null;
 		}
-
 		return blocks[blockIndex(y)][blockIndex(x)].getValue(blockLine(x), blockLine(y));
 	}
 
@@ -139,14 +133,9 @@ class Logical {
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
 		if (!validPosition(x, y) || !_checkPossibleValue(x, y, value)) return false;
 
-		var oldValue = getValue(x, y);
-
 		var result = blocks[blockIndex(y)][blockIndex(x)].setValue(blockLine(x), blockLine(y), value, type);
 		_cloneValues();
-		// if ((value == null && oldValue == plusValue) || (value == plusValue && oldValue == null)) {
-		// 	_setBlockPlusValue(x, y, value);
-		// 	return result;
-		// }
+
 		return result;
 	}
 
@@ -184,17 +173,8 @@ class Logical {
 					_setBlockPlusValue(x, y, _value);
 					_cloneBlocks(x, y);
 				}
-				// if (value != null || block.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-				// 	block.setValue(i, y, value == null ? null : i == x ? plusValue : minusValue, LogicPuzzleFillType.USER_FILLED);
-				// }
 			}
 		}
-		// // column
-		// for (var i = 0; i < itemsCount; i++) {
-		// 	if (value != null || block.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-		// 		block.setValue(x, i, value == null ? null : i == y ? plusValue : minusValue, LogicPuzzleFillType.USER_FILLED);
-		// 	}
-		// }
 	}
 
 	void _cloneBlocks(int x, int y) {
@@ -207,10 +187,10 @@ class Logical {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRow2ColumnBlockIndex(yBlockIndex)], false);
+							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowColumnBlockIndex(yBlockIndex)], false);
 				} else {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRow2ColumnBlockIndex(blockRow)], true);
+							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowColumnBlockIndex(blockRow)], true);
 				}
 			}
 		}
@@ -218,10 +198,10 @@ class Logical {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(xBlockIndex)][blockColumn], false);
+							blocks[yBlockIndex][blockColumn], blocks[mapRowColumnBlockIndex(xBlockIndex)][blockColumn], false);
 				} else {
 					_cloneBlockValues(xBlockLine, yBlockline,
-							blocks[yBlockIndex][blockColumn], blocks[mapColumn2RowBlockIndex(blockColumn)][xBlockIndex], true);
+							blocks[yBlockIndex][blockColumn], blocks[mapRowColumnBlockIndex(blockColumn)][xBlockIndex], true);
 				}
 			}
 		}

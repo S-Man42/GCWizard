@@ -111,7 +111,7 @@ class LogicalSolverState extends State<LogicalSolver> {
               child: Container(
                 padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: GCWButton(
-                  text: i18n(context, 'logicalsolver_save_state'),
+                  text: i18n(context, 'logicalsolver_save'),
                   onPressed: () {
                     setState(() {
                       _exportJsonFile(context, _currentBoard.toJson());
@@ -125,7 +125,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                 padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                 child: GCWOpenFile(
                   supportedFileTypes: const [FileType.TXT, FileType.JSON],
-                  title: i18n(context, 'logicalsolver_restore_state'),
+                  title: i18n(context, 'logicalsolver_load'),
                   onLoaded: (GCWFile? value) {
                     if (value == null) {
                       showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
@@ -172,47 +172,27 @@ class LogicalSolverState extends State<LogicalSolver> {
     );
   }
 
-  void _showSolution() {
-    _currentBoard.mergeSolution(_currentSolution);
-  }
-
   void onTapped(int x, int y) {
-    if (_currentBoard.validPosition(x, y)) {
-      var validChange = false;
-      if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-        validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
-      } else {
-        validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
-      }
-      if (!validChange) {
-        showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
-      }
+    var validChange = false;
+    if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
+      validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
     } else {
-      _editItemName(x, y);
+      validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
+    }
+    if (!validChange) {
+      showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
     }
   }
 
   void onLongTapped(int x, int y) {
-    if (_currentBoard.validPosition(x, y)) {
-      var validChange = false;
-      if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-        validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
-      } else {
-        validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
-      }
-      if (!validChange) {
-        showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
-      }
+    var validChange = false;
+    if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
+      validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
     } else {
-      _editItemName(x, y);
+      validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
     }
-  }
-
-  void _editItemName(int x, int y) {
-    if (x == -1 &&  _currentBoard.validPosition(0, y)) {
-
-    } else if (y == -1 &&  _currentBoard.validPosition(x, -1)) {
-
+    if (!validChange) {
+      showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
     }
   }
 
