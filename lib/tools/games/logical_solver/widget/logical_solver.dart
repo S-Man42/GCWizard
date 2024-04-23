@@ -122,7 +122,7 @@ class LogicalSolverState extends State<LogicalSolver> {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                 child: GCWOpenFile(
                   supportedFileTypes: const [FileType.TXT, FileType.JSON],
                   title: i18n(context, 'logicalsolver_restore_state'),
@@ -132,7 +132,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                       return;
                     } else {
                       setState(() {
-                        _importJsonFile(value.bytes, _currentBoard);
+                        _currentBoard = _importJsonFile(value.bytes);
                       });
                     }
                   },
@@ -216,11 +216,12 @@ class LogicalSolverState extends State<LogicalSolver> {
     }
   }
 
-  void _importJsonFile(Uint8List bytes, Logical logical) {
-    logical = Logical.parseJson(convertBytesToString(bytes));
+  Logical _importJsonFile(Uint8List bytes) {
+    var logical = Logical.parseJson(convertBytesToString(bytes));
     if (logical.state != LogicalState.Ok) {
       showSnackBar(i18n(context, 'logicalsolver_dataerror'), context);
     }
+    return logical;
   }
 
   Future<void> _exportJsonFile(BuildContext context, String? data) async {

@@ -333,21 +333,21 @@ class Logical {
 		var logical = Logical(2, 2);
 		var jsonMap = asJsonMap(json.decode(jsonString));
 
-		var data = jsonMap[_jsonItems];
-		if (data is String) {
-			logical.itemsCount = int.tryParse(data) ?? 2;
+		var data = jsonMap[_jsonItemsCount];
+		if (getJsonType(data) == JsonType.SIMPLE_TYPE) {
+			logical.itemsCount = int.tryParse(data.toString()) ?? 2;
 		} else {
 			logical.state = LogicalState.InvalidData;
 		}
 
 		data = jsonMap[_jsonCategoriesCount];
-		if (data is String) {
-			logical.categoriesCount = int.tryParse(data) ?? 2;
+		if (getJsonType(data) == JsonType.SIMPLE_TYPE) {
+			logical.categoriesCount = int.tryParse(data.toString()) ?? 2;
 		} else {
 			logical.state = LogicalState.InvalidData;
 		}
 
-	logical = Logical(logical.categoriesCount, logical.itemsCount);
+		logical = Logical(logical.categoriesCount, logical.itemsCount);
 
 		var list = asJsonArrayOrNull(jsonMap[_jsonItems]);
 		if (list != null) {
@@ -418,7 +418,7 @@ class Logical {
 			_jsonDataMinus: jsonDataMinus,
 			_jsonCategoriesCount: categoriesCount,
 			_jsonItemsCount: itemsCount,
-			_jsonDataPlus: _jsonDataPlus
+			_jsonDataPlus: jsonDataPlus
 		});
 
 		return jsonEncode(list);
@@ -432,8 +432,8 @@ class Logical {
 
 	static Point<int>? _jsonValueFromString(String value, Logical logical) {
 		//ToDo Check Alphabet Length
-		return Point<int>(alphabet_AZ[value[0].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[1]) ?? 0),
-											alphabet_AZ[value[2].toUpperCase()]! * logical.itemsCount + (int.tryParse(value[3]) ?? 0));
+		return Point<int>((alphabet_AZ[value[0].toUpperCase()]! - 1) * logical.itemsCount + (int.tryParse(value[1]) ?? 0),
+											(alphabet_AZ[value[2].toUpperCase()]! - 2) * logical.itemsCount + (int.tryParse(value[3]) ?? 0));
 	}
 }
 
