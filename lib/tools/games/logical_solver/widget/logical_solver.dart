@@ -10,6 +10,8 @@ import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/games/logical_solver/logic/logical_solver.dart';
@@ -29,9 +31,6 @@ class LogicalSolver extends StatefulWidget {
 
 class LogicalSolverState extends State<LogicalSolver> {
   late Logical _currentBoard;
-  int _currentSolution = 0;
-
-  final int _MAX_SOLUTIONS = 10;
   var _categoriesCount = 4;
   var _itemsCount = 5;
   var _currentExpanded = true;
@@ -48,39 +47,53 @@ class LogicalSolverState extends State<LogicalSolver> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWExpandableTextDivider(
-            text: i18n(context, 'common_options'),
-            expanded: _currentExpanded,
-            onChanged: (value) {
+        GCWOpenFile(
+          supportedFileTypes: const [FileType.TXT, FileType.JSON],
+          title: i18n(context, 'logicalsolver_load'),
+          onLoaded: (GCWFile? value) {
+            if (value == null) {
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+              return;
+            } else {
               setState(() {
-                _currentExpanded = value;
+                _currentBoard = _importJsonFile(value.bytes);
               });
-            },
-            child: Column(
-              children: <Widget>[
-                  GCWIntegerSpinner(
-                    title: i18n(context, 'logicalsolver_categories'),
-                    value: _categoriesCount,
-                    min: 2,
-                    onChanged: (value) {
-                      setState(() {
-                        _categoriesCount = value;
-                        _currentBoard = Logical(_categoriesCount, _itemsCount, logical: _currentBoard);
-                      });
-                    },
-                  ),
-                  GCWIntegerSpinner(
-                    title: i18n(context, 'logicalsolver_items'),
-                    value: _itemsCount,
-                    min: 2,
-                    onChanged: (value) {
-                      setState(() {
-                        _itemsCount = value;
-                        _currentBoard = Logical(_categoriesCount, _itemsCount, logical: _currentBoard);
-                      });
-                    },
+            }
+          },
+        ),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'common_options'),
+          expanded: _currentExpanded,
+          onChanged: (value) {
+            setState(() {
+              _currentExpanded = value;
+            });
+          },
+          child: Column(
+            children: <Widget>[
+              GCWIntegerSpinner(
+                title: i18n(context, 'logicalsolver_categories'),
+                value: _categoriesCount,
+                min: 2,
+                onChanged: (value) {
+                  setState(() {
+                    _categoriesCount = value;
+                    _currentBoard = Logical(_categoriesCount, _itemsCount, logical: _currentBoard);
+                  });
+                },
               ),
-            ])
+              GCWIntegerSpinner(
+                title: i18n(context, 'logicalsolver_items'),
+                value: _itemsCount,
+                min: 2,
+                onChanged: (value) {
+                  setState(() {
+                    _itemsCount = value;
+                    _currentBoard = Logical(_categoriesCount, _itemsCount, logical: _currentBoard);
+                  });
+                },
+            ),
+          ])
         ),
         Container(height: 10),
         GCWPainterContainer(
@@ -107,38 +120,6 @@ class LogicalSolverState extends State<LogicalSolver> {
 
         Row(
           children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                child: GCWButton(
-                  text: i18n(context, 'logicalsolver_save'),
-                  onPressed: () {
-                    setState(() {
-                      _exportJsonFile(context, _currentBoard.toJson());
-                    });
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                child: GCWOpenFile(
-                  supportedFileTypes: const [FileType.TXT, FileType.JSON],
-                  title: i18n(context, 'logicalsolver_load'),
-                  onLoaded: (GCWFile? value) {
-                    if (value == null) {
-                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-                      return;
-                    } else {
-                      setState(() {
-                        _currentBoard = _importJsonFile(value.bytes);
-                      });
-                    }
-                  },
-                ),
-              ),
-            ),
             Expanded(
                 child: Container(
                   padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
@@ -167,6 +148,18 @@ class LogicalSolverState extends State<LogicalSolver> {
                   ),
             ))
           ],
+        ),
+        GCWButton(
+          text: i18n(context, 'logicalsolver_save'),
+          onPressed: () {
+            setState(() {
+              _exportJsonFile(context, _currentBoard.toJson());
+            });
+          },
+        ),
+        GCWDefaultOutput(
+          child: GCWColumnedMultilineOutput(data: _currentBoard.getSolution(), hasHeader: false, copyAll: true),
+          //copyText: bearingOutput,
         )
       ],
     );
