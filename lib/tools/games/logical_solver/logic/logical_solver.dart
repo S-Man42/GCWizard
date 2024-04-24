@@ -154,13 +154,13 @@ class Logical {
 			for (var x = 0; x < getLineLength(y); x++) {
 				var _value = getValue(x, y);
 				if (_value == plusValue) {
-					solution[blockLine(y)][mapRowColumnBlockIndex(x)] = logicalItems[mapRowColumnBlockIndex(x)][blockLine(x)];
+					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] = logicalItems[mapRowColumnBlockIndex(blockIndex(x))][blockLine(x)];
 					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
 				}
 			}
 		}
 
-		solution.removeWhere((line) => line.any((element) => element == ''));
+		solution.removeWhere((line) => line.every((element) => element == ''));
 
 		return solution;
 	}
