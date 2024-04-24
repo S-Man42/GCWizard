@@ -109,9 +109,9 @@ class Logical {
 	}
 
 	/// map row block index to column block index
-	////@yBlock block index (0 invalid)
-	int mapRowColumnBlockIndex(int yBlock) {
-		return categoriesCount - 1 - yBlock;
+	////@yBlock block index (<=0 invalid)
+	int mapRowColumnBlockIndex(int block) {
+		return block < 1 ? 0 : categoriesCount - 1 - block;
 	}
 
 	int blockIndex(int line) {
@@ -123,7 +123,7 @@ class Logical {
 	}
 
 	int? getValue(int x, int y) {
-		if (!validPosition(x, y)) {
+		if (!_validPosition(x, y)) {
 			return null;
 		}
 		return blocks[blockIndex(y)][blockIndex(x)].getValue(blockLine(x), blockLine(y));
@@ -131,12 +131,39 @@ class Logical {
 
 	/// return valid change
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
-		if (!validPosition(x, y) || !_checkPossibleValue(x, y, value)) return false;
+		if (!_validPosition(x, y) || !_checkPossibleValue(x, y, value)) return false;
 
 		var result = blocks[blockIndex(y)][blockIndex(x)].setValue(blockLine(x), blockLine(y), value, type);
 		_cloneValues();
 
 		return result;
+	}
+
+	LogicPuzzleFillType? getFillType(int x, int y) {
+		if (!_validPosition(x, y)) return null;
+
+		return blocks[blockIndex(y)][blockIndex(x)].getFillType(blockLine(x), blockLine(y));
+	}
+
+	List<List<String>> getSolution() {
+		List<List<String>> solution = List<List<String>>.generate(
+				itemsCount, (index) => List<String>.generate(
+				categoriesCount, (index) => ''));
+
+		for (var y = 0; y < getMaxLineLength(); y++) {
+			for (var x = 0; x < getLineLength(y); x++) {
+				var _value = getValue(x, y);
+				if (_value == plusValue) {
+					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
+							logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
+					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y)][blockLine(y)];
+				}
+			}
+		}
+
+		solution.removeWhere((line) => line.every((element) => element == ''));
+
+		return solution;
 	}
 
 	void _setBlockPlusValue(int x, int y, int? value) {
@@ -233,7 +260,6 @@ class Logical {
 		}
 	}
 
-
 	void _removeCalculatedValues(_LogicalBlock block) {
 		for (var x = 0; x < itemsCount; x++) {
 			for (var y = 0; y < itemsCount; y++) {
@@ -263,13 +289,7 @@ class Logical {
 		return true;
 	}
 
-	LogicPuzzleFillType? getFillType(int x, int y) {
-		if (!validPosition(x, y)) return null;
-
-		return blocks[blockIndex(y)][blockIndex(x)].getFillType(blockLine(x), blockLine(y));
-	}
-
-	bool validPosition(int x, int y) {
+	bool _validPosition(int x, int y) {
 		return !(y < 0 || y >= getMaxLineLength() || x < 0 || x >= getLineLength(y));
 	}
 
@@ -289,25 +309,16 @@ class Logical {
 
 	void _generateItems() {
 		logicalItems = List<List<String>>.generate(
-				categoriesCount, (index) => List<String>.generate(
-				itemsCount, (index) => 'ybcdhjhhh jhjhjMB'));
+				categoriesCount, (rowIndex) => List<String>.generate(
+				itemsCount, (lineIndex) => rowIndex.toString() + lineIndex.toString()));
 	}
 
-	void mergeSolution(int solutionIndex) {
-		if (solutions == null || solutionIndex < 0 || solutionIndex >= solutions!.length) return;
-		for (var y = 0; y < blocks.length; y++) {
-			for (var x = 0; x < blocks[y].length; x++) {
-				if (getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) continue;
-				setValue(x, y, solutions![solutionIndex].getValue(x, y), LogicPuzzleFillType.CALCULATED);
-			}
-		}
-	}
+
 	static const String _jsonItems = 'items';
 	static const String _jsonDataMinus = 'n';
 	static const String _jsonDataPlus = 'p';
 	static const String _jsonItemsCount = 'ni';
 	static const String _jsonCategoriesCount = 'nc';
-
 
 	static Logical parseJson(String jsonString) {
 		var logical = Logical(2, 2);
