@@ -154,8 +154,9 @@ class Logical {
 			for (var x = 0; x < getLineLength(y); x++) {
 				var _value = getValue(x, y);
 				if (_value == plusValue) {
-					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] = logicalItems[mapRowColumnBlockIndex(blockIndex(x))][blockLine(x)];
-					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
+					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
+							logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
+					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y)][blockLine(y)];
 				}
 			}
 		}
@@ -308,8 +309,8 @@ class Logical {
 
 	void _generateItems() {
 		logicalItems = List<List<String>>.generate(
-				categoriesCount, (index) => List<String>.generate(
-				itemsCount, (index) => 'ybcdhjhhh jhjhjMB'));
+				categoriesCount, (rowIndex) => List<String>.generate(
+				itemsCount, (lineIndex) => rowIndex.toString() + lineIndex.toString()));
 	}
 
 
