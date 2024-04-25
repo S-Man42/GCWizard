@@ -239,7 +239,12 @@ class Logical {
 			var _value = xBlock.getValue(x, _y);
 			if (_value != null && yBlock.getFillType(x, _y) != LogicPuzzleFillType.USER_FILLED) {
 				if (useFoundLine) {
-					yBlock.setValue(x, y, _value, LogicPuzzleFillType.CALCULATED);
+					if (_y > y) {
+						//yBlock.setValue(x, y, _value, LogicPuzzleFillType.CALCULATED);
+						yBlock.setValue(_y, x, _value, LogicPuzzleFillType.CALCULATED);
+					} else {
+						yBlock.setValue(x, y, _value, LogicPuzzleFillType.CALCULATED);
+					}
 
 				} else {
 					yBlock.setValue(x, _y, _value, LogicPuzzleFillType.CALCULATED);
