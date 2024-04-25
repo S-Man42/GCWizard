@@ -77,7 +77,6 @@ class _AboutState extends State<About> {
         _buildUrl('faq'),
         _buildUrl('blog'),
         _buildUrl('mastodon'),
-        _buildUrl('facebook'),
         _buildUrl('webversion'),
         const GCWDivider(),
         _buildUrl('license'),
