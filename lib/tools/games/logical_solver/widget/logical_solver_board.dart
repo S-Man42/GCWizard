@@ -203,7 +203,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {
-      showInputTextBox(null, null);
+      if (_selectedBox != null) showInputTextBox(null, null);
     });
 
     // row item names
@@ -211,11 +211,12 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
       rect = Rect.fromLTWH(xOuter, yInner, maxRowItemsWidth, heightInner);
       var rectTextBox = Rect.fromLTWH(xOuter, yInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
+      var itemIndex = y + board.itemsCount;
       canvas.drawRect(rect, paintItemLine);
       _touchCanvas.drawRect(rect, paintTransparent,
-          onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, y), rectTextBox);},
-          onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(-1, y), rectTextBox);});
-      _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(y) + 1][board.blockLine(y)],
+          onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);},
+          onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);});
+      _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)],
           fontSize, font_color);
     }
 
@@ -224,23 +225,22 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     canvas.rotate(-90 / 180 * pi);
     canvas.translate(-xInnerStart + blockMargin, yInnerStart);
     for (int x = 0; x < board.getLineLength(0) ; x++) {
-      var blockIndex = board.blockIndex(x);
-      //if (blockIndex == 1) continue;
+      var itemIndex = (board.blockIndex(x) < 1
+          ? 0
+          : (board.mapRowColumnBlockIndex(board.blockIndex(x)) + 1) )
+          * board.itemsCount + board.blockLine(x);
+
       var xInner = x * widthInner + _lineOffset(x);
       rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
       var rectTextBox = Rect.fromLTWH(xOuter, xInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
       if (x < board.itemsCount) {
         canvas.drawRect(rect, paintItemLine);
         _touchCanvas.drawRect(rect, paintTransparent,
-            onTapUp: (tapDetail) {showInputTextBox(Point<int>(x, -1), rectTextBox);},
-            onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(x, -1), rectTextBox);});
-
+            onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
+            onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
       }
       _paintItemText(canvas, rect,
-          board.logicalItems[blockIndex < 1
-              ? blockIndex
-              : board.mapRowColumnBlockIndex(blockIndex) + 1][board.blockLine(x)],
-          fontSize, font_color);
+          board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)], fontSize, font_color);
     }
     canvas.restore();
 
@@ -250,7 +250,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var xInner = xInnerStart + x * widthInner + _lineOffset(x);
         rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBackground,
-            onTapUp: (tapDetail) {onTapped(x, y);}, onLongPressEnd: (tapDetail) {onLongTapped(x, y);});
+            onTapUp: (tapDetail) {if (_selectedBox == null) onTapped(x, y);},
+            onLongPressEnd: (tapDetail) {if (_selectedBox == null) onLongTapped(x, y);});
         canvas.drawRect(rect, paintLine);
         var value = board.getValue(x, y);
         if (value != null) {
