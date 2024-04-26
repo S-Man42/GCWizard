@@ -237,13 +237,13 @@ class Logical {
 	void _cloneBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool after) {
 		for (var _y = 0; _y < itemsCount; _y++) {
 			var _value = xBlock.getValue(xPlus, _y);
-			if (_value != null && yBlock.getFillType(xPlus, _y) != LogicPuzzleFillType.USER_FILLED) {
+			if (_value != null) {
 				if (after) {
 					// bottom from +, row from +, column = row from -
-					yBlock.setValue(_y, yPlus, _value, LogicPuzzleFillType.CALCULATED);
+					_setBlockValue(yBlock, _y, yPlus, _value);
 				} else {
 					// top from +, row from -, column = row from +
-					yBlock.setValue(yPlus, _y, _value, LogicPuzzleFillType.CALCULATED);
+					_setBlockValue(yBlock, yPlus, _y, _value);
 
 				}
 			}
@@ -251,15 +251,21 @@ class Logical {
 
 		for (var _x = 0; _x < itemsCount; _x++) {
 			var _value = yBlock.getValue(_x, yPlus);
-			if (_value != null && xBlock.getFillType(_x, yPlus) != LogicPuzzleFillType.USER_FILLED) {
+			if (_value != null) {
 				if (after) {
 					// right from +, row = column from -, column from +
-					xBlock.setValue(xPlus, _x, _value, LogicPuzzleFillType.CALCULATED);
+					_setBlockValue(xBlock, xPlus, _x, _value);
 				} else {
 					// left from +, row = column from +, column from -
-					xBlock.setValue(_x, yPlus, _value, LogicPuzzleFillType.CALCULATED);
+					_setBlockValue(xBlock, _x, yPlus, _value);
 				}
 			}
+		}
+	}
+
+	void _setBlockValue(_LogicalBlock block, int xLine, int yLine, int value) {
+		if (block.getFillType(xLine, yLine) != LogicPuzzleFillType.USER_FILLED) {
+			block.setValue(xLine, yLine, value, LogicPuzzleFillType.CALCULATED);
 		}
 	}
 
