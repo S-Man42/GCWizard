@@ -221,9 +221,9 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     }
 
     // column item names
-    canvas.save();
-    canvas.rotate(-90 / 180 * pi);
-    canvas.translate(-xInnerStart + blockMargin, yInnerStart);
+    // canvas.save();
+    // canvas.rotate(-90 / 180 * pi);
+    // canvas.translate(-xInnerStart + blockMargin, yInnerStart);
     for (int x = 0; x < board.getLineLength(0) ; x++) {
       var itemIndex = (board.blockIndex(x) < 1
           ? 0
@@ -231,18 +231,24 @@ class LogicPuzzleBoardPainter extends CustomPainter {
           * board.itemsCount + board.blockLine(x);
 
       var xInner = x * widthInner + _lineOffset(x);
-      rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
+      rect = Rect.fromLTWH(yInnerStart, xInner, maxRowItemsWidth, heightInner);
       var rectTextBox = Rect.fromLTWH(xOuter, xInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
       if (x < board.itemsCount) {
-        canvas.drawRect(rect, paintItemLine);
-        _touchCanvas.drawRect(rect, paintTransparent,
+        //canvas.drawRect(rect, paintItemLine);
+        var r1= rect;
+        print(canvas.getTransform());
+
+        r1 = Rect.fromLTWH(xInner, 0, heightInner, maxRowItemsWidth);
+        //r1 = r1.translate(xInnerStart + blockMargin, yInnerStart);
+        _touchCanvas.drawRect(r1,paintLine);
+        _touchCanvas.drawRect(r1, paintTransparent,
             onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
             onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
       }
       _paintItemText(canvas, rect,
           board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)], fontSize, font_color);
     }
-    canvas.restore();
+    // canvas.restore();
 
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
@@ -250,8 +256,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var xInner = xInnerStart + x * widthInner + _lineOffset(x);
         rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBackground,
-            onTapUp: (tapDetail) {if (_selectedBox == null) onTapped(x, y);},
-            onLongPressEnd: (tapDetail) {if (_selectedBox == null) onLongTapped(x, y);});
+            onTapUp: (tapDetail) {(_selectedBox == null) ? onTapped(x, y) : showInputTextBox(null, null);},
+            onLongPressEnd: (tapDetail) { (_selectedBox == null) ? onLongTapped(x, y) : showInputTextBox(null, null);});
         canvas.drawRect(rect, paintLine);
         var value = board.getValue(x, y);
         if (value != null) {
