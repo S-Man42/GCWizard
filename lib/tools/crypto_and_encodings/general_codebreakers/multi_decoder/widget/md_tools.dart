@@ -329,11 +329,6 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatDefinitionByKey(CoordinateFormatKey.GEOHASH).persistenceKey)
-        ]),
-    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
-        options: [
-          MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
               coordinateFormatDefinitionByKey(CoordinateFormatKey.GEOHEX).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
