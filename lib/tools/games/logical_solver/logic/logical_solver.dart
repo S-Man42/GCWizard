@@ -239,12 +239,11 @@ class Logical {
 			var _value = xBlock.getValue(xPlus, _y);
 			if (_value != null) {
 				if (after) {
-					// bottom from +, row from +, column = row from -
+					// bottom from +, column = row from -, row from +
 					_setBlockValue(yBlock, _y, yPlus, _value);
 				} else {
-					// top from +, row from -, column = row from +
+					// top from +, column = row from +, row from -
 					_setBlockValue(yBlock, yPlus, _y, _value);
-
 				}
 			}
 		}
@@ -253,11 +252,11 @@ class Logical {
 			var _value = yBlock.getValue(_x, yPlus);
 			if (_value != null) {
 				if (after) {
-					// right from +, row = column from -, column from +
+					// right from +, column from +, row = column from -
 					_setBlockValue(xBlock, xPlus, _x, _value);
 				} else {
-					// left from +, row = column from +, column from -
-					_setBlockValue(xBlock, _x, yPlus, _value);
+					// left from +, column from -, row = column from +
+					_setBlockValue(xBlock, _x, xPlus, _value);
 				}
 			}
 		}
