@@ -22,7 +22,7 @@ List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputDat
     result = [
       answers.length > 1
           ? [i18n(context, 'wherigo_output_hash'), hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash, '']
-          : [i18n(context, 'wherigo_output_answer'), hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash],
+          : [i18n(context, 'wherigo_output_answer'), hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash, ''],
     ];
     if (hash != '0') {
       for (int i = 0; i < input.InputChoices.length; i++) {
@@ -39,7 +39,7 @@ List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputDat
       result = [
         answers.length > 1
             ? [i18n(context, 'wherigo_output_hash'), hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash, '']
-            : [i18n(context, 'wherigo_output_answer'), hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash],
+            : [i18n(context, 'wherigo_output_answer'), hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash, ''],
         if (answerAlphabetical != null)
           [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical],
         if (answerNumeric != null)
