@@ -174,7 +174,9 @@ const List<String> _Functions_12 = [
   'TEXTANALYSIS(',
 ];
 const List<String> _Functions_13 = [
+  'BINARYTOFLOAT(',
   'ENCLOSEDAREAS(',
+  'FLOATTOBINARY(',
 ];
 const List<String> _Functions_14 = [
   'CENTERTWOPINTS(',
@@ -237,6 +239,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'ACOS': _GCWizardScriptClassFunctionDefinition(_acos, 1),
   'ASIN': _GCWizardScriptClassFunctionDefinition(_asin, 1),
   'ATAN': _GCWizardScriptClassFunctionDefinition(_atan, 1),
+  'BINARYTOFLOAT': _GCWizardScriptClassFunctionDefinition(_binary2float, 1),
   'CARTHESIAN': _GCWizardScriptClassFunctionDefinition(_carthesian, 3, functionReturn: false),
   'CEIL': _GCWizardScriptClassFunctionDefinition(_ceil, 1),
   'CONVERTBASE': _GCWizardScriptClassFunctionDefinition(_convertBase, 3),
@@ -247,6 +250,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DIVISORS': _GCWizardScriptClassFunctionDefinition(_divisors, 2),
   'EXP': _GCWizardScriptClassFunctionDefinition(_exp, 1),
   'FAC': _GCWizardScriptClassFunctionDefinition(_fac, 1),
+  'FLOATTOBINARY': _GCWizardScriptClassFunctionDefinition(_float2binary, 2),
   'FLOOR': _GCWizardScriptClassFunctionDefinition(_floor, 1),
   'FRAC': _GCWizardScriptClassFunctionDefinition(_frac, 1),
   'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),

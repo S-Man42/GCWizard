@@ -7,6 +7,15 @@ import 'package:gc_wizard/application/category_views/selector_lists/bcd_selectio
 import 'package:gc_wizard/application/category_views/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bundeswehr_talkingboard.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_ean_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_euro_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_iban_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_imei_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_creditcard_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_uic_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/checkdigits_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/colors_selection.dart';
@@ -81,9 +90,11 @@ import 'package:gc_wizard/application/category_views/selector_lists/symbol_table
 import 'package:gc_wizard/application/category_views/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/uic_wagoncode_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/zodiac_selection.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
@@ -102,7 +113,7 @@ import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/widget/
 import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/widget/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/tools/coords/coordinate_averaging/widget/coordinate_averaging.dart';
 import 'package:gc_wizard/tools/coords/cross_bearing/widget/cross_bearing.dart';
-import 'package:gc_wizard/tools/coords/distance_and_bearing/widget/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/distance_and_bearing/widget/distancebearing_geodetic.dart';
 import 'package:gc_wizard/tools/coords/dmm_offset/widget/dmm_offset.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/widget/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/equilateral_triangle/widget/equilateral_triangle.dart';
@@ -116,10 +127,12 @@ import 'package:gc_wizard/tools/coords/intersect_two_circles/widget/intersect_tw
 import 'package:gc_wizard/tools/coords/intersection/widget/intersection.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
+import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
+import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
 import 'package:gc_wizard/tools/coords/segment_bearings/widget/segment_bearings.dart';
 import 'package:gc_wizard/tools/coords/segment_line/widget/segment_line.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
-import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection.dart';
+import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
@@ -136,6 +149,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/base/base58/widget/base58.d
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base64/widget/base64.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base85/widget/base85.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base91/widget/base91.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/battleship/widget/battleship.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd1of10/widget/bcd1of10.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd20f5postnet/widget/bcd20f5postnet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd2of5/widget/bcd2of5.dart';
@@ -202,6 +216,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_langu
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/widget/morse.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words_converter/widget/numeral_words_converter.dart';
@@ -211,6 +226,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_time_pad.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/widget/predator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
@@ -244,6 +260,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_a
 import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/widget/tomtom.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/universal_product_code/widget/universal_product_code.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/widget/wasd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
@@ -251,10 +268,12 @@ import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagrou
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
 import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life.dart';
+import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
@@ -265,6 +284,7 @@ import 'package:gc_wizard/tools/images_and_files/hexstring2file/widget/hexstring
 import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.dart';
 import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/widget/image_colorcorrections.dart';
 import 'package:gc_wizard/tools/images_and_files/image_flip_rotate/widget/image_flip_rotate.dart';
+import 'package:gc_wizard/tools/images_and_files/image_stretch_shrink/widget/image_stretch_shrink.dart';
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_eye_solver.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
@@ -292,6 +312,14 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/wi
 import 'package:gc_wizard/tools/science_and_technology/beaufort/widget/beaufort.dart';
 import 'package:gc_wizard/tools/science_and_technology/binary/widget/binary.dart';
 import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/widget/blood_alcohol_content.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_creditcard.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_de_taxid.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_ean.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_euro.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_iban.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_imei.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_isbn.dart';
+import 'package:gc_wizard/tools/science_and_technology/checkdigits/widget/checkdigits_uic.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/widget/pantone_color_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/ral_color_codes/widget/ral_color_codes.dart';
@@ -330,6 +358,7 @@ import 'package:gc_wizard/tools/science_and_technology/guitar_strings/widget/gui
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/icecodes/widget/icecodes.dart';
+import 'package:gc_wizard/tools/science_and_technology/ieee754/widget/ieee754.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/e/widget/e.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/phi/widget/phi.dart';
@@ -389,6 +418,7 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_eia96/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
+import 'package:gc_wizard/tools/science_and_technology/sort/widget/sort.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/widget/spelling_alphabets_crypt.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
@@ -419,6 +449,11 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_countrycodes.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_freight_classifications.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_passenger_lettercodes.dart';
+import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_vkm.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/widget/vanity_multitap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
@@ -542,6 +577,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'binary',
     ]),
+    GCWTool(tool: const Battleship(), id: 'battleship', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'battleship',
+    ]),
     GCWTool(tool: const BloodAlcoholContent(), id: 'bloodalcoholcontent', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -575,7 +615,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'binary',
     ]),
-    GCWTool(tool: const Binary2Image(), id: 'binary2image', isBeta: true, categories: const [
+    GCWTool(tool: const Binary2Image(), id: 'binary2image', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'binary',
@@ -628,6 +668,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'cipherwheel',
     ]),
+    GCWTool(
+        tool: const CheckDigitsSelection(),
+        id: 'checkdigits_selection',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: const []),
     GCWTool(
         tool: const CistercianNumbersSelection(),
         id: 'cistercian_selection',
@@ -719,7 +764,7 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'esotericprogramminglanguage',
         ]),
-    GCWTool(tool: const ExifReader(), id: 'exif', isBeta: true, categories: const [
+    GCWTool(tool: const ExifReader(), id: 'exif', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'exif',
@@ -802,7 +847,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'hexadecimal',
     ]),
-    GCWTool(tool: const HexString2File(), id: 'hexstring2file', isBeta: true, categories: const [
+    GCWTool(tool: const HexString2File(), id: 'hexstring2file', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'hexadecimal',
@@ -843,6 +888,12 @@ void initializeRegistry(BuildContext context) {
       categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
       searchKeys: const [],
     ),
+    GCWTool(tool: const IEEE754(), id: 'ieee754', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'binary',
+      'ieee754',
+    ]),
     GCWTool(tool: const ILLIAC(), id: 'illiac', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -857,7 +908,6 @@ void initializeRegistry(BuildContext context) {
         autoScroll: false,
         categories: const [ToolCategory.IMAGES_AND_FILES],
         id: 'image_colorcorrections',
-        isBeta: true,
         searchKeys: const [
           'images',
           'color',
@@ -870,6 +920,14 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'images',
           'image_fliprotate',
+        ]),
+    GCWTool(
+        tool: const ImageStretchShrink(),
+        categories: const [ToolCategory.IMAGES_AND_FILES],
+        id: 'image_stretchshrink',
+        searchKeys: const [
+          'images',
+          'image_stretchshrink',
         ]),
     GCWTool(
         tool: const IPCodes(),
@@ -937,6 +995,12 @@ void initializeRegistry(BuildContext context) {
     ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: const [
       'milesian_numbers',
     ]),
+    GCWTool(tool: const Morbit(), id: 'morbit', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'morbit',
+      'numbers'
+    ]),
     GCWTool(
         tool: const MorseSelection(),
         id: 'morse_selection',
@@ -960,6 +1024,14 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'navajo',
+    ]),
+    GCWTool(tool: const NonogramSolver(), id: 'nonogramsolver', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'games',
+      'nonogramsolver',
+      'grid',
+      'images'
     ]),
     GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
       ToolCategory.GAMES,
@@ -988,6 +1060,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'onetimepad',
+      'numbers'
     ], deeplinkAlias: const [
       'otp',
       'one_time_pad'
@@ -1030,6 +1103,12 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'pokemon',
+    ]),
+    GCWTool(tool: const Pollux(), id: 'pollux', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'pollux',
+      'numbers'
     ]),
     GCWTool(tool: const Polybios(), id: 'polybios', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1148,6 +1227,13 @@ void initializeRegistry(BuildContext context) {
       'solitaire',
     ]),
     GCWTool(
+        tool: const Sort(),
+        id: 'sort',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: const [
+          'sort'
+        ]),
+    GCWTool(
         tool: const SpellingAlphabetsSelection(),
         id: 'spelling_alphabets_selection',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
@@ -1170,7 +1256,7 @@ void initializeRegistry(BuildContext context) {
       'sqrt',
       'irrationalnumbers',
     ]),
-    GCWTool(tool: const Stegano(), id: 'stegano', isBeta: true, categories: const [
+    GCWTool(tool: const Stegano(), id: 'stegano', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'stegano',
@@ -1216,6 +1302,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'tapir',
+      'numbers'
     ]),
     GCWTool(
         tool: const TelegraphSelection(),
@@ -1269,10 +1356,20 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'ufi',
     ]),
+    GCWTool(tool: const UICWagonCodeSelection(), id: 'uic_wagoncode_selection', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ]),
     GCWTool(tool: const UnitConverter(), id: 'unitconverter', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'unitconverter',
+    ]),
+    GCWTool(tool: const UniversalProductCode(), id: 'universalproductcode', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'barcodes',
+      'binary',
+      'universalproductcode',
     ]),
     GCWTool(
         tool: const VelocityAcceleration(),
@@ -1292,7 +1389,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const VisualCryptography(),
         id: 'visual_cryptography',
-        isBeta: true,
         categories: const [ToolCategory.IMAGES_AND_FILES, ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['visualcryptography', 'images']),
     GCWTool(tool: const WASD(), id: 'wasd', categories: const [
@@ -1315,6 +1411,12 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'z22',
     ]),
+    GCWTool(tool: const WordSearch(), id: 'word_search', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'word_search',
+      'grid'
+    ]),
     GCWTool(tool: ZamonianNumbers(), autoScroll: false, id: 'zamoniannumbers', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1324,6 +1426,9 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'zc1',
+    ]),
+    GCWTool(tool: const ZodiacSelection(), id: 'zodiac_selection', categories: const [
+      ToolCategory.MISCELLANEOUS
     ]),
 
     //ApparentTemperatureSelection  ********************************************************************************************
@@ -1346,13 +1451,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const WetBulbTemperature(), id: 'wet_bulb_temperature', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_wet_bulb_temperature',
-    ]),
-
-    GCWTool(tool: const Zodiac(), id: 'zodiac', searchKeys: const [
-      'symbol_alchemy',
-      'symbol_planets',
-      'symbol_zodiacsigns',
-      'symbol_zodiacsigns_latin',
     ]),
 
     //AstronomySelection  ********************************************************************************************
@@ -1585,6 +1683,93 @@ void initializeRegistry(BuildContext context) {
       'teletypewriter',
     ]),
 
+    //CheckDigitsSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsCreditCardSelection(), id: 'checkdigits_creditcard_selection', searchKeys: const ['checkdigits', '']),
+    GCWTool(tool: const CheckDigitsDETaxIDSelection(), id: 'checkdigits_de_taxid_selection', searchKeys: const ['checkdigits',  'checkdigits_de_taxid']),
+    GCWTool(tool: const CheckDigitsEANSelection(), id: 'checkdigits_ean_selection', searchKeys: const ['checkdigits',  'checkdigits_ean']),
+    GCWTool(tool: const CheckDigitsIBANSelection(), id: 'checkdigits_iban_selection', searchKeys: const ['checkdigits',  'checkdigits_iban']),
+    GCWTool(tool: const CheckDigitsIMEISelection(), id: 'checkdigits_imei_selection', searchKeys: const ['checkdigits',  'checkdigits_imei']),
+    GCWTool(tool: const CheckDigitsISBNSelection(), id: 'checkdigits_isbn_selection', searchKeys: const ['checkdigits',  'checkdigits_isbn']),
+    GCWTool(tool: const CheckDigitsEUROSelection(), id: 'checkdigits_euro_selection', searchKeys: const ['checkdigits',  'checkdigits_euro']),
+    GCWTool(tool: const CheckDigitsUICSelection(), id: 'checkdigits_uic_selection', searchKeys: const ['checkdigits',  'checkdigits_uic']),
+
+    //CheckDigitsCreditCardSelection  ********************************************************************************************
+    GCWTool(
+        tool: const CheckDigitsCreditCardCheckNumber(), id: 'checkdigits_creditcard_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsCreditCardCalculateCheckDigit(),
+        id: 'checkdigits_creditcard_calculate_digit',
+        searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsCreditCardCalculateMissingDigit(),
+        id: 'checkdigits_creditcard_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsDETINSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsDETaxIDCheckNumber(), id: 'checkdigits_de_taxid_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsDETaxIDCalculateCheckDigit(),
+        id: 'checkdigits_de_taxid_calculate_digit',
+        searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsDETaxIDCalculateMissingDigit(),
+        id: 'checkdigits_de_taxid_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsEANSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsEANCheckNumber(), id: 'checkdigits_ean_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEANCalculateCheckDigit(), id: 'checkdigits_ean_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEANCalculateMissingDigit(),
+        id: 'checkdigits_ean_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsEUROSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsEUROCheckNumber(), id: 'checkdigits_euro_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEUROCalculateCheckDigit(), id: 'checkdigits_euro_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsEUROCalculateMissingDigit(),
+        id: 'checkdigits_euro_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsIBANSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsIBANCheckNumber(), id: 'checkdigits_iban_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIBANCalculateCheckDigit(), id: 'checkdigits_iban_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIBANCalculateMissingDigit(),
+        id: 'checkdigits_iban_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsIMEISelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsIMEICheckNumber(), id: 'checkdigits_imei_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIMEICalculateCheckDigit(), id: 'checkdigits_imei_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsIMEICalculateMissingDigit(),
+        id: 'checkdigits_imei_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsISBNSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsISBNCheckNumber(), id: 'checkdigits_isbn_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsISBNCalculateCheckDigit(), id: 'checkdigits_isbn_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsISBNCalculateMissingDigit(),
+        id: 'checkdigits_isbn_calculate_number',
+        searchKeys: const []),
+
+    //CheckDigitsUICSelection  ********************************************************************************************
+    GCWTool(tool: const CheckDigitsUICCheckNumber(), id: 'checkdigits_uic_checknumber', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsUICCalculateCheckDigit(), id: 'checkdigits_uic_calculate_digit', searchKeys: const []),
+    GCWTool(
+        tool: const CheckDigitsUICCalculateMissingDigit(),
+        id: 'checkdigits_uic_calculate_number',
+        searchKeys: const []),
+
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: const CistercianNumbers(), id: 'cistercian', searchKeys: const [
       'cistercian',
@@ -1621,7 +1806,7 @@ void initializeRegistry(BuildContext context) {
 
     //CoordsSelection **********************************************************************************************
     GCWTool(
-        tool: const WaypointProjection(),
+        tool: const WaypointProjectionGeodetic(),
         id: 'coords_waypointprojection',
         iconPath: 'lib/tools/coords/_common/assets/icons/icon_waypoint_projection.png',
         categories: const [
@@ -1631,9 +1816,10 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_compassrose',
           'coordinates_waypointprojection',
+          'coordinates_geodetic',
         ]),
     GCWTool(
-        tool: const DistanceBearing(),
+        tool: const DistanceBearingGeodetic(),
         id: 'coords_distancebearing',
         iconPath: 'lib/tools/coords/_common/assets/icons/icon_distance_and_bearing.png',
         categories: const [
@@ -1642,6 +1828,7 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_distancebearing',
+          'coordinates_geodetic',
         ]),
     GCWTool(
         tool: const FormatConverter(),
@@ -1880,6 +2067,30 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_equilateraltriangle',
+        ]),
+    GCWTool(
+        tool: const WaypointProjectionRhumbline(),
+        id: 'coords_rhumbline_projection',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_waypoint_projection.png',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'coordinates',
+          'coordinates_waypointprojection',
+          'coordinates_rhumbline',
+        ]),
+    GCWTool(
+        tool: const DistanceBearingRhumbline(),
+        id: 'coords_rhumbline_distancebearing',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_distance_and_bearing.png',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'coordinates',
+          'coordinates_distancebearing',
+          'coordinates_rhumbline',
         ]),
     GCWTool(
         tool: const EllipsoidTransform(),
@@ -3991,6 +4202,19 @@ void initializeRegistry(BuildContext context) {
       'symbol_freemason',
     ]),
     GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: const ['symbol_freemason']),
+    GCWSymbolTableTool(symbolKey: 'futhark_elder', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'futhark_younger', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark',
+      'symbol_futhorc'
+    ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
     ]),
@@ -4118,6 +4342,26 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_firesafety', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_firesafety'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_mandatory', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_mandatory'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_prohibition', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_prohibition'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_safecondition', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_safecondition'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iso7010_warning', symbolSearchStrings: const [
+      'iso7010',
+      'iso7010_warning'
+    ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const ['ccitt', 'symbol_murray', 'teletypewriter']),
@@ -4134,6 +4378,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: const [
       'color',
       'barcodes',
+      'railways',
       'symbol_kartrak',
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const ['symbol_kaktovik', 'zigzag']),
@@ -4215,6 +4460,10 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: const [
       'symbol_maze',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'medieval_runes', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark'
     ]),
     GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: const [
       'symbol_minimoys',
@@ -4414,10 +4663,6 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: const [
       'symbol_romulan',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: const [
-      'symbol_futhark',
-      'symbol_runes',
     ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
@@ -4709,6 +4954,30 @@ void initializeRegistry(BuildContext context) {
       'tomtom',
     ]),
 
+    // UICWagonCodeSelection ***************************************************************************************
+    GCWTool(tool: const UICWagonCode(), id: 'uic_wagoncode', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+    ]),
+    GCWTool(tool: const UICWagonCodeVKM(), id: 'uic_wagoncode_vkm', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+      'uic_wagoncode_vkm',
+    ]),
+    GCWTool(tool: const UICWagonCodeCountryCodes(), id: 'uic_wagoncode_countrycodes', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+      'countries',
+    ]),
+    GCWTool(tool: const UICWagonCodeFreightClassifications(), id: 'uic_wagoncode_freight_classification', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+    ]),
+    GCWTool(tool: const UICWagonCodePassengerLettercodes(), id: 'uic_wagoncode_passenger_lettercodes', searchKeys: const [
+      'railways', 'uic',
+      'uic_wagoncode',
+    ]),
+
     //VanitySelection **********************************************************************************************
     GCWTool(tool: const VanitySingletap(), id: 'vanity_singletap', searchKeys: const [
       'vanity',
@@ -4751,8 +5020,8 @@ void initializeRegistry(BuildContext context) {
       'trithemius',
     ]),
 
-    //WherigoUrwigoSelection **************************************************************************************
-    GCWTool(tool: const WherigoAnalyze(), id: 'wherigo', isBeta: true, categories: const [
+    // WherigoUrwigoSelection ************************************************************************************
+    GCWTool(tool: const WherigoAnalyze(), id: 'wherigo', categories: const [
       ToolCategory.IMAGES_AND_FILES,
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: const [
@@ -4768,6 +5037,15 @@ void initializeRegistry(BuildContext context) {
         tool: const EarwigoTextDeobfuscation(),
         id: 'earwigo_textdeobfuscation',
         searchKeys: const ['wherigo', 'earwigo', 'urwigo_textdeobfuscation']),
+
+    // ZodiacSelection ******************************************************************************************
+    GCWTool(tool: const Zodiac(), id: 'zodiac', searchKeys: const [
+      'symbol_alchemy',
+      'symbol_planets',
+      'symbol_zodiacsigns',
+      'symbol_zodiacsigns_latin',
+    ]),
+
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.id + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.id + '_title', useDefaultLanguage: true);
