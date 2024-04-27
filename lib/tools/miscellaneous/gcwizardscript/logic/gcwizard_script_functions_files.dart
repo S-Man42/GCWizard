@@ -172,8 +172,12 @@ void _writeFileDouble(double value) {
   });
 }
 
-bool _eof() {
-  return _state.FILEINDEX < _state.FILE.length;
+int _eof() {
+  if (_state.FILEINDEX < _state.FILE.length) {
+    return 0;
+  } else {
+    return 1;
+  }
 }
 
 String _dumpFile(Object? mode) {
