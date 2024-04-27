@@ -8,6 +8,7 @@ Object? _readFromFile(Object mode, Object index) {
   }
   int start = _state.FILEINDEX;
   if (index as int == -1) start = index;
+  if (index == 0) start = 0;
 
   switch (mode as int) {
     case -1: // 8 byte double
