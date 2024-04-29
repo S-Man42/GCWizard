@@ -16,7 +16,6 @@ class Reverse extends StatefulWidget {
 }
 
 class _ReverseState extends State<Reverse> {
-  String _output = '';
   var _currentMode = _ReverseMode.ALL;
 
   late TextEditingController _inputController;

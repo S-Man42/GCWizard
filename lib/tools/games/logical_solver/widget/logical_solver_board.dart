@@ -236,7 +236,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       if (x < board.itemsCount) {
         //canvas.drawRect(rect, paintItemLine);
         var r1= rect;
-        print(canvas.getTransform());
+        //print(canvas.getTransform());
 
         r1 = Rect.fromLTWH(xInner, 0, heightInner, maxRowItemsWidth);
         //r1 = r1.translate(xInnerStart + blockMargin, yInnerStart);
