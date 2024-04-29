@@ -116,6 +116,7 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
   }
 
   void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
+    if (_selectedBoxRect == selectedBoxRect) return;
     setState(() {
       if (showInputTextBox != null) {
         _selectedBox = showInputTextBox;
@@ -142,7 +143,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
   final void Function() setState;
   final Logical board;
   Color line_color = themeColors().secondary();
-  Color hint_line_color = themeColors().switchThumb1();
+  Color item_line_color = themeColors().switchThumb1();
   Color full_color = themeColors().secondary();
   Color background_color = themeColors().gridBackground();
   Color font_color = themeColors().mainFont();
@@ -153,7 +154,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       {Color? line_color, Color?  hint_line_color, Color? full_color, Color? background_color, Color? font_color,
         required this.onTapped, required this.onLongTapped}) {
     this.line_color = line_color ?? this.line_color;
-    this.hint_line_color = hint_line_color ?? this.hint_line_color;
+    this.item_line_color = hint_line_color ?? this.item_line_color;
     this.full_color = full_color ?? this.full_color;
     this.background_color = background_color ?? this.background_color;
     this.font_color = font_color ?? this.font_color;
@@ -173,7 +174,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
     paintItemLine.strokeWidth = 1;
     paintItemLine.style = PaintingStyle.stroke;
-    paintItemLine.color = hint_line_color;
+    paintItemLine.color = item_line_color;
 
     paintBackground.style = PaintingStyle.fill;
     paintBackground.color = background_color;
@@ -194,23 +195,24 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     //var fontSize = heightInner * 0.7;
     var fieldBorderOn = widthInner / 10;
 
-    var xInnerStart = xOuter + maxRowItemsWidth + blockMargin;
+    var xInnerStart = xOuter + maxColumnItemsWidth + blockMargin;
     var xInnerEnd = xInnerStart + board.getLineLength(0) * heightInner + _lineOffset(board.getLineLength(0));
-    var yInnerStart = yOuter + maxColumnItemsWidth + blockMargin;
+    var yInnerStart = yOuter + maxRowItemsWidth + blockMargin;
     var yInnerEnd = yInnerStart + board.getMaxLineLength() * heightInner + _lineOffset(board.getMaxLineLength());
 
     var rect = Rect.zero;
 
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {
+      print("x " + tapDetail.localPosition.dx.toString() + "y " + tapDetail.localPosition.dy.toString());
       if (_selectedBox != null) showInputTextBox(null, null);
     });
 
     // row item names
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
-      rect = Rect.fromLTWH(xOuter, yInner, maxRowItemsWidth, heightInner);
-      var rectTextBox = Rect.fromLTWH(xOuter, yInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
+      rect = Rect.fromLTWH(xOuter, yInner, maxColumnItemsWidth, heightInner);
+      var rectTextBox = Rect.fromLTWH(xOuter, yInner - heightInner/2, maxColumnItemsWidth * 2, heightInner * 2);
       var itemIndex = y + board.itemsCount;
       canvas.drawRect(rect, paintItemLine);
       _touchCanvas.drawRect(rect, paintTransparent,
@@ -221,34 +223,30 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     }
 
     // column item names
-    // canvas.save();
-    // canvas.rotate(-90 / 180 * pi);
-    // canvas.translate(-xInnerStart + blockMargin, yInnerStart);
+    canvas.save();
+    canvas.rotate(-90 / 180 * pi);
+    canvas.translate(-yInnerStart + blockMargin, xInnerStart);
     for (int x = 0; x < board.getLineLength(0) ; x++) {
       var itemIndex = (board.blockIndex(x) < 1
           ? 0
           : (board.mapRowColumnBlockIndex(board.blockIndex(x)) + 1) )
           * board.itemsCount + board.blockLine(x);
-
       var xInner = x * widthInner + _lineOffset(x);
-      rect = Rect.fromLTWH(yInnerStart, xInner, maxRowItemsWidth, heightInner);
-      var rectTextBox = Rect.fromLTWH(xOuter, xInner - heightInner/2, maxRowItemsWidth * 2, heightInner * 2);
-      if (x < board.itemsCount) {
-        //canvas.drawRect(rect, paintItemLine);
-        var r1= rect;
-        //print(canvas.getTransform());
-
-        r1 = Rect.fromLTWH(xInner, 0, heightInner, maxRowItemsWidth);
-        //r1 = r1.translate(xInnerStart + blockMargin, yInnerStart);
-        _touchCanvas.drawRect(r1,paintLine);
-        _touchCanvas.drawRect(r1, paintTransparent,
-            onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
-            onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
-      }
+      rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
       _paintItemText(canvas, rect,
           board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)], fontSize, font_color);
+
+      if (x < board.itemsCount) {
+        _touchCanvas.drawRect(rect, paintItemLine);
+        rect = Rect.fromLTWH(xInnerStart + xInner, yOuter, heightInner, maxRowItemsWidth);
+        var rectTextBox = Rect.fromLTWH(rect.left, rect.bottom - 2 * heightInner, maxRowItemsWidth * 2, heightInner * 2);
+        
+        _touchCanvas .drawRect(rect, paintTransparent,
+              onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
+              onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
+      }
     }
-    // canvas.restore();
+    canvas.restore();
 
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
@@ -262,7 +260,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var value = board.getValue(x, y);
         if (value != null) {
           _paintText(canvas, rect, value == Logical.plusValue ? '+' : '-',
-              fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ?  line_color : hint_line_color);
+              fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ?  line_color : item_line_color);
         }
       }
     }
