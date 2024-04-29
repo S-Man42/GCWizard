@@ -93,7 +93,7 @@ class Logical {
 	}
 
 	int getMaxLineLength() {
-	 	return (categoriesCount - 1) * itemsCount;
+		return (categoriesCount - 1) * itemsCount;
 	}
 
 	int getLineLength(int line) {
@@ -155,7 +155,7 @@ class Logical {
 				var _value = getValue(x, y);
 				if (_value == plusValue) {
 					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
-							logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
+					logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
 					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y)][blockLine(y)];
 				}
 			}
@@ -213,12 +213,10 @@ class Logical {
 		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
-					print('xBlock ' + blockRow.toString() + ' ' + xBlockIndex.toString() + ' yBlock ' + blockRow.toString() + ' ' + mapRowColumnBlockIndex(yBlockIndex).toString());
-					_cloneBlockValues(xBlockLine, yBlockline,
+					_cloneVericalBlockValues(xBlockLine, yBlockline,
 							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowColumnBlockIndex(yBlockIndex)], false);
 				} else {
-					print('xBlock ' + blockRow.toString() + ' ' + xBlockIndex.toString() + ' yBlock ' + yBlockIndex.toString() + ' ' + mapRowColumnBlockIndex(blockRow).toString());
-					_cloneBlockValues(xBlockLine, yBlockline,
+					_cloneVericalBlockValues(xBlockLine, yBlockline,
 							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowColumnBlockIndex(blockRow)], true);
 				}
 			}
@@ -226,41 +224,43 @@ class Logical {
 		for (var blockColumn = 0; blockColumn < getBlockLength(yBlockIndex); blockColumn++) {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
-					print('xBlock ' + mapRowColumnBlockIndex(xBlockIndex).toString() + ' ' + blockColumn.toString() + ' yBlock ' + yBlockIndex.toString() + ' ' + blockColumn.toString() );
-					_cloneBlockValues(xBlockLine, yBlockline,
+					_cloneHorizontalBlockValues(xBlockLine, yBlockline,
 							blocks[mapRowColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
 				} else {
-					print('xBlock ' + mapRowColumnBlockIndex(blockColumn).toString() + ' ' + xBlockIndex.toString() + ' yBlock ' + yBlockIndex.toString() + ' ' + blockColumn.toString() );
-					_cloneBlockValues(xBlockLine, yBlockline,
+					_cloneHorizontalBlockValues(xBlockLine, yBlockline,
 							blocks[mapRowColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
 				}
 			}
 		}
 	}
 
-	void _cloneBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+	void _cloneVericalBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+		// copy from xBlock to yBlock (search in xPlus Column)
 		for (var _y = 0; _y < itemsCount; _y++) {
 			var _value = xBlock.getValue(xPlus, _y);
 			if (_value != null) {
 				if (afterPlus) {
-					// bottom from +, row from +, column = row from -
+					// bottom from +
 					_setBlockValue(yBlock, _y, yPlus, _value);
 				} else {
-					// top from +, row from -, column = row from +
+					// top from +
 					_setBlockValue(yBlock, yPlus, _y, _value);
 				}
 			}
 		}
+	}
 
+	void _cloneHorizontalBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+		// copy from yBlock to xBlock (search in yPlus Row)
 		for (var _x = 0; _x < itemsCount; _x++) {
 			var _value = yBlock.getValue(_x, yPlus);
 			if (_value != null) {
 				if (afterPlus) {
-					// right from +, row = column from -, column from +
+					// right from +
 					_setBlockValue(xBlock, xPlus, _x, _value);
 				} else {
-					// left from +, row = column from +, column from -
-					_setBlockValue(xBlock, _x, yPlus, _value);
+					// left from +
+					_setBlockValue(xBlock, _x, xPlus, _value);
 				}
 			}
 		}
@@ -430,13 +430,13 @@ class Logical {
 	static String _jsonValueToString(int x, int y, Logical logical) {
 		//ToDo Check Alphabet Length
 		return alphabet_AZIndexes[logical.blockIndex(x) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
-					 alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
+				alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
 	}
 
 	static Point<int>? _jsonValueFromString(String value, Logical logical) {
 		//ToDo Check Alphabet Length
 		return Point<int>((alphabet_AZ[value[0].toUpperCase()]! - 1) * logical.itemsCount + (int.tryParse(value[1]) ?? 0),
-											(alphabet_AZ[value[2].toUpperCase()]! - 2) * logical.itemsCount + (int.tryParse(value[3]) ?? 0));
+				(alphabet_AZ[value[2].toUpperCase()]! - 2) * logical.itemsCount + (int.tryParse(value[3]) ?? 0));
 	}
 }
 
