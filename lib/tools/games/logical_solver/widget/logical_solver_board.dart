@@ -204,7 +204,6 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
     _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {
-      print("x " + tapDetail.localPosition.dx.toString() + "y " + tapDetail.localPosition.dy.toString());
       if (_selectedBox != null) showInputTextBox(null, null);
     });
 
@@ -212,7 +211,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     for (int y = 0; y < board.getMaxLineLength(); y++) {
       var yInner = yInnerStart + y * heightInner + _lineOffset(y);
       rect = Rect.fromLTWH(xOuter, yInner, maxColumnItemsWidth, heightInner);
-      var rectTextBox = Rect.fromLTWH(xOuter, yInner - heightInner/2, maxColumnItemsWidth * 2, heightInner * 2);
+      var rectTextBox = Rect.fromLTWH(rect.left, rect.top - rect.height/ 2, rect.width * 2, rect.height * 2);
       var itemIndex = y + board.itemsCount;
       canvas.drawRect(rect, paintItemLine);
       _touchCanvas.drawRect(rect, paintTransparent,
@@ -229,8 +228,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     for (int x = 0; x < board.getLineLength(0) ; x++) {
       var itemIndex = (board.blockIndex(x) < 1
           ? 0
-          : (board.mapRowColumnBlockIndex(board.blockIndex(x)) + 1) )
-          * board.itemsCount + board.blockLine(x);
+          : (board.mapRowColumnBlockIndex(board.blockIndex(x)) + 1)) * board.itemsCount + board.blockLine(x);
       var xInner = x * widthInner + _lineOffset(x);
       rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
       _paintItemText(canvas, rect,
@@ -238,8 +236,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
       if (x < board.itemsCount) {
         _touchCanvas.drawRect(rect, paintItemLine);
-        rect = Rect.fromLTWH(xInnerStart + xInner, yOuter, heightInner, maxRowItemsWidth);
-        var rectTextBox = Rect.fromLTWH(rect.left, rect.bottom - 2 * heightInner, maxRowItemsWidth * 2, heightInner * 2);
+        rect = Rect.fromLTWH(xInnerStart + xInner, yOuter, rect.height, rect.width);
+        var rectTextBox = Rect.fromLTWH(rect.left, rect.bottom - rect.width * 2, rect.height * 2, rect.width * 2);
         
         _touchCanvas .drawRect(rect, paintTransparent,
               onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
