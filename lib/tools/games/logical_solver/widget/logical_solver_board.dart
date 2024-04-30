@@ -238,8 +238,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var rectTextBox = Rect.fromLTWH(rect.left, rect.bottom - rect.width * 2, rect.height * 2, rect.width * 2);
         
         _touchCanvas .drawRect(rect, paintTransparent,
-              onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
-              onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
+            onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
+            onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
       }
     }
     canvas.restore();
@@ -251,12 +251,12 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBackground,
             onTapUp: (tapDetail) {(_selectedBox == null) ? onTapped(x, y) : showInputTextBox(null, null);},
-            onLongPressEnd: (tapDetail) { (_selectedBox == null) ? onLongTapped(x, y) : showInputTextBox(null, null);});
+            onLongPressEnd: (tapDetail) {(_selectedBox == null) ? onLongTapped(x, y) : showInputTextBox(null, null);});
         canvas.drawRect(rect, paintLine);
         var value = board.getValue(x, y);
         if (value != null) {
           _paintText(canvas, rect, value == Logical.plusValue ? '+' : '-',
-              _fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ?  line_color : item_line_color);
+              _fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ? line_color : item_line_color);
         }
       }
     }
