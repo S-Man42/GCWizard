@@ -1,10 +1,10 @@
 part of 'package:gc_wizard/tools/games/logical_solver/widget/logical_solver.dart';
 
-const boxSize = 20.0;
-const fontSize = boxSize * 0.7;
-const blockMargin = boxSize/ 2;
-const itemTextOffsetStart = 3;
-const itemTextOffsetEnd = 10;
+const _boxSize = 20.0;
+const _fontSize = _boxSize * 0.7;
+const _blockMargin = _boxSize/ 2;
+const _itemTextOffsetStart = 3;
+const _itemTextOffsetEnd = 10;
 Point<int>? _selectedBox;
 Rect? _selectedBoxRect;
 FocusNode? _valueFocusNode;
@@ -43,10 +43,10 @@ class LogicPuzzleBoardState extends State<LogicPuzzleBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: max(_maxRowItemsWidth(widget.board, fontSize) + widget.board.getLineLength(0) * boxSize, 1) / //ToDo FontSize
-                        max(_maxColumnItemsWidth(widget.board, fontSize) + widget.board.getMaxLineLength() * boxSize, 1),
+                    aspectRatio: max(_maxRowItemsWidth(widget.board, _fontSize) + widget.board.getLineLength(0) * _boxSize, 1) / //ToDo FontSize
+                        max(_maxColumnItemsWidth(widget.board, _fontSize) + widget.board.getMaxLineLength() * _boxSize, 1),
                     child: CanvasTouchDetector(
-                      gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd], //ToDo onTapDown neccesery , GestureType.onTapDown
+                      gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd],
                       builder: (context) {
                         return CustomPaint(
                             painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
@@ -151,10 +151,10 @@ class LogicPuzzleBoardPainter extends CustomPainter {
   final void Function(int, int) onLongTapped;
 
   LogicPuzzleBoardPainter(this.context, this.board, this.showInputTextBox, this.setState,
-      {Color? line_color, Color?  hint_line_color, Color? full_color, Color? background_color, Color? font_color,
+      {Color? line_color, Color?  item_line_color, Color? full_color, Color? background_color, Color? font_color,
         required this.onTapped, required this.onLongTapped}) {
     this.line_color = line_color ?? this.line_color;
-    this.item_line_color = hint_line_color ?? this.item_line_color;
+    this.item_line_color = item_line_color ?? this.item_line_color;
     this.full_color = full_color ?? this.full_color;
     this.background_color = background_color ?? this.background_color;
     this.font_color = font_color ?? this.font_color;
@@ -184,28 +184,26 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
 
     const border = 5;
-    var maxRowItemsWidth = _maxRowItemsWidth(board, fontSize);
-    var maxColumnItemsWidth = _maxColumnItemsWidth(board, fontSize);
+    var maxRowItemsWidth = _maxRowItemsWidth(board, _fontSize);
+    var maxColumnItemsWidth = _maxColumnItemsWidth(board, _fontSize);
 
     double widthOuter = size.width - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
-    double widthInner = boxSize; // (widthOuter - _lineOffset(maxRowHints + board.getColumnsCount(0))) / (maxRowHints + board.getRowsCount());
+    double widthInner = _boxSize; // (widthOuter - _lineOffset(maxRowHints + board.getColumnsCount(0))) / (maxRowHints + board.getRowsCount());
     double heightInner = widthInner;
     //var fontSize = heightInner * 0.7;
-    var fieldBorderOn = widthInner / 10;
 
-    var xInnerStart = xOuter + maxColumnItemsWidth + blockMargin;
+    var xInnerStart = xOuter + maxColumnItemsWidth + _blockMargin;
     var xInnerEnd = xInnerStart + board.getLineLength(0) * heightInner + _lineOffset(board.getLineLength(0));
-    var yInnerStart = yOuter + maxRowItemsWidth + blockMargin;
+    var yInnerStart = yOuter + maxRowItemsWidth + _blockMargin;
     var yInnerEnd = yInnerStart + board.getMaxLineLength() * heightInner + _lineOffset(board.getMaxLineLength());
 
     var rect = Rect.zero;
 
     rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    _touchCanvas.drawRect(rect, paintTransparent, onTapDown: (tapDetail) {
-      if (_selectedBox != null) showInputTextBox(null, null);
-    });
+    _touchCanvas.drawRect(rect, paintTransparent,
+        onTapDown: (tapDetail) {if (_selectedBox != null) showInputTextBox(null, null);});
 
     // row item names
     for (int y = 0; y < board.getMaxLineLength(); y++) {
@@ -218,13 +216,13 @@ class LogicPuzzleBoardPainter extends CustomPainter {
           onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);},
           onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);});
       _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)],
-          fontSize, font_color);
+          _fontSize, font_color);
     }
 
     // column item names
     canvas.save();
     canvas.rotate(-90 / 180 * pi);
-    canvas.translate(-yInnerStart + blockMargin, xInnerStart);
+    canvas.translate(-yInnerStart + _blockMargin, xInnerStart);
     for (int x = 0; x < board.getLineLength(0) ; x++) {
       var itemIndex = (board.blockIndex(x) < 1
           ? 0
@@ -232,7 +230,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       var xInner = x * widthInner + _lineOffset(x);
       rect = Rect.fromLTWH(0, xInner, maxRowItemsWidth, heightInner);
       _paintItemText(canvas, rect,
-          board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)], fontSize, font_color);
+          board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)], _fontSize, font_color);
 
       if (x < board.itemsCount) {
         _touchCanvas.drawRect(rect, paintItemLine);
@@ -258,14 +256,14 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var value = board.getValue(x, y);
         if (value != null) {
           _paintText(canvas, rect, value == Logical.plusValue ? '+' : '-',
-              fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ?  line_color : item_line_color);
+              _fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ?  line_color : item_line_color);
         }
       }
     }
   }
 
   double _lineOffset(int value) {
-    return (value / board.itemsCount).floor() * blockMargin;
+    return (value / board.itemsCount).floor() * _blockMargin;
   }
 
   void _paintText(Canvas canvas, Rect rect, String text, double fontSize, Color color) {
@@ -276,7 +274,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 
   void _paintItemText(Canvas canvas, Rect rect, String text, double fontSize, Color color) {
     var textPainter = _buildTextPainter(text, color, fontSize);
-    textPainter.paint(canvas, Offset(rect.left + itemTextOffsetStart,
+    textPainter.paint(canvas, Offset(rect.left + _itemTextOffsetStart,
         rect.centerLeft.dy - textPainter.height * 0.5));
   }
 
@@ -287,20 +285,16 @@ class LogicPuzzleBoardPainter extends CustomPainter {
 }
 
 double _maxRowItemsWidth(Logical board, double fontsize) {
-  var maxWidth = 3 * boxSize - itemTextOffsetStart - itemTextOffsetEnd;
-  for(var itemBlock = 0; itemBlock < board.logicalItems.length; itemBlock++) {
-    if (itemBlock == 1) continue;
-    maxWidth = max(maxWidth, _maxItemBlockWidth(board.logicalItems[itemBlock], fontsize));
-  }
-  return maxWidth + itemTextOffsetStart + itemTextOffsetEnd;
+  return _maxColumnItemsWidth(board, fontsize, ignoreBlock: 1);
 }
 
-double _maxColumnItemsWidth(Logical board, double fontsize) {
-  var maxWidth = 3 * boxSize - itemTextOffsetStart - itemTextOffsetEnd;
-  for(var itemBlock = 1; itemBlock < board.logicalItems.length; itemBlock++) {
+double _maxColumnItemsWidth(Logical board, double fontsize, {int ignoreBlock = 0}) {
+  var maxWidth = 3 * _boxSize - _itemTextOffsetStart - _itemTextOffsetEnd;
+  for(var itemBlock = 0; itemBlock < board.logicalItems.length; itemBlock++) {
+    if (itemBlock == ignoreBlock) continue;
     maxWidth = max(maxWidth, _maxItemBlockWidth(board.logicalItems[itemBlock], fontsize));
   }
-  return maxWidth + itemTextOffsetStart + itemTextOffsetEnd;
+  return maxWidth + _itemTextOffsetStart + _itemTextOffsetEnd;
 }
 
 double _maxItemBlockWidth(List<String> itemBlock, double fontsize) {

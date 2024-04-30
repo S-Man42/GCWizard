@@ -75,6 +75,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                 title: i18n(context, 'logicalsolver_categories'),
                 value: _categoriesCount,
                 min: 2,
+                max: 26,
                 onChanged: (value) {
                   setState(() {
                     _categoriesCount = value;
@@ -86,6 +87,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                 title: i18n(context, 'logicalsolver_items'),
                 value: _itemsCount,
                 min: 2,
+                max: 26,
                 onChanged: (value) {
                   setState(() {
                     _itemsCount = value;
@@ -106,7 +108,6 @@ class LogicalSolverState extends State<LogicalSolver> {
             onChanged: (newBoard) {
               setState(() {
                 _currentBoard = newBoard;
-                //_hideInputTextBox();
               });
             },
             onTapped: (x, y) {
@@ -127,7 +128,6 @@ class LogicalSolverState extends State<LogicalSolver> {
                     text: i18n(context, 'logicalsolver_clear_relations'),
                     onPressed: () {
                       setState(() {
-                        //_unselectBoardBox();
                         _currentBoard.removeRelations();
                       });
                     },
