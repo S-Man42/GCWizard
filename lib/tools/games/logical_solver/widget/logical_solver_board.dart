@@ -190,14 +190,14 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     double widthOuter = size.width - 2 * border;
     double xOuter = 1 * border.toDouble();
     double yOuter = 1 * border.toDouble();
-    double widthInner = _calcWidth(widthOuter, maxRowItemsWidth, 1, maxLineLength); //_boxSize; //
+    double widthInner = _calcBoxWidth(widthOuter, maxRowItemsWidth, 1, maxLineLength);
     double widthInnerOld = 0.0;
     double factor = widthInner/ _boxSize;
     int loopCounter = 0;
-    
-    while ((widthInnerOld - widthInner).abs() > 0.2 || loopCounter > 10) {
+
+    while ((widthInnerOld - widthInner).abs() > 0.05 && loopCounter <= 100) {
       widthInnerOld = widthInner;
-      widthInner = _calcWidth(widthOuter, maxRowItemsWidth, factor, maxLineLength);
+      widthInner = _calcBoxWidth(widthOuter, maxRowItemsWidth, factor, maxLineLength);
       factor = widthInner/ _boxSize;
       loopCounter++;
     }
@@ -207,8 +207,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     maxColumnItemsWidth *= factor;
     maxRowItemsWidth *= factor;
 
-    var xInnerStart = xOuter + maxRowItemsWidth + _blockMargin;
-    var yInnerStart = yOuter + maxColumnItemsWidth + _blockMargin;
+    var xInnerStart = xOuter + maxRowItemsWidth + _blockMargin * factor;
+    var yInnerStart = yOuter + maxColumnItemsWidth + _blockMargin * factor;
 
     var rect = Rect.zero;
 
@@ -233,7 +233,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     // column item names
     canvas.save();
     canvas.rotate(-90 / 180 * pi);
-    canvas.translate(-yInnerStart + _blockMargin, xInnerStart);
+    canvas.translate(-yInnerStart + _blockMargin * factor, xInnerStart);
     for (int x = 0; x < board.getLineLength(0) ; x++) {
       var itemIndex = (board.blockIndex(x) < 1
           ? 0
@@ -273,8 +273,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     }
   }
 
-  double _calcWidth(double widthOuter, double maxRowItemsWidth, double factor, int maxLineLength) {
-    return (widthOuter - maxRowItemsWidth * factor - _lineOffset(maxLineLength, factor)) / maxLineLength;
+  double _calcBoxWidth(double widthOuter, double maxRowItemsWidth, double factor, int maxLineLength) {
+    return (widthOuter - maxRowItemsWidth * factor - _lineOffset(maxLineLength, factor)) / maxLineLength.toDouble();
   }
 
   double _lineOffset(int value, double factor) {
