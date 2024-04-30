@@ -103,7 +103,7 @@ class LogicalSolverState extends State<LogicalSolver> {
           onChanged: (value) {
             _scale = value;
           },
-          child: LogicPuzzleBoard(
+          child: LogicalBoard(
             board: _currentBoard,
             onChanged: (newBoard) {
               setState(() {
