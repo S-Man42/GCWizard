@@ -24,7 +24,8 @@ class Puzzle {
   int width = 0;
   var rows = <List<int>>[];
   PuzzleState state = PuzzleState.Ok;
-  var invalidHintDataInfo = "";
+  String? invalidHintDataInfoCode;
+  String? invalidHintDataInfoData;
 
   Puzzle(this.rowHints, this.columnHints, {List<int>? content}) {
     height = rowHints.length;
@@ -44,7 +45,7 @@ class Puzzle {
       Strategy().solve(this, maxRecursionLevel);
     }
     var stateTmp = state;
-    _checkConsistency(this);
+    checkConsistency(this);
     if (state == PuzzleState.Ok) {
       state = stateTmp;
     }
@@ -72,7 +73,7 @@ class Puzzle {
     }
     data.rows = generateRows(data);
 
-    _checkConsistency(data);
+    checkConsistency(data);
   }
 
   static List<List<int>> _cleanClone(List<List<int>> hints) {
@@ -278,7 +279,7 @@ class Puzzle {
     return clone.toJson();
   }
 
-  static void _checkConsistency(Puzzle data) {
+  static void checkConsistency(Puzzle data) {
     if (data.rowHints.isEmpty || data.columnHints.isEmpty ||
         data.height == 0 || data.width == 0) {
       data.state = PuzzleState.InvalidContentData;
@@ -288,28 +289,32 @@ class Puzzle {
     var test = data.rowHints.firstWhereOrNull((row) => row.sum > data.width);
     if (test != null) {
        data.state = PuzzleState.InvalidHintData;
-       data.invalidHintDataInfo = 'invalid row ' + (data.rowHints.indexOf(test) + 1).toString();
+       data.invalidHintDataInfoCode = 'invalid_row';
+       data.invalidHintDataInfoData = (data.rowHints.indexOf(test) + 1).toString();
        return;
     }
 
     test = data.columnHints.firstWhereOrNull((column) => column.sum > data.height);
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
-      data.invalidHintDataInfo = 'invalid column ' + (data.columnHints.indexOf(test) + 1).toString();
+      data.invalidHintDataInfoCode = 'invalid_column';
+      data.invalidHintDataInfoData = (data.columnHints.indexOf(test) + 1).toString();
       return;
     }
 
     test = data.rowHints.firstWhereOrNull((row) => row.any((hint) => hint < 0));
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
-      data.invalidHintDataInfo = 'invalid row ' + (data.rowHints.indexOf(test) + 1).toString();
+      data.invalidHintDataInfoCode = 'invalid_row';
+      data.invalidHintDataInfoData = (data.rowHints.indexOf(test) + 1).toString();
       return;
     }
 
     test = data.columnHints.firstWhereOrNull((row) => row.any((hint) => hint < 0));
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
-      data.invalidHintDataInfo = 'invalid column ' + (data.columnHints.indexOf(test) + 1).toString();
+      data.invalidHintDataInfoCode = 'invalid_column';
+      data.invalidHintDataInfoData = (data.columnHints.indexOf(test) + 1).toString();
       return;
     }
 
@@ -318,9 +323,9 @@ class Puzzle {
     if ( (rowSum != columnSum)) {
      data.state = PuzzleState.InvalidHintData;
      if (rowSum > columnSum) {
-       data.invalidHintDataInfo = 'more row as column points';
+       data.invalidHintDataInfoCode = 'more_row_points_than_column_points';
      } else {
-       data.invalidHintDataInfo = 'more column as row points';
+       data.invalidHintDataInfoCode = 'more_column_points_than_row_points';
      }
      return;
    }

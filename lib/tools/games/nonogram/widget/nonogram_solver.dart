@@ -15,6 +15,7 @@ import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -95,6 +96,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                       case _EncryptWizardStep.DRAW_MANUALLY: _currentEncryptStep = _EncryptWizardStep.DEFINE_SIZE; break;
                       default: _currentEncryptStep = _EncryptWizardStep.FILE_OR_MANUAL; break;
                     }
+
+                    _encryptPuzzle.resetCalculation();
                   });
                 },
               )
@@ -118,6 +121,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                         case _DecryptWizardStep.SHOW_RESULT_MANUAL: _currentDecryptStep = _DecryptWizardStep.SET_COLUMN_VALUES; break;
                         default: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
                       }
+
+                      _decryptPuzzle.resetCalculation();
                     });
                   },
                 )
@@ -171,7 +176,8 @@ class NonogramSolverState extends State<NonogramSolver> {
                   _openFileButtonEncrypt(puzzle, _currentEncryptStep),
                 if (_currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE || _currentEncryptStep == _EncryptWizardStep.DEFINE_SIZE_IMAGE)
                   _buildSizeSelection(puzzle),
-                if ([_EncryptWizardStep.DRAW_LOADED_JSON, _EncryptWizardStep.DRAW_LOADED_IMAGE, _EncryptWizardStep.DRAW_MANUALLY].contains(_currentEncryptStep))
+                if ([_EncryptWizardStep.DRAW_LOADED_JSON, _EncryptWizardStep.DRAW_LOADED_IMAGE, _EncryptWizardStep.DRAW_MANUALLY].contains(_currentEncryptStep) 
+                    && [PuzzleState.Ok, PuzzleState.Solved].contains(puzzle.board.state))
                   Column(
                     children: [
                       _drawNonogramm(puzzle),
@@ -179,6 +185,15 @@ class NonogramSolverState extends State<NonogramSolver> {
                       _encryptPreview(puzzle),
                       _exportButtons(puzzle),
                     ],
+                  ),
+                if ([_EncryptWizardStep.DRAW_LOADED_JSON, _EncryptWizardStep.DRAW_LOADED_IMAGE, _EncryptWizardStep.DRAW_MANUALLY].contains(_currentEncryptStep)
+                    && ![PuzzleState.Ok, PuzzleState.Solved].contains(puzzle.board.state))
+                  Column(
+                    children: [
+                      GCWDefaultOutput(
+                        child: _dataErrorText(puzzle.board),
+                      )
+                    ]
                   )
               ],
             )
@@ -216,13 +231,21 @@ class NonogramSolverState extends State<NonogramSolver> {
                   _buildRowHints(puzzle),
                 if (_currentDecryptStep == _DecryptWizardStep.SET_COLUMN_VALUES)
                   _buildColumnHints(puzzle),
-                if ([_DecryptWizardStep.SHOW_RESULT_MANUAL, _DecryptWizardStep.SHOW_RESULT_FILE].contains(_currentDecryptStep))
+                if ([_DecryptWizardStep.SHOW_RESULT_MANUAL, _DecryptWizardStep.SHOW_RESULT_FILE].contains(_currentDecryptStep)
+                  && [PuzzleState.Ok, PuzzleState.Solved].contains(puzzle.board.state)
+                )
                   Column(
                     children: [
                       _drawNonogramm(puzzle),
                       _controlButtons(puzzle),
                       _exportButtons(puzzle),
                     ],
+                  ),
+                if ([_DecryptWizardStep.SHOW_RESULT_MANUAL, _DecryptWizardStep.SHOW_RESULT_FILE].contains(_currentDecryptStep)
+                    && ![PuzzleState.Ok, PuzzleState.Solved].contains(puzzle.board.state)
+                )
+                  GCWDefaultOutput(
+                    child: _dataErrorText(puzzle.board),
                   )
               ],
             )
@@ -434,6 +457,7 @@ class NonogramSolverState extends State<NonogramSolver> {
               showSnackBar(i18n(context, 'nonogramsolver_hinterror'), context);
             } else {
               puzzle.board.columnHints[i] = data;
+              Puzzle.checkConsistency(puzzle.board);
               _currentDecryptStep = _DecryptWizardStep.SHOW_RESULT_MANUAL;
             }
           }
@@ -459,11 +483,6 @@ class NonogramSolverState extends State<NonogramSolver> {
                     onPressed: () {
                       setState(() {
                         puzzle.board.solve();
-                        if (puzzle.board.state != PuzzleState.Solved) {
-                          if (!_showSnackBarDataError(puzzle.board)) {
-                            showSnackBar(i18n(context, 'sudokusolver_error'), context);
-                          }
-                        }
                       });
                     },
                   ),
@@ -506,9 +525,10 @@ class NonogramSolverState extends State<NonogramSolver> {
                           TextButton(
                               onPressed: () {
                                 setState(() {
-                                  puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+                                  puzzle.resetCalculation();
                                   puzzle.clearRowHints();
                                   puzzle.clearColumnHints();
+                                  _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL;
                                   Navigator.pop(context);
                                 });
                               },
@@ -588,11 +608,35 @@ class NonogramSolverState extends State<NonogramSolver> {
     }
   }
 
+  String _dataErrorText(Puzzle board) {
+    switch (board.state) {
+      case PuzzleState.InvalidHintData:
+        var errorhint = i18n(context, 'nonogramsolver_hinterror');
+
+        var extendedInfo = board.invalidHintDataInfoCode;
+        if (extendedInfo != null && extendedInfo.isNotEmpty) {
+          errorhint += '\n';
+
+          var params = board.invalidHintDataInfoData;
+          if (params != null && params.isNotEmpty) {
+            errorhint += i18n(context, 'nonogramsolver_error_invalidhint_' + extendedInfo, parameters: [board.invalidHintDataInfoData]);
+          } else {
+            errorhint += i18n(context, 'nonogramsolver_error_invalidhint_' + extendedInfo);
+          }
+
+          return errorhint;
+        } else {
+          return errorhint;
+        }
+      case PuzzleState.Finished:
+        return i18n(context, 'sudokusolver_error');
+      default: return '';
+    }
+  }
+  
   bool _showSnackBarDataError(Puzzle board) {
     if (board.state == PuzzleState.InvalidHintData) {
-      var extendedInfo = board.invalidHintDataInfo;
-      if (extendedInfo.isNotEmpty) extendedInfo = '\n' + extendedInfo;
-      showSnackBar(i18n(context, 'nonogramsolver_hinterror') + extendedInfo, context);
+      showSnackBar(_dataErrorText(board), context);
       return true;
     }
     return false;
@@ -702,12 +746,16 @@ class PuzzleWidgetValues {
     Puzzle.mapData(board);
   }
 
+  void resetCalculation() {
+    board.state = PuzzleState.Ok;
+  }
+
   void clearRowHints() {
-    for (var controler in rowController) {controler.text = '';}
+    for (var controller in rowController) {controller.text = '';}
   }
 
   void clearColumnHints() {
-    for (var controler in columnController) {controler.text = '';}
+    for (var controller in columnController) {controller.text = '';}
   }
 
   void onTapped(int row, int column) {
