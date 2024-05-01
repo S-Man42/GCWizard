@@ -595,7 +595,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                                       'formulasolver_formulas_showonmap',
                                                     ),
                                                     action: (idx) {
-                                                      if (index + 1 >= coordinates.length) return;
+                                                      if (index + 1 > coordinates.length) return;
 
                                                       _showFormulaResultOnMap(
                                                           [_createMapPoint(coordinates[index + 1]!)]);
