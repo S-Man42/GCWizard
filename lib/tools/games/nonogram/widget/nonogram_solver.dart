@@ -623,11 +623,8 @@ class NonogramSolverState extends State<NonogramSolver> {
           } else {
             errorhint += i18n(context, 'nonogramsolver_error_invalidhint_' + extendedInfo);
           }
-
-          return errorhint;
-        } else {
-          return errorhint;
         }
+        return errorhint;
       case PuzzleState.Finished:
         return i18n(context, 'sudokusolver_error');
       default: return '';
