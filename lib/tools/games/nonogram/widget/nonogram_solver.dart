@@ -623,11 +623,8 @@ class NonogramSolverState extends State<NonogramSolver> {
           } else {
             errorhint += i18n(context, 'nonogramsolver_error_invalidhint_' + extendedInfo);
           }
-
-          return errorhint;
-        } else {
-          return errorhint;
         }
+        return errorhint;
       case PuzzleState.Finished:
         return i18n(context, 'sudokusolver_error');
       default: return '';
@@ -747,8 +744,7 @@ class PuzzleWidgetValues {
   }
 
   void resetCalculation() {
-    board.state = PuzzleState.Ok;
-    board.columns = List<List<int>>.generate(board.width, (index) => List<int>.filled(board.height, 0));
+    board = Puzzle.generate(board.width, board.height);
   }
 
   void clearRowHints() {
