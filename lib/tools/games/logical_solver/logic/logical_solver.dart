@@ -109,7 +109,7 @@ class Logical {
 	}
 
 	/// map row block index to column block index
-	////@yBlock block index (<=0 invalid)
+	////@yBlock block index
 	int mapRowColumnBlockIndex(int block) {
 		return block < 1 ? 0 : categoriesCount - 1 - block;
 	}
@@ -150,13 +150,21 @@ class Logical {
 				itemsCount, (index) => List<String>.generate(
 				categoriesCount, (index) => ''));
 
-		for (var y = 0; y < getMaxLineLength(); y++) {
+		for (var y = 0; y < itemsCount; y++) {
 			for (var x = 0; x < getLineLength(y); x++) {
-				var _value = getValue(x, y);
-				if (_value == plusValue) {
+				if (getValue(x, y) == plusValue) {
 					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
-					logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
-					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y)][blockLine(y)];
+						logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
+					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
+				}
+			}
+		}
+		for (var y = itemsCount; y < getMaxLineLength(); y++) {
+			for (var x = 0; x < getLineLength(y); x++) {
+				if (getValue(x, y) == plusValue) {
+					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
+						logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
+					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
 				}
 			}
 		}
