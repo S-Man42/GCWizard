@@ -744,8 +744,7 @@ class PuzzleWidgetValues {
   }
 
   void resetCalculation() {
-    board.state = PuzzleState.Ok;
-    board.columns = List<List<int>>.generate(board.width, (index) => List<int>.filled(board.height, 0));
+    board = Puzzle.generate(board.width, board.height);
   }
 
   void clearRowHints() {
