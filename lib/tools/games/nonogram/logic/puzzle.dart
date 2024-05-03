@@ -51,6 +51,11 @@ class Puzzle {
     }
   }
 
+  void resetCalculation() {
+    generateRows(this);
+    state = PuzzleState.Ok;
+  }
+
    static Puzzle generate(int height, int width) {
      var puzzle = Puzzle(List<List<int>>.generate(height, (index) => []),
                    List<List<int>>.generate(width, (index) => []));
