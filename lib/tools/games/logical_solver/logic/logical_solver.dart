@@ -163,55 +163,32 @@ class Logical {
 					var yL = blockLine(y);
 					var xL = blockLine(x);
 					var xB = blockIndex(x);
-					var xt1 = mapColumnToRowBlockIndex(xB);
-
+					var ys1 = mapColumnToRowBlockIndex(xB);
 					var ys2 = yB + 1;
 					var xt2 = yB + 1;
+					var solution1 = logicalItems[ys1][xL];
+					var solution2 = logicalItems[ys2][yL];
 
-					var v1 = logicalItems[xt1][xL];
-					var v2 = logicalItems[ys2][yL];
-
-					yL = 0;
-
-					while(!(solution[yL].every((element) => element == '')
-							|| solution[yL][xt1] == v1 || solution[yL][xt2] == v2 )) {
-						yL++;
+					var tL = 0;
+					while(!(solution[tL].every((element) => element == '')
+							|| solution[tL][ys1] == solution1 || solution[tL][xt2] == solution2 )) {
+						tL++;
 					}
 
-					if (yL < solution.length) {
-						solution[yL][xt1] = v1;
-						solution[yL][xt2] = v2;
+					if (tL < solution.length) {
+						solution[tL][ys1] = solution1;
+						solution[tL][xt2] = solution2;
 
-						print(y.toString() + '  ' + yL.toString() + '/ ' + xt1.toString() + ' -> ' + solution[yL][xt1] + ' ' + xB.toString());
-						print(y.toString() + '  ' + yL.toString() + '/ ' + xt2.toString() + ' -> ' + solution[yL][xt2]);
+						print(y.toString() + '  ' + tL.toString() + '/ ' + ys1.toString() + ' -> ' + solution[tL][ys1] + ' ' + xB.toString());
+						print(y.toString() + '  ' + tL.toString() + '/ ' + xt2.toString() + ' -> ' + solution[tL][xt2]);
 					}
-
-					// solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
-					// 		logicalItems[mapRowColumnBlockIndex(blockIndex(x))][blockLine(x)];
-					// solution[blockLine(y)][blockIndex(y)] = logicalItems[blockIndex(y)][blockLine(y)];
-					// print(y.toString() + ' ' + blockLine(y).toString() + ' ' + mapRowColumnBlockIndex(blockIndex(x)).toString() + ' ' + solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))].toString());
-					// print(y.toString() + ' ' + blockLine(y).toString() + ' ' + (blockIndex(y) + 1).toString() + ' ' + solution[blockLine(y)][blockIndex(y) + 1]);
 				}
 			}
 		}
-		// for (var y = itemsCount; y < getMaxLineLength(); y++) {
-		// 	for (var x = 0; x < getLineLength(y); x++) {
-		// 		if (getValue(x, y) == plusValue) {
-		// 			solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
-		// 					logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
-		// 			solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
-		// 			print(y.toString() + ' ' + blockLine(y).toString() + ' ' + mapRowColumnBlockIndex(blockIndex(x)).toString() + ' ' + solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))].toString());
-		// 			print(y.toString() + ' ' + blockLine(y).toString() + ' ' + (blockIndex(y) + 1).toString() + ' ' + solution[blockLine(y)][blockIndex(y) + 1]);
-		// 		}
-		// 	}
-		// }
-
 		solution.removeWhere((line) => line.every((element) => element == ''));
 
 		return solution;
 	}
-
-	//List<List<String>> addSultion()
 
 	void _setBlockPlusValue(int xPlus, int yPlus, int? value) {
 		var block = blocks[blockIndex(yPlus)][blockIndex(xPlus)];
