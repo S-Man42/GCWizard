@@ -208,7 +208,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
     _wptsLat,
     1,
   ),
-  'WPTSCENTER': _GCWizardScriptClassFunctionDefinition(_wptsCenter, 0, functionReturn: false),
+  'WPTSCENTER': _GCWizardScriptClassFunctionDefinition(_wptsCenter, 1, functionReturn: false),
 
   // date, time
   'DATE': _GCWizardScriptClassFunctionDefinition(_date, 0),
