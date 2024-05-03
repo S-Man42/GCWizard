@@ -199,7 +199,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),
   'WPTSCLEAR': _GCWizardScriptClassFunctionDefinition(_wptsClear, 0, functionReturn: false),
-  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, functionReturn: false),
+  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, ),
   'WPTSLON': _GCWizardScriptClassFunctionDefinition(
     _wptsLon,
     1,
@@ -208,7 +208,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
     _wptsLat,
     1,
   ),
-  'WPTSCENTER': _GCWizardScriptClassFunctionDefinition(_wptsCenter, 1, functionReturn: false),
+  'WPTSCENTER': _GCWizardScriptClassFunctionDefinition(_wptsCenter, 0, functionReturn: false),
 
   // date, time
   'DATE': _GCWizardScriptClassFunctionDefinition(_date, 0),
