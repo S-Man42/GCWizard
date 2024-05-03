@@ -110,8 +110,14 @@ class Logical {
 
 	/// map row block index to column block index
 	////@block block index
-	int mapRowColumnBlockIndex(int block) {
+	int mapRowToColumnBlockIndex(int block) {
 		return block < 1 ? 0 : categoriesCount - 1 - block;
+	}
+
+	/// map row block index to column block index
+	////@block block index
+	int mapColumnToRowBlockIndex(int block) {
+		return block < 1 ? 0 : categoriesCount - block;
 	}
 
 	int blockIndex(int line) {
@@ -150,33 +156,62 @@ class Logical {
 				itemsCount, (index) => List<String>.generate(
 				categoriesCount, (index) => ''));
 
-		for (var y = 0; y < itemsCount; y++) {
+		for (var y = 0; y < getMaxLineLength(); y++) {
 			for (var x = 0; x < getLineLength(y); x++) {
 				if (getValue(x, y) == plusValue) {
-					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
-							logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
-					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
-					print(y.toString() + ' ' + blockLine(y).toString() + ' ' + mapRowColumnBlockIndex(blockIndex(x)).toString() + ' ' + solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))].toString());
-					print(y.toString() + ' ' + blockLine(y).toString() + ' ' + (blockIndex(y) + 1).toString() + ' ' + solution[blockLine(y)][blockIndex(y) + 1]);
+					var yB = blockIndex(y);
+					var yL = blockLine(y);
+					var xL = blockLine(x);
+					var xB = blockIndex(x);
+					var xt1 = mapColumnToRowBlockIndex(xB);
+
+					var ys2 = yB + 1;
+					var xt2 = yB + 1;
+
+					var v1 = logicalItems[xt1][xL];
+					var v2 = logicalItems[ys2][yL];
+
+					yL = 0;
+
+					while(!(solution[yL].every((element) => element == '')
+							|| solution[yL][xt1] == v1 || solution[yL][xt2] == v2 )) {
+						yL++;
+					}
+
+					if (yL < solution.length) {
+						solution[yL][xt1] = v1;
+						solution[yL][xt2] = v2;
+
+						print(y.toString() + '  ' + yL.toString() + '/ ' + xt1.toString() + ' -> ' + solution[yL][xt1] + ' ' + xB.toString());
+						print(y.toString() + '  ' + yL.toString() + '/ ' + xt2.toString() + ' -> ' + solution[yL][xt2]);
+					}
+
+					// solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
+					// 		logicalItems[mapRowColumnBlockIndex(blockIndex(x))][blockLine(x)];
+					// solution[blockLine(y)][blockIndex(y)] = logicalItems[blockIndex(y)][blockLine(y)];
+					// print(y.toString() + ' ' + blockLine(y).toString() + ' ' + mapRowColumnBlockIndex(blockIndex(x)).toString() + ' ' + solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))].toString());
+					// print(y.toString() + ' ' + blockLine(y).toString() + ' ' + (blockIndex(y) + 1).toString() + ' ' + solution[blockLine(y)][blockIndex(y) + 1]);
 				}
 			}
 		}
-		for (var y = itemsCount; y < getMaxLineLength(); y++) {
-			for (var x = 0; x < getLineLength(y); x++) {
-				if (getValue(x, y) == plusValue) {
-					solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
-							logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
-					solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
-					print(y.toString() + ' ' + blockLine(y).toString() + ' ' + mapRowColumnBlockIndex(blockIndex(x)).toString() + ' ' + solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))].toString());
-					print(y.toString() + ' ' + blockLine(y).toString() + ' ' + (blockIndex(y) + 1).toString() + ' ' + solution[blockLine(y)][blockIndex(y) + 1]);
-				}
-			}
-		}
+		// for (var y = itemsCount; y < getMaxLineLength(); y++) {
+		// 	for (var x = 0; x < getLineLength(y); x++) {
+		// 		if (getValue(x, y) == plusValue) {
+		// 			solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))] =
+		// 					logicalItems[mapRowColumnBlockIndex(blockIndex(x)) + 1][blockLine(x)];
+		// 			solution[blockLine(y)][blockIndex(y) + 1] = logicalItems[blockIndex(y) + 1][blockLine(y)];
+		// 			print(y.toString() + ' ' + blockLine(y).toString() + ' ' + mapRowColumnBlockIndex(blockIndex(x)).toString() + ' ' + solution[blockLine(y)][mapRowColumnBlockIndex(blockIndex(x))].toString());
+		// 			print(y.toString() + ' ' + blockLine(y).toString() + ' ' + (blockIndex(y) + 1).toString() + ' ' + solution[blockLine(y)][blockIndex(y) + 1]);
+		// 		}
+		// 	}
+		// }
 
 		solution.removeWhere((line) => line.every((element) => element == ''));
 
 		return solution;
 	}
+
+	//List<List<String>> addSultion()
 
 	void _setBlockPlusValue(int xPlus, int yPlus, int? value) {
 		var block = blocks[blockIndex(yPlus)][blockIndex(xPlus)];
@@ -226,10 +261,10 @@ class Logical {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
 					_cloneVericalBlockValues(xBlockLine, yBlockline,
-							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowColumnBlockIndex(yBlockIndex)], false);
+							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowToColumnBlockIndex(yBlockIndex)], false);
 				} else {
 					_cloneVericalBlockValues(xBlockLine, yBlockline,
-							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowColumnBlockIndex(blockRow)], true);
+							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowToColumnBlockIndex(blockRow)], true);
 				}
 			}
 		}
@@ -237,10 +272,10 @@ class Logical {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
 					_cloneHorizontalBlockValues(xBlockLine, yBlockline,
-							blocks[mapRowColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
+							blocks[mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
 				} else {
 					_cloneHorizontalBlockValues(xBlockLine, yBlockline,
-							blocks[mapRowColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
+							blocks[mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
 				}
 			}
 		}
