@@ -73,11 +73,16 @@ class Logical {
 		_generateItems();
 
 		if (logical != null) {
-			for (var row = 0; row < min(logical.getMaxLineLength(), getMaxLineLength()); row++) {
-				for (var column = 0; column < getLineLength(row); column++) {
-					if (logical.getValue(row, column) != null) {
-						setValue(column, row, logical.getValue(column, row),
-								logical.getFillType(column, row) ?? LogicPuzzleFillType.CALCULATED);
+			for (var yBlock = 0; yBlock < min(logical.getMaxBlockLength(), getMaxBlockLength()); yBlock++) {
+				for (var xBlock = 0; xBlock < min(logical.getBlockLength(yBlock), getBlockLength(yBlock)); xBlock++) {
+					for (var y = 0; y < min(logical.itemsCount, itemsCount); y++) {
+						for (var x = 0; x < min(logical.itemsCount, itemsCount); x++) {
+							var value = logical.blocks[yBlock][xBlock].getValue(x, y);
+							if (value != null) {
+								_setBlockValue(blocks[yBlock][xBlock], x, y, value,
+										type: logical.blocks[yBlock][xBlock].getFillType(x, y) ?? LogicPuzzleFillType.CALCULATED);
+							}
+						}
 					}
 				}
 			}
@@ -165,8 +170,8 @@ class Logical {
 				if (getValue(x, y) == plusValue) {
 					var yB = blockIndex(y);
 					var yL = blockLine(y);
-					var xL = blockLine(x);
 					var xB = blockIndex(x);
+					var xL = blockLine(x);
 					var ys1 = mapColumnToRowBlockIndex(xB);
 					var ys2 = yB + 1;
 					var xt2 = yB + 1;
@@ -177,6 +182,9 @@ class Logical {
 					while(!(solution[tL].every((element) => element == '') ||
 							solution[tL][ys1] == solution1 || solution[tL][xt2] == solution2 )) {
 						tL++;
+						if (tL >= solution.length) {
+							solution.add(List<String>.generate(categoriesCount, (index) => ''));
+						}
 					}
 
 					if (tL < solution.length) {
@@ -200,18 +208,27 @@ class Logical {
 	}
 
 	bool _setBlockPlusValue(int xPlus, int yPlus) {
-		return __setBlockPlusValue(blocks[blockIndex(yPlus)][blockIndex(xPlus)], blockLine(xPlus), blockLine(yPlus));
+		return __setBlockPlusValue(blocks[blockIndex(yPlus)][blockIndex(xPlus)], blockLine(xPlus), blockLine(yPlus),
+				LogicPuzzleFillType.CALCULATED);
 	}
 
-	bool __setBlockPlusValue(_LogicalBlock block, int xPlus, int yPlus) {
+	bool __setBlockPlusValue(_LogicalBlock block, int xPlus, int yPlus, LogicPuzzleFillType type) {
 		var result = true;
 		// row
 		for (var i = 0; i < itemsCount; i++) {
-			result &= block.setValue(i, yPlus, i == xPlus ? plusValue : minusValue, LogicPuzzleFillType.CALCULATED);
+			if (i == xPlus) {
+				result &= block.setValue(i, yPlus, plusValue, type);
+			} else {
+				result &= block.setValue(i, yPlus, minusValue, LogicPuzzleFillType.CALCULATED);
+			}
 		}
 		// column
 		for (var i = 0; i < itemsCount; i++) {
-			result &= block.setValue(xPlus, i, i == yPlus ? plusValue : minusValue, LogicPuzzleFillType.CALCULATED);
+			if (i == yPlus) {
+				result &= block.setValue(xPlus, i, plusValue, type);
+			} else {
+				result &= block.setValue(xPlus, i, minusValue, LogicPuzzleFillType.CALCULATED);
+			}
 		}
 		return result;
 	}
@@ -301,7 +318,7 @@ class Logical {
 	}
 
 	bool _checkBlockValue(_LogicalBlock sourceBlock, int xSourceLine, int ySourceLine,
-											_LogicalBlock targetBlock, int xTargetLine, int yTargetLine) {
+												_LogicalBlock targetBlock, int xTargetLine, int yTargetLine) {
 		var _value = sourceBlock.getValue(xSourceLine, ySourceLine);
 		if (_value != null) {
 			return _setBlockValue(targetBlock, xTargetLine, yTargetLine, _value);
@@ -314,11 +331,12 @@ class Logical {
 		return true;
 	}
 
-	bool _setBlockValue(_LogicalBlock block, int xLine, int yLine, int _value) {
+	bool _setBlockValue(_LogicalBlock block, int xLine, int yLine, int _value,
+			{LogicPuzzleFillType type = LogicPuzzleFillType.CALCULATED}) {
 		if (_value == plusValue) {
-			return __setBlockPlusValue(block, xLine, yLine);
+			return __setBlockPlusValue(block, xLine, yLine, type);
 		} else {
-			return block.setValue(xLine, yLine, _value, LogicPuzzleFillType.CALCULATED);
+			return block.setValue(xLine, yLine, _value, type);
 		}
 	}
 
