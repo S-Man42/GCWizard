@@ -99,7 +99,7 @@ class LogicalSolverState extends State<LogicalSolver> {
             ),
           ])
         ),
-        Container(height: 10),
+        Container(height: 5),
         GCWPainterContainer(
           scale: _scale,
           onChanged: (value) {
@@ -113,7 +113,7 @@ class LogicalSolverState extends State<LogicalSolver> {
               });
             },
             onTapped: (x, y) {
-                  setState(() {onTapped(x, y);});
+              setState(() {onTapped(x, y);});
             },
             onLongTapped: (x, y) {
               setState(() {onLongTapped(x, y);});
@@ -160,7 +160,8 @@ class LogicalSolverState extends State<LogicalSolver> {
           },
         ),
         GCWDefaultOutput(
-          child: GCWColumnedMultilineOutput(data: _currentBoard.getSolution(), hasHeader: false, copyAll: true),
+          child: GCWColumnedMultilineOutput(data: _currentBoard.getSolution(), hasHeader: false,
+              suppressCopyButtons: true),
           //copyText: bearingOutput,
         )
       ],

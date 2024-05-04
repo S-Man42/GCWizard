@@ -33,6 +33,10 @@ class _LogicalBlock {
 		return block[y][x]?.value;
 	}
 
+	LogicPuzzleFillType? getFillType(int x, int y) {
+		return block[y][x]?.type;
+	}
+
 	/// return valid change
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
 		if (value== null || getValue(x, y) == null) {
@@ -44,15 +48,8 @@ class _LogicalBlock {
 			}
 			return true;
 		} else {
-			block[y][x] = LogicalValue(value, type);
 			return false;
 		}
-	}
-
-	LogicPuzzleFillType? getFillType(int x, int y) {
-		return (block[y][x] == null || block[y][x]!.type == LogicPuzzleFillType.CALCULATED)
-				? LogicPuzzleFillType.CALCULATED
-				: LogicPuzzleFillType.USER_FILLED;
 	}
 }
 
@@ -138,10 +135,17 @@ class Logical {
 	/// return valid change
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
 		if (!_validPosition(x, y)) return false;
+		var block = blocks[blockIndex(y)][blockIndex(x)];
+		var valueTmp = block.getValue(blockLine(x), blockLine(y));
+		var typeTmp = block.getFillType(blockLine(x), blockLine(y));
 
-		var result = blocks[blockIndex(y)][blockIndex(x)].setValue(blockLine(x), blockLine(y), value, type);
+		var result = block.setValue(blockLine(x), blockLine(y), value, type);
 		result &= _cloneValues();
 
+		if (!result) {
+			// reset changes
+			setValue(x, y, valueTmp, typeTmp ?? LogicPuzzleFillType.CALCULATED);
+		}
 		return result;
 	}
 
@@ -318,25 +322,6 @@ class Logical {
 				}
 			}
 		}
-	}
-
-	bool _checkPossibleValue(int x, int y, int? value) {
-		if (value == null || value == minusValue ) return true;
-
-		var block = blocks[blockIndex(y)][blockIndex(x)];
-		x = blockLine(x);
-		y = blockLine(y);
-
-		// row
-		for (var i = 0; i < itemsCount; i++) {
-			if (block.getValue(i, y) == plusValue) return false;
-		}
-		// column
-		for (var i = 0; i < itemsCount; i++) {
-			if (block.getValue(x, i) == plusValue) return false;
-		}
-
-		return true;
 	}
 
 	bool _validPosition(int x, int y) {
