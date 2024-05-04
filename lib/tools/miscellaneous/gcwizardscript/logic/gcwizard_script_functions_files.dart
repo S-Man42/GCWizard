@@ -91,7 +91,9 @@ String _dumpFile(Object? mode) {
         break;
       case 2: // string
         for (int byte in _state.FILE) {
-          dump.add(_byteToString(byte));
+          if (byte != 0) {
+            dump.add(_byteToString(byte));
+          }
         }
         result = dump.join('');
         break;
