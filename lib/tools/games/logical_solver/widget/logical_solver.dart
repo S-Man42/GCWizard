@@ -6,6 +6,8 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
@@ -159,12 +161,32 @@ class LogicalSolverState extends State<LogicalSolver> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: GCWColumnedMultilineOutput(data: _currentBoard.getSolution(), hasHeader: false,
-              suppressCopyButtons: true),
-          //copyText: bearingOutput,
-        )
+        _buildOutput()
       ],
+    );
+  }
+
+  Widget _buildOutput() {
+    var result = _currentBoard.getSolution();
+
+    return GCWDefaultOutput(
+      trailing: Row(
+        children: <Widget>[
+          GCWIconButton(
+            iconColor: themeColors().mainFont(),
+            size: IconButtonSize.SMALL,
+            icon: Icons.content_copy,
+            onPressed: () {
+              var copyText = result.map((line) {
+                return line.map((e) => e).join('\t');
+              }).join('\n');
+              insertIntoGCWClipboard(context, copyText);
+            },
+          ),
+        ],
+      ),
+      child: GCWColumnedMultilineOutput(data: result, hasHeader: false,
+          suppressCopyButtons: true),
     );
   }
 
