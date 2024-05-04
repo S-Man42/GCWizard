@@ -41,7 +41,7 @@ Object? _readFromFile(Object mode, Object index) {
 void _writeToFile(Object? value) {
   if (_isAList(value)) {
     _writeFileList(value as _GCWList);
-  } else if (_isAString(value)) {
+  } else {
     _writeFileString(value.toString());
   } 
   _state.fileSaved = false;
