@@ -43,8 +43,8 @@ class LogicalBoardState extends State<LogicalBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: max(_maxRowItemsWidth(widget.board, _fontSize) + widget.board.getLineLength(0) * _boxSize, 1) / //ToDo FontSize
-                        max(_maxColumnsItemsWidth(widget.board, _fontSize) + widget.board.getMaxLineLength() * _boxSize, 1),
+                    aspectRatio: _maxRowItemsWidth(widget.board, _fontSize) /
+                        _maxColumnsItemsWidth(widget.board, _fontSize),
                     child: CanvasTouchDetector(
                       gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd],
                       builder: (context) {

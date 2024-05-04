@@ -111,7 +111,7 @@ class Logical {
 		return block < 1 ? 0 : categoriesCount - 1 - block;
 	}
 
-	/// map row block index to column block index
+	/// map column block index to row block index
 	////@block block index
 	int mapColumnToRowBlockIndex(int block) {
 		return block < 1 ? 0 : categoriesCount - block;
@@ -191,6 +191,14 @@ class Logical {
 		return solution;
 	}
 
+	void removeRelations() {
+		_generateBlocks();
+	}
+
+	void removeItems() {
+		_generateItems();
+	}
+
 	bool _setBlockPlusValue(int xPlus, int yPlus) {
 		return __setBlockPlusValue(blocks[blockIndex(yPlus)][blockIndex(xPlus)], blockLine(xPlus), blockLine(yPlus));
 	}
@@ -234,16 +242,16 @@ class Logical {
 		var xBlockIndex = blockIndex(xPlus);
 		var yBlockIndex = blockIndex(yPlus);
 		var xBlockLine = blockLine(xPlus);
-		var yBlockline = blockLine(yPlus);
+		var yBlockLine = blockLine(yPlus);
 		var result = true;
 
 		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
-					result &= _cloneVericalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneVericalBlockValues(xBlockLine, yBlockLine,
 							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowToColumnBlockIndex(yBlockIndex)], false);
 				} else {
-					result &= _cloneVericalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneVericalBlockValues(xBlockLine, yBlockLine,
 							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowToColumnBlockIndex(blockRow)], true);
 				}
 			}
@@ -251,10 +259,10 @@ class Logical {
 		for (var blockColumn = 0; blockColumn < getBlockLength(yBlockIndex); blockColumn++) {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
-					result &= _cloneHorizontalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneHorizontalBlockValues(xBlockLine, yBlockLine,
 							blocks[mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
 				} else {
-					result &= _cloneHorizontalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneHorizontalBlockValues(xBlockLine, yBlockLine,
 							blocks[mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
 				}
 			}
@@ -326,14 +334,6 @@ class Logical {
 
 	bool _validPosition(int x, int y) {
 		return !(y < 0 || y >= getMaxLineLength() || x < 0 || x >= getLineLength(y));
-	}
-
-	void removeRelations() {
-		_generateBlocks();
-	}
-
-	void removeItems() {
-		_generateItems();
 	}
 
 	void _generateBlocks() {

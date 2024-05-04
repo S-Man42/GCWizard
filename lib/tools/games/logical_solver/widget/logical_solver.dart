@@ -98,10 +98,10 @@ class LogicalSolverState extends State<LogicalSolver> {
                     _currentBoard = Logical(_categoriesCount, _itemsCount, logical: _currentBoard);
                   });
                 },
-            ),
-          ])
+              ),
+            ]
+          )
         ),
-        Container(height: 5),
         GCWPainterContainer(
           scale: _scale,
           onChanged: (value) {
@@ -115,10 +115,10 @@ class LogicalSolverState extends State<LogicalSolver> {
               });
             },
             onTapped: (x, y) {
-              setState(() {onTapped(x, y);});
+              setState(() {_onTapped(x, y);});
             },
             onLongTapped: (x, y) {
-              setState(() {onLongTapped(x, y);});
+              setState(() {_onLongTapped(x, y);});
             },
           ),
         ),
@@ -190,7 +190,7 @@ class LogicalSolverState extends State<LogicalSolver> {
     );
   }
 
-  void onTapped(int x, int y) {
+  void _onTapped(int x, int y) {
     var validChange = false;
     if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
       validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
@@ -202,7 +202,7 @@ class LogicalSolverState extends State<LogicalSolver> {
     }
   }
 
-  void onLongTapped(int x, int y) {
+  void _onLongTapped(int x, int y) {
     var validChange = false;
     if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
       validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
