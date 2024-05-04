@@ -30,23 +30,23 @@ class _LogicalBlock {
 	}
 
 	int? getValue(int x, int y) {
-		if (block[y][x] == null) {
-			return null;
-		}
 		return block[y][x]?.value;
 	}
 
 	/// return valid change
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
-		bool valueChanged = false;
-
-		if (value != getValue(x, y) || type != getFillType(x, y)) {
-			valueChanged = true;
+		if (value== null || getValue(x, y) == null) {
+			block[y][x] = value == null ? null : LogicalValue(value, type);
+			return true;
+		} else if (getValue(x, y) == value) {
+			if (getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
+				block[y][x] = LogicalValue(value, type);
+			}
+			return true;
+		} else {
+			block[y][x] = LogicalValue(value, type);
+			return false;
 		}
-
-		block[y][x] = value == null ? null : LogicalValue(value, type);
-
-		return valueChanged;
 	}
 
 	LogicPuzzleFillType? getFillType(int x, int y) {
@@ -137,10 +137,10 @@ class Logical {
 
 	/// return valid change
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
-		if (!_validPosition(x, y) || !_checkPossibleValue(x, y, value)) return false;
+		if (!_validPosition(x, y)) return false;
 
 		var result = blocks[blockIndex(y)][blockIndex(x)].setValue(blockLine(x), blockLine(y), value, type);
-		_cloneValues();
+		result &= _cloneValues();
 
 		return result;
 	}
@@ -187,26 +187,26 @@ class Logical {
 		return solution;
 	}
 
-	void _setBlockPlusValue(int xPlus, int yPlus) {
-		__setBlockPlusValue(blocks[blockIndex(yPlus)][blockIndex(xPlus)], blockLine(xPlus), blockLine(yPlus));
+	bool _setBlockPlusValue(int xPlus, int yPlus) {
+		return __setBlockPlusValue(blocks[blockIndex(yPlus)][blockIndex(xPlus)], blockLine(xPlus), blockLine(yPlus));
 	}
 
-	void __setBlockPlusValue(_LogicalBlock block, int xPlus, int yPlus) {
+	bool __setBlockPlusValue(_LogicalBlock block, int xPlus, int yPlus) {
+		var result = true;
 		// row
 		for (var i = 0; i < itemsCount; i++) {
-			if (block.getFillType(i, yPlus) != LogicPuzzleFillType.USER_FILLED) {
-				block.setValue(i, yPlus, i == xPlus ? plusValue : minusValue, LogicPuzzleFillType.CALCULATED);
-			}
+			result &= block.setValue(i, yPlus, i == xPlus ? plusValue : minusValue, LogicPuzzleFillType.CALCULATED);
 		}
 		// column
 		for (var i = 0; i < itemsCount; i++) {
-			if (block.getFillType(xPlus, i) != LogicPuzzleFillType.USER_FILLED) {
-				block.setValue(xPlus, i, i == yPlus ? plusValue : minusValue, LogicPuzzleFillType.CALCULATED);
-			}
+			result &= block.setValue(xPlus, i, i == yPlus ? plusValue : minusValue, LogicPuzzleFillType.CALCULATED);
 		}
+		return result;
 	}
 
-	void _cloneValues() {
+	bool _cloneValues() {
+		var result = true;
+
 		// remove all calculated values
 		for (var y = 0; y < blocks.length; y++) {
 			for (var x = 0; x < blocks[y].length; x++) {
@@ -218,26 +218,28 @@ class Logical {
 			for (var x = 0; x < getLineLength(y); x++) {
 				var _value = getValue(x, y);
 				if (_value == plusValue) {
-					_setBlockPlusValue(x, y);
-					_cloneBlocks(x, y);
+					result &= _setBlockPlusValue(x, y);
+					result &= _cloneBlocks(x, y);
 				}
 			}
 		}
+		return result;
 	}
 
-	void _cloneBlocks(int xPlus, int yPlus) {
+	bool _cloneBlocks(int xPlus, int yPlus) {
 		var xBlockIndex = blockIndex(xPlus);
 		var yBlockIndex = blockIndex(yPlus);
 		var xBlockLine = blockLine(xPlus);
 		var yBlockline = blockLine(yPlus);
+		var result = true;
 
 		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
-					_cloneVericalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneVericalBlockValues(xBlockLine, yBlockline,
 							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowToColumnBlockIndex(yBlockIndex)], false);
 				} else {
-					_cloneVericalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneVericalBlockValues(xBlockLine, yBlockline,
 							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowToColumnBlockIndex(blockRow)], true);
 				}
 			}
@@ -245,62 +247,66 @@ class Logical {
 		for (var blockColumn = 0; blockColumn < getBlockLength(yBlockIndex); blockColumn++) {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
-					_cloneHorizontalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneHorizontalBlockValues(xBlockLine, yBlockline,
 							blocks[mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
 				} else {
-					_cloneHorizontalBlockValues(xBlockLine, yBlockline,
+					result &= _cloneHorizontalBlockValues(xBlockLine, yBlockline,
 							blocks[mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
 				}
 			}
 		}
+		return result;
 	}
 
-	void _cloneVericalBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+	bool _cloneVericalBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+		var result = true;
 		// copy from xBlock to yBlock (search in xPlus Column)
 		for (var _y = 0; _y < itemsCount; _y++) {
 			if (afterPlus) {
 				// bottom from +
-				_checkBlockValue(xBlock, xPlus, _y, yBlock, _y, yPlus);
+				result &= _checkBlockValue(xBlock, xPlus, _y, yBlock, _y, yPlus);
 			} else {
 				// top from +
-				_checkBlockValue(xBlock, xPlus, _y, yBlock, yPlus, _y);
+				result &= _checkBlockValue(xBlock, xPlus, _y, yBlock, yPlus, _y);
 			}
 		}
+		return result;
 	}
 
-	void _cloneHorizontalBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+	bool _cloneHorizontalBlockValues(int xPlus, int yPlus, _LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
+		var result = true;
 		// copy from yBlock to xBlock (search in yPlus Row)
 		for (var _x = 0; _x < itemsCount; _x++) {
 			if (afterPlus) {
 				// right from +
-				_checkBlockValue(yBlock, _x, yPlus, xBlock, xPlus, _x);
+				result &= _checkBlockValue(yBlock, _x, yPlus, xBlock, xPlus, _x);
 			} else {
 				// left from +
-				_checkBlockValue(yBlock, _x, yPlus, xBlock, _x, xPlus);
+				result &= _checkBlockValue(yBlock, _x, yPlus, xBlock, _x, xPlus);
 			}
 		}
+		return result;
 	}
 
-	void _checkBlockValue(_LogicalBlock sourceBlock, int xSourceLine, int ySourcetLine,
+	bool _checkBlockValue(_LogicalBlock sourceBlock, int xSourceLine, int ySourceLine,
 											_LogicalBlock targetBlock, int xTargetLine, int yTargetLine) {
-		var _value = sourceBlock.getValue(xSourceLine, ySourcetLine);
+		var _value = sourceBlock.getValue(xSourceLine, ySourceLine);
 		if (_value != null) {
-			_setBlockValue(targetBlock, xTargetLine, yTargetLine, _value);
+			return _setBlockValue(targetBlock, xTargetLine, yTargetLine, _value);
 		} else {
 			_value = targetBlock.getValue(xTargetLine, yTargetLine);
 			if (_value != null) {
-				_setBlockValue(sourceBlock, xSourceLine, ySourcetLine, _value);
+				return _setBlockValue(sourceBlock, xSourceLine, ySourceLine, _value);
 			}
 		}
+		return true;
 	}
 
-	void _setBlockValue(_LogicalBlock block, int xLine, int yLine, int _value) {
-		if (block.getFillType(xLine, yLine) != LogicPuzzleFillType.USER_FILLED) {
-			if (_value == plusValue) {
-				__setBlockPlusValue(block, xLine, yLine);
-			} else {
-				block.setValue(xLine, yLine, _value, LogicPuzzleFillType.CALCULATED);
-			}
+	bool _setBlockValue(_LogicalBlock block, int xLine, int yLine, int _value) {
+		if (_value == plusValue) {
+			return __setBlockPlusValue(block, xLine, yLine);
+		} else {
+			return block.setValue(xLine, yLine, _value, LogicPuzzleFillType.CALCULATED);
 		}
 	}
 
