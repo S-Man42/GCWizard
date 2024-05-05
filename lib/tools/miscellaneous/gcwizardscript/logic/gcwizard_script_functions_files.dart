@@ -65,7 +65,7 @@ void _writeFileString(String value) {
 }
 
 int _eof() {
-  if (_state.FILEINDEX < _state.FILE.length) {
+  if (_state.FILEINDEX < _state.FILE.length - 1) {
     return 0;
   }
   return 1;
@@ -94,7 +94,10 @@ String _dumpFile(Object? mode) {
         break;
       case 2: // string
         for (int byte in _state.FILE) {
-          if (byte != 0) {
+          if (byte == 0) {
+            dump.add(' ');
+          }
+          else {
             dump.add(_byteToString(byte));
           }
         }

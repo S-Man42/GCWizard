@@ -16,6 +16,7 @@ part 'gcwizard_script_functions_math.dart';
 part 'gcwizard_script_functions_math_nested.dart';
 part 'gcwizard_script_functions_string.dart';
 part 'gcwizard_script_functions_waypoints.dart';
+part 'gcwizard_script_functions_files.dart';
 part 'gcwizard_script_loops.dart';
 part 'gcwizard_script_nested_loops.dart';
 
@@ -35,8 +36,8 @@ void main() {
 /*
     _inputsToExpected.addAll(_inputsGraphicToExpected);
 */
-    _inputsToExpected.addAll(_inputsWaypoinsToExpected);
-
+   // _inputsToExpected.addAll(_inputsWaypoinsToExpected); // passed 05.05.2024
+    _inputsToExpected.addAll(_inputsFilesToExpected);
    // _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsNestedLoopsToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsConstToExpected); // passed 05.05.2024
