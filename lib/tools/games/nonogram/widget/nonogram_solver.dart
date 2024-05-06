@@ -459,7 +459,7 @@ class NonogramSolverState extends State<NonogramSolver> {
         GCWIconButton(
           iconColor: _currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL ? themeColors().inActive() : null,
           size: IconButtonSize.SMALL,
-          icon: Icons.undo, 
+          icon: Icons.undo,
           onPressed: () {
             if (_currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL) {
               return;
@@ -510,7 +510,8 @@ class NonogramSolverState extends State<NonogramSolver> {
           }).join('\n');
           insertIntoGCWClipboard(context, copyText);
         },
-      )
+      ),
+      Container(width: 10)
     ];
   }
 
