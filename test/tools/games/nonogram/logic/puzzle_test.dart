@@ -123,6 +123,10 @@ void main() {
         'rows': [[1],[1],[1],[1],[1],[1]],
         'expectedOutputCode': 'invalid_column', 'expectedOutputData': '1'
       },
+      { 'columns': [[7],<int>[],<int>[],<int>[],<int>[],<int>[]],
+        'rows': [[1],[1],[1],[1],[1],[1]],
+        'expectedOutputCode': 'invalid_column', 'expectedOutputData': '1'
+      },
       { 'columns': [[1],[1],[1],<int>[],[1],[1]],
         'rows': [[3, 2],<int>[],<int>[],<int>[],<int>[], <int>[]],
         'expectedOutputCode': null, 'expectedOutputData': null
@@ -133,6 +137,10 @@ void main() {
       },
       { 'columns': [[1],[1],[1],[1],[1],[1]],
         'rows': [[3, 3],<int>[],<int>[],<int>[],<int>[],<int>[]],
+        'expectedOutputCode': 'invalid_row', 'expectedOutputData': '1'
+      },
+      { 'columns': [[1],[1],[1],[1],[1],[1]],
+        'rows': [[7],<int>[],<int>[],<int>[],<int>[],<int>[]],
         'expectedOutputCode': 'invalid_row', 'expectedOutputData': '1'
       },
       { 'columns': [[1],[1],[1],[1],[1],[1]],
