@@ -91,6 +91,30 @@ class Logical {
 					logicalItems[itemBlock][item] = logical.logicalItems[itemBlock][item];
 				}
 			}
+		} else if (categoriesCount == 4 && itemsCount == 5) {
+			logicalItems[0][0] = 'Steffi';
+			logicalItems[0][1] = 'George';
+			logicalItems[0][2] = 'Barack';
+			logicalItems[0][3] = 'Carla';
+			logicalItems[0][4] = 'Roger';
+
+			logicalItems[1][0] = 'Cambridge';
+			logicalItems[1][1] = 'Obama';
+			logicalItems[1][2] = 'Graf';
+			logicalItems[1][3] = 'Federer';
+			logicalItems[1][4] = 'Bruni';
+
+			logicalItems[2][0] = '1969';
+			logicalItems[2][1] = '2013';
+			logicalItems[2][2] = '1961';
+			logicalItems[2][3] = '1967';
+			logicalItems[2][4] = '1981';
+
+			logicalItems[3][0] = 'CH';
+			logicalItems[3][1] = 'UK';
+			logicalItems[3][2] = 'D';
+			logicalItems[3][3] = 'USA';
+			logicalItems[3][4] = 'F';
 		}
 	}
 
