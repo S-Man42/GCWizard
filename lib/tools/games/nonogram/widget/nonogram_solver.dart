@@ -744,7 +744,7 @@ class PuzzleWidgetValues {
   }
 
   void resetCalculation() {
-    board.resetCalculation();
+    board = Puzzle.generate(board.width, board.height);
   }
 
   void clearRowHints() {
