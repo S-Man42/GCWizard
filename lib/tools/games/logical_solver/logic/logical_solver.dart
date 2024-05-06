@@ -199,8 +199,8 @@ class Logical {
 					var ys1 = mapColumnToRowBlockIndex(xB);
 					var ys2 = yB + 1;
 					var xt2 = yB + 1;
-					var solution1 = logicalItems[ys1][xL];
-					var solution2 = logicalItems[ys2][yL];
+					var solution1 = (ys1 * itemsCount + xL).toString();
+					var solution2 = (ys2 * itemsCount + yL).toString();
 
 					var tL = 0;
 					while(!(solution[tL].every((element) => element == '') ||
@@ -220,6 +220,16 @@ class Logical {
 		}
 		solution.removeWhere((line) => line.every((element) => element == ''));
 
+		for (var y = 0; y < solution.length; y++) {
+			for (var x = 0; x < solution[y].length; x++) {
+				if (solution[y][x].isNotEmpty) {
+					var value = int.tryParse(solution[y][x]);
+					if (value != null) {
+						solution[y][x] = logicalItems[blockIndex(value)][blockLine(value)];
+					}
+				}
+			}
+		}
 		return solution;
 	}
 
