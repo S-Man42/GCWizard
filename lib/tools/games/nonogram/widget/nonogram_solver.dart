@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui' as ui;
 
@@ -8,6 +9,8 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -80,7 +83,8 @@ class NonogramSolverState extends State<NonogramSolver> {
               trailing: GCWIconButton(
                 iconColor: _currentEncryptStep == _EncryptWizardStep.FILE_OR_MANUAL ? themeColors().inActive() : null,
                 size: IconButtonSize.SMALL,
-                icon: Icons.undo, onPressed: () {
+                icon: Icons.undo,
+                onPressed: () {
                   if (_currentEncryptStep == _EncryptWizardStep.FILE_OR_MANUAL) {
                     return;
                   }
@@ -104,28 +108,7 @@ class NonogramSolverState extends State<NonogramSolver> {
             ) :
             GCWTextDivider(
                 text: i18n(context, 'nonogramsolver_setup_solver'),
-                trailing: GCWIconButton(
-                  iconColor: _currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL ? themeColors().inActive() : null,
-                  size: IconButtonSize.SMALL,
-                  icon: Icons.undo, onPressed: () {
-                    if (_currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL) {
-                      return;
-                    }
-                    setState(() {
-                      switch (_currentDecryptStep) {
-                        case _DecryptWizardStep.LOAD_JSON: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
-                        case _DecryptWizardStep.SHOW_RESULT_FILE: _currentDecryptStep = _DecryptWizardStep.LOAD_JSON; break;
-                        case _DecryptWizardStep.DEFINE_SIZE: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
-                        case _DecryptWizardStep.SET_ROW_VALUES: _currentDecryptStep = _DecryptWizardStep.DEFINE_SIZE; break;
-                        case _DecryptWizardStep.SET_COLUMN_VALUES: _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES; break;
-                        case _DecryptWizardStep.SHOW_RESULT_MANUAL: _currentDecryptStep = _DecryptWizardStep.SET_COLUMN_VALUES; break;
-                        default: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
-                      }
-
-                      _decryptPuzzle.resetCalculation();
-                    });
-                  },
-                )
+                trailing: _buildDecryptTrailingButtons(_decryptPuzzle)
             ),
           _currentMode == GCWSwitchPosition.right
             ? _puzzleWidget(_decryptPuzzle)
@@ -468,6 +451,67 @@ class NonogramSolverState extends State<NonogramSolver> {
     return Column(
       children: list,
     );
+  }
+
+  Row _buildDecryptTrailingButtons(PuzzleWidgetValues puzzle) {
+    var row = Row(
+      children: <Widget>[
+        GCWIconButton(
+          iconColor: _currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL ? themeColors().inActive() : null,
+          size: IconButtonSize.SMALL,
+          icon: Icons.undo, 
+          onPressed: () {
+            if (_currentDecryptStep == _DecryptWizardStep.FILE_OR_MANUAL) {
+              return;
+            }
+            setState(() {
+              switch (_currentDecryptStep) {
+                case _DecryptWizardStep.LOAD_JSON: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
+                case _DecryptWizardStep.SHOW_RESULT_FILE: _currentDecryptStep = _DecryptWizardStep.LOAD_JSON; break;
+                case _DecryptWizardStep.DEFINE_SIZE: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
+                case _DecryptWizardStep.SET_ROW_VALUES: _currentDecryptStep = _DecryptWizardStep.DEFINE_SIZE; break;
+                case _DecryptWizardStep.SET_COLUMN_VALUES: _currentDecryptStep = _DecryptWizardStep.SET_ROW_VALUES; break;
+                case _DecryptWizardStep.SHOW_RESULT_MANUAL: _currentDecryptStep = _DecryptWizardStep.SET_COLUMN_VALUES; break;
+                default: _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL; break;
+              }
+
+              _decryptPuzzle.resetCalculation();
+            });
+          },
+        )
+      ],
+    );
+
+    if (_currentDecryptStep == _DecryptWizardStep.SET_ROW_VALUES) {
+      row.children.insertAll(0, _buildCopyPasteTrailingButtons(puzzle.rowController));
+    } else if (_currentDecryptStep == _DecryptWizardStep.SET_COLUMN_VALUES) {
+      row.children.insertAll(0, _buildCopyPasteTrailingButtons(puzzle.columnController));
+    }
+    return row;
+  }
+
+  List<Widget> _buildCopyPasteTrailingButtons(List<TextEditingController> controller) {
+    return <Widget>[
+      GCWPasteButton(
+        iconSize: IconButtonSize.SMALL,
+        onSelected: (text) {
+          var lines = const LineSplitter().convert(text);
+          for (var i = 0; i < min(controller.length, lines.length); i++) {
+            controller[i].text = lines[i];
+          }
+        },
+      ),
+      GCWIconButton(
+        size: IconButtonSize.SMALL,
+        icon: Icons.content_copy,
+        onPressed: () {
+          var copyText = controller.map((item) {
+            return item.text;
+          }).join('\n');
+          insertIntoGCWClipboard(context, copyText);
+        },
+      )
+    ];
   }
 
   Widget _controlButtons(PuzzleWidgetValues puzzle) {
