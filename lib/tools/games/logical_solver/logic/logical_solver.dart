@@ -169,11 +169,46 @@ class Logical {
 		var typeTmp = block.getFillType(blockLine(x), blockLine(y));
 
 		var result = block.setValue(blockLine(x), blockLine(y), value, type);
-		result &= _cloneValues();
+		result &= _checkFullLine(block, blockLine(x), blockLine(y));
+		//result &= _cloneValues();
 
 		if (!result) {
 			// reset changes
 			setValue(x, y, valueTmp, typeTmp ?? LogicPuzzleFillType.CALCULATED);
+		}
+		return result;
+	}
+
+	bool _checkFullLine(_LogicalBlock block, int xLine, int yLine) {
+		var result = true;
+		var count = 0;
+		var emptyIndex = -1;
+		int? value;
+
+		for (var y = 0; y < itemsCount; y++) {
+			value = block.getValue(xLine, y);
+			if (value == null) {
+				emptyIndex = y;
+			} else {
+				count += (value == minusValue) ? 1 : 0;
+			}
+		}
+		if (count == itemsCount - 1 && emptyIndex >= 0) {
+			result &= block.setValue(xLine, emptyIndex, plusValue, LogicPuzzleFillType.CALCULATED);
+		}
+
+		count = 0;
+		emptyIndex = -1;
+		for (var x = 0; x < itemsCount; x++) {
+			value = block.getValue(x, yLine);
+			if (value == null) {
+				emptyIndex = x;
+			} else {
+				count += (value == minusValue) ? 1 : 0;
+			}
+		}
+		if (count == itemsCount - 1 && emptyIndex >= 0) {
+			result &= block.setValue(emptyIndex, yLine, plusValue, LogicPuzzleFillType.CALCULATED);
 		}
 		return result;
 	}
