@@ -58,14 +58,14 @@ class UICWagonCode {
       throw const FormatException('uic_wagoncode_invalid_number');
     }
 
-    var mainType = _getWagonType(number);
+    var mainType = _getWagonType(_number);
     switch(mainType.name) {
-      case UICWagonTypes.OUT_OF_ORDER: return UICWagonCode(number);
-      case UICWagonTypes.TRACTIVE:  return UICWagonCodeTractiveUnit(number);
-      case UICWagonTypes.PASSENGER_WAGON: return UICWagonCodePassengerWagon(number);
-      case UICWagonTypes.FREIGHT_WAGON: return UICWagonCodeFreightWagon(number);
-      case UICWagonTypes.SPECIAL: return UICWagonCodeSpecialVehicle(number);
-      default: return UICWagonCode(number);
+      case UICWagonTypes.OUT_OF_ORDER: return UICWagonCode(_number);
+      case UICWagonTypes.TRACTIVE:  return UICWagonCodeTractiveUnit(_number);
+      case UICWagonTypes.PASSENGER_WAGON: return UICWagonCodePassengerWagon(_number);
+      case UICWagonTypes.FREIGHT_WAGON: return UICWagonCodeFreightWagon(_number);
+      case UICWagonTypes.SPECIAL: return UICWagonCodeSpecialVehicle(_number);
+      default: return UICWagonCode(_number);
     }
   }
 

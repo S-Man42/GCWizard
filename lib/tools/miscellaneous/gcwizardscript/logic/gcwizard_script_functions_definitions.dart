@@ -173,10 +173,11 @@ const List<String> _Functions_13 = [
   'FLOATTOBINARY(',
 ];
 const List<String> _Functions_14 = [
-  'CENTERTWOPINTS(',
   'LISTISNOTEMPTY(',
 ];
-const List<String> _Functions_15 = [];
+const List<String> _Functions_15 = [
+    'CENTERTWOPOINTS(',
+];
 const List<String> _Functions_16 = [];
 const List<String> _Functions_17 = [
   'CENTERTHREEPOINTS(',
@@ -198,7 +199,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),
   'WPTSCLEAR': _GCWizardScriptClassFunctionDefinition(_wptsClear, 0, functionReturn: false),
-  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, functionReturn: false),
+  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, ),
   'WPTSLON': _GCWizardScriptClassFunctionDefinition(
     _wptsLon,
     1,
