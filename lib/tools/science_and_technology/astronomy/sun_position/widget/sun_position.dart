@@ -33,7 +33,7 @@ class _SunPositionState extends State<SunPosition> {
           onChanged: (ret) {
             setState(() {
               if (ret != null) {
-               _currentCoords = ret;
+                _currentCoords = ret;
               }
             });
           },

@@ -120,7 +120,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
               ],
             ),
           if (_currentInputNumberString.toUpperCase().substring(0, 2) == 'DE' && deBankAccountDoesNotExist)
-          _detailsBankData(),
+            _detailsBankData(),
         ],
       );
     }
@@ -269,9 +269,11 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   Widget _detailsUICWidget() {
-    return GCWButton(text: i18n(context, 'checkdigits_uic_openinuicwagoncode'), onPressed: () {
-      openInUICWagonCode(context, _currentInputNumberString);
-    });
+    return GCWButton(
+        text: i18n(context, 'checkdigits_uic_openinuicwagoncode'),
+        onPressed: () {
+          openInUICWagonCode(context, _currentInputNumberString);
+        });
   }
 
   Widget _detailsEUROWidget() {
@@ -482,8 +484,16 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
 
     return [
       [i18n(context, 'checkdigits_euro_countrycode'), number[0] + (checkedNumber != 1 ? number[1] : '')],
-      [i18n(context, 'checkdigits_euro_country'), i18n(context, checkedNumber == 1 ? EUROBANKNOTEDATA[1]![number[0]]!['country']! : EUROBANKNOTEDATA[2]![number[0]]!['country']!)],
-      if (checkedNumber != 1) [ i18n(context, 'checkdigits_euro_institute'), EUROBANKNOTEDATA[2]![number[0]]!['institute']!]
+      [
+        i18n(context, 'checkdigits_euro_country'),
+        i18n(
+            context,
+            checkedNumber == 1
+                ? EUROBANKNOTEDATA[1]![number[0]]!['country']!
+                : EUROBANKNOTEDATA[2]![number[0]]!['country']!)
+      ],
+      if (checkedNumber != 1)
+        [i18n(context, 'checkdigits_euro_institute'), EUROBANKNOTEDATA[2]![number[0]]!['institute']!]
     ];
   }
 

@@ -60,7 +60,6 @@ abstract class BaseCoordinate {
 }
 
 abstract class BaseCoordinateWithSubtypes extends BaseCoordinate {
-
   CoordinateFormatKey get defaultSubtype;
 }
 
@@ -81,7 +80,6 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
 }
 
 BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
-
   return coordinateFormatDefinitionByKey(format.type).defaultCoordinate;
 }
 

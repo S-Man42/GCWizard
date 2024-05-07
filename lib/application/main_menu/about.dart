@@ -21,7 +21,6 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-
   late GCWPackageInfo _packageInfo;
 
   @override

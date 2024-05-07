@@ -14,8 +14,8 @@ import 'package:prefs/prefs.dart';
 const dmmKey = 'coords_dmm';
 
 class CoordinateFormatDefinitionDMM extends CoordinateFormatDefinition {
-  CoordinateFormatDefinitionDMM(super.type, super.persistenceKey, super.apiKey,
-      super.parseCoordinate, super.defaultCoordinate);
+  CoordinateFormatDefinitionDMM(
+      super.type, super.persistenceKey, super.apiKey, super.parseCoordinate, super.defaultCoordinate);
 
   @override
   BaseCoordinate? parseCoordinateWholeString(String input) {
@@ -23,8 +23,7 @@ class CoordinateFormatDefinitionDMM extends CoordinateFormatDefinition {
   }
 }
 
-final DMMFormatDefinition = CoordinateFormatDefinitionDMM(
-    CoordinateFormatKey.DMM, dmmKey, dmmKey, DMMCoordinate.parse,
+final DMMFormatDefinition = CoordinateFormatDefinitionDMM(CoordinateFormatKey.DMM, dmmKey, dmmKey, DMMCoordinate.parse,
     DMMCoordinate(DMMLatitude(0, 0, 0), DMMLongitude(0, 0, 0)));
 
 class _FormattedDMMPart {
@@ -127,6 +126,7 @@ class DMMCoordinate extends BaseCoordinate {
   static DMMCoordinate? parse(String text, {bool leftPadMilliMinutes = false, bool wholeString = false}) {
     return _parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
+
   static DMMCoordinate? parseWholeString(String input) {
     return _parseDMM(input, wholeString: true);
   }

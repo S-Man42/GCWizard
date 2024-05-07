@@ -13,8 +13,7 @@ String digraphLettersNorth = "ABCDEFGHJKLMNPQRSTUV";
 const mgrsKey = 'coords_mgrs';
 
 final MGRSFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.MGRS, mgrsKey, mgrsKey,
-  MGRSCoordinate.parse, MGRSCoordinate(UTMZone(0, 0, 'A'), 'AA', 0, 0));
+    CoordinateFormatKey.MGRS, mgrsKey, mgrsKey, MGRSCoordinate.parse, MGRSCoordinate(UTMZone(0, 0, 'A'), 'AA', 0, 0));
 
 class MGRSCoordinate extends BaseCoordinate {
   @override

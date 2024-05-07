@@ -416,9 +416,9 @@ double _sum(
   }
 }
 
-String _float2binary(Object number, Object? bitLength){
+String _float2binary(Object number, Object? bitLength) {
   String result = '';
-  if (_isNotANumber(number) || _isNotAInt(bitLength)){
+  if (_isNotANumber(number) || _isNotAInt(bitLength)) {
     _handleError(_INVALIDTYPECAST);
   } else {
     if (bitLength as int == 32) {
@@ -432,7 +432,7 @@ String _float2binary(Object number, Object? bitLength){
   return result;
 }
 
-double _binary2float(Object? binary){
+double _binary2float(Object? binary) {
   double result = 0.0;
   if (_isNotAString(binary)) {
     _handleError(_INVALIDTYPECAST);

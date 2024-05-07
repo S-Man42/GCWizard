@@ -175,9 +175,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   }
 
   String _sanitizeFormulaReferences(String formula) {
-    return formula.replaceAllMapped(RegExp(r'{(.*?)}'), (match) => '{'
-        + match[1]!.toLowerCase().replaceAll(RegExp(r'\s'), '') + '}'
-    );
+    return formula.replaceAllMapped(
+        RegExp(r'{(.*?)}'), (match) => '{' + match[1]!.toLowerCase().replaceAll(RegExp(r'\s'), '') + '}');
   }
 
   Column _buildGroupList(BuildContext context) {
@@ -196,7 +195,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   the logic. It needs to be moved from the frontend part
                 )
            */
-          var formulaToParse = substitution(_sanitizeFormulaReferences(formula.formula), formulaReferences, caseSensitive: false);
+          var formulaToParse =
+              substitution(_sanitizeFormulaReferences(formula.formula), formulaReferences, caseSensitive: false);
           FormulaSolverOutput calculated = formulaParser.parse(formulaToParse, widget.group.values);
 
           var resultType =
@@ -219,7 +219,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
               () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
           if (formula.name.isNotEmpty) {
             formulaReferences.putIfAbsent('{${formula.name.toLowerCase().replaceAll(RegExp(r'\s'), '')}}',
-                    () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
+                () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
           }
 
           Widget output;
@@ -301,7 +301,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                           children: [
                             SizedBox(width: 35, child: GCWText(text: (index + 1).toString() + '.')),
                             Flexible(
-                              child: _buildFormulaText(formula.formula, widget.group.values, index + 1, widget.group.formulas),
+                              child: _buildFormulaText(
+                                  formula.formula, widget.group.values, index + 1, widget.group.formulas),
                             )
                           ],
                         ),
@@ -643,7 +644,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   Widget _buildFormulaText(String formula, List<FormulaValue> values, int formulaIndex, List<Formula> formulas) {
     Map<String, String> vals = {};
     List<String> formulaNames = [];
-    
+
     for (var value in values) {
       vals.putIfAbsent(value.key, () => value.value);
     }
@@ -655,8 +656,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return SelectableText.rich(TextSpan(
         children: _buildTextSpans(
             formula,
-            formulaPainter.paintFormula(
-                formula, values, formulaIndex, formulaNames, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
+            formulaPainter.paintFormula(formula, values, formulaIndex, formulaNames,
+                Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {

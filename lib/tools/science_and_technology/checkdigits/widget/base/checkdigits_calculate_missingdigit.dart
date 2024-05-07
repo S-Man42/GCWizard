@@ -12,8 +12,10 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdi
 
 class CheckDigitsCalculateMissingDigits extends StatefulWidget {
   final CheckDigitsMode mode;
-  const CheckDigitsCalculateMissingDigits({Key? key, required this.mode, })
-      : super(key: key);
+  const CheckDigitsCalculateMissingDigits({
+    Key? key,
+    required this.mode,
+  }) : super(key: key);
 
   @override
   CheckDigitsCalculateMissingDigitsState createState() => CheckDigitsCalculateMissingDigitsState();
@@ -56,7 +58,8 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
         GCWSubmitButton(
           onPressed: () {
             setState(() {
-              _numbers = checkDigitsCalculateMissingDigitsAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
+              _numbers = checkDigitsCalculateMissingDigitsAndNumber(
+                  widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
             });
           },
         ),
@@ -103,7 +106,9 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
             suppressCopyButton: true,
             child: i18n(context, 'checkdigits_iban_hint_iban_multiple'),
           ),
-          (_currentInputNumberString.length > 2 && _currentInputNumberString.toUpperCase().substring(0,2) == 'DE') ? _showInvalidBankNumbers() : Container(),
+          (_currentInputNumberString.length > 2 && _currentInputNumberString.toUpperCase().substring(0, 2) == 'DE')
+              ? _showInvalidBankNumbers()
+              : Container(),
         ],
       );
     } else {

@@ -74,11 +74,14 @@ class GCWMapLine extends GCWMapSimpleGeometry {
     shape.add(start.point);
     switch (type) {
       case GCWMapLineType.GEODETIC:
-        _calculateGeodeticShape(); break;
+        _calculateGeodeticShape();
+        break;
       case GCWMapLineType.RHUMB:
-        _calculateRhumbShape(); break;
+        _calculateRhumbShape();
+        break;
       default:
-        _calculateGeodeticShape(); break;
+        _calculateGeodeticShape();
+        break;
     }
   }
 
@@ -90,7 +93,8 @@ class GCWMapLine extends GCWMapSimpleGeometry {
     _calculateLineShape(projectionVincenty, geodetic.distanceBearingVincenty, 5000.0);
   }
 
-  void _calculateLineShape(LatLng Function(LatLng, double, double, Ellipsoid) projection, DistanceBearingData Function(LatLng, LatLng, Ellipsoid) distanceBearing, double stepLengthInM) {
+  void _calculateLineShape(LatLng Function(LatLng, double, double, Ellipsoid) projection,
+      DistanceBearingData Function(LatLng, LatLng, Ellipsoid) distanceBearing, double stepLengthInM) {
     DistanceBearingData _distBear = distanceBearing(start.point, end!.point, defaultEllipsoid);
     length = _distBear.distance;
     bearingAB = _distBear.bearingAToB;
@@ -117,12 +121,8 @@ class GCWMapPolyline {
 
   late List<GCWMapLine> lines;
 
-  GCWMapPolyline({
-    this.uuid,
-    required this.points,
-    this.color = COLOR_MAP_POLYLINE,
-    this.type = GCWMapLineType.GEODETIC
-  }) {
+  GCWMapPolyline(
+      {this.uuid, required this.points, this.color = COLOR_MAP_POLYLINE, this.type = GCWMapLineType.GEODETIC}) {
     if (uuid == null || uuid!.isEmpty) uuid = const Uuid().v4();
     update();
   }
@@ -191,4 +191,4 @@ class GCWMapCircle extends GCWMapSimpleGeometry {
   }
 }
 
-enum GCWMapLineType {GEODETIC, RHUMB}
+enum GCWMapLineType { GEODETIC, RHUMB }

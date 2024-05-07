@@ -158,8 +158,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           keyValueEntry: entry,
           odd: odd,
           validateEditedValue: widget.validateEditedValue,
-          invalidEditedValueMessage: widget.invalidEditedValueMessage
-      );
+          invalidEditedValueMessage: widget.invalidEditedValueMessage);
     }
 
     item.keyValueEditorControl = _keyValueEditorControl;

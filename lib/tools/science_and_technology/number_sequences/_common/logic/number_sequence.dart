@@ -81,7 +81,6 @@ const Map<NumberSequencesMode, String> NUMBERSEQUENCE_TITLE = {
   NumberSequencesMode.PERMUTABLE_PRIMES: 'numbersequence_permutableprimes_title',
   NumberSequencesMode.LUCKY_NUMBERS: 'numbersequence_luckynumbers_title',
   NumberSequencesMode.HAPPY_NUMBERS: 'numbersequence_happynumbers_title',
-
 };
 
 class PositionOfSequenceOutput {
@@ -126,5 +125,3 @@ final Two = BigInt.two;
 final Three = BigInt.from(3);
 final sqrt5 = sqrt(5);
 final sqrt2 = sqrt(2);
-
-

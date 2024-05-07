@@ -178,9 +178,7 @@ class _GCWMapViewState extends State<GCWMapView> {
       }
     }
 
-    return NumberFormat(format).format(lengthUnit.fromMeter(length)) +
-        ' ' +
-        lengthUnit.symbol;
+    return NumberFormat(format).format(lengthUnit.fromMeter(length)) + ' ' + lengthUnit.symbol;
   }
 
   String _formatBearingOutput(double bearing) {
@@ -316,12 +314,11 @@ class _GCWMapViewState extends State<GCWMapView> {
       ),
       PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
-        markers: _markers,
-        popupSnap: PopupSnap.markerTop,
-        popupController: _popupLayerController.popupController,
-        popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
-        markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero)
-      )),
+              markers: _markers,
+              popupSnap: PopupSnap.markerTop,
+              popupController: _popupLayerController.popupController,
+              popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
+              markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero))),
     ]);
 
     return layers;

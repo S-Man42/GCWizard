@@ -20,7 +20,8 @@ class WaypointProjection extends StatefulWidget {
   final LatLng Function(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) calculate;
   final List<LatLng> Function(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) calculateReverse;
 
-  const WaypointProjection({Key? key, required this.type, required this.calculate, required this.calculateReverse}) : super(key: key);
+  const WaypointProjection({Key? key, required this.type, required this.calculate, required this.calculateReverse})
+      : super(key: key);
 
   @override
   _WaypointProjectionState createState() => _WaypointProjectionState();
@@ -107,8 +108,8 @@ class _WaypointProjectionState extends State<WaypointProjection> {
         return;
       }
 
-      _currentValues =
-          widget.calculateReverse(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
+      _currentValues = widget.calculateReverse(
+          _currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
       if (_currentValues.isEmpty) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;

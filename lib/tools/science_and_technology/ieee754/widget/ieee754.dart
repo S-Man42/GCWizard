@@ -56,45 +56,45 @@ class _IEEE754State extends State<IEEE754> {
         ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTwoOptionsSwitch(
-          leftValue: '32',
-          rightValue: '64',
-          value: _currentBitMode,
-          onChanged: (value) {
-            setState(() {
-              _currentBitMode = value;
-            });
-          },
-        )
+                leftValue: '32',
+                rightValue: '64',
+                value: _currentBitMode,
+                onChanged: (value) {
+                  setState(() {
+                    _currentBitMode = value;
+                  });
+                },
+              )
             : Container(),
         _currentMode == GCWSwitchPosition.left
-          ? GCWDoubleTextField(
-              controller: _encodeController,
-              onChanged: (value) {
-                setState(() {
-                  _currentEncodeInput = value;
-                });
-              }
-            )
-          : GCWTextField(
-            controller: _decodeController,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[01]')),],
-            onChanged: (text) {
-              setState(() {
-                _currentDecodeInput = text;
-              });
-            },
-          ),
+            ? GCWDoubleTextField(
+                controller: _encodeController,
+                onChanged: (value) {
+                  setState(() {
+                    _currentEncodeInput = value;
+                  });
+                })
+            : GCWTextField(
+                controller: _decodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[01]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
-          title: 'Endian',
-          leftValue: 'Little (LE)',
-          rightValue: 'Big (BE)',
-          value: _currentEndian,
-          onChanged: (value) {
-            setState(() {
-              _currentEndian = value;
-            });
-          }
-        ),
+            title: 'Endian',
+            leftValue: 'Little (LE)',
+            rightValue: 'Big (BE)',
+            value: _currentEndian,
+            onChanged: (value) {
+              setState(() {
+                _currentEndian = value;
+              });
+            }),
         _buildOutput(context)
       ],
     );

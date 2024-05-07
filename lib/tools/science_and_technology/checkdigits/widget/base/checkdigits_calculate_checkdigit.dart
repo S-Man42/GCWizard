@@ -8,7 +8,10 @@ import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdi
 
 class CheckDigitsCalculateCheckDigit extends StatefulWidget {
   final CheckDigitsMode mode;
-  const CheckDigitsCalculateCheckDigit({Key? key, required this.mode, }) : super(key: key);
+  const CheckDigitsCalculateCheckDigit({
+    Key? key,
+    required this.mode,
+  }) : super(key: key);
 
   @override
   CheckDigitsCalculateCheckDigitState createState() => CheckDigitsCalculateCheckDigitState();
@@ -34,7 +37,8 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField( // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
+        GCWTextField(
+          // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
           controller: currentInputController,
           inputFormatters: [INPUTFORMATTERS[widget.mode]!],
           onChanged: (text) {
@@ -49,7 +53,8 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
   }
 
   Widget _buildOutput() {
-    String output = checkDigitsCalculateCheckDigitAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNString));
+    String output =
+        checkDigitsCalculateCheckDigitAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNString));
     if (output.startsWith('check')) {
       output = i18n(context, output);
     }
@@ -58,14 +63,14 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
     );
   }
 
-  String _formatOutput(String output, CheckDigitsMode mode){
+  String _formatOutput(String output, CheckDigitsMode mode) {
     switch (mode) {
       case CheckDigitsMode.EAN_GTIN:
       case CheckDigitsMode.DETAXID:
       case CheckDigitsMode.EURO:
       case CheckDigitsMode.IMEI:
       case CheckDigitsMode.ISBN:
-      return output;
+        return output;
       case CheckDigitsMode.IBAN:
         return _formatOutput_IBAN(output);
       case CheckDigitsMode.UIC:
@@ -77,7 +82,7 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
     }
   }
 
-  String _formatOutput_IBAN(String output){
+  String _formatOutput_IBAN(String output) {
     if (BigInt.tryParse(output.substring(2)) == null) {
       return output;
     }
@@ -91,7 +96,7 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
     return result;
   }
 
-  String _formatOutput_Creditcard(String output){
+  String _formatOutput_Creditcard(String output) {
     if (int.tryParse(output) == null) {
       return output;
     }
@@ -105,11 +110,18 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
     return result;
   }
 
-  String _formatOutput_UIC(String output){
+  String _formatOutput_UIC(String output) {
     if (int.tryParse(output) == null) {
       return output;
     }
-    return output.substring(0, 2) + ' ' + output.substring(2, 4) + ' ' + output.substring(4, 8) + ' ' + output.substring(8, 11) + '-' + output[11];
+    return output.substring(0, 2) +
+        ' ' +
+        output.substring(2, 4) +
+        ' ' +
+        output.substring(4, 8) +
+        ' ' +
+        output.substring(8, 11) +
+        '-' +
+        output[11];
   }
-
 }

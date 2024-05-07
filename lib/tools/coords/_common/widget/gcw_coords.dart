@@ -152,9 +152,10 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   @override
   Widget build(BuildContext context) {
-
     Column _widget;
-    if (widget.notitle != null && widget.notitle! || widget.title == null || widget.title != null && widget.title!.isNotEmpty) {
+    if (widget.notitle != null && widget.notitle! ||
+        widget.title == null ||
+        widget.title != null && widget.title!.isNotEmpty) {
       _widget = Column(
         children: <Widget>[
           Row(
@@ -187,8 +188,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           setState(() {
             _setCurrentValueAndEmitOnChange(newValue);
           });
-        }
-    );
+        });
 
     _resetCoords = false;
     _widget.children.add(_currentWidget!);
@@ -317,17 +317,12 @@ class _GCWCoordsState extends State<GCWCoords> {
   }
 }
 
-abstract class _GCWCoordWidget extends StatefulWidget{
+abstract class _GCWCoordWidget extends StatefulWidget {
   final bool initialize;
   final BaseCoordinate? coordinates;
   final void Function(BaseCoordinate?) onChanged;
 
-  const _GCWCoordWidget({
-      super.key,
-      this.initialize = false,
-      required this.coordinates,
-      required this.onChanged
-  });
+  const _GCWCoordWidget({super.key, this.initialize = false, required this.coordinates, required this.onChanged});
 }
 
 abstract class GCWCoordWidgetInfo {
@@ -336,47 +331,35 @@ abstract class GCWCoordWidgetInfo {
   String get name;
   String get example;
 
-  _GCWCoordWidget mainWidget({
-    Key? key,
-    required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate? coordinates,
-    bool? initialize
-  });
+  _GCWCoordWidget mainWidget(
+      {Key? key,
+      required void Function(BaseCoordinate?) onChanged,
+      required BaseCoordinate? coordinates,
+      bool? initialize});
 }
 
 abstract class GCWCoordWidgetWithSubtypeInfo extends GCWCoordWidgetInfo {
   CoordinateFormatKey get subtype;
   List<_GCWCoordWidgetSubtypeInfo> get subtypes;
 
-  Widget inputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildSubtypeWidget(
-        context: context,
-        value: value,
-        onChanged: onChanged
-    );
+  Widget inputWidget(
+      {required BuildContext context,
+      required CoordinateFormatKey value,
+      required void Function(CoordinateFormatKey) onChanged}) {
+    return _buildSubtypeWidget(context: context, value: value, onChanged: onChanged);
   }
 
-  Widget outputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildSubtypeWidget(
-        context: context,
-        value: value,
-        onChanged: onChanged
-    );
+  Widget outputWidget(
+      {required BuildContext context,
+      required CoordinateFormatKey value,
+      required void Function(CoordinateFormatKey) onChanged}) {
+    return _buildSubtypeWidget(context: context, value: value, onChanged: onChanged);
   }
 
-  Widget _buildSubtypeWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged
-  });
+  Widget _buildSubtypeWidget(
+      {required BuildContext context,
+      required CoordinateFormatKey value,
+      required void Function(CoordinateFormatKey) onChanged});
 }
 
 class _GCWCoordWidgetSubtypeInfo {
@@ -398,7 +381,8 @@ GCWCoordWidgetInfo? coordinateWidgetInfoByByPersistenceKey(String key) {
   return null;
 }
 
-_GCWCoordWidgetSubtypeInfo? coordinateWidgetSubtypeInfoByType(GCWCoordWidgetInfo widgetInfo, CoordinateFormatKey subtype) {
+_GCWCoordWidgetSubtypeInfo? coordinateWidgetSubtypeInfoByType(
+    GCWCoordWidgetInfo widgetInfo, CoordinateFormatKey subtype) {
   if (widgetInfo is GCWCoordWidgetWithSubtypeInfo) {
     return widgetInfo.subtypes.firstWhere((subtypeInfo) => subtypeInfo.type == subtype);
   } else {

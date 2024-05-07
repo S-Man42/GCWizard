@@ -88,7 +88,8 @@ class _DMMOffsetState extends State<DMMOffset> {
   }
 
   void _calculateOutput() {
-    var result = addIntegersToDMM(_currentCoords.toLatLng()!, {'latitude': _currentAddLatitude, 'longitude': _currentAddLongitude});
+    var result = addIntegersToDMM(
+        _currentCoords.toLatLng()!, {'latitude': _currentAddLatitude, 'longitude': _currentAddLongitude});
     if (result == null) {
       _currentValues = [];
       _currentOutput = [];

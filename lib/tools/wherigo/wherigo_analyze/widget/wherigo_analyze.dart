@@ -682,7 +682,10 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
               size: IconButtonSize.SMALL,
               iconColor: themeColors().mainFont(),
               onPressed: () {
-                _exportMediaFilesToZIP(context, '',);
+                _exportMediaFilesToZIP(
+                  context,
+                  '',
+                );
               },
             )
           ]),
@@ -1921,7 +1924,10 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     }).toList();
   }
 
-  Future<void> _exportMediaFilesToZIP(BuildContext context, String fileName, ) async {
+  Future<void> _exportMediaFilesToZIP(
+    BuildContext context,
+    String fileName,
+  ) async {
     createZipFile(fileName, '', _buildUint8ListFromMedia(), names: _buildNamesFromMedia()).then((bytes) async {
       await saveByteDataToFile(context, bytes, buildFileNameWithDate('media_', FileType.ZIP)).then((value) {
         if (value) showExportedFileDialog(context);
@@ -1929,7 +1935,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  List<String> _buildNamesFromMedia(){
+  List<String> _buildNamesFromMedia() {
     List<String> names = [];
     for (WherigoMediaData mediaFileContent in WherigoCartridgeLUAData.Media) {
       names.add(mediaFileContent.MediaFilename);
@@ -1937,7 +1943,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     return names;
   }
 
-  List<Uint8List> _buildUint8ListFromMedia(){
+  List<Uint8List> _buildUint8ListFromMedia() {
     List<Uint8List> data = [];
 
     for (WherigoMediaFileContent mediaFileContent in WherigoCartridgeGWCData.MediaFilesContents) {
@@ -1951,15 +1957,13 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   Future<void> _exportMessagesToFile(BuildContext context) async {
     List<String> messages = [];
     for (var message in WherigoCartridgeLUAData.Messages) {
-      for (var messageElement in message){
+      for (var messageElement in message) {
         if (messageElement.ActionMessageType == WHERIGO_ACTIONMESSAGETYPE.TEXT) {
           messages.add(messageElement.ActionMessageContent);
         }
       }
       messages.add('');
     }
-    _exportFile(context, Uint8List.fromList(messages.join('\n').codeUnits), 'Messages',
-        FileType.TXT);
+    _exportFile(context, Uint8List.fromList(messages.join('\n').codeUnits), 'Messages', FileType.TXT);
   }
-
 }

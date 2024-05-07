@@ -163,7 +163,7 @@ String checkDigitsCalculateCheckDigitAndNumber(CheckDigitsMode mode, String numb
   }
 }
 
-bool _toManyNumbersToSearch(String number){
+bool _toManyNumbersToSearch(String number) {
   return ('?'.allMatches(number).length > 2);
 }
 
