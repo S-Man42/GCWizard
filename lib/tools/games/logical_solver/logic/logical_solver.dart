@@ -58,17 +58,17 @@ class _LogicalBlock {
 		// row
 		for (var i = 0; i < itemsCount; i++) {
 			if (i == xPlus) {
-				result = result.combineResult(setValue(i, yPlus, Logical.plusValue, type));
+				result &= setValue(i, yPlus, Logical.plusValue, type);
 			} else {
-				result = result.combineResult(setValue(i, yPlus, Logical.minusValue, LogicPuzzleFillType.CALCULATED));
+				result &= setValue(i, yPlus, Logical.minusValue, LogicPuzzleFillType.CALCULATED);
 			}
 		}
 		// column
 		for (var i = 0; i < itemsCount; i++) {
 			if (i == yPlus) {
-				result = result.combineResult(setValue(xPlus, i, Logical.plusValue, type));
+				result &= setValue(xPlus, i, Logical.plusValue, type);
 			} else {
-				result = result.combineResult(setValue(xPlus, i, Logical.minusValue, LogicPuzzleFillType.CALCULATED));
+				result &= setValue(xPlus, i, Logical.minusValue, LogicPuzzleFillType.CALCULATED);
 			}
 		}
 		return result;
@@ -79,8 +79,7 @@ class _LogicalBlock {
 		if (value == Logical.plusValue) {
 			return setPlusValue(x, y, type);
 		} else {
-			return setValue(x, y, value, type).combineResult(_checkAndSetCalculatedFullRow(x))
-					.combineResult(_checkAndSetCalculatedFullColumn(y));
+			return setValue(x, y, value, type) & _checkAndSetCalculatedFullRow(x) & _checkAndSetCalculatedFullColumn(y);
 		}
 	}
 
@@ -99,7 +98,7 @@ class _LogicalBlock {
 			}
 		}
 		if (count == itemsCount - 1 && emptyIndex >= 0) {
-			result = result.combineResult(setValueAndCalculated(x, emptyIndex, Logical.plusValue));
+			result &= setValueAndCalculated(x, emptyIndex, Logical.plusValue);
 		} else if (count == itemsCount) {
 			result.validChange = false;
 		}
@@ -121,7 +120,7 @@ class _LogicalBlock {
 			}
 		}
 		if (count == itemsCount - 1 && emptyIndex >= 0) {
-			result = result.combineResult(setValueAndCalculated(emptyIndex, y, Logical.plusValue));
+			result &= setValueAndCalculated(emptyIndex, y, Logical.plusValue);
 		} else if (count == itemsCount) {
 			result.validChange = false;
 		}
@@ -261,10 +260,10 @@ class Logical {
 
 			do {
 				result.valueChanged = false;
-				result = result.combineResult(_setCalculatedValues());
+				result &= _setCalculatedValues();
 				loopCounter++;
 			} while (result.validChange && result.valueChanged && loopCounter < 100);
-
+print(loopCounter);
 			result.valueChanged = true;
 		}
 
@@ -357,8 +356,8 @@ class Logical {
 		for (var y = 0; y < getMaxLineLength(); y++) {
 			for (var x = 0; x < getLineLength(y); x++) {
 				if (getValue(x, y) == plusValue) {
-					result = result.combineResult(_setBlockPlusValue(x, y));
-					result = result.combineResult(_setCalculatedBlocks(x, y));
+					result &= _setBlockPlusValue(x, y);
+					result &= _setCalculatedBlocks(x, y);
 				}
 			}
 		}
@@ -375,22 +374,22 @@ class Logical {
 		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
-					result = result.combineResult(_setCalculatedVericalBlockValues(xBlockLine, yBlockLine,
-							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowToColumnBlockIndex(yBlockIndex)], false));
+					result &= _setCalculatedVericalBlockValues(xBlockLine, yBlockLine,
+							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowToColumnBlockIndex(yBlockIndex)], false);
 				} else {
-					result = result.combineResult(_setCalculatedVericalBlockValues(xBlockLine, yBlockLine,
-							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowToColumnBlockIndex(blockRow)], true));
+					result &= _setCalculatedVericalBlockValues(xBlockLine, yBlockLine,
+							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowToColumnBlockIndex(blockRow)], true);
 				}
 			}
 		}
 		for (var blockColumn = 0; blockColumn < getBlockLength(yBlockIndex); blockColumn++) {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
-					result = result.combineResult(_setCalculatedHorizontalBlockValues(xBlockLine, yBlockLine,
-							blocks[mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false));
+					result &= _setCalculatedHorizontalBlockValues(xBlockLine, yBlockLine,
+							blocks[mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
 				} else {
-					result = result.combineResult(_setCalculatedHorizontalBlockValues(xBlockLine, yBlockLine,
-							blocks[mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true));
+					result &= _setCalculatedHorizontalBlockValues(xBlockLine, yBlockLine,
+							blocks[mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
 				}
 			}
 		}
@@ -404,10 +403,10 @@ class Logical {
 		for (var _y = 0; _y < itemsCount; _y++) {
 			if (afterPlus) {
 				// bottom from +
-				result = result.combineResult(_checkBlockValue(xBlock, xLinePlus, _y, yBlock, _y, yLinePlus));
+				result &= _checkBlockValue(xBlock, xLinePlus, _y, yBlock, _y, yLinePlus);
 			} else {
 				// top from +
-				result = result.combineResult(_checkBlockValue(xBlock, xLinePlus, _y, yBlock, yLinePlus, _y));
+				result &= _checkBlockValue(xBlock, xLinePlus, _y, yBlock, yLinePlus, _y);
 			}
 		}
 		return result;
@@ -420,10 +419,10 @@ class Logical {
 		for (var _x = 0; _x < itemsCount; _x++) {
 			if (afterPlus) {
 				// right from +
-				result = result.combineResult(_checkBlockValue(yBlock, _x, yLinePlus, xBlock, xLinePlus, _x));
+				result &= _checkBlockValue(yBlock, _x, yLinePlus, xBlock, xLinePlus, _x);
 			} else {
 				// left from +
-				result = result.combineResult(_checkBlockValue(yBlock, _x, yLinePlus, xBlock, _x, xLinePlus));
+				result &= _checkBlockValue(yBlock, _x, yLinePlus, xBlock, _x, xLinePlus);
 			}
 		}
 		return result;
@@ -591,7 +590,9 @@ class _setValueResult {
 
 	_setValueResult(this.validChange, this.valueChanged);
 
-	_setValueResult combineResult(_setValueResult result) {
-		return _setValueResult(validChange & result.validChange, valueChanged | result.valueChanged);
+	_setValueResult operator &(_setValueResult result) {
+		validChange &= result.validChange;
+		valueChanged |= result.valueChanged;
+		return this;
 	}
 }
