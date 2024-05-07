@@ -140,13 +140,11 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         },
       )
     ]);
-
-    if (rows.isNotEmpty) {
-      rows.insert(
-        0,
-        GCWTextDivider(text: widget.dividerText ?? '', trailing: Row(children: _trailingChildren)),
-      );
-    }
+    
+    rows.insert(
+      0,
+      GCWTextDivider(text: widget.dividerText ?? '', trailing: Row(children: _trailingChildren)),
+    );
 
     return rows.isEmpty ? Container() : Column(children: rows);
   }
