@@ -6231,7 +6231,7 @@
   "uic_passenger_passengertype_historic": "historisches Fahrzeug",
   "uic_passenger_passengertype_misc": "anderes Fahrzeug",
   "uic_passenger_passengertype_invalid": "Ungültiger Reisewagenzug-Typ",
-  "uic_passenger_internationalusage": "Internationialer Verkehr",
+  "uic_passenger_internationalusage": "Internationaler Verkehr",
   "uic_passenger_internationalusage_only_domestic": "Inlandsverkehr",
   "uic_passenger_internationalusage_international_with_specialpermission": "Inlandsverkehr oder internationaler Verkehr nach Sondervereinbarung",
   "uic_passenger_internationalusage_ten_and_ppw": "TEN/COTIF/PPV/PPW",

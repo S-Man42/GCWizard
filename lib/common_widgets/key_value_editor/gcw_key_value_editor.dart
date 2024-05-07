@@ -140,7 +140,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         },
       )
     ]);
-    
+
     rows.insert(
       0,
       GCWTextDivider(text: widget.dividerText ?? '', trailing: Row(children: _trailingChildren)),
