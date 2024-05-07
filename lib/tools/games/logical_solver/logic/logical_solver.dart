@@ -73,12 +73,12 @@ class _LogicalBlock {
 		return result;
 	}
 
-	bool setValueAndCalculated(int xLine, int yLine, int _value,
+	bool setValueAndCalculated(int x, int y, int value,
 			{LogicPuzzleFillType type = LogicPuzzleFillType.CALCULATED}) {
-		if (_value == Logical.plusValue) {
-			return setPlusValue(xLine, yLine, type);
+		if (value == Logical.plusValue) {
+			return setPlusValue(x, y, type);
 		} else {
-			return setValue(xLine, yLine, _value, type);
+			return setValue(x, y, value, type);
 		}
 	}
 
