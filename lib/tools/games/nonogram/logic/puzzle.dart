@@ -291,7 +291,7 @@ class Puzzle {
       return;
     }
 
-    var test = data.rowHints.firstWhereOrNull((row) => row.sum > data.width);
+    var test = data.rowHints.firstWhereOrNull((row) => _calcLineMinLength(row) > data.width);
     if (test != null) {
        data.state = PuzzleState.InvalidHintData;
        data.invalidHintDataInfoCode = 'invalid_row';
@@ -299,7 +299,7 @@ class Puzzle {
        return;
     }
 
-    test = data.columnHints.firstWhereOrNull((column) => column.sum > data.height);
+    test = data.columnHints.firstWhereOrNull((column) => _calcLineMinLength(column) > data.height);
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
       data.invalidHintDataInfoCode = 'invalid_column';
@@ -336,6 +336,11 @@ class Puzzle {
    }
 
     data.state = PuzzleState.Ok;
+  }
+
+  /// sum items + space items
+  static int _calcLineMinLength(List<int> hints) {
+    return hints.sum + max(hints.where((hint) => hint != 0).length - 1, 0);
   }
 
   void importImage(Uint8List data) {
