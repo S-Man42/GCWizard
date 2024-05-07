@@ -154,7 +154,7 @@ class _GCWCoordsState extends State<GCWCoords> {
   Widget build(BuildContext context) {
 
     Column _widget;
-    if (widget.notitle != null && widget.notitle! && widget.title != null && widget.title!.isNotEmpty) {
+    if (widget.notitle != null && widget.notitle! || widget.title == null || widget.title != null && widget.title!.isNotEmpty) {
       _widget = Column(
         children: <Widget>[
           Row(
