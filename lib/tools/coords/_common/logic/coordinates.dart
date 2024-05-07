@@ -1,9 +1,3 @@
-import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/mapcode.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart' as defaultCoord;
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
@@ -15,6 +9,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/geohex.dart'
 import 'package:gc_wizard/tools/coords/_common/formats/lambert/logic/lambert.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/maidenhead/logic/maidenhead.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/makaney.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/mapcode.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mercator/logic/mercator.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/logic/natural_area_code.dart';
@@ -24,8 +19,13 @@ import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/lo
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/logic/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart' as defaultCoord;
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'coordinate_format_definition.dart';

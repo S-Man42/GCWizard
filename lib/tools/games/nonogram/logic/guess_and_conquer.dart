@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
+import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:utility/utility.dart';
 
 int _getNextIndex(List<int> zeroIndexes, bool randomize) {

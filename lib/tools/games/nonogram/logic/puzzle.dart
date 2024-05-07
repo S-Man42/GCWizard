@@ -3,11 +3,11 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
-import 'package:image/image.dart' as Image;
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:image/image.dart' as Image;
 
 enum PuzzleState {
   Ok, // no data errors
