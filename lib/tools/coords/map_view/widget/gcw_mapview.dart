@@ -16,7 +16,6 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -30,6 +29,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/gpx_kml_import.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappoint_editor.dart';
@@ -178,9 +178,7 @@ class _GCWMapViewState extends State<GCWMapView> {
       }
     }
 
-    return NumberFormat(format).format(lengthUnit.fromMeter(length)) +
-        ' ' +
-        lengthUnit.symbol;
+    return NumberFormat(format).format(lengthUnit.fromMeter(length)) + ' ' + lengthUnit.symbol;
   }
 
   String _formatBearingOutput(double bearing) {
@@ -316,12 +314,11 @@ class _GCWMapViewState extends State<GCWMapView> {
       ),
       PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
-        markers: _markers,
-        popupSnap: PopupSnap.markerTop,
-        popupController: _popupLayerController.popupController,
-        popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
-        markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero)
-      )),
+              markers: _markers,
+              popupSnap: PopupSnap.markerTop,
+              popupController: _popupLayerController.popupController,
+              popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker),
+              markerCenterAnimation: const MarkerCenterAnimation(duration: Duration.zero))),
     ]);
 
     return layers;

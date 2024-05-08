@@ -17,7 +17,7 @@ Object? _readFromFile(Object mode, Object index) {
     case 0: // x byte String 0-terminated
       int byte = _state.FILE[start];
       String value = '';
-      while (byte  != 0 && start < _state.FILE.length - 1) {
+      while (byte != 0 && start < _state.FILE.length - 1) {
         value = value + String.fromCharCode(byte);
         start++;
         byte = _state.FILE[start];
@@ -43,7 +43,7 @@ void _writeToFile(Object? value) {
     _writeFileList(value as _GCWList);
   } else {
     _writeFileString(value.toString());
-  } 
+  }
   _state.fileSaved = false;
 }
 
@@ -53,7 +53,7 @@ void _writeFileList(_GCWList value) {
       _writeFileList(element as _GCWList);
     } else {
       _writeFileString(element.toString());
-    } 
+    }
   });
 }
 
@@ -65,7 +65,7 @@ void _writeFileString(String value) {
 }
 
 int _eof() {
-  if (_state.FILEINDEX < _state.FILE.length) {
+  if (_state.FILEINDEX < _state.FILE.length - 1) {
     return 0;
   }
   return 1;
@@ -94,7 +94,9 @@ String _dumpFile(Object? mode) {
         break;
       case 2: // string
         for (int byte in _state.FILE) {
-          if (byte != 0) {
+          if (byte == 0) {
+            dump.add(' ');
+          } else {
             dump.add(_byteToString(byte));
           }
         }

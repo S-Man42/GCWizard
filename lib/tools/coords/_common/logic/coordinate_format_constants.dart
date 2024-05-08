@@ -134,11 +134,4 @@ final allCoordinateFormatDefinitions = [
   MapCodeFormatDefinition
 ];
 
-final standardCoordinateFormatDefinitions = [
-  DMSFormatDefinition,
-  DMMFormatDefinition,
-  DECFormatDefinition
-];
-
-
-
+final standardCoordinateFormatDefinitions = [DMSFormatDefinition, DMMFormatDefinition, DECFormatDefinition];

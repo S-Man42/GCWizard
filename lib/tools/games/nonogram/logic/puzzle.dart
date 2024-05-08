@@ -3,11 +3,11 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
-import 'package:image/image.dart' as Image;
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/image_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:image/image.dart' as Image;
 
 enum PuzzleState {
   Ok, // no data errors
@@ -56,11 +56,11 @@ class Puzzle {
     state = PuzzleState.Ok;
   }
 
-   static Puzzle generate(int height, int width) {
-     var puzzle = Puzzle(List<List<int>>.generate(height, (index) => []),
-                   List<List<int>>.generate(width, (index) => []));
-     mapData(puzzle);
-     return puzzle;
+  static Puzzle generate(int height, int width) {
+    var puzzle =
+        Puzzle(List<List<int>>.generate(height, (index) => []), List<List<int>>.generate(width, (index) => []));
+    mapData(puzzle);
+    return puzzle;
   }
 
   static List<List<int>> generateRows(Puzzle data) {
@@ -96,23 +96,27 @@ class Puzzle {
   }
 
   void clearHints() {
-    for (var hints in rowHints) { hints.clear(); }
-    for (var hints in columnHints) { hints.clear(); }
+    for (var hints in rowHints) {
+      hints.clear();
+    }
+    for (var hints in columnHints) {
+      hints.clear();
+    }
   }
 
   List<List<int>> get columns {
     var _columns = List<List<int>>.generate(width, (index) => List<int>.filled(height, 0));
-    for(var x = 0; x < width; x++) {
-      for(var y = 0; y < height; y++) {
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
         _columns[x][y] = rows[y][x];
       }
     }
     return _columns;
   }
 
-  set columns (List<List<int>> newColumns) {
-    for(var x = 0; x < width; x++) {
-      for(var y = 0; y < height; y++) {
+  set columns(List<List<int>> newColumns) {
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
         rows[y][x] = newColumns[x][y];
       }
     }
@@ -174,7 +178,8 @@ class Puzzle {
 
   Puzzle calcHints() {
     var clone = Puzzle(List<List<int>>.generate(rowHints.length, (index) => []),
-        List<List<int>>.generate(columnHints.length, (index) => []), content: snapshot);
+        List<List<int>>.generate(columnHints.length, (index) => []),
+        content: snapshot);
     var counter = 0;
     clone.rows.forEachIndexed((index, row) {
       counter = 0;
@@ -237,9 +242,7 @@ class Puzzle {
       if (data != null) {
         puzzle._import(_jsonArrayToList(data));
       }
-    } else {
-
-    }
+    } else {}
     return puzzle;
   }
 
@@ -257,7 +260,7 @@ class Puzzle {
   static List<int> _jsonArrayToList(List<Object?> jsonList) {
     var list = <int>[];
     for (var entry in jsonList) {
-       var value = toIntOrNull(entry);
+      var value = toIntOrNull(entry);
       if (value != null) list.add(value);
     }
     return list;
@@ -285,21 +288,20 @@ class Puzzle {
   }
 
   static void checkConsistency(Puzzle data) {
-    if (data.rowHints.isEmpty || data.columnHints.isEmpty ||
-        data.height == 0 || data.width == 0) {
+    if (data.rowHints.isEmpty || data.columnHints.isEmpty || data.height == 0 || data.width == 0) {
       data.state = PuzzleState.InvalidContentData;
       return;
     }
 
-    var test = data.rowHints.firstWhereOrNull((row) => row.sum > data.width);
+    var test = data.rowHints.firstWhereOrNull((row) => _calcLineMinLength(row) > data.width);
     if (test != null) {
-       data.state = PuzzleState.InvalidHintData;
-       data.invalidHintDataInfoCode = 'invalid_row';
-       data.invalidHintDataInfoData = (data.rowHints.indexOf(test) + 1).toString();
-       return;
+      data.state = PuzzleState.InvalidHintData;
+      data.invalidHintDataInfoCode = 'invalid_row';
+      data.invalidHintDataInfoData = (data.rowHints.indexOf(test) + 1).toString();
+      return;
     }
 
-    test = data.columnHints.firstWhereOrNull((column) => column.sum > data.height);
+    test = data.columnHints.firstWhereOrNull((column) => _calcLineMinLength(column) > data.height);
     if (test != null) {
       data.state = PuzzleState.InvalidHintData;
       data.invalidHintDataInfoCode = 'invalid_column';
@@ -325,17 +327,22 @@ class Puzzle {
 
     var rowSum = data.rowHints.map((l) => l.sum).sum;
     var columnSum = data.columnHints.map((l) => l.sum).sum;
-    if ( (rowSum != columnSum)) {
-     data.state = PuzzleState.InvalidHintData;
-     if (rowSum > columnSum) {
-       data.invalidHintDataInfoCode = 'more_row_points_than_column_points';
-     } else {
-       data.invalidHintDataInfoCode = 'more_column_points_than_row_points';
-     }
-     return;
-   }
+    if ((rowSum != columnSum)) {
+      data.state = PuzzleState.InvalidHintData;
+      if (rowSum > columnSum) {
+        data.invalidHintDataInfoCode = 'more_row_points_than_column_points';
+      } else {
+        data.invalidHintDataInfoCode = 'more_column_points_than_row_points';
+      }
+      return;
+    }
 
     data.state = PuzzleState.Ok;
+  }
+
+  /// sum items + space items
+  static int _calcLineMinLength(List<int> hints) {
+    return hints.sum + max(hints.where((hint) => hint != 0).length - 1, 0);
   }
 
   void importImage(Uint8List data) {
@@ -346,18 +353,18 @@ class Puzzle {
 
     if (image == null) return;
     image = image.convert(numChannels: 1);
-    if (width/ image.width > height/ image.height) {
+    if (width / image.width > height / image.height) {
       image = Image.copyResize(image, height: height, interpolation: Image.Interpolation.average);
     } else {
       image = Image.copyResize(image, width: width, interpolation: Image.Interpolation.average);
     }
-    rowOffset = max((( height - image.height)/ 2).truncate(), 0);
-    columnOffset = max(((width - image.width)/ 2).truncate(), 0);
+    rowOffset = max(((height - image.height) / 2).truncate(), 0);
+    columnOffset = max(((width - image.width) / 2).truncate(), 0);
 
     for (int row = 0; row < image.height; row++) {
       for (int column = 0; column < image.width; column++) {
         if ((row + rowOffset < rows.length) && (column + columnOffset < rows[row + rowOffset].length)) {
-          rows[row + rowOffset][column + columnOffset] = image.getPixel(column, row).r < 128  ? 1 : -1;
+          rows[row + rowOffset][column + columnOffset] = image.getPixel(column, row).r < 128 ? 1 : -1;
         }
       }
     }

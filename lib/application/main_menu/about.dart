@@ -21,7 +21,6 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-
   late GCWPackageInfo _packageInfo;
 
   @override
@@ -222,10 +221,12 @@ class _AboutState extends State<About> {
                     'GrafZahl75',
                     'hwi',
                     'Isidore S.',
+                    'JanRei',
                     'Johannes C.',
                     'Jonas M.',
                     'kinderarzt',
                     'Klumpenkukuk',
+                    'Linsty',
                     'Lue',
                     'LupiMus',
                     'Lutz \'DL3BZZ\'',
