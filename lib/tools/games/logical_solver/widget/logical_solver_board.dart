@@ -235,9 +235,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
     canvas.rotate(-90 / 180 * pi);
     canvas.translate(-yInnerStart + _blockMargin * factor, xInnerStart);
     for (int x = 0; x < board.getLineLength(0) ; x++) {
-      var itemIndex = (board.blockIndex(x) < 1
-          ? 0
-          : (board.mapRowToColumnBlockIndex(board.blockIndex(x)) + 1)) * board.itemsCount + board.blockLine(x);
+      var itemIndex = board.fullLine(board.mapColumnToRowBlockIndex(board.blockIndex(x)), board.blockLine(x));
       var xInner = x * widthInner + _lineOffset(x, factor);
       rect = Rect.fromLTWH(0, xInner, maxColumnItemsWidth, heightInner);
       _paintItemText(canvas, rect,

@@ -239,6 +239,10 @@ class Logical {
 		return value % itemsCount;
 	}
 
+	int fullLine(int block, int line) {
+		return block * itemsCount + line;
+	}
+
 	int? getValue(int x, int y) {
 		if (!_validPosition(x, y)) {
 			return null;
@@ -298,8 +302,8 @@ print(loopCounter);
 					var ys1 = mapColumnToRowBlockIndex(xB);
 					var ys2 = yB + 1;
 					var xt2 = yB + 1;
-					var solution1 = (ys1 * itemsCount + xL).toString();
-					var solution2 = (ys2 * itemsCount + yL).toString();
+					var solution1 = fullLine(ys1, xL).toString();
+					var solution2 = fullLine(ys2, yL).toString();
 
 					var tL = 0;
 					while(!(solution[tL].every((element) => element == '') ||
@@ -402,7 +406,7 @@ print(loopCounter);
 	_setValueResult _setCalculatedVericalBlockValues(int xLinePlus, int yLinePlus,
 			_LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
 		var result = _setValueResult();
-		// copy from xBlock to yBlock (search in xPlus Column)
+		// copy from xBlock to yBlock (search in xPlus column)
 		for (var _y = 0; _y < itemsCount; _y++) {
 			if (afterPlus) {
 				// bottom from +
@@ -418,7 +422,7 @@ print(loopCounter);
 	_setValueResult _setCalculatedHorizontalBlockValues(int xLinePlus, int yLinePlus,
 			_LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
 		var result = _setValueResult();
-		// copy from yBlock to xBlock (search in yPlus Row)
+		// copy from yBlock to xBlock (search in yPlus row)
 		for (var _x = 0; _x < itemsCount; _x++) {
 			if (afterPlus) {
 				// right from +
@@ -565,14 +569,16 @@ print(loopCounter);
 
 	static String _jsonValueToString(int x, int y, Logical logical) {
 		//ToDo Check Alphabet Length
-		return alphabet_AZIndexes[logical.blockIndex(x) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
-				alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
+		return alphabet_AZIndexes[
+			logical.mapColumnToRowBlockIndex(logical.blockIndex(x)) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
+										 alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
 	}
 
 	static Point<int>? _jsonValueFromString(String value, Logical logical) {
 		//ToDo Check Alphabet Length
-		return Point<int>((alphabet_AZ[value[0].toUpperCase()]! - 1) * logical.itemsCount + (int.tryParse(value[1]) ?? 0),
-				(alphabet_AZ[value[2].toUpperCase()]! - 2) * logical.itemsCount + (int.tryParse(value[3]) ?? 0));
+		return Point<int>(logical.fullLine(logical.mapRowToColumnBlockIndex(alphabet_AZ[value[0].toUpperCase()]!) - 1,
+				int.tryParse(value[1]) ?? 0),
+				logical.fullLine(alphabet_AZ[value[2].toUpperCase()]! - 2, int.tryParse(value[3]) ?? 0));
 	}
 }
 
