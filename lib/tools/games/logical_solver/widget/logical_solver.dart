@@ -76,6 +76,7 @@ class LogicalSolverState extends State<LogicalSolver> {
               GCWIntegerSpinner(
                 title: i18n(context, 'logicalsolver_categories'),
                 value: _categoriesCount,
+                flexValues: const [2, 1],
                 overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
                 min: minItemCount,
                 max: maxCategoriesCount,
@@ -89,6 +90,7 @@ class LogicalSolverState extends State<LogicalSolver> {
               GCWIntegerSpinner(
                 title: i18n(context, 'logicalsolver_items'),
                 value: _itemsCount,
+                flexValues: const [2, 1],
                 overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
                 min: minItemCount,
                 max: 99,
