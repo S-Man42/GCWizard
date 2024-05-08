@@ -260,6 +260,7 @@ class Logical {
 		var typeTmp = block.getFillType(xL, yL);
 
 		if (valueTmp == value && typeTmp == type) return true;
+
 		var result = block.setValueAndCalculated(xL, yL, value, type: type);
 		if (result.validChange && result.valueChanged) {
 			_removeCalculatedValues();
@@ -365,6 +366,15 @@ print(loopCounter);
 				if (getValue(x, y) == plusValue) {
 					result &= _setBlockPlusValue(x, y);
 					result &= _setCalculatedBlocks(x, y);
+				}
+			}
+		}
+
+		for (var yBlock = 0; yBlock < getMaxBlockLength(); yBlock++) {
+			for (var xBlock = 0; xBlock < getBlockLength(yBlock); xBlock++) {
+				for (var i = 0; i < itemsCount; i++) {
+					result &= blocks[yBlock][xBlock]._checkAndSetCalculatedFullRow(i);
+					result &= blocks[yBlock][xBlock]._checkAndSetCalculatedFullColumn(i);
 				}
 			}
 		}
