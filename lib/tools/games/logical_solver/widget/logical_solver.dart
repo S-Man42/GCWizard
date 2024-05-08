@@ -77,8 +77,8 @@ class LogicalSolverState extends State<LogicalSolver> {
                 title: i18n(context, 'logicalsolver_categories'),
                 value: _categoriesCount,
                 overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
-                min: 2,
-                max: 26,
+                min: MINITEMCOUNT,
+                max: MAXCATEGORIESCOUNT,
                 onChanged: (value) {
                   setState(() {
                     _categoriesCount = value;
@@ -90,8 +90,8 @@ class LogicalSolverState extends State<LogicalSolver> {
                 title: i18n(context, 'logicalsolver_items'),
                 value: _itemsCount,
                 overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
-                min: 2,
-                max: 26,
+                min: MINITEMCOUNT,
+                max: 99,
                 onChanged: (value) {
                   setState(() {
                     _itemsCount = value;

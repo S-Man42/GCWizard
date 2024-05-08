@@ -5,6 +5,9 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
+const int MAXCATEGORIESCOUNT = 26;
+const int MINITEMCOUNT = 2;
+
 enum LogicPuzzleFillType { USER_FILLED, CALCULATED }
 
 enum LogicalState {
@@ -151,8 +154,8 @@ class Logical {
 	static const minusValue = -1;
 
 	Logical(this.categoriesCount, this.itemsCount, {Logical? logical}) {
-		categoriesCount = max(2, categoriesCount);
-		itemsCount = max(2, itemsCount);
+		categoriesCount = max(MINITEMCOUNT, categoriesCount);
+		itemsCount = max(MINITEMCOUNT, itemsCount);
 
 		_generateBlocks();
 		_generateItems();
@@ -483,19 +486,33 @@ print(loopCounter);
 	static const String _jsonCategoriesCount = 'nc';
 
 	static Logical parseJson(String jsonString) {
-		var logical = Logical(2, 2);
+		var logical = Logical(MINITEMCOUNT, MINITEMCOUNT);
 		var jsonMap = asJsonMap(json.decode(jsonString));
 
 		var data = jsonMap[_jsonItemsCount];
 		if (getJsonType(data) == JsonType.SIMPLE_TYPE) {
-			logical.itemsCount = int.tryParse(data.toString()) ?? 2;
+			logical.itemsCount = int.tryParse(data.toString()) ?? MINITEMCOUNT;
+			if (logical.itemsCount > 99) {
+				logical.itemsCount = 99;
+				logical.state = LogicalState.InvalidData;
+			} else if (logical.itemsCount < MINITEMCOUNT) {
+				logical.itemsCount = MINITEMCOUNT;
+				logical.state = LogicalState.InvalidData;
+			}
 		} else {
 			logical.state = LogicalState.InvalidData;
 		}
 
 		data = jsonMap[_jsonCategoriesCount];
 		if (getJsonType(data) == JsonType.SIMPLE_TYPE) {
-			logical.categoriesCount = int.tryParse(data.toString()) ?? 2;
+			logical.categoriesCount = int.tryParse(data.toString()) ?? MINITEMCOUNT;
+			if (logical.categoriesCount > MAXCATEGORIESCOUNT) {
+				logical.categoriesCount = MAXCATEGORIESCOUNT;
+				logical.state = LogicalState.InvalidData;
+			} else if (logical.categoriesCount < MINITEMCOUNT) {
+				logical.categoriesCount = MINITEMCOUNT;
+				logical.state = LogicalState.InvalidData;
+			}
 		} else {
 			logical.state = LogicalState.InvalidData;
 		}
@@ -515,14 +532,17 @@ print(loopCounter);
 		return logical;
 	}
 
-	static Logical _jsonImportData(Object? data, int values, Logical logical) {
+	static Logical _jsonImportData(Object? data, int value, Logical logical) {
 		var list = asJsonArrayOrNull(data);
 		if (list != null) {
 			for (var element in list) {
 				if (element is String) {
 					var entry = _jsonValueFromString(element, logical);
 					if (entry != null) {
-						logical.setValue(entry.x, entry.y, values, LogicPuzzleFillType.USER_FILLED);
+						if (!logical.setValue(entry.x, entry.y, value, LogicPuzzleFillType.USER_FILLED)) {
+							logical.state = LogicalState.InvalidData;
+							logical.setValue(entry.x, entry.y, null, LogicPuzzleFillType.CALCULATED);
+						}
 					} else {
 						logical.state = LogicalState.InvalidData;
 					}
@@ -578,7 +598,7 @@ print(loopCounter);
 	}
 
 	static String _jsonValueToString(int x, int y, Logical logical) {
-		//ToDo Check Alphabet Length
+		if (!logical._validPosition(x, y)) return '';
 		return alphabet_AZIndexes[
 			logical.mapColumnToRowBlockIndex(logical.blockIndex(x)) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
 										 alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
