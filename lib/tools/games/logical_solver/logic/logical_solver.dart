@@ -37,10 +37,10 @@ class _LogicalBlock {
 		return block[y][x]?.type;
 	}
 
-	/// return valid change
 	_setValueResult setValue(int x, int y, int? value, LogicPuzzleFillType type) {
-		var result = _setValueResult(true, getValue(x, y) != value);
-		if (value == null || getValue(x, y) == null) {
+		var orgValue = getValue(x, y);
+		var result = _setValueResult(valueChanged: orgValue != value);
+		if (value == null || orgValue == null) {
 			block[y][x] = value == null ? null : LogicalValue(value, type);
 			return result;
 		} else if (!result.valueChanged) {
@@ -49,12 +49,12 @@ class _LogicalBlock {
 			}
 			return result;
 		} else {
-			return _setValueResult(false, false);
+			return _setValueResult(validChange: false);
 		}
 	}
 
 	_setValueResult setPlusValue(int xPlus, int yPlus, LogicPuzzleFillType type) {
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 		// row
 		for (var i = 0; i < itemsCount; i++) {
 			if (i == xPlus) {
@@ -84,7 +84,7 @@ class _LogicalBlock {
 	}
 
 	_setValueResult _checkAndSetCalculatedFullRow(int x) {
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 		var count = 0;
 		var emptyIndex = -1;
 		int? value;
@@ -106,7 +106,7 @@ class _LogicalBlock {
 	}
 
 	_setValueResult _checkAndSetCalculatedFullColumn(int y) {
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 		var count = 0;
 		var emptyIndex = -1;
 		int? value;
@@ -250,10 +250,13 @@ class Logical {
 	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
 		if (!_validPosition(x, y)) return false;
 		var block = blocks[blockIndex(y)][blockIndex(x)];
-		var valueTmp = block.getValue(blockLine(x), blockLine(y));
-		var typeTmp = block.getFillType(blockLine(x), blockLine(y));
+		var xL = blockLine(x);
+		var yL = blockLine(y);
+		var valueTmp = block.getValue(xL, yL);
+		var typeTmp = block.getFillType(xL, yL);
 
-		var result = block.setValueAndCalculated(blockLine(x), blockLine(y), value, type: type);
+		if (valueTmp == value && typeTmp == type) return true;
+		var result = block.setValueAndCalculated(xL, yL, value, type: type);
 		if (result.validChange && result.valueChanged) {
 			_removeCalculatedValues();
 			int loopCounter = 0;
@@ -351,7 +354,7 @@ print(loopCounter);
 	}
 
 	_setValueResult _setCalculatedValues() {
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 
 		for (var y = 0; y < getMaxLineLength(); y++) {
 			for (var x = 0; x < getLineLength(y); x++) {
@@ -369,7 +372,7 @@ print(loopCounter);
 		var yBlockIndex = blockIndex(yPlus);
 		var xBlockLine = blockLine(xPlus);
 		var yBlockLine = blockLine(yPlus);
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 
 		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
 			if (blockRow != yBlockIndex) {
@@ -398,7 +401,7 @@ print(loopCounter);
 
 	_setValueResult _setCalculatedVericalBlockValues(int xLinePlus, int yLinePlus,
 			_LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 		// copy from xBlock to yBlock (search in xPlus Column)
 		for (var _y = 0; _y < itemsCount; _y++) {
 			if (afterPlus) {
@@ -414,7 +417,7 @@ print(loopCounter);
 
 	_setValueResult _setCalculatedHorizontalBlockValues(int xLinePlus, int yLinePlus,
 			_LogicalBlock xBlock, _LogicalBlock yBlock, bool afterPlus) {
-		var result = _setValueResult(true, false);
+		var result = _setValueResult();
 		// copy from yBlock to xBlock (search in yPlus Row)
 		for (var _x = 0; _x < itemsCount; _x++) {
 			if (afterPlus) {
@@ -439,7 +442,7 @@ print(loopCounter);
 				return sourceBlock.setValueAndCalculated(xSourceLine, ySourceLine, _value);
 			}
 		}
-		return _setValueResult(true, false);
+		return _setValueResult();
 	}
 
 	bool _validPosition(int x, int y) {
@@ -585,10 +588,10 @@ class _LogicalSolverSolution {
 }
 
 class _setValueResult {
-	bool validChange = true;
-	bool valueChanged = false;
+	bool validChange;
+	bool valueChanged;
 
-	_setValueResult(this.validChange, this.valueChanged);
+	_setValueResult({this.validChange = true, this.valueChanged = false});
 
 	_setValueResult operator &(_setValueResult result) {
 		validChange &= result.validChange;
