@@ -43,11 +43,11 @@ class LogicalBoardState extends State<LogicalBoard> {
               child:
               Stack(children: <Widget>[
                 AspectRatio(
-                    aspectRatio: max(_maxRowItemsWidth(widget.board, _fontSize) + widget.board.getLineLength(0) * _boxSize, 1) / //ToDo FontSize
+                    aspectRatio: max(_maxRowItemsWidth(widget.board, _fontSize) + widget.board.getLineLength(0) * _boxSize, 1) /
                         max(_maxColumnsItemsWidth(widget.board, _fontSize) + widget.board.getMaxLineLength() * _boxSize, 1),
                     child: CanvasTouchDetector(
-                    gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd],
-                    builder: (context) {
+                      gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd],
+                      builder: (context) {
                       return CustomPaint(
                           painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
                               onTapped: widget.onTapped, onLongTapped: widget.onLongTapped)
@@ -117,15 +117,15 @@ class LogicalBoardState extends State<LogicalBoard> {
 
   void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
     if (_selectedBoxRect == selectedBoxRect) return;
-    setState(() {
-      if (showInputTextBox != null) {
-        _selectedBox = showInputTextBox;
-        _selectedBoxRect = selectedBoxRect;
-        _currentValueFocusNode.requestFocus();
-      } else {
-        _hideInputTextBox();
-      }
-    });
+    if (showInputTextBox != null) {
+      _selectedBox = showInputTextBox;
+      _selectedBoxRect = selectedBoxRect;
+      _currentValueFocusNode.requestFocus();
+    } else {
+      _hideInputTextBox();
+      widget.onChanged(widget.board);
+    }
+    _setState();
   }
 }
 
