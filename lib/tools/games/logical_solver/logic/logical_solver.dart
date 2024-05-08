@@ -161,8 +161,8 @@ class Logical {
 		_generateItems();
 
 		if (logical != null) {
-			for (var yBlock = 0; yBlock < min(logical.getMaxBlockLength(), getMaxBlockLength()); yBlock++) {
-				for (var xBlock = 0; xBlock < min(logical.getBlockLength(yBlock), getBlockLength(yBlock)); xBlock++) {
+			for (var yBlock = 0; yBlock < min(logical._getMaxBlockLength(), _getMaxBlockLength()); yBlock++) {
+				for (var xBlock = 0; xBlock < min(logical._getBlockLength(yBlock), _getBlockLength(yBlock)); xBlock++) {
 					for (var y = 0; y < min(logical.itemsCount, itemsCount); y++) {
 						for (var x = 0; x < min(logical.itemsCount, itemsCount); x++) {
 							var value = logical.blocks[yBlock][xBlock].getValue(x, y);
@@ -214,17 +214,17 @@ class Logical {
 		return (categoriesCount - 1 - (line / itemsCount).floor()) * itemsCount;
 	}
 
-	int getMaxBlockLength() {
+	int _getMaxBlockLength() {
 		return categoriesCount - 1;
 	}
 
-	int getBlockLength(int block) {
+	int _getBlockLength(int block) {
 		return categoriesCount - 1 - block;
 	}
 
 	/// map row block index to column block index
 	////@block block index
-	int mapRowToColumnBlockIndex(int block) {
+	int _mapRowToColumnBlockIndex(int block) {
 		return block < 1 ? 0 : categoriesCount - 1 - block;
 	}
 
@@ -373,8 +373,8 @@ print(loopCounter);
 			}
 		}
 
-		for (var yBlock = 0; yBlock < getMaxBlockLength(); yBlock++) {
-			for (var xBlock = 0; xBlock < getBlockLength(yBlock); xBlock++) {
+		for (var yBlock = 0; yBlock < _getMaxBlockLength(); yBlock++) {
+			for (var xBlock = 0; xBlock < _getBlockLength(yBlock); xBlock++) {
 				for (var i = 0; i < itemsCount; i++) {
 					result &= blocks[yBlock][xBlock]._checkAndSetCalculatedFullRow(i);
 					result &= blocks[yBlock][xBlock]._checkAndSetCalculatedFullColumn(i);
@@ -391,25 +391,25 @@ print(loopCounter);
 		var yBlockLine = blockLine(yPlus);
 		var result = _setValueResult();
 
-		for (var blockRow = 0; blockRow < getBlockLength(xBlockIndex); blockRow++) {
+		for (var blockRow = 0; blockRow < _getBlockLength(xBlockIndex); blockRow++) {
 			if (blockRow != yBlockIndex) {
 				if (blockRow < yBlockIndex) {
 					result &= _setCalculatedVericalBlockValues(xBlockLine, yBlockLine,
-							blocks[blockRow][xBlockIndex], blocks[blockRow][mapRowToColumnBlockIndex(yBlockIndex)], false);
+							blocks[blockRow][xBlockIndex], blocks[blockRow][_mapRowToColumnBlockIndex(yBlockIndex)], false);
 				} else {
 					result &= _setCalculatedVericalBlockValues(xBlockLine, yBlockLine,
-							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][mapRowToColumnBlockIndex(blockRow)], true);
+							blocks[blockRow][xBlockIndex], blocks[yBlockIndex][_mapRowToColumnBlockIndex(blockRow)], true);
 				}
 			}
 		}
-		for (var blockColumn = 0; blockColumn < getBlockLength(yBlockIndex); blockColumn++) {
+		for (var blockColumn = 0; blockColumn < _getBlockLength(yBlockIndex); blockColumn++) {
 			if (blockColumn != xBlockIndex) {
 				if (blockColumn < xBlockIndex) {
 					result &= _setCalculatedHorizontalBlockValues(xBlockLine, yBlockLine,
-							blocks[mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
+							blocks[_mapRowToColumnBlockIndex(xBlockIndex)][blockColumn], blocks[yBlockIndex][blockColumn], false);
 				} else {
 					result &= _setCalculatedHorizontalBlockValues(xBlockLine, yBlockLine,
-							blocks[mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
+							blocks[_mapRowToColumnBlockIndex(blockColumn)][xBlockIndex], blocks[yBlockIndex][blockColumn], true);
 				}
 			}
 		}
@@ -468,8 +468,8 @@ print(loopCounter);
 
 	void _generateBlocks() {
 		blocks = List<List<_LogicalBlock>>.generate(
-				getMaxBlockLength(), (index) => List<_LogicalBlock>.generate(
-				getBlockLength(index), (index) => _LogicalBlock(itemsCount)));
+				_getMaxBlockLength(), (index) => List<_LogicalBlock>.generate(
+				_getBlockLength(index), (index) => _LogicalBlock(itemsCount)));
 	}
 
 	void _generateItems() {
@@ -606,7 +606,7 @@ print(loopCounter);
 
 	static Point<int>? _jsonValueFromString(String value, Logical logical) {
 		//ToDo Check Alphabet Length
-		return Point<int>(logical.fullLine(logical.mapRowToColumnBlockIndex(alphabet_AZ[value[0].toUpperCase()]!) - 1,
+		return Point<int>(logical.fullLine(logical._mapRowToColumnBlockIndex(alphabet_AZ[value[0].toUpperCase()]!) - 1,
 				int.tryParse(value[1]) ?? 0),
 				logical.fullLine(alphabet_AZ[value[2].toUpperCase()]! - 2, int.tryParse(value[3]) ?? 0));
 	}
