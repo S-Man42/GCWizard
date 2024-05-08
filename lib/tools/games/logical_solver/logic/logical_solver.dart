@@ -5,8 +5,8 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 
-const int MAXCATEGORIESCOUNT = 26;
-const int MINITEMCOUNT = 2;
+const int maxCategoriesCount = 26;
+const int minItemCount = 2;
 
 enum LogicPuzzleFillType { USER_FILLED, CALCULATED }
 
@@ -154,8 +154,8 @@ class Logical {
 	static const minusValue = -1;
 
 	Logical(this.categoriesCount, this.itemsCount, {Logical? logical}) {
-		categoriesCount = max(MINITEMCOUNT, categoriesCount);
-		itemsCount = max(MINITEMCOUNT, itemsCount);
+		categoriesCount = max(minItemCount, categoriesCount);
+		itemsCount = max(minItemCount, itemsCount);
 
 		_generateBlocks();
 		_generateItems();
@@ -486,17 +486,17 @@ print(loopCounter);
 	static const String _jsonCategoriesCount = 'nc';
 
 	static Logical parseJson(String jsonString) {
-		var logical = Logical(MINITEMCOUNT, MINITEMCOUNT);
+		var logical = Logical(minItemCount, minItemCount);
 		var jsonMap = asJsonMap(json.decode(jsonString));
 
 		var data = jsonMap[_jsonItemsCount];
 		if (getJsonType(data) == JsonType.SIMPLE_TYPE) {
-			logical.itemsCount = int.tryParse(data.toString()) ?? MINITEMCOUNT;
+			logical.itemsCount = int.tryParse(data.toString()) ?? minItemCount;
 			if (logical.itemsCount > 99) {
 				logical.itemsCount = 99;
 				logical.state = LogicalState.InvalidData;
-			} else if (logical.itemsCount < MINITEMCOUNT) {
-				logical.itemsCount = MINITEMCOUNT;
+			} else if (logical.itemsCount < minItemCount) {
+				logical.itemsCount = minItemCount;
 				logical.state = LogicalState.InvalidData;
 			}
 		} else {
@@ -505,12 +505,12 @@ print(loopCounter);
 
 		data = jsonMap[_jsonCategoriesCount];
 		if (getJsonType(data) == JsonType.SIMPLE_TYPE) {
-			logical.categoriesCount = int.tryParse(data.toString()) ?? MINITEMCOUNT;
-			if (logical.categoriesCount > MAXCATEGORIESCOUNT) {
-				logical.categoriesCount = MAXCATEGORIESCOUNT;
+			logical.categoriesCount = int.tryParse(data.toString()) ?? minItemCount;
+			if (logical.categoriesCount > maxCategoriesCount) {
+				logical.categoriesCount = maxCategoriesCount;
 				logical.state = LogicalState.InvalidData;
-			} else if (logical.categoriesCount < MINITEMCOUNT) {
-				logical.categoriesCount = MINITEMCOUNT;
+			} else if (logical.categoriesCount < minItemCount) {
+				logical.categoriesCount = minItemCount;
 				logical.state = LogicalState.InvalidData;
 			}
 		} else {
