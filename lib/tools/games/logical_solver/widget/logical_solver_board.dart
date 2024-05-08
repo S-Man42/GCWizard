@@ -94,7 +94,12 @@ class LogicalBoardState extends State<LogicalBoard> {
                     fontSize: _selectedBoxRect!.height * 0.5,
                     color: themeColors().mainFont(),
                   ),
-                  onChanged: (value) {
+                  onChanged: (text) {
+                    var closeBox = false;
+                    if (text.contains('\n')) {
+                      _currentInputController.text = _currentInputController.text.replaceAll('\n', '');
+                      closeBox = true;
+                    }
                     setState(() {
                       if (_selectedBox!.x < 0) {
                         widget.board.logicalItems[widget.board.blockIndex(_selectedBox!.y)]
@@ -102,6 +107,9 @@ class LogicalBoardState extends State<LogicalBoard> {
                       } else if (_selectedBox!.y < 0) {
                         widget.board.logicalItems[widget.board.blockIndex(_selectedBox!.x)]
                             [widget.board.blockLine(_selectedBox!.x)] = _currentInputController.text;
+                      }
+                      if (closeBox) {
+                        _showInputTextBox(null, null);
                       }
                     });
                   })));
@@ -116,16 +124,17 @@ class LogicalBoardState extends State<LogicalBoard> {
   }
 
   void _showInputTextBox(Point<int>? showInputTextBox, Rect? selectedBoxRect) {
-    if (_selectedBoxRect == selectedBoxRect) return;
-    if (showInputTextBox != null) {
-      _selectedBox = showInputTextBox;
-      _selectedBoxRect = selectedBoxRect;
-      _currentValueFocusNode.requestFocus();
-    } else {
-      _hideInputTextBox();
-      widget.onChanged(widget.board);
-    }
-    _setState();
+    setState(() {
+      if (_selectedBoxRect == selectedBoxRect) return;
+      if (showInputTextBox != null) {
+        _selectedBox = showInputTextBox;
+        _selectedBoxRect = selectedBoxRect;
+        _currentValueFocusNode.requestFocus();
+      } else {
+        _hideInputTextBox();
+        widget.onChanged(widget.board);
+      }
+    });
   }
 }
 
