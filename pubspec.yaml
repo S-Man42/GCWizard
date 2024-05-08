@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.0.3+178
+version: 3.1.0+263
 publish_to: none
 
 environment:
@@ -14,6 +14,7 @@ dependencies:
   cached_network_image: ^3.3.0
   code_text_field: ^1.1.0
   collection: ^1.17.1
+  #dart_numerics: DO NOT USE! CURRENT VERSION 0.0.6 NOT WEB COMPATIBLE (02/2024)
   device_info_plus: ^9.1.0
   diacritic: ^0.1.1
   encrypt: ^5.0.3
@@ -31,7 +32,7 @@ dependencies:
   highlight: ^0.7.0
   http: ^0.13.5
   http_parser: ^4.0.2
-  image: ^4.1.2
+  image: 4.1.3
   intl: ^0.18.0
   latlong2: ^0.8.2
   location: ^5.0.1
@@ -48,7 +49,7 @@ dependencies:
   qr: ^3.0.1
   r_scan:
     git:
-      url: https://github.com/S-Man42/r_scan.git
+      url: https://github.com/masewo/r_scan.git
   scrollable_positioned_list: ^0.3.7
   shared_preferences: ^2.2.1
   stack: ^0.2.1
@@ -65,11 +66,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #flutter_launcher_icons: 0.12.0
+  #flutter_launcher_icons: 0.13.1
   flutter_lints: ^2.0.1
 
 flutter:
   fonts:
+    - family: MyFlutterApp
+      fonts:
+        - asset: lib/application/_common/assets/fonts/Icons/MyFlutterApp.ttf
     - family: Courier
       fonts:
         - asset: lib/application/_common/assets/fonts/Courier_Prime/CourierPrime-Bold.ttf
@@ -115,8 +119,11 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/ballet/
     - lib/tools/symbol_tables/_common/assets/barbier/
     - lib/tools/symbol_tables/_common/assets/barcode39/
+    - lib/tools/symbol_tables/_common/assets/base16_02/
+    - lib/tools/symbol_tables/_common/assets/base16/
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
+    - lib/tools/symbol_tables/_common/assets/bibibinary/
     - lib/tools/symbol_tables/_common/assets/birds_on_a_wire/
     - lib/tools/symbol_tables/_common/assets/blox/
     - lib/tools/symbol_tables/_common/assets/blue_monday/
@@ -136,6 +143,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/christmas/
     - lib/tools/symbol_tables/_common/assets/cirth_erebor/
     - lib/tools/symbol_tables/_common/assets/cistercian/
+    - lib/tools/symbol_tables/_common/assets/clocks_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_1/
+    - lib/tools/symbol_tables/_common/assets/clocks_2_2/
+    - lib/tools/symbol_tables/_common/assets/clocks_3/
     - lib/tools/symbol_tables/_common/assets/color_add/
     - lib/tools/symbol_tables/_common/assets/color_code/
     - lib/tools/symbol_tables/_common/assets/color_honey/
@@ -166,6 +177,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/egyptian_numerals/
     - lib/tools/symbol_tables/_common/assets/elia/
     - lib/tools/symbol_tables/_common/assets/enochian/
+    - lib/tools/symbol_tables/_common/assets/eternity_code/
     - lib/tools/symbol_tables/_common/assets/eurythmy/
     - lib/tools/symbol_tables/_common/assets/face_it/
     - lib/tools/symbol_tables/_common/assets/fakoo/
@@ -182,6 +194,9 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/four_triangles/
     - lib/tools/symbol_tables/_common/assets/freemason/
     - lib/tools/symbol_tables/_common/assets/freemason_v2/
+    - lib/tools/symbol_tables/_common/assets/futhark_elder/
+    - lib/tools/symbol_tables/_common/assets/futhark_younger/
+    - lib/tools/symbol_tables/_common/assets/futhorc/
     - lib/tools/symbol_tables/_common/assets/futurama/
     - lib/tools/symbol_tables/_common/assets/futurama_2/
     - lib/tools/symbol_tables/_common/assets/gallifreyan/
@@ -220,6 +235,11 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/intergalactic/
     - lib/tools/symbol_tables/_common/assets/interlac/
     - lib/tools/symbol_tables/_common/assets/iokharic/
+    - lib/tools/symbol_tables/_common/assets/iso7010_firesafety/
+    - lib/tools/symbol_tables/_common/assets/iso7010_mandatory/
+    - lib/tools/symbol_tables/_common/assets/iso7010_prohibition/
+    - lib/tools/symbol_tables/_common/assets/iso7010_safecondition/
+    - lib/tools/symbol_tables/_common/assets/iso7010_warning/
     - lib/tools/symbol_tables/_common/assets/ita1_1926/
     - lib/tools/symbol_tables/_common/assets/ita1_1929/
     - lib/tools/symbol_tables/_common/assets/ita2_1929/
@@ -234,10 +254,12 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/klingon_klinzhai/
     - lib/tools/symbol_tables/_common/assets/krempel/
     - lib/tools/symbol_tables/_common/assets/krypton/
+    - lib/tools/symbol_tables/_common/assets/kurrent/
     - lib/tools/symbol_tables/_common/assets/la_buse/
     - lib/tools/symbol_tables/_common/assets/linear_b/
     - lib/tools/symbol_tables/_common/assets/lorm/
     - lib/tools/symbol_tables/_common/assets/magicode/
+    - lib/tools/symbol_tables/_common/assets/malachim/
     - lib/tools/symbol_tables/_common/assets/mandalorian/
     - lib/tools/symbol_tables/_common/assets/marain/
     - lib/tools/symbol_tables/_common/assets/marain_v2/
@@ -247,12 +269,18 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/maya_calendar_longcount/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_codices/
     - lib/tools/symbol_tables/_common/assets/maya_calendar_tzolkin_inscripts/
+    - lib/tools/symbol_tables/_common/assets/maya_numbers_glyphs/
     - lib/tools/symbol_tables/_common/assets/maya_numerals/
     - lib/tools/symbol_tables/_common/assets/maze/
+    - lib/tools/symbol_tables/_common/assets/medieval_runes/
     - lib/tools/symbol_tables/_common/assets/minimoys/
     - lib/tools/symbol_tables/_common/assets/moon/
     - lib/tools/symbol_tables/_common/assets/moon_phases/
     - lib/tools/symbol_tables/_common/assets/morse/
+    - lib/tools/symbol_tables/_common/assets/morse_gerke/
+    - lib/tools/symbol_tables/_common/assets/morse_1838_patent/
+    - lib/tools/symbol_tables/_common/assets/morse_1844_vail/
+    - lib/tools/symbol_tables/_common/assets/morse_steinheil/
     - lib/tools/symbol_tables/_common/assets/murray/
     - lib/tools/symbol_tables/_common/assets/murray_v2_fischer_corrected/
     - lib/tools/symbol_tables/_common/assets/murray_v3_navy_1796/
@@ -306,7 +334,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/rm4scc/
     - lib/tools/symbol_tables/_common/assets/robots/
     - lib/tools/symbol_tables/_common/assets/romulan/
-    - lib/tools/symbol_tables/_common/assets/runes/
     - lib/tools/symbol_tables/_common/assets/sanluca/
     - lib/tools/symbol_tables/_common/assets/sarati/
     - lib/tools/symbol_tables/_common/assets/semaphore/
@@ -333,6 +360,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/telegraph_pasley/
     - lib/tools/symbol_tables/_common/assets/telegraph_popham/
     - lib/tools/symbol_tables/_common/assets/telegraph_prussia/
+    - lib/tools/symbol_tables/_common/assets/telegraph_schmidt/
     - lib/tools/symbol_tables/_common/assets/templers/
     - lib/tools/symbol_tables/_common/assets/tenctonese_cursive/
     - lib/tools/symbol_tables/_common/assets/tenctonese_printed/
@@ -381,6 +409,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/zodiac_z408/
 
 flutter_icons:
-  image_path: "assets/logo/circle_border_1024_gold.png"
+  image_path: "assets/logo/circle_border_nightly.png"
   android: true
   ios: true

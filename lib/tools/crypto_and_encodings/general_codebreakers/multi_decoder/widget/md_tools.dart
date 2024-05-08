@@ -55,7 +55,7 @@ final _initialOptions = <String, Map<String, Object>>{
   MDT_INTERNALNAMES_CCITT1: {MDT_CCITT1_OPTION_MODE: MDT_CCITT1_OPTION_MODE_BINARY},
   MDT_INTERNALNAMES_CCITT2: {MDT_CCITT2_OPTION_MODE: MDT_CCITT2_OPTION_MODE_BINARY},
   MDT_INTERNALNAMES_COORDINATEFORMATS: {
-    MDT_COORDINATEFORMATS_OPTION_FORMAT: coordinateFormatMetadataByKey(CoordinateFormatKey.UTM).persistenceKey
+    MDT_COORDINATEFORMATS_OPTION_FORMAT: coordinateFormatDefinitionByKey(CoordinateFormatKey.UTM).persistenceKey
   },
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK: {MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE: scrabbleID_EN},
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE: {
@@ -304,67 +304,62 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.UTM).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.UTM).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.MGRS).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.MGRS).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.XYZ).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.XYZ).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.MAIDENHEAD).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.MAIDENHEAD).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.NATURAL_AREA_CODE).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.NATURAL_AREA_CODE).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.GEOHASH).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.GEOHEX).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.GEOHEX).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.GEO3X3).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.GEO3X3).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.MAKANEY).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.MAKANEY).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.OPEN_LOCATION_CODE).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.OPEN_LOCATION_CODE).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.QUADTREE).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.QUADTREE).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.REVERSE_WIG_WALDMEISTER).persistenceKey)
-        ]),
-    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
-        options: [
-          MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
-              coordinateFormatMetadataByKey(CoordinateFormatKey.REVERSE_WIG_DAY1976).persistenceKey)
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.REVERSE_WIG_DAY1976).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),

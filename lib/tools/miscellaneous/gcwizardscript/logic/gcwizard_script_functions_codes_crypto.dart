@@ -37,12 +37,12 @@ String _abaddon(Object text, Object mode) {
   return output;
 }
 
-String _atbash(Object text) {
-  if (_isNotAString(text)) {
+String _atbash(Object text, Object mode) {
+  if (_isNotAString(text) || _isNotANumber(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
-  return atbash(text as String);
+  return atbash(text as String, historicHebrew: (mode as int) == 0);
 }
 
 String _avemaria(Object text, Object mode) {
@@ -62,19 +62,35 @@ String _avemaria(Object text, Object mode) {
   return output;
 }
 
-String _morse(Object text, Object mode) {
-  if (_isNotAString(text) || _isNotAInt(mode)) {
+String _morse(Object text, Object mode, Object code) {
+  if (_isNotAString(text) || _isNotAInt(mode) || _isNotAInt(code)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
+
+  final Map<int, MorseType> CODETABLE = {
+    0: MorseType.MORSE_ITU,
+    10: MorseType.MORSE1838,
+    11: MorseType.MORSE1844,
+    2: MorseType.GERKE,
+    3: MorseType.STEINHEIL,
+  };
+
   String output = '';
+
+  if (CODETABLE[code as int] == null) {
+    return '';
+  }
+
   switch (mode) {
     case _DECODE:
-      output = decodeMorse(text as String);
+      output = decodeMorse(text as String, type: CODETABLE[code]!);
       break;
     case _ENCODE:
-      output = encodeMorse(text as String);
+      output = encodeMorse(text as String, type: CODETABLE[code]!);
       break;
+    default:
+      return '';
   }
   return output;
 }
