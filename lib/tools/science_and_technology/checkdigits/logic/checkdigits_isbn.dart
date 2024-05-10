@@ -58,19 +58,13 @@ String _calculateISBNCheckDigit(String number) {
     int sum = 0;
     for (int i = 1; i < 10; i++) {
       sum = sum + i * int.parse(number[i]);
-      sum = sum % 11;
-      if (sum == 10) {
-        return 'X';
-      } else {
-        return sum.toString();
-      }
     }
-    if (sum >= 100) {
-      sum = sum % 100;
+    sum = sum % 11;
+    if (sum == 10) {
+      return 'X';
+    } else {
+      return sum.toString();
     }
-    sum = sum % 10;
-    sum = 10 - sum;
-    return sum.toString();
   } else {
     if (int.tryParse(number) == null) {
       return '';
