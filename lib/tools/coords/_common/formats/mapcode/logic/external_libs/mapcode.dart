@@ -2206,5 +2206,5 @@ class McInfo {
   String fullmapcode = '';
   int territoryNumber = 0;
 
-  McInfo({required this.mapcode, required this.territoryAlphaCode, required this.fullmapcode, required this.territoryNumber});
+  McInfo();
 }

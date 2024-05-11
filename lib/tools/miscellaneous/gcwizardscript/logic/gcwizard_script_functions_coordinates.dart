@@ -712,13 +712,12 @@ void _convertFrom(Object source, _GCWList parameter) {
       if (_isAString(parameter_2)) _handleError(_INVALIDTYPECAST);
       if (_isAString(parameter_3)) _handleError(_INVALIDTYPECAST);
       if (_isNotAInt(parameter_4)) _handleError(_INVALIDTYPECAST);
-      MapCode result = MapCode([
-        McInfo(
-            mapcode: parameter_1 as String,
-            territoryAlphaCode: parameter_2 as String,
-            fullmapcode: parameter_3 as String,
-            territoryNumber: parameter_4 as int)
-      ], _GCW_SCRIPT_COORD_CONVERTER[source]!);
+      McInfo mcInfo = McInfo();
+      mcInfo.mapcode = parameter_1 as String;
+      mcInfo.territoryAlphaCode = parameter_2 as String;
+      mcInfo.fullmapcode = parameter_3 as String;
+      mcInfo.territoryNumber = parameter_4 as int;
+      MapCode result = MapCode([mcInfo], _GCW_SCRIPT_COORD_CONVERTER[source]!);
       coord = result.toLatLng();
       break;
 
