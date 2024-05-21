@@ -713,12 +713,14 @@ class _GCWizardSCriptInterpreter {
     //if (!state.continueLoop) {
     do {
       getToken();
+      print(state.keywordToken.toString()+' '+state.token.toString());
       if (state.keywordToken == EOL || state.token == EOP) break;
 
       if (state.tokenType == QUOTEDSTR) {
         state.STDOUT += state.token;
         len += state.token.length;
         getToken();
+        print(state.keywordToken.toString()+' '+state.token.toString());
       } else {
         putBack();
         result = evaluateExpression();
@@ -740,10 +742,12 @@ class _GCWizardSCriptInterpreter {
       } else if (state.token == ";") {
         state.STDOUT += " ";
         len++;
+      } else if (state.token == "+") {
+        executeCommandPRINT();
       } else if (state.keywordToken != EOL && state.token != EOP) {
         _handleError(_SYNTAXERROR);
       }
-    } while (lastDelimiter == ";" || lastDelimiter == ",");
+    } while (lastDelimiter == ";" || lastDelimiter == "," || lastDelimiter == "+");
 
     //state.continueLoop = true;
     //}
