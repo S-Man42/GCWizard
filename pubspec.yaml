@@ -56,7 +56,9 @@ dependencies:
   touchable: ^1.0.2
   tuple: ^2.0.1
   universal_html: ^2.2.4
-  unrar_file: ^1.1.0
+  unrar_file:
+    git:
+      url: https://github.com/fyxtc/unrar_file
   uuid: ^4.4.0
   url_launcher: ^6.1.14
   utility: ^1.0.3
