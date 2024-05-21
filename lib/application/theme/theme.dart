@@ -104,7 +104,7 @@ ThemeData buildTheme() {
       colorScheme: ColorScheme.fromSwatch(primarySwatch: _generateMaterialColor(colors.primaryBackground())).copyWith(
           secondary: colors.secondary(),
           brightness: base.brightness,
-          surfaceVariant: colors.gridBackground(),
+          surfaceContainerHighest: colors.gridBackground(),
           onSurface: colors.mainFont()),
       dividerTheme: const DividerThemeData().copyWith(thickness: 0, color: colors.gridBackground()),
       drawerTheme: const DrawerThemeData().copyWith(backgroundColor: base.scaffoldBackgroundColor));
