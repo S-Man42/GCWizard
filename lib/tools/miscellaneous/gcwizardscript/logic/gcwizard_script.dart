@@ -704,6 +704,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandPRINT() {
+    print('executeCommandPRINT()');
     Object? result;
     int len = 0;
     int spaces = 0;
@@ -713,18 +714,21 @@ class _GCWizardSCriptInterpreter {
     //if (!state.continueLoop) {
     do {
       getToken();
-      print(state.keywordToken.toString()+' '+state.token.toString());
+      print('found <'+state.keywordToken.toString()+'> <'+state.token.toString()+'>');
       if (state.keywordToken == EOL || state.token == EOP) break;
 
       if (state.tokenType == QUOTEDSTR) {
+        print('      quoted string');
         state.STDOUT += state.token;
         len += state.token.length;
         getToken();
-        print(state.keywordToken.toString()+' '+state.token.toString());
+        print('     <'+state.keywordToken.toString()+'> <'+state.token.toString()+'>');
       } else {
+        print('      putback, evaluate expression');
         putBack();
         result = evaluateExpression();
         getToken();
+        print('      <'+state.keywordToken.toString()+'> <'+state.token.toString()+'>');
         state.STDOUT += result.toString();
 
         var t = result;
@@ -743,17 +747,18 @@ class _GCWizardSCriptInterpreter {
         state.STDOUT += " ";
         len++;
       } else if (state.token == "+") {
+        print('      executeCommandPRINT');
         executeCommandPRINT();
       } else if (state.keywordToken != EOL && state.token != EOP) {
         _handleError(_SYNTAXERROR);
       }
-    } while (lastDelimiter == ";" || lastDelimiter == "," || lastDelimiter == "+");
+    } while (lastDelimiter == ";" || lastDelimiter == "," );
 
     //state.continueLoop = true;
     //}
 
     if (state.keywordToken == EOL || state.token == EOP) {
-      if (lastDelimiter != ";" && lastDelimiter != ",") state.STDOUT += LF;
+      if (lastDelimiter != ";" && lastDelimiter != "," && lastDelimiter != "+") state.STDOUT += LF;
     } else {
       _handleError(_SYNTAXERROR);
     }
