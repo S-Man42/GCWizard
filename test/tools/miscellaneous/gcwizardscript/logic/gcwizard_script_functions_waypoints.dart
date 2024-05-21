@@ -1,5 +1,6 @@
 part of 'gcwizard_scipt_test.dart';
 
+// ignore: unused_element
 List<Map<String, Object?>> _inputsWaypoinsToExpected = [
   {'code' : 'WPTSCLEAR()', 'expectedOutput' : ''},
   {'code' : 'WPTSCLEAR(10)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error_invalid_number_of_parameters'},
