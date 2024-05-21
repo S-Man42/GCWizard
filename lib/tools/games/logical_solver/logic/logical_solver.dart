@@ -42,13 +42,23 @@ class _LogicalBlock {
 
 	_setValueResult setValue(int x, int y, int? value, LogicPuzzleFillType type) {
 		var orgValue = getValue(x, y);
+		var orgType = getFillType(x, y);
 		var result = _setValueResult(valueChanged: orgValue != value);
 		if (value == null || orgValue == null) {
 			block[y][x] = value == null ? null : LogicalValue(value, type);
 			return result;
 		} else if (!result.valueChanged) {
-			if (getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
+			if (orgType == LogicPuzzleFillType.CALCULATED) {
 				block[y][x] = LogicalValue(value, type);
+			}
+			return result;
+		} else if (orgType == LogicPuzzleFillType.USER_FILLED && type == LogicPuzzleFillType.USER_FILLED) {
+			if (value == Logical.plusValue ) {
+				if (_checkPlusPossibleRow(x) && _checkPlusPossibleColumn(y) ) {
+					block[y][x] = LogicalValue(value, type);
+				} else {
+					return _setValueResult(validChange: false);
+				}
 			}
 			return result;
 		} else {
@@ -86,8 +96,38 @@ class _LogicalBlock {
 		}
 	}
 
+	bool _checkPlusPossibleRow(int x) {
+		var count = 0;
+		int? value;
+
+		for (var _y = 0; _y < itemsCount; _y++) {
+			value = getValue(x, _y);
+			if (value == Logical.plusValue) {
+				return false;
+			} else {
+				count += (value == Logical.minusValue) ? 1 : 0;
+			}
+		}
+		return (count <= itemsCount - 1);
+	}
+
+	bool _checkPlusPossibleColumn(int y) {
+		var count = 0;
+		int? value;
+
+		for (var _x = 0; _x < itemsCount; _x++) {
+			value = getValue(_x, y);
+			if (value == Logical.plusValue) {
+				return false;
+			} else {
+				count += (value == Logical.minusValue) ? 1 : 0;
+			}
+		}
+		return (count <= itemsCount - 1);
+	}
+
+
 	_setValueResult _checkAndSetCalculatedFullRow(int x) {
-		var result = _setValueResult();
 		var count = 0;
 		var emptyIndex = -1;
 		int? value;
@@ -100,16 +140,17 @@ class _LogicalBlock {
 				count += (value == Logical.minusValue) ? 1 : 0;
 			}
 		}
+
 		if (count == itemsCount - 1 && emptyIndex >= 0) {
-			result &= setValueAndCalculated(x, emptyIndex, Logical.plusValue);
+			return setValueAndCalculated(x, emptyIndex, Logical.plusValue);
 		} else if (count == itemsCount) {
-			result.validChange = false;
+			return _setValueResult(validChange: false);
+		} else {
+			return _setValueResult();
 		}
-		return result;
 	}
 
 	_setValueResult _checkAndSetCalculatedFullColumn(int y) {
-		var result = _setValueResult();
 		var count = 0;
 		var emptyIndex = -1;
 		int? value;
@@ -122,12 +163,14 @@ class _LogicalBlock {
 				count += (value == Logical.minusValue) ? 1 : 0;
 			}
 		}
+
 		if (count == itemsCount - 1 && emptyIndex >= 0) {
-			result &= setValueAndCalculated(emptyIndex, y, Logical.plusValue);
+			return setValueAndCalculated(emptyIndex, y, Logical.plusValue);
 		} else if (count == itemsCount) {
-			result.validChange = false;
+			return _setValueResult(validChange: false);
+		} else {
+			return _setValueResult();
 		}
-		return result;
 	}
 
 	void removeCalculatedValues() {

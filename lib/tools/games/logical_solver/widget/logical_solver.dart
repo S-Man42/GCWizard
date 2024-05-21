@@ -194,26 +194,49 @@ class LogicalSolverState extends State<LogicalSolver> {
 
   void _onTapped(int x, int y) {
     var validChange = false;
-    if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-      validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
-    } else {
-      validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
+    var value = _currentBoard.getValue(x, y);
+    switch (value) {
+      case null:
+        validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
+        break;
+      case Logical.minusValue:
+        if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
+          validChange = _currentBoard.setValue(x, y, value, LogicPuzzleFillType.USER_FILLED);
+        } else {
+          validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
+        }
+        break;
+      case Logical.plusValue:
+        if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
+          validChange = _currentBoard.setValue(x, y, value, LogicPuzzleFillType.USER_FILLED);
+        } else {
+          validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
+        }
     }
     if (!validChange) {
       showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
     }
+
+    // if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
+    //   validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
+    // } else {
+    //   validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
+    // }
+    // if (!validChange) {
+    //   showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
+    // }
   }
 
   void _onLongTapped(int x, int y) {
-    var validChange = false;
-    if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-      validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
-    } else {
-      validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
-    }
-    if (!validChange) {
-      showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
-    }
+    // var validChange = false;
+    // if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
+    //   validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
+    // } else {
+    //   validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
+    // }
+    // if (!validChange) {
+    //   showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
+    // }
   }
 
   Logical _importJsonFile(Uint8List bytes) {
