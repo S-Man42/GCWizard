@@ -1,5 +1,6 @@
 part of 'gcwizard_scipt_test.dart';
 
+// ignore: unused_element
 List<Map<String, Object?>> _inputsCryptoToExpected = [
   {'code' : 'a="HALLO"\nprint ABADDON(a, 1)', 'expectedOutput' : 'þµ¥¥¥µµ¥¥µ¥¥þþþ'},
   {'code' : 'a="þµ¥¥¥µµ¥¥µ¥¥þþþ"\nprint ABADDON(a, 0)', 'expectedOutput' : 'HALLO'},
