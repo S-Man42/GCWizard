@@ -844,7 +844,7 @@
   "chef_hint_recipe_methods_de": "Did you specify 'Zubereitung:' above the methods?",
   "chef_hint_recipe_oven_temperature": "Did you have the correct oven temperature?",
   "chef_hint_no_hint_available": "No hint available",
-  "chef_warning_liquefy_missing_title": "WARNING: Output could be strange - LIQEFY is missing",
+  "chef_warning_liquefy_missing_title": "WARNING: Output could be strange - LIQUEFY is missing",
   "chef_warning_liquefy_missing_hint": "is necessary to get text displayed when ",
   "chickenlanguage_title": "Chicken Language",
   "chickenlanguage_description": "Game Language, Secret Language",
