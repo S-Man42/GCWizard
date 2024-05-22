@@ -19,6 +19,7 @@ part 'gcwizard_script_functions_waypoints.dart';
 part 'gcwizard_script_functions_files.dart';
 part 'gcwizard_script_loops.dart';
 part 'gcwizard_script_nested_loops.dart';
+part 'gcwizard_script_commands.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {
@@ -37,11 +38,12 @@ void main() {
     _inputsToExpected.addAll(_inputsGraphicToExpected);
 */
    // _inputsToExpected.addAll(_inputsWaypoinsToExpected); // passed 05.05.2024
-    _inputsToExpected.addAll(_inputsFilesToExpected);
+   // _inputsToExpected.addAll(_inputsFilesToExpected);
    // _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsNestedLoopsToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsConstToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsCoordinatesToExpected); // passed 05.05.2024
+    _inputsToExpected.addAll(_inputsCommandsToExpected); // passed 22.05.2024
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {
