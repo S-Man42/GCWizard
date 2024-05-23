@@ -274,7 +274,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var value = board.getValue(x, y);
         if (value != null) {
           _paintText(canvas, rect, value == Logical.plusValue ? '+' : '-',
-              fontSize * 2, board.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED ? line_color : item_line_color);
+              fontSize * 2, board.getFillType(x, y) == LogicalFillType.USER_FILLED ? line_color : item_line_color);
         }
       }
     }

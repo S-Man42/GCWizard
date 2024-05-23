@@ -8,7 +8,7 @@ import 'package:gc_wizard/utils/json_utils.dart';
 const int maxCategoriesCount = 26;
 const int minItemCount = 2;
 
-enum LogicPuzzleFillType { USER_FILLED, CALCULATED }
+enum LogicalFillType { USER_FILLED, CALCULATED }
 
 enum LogicalState {
 	Ok, // no data errors
@@ -17,7 +17,7 @@ enum LogicalState {
 }
 
 class LogicalValue {
-	LogicPuzzleFillType type;
+	LogicalFillType type;
 	int? value;
 
 	LogicalValue(this.value, this.type);
@@ -36,11 +36,11 @@ class _LogicalBlock {
 		return block[y][x]?.value;
 	}
 
-	LogicPuzzleFillType? getFillType(int x, int y) {
+	LogicalFillType? getFillType(int x, int y) {
 		return block[y][x]?.type;
 	}
 
-	_setValueResult setValue(int x, int y, int? value, LogicPuzzleFillType type) {
+	_setValueResult setValue(int x, int y, int? value, LogicalFillType type) {
 		var orgValue = getValue(x, y);
 		var orgType = getFillType(x, y);
 		var result = _setValueResult(valueChanged: orgValue != value);
@@ -48,11 +48,11 @@ class _LogicalBlock {
 			block[y][x] = value == null ? null : LogicalValue(value, type);
 			return result;
 		} else if (!result.valueChanged) {
-			if (orgType == LogicPuzzleFillType.CALCULATED) {
+			if (orgType == LogicalFillType.CALCULATED) {
 				block[y][x] = LogicalValue(value, type);
 			}
 			return result;
-		} else if (orgType == LogicPuzzleFillType.USER_FILLED && type == LogicPuzzleFillType.USER_FILLED) {
+		} else if (orgType == LogicalFillType.USER_FILLED && type == LogicalFillType.USER_FILLED) {
 			if (value == Logical.plusValue ) {
 				if (_checkPlusPossibleRow(x) && _checkPlusPossibleColumn(y) ) {
 					block[y][x] = LogicalValue(value, type);
@@ -66,14 +66,14 @@ class _LogicalBlock {
 		}
 	}
 
-	_setValueResult setPlusValue(int xPlus, int yPlus, LogicPuzzleFillType type) {
+	_setValueResult setPlusValue(int xPlus, int yPlus, LogicalFillType type) {
 		var result = _setValueResult();
 		// row
 		for (var i = 0; i < itemsCount; i++) {
 			if (i == xPlus) {
 				result &= setValue(i, yPlus, Logical.plusValue, type);
 			} else {
-				result &= setValue(i, yPlus, Logical.minusValue, LogicPuzzleFillType.CALCULATED);
+				result &= setValue(i, yPlus, Logical.minusValue, LogicalFillType.CALCULATED);
 			}
 		}
 		// column
@@ -81,14 +81,14 @@ class _LogicalBlock {
 			if (i == yPlus) {
 				result &= setValue(xPlus, i, Logical.plusValue, type);
 			} else {
-				result &= setValue(xPlus, i, Logical.minusValue, LogicPuzzleFillType.CALCULATED);
+				result &= setValue(xPlus, i, Logical.minusValue, LogicalFillType.CALCULATED);
 			}
 		}
 		return result;
 	}
 
 	_setValueResult setValueAndCalculated(int x, int y, int? value,
-			{LogicPuzzleFillType type = LogicPuzzleFillType.CALCULATED}) {
+			{LogicalFillType type = LogicalFillType.CALCULATED}) {
 		if (value == Logical.plusValue) {
 			return setPlusValue(x, y, type);
 		} else {
@@ -176,8 +176,8 @@ class _LogicalBlock {
 	void removeCalculatedValues() {
 		for (var x = 0; x < itemsCount; x++) {
 			for (var y = 0; y < itemsCount; y++) {
-				if (getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
-					setValue(x, y, null, LogicPuzzleFillType.CALCULATED);
+				if (getFillType(x, y) == LogicalFillType.CALCULATED) {
+					setValue(x, y, null, LogicalFillType.CALCULATED);
 				}
 			}
 		}
@@ -211,7 +211,7 @@ class Logical {
 							var value = logical.blocks[yBlock][xBlock].getValue(x, y);
 							if (value != null) {
 								blocks[yBlock][xBlock].setValueAndCalculated(x, y, value,
-										type: logical.blocks[yBlock][xBlock].getFillType(x, y) ?? LogicPuzzleFillType.CALCULATED);
+										type: logical.blocks[yBlock][xBlock].getFillType(x, y) ?? LogicalFillType.CALCULATED);
 							}
 						}
 					}
@@ -297,7 +297,7 @@ class Logical {
 	}
 
 	/// return valid change
-	bool setValue(int x, int y, int? value, LogicPuzzleFillType type) {
+	bool setValue(int x, int y, int? value, LogicalFillType type) {
 		if (!_validPosition(x, y)) return false;
 		var block = blocks[blockIndex(y)][blockIndex(x)];
 		var xL = blockLine(x);
@@ -323,12 +323,12 @@ print(loopCounter);
 
 		if (!result.validChange) {
 			// reset changes
-			setValue(x, y, valueTmp, typeTmp ?? LogicPuzzleFillType.CALCULATED);
+			setValue(x, y, valueTmp, typeTmp ?? LogicalFillType.CALCULATED);
 		}
 		return result.validChange;
 	}
 
-	LogicPuzzleFillType? getFillType(int x, int y) {
+	LogicalFillType? getFillType(int x, int y) {
 		if (!_validPosition(x, y)) return null;
 
 		return blocks[blockIndex(y)][blockIndex(x)].getFillType(blockLine(x), blockLine(y));
@@ -393,7 +393,7 @@ print(loopCounter);
 
 	_setValueResult _setBlockPlusValue(int xPlus, int yPlus) {
 		return blocks[blockIndex(yPlus)][blockIndex(xPlus)].setPlusValue(blockLine(xPlus), blockLine(yPlus),
-				LogicPuzzleFillType.CALCULATED);
+				LogicalFillType.CALCULATED);
 	}
 
 	void _removeCalculatedValues() {
@@ -582,9 +582,9 @@ print(loopCounter);
 				if (element is String) {
 					var entry = _jsonValueFromString(element, logical);
 					if (entry != null) {
-						if (!logical.setValue(entry.x, entry.y, value, LogicPuzzleFillType.USER_FILLED)) {
+						if (!logical.setValue(entry.x, entry.y, value, LogicalFillType.USER_FILLED)) {
 							logical.state = LogicalState.InvalidData;
-							logical.setValue(entry.x, entry.y, null, LogicPuzzleFillType.CALCULATED);
+							logical.setValue(entry.x, entry.y, null, LogicalFillType.CALCULATED);
 						}
 					} else {
 						logical.state = LogicalState.InvalidData;
@@ -620,7 +620,7 @@ print(loopCounter);
 		var jsonDataPlus = <String>[];
 		for (var y = 0; y < getMaxLineLength(); y++) {
 			for (var x = 0; x < getLineLength(y); x++) {
-				if (getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
+				if (getFillType(x, y) == LogicalFillType.USER_FILLED) {
 					if (getValue(x, y) == minusValue) {
 						jsonDataMinus.add(_jsonValueToString(x, y, this));
 					} else {

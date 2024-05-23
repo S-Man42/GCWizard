@@ -197,20 +197,20 @@ class LogicalSolverState extends State<LogicalSolver> {
     var value = _currentBoard.getValue(x, y);
     switch (value) {
       case null:
-        validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
+        validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicalFillType.USER_FILLED);
         break;
       case Logical.minusValue:
-        if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
-          validChange = _currentBoard.setValue(x, y, value, LogicPuzzleFillType.USER_FILLED);
+        if (_currentBoard.getFillType(x, y) == LogicalFillType.CALCULATED) {
+          validChange = _currentBoard.setValue(x, y, value, LogicalFillType.USER_FILLED);
         } else {
-          validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
+          validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicalFillType.USER_FILLED);
         }
         break;
       case Logical.plusValue:
-        if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.CALCULATED) {
-          validChange = _currentBoard.setValue(x, y, value, LogicPuzzleFillType.USER_FILLED);
+        if (_currentBoard.getFillType(x, y) == LogicalFillType.CALCULATED) {
+          validChange = _currentBoard.setValue(x, y, value, LogicalFillType.USER_FILLED);
         } else {
-          validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
+          validChange = _currentBoard.setValue(x, y, null, LogicalFillType.USER_FILLED);
         }
     }
     if (!validChange) {
