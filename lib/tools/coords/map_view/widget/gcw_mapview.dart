@@ -198,10 +198,12 @@ class _GCWMapViewState extends State<GCWMapView> {
         ? TileLayer(
             urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
             additionalOptions: {'accessToken': _mapBoxToken!},
-    )
+            //tileProvider: CachedNetworkTileProvider()
+          )
         : TileLayer(
             urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-     );
+            //tileProvider: CachedNetworkTileProvider()
+          );
 
     var layers = <Widget>[tileLayer];
     layers.addAll(_buildLinesAndMarkersLayers());
@@ -536,24 +538,74 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   Widget _createDragableIcon(GCWMapPoint point, Widget icon) {
     return GestureDetector(
-      onPanUpdate: (details) {
-        _popupLayerController.hidePopup();
-
-        CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
-        Offset delta = details.delta;
-        LatLng pointToLatLng =
-            const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
-
-        point.point = pointToLatLng;
-
-        setState(() {
-          if (_persistanceAdapter != null) {
-            _persistanceAdapter!.updateMapPoint(point);
-          }
-        });
-      },
+      //onPanUpdate: (details) => _onPanUpdate(details, point),
+      // onVerticalDragStart: _onPanStart,
+      onVerticalDragUpdate: (details) => _onPanUpdate(details, point),
+      // onVerticalDragEnd: _onPanEnd,
+      // onHorizontalDragStart: _onPanStart,
+      onHorizontalDragUpdate: (details) => _onPanUpdate(details, point),
+      // onHorizontalDragEnd: _onPanEnd,
+      // onVerticalDragStart: _onPanStart,
+      // onVerticalDragUpdate: _onPanUpdate,
+      // onVerticalDragEnd: _onPanEnd,
+      // onHorizontalDragStart: _onPanStart,
+      // onHorizontalDragUpdate: _onPanUpdate,
+      // onHorizontalDragEnd: _onPanEnd,
       child: icon,
     );
+  }
+
+  // late LatLng _dragPosStart;
+  // late LatLng _markerPointStart;
+  // bool _isDragging = false;
+  //
+  // void _start(Offset localPosition) {
+  //   _isDragging = true;
+  //   _dragPosStart = _offsetToCrs(localPosition);
+  //   _markerPointStart = LatLng(markerPoint.latitude, markerPoint.longitude);
+  // }
+  //
+  // void _onPanStart(DragStartDetails details) {
+  //   _start(details.localPosition);
+  //   widget.marker.onDragStart?.call(details, markerPoint);
+  // }
+  //
+  // void _onPanUpdate(DragUpdateDetails details) {
+  //   _pan(details.localPosition);
+  //   widget.marker.onDragUpdate?.call(details, markerPoint);
+  // }
+  //
+  // void _onPanEnd(details) {
+  //   _end();
+  //   widget.marker.onDragEnd?.call(details, markerPoint);
+  // }
+  //
+  // void _end() {
+  //   // setState is needed if using a different widget while dragging
+  //   setState(() {
+  //     _isDragging = false;
+  //   });
+  // }
+
+  // LatLng _offsetToCrs(Offset offset) {
+  //   return const Epsg3857().latLngToPoint(offset, _mapController.zoom);
+  // }
+
+  void _onPanUpdate(DragUpdateDetails details, GCWMapPoint point) {
+    _popupLayerController.hidePopup();
+
+    CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
+    Offset delta = details.delta;
+    LatLng pointToLatLng =
+    const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
+
+    point.point = pointToLatLng;
+
+    setState(() {
+      if (_persistanceAdapter != null) {
+        _persistanceAdapter!.updateMapPoint(point);
+      }
+    });
   }
 
   Widget _createIconButtonIcons(IconData iconData, {IconData? stacked, Color? color}) {
