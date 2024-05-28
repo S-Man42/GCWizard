@@ -198,13 +198,10 @@ class _GCWMapViewState extends State<GCWMapView> {
         ? TileLayer(
             urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
             additionalOptions: {'accessToken': _mapBoxToken!},
-            //tileProvider: CachedNetworkTileProvider()
     )
         : TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: const ['a', 'b', 'c'],
-            //tileProvider: CachedNetworkTileProvider()
-    );
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+     );
 
     var layers = <Widget>[tileLayer];
     layers.addAll(_buildLinesAndMarkersLayers());
