@@ -52,7 +52,7 @@ const _OSM_URL = 'coords_mapview_osm_url';
 const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
-final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
+final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
 const _BUTTONGROUP_MARGIN = 30.0;
 
@@ -146,7 +146,7 @@ class _GCWMapViewState extends State<GCWMapView> {
           }
 
           if (_currentPosition == null && (_manuallyToggledPosition || widget.points.isEmpty)) {
-            _mapController.move(newPosition!, _mapController.zoom);
+            _mapController.move(newPosition!, _mapController.camera.zoom);
           }
           _manuallyToggledPosition = false;
 
@@ -420,7 +420,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     if (_persistanceAdapter != null) {
                       _persistanceAdapter!.updateMapPoint(mapPoint);
                     }
-                    _mapController.move(mapPoint.point, _mapController.zoom);
+                    _mapController.move(mapPoint.point, _mapController.camera.zoom);
                   });
                 });
               }
@@ -588,16 +588,16 @@ class _GCWMapViewState extends State<GCWMapView> {
   // }
 
   // LatLng _offsetToCrs(Offset offset) {
-  //   return const Epsg3857().latLngToPoint(offset, _mapController.zoom);
+  //   return const Epsg3857().latLngToPoint(offset, _mapController.camera.zoom);
   // }
 
   void _onPanUpdate(DragUpdateDetails details, GCWMapPoint point) {
     _popupLayerController.hidePopup();
 
-    CustomPoint position = const Epsg3857().latLngToPoint(point.point, _mapController.zoom);
+    var position = const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
     Offset delta = details.delta;
     LatLng pointToLatLng =
-    const Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
+        const Epsg3857().pointToLatLng(position + delta.toPoint(), _mapController.camera.zoom);
 
     point.point = pointToLatLng;
 
@@ -662,7 +662,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
           setState(() {
             if (_persistanceAdapter != null) {
-              _persistanceAdapter!.addMapPoint(_mapController.center);
+              _persistanceAdapter!.addMapPoint(_mapController.camera.center);
             }
           });
         },
@@ -734,7 +734,7 @@ class _GCWMapViewState extends State<GCWMapView> {
               if (_importGpxKml(text) ||
                   (_persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(text))) {
                 setState(() {
-                  _mapController.fitBounds(_getBounds());
+                  _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
                 });
               } else {
                 var pastedCoordinate = _parseCoords(text);
@@ -746,7 +746,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     _persistanceAdapter!.addMapPoint(pastedCoordinate.first.toLatLng()!,
                         coordinateFormat: pastedCoordinate.first.format);
                   }
-                  _mapController.move(pastedCoordinate.first.toLatLng()!, _mapController.zoom);
+                  _mapController.move(pastedCoordinate.first.toLatLng()!, _mapController.camera.zoom);
                 });
               }
             },
@@ -817,7 +817,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   void handleSignal(PointerSignalEvent e) {
     if (e is PointerScrollEvent) {
       var delta = e.scrollDelta.direction;
-      _mapController.move(_mapController.center, _mapController.zoom + (delta > 0 ? -0.2 : 0.2));
+      _mapController.move(_mapController.camera.center, _mapController.camera.zoom + (delta > 0 ? -0.2 : 0.2));
     }
   }
 
@@ -991,7 +991,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     if (_persistanceAdapter != null) {
       _persistanceAdapter!.updateMapPoint(gcwMarker.mapPoint);
     }
-    _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
+    _mapController.move(gcwMarker.mapPoint.point, _mapController.camera.zoom);
   }
 
   List<Polyline> _addPolylines() {
@@ -1056,7 +1056,7 @@ class _GCWMapViewState extends State<GCWMapView> {
           if (_persistanceAdapter != null) {
             _persistanceAdapter!.addViewData(viewData);
           }
-          _mapController.fitBounds(_getBounds());
+          _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
         });
       });
     } catch (exception) {}
