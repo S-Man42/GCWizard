@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 //import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
@@ -538,66 +539,25 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   Widget _createDragableIcon(GCWMapPoint point, Widget icon) {
     return GestureDetector(
-      //onPanUpdate: (details) => _onPanUpdate(details, point),
-      // onVerticalDragStart: _onPanStart,
+      onVerticalDragStart: (details) => _onPanStart(details, point),
       onVerticalDragUpdate: (details) => _onPanUpdate(details, point),
-      // onVerticalDragEnd: _onPanEnd,
-      // onHorizontalDragStart: _onPanStart,
+      onHorizontalDragStart: (details) => _onPanStart(details, point),
       onHorizontalDragUpdate: (details) => _onPanUpdate(details, point),
-      // onHorizontalDragEnd: _onPanEnd,
-      // onVerticalDragStart: _onPanStart,
-      // onVerticalDragUpdate: _onPanUpdate,
-      // onVerticalDragEnd: _onPanEnd,
-      // onHorizontalDragStart: _onPanStart,
-      // onHorizontalDragUpdate: _onPanUpdate,
-      // onHorizontalDragEnd: _onPanEnd,
       child: icon,
     );
   }
 
-  // late LatLng _dragPosStart;
-  // late LatLng _markerPointStart;
-  // bool _isDragging = false;
-  //
-  // void _start(Offset localPosition) {
-  //   _isDragging = true;
-  //   _dragPosStart = _offsetToCrs(localPosition);
-  //   _markerPointStart = LatLng(markerPoint.latitude, markerPoint.longitude);
-  // }
-  //
-  // void _onPanStart(DragStartDetails details) {
-  //   _start(details.localPosition);
-  //   widget.marker.onDragStart?.call(details, markerPoint);
-  // }
-  //
-  // void _onPanUpdate(DragUpdateDetails details) {
-  //   _pan(details.localPosition);
-  //   widget.marker.onDragUpdate?.call(details, markerPoint);
-  // }
-  //
-  // void _onPanEnd(details) {
-  //   _end();
-  //   widget.marker.onDragEnd?.call(details, markerPoint);
-  // }
-  //
-  // void _end() {
-  //   // setState is needed if using a different widget while dragging
-  //   setState(() {
-  //     _isDragging = false;
-  //   });
-  // }
-
-  // LatLng _offsetToCrs(Offset offset) {
-  //   return const Epsg3857().latLngToPoint(offset, _mapController.camera.zoom);
-  // }
+  late Point<double> _markerPointStart;
+  
+  void _onPanStart(DragStartDetails details, GCWMapPoint point) {
+    _markerPointStart = const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
+  }
 
   void _onPanUpdate(DragUpdateDetails details, GCWMapPoint point) {
     _popupLayerController.hidePopup();
 
-    var position = const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
-    Offset delta = details.delta;
     LatLng pointToLatLng =
-        const Epsg3857().pointToLatLng(position + delta.toPoint(), _mapController.camera.zoom);
+        const Epsg3857().pointToLatLng(_markerPointStart + details.localPosition.toPoint(), _mapController.camera.zoom);
 
     point.point = pointToLatLng;
 
