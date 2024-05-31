@@ -216,7 +216,6 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                  //absorbPanEventsOnScrollables: false,
                   initialCameraFit: CameraFit.bounds(bounds: _getBounds(), padding: const EdgeInsets.all(30.0)),
                   /// IMPORTANT for dragging
                   minZoom: 1.0,
@@ -548,20 +547,18 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   late Point<double> _markerPointStart;
-  late Point<double> _markerPointlocalPosition;
 
   void _onPanStart(DragStartDetails details, GCWMapPoint point) {
-    _markerPointStart =
-          const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
+    _markerPointStart = const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
 
-    _markerPointlocalPosition = details.localPosition.toPoint()/1;
+    _markerPointStart -= details.localPosition.toPoint();
   }
 
   void _onPanUpdate(DragUpdateDetails details, GCWMapPoint point) {
     _popupLayerController.hidePopup();
 
     LatLng pointToLatLng =
-        const Epsg3857().pointToLatLng(_markerPointStart + details.localPosition.toPoint()- _markerPointlocalPosition, _mapController.camera.zoom);
+        const Epsg3857().pointToLatLng(_markerPointStart + details.localPosition.toPoint(), _mapController.camera.zoom);
 
     point.point = pointToLatLng;
 
