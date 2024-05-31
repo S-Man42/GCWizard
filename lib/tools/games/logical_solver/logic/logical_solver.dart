@@ -54,7 +54,7 @@ class _LogicalBlock {
 			return result;
 		} else if (orgType == LogicalFillType.USER_FILLED && type == LogicalFillType.USER_FILLED) {
 			if (value == Logical.plusValue ) {
-				if (_checkPlusPossibleRow(x) && _checkPlusPossibleColumn(y) ) {
+				if (_ckeckPlusPossible(x, y)) {
 					block[y][x] = LogicalValue(value, type);
 				} else {
 					return _setValueResult(validChange: false);
@@ -90,10 +90,18 @@ class _LogicalBlock {
 	_setValueResult setValueAndCalculated(int x, int y, int? value,
 			{LogicalFillType type = LogicalFillType.CALCULATED}) {
 		if (value == Logical.plusValue) {
-			return setPlusValue(x, y, type);
+			if (_ckeckPlusPossible(x, y)) {
+				return setPlusValue(x, y, type);
+			} else {
+				return _setValueResult(validChange: false, valueChanged: false);
+			}
 		} else {
 			return setValue(x, y, value, type) & _checkAndSetCalculatedFullRow(x) & _checkAndSetCalculatedFullColumn(y);
 		}
+	}
+
+	bool _ckeckPlusPossible(int xPlus, int yPlus) {
+		return _checkPlusPossibleRow(xPlus) && _checkPlusPossibleColumn(yPlus);
 	}
 
 	bool _checkPlusPossibleRow(int x) {
@@ -317,7 +325,7 @@ class Logical {
 				result &= _setCalculatedValues();
 				loopCounter++;
 			} while (result.validChange && result.valueChanged && loopCounter < 100);
-print(loopCounter);
+			print(loopCounter);
 			result.valueChanged = true;
 		}
 
@@ -492,7 +500,7 @@ print(loopCounter);
 	}
 
 	_setValueResult _checkBlockValue(_LogicalBlock sourceBlock, int xSourceLine, int ySourceLine,
-												_LogicalBlock targetBlock, int xTargetLine, int yTargetLine) {
+			_LogicalBlock targetBlock, int xTargetLine, int yTargetLine) {
 		var _value = sourceBlock.getValue(xSourceLine, ySourceLine);
 		if (_value != null) {
 			return targetBlock.setValueAndCalculated(xTargetLine, yTargetLine, _value);
@@ -643,8 +651,8 @@ print(loopCounter);
 	static String _jsonValueToString(int x, int y, Logical logical) {
 		if (!logical._validPosition(x, y)) return '';
 		return alphabet_AZIndexes[
-			logical.mapColumnToRowBlockIndex(logical.blockIndex(x)) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
-										 alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
+		logical.mapColumnToRowBlockIndex(logical.blockIndex(x)) + 1]!.toLowerCase() + logical.blockLine(x).toString() +
+				alphabet_AZIndexes[logical.blockIndex(y) + 2]!.toLowerCase() + logical.blockLine(y).toString();
 	}
 
 	static Point<int>? _jsonValueFromString(String value, Logical logical) {
