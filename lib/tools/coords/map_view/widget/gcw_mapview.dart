@@ -547,80 +547,21 @@ class _GCWMapViewState extends State<GCWMapView> {
     );
   }
 
-  // late Point<double> _markerPointStart;
-  // late Point<double> _markerPointlocalPosition;
-  late LatLng _dragPosStart;
-  late LatLng _markerPointStart;
-
-  LatLng _offsetToCrs(Offset offset) {
-    // Get the widget's offset
-    final renderObject = context.findRenderObject() as RenderBox;
-    final width = renderObject.size.width;
-    final height = renderObject.size.height;
-    final mapState = _mapController.camera;
-
-    // convert the point to global coordinates
-    final localPoint = offset.toPoint(); // Point<double>(offset.dx, offset.dy);
-    final localPointCenterDistance = Point<double>((width / 2) - localPoint.x, (height / 2) - localPoint.y);
-    final mapCenter = mapState.project(mapState.center);
-    final point = mapCenter - localPointCenterDistance;
-    return mapState.unproject(point);
-  }
-
+  late Point<double> _markerPointStart;
+  late Point<double> _markerPointlocalPosition;
 
   void _onPanStart(DragStartDetails details, GCWMapPoint point) {
-    _dragPosStart = _offsetToCrs(details.localPosition);
-    _markerPointStart = point.point;
+    _markerPointStart =
+          const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
 
-    // _markerPointStart = //details.globalPosition.toPoint();
-    // const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
-    // _markerPointlocalPosition = details.localPosition.toPoint()/1;
-    //     //const Epsg3857().latLngToPoint(point.point, _mapController.camera.zoom);
-    // var p = const Epsg3857().pointToLatLng(details.globalPosition.toPoint(), _mapController.camera.zoom);
-    // p = const Epsg3857().pointToLatLng(details.globalPosition.toPoint(), _mapController.camera.zoom);
-    // print(p.toString() + ' '+ details.localPosition.toPoint().toString() + ' '+ _markerPointStart.toString() + ' '+ details.globalPosition.toPoint().toString());
+    _markerPointlocalPosition = details.localPosition.toPoint()/1;
   }
-  // void _pan(Offset localPosition) {
-  //   final dragPos = _offsetToCrs(localPosition);
-  //
-  //   final deltaLat = dragPos.latitude - _dragPosStart.latitude;
-  //   final deltaLon = dragPos.longitude - _dragPosStart.longitude;
-  //
-  //   // // If we're near an edge, move the map to compensate
-  //   // if (widget.marker.scrollMapNearEdge) {
-  //   //   final scrollOffset = _getMapScrollOffset();
-  //   //   // start the scroll timer if scrollOffset is not zero
-  //   //   if (scrollOffset != Offset.zero) {
-  //   //     _mapScrollTimer ??= Timer.periodic(
-  //   //       const Duration(milliseconds: 10),
-  //   //       _mapScrollTimerCallback,
-  //   //     );
-  //   //   }
-  //   }
-  //
-  //   setState(() {
-  //     widget.marker.point = LatLng(
-  //       _markerPointStart.latitude + deltaLat,
-  //       _markerPointStart.longitude + deltaLon,
-  //     );
-  //     _updatePixelPos(markerPoint);
-  //   });
-  // }
 
   void _onPanUpdate(DragUpdateDetails details, GCWMapPoint point) {
     _popupLayerController.hidePopup();
 
-    final dragPos = _offsetToCrs(details.localPosition);
-
-    final deltaLat = dragPos.latitude - _dragPosStart.latitude;
-    final deltaLon = dragPos.longitude - _dragPosStart.longitude;
-    LatLng pointToLatLng = LatLng(
-            _markerPointStart.latitude + deltaLat,
-            _markerPointStart.longitude + deltaLon,
-          );
-
-    // LatLng pointToLatLng =
-    //     const Epsg3857().pointToLatLng(_markerPointStart + details.localPosition.toPoint()- _markerPointlocalPosition, _mapController.camera.zoom);
+    LatLng pointToLatLng =
+        const Epsg3857().pointToLatLng(_markerPointStart + details.localPosition.toPoint()- _markerPointlocalPosition, _mapController.camera.zoom);
 
     point.point = pointToLatLng;
 
