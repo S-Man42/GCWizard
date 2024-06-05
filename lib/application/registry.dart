@@ -208,6 +208,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_overview/widg
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/widget/homophone.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/widget/houdini.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/widget/duck_speak.dart';
@@ -940,6 +941,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'rotation',
       'kamasutra',
+    ]),
+    GCWTool(tool: const Judoon(), id: 'judoon', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'judoon','doctor who',
     ]),
     GCWTool(tool: const Kenny(), id: 'kenny', categories: const [
       ToolCategory.CRYPTOGRAPHY
