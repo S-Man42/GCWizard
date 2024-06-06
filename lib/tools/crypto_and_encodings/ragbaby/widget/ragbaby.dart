@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -59,9 +59,8 @@ class _RagbabyState extends State<Ragbaby> {
             });
           },
         ),
-        const GCWDivider(),
-        GCWText(text: i18n(context, "common_alphabet") + ": " + translatePasswordIntoKey(_currentPassword)),
-        const GCWDivider(),
+        GCWTextDivider(text: i18n(context, "common_alphabet")),
+        GCWText(text: translatePasswordIntoKey(_currentPassword)),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {

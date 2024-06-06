@@ -1,4 +1,4 @@
-
+import 'package:gc_wizard/utils/collection_utils.dart';
 /*
  * Doctor Who Alien language
  * Every letter gets a special
@@ -31,9 +31,8 @@ String encryptJudoon(String input) {
 String decryptJudoon(String input) {
   if (input.isEmpty) return "";
 
-  final invertedDict = {
-    for (var entry in alphabetJudoon.entries) entry.value: entry.key
-  };
+  final invertedDict = switchMapKeyValue(alphabetJudoon);
+
   return input
       .split(' ')
       .map((word) => invertedDict[word.toLowerCase()] ?? '')
