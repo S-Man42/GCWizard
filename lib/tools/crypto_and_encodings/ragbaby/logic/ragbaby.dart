@@ -1,44 +1,41 @@
 import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 
+//
+// More under
+// https://www.cwu.edu/academics/math/_documents/kryptos-challenges/cwu-kryptos-rag-baby-cipher.pdf
+// todo: Link for later use
 
 String translatePasswordIntoKey(String input) {
-  List<String> alphabet = alphabet_AZString.split("");
-  alphabet.remove("J");
-  alphabet.remove("X");
+  List<String> alphabet = alphabet_AZString.split('');
+  alphabet.remove('J');
+  alphabet.remove('X');
 
-  String newAlphabet = "";
+  if (input.isEmpty) return alphabet.join();
 
-  if (input.isEmpty) {
-    return alphabet.join();
-  } else {
-    String cleanedInput = trimCharacters(input, " ")
-        .toUpperCase();
+  String cleanedInput = input.toUpperCase();
+  String newAlphabet = '';
 
-    for (int i = 0; i < cleanedInput.length; i++){
-      String letter = cleanedInput[i];
-      if (alphabet.contains(letter)) {
-        newAlphabet += letter;
-        alphabet.remove(letter);
-      }
+  for (int i = 0; i < cleanedInput.length; i++) {
+    String letter = cleanedInput[i];
+    if (alphabet.contains(letter)) {
+      newAlphabet += letter;
+      alphabet.remove(letter);
     }
   }
   return newAlphabet + alphabet.join();
 }
 
 String encryptRagbaby(String input, String password) {
-  if (input.isEmpty) return "";
+  if (input.isEmpty) return '';
 
   String key = translatePasswordIntoKey(password);
-  List<String> cleanedText = input.toUpperCase()
-      .replaceAll("X", "U")
-      .replaceAll("J", "I")
-      .split(" ");
+  List<String> cleanedText =
+      input.toUpperCase().replaceAll('X', 'U').replaceAll('J', 'I').split(' ');
   List<String> encryptedText = [];
 
   for (int wIndex = 0; wIndex < cleanedText.length; wIndex++) {
     String word = cleanedText[wIndex];
-    String encryptedWord = "";
+    String encryptedWord = '';
     for (int lIndex = 0; lIndex < word.length; lIndex++) {
       String letter = word[lIndex];
       if (key.contains(letter)) {
@@ -51,23 +48,21 @@ String encryptRagbaby(String input, String password) {
     encryptedText.add(encryptedWord);
   }
 
-  return encryptedText.join(" ");
+  return encryptedText.join(' ');
 }
 
 String decryptRagbaby(String input, String password) {
-  if (input.isEmpty) return "";
+  if (input.isEmpty) return '';
 
   String key = translatePasswordIntoKey(password);
-  List<String> cleanedText = input.toUpperCase()
-      .replaceAll("X", "U")
-      .replaceAll("J", "I")
-      .split(" ");
+  List<String> cleanedText =
+      input.toUpperCase().replaceAll('X', 'U').replaceAll('J', 'I').split(' ');
   List<String> words = cleanedText;
   List<String> decryptedText = [];
 
   for (int wIndex = 0; wIndex < words.length; wIndex++) {
     String word = words[wIndex];
-    String decryptedWord = "";
+    String decryptedWord = '';
     for (int lIndex = 0; lIndex < word.length; lIndex++) {
       String letter = word[lIndex];
       if (key.contains(letter)) {
@@ -81,5 +76,5 @@ String decryptRagbaby(String input, String password) {
     decryptedText.add(decryptedWord);
   }
 
-  return decryptedText.join(" ");
+  return decryptedText.join(' ');
 }

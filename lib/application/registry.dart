@@ -946,7 +946,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Judoon(), id: 'judoon', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
-      'judoon','doctor who',
+      'judoon',
     ]),
     GCWTool(tool: const Kenny(), id: 'kenny', categories: const [
       ToolCategory.CRYPTOGRAPHY
