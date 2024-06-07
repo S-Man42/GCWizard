@@ -3,7 +3,7 @@ import 'package:gc_wizard/utils/alphabets.dart';
 //
 // More under
 // https://www.cwu.edu/academics/math/_documents/kryptos-challenges/cwu-kryptos-rag-baby-cipher.pdf
-// todo: Link for later use
+
 
 String translatePasswordIntoKey(String input) {
   List<String> alphabet = alphabet_AZString.split('');

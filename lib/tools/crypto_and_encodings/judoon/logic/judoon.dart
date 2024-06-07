@@ -14,7 +14,7 @@ const Map<String, String> alphabetJudoon  = {
   'u': 'tro', 'v': 'vo', 'w': 'wo', 'x': 'xo', 'y': 'yo',
   'z': 'zo',
   ' ': 'sho', '_': 'œ', '!': 'sco', '?': 'spo', '.': 'bla',
-  '\'': 'cho', '(': 'pra', ')': 'pla', '#': 'ma', '0': 'za',
+  '"': 'cho', '(': 'pra', ')': 'pla', '0': 'za',
   '1': 'ha', '2': 'ta', '3': 'tra', '4': 'fa', '5': 'fla',
   '6': 'sa', '7': 'schla', '8': 'ga', '9': 'na',
 };
@@ -24,7 +24,7 @@ String encryptJudoon(String input) {
 
   return input
       .split('')
-      .map((char) => alphabetJudoon[char.toLowerCase()] ?? '')
+      .map((char) => alphabetJudoon[char.toLowerCase()] ?? '•')
       .join(' ');
 }
 

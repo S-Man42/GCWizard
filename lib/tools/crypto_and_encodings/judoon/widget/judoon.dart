@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -45,6 +46,9 @@ class _JudoonState extends State<Judoon> {
             });
           },
         ),
+
+        GCWText(text: i18n(context, 'judoon_unknown_character'),),
+
         GCWTextDivider(text: i18n(context, 'common_key')),
 
         GCWTwoOptionsSwitch(
@@ -57,6 +61,7 @@ class _JudoonState extends State<Judoon> {
         ),
 
         GCWDefaultOutput(child: _buildOutput())
+
       ],
     );
   }
