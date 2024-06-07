@@ -30,7 +30,7 @@ String encryptRagbaby(String input, String password) {
 
   String key = translatePasswordIntoKey(password);
   List<String> cleanedText =
-      input.toUpperCase().replaceAll('X', 'U').replaceAll('J', 'I').split(' ');
+  input.toUpperCase().replaceAll('X', 'U').replaceAll('J', 'I').split(' ');
   List<String> encryptedText = [];
 
   for (int wIndex = 0; wIndex < cleanedText.length; wIndex++) {
@@ -56,7 +56,7 @@ String decryptRagbaby(String input, String password) {
 
   String key = translatePasswordIntoKey(password);
   List<String> cleanedText =
-      input.toUpperCase().replaceAll('X', 'U').replaceAll('J', 'I').split(' ');
+  input.toUpperCase().replaceAll('X', 'U').replaceAll('J', 'I').split(' ');
   List<String> words = cleanedText;
   List<String> decryptedText = [];
 
