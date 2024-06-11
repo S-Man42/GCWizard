@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
@@ -25,6 +26,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 
 enum CoordinateFormatKey {
   ALL,
+  BOSCH,
   DEC,
   DMM,
   DMS,
@@ -124,14 +126,16 @@ final allCoordinateFormatDefinitions = [
   MaidenheadFormatDefinition,
   MercatorFormatDefinition,
   NaturalAreaCodeFormatDefinition,
-  GeohashFormatDefinition,
   GeoHexFormatDefinition,
   Geo3x3FormatDefinition,
   OpenLocationCodeFormatDefinition,
   MakaneyFormatDefinition,
   QuadtreeFormatDefinition,
   SlippyMapFormatDefinition,
-  MapCodeFormatDefinition
+  MapCodeFormatDefinition,
+  BoschFormatDefinition,
+
+  GeohashFormatDefinition, // Must be last one in list!
 ];
 
 final standardCoordinateFormatDefinitions = [DMSFormatDefinition, DMMFormatDefinition, DECFormatDefinition];

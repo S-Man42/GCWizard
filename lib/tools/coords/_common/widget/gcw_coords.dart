@@ -20,6 +20,7 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
@@ -66,6 +67,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
 
+part 'package:gc_wizard/tools/coords/_common/formats/bosch/widget/gcw_coords_bosch.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dec/widget/gcw_coords_dec.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dmm/widget/gcw_coords_dmm.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dms/widget/gcw_coords_dms.dart';
@@ -410,7 +412,7 @@ var allCoordinateWidgetInfos = [
   _GCWCoordWidgetInfoReverseWherigoWaldmeister(),
   _GCWCoordWidgetInfoReverseWherigoDay1976(),
   _GCWCoordWidgetInfoGeohash(),
-  _GCWCoordWidgetInfoQuadtree(),
+  _GCWCoordWidgetInfoBosch(),
   _GCWCoordWidgetInfoMakaney(),
   _GCWCoordWidgetInfoGeoHex(),
   _GCWCoordWidgetInfoGeo3x3(),

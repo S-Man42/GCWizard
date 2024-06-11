@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
@@ -145,6 +146,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return ReverseWherigoDay1976Coordinate.fromLatLon(coords);
     case CoordinateFormatKey.MAPCODE:
       return MapCode.fromLatLon(coords, format.subtype!);
+    case CoordinateFormatKey.BOSCH:
+      return BoschCoordinate.fromLatLon(coords);
     default:
       return buildDefaultCoordinateByCoordinates(coords);
   }
