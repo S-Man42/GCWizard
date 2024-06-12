@@ -51,7 +51,7 @@ void main() {
         if (_actual == null) {
           expect(null, elem['expectedOutput']);
         } else {
-          expect(equalsLatLng(_actual, elem['expectedOutput'] as LatLng, tolerance: 5), true);
+          expect(equalsLatLng(_actual, elem['expectedOutput'] as LatLng, tolerance: 1e-4), true);
         }
       });
     }

@@ -3,6 +3,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/gars/logic/gars.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geo3x3/logic/geo3x3.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geohash/logic/geohash.dart';
@@ -148,6 +149,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return MapCode.fromLatLon(coords, format.subtype!);
     case CoordinateFormatKey.BOSCH:
       return BoschCoordinate.fromLatLon(coords);
+    case CoordinateFormatKey.GARS:
+      return GARSCoordinate.fromLatLon(coords);
     default:
       return buildDefaultCoordinateByCoordinates(coords);
   }

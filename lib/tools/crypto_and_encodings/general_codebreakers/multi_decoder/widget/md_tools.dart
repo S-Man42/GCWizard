@@ -366,6 +366,11 @@ void _initializeMultiToolDecoder(BuildContext context) {
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
               coordinateFormatDefinitionByKey(CoordinateFormatKey.BOSCH).persistenceKey)
         ]),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [
+          MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.GARS).persistenceKey)
+        ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),
