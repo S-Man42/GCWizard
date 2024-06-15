@@ -6,7 +6,7 @@ class _GCWCoordWidgetInfoGARS extends GCWCoordWidgetInfo {
   @override
   String get i18nKey => garsKey;
   @override
-  String get name => 'GARS';
+  String get name => 'GARS (Global Area Reference System)';
   @override
   String get example => '116MG18';
 
