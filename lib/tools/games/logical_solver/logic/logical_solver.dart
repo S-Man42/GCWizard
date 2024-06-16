@@ -329,7 +329,7 @@ class Logical {
 			result.valueChanged = true;
 		}
 
-		if (!result.validChange) {
+		if (!result.validChange && result.valueChanged) {
 			// reset changes
 			setValue(x, y, valueTmp, typeTmp ?? LogicalFillType.CALCULATED);
 		}
