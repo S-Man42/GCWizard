@@ -19,16 +19,16 @@ class _RagbabyState extends State<Ragbaby> {
 
   String _currentInput = '';
   String _currentPassword = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
-
   RagbabyType _currentOption = RagbabyType.NoJX;
+
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
     super.initState();
 
-  _inputController = TextEditingController(text: _currentInput);
-  _passwordController = TextEditingController(text: _currentPassword);
+    _inputController = TextEditingController(text: _currentInput);
+    _passwordController = TextEditingController(text: _currentPassword);
   }
 
   @override
@@ -46,13 +46,12 @@ class _RagbabyState extends State<Ragbaby> {
             value: _currentOption,
             items: RAGBABY_OPTIONS.entries.map((mode) {
               return GCWDropDownMenuItem(
-                  value: mode.key,
-                  child: i18n(context, mode.value));
+                  value: mode.key, child: i18n(context, mode.value));
             }).toList(),
             onChanged: (value) {
-                setState(() {
-                  _currentOption = value;
-                });
+              setState(() {
+                _currentOption = value;
+              });
             }),
         GCWTextField(
           hintText: i18n(context, 'common_programming_hint_input'),
@@ -81,7 +80,6 @@ class _RagbabyState extends State<Ragbaby> {
           },
         ),
         _buildOutput(context)
-
       ],
     );
   }
@@ -90,11 +88,10 @@ class _RagbabyState extends State<Ragbaby> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encryptRagbaby (
+      output = encryptRagbaby(
         _currentInput,
         _currentPassword,
         type: _currentOption,
-
       );
     } else {
       output = decryptRagbaby(
