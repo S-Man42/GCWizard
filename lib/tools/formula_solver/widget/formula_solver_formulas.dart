@@ -353,7 +353,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                 Container(
                     alignment: Alignment.topRight,
                     child: GCWPopupMenu(
-                        iconData: Icons.more_vert,
+                        icon: Icons.more_vert,
                         menuItemBuilder: (context) => [
                               GCWPopupMenuItem(
                                   child:
@@ -476,7 +476,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   },
                 ),
                 GCWPopupMenu(
-                    iconData: Icons.more_vert,
+                    icon: Icons.more_vert,
                     size: IconButtonSize.SMALL,
                     menuItemBuilder: (context) => [
                           GCWPopupMenuItem(
@@ -581,7 +581,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                       ],
                                     )),
                                     GCWPopupMenu(
-                                        iconData: Icons.more_vert,
+                                        icon: Icons.more_vert,
                                         size: IconButtonSize.SMALL,
                                         menuItemBuilder: (context) => [
                                               GCWPopupMenuItem(
