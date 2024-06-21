@@ -475,6 +475,11 @@ class _GeodesicLine {
     return r;
   }
 
+  GeodesicData PositionOnlyDistance(double s12_a12) {
+    return Position(false, s12_a12, _GeodesicMask.LATITUDE | _GeodesicMask.LONGITUDE | _GeodesicMask.AZIMUTH |
+    _GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE | _GeodesicMask.AREA);
+  }
+  
   /*
    * @return true if the object has been initialized.
    **********************************************************************/

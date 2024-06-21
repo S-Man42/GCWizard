@@ -875,6 +875,10 @@ class Geodesic {
         : cosx * (y0 - y1); // cos(x) * (y0 - y1)
   }
 
+  _GeodesicLine _Line(double lat1, double lon1, double azi1, int caps) {
+    return _GeodesicLine(this, lat1, lon1, azi1, caps);
+  }
+
   void _Lengths(
       _LengthsV v,
       double eps,
@@ -1509,6 +1513,16 @@ class Geodesic {
         o += m + 2;
       }
     }
+  }
+
+  /**
+   * @return total area of ellipsoid in meters<sup>2</sup>.  The area of a
+   *   polygon encircling a pole can be found by adding
+   *   Geodesic::EllipsoidArea()/2 to the sum of \e S12 for each side of the
+   *   polygon.
+   **********************************************************************/
+  double ellipsoidArea() {
+    return 4 * _GeoMath.pi() * c2;
   }
 }
 

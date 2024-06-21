@@ -359,10 +359,10 @@ class _GeoMath {
     // In order to minimize round-off errors, this function exactly reduces
     // the argument to the range [-45, 45] before converting it to radians.
     double r;
-    int q;
+    int q = 0;
     r = x % 360.0;
-    q = (r / 90).round().toInt(); // If r is NaN this returns 0
-    r -= 90 * q;
+    q = (r / qd).round().toInt(); // If r is NaN this returns 0
+    r -= qd * q;
     // now abs(r) <= 45
     r = _toRadians(r);
     // Possibly could call the gnu extension sincos
@@ -390,6 +390,49 @@ class _GeoMath {
       sinx += 0.0;
       cosx += 0.0;
     }
+    p.first = sinx;
+    p.second = cosx;
+  }
+
+  /**
+   * Evaluate the sine and cosine with reduced argument plus correction
+   *
+   * @tparam T the type of the arguments.
+   * @param[in] x reduced angle in degrees.
+   * @param[in] t correction in degrees.
+   * @param[out] sinx sin(<i>x</i> + <i>t</i>).
+   * @param[out] cosx cos(<i>x</i> + <i>t</i>).
+   *
+   * This is a variant of Math::sincosd allowing a correction to the angle to
+   * be supplied.  \e x must be in [&minus;180&deg;, 180&deg;] and \e t is
+   * assumed to be a <i>small</i> correction.  Math::AngRound is applied to
+   * the reduced angle to prevent problems with \e x + \e t being extremely
+   * close but not exactly equal to one of the four cardinal directions.
+   **********************************************************************/
+  static void sincosde(double x, double t, _Pair p) {
+    // In order to minimize round-off errors, this function exactly reduces
+    // the argument to the range [-45, 45] before converting it to radians.
+    // This implementation allows x outside [-180, 180], but implementations in
+    // other languages may not.
+    double r; int q = 0;
+    r = x % 360.0;
+    q = (r / qd).round().toInt(); // If r is NaN this returns 0
+    r -= qd * q;
+    r = AngRound(r + t); // now abs(r) <= 45
+    r = _toRadians(r);
+    double s = sin(r), c = cos(r);
+    double sinx, cosx;
+    switch (q & 3) {
+      case 0: sinx =  s; cosx =  c; break;
+      case 1: sinx =  c; cosx = -s; break;
+      case 2: sinx = -s; cosx = -c; break;
+      default: sinx = -c; cosx =  s; break; // case 3
+    }
+    // http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1950.pdf
+    // mpreal needs T(0) here
+    cosx += 0;                            // special values from F.10.1.12
+    if (sinx == 0) sinx = _copySign(sinx, x); // special values from F.10.1.13
+
     p.first = sinx;
     p.second = cosx;
   }
