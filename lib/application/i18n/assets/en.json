@@ -3940,8 +3940,6 @@
   "punchtape_baudot_description" :  "Bit Order 12345",
   "punchtape_baudot_54123_title" :  "Baudot Code, 1926",
   "punchtape_baudot_54123_description" :  "Bit Order 54123",
-  "punchtape_baudot_54321_title" :  "Baudot Code, 1926",
-  "punchtape_baudot_54321_description" :  "Bit Order 54321",
   "punchtape_murray_title" :  "Murray Code, 1926",
   "punchtape_murray_description" :  "Teletypewriter, Donald Murray",
   "punchtape_siemens_title" :  "Siemens Teletypewriter, 1926",
