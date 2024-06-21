@@ -104,7 +104,7 @@ class _AmscoState extends State<Amsco> {
         case ErrorCode.Key:
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showSnackBar(i18n(context, 'amsco_error_key'), context);
-          })
+          });
           break;
         default:
       }
