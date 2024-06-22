@@ -112,7 +112,7 @@ final BrainfkDerivatives BRAINFKDERIVATIVE_OMAM = BrainfkDerivatives(
     outputCommandDelimiter: '\n');
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_REVOLUTION9 = BrainfkDerivatives(
-    pointerShiftRightInstruction: "It' ' 's alright",
+    pointerShiftRightInstruction: "It's alright",
     pointerShiftLeftInstruction: 'turn me on, dead man',
     increaseValueInstruction: 'Number 9',
     decreaseValueInstruction: 'if you become naked',
