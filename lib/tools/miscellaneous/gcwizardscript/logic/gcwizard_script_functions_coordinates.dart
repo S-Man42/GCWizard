@@ -337,8 +337,8 @@ _GCWList _convertTo(Object target) {
       _listAdd(targetData, result.t);
       break;
 
-    case _COORD_MAPCODE_LOCAL:
-    case _COORD_MAPCODE_INTERNATIONAL:
+    case _COORD_MAPCODE_LOCAL: // 2301
+    case _COORD_MAPCODE_INTERNATIONAL: // 2302
       MapCode result = MapCode.fromLatLon(coord, _GCW_SCRIPT_COORD_CONVERTER[target]!);
       _listAdd(
           targetData,
@@ -718,12 +718,13 @@ void _convertFrom(Object source, _GCWList parameter) {
       mcInfo.fullmapcode = parameter_3 as String;
       mcInfo.territoryNumber = parameter_4 as int;
       MapCode result = MapCode([mcInfo], _GCW_SCRIPT_COORD_CONVERTER[source]!);
+
       coord = result.toLatLng();
       break;
 
     default:
       _handleError(_INVALIDCOORDINATEFORMAT);
-      coord = LatLng(0.0, 0.0);
+      coord = const LatLng(0.0, 0.0);
   }
 
   _setLat(coord!.latitude);

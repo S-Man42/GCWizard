@@ -8,9 +8,9 @@ part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wag
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_freight_classification_descriptions.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_passenger.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_passenger_heatingsystem_values.dart';
-part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_wagon.dart';
-part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_tractiveunit.dart';
 part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_specialvehicles.dart';
+part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_tractiveunit.dart';
+part 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_wagoncode_wagon.dart';
 
 enum UICWagonTypes {INVALID, OUT_OF_ORDER, TRACTIVE, FREIGHT_WAGON, PASSENGER_WAGON, SPECIAL}
 
