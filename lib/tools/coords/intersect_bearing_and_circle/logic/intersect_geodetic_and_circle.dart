@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/geoarc_intercept.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/geoformulas/geoarc_intercept.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:latlong2/latlong.dart';
@@ -21,7 +21,7 @@ class IntersectGeodeticAndCircleJobData {
 
 Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
   if (jobData?.parameters is! IntersectGeodeticAndCircleJobData) {
-    throw Exception('Unexpected data for Intersectopm Geodetic and Circle');
+    throw Exception('Unexpected data for Intersection Geodetic and Circle');
   }
 
   var data = jobData!.parameters as IntersectGeodeticAndCircleJobData;
@@ -53,6 +53,8 @@ List<LatLng> intersectGeodeticAndCircle(
   List<LatLng> output =
       geodesicArcIntercept(startGeodetic, degToRadian(bearingGeodetic), centerPoint, radiusCircle, ells);
 
+  print(output);
+
   if (isInCircle) {
     help = distanceBearing(startGeodetic, output[0], ells);
     if (help.distance > radiusCircle * 2.1) {
@@ -63,4 +65,37 @@ List<LatLng> intersectGeodeticAndCircle(
   }
 
   return output;
+}
+
+void main() {
+  // var lat1 = 35.8801275809;
+  // var lon1 = -024.3479101592;
+  // var rad1 = 1100000.0;
+  //
+  // var lata = 33.633672083;
+  // var lona = -041.8190530822;
+  // var latb = 44.7377569269;
+  // var lonb = -008.7872823648;
+
+  var lat1 = 39.7252664957;
+  var lon1 = 1.4551465029;
+  var rad1 = 4100000.0;
+
+  var lata = 17.4602726873;
+  var lona = -46.2007042135;
+  var latb = -0.1499488259;
+  var lonb = 122.575110254;
+
+  var distBear = distanceBearing(LatLng(lata, lona), LatLng(latb, lonb), Ellipsoid.WGS84);
+  print(distBear);
+
+  var ret = intersectGeodeticAndCircle(
+      LatLng(lata, lonb), distBear.bearingAToB, LatLng(lat1, lon1), rad1, Ellipsoid.WGS84);
+
+  print(ret);
+  for (var x in ret) {
+    print(x.latitude);
+    print(x.longitude);
+    print('     ');
+  }
 }

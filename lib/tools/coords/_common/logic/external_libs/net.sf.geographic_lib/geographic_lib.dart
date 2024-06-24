@@ -44,12 +44,11 @@ void main() {
   GeodesicData projected = Geodesic(a, f).direct(lata, lona, azia, x.first);
   print(projected.lat2);
   print(projected.lon2);
-  
+
 
   print(x.second);
 
   projected = Geodesic(a, f).direct(latb, lonb, azib, x.second);
   print(projected.lat2);
   print(projected.lon2);
-
 }
