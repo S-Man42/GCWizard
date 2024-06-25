@@ -25,7 +25,7 @@ class Ellipsoid {
     return a * (1 - 1 / (invf == 0.0 ? practical_epsilon : invf));
   }
 
-  double get sphereRad {
+  double get sphereRadius {
     return sqrt(a * b);
   }
 

@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/external_libs/geoformulas/geoarc_intercept.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geoformulas/geoformulas.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:latlong2/latlong.dart';
@@ -50,10 +50,7 @@ List<LatLng> intersectGeodeticAndCircle(
     bearingGeodetic = help.bearingBToA;
   }
 
-  List<LatLng> output =
-      geodesicArcIntercept(startGeodetic, degToRadian(bearingGeodetic), centerPoint, radiusCircle, ells);
-
-  print(output);
+  List<LatLng> output = geodesicArcIntercept(startGeodetic, bearingGeodetic, centerPoint, radiusCircle, ells);
 
   if (isInCircle) {
     help = distanceBearing(startGeodetic, output[0], ells);

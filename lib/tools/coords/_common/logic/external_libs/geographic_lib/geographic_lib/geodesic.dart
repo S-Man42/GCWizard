@@ -10,7 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
 
 /*
  * Geodesic calculations.
@@ -188,7 +188,7 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
  * // out lines with lat2, lon2, azi2 (for the WGS84 ellipsoid).
  *
  * import java.util.*;
- * import net.sf.geographiclib.*;
+ * import geographiclib.*;
  * class Direct {
  *   static void main(String[] args) {
  *     try {

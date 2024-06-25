@@ -9,7 +9,7 @@
  * https://geographiclib.sourceforge.io/
  **********************************************************************/
 
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
 
 const int _GEOGRAPHICLIB_TRANSVERSEMERCATOR_ORDER = 8;
 

@@ -11,7 +11,7 @@
  * under the MIT/X11 License.  For more information, see
  * http://geographiclib.sourceforge.net/
  **********************************************************************/
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
 
 /*
  * \brief Lambert Conformal Conic Projection

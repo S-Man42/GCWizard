@@ -52,7 +52,7 @@
  *   10.1007/s11200-017-1020-z</a>.
  **********************************************************************/
 
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
 
 class Intersect {
   static const int LineCaps = _GeodesicMask.LATITUDE | _GeodesicMask.LONGITUDE |

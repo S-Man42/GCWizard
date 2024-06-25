@@ -10,7 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
 
 /*
  * A geodesic line.
@@ -57,7 +57,7 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geogr
  * Here's an example of using this class
  * <pre>
  * {@code
- * import net.sf.geographiclib.*;
+ * import geographiclib.*;
  * class GeodesicLineTest {
  *   static void main(String[] args) {
  *     // Print waypoints between JFK and SIN

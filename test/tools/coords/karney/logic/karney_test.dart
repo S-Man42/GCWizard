@@ -6,9 +6,9 @@ import 'dart:math';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geoformulas/geoformulas.dart';
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';
-import 'package:gc_wizard/tools/coords/waypoint_projection/logic/vincenty/distance_bearing_vincenty.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart' as utils;
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:latlong2/latlong.dart';
@@ -35,8 +35,7 @@ void main() {
               GeodesicData karney = Geodesic(ellipsoid.a, ellipsoid.f).inverse(coord1.latitude, coord1.longitude, coord2.latitude, coord2.longitude);
 
               // Vincenty
-              DistanceBearingData vincenty = vincentyInverse(
-                  coord1, coord2, ellipsoid);
+              DistanceBearingData vincenty = vincentyInverse(coord1, coord2, ellipsoid);
 
               var karneyAzi1 = utils.normalizeBearing(karney.azi1);
               var karneyAzi2 = utils.normalizeBearing(karney.azi2 + 180.0);
