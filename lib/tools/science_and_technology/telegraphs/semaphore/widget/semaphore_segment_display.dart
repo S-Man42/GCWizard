@@ -126,7 +126,9 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                   if (segmentActive(currentSegments, 'l2')) {
                     setSegmentState('l1', false);
                     //setSegmentState('l3', false);
-                    //setSegmentState('l4', false);
+                    if (segmentActive(currentSegments, 'l3') && segmentActive(currentSegments, 'l4')) {
+                      setSegmentState('l4', false);
+                    }
                     setSegmentState('l5', false);
                   }
                 });
@@ -153,10 +155,10 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('r2', !segmentActive(currentSegments, 'r2'));
                   if (segmentActive(currentSegments, 'r2')) {
                     setSegmentState('r1', false);
+                    //setSegmentState('r3', false);
                     if (segmentActive(currentSegments, 'r3') && segmentActive(currentSegments, 'r4')) {
                       setSegmentState('r4', false);
                     }
-                    //setSegmentState('r3', false);
                     setSegmentState('r5', false);
                   }
                 });
