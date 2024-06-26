@@ -125,7 +125,7 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('l2', !segmentActive(currentSegments, 'l2'));
                   if (segmentActive(currentSegments, 'l2')) {
                     setSegmentState('l1', false);
-                    //setSegmentState('l3', false);
+                    setSegmentState('l3', false);
                     //setSegmentState('l4', false);
                     setSegmentState('l5', false);
                   }
@@ -153,7 +153,7 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('r2', !segmentActive(currentSegments, 'r2'));
                   if (segmentActive(currentSegments, 'r2')) {
                     setSegmentState('r1', false);
-                    //setSegmentState('r3', false);
+                    setSegmentState('r3', false);
                     //setSegmentState('r4', false);
                     setSegmentState('r5', false);
                   }
@@ -180,9 +180,9 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                 canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {
                   setSegmentState('l3', !segmentActive(currentSegments, 'l3'));
                   if (segmentActive(currentSegments, 'l3')) {
-                    //setSegmentState('l2', false);
+                    setSegmentState('l2', false);
                     setSegmentState('l1', false);
-                    //setSegmentState('l4', false);
+                    setSegmentState('l4', false);
                     setSegmentState('l5', false);
                   }
                 });
@@ -208,9 +208,9 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                 canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {
                   setSegmentState('r3', !segmentActive(currentSegments, 'r3'));
                   if (segmentActive(currentSegments, 'r3')) {
-                    //setSegmentState('r2', false);
+                    setSegmentState('r2', false);
                     setSegmentState('r1', false);
-                    //setSegmentState('r4', false);
+                    setSegmentState('r4', false);
                     setSegmentState('r5', false);
                   }
                 });
@@ -237,7 +237,7 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('l4', !segmentActive(currentSegments, 'l4'));
                   if (segmentActive(currentSegments, 'l4')) {
                     //setSegmentState('l2', false);
-                    //setSegmentState('l3', false);
+                    setSegmentState('l3', false);
                     setSegmentState('l1', false);
                     setSegmentState('l5', false);
                   }
@@ -265,7 +265,7 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('r4', !segmentActive(currentSegments, 'r4'));
                   if (segmentActive(currentSegments, 'r4')) {
                     //setSegmentState('r2', false);
-                    //setSegmentState('r3', false);
+                    setSegmentState('r3', false);
                     setSegmentState('r1', false);
                     setSegmentState('r5', false);
                   }
