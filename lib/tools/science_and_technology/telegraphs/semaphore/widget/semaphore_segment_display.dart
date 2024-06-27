@@ -36,17 +36,17 @@ class _SemaphoreSegmentDisplay extends NSegmentDisplay {
               var SEGMENTS_COLOR_OFF = segment_color_off;
               var paintTouch = defaultSegmentPaint();
               paintTouch.color = Colors.transparent;
-              var centerPoint = Offset(size.width * 0.5, size.height * 0.5);
+              var centerPoint = Offset(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 185, size.height * 0.5);
 
               paint.color = Colors.grey;
               canvas.touchCanvas.drawCircle(
-                  Offset(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 185,
+                  Offset(centerPoint.dx,
                       size.height / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 55),
                       size.height / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 25.0,
                       paint);
 
               canvas.touchCanvas.drawCircle(
-                  Offset(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 185,
+                  Offset(centerPoint.dx,
                       size.height / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 120),
                       size.height / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 35.0,
                       paint);
