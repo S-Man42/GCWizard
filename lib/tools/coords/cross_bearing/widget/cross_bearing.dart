@@ -11,7 +11,7 @@ import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/intersect_lines/logic/intersect_lines.dart';
+import 'package:gc_wizard/tools/coords/cross_bearing/logic/cross_bearing.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -156,7 +156,7 @@ class _CrossBearingState extends State<CrossBearing> {
               height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
               width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
               child: GCWAsyncExecuter<LatLng?>(
-                isolatedFunction: intersectBearingsAsync,
+                isolatedFunction: crossBearingsAsync,
                 parameter: _buildJobData,
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
@@ -169,13 +169,12 @@ class _CrossBearingState extends State<CrossBearing> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(IntersectBearingJobData(
+    return GCWAsyncExecuterParameters(CrossBearingJobData(
         coord1: _currentCoords1.toLatLng()!,
         az13: _currentBearing1.value,
         coord2: _currentCoords2.toLatLng()!,
         az23: _currentBearing2.value,
-        ells: defaultEllipsoid,
-        crossbearing: true));
+        ells: defaultEllipsoid));
   }
 
   void _showOutput(LatLng? output) {

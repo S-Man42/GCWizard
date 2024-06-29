@@ -10,7 +10,7 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 /*
  * Geodesic calculations.
@@ -205,7 +205,7 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_l
  *   }
  * }}</pre>
  **********************************************************************/
-class Geodesic {
+class _Geodesic {
   /*
    * The order of the expansions used by Geodesic.
    **********************************************************************/
@@ -252,7 +252,7 @@ class Geodesic {
    * @exception GeographicErr if <i>a</i> or (1 &minus; <i>f</i> ) <i>a</i> is
    *   not positive.
    **********************************************************************/
-  Geodesic(double _a, double _f) {
+  _Geodesic(double _a, double _f) {
     a = _a;
     f = _f;
     f1 = 1 - f;

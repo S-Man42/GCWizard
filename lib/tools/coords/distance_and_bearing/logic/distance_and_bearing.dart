@@ -1,12 +1,11 @@
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geoformulas/geoformulas.dart';
 import 'package:latlong2/latlong.dart';
 
 DistanceBearingData distanceBearing(LatLng coords1, LatLng coords2, Ellipsoid ellipsoid) {
-  GeodesicData data = Geodesic(ellipsoid.a, ellipsoid.f)
-      .inverse(coords1.latitude, coords1.longitude, coords2.latitude, coords2.longitude);
+  var data = geodeticInverse(coords1, coords2, ellipsoid);
 
   DistanceBearingData result = DistanceBearingData();
   result.distance = data.s12;

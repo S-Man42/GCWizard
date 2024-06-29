@@ -11,25 +11,7 @@
 
  **********************************************************************/
 
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
-
-// ignore_for_file: unused_field
-// ignore_for_file: unused_element
-class Rhumb {
-  late final _Rhumb rhumb;
-
-  Rhumb(double a, double f) {
-    rhumb = _Rhumb(a, f, true);
-  }
-
-  RhumbInverseReturn inverse(double lat1, double lon1, double lat2, double lon2) {
-    return rhumb._Inverse(lat1, lon1, lat2, lon2);
-  }
-
-  RhumbDirectReturn direct(double lat1, double lon1, double azi12, double s12) {
-    return rhumb._Direct(lat1, lon1, azi12, s12);
-  }
-}
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 class _Rhumb {
   late _Ellipsoid _ell;

@@ -11,7 +11,7 @@
 
  **********************************************************************/
 
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 /**
  * \brief Elliptic integrals and functions

@@ -52,15 +52,15 @@
  *   10.1007/s11200-017-1020-z</a>.
  **********************************************************************/
 
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
-class Intersect {
+class _Intersect {
   static const int LineCaps = _GeodesicMask.LATITUDE | _GeodesicMask.LONGITUDE |
   _GeodesicMask.AZIMUTH | _GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE |
   _GeodesicMask.DISTANCE_IN;
 
   static const int numit_ = 100;
-  late final Geodesic _geod;
+  late final _Geodesic _geod;
   final double _a, _f;          // equatorial radius, flattening
   late final double _R,         // authalic radius
       _d,                       // pi*_R
@@ -78,8 +78,8 @@ class Intersect {
   late int _cnt0, _cnt1, _cnt2, _cnt3, _cnt4;
   late final SetComp _comp;
 
-  Intersect(this._a, this._f) {
-    _geod = Geodesic(_a, _f);
+  _Intersect(this._a, this._f) {
+    _geod = _Geodesic(_a, _f);
     _R = sqrt(_geod.ellipsoidArea() / (4 * _GeoMath.pi()));
     _d = _R * _GeoMath.pi();      // Used to normalize intersection points
     _eps = 3 * practical_epsilon;

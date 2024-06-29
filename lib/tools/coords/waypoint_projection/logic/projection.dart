@@ -1,5 +1,5 @@
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geoformulas/geoformulas.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/intervals/interval_calculator.dart';
@@ -10,8 +10,7 @@ LatLng projection(LatLng coord, double bearingDeg, double distance, Ellipsoid el
 
   bearingDeg = normalizeBearing(bearingDeg);
 
-  GeodesicData projected =
-      Geodesic(ellipsoid.a, ellipsoid.f).direct(coord.latitude, coord.longitude, bearingDeg, distance);
+  GeodesicData projected = geodeticDirect(coord, bearingDeg, distance, ellipsoid);
 
   return LatLng(projected.lat2, projected.lon2);
 }

@@ -10,30 +10,30 @@
  * https://sourceforge.net/projects/geographiclib/
 
  **********************************************************************/
-part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_lib/geographic_lib.dart';
+part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 /*
  * A geodesic line.
  * <p>
  * GeodesicLine facilitates the determination of a series of points on a single
- * geodesic.  The starting point (<i>lat1</i>, <i>lon1</i>) and the azimuth
+ * _Geodesic.  The starting point (<i>lat1</i>, <i>lon1</i>) and the azimuth
  * <i>azi1</i> are specified in the constructor; alternatively, the {@link
- * Geodesic#Line Geodesic.Line} method can be used to create a GeodesicLine.
+ * Geodesic#Line _Geodesic.Line} method can be used to create a GeodesicLine.
  * {@link #Position Position} returns the location of point 2 a distance
- * <i>s12</i> along the geodesic.  Alternatively {@link #ArcPosition
+ * <i>s12</i> along the _Geodesic.  Alternatively {@link #ArcPosition
  * ArcPosition} gives the position of point 2 an arc length <i>a12</i> along
- * the geodesic.
+ * the _Geodesic.
  * <p>
  * You can register the position of a reference point 3 a distance (arc
  * length), <i>s13</i> (<i>a13</i>) along the geodesic with the
  * {@link #SetDistance SetDistance} ({@link #SetArc SetArc}) functions.  Points
  * a fractional distance along the line can be found by providing, for example,
  * 0.5 * {@link #Distance} as an argument to {@link #Position Position}.  The
- * {@link Geodesic#InverseLine Geodesic.InverseLine} or
- * {@link Geodesic#DirectLine Geodesic.DirectLine} methods return GeodesicLine
+ * {@link Geodesic#InverseLine _Geodesic.InverseLine} or
+ * {@link Geodesic#DirectLine _Geodesic.DirectLine} methods return GeodesicLine
  * objects with point 3 set to the point 2 of the corresponding geodesic
  * problem.  GeodesicLine objects created with the constructor or with
- * {@link Geodesic#Line Geodesic.Line} have <i>s13</i> and <i>a13</i> set to
+ * {@link Geodesic#Line _Geodesic.Line} have <i>s13</i> and <i>a13</i> set to
  * NaNs.
  * <p>
  * The calculations are accurate to better than 15 nm (15 nanometers).  See
@@ -61,7 +61,7 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_l
  * class GeodesicLineTest {
  *   static void main(String[] args) {
  *     // Print waypoints between JFK and SIN
- *     Geodesic geod = Geodesic.WGS84;
+ *     Geodesic geod = _Geodesic.WGS84;
  *     double
  *       lat1 = 40.640, lon1 = -73.779, // JFK
  *       lat2 =  1.359, lon2 = 103.989; // SIN
@@ -97,11 +97,11 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/geographic_l
  **********************************************************************/
 
 class _GeodesicLine {
-  static const int _nC1_ = Geodesic.nC1_;
-  static const int _nC1p_ = Geodesic.nC1p_;
-  static const int _nC2_ = Geodesic.nC2_;
-  static const int _nC3_ = Geodesic.nC3_;
-  static const int _nC4_ = Geodesic.nC4_;
+  static const int _nC1_ = _Geodesic.nC1_;
+  static const int _nC1p_ = _Geodesic.nC1p_;
+  static const int _nC2_ = _Geodesic.nC2_;
+  static const int _nC3_ = _Geodesic.nC3_;
+  static const int _nC4_ = _Geodesic.nC4_;
 
   late double _lat1, _lon1, _azi1;
   late double _a,
@@ -178,7 +178,7 @@ class _GeodesicLine {
    *   <i>caps</i> |= {@link GeodesicMask#ALL} for all of the above.
    * </ul>
    **********************************************************************/
-  _GeodesicLine(Geodesic g, double lat1, double lon1, double azi1, int caps) {
+  _GeodesicLine(_Geodesic g, double lat1, double lon1, double azi1, int caps) {
     azi1 = _GeoMath.AngNormalize(azi1);
     double salp1, calp1;
     _Pair p = _Pair();
@@ -189,7 +189,7 @@ class _GeodesicLine {
     _LineInit(g, lat1, lon1, azi1, salp1, calp1, caps, p);
   }
 
-  void _LineInit(Geodesic g, double lat1, double lon1, double azi1, double salp1, double calp1, int caps, _Pair p) {
+  void _LineInit(_Geodesic g, double lat1, double lon1, double azi1, double salp1, double calp1, int caps, _Pair p) {
     _a = g.a;
     _f = g.f;
     _b = g.b;
@@ -210,7 +210,7 @@ class _GeodesicLine {
     // Ensure cbet1 = +epsilon at poles
     _GeoMath.norm(p, sbet1, cbet1);
     sbet1 = p.first;
-    cbet1 = max(Geodesic.tiny_, p.second);
+    cbet1 = max(_Geodesic.tiny_, p.second);
     _dn1 = sqrt(1 + g.ep2 * _GeoMath.sq(sbet1));
 
     // Evaluate alp0 from sin(alp1) * cos(bet1) = sin(alp0),
@@ -239,10 +239,10 @@ class _GeodesicLine {
     double eps = _k2 / (2 * (1 + sqrt(1 + _k2)) + _k2);
 
     if ((_caps & _GeodesicMask.CAP_C1) != 0) {
-      _A1m1 = Geodesic.A1m1f(eps);
+      _A1m1 = _Geodesic.A1m1f(eps);
       _C1a = List<double>.generate(_nC1_ + 1, (index) => 0.0);
-      Geodesic.C1f(eps, _C1a);
-      _B11 = Geodesic.SinCosSeries(true, _ssig1, _csig1, _C1a);
+      _Geodesic.C1f(eps, _C1a);
+      _B11 = _Geodesic.SinCosSeries(true, _ssig1, _csig1, _C1a);
       double s = sin(_B11), c = cos(_B11);
       // tau1 = sig1 + B11
       _stau1 = _ssig1 * c + _csig1 * s;
@@ -253,21 +253,21 @@ class _GeodesicLine {
 
     if ((_caps & _GeodesicMask.CAP_C1p) != 0) {
       _C1pa = List<double>.generate(_nC1p_ + 1, (index) => 0.0);
-      Geodesic.C1pf(eps, _C1pa);
+      _Geodesic.C1pf(eps, _C1pa);
     }
 
     if ((_caps & _GeodesicMask.CAP_C2) != 0) {
       _C2a = List<double>.generate(_nC2_ + 1, (index) => 0.0);
-      _A2m1 = Geodesic.A2m1f(eps);
-      Geodesic.C2f(eps, _C2a);
-      _B21 = Geodesic.SinCosSeries(true, _ssig1, _csig1, _C2a);
+      _A2m1 = _Geodesic.A2m1f(eps);
+      _Geodesic.C2f(eps, _C2a);
+      _B21 = _Geodesic.SinCosSeries(true, _ssig1, _csig1, _C2a);
     }
 
     if ((_caps & _GeodesicMask.CAP_C3) != 0) {
       _C3a = List<double>.generate(_nC3_, (index) => 0.0);
       g.C3f(eps, _C3a);
       _A3c = -_f * _salp0 * g.A3f(eps);
-      _B31 = Geodesic.SinCosSeries(true, _ssig1, _csig1, _C3a);
+      _B31 = _Geodesic.SinCosSeries(true, _ssig1, _csig1, _C3a);
     }
 
     if ((_caps & _GeodesicMask.CAP_C4) != 0) {
@@ -275,7 +275,7 @@ class _GeodesicLine {
       g.C4f(eps, _C4a);
       // Multiplier = a^2 * e^2 * cos(alpha0) * sin(alpha0)
       _A4 = _GeoMath.sq(_a) * _calp0 * _salp0 * g.e2;
-      _B41 = Geodesic.SinCosSeries(false, _ssig1, _csig1, _C4a);
+      _B41 = _Geodesic.SinCosSeries(false, _ssig1, _csig1, _C4a);
     }
   }
 
@@ -349,7 +349,7 @@ class _GeodesicLine {
       r.s12 = s12_a12;
       double tau12 = s12_a12 / (_b * (1 + _A1m1)), s = sin(tau12), c = cos(tau12);
       // tau2 = tau1 + tau12
-      B12 = -Geodesic.SinCosSeries(true, _stau1 * c + _ctau1 * s, _ctau1 * c - _stau1 * s, _C1pa);
+      B12 = -_Geodesic.SinCosSeries(true, _stau1 * c + _ctau1 * s, _ctau1 * c - _stau1 * s, _C1pa);
       sig12 = tau12 - (B12 - _B11);
       ssig12 = sin(sig12);
       csig12 = cos(sig12);
@@ -377,7 +377,7 @@ class _GeodesicLine {
         //      1/10  829e3  22e6 1.5e6
         //      1/5   157e6 3.8e9 280e6
         double ssig2 = _ssig1 * csig12 + _csig1 * ssig12, csig2 = _csig1 * csig12 - _ssig1 * ssig12;
-        B12 = Geodesic.SinCosSeries(true, ssig2, csig2, _C1a);
+        B12 = _Geodesic.SinCosSeries(true, ssig2, csig2, _C1a);
         double serr = (1 + _A1m1) * (sig12 + (B12 - _B11)) - s12_a12 / _b;
         sig12 = sig12 - serr / sqrt(1 + _k2 * _GeoMath.sq(ssig2));
         ssig12 = sin(sig12);
@@ -393,7 +393,7 @@ class _GeodesicLine {
     csig2 = _csig1 * csig12 - _ssig1 * ssig12;
     double dn2 = sqrt(1 + _k2 * _GeoMath.sq(ssig2));
     if ((outmask & (_GeodesicMask.DISTANCE | _GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
-      if (arcmode || _f.abs() > 0.01) B12 = Geodesic.SinCosSeries(true, ssig2, csig2, _C1a);
+      if (arcmode || _f.abs() > 0.01) B12 = _Geodesic.SinCosSeries(true, ssig2, csig2, _C1a);
       AB1 = (1 + _A1m1) * (B12 - _B11);
     }
     // sin(bet2) = cos(alp0) * sin(sig2)
@@ -401,7 +401,7 @@ class _GeodesicLine {
     // Alt: cbet2 = Math.hypot(csig2, salp0 * ssig2);
     cbet2 = _hypot(_salp0, _calp0 * csig2);
     if (cbet2 == 0) {
-      cbet2 = csig2 = Geodesic.tiny_;
+      cbet2 = csig2 = _Geodesic.tiny_;
     }
     // tan(alp0) = cos(sig2)*tan(alp2)
     salp2 = _salp0;
@@ -421,7 +421,7 @@ class _GeodesicLine {
                   (atan2(ssig2, csig2) - atan2(_ssig1, _csig1)) +
                   (atan2(E * somg2, comg2) - atan2(E * _somg1, _comg1)))
           : atan2(somg2 * _comg1 - comg2 * _somg1, comg2 * _comg1 + somg2 * _somg1);
-      double lam12 = omg12 + _A3c * (sig12 + (Geodesic.SinCosSeries(true, ssig2, csig2, _C3a) - _B31));
+      double lam12 = omg12 + _A3c * (sig12 + (_Geodesic.SinCosSeries(true, ssig2, csig2, _C3a) - _B31));
       double lon12 = _toDegrees(lam12);
       r.lon2 = ((outmask & _GeodesicMask.LONG_UNROLL) != 0)
           ? _lon1 + lon12
@@ -433,7 +433,7 @@ class _GeodesicLine {
     if ((outmask & _GeodesicMask.AZIMUTH) != 0) r.azi2 = _GeoMath.atan2d(salp2, calp2);
 
     if ((outmask & (_GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE)) != 0) {
-      double B22 = Geodesic.SinCosSeries(true, ssig2, csig2, _C2a),
+      double B22 = _Geodesic.SinCosSeries(true, ssig2, csig2, _C2a),
           AB2 = (1 + _A2m1) * (B22 - _B21),
           J12 = (_A1m1 - _A2m1) * sig12 + (AB1 - AB2);
       if ((outmask & _GeodesicMask.REDUCEDLENGTH) != 0) {
@@ -447,7 +447,7 @@ class _GeodesicLine {
     }
 
     if ((outmask & _GeodesicMask.AREA) != 0) {
-      double B42 = Geodesic.SinCosSeries(false, ssig2, csig2, _C4a);
+      double B42 = _Geodesic.SinCosSeries(false, ssig2, csig2, _C4a);
       double salp12, calp12;
       if (_calp0 == 0 || _salp0 == 0) {
         // alp12 = alp2 - alp1, used in atan2 so no need to normalize
