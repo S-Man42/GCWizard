@@ -183,6 +183,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/eurythmy/
     - lib/tools/symbol_tables/_common/assets/face_it/
     - lib/tools/symbol_tables/_common/assets/fakoo/
+    - lib/tools/symbol_tables/_common/assets/fantastic/
     - lib/tools/symbol_tables/_common/assets/fez/
     - lib/tools/symbol_tables/_common/assets/finger/
     - lib/tools/symbol_tables/_common/assets/finger_numbers/
@@ -313,6 +314,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/pixel/
     - lib/tools/symbol_tables/_common/assets/planet/
     - lib/tools/symbol_tables/_common/assets/planets/
+    - lib/tools/symbol_tables/_common/assets/pleiadian/
     - lib/tools/symbol_tables/_common/assets/pokemon_unown/
     - lib/tools/symbol_tables/_common/assets/postcode_01247/
     - lib/tools/symbol_tables/_common/assets/postcode_8421/

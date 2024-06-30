@@ -4046,6 +4046,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: const [
       'symbol_fakoo',
     ]),
+    GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
+      'symbol_fantastic',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: const [
       'symbol_fez',
     ]),
@@ -4450,6 +4453,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: const [
       'symbol_planets',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
+      'symbol_pleiadian',
     ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: const [
       'pokemon',
