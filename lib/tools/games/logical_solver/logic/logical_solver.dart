@@ -96,19 +96,20 @@ class _LogicalBlock {
 				return _setValueResult(validChange: false, valueChanged: false);
 			}
 		} else {
-			return setValue(x, y, value, type) & _checkAndSetCalculatedFullRow(x) & _checkAndSetCalculatedFullColumn(y);
+			return setValue(x, y, value, type) & _checkAndSetCalculatedFullRow(x) & _checkAndSetCalculatedFullColumn(y); //ToDo wieder aktivieren
 		}
 	}
 
 	bool _ckeckPlusPossible(int xPlus, int yPlus) {
-		return _checkPlusPossibleRow(xPlus) && _checkPlusPossibleColumn(yPlus);
+		return _checkPlusPossibleRow(xPlus, yPlus) && _checkPlusPossibleColumn(xPlus, yPlus);
 	}
 
-	bool _checkPlusPossibleRow(int x) {
+	bool _checkPlusPossibleRow(int x, int y) {
 		var count = 0;
 		int? value;
 
 		for (var _y = 0; _y < itemsCount; _y++) {
+			if (_y == y) continue;
 			value = getValue(x, _y);
 			if (value == Logical.plusValue) {
 				return false;
@@ -119,11 +120,12 @@ class _LogicalBlock {
 		return (count <= itemsCount - 1);
 	}
 
-	bool _checkPlusPossibleColumn(int y) {
+	bool _checkPlusPossibleColumn(int x, int y) {
 		var count = 0;
 		int? value;
 
 		for (var _x = 0; _x < itemsCount; _x++) {
+			if (_x == x) continue;
 			value = getValue(_x, y);
 			if (value == Logical.plusValue) {
 				return false;
@@ -325,12 +327,10 @@ class Logical {
 				result &= _setCalculatedValues();
 				loopCounter++;
 			} while (result.validChange && result.valueChanged && loopCounter < 100);
-			print(loopCounter);
 			result.valueChanged = true;
 		}
 
 		if (!result.validChange && result.valueChanged) {
-			// reset changes
 			setValue(x, y, valueTmp, typeTmp ?? LogicalFillType.CALCULATED);
 		}
 		return result.validChange;

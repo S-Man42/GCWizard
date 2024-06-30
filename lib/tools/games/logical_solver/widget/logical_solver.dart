@@ -204,6 +204,9 @@ class LogicalSolverState extends State<LogicalSolver> {
           validChange = _currentBoard.setValue(x, y, value, LogicalFillType.USER_FILLED);
         } else {
           validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicalFillType.USER_FILLED);
+          if (!validChange) {
+            validChange = _currentBoard.setValue(x, y, null, LogicalFillType.USER_FILLED);
+          }
         }
         break;
       case Logical.plusValue:
