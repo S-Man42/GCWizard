@@ -20,18 +20,18 @@ class _FoxState extends State<Fox> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (mode) {
             setState(() {
               _currentMode = mode;
+            });
+          },
+        ),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
             });
           },
         ),
