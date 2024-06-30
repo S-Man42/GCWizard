@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-//import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1007,17 +1006,26 @@ class _GCWMapViewState extends State<GCWMapView> {
     if (file == null) return;
 
     try {
-      await importCoordinatesFile(file).then((viewData) {
-        if (viewData == null) return false;
+      var type = fileTypeByFilename(file.name!);
+      switch (type) {
+        case FileType.JSON:
+          var json = convertBytesToString(file.bytes);
+          setState(() {
+            if (!(_persistanceAdapter?.setJsonMapViewData(json) ?? false)) return;
+            _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+          });
+          break;
+        default:
+          await importCoordinatesFile(file).then((viewData) {
+            if (viewData == null) return false;
 
-        setState(() {
-          _isPolylineDrawing = false;
-          if (_persistanceAdapter != null) {
-            _persistanceAdapter!.addViewData(viewData);
-          }
-          _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
-        });
-      });
+            setState(() {
+              _isPolylineDrawing = false;
+              _persistanceAdapter?.addViewData(viewData);
+              _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+            });
+          });
+      }
     } catch (exception) {}
   }
 }
@@ -1068,13 +1076,6 @@ class _GCWOwnLocationMapPoint extends GCWMapPoint {
             coordinateFormat: defaultCoordinateFormat);
 }
 
-// class CachedNetworkTileProvider extends TileProvider {
-//   @override
-//   ImageProvider getImageWithCancelLoadingSupport(Invali coords, TileLayer options) {
-//     return CachedNetworkImageProvider(getTileUrl(coords, options));
-//   }
-// }
-
 void openInMap(BuildContext context, List<GCWMapPoint> mapPoints,
     {List<GCWMapPolyline>? mapPolylines, bool freeMap = false}) {
   Navigator.push(
@@ -1090,3 +1091,4 @@ void openInMap(BuildContext context, List<GCWMapPoint> mapPoints,
               autoScroll: false,
               suppressToolMargin: true)));
 }
+
