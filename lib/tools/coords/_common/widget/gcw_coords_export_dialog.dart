@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/gpx_kml_export.dart' as coordinatesExport;
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 
 void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {String? json}) {
@@ -40,7 +41,19 @@ void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points,
           if (value) _showExportedFileDialog(context, FileType.KML);
         });
       },
-    )
+    ),
+    json != null
+        ? GCWDialogButton(
+            text: 'JSON',
+            onPressed: () async {
+              try {
+                var fileName = buildFileNameWithDate('coords_', FileType.JSON);
+                saveStringToFile(context, json, fileName);
+              } on Exception {
+              }
+            },
+          )
+        : Container(),
   ]);
 }
 
