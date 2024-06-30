@@ -40,7 +40,7 @@ void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points,
           if (value) _showExportedFileDialog(context, FileType.KML);
         });
       },
-    )
+    ),
   ]);
 }
 

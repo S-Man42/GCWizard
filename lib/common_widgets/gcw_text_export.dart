@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
@@ -122,12 +123,27 @@ class _GCWTextExportState extends State<GCWTextExport> {
                           });
                         },
                       ),
-                      GCWButton(
-                        text: i18n(context, 'common_copy'),
-                        onPressed: () {
-                          if (_currentExportText != null) insertIntoGCWClipboard(context, _currentExportText!);
-                        },
-                      )
+                      Row(
+                        children: <Widget>[
+                          GCWButton(
+                            text: i18n(context, 'coords_export'),
+                            onPressed: () {
+                              if (_currentExportText != null) {
+                                try {
+                                  var fileName = buildFileNameWithDate('json_', FileType.JSON);
+                                  saveStringToFile(context, _currentExportText!, fileName);
+                                } on Exception {}
+                              }
+                            },
+                          ),
+                          Container(width: DEFAULT_MARGIN),
+                          GCWButton(
+                            text: i18n(context, 'common_copy'),
+                            onPressed: () {
+                              if (_currentExportText != null) insertIntoGCWClipboard(context, _currentExportText!);
+                            },
+                          )
+                        ])
                     ],
                   ),
           ],
