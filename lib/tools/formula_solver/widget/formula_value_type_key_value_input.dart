@@ -67,7 +67,7 @@ class _GCWKeyValueTypeNewEntryState extends GCWKeyValueInputState {
 
   @override
   void addEntry(KeyValueBase entry, {bool clearInput = true}) {
-    // normalize entry.value to change international quotation marks to normal double quotes
+    // normalized entry.value to change international quotation marks to normal double quot
     var newEntry = FormulaValue(entry.key, normalizeCharacters(entry.value), type: _currentType);
     if (widget.onAddEntry == null) {
       widget.entries.add(newEntry);
