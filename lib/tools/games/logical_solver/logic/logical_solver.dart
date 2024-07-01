@@ -136,7 +136,6 @@ class _LogicalBlock {
 		return (count <= itemsCount - 1);
 	}
 
-
 	_setValueResult _checkAndSetCalculatedFullRow(int x) {
 		var count = 0;
 		var emptyIndex = -1;
@@ -317,9 +316,9 @@ class Logical {
 
 		if (valueTmp == value && typeTmp == type) return true;
 
+		_removeCalculatedValues();
 		var result = block.setValueAndCalculated(xL, yL, value, type: type);
 		if (result.validChange && result.valueChanged) {
-			_removeCalculatedValues();
 			int loopCounter = 0;
 
 			do {
