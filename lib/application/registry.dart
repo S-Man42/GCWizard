@@ -207,6 +207,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_identificatio
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_overview/widget/hashes_overview.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/widget/homophone.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/widget/houdini.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
@@ -935,6 +936,11 @@ void initializeRegistry(BuildContext context) {
         id: 'ipcodes',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const ['ipcodes']),
+    GCWTool(tool: const Judoon(), id: 'judoon', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'judoon',
+    ]),
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
