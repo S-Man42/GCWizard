@@ -4115,6 +4115,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: const [
       'symbol_gc_attributes',
     ]),
+    GCWSymbolTableTool(symbolKey: 'geovlog', symbolSearchStrings: const [
+      'symbol_geovlog',
+    ]),
     GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: const [
       'symbol_gernreich',
     ]),
@@ -4651,6 +4654,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: const [
       'symbol_tines',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tll', symbolSearchStrings: const [
+      'symbol_tll',
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
       'tomtom',

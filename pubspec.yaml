@@ -206,6 +206,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/gargish/
     - lib/tools/symbol_tables/_common/assets/gc_attributes_ids/
     - lib/tools/symbol_tables/_common/assets/gc_attributes_meaning/
+    - lib/tools/symbol_tables/_common/assets/geovlog/
     - lib/tools/symbol_tables/_common/assets/gernreich/
     - lib/tools/symbol_tables/_common/assets/gerudo/
     - lib/tools/symbol_tables/_common/assets/glagolitic/
@@ -377,6 +378,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/three_squares/
     - lib/tools/symbol_tables/_common/assets/tifinagh/
     - lib/tools/symbol_tables/_common/assets/tines/
+    - lib/tools/symbol_tables/_common/assets/tll/
     - lib/tools/symbol_tables/_common/assets/tomtom/
     - lib/tools/symbol_tables/_common/assets/trafficsigns_germany/
     - lib/tools/symbol_tables/_common/assets/ulog/
