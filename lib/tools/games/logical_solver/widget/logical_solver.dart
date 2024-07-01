@@ -119,9 +119,6 @@ class LogicalSolverState extends State<LogicalSolver> {
             onTapped: (x, y) {
               setState(() {_onTapped(x, y);});
             },
-            onLongTapped: (x, y) {
-              setState(() {_onLongTapped(x, y);});
-            },
           ),
         ),
 
@@ -219,27 +216,6 @@ class LogicalSolverState extends State<LogicalSolver> {
     if (!validChange) {
       showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
     }
-
-    // if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-    //   validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
-    // } else {
-    //   validChange = _currentBoard.setValue(x, y, Logical.minusValue, LogicPuzzleFillType.USER_FILLED);
-    // }
-    // if (!validChange) {
-    //   showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
-    // }
-  }
-
-  void _onLongTapped(int x, int y) {
-    // var validChange = false;
-    // if (_currentBoard.getFillType(x, y) == LogicPuzzleFillType.USER_FILLED) {
-    //   validChange = _currentBoard.setValue(x, y, null, LogicPuzzleFillType.USER_FILLED);
-    // } else {
-    //   validChange = _currentBoard.setValue(x, y, Logical.plusValue, LogicPuzzleFillType.USER_FILLED);
-    // }
-    // if (!validChange) {
-    //   showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
-    // }
   }
 
   Logical _importJsonFile(Uint8List bytes) {

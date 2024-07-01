@@ -13,10 +13,8 @@ class LogicalBoard extends StatefulWidget {
   final void Function(Logical) onChanged;
   final Logical board;
   final void Function(int, int) onTapped;
-  final void Function(int, int) onLongTapped;
 
-  const LogicalBoard({Key? key, required this.onChanged,
-    required this.board, required this.onTapped, required this.onLongTapped})
+  const LogicalBoard({Key? key, required this.onChanged, required this.board, required this.onTapped})
       : super(key: key);
 
   @override
@@ -50,7 +48,7 @@ class LogicalBoardState extends State<LogicalBoard> {
                       builder: (context) {
                       return CustomPaint(
                           painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
-                              onTapped: widget.onTapped, onLongTapped: widget.onLongTapped)
+                              onTapped: widget.onTapped)
                       );
                     },
                   )
@@ -157,11 +155,10 @@ class LogicPuzzleBoardPainter extends CustomPainter {
   Color background_color = themeColors().gridBackground();
   Color font_color = themeColors().mainFont();
   final void Function(int, int) onTapped;
-  final void Function(int, int) onLongTapped;
 
   LogicPuzzleBoardPainter(this.context, this.board, this.showInputTextBox, this.setState,
       {Color? line_color, Color?  item_line_color, Color? full_color, Color? background_color, Color? font_color,
-        required this.onTapped, required this.onLongTapped}) {
+        required this.onTapped}) {
     this.line_color = line_color ?? this.line_color;
     this.item_line_color = item_line_color ?? this.item_line_color;
     this.full_color = full_color ?? this.full_color;
@@ -268,8 +265,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         var xInner = xInnerStart + x * widthInner + _lineOffset(x, factor);
         rect = Rect.fromLTWH(xInner, yInner, widthInner, heightInner);
         _touchCanvas.drawRect(rect, paintBackground,
-            onTapUp: (tapDetail) {(_selectedBox == null) ? onTapped(x, y) : showInputTextBox(null, null);},
-            onLongPressEnd: (tapDetail) {(_selectedBox == null) ? onLongTapped(x, y) : showInputTextBox(null, null);});
+            onTapUp: (tapDetail) {(_selectedBox == null) ? onTapped(x, y) : showInputTextBox(null, null);});
         canvas.drawRect(rect, paintLine);
         var value = board.getValue(x, y);
         if (value != null) {
