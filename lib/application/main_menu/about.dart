@@ -208,6 +208,7 @@ class _AboutState extends State<About> {
                     'baer2006',
                     'Bleg1966',
                     'Cycle73',
+                    'Dawn T.',
                     'Don Rodolphos',
                     'Headbanger-Berlin',
                     'Felix Z.',
