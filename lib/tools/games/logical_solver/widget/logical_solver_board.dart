@@ -44,7 +44,7 @@ class LogicalBoardState extends State<LogicalBoard> {
                     aspectRatio: max(_maxRowItemsWidth(widget.board, _fontSize) + widget.board.getLineLength(0) * _boxSize, 1) /
                         max(_maxColumnsItemsWidth(widget.board, _fontSize) + widget.board.getMaxLineLength() * _boxSize, 1),
                     child: CanvasTouchDetector(
-                      gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp, GestureType.onLongPressEnd],
+                      gesturesToOverride: const [GestureType.onTapDown, GestureType.onTapUp],
                       builder: (context) {
                       return CustomPaint(
                           painter: LogicPuzzleBoardPainter(context, widget.board, _showInputTextBox, _setState,
@@ -230,8 +230,7 @@ class LogicPuzzleBoardPainter extends CustomPainter {
       var itemIndex = y + board.itemsCount;
       canvas.drawRect(rect, paintItemLine);
       _touchCanvas.drawRect(rect, paintTransparent,
-          onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);},
-          onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);});
+          onTapUp: (tapDetail) {showInputTextBox(Point<int>(-1, itemIndex), rectTextBox);});
       _paintItemText(canvas, rect, board.logicalItems[board.blockIndex(itemIndex)][board.blockLine(itemIndex)],
           fontSize, font_color);
     }
@@ -252,9 +251,8 @@ class LogicPuzzleBoardPainter extends CustomPainter {
         rect = Rect.fromLTWH(xInnerStart + xInner, yOuter, rect.height, rect.width);
         var rectTextBox = Rect.fromLTWH(rect.left, rect.bottom - rect.width * 2, rect.height * 2, rect.width * 2);
         
-        _touchCanvas .drawRect(rect, paintTransparent,
-            onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);},
-            onLongPressEnd: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
+        _touchCanvas.drawRect(rect, paintTransparent,
+            onTapUp: (tapDetail) {showInputTextBox(Point<int>(itemIndex, -1), rectTextBox);});
       }
     }
     canvas.restore();
