@@ -117,6 +117,10 @@ class _AboutState extends State<About> {
                             'Andreas \'TeamBirdy2404\' (Manual & Symbol Tables)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
+                            'Maria \'Nebelsturm\' (Test)',
+                            'Henrike (Test & Translations)',
+                            'Marcia (Test & Translations)',
+                            'Olli \'Rinser\' (Code & Symbol Tables)',
                           ].join('\n') +
                           '\n')
                 ], style: gcwTextStyle()),
@@ -205,6 +209,7 @@ class _AboutState extends State<About> {
                     '83_Seth',
                     'Amelie2401',
                     'Andreas E.',
+                    'Andreas L.',
                     'baer2006',
                     'Bleg1966',
                     'Cycle73',
@@ -241,7 +246,6 @@ class _AboutState extends State<About> {
                     'Mondlinger',
                     'MrDosinger & MsDosinger',
                     'musketon',
-                    'Nebelsturm',
                     'Niki R.',
                     'Palk \'geogedoens.de\'',
                     'Pamakaru',
