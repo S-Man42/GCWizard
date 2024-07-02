@@ -89,7 +89,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   controller: _newFormulaController,
                   onChanged: (text) {
                     setState(() {
-                      _currentNewFormula = text;
+                      _currentNewFormula = normalizeCharacters(text); // change quotation marks
                     });
                   },
                 ),
@@ -255,7 +255,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                           focusNode: _editFocusNode,
                           onChanged: (text) {
                             setState(() {
-                              _currentEditedFormula = text;
+                              _currentEditedFormula = normalizeCharacters(text); // change quotation marks
                             });
                           },
                         ),
