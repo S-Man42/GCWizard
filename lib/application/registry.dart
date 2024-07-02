@@ -4046,6 +4046,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: const [
       'symbol_fakoo',
     ]),
+    GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
+      'symbol_fantastic',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: const [
       'symbol_fez',
     ]),
@@ -4111,6 +4114,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: const [
       'symbol_gc_attributes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'geovlog', symbolSearchStrings: const [
+      'symbol_geovlog',
     ]),
     GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: const [
       'symbol_gernreich',
@@ -4451,6 +4457,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: const [
       'symbol_planets',
     ]),
+    GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
+      'symbol_pleiadian',
+    ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: const [
       'pokemon',
       'symbol_pokemon_unown',
@@ -4645,6 +4654,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: const [
       'symbol_tines',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tll', symbolSearchStrings: const [
+      'symbol_tll',
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
       'tomtom',
