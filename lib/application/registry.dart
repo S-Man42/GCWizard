@@ -3961,6 +3961,9 @@ void initializeRegistry(BuildContext context) {
       'symbol_cookewheatstone',
       'symbol_cookewheatstone_5',
     ]),
+    GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
+      'symbol_cosmic',
+    ]),
     GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: const [
       'countries',
       'symbol_flags',
