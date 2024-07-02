@@ -47,7 +47,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {
-        var _actual = await GCWizardScriptInterpretScript(elem['code'] as String, (elem['input'] as String?) ?? '', LatLng(0.0, 0.0), null);
+        var _actual = await GCWizardScriptInterpretScript(elem['code'] as String, (elem['input'] as String?) ?? '', const LatLng(0.0, 0.0), null);
 
         expect(_actual.STDOUT, (elem['expectedOutput'] as String));
         expect(_actual.ErrorMessage, elem['error'] ?? '');

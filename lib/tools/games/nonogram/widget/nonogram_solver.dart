@@ -612,9 +612,13 @@ class NonogramSolverState extends State<NonogramSolver> {
                           TextButton(
                               onPressed: () {
                                 setState(() {
-                                  puzzle.resetCalculation();
-                                  puzzle.clearRowHints();
-                                  puzzle.clearColumnHints();
+                                  if (puzzle.encryptVersion && _currentEncryptStep == _EncryptWizardStep.DRAW_MANUALLY) {
+                                    puzzle.board = Puzzle.generate(puzzle.rowCount, puzzle.columnCount);
+                                  } else {
+                                    puzzle.resetCalculation();
+                                    puzzle.clearRowHints();
+                                    puzzle.clearColumnHints();
+                                  }
                                   _currentDecryptStep = _DecryptWizardStep.FILE_OR_MANUAL;
                                   Navigator.pop(context);
                                 });

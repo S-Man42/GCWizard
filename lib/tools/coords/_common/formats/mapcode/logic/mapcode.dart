@@ -59,7 +59,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
   }
 
   static MapCode? parse(String input, {String territory = ''}) {
-    return _parseMapCode(input, territory: territory) ?? MapCode([], defaultMapCodeType);
+    return _parseMapCode(input, territory: territory);
   }
 
   @override
