@@ -118,7 +118,7 @@ class _AboutState extends State<About> {
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                             'Maria \'Nebelsturm\' (Test)',
-                            'Henrike (Test & Translations)',
+                            'Henrike \'69and71\' (Test & Translations)',
                             'Marcia \'Linsty\' (Test & Translations)',
                             'Olli \'Rinser\' (Code & Symbol Tables)',
                           ].join('\n') +
@@ -172,7 +172,7 @@ class _AboutState extends State<About> {
                             'drobec (SK)',
                             'emrszon (ES)',
                             'hakuchi (IT)',
-                            'Henrike71 (NL, SV)',
+                            '69and71 (NL, SV)',
                             'Igor Č. (SK)',
                             'j_janus (PL)',
                             'Joao F. (PT)',
