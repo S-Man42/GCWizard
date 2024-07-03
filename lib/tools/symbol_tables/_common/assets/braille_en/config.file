@@ -1,3 +1,4 @@
 {
+    "case_sensitive" : false,
 	"translate" : ["capital_follows", "number_follows", "mathmatics_follows"]
 }
