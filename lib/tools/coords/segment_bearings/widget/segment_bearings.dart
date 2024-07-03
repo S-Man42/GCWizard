@@ -87,7 +87,6 @@ class _SegmentBearingsState extends State<SegmentBearings> {
                 },
               )
             : GCWCoords(
-                notitle: true,
                 coordsFormat: _currentCoords1.format,
                 onChanged: (ret) {
                   setState(() {
@@ -120,7 +119,6 @@ class _SegmentBearingsState extends State<SegmentBearings> {
                 },
               )
             : GCWCoords(
-                notitle: true,
                 coordsFormat: _currentCoords2.format,
                 onChanged: (ret) {
                   setState(() {
