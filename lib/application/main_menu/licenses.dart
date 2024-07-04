@@ -194,10 +194,7 @@ class _LicensesState extends State<Licenses> {
               i18n(context, 'symboltables_gc_attributes_ids_title'),
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
-            [
-              i18n(context, 'symboltables_geovlog_title'),
-              'GEOVLOGS.nl (Permitted via email)'
-            ],
+            [i18n(context, 'symboltables_geovlog_title'), 'GEOVLOGS.nl (Permitted via email)'],
             [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
             [
               i18n(context, 'symboltables_kabouter_abc_title'),
@@ -228,15 +225,9 @@ class _LicensesState extends State<Licenses> {
             [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
             [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_tifinagh_title'), '(WikiCommons, CC BY-SA 4.0)'],
-            [
-              i18n(context, 'symboltables_tll_title'),
-              'GEOVLOGS.nl (Permitted via email)'
-            ],
+            [i18n(context, 'symboltables_tll_title'), 'GEOVLOGS.nl (Permitted via email)'],
             [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
-            [
-              i18n(context, 'symboltables_steinheil_title'),
-              '(WikiCommons, CC BY-SA 4.0)'
-            ],
+            [i18n(context, 'symboltables_steinheil_title'), '(WikiCommons, CC BY-SA 4.0)'],
             [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
           ], flexValues: const [
             1,
