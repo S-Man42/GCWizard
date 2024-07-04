@@ -195,7 +195,7 @@ class _LicensesState extends State<Licenses> {
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
             [
-              i18n(context, 'symbol_geovlog_title'),
+              i18n(context, 'symboltables_geovlog_title'),
               'GEOVLOGS.nl (Permitted via email)'
             ],
             [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
@@ -229,7 +229,7 @@ class _LicensesState extends State<Licenses> {
             [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_tifinagh_title'), '(WikiCommons, CC BY-SA 4.0)'],
             [
-              i18n(context, 'symbol_tll_title'),
+              i18n(context, 'symboltables_tll_title'),
               'GEOVLOGS.nl (Permitted via email)'
             ],
             [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
