@@ -145,7 +145,7 @@ class _GCWTextExportState extends State<GCWTextExport> {
                               if (_currentExportText != null) {
                                 try {
                                   var fileName = buildFileNameWithDate((widget.saveFilenamePrefix ?? 'export') + '_', widget.saveFileType ?? FileType.TXT);
-                                  saveStringToFile(context, _currentExportText!, fileName);
+                                  saveStringToFile(context, _currentExportText!, fileName).whenComplete(() => Navigator.pop(context));
                                 } on Exception {}
                               }
                             },
