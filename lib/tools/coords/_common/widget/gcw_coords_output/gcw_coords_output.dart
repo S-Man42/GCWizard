@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -68,13 +66,22 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             GCWButton(
               text: i18n(context, 'coords_show_on_map'),
               onPressed: () {
-                _openInMap();
+                openInMap(
+                  context,
+                  List<GCWMapPoint>.from(widget.points),
+                  mapPolylines: List<GCWMapPolyline>.from(widget.polylines)
+                );
               },
             ),
             GCWButton(
               text: i18n(context, 'coords_show_on_openmap'),
               onPressed: () {
-                _openInMap(freeMap: true);
+                openInMap(
+                  context,
+                  List<GCWMapPoint>.from(widget.points),
+                  isCommonMap: true,
+                  mapPolylines: List<GCWMapPolyline>.from(widget.polylines)
+                );
               },
             )
           ],
@@ -95,21 +102,6 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           },
         ),
         children: _children);
-  }
-
-  void _openInMap({bool freeMap = false}) {
-    Navigator.push(
-        context,
-        NoAnimationMaterialPageRoute<GCWTool>(
-            builder: (context) => GCWTool(
-                tool: GCWMapView(
-                  points: List<GCWMapPoint>.from(widget.points),
-                  polylines: List<GCWMapPolyline>.from(widget.polylines),
-                  isEditable: freeMap,
-                ),
-                id: freeMap ? 'coords_openmap' : 'coords_map_view',
-                autoScroll: false,
-                suppressToolMargin: true)));
   }
 
   Future<void> _exportCoordinates(

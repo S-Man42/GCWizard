@@ -1181,7 +1181,7 @@ IconData mapIconFromPreference() {
 }
 
 void openInMap(BuildContext context, List<GCWMapPoint> mapPoints,
-    {List<GCWMapPolyline>? mapPolylines, bool freeMap = false}) {
+    {List<GCWMapPolyline>? mapPolylines, bool isCommonMap = false}) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
@@ -1189,9 +1189,9 @@ void openInMap(BuildContext context, List<GCWMapPoint> mapPoints,
               tool: GCWMapView(
                 points: List<GCWMapPoint>.from(mapPoints),
                 polylines: mapPolylines == null ? null : List<GCWMapPolyline>.from(mapPolylines),
-                isEditable: freeMap,
+                isEditable: isCommonMap,
               ),
-              id: freeMap ? 'coords_openmap' : 'coords_map_view',
+              id: 'coords_openmap',
               autoScroll: false,
               suppressToolMargin: true)));
 }
