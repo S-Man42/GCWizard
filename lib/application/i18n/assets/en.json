@@ -2135,6 +2135,7 @@
   "coords_openmap_hideownposition": "Hide own position",
   "coords_openmap_showownposition": "Show own position",
   "coords_openmap_usethismarkericon": "Use this marker icon",
+  "coords_openmap_mergepoints": "Merge overlapping points",
   "coords_averaging_title": "Coordinate Measurement",
   "coords_averaging_start": "Start Measurement",
   "coords_averaging_stop": "Stop Measurement",

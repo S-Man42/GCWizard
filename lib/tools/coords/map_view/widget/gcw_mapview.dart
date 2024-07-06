@@ -219,28 +219,28 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                  initialCameraFit: CameraFit.bounds(bounds: _getBounds(), padding: const EdgeInsets.all(30.0)),
-                  /// IMPORTANT for dragging
-                  minZoom: 1.0,
-                  maxZoom: 18.0,
-                  interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate), // suppress rotation
-                  onTap: (_, __) => _popupLayerController.hidePopup(),
-                  onLongPress: widget.isEditable && !_isPointsHidden // == _persistanceAdapter is set
-                      ? (_, LatLng coordinate) {
-                          setState(() {
-                            if (_persistanceAdapter != null) {
-                              var newPoint = _persistanceAdapter!.addMapPoint(coordinate);
+                initialCameraFit: CameraFit.bounds(bounds: _getBounds(), padding: const EdgeInsets.all(30.0)),
+                /// IMPORTANT for dragging
+                minZoom: 1.0,
+                maxZoom: 18.0,
+                interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate), // suppress rotation
+                onTap: (_, __) => _popupLayerController.hidePopup(),
+                onLongPress: widget.isEditable && !_isPointsHidden // == _persistanceAdapter is set
+                  ? (_, LatLng coordinate) {
+                      setState(() {
+                        if (_persistanceAdapter != null) {
+                          var newPoint = _persistanceAdapter!.addMapPoint(coordinate);
 
-                              if (_isPolylineDrawing) {
-                                if (widget.polylines.isEmpty) _persistanceAdapter!.createMapPolyline();
+                          if (_isPolylineDrawing) {
+                            if (widget.polylines.isEmpty) _persistanceAdapter!.createMapPolyline();
 
-                                _persistanceAdapter!.addMapPointIntoPolyline(newPoint, widget.polylines.last);
-                                _isPolylineDrawingFirstPoint = false;
-                              }
-                            }
-                          });
+                            _persistanceAdapter!.addMapPointIntoPolyline(newPoint, widget.polylines.last);
+                            _isPolylineDrawingFirstPoint = false;
+                          }
                         }
-                      : null),
+                      });
+                    }
+                  : null),
               children: layers,
             ),
             Positioned(
@@ -714,6 +714,14 @@ class _GCWMapViewState extends State<GCWMapView> {
                       });
                     }),
               ]);
+        },
+      ),
+      GCWPopupMenuItem(
+        child: iconedGCWPopupMenuItem(context, Icons.merge_type, i18n(context, 'coords_openmap_mergepoints'), rotateDegrees: 180),
+        action: (index) {
+          setState(() {
+            _persistanceAdapter!.mergePoints();
+          });
         },
       ),
       GCWPopupMenuItem(
