@@ -187,11 +187,14 @@ class _LicensesState extends State<Licenses> {
             [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
             [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
+            [i18n(context, 'symboltables_fantastic_title'),
+              'nederlandse-fantasia.fandom.com/wiki/Fantastisch (CC BY-SA 3.0)'],
             [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
             [
               i18n(context, 'symboltables_gc_attributes_ids_title'),
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
+            [i18n(context, 'symboltables_geovlog_title'), 'GEOVLOGS.nl (Permitted via email)'],
             [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
             [
               i18n(context, 'symboltables_kabouter_abc_title'),
@@ -207,7 +210,7 @@ class _LicensesState extends State<Licenses> {
             ],
             [
               i18n(context, 'symboltables_maya_numbers_glyphs_title'),
-              'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reporductions of this educational item are allowed. www.unitycorps.org)'
+              'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reproductions of this educational item are allowed. www.unitycorps.org)'
             ],
             [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
             [
@@ -221,12 +224,10 @@ class _LicensesState extends State<Licenses> {
             [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
             [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
             [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_tifinagh_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
+            [i18n(context, 'symboltables_tifinagh_title'), '(WikiCommons, CC BY-SA 4.0)'],
+            [i18n(context, 'symboltables_tll_title'), 'GEOVLOGS.nl (Permitted via email)'],
             [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
-            [
-              i18n(context, 'symboltables_steinheil_title'),
-              'https://de.wikipedia.org/wiki/Steinheilschrift (Wiki Commons)'
-            ],
+            [i18n(context, 'symboltables_steinheil_title'), '(WikiCommons, CC BY-SA 4.0)'],
             [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
           ], flexValues: const [
             1,
