@@ -233,6 +233,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/hylian_twilight_princess_wii/
     - lib/tools/symbol_tables/_common/assets/hylian_wind_waker/
     - lib/tools/symbol_tables/_common/assets/hymmnos/
+    - lib/tools/symbol_tables/_common/assets/ice_lolly/
     - lib/tools/symbol_tables/_common/assets/icecodes/
     - lib/tools/symbol_tables/_common/assets/iching/
     - lib/tools/symbol_tables/_common/assets/illuminati_v1/
