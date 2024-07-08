@@ -5,6 +5,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart'
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
@@ -37,8 +38,7 @@ class _IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
   var _currentOutputFormat = defaultCoordinateFormat;
   Length _currentOutputUnit = defaultLengthUnit;
-  List<String> _currentOutput = [];
-  List<String> _currentCopyableOutput = [];
+  List<Object> _currentOutput = [];
   var _currentMapPoints = <GCWMapPoint>[];
 
   @override
@@ -112,7 +112,7 @@ class _IntersectThreeCirclesState extends State<IntersectThreeCircles> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(outputs: _currentOutput, copyTexts: _currentCopyableOutput, points: _currentMapPoints),
+        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints),
       ],
     );
   }
@@ -191,7 +191,6 @@ class _IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
     if (_currentIntersections.isEmpty) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
-      _currentCopyableOutput = _currentOutput;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});
       });
@@ -207,14 +206,17 @@ class _IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         .toList());
 
     _currentOutput = _currentIntersections.map((intersection) {
-      return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid)} '
+      var outputText = '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid)} '
           '(${i18n(context, "coords_intersectthreecircles_accuracy")}: '
           '${doubleFormat.format(_currentOutputUnit.fromMeter(intersection.accuracy))} ${_currentOutputUnit.symbol})';
+      var copyText = formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid, false);
+
+      return GCWOutputText(
+        text: outputText,
+        copyText: copyText
+      );
     }).toList();
 
-    _currentCopyableOutput = _currentIntersections.map((intersection) {
-      return formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid);
-    }).toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

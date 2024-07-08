@@ -408,6 +408,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute<GCWTool>(
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child.parent),
+                            toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_lineeditor_title'),
                             id: 'coords_openmap_lineeditor'))).whenComplete(() {
                   setState(() {
                     Navigator.pop(context);
@@ -423,7 +424,8 @@ class _GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute<GCWTool>(
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnitGCWMapView),
-                            id: 'coords_openmap_lineeditor'))).whenComplete(() {
+                            toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_pointeditor_title'),
+                            id: 'coords_openmap_pointeditor'))).whenComplete(() {
                   setState(() {
                     if (_persistanceAdapter != null) {
                       _persistanceAdapter!.updateMapPoint(mapPoint);
@@ -539,7 +541,6 @@ class _GCWMapViewState extends State<GCWMapView> {
 
       return _GCWMarker(
           coordinateDescription: _buildPopupCoordinateDescription(_point),
-          coordinateText: _buildPopupCoordinateText(_point),
           width: 28.3,
           height: 28.3,
           mapPoint: _point,
@@ -643,6 +644,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                   builder: (context) => GCWTool(
                       tool: MapPointEditor(
                           mapPoint: mapPoint, lengthUnit: defaultLengthUnitGCWMapView),
+                      toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_pointeditor_title'),
                       id: 'coords_openmap_pointeditor'))).whenComplete(() {
                 setState(() {
                   _updateMapPoint(mapPoint);
@@ -841,11 +843,11 @@ class _GCWMapViewState extends State<GCWMapView> {
     }
   }
 
-  String? _buildPopupCoordinateText(GCWMapPoint point) {
+  String? _buildPopupCoordinateText(GCWMapPoint point, {required bool rounded}) {
     var coordinateFormat = defaultCoordinateFormat;
     if (point.coordinateFormat != null) coordinateFormat = point.coordinateFormat!;
 
-    return formatCoordOutput(point.point, coordinateFormat, Ellipsoid.WGS84);
+    return formatCoordOutput(point.point, coordinateFormat, Ellipsoid.WGS84, rounded);
   }
 
   String? _buildPopupCoordinateDescription(GCWMapPoint point) {
@@ -924,7 +926,11 @@ class _GCWMapViewState extends State<GCWMapView> {
               ],
             ),
             Container(margin: const EdgeInsets.only(bottom: 5)),
-            GCWOutputText(text: gcwMarker.coordinateText, style: gcwDialogTextStyle()),
+            GCWOutputText(
+              text: _buildPopupCoordinateText(gcwMarker.mapPoint, rounded: true),
+              copyText: _buildPopupCoordinateText(gcwMarker.mapPoint, rounded: false),
+              style: gcwDialogTextStyle()
+            ),
             gcwMarker.mapPoint.hasCircle()
               ? GCWOutputText(
                   text:
@@ -956,6 +962,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                                     builder: (context) => GCWTool(
                                         tool: MapPointEditor(
                                             mapPoint: point, lengthUnit: defaultLengthUnitGCWMapView),
+                                        toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_pointeditor_title'),
                                         id: 'coords_openmap_pointeditor'))).whenComplete(() {
                               setState(() {
                                 _updateMapPoint(point);
@@ -1122,12 +1129,10 @@ class _GCWMapViewState extends State<GCWMapView> {
 }
 
 class _GCWMarker extends Marker {
-  final String? coordinateText;
   final String? coordinateDescription;
   final GCWMapPoint mapPoint;
 
   _GCWMarker({
-    this.coordinateText,
     this.coordinateDescription,
     required this.mapPoint,
     required Widget child,

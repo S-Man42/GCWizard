@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_bearing.dart';
@@ -32,7 +32,7 @@ class _IntersectBearingsState extends State<IntersectBearings> {
   var _currentBearing2 = defaultDoubleText;
 
   var _currentOutputFormat = defaultCoordinateFormat;
-  List<String> _currentOutput = [];
+  List<Object> _currentOutput = [];
 
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
@@ -136,7 +136,7 @@ class _IntersectBearingsState extends State<IntersectBearings> {
         markerText: i18n(context, 'coords_common_intersection'),
         coordinateFormat: _currentOutputFormat));
 
-    _currentOutput = [formatCoordOutput(_currentIntersection!, _currentOutputFormat, defaultEllipsoid)];
+    _currentOutput = [buildCoordinate(_currentOutputFormat, _currentIntersection!)];
 
     _currentMapPolylines = [
       GCWMapPolyline(points: [_currentMapPoints[0], _getEndLine1()]),

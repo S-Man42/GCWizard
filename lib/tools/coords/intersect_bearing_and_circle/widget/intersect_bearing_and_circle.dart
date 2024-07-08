@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart'
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_bearing.dart';
@@ -37,7 +37,7 @@ class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> 
   var _currentRadiusCircle = 0.0;
 
   var _currentOutputFormat = defaultCoordinateFormat;
-  List<String> _currentOutput = [];
+  List<Object> _currentOutput = [];
 
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
@@ -181,7 +181,7 @@ class _IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> 
         .toList());
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid))
+        .map((intersection) => buildCoordinate(_currentOutputFormat, intersection))
         .toList();
 
     _currentMapPolylines = [

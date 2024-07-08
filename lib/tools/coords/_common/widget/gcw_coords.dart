@@ -225,7 +225,7 @@ class _GCWCoordsState extends State<GCWCoords> {
               insertIntoGCWClipboard(
                   context,
                   _currentCoordsLatLng != null
-                      ? formatCoordOutput(_currentCoordsLatLng, _currentCoordinateFormat, defaultEllipsoid)
+                      ? formatCoordOutput(_currentCoordsLatLng, _currentCoordinateFormat, defaultEllipsoid, false)
                       : '');
             }),
         Container(width: DEFAULT_MARGIN),

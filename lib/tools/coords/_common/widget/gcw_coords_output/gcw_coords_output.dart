@@ -6,29 +6,34 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<Object> outputs;
-  final List<String>? copyTexts;
   late final List<GCWMapPoint> points;
   late final List<GCWMapPolyline> polylines;
   final bool? mapButtonTop;
   final String? title;
+  late final Ellipsoid ellipsoid;
 
   GCWCoordsOutput(
       {Key? key,
       required this.outputs,
-      this.copyTexts,
       List<GCWMapPoint>? points,
       List<GCWMapPolyline>? polylines,
       this.mapButtonTop = false,
-      this.title})
+      this.title,
+      Ellipsoid? ellipsoid})
       : super(key: key) {
     this.points = points ?? [];
     this.polylines = polylines ?? [];
+    this.ellipsoid = ellipsoid ?? defaultEllipsoid;
   }
 
   @override
@@ -46,9 +51,10 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
               Container(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: GCWOutput(
-                  child: output,
-                  copyText:
-                      widget.copyTexts != null && widget.copyTexts!.length > index ? widget.copyTexts![index] : null,
+                  child: output is BaseCoordinate ? formatCoordOutput(output.toLatLng()!, output.format, widget.ellipsoid) : output,
+                  copyText: output is BaseCoordinate
+                      ? formatCoordOutput(output.toLatLng()!, output.format, widget.ellipsoid, false)
+                      : ((output is String) || (output is int) || (output is double) ? output.toString() : null)
                 ),
               ));
         })
