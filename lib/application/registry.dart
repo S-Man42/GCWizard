@@ -4986,8 +4986,8 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: const [
       'symbol_hymmnos',
     ]),
-    GCWSymbolTableTool(symbolKey: 'ice_lolly', symbolSearchStrings: const [
-      'symbol_ice_lolly',
+    GCWSymbolTableTool(symbolKey: 'ice_lolly_ding', symbolSearchStrings: const [
+      'symbol_ice_lolly_ding',
     ]),
     GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: const [
       'icecodes',
