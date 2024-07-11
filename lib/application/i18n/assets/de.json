@@ -3606,7 +3606,7 @@
   "numeralwords_s": "süd",
   "numeralwords_e": "ost",
   "numeralwords_w": "west",
-  "numeralwords_syntax_highlight": "Fundstellem im Text",
+  "numeralwords_syntax_highlight": "Fundstellen im Text",
   "onetimepad_title": "One-Time Pad",
   "onetimepad_description": "Einmalschlüssel: Addiere Schlüsselwort zu Text",
   "onetimepad_example": "ABC + ABC → BDF",

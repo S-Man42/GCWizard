@@ -10,6 +10,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
@@ -26,6 +27,7 @@ class NumeralWordsTextSearch extends StatefulWidget {
 class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   late TextEditingController _decodeController;
   late TextEditingController _codeControllerHighlighted;
+  late bool _supressSpaces;
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
@@ -39,6 +41,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
     _codeControllerHighlighted = TextEditingController(text: '');
+    _supressSpaces = false;
   }
 
   @override
@@ -98,6 +101,15 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
             });
           },
         ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'numeralwords_suppress_spaces'),
+          value: _supressSpaces,
+          onChanged: (value) {
+            setState(() {
+              _supressSpaces = value;
+            });
+          },
+        ),
         GCWDefaultOutput(
           child: _buildOutput(context),
         )
@@ -150,7 +162,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     return Column(
       children: <Widget>[
         GCWOutputText(
-          text: output.join(' '),
+          text: output.join((_supressSpaces) ? '' : ' '),
         ),
         output.isEmpty
             ? Container()
