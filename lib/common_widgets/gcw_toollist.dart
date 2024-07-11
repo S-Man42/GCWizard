@@ -92,7 +92,7 @@ class _GCWToolListState extends State<GCWToolList> {
         color: themeColors().mainFont(),
         onPressed: () {
           if (tool.isFavorite) {
-            showDeleteAlertDialog(context, tool.toolName ?? UNKNOWN_ELEMENT, () {
+            showDeleteFavoriteAlertDialog(context, tool.toolName ?? UNKNOWN_ELEMENT, () {
               Favorites.update(tool.longId, FavoriteChangeStatus.REMOVE);
 
               setState(() {
