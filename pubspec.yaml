@@ -414,6 +414,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/zodiac_signs_latin/
     - lib/tools/symbol_tables/_common/assets/zodiac_z340/
     - lib/tools/symbol_tables/_common/assets/zodiac_z408/
+    - lib/tools/uncategorized/wedding_anniversaries/assets/
 
 flutter_icons:
   image_path: "assets/logo/circle_border_nightly.png"
