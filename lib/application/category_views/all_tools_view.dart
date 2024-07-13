@@ -253,6 +253,7 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_t
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
 import 'package:gc_wizard/tools/science_and_technology/physical_constants/widget/physical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/piano/widget/piano.dart';
+import 'package:gc_wizard/tools/science_and_technology/postcode/widget/postcode.dart';
 import 'package:gc_wizard/tools/science_and_technology/projectiles/widget/projectiles.dart';
 import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/widget/quadratic_equation.dart';
 import 'package:gc_wizard/tools/science_and_technology/recycling/widget/recycling.dart';
@@ -682,6 +683,7 @@ void _initStaticToolList() {
       className(const PhiSelection()),
       className(const PhysicalConstants()),
       className(const Piano()),
+      className(const Postcode()),
       className(const Piet()),
       className(const PiSelection()),
       className(const PigLatin()),

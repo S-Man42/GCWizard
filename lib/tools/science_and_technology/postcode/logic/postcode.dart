@@ -1,22 +1,27 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
+import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 enum PostcodeFormat { Linear30, Linear36, Linear69, Linear80 }
 enum ErrorCode { Ok, Character, Length, Invalid }
 
-class postcodeResult {
+class PostcodeResult {
   final String postalCode;
   final String postalCodeCheckDigit;
+  final bool postalCodeCheckDigitOk;
   final String streetCode;
   final String houseNumber;
   final String feeProtectionCode;
   final PostcodeFormat format;
   final ErrorCode errorCode;
 
-  const postcodeResult(this.postalCode, this.postalCodeCheckDigit, this.streetCode,
+  const PostcodeResult(this.postalCode, this.postalCodeCheckDigit, this.postalCodeCheckDigitOk , this.streetCode,
       this.houseNumber, this.feeProtectionCode, this.format, this.errorCode);
   @override
   String toString() {
-    return 'postalCode: ' + postalCode + ' postalCodeCheckDigit: ' + postalCodeCheckDigit + ' streetCode: ' + streetCode +
+    return 'postalCode: ' + postalCode + ' postalCodeCheckDigit: ' + postalCodeCheckDigit +
+        ' postalCodeCheckDigitOk: ' + postalCodeCheckDigitOk.toString() + ' streetCode: ' + streetCode +
         ' houseNumber: ' + houseNumber + ' feeProtectionCode: ' + feeProtectionCode +
         ' format: ' + format.toString() + ' errorCode: ' + errorCode.toString();
   }
@@ -48,20 +53,77 @@ const Map<String, String> _8421 = {
   '0110': '9',
 };
 
-postcodeResult decodePostcode(String code) {
+PostcodeResult decodePostcode(String code) {
   var _code = _cleanCode(code);
   if (_code == null) {
-    return const postcodeResult('','','','','', PostcodeFormat.Linear30, ErrorCode.Character);
+    return const PostcodeResult('','',false,'','','', PostcodeFormat.Linear30, ErrorCode.Character);
   }
   var format = _getFormat(_code);
   if (format == null) {
-    return const postcodeResult('','','','','', PostcodeFormat.Linear30, ErrorCode.Length);
+    return const PostcodeResult('','',false,'','','', PostcodeFormat.Linear30, ErrorCode.Length);
   }
   return _decode(_code, format);
 }
 
-postcodeResult _decode(String code, PostcodeFormat format) {
-  const invalidResult = postcodeResult('','','','','', PostcodeFormat.Linear30, ErrorCode.Invalid);
+String encodePostcode(String postalCode, int streetCode, int houseNumber, int feeProtectionCode,
+    PostcodeFormat format) {
+  if ((postalCode.length != 5 && format != PostcodeFormat.Linear30) ||
+      (postalCode.length != 4 && format == PostcodeFormat.Linear30)) {
+    return 'postalCodeLength';
+  }
+  if (int.tryParse(postalCode) == null) {
+    return 'postalCodeData';
+  }
+  if (streetCode.toString().length > 3) {
+    return 'streetCodeLength';
+  }
+  if (houseNumber.toString().length > 3) {
+    return 'houseNumberLength';
+  }
+  if (feeProtectionCode.toString().length > 2) {
+    return 'feeProtectionCodeLength';
+  }
+
+  var map01247 = switchMapKeyValue(_01247);
+  var map8421 = switchMapKeyValue(_8421);
+
+  var _postalCode = reverse(postalCode).split('').map((e) => map01247[e]! + '1').toList();
+  var _postalCodeCheckDigit = _calcChecksum(postalCode).split('').map((e) => map01247[e]! + '1').toList();
+  var _streetCode = reverse(streetCode.toString().padLeft(3, '0')).split('').map((e) => map8421[e]! + '1').toList();
+  var _houseNumber = reverse(houseNumber.toString().padLeft(3, '0')).split('').map((e) => map8421[e]! + '1').toList();
+  var _feeProtectionCode = reverse(feeProtectionCode.toString().padLeft(2, '0')).split('').
+        map((e) => map8421[e]! + '1').toList();
+
+  var output = <String>[];
+  switch (format) {
+    case PostcodeFormat.Linear30:
+    case PostcodeFormat.Linear36:
+      output.addAll(_postalCode);
+      output.addAll(_postalCodeCheckDigit);
+
+    case PostcodeFormat.Linear69:
+      output.add('0');
+      output.addAll(_houseNumber);
+      output.addAll(_streetCode);
+      output.addAll(_postalCode);
+      output.addAll(_postalCodeCheckDigit);
+      output.add('11');
+
+    case PostcodeFormat.Linear80:
+      output.add('0');
+      output.addAll(_feeProtectionCode);
+      output.addAll(_houseNumber);
+      output.addAll(_streetCode);
+      output.addAll(_postalCode);
+      output.addAll(_postalCodeCheckDigit);
+      output.add('11');
+  }
+
+  return output.join().replaceAll('0', '.').replaceAll('1', '|');
+}
+
+PostcodeResult _decode(String code, PostcodeFormat format) {
+  const invalidResult = PostcodeResult('','',false, '','','', PostcodeFormat.Linear30, ErrorCode.Invalid);
 
   switch (format) {
     case PostcodeFormat.Linear30:
@@ -75,10 +137,13 @@ postcodeResult _decode(String code, PostcodeFormat format) {
       for (var number in numbers) {
         if (_decode01247(number) == null) return invalidResult;
       }
-      return postcodeResult(
-          _decode01247(numbers[3])! + _decode01247(numbers[2])! +
-              _decode01247(numbers[1])! + _decode01247(numbers[0])!,
+      var postalCode =  _decode01247(numbers[3])! + _decode01247(numbers[2])! +
+          _decode01247(numbers[1])! + _decode01247(numbers[0])!;
+
+      return PostcodeResult(
+          postalCode,
           _decode01247(numbers[4])!,
+          _decode01247(numbers[4])! == _calcChecksum(postalCode),
           '','','',
           PostcodeFormat.Linear30, ErrorCode.Ok);
 
@@ -94,10 +159,13 @@ postcodeResult _decode(String code, PostcodeFormat format) {
       for (var number in numbers) {
         if (_decode01247(number) == null) return invalidResult;
       }
-      return postcodeResult(
-          _decode01247(numbers[4])! + _decode01247(numbers[3])! + _decode01247(numbers[2])! +
-            _decode01247(numbers[1])! + _decode01247(numbers[0])!,
+      var postalCode =  _decode01247(numbers[4])! + _decode01247(numbers[3])! + _decode01247(numbers[2])! +
+          _decode01247(numbers[1])! + _decode01247(numbers[0])!;
+
+      return PostcodeResult(
+          postalCode,
           _decode01247(numbers[5])!,
+          _decode01247(numbers[5])! == _calcChecksum(postalCode),
           '','','',
           PostcodeFormat.Linear36, ErrorCode.Ok);
 
@@ -121,10 +189,13 @@ postcodeResult _decode(String code, PostcodeFormat format) {
       for (var number in numbers) {
         if ((number.length == 5 ? _decode01247(number) : _decode8421(number)) == null) return invalidResult;
       }
-      return postcodeResult(
-          _decode01247(numbers[10])! + _decode01247(numbers[9])! + _decode01247(numbers[8])! +
-            _decode01247(numbers[7])! + _decode01247(numbers[6])!,
+      var postalCode = _decode01247(numbers[10])! + _decode01247(numbers[9])! + _decode01247(numbers[8])! +
+          _decode01247(numbers[7])! + _decode01247(numbers[6])!;
+
+      return PostcodeResult(
+          postalCode,
           _decode01247(numbers[11])!,
+          _decode01247(numbers[11])! == _calcChecksum(postalCode),
           _decode8421(numbers[5])! + _decode8421(numbers[4])! + _decode8421(numbers[3])!,
           _decode8421(numbers[2])! + _decode8421(numbers[1])! + _decode8421(numbers[0])!,
           '',
@@ -153,10 +224,13 @@ postcodeResult _decode(String code, PostcodeFormat format) {
       for (var number in numbers) {
         if ((number.length == 5 ? _decode01247(number) : _decode8421(number)) == null) return invalidResult;
       }
-      return postcodeResult(
-          _decode01247(numbers[12])! + _decode01247(numbers[11])! + _decode01247(numbers[10])! +
-            _decode01247(numbers[9])! + _decode01247(numbers[8])!,
+      var postalCode = _decode01247(numbers[12])! + _decode01247(numbers[11])! + _decode01247(numbers[10])! +
+          _decode01247(numbers[9])! + _decode01247(numbers[8])!;
+
+      return PostcodeResult(
+          postalCode,
           _decode01247(numbers[13])!,
+          _decode01247(numbers[13])! == _calcChecksum(postalCode),
           _decode8421(numbers[7])! + _decode8421(numbers[6])! + _decode8421(numbers[5])!,
           _decode8421(numbers[4])! + _decode8421(numbers[3])! + _decode8421(numbers[2])!,
           _decode8421(numbers[1])! + _decode8421(numbers[0])!,
@@ -164,7 +238,9 @@ postcodeResult _decode(String code, PostcodeFormat format) {
   }
 }
 
-
+String _calcChecksum(String postalCode) {
+  return (10 - (crossSum([int.parse(postalCode)]).toInt() % 10)).toString();
+}
 
 String? _decode01247(String code) {
   if (_01247.containsKey(code)) return _01247[code];

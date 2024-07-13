@@ -405,6 +405,7 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_t
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
 import 'package:gc_wizard/tools/science_and_technology/physical_constants/widget/physical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/piano/widget/piano.dart';
+import 'package:gc_wizard/tools/science_and_technology/postcode/widget/postcode.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/primes_integerfactorization/widget/primes_integerfactorization.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/primes_isprime/widget/primes_isprime.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/primes_nearestprime/widget/primes_nearestprime.dart';
@@ -1074,9 +1075,14 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Piano(), id: 'piano', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
-      'music'
-          'music_notes',
+      'music',
+      'music_notes',
       'piano',
+    ]),
+    GCWTool(tool: const Postcode(), id: 'postcode', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'postcode',
     ]),
     GCWTool(tool: const PiSelection(), id: 'pi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
