@@ -1083,6 +1083,8 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'postcode',
+      'symbol_postcode01247',
+      'symbol_postcode8421'
     ]),
     GCWTool(tool: const PiSelection(), id: 'pi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
