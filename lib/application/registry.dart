@@ -41,6 +41,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/maya_numbers
 import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_bell_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_busybeaver_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
@@ -2798,6 +2799,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const NumberSequenceLychrelSelection(), id: 'numbersequence_lychrel', searchKeys: const [
       'numbersequence',
       'numbersequence_lychrelselection',
+    ]),
+    GCWTool(tool: const NumberSequenceBusyBeaverSelection(), id: 'numbersequence_busy_beaver', searchKeys: const [
+      'numbersequence',
+      'numbersequence_busy_beavernumbersselection',
     ]),
 
     //NumberSequenceSelection Factorial ****************************************************************************************

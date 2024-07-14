@@ -28,6 +28,7 @@
 // https://oeis.org/A000668   Mersenne primes
 // https://oeis.org/A000043   Mersenne exponents
 // https://oeis.org/A023108   Lychrel numbers
+// https://oeis.org/A060843   Busy Beaver
 //
 // suggestions - https://en.wikipedia.org/wiki/List_of_integer_sequences
 // https://oeis.org/A008336   RecamánII           a(n+1) = a(n)/n if n|a(n) else a(n)*n, a(1) = 1.
@@ -81,6 +82,7 @@ const Map<NumberSequencesMode, String> NUMBERSEQUENCE_TITLE = {
   NumberSequencesMode.PERMUTABLE_PRIMES: 'numbersequence_permutableprimes_title',
   NumberSequencesMode.LUCKY_NUMBERS: 'numbersequence_luckynumbers_title',
   NumberSequencesMode.HAPPY_NUMBERS: 'numbersequence_happynumbers_title',
+  NumberSequencesMode.BUSY_BEAVER: 'numbersequence_busy_beaver_title',
 };
 
 class PositionOfSequenceOutput {
@@ -117,6 +119,7 @@ enum NumberSequencesMode {
   PERMUTABLE_PRIMES,
   LUCKY_NUMBERS,
   HAPPY_NUMBERS,
+  BUSY_BEAVER,
 }
 
 final Zero = BigInt.zero;
