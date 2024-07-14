@@ -1,39 +1,43 @@
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:path/path.dart';
+
 part 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/logic/wedding_anniversaries_data.dart';
 
-enum WeddingCountry { DE, UK, US, NL, DK, SW, FR, IT, ES }
+enum WeddingCountries { DE, UK, US, NL, DK, SW, FR, IT, ES }
 
-Map<String, List<String>> _countryAnniversaries (WeddingCountry country) {
+Map<String, List<String>> countryAnniversaries (WeddingCountries country) {
   switch (country) {
-    case WeddingCountry.DE:
+    case WeddingCountries.DE:
       return _anniversariesDE;
-    case WeddingCountry.UK:
+    case WeddingCountries.UK:
       return _anniversariesUK;
-    case WeddingCountry.US:
+    case WeddingCountries.US:
       return _anniversariesUS;
-    case WeddingCountry.NL:
+    case WeddingCountries.NL:
       return _anniversariesNL;
-    case WeddingCountry.DK:
+    case WeddingCountries.DK:
       return _anniversariesDK;
-    case WeddingCountry.SW:
+    case WeddingCountries.SW:
       return _anniversariesSW;
-    case WeddingCountry.FR:
+    case WeddingCountries.FR:
       return _anniversariesFR;
-    case WeddingCountry.IT:
+    case WeddingCountries.IT:
       return _anniversariesIT;
-    case WeddingCountry.ES:
+    case WeddingCountries.ES:
       return _anniversariesES;
   }
 }
 
-String getItems(WeddingCountry country, String year) {
-  var anniversaryList = _countryAnniversaries(country);
+String getItems(WeddingCountries country, String year) {
+  var anniversaryList = countryAnniversaries(country);
   var items = anniversaryList[year];
   return (items != null) ? items.join(", ") : '';
 }
 
 String getAllItems (String year) {
   List<String> allItems = [];
-  for (WeddingCountry country in WeddingCountry.values) {
+  for (WeddingCountries country in WeddingCountries.values) {
     var items = getItems(country, year);
     if (items.isNotEmpty) {
       allItems.add("${country.name}: $items");
@@ -42,12 +46,12 @@ String getAllItems (String year) {
   return allItems.join("\n");
 }
 
-Iterable<String> getAvailableYears(WeddingCountry country) {
-  return _countryAnniversaries(country).keys;
+Iterable<String> getAvailableYears(WeddingCountries country) {
+  return countryAnniversaries(country).keys;
 }
 
-String getYearFromItem(WeddingCountry country, String item) {
-  var anniversaryList = _countryAnniversaries(country);
+String getYearFromItem(WeddingCountries country, String item) {
+  var anniversaryList = countryAnniversaries(country);
   List<String> years = [];
   for (var entry in anniversaryList.entries){
     if (entry.value.contains(item)) {
