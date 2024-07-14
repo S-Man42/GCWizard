@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+// import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+// import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/logic/wedding_anniversaries.dart';
 
@@ -35,6 +36,7 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
     return Column(
       children: <Widget>[
         GCWDropDown<WeddingCountries>(
+          title: 'Language',
           value: _currentCountry,
           onChanged: (value) {
             setState(() {
@@ -42,75 +44,25 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
               _currentList = countryAnniversaries(_currentCountry);
             });
           },
-          items: WeddingCountries.entries.map((system) {
-            return GCWDropDownMenuItem(
-              value: system.key,
-              child: i18n(context, system.value),
-            );
+          items: WeddingCountries.values.map( (lang) {
+             return GCWDropDownMenuItem(value: lang, child: lang.name);
           }).toList(),
         ),
-        if (_currentIceCodeSystem == IceCodeSystem.BALTIC)
-          GCWDropDown<IceCodeSubSystem>(
-            value: _currentIceCodeSubSystemBaltic,
-            onChanged: (value) {
-              setState(() {
-                _currentIceCodeSubSystemBaltic = value;
-                _currentIceCodeSubSystem = value;
-              });
-            },
-            items: ICECODE_SUBSYSTEM_BALTIC.entries.map((system) {
-              return GCWDropDownMenuItem(
-                value: system.key,
-                child: i18n(context, system.value),
-              );
-            }).toList(),
-          ),
-        if (_currentIceCodeSystem == IceCodeSystem.EU)
-          GCWDropDown<IceCodeSubSystem>(
-            value: _currentIceCodeSubSystemEU,
-            onChanged: (value) {
-              setState(() {
-                _currentIceCodeSubSystemEU = value;
-                _currentIceCodeSubSystem = value;
-              });
-            },
-            items: ICECODE_SUBSYSTEM_EU.entries.map((system) {
-              return GCWDropDownMenuItem(
-                value: system.key,
-                child: i18n(context, system.value),
-              );
-            }).toList(),
-          ),
-        if (_currentIceCodeSystem == IceCodeSystem.WMO)
-          GCWDropDown<IceCodeSubSystem>(
-            value: _currentIceCodeSubSystemWMO,
-            onChanged: (value) {
-              setState(() {
-                _currentIceCodeSubSystemWMO = value;
-                _currentIceCodeSubSystem = value;
-              });
-            },
-            items: ICECODE_SUBSYSTEM_WMO.entries.map((system) {
-              return GCWDropDownMenuItem(
-                value: system.key,
-                child: i18n(context, system.value),
-              );
-            }).toList(),
-          ),
+
         _buildOutput()
       ],
     );
   }
 
   Widget _buildOutput() {
-    var iceCodeSubSystem = ICECODES[_currentIceCodeSystem]?[_currentIceCodeSubSystem];
-    if (iceCodeSubSystem == null) return const GCWDefaultOutput();
 
     return GCWDefaultOutput(
-        child: GCWColumnedMultilineOutput(
-            data: iceCodeSubSystem.entries.map((entry) {
-              return [entry.key, i18n(context, entry.value)];
-            }).toList(),
-            flexValues: const [1, 5]));
+          child: GCWText( text: _currentCountry.name),
+    );
+        // child: GCWColumnedMultilineOutput(
+        //     data: iceCodeSubSystem.entries.map((entry) {
+        //       return [entry.key, i18n(context, entry.value)];
+        //     }).toList(),
+        //     flexValues: const [1, 5]));
   }
 }
