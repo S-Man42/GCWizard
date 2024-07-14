@@ -375,6 +375,7 @@ import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/wi
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/widget/maya_calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/bell/widget/bell.dart';
+import 'package:gc_wizard/tools/science_and_technology/number_sequences/busybeaver/widget/busybeaver.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/catalan/widget/catalan.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/factorial/widget/factorial.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/fermat/widget/fermat.dart';
@@ -2805,6 +2806,33 @@ void initializeRegistry(BuildContext context) {
       'numbersequence_busy_beavernumbersselection',
     ]),
 
+    //NumberSequenceSelection BusyBeaver ****************************************************************************************
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverNthNumber(),
+        id: 'numbersequence_nth',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverRange(),
+        id: 'numbersequence_range',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverCheckNumber(),
+        id: 'numbersequence_check',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverDigits(),
+        id: 'numbersequence_digits',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverContainsDigits(),
+        id: 'numbersequence_containsdigits',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+
     //NumberSequenceSelection Factorial ****************************************************************************************
     GCWTool(
         tool: const NumberSequenceFactorialNthNumber(),
@@ -2831,6 +2859,7 @@ void initializeRegistry(BuildContext context) {
         id: 'numbersequence_containsdigits',
         id_prefix: 'factorial_',
         searchKeys: const []),
+
     //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
     GCWTool(
         tool: const NumberSequenceMersenneFermatNthNumber(),

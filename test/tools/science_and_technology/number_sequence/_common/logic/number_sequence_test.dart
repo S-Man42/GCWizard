@@ -18,7 +18,7 @@ void main() {
       {'sequence' : NumberSequencesMode.FACTORIAL,        'position' : 20, 'expectedOutput' : BigInt.from(2432902008176640000)},
       {'sequence' : NumberSequencesMode.LYCHREL,          'position' : 20, 'expectedOutput' : BigInt.from(1767)},
       {'sequence' : NumberSequencesMode.PRIMES,           'position' : 1818, 'expectedOutput' : BigInt.from(15601)},
-      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'position' : 4, 'expectedOutput' : BigInt.from(107)},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'position' : 3, 'expectedOutput' : BigInt.from(107)},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -45,7 +45,7 @@ void main() {
       {'sequence' : NumberSequencesMode.FACTORIAL,        'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(2432902008176640000)},
       {'sequence' : NumberSequencesMode.LYCHREL,          'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(1767)},
       {'sequence' : NumberSequencesMode.PRIMES,           'maxIndex' : 10000, 'expectedOutput' : 1818, 'number' : BigInt.from(15601)},
-      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'maxIndex' : 5, 'expectedOutput' : 4, 'number' : BigInt.from(107)},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'maxIndex' : 4, 'expectedOutput' : 3, 'number' : BigInt.from(107)},
 
     ];
 
@@ -73,7 +73,7 @@ void main() {
       {'sequence' : NumberSequencesMode.FACTORIAL,        'start' : 10, 'stop' : 15, 'expectedOutput' : [3628800, 39916800, 479001600, 6227020800, 87178291200, 1307674368000]},
       {'sequence' : NumberSequencesMode.LYCHREL,          'start' : 10, 'stop' : 15, 'expectedOutput' : [887, 978, 986, 1495, 1497]},
       {'sequence' : NumberSequencesMode.PRIMES,           'start' : 10, 'stop' : 15, 'expectedOutput' : [31, 37, 41, 43, 47, 53]},
-      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'start' : 1, 'stop' : 5, 'expectedOutput' : [1, 6, 11, 107, 47176870 ]},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'start' : 0, 'stop' : 4, 'expectedOutput' : [1, 6, 11, 107, 47176870 ]},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -151,7 +151,7 @@ void main() {
           38, 2)},
       {'sequence' : NumberSequencesMode.PRIMES,           'maxIndex' : 1000,  'number' : '1560', 'expectedOutput' : PositionOfSequenceOutput('15601',
           1818, 1)},
-      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'maxIndex' : 5,  'number' : '17', 'expectedOutput' : PositionOfSequenceOutput('47176870 ',
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'maxIndex' : 4,  'number' : '17', 'expectedOutput' : PositionOfSequenceOutput('47176870 ',
           5, 3)},
     ];
 

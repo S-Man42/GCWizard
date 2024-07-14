@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/widget/numbersequences_range.dart';
 
 class NumberSequenceBusyBeaverCheckNumber extends NumberSequenceCheckNumber {
-  const NumberSequenceBusyBeaverCheckNumber({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 5);
+  const NumberSequenceBusyBeaverCheckNumber({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 4);
 }
 
 class NumberSequenceBusyBeaverDigits extends NumberSequenceDigits {
@@ -15,13 +15,13 @@ class NumberSequenceBusyBeaverDigits extends NumberSequenceDigits {
 }
 
 class NumberSequenceBusyBeaverRange extends NumberSequenceRange {
-  const NumberSequenceBusyBeaverRange({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 5);
+  const NumberSequenceBusyBeaverRange({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 4);
 }
 
 class NumberSequenceBusyBeaverNthNumber extends NumberSequenceNthNumber {
-  const NumberSequenceBusyBeaverNthNumber({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 5);
+  const NumberSequenceBusyBeaverNthNumber({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 4);
 }
 
 class NumberSequenceBusyBeaverContainsDigits extends NumberSequenceContainsDigits {
-  const NumberSequenceBusyBeaverContainsDigits({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 5);
+  const NumberSequenceBusyBeaverContainsDigits({Key? key}) : super(key: key, mode: NumberSequencesMode.BUSY_BEAVER, maxIndex: 4);
 }

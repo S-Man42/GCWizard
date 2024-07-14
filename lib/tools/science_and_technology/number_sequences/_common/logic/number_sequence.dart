@@ -39,6 +39,7 @@
 
 import 'dart:math';
 
+import 'package:gc_wizard/tools/science_and_technology/number_sequences/busybeaver/logic/list_busy_beaver_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/happy_numbers/logic/list_happy_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/lucky_numbers/logic/list_lucky_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/lychrel/logic/list_lychrel_numbers.dart';
