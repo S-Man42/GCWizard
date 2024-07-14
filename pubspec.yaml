@@ -140,6 +140,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/chappe_1794/
     - lib/tools/symbol_tables/_common/assets/chappe_1809/
     - lib/tools/symbol_tables/_common/assets/chappe_v1/
+    - lib/tools/symbol_tables/_common/assets/chappe_v2/
     - lib/tools/symbol_tables/_common/assets/cherokee/
     - lib/tools/symbol_tables/_common/assets/chinese_numerals/
     - lib/tools/symbol_tables/_common/assets/christmas/

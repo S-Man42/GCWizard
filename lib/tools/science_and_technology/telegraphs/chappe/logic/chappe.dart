@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/lo
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum ChappeCodebook { ALPHABET, CODEPOINTS, DIGITS, KULIBIN }
+enum ChappeCodebook { ALPHABET, CODEPOINTS, DIGITS, KULIBIN, ALPHABET_2 }
 
 const Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   ChappeCodebook.DIGITS:
@@ -12,6 +12,8 @@ const Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
       CodebookConfig(title: 'telegraph_chappe_codepoints_title', subtitle: 'telegraph_chappe_codepoints_description'),
   ChappeCodebook.ALPHABET:
       CodebookConfig(title: 'telegraph_chappe_alphabet_title', subtitle: 'telegraph_chappe_alphabet_description'),
+  ChappeCodebook.ALPHABET_2:
+  CodebookConfig(title: 'telegraph_chappe_alphabet_2_title', subtitle: 'telegraph_chappe_alphabet_2_description'),
   ChappeCodebook.KULIBIN:
       CodebookConfig(title: 'telegraph_chappe_kulibin_title', subtitle: 'telegraph_chappe_kulibin_description'),
 };
@@ -30,6 +32,45 @@ const Map<String, List<String>> _CODEBOOK_CHAPPE_DIGITS = {
 };
 
 const Map<String, List<String>> _CODEBOOK_CHAPPE_ALPHABET = {
+  'A': ['10', '1r', '50', '5l'],
+  'B': ['20', '2r', '60', '6l'],
+  'C': ['30', '3r', '70', '7l'],
+  'D': ['40', '4r', '80', '8l'],
+  'E': ['10', '1l', '50', '5r'],
+  'F': ['20', '2l', '60', '6r'],
+  'G': ['30', '3l', '70', '7r'],
+  'H': ['40', '4l', '80', '8r'],
+  'I': ['10', '1l', '50', '5l'],
+  'K': ['20', '2l', '60', '6l'],
+  'L': ['30', '3l', '70', '7l'],
+  'M': ['40', '4l', '80', '8l'],
+  'N': ['10', '1r', '50', '5r'],
+  'O': ['20', '2r', '60', '6r'],
+  'P': ['30', '3r', '70', '7r'],
+  'Q': ['40', '4r', '80', '8r'],
+  'R': ['10', '1r', '50'],
+  'S': ['20', '2r', '60'],
+  'T': ['30', '3r', '70'],
+  'U': ['40', '4r', '80'],
+  'V': ['10', '50', '5r'],
+  'W': ['20', '60', '6r'],
+  'X': ['30', '70', '7r'],
+  'Y': ['40', '80', '8r'],
+  'Z': ['10', '50', '5l'],
+  '1': ['30', '70', '7l'],
+  '2': ['40', '80', '8l'],
+  '3': ['10', '1l', '50'],
+  '4': ['20', '2l', '60'],
+  '5': ['30', '3l', '70'],
+  '6': ['40', '4l', '80'],
+  '7': ['10', '50'],
+  '8': ['20', '60'],
+  '9': ['30', '70'],
+  '0': ['40', '80'],
+  '&': ['20', '60', '6l'],
+};
+
+const Map<String, List<String>> _CODEBOOK_CHAPPE_ALPHABET_2 = {
   'A': ['10', '1r', '50', '5l'],
   'B': ['20', '2r', '60', '6l'],
   'C': ['30', '3r', '70', '7l'],
@@ -216,6 +257,9 @@ Segments encodeChappe(String input, ChappeCodebook language) {
     case ChappeCodebook.ALPHABET:
       CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET;
       break;
+    case ChappeCodebook.ALPHABET_2:
+      CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET_2;
+      break;
     case ChappeCodebook.CODEPOINTS:
       CODEBOOK = _CODEBOOK_CHAPPE_CODEPOINTS;
       break;
@@ -246,6 +290,9 @@ SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
   switch (language) {
     case ChappeCodebook.ALPHABET:
       CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_ALPHABET);
+      break;
+    case ChappeCodebook.ALPHABET_2:
+      CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_ALPHABET_2);
       break;
     case ChappeCodebook.CODEPOINTS:
       CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_CODEPOINTS);
@@ -304,6 +351,9 @@ SegmentsText decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
   switch (language) {
     case ChappeCodebook.ALPHABET:
       CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET;
+      break;
+    case ChappeCodebook.ALPHABET_2:
+      CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET_2;
       break;
     case ChappeCodebook.CODEPOINTS:
       CODEBOOK = _CODEBOOK_CHAPPE_CODEPOINTS;
