@@ -1,7 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:path/path.dart';
-
 part 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/logic/wedding_anniversaries_data.dart';
 
 enum WeddingCountries { DE, UK, US, NL, DK, SW, FR, IT, ES }

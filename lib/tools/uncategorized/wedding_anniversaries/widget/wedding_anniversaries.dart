@@ -14,7 +14,7 @@ class WeddingAnniversaries extends StatefulWidget {
 }
 
 class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
-  late WeddingCountries _currentCountry;
+  late WeddingCountries _currentCountry = WeddingCountries.DE;
   late String _currentYear;
   late Map<String, List<String>> _currentList;
 
