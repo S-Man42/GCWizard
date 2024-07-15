@@ -183,8 +183,12 @@ class PostcodeState extends State<Postcode> {
       switch (result.errorCode) {
         case  ErrorCode.Ok:
           List<List<Object>> output = [];
+
+          output.add([i18n(context, 'common_type'), result.format]);
           output.add([i18n(context, 'common_type'), result.postalCode]);
-          output.add([i18n(context, 'enigma_turnovers'), result.postalCodeCheckDigit]);
+          var checkDigit = result.postalCodeCheckDigit;
+          checkDigit += ' (' + i18n(context, (result.postalCodeCheckDigitOk ? 'common_valid': 'common_invalid')) + ')';
+          output.add([i18n(context, 'enigma_turnovers'), checkDigit]);
 
           if (result.streetCode.isNotEmpty) {
             output.add([i18n(context, 'enigma_turnovers'), result.streetCode]);
@@ -197,13 +201,12 @@ class PostcodeState extends State<Postcode> {
           }
           return GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]);
         case ErrorCode.Length:
-          return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_length'));
+          return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_length') + '(30, 36, 69, 80)');
         case ErrorCode.Character:
           return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_character'));
         default:
           return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_data'));
       }
-
     }
   }
 
