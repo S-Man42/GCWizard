@@ -47,6 +47,7 @@ class _DINPaperFormatState extends State<DINPaperFormats> {
 
     return GCWColumnedMultilineOutput(
         hasHeader: true,
+        copyColumn: 1,
         data: output,
         flexValues: const [1, 2, 2]);
   }
