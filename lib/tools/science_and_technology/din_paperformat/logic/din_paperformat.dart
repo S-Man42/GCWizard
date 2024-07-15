@@ -48,15 +48,15 @@ const Map<String, FormatInfo> DINC_FORMAT = {
 };
 
 const Map<String, FormatInfo> DIND_FORMAT = {
-  'D0': FormatInfo('771 x 1090', '0,84 m²'),
-  'D1': FormatInfo('545 x 771', '0,42 m²'),
-  'D2': FormatInfo('385 x 545', '0,21 m²'),
-  'D3': FormatInfo('272 x 385', '0,10 m²'),
-  'D4': FormatInfo('192 x 272', '522 cm²'),
-  'D5': FormatInfo('136 x 192', '261,1 cm²'),
-  'D6': FormatInfo('96 x 136', '130,6 cm²'),
-  'D7': FormatInfo('68 x 96', '65,3 cm²'),
-  'D8': FormatInfo('48 x 68', '32,6 cm²'),
-  'D9': FormatInfo('34 x 48', '16,3 cm²'),
-  'D10': FormatInfo( '24 x 34', '8,2 cm²'),
+  'D0': FormatInfo('771 x 1090 mm', '0,84 m²'),
+  'D1': FormatInfo('545 x 771 mm', '0,42 m²'),
+  'D2': FormatInfo('385 x 545 mm', '0,21 m²'),
+  'D3': FormatInfo('272 x 385 mm', '0,10 m²'),
+  'D4': FormatInfo('192 x 272 mm', '522 cm²'),
+  'D5': FormatInfo('136 x 192 mm', '261,1 cm²'),
+  'D6': FormatInfo('96 x 136 mm', '130,6 cm²'),
+  'D7': FormatInfo('68 x 96 mm', '65,3 cm²'),
+  'D8': FormatInfo('48 x 68 mm', '32,6 cm²'),
+  'D9': FormatInfo('34 x 48 mm', '16,3 cm²'),
+  'D10': FormatInfo( '24 x 34 mm', '8,2 cm²'),
 };
