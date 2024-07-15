@@ -112,6 +112,7 @@ class PostcodeState extends State<Postcode> {
               flex: flexValues[1],
               child: GCWTextField(
                 controller: _encodePostalCodeController,
+                maxLength: _currentEncodeFormat == PostcodeFormat.Linear30 ? 4: 5,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                 ],
@@ -177,11 +178,28 @@ class PostcodeState extends State<Postcode> {
     if (_currentMode == GCWSwitchPosition.left) {
       var result = encodePostcode(_currentEncodePostalCode, _currentEncodeStreetCode, _currentEncodeHouseNumber,
           _currentEncodeFeeProtectionCode, _currentEncodeFormat);
+      switch (result) {
+        case 'postalCodeLength':
+          result = i18n(context, 'common_invalid') + ' (' + i18n(context, 'postcode_postalcode') +
+             ', ' + i18n(context, 'common_length') + ')';
+        case 'postalCodeData':
+          result = i18n(context, 'common_invalid') + ' (' + i18n(context, 'postcode_postalcode') + ')';
+        case 'streetCodeLength':
+          result = i18n(context, 'common_invalid') + ' (' + i18n(context, 'postcode_streetcode') +
+              ', ' + i18n(context, 'common_length') + ')';
+        case 'houseNumberLength':
+          result = i18n(context, 'common_invalid') + ' (' + i18n(context, 'postcode_housenumber') +
+              ', ' + i18n(context, 'common_length') + ')';
+        case 'feeProtectionCodeLength':
+          result = i18n(context, 'common_invalid') + ' (' + i18n(context, 'postcode_feeprotectioncode') +
+              ', ' + i18n(context, 'common_length') + ')';
+      }
       return GCWDefaultOutput(child: result);
     } else {
       var result = decodePostcode(_currentDecodeInput);
       switch (result.errorCode) {
         case  ErrorCode.Ok:
+        case  ErrorCode.Invalid:
           List<List<Object>> output = [];
 
           var linearCodeString = i18n(context, 'postcode_linearcode') + '-';
@@ -215,9 +233,18 @@ class PostcodeState extends State<Postcode> {
           if (result.feeProtectionCode.isNotEmpty) {
             output.add([i18n(context, 'postcode_feeprotectioncode'), result.feeProtectionCode]);
           }
-          return GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]);
+          if (result.errorCode == ErrorCode.Invalid) {
+            output.add([i18n(context, 'postcode_invalid_data'), '']);
+          }
+          return GCWDefaultOutput(child:
+            GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]),
+          );
         case ErrorCode.Length:
-          return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_length') + '(30, 36, 69, 80)');
+          if (_currentDecodeInput.isNotEmpty) {
+            return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_length') + ' (30, 36, 69, 80)');
+          } else {
+            return const GCWDefaultOutput(child: '');
+          }
         case ErrorCode.Character:
           return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_character'));
         default:
@@ -229,10 +256,10 @@ class PostcodeState extends State<Postcode> {
   List<GCWDropDownMenuItem<PostcodeFormat>> _buildFormatList() {
     var linearCodeString = i18n(context, 'postcode_linearcode') + '-';
     return [
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear80, child: i18n(context, linearCodeString + '80')),
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear69, child: i18n(context, linearCodeString + '69')),
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear36, child: i18n(context, linearCodeString + '36')),
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear30, child: i18n(context, linearCodeString + '30')),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear80, child: linearCodeString + '80'),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear69, child: linearCodeString + '69'),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear36, child: linearCodeString + '36'),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear30, child: linearCodeString + '30'),
     ];
   }
 }

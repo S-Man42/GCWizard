@@ -127,6 +127,8 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
 
   switch (format) {
     case PostcodeFormat.Linear30:
+      if (!code.endsWith('1')) return invalidResult;
+
       var numbers = [
         code.substring(0, 5),
         code.substring(6, 11),
@@ -136,7 +138,7 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
       ];
 
       var invalidData = !_checkDataValid(numbers);
-      var postalCode =  _decode01247(numbers[3]) + _decode01247(numbers[2]) +
+      var postalCode = _decode01247(numbers[3]) + _decode01247(numbers[2]) +
           _decode01247(numbers[1]) + _decode01247(numbers[0]);
       var postalCodeCheckSum = _decode01247(numbers[4]);
 
@@ -144,10 +146,13 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
           postalCode,
           postalCodeCheckSum.isEmpty ? '?' : postalCodeCheckSum,
           postalCodeCheckSum == _calcChecksum(postalCode),
-          '','','',
-          PostcodeFormat.Linear30, invalidData ? ErrorCode.Invalid : ErrorCode.Ok);
+          '', '', '',
+          PostcodeFormat.Linear30,
+          invalidData ? ErrorCode.Invalid : ErrorCode.Ok);
 
     case PostcodeFormat.Linear36:
+      if (!code.endsWith('1')) return invalidResult;
+
       var numbers = [
         code.substring(0, 5),
         code.substring(6, 11),
@@ -158,7 +163,7 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
       ];
 
       var invalidData = !_checkDataValid(numbers);
-      var postalCode =  _decode01247(numbers[4]) + _decode01247(numbers[3]) + _decode01247(numbers[2]) +
+      var postalCode = _decode01247(numbers[4]) + _decode01247(numbers[3]) + _decode01247(numbers[2]) +
           _decode01247(numbers[1]) + _decode01247(numbers[0]);
       var postalCodeCheckSum = _decode01247(numbers[5]);
 
@@ -166,12 +171,17 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
           postalCode,
           postalCodeCheckSum.isEmpty ? '?' : postalCodeCheckSum,
           postalCodeCheckSum == _calcChecksum(postalCode),
-          '','','',
-          PostcodeFormat.Linear36, invalidData ? ErrorCode.Invalid : ErrorCode.Ok);
+          '', '', '',
+          PostcodeFormat.Linear36,
+          invalidData ? ErrorCode.Invalid : ErrorCode.Ok);
 
     case PostcodeFormat.Linear69:
       if (!code.endsWith('111')) return invalidResult;
-      if (code.length < 69) code = code.padLeft(69, '|');
+      if (code.length < 69) {
+        code = code.padLeft(69, '1');
+      } else if (code.length > 69) {
+        code = code.substring(code.length - 69);
+      }
 
       var numbers = [
         code.substring(1, 5),
@@ -200,11 +210,16 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
           _decode8421(numbers[5]) + _decode8421(numbers[4]) + _decode8421(numbers[3]),
           _decode8421(numbers[2]) + _decode8421(numbers[1]) + _decode8421(numbers[0]),
           '',
-          PostcodeFormat.Linear69, invalidData ? ErrorCode.Invalid : ErrorCode.Ok);
+          PostcodeFormat.Linear69,
+          invalidData ? ErrorCode.Invalid : ErrorCode.Ok);
 
     case PostcodeFormat.Linear80:
       if (!code.endsWith('111')) return invalidResult;
-      if (code.length < 80) code = code.padLeft(80, '|');
+      if (code.length < 79) {
+        code = code.padLeft(79, '1');
+      } else if (code.length > 79) {
+        code = code.substring(code.length - 79);
+      }
 
       var numbers = [
         code.substring(1, 5),
@@ -241,7 +256,9 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
 
 bool _checkDataValid(List<String> numbers) {
   for (var number in numbers) {
-    if ((number.length == 5 ? _decode01247(number) : _decode8421(number)).isEmpty) return false;
+    if ((number.length == 5 ? _decode01247(number) : _decode8421(number)).isEmpty) {
+      return false;
+    }
   }
   return true;
 }
@@ -271,17 +288,17 @@ String? _cleanCode(String code) {
 
 PostcodeFormat? _getFormat(String code) {
   switch (code.length) {
-    case 29:
     case 30:
       return PostcodeFormat.Linear30;
-    case 35:
     case 36:
       return PostcodeFormat.Linear36;
     case 68:
+    case 70:
     case 69:
       return PostcodeFormat.Linear69;
-    case 79:
+    case 78:
     case 80:
+    case 79:
       return PostcodeFormat.Linear80;
   }
   return null;
