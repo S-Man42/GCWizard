@@ -184,20 +184,36 @@ class PostcodeState extends State<Postcode> {
         case  ErrorCode.Ok:
           List<List<Object>> output = [];
 
-          output.add([i18n(context, 'common_type'), result.format]);
-          output.add([i18n(context, 'common_type'), result.postalCode]);
+          var linearCodeString = i18n(context, 'postcode_linearcode') + '-';
+          switch (result.format) {
+            case PostcodeFormat.Linear30:
+              linearCodeString += '30';
+              break;
+            case PostcodeFormat.Linear36:
+              linearCodeString += '36';
+              break;
+            case PostcodeFormat.Linear69:
+              linearCodeString += '69';
+              break;
+            default:
+              linearCodeString += '80';
+              break;
+          }
+          output.add([i18n(context, 'common_type'), linearCodeString]);
+
+          output.add([i18n(context, 'postcode_postalcode'), result.postalCode]);
           var checkDigit = result.postalCodeCheckDigit;
           checkDigit += ' (' + i18n(context, (result.postalCodeCheckDigitOk ? 'common_valid': 'common_invalid')) + ')';
-          output.add([i18n(context, 'enigma_turnovers'), checkDigit]);
+          output.add([i18n(context, 'postcode_postalcode_checkdigit'), checkDigit]);
 
           if (result.streetCode.isNotEmpty) {
-            output.add([i18n(context, 'enigma_turnovers'), result.streetCode]);
+            output.add([i18n(context, 'postcode_streetcode'), result.streetCode]);
           }
           if (result.houseNumber.isNotEmpty) {
-            output.add([i18n(context, 'enigma_turnovers'), result.houseNumber]);
+            output.add([i18n(context, 'postcode_housenumber'), result.houseNumber]);
           }
           if (result.feeProtectionCode.isNotEmpty) {
-            output.add([i18n(context, 'enigma_turnovers'), result.feeProtectionCode]);
+            output.add([i18n(context, 'postcode_feeprotectioncode'), result.feeProtectionCode]);
           }
           return GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]);
         case ErrorCode.Length:
@@ -211,11 +227,12 @@ class PostcodeState extends State<Postcode> {
   }
 
   List<GCWDropDownMenuItem<PostcodeFormat>> _buildFormatList() {
+    var linearCodeString = i18n(context, 'postcode_linearcode') + '-';
     return [
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear80, child: i18n(context, 'bowling_hdcp')),
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear69, child: i18n(context, 'bowling_hdcp')),
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear36, child: i18n(context, 'bowling_hdcp')),
-      GCWDropDownMenuItem(value: PostcodeFormat.Linear30, child: i18n(context, 'bowling_hdcp')),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear80, child: i18n(context, linearCodeString + '80')),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear69, child: i18n(context, linearCodeString + '69')),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear36, child: i18n(context, linearCodeString + '36')),
+      GCWDropDownMenuItem(value: PostcodeFormat.Linear30, child: i18n(context, linearCodeString + '30')),
     ];
   }
 }
