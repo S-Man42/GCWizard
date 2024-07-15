@@ -143,6 +143,7 @@
   "dates_calendar": "julian date gregorian date calendar timestamp",
   "dates_calendarweek": "calendarweek calenderweek",
   "decabit": "ripple control",
+  "din_paperformat" : "paper format size",
   "divisor": "divisor divider",
   "dna": "desoxyribonucleicacid genetics genes genomes sequence nucleotide codesun dna rna mrna",
   "dnaaminoacids": "aminoacids",

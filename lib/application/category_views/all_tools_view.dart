@@ -234,6 +234,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calcul
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/widget/unix_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
 import 'package:gc_wizard/tools/science_and_technology/decabit/widget/decabit.dart';
+import 'package:gc_wizard/tools/science_and_technology/din_paperformat/widget/din_paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/widget/divisor.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget/dna_aminoacids.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
@@ -579,6 +580,7 @@ void _initStaticToolList() {
       className(const DayOfTheYear()),
       className(const Deadfish()),
       className(const Decabit()),
+      className(const DINPaperFormats()),
       className(const DistanceBearingGeodetic()),
       className(const DistanceBearingRhumbline()),
       className(const Divisor()),
