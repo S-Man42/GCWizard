@@ -349,7 +349,6 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calcul
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/widget/unix_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
 import 'package:gc_wizard/tools/science_and_technology/decabit/widget/decabit.dart';
-import 'package:gc_wizard/tools/science_and_technology/din_paperformat/widget/din_paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/widget/divisor.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget/dna_aminoacids.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
@@ -403,6 +402,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/sublime_
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/superperfect_numbers/widget/superperfect_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/weird_numbers/widget/weird_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/paperformat/widget/paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/atomic_numbers_to_text/widget/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table/widget/periodic_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
@@ -726,11 +726,6 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'decabit',
-    ]),
-    GCWTool(tool: const DINPaperFormats(), id: 'din_paperformat', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'din_paperformat',
     ]),
     GCWTool(tool: const Divisor(), id: 'divisor', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -1068,6 +1063,11 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['onetimepad', 'numbers'],
         deeplinkAlias: const ['otp', 'one_time_pad']),
+    GCWTool(tool: const PaperFormats(), id: 'paperformat', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'paperformat',
+    ]),
     GCWTool(tool: const PeriodicTableSelection(), id: 'periodictable_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [

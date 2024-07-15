@@ -3,16 +3,16 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/tools/science_and_technology/din_paperformat/logic/din_paperformat.dart';
+import 'package:gc_wizard/tools/science_and_technology/paperformat/logic/paperformat.dart';
 
-class DINPaperFormats extends StatefulWidget {
-  const DINPaperFormats({Key? key}) : super(key: key);
+class PaperFormats extends StatefulWidget {
+  const PaperFormats({Key? key}) : super(key: key);
 
   @override
-  _DINPaperFormatState createState() => _DINPaperFormatState();
+  _PaperFormatState createState() => _PaperFormatState();
 }
 
-class _DINPaperFormatState extends State<DINPaperFormats> {
+class _PaperFormatState extends State<PaperFormats> {
   var _currentDINFormat = DINA_FORMAT;
 
   @override
@@ -26,6 +26,9 @@ class _DINPaperFormatState extends State<DINPaperFormats> {
             GCWDropDownMenuItem( value: DINB_FORMAT, child: 'DIN B'),
             GCWDropDownMenuItem( value: DINC_FORMAT, child: 'DIN C'),
             GCWDropDownMenuItem( value: DIND_FORMAT, child: 'DIN D'),
+            GCWDropDownMenuItem( value: US_FORMAT, child: 'US'),
+            GCWDropDownMenuItem( value: US_ANSI_FORMAT, child: 'US ANSI'),
+            GCWDropDownMenuItem( value: US_ARCH_FORMAT, child: 'US ARCH'),
           ],
           onChanged: (value) {
             setState(() {
@@ -49,6 +52,6 @@ class _DINPaperFormatState extends State<DINPaperFormats> {
         hasHeader: true,
         copyColumn: 1,
         data: output,
-        flexValues: const [1, 2, 2]);
+        flexValues: const [3, 8, 4]);
   }
 }

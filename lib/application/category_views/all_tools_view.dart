@@ -234,7 +234,6 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calcul
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/widget/unix_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
 import 'package:gc_wizard/tools/science_and_technology/decabit/widget/decabit.dart';
-import 'package:gc_wizard/tools/science_and_technology/din_paperformat/widget/din_paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/widget/divisor.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget/dna_aminoacids.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
@@ -249,6 +248,7 @@ import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/paperformat/widget/paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/atomic_numbers_to_text/widget/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table/widget/periodic_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
@@ -580,7 +580,6 @@ void _initStaticToolList() {
       className(const DayOfTheYear()),
       className(const Deadfish()),
       className(const Decabit()),
-      className(const DINPaperFormats()),
       className(const DistanceBearingGeodetic()),
       className(const DistanceBearingRhumbline()),
       className(const Divisor()),
@@ -674,6 +673,7 @@ void _initStaticToolList() {
       className(OneTimePad()),
       className(Ook()),
       className(const PantoneColorCodes()),
+      className(const PaperFormats()),
       className(const PasleyTelegraph()),
       className(const PophamTelegraph()),
       className(const PeriodicTable()),
