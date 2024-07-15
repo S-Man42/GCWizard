@@ -90,7 +90,7 @@ class PostcodeState extends State<Postcode> {
       children: <Widget>[
         GCWDropDown<PostcodeFormat>(
           flexValues: const [2, 3],
-          title: i18n(context, 'piano_sort'),
+          title: i18n(context, 'common_outputformat'),
           value: _currentEncodeFormat,
           onChanged: (value) {
             setState(() {
@@ -105,7 +105,7 @@ class PostcodeState extends State<Postcode> {
             Expanded(
                 flex: flexValues[0],
                 child: GCWText(
-                  text:  ':',
+                  text:  i18n(context, 'postcode_postalcode')+ ':',
                 )),
             Expanded(
               flex: flexValues[1],
@@ -125,7 +125,7 @@ class PostcodeState extends State<Postcode> {
         ]),
         _currentEncodeFormat == PostcodeFormat.Linear69 || _currentEncodeFormat == PostcodeFormat.Linear80
             ? GCWIntegerSpinner(
-                title: i18n(context, 'bowling_hdcp'),
+                title: i18n(context, 'postcode_streetcode'),
                 value: _currentEncodeStreetCode,
                 min: 0,
                 max: 999,
@@ -155,7 +155,7 @@ class PostcodeState extends State<Postcode> {
             : Container(),
           _currentEncodeFormat == PostcodeFormat.Linear80
             ? GCWIntegerSpinner(
-                title: i18n(context, 'bowling_hdcp'),
+                title: i18n(context, 'postcode_feeprotectioncode'),
                 value: _currentEncodeFeeProtectionCode,
                 min: 0,
                 max: 99,
