@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-// import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/logic/wedding_anniversaries.dart';
 
@@ -14,16 +14,12 @@ class WeddingAnniversaries extends StatefulWidget {
 }
 
 class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
-  late WeddingCountries _currentCountry = WeddingCountries.DE;
-  late String _currentYear;
-  late Map<String, List<String>> _currentList;
+  late WeddingCountries _currentCountry;
 
   @override
   void initState() {
     super.initState();
-    var _currentCountry = WeddingCountries.DE;
-    var _currentYear = "1";
-    var _currentList = countryAnniversaries(_currentCountry);
+    _currentCountry = WeddingCountries.DE;
   }
 
   @override
@@ -41,28 +37,36 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
           onChanged: (value) {
             setState(() {
               _currentCountry = value;
-              _currentList = countryAnniversaries(_currentCountry);
             });
           },
-          items: WeddingCountries.values.map( (lang) {
-             return GCWDropDownMenuItem(value: lang, child: lang.name);
+          items: WeddingCountries.values.map((lang) {
+            return GCWDropDownMenuItem(value: lang, child: lang.name);
           }).toList(),
         ),
-
         _buildOutput()
       ],
     );
   }
 
   Widget _buildOutput() {
-
     return GCWDefaultOutput(
-          child: GCWText( text: _currentCountry.name),
+      child: GCWColumnedMultilineOutput(flexValues: const [1, 6],
+          firstRows: [
+            Container(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: GCWText(
+                  text:
+                      '${i18n(context, "common_year")}: ${i18n((context), "common_description")}'),
+            )],
+          data: _convertForMultilineList(countryAnniversaries(_currentCountry))),
     );
-        // child: GCWColumnedMultilineOutput(
-        //     data: iceCodeSubSystem.entries.map((entry) {
-        //       return [entry.key, i18n(context, entry.value)];
-        //     }).toList(),
-        //     flexValues: const [1, 5]));
+  }
+
+  List<List<String>> _convertForMultilineList(Map<String, List<String>> map) {
+    List<List<String>> convertedMap = [];
+    map.forEach((key, valueList) {
+      convertedMap.add([key, valueList.join(", ")]);
+    });
+    return convertedMap;
   }
 }

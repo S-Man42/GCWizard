@@ -4911,6 +4911,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const WeddingAnniversaries(),
         id: 'wedding_anniversaries',
+        categories: const [ToolCategory.MISCELLANEOUS],
         searchKeys: const ['weddinganniversaries']),
 
     // WherigoUrwigoSelection ************************************************************************************
