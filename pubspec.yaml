@@ -197,6 +197,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/flags_rn_popham/
     - lib/tools/symbol_tables/_common/assets/fonic/
     - lib/tools/symbol_tables/_common/assets/four_triangles/
+    - lib/tools/symbol_tables/_common/assets/foybreguet/
     - lib/tools/symbol_tables/_common/assets/freemason/
     - lib/tools/symbol_tables/_common/assets/freemason_v2/
     - lib/tools/symbol_tables/_common/assets/futhark_elder/

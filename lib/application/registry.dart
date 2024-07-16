@@ -3906,6 +3906,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_chappe',
       'symbol_chappe_v1',
     ]),
+    GCWSymbolTableTool(symbolKey: 'foybreguet', symbolSearchStrings: const [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_foybreguet',
+    ]),
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: const [
       'symbol_cherokee',
     ]),
