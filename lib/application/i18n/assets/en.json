@@ -5838,6 +5838,8 @@
   "telegraph_chappe_alphabet_2_description" : "76 Codepoints",
   "telegraph_chappe_codepoints_title" : "Chappe Telegraphencode",
   "telegraph_chappe_codepoints_description" : "1809, 92 Codepoints total",
+  "telegraph_chappe_codepoints_ascii_title" : "Chappe Telegraphencode, ASCII-Subset 30 - 90",
+  "telegraph_chappe_codepoints_ascii_description" : "Chappe Codepoints used like ASCII-Code",
   "telegraph_chappe_digits_title" : "Chappe Telegraph, Digits",
   "telegraph_chappe_digits_description" : "1794, 10 Codepoints",
   "telegraph_chappe_kulibin_title" : "Kulibin Telegraph, Letters and Digits",
