@@ -1100,7 +1100,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                         ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
                   ),
-                  copyColumn: 2,
+                  copyColumn: 1,
                   flexValues: const [3, 2, 2]),
               GCWExpandableTextDivider(
                 expanded: false,
