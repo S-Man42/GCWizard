@@ -382,7 +382,7 @@ const Map<String, List<String>> _anniversariesFR =
   "85": ["wedding_element_uranium"],
   "86": ["wedding_element_jasper"],
   "87": ["wedding_element_psilocybe"],
-  "88": ["wedding_element_pines"],
+  "88": ["wedding_element_pine"],
   "89": ["wedding_element_onyx"],
   "90": ["wedding_element_granite"],
   "91": ["wedding_element_beryl"],
