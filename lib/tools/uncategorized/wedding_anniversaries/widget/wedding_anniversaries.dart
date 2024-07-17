@@ -14,8 +14,6 @@ class WeddingAnniversaries extends StatefulWidget {
 
 class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
   late WeddingCountries _currentCountry;
-  
-  
 
   @override
   void initState() {
@@ -57,7 +55,11 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
     ]);
 
     countryAnniversaries(_currentCountry).forEach((key, valueList) {
-      output.add([" " + key, valueList.join(", ")]);
+      List<String> values = [];
+      for (var word in valueList) {
+        values.add(i18n(context, word));
+      }
+      output.add([" " + key, values.join(", ")]);
     });
 
     return GCWDefaultOutput(
