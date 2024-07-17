@@ -14,6 +14,8 @@ class WeddingAnniversaries extends StatefulWidget {
 
 class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
   late WeddingCountries _currentCountry;
+  
+  
 
   @override
   void initState() {
@@ -38,8 +40,8 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
               _currentCountry = value;
             });
           },
-          items: WeddingCountries.values.map((lang) {
-            return GCWDropDownMenuItem(value: lang, child: lang.name);
+          items: WeddingCountries.values.map((country) {
+            return GCWDropDownMenuItem(value: country, child: i18n(context, localizationName(country)));
           }).toList(),
         ),
         _buildOutput()
