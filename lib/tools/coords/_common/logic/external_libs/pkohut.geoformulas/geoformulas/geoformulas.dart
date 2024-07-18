@@ -73,7 +73,9 @@ class _LLPoint {
   }
 
   static _LLPoint fromLatLng(LatLng latlng) {
-    return _LLPoint(latitude: degToRadian(latlng.latitude), longitude: degToRadian(latlng.longitude));
+    print(latlng);
+    print(latlng.latitudeInRad.toString() + ' ' + latlng.longitudeInRad.toString());
+    return _LLPoint(latitude: latlng.latitudeInRad, longitude: latlng.longitudeInRad);
   }
 
   LatLng toLatLng() {

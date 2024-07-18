@@ -5,9 +5,9 @@
 
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library.dart';
 
-const M_PI = pi;
-const M_2PI = pi * 2;
-const M_PI_2 = pi / 2;
+const _M_PI = pi;
+const _M_2PI = pi * 2;
+const _M_PI_2 = pi / 2;
 
 /*
  *   \brief Tolerance
@@ -17,8 +17,12 @@ const M_PI_2 = pi / 2;
  *   tol = 1.0-e9 work well."
  *
  */
-const TOL = 1.0e-9;
+const _TOL = 1.0e-9;
+/* Not a scientific number, but something near zero is needed in a few cases */
+const _INTERNAL_ZERO = 1.0e-15;
 
-const SPHERE_RADIUS_NMI = 3438.140221487929;
+const _MAX_ITERATIONS = 100;
 
-const NMI_IN_METERS = 1852.0;
+const _SPHERE_RADIUS_NMI = 3438.140221487929;
+
+const _NMI_IN_METERS = 1852.0;

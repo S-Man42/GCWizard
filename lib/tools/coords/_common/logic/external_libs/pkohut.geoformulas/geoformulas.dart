@@ -30,7 +30,7 @@ LatLng vincentyDirect(LatLng coord, double bearing, double distance, Ellipsoid e
   return result.toLatLng();
 }
 
-List<LatLng> geodesicArcIntercept(LatLng pt1, double crs1, LatLng center, double radius, Ellipsoid ellipsoid) {
+List<LatLng> geodesicArcIntercept3(LatLng pt1, double crs1, LatLng center, double radius, Ellipsoid ellipsoid) {
   var out = <LatLng>[];
 
   var result = _geodesicArcIntercept(_LLPoint.fromLatLng(pt1), degToRadian(crs1), _LLPoint.fromLatLng(center), radius, _kTol, ellipsoid);

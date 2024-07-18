@@ -5,11 +5,21 @@ import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_b
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:latlong2/latlong.dart';
 
-part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/error_codes.dart';
-part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/geolib.dart';
 part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/shape.dart';
 part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/constants.dart';
 part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/util.dart';
 part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/projections.dart';
 part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/llpoint.dart';
 part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/vincenty_algorithms.dart';
+part 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library/intersections.dart';
+
+List<LatLng> geodesicArcIntercept(LatLng pt1, double crs1, LatLng center, double radius, Ellipsoid ellipsoid) {
+  var out = <LatLng>[];
+
+  var result = _geoArcIntx(_LLPoint.fromLatLng(pt1), degToRadian(crs1), _LLPoint.fromLatLng(center), radius, _TOL, ellipsoid);
+  for (_LLPoint pt in result) {
+    out.add(pt.toLatLng());
+  }
+
+  return out;
+}
