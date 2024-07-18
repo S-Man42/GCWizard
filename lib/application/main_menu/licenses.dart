@@ -184,6 +184,7 @@ class _LicensesState extends State<Licenses> {
             ],
             [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
+            [i18n(context, 'symboltables_cosmic_title'), 'https://www.dafont.com/de/modern-cybertronic.font, http://www.pixelsagas.com (Personal Use)'],
             [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
             [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
