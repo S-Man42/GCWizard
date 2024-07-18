@@ -4005,7 +4005,7 @@
   "rabbit_initialization_vector": "Initialization Vector (Optional)",
   "rabbit_initialization_vector_format": "Initialization vector type does not match the initialization vector!",
   "ragbaby_title": "Ragbaby Cipher",
-  "ragbaby_description": "Ragbaby is poly-alphabetic substitution cipher with a 24 letters alphabet. J=>I and X=>U. The rotation changes for each word and letter.",
+  "ragbaby_description": "Poly-alphabetic substitution cipher with a 24 letters alphabet.",
   "ragbaby_example": "Hello World → igopt zrvqk",
   "ragbaby_option_24": "Original - 24 characters J→I and X→U",
   "ragbaby_option_26": "26 characters (A-Z)",
