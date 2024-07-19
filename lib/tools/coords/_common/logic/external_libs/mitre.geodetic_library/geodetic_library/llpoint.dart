@@ -12,9 +12,9 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodet
  *       0 -> NOT at a pole
  *       1 -> North Pole
  * */
-int _ptIsAtPole(_LLPoint testPt, double tol, Ellipsoid ellipsoid) {
+int _ptIsAtPole(LLPoint testPt, double tol, Ellipsoid ellipsoid) {
   double distFromNPole, distFromSPole;
-  _LLPoint northPolePt = _LLPoint(), southPolePt = _LLPoint();
+  LLPoint northPolePt = LLPoint(), southPolePt = LLPoint();
   northPolePt.latitude = _M_PI_2;
   northPolePt.longitude = 0;
   southPolePt.latitude = -_M_PI_2;
@@ -47,7 +47,7 @@ int _ptIsAtPole(_LLPoint testPt, double tol, Ellipsoid ellipsoid) {
   return 0;
 }
 
-bool _ptsAreSame(_LLPoint p1, _LLPoint p2, double tol, Ellipsoid ellipsoid) {
+bool _ptsAreSame(LLPoint p1, LLPoint p2, double tol, Ellipsoid ellipsoid) {
   double approxDist = 0.0;
 //    smallDistInverse(p1, p2, NULL, &approxDist);
   approxDist = distanceBearing(p1.toLatLng(),p2.toLatLng(), ellipsoid).distance;

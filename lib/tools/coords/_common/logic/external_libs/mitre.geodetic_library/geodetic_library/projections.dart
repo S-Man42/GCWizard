@@ -6,7 +6,7 @@
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodetic_library/geodetic_library.dart';
 
 class _ProjectToGeoReturn {
-  final _LLPoint pt2;
+  final LLPoint pt2;
   final double crsFromPoint;
   final double distFromPoint;
 
@@ -20,10 +20,10 @@ class _ProjectToGeoReturn {
  * different from geodesic course.
  *
  */
-_ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3, double tol, Ellipsoid ellipsoid) {
+_ProjectToGeoReturn _projectToGeo(LLPoint pt1, double geoStartAz, LLPoint pt3, double tol, Ellipsoid ellipsoid) {
 
   // Spherical solution is first approximation
-  _LLPoint newPt1, pt2 = _LLPoint();
+  LLPoint newPt1, pt2 = LLPoint();
   //    LLPoint testPt3 = { 0.0, 0.0 };
   double crs13, dist13, crs23, crs32, tmpCrs12;
   double crs21, dist12, crs31;
@@ -35,7 +35,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
   List<double> distarray = [double.nan, double.nan];
   double approxDist23;
   double npCrsFromPoint, npDistFromPoint;
-  _LLPoint npPt2;
+  LLPoint npPt2;
   double startNbhdRadius = 1.0; /* one meter in NM */
   double delta = 9.0e99;
   double perpDistUpperBound = 1.0; /* one meter in NM */
@@ -70,7 +70,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
     return _ProjectToGeoReturn(pt2, double.nan, distFromPoint);
   } else if (approxDist23 < (300.0 / 6076.0) && pt1IsAtPole == 0) {
     /* pt3 is near geodesic.  Move start point back 10 nm and check again */
-    newPt1 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz + _M_PI, 10.0 * _NMI_IN_METERS, ellipsoid));
+    newPt1 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz + _M_PI, 10.0 * _NMI_IN_METERS, ellipsoid));
     if (_ptIsOnGeo(pt1, newPt1, pt3, _LineType.INFINITE, tol, ellipsoid))  {
       /* point to be projected already lies on geodesic, so return it */
       /* NOTE: crsFromPoint undefined, distFromPoint == 0 in this case */
@@ -126,7 +126,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
   if (angle > _M_PI_2) {
     /* pt3 was behind pt1.  Need to move pt1 1.0 NM behind point that would
          * be abeam pt3 */
-    newPt1 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz + _M_PI, 5.0 * _NMI_IN_METERS + dist12, ellipsoid));
+    newPt1 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz + _M_PI, 5.0 * _NMI_IN_METERS + dist12, ellipsoid));
     dist12 = 5.0 * _NMI_IN_METERS;
     distBear = distanceBearing(newPt1.toLatLng(), pt1.toLatLng(), ellipsoid);
     geoStartAz = distBear.distance;
@@ -136,7 +136,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
   } else if (dist12.abs() < 5.0 * _NMI_IN_METERS) {
     /* pt3 is within 5.0 nmi of being abeam pt1
          * move pt1 backward 5 nmi to give the algorithms room to work */
-    newPt1 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz + _M_PI, 5.0 * _NMI_IN_METERS + dist12, ellipsoid));
+    newPt1 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz + _M_PI, 5.0 * _NMI_IN_METERS + dist12, ellipsoid));
     dist12 = 5.0 * _NMI_IN_METERS + dist12;
     distBear = distanceBearing(newPt1.toLatLng(), pt1.toLatLng(), ellipsoid);
     geoStartAz = distBear.distance;
@@ -177,7 +177,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
     dist12 = c * sphereRad;
 
     //find the projection point of pt3 on the geodesic using the spherical distance approx
-    pt2 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, dist12, ellipsoid));
+    pt2 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, dist12, ellipsoid));
 
     //determine the course and distance info with respect to pt2
     distBear = distanceBearing(pt1.toLatLng(), pt3.toLatLng(), ellipsoid);
@@ -187,7 +187,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
 
     return _ProjectToGeoReturn(pt2, crsFromPoint, distFromPoint);
   } else {
-    pt2 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, dist12, ellipsoid));
+    pt2 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, dist12, ellipsoid));
   }
 
   /* Calculate angle between radial and approximate perpendicular */
@@ -207,7 +207,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
 
   distarray[1] = distarray[0] + errarray[0] * dist23;
 
-  pt2 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, distarray[1], ellipsoid));
+  pt2 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, distarray[1], ellipsoid));
 
   // Calculate angle between radial and approximate perpendicular
   distBear = distanceBearing(pt2.toLatLng(), pt1.toLatLng(), ellipsoid);
@@ -232,7 +232,7 @@ _ProjectToGeoReturn _projectToGeo(_LLPoint pt1, double geoStartAz, _LLPoint pt3,
       newDist += tol;
     }
 
-    pt2 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, newDist, ellipsoid));
+    pt2 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), geoStartAz, newDist, ellipsoid));
     /* Calculate angle between given line and approximate perpendicular */
     distBear = distanceBearing(pt2.toLatLng(), pt1.toLatLng(), ellipsoid);
     crs21 = distBear.bearingAToBInRadian;

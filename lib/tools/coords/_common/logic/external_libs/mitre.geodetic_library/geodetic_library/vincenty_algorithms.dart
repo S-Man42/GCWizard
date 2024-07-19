@@ -26,9 +26,9 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodet
  *   0: otherwise
  */
 
-bool _ptIsOnGeo(_LLPoint startPt, _LLPoint endPt, _LLPoint testPt, _LineType lengthCode, double tol, Ellipsoid ellipsoid) {
+bool _ptIsOnGeo(LLPoint startPt, LLPoint endPt, LLPoint testPt, _LineType lengthCode, double tol, Ellipsoid ellipsoid) {
 
-  _LLPoint newStart, newEnd;
+  LLPoint newStart, newEnd;
 
   double dist12, crs12, crs21;
   double dist2Test;
@@ -57,7 +57,7 @@ bool _ptIsOnGeo(_LLPoint startPt, _LLPoint endPt, _LLPoint testPt, _LineType len
     } else if ((ptIsOnCrsRet.dist1Test > 0.0) && (ptIsOnCrsRet.dist1Test < 10.0)) {
       /* Test point is extremely close to startPt.  Courses are not
                    * accurate enough in this case.  Move startPt back 1.0 nm and test again */
-      newStart = _LLPoint.fromLatLng(projectionRadian(startPt.toLatLng(), crs12 + _M_PI, 1.0 * _NMI_IN_METERS, ellipsoid));
+      newStart = LLPoint.fromLatLng(projectionRadian(startPt.toLatLng(), crs12 + _M_PI, 1.0 * _NMI_IN_METERS, ellipsoid));
       var distBear = distanceBearing(newStart.toLatLng(), endPt.toLatLng(), ellipsoid);
       crs12 = distBear.bearingAToBInRadian;
       crs21 = distBear.bearingBToAInRadian;
@@ -79,7 +79,7 @@ bool _ptIsOnGeo(_LLPoint startPt, _LLPoint endPt, _LLPoint testPt, _LineType len
         returnVal = true;
       } else if ((dist2Test > 0.0) && (dist2Test < 10.0)) {
 
-        newEnd = _LLPoint.fromLatLng(projectionRadian(startPt.toLatLng(), crs12 + _M_PI, dist12 + 1.0 * _NMI_IN_METERS, ellipsoid));
+        newEnd = LLPoint.fromLatLng(projectionRadian(startPt.toLatLng(), crs12 + _M_PI, dist12 + 1.0 * _NMI_IN_METERS, ellipsoid));
         distBear = distanceBearing(newEnd.toLatLng(), endPt.toLatLng(), ellipsoid);
         crs12 = distBear.bearingAToBInRadian;
         crs21 = distBear.bearingBToAInRadian;
@@ -102,9 +102,9 @@ bool _ptIsOnGeo(_LLPoint startPt, _LLPoint endPt, _LLPoint testPt, _LineType len
 /*
  * Starting at startPt and following crs12, will one eventually reach testPt?
  */
-_PtIsOnCrsReturn _ptIsOnCrs(_LLPoint startPt, double crs12, _LLPoint testPt, double tol, Ellipsoid ellipsoid) {
+_PtIsOnCrsReturn _ptIsOnCrs(LLPoint startPt, double crs12, LLPoint testPt, double tol, Ellipsoid ellipsoid) {
 
-  _LLPoint comparePt;
+  LLPoint comparePt;
   double crs1Test;
   double dist1Test;
   double crsTest1;
@@ -120,7 +120,7 @@ _PtIsOnCrsReturn _ptIsOnCrs(_LLPoint startPt, double crs12, _LLPoint testPt, dou
   crs1Test = distBear.bearingAToBInRadian;
   crsTest1 = distBear.bearingBToAInRadian;
   dist1Test = distBear.distance;
-  comparePt = _LLPoint.fromLatLng(projectionRadian(startPt.toLatLng(), crs12, dist1Test, ellipsoid));
+  comparePt = LLPoint.fromLatLng(projectionRadian(startPt.toLatLng(), crs12, dist1Test, ellipsoid));
   if ((_modlon(crs12 - crs1Test)).abs() > _M_PI_2) {
     /* testPt is behind startPt, useful for calling function to know this */
     dist1Test = -dist1Test.abs();

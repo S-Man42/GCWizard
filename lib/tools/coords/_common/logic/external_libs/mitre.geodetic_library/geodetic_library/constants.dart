@@ -23,6 +23,8 @@ const _INTERNAL_ZERO = 1.0e-15;
 
 const _MAX_ITERATIONS = 100;
 
-const _SPHERE_RADIUS_NMI = 3438.140221487929;
-
 const _NMI_IN_METERS = 1852.0;
+
+double MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(Ellipsoid ellipsoid) {
+  return (_M_PI_2 * (1.0 - ellipsoid.f) * ellipsoid.a / _NMI_IN_METERS);
+}
