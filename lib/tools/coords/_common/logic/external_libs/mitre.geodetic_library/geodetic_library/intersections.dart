@@ -28,18 +28,18 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodet
 * @retval ERROR_MAX_REACHED_ERR Indicates that an error value has grown larger than allowed.
 * @retval UNEXPECTED_ERR Indicates that an unknown error has occurred.
  */
-List<LLPoint> arcIntx(LLPoint center1, double r1, LLPoint center2, double r2, double tol, Ellipsoid ellipsoid) {
+List<_LLPoint> _arcIntx(_LLPoint center1, double r1, _LLPoint center2, double r2, double tol, Ellipsoid ellipsoid) {
 
-    LLPoint pt, tempPt;
-    _LLPointPair intx = [LLPoint(), LLPoint()];
+    _LLPoint pt, tempPt;
+    _LLPointPair intx = [_LLPoint(), _LLPoint()];
 
     double crs12, crs21, dist12, tempr;
-    double crs1x, crsx1, crs2x, crsx2, dist1x, dist2x;
+    double crs1x, crsx1, crs2x = 0.0, crsx2, dist1x, dist2x;
     List<double> crsarray = [double.nan, double.nan], errarray = [double.nan, double.nan], longarray = [double.nan, double.nan];
-    int arc1IsAtPole = 0, arc2IsAtPole = 0;
+    bool arc1IsAtPole = false, arc2IsAtPole = false;
     double error, y;
     double intersectionLatitude, newLongitude;
-    Arc arcP, arcNP;
+    _Arc arcP = _Arc(), arcNP = _Arc();
 
     int sn; /* Number of intersecting points found from sphere approx. */
     //    int narray; /* number of approximations stored in crsarray, errarray   */
@@ -50,15 +50,15 @@ List<LLPoint> arcIntx(LLPoint center1, double r1, LLPoint center2, double r2, do
     bool c2OnArc1 = false;
 
     int npN;
-    _LLPointPair npIntx = [LLPoint(), LLPoint()];
+    _LLPointPair npIntx = [_LLPoint(), _LLPoint()];
 
     /* initialize count of intersections */
     int n = -1;
 
     /* Arcs with radius greater than approximate half-circumference of the Earth
          * are not defined and can't be solved with this algorithm. */
-    if ((r1 > MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(ellipsoid)) || (r2 > MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(ellipsoid))) {
-      return [];
+    if ((r1 > _MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(ellipsoid)) || (r2 > _MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(ellipsoid))) {
+      return <_LLPoint>[];
     }
 
     //If allowed, this could lead to a logical inconsistency with respect to the geometry (including points) that is defined over a given mathematical space
@@ -78,49 +78,50 @@ List<LLPoint> arcIntx(LLPoint center1, double r1, LLPoint center2, double r2, do
         //therefore the intersection of the points are the points themselves
         //pick center1 as the intersection point, with respect to the mathematical notion of neighborhoods
         n = 1;
-        intx[0] = LLPoint(center1.latitude, center1.longitude);
+        intx[0] = _LLPoint(center1.latitude, center1.longitude);
         return [intx[0]];
       } else {
         //centers are the same and both arcs are singular points
         //since the centers are distinct with respect to tol (and the mathematical notion of neighborhoods)
         //no intersection may exist
-        return [];n = 0;
+        n = 0;
+        return <_LLPoint>[];
       }
     } else if (r1 == 0.0) {
       //Only arc1 is a singular point
       //Use the center1 point as the representation of arc1
 
       //check if center1 lies on arc2 (treating arc2 as a circle)
-      c1OnArc2 = ptIsOnArc(center2, r2, 0.0, 0.0, ArcDirection.COUNTERCLOCKWISE, center1, tol, ellipsoid);
+      c1OnArc2 = _ptIsOnArc(center2, r2, 0.0, 0.0, _ArcDirection.COUNTERCLOCKWISE, center1, tol, ellipsoid);
 
       if (c1OnArc2) {
         //center1 lies on arc2 so center1 must be the intersection since center1 is also a singular point
         n = 1;
-        intx[0] = LLPoint(center1.latitude, center1.longitude);
+        intx[0] = _LLPoint(center1.latitude, center1.longitude);
         return [intx[0]];
       } else {
         //center1 does not lie on arc2 and center1 is also a singular point
         //no intersection may exist
         n = 0;
-        return [];
+        return <_LLPoint>[];
       }
     } else if (r2 == 0.0) {
       //Only arc2 is a singular point
       //Use the center2 point as the representation of arc2
 
       //check if center2 lies on arc1 (treating arc1 as a circle)
-      c2OnArc1 = ptIsOnArc(center1, r1, 0.0, 0.0, ArcDirection.COUNTERCLOCKWISE, center2, tol, ellipsoid);
+      c2OnArc1 = _ptIsOnArc(center1, r1, 0.0, 0.0, _ArcDirection.COUNTERCLOCKWISE, center2, tol, ellipsoid);
 
       if (c2OnArc1) {
         //center2 lies on arc1 so center1 must be the intersection since center2 is also a singular point
         n = 1;
-        intx[0] = LLPoint(center2.latitude, center2.longitude);
+        intx[0] = _LLPoint(center2.latitude, center2.longitude);
         return [intx[0]];
       } else {
         //center2 does not lie on arc1 and center2 is also a singular point
         //no intersection may exist
         n = 0;
-        return [];
+        return <_LLPoint>[];
       }
     }
 
@@ -141,298 +142,242 @@ List<LLPoint> arcIntx(LLPoint center1, double r1, LLPoint center2, double r2, do
     }
 
     //find the distance between the arc centers
-    err |= inverse(center1, center2, &crs12, &crs21, &dist12, eps);
+    var distBear = distanceBearing(center1.toLatLng(), center2.toLatLng(), ellipsoid);
+    crs12 = distBear.bearingAToBInRadian;
+    crs21 = distBear.bearingBToAInRadian;
+    dist12 = distBear.distance / _NMI_IN_METERS;
 
     //at this point in the algorithm, it is guaranteed that r1 >= r2
-    if (dist12 <= tol)
-    {
-    //circles are concentric
+    if (dist12 <= tol) {
+      //circles are concentric
 
-    if (fabs(r1 - r2) <= tol)
-    {
-    //circles are coincidental, infinite intersections
-    err |= CONCENTRIC_CIRCLE_ERR;
-    //allow n to = -1 indicating that no distinct intersections exist
+      if ((r1 - r2).abs() > tol) {
+        //circles are concentric but not coincidental, no intersections
+        n = 0;
+      }
     }
-    else
-    {
-    //circles are concentric but not coincidental, no intersections
-    *n = 0;
-    }
-    }
-    /*
-         * Please do not update this section of the code if it is unclear what is going on mathematically, see Mike or Juan for details
-         */
+
     //Six "simple" cases - the use of tolerance complicates the problem
-    if ( r1 + tol + r2 + tol < dist12)//see the figures/details in bug 18763 to understand this inequality - jamezcua
-        {
-    //circles are widely separated, no intersections
-    *n = 0;
+    if ( r1 + tol + r2 + tol < dist12) {
+      //circles are widely separated, no intersections
+      n = 0;
+    } else if (((r1 - tol) - (r2 + tol)).abs() > dist12) {
+      //one circle lies within the other such that no intersection exists
+      n = 0;
+    } else if ((r1 + r2 - dist12).abs() <= tol) {
+      //The discs, represented by the circles, are disjoint other than at the point of tangency
+      n = 1;
+    } else if (((r1 - r2).abs() - dist12).abs() <= tol) {
+      //one circle lies within the other such that the inner circle is tangent to the outer circle
+      n = 1;
+    } else if (r1 + r2 > dist12) {
+      //The discs, represented by the circles, overlap such that no center point overlaps either disc
+      n = 2;
+    } else if ((r1 - r2).abs() < dist12) {
+      //The discs, represented by the circles, overlap such that at least one center point overlaps a disc
+      n = 2;
     }
-    else if (fabs((r1 - tol) - (r2 + tol)) > dist12)//see the figures/details in bug 18763 to understand this inequality - jamezcua
-        {
-    //one circle lies within the other such that no intersection exists
-    *n = 0;
-    }
-    else if ( fabs(r1 + r2 - dist12) <= tol)//TODO need to verify the math on this inequality - jamezcua
-        {
-    //The discs, represented by the circles, are disjoint other than at the point of tangency
-    *n = 1;
-    }
-    else if (fabs(fabs(r1 - r2) - dist12) <= tol)//TODO need to verify the math on this inequality - jamezcua
-        {
-    //one circle lies within the other such that the inner circle is tangent to the outer circle
-    *n = 1;
-    }
-    else if (r1 + r2 > dist12)//TODO need to verify the math on this inequality - jamezcua
-        {
-    //The discs, represented by the circles, overlap such that no center point overlaps either disc
-    *n = 2;
-    }
-    else if (fabs(r1 - r2) < dist12)//TODO need to verify the math on this inequality - jamezcua
-        {
-    //The discs, represented by the circles, overlap such that at least one center point overlaps a disc
-    *n = 2;
-    }
-
-
-
 
     //find the intersections if they exist
-    if (*n == 1)
-    {
-    err |= direct(center1, crs12, r1, &intx[0], eps);
-    }
-    else if (*n == 2)
-    {
-
-    // If both arcs are at a pole
-    arc1IsAtPole = ptIsAtPole(center1, &err, tol, eps) != 0;
-    arc2IsAtPole = ptIsAtPole(center2, &err, tol, eps) != 0;
-    if (arc1IsAtPole && arc2IsAtPole)
-    {
-    //Umm...okay, what was the caller thinking?! Either no
-    //intersections (if radii not equal) or infinite intersections.
-    err |= UNEXPECTED_ERR;
-    return err;
-    }
-    // If one arc is at a pole
-    else if (arc1IsAtPole || arc2IsAtPole)
-    {
-    /* Algorithm Description:
-           We know the latitude at which the intersection must
-           occur (constant latitude of the arc at the pole). So,
-           we can just iterate along that constant latitude line
-           until we find a longitude that is on the non-pole arc.
-           Once one intersection is known, the other is simply on
-           the opposite side of the non-pole arc's center point.
-           */
+    if (n == 1) {
+      intx[0] = _LLPoint.fromLatLng(projectionRadian(center1.toLatLng(), crs12, r1 / _NMI_IN_METERS, ellipsoid));
+    } else if (n == 2) {
+      // If both arcs are at a pole
+      arc1IsAtPole = _ptIsAtPole(center1, tol, ellipsoid) != 0;
+      arc2IsAtPole = _ptIsAtPole(center2, tol, ellipsoid) != 0;
+      if (arc1IsAtPole && arc2IsAtPole) {
+        //Umm...okay, what was the caller thinking?! Either no
+        //intersections (if radii not equal) or infinite intersections.
+        return <_LLPoint>[];
+      }
+      // If one arc is at a pole
+        else if (arc1IsAtPole || arc2IsAtPole) {
+        /* Algorithm Description:
+               We know the latitude at which the intersection must
+               occur (constant latitude of the arc at the pole). So,
+               we can just iterate along that constant latitude line
+               until we find a longitude that is on the non-pole arc.
+               Once one intersection is known, the other is simply on
+               the opposite side of the non-pole arc's center point.
+               */
 
 
-    // Figure out which one is at the pole
-    if (arc1IsAtPole)
-    {
-    arcP.centerPoint = center1;
-    arcP.radius = r1;
-    arcNP.centerPoint = center2;
-    arcNP.radius = r2;
-    }
-    else
-    {
-    arcP.centerPoint = center2;
-    arcP.radius = r2;
-    arcNP.centerPoint = center1;
-    arcNP.radius = r1;
-    }
+        // Figure out which one is at the pole
+        if (arc1IsAtPole) {
+          arcP.centerPoint = center1;
+          arcP.radius = r1;
+          arcNP.centerPoint = center2;
+          arcNP.radius = r2;
+        } else {
+          arcP.centerPoint = center2;
+          arcP.radius = r2;
+          arcNP.centerPoint = center1;
+          arcNP.radius = r1;
+        }
 
-    // Calculate the intersection latitude from the pole arc
-    err |= direct(arcP.centerPoint, 0, arcP.radius, &tempPt, eps);
-    intersectionLatitude = tempPt.latitude;
+        // Calculate the intersection latitude from the pole arc
+        tempPt = _LLPoint.fromLatLng(projectionRadian(arcP.centerPoint.toLatLng(), 0, arcP.radius / _NMI_IN_METERS, ellipsoid));
+        intersectionLatitude = tempPt.latitude;
 
-    // Create a point on the latitude that we
-    // know is correct for the intersection. Guess the longitude. This will help us
-    // seed the iteration loop below.
-    intx[0].latitude = intersectionLatitude; //initial guess for an intersection
-    intx[0].longitude = arcNP.centerPoint.longitude;
-    err |= invDist(arcNP.centerPoint, intx[0], &dist1x, eps); //distance btwn center and initial guess
-    error = dist1x - arcNP.radius; //error of initial guess
-    longarray[0] = intx[0].longitude; //store the longitude of initial guess
-    errarray[0] = error; //store the error of initial guess
+        // Create a point on the latitude that we
+        // know is correct for the intersection. Guess the longitude. This will help us
+        // seed the iteration loop below.
+        intx[0].latitude = intersectionLatitude; //initial guess for an intersection
+        intx[0].longitude = arcNP.centerPoint.longitude;
+        dist1x = distanceBearing(arcNP.centerPoint.toLatLng(), intx[0].toLatLng(), ellipsoid).distance; //distance btwn center and initial guess
+        error = dist1x * _NMI_IN_METERS - arcNP.radius; //error of initial guess
+        longarray[0] = intx[0].longitude; //store the longitude of initial guess
+        errarray[0] = error; //store the error of initial guess
 
-    // Create another point at a slightly different longitude. But,
-    // the iteration below will fail if trying to find a solution across
-    // the international date line (longitude of +/-pi). So, always
-    // choose to search for the intersection point that is away from
-    // that line.
-    intx[0].latitude = intersectionLatitude; //next guess for intersection point
-    intx[0].longitude = arcNP.centerPoint.longitude + (-sgn(
-    arcNP.centerPoint.longitude)) * 0.1;
-    err |= invDist(arcNP.centerPoint, intx[0], &dist1x, eps); //distance from center to intersection point
-    error = dist1x - arcNP.radius; //error in this guess
-    longarray[1] = intx[0].longitude; //store the longitude
-    errarray[1] = error; //store the error
+        // Create another point at a slightly different longitude. But,
+        // the iteration below will fail if trying to find a solution across
+        // the international date line (longitude of +/-pi). So, always
+        // choose to search for the intersection point that is away from
+        // that line.
+        intx[0].latitude = intersectionLatitude; //next guess for intersection point
+        intx[0].longitude = arcNP.centerPoint.longitude + (-_sgn(arcNP.centerPoint.longitude)) * 0.1;
+        dist1x = distanceBearing(arcNP.centerPoint.toLatLng(), intx[0].toLatLng(), ellipsoid).distance;//distance from center to intersection point
+        error = dist1x * _NMI_IN_METERS - arcNP.radius; //error in this guess
+        longarray[1] = intx[0].longitude; //store the longitude
+        errarray[1] = error; //store the error
 
-    // Now we're ready to iterate the longitude of our guess along a
-    // line of constant latitude until the distance value reaches
-    // the radius value (error = 0).
-    k = 0;
-    while ((k < MAX_ITERATIONS) && (fabs(error) > tol) && (fabs(error)
-    < MAX_ELLIPSOIDAL_ARC_RADIUS_NMI))
-    {
+        // Now we're ready to iterate the longitude of our guess along a
+        // line of constant latitude until the distance value reaches
+        // the radius value (error = 0).
+        k = 0;
+        while ((k < _MAX_ITERATIONS) && (error.abs() > tol) && (error.abs() < _MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(ellipsoid))) {
+          k++;
 
-    k++;
+          // Get a new guess for the intersection longitude
+          newLongitude = _findRootSecantMethod(longarray, errarray);
+          newLongitude = _modlon(newLongitude); //force onto interval [-pi,pi]
 
-    // Get a new guess for the intersection longitude
-    newLongitude = findRootSecantMethod(longarray, errarray, &err);
-    newLongitude = modlon(newLongitude); //force onto interval [-pi,pi]
+          // Use newLongitude to create the new guess point
+          intx[0].longitude = newLongitude;
+          dist1x = distanceBearing(arcNP.centerPoint.toLatLng(), intx[0].toLatLng(), ellipsoid).distance; //distance from center to intersection point
+          error = dist1x * _NMI_IN_METERS - arcNP.radius; //error in this guess
 
-    // Use newLongitude to create the new guess point
-    intx[0].longitude = newLongitude;
-    err |= invDist(arcNP.centerPoint, intx[0], &dist1x, eps); //distance from center to intersection point
-    error = dist1x - arcNP.radius; //error in this guess
+          // Now shift & store the values into the arrays
+          longarray[0] = longarray[1];
+          errarray[0] = errarray[1];
+          longarray[1] = intx[0].longitude;
+          errarray[1] = error;
+        } //while
 
-    // Now shift & store the values into the arrays
-    longarray[0] = longarray[1];
-    errarray[0] = errarray[1];
-    longarray[1] = intx[0].longitude;
-    errarray[1] = error;
-    } //while
+        // Now that we have one intersection point, we can calculate the other without difficulty
+        // because it is opposite the known point.
+        intx[1].latitude = intersectionLatitude;
+        intx[1].longitude = _modlon(arcNP.centerPoint.longitude + (arcNP.centerPoint.longitude - intx[0].longitude));
+      }
+      // Neither arc is at a pole
+        else {
+        /* Spherical approx */
+        intx = _initArcIntx(_geodeticToGeocentric(center1, ellipsoid), r1, _geodeticToGeocentric(center2, ellipsoid), r2, tol, ellipsoid);
+        sn = intx.length;
+        /* Sphere arc intersect may return NO_INTERSECTION_ERR in cases where the
+               * circles are nearly tangent.  Non-intersecting cases are already handled by
+               * the midptErr check above, so we mask out the NO_INTERSECTION_ERR and proceed,
+               * pretending that the arcs are approximately tangent (number of approximate
+               * intersections will be 0).*/
 
-    // Now that we have one intersection point, we can calculate the other without difficulty
-    // because it is opposite the known point.
-    intx[1].latitude = intersectionLatitude;
-    intx[1].longitude = modlon(arcNP.centerPoint.longitude
-    + (arcNP.centerPoint.longitude - intx[0].longitude));
+        if (sn < 2) {
+          /* Spherical approximation doesn't exist, try more direct approximation *
+                   * This case will occur when close to the tangent case.  Due to errors  *
+                   * in the spherical approximation, the spherical solution may not exist *
+                   * even though the ellipsoidal solution has at least one intersection.  */
 
-    }
-    // Neither arc is at a pole
-    else
-    {
-    /* Spherical approx */
-    err |= initArcIntx(geodeticToGeocentric(center1), r1,
-    geodeticToGeocentric(center2), r2, intx, &sn, NULL, eps);
-    /* Sphere arc intersect may return NO_INTERSECTION_ERR in cases where the
-           * circles are nearly tangent.  Non-intersecting cases are already handled by
-           * the midptErr check above, so we mask out the NO_INTERSECTION_ERR and proceed,
-           * pretending that the arcs are approximately tangent (number of approximate
-           * intersections will be 0).*/
+          /* Flat-earth approximation of distance from midpoint to intersection */
+          /* Distance from center1 to point along center1-center2 line abeam intersection */
+          y = (r2 * r2 - r1 * r1 + dist12 * dist12) / (2.0 * dist12);
 
-    err = getMaskedError(err, NO_INTERSECTION_ERR);
-    if (err)
-    {
-    return err;
-    }
+          /* angle between crs12 and crs to approximate intersection */
+          crs1x = acos(y / r1);
 
-    if (sn < 2)
-    {
-    /* Spherical approximation doesn't exist, try more direct approximation *
-             * This case will occur when close to the tangent case.  Due to errors  *
-             * in the spherical approximation, the spherical solution may not exist *
-             * even though the ellipsoidal solution has at least one intersection.  */
+          intx[0] = _LLPoint.fromLatLng(projectionRadian(center1.toLatLng(), crs12 + crs1x, r1 * _NMI_IN_METERS, ellipsoid));
+          intx[1] = _LLPoint.fromLatLng(projectionRadian(center1.toLatLng(), crs12 - crs1x, r1 * _NMI_IN_METERS, ellipsoid));
+        }
 
-    /* Flat-earth approximation of distance from midpoint to intersection */
-    /* Distance from center1 to point along center1-center2 line abeam intersection */
-    y = (r2 * r2 - r1 * r1 + dist12 * dist12) / (2.0 * dist12);
+        /* intx will point to array of two points now
+               * Refine position of each point until it lies on both circles.
+               */
 
-    /* angle between crs12 and crs to approximate intersection */
-    crs1x = acos(y / r1);
+        for (i = 0; i < 2; i++) {
+          if (i == 0) {
+            intx[i].latitude = _geodeticLat(intx[i].latitude, ellipsoid);
+            pt = intx[i];
+            /* Find course from center 2 to approx point */
+            distBear = distanceBearing(center2.toLatLng(), pt.toLatLng(), ellipsoid);
+            crs2x = distBear.bearingAToBInRadian;
+            crsx2 = distBear.bearingBToAInRadian;
+            dist2x = distBear.distance / _NMI_IN_METERS;
+          } else {
+            /* use angle to first solution as starting point for
+                       * second solution */
+            crs2x = crs21 + _modlon(crs21 - crs2x);
+          }
 
-    err |= direct(center1, crs12 + crs1x, r1, &intx[0], eps);
-    err |= direct(center1, crs12 - crs1x, r1, &intx[1], eps);
-    if (err)
-    {
-    return err;
-    }
-    }
+          k = 0;
 
-    /* intx will point to array of two points now
-           * Refine position of each point until it lies on both circles.
-           */
+          /* Place point on circumference of circle 2 */
+          pt = _LLPoint.fromLatLng(projectionRadian(center2.toLatLng(), crs2x, r2 * _NMI_IN_METERS, ellipsoid));
+          /* Find distance from center 1 to pt */
+          /* As pt approaches intersection, this value will approach r1 */
+          distBear = distanceBearing(center1.toLatLng(), pt.toLatLng(), ellipsoid);
+          crs1x = distBear.bearingAToBInRadian;
+          crsx1 = distBear.bearingBToAInRadian;
+          dist1x = distBear.distance / _NMI_IN_METERS;
+          error = r1 - dist1x;
 
-    for (i = 0; i < 2; i++)
-    {
-    if (i == 0)
-    {
-    intx[i].latitude = geodeticLat(intx[i].latitude);
-    pt = intx[i];
-    /* Find course from center 2 to approx point */
-    err |= inverse(center2, pt, &crs2x, &crsx2, &dist2x, eps);
-    }
-    else
-    {
-    /* use angle to first solution as starting point for
-               * second solution */
-    crs2x = crs21 + modlon(crs21 - crs2x);
-    }
+          errarray[1] = error;
+          crsarray[1] = crs1x;
 
-    k = 0;
+          /* Iteratively improve solution */
+          while ((k < _MAX_ITERATIONS) && (error.abs() > tol)) {
+            k++;
 
-    /* Place point on circumference of circle 2 */
+            /* Use calculated course to move point to circumference 1 */
+            pt = _LLPoint.fromLatLng(projectionRadian(center1.toLatLng(), crs1x, r1 * _NMI_IN_METERS, ellipsoid));
 
-    err |= direct(center2, crs2x, r2, &pt, eps);
-    /* Find distance from center 1 to pt */
-    /* As pt approaches intersection, this value will approach r1 */
-    err |= inverse(center1, pt, &crs1x, &crsx1, &dist1x, eps);
+            /* Find course from center 2 to new approx point */
+            distBear = distanceBearing(center2.toLatLng(), pt.toLatLng(), ellipsoid);
+            crs2x = distBear.bearingAToBInRadian;
+            crsx2 = distBear.bearingBToAInRadian;
+            dist2x = distBear.distance / _NMI_IN_METERS;
 
-    error = r1 - dist1x;
-    //        printf("initial error[%d] = %e => ",i,error);
+            /* Move point along crs to circumference of circle 2 */
+            pt = _LLPoint.fromLatLng(projectionRadian(center2.toLatLng(), crs2x, r2 * _NMI_IN_METERS, ellipsoid));
 
-    errarray[1] = error;
-    crsarray[1] = crs1x;
+            /* Find distance from center 1 to pt */
+            //      dist1x = invDist(center1,pt,eps);
+            distBear = distanceBearing(center1.toLatLng(), pt.toLatLng(), ellipsoid);
+            crs1x = distBear.bearingAToBInRadian;
+            crsx1 = distBear.bearingBToAInRadian;
+            dist1x = distBear.distance / _NMI_IN_METERS;
 
-    /* Iteratively improve solution */
-    while ((k < MAX_ITERATIONS) && (fabs(error) > tol))
-    {
+            error = r1 - dist1x;
 
-    k++;
+            crsarray[0] = crsarray[1];
+            crsarray[1] = crs1x;
+            errarray[0] = errarray[1];
+            errarray[1] = error;
+            /* The error is a function that depends on crs1x
+                       * Use linear approx to this function to find new
+                       * intersection estimate */
+            crs1x = _findRootSecantMethod(crsarray, errarray);
+          } /* end while */
 
-    /* Use calculated course to move point to circumference 1 */
-    err |= direct(center1, crs1x, r1, &pt, eps);
+          intx[i] = pt;
+        } /* end for */
 
-    /* Find course from center 2 to new approx point */
-    err |= inverse(center2, pt, &crs2x, &crsx2, &dist2x, eps);
-
-    /* Move point along crs to circumference of circle 2 */
-    err |= direct(center2, crs2x, r2, &pt, eps);
-
-    /* Find distance from center 1 to pt */
-    //      dist1x = invDist(center1,pt,eps);
-    err |= inverse(center1, pt, &crs1x, &crsx1, &dist1x, eps);
-
-    error = r1 - dist1x;
-
-    crsarray[0] = crsarray[1];
-    crsarray[1] = crs1x;
-    errarray[0] = errarray[1];
-    errarray[1] = error;
-    /* The error is a function that depends on crs1x
-               * Use linear approx to this function to find new
-               * intersection estimate */
-    crs1x = findRootSecantMethod(crsarray, errarray, &err);
-    } /* end while */
-
-    //        printf("k[%d] = %d, error[%d] = %e\n",i,k,i,error);
-    intx[i] = pt;
-
-
-    } /* end for */
-
-    } /* if arc on pole */
-
-    // Error check the iteration
-    if (k >= MAX_ITERATIONS)
-    {
-    err |= SEC_NOT_CONVERGED_ERR;
+      } /* if arc on pole */
     }
 
-    if (fabs(error) >= MAX_DISTANCE_ERROR)
-    {
-    err |= ERROR_MAX_REACHED_ERR;
-    }
+    var out = <_LLPoint>[];
+    for (int i = 0; i < n; i++) {
+      out.add(intx[i]);
     }
 
-    return err;
-
+    return out;
 }
 
 /* Calculate points of intersection of arc and geodesic.  The arc is treated as a full
@@ -456,9 +401,9 @@ List<LLPoint> arcIntx(LLPoint center1, double r1, LLPoint center2, double r2, do
 * @retval ERROR_MAX_REACHED_ERR Indicates that an error value has grown larger than allowed.
  */
 
-List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radius, double tol, Ellipsoid ellipsoid) {
-  LLPoint perpPt;
-  LLPoint newStart;
+List<_LLPoint> _geoArcIntx(_LLPoint pt1, double crs1, _LLPoint center, double radius, double tol, Ellipsoid ellipsoid) {
+  _LLPoint perpPt;
+  _LLPoint newStart;
   int i, k, j = 0;
 
   double perpDist, perpCrs; // Distance & crs from center to perp. point
@@ -470,28 +415,28 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
   double tempCrs, newCrs; // throw-away course value
   double stepSize = 9.0e99;
 
-  double sphereRad = ellipsoid.sphereRadius;
+  double sphereRad = ellipsoid.sphereRadius / _NMI_IN_METERS;
 
   int n = 0; /* initialize number of intersections found */
-  _LLPointPair intx = [LLPoint(), LLPoint()];
+  _LLPointPair intx = [_LLPoint(), _LLPoint()];
 
   /* Handle case if center and pt1 are essentially same point */
   /* Find dist from center to pt1 */
-  radDist = distanceBearing(pt1.toLatLng(), center.toLatLng(), ellipsoid).distance;
+  radDist = distanceBearing(pt1.toLatLng(), center.toLatLng(), ellipsoid).distance / _NMI_IN_METERS;
 
   if (radDist < _TOL) {
     /* center and pt1 are indistinguishable */
-    var intx0 = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), crs1, radius, ellipsoid));
-    var intx1 = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), _modcrs(crs1 + _M_PI), radius, ellipsoid));
+    var intx0 = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), crs1, radius * _NMI_IN_METERS, ellipsoid));
+    var intx1 = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), _modcrs(crs1 + _M_PI), radius * _NMI_IN_METERS, ellipsoid));
     return [intx0, intx1];
   }
   else if (radDist < radius) {
     /* pt1 is inside circle, numerical accuracy may not be good */
     /* Move start of line outside circle for better accuracy */
     /* New start will be at least one mile from circle */
-    newStart = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), crs1 + _M_PI, 2.0 * radius + 10.0, ellipsoid));
+    newStart = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), crs1 + _M_PI, (2.0 * radius + 10.0) * _NMI_IN_METERS, ellipsoid));
 
-    var distBear = distanceBearing(pt1.toLatLng(), center.toLatLng(), ellipsoid);
+    var distBear = distanceBearing(newStart.toLatLng(), pt1.toLatLng(), ellipsoid);
     newCrs = distBear.bearingAToBInRadian;
     tempCrs = distBear.bearingBToAInRadian;
     pt1 = newStart;
@@ -515,7 +460,7 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
     return [perpPt];
   } else if (perpDist > radius) {
     /* no intersections -- line too far from circle */
-    return <LLPoint>[];
+    return <_LLPoint>[];
   } else if (_ptsAreSame(perpPt,center,tol,ellipsoid)) {
     /* Line goes through center of arc.  This is a special case where
            * we can project the intersection points directly. Find azimuth of geodesic
@@ -534,10 +479,10 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
                  * and then update pt1 to this location */
       if ((_modlon(crs1-azToCenter)).abs()<_M_PI_2) {
         /* Arc center lies in crs1 direction from pt1, so move pt1 backward 1.0 NM */
-        pt1 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), crs1 + _M_PI, 1.0 * _NMI_IN_METERS, ellipsoid));
+        pt1 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), crs1 + _M_PI, 1.0 * _NMI_IN_METERS, ellipsoid));
       } else {
         /* Arc center lies "behind" pt1, so move pt1 forward 1 NM */
-        pt1 = LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), crs1, 1.0 * _NMI_IN_METERS, ellipsoid));
+        pt1 = _LLPoint.fromLatLng(projectionRadian(pt1.toLatLng(), crs1, 1.0 * _NMI_IN_METERS, ellipsoid));
       }
       /* Recompute azimuth */
       var distBear = distanceBearing(center.toLatLng(), pt1.toLatLng(), ellipsoid);
@@ -546,8 +491,8 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
       radDist = _modcrs(crs[0] + _M_PI);
     }
 
-    intx[0] = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), azFromCenter, radius, ellipsoid));
-    intx[1] = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), _modcrs(azFromCenter+_M_PI), radius, ellipsoid));
+    intx[0] = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), azFromCenter, radius * _NMI_IN_METERS, ellipsoid));
+    intx[1] = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), _modcrs(azFromCenter+_M_PI), radius * _NMI_IN_METERS, ellipsoid));
     return [intx[0], intx[1]];
   }
 
@@ -556,11 +501,11 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
   } else {
     /* Arc and geodesic describe the same great circle.
            * Intersection is entire arc. */
-    return <LLPoint>[];
+    return <_LLPoint>[];
   }
 
   /* move first approximate point to line */
-  intx[0] = LLPoint.fromLatLng(projectionRadian(perpPt.toLatLng(), crs[0], dist[0], ellipsoid));
+  intx[0] = _LLPoint.fromLatLng(projectionRadian(perpPt.toLatLng(), crs[0], dist[0] * _NMI_IN_METERS, ellipsoid));
 
   /* Iterate to improve approximations */
   for (i = 0; i < 2; i++) {
@@ -568,7 +513,7 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
     if (i == 1) {
       // Use solution to first point to find approximation to second point
       dist[1] = dist[0];
-      intx[1] = LLPoint.fromLatLng(projectionRadian(perpPt.toLatLng(), crs[1], dist[1], ellipsoid));
+      intx[1] = _LLPoint.fromLatLng(projectionRadian(perpPt.toLatLng(), crs[1], dist[1] * _NMI_IN_METERS, ellipsoid));
     }
 
     k = 0;
@@ -637,12 +582,12 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
       }
 
       /* Place i-th approximate intersection point on geodesic */
-      intx[i] = LLPoint.fromLatLng(projectionRadian(perpPt.toLatLng(), crs[i], dist[i], ellipsoid));
+      intx[i] = _LLPoint.fromLatLng(projectionRadian(perpPt.toLatLng(), crs[i], dist[i] * _NMI_IN_METERS, ellipsoid));
       /* Calculate distance from center of circle to approx. intersection */
       var distBear = distanceBearing(intx[i].toLatLng(), center.toLatLng(), ellipsoid);
       rcrs = distBear.bearingAToBInRadian;
       brcrs = distBear.bearingBToAInRadian;
-      radDist = distBear.distance;
+      radDist = distBear.distance / _NMI_IN_METERS;
 
       error = radius - radDist;
 
@@ -676,7 +621,7 @@ List<LLPoint> _geoArcIntx(LLPoint pt1, double crs1, LLPoint center, double radiu
     n = n + 1;
   } /* end for(i) */
 
-  var out = <LLPoint>[];
+  var out = <_LLPoint>[];
   for (int i = 0; i < n; i++) {
     out.add(intx[i]);
   }

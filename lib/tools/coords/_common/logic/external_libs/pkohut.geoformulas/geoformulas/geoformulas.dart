@@ -36,23 +36,6 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geofo
  */
 const double _kEps = 0.5e-15;
 
-/*
- *   \brief Tolerance
- *   \returns double tolerance of 1.0e-9
- *   \note Order 8260.54A Appendix 2, 3.3 Tolerances, states
- *   "Empirical studies have shown that eps = 0.5e-13 and
- *   tol = 1.0-e9 work well."
- *
- *   Functions in the GeoFormulas that use different values
- *   will be clearly marked in the comments and the value
- *   used.
- *
- *   See file "Application test Results.txt" for information
- *   about tolerances used in the "TerpsTest" application.
- *
- */
-const double _kTol = 1.0e-8;
-
 class _InverseResult {
   double azimuth;
   double reverseAzimuth;
@@ -73,8 +56,6 @@ class _LLPoint {
   }
 
   static _LLPoint fromLatLng(LatLng latlng) {
-    print(latlng);
-    print(latlng.latitudeInRad.toString() + ' ' + latlng.longitudeInRad.toString());
     return _LLPoint(latitude: latlng.latitudeInRad, longitude: latlng.longitudeInRad);
   }
 

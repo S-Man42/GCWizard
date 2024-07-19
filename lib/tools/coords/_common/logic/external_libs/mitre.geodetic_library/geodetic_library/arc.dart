@@ -18,11 +18,11 @@ part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/mitre.geodet
  * before calling this function.
  *  */
 
-double getArcExtent(LLPoint center, double radius, double startCrs, double endCrs,
-  ArcDirection orientation, double tol, Ellipsoid ellipsoid) {
+double _getArcExtent(_LLPoint center, double radius, double startCrs, double endCrs,
+  _ArcDirection orientation, double tol, Ellipsoid ellipsoid) {
 
   double distToPoint, tempStartCrs, tempEndCrs;
-  LLPoint startPoint, endPoint;
+  _LLPoint startPoint, endPoint;
   bool ptsAreClose = false;
   double arcExtent;
 
@@ -31,8 +31,8 @@ double getArcExtent(LLPoint center, double radius, double startCrs, double endCr
   tempEndCrs = _modpos(endCrs, _M_2PI);
 
   //Calculate the start/end points of the given arc
-  startPoint = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), tempStartCrs, radius / _NMI_IN_METERS, ellipsoid));
-  endPoint = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), tempEndCrs, radius / _NMI_IN_METERS, ellipsoid));
+  startPoint = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), tempStartCrs, radius / _NMI_IN_METERS, ellipsoid));
+  endPoint = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), tempEndCrs, radius / _NMI_IN_METERS, ellipsoid));
 
   //Check if the arc start and end points are within tolerance of each other
   var distBear = distanceBearing(startPoint.toLatLng(), endPoint.toLatLng(), ellipsoid);
@@ -42,7 +42,7 @@ double getArcExtent(LLPoint center, double radius, double startCrs, double endCr
   }
 
   //Compute the arc extent
-  arcExtent = computeSubtendedAngle(tempStartCrs, tempEndCrs, orientation);
+  arcExtent = _computeSubtendedAngle(tempStartCrs, tempEndCrs, orientation);
 
   if ((tempStartCrs != tempEndCrs) && (ptsAreClose)){
     /*
@@ -53,7 +53,7 @@ double getArcExtent(LLPoint center, double radius, double startCrs, double endCr
     if (arcExtent.abs() < _M_PI) {
       arcExtent = 0.0;
     } else if (arcExtent.abs() > _M_PI) {
-      arcExtent = _M_2PI * (orientation == ArcDirection.CLOCKWISE ? 1 : -1);
+      arcExtent = _M_2PI * (orientation == _ArcDirection.CLOCKWISE ? 1 : -1);
     } else {
       //if abs(arc extent) ~= PI and points are close something is really wrong
       arcExtent = 0.0;
@@ -85,15 +85,15 @@ double getArcExtent(LLPoint center, double radius, double startCrs, double endCr
  *
  */
 
-bool ptIsOnArc(LLPoint center, double radius, double startCrs, double endCrs, ArcDirection orientation, LLPoint testPt, double tol, Ellipsoid ellipsoid) {
+bool _ptIsOnArc(_LLPoint center, double radius, double startCrs, double endCrs, _ArcDirection orientation, _LLPoint testPt, double tol, Ellipsoid ellipsoid) {
 
   double distToPoint, crsToPoint, crsFromPoint;
-  LLPoint startPoint, endPoint;
+  _LLPoint startPoint, endPoint;
   double arcExtent, subExtent;
 
   //Calculate the start/end points of the given arc
-  startPoint = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), startCrs, radius / _NMI_IN_METERS, ellipsoid));
-  endPoint = LLPoint.fromLatLng(projectionRadian(center.toLatLng(), endCrs, radius / _NMI_IN_METERS, ellipsoid));
+  startPoint = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), startCrs, radius / _NMI_IN_METERS, ellipsoid));
+  endPoint = _LLPoint.fromLatLng(projectionRadian(center.toLatLng(), endCrs, radius / _NMI_IN_METERS, ellipsoid));
 
   //Check if the test point is within the neighborhood of the arc start point
   var distBear = distanceBearing(startPoint.toLatLng(), testPt.toLatLng(), ellipsoid);
@@ -120,7 +120,7 @@ bool ptIsOnArc(LLPoint center, double radius, double startCrs, double endCrs, Ar
   }
 
   //Get the actual arc extent of the given arc
-  arcExtent = getArcExtent(center, radius, startCrs, endCrs, orientation, tol, ellipsoid);
+  arcExtent = _getArcExtent(center, radius, startCrs, endCrs, orientation, tol, ellipsoid);
 
   //Check whether the arc is actually a full circle
   /*If so then the test point must be on the arc since we know it lies within its neighborhood
@@ -129,7 +129,7 @@ bool ptIsOnArc(LLPoint center, double radius, double startCrs, double endCrs, Ar
   if (arcExtent.abs() >= _M_2PI) return true;
 
   /* find extent of new arc with same startCrs but testPt as endCrs */
-  subExtent = getArcExtent(center, radius, startCrs, crsToPoint,orientation, tol, ellipsoid);
+  subExtent = _getArcExtent(center, radius, startCrs, crsToPoint,orientation, tol, ellipsoid);
 
   //Check whether the test point is in the arc extent of the given arc
   /*Note: If you have made it this far in the code then the test point is not within a distance of tol

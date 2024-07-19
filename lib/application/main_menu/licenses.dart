@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class Licenses extends StatefulWidget {
   const Licenses({Key? key}) : super(key: key);
@@ -17,42 +19,44 @@ class _LicensesState extends State<Licenses> {
     var content = Column(children: [
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_additionalcode'),
-          child: const GCWColumnedMultilineOutput(data: [
-            ['Astronomy Functions', 'astronomie.info, jgiesen.de', 'Personal Permission'],
-            ['Base58', 'Dark Launch', null],
-            ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
-            ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
-            ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
-            [
+          child: GCWColumnedMultilineOutput(data: [
+            const ['Astronomy Functions', 'astronomie.info, jgiesen.de', 'Personal Permission'],
+            const ['Base58', 'Dark Launch', null],
+            const ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
+            const ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
+            const ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
+            const [
               'Calendar conversions',
               'Johannes Thomann, University of Zurich Asia-Orient-Institute',
               'Personal Permission'
             ],
-            ['Centroid Code', 'Andy Eschbacher (carto.com)', 'Personal Permission'],
-            [
+            const ['Centroid Code', 'Andy Eschbacher (carto.com)', 'Personal Permission'],
+            const [
               'Chef Interpreter',
               'Wesley Janssen, Joost Rijneveld, Mathijs Vos',
               'CC0 1.0 Universal Public Domain Dedication'
             ],
-            ['Color Picker', 'flutter_hsvcolor_picker (minimized)', null],
-            ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
-            ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
-            ['Cow Generator', 'Frank Buss', 'Personal Permission'],
-            ['DutchGrid Code', '@djvanderlaan', 'MIT License'],
-            ['Gauss-Krüger Code', 'moenk', 'Personal Permission'],
-            ['GC Wizard Script Code', 'Herbert Schildt/James Holmes\nMcGrawHill', 'Personal Permission'],
-            ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
-            ['Geodetics Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
-            ['GeoHex Code', '@chsii (geohex4j), @sa2da (geohex.org)', 'MIT License'],
-            ['Lambert Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
-            ['Magic Eye Solver', 'piellardj.github.io\ngithub.com/machinewrapped', 'MIT License'],
-            ['Malbolge Code', 'lscheffer.com, Matthias Ernst', 'CC0, Public Domain'],
-            ['Substitution Breaker', 'Jens Guballa (guballa.de)', 'MIT License'],
-            ['Sudoku Solver', 'Peter Norvig (norvig.com), \'dartist\'', 'MIT License'],
-            ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
-            ['Vigenère Breaker', 'Jens Guballa (guballa.de)', 'Personal Permission'],
-            ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
-            ['Wherigo Analyzer', 'WFoundation\ngithub.com/WFoundation', ''],
+            const ['Color Picker', 'flutter_hsvcolor_picker (minimized)', null],
+            const ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
+            const ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
+            const ['Cow Generator', 'Frank Buss', 'Personal Permission'],
+            const ['DutchGrid Code', '@djvanderlaan', 'MIT License'],
+            const ['Gauss-Krüger Code', 'moenk', 'Personal Permission'],
+            const ['GC Wizard Script Code', 'Herbert Schildt/James Holmes\nMcGrawHill', 'Personal Permission'],
+            const ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
+            ['Geodetics Code', 'Charles Karney\n(GeographicLib)', _buildUrl('MIT/X11 License', 'https://github.com/geographiclib/geographiclib/blob/main/LICENSE.txt')],
+            ['Geodetics Code', 'MITRE\n(Geodetic Library)', _buildUrl('Apache 2.0 License', 'https://github.com/mitre/geodetic_library/blob/main/LICENSE')],
+            ['Geodetics Code', 'Paul Kohut\n(GeoFormulas)', _buildUrl('Apache 2.0 License', 'https://github.com/pkohut/GeoFormulas?tab=readme-ov-file#legal-stuff')],
+            const ['GeoHex Code', '@chsii (geohex4j), @sa2da (geohex.org)', 'MIT License'],
+            const ['Lambert Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
+            const ['Magic Eye Solver', 'piellardj.github.io\ngithub.com/machinewrapped', 'MIT License'],
+            const ['Malbolge Code', 'lscheffer.com, Matthias Ernst', 'CC0, Public Domain'],
+            const ['Substitution Breaker', 'Jens Guballa (guballa.de)', 'MIT License'],
+            const ['Sudoku Solver', 'Peter Norvig (norvig.com), \'dartist\'', 'MIT License'],
+            const ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
+            const ['Vigenère Breaker', 'Jens Guballa (guballa.de)', 'Personal Permission'],
+            const ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
+            const ['Wherigo Analyzer', 'WFoundation\ngithub.com/WFoundation', ''],
           ])),
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_used_apis'),
@@ -235,5 +239,20 @@ class _LicensesState extends State<Licenses> {
     ]);
 
     return MainMenuEntryStub(content: content);
+  }
+
+  Container _buildUrl(String text, String link) {
+    return Container(
+        padding: const EdgeInsets.only(top: 15, bottom: 10),
+        child: InkWell(
+          child: Text(
+            text,
+            style: gcwHyperlinkTextStyle(),
+          ),
+          onTap: () {
+            launchUrl(Uri.parse(link));
+          },
+        )
+    );
   }
 }

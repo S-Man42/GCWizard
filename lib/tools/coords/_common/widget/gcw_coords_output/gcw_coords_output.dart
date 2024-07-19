@@ -53,7 +53,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
                 child: GCWOutput(
                   child: output is BaseCoordinate ? formatCoordOutput(output.toLatLng()!, output.format, widget.ellipsoid) : output,
                   copyText: output is BaseCoordinate
-                      ? formatCoordOutput(output.toLatLng()!, output.format, widget.ellipsoid, false)
+                      ? formatCoordOutput(output.toLatLng()!, output.format, widget.ellipsoid, false).replaceAll('\n', ' ')
                       : ((output is String) || (output is int) || (output is double) ? output.toString() : null)
                 ),
               ));

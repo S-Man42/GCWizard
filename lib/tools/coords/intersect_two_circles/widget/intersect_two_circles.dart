@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -84,46 +82,26 @@ class _IntersectTwoCirclesState extends State<IntersectTwoCircles> {
             });
           },
         ),
-        _buildSubmitButton(),
+        GCWSubmitButton(
+          onPressed:() {
+            setState(() {
+              _calculateOutput();
+            });
+          }
+        ),
         GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints),
       ],
     );
   }
 
-  Widget _buildSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog<bool>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: SizedBox(
-              height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
-              width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
-              child: GCWAsyncExecuter<List<LatLng>>(
-                isolatedFunction: intersectTwoCirclesAsync,
-                parameter: _buildJobData,
-                onReady: (data) => _showOutput(data),
-                isOverlay: true,
-              ),
-            ),
-          );
-        },
-      );
-    });
-  }
-
-  Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(IntersectTwoCirclesJobData(
-        coord1: _currentCoords1.toLatLng()!,
-        radius1: _currentRadius1,
-        coord2: _currentCoords2.toLatLng()!,
-        radius2: _currentRadius2,
-        ells: defaultEllipsoid));
-  }
-
-  void _showOutput(List<LatLng> output) {
-    _currentIntersections = output;
+  void _calculateOutput() {
+    _currentIntersections = intersectTwoCircles(
+      _currentCoords1.toLatLng()!,
+      _currentRadius1,
+      _currentCoords2.toLatLng()!,
+      _currentRadius2,
+      defaultEllipsoid
+    );
 
     _currentMapPoints = [
       GCWMapPoint(

@@ -25,6 +25,6 @@ const _MAX_ITERATIONS = 100;
 
 const _NMI_IN_METERS = 1852.0;
 
-double MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(Ellipsoid ellipsoid) {
+double _MAX_ELLIPSOIDAL_ARC_RADIUS_NMI(Ellipsoid ellipsoid) {
   return (_M_PI_2 * (1.0 - ellipsoid.f) * ellipsoid.a / _NMI_IN_METERS);
 }

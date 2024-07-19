@@ -84,12 +84,12 @@ int _sgn(double x) {
  * @return Returns the angle subtended between the two courses in the direction of the arc
  * @retval 0 <= return <= \f$2\pi\f$
  */
-double computeSubtendedAngle(double startCrs, double endCrs, ArcDirection orient) {
+double _computeSubtendedAngle(double startCrs, double endCrs, _ArcDirection orient) {
 
   double alpha;
   double temp;
 
-  if (orient != ArcDirection.COUNTERCLOCKWISE) {
+  if (orient != _ArcDirection.COUNTERCLOCKWISE) {
     /* always use counter-clockwise orientaion */
     temp = startCrs;
     startCrs = endCrs;
@@ -102,7 +102,32 @@ double computeSubtendedAngle(double startCrs, double endCrs, ArcDirection orient
     alpha = _M_2PI - (endCrs - startCrs);
   }
 
-  alpha = (orient == ArcDirection.CLOCKWISE ? 1 : -1) * alpha;
+  alpha = (orient == _ArcDirection.CLOCKWISE ? 1 : -1) * alpha;
 
   return alpha;
+}
+
+double _geodeticLat(double lat, Ellipsoid ellipsoid) {
+  /* Angular eccentricity */
+  double cosoe = 1.0 - ellipsoid.f;
+  return atan(tan(lat) / cosoe / cosoe);
+}
+
+/* Convert geodetic latitude to geocentric latitude */
+double _geocentricLat(double lat, Ellipsoid ellipsoid) {
+  /* Angular eccentricity */
+  double cosoe = 1.0 - ellipsoid.f;
+  return atan(cosoe * cosoe * tan(lat));
+}
+
+_LLPoint _geodeticToGeocentric(_LLPoint pt, Ellipsoid ellipsoid) {
+  _LLPoint newPt = _LLPoint(pt.latitude, pt.longitude);
+  newPt.latitude = _geocentricLat(newPt.latitude, ellipsoid);
+  return newPt;
+}
+
+_LLPoint _geocentricToGeodetic(_LLPoint pt, Ellipsoid ellipsoid) {
+  _LLPoint newPt = _LLPoint(pt.latitude, pt.longitude);
+  newPt.latitude = _geodeticLat(newPt.latitude, ellipsoid);
+  return newPt;
 }
