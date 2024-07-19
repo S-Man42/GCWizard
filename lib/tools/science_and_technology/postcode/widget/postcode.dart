@@ -142,7 +142,7 @@ class PostcodeState extends State<Postcode> {
             : Container(),
         _currentEncodeFormat == PostcodeFormat.Linear69 || _currentEncodeFormat == PostcodeFormat.Linear80
             ? GCWIntegerSpinner(
-                title: i18n(context, 'bowling_hdcp'),
+                title: i18n(context, 'postcode_housenumber'),
                 value: _currentEncodeHouseNumber,
                 min: 0,
                 max: 999,
