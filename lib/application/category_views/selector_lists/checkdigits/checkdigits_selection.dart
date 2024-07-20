@@ -10,7 +10,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/checkdigits/
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/application/tools/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
+import 'package:gc_wizard/application/tools/gcw_toollist.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class CheckDigitsSelection extends GCWSelection {
