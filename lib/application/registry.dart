@@ -758,6 +758,22 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'enigma',
+    ], licenses: [
+      ToolLicense(
+        credit: 'en.wikipedia.org',
+        licenseType: 'CC BY-SA 4.0',
+        url: 'https://en.wikipedia.org/w/index.php?title=Enigma_machine&oldid=1226502398'
+      ),
+      ToolLicense(
+        credit: 'de.wikipedia.org',
+        licenseType: 'CC BY-SA 4.0',
+        url: 'https://de.wikipedia.org/w/index.php?title=Enigma_(Maschine)&oldid=245365474'
+      ),
+      ToolLicense(
+        credit: 'Dominik Oepen, Sebastian Höfer\n(Humboldt Universität zu Berlin)',
+        licenseType: 'Article: Die Enigma',
+        url: 'https://web.archive.org/web/20240613212151/https://www2.informatik.hu-berlin.de/~oependox/files/Ausarbeitung-Enigma.pdf'
+      ),
     ]),
     GCWTool(
         tool: const EsotericProgrammingLanguageSelection(),
@@ -801,6 +817,12 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.GAMES
     ], searchKeys: const [
       'gameoflife',
+    ], licenses: [
+      ToolLicense(
+        credit: 'de.wikipedia.org',
+        licenseType: 'CC BY-SA 4.0',
+        url: 'https://de.wikipedia.org/w/index.php?title=Conways_Spiel_des_Lebens&oldid=246560171'
+      )
     ]),
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1292,12 +1314,25 @@ void initializeRegistry(BuildContext context) {
         'substitutionbreaker',
       ],
       deeplinkAlias: const ['substitution_breaker', 'substbreaker', 'substbreak', 'subst_breaker', 'subst_break'],
+      licenses: [
+        ToolLicense(
+          credit: 'Jens Guballa\n(guballa.de)',
+          licenseType: 'MIT License',
+          url: 'https://gitlab.com/guballa/SubstitutionBreaker/-/blob/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb/LICENSE'
+        )
+      ]
     ),
     GCWTool(tool: const SudokuSolver(), id: 'sudokusolver', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
       'games',
       'games_sudokusolver',
+    ], licenses: [
+      ToolLicense(
+        credit: 'Demis Bellot, Adam Singer, Matias Meno',
+        licenseType: 'Free to use',
+        url: 'https://github.com/S-Man42/sudoku_solver/blob/5f1889ce8f6c4f0eb1f8ec10caa84cc318c827b8/LICENSE'
+      )
     ]),
     GCWTool(
       tool: const SymbolTableSelection(),
@@ -1592,7 +1627,7 @@ void initializeRegistry(BuildContext context) {
     licenses: [
       ToolLicense(
         credit: 'en.wikipedia.org',
-        licenseType: 'CC SA 4.0',
+        licenseType: 'CC BY-SA 4.0',
         url: 'https://en.wikipedia.org/w/index.php?title=Equatorial_coordinate_system&oldid=1228085432'
       ),
       ToolLicense(
@@ -1996,7 +2031,7 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
           credit: 'en.wikipedia.org',
-          licenseType: 'CC SA 4.0',
+          licenseType: 'CC BY-SA 4.0',
           url: 'https://en.wikipedia.org/w/index.php?title=Global_Area_Reference_System&oldid=1127203453'
       ),
       ToolLicense(
@@ -2036,13 +2071,18 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
           credit: 'OpenStreetMap.org',
-          licenseType: 'CC SA 2.0',
+          licenseType: 'CC BY-SA 2.0',
           url: 'https://wiki.openstreetmap.org/w/index.php?title=Slippy_map_tilenames&oldid=2689774'
       ),
       ToolLicense(
-          credit: 'Bundesamt für Landestopografie Schweiz swisstopo',
-          licenseType: 'Article: Formeln und Konstanten für die Berechnung der Schweizerischen schiefachsigen Zylinderprojektion und der Transformation zwischen Koordinatensystemen',
-          url: 'http://web.archive.org/web/20210511074533/https://www.swisstopo.admin.ch/content/swisstopo-internet/de/topics/survey/reference-systems/switzerland/_jcr_content/contentPar/tabs/items/dokumente_publikatio/tabPar/downloadlist/downloadItems/517_1459343190376.download/refsys_d.pdf'
+        credit: 'Bundesamt für Landestopografie Schweiz swisstopo',
+        licenseType: 'Article: Formeln und Konstanten für die Berechnung der Schweizerischen schiefachsigen Zylinderprojektion und der Transformation zwischen Koordinatensystemen',
+        url: 'http://web.archive.org/web/20210511074533/https://www.swisstopo.admin.ch/content/swisstopo-internet/de/topics/survey/reference-systems/switzerland/_jcr_content/contentPar/tabs/items/dokumente_publikatio/tabPar/downloadlist/downloadItems/517_1459343190376.download/refsys_d.pdf'
+      ),
+      ToolLicense(
+        credit: 'Thomas \'moenk\' Mönkemeier\n(moenk.de)',
+        licenseType: 'Use permission (geoclub.de, 2013)',
+        url: 'http://web.archive.org/web/20210511074533/https://www.swisstopo.admin.ch/content/swisstopo-internet/de/topics/survey/reference-systems/switzerland/_jcr_content/contentPar/tabs/items/dokumente_publikatio/tabPar/downloadlist/downloadItems/517_1459343190376.download/refsys_d.pdf'
       ),
     ]),
     GCWTool(
@@ -2581,6 +2621,12 @@ void initializeRegistry(BuildContext context) {
       'codebreaker',
       'hashes',
       'hashbreaker',
+    ], licenses: [
+      ToolLicense(
+        credit: 'PointyCastle',
+        licenseType: 'MIT License',
+        url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const UrwigoHashBreaker(), id: 'urwigo_hashbreaker', searchKeys: const [
       'wherigo',
@@ -2588,279 +2634,597 @@ void initializeRegistry(BuildContext context) {
       'hashes',
       'hashbreaker',
     ]),
-    GCWTool(tool: const HashOverview(), id: 'hashes_overview', searchKeys: const ['hashes', 'hashes_overview']),
+    GCWTool(tool: const HashOverview(), id: 'hashes_overview', searchKeys: const ['hashes', 'hashes_overview'], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
+    ]),
     GCWTool(
         tool: const HashIdentification(),
         id: 'hashes_identification',
-        searchKeys: const ['hashes', 'hashes_identification']),
+        searchKeys: const ['hashes', 'hashes_identification'], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
+    ]),
     GCWTool(tool: const SHA1(), id: 'hashes_sha1', searchKeys: const [
       'hashes',
       'hashes_sha1',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA1HMac(), id: 'hashes_sha1hmac', searchKeys: const [
       'hashes',
       'hashes_sha1',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA224(), id: 'hashes_sha224', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha224',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA224HMac(), id: 'hashes_sha224hmac', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha224',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA256(), id: 'hashes_sha256', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha256',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA256HMac(), id: 'hashes_sha256hmac', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha256',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA384(), id: 'hashes_sha384', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha384',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA384HMac(), id: 'hashes_sha384hmac', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha384',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA512(), id: 'hashes_sha512', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA512HMac(), id: 'hashes_sha512hmac', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA512_224(), id: 'hashes_sha512.224', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_224',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA512_224HMac(), id: 'hashes_sha512.224hmac', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_224',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA512_256(), id: 'hashes_sha512.256', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA512_256HMac(), id: 'hashes_sha512.256hmac', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_224(), id: 'hashes_sha3.224', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_224',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_224HMac(), id: 'hashes_sha3.224hmac', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_224',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_256(), id: 'hashes_sha3.256', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_256',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_256HMac(), id: 'hashes_sha3.256hmac', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_256',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_384(), id: 'hashes_sha3.384', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_384',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_384HMac(), id: 'hashes_sha3.384hmac', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_384',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_512(), id: 'hashes_sha3.512', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_512',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const SHA3_512HMac(), id: 'hashes_sha3.512hmac', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_512',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Keccak_128(), id: 'hashes_keccak128', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_keccak',
       'hashes_keccak_128',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Keccak_224(), id: 'hashes_keccak224', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_keccak',
       'hashes_keccak_224',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Keccak_256(), id: 'hashes_keccak256', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_keccak',
       'hashes_keccak_256',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Keccak_288(), id: 'hashes_keccak288', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_keccak',
       'hashes_keccak_288',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Keccak_384(), id: 'hashes_keccak384', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_keccak',
       'hashes_keccak_384',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Keccak_512(), id: 'hashes_keccak512', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_keccak',
       'hashes_keccak_512',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_128(), id: 'hashes_ripemd128', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_128',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_128HMac(), id: 'hashes_ripemd128hmac', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_128',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_160(), id: 'hashes_ripemd160', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_160',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_160HMac(), id: 'hashes_ripemd160hmac', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_160',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_256(), id: 'hashes_ripemd256', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_256',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_256HMac(), id: 'hashes_ripemd256hmac', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_256',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_320(), id: 'hashes_ripemd320', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_320',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const RIPEMD_320HMac(), id: 'hashes_ripemd320hmac', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_320',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const MD2(), id: 'hashes_md2', searchKeys: const [
       'hashes',
       'hashes_md2',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const MD2HMac(), id: 'hashes_md2hmac', searchKeys: const [
       'hashes',
       'hashes_md2',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const MD4(), id: 'hashes_md4', searchKeys: const [
       'hashes',
       'hashes_md4',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const MD4HMac(), id: 'hashes_md4hmac', searchKeys: const [
       'hashes',
       'hashes_md4',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const MD5(), id: 'hashes_md5', searchKeys: const [
       'hashes',
       'hashes_md5',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const MD5HMac(), id: 'hashes_md5hmac', searchKeys: const [
       'hashes',
       'hashes_md5',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Tiger_192(), id: 'hashes_tiger192', searchKeys: const [
       'hashes',
       'hashes_tiger_192',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Tiger_192HMac(), id: 'hashes_tiger192hmac', searchKeys: const [
       'hashes',
       'hashes_tiger_192',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Whirlpool_512(), id: 'hashes_whirlpool512', searchKeys: const [
       'hashes',
       'hashes_whirlpool_512',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const Whirlpool_512HMac(), id: 'hashes_whirlpool512hmac', searchKeys: const [
       'hashes',
       'hashes_whirlpool_512',
       'hashes_hmac',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const BLAKE2b_160(), id: 'hashes_blake2b160', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_160',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const BLAKE2b_224(), id: 'hashes_blake2b224', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_224',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const BLAKE2b_256(), id: 'hashes_blake2b256', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_256',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const BLAKE2b_384(), id: 'hashes_blake2b384', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_384',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
     GCWTool(tool: const BLAKE2b_512(), id: 'hashes_blake2b512', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_512',
+    ], licenses: [
+      ToolLicense(
+          credit: 'PointyCastle',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
+      )
     ]),
 
     // IceCodeSelection *********************************************************************************************
@@ -3960,9 +4324,31 @@ void initializeRegistry(BuildContext context) {
 
     GCWTool(tool: const Scrabble(), id: 'scrabble', searchKeys: const [
       'games_scrabble',
+    ], licenses: [
+      ToolLicense(
+        credit: 'en.wikipedia.org',
+        licenseType: 'CC BY-SA 4.0',
+        url: 'https://en.wikipedia.org/w/index.php?title=Scrabble_letter_distributions&oldid=1231431837'
+      ),
+      ToolLicense(
+        credit: 'de.wikipedia.org',
+        licenseType: 'CC BY-SA 4.0',
+        url: 'https://de.wikipedia.org/w/index.php?title=Scrabble&oldid=245686434'
+      ),
     ]),
     GCWTool(tool: const ScrabbleOverview(), id: 'scrabbleoverview', searchKeys: const [
       'games_scrabble',
+    ], licenses: [
+      ToolLicense(
+          credit: 'en.wikipedia.org',
+          licenseType: 'CC BY-SA 4.0',
+          url: 'https://en.wikipedia.org/w/index.php?title=Scrabble_letter_distributions&oldid=1231431837'
+      ),
+      ToolLicense(
+          credit: 'de.wikipedia.org',
+          licenseType: 'CC BY-SA 4.0',
+          url: 'https://de.wikipedia.org/w/index.php?title=Scrabble&oldid=245686434'
+      ),
     ]),
 
     //Miscellaneous Selection *****************************************************************************************
