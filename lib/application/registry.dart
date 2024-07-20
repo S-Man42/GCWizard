@@ -106,7 +106,7 @@ import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart'
 import 'package:gc_wizard/application/settings/widget/settings_general.dart';
 import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
 import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
-import 'package:gc_wizard/application/tools/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_two_points/widget/center_two_points.dart';
