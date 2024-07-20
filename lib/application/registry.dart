@@ -1465,6 +1465,21 @@ void initializeRegistry(BuildContext context) {
       'astronomy_riseset',
       'astronomy_sun',
       'astronomy_sunriseset',
+    ], licenses: [
+      ToolLicense(
+          credit: 'Peter Duffett-Smith',
+          licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
+      ),
+      ToolLicense(
+          credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
+          licenseType: 'GNU License',
+          url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
+      ),
+      ToolLicense(
+          credit: 'NASA',
+          licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+          url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
+      )
     ]),
     GCWTool(tool: const SunPosition(), id: 'astronomy_sunposition', searchKeys: const [
       'astronomy',
@@ -1472,21 +1487,60 @@ void initializeRegistry(BuildContext context) {
       'astronomy_sun',
     ], licenses: [
       ToolLicense(
-        credit: 'Helmut Lehmeyer\nastronomie.info',
+        credit: 'Peter Duffett-Smith',
+        licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
+      ),
+      ToolLicense(
+        credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
         licenseType: 'GNU License',
         url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
+      ),
+      ToolLicense(
+          credit: 'NASA',
+          licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+          url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
       )
     ]),
     GCWTool(tool: const MoonRiseSet(), id: 'astronomy_moonriseset', searchKeys: const [
       'astronomy',
       'astronomy_riseset',
       'astronomy_moon',
+    ], licenses: [
+      ToolLicense(
+          credit: 'Peter Duffett-Smith',
+          licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
+      ),
+      ToolLicense(
+          credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
+          licenseType: 'GNU License',
+          url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
+      ),
+      ToolLicense(
+          credit: 'NASA',
+          licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+          url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
+      )
     ]),
     GCWTool(tool: const MoonPosition(), id: 'astronomy_moonposition', searchKeys: const [
       'astronomy',
       'astronomy_position',
       'astronomy_moon',
       'astronomy_moonposition',
+    ], licenses: [
+      ToolLicense(
+          credit: 'Peter Duffett-Smith',
+          licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
+      ),
+      ToolLicense(
+          credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
+          licenseType: 'GNU License',
+          url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
+      ),
+      ToolLicense(
+        credit: 'NASA',
+        licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+        url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
+      )
     ]),
     GCWTool(tool: const EasterSelection(), id: 'astronomy_easter_selection', searchKeys: const [
       'easter_date',
@@ -1494,10 +1548,26 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Seasons(), id: 'astronomy_seasons', searchKeys: const [
       'astronomy',
       'astronomy_seasons',
+    ], licenses: [
+      ToolLicense(
+        credit: 'Jean Meeus',
+        licenseType: 'Astronomical Algorithms, ISBN 978-0943396613'
+      ),
+      ToolLicense(
+        credit: 'Jürgen Giesen\n(jgiesen.de)',
+        licenseType: 'Permission by e-mail (2020-06-29)',
+        url: 'https://web.archive.org/web/20140805014345/http://www.jgiesen.de/astro/astroJS/seasons2/seasons.js'
+      )
     ]),
     GCWTool(tool: const ShadowLength(), id: 'shadowlength', searchKeys: const [
       'astronomy',
       'astronomy_shadow_length',
+    ], licenses: [
+      ToolLicense(
+        credit: 'NASA',
+        licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+        url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
+      )
     ]),
     GCWTool(
         tool: const RightAscensionToDegree(),
@@ -1507,7 +1577,19 @@ void initializeRegistry(BuildContext context) {
           'astronomy',
           'right_ascension_to_degree',
           'coordinates',
-        ]),
+        ],
+    licenses: [
+      ToolLicense(
+        credit: 'en.wikipedia.org',
+        licenseType: 'CC SA 4.0',
+        url: 'https://en.wikipedia.org/w/index.php?title=Equatorial_coordinate_system&oldid=1228085432'
+      ),
+      ToolLicense(
+        credit: 'GitHub: @max-mapper',
+        licenseType: 'Github default',
+        url: 'https://github.com/S-Man42/equatorial/commit/f11b2a91be12721d87b108cc495953bc96565fec'
+      )]
+    ),
 
     //Babylon Numbers Selection **************************************************************************************
     GCWTool(tool: const BabylonNumbers(), id: 'babylonnumbers', searchKeys: const [
@@ -2246,10 +2328,20 @@ void initializeRegistry(BuildContext context) {
     //Easter Selection ***************************************************************************************
     GCWTool(tool: const EasterDate(), id: 'astronomy_easter_easterdate', searchKeys: const [
       'easter_date',
+    ], licenses: [
+      ToolLicense(
+        credit: 'Jean Meeus',
+        licenseType: 'Astronomical Algorithms, ISBN 978-0943396613'
+      )
     ]),
     GCWTool(tool: const EasterYears(), id: 'astronomy_easter_easteryears', searchKeys: const [
       'easter_date',
       'easter_years',
+    ], licenses: [
+      ToolLicense(
+          credit: 'Jean Meeus',
+          licenseType: 'Astronomical Algorithms, ISBN 978-0943396613'
+      )
     ]),
 
     //Esoteric Programming Language Selection ****************************************************************
