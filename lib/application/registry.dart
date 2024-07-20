@@ -107,6 +107,7 @@ import 'package:gc_wizard/application/settings/widget/settings_general.dart';
 import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
 import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/tool_licenses.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_two_points/widget/center_two_points.dart';
@@ -1469,6 +1470,12 @@ void initializeRegistry(BuildContext context) {
       'astronomy',
       'astronomy_position',
       'astronomy_sun',
+    ], licenses: [
+      ToolLicense(
+        credit: 'Helmut Lehmeyer\nastronomie.info',
+        licenseType: 'GNU License',
+        url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
+      )
     ]),
     GCWTool(tool: const MoonRiseSet(), id: 'astronomy_moonriseset', searchKeys: const [
       'astronomy',

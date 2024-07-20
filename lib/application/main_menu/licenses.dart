@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/tool_licenses.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 
 class Licenses extends StatefulWidget {
   const Licenses({Key? key}) : super(key: key);
@@ -16,7 +15,27 @@ class Licenses extends StatefulWidget {
 class _LicensesState extends State<Licenses> {
   @override
   Widget build(BuildContext context) {
-    var content = Column(children: [
+    var content = registeredTools
+      .where((GCWTool tool) => tool.licenses != null && tool.licenses!.isNotEmpty)
+      .map((GCWTool tool){
+        var name = toolName(context, tool);
+        return [name, Column(
+          children: [
+            GCWTextDivider(text: name),
+            buildToolLicenseContent(tool.licenses!)
+          ],
+        )];
+      }).toList();
+
+    content.sort((a, b) {
+      return a[0].toString().compareTo(b[0].toString());
+    });
+
+    return MainMenuEntryStub(content: Column(
+      children: content.map((element) => element[1] as Column).toList()
+    ));
+
+    /*return Column(children: [
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_additionalcode'),
           child: GCWColumnedMultilineOutput(data: [
@@ -44,9 +63,9 @@ class _LicensesState extends State<Licenses> {
             const ['Gauss-Krüger Code', 'moenk', 'Personal Permission'],
             const ['GC Wizard Script Code', 'Herbert Schildt/James Holmes\nMcGrawHill', 'Personal Permission'],
             const ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
-            ['Geodetics Code', 'Charles Karney\n(GeographicLib)', _buildUrl('MIT/X11 License', 'https://github.com/geographiclib/geographiclib/blob/main/LICENSE.txt')],
-            ['Geodetics Code', 'MITRE\n(Geodetic Library)', _buildUrl('Apache 2.0 License', 'https://github.com/mitre/geodetic_library/blob/main/LICENSE')],
-            ['Geodetics Code', 'Paul Kohut\n(GeoFormulas)', _buildUrl('Apache 2.0 License', 'https://github.com/pkohut/GeoFormulas?tab=readme-ov-file#legal-stuff')],
+            ['Geodetics Code', 'Charles Karney\n(GeographicLib)', buildUrl('MIT/X11 License', 'https://github.com/geographiclib/geographiclib/blob/main/LICENSE.txt')],
+            ['Geodetics Code', 'MITRE\n(Geodetic Library)', buildUrl('Apache 2.0 License', 'https://github.com/mitre/geodetic_library/blob/main/LICENSE')],
+            ['Geodetics Code', 'Paul Kohut\n(GeoFormulas)', buildUrl('Apache 2.0 License', 'https://github.com/pkohut/GeoFormulas?tab=readme-ov-file#legal-stuff')],
             const ['GeoHex Code', '@chsii (geohex4j), @sa2da (geohex.org)', 'MIT License'],
             const ['Lambert Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
             const ['Magic Eye Solver', 'piellardj.github.io\ngithub.com/machinewrapped', 'MIT License'],
@@ -57,7 +76,7 @@ class _LicensesState extends State<Licenses> {
             const ['Vigenère Breaker', 'Jens Guballa (guballa.de)', 'Personal Permission'],
             const ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
             const ['Wherigo Analyzer', 'WFoundation\ngithub.com/WFoundation', ''],
-          ])),
+          ], suppressCopyButtons: true,)),
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_used_apis'),
           suppressTopSpace: false,
@@ -238,23 +257,6 @@ class _LicensesState extends State<Licenses> {
             1,
             2
           ])),
-    ]);
-
-    return MainMenuEntryStub(content: content);
-  }
-
-  Container _buildUrl(String text, String link) {
-    return Container(
-        padding: const EdgeInsets.only(top: 15, bottom: 10),
-        child: InkWell(
-          child: Text(
-            text,
-            style: gcwHyperlinkTextStyle(),
-          ),
-          onTap: () {
-            launchUrl(Uri.parse(link));
-          },
-        )
-    );
+    ]);*/
   }
 }
