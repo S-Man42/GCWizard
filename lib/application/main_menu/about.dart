@@ -53,7 +53,7 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     var content = Column(
       children: <Widget>[
-        Text(GCWPackageInfo.getInstance().appName, style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
+        Text(GCWPackageInfo.getInstance().appName, style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold, fontSize: defaultFontSize() + 5)),
         const GCWDivider(),
         Container(
             padding: const EdgeInsets.only(top: 15),
@@ -142,7 +142,7 @@ class _AboutState extends State<About> {
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
                             'Geo-Link (Hardware & Symbol Tables)',
                             'Karl B. (Coords Algorithms)',
-                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
+                            'Ludovic \'LudoO\' Valente (Code & Translation FR)',
                             'Michael D. (Symbol Tables)',
                             'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
                             'moenk (GK Coords)',
@@ -274,7 +274,7 @@ class _AboutState extends State<About> {
         Container(
           padding: const EdgeInsets.only(top: 15, bottom: 10),
           child:
-              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: i18n(context, 'about_notfornazis')),
+              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: '🏳️‍🌈  ' + i18n(context, 'about_notfornazis') + '  🏳️‍🌈'),
         )
       ],
     );
