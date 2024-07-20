@@ -2035,11 +2035,6 @@ void initializeRegistry(BuildContext context) {
           url: 'https://github.com/S-Man42/open-location-code/blob/dfcebc905b81c3d9c987f7b3ac6e992f1e8710c6/LICENSE'
       ),
       ToolLicense(
-          credit: 'Google',
-          licenseType: 'Apache 2.0 License',
-          url: 'https://github.com/S-Man42/open-location-code/blob/dfcebc905b81c3d9c987f7b3ac6e992f1e8710c6/LICENSE'
-      ),
-      ToolLicense(
           credit: 'OpenStreetMap.org',
           licenseType: 'CC SA 2.0',
           url: 'https://wiki.openstreetmap.org/w/index.php?title=Slippy_map_tilenames&oldid=2689774'
