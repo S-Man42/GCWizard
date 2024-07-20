@@ -31,7 +31,7 @@ enum ToolCategory {
   MISCELLANEOUS,
 }
 
-final _SEARCH_BLACKLIST = {
+final _MANUAL_SEARCH_BLACKLIST = {
   'code',
   'chiffre',
   'cipher',
@@ -76,7 +76,7 @@ final _SEARCH_BLACKLIST = {
   'ou',
 };
 
-final _SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
+final _MANUAL_SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
@@ -174,7 +174,7 @@ class _GCWToolState extends State<GCWTool> {
         body: _buildBody());
   }
 
-  String _normalizeSearchString(String text) {
+  String _normalizeManualSearchString(String text) {
     text = text.trim().toLowerCase();
     text = text
         .replaceAll(RegExp(r"['`´]"), ' ')
@@ -187,8 +187,8 @@ class _GCWToolState extends State<GCWTool> {
         .replaceAll('(', '')
         .replaceAll(')', '');
     //.replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
-    text = substitution(text, _SEARCH_WHITELIST);
-    text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
+    text = substitution(text, _MANUAL_SEARCH_WHITELIST);
+    text = text.split(' ').where((word) => !_MANUAL_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
   }
 
@@ -202,26 +202,26 @@ class _GCWToolState extends State<GCWTool> {
     // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
 
-    String searchString = '';
+    String manualSearchString = '';
 
     if (widget.helpSearchString.isEmpty) {
       if (_needsDefaultHelp(appLocale)) {
         // fallback to en if unsupported locale
-        searchString = _defaultLanguageToolName;
+        manualSearchString = _defaultLanguageToolName;
       } else {
-        searchString = _toolName;
+        manualSearchString = _toolName;
       }
     } else {
-      searchString = i18n(context, widget.helpSearchString,
+      manualSearchString = i18n(context, widget.helpSearchString,
           useDefaultLanguage: _needsDefaultHelp(appLocale), ifTranslationNotExists: widget.helpSearchString);
     }
 
-    searchString = _normalizeSearchString(searchString);
+    manualSearchString = _normalizeManualSearchString(manualSearchString);
     String locale = DEFAULT_LOCALE.languageCode;
 
     if (!_needsDefaultHelp(appLocale)) locale = Localizations.localeOf(context).languageCode;
 
-    var url = HELP_BASE_URL + locale + '/search/' + searchString;
+    var url = HELP_BASE_URL + locale + '/search/' + manualSearchString;
     url = Uri.encodeFull(url);
 
     return GCWPopupMenuItem(
