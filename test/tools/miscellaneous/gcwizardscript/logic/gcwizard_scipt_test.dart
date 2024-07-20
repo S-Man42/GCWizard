@@ -21,6 +21,7 @@ part 'gcwizard_script_commands_loops.dart';
 part 'gcwizard_script_commands_nested_loops.dart';
 part 'gcwizard_script_commands_print.dart';
 part 'gcwizard_script_commands_if.dart';
+part 'gcwizard_script_commands_nested_loop_if.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {
@@ -45,7 +46,9 @@ void main() {
    // _inputsToExpected.addAll(_inputsConstToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsCoordinatesToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsCommandsPRINTToExpected); // passed 22.05.2024
-    _inputsToExpected.addAll(_inputsCommandsIFToExpected); // passed 22.05.2024
+   // _inputsToExpected.addAll(_inputsCommandsIFToExpected); // passed 20.07.2024
+    _inputsToExpected.addAll(_inputsCommandsFORIFToExpected); // passed 20.07.2024
+
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {
