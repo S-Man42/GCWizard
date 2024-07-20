@@ -41,6 +41,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/maya_numbers
 import 'package:gc_wizard/application/category_views/selector_lists/miscellaneous_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_bell_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_busybeaver_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
@@ -374,6 +375,7 @@ import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/wi
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/widget/maya_calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/bell/widget/bell.dart';
+import 'package:gc_wizard/tools/science_and_technology/number_sequences/busybeaver/widget/busybeaver.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/catalan/widget/catalan.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/factorial/widget/factorial.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/fermat/widget/fermat.dart';
@@ -400,6 +402,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/sublime_
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/superperfect_numbers/widget/superperfect_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/weird_numbers/widget/weird_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/numeral_bases.dart';
+import 'package:gc_wizard/tools/science_and_technology/paperformat/widget/paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/atomic_numbers_to_text/widget/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table/widget/periodic_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
@@ -1060,6 +1063,11 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['onetimepad', 'numbers'],
         deeplinkAlias: const ['otp', 'one_time_pad']),
+    GCWTool(tool: const PaperFormats(), id: 'paperformat', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'paperformat',
+    ]),
     GCWTool(tool: const PeriodicTableSelection(), id: 'periodictable_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -2799,6 +2807,37 @@ void initializeRegistry(BuildContext context) {
       'numbersequence',
       'numbersequence_lychrelselection',
     ]),
+    GCWTool(tool: const NumberSequenceBusyBeaverSelection(), id: 'numbersequence_busy_beaver', searchKeys: const [
+      'numbersequence',
+      'numbersequence_busy_beavernumbersselection',
+    ]),
+
+    //NumberSequenceSelection BusyBeaver ****************************************************************************************
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverNthNumber(),
+        id: 'numbersequence_nth',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverRange(),
+        id: 'numbersequence_range',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverCheckNumber(),
+        id: 'numbersequence_check',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverDigits(),
+        id: 'numbersequence_digits',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverContainsDigits(),
+        id: 'numbersequence_containsdigits',
+        id_prefix: 'busy_beaver_',
+        searchKeys: const []),
 
     //NumberSequenceSelection Factorial ****************************************************************************************
     GCWTool(
@@ -2826,6 +2865,7 @@ void initializeRegistry(BuildContext context) {
         id: 'numbersequence_containsdigits',
         id_prefix: 'factorial_',
         searchKeys: const []),
+
     //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
     GCWTool(
         tool: const NumberSequenceMersenneFermatNthNumber(),
@@ -3961,6 +4001,9 @@ void initializeRegistry(BuildContext context) {
       'symbol_cookewheatstone',
       'symbol_cookewheatstone_5',
     ]),
+    GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
+      'symbol_cosmic',
+    ]),
     GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: const [
       'countries',
       'symbol_flags',
@@ -4046,6 +4089,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: const [
       'symbol_fakoo',
     ]),
+    GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
+      'symbol_fantastic',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: const [
       'symbol_fez',
     ]),
@@ -4111,6 +4157,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: const [
       'symbol_gc_attributes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'geovlog', symbolSearchStrings: const [
+      'symbol_geovlog',
     ]),
     GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: const [
       'symbol_gernreich',
@@ -4451,6 +4500,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: const [
       'symbol_planets',
     ]),
+    GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
+      'symbol_pleiadian',
+    ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: const [
       'pokemon',
       'symbol_pokemon_unown',
@@ -4645,6 +4697,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: const [
       'symbol_tines',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tll', symbolSearchStrings: const [
+      'symbol_tll',
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
       'tomtom',

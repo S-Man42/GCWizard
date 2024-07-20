@@ -1,10 +1,10 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.1.0+263
+version: 3.1.1+270
 publish_to: none
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   archive: ^3.5.1
@@ -156,6 +156,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/cookewheatstone_1/
     - lib/tools/symbol_tables/_common/assets/cookewheatstone_2/
     - lib/tools/symbol_tables/_common/assets/cookewheatstone_5/
+    - lib/tools/symbol_tables/_common/assets/cosmic/
     - lib/tools/symbol_tables/_common/assets/country_flags/
     - lib/tools/symbol_tables/_common/assets/covenant/
     - lib/tools/symbol_tables/_common/assets/crystal/
@@ -183,6 +184,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/eurythmy/
     - lib/tools/symbol_tables/_common/assets/face_it/
     - lib/tools/symbol_tables/_common/assets/fakoo/
+    - lib/tools/symbol_tables/_common/assets/fantastic/
     - lib/tools/symbol_tables/_common/assets/fez/
     - lib/tools/symbol_tables/_common/assets/finger/
     - lib/tools/symbol_tables/_common/assets/finger_numbers/
@@ -205,6 +207,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/gargish/
     - lib/tools/symbol_tables/_common/assets/gc_attributes_ids/
     - lib/tools/symbol_tables/_common/assets/gc_attributes_meaning/
+    - lib/tools/symbol_tables/_common/assets/geovlog/
     - lib/tools/symbol_tables/_common/assets/gernreich/
     - lib/tools/symbol_tables/_common/assets/gerudo/
     - lib/tools/symbol_tables/_common/assets/glagolitic/
@@ -313,6 +316,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/pixel/
     - lib/tools/symbol_tables/_common/assets/planet/
     - lib/tools/symbol_tables/_common/assets/planets/
+    - lib/tools/symbol_tables/_common/assets/pleiadian/
     - lib/tools/symbol_tables/_common/assets/pokemon_unown/
     - lib/tools/symbol_tables/_common/assets/postcode_01247/
     - lib/tools/symbol_tables/_common/assets/postcode_8421/
@@ -375,6 +379,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/three_squares/
     - lib/tools/symbol_tables/_common/assets/tifinagh/
     - lib/tools/symbol_tables/_common/assets/tines/
+    - lib/tools/symbol_tables/_common/assets/tll/
     - lib/tools/symbol_tables/_common/assets/tomtom/
     - lib/tools/symbol_tables/_common/assets/trafficsigns_germany/
     - lib/tools/symbol_tables/_common/assets/ulog/

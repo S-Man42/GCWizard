@@ -313,6 +313,7 @@ void main() {
       {'formula' : 'bww("ABCD\')', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww("ABCD\')', 'state': 'error'}]}},
       {'formula' : '"bww("ABCD\')', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"bww("ABCD\')', 'state': 'error'}]}},
       {'formula' : '"bww(\'\')', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': '"bww(\'\')', 'state': 'error'}]}},
+      {'formula' : 'bww(\u00bbABCD\u00ab)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '10', 'state': 'ok'}]}},
 
       {'formula' : 'bww(AB,CD)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(AB,CD)', 'state': 'error'}]}},
       {'formula' : 'bww("AB",\'CD\')', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww("AB",\'CD\')', 'state': 'error'}]}},
@@ -337,6 +338,7 @@ void main() {
       {'formula' : 'bww(A)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(ABC)', 'state': 'error'}]}},
       {'formula' : 'bww(A)', 'values': [FormulaValue('A', '"ABC"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
       {'formula' : 'bww(A)', 'values': [FormulaValue('A', '\'ABC\'', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
+      {'formula' : 'bww(A)', 'values': [FormulaValue('A', '\u00bbABC\u00ab', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
 
       {'formula' : 'bww(A) + bww(A)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(ABC) + bww(ABC)', 'state': 'error'}]}},
       {'formula' : 'bww(A) + bww(A)', 'values': [FormulaValue('A', '"ABC"', type: FormulaValueType.FIXED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},

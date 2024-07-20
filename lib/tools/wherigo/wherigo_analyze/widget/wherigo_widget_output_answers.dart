@@ -36,10 +36,10 @@ List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputDat
       }
     }
   } else {
-    String _variable = _answerIsVariable(answers[0]);
+    String _variable = _answerIsVariable(answers[1]);
     if (_variable.isNotEmpty) {
       result = [
-        [i18n(context, 'wherigo_output_answer'), _variable]
+        [i18n(context, 'wherigo_output_answer'), _variable, '']
       ];
     } else {
       result = [
@@ -61,7 +61,6 @@ List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputDat
       ];
     }
   }
-
   return result;
 }
 

@@ -479,7 +479,7 @@ class FormulaParser {
     List<FormulaValue> val = [];
     for (var element in values) {
       var key = element.key.trim();
-      var value = element.value;
+      var value = normalizeCharacters(element.value);
 
       if (value.isEmpty) {
         value = key;
