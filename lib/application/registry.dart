@@ -474,6 +474,8 @@ import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbre
 import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
 
+part 'package:gc_wizard/application/tools/tool_licenses/specific_tool_licenses.dart';
+
 List<GCWTool> registeredTools = [];
 
 void initializeRegistry(BuildContext context) {
@@ -1512,60 +1514,27 @@ void initializeRegistry(BuildContext context) {
       'astronomy_sun',
       'astronomy_sunriseset',
     ], licenses: [
-      ToolLicense(
-          credit: 'Peter Duffett-Smith',
-          licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
-      ),
-      ToolLicense(
-          credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
-          licenseType: 'GNU License',
-          url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
-      ),
-      ToolLicense(
-          credit: 'NASA',
-          licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
-          url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
-      )
+      _toolLicensePracticalAstronomy,
+      _toolLicenseAstronomieInfo,
+      _toolLicenseNASADeltaT
     ]),
     GCWTool(tool: const SunPosition(), id: 'astronomy_sunposition', searchKeys: const [
       'astronomy',
       'astronomy_position',
       'astronomy_sun',
     ], licenses: [
-      ToolLicense(
-        credit: 'Peter Duffett-Smith',
-        licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
-      ),
-      ToolLicense(
-        credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
-        licenseType: 'GNU License',
-        url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
-      ),
-      ToolLicense(
-          credit: 'NASA',
-          licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
-          url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
-      )
+      _toolLicensePracticalAstronomy,
+      _toolLicenseAstronomieInfo,
+      _toolLicenseNASADeltaT
     ]),
     GCWTool(tool: const MoonRiseSet(), id: 'astronomy_moonriseset', searchKeys: const [
       'astronomy',
       'astronomy_riseset',
       'astronomy_moon',
     ], licenses: [
-      ToolLicense(
-          credit: 'Peter Duffett-Smith',
-          licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
-      ),
-      ToolLicense(
-          credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
-          licenseType: 'GNU License',
-          url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
-      ),
-      ToolLicense(
-          credit: 'NASA',
-          licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
-          url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
-      )
+      _toolLicensePracticalAstronomy,
+      _toolLicenseAstronomieInfo,
+      _toolLicenseNASADeltaT
     ]),
     GCWTool(tool: const MoonPosition(), id: 'astronomy_moonposition', searchKeys: const [
       'astronomy',
@@ -1573,20 +1542,9 @@ void initializeRegistry(BuildContext context) {
       'astronomy_moon',
       'astronomy_moonposition',
     ], licenses: [
-      ToolLicense(
-          credit: 'Peter Duffett-Smith',
-          licenseType: 'Practical Astronomy with your Calculator, ISBN 978-0521356992'
-      ),
-      ToolLicense(
-          credit: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
-          licenseType: 'GNU License',
-          url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
-      ),
-      ToolLicense(
-        credit: 'NASA',
-        licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
-        url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
-      )
+      _toolLicensePracticalAstronomy,
+      _toolLicenseAstronomieInfo,
+      _toolLicenseNASADeltaT
     ]),
     GCWTool(tool: const EasterSelection(), id: 'astronomy_easter_selection', searchKeys: const [
       'easter_date',
@@ -1609,11 +1567,7 @@ void initializeRegistry(BuildContext context) {
       'astronomy',
       'astronomy_shadow_length',
     ], licenses: [
-      ToolLicense(
-        credit: 'NASA',
-        licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
-        url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
-      )
+      _toolLicenseNASADeltaT
     ]),
     GCWTool(
         tool: const RightAscensionToDegree(),
@@ -1974,11 +1928,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_waypointprojection',
           'coordinates_geodetic',
         ], licenses: [
-          ToolLicense(
-            credit: 'Charles Karney\n(GeographicLib)',
-            licenseType: 'MIT License',
-            url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-          )
+      _toolLicenseGeographicLib
     ]),
     GCWTool(
         tool: const DistanceBearingGeodetic(),
@@ -1992,11 +1942,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_distancebearing',
           'coordinates_geodetic',
         ], licenses: [
-      ToolLicense(
-          credit: 'Charles Karney\n(GeographicLib)',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-      )
+      _toolLicenseGeographicLib
     ]),
     GCWTool(
         tool: const FormatConverter(),
@@ -2009,11 +1955,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_formatconverter',
         ], licenses: [
-      ToolLicense(
-          credit: 'Charles Karney\n(GeographicLib)',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-      ),
+      _toolLicenseGeographicLib,
       ToolLicense(
           credit: 'Hartwig Koch, Frank Naberfeld\n(Robert Bosch GmbH)',
           licenseType: 'Patent, Deutsches Patent- und Markenamt, 102 39 432.6, 2002-08-28',
@@ -2097,11 +2039,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_mapview',
         ], licenses: [
-      ToolLicense(
-          credit: 'U.S. Department of Transportation (FAA)',
-          licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
-          url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
-      ),
+      _toolLicenseFAA8260,
       ToolLicense(
           credit: 'Paul Kohut\n(GeoFormulas)',
           licenseType: 'Apache 2.0 License',
@@ -2171,11 +2109,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_centroid',
           'coordinates_arithmeticmean',
         ],licenses: [
-          ToolLicense(
-            credit: 'Geo Midpoint\n(geomidpoint.com)',
-            licenseType: 'Article: Calculation Methods: A. Geographic midpoint',
-            url: 'https://web.archive.org/web/20240606083622/http://www.geomidpoint.com/calculation.html'
-          )]),
+      _toolLicenseGeoMidpoint]),
     GCWTool(
         tool: const CentroidCenterOfGravity(),
         id: 'coords_centroid_centerofgravity',
@@ -2188,11 +2122,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_centroid',
           'coordinates_centerofgravity',
         ],licenses: [
-      ToolLicense(
-          credit: 'Geo Midpoint\n(geomidpoint.com)',
-          licenseType: 'Article: Calculation Methods: A. Geographic midpoint',
-          url: 'https://web.archive.org/web/20240606083622/http://www.geomidpoint.com/calculation.html'
-      )]),
+      _toolLicenseGeoMidpoint]),
     GCWTool(
         tool: const CenterThreePoints(),
         id: 'coords_centerthreepoints',
@@ -2250,11 +2180,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_compassrose',
           'coordinates_intersectbearing',
         ], licenses: [
-      ToolLicense(
-          credit: 'Charles Karney\n(GeographicLib)',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-      )
+      _toolLicenseGeographicLib
     ]),
     GCWTool(
         tool: const IntersectFourPoints(),
@@ -2267,11 +2193,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_intersectfourpoints',
         ], licenses: [
-      ToolLicense(
-          credit: 'Charles Karney\n(GeographicLib)',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-      )
+      _toolLicenseGeographicLib
     ]),
     GCWTool(
         tool: const IntersectGeodeticAndCircle(),
@@ -2285,16 +2207,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_compassrose',
           'coordinates_intersectgeodeticandcircle',
         ], licenses: [
-      ToolLicense(
-        credit: 'U.S. Department of Transportation (FAA)',
-        licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
-        url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
-      ),
-      ToolLicense(
-          credit: 'The MITRE Corporation\n(Geodetic Library)',
-          licenseType: 'Apache 2.0 License',
-          url: 'https://github.com/S-Man42/geodetic_library/blob/e2fd776eec8f7591d98022682137de0f74a4a0d7/LICENSE'
-      )
+      _toolLicenseFAA8260,
+      _toolLicenseMitre
     ]),
     GCWTool(
         tool: const IntersectTwoCircles(),
@@ -2307,16 +2221,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_intersecttwocircles',
         ], licenses: [
-      ToolLicense(
-          credit: 'U.S. Department of Transportation (FAA)',
-          licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
-          url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
-      ),
-      ToolLicense(
-          credit: 'The MITRE Corporation\n(Geodetic Library)',
-          licenseType: 'Apache 2.0 License',
-          url: 'https://github.com/S-Man42/geodetic_library/blob/e2fd776eec8f7591d98022682137de0f74a4a0d7/LICENSE'
-      )
+      _toolLicenseFAA8260,
+      _toolLicenseMitre
     ]),
     GCWTool(
         tool: const IntersectThreeCircles(),
@@ -2329,16 +2235,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_intersectthreecircles',
         ], licenses: [
-      ToolLicense(
-          credit: 'U.S. Department of Transportation (FAA)',
-          licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
-          url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
-      ),
-      ToolLicense(
-          credit: 'The MITRE Corporation\n(Geodetic Library)',
-          licenseType: 'Apache 2.0 License',
-          url: 'https://github.com/S-Man42/geodetic_library/blob/e2fd776eec8f7591d98022682137de0f74a4a0d7/LICENSE'
-      )
+      _toolLicenseFAA8260,
+      _toolLicenseMitre
     ]),
     GCWTool(
         tool: const Antipodes(),
@@ -2396,11 +2294,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_waypointprojection',
           'coordinates_rhumbline',
         ], licenses: [
-      ToolLicense(
-          credit: 'Charles Karney\n(GeographicLib)',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-      )
+      _toolLicenseGeographicLib
     ]),
     GCWTool(
         tool: const DistanceBearingRhumbline(),
@@ -2414,11 +2308,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_distancebearing',
           'coordinates_rhumbline',
         ], licenses: [
-      ToolLicense(
-          credit: 'Charles Karney\n(GeographicLib)',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
-      )
+      _toolLicenseGeographicLib
     ]),
     GCWTool(
         tool: const EllipsoidTransform(),
@@ -2621,11 +2511,7 @@ void initializeRegistry(BuildContext context) {
       'hashes',
       'hashbreaker',
     ], licenses: [
-      ToolLicense(
-        credit: 'PointyCastle',
-        licenseType: 'MIT License',
-        url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const UrwigoHashBreaker(), id: 'urwigo_hashbreaker', searchKeys: const [
       'wherigo',
@@ -2634,53 +2520,33 @@ void initializeRegistry(BuildContext context) {
       'hashbreaker',
     ]),
     GCWTool(tool: const HashOverview(), id: 'hashes_overview', searchKeys: const ['hashes', 'hashes_overview'], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(
         tool: const HashIdentification(),
         id: 'hashes_identification',
         searchKeys: const ['hashes', 'hashes_identification'], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA1(), id: 'hashes_sha1', searchKeys: const [
       'hashes',
       'hashes_sha1',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA1HMac(), id: 'hashes_sha1hmac', searchKeys: const [
       'hashes',
       'hashes_sha1',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA224(), id: 'hashes_sha224', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha224',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA224HMac(), id: 'hashes_sha224hmac', searchKeys: const [
       'hashes',
@@ -2688,22 +2554,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha224',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA256(), id: 'hashes_sha256', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha256',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA256HMac(), id: 'hashes_sha256hmac', searchKeys: const [
       'hashes',
@@ -2711,22 +2569,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha256',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA384(), id: 'hashes_sha384', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha384',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA384HMac(), id: 'hashes_sha384hmac', searchKeys: const [
       'hashes',
@@ -2734,22 +2584,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha384',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA512(), id: 'hashes_sha512', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA512HMac(), id: 'hashes_sha512hmac', searchKeys: const [
       'hashes',
@@ -2757,22 +2599,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha512',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA512_224(), id: 'hashes_sha512.224', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_224',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA512_224HMac(), id: 'hashes_sha512.224hmac', searchKeys: const [
       'hashes',
@@ -2780,22 +2614,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha512_224',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA512_256(), id: 'hashes_sha512.256', searchKeys: const [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA512_256HMac(), id: 'hashes_sha512.256hmac', searchKeys: const [
       'hashes',
@@ -2803,22 +2629,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha512_256',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_224(), id: 'hashes_sha3.224', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_224',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_224HMac(), id: 'hashes_sha3.224hmac', searchKeys: const [
       'hashes',
@@ -2826,22 +2644,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha3_224',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_256(), id: 'hashes_sha3.256', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_256',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_256HMac(), id: 'hashes_sha3.256hmac', searchKeys: const [
       'hashes',
@@ -2849,22 +2659,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha3_256',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_384(), id: 'hashes_sha3.384', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_384',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_384HMac(), id: 'hashes_sha3.384hmac', searchKeys: const [
       'hashes',
@@ -2872,22 +2674,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha3_384',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_512(), id: 'hashes_sha3.512', searchKeys: const [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_512',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const SHA3_512HMac(), id: 'hashes_sha3.512hmac', searchKeys: const [
       'hashes',
@@ -2895,11 +2689,7 @@ void initializeRegistry(BuildContext context) {
       'hashes_sha3_512',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Keccak_128(), id: 'hashes_keccak128', searchKeys: const [
       'hashes',
@@ -2907,11 +2697,7 @@ void initializeRegistry(BuildContext context) {
       'hashes_keccak',
       'hashes_keccak_128',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Keccak_224(), id: 'hashes_keccak224', searchKeys: const [
       'hashes',
@@ -2919,11 +2705,7 @@ void initializeRegistry(BuildContext context) {
       'hashes_keccak',
       'hashes_keccak_224',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Keccak_256(), id: 'hashes_keccak256', searchKeys: const [
       'hashes',
@@ -2931,11 +2713,7 @@ void initializeRegistry(BuildContext context) {
       'hashes_keccak',
       'hashes_keccak_256',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Keccak_288(), id: 'hashes_keccak288', searchKeys: const [
       'hashes',
@@ -2943,11 +2721,7 @@ void initializeRegistry(BuildContext context) {
       'hashes_keccak',
       'hashes_keccak_288',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Keccak_384(), id: 'hashes_keccak384', searchKeys: const [
       'hashes',
@@ -2955,11 +2729,7 @@ void initializeRegistry(BuildContext context) {
       'hashes_keccak',
       'hashes_keccak_384',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Keccak_512(), id: 'hashes_keccak512', searchKeys: const [
       'hashes',
@@ -2967,22 +2737,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_keccak',
       'hashes_keccak_512',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_128(), id: 'hashes_ripemd128', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_128',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_128HMac(), id: 'hashes_ripemd128hmac', searchKeys: const [
       'hashes',
@@ -2990,22 +2752,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_ripemd_128',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_160(), id: 'hashes_ripemd160', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_160',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_160HMac(), id: 'hashes_ripemd160hmac', searchKeys: const [
       'hashes',
@@ -3013,22 +2767,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_ripemd_160',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_256(), id: 'hashes_ripemd256', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_256',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_256HMac(), id: 'hashes_ripemd256hmac', searchKeys: const [
       'hashes',
@@ -3036,22 +2782,14 @@ void initializeRegistry(BuildContext context) {
       'hashes_ripemd_256',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_320(), id: 'hashes_ripemd320', searchKeys: const [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_320',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const RIPEMD_320HMac(), id: 'hashes_ripemd320hmac', searchKeys: const [
       'hashes',
@@ -3059,171 +2797,107 @@ void initializeRegistry(BuildContext context) {
       'hashes_ripemd_320',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const MD2(), id: 'hashes_md2', searchKeys: const [
       'hashes',
       'hashes_md2',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const MD2HMac(), id: 'hashes_md2hmac', searchKeys: const [
       'hashes',
       'hashes_md2',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const MD4(), id: 'hashes_md4', searchKeys: const [
       'hashes',
       'hashes_md4',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const MD4HMac(), id: 'hashes_md4hmac', searchKeys: const [
       'hashes',
       'hashes_md4',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const MD5(), id: 'hashes_md5', searchKeys: const [
       'hashes',
       'hashes_md5',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const MD5HMac(), id: 'hashes_md5hmac', searchKeys: const [
       'hashes',
       'hashes_md5',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Tiger_192(), id: 'hashes_tiger192', searchKeys: const [
       'hashes',
       'hashes_tiger_192',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Tiger_192HMac(), id: 'hashes_tiger192hmac', searchKeys: const [
       'hashes',
       'hashes_tiger_192',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Whirlpool_512(), id: 'hashes_whirlpool512', searchKeys: const [
       'hashes',
       'hashes_whirlpool_512',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const Whirlpool_512HMac(), id: 'hashes_whirlpool512hmac', searchKeys: const [
       'hashes',
       'hashes_whirlpool_512',
       'hashes_hmac',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const BLAKE2b_160(), id: 'hashes_blake2b160', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_160',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const BLAKE2b_224(), id: 'hashes_blake2b224', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_224',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const BLAKE2b_256(), id: 'hashes_blake2b256', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_256',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const BLAKE2b_384(), id: 'hashes_blake2b384', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_384',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
     GCWTool(tool: const BLAKE2b_512(), id: 'hashes_blake2b512', searchKeys: const [
       'hashes',
       'hashes_blake2b',
       'hashes_blake2b_512',
     ], licenses: [
-      ToolLicense(
-          credit: 'PointyCastle',
-          licenseType: 'MIT License',
-          url: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE'
-      )
+      _toolLicensePointyCastle
     ]),
 
     // IceCodeSelection *********************************************************************************************
