@@ -223,8 +223,7 @@ class _GCWizardSCriptInterpreter {
   static const LE = '1'; // <=
   static const GE = '2'; // >=
   static const NE = '3'; // !=
-  static const AND = '4'; // &&
-  static const OR = '5'; // ||
+
 
   static const Map<String, int> registeredKeywordsControls = {
     "if": IF,
@@ -303,8 +302,6 @@ class _GCWizardSCriptInterpreter {
   SendPort? sendAsyncPort;
 
   static const List<String> relationOperators = [
-    AND,
-    OR,
     GE,
     NE,
     LE,
@@ -487,6 +484,7 @@ class _GCWizardSCriptInterpreter {
       }
     }
     state.variables[variableName] = value;
+
   }
 
   void executeCommand() {
@@ -613,10 +611,12 @@ class _GCWizardSCriptInterpreter {
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT +
         '********** GC Wizard  Skript **********\n' +
-        '*      Version as of  2023.09.09      *\n' +
+        '*      Version as of  2024.07.20      *\n' +
         '*  based on the work of Herb Schildt  *\n' +
         '*  The Art of C, 1991, © McGraw Hill  *\n' +
         '* Enhancement for GC Wizard permitted *\n' +
+        '*                                     *\n' +
+        '*   Thanks linsty for heavy testing   *\n' +
         '***************************************\n';
   }
 
@@ -795,7 +795,9 @@ class _GCWizardSCriptInterpreter {
     //}
 
     if (state.keywordToken == EOL || state.token == EOP) {
-      if (lastDelimiter != ";" && lastDelimiter != "," && lastDelimiter != "+") {
+      if (lastDelimiter != ";" &&
+          lastDelimiter != "," &&
+          lastDelimiter != "+") {
         state.STDOUT += LF;
       }
     } else {
@@ -841,17 +843,19 @@ class _GCWizardSCriptInterpreter {
     } else {
       result = expression as double;
     }
-
     state.executeElse = false;
 
     if (result != 0.0) {
+      // TRUE
       state.ifStack.push(true);
       getToken();
       if (state.keywordToken != THEN) {
         _handleError(_THENEXPECTED);
         return;
-      } // else, target statement will be executed
+      }
+      findEOL();
     } else {
+      //FALSE => elseif or else - target statement will be executed
       state.ifStack.push(false);
       state.executeElse = true;
       findEOL();
@@ -862,8 +866,8 @@ class _GCWizardSCriptInterpreter {
 
   void executeCommandELSEIF() {
     double result;
-
-    if (state.ifStack.pop()) {
+    bool ifState = state.ifStack.pop();
+    if (ifState) {
       state.ifStack.push(true);
       findCorrespondingENDIF();
     } else {
@@ -951,7 +955,7 @@ class _GCWizardSCriptInterpreter {
       }
       if (state.script.substring(pc).toUpperCase().startsWith('ENDIF')) {
         if (ifList.isEmpty) {
-          result += 5;
+          result = pc;
           break;
         } else {
           ifList.removeLast();
@@ -1882,7 +1886,7 @@ class _GCWizardSCriptInterpreter {
     return result;
   }
 
-  Object? evaluateExpressionRelationalOperation() {
+    Object? evaluateExpressionRelationalOperation() {
     Object? l_temp, r_temp, result;
     String op;
 
@@ -1895,24 +1899,17 @@ class _GCWizardSCriptInterpreter {
     if (isRelationalOperator(op)) {
       l_temp = result;
       getToken();
-
       r_temp = evaluateExpressionRelationalOperation();
 
-      if (_isNotANumber(l_temp) || _isNotANumber(r_temp)) {
-        _handleError(_INVALIDTYPECAST);
-        result = 0.0;
-      } else {
+      if ((_isANumber(l_temp) && _isANumber(r_temp)) ||
+          (_isAString(l_temp) && _isAString(r_temp))) {
         if (_isAString(l_temp)) {
+          // String
           switch (op) {
             case '<':
             case LE:
             case '>':
             case GE:
-            case OR:
-            case AND:
-              _handleError(_INVALIDTYPECAST);
-              result = 0.0;
-              break;
             case '=':
               if ((l_temp as String) == (r_temp as String)) {
                 result = 1.0;
@@ -1959,28 +1956,14 @@ class _GCWizardSCriptInterpreter {
               }
               break;
             case '=':
-              if (l_temp == r_temp) {
+              if ((l_temp as num) == (r_temp as num)) {
                 result = 1.0;
               } else {
                 result = 0.0;
               }
               break;
             case NE:
-              if (l_temp != r_temp) {
-                result = 1.0;
-              } else {
-                result = 0.0;
-              }
-              break;
-            case OR:
-              if (l_temp == 0.0 && r_temp == 0.0) {
-                result = 0.0;
-              } else {
-                result = 1.0;
-              }
-              break;
-            case AND:
-              if (l_temp != 0.0 && r_temp != 0.0) {
+              if ((l_temp as num) != (r_temp as num)) {
                 result = 1.0;
               } else {
                 result = 0.0;
@@ -1988,6 +1971,9 @@ class _GCWizardSCriptInterpreter {
               break;
           }
         }
+      } else {
+        _handleError(_INVALIDTYPECAST);
+        result = 0.0;
       }
     }
     return result;
@@ -2106,7 +2092,7 @@ class _GCWizardSCriptInterpreter {
         (op = state.token[0]) == '→' || op == '←' || op == '&' || op == '|') {
       getToken();
       partialResult = evaluateExpressionUnaryFunctionOperator();
-      if (_isNotAInt(partialResult) || _isNotAInt(result)) {
+      if (_isNotAInt(partialResult) && _isNotAInt(result)) {
         _handleError(_INVALIDTYPECAST);
       } else {
         switch (op) {
@@ -2319,22 +2305,22 @@ class _GCWizardSCriptInterpreter {
           }
           break;
         case '&':
-          if (state.script[state.scriptIndex + 1] == '&') {
-            state.scriptIndex += 2;
-            state.token = AND.toString();
-          } else {
+          //if (state.script[state.scriptIndex + 1] == '&') {
+          //  state.scriptIndex += 2;
+          //  state.token = AND.toString();
+          //} else {
             state.scriptIndex++;
             state.token = "&";
-          }
+          //}
           break;
         case '|':
-          if (state.script[state.scriptIndex + 1] == '|') {
-            state.scriptIndex += 2;
-            state.token = OR.toString();
-          } else {
+          //if (state.script[state.scriptIndex + 1] == '|') {
+          //  state.scriptIndex += 2;
+          //  state.token = OR.toString();
+          //} else {
             state.scriptIndex++;
             state.token = "|";
-          }
+          //}
           break;
       }
       state.tokenType = DELIMITER;
