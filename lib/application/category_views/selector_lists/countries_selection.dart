@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_calling_codes/widget/countries_calling_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/countries/countries_embassycodes_ger/widget/countries_embassycodes_ger.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
 
 class MiscellaneousSelection extends GCWSelection {
