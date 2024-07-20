@@ -4648,20 +4648,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: const [
       'braille',
     ]),
-    GCWSymbolTableTool(symbolKey: 'braille_en', Ich habe eine Liste der Begriffe erstellt, die ich am häufigsten gesehen habe. 
-Ich bin nicht auf viele belgische Websites gestoßen, auf denen diese Begriffe genannt wurden. Deshalb habe ich die Zahlen, bei denen ich mir unsicher war, nicht in die Liste aufgenommen. Außerdem bin ich vielen doppelten Namen begegnet, was das Codieren/Dekodieren nicht einfacher macht.
-Ich habe die folgenden Quellen zur Kontrolle verwendet:
-
-https://www.trouwplannen.nl/vieren-van-huwelijksjubileum/
-
-https://bruiloftinspiratie.nl/alle-jubilea-van-het-huwelijk/
-https://skyfly.nl/nieuws/alle-bruiloftsjaren-op-een-rij/
-https://historiek.net/jubilea-benamingen-en-kleuren/156360/
-https://madeformoments.nl/hoe-heten-jubileumjaren
-https://www.wimmeeussen.be/nl/nieuws/huwelijksverjaardag-belgie
-https://www.huwelijk.be/nuttige-tips/huwelijksverjaardagen.asp
-https://nl.wikipedia.org/wiki/Trouwdag
-https://www.locomix.eu/nl/blog/huwelijksjubileum-oftewel-de-huwelijksverjaardag/: const [
+    GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: const [
       'braille',
     ]),
     GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: const [
