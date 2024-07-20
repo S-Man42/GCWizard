@@ -2044,6 +2044,11 @@ void initializeRegistry(BuildContext context) {
           licenseType: 'CC SA 2.0',
           url: 'https://wiki.openstreetmap.org/w/index.php?title=Slippy_map_tilenames&oldid=2689774'
       ),
+      ToolLicense(
+          credit: 'Bundesamt für Landestopografie Schweiz swisstopo',
+          licenseType: 'Article: Formeln und Konstanten für die Berechnung der Schweizerischen schiefachsigen Zylinderprojektion und der Transformation zwischen Koordinatensystemen',
+          url: 'http://web.archive.org/web/20210511074533/https://www.swisstopo.admin.ch/content/swisstopo-internet/de/topics/survey/reference-systems/switzerland/_jcr_content/contentPar/tabs/items/dokumente_publikatio/tabPar/downloadlist/downloadItems/517_1459343190376.download/refsys_d.pdf'
+      ),
     ]),
     GCWTool(
         tool: const MapView(),
