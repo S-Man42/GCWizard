@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/tools/widget/tool_licenses.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
@@ -91,9 +93,11 @@ class GCWTool extends StatefulWidget {
   final List<String> searchKeys;
   final List<GCWPopupMenuItem> toolBarItemList;
   final bool suppressHelpButton;
+  final bool suppressAppBarButtons;
   final String helpSearchString;
   final bool isBeta;
   final List<String>? deeplinkAlias;
+  final List<ToolLicense>? licenses;
 
   GCWSymbolContainer? icon;
   var longId = '';
@@ -119,7 +123,9 @@ class GCWTool extends StatefulWidget {
       this.helpSearchString = '',
       this.isBeta = false,
       this.suppressHelpButton = false,
+      this.suppressAppBarButtons = false,
       this.deeplinkAlias,
+      this.licenses,
       this.toolBarItemList = const []})
       : super(key: key) {
     longId = className(tool) + '_' + (id);
@@ -165,11 +171,11 @@ class _GCWToolState extends State<GCWTool> {
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(title: Text(_toolName), actions: [
-          GCWPopupMenu(
+          widget.suppressAppBarButtons == false ? GCWPopupMenu(
             icon: Icons.more_vert,
             buttonNoBorder: true,
             menuItemBuilder: (context) => _buildToolBarItems(),
-          )
+          ) : Container()
         ]),
         body: _buildBody());
   }
@@ -249,6 +255,26 @@ class _GCWToolState extends State<GCWTool> {
 
     var helpItem = _buildHelpMenuItem();
     if (helpItem != null) menuItems.add(helpItem);
+
+    if (widget.licenses != null && widget.licenses!.isNotEmpty) {
+      menuItems.add(GCWPopupMenuItem(
+          child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, i18n(context, 'toollicenses_title')),
+          action: (index) => setState(() {
+            Navigator.push(
+              context,
+              NoAnimationMaterialPageRoute<GCWTool>(
+                builder: (context) =>
+                  GCWTool(
+                    tool: ToolLicenses(licenses: widget.licenses!),
+                    toolName: i18n(context, 'toollicenses_title') + ': ' + _toolName,
+                    suppressAppBarButtons: true,
+                    id: 'toollicenses',
+                  )
+              )
+            );
+          }))
+      );
+    }
 
     return menuItems;
   }
