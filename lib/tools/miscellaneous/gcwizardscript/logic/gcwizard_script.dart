@@ -997,10 +997,21 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandCASE() {
-    double result;
+    Object result;
+
     String variable = state.switchStack.top();
 
-    result = evaluateExpression() as double;
+    Object? exprResult = evaluateExpression();
+
+    if (!(_isANumber(exprResult) || _isAString(exprResult))){
+      _handleError(_INVALIDTYPECAST);
+    }
+    if (_isAString(exprResult)) {
+      result = exprResult as String;
+    } else {
+      result = exprResult as num;
+    }
+
     if (state.variables[variable] != result) {
       findNextCASE();
     }
