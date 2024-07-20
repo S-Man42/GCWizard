@@ -819,6 +819,17 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'geohashing',
+    ], licenses: [
+      ToolLicense(
+        credit: 'Randall Munroe\nxkcd.com',
+        licenseType: 'CC NC 2.5',
+        url: 'https://web.archive.org/web/20240715180948/https://xkcd.com/426/'
+      ),
+      ToolLicense(
+        credit: 'crox.net\n(geo.crox.net/djia)',
+        licenseType: 'DowJones API',
+        url: 'https://web.archive.org/web/20130624044036/http://geo.crox.net/djia/'
+      )
     ]),
     GCWTool(tool: const Gray(), id: 'gray', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1477,7 +1488,7 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
           credit: 'NASA',
-          licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+          licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
           url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
       )
     ]),
@@ -1497,7 +1508,7 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
           credit: 'NASA',
-          licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+          licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
           url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
       )
     ]),
@@ -1517,7 +1528,7 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
           credit: 'NASA',
-          licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+          licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
           url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
       )
     ]),
@@ -1538,7 +1549,7 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
         credit: 'NASA',
-        licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+        licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
         url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
       )
     ]),
@@ -1555,7 +1566,7 @@ void initializeRegistry(BuildContext context) {
       ),
       ToolLicense(
         credit: 'Jürgen Giesen\n(jgiesen.de)',
-        licenseType: 'Permission by e-mail (2020-06-29)',
+        licenseType: 'Use permission by e-mail (2020-06-29)',
         url: 'https://web.archive.org/web/20140805014345/http://www.jgiesen.de/astro/astroJS/seasons2/seasons.js'
       )
     ]),
@@ -1565,7 +1576,7 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicense(
         credit: 'NASA',
-        licenseType: 'Polynomial Expressions for Delta T (ΔT)',
+        licenseType: 'Article: Polynomial Expressions for Delta T (ΔT)',
         url: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
       )
     ]),
@@ -1585,7 +1596,7 @@ void initializeRegistry(BuildContext context) {
         url: 'https://en.wikipedia.org/w/index.php?title=Equatorial_coordinate_system&oldid=1228085432'
       ),
       ToolLicense(
-        credit: 'GitHub: @max-mapper',
+        credit: '@max-mapper',
         licenseType: 'Github default',
         url: 'https://github.com/S-Man42/equatorial/commit/f11b2a91be12721d87b108cc495953bc96565fec'
       )]
@@ -1927,7 +1938,13 @@ void initializeRegistry(BuildContext context) {
           'coordinates_compassrose',
           'coordinates_waypointprojection',
           'coordinates_geodetic',
-        ]),
+        ], licenses: [
+          ToolLicense(
+            credit: 'Charles Karney\n(GeographicLib)',
+            licenseType: 'MIT License',
+            url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+          )
+    ]),
     GCWTool(
         tool: const DistanceBearingGeodetic(),
         id: 'coords_distancebearing',
@@ -1939,7 +1956,13 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_distancebearing',
           'coordinates_geodetic',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'Charles Karney\n(GeographicLib)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+      )
+    ]),
     GCWTool(
         tool: const FormatConverter(),
         id: 'coords_formatconverter',
@@ -1950,7 +1973,78 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_formatconverter',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'Charles Karney\n(GeographicLib)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+      ),
+      ToolLicense(
+          credit: 'Hartwig Koch, Frank Naberfeld\n(Robert Bosch GmbH)',
+          licenseType: 'Patent, Deutsches Patent- und Markenamt, 102 39 432.6, 2002-08-28',
+          url: 'https://web.archive.org/web/20240720180713/https://patentimages.storage.googleapis.com/8c/d1/46/c983120d1aea7b/DE10239432A1.pdf'
+      ),
+      ToolLicense(
+          credit: 'Jan van der Laan',
+          licenseType: 'MIT License',
+          url: 'https://web.archive.org/web/20041206052853/http://www.dekoepel.nl/pdf/Transformatieformules.pdf'
+      ),
+      ToolLicense(
+          credit: 'F.H. Schreutelkamp, Strang van Hees',
+          licenseType: 'Article: Benaderingsformules voor de transformatie tussen RD- en WGS84-kaartcoördinaten',
+          url: 'https://github.com/S-Man42/rijksdriehoek/blob/dfea5221b8e3f9f44b6f0102114ab92f36eca5b2/LICENSE'
+      ),
+      ToolLicense(
+          credit: 'en.wikipedia.org',
+          licenseType: 'CC SA 4.0',
+          url: 'https://en.wikipedia.org/w/index.php?title=Global_Area_Reference_System&oldid=1127203453'
+      ),
+      ToolLicense(
+          credit: 'National Geospatial-Intelligence Agency',
+          licenseType: 'Article: Global Area Reference System (GARS)',
+          url: 'https://web.archive.org/web/20061020155156/http://earth-info.nga.mil/GandG/coordsys/grids/gars.html'
+      ),
+      ToolLicense(
+          credit: 'Taisuke Fukuno\n(Geo3x3)',
+          licenseType: 'CC0-1.0 License',
+          url: 'https://github.com/S-Man42/Geo3x3/tree/ca45f4a2c5fcebd806d1dbf615c7a26a8cad1150?tab=License-1-ov-file'
+      ),
+      ToolLicense(
+          credit: '@sa2da\n(geohex.org/)',
+          licenseType: 'MIT License',
+          url: 'https://web.archive.org/web/20240301005527/http://www.geohex.org/'
+      ),
+      ToolLicense(
+          credit: 'Chikura Shinsaku\n(geohex4j)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geohex4j/tree/464acda075666e0c2cb868935b334371c7f2eb97?tab=readme-ov-file#license'
+      ),
+      ToolLicense(
+          credit: 'makaney.net',
+          licenseType: 'Free to use',
+          url: 'https://web.archive.org/web/20230719211854/http://www.makaney.net/mkc_standard.html'
+      ),
+      ToolLicense(
+          credit: 'Stichting Mapcode Foundation\n(mapcode.com)',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/mapcode-js/blob/25abcc53f4a15b996810a9d0fd00ff2efd0f2eeb/LICENSE'
+      ),
+      ToolLicense(
+          credit: 'Google',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/open-location-code/blob/dfcebc905b81c3d9c987f7b3ac6e992f1e8710c6/LICENSE'
+      ),
+      ToolLicense(
+          credit: 'Google',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/open-location-code/blob/dfcebc905b81c3d9c987f7b3ac6e992f1e8710c6/LICENSE'
+      ),
+      ToolLicense(
+          credit: 'OpenStreetMap.org',
+          licenseType: 'CC SA 2.0',
+          url: 'https://wiki.openstreetmap.org/w/index.php?title=Slippy_map_tilenames&oldid=2689774'
+      ),
+    ]),
     GCWTool(
         tool: const MapView(),
         autoScroll: false,
@@ -1963,7 +2057,18 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_mapview',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'U.S. Department of Transportation (FAA)',
+          licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
+          url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
+      ),
+      ToolLicense(
+          credit: 'Paul Kohut\n(GeoFormulas)',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/GeoFormulas/tree/ac40eb5589883999f830908cd1db45c73e1e1267?tab=readme-ov-file#legal-stuff'
+      )
+    ]),
     GCWTool(
         tool: const VariableCoordinateFormulas(),
         id: 'coords_variablecoordinate',
@@ -1997,7 +2102,13 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_coordinateaveraging',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'David Vávra\n(GPS Averaging)',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/GPS-Averaging/blob/260eb5464d6d1b969c3f30bce42c5cf7848aab93/LICENSE.md'
+      )
+    ]),
     GCWTool(
         tool: const CenterTwoPoints(),
         id: 'coords_centertwopoints',
@@ -2020,7 +2131,12 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_centroid',
           'coordinates_arithmeticmean',
-        ]),
+        ],licenses: [
+          ToolLicense(
+            credit: 'Geo Midpoint\n(geomidpoint.com)',
+            licenseType: 'Article: Calculation Methods: A. Geographic midpoint',
+            url: 'https://web.archive.org/web/20240606083622/http://www.geomidpoint.com/calculation.html'
+          )]),
     GCWTool(
         tool: const CentroidCenterOfGravity(),
         id: 'coords_centroid_centerofgravity',
@@ -2032,7 +2148,12 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_centroid',
           'coordinates_centerofgravity',
-        ]),
+        ],licenses: [
+      ToolLicense(
+          credit: 'Geo Midpoint\n(geomidpoint.com)',
+          licenseType: 'Article: Calculation Methods: A. Geographic midpoint',
+          url: 'https://web.archive.org/web/20240606083622/http://www.geomidpoint.com/calculation.html'
+      )]),
     GCWTool(
         tool: const CenterThreePoints(),
         id: 'coords_centerthreepoints',
@@ -2076,7 +2197,8 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_crossbearing',
-        ]),
+        ],
+    ),
     GCWTool(
         tool: const IntersectBearings(),
         id: 'coords_intersectbearings',
@@ -2088,7 +2210,13 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_compassrose',
           'coordinates_intersectbearing',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'Charles Karney\n(GeographicLib)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+      )
+    ]),
     GCWTool(
         tool: const IntersectFourPoints(),
         id: 'coords_intersectfourpoints',
@@ -2099,7 +2227,13 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_intersectfourpoints',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'Charles Karney\n(GeographicLib)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+      )
+    ]),
     GCWTool(
         tool: const IntersectGeodeticAndCircle(),
         id: 'coords_intersectbearingcircle',
@@ -2111,7 +2245,18 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_compassrose',
           'coordinates_intersectgeodeticandcircle',
-        ]),
+        ], licenses: [
+      ToolLicense(
+        credit: 'U.S. Department of Transportation (FAA)',
+        licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
+        url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
+      ),
+      ToolLicense(
+          credit: 'The MITRE Corporation\n(Geodetic Library)',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/geodetic_library/blob/e2fd776eec8f7591d98022682137de0f74a4a0d7/LICENSE'
+      )
+    ]),
     GCWTool(
         tool: const IntersectTwoCircles(),
         id: 'coords_intersecttwocircles',
@@ -2122,7 +2267,18 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_intersecttwocircles',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'U.S. Department of Transportation (FAA)',
+          licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
+          url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
+      ),
+      ToolLicense(
+          credit: 'The MITRE Corporation\n(Geodetic Library)',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/geodetic_library/blob/e2fd776eec8f7591d98022682137de0f74a4a0d7/LICENSE'
+      )
+    ]),
     GCWTool(
         tool: const IntersectThreeCircles(),
         id: 'coords_intersectthreecircles',
@@ -2133,7 +2289,18 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_intersectthreecircles',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'U.S. Department of Transportation (FAA)',
+          licenseType: 'Article: FAA Order 8260.58A CHG 2, Appendix E: Geospatial Standard',
+          url: 'https://web.archive.org/web/20240118214508/https://www.faa.gov/documentLibrary/media/Order/FAA_Order_8260.58A_Including_Change_1_and_2.pdf'
+      ),
+      ToolLicense(
+          credit: 'The MITRE Corporation\n(Geodetic Library)',
+          licenseType: 'Apache 2.0 License',
+          url: 'https://github.com/S-Man42/geodetic_library/blob/e2fd776eec8f7591d98022682137de0f74a4a0d7/LICENSE'
+      )
+    ]),
     GCWTool(
         tool: const Antipodes(),
         id: 'coords_antipodes',
@@ -2189,7 +2356,13 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_waypointprojection',
           'coordinates_rhumbline',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'Charles Karney\n(GeographicLib)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+      )
+    ]),
     GCWTool(
         tool: const DistanceBearingRhumbline(),
         id: 'coords_rhumbline_distancebearing',
@@ -2201,7 +2374,13 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_distancebearing',
           'coordinates_rhumbline',
-        ]),
+        ], licenses: [
+      ToolLicense(
+          credit: 'Charles Karney\n(GeographicLib)',
+          licenseType: 'MIT License',
+          url: 'https://github.com/S-Man42/geographiclib/blob/23bd797bf2b1fa894ca30b69a9cf998e00f4a663/LICENSE.txt'
+      )
+    ]),
     GCWTool(
         tool: const EllipsoidTransform(),
         id: 'coords_ellipsoidtransform',
