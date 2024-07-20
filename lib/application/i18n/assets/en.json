@@ -5992,6 +5992,7 @@
   "tomtom_selection_example": "A → /, D → ////, E → /\\",
   "tomtom_title": "TomTom Code",
   "tomtom_example": "A → /, D → ////, E → /\\",
+  "toollicenses_title": "Sources",
   "trifid_title": "Trifid Cipher",
   "trifid_description": "Encryption based on three 3x3 Squares",
   "trifid_example": "HELLO → BQBRO",
