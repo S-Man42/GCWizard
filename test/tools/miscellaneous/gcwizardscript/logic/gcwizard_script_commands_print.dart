@@ -1,7 +1,7 @@
 part of 'gcwizard_scipt_test.dart';
 
 // ignore: unused_element
-List<Map<String, Object?>> _inputsCommandsToExpected = [
+List<Map<String, Object?>> _inputsCommandsPRINTToExpected = [
   {'code' : codePRINT, 'expectedOutput' : '''
 Hello GC Wizard
 Hello GC Wizard
