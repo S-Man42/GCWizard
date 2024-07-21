@@ -110,7 +110,6 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      // search for name
       if (_currentInputName.isEmpty) {
         return Container();
       } else if (_currentInputName.length < 2) {
@@ -126,7 +125,6 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
           }).toList();
 
       if (data.isEmpty) {
-
         return GCWText(text: i18n(context, "common_nothingfound") + "!");
       }
 
