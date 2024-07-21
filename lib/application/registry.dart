@@ -6196,6 +6196,14 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'telegraph',
           'telegraph_prussia',
+        ],
+        licenses: [
+          ToolLicenseImage(context: context,
+              author: 'Museumsstiftung Post und Telekommunikation',
+              title: '',
+              sourceUrl: '',
+              licenseUrl: 'https://www.bilder.mspt.de/Nutzungsbedingungen%20fu%CC%88r%20Bildmaterial%20der%20MSPT.pdf',
+              licenseType: ToolLicenseType.CCBYSA4)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'telegraph_schmidt',
@@ -6383,13 +6391,60 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_edelcrantz',
-        ]),
+        ],
+      licenses: [
+        ToolLicenseOnlineBook(
+            context: context,
+            author: 'Gerard J. Holzmann',
+            title: 'The early history of data networks',
+            publisher: 'John Wiley & Sons, Hoboken, New Jersey',
+            isbn: '0-8186-6782-6',
+            year: 2003,
+            customComment: 'Page 139ff',
+            sourceUrl: 'https://archive.org/details/earlyhistoryofda0000holz/mode/2up'),
+        ToolLicenseOnlineBook(context: context,
+            author: 'Silvia Rubio Hernández',
+            title: 'Vapriikki Case: Design and Evaluation of an Interactive Mixed-Reality Museum Exhibit',
+            sourceUrl: 'https://web.archive.org/web/20240721203438/https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y',
+        customComment: 'Page 23ff'),
+        ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Anders Lindeberg-Lindvet; Kurator Schwedisches Technikmuseum',
+          title: 'Telegrafiske Chiffertabeller 1808',
+          medium: 'e-Mail',
+          permissionYear: 2021,
+          permissionMonth: 10,
+          permissionDay: 5
+        ),
+      ],),
     GCWTool(
         tool: const MurrayTelegraph(),
         id: 'telegraph_murray',
         searchKeys: const [
           'telegraph',
           'telegraph_murray',
+        ],
+        licenses: [
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'Helmar Fischer',
+              title: 'Informationen übertragen - nicht mit der großen Klappe sondern mit sechs kleinen Klappen ... der Klappentelegraph',
+              medium: 'e-Mail',
+              permissionYear: 2021,
+            sourceUrl: 'https://web.archive.org/web/20240721211725/https://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/',
+          ),
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'John Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux',
+              title: '',
+              medium: 'e-Mail',
+              permissionYear: 2021,
+              permissionMonth: 12,
+              permissionDay: 13,
+            sourceUrl: 'https://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_two.htm',
+          ),
+          ToolLicenseImage(context: context,
+              author: 'Unknown',
+              title: 'View of the Telegraph erected on the Admiralty Office, Charing Cross in Feby 1796',
+              sourceUrl: 'https://www.alamy.com/english-view-of-the-telegraph-erected-on-the-admiralty-office-charing-cross-in-feby-1796-text-in-english-within-plate-the-print-dates-from-the-year-that-the-revd-lord-george-murray-designed-the-original-arrangement-although-telegraph-or-semaphore-signals-were-also-developed-in-france-as-well-as-england-in-the-last-years-of-the-18th-century-murrays-system-was-known-as-the-shutter-telegraph-and-comprised-a-vertical-board-with-six-large-holes-in-its-face-each-of-which-could-be-opened-to-display-the-sky-or-a-light-or-closed-see-mdl0020-depending-on-the-lie-of-the-land-distances-bet-image206595447.html',
+              licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
     GCWTool(
         tool: const OhlsenTelegraph(),
@@ -6397,7 +6452,17 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_ohlsen',
-        ]),
+        ],
+    licenses: [
+      ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Anne Solberg, Museumsbibliotekar, Norsk Teknisk Museum',
+          title: 'Telegrafiske Chiffertabeller 1808',
+          medium: 'e-Mail',
+          permissionYear: 2021,
+          permissionMonth: 10,
+          permissionDay: 28
+      )
+    ]),
     GCWTool(
         tool: const PasleyTelegraph(),
         id: 'telegraph_pasley',

@@ -282,36 +282,19 @@ class _LicensesState extends State<Licenses> {
           text: i18n(context, 'licenses_telegraphs'),
           suppressTopSpace: false,
           child: GCWColumnedMultilineOutput(data: [
-            [
-              i18n(context, 'telegraph_edelcrantz_title'),
-              'Gerard Holzmann,\nSilvia Rubio Hernández\nAnders Lindeberg-Lindvet, Curator Tekniskamuseet Stockholm\nErika Tanhua-Piiroinen, Tampere University Finland'
-            ],
-            [
-              i18n(context, 'telegraph_murray_title'),
-              'Helmar Fischer,\nJohn Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux'
-            ],
-            [i18n(context, 'telegraph_ohlsen_title'), 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
-            # DONE # [
-              i18n(context, 'telegraph_pasley_title'),
-              'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 450'
-            ],
-            # DONE # [
-              i18n(context, 'telegraph_popham_title'),
-              'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 446'
-            ],
-            [
-              i18n(context, 'telegraph_prussia_title'),
-              'Bilddatenbank der Museumsstiftung Post und Telekommunikation (CC BY-SA)'
-            ],
+            # DONE # [i18n(context, 'telegraph_edelcrantz_title'),'Gerard Holzmann,\nSilvia Rubio Hernández\nAnders Lindeberg-Lindvet, Curator Tekniskamuseet Stockholm\nErika Tanhua-Piiroinen, Tampere University Finland'],
+            # DONE # [i18n(context, 'telegraph_murray_title'),'Helmar Fischer,\nJohn Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux'],
+            # DONE # [i18n(context, 'telegraph_ohlsen_title'), 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
+            # DONE # [i18n(context, 'telegraph_pasley_title'), 'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 450'            ],
+            # DONE # [i18n(context, 'telegraph_popham_title'), 'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 446'           ],
+            # DONE # [i18n(context, 'telegraph_prussia_title'), 'Bilddatenbank der Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
             # DONE # [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
           ])),
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_images'),
           suppressTopSpace: false,
           child: GCWColumnedMultilineOutput(
-            # DONE # data: [
-              [i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']
-            ],
+            # DONE # data: [[i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']],
           )),
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_usedflutterlibraries'),
