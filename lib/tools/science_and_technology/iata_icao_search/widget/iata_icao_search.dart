@@ -3,9 +3,9 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/logic/iata_icao.dart';
 
 class IATAICAOSearch extends StatefulWidget {
@@ -113,7 +113,7 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
       if (_currentInputName.isEmpty) {
         return Container();
       } else if (_currentInputName.length < 2) {
-        return GCWText(text: i18n(context, "iataicao_searchtext_too_short") + "!");
+        return GCWOutputText(text: i18n(context, "iataicao_searchtext_too_short") + "!", suppressCopyButton: true);
       }
 
       List<List<String>> data = [];
@@ -125,7 +125,7 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
           }).toList();
 
       if (data.isEmpty) {
-        return GCWText(text: i18n(context, "common_nothingfound") + "!");
+        return GCWOutputText(text: i18n(context, "common_nothingfound") + "!", suppressCopyButton: true);
       }
 
       flexValues = [2, 1, 1, 2];
