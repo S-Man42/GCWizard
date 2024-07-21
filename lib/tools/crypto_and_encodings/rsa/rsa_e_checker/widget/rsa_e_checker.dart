@@ -10,7 +10,7 @@ class RSAEChecker extends StatefulWidget {
   const RSAEChecker({Key? key}) : super(key: key);
 
   @override
- _RSAECheckerState createState() => _RSAECheckerState();
+  _RSAECheckerState createState() => _RSAECheckerState();
 }
 
 class _RSAECheckerState extends State<RSAEChecker> {
@@ -59,9 +59,7 @@ class _RSAECheckerState extends State<RSAEChecker> {
   }
 
   void _calculateOutput() {
-    if (_currentE.isEmpty ||
-        _currentP.isEmpty ||
-        _currentQ.isEmpty) {
+    if (_currentE.isEmpty || _currentP.isEmpty || _currentQ.isEmpty) {
       _output = null;
     }
 
@@ -73,8 +71,8 @@ class _RSAECheckerState extends State<RSAEChecker> {
       var validE = validateE(e as BigInt, p as BigInt, q as BigInt);
       _output = GCWDefaultOutput(
           child: validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid'));
-    } catch (exception) {
-      _output = GCWDefaultOutput(child: i18n(context, exception.toString()));
+    } on FormatException catch (e) {
+      _output = GCWDefaultOutput(child: i18n(context, e.message));
     }
   }
 }

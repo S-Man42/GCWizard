@@ -53,14 +53,17 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     _foundCoordinates = {};
 
     var formulaTool = GCWTool(
-        tool: _FormulaSolverFormulaValues(group: widget.group),
-        toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-        helpSearchString: 'formulasolver_values',
-        defaultLanguageToolName:
-            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}', id: '',);
+      tool: _FormulaSolverFormulaValues(group: widget.group),
+      toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+      helpSearchString: 'formulasolver_values',
+      defaultLanguageToolName:
+          '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
+      id: '',
+    );
 
     Future<void> _navigateToSubPage(BuildContext context) async {
-      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
+      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+          .whenComplete(() {
         setState(() {});
       });
     }
@@ -137,8 +140,9 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return name;
   }
 
-  var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
-    var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
+  var_coords_model.VariableCoordinateFormula _exportToVariableCoordinate(Formula formula) {
+    var_coords_model.VariableCoordinateFormula varCoordsFormula =
+        var_coords_model.VariableCoordinateFormula(_createVariableCoordinateName());
     varCoordsFormula.formula = formula.formula;
     var_coords_provider.insertFormula(varCoordsFormula);
 
@@ -150,7 +154,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     return varCoordsFormula;
   }
 
-  void _openInVariableCoordinate(var_coords_model.Formula formula) {
+  void _openInVariableCoordinate(var_coords_model.VariableCoordinateFormula formula) {
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute<GCWTool>(
@@ -158,8 +162,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
                 helpSearchString: 'coords_variablecoordinate_title',
-                id:
-                    '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
+                id: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
   }
 
   String _removeOuterSquareBrackets(String formula) {
@@ -169,6 +172,11 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     }
 
     return formula;
+  }
+
+  String _sanitizeFormulaReferences(String formula) {
+    return formula.replaceAllMapped(
+        RegExp(r'{(.*?)}'), (match) => '{' + match[1]!.toLowerCase().replaceAll(RegExp(r'\s'), '') + '}');
   }
 
   Column _buildGroupList(BuildContext context) {
@@ -187,7 +195,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   the logic. It needs to be moved from the frontend part
                 )
            */
-          var formulaToParse = substitution(formula.formula, formulaReferences, caseSensitive: false);
+          var formulaToParse =
+              substitution(_sanitizeFormulaReferences(formula.formula), formulaReferences, caseSensitive: false);
           FormulaSolverOutput calculated = formulaParser.parse(formulaToParse, widget.group.values);
 
           var resultType =
@@ -208,6 +217,10 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
 
           formulaReferences.putIfAbsent('{${index + 1}}',
               () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
+          if (formula.name.isNotEmpty) {
+            formulaReferences.putIfAbsent('{${formula.name.toLowerCase().replaceAll(RegExp(r'\s'), '')}}',
+                () => RECURSIVE_FORMULA_REPLACEMENT_START + firstFormulaResult + RECURSIVE_FORMULA_REPLACEMENT_END);
+          }
 
           Widget output;
 
@@ -217,12 +230,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
             if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.toLatLng() != null) {
               _foundFormulaCoordinates.putIfAbsent(
                   idx + 1,
-                  () => _ParsedCoordinate(
-                        _foundFormulaCoordinate,
-                        resultType,
-                        '${formula.id}' + (calculated.results.length > 1 ? '.${idx + 1}' : '')
-                  )
-              );
+                  () => _ParsedCoordinate(_foundFormulaCoordinate, resultType,
+                      '${formula.id}' + (calculated.results.length > 1 ? '.${idx + 1}' : '')));
             }
           });
           if (_foundFormulaCoordinates.isNotEmpty) {
@@ -292,7 +301,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                           children: [
                             SizedBox(width: 35, child: GCWText(text: (index + 1).toString() + '.')),
                             Flexible(
-                              child: _buildFormulaText(formula.formula, widget.group.values, index + 1),
+                              child: _buildFormulaText(
+                                  formula.formula, widget.group.values, index + 1, widget.group.formulas),
                             )
                           ],
                         ),
@@ -343,7 +353,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                 Container(
                     alignment: Alignment.topRight,
                     child: GCWPopupMenu(
-                        iconData: Icons.more_vert,
+                        icon: Icons.more_vert,
                         menuItemBuilder: (context) => [
                               GCWPopupMenuItem(
                                   child:
@@ -358,7 +368,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                   child: iconedGCWPopupMenuItem(
                                       context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                                   action: (index) => setState(() {
-                                        _showFormulaReplaceDialog(context, [formula], onOkPressed: (List<Formula> value) {
+                                        _showFormulaReplaceDialog(context, [formula],
+                                            onOkPressed: (List<Formula> value) {
                                           if (formula.formula == value.first.formula) return;
 
                                           formula.formula = value.first.formula;
@@ -465,14 +476,15 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   },
                 ),
                 GCWPopupMenu(
-                    iconData: Icons.more_vert,
+                    icon: Icons.more_vert,
                     size: IconButtonSize.SMALL,
                     menuItemBuilder: (context) => [
                           GCWPopupMenuItem(
                               child:
                                   iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
                               action: (index) => setState(() {
-                                    _showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (List<Formula> value) {
+                                    _showFormulaReplaceDialog(context, widget.group.formulas,
+                                        onOkPressed: (List<Formula> value) {
                                       for (int i = 0; i < widget.group.formulas.length; i++) {
                                         if (widget.group.formulas[i].formula != value[i].formula) {
                                           var formula = widget.group.formulas[i];
@@ -556,18 +568,20 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                         GCWText(text: result.result),
                                         Container(height: DOUBLE_DEFAULT_MARGIN),
                                         GCWText(
-                                          text: result.variables == null ? '' : result.variables!
-                                              .map((key, value) {
-                                                return MapEntry(key, '$key: $value');
-                                              })
-                                              .values
-                                              .join(', '),
+                                          text: result.variables == null
+                                              ? ''
+                                              : result.variables!
+                                                  .map((key, value) {
+                                                    return MapEntry(key, '$key: $value');
+                                                  })
+                                                  .values
+                                                  .join(', '),
                                           style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
                                         )
                                       ],
                                     )),
                                     GCWPopupMenu(
-                                        iconData: Icons.more_vert,
+                                        icon: Icons.more_vert,
                                         size: IconButtonSize.SMALL,
                                         menuItemBuilder: (context) => [
                                               GCWPopupMenuItem(
@@ -582,7 +596,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                                       'formulasolver_formulas_showonmap',
                                                     ),
                                                     action: (idx) {
-                                                      if (index + 1 >= coordinates.length) return;
+                                                      if (index + 1 > coordinates.length) return;
 
                                                       _showFormulaResultOnMap(
                                                           [_createMapPoint(coordinates[index + 1]!)]);
@@ -627,17 +641,23 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                 suppressToolMargin: true)));
   }
 
-  Widget _buildFormulaText(String formula, List<FormulaValue> values, int formulaIndex) {
+  Widget _buildFormulaText(String formula, List<FormulaValue> values, int formulaIndex, List<Formula> formulas) {
     Map<String, String> vals = {};
+    List<String> formulaNames = [];
+
     for (var value in values) {
       vals.putIfAbsent(value.key, () => value.value);
+    }
+
+    for (var formula in formulas) {
+      formulaNames.add(formula.name);
     }
 
     return SelectableText.rich(TextSpan(
         children: _buildTextSpans(
             formula,
-            formulaPainter.paintFormula(
-                formula, vals, formulaIndex, Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
+            formulaPainter.paintFormula(formula, values, formulaIndex, formulaNames,
+                Prefs.getBool(PREFERENCE_FORMULASOLVER_COLOREDFORMULAS)))));
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {
@@ -649,18 +669,18 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
       if ((i == formula.length - 1) || (formulaColors[i + 1] != formulaColors[i])) {
         TextStyle textStyle;
         switch (formulaColors[i]) {
-          case 'g':
+          case FormulaPainter.Number:
             textStyle = TextStyle(color: themeColors().formulaNumber());
             break;
-          case 'r':
+          case FormulaPainter.Variable:
             textStyle = TextStyle(color: themeColors().formulaVariable());
             break;
-          case 'b':
+          case FormulaPainter.OFRB:
             textStyle = TextStyle(color: themeColors().formulaMath());
             break;
-          case 'R':
-          case 'G':
-          case 'B':
+          case FormulaPainter.VariableError:
+          case FormulaPainter.NumberError:
+          case FormulaPainter.OFRBError:
             textStyle = TextStyle(color: themeColors().formulaError(), fontWeight: FontWeight.bold);
             break;
           default:

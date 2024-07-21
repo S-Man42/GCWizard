@@ -7,11 +7,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart'
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT = 'karol_robot_title';
 
 class MultiDecoderToolEsotericLanguageKarolRobot extends AbstractMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageKarolRobot({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options})
+  MultiDecoderToolEsotericLanguageKarolRobot(
+      {Key? key, required int id, required String name, required Map<String, Object?> options})
       : super(
             key: key,
             id: id,

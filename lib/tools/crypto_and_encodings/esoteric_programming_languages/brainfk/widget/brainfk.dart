@@ -15,7 +15,7 @@ class Brainfk extends StatefulWidget {
   const Brainfk({Key? key, this.interpret, this.generate}) : super(key: key);
 
   @override
- _BrainfkState createState() => _BrainfkState();
+  _BrainfkState createState() => _BrainfkState();
 }
 
 class _BrainfkState extends State<Brainfk> {
@@ -110,10 +110,11 @@ class _BrainfkState extends State<Brainfk> {
                       _currentDerivate = value;
                     });
                   },
-                  items: BRAINFK_DERIVATIVES.entries.map((mode) {
+                  items: BRAINFK_DERIVATIVES_DETAILED.entries.map((mode) {
                     return GCWDropDownMenuItem(
                       value: mode.key,
-                      child: mode.value,
+                      child: mode.value.title,
+                      subtitle: mode.value.description,
                     );
                   }).toList(),
                 ),
@@ -235,16 +236,15 @@ class _BrainfkState extends State<Brainfk> {
         if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
-                    pointerShiftRightInstruction: _currentInput_shiftRight,
-                    pointerShiftLeftInstruction: _currentInput_shiftLeft,
-                    increaseValueInstruction: _currentInput_increaseValue,
-                    decreaseValueInstruction: _currentInput_decreaseValue,
-                    outputInstruction: _currentInput_output,
-                    inputInstruction: _currentInput_input,
-                    startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop,
-            )
-                .interpretBrainfkDerivatives(_currentText, input: _currentInput);
+              pointerShiftRightInstruction: _currentInput_shiftRight,
+              pointerShiftLeftInstruction: _currentInput_shiftLeft,
+              increaseValueInstruction: _currentInput_increaseValue,
+              decreaseValueInstruction: _currentInput_decreaseValue,
+              outputInstruction: _currentInput_output,
+              inputInstruction: _currentInput_input,
+              startLoopInstruction: _currentInput_startLoop,
+              endLoopInstruction: _currentInput_endLoop,
+            ).interpretBrainfkDerivatives(_currentText, input: _currentInput);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
@@ -259,16 +259,15 @@ class _BrainfkState extends State<Brainfk> {
         if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM) {
           try {
             return BrainfkDerivatives(
-                    pointerShiftRightInstruction: _currentInput_shiftRight,
-                    pointerShiftLeftInstruction: _currentInput_shiftLeft,
-                    increaseValueInstruction: _currentInput_increaseValue,
-                    decreaseValueInstruction: _currentInput_decreaseValue,
-                    outputInstruction: _currentInput_output,
-                    inputInstruction: _currentInput_input,
-                    startLoopInstruction: _currentInput_startLoop,
-                    endLoopInstruction: _currentInput_endLoop,
-            )
-                .generateBrainfkDerivative(_currentText);
+              pointerShiftRightInstruction: _currentInput_shiftRight,
+              pointerShiftLeftInstruction: _currentInput_shiftLeft,
+              increaseValueInstruction: _currentInput_increaseValue,
+              decreaseValueInstruction: _currentInput_decreaseValue,
+              outputInstruction: _currentInput_output,
+              inputInstruction: _currentInput_input,
+              startLoopInstruction: _currentInput_startLoop,
+              endLoopInstruction: _currentInput_endLoop,
+            ).generateBrainfkDerivative(_currentText);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }

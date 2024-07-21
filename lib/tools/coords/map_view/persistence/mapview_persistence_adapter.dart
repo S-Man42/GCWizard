@@ -1,9 +1,10 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/json_provider.dart';
@@ -14,7 +15,6 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/color_utils.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
-import 'package:collection/collection.dart';
 
 class MapViewPersistenceAdapter {
   final GCWMapView mapWidget;
@@ -26,18 +26,17 @@ class MapViewPersistenceAdapter {
 
   static MapPointDAO gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
     return MapPointDAO(
-      gcwMapPoint.uuid!,
-      gcwMapPoint.markerText,
-      gcwMapPoint.point.latitude,
-      gcwMapPoint.point.longitude,
-      persistenceKeyByCoordinateFormatKey(gcwMapPoint.coordinateFormat!.type),
-      gcwMapPoint.isVisible,
-      colorToHexString(gcwMapPoint.color),
-      gcwMapPoint.hasCircle() ? gcwMapPoint.circle!.radius : null,
-      gcwMapPoint.circleColorSameAsPointColor,
-      gcwMapPoint.hasCircle() ? colorToHexString(gcwMapPoint.circle!.color) : null,
-      gcwMapPoint.isEditable
-    );
+        gcwMapPoint.uuid!,
+        gcwMapPoint.markerText,
+        gcwMapPoint.point.latitude,
+        gcwMapPoint.point.longitude,
+        persistenceKeyByCoordinateFormatKey(gcwMapPoint.coordinateFormat!.type),
+        gcwMapPoint.isVisible,
+        colorToHexString(gcwMapPoint.color),
+        gcwMapPoint.hasCircle() ? gcwMapPoint.circle!.radius : null,
+        gcwMapPoint.circleColorSameAsPointColor,
+        gcwMapPoint.hasCircle() ? colorToHexString(gcwMapPoint.circle!.color) : null,
+        gcwMapPoint.isEditable);
   }
 
   GCWMapPoint _mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
@@ -54,19 +53,15 @@ class MapViewPersistenceAdapter {
             ? GCWMapCircle(
                 centerPoint: coords,
                 radius: mapPointDAO.radius!,
-                color: hexStringToColor(mapPointDAO.circleColor ?? mapPointDAO.color)
-              )
+                color: hexStringToColor(mapPointDAO.circleColor ?? mapPointDAO.color))
             : null,
         circleColorSameAsPointColor: mapPointDAO.circleColorSameAsColor,
         isEditable: mapPointDAO.isEditable ?? false);
   }
 
   static MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
-    return MapPolylineDAO(
-        gcwMapPolyline.uuid!,
-        gcwMapPolyline.points.map((GCWMapPoint point) => point.uuid!).toList(),
-        colorToHexString(gcwMapPolyline.color)
-    );
+    return MapPolylineDAO(gcwMapPolyline.uuid!, gcwMapPolyline.points.map((GCWMapPoint point) => point.uuid!).toList(),
+        colorToHexString(gcwMapPolyline.color), gcwMapLineTypeFromEnumValue(gcwMapPolyline.type));
   }
 
   GCWMapPolyline _mapPolylineDAOToGCWMapPolyline(MapPolylineDAO mapPolylineDAO) {
@@ -76,7 +71,9 @@ class MapViewPersistenceAdapter {
             .where((uuid) => mapWidget.points.firstWhereOrNull((GCWMapPoint point) => point.uuid == uuid) != null)
             .map((uuid) => mapWidget.points.firstWhere((GCWMapPoint point) => point.uuid == uuid))
             .toList(),
-        color: hexStringToColor(mapPolylineDAO.color));
+        color: hexStringToColor(mapPolylineDAO.color),
+        type: GCWMapLineType.values.firstWhere((element) => gcwMapLineTypeFromEnumValue(element) == mapPolylineDAO.type,
+            orElse: () => GCWMapLineType.GEODETIC));
   }
 
   void _initializeMapView() {
@@ -105,7 +102,8 @@ class MapViewPersistenceAdapter {
     }
 
     if (mapWidget.polylines.isNotEmpty) {
-      _mapViewDAO.polylines.addAll(mapWidget.polylines.where((polyline) =>
+      _mapViewDAO.polylines.addAll(mapWidget.polylines
+          .where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
           .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
           .toList());
@@ -163,7 +161,8 @@ class MapViewPersistenceAdapter {
 
     updateMapPointDAO(mapPointDAO, _mapViewDAO);
 
-    mapWidget.polylines.where((polyline) => polyline.points.contains(mapPoint))
+    mapWidget.polylines
+        .where((polyline) => polyline.points.contains(mapPoint))
         .forEach((polyline) => updateMapPolyline(polyline));
   }
 
@@ -173,6 +172,7 @@ class MapViewPersistenceAdapter {
     var mapPolylineDAO = _mapPolylineDAOByUUID(polyline.uuid!);
     mapPolylineDAO.pointUUIDs = polyline.points.map((GCWMapPoint point) => point.uuid!).toList();
     mapPolylineDAO.color = colorToHexString(polyline.color);
+    mapPolylineDAO.type = gcwMapLineTypeFromEnumValue(polyline.type);
 
     updateMapPolylineDAO(mapPolylineDAO, _mapViewDAO);
   }

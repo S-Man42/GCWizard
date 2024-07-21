@@ -24,7 +24,7 @@ class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
 
   @override
- _GeneralSettingsState createState() => _GeneralSettingsState();
+  _GeneralSettingsState createState() => _GeneralSettingsState();
 }
 
 class _GeneralSettingsState extends State<GeneralSettings> {
@@ -186,27 +186,23 @@ class _GeneralSettingsState extends State<GeneralSettings> {
         Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? GCWDropDown<int>(
                 value: Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB),
-                items:
-                  {
-                    0: Row(children: [
-                      Icon(Icons.category, color: themeColors().mainFont()),
-                      Container(width: 10),
-                      Text(i18n(context, 'common_tabs_categories'))
-                    ]),
-
-                    1: Row(children: [
-                      Icon(Icons.list, color: themeColors().mainFont()),
-                      Container(width: 10),
-                      Text(i18n(context, 'common_tabs_all'))
-                    ]),
-
-                    2: Row(children: [
-                      Icon(Icons.star, color: themeColors().mainFont()),
-                      Container(width: 10),
-                      Text(i18n(context, 'common_tabs_favorites'))
-                    ])
-                  }
-                .entries.map((MapEntry<int, Row> item) {
+                items: {
+                  0: Row(children: [
+                    Icon(Icons.category, color: themeColors().mainFont()),
+                    Container(width: 10),
+                    Text(i18n(context, 'common_tabs_categories'))
+                  ]),
+                  1: Row(children: [
+                    Icon(Icons.list, color: themeColors().mainFont()),
+                    Container(width: 10),
+                    Text(i18n(context, 'common_tabs_all'))
+                  ]),
+                  2: Row(children: [
+                    Icon(Icons.star, color: themeColors().mainFont()),
+                    Container(width: 10),
+                    Text(i18n(context, 'common_tabs_favorites'))
+                  ])
+                }.entries.map((MapEntry<int, Row> item) {
                   return GCWDropDownMenuItem(
                     value: item.key,
                     child: item.value,
@@ -245,5 +241,4 @@ class _GeneralSettingsState extends State<GeneralSettings> {
       ],
     );
   }
-
 }

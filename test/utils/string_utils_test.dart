@@ -318,4 +318,87 @@ void main() {
       });
     }
   });
+
+  group("StringUtils.trimCharacterLeft", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'character': '', 'expectedOutput' : ''},
+      {'input' : '', 'character': '0', 'expectedOutput' : ''},
+
+      {'input' : '000123000', 'character': '0', 'expectedOutput' : '123000'},
+      {'input' : '000123', 'character': '1', 'expectedOutput' : '000123'},
+      {'input' : '0123', 'character': '0', 'expectedOutput' : '123'},
+      {'input' : '  ABC', 'character': ' ', 'expectedOutput' : 'ABC'},
+      {'input' : '  ABC', 'character': '', 'expectedOutput' : '  ABC'},
+      {'input' : '0ABC', 'character': '0', 'expectedOutput' : 'ABC'},
+      {'input' : 'AAA', 'character': 'A', 'expectedOutput' : ''},
+
+      {'input' : 'ABCABCDEF', 'character': 'ABC', 'expectedOutput' : 'DEF'},
+      {'input' : 'ABCABC', 'character': 'ABC', 'expectedOutput' : ''},
+      {'input' : 'ABCAB', 'character': 'ABC', 'expectedOutput' : 'AB'},
+      {'input' : 'AB', 'character': 'ABC', 'expectedOutput' : 'AB'},
+      {'input' : 'ABD', 'character': 'ABC', 'expectedOutput' : 'ABD'},
+      {'input' : 'XYZ123', 'character': 'ABC', 'expectedOutput' : 'XYZ123'},
+      {'input' : 'XYZABC123', 'character': 'ABC', 'expectedOutput' : 'XYZABC123'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}, character: ${elem['character']}, ', () {
+        var _actual = trimCharactersLeft(elem['input'] as String, elem['character'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("StringUtils.trimCharacterRight", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'character': '', 'expectedOutput' : ''},
+      {'input' : '', 'character': '0', 'expectedOutput' : ''},
+
+      {'input' : '000123000', 'character': '0', 'expectedOutput' : '000123'},
+      {'input' : '123000', 'character': '1', 'expectedOutput' : '123000'},
+      {'input' : '1230', 'character': '0', 'expectedOutput' : '123'},
+      {'input' : 'ABC  ', 'character': ' ', 'expectedOutput' : 'ABC'},
+      {'input' : 'ABC  ', 'character': '', 'expectedOutput' : 'ABC  '},
+      {'input' : 'ABC0', 'character': '0', 'expectedOutput' : 'ABC'},
+      {'input' : 'AAA', 'character': 'A', 'expectedOutput' : ''},
+
+      {'input' : 'DEFABCABC', 'character': 'ABC', 'expectedOutput' : 'DEF'},
+      {'input' : 'ABCABC', 'character': 'ABC', 'expectedOutput' : ''},
+      {'input' : 'ABABC', 'character': 'ABC', 'expectedOutput' : 'AB'},
+      {'input' : 'AB', 'character': 'ABC', 'expectedOutput' : 'AB'},
+      {'input' : 'ABD', 'character': 'ABC', 'expectedOutput' : 'ABD'},
+      {'input' : 'XYZ123', 'character': 'ABC', 'expectedOutput' : 'XYZ123'},
+      {'input' : 'XYZABC123', 'character': 'ABC', 'expectedOutput' : 'XYZABC123'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}, character: ${elem['character']}, ', () {
+        var _actual = trimCharactersRight(elem['input'] as String, elem['character'] as String);
+        expect(_actual, elem['expectedOutput']);
+      });
+    }
+  });
+
+  group("StringUtils.splitGroupsOfSameCharacters", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'input' : '', 'expectedOutput' : <String>[]},
+      {'input' : 'a', 'expectedOutput' : ['a']},
+      {'input' : 'aa', 'expectedOutput' : ['aa']},
+      {'input' : 'aab', 'expectedOutput' : ['aa', 'b']},
+      {'input' : 'aba', 'expectedOutput' : ['a', 'b', 'a']},
+      {'input' : 'aabcc', 'expectedOutput' : ['aa', 'b', 'cc']},
+      {'input' : 'abbbcc', 'expectedOutput' : ['a', 'bbb', 'cc']},
+      {'input' : 'ab1bb###cc22 aa', 'expectedOutput' : ['a', 'b', '1', 'bb', '###', 'cc', '22', ' ', 'aa']},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('input: ${elem['input']}', () {
+        var _actual = splitGroupsOfSameCharacters(elem['input'] as String);
+        expect(_actual.length, (elem['expectedOutput'] as List<String>).length);
+        for (int i = 0; i < _actual.length; i++) {
+          expect(_actual[i], (elem['expectedOutput'] as List<String>)[i]);
+        }
+      });
+    }
+  });
 }

@@ -13,7 +13,7 @@ class Chef extends StatefulWidget {
   const Chef({Key? key}) : super(key: key);
 
   @override
- _ChefState createState() => _ChefState();
+  _ChefState createState() => _ChefState();
 }
 
 class _ChefState extends State<Chef> {
@@ -33,16 +33,20 @@ class _ChefState extends State<Chef> {
   var _currentTemperature = '';
   var _currentOutput = '';
 
-  var TimeInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
+  var TimeInputFormatter = GCWMaskTextInputFormatter(
+      mask: '#' * 3, // allow 3 characters input
       filter: {"#": RegExp(r'\d')});
-  var TemperatureInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
+  var TemperatureInputFormatter = GCWMaskTextInputFormatter(
+      mask: '#' * 3, // allow 3 characters input
       filter: {"#": RegExp(r'\d')});
-  var DigitSpacesInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 1000, // allow 1000 characters input
+  var DigitSpacesInputFormatter = GCWMaskTextInputFormatter(
+      mask: '#' * 1000, // allow 1000 characters input
       filter: {"#": RegExp(r'\d ')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left; // interpret
   GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english
   bool _auxilaryRecipes = false;
+  var init = true;
 
   @override
   void initState() {
@@ -70,7 +74,10 @@ class _ChefState extends State<Chef> {
 
   @override
   Widget build(BuildContext context) {
-    _currentLanguage = _defaultLanguage(context);
+    if (init) {
+      _currentLanguage = _defaultLanguage(context);
+      init = false;
+    }
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -197,9 +204,11 @@ class _ChefState extends State<Chef> {
     if (_currentMode == GCWSwitchPosition.right) {
       // generate chef
       if (_currentTitle.isEmpty) {
-        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
+        output =
+            chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
       } else if (_currentOutput.isEmpty) {
-        output = chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
+        output =
+            chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
       } else {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
             _currentOutput, _auxilaryRecipes);

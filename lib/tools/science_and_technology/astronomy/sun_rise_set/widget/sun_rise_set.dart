@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/logic/sun_rise_set.dart' as logic;
 import 'package:gc_wizard/utils/complex_return_types.dart';
@@ -14,7 +14,7 @@ class SunRiseSet extends StatefulWidget {
   const SunRiseSet({Key? key}) : super(key: key);
 
   @override
- _SunRiseSetState createState() => _SunRiseSetState();
+  _SunRiseSetState createState() => _SunRiseSetState();
 }
 
 class _SunRiseSetState extends State<SunRiseSet> {
@@ -30,7 +30,9 @@ class _SunRiseSetState extends State<SunRiseSet> {
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
-              _currentCoords = ret;
+              if (ret != null) {
+                _currentCoords = ret;
+              }
             });
           },
         ),
@@ -51,11 +53,8 @@ class _SunRiseSetState extends State<SunRiseSet> {
   }
 
   Widget _buildOutput() {
-    var sunRise = logic.SunRiseSet(
-        _currentCoords.toLatLng() ?? defaultCoordinate,
-        JulianDate(_currentDateTime),
-        _currentDateTime.timezone,
-        defaultEllipsoid);
+    var sunRise = logic.SunRiseSet(_currentCoords.toLatLng() ?? defaultCoordinate, JulianDate(_currentDateTime),
+        _currentDateTime.timezone, defaultEllipsoid);
 
     var outputs = [
       [
@@ -108,9 +107,6 @@ class _SunRiseSetState extends State<SunRiseSet> {
       ],
     ];
 
-    return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs
-    );
+    return GCWColumnedMultilineOutput(firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs);
   }
 }

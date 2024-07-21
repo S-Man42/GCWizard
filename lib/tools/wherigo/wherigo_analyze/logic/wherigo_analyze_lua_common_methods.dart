@@ -29,9 +29,7 @@ WherigoZonePoint _getPoint(String line) {
       .replaceAll(' ', '')
       .split(',');
   return WherigoZonePoint(
-      Latitude: double.parse(data[0]),
-      Longitude: double.parse(data[1]),
-      Altitude: double.parse(data[2]));
+      Latitude: double.parse(data[0]), Longitude: double.parse(data[1]), Altitude: double.parse(data[2]));
 }
 
 bool _isMessageActionElement(String line) {
@@ -43,8 +41,8 @@ bool _isMessageActionElement(String line) {
       line.startsWith('Buttons = ') ||
       line.contains(':MoveTo') ||
       line.endsWith('= true') ||
-      line.endsWith('= false')
-  ) {
+      line.endsWith('= false') ||
+      line.trim() == 'else') {
     return true;
   } else {
     return false;
@@ -55,66 +53,41 @@ WherigoActionMessageElementData _handleAnswerLine(String line) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-        ActionMessageContent: line.trim());
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: line);
   } else if (line.startsWith('Wherigo.ShowScreen')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-        ActionMessageContent: line.trim().replaceAll('Wherigo.', '').replaceAll('(', ' ').replaceAll(')', ''));
+        ActionMessageContent: line.replaceAll('Wherigo.', '').replaceAll('(', ' ').replaceAll(')', ''));
   } else if (line.startsWith('Wherigo.GetInput')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-        ActionMessageContent: line.trim());
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: line);
   } else if (line.startsWith('Text = ')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
-        ActionMessageContent: getTextData(line));
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT, ActionMessageContent: getTextData(line));
   } else if (line.startsWith('Media = ')) {
     return WherigoActionMessageElementData(
         ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE,
-        ActionMessageContent: line.trim().replaceAll('Media = ', '').replaceAll(',', ''));
+        ActionMessageContent: line.replaceAll('Media = ', '').replaceAll(',', ''));
   } else if (line.startsWith('Buttons = ')) {
     if (line.endsWith('}') || line.endsWith('},')) {
       // single line
       return WherigoActionMessageElementData(
           ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
-          ActionMessageContent: getTextData(line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', '')));
+          ActionMessageContent:
+              getTextData(line.replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', '')));
     }
   } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else')) {
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE,
-        ActionMessageContent: line.trim());
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.CASE, ActionMessageContent: line);
   } else {
     String actionLine = '';
-    // if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-    //   List<String> actions = line.trim().split('=');
-    //   if (actions.length == 2) {
-    //     actionLine = actions[0].trim() +
-    //         ' = ' +
-    //         deobfuscateUrwigoText(
-    //             (actions[1].indexOf('")') > 0)
-    //                 ? actions[1]
-    //                 .substring(0, actions[1].indexOf('")'))
-    //                 .replaceAll(obfuscator, '')
-    //                 .replaceAll('("', '')
-    //                 .replaceAll('")', '')
-    //                 .trim()
-    //                 : actions[1].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
-    //             dtable);
-    //   } else {
-    //     actionLine = deobfuscateUrwigoText(
-    //         actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable);
-    //   }
-    // } else
     actionLine = line.trimLeft();
     actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
+
     return WherigoActionMessageElementData(
-        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND,
-        ActionMessageContent: actionLine);
+        ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.COMMAND, ActionMessageContent: actionLine);
   }
-  return WherigoActionMessageElementData(
-      ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.NONE,
-      ActionMessageContent: '');
+  return WherigoActionMessageElementData(ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.NONE, ActionMessageContent: '');
 }
 
 String _getVariable(String line) {
@@ -126,7 +99,6 @@ String _getVariable(String line) {
 }
 
 String _normalizeDate(String dateString) {
-
   if (dateString.isEmpty || dateString == '1/1/0001 12:00:00 AM') return WHERIGO_NULLDATE;
 
   List<String> dateTime = dateString.split(' ');
@@ -147,12 +119,8 @@ bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-WherigoCartridgeLUA _faultyWherigoCartridgeLUA(
-    String _LUAFile,
-    WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
-    List<String> _http_code_http,
-    int _httpCode,
-    String _httpMessage) {
+WherigoCartridgeLUA _faultyWherigoCartridgeLUA(String _LUAFile, WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
+    List<String> _http_code_http, int _httpCode, String _httpMessage) {
   return WherigoCartridgeLUA(
       CartridgeLUAName: '',
       CartridgeGUID: '',
@@ -160,7 +128,9 @@ WherigoCartridgeLUA _faultyWherigoCartridgeLUA(
       ObfuscatorFunction: '',
       Builder: WHERIGO_BUILDER.NONE,
       BuilderVersion: '',
+      TargetDevice: '',
       TargetDeviceVersion: '',
+      StartLocation: const WherigoZonePoint(),
       StateID: '',
       UseLogging: '',
       CountryID: '',

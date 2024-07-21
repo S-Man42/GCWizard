@@ -5,7 +5,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -20,7 +20,7 @@ class PeriodicTableDataView extends StatefulWidget {
   const PeriodicTableDataView({Key? key, required this.atomicNumber}) : super(key: key);
 
   @override
- _PeriodicTableDataViewState createState() => _PeriodicTableDataViewState();
+  _PeriodicTableDataViewState createState() => _PeriodicTableDataViewState();
 }
 
 class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
@@ -109,14 +109,16 @@ class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         .where((element) => element.mainGroup != null)
         .map((element) => element.mainGroup)
         .toSet()
-        .toList().cast();
+        .toList()
+        .cast();
     _mainGroups.sort();
 
     _subGroups = allPeriodicTableElements
         .where((element) => element.subGroup != null)
         .map((element) => element.subGroup)
         .toSet()
-        .toList().cast();
+        .toList()
+        .cast();
     _subGroups.sort();
 
     _periods = allPeriodicTableElements.map((element) => element.period).toSet().toList();
@@ -219,7 +221,7 @@ class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
       case PeriodicTableCategory.IUPAC_GROUP_NAME:
         for (var entry in _iupacGroupNames) {
           listItems.putIfAbsent(
-            i18n(context, entry), () => iupacGroupNameToString.map((k, v) => MapEntry(v, k))[entry]!);
+              i18n(context, entry), () => iupacGroupNameToString.map((k, v) => MapEntry(v, k))[entry]!);
         }
         break;
       case PeriodicTableCategory.MAIN_GROUP:
@@ -240,7 +242,7 @@ class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
       case PeriodicTableCategory.STATE_OF_MATTER:
         for (var entry in _statesOfMatter) {
           listItems.putIfAbsent(
-            i18n(context, entry), () => stateOfMatterToString.map((k, v) => MapEntry(v, k))[entry]!);
+              i18n(context, entry), () => stateOfMatterToString.map((k, v) => MapEntry(v, k))[entry]!);
         }
         break;
       case PeriodicTableCategory.IS_RADIOACTIVE:
@@ -537,13 +539,14 @@ class _PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         break;
     }
 
-    List<Widget> rows = [GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputData,
-        flexValues: flexValues,
-        copyColumn: 1,
-        tappables: tappables
-    )];
+    List<Widget> rows = [
+      GCWColumnedMultilineOutput(
+          firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
+          data: outputData,
+          flexValues: flexValues,
+          copyColumn: 1,
+          tappables: tappables)
+    ];
 
     if (comments != null && comments.isNotEmpty) {
       rows.addAll(

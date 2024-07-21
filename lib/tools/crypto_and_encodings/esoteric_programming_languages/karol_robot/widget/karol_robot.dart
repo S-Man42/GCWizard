@@ -23,7 +23,7 @@ class KarolRobot extends StatefulWidget {
   const KarolRobot({Key? key}) : super(key: key);
 
   @override
- _KarolRobotState createState() => _KarolRobotState();
+  _KarolRobotState createState() => _KarolRobotState();
 }
 
 class _KarolRobotState extends State<KarolRobot> {
@@ -39,10 +39,10 @@ class _KarolRobotState extends State<KarolRobot> {
   String _output = '';
 
   final _MASKINPUTFORMATTER_ENCODE =
-      WrapperForMaskTextInputFormatter(mask: '@' * 100, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9 .°,\n\r]')});
+      GCWMaskTextInputFormatter(mask: '@' * 100, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9 .°,\n\r]')});
 
   final _MASKINPUTFORMATTER_DECODE =
-      WrapperForMaskTextInputFormatter(mask: "@" * 50000, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
+      GCWMaskTextInputFormatter(mask: "@" * 50000, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   var _currentLanguage = KAREL_LANGUAGES.DEU;

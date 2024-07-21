@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
@@ -7,29 +8,21 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
-const _ABOUT_PACKAGE_INFO_UNKNOWN = 'unknown';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
 
   @override
- _AboutState createState() => _AboutState();
+  _AboutState createState() => _AboutState();
 }
 
 class _AboutState extends State<About> {
-  PackageInfo _packageInfo = PackageInfo(
-    appName: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    packageName: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    version: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    buildNumber: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    buildSignature: _ABOUT_PACKAGE_INFO_UNKNOWN,
-    installerStore: _ABOUT_PACKAGE_INFO_UNKNOWN,
-  );
+  late GCWPackageInfo _packageInfo;
 
   @override
   void initState() {
@@ -37,37 +30,30 @@ class _AboutState extends State<About> {
     _initPackageInfo();
   }
 
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    setState(() {
-      _packageInfo = info;
-    });
+  void _initPackageInfo() {
+    _packageInfo = GCWPackageInfo.getInstance();
   }
 
   Container _buildUrl(String key) {
     return Container(
-        padding: const EdgeInsets.only(top: 15, bottom: 10),
-        child: Row(children: <Widget>[
-          Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_$key'))),
-          Expanded(
-              flex: 3,
-              child: InkWell(
-                child: Text(
-                  i18n(context, 'about_${key}_url_text'),
-                  style: gcwHyperlinkTextStyle(),
-                ),
-                onTap: () {
-                  launchUrl(Uri.parse(i18n(context, 'about_${key}_url')));
-                },
-              ))
-        ]));
+      padding: const EdgeInsets.only(top: 15, bottom: 10),
+      child: Row(children: <Widget>[
+        Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_$key'))),
+        Expanded(
+          flex: 3,
+          child: buildUrl(
+            i18n(context, 'about_${key}_url_text'),
+            i18n(context, 'about_${key}_url')
+          )
+        )
+      ]));
   }
 
   @override
   Widget build(BuildContext context) {
     var content = Column(
       children: <Widget>[
-        Text('GC Wizard - Geocache Wizard', style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
+        Text(GCWPackageInfo.getInstance().appName, style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold, fontSize: defaultFontSize() + 5)),
         const GCWDivider(),
         Container(
             padding: const EdgeInsets.only(top: 15),
@@ -87,7 +73,6 @@ class _AboutState extends State<About> {
         _buildUrl('faq'),
         _buildUrl('blog'),
         _buildUrl('mastodon'),
-        _buildUrl('facebook'),
         _buildUrl('webversion'),
         const GCWDivider(),
         _buildUrl('license'),
@@ -129,6 +114,10 @@ class _AboutState extends State<About> {
                             'Andreas \'TeamBirdy2404\' (Manual & Symbol Tables)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
+                            'Maria \'Nebelsturm\' (Test)',
+                            'Henrike \'69and71\' (Test & Translations)',
+                            'Marcia \'Linsty\' (Test & Translations)',
+                            'Olli \'Rinser\' (Code & Symbol Tables)',
                           ].join('\n') +
                           '\n')
                 ], style: gcwTextStyle()),
@@ -146,21 +135,21 @@ class _AboutState extends State<About> {
                   TextSpan(text: i18n(context, 'about_contributors') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
-                            '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
-                            '\'andre0707\' (Day1976 Code)',
-                            '\'capoaira\' (Code)',
+                            '\xc4ggsb\xe4rde (Symbol Tables)',
+                            'andre0707 (Day1976 Code)',
+                            'capoaira (Code)',
                             'Dennis \'dennistreysa\' (Code)',
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
-                            '\'Geo-Link\' (Hardware & Symbol Tables)',
+                            'Geo-Link (Hardware & Symbol Tables)',
                             'Karl B. (Coords Algorithms)',
-                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
+                            'Ludovic \'LudoO\' Valente (Code & Translation FR)',
                             'Michael D. (Symbol Tables)',
                             'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
-                            '\'moenk\' (GK Coords)',
-                            '\'radioscout\' (Research)',
-                            '\'Schnatt\' (Symbol Tables)',
+                            'moenk (GK Coords)',
+                            'radioscout (Research)',
+                            'Schnatt (Symbol Tables)',
                             'Udo J. (Code)',
-                            '\'wollpirat\' (Food, Tea & more)'
+                            'wollpirat (Food, Tea & more)'
                           ].join('\n') +
                           '\n'),
                 ], style: gcwTextStyle()),
@@ -171,36 +160,38 @@ class _AboutState extends State<About> {
                   TextSpan(text: i18n(context, 'about_translators') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
-                            '\'alantheandroid\' (IT)',
-                            '\'alexgonc\' (PT, ES)',
-                            '\'bimsor\' (DK)',
+                            'alantheandroid (IT)',
+                            'alexgonc (PT, ES)',
+                            'bimsor (DK)',
                             'Cavit A. (TR)',
-                            '\'crazedllama\' (KO)',
-                            '\'drobec\' (SK)',
-                            '\'emrszon\' (ES)',
-                            '\'hakuchi\' (IT)',
-                            '\'Henrike71\' (NL, SV)',
+                            'crazedllama (KO)',
+                            'DrakeZero (ES)',
+                            'drobec (SK)',
+                            'emrszon (ES)',
+                            'hakuchi (IT)',
+                            '69and71 (NL, SV)',
                             'Igor Č. (SK)',
-                            '\'j_janus\' (PL)',
+                            'j_janus (PL)',
                             'Joao F. (PT)',
-                            '\'Johan-V\' (NL)',
-                            '\'juroot\' (SK)',
-                            '\'MAJ\' (ES)',
-                            '\'Martanal (CZ)\'',
-                            '\'n3oklan\' (CZ)',
+                            'Johan-V (NL)',
+                            'juroot (SK)',
+                            'MAJ (ES)',
+                            'Martanal (CZ)',
+                            'n3oklan (CZ)',
                             'Paul Z. (NL)',
                             'Paweł B. (PL)',
-                            '\'QouiZ\' (EL)',
-                            '\'proXmiii\' (SK)',
-                            '\'S182\' (IT)',
+                            'proXmiii (SK)',
+                            'przematcr (PL)',
+                            'QouiZ (EL)',
+                            'S182 (IT)',
                             'Silvia O. (SK)',
-                            '\'tkemer\' (EL)',
-                            '\'Todclerc\' (NL)',
-                            '\'verturin\' (FR, IT)',
-                            '\'vike91\' (FI)',
-                            '\'Vojta_\' (CZ)',
-                            '\'Willa_Lecznica\' (PL)',
-                            '\'Xoyn\' (RU)',
+                            'tkemer (EL)',
+                            'Todclerc (NL)',
+                            'verturin (FR, IT)',
+                            'vike91 (FI)',
+                            'Vojta_ (CZ)',
+                            'Willa_Lecznica (PL)',
+                            'Xoyn (RU)',
                           ].join(', ') +
                           '\n')
                 ], style: gcwTextStyle()),
@@ -211,55 +202,68 @@ class _AboutState extends State<About> {
                   TextSpan(text: i18n(context, 'about_testers') + '\n', style: gcwBoldTextStyle()),
                   TextSpan(
                       text: [
-                    '\'4-Everus\'',
-                    '\'83_Seth\'',
+                    '4-Everus',
+                    '83_Seth',
+                    'Amelie2401',
                     'Andreas E.',
-                    '\'baer2006\'',
-                    '\'Cycle73\'',
-                    '\'Don Rodolphos\'',
-                    '\'Headbanger-Berlin\'',
+                    'Andreas L.',
+                    'baer2006',
+                    'Bleg1966',
+                    'Cycle73',
+                    'Dawn T.',
+                    'Don Rodolphos',
+                    'Headbanger-Berlin',
                     'Felix Z.',
-                    '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
-                    '\'finding tresor\'',
-                    '\'Flosphor\'',
+                    'ferrrix',
+                    'Filu \'Aye, Käppn!\' 43 & Stormi \'Aaarrh\' 2061',
+                    'finding tresor',
+                    'Flosphor',
                     'Franz K.',
-                    '\'Freakyfinder\'',
-                    '\'GrafZahl75\'',
-                    '\'hwi\'',
+                    'Freakyfinder',
+                    'geo_aug',
+                    'GrafZahl75',
+                    'hwi',
                     'Isidore S.',
+                    'JanRei',
                     'Johannes C.',
                     'Jonas M.',
-                    '\'kinderarzt\'',
-                    '\'Klumpenkukuk\'',
-                    '\'LupiMus\'',
+                    'kinderarzt',
+                    'Klumpenkukuk',
+                    'Lue',
+                    'LupiMus',
                     'Lutz \'DL3BZZ\'',
-                    '\'mahoplus\'',
+                    'mahoplus',
                     'Markus M.',
                     'Martin Sch.',
                     'Martina F.',
-                    '\'mgo\'',
+                    'mgo',
+                    'MicDie',
                     'Michael St.',
-                    '\'Mondlinger\'',
-                    '\'MrDosinger\' & \'MsDosinger\'',
-                    '\'Nebelsturm\'',
+                    'Mondlinger',
+                    'MrDosinger & MsDosinger',
+                    'musketon',
                     'Niki R.',
                     'Palk \'geogedoens.de\'',
-                    '\'Pamakaru\'',
+                    'Pamakaru',
                     'Pascal M.',
                     'Peter S.-H.',
-                    '\'radlerandi\'',
+                    'radlerandi',
                     'Richard M.',
-                    '\'schatzi-s\'',
-                    '\'Sechsfüssler\'',
+                    'schatzi-s',
+                    'Sechsfüssler',
                     'Stefan J.',
                     'Stefan K.',
-                    'Team \'kesteri\'',
+                    'Team kesteri',
                     'Thomas B.',
-                    '\'tebarius\'',
-                    '\'tomcat06\'',
-                    '\'Vyrembi\'',
-                    '\'WeinWalker\'',
-                    '\'zoRRo\''
+                    'tebarius',
+                    'tomcat06',
+                    'trekkiefreak76',
+                    'Vlad_Tepes',
+                    'Vyrembi',
+                    'waldstadt',
+                    'WeinWalker',
+                    'WingsAndTales',
+                    'zoRRo'
                   ].join(', '))
                 ], style: gcwTextStyle()),
               ),
@@ -270,7 +274,7 @@ class _AboutState extends State<About> {
         Container(
           padding: const EdgeInsets.only(top: 15, bottom: 10),
           child:
-              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: i18n(context, 'about_notfornazis')),
+              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: '🏳️‍🌈  ' + i18n(context, 'about_notfornazis') + '  🏳️‍🌈'),
         )
       ],
     );

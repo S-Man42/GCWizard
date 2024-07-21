@@ -1,0 +1,78 @@
+import 'package:gc_wizard/application/webapi/api_mapper.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+
+const String _apiSpecification = '''
+{
+  "/key_label" : {
+    "get": {
+      "summary": "Morse Tool",
+      "responses": {
+        "200": {
+          "description": "Encoded or decoded text."
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for encoding or decoding Morse",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "mode",
+          "description": "Defines encoding or decoding mode",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "encode",
+              "decode"
+            ],
+            "default": "decode"
+          }
+        }
+      ]
+    }
+  }
+}
+''';
+
+class MorseAPIMapper extends APIMapper {
+  @override
+  String get Key => 'morse';
+
+  @override
+  String doLogic() {
+    var input = getWebParameter(WEBPARAMETER.input);
+    if (input == null) {
+      return '';
+    }
+
+    if (getWebParameter(WEBPARAMETER.mode) == enumName(MODE.encode.toString())) {
+      return encodeMorse(input, type: MorseType.MORSE_ITU, spaceCharacter: String.fromCharCode(8195));
+    } else {
+      return decodeMorse(input, type: MorseType.MORSE_ITU);
+    }
+  }
+
+  /// convert doLogic output to map
+  @override
+  Map<String, String> toMap(Object result) {
+    return <String, String>{enumName(WEBPARAMETER.result.toString()): result.toString()};
+  }
+
+  @override
+  String apiSpecification() {
+    return _apiSpecification.replaceAll('/key_label', Key);
+  }
+}

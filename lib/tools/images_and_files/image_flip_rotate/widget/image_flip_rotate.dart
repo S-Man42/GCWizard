@@ -7,8 +7,8 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
@@ -22,7 +22,7 @@ class ImageFlipRotate extends StatefulWidget {
   const ImageFlipRotate({Key? key, this.file}) : super(key: key);
 
   @override
- _ImageFlipRotateState createState() => _ImageFlipRotateState();
+  _ImageFlipRotateState createState() => _ImageFlipRotateState();
 }
 
 class _ImageFlipRotateState extends State<ImageFlipRotate> {
@@ -64,7 +64,7 @@ class _ImageFlipRotateState extends State<ImageFlipRotate> {
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile? value) {
             if (value == null || !_validateData(value.bytes)) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
               return;
             }
 
@@ -78,7 +78,9 @@ class _ImageFlipRotateState extends State<ImageFlipRotate> {
 
         if (_currentImage != null)
           GCWImageView(
-            imageData: _originalData == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes(_currentImage) ?? Uint8List(0))),
+            imageData: _originalData == null
+                ? null
+                : GCWImageViewData(GCWFile(bytes: _imageBytes(_currentImage) ?? Uint8List(0))),
             suppressOpenInTool: const {GCWImageViewOpenInTools.FLIPROTATE},
           ),
         if (_currentImage != null)
@@ -132,7 +134,7 @@ class _ImageFlipRotateState extends State<ImageFlipRotate> {
           ),
         if (_currentImage != null)
           GCWButton(
-            text: i18n(context, 'image_fliprotate_reset'),
+            text: i18n(context, 'common_reset'),
             onPressed: () {
               _resetInputs();
             },
@@ -142,7 +144,7 @@ class _ImageFlipRotateState extends State<ImageFlipRotate> {
   }
 
   Image.Image? _flipRotate(Image.Image? image) {
-    if(image == null) return null;
+    if (image == null) return null;
     return _doFlipRotate(_FlipRotateInput(
       image: image,
       flipHorizontally: _currentFlipHorizontally,
@@ -185,5 +187,7 @@ void openInFlipRotate(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
           builder: (BuildContext context) => GCWTool(
-              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), id: 'image_fliprotate')));
+              tool: ImageFlipRotate(file: file),
+              toolName: i18n(context, 'image_fliprotate_title'),
+              id: 'image_fliprotate')));
 }

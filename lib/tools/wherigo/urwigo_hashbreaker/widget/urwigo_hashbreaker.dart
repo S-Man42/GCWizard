@@ -13,7 +13,7 @@ class UrwigoHashBreaker extends StatefulWidget {
   const UrwigoHashBreaker({Key? key}) : super(key: key);
 
   @override
- _UrwigoHashBreakerState createState() => _UrwigoHashBreakerState();
+  _UrwigoHashBreakerState createState() => _UrwigoHashBreakerState();
 }
 
 class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
@@ -82,7 +82,7 @@ class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
                 controller: _inputController,
                 onChanged: (text) {
                   setState(() {
-                    _currentTextInput = text;
+                    _currentTextInput = text.toLowerCase();
                   });
                 },
               ),
@@ -94,13 +94,10 @@ class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(
-          child: GCWColumnedMultilineOutput(
-              data: [
-                      [i18n(context, 'common_letters'), _currentOutputAlphabetical],
-                      [i18n(context, 'common_numbers'), _currentOutputNumeric]
-                    ]
-          )
-      );
+          child: GCWColumnedMultilineOutput(data: [
+        [i18n(context, 'common_letters'), _currentOutputAlphabetical],
+        [i18n(context, 'common_numbers'), _currentOutputNumeric]
+      ]));
     } else {
       return GCWDefaultOutput(child: RSHash(_currentTextInput).toString());
     }

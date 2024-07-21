@@ -2,27 +2,27 @@ part of 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi
 
 const String _apiSpecification = '''
 {
-	"/multidecoder" : {
-		"get": {
-			"summary": "Multi Decoder Tool",
-			"responses": {
-				"204": {
-					"description": "Tool loaded. No response data."
-				}
-			}
-		},
-		"parameters" : [
-			{
-				"in": "query",
-				"name": "input",
-				"required": true,
-				"description": "Input data for decoding text",
-				"schema": {
-					"type": "string"
-				}
-			}
-		]
-	}
+  "/multidecoder" : {
+    "get": {
+      "summary": "Multi Decoder Tool",
+      "responses": {
+        "204": {
+          "description": "Tool loaded. No response data."
+        }
+      },  
+      "parameters" : [
+        {
+          "in": "query",
+          "name": "input",
+          "required": true,
+          "description": "Input data for decoding text",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  }
 }
 ''';
 
@@ -30,7 +30,7 @@ class MultiDecoder extends GCWWebStatefulWidget {
   MultiDecoder({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
 
   @override
- _MultiDecoderState createState() => _MultiDecoderState();
+  _MultiDecoderState createState() => _MultiDecoderState();
 }
 
 class _MultiDecoderState extends State<MultiDecoder> {
@@ -49,7 +49,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
     super.initState();
 
     if (widget.hasWebParameter()) {
-      _currentInput = widget.getWebParameter(WEBPARAMETER.input) ?? _currentInput;
+      _currentInput = widget.getWebParameter('input') ?? _currentInput;
       widget.webParameter = null;
     }
 
@@ -164,9 +164,9 @@ class _MultiDecoderState extends State<MultiDecoder> {
       String result = value.toString();
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-        var coordFormat = coordinateFormatMetadataByPersistenceKey((value ?? '').toString());
-        if (coordFormat != null) {
-          result = coordFormat.name;
+        var widgetInfo = coordinateWidgetInfoByByPersistenceKey((value ?? '').toString());
+        if (widgetInfo != null) {
+          result = widgetInfo.name;
         }
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
@@ -190,8 +190,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
         if (_currentInput.isEmpty) {
           return GCWOutput(title: _toolTitle(tool), child: Container());
         } else if (!tool.optionalKey &&
-            ((tool.requiresKey && _currentKey.isEmpty) ||
-            (!tool.requiresKey && _currentKey.isNotEmpty))) {
+            ((tool.requiresKey && _currentKey.isEmpty) || (!tool.requiresKey && _currentKey.isNotEmpty))) {
           return Container();
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
@@ -241,7 +240,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
                     title: _toolTitle(tool),
                     child: GCWImageView(
                         imageData:
-                        GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
+                            GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
               } else {
                 return Container();
               }

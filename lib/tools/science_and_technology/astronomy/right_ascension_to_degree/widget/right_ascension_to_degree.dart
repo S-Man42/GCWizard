@@ -7,8 +7,8 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -17,19 +17,17 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dmm.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dms.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/logic/right_ascension_to_degree.dart';
-
 
 class RightAscensionToDegree extends StatefulWidget {
   const RightAscensionToDegree({Key? key}) : super(key: key);
 
   @override
- _RightAscensionToDegreeState createState() => _RightAscensionToDegreeState();
+  _RightAscensionToDegreeState createState() => _RightAscensionToDegreeState();
 }
 
 class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
@@ -151,13 +149,13 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
             : GCWTextDivider(
                 text: '',
                 trailing: GCWPasteButton(
-                    iconSize: IconButtonSize.SMALL,
-                    onSelected: (text) {
-                      setState(() {
-                        _parseRAPaste(text);
-                      });
-                    },
-                  ),
+                  iconSize: IconButtonSize.SMALL,
+                  onSelected: (text) {
+                    setState(() {
+                      _parseRAPaste(text);
+                    });
+                  },
+                ),
               ),
         _currentMode == GCWSwitchPosition.left ? _buildDecryptWidget() : _buildHmsWidget(),
         Container(height: 10),
@@ -201,22 +199,21 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
                 break;
               default:
                 _setDecRightAscension();
-
             }
           });
         },
         items: [
           GCWDropDownMenuItem(
             value: CoordinateFormatKey.DEC,
-            child: coordinateFormatMetadataByKey(CoordinateFormatKey.DEC).name,
+            child: coordinateWidgetInfoByType(CoordinateFormatKey.DEC)!.name,
           ),
           GCWDropDownMenuItem(
             value: CoordinateFormatKey.DMM,
-            child: coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).name,
+            child: coordinateWidgetInfoByType(CoordinateFormatKey.DMM)!.name,
           ),
           GCWDropDownMenuItem(
             value: CoordinateFormatKey.DMS,
-            child: coordinateFormatMetadataByKey(CoordinateFormatKey.DMS).name,
+            child: coordinateWidgetInfoByType(CoordinateFormatKey.DMS)!.name,
           ),
         ],
       ),
@@ -533,9 +530,9 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
       var dms = DMSLatitude.from(doubleToDMSPart(output.degrees)).format(6).replaceAll('N ', '').replaceAll('S ', '-');
 
       var rows = [
-        [coordinateFormatMetadataByKey(CoordinateFormatKey.DEC).name, output.toString() + '°'],
-        [coordinateFormatMetadataByKey(CoordinateFormatKey.DMM).name, dmm],
-        [coordinateFormatMetadataByKey(CoordinateFormatKey.DMS).name, dms],
+        [coordinateWidgetInfoByType(CoordinateFormatKey.DEC)!.name, output.toString() + '°'],
+        [coordinateWidgetInfoByType(CoordinateFormatKey.DMM)!.name, dmm],
+        [coordinateWidgetInfoByType(CoordinateFormatKey.DMS)!.name, dms],
       ];
       return GCWDefaultOutput(child: GCWColumnedMultilineOutput(data: rows));
     }
@@ -544,7 +541,7 @@ class _RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   void _parseRAPaste(String input) {
     var rightAscension = RightAscension.parse(input);
     if (rightAscension == null) {
-      showToast(i18n(context, 'right_ascension_to_degree_clipboard_nodatafound'));
+      showSnackBar(i18n(context, 'right_ascension_to_degree_clipboard_nodatafound'), context);
       return;
     }
 

@@ -141,7 +141,7 @@ class LambertConformalConic {
   // Dexp(x,y) = exp((x+y)/2) * 2*sinh((x-y)/2)/(x-y)
   static double Dexp(double x, double y) {
     double t = (x - y) / 2;
-    return (t != 0 ? sinh(t) / t : 1.0) * exp((x + y) / 2);
+    return (t != 0 ? _sinh(t) / t : 1.0) * exp((x + y) / 2);
   }
 
   // Dsinh(x,y) = 2*sinh((x-y)/2)/(x-y) * cosh((x+y)/2)
@@ -151,7 +151,7 @@ class LambertConformalConic {
   static double Dsinh(double x, double y, double sx, double sy, double cx, double cy) {
     // sx = sinh(x), cx = cosh(x)
     double t = (x - y) / 2;
-    return (t != 0 ? sinh(t) / t : 1.0) * sqrt((sx * sy + cx * cy + 1) / 2);
+    return (t != 0 ? _sinh(t) / t : 1.0) * sqrt((sx * sy + cx * cy + 1) / 2);
   }
 
   // Dasinh(x,y) = asinh((x-y)*(x+y)/(x*sqrt(1+y^2)+y*sqrt(1+x^2)))/(x-y)
@@ -255,13 +255,13 @@ class LambertConformalConic {
     double tbet1 = _fm * tphi1, scbet1 = hyp(tbet1), tbet2 = _fm * tphi2, scbet2 = hyp(tbet2);
     double scphi1 = 1 / cphi1,
         xi1 = eatanhe(sphi1),
-        shxi1 = sinh(xi1),
+        shxi1 = _sinh(xi1),
         chxi1 = hyp(shxi1),
         tchi1 = chxi1 * tphi1 - shxi1 * scphi1,
         scchi1 = hyp(tchi1),
         scphi2 = 1 / cphi2,
         xi2 = eatanhe(sphi2),
-        shxi2 = sinh(xi2),
+        shxi2 = _sinh(xi2),
         chxi2 = hyp(shxi2),
         tchi2 = chxi2 * tphi2 - shxi2 * scphi2,
         scchi2 = hyp(tchi2),
@@ -296,9 +296,10 @@ class LambertConformalConic {
         //     - (tbet2 + tbet1)/(scbet2 + scbet1)
         double t;
         // s1 = (scbet1 - scchi1) * (scbet1 + scchi1)
-        double s1 =
-                (tphi1 * (2 * shxi1 * chxi1 * scphi1 - _e2 * tphi1) - _GeoMath.sq(shxi1) * (1 + 2 * _GeoMath.sq(tphi1))),
-            s2 = (tphi2 * (2 * shxi2 * chxi2 * scphi2 - _e2 * tphi2) - _GeoMath.sq(shxi2) * (1 + 2 * _GeoMath.sq(tphi2))),
+        double s1 = (tphi1 * (2 * shxi1 * chxi1 * scphi1 - _e2 * tphi1) -
+                _GeoMath.sq(shxi1) * (1 + 2 * _GeoMath.sq(tphi1))),
+            s2 = (tphi2 * (2 * shxi2 * chxi2 * scphi2 - _e2 * tphi2) -
+                _GeoMath.sq(shxi2) * (1 + 2 * _GeoMath.sq(tphi2))),
             // t1 = scbet1 - tchi1
             t1 = tchi1 < 0 ? scbet1 - tchi1 : (s1 + 1) / (scbet1 + tchi1),
             t2 = tchi2 < 0 ? scbet2 - tchi2 : (s2 + 1) / (scbet2 + tchi2),
@@ -347,7 +348,7 @@ class LambertConformalConic {
         // dchi = ((mu2 + mu1) - D(nu2, nu1) * (scphi2 +  scphi1)) /
         //         D(tchi2, tchi1)
         double xiZ = eatanhe(1.0),
-            shxiZ = sinh(xiZ),
+            shxiZ = _sinh(xiZ),
             chxiZ = hyp(shxiZ),
             // These are differences not divided differences
             // dxiZ1 = xiZ - xi1; dshxiZ1 = shxiZ - shxi; dchxiZ1 = chxiZ - chxi
@@ -393,7 +394,7 @@ class LambertConformalConic {
     }
 
     _scbet0 = hyp(_fm * tphi0);
-    double shxi0 = sinh(eatanhe(_n));
+    double shxi0 = _sinh(eatanhe(_n));
     _tchi0 = tphi0 * hyp(shxi0) - shxi0 * hyp(tphi0);
     _scchi0 = hyp(_tchi0);
     _psi0 = _GeoMath.asinh(_tchi0);
@@ -468,7 +469,7 @@ class LambertConformalConic {
         tbet = _fm * tphi,
         scbet = hyp(tbet),
         scphi = 1 / cphi,
-        shxi = sinh(eatanhe(sphi)),
+        shxi = _sinh(eatanhe(sphi)),
         tchi = hyp(shxi) * tphi - shxi * scphi,
         scchi = hyp(tchi),
         psi = _GeoMath.asinh(tchi),
@@ -484,7 +485,8 @@ class LambertConformalConic {
                 : Dexp(-_n * psi, -_n * _psi0) * dpsi);
 
     var x = (_nrho0 + _n * drho) * (_n != 0 ? stheta / _n : lam);
-    var y = _nrho0 * (_n != 0 ? (ctheta < 0 ? 1 - ctheta : _GeoMath.sq(stheta) / (1 + ctheta)) / _n : 0) - drho * ctheta;
+    var y =
+        _nrho0 * (_n != 0 ? (ctheta < 0 ? 1 - ctheta : _GeoMath.sq(stheta) / (1 + ctheta)) / _n : 0) - drho * ctheta;
     var k = _k0 *
         (scbet / _scbet0) /
         (exp(-(_GeoMath.sq(_nc) / (1 + _n)) * dpsi) *
@@ -541,7 +543,7 @@ class LambertConformalConic {
     if (2 * _n <= 1) {
       // tchi = sinh(psi)
       double psi = _psi0 + dpsi,
-          tchia = sinh(psi),
+          tchia = _sinh(psi),
           scchi = hyp(tchia),
           dtchi = Dsinh(psi, _psi0, tchia, _tchi0, scchi, _scchi0) * dpsi;
       tchi = _tchi0 + dtchi; // Update tchi using divided difference
@@ -553,7 +555,7 @@ class LambertConformalConic {
       // (1-1/n) = - nc^2/(n*(1+n))
       // cosh(log(tn)) = (tn + 1/tn)/2; sinh(log(tn)) = (tn - 1/tn)/2
       double tn = tnm1 + 1 == 0 ? epsx_ : tnm1 + 1,
-          sh = sinh(-_GeoMath.sq(_nc) / (_n * (1 + _n)) * (2 * tn > 1 ? _GeoMath.log1p(tnm1) : log(tn)));
+          sh = _sinh(-_GeoMath.sq(_nc) / (_n * (1 + _n)) * (2 * tn > 1 ? _GeoMath.log1p(tnm1) : log(tn)));
       tchi = sh * (tn + 1 / tn) / 2 - hyp(sh) * (tnm1 * (tn + 1) / tn) / 2;
     }
 
@@ -562,7 +564,7 @@ class LambertConformalConic {
     // min iterations = 1, max iterations = 2; mean = 1.99
     for (int i = 0; i < numit_; ++i) {
       double scphi = hyp(tphi),
-          shxi = sinh(eatanhe(tphi / scphi)),
+          shxi = _sinh(eatanhe(tphi / scphi)),
           tchia = hyp(shxi) * tphi - shxi * scphi,
           dtphi = (tchi - tchia) * (1 + _e2m * _GeoMath.sq(tphi)) / (_e2m * scphi * hyp(tchia));
       tphi += dtphi;

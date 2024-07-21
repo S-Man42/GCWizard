@@ -17,7 +17,7 @@ class Beatnik extends StatefulWidget {
   const Beatnik({Key? key}) : super(key: key);
 
   @override
- _BeatnikState createState() => _BeatnikState();
+  _BeatnikState createState() => _BeatnikState();
 }
 
 class _BeatnikState extends State<Beatnik> {
@@ -228,10 +228,7 @@ class _BeatnikState extends State<Beatnik> {
                           ]),
                           GCWOutput(
                             title: i18n(context, 'common_programming_debug'),
-                            child: GCWColumnedMultilineOutput(
-                                data: _columnData,
-                                flexValues: const [1, 2, 3, 3]
-                            ),
+                            child: GCWColumnedMultilineOutput(data: _columnData, flexValues: const [1, 2, 3, 3]),
                           ),
                         ])
                       : Container(),

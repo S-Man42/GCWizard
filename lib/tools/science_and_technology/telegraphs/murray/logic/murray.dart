@@ -23,38 +23,25 @@ enum MurrayCodebook {
 }
 
 const Map<MurrayCodebook, CodebookConfig> MURRAY_CODEBOOK = {
-  MurrayCodebook.ROYALNAVY: CodebookConfig(
-    title: 'telegraph_murray_royalnavy_title',
-    subtitle: 'telegraph_murray_royalnavy_description'
-  ),
-  MurrayCodebook.GEOCACHING: CodebookConfig(
-    title: 'telegraph_murray_geocaching_title',
-    subtitle: 'telegraph_murray_geocaching_description'
-  ),
-  MurrayCodebook.FISCHER: CodebookConfig(
-    title: 'telegraph_murray_fischer_title',
-    subtitle: 'telegraph_murray_fischer_description'
-  ),
-  MurrayCodebook.ROUCOUX: CodebookConfig(
-    title: 'telegraph_murray_roucoux_title',
-    subtitle: 'telegraph_murray_roucoux_description'
-  ),
+  MurrayCodebook.ROYALNAVY:
+      CodebookConfig(title: 'telegraph_murray_royalnavy_title', subtitle: 'telegraph_murray_royalnavy_description'),
+  MurrayCodebook.GEOCACHING:
+      CodebookConfig(title: 'telegraph_murray_geocaching_title', subtitle: 'telegraph_murray_geocaching_description'),
+  MurrayCodebook.FISCHER:
+      CodebookConfig(title: 'telegraph_murray_fischer_title', subtitle: 'telegraph_murray_fischer_description'),
+  MurrayCodebook.ROUCOUX:
+      CodebookConfig(title: 'telegraph_murray_roucoux_title', subtitle: 'telegraph_murray_roucoux_description'),
   MurrayCodebook.GEOCACHINGTOOLBOX_1: CodebookConfig(
-    title: 'telegraph_murray_geocachingtoolbox_1_title',
-    subtitle: 'telegraph_murray_geocachingtoolbox_1_description'
-  ),
+      title: 'telegraph_murray_geocachingtoolbox_1_title',
+      subtitle: 'telegraph_murray_geocachingtoolbox_1_description'),
   MurrayCodebook.GEOCACHINGTOOLBOX_2: CodebookConfig(
-    title: 'telegraph_murray_geocachingtoolbox_2_title',
-    subtitle: 'telegraph_murray_geocachingtoolbox_2_description'
-  ),
+      title: 'telegraph_murray_geocachingtoolbox_2_title',
+      subtitle: 'telegraph_murray_geocachingtoolbox_2_description'),
   MurrayCodebook.GEOCACHINGTOOLBOX_3: CodebookConfig(
-    title: 'telegraph_murray_geocachingtoolbox_3_title',
-    subtitle: 'telegraph_murray_geocachingtoolbox_3_description'
-  ),
-  MurrayCodebook.MYGEOTOOLS: CodebookConfig(
-    title: 'telegraph_murray_mygeotools_title',
-    subtitle: 'telegraph_murray_mygeotools_description'
-  ),
+      title: 'telegraph_murray_geocachingtoolbox_3_title',
+      subtitle: 'telegraph_murray_geocachingtoolbox_3_description'),
+  MurrayCodebook.MYGEOTOOLS:
+      CodebookConfig(title: 'telegraph_murray_mygeotools_title', subtitle: 'telegraph_murray_mygeotools_description'),
 };
 
 const Map<String, List<String>> _CODEBOOK_ROYALNAVY = {
@@ -202,6 +189,7 @@ const Map<String, List<String>> _CODEBOOK_ROUCOUX = {
   'G': ['1'],
   'H': ['2'],
   'I': ['3'],
+  'J': ['3'],
   'K': ['4'],
   'L': ['5'],
   'M': ['6'],
@@ -209,14 +197,25 @@ const Map<String, List<String>> _CODEBOOK_ROUCOUX = {
   'O': ['1', '2', '3', '5'],
   'P': ['1', '5'],
   'Q': ['1', '3', '4', '5'],
-  'R': ['1', '2'],
+  'R': ['1', '3'],
   'S': ['1', '3', '5', '6'],
   'T': ['1', '2', '4', '6'],
+  'U': ['4', '6'],
   'V': ['4', '6'],
   'W': ['2', '3', '4', '6'],
   'X': ['2', '6'],
   'Y': ['2', '4', '5', '6'],
   'Z': ['2', '4'],
+  '0': ['1', '2', '3', '4'],
+  '1': ['1', '2', '5', '6'],
+  '2': ['2', '3', '4', '5'],
+  '3': ['2', '3', '4','5'],
+  '4': ['1', '3', '4', '6'],
+  '5': ['2', '3', '5', '6'],
+  '6': ['1', '2', '3'],
+  '7': ['4', '5', '6'],
+  '8': ['1', '2', '3', '6'],
+  '9': ['1', '2', '4', '5'],
 };
 
 const Map<String, List<String>> _CODEBOOK_MYGEOTOOLS = _CODEBOOK_GEOCACHING;
@@ -287,7 +286,6 @@ const Map<String, List<String>> _CODEBOOK_GEOCACHINGTOOLBOX_3 = {
 };
 
 Segments encodeMurray(String input, MurrayCodebook language) {
-
   Map<String, List<String>> CODEBOOK = <String, List<String>>{};
   switch (language) {
     case MurrayCodebook.GEOCACHING:
@@ -326,7 +324,7 @@ Segments encodeMurray(String input, MurrayCodebook language) {
 }
 
 SegmentsChars decodeMurray(List<String> inputs, MurrayCodebook language) {
-  if (inputs.isEmpty) return  SegmentsChars(displays: <List<String>>[], chars: []);
+  if (inputs.isEmpty) return SegmentsChars(displays: <List<String>>[], chars: []);
 
   var displays = <List<String>>[];
 

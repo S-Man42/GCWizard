@@ -1,11 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_textinputformatter.dart';
@@ -14,7 +15,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/logic/h
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 const _ALERT_COMBINATIONS = 100000;
 
@@ -72,7 +72,6 @@ class _HashBreakerState extends State<HashBreaker> {
     _currentToInput = entry.value;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -120,14 +119,18 @@ class _HashBreakerState extends State<HashBreaker> {
 
   Widget _buildVariablesEditor() {
     return GCWKeyValueEditor(
-        keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
-        valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-        valueInputFormatters: [VariableStringTextInputFormatter()],
-        valueFlex: 4,
-        entries: _currentSubstitutions,
-        onNewEntryChanged: (entry) => _updateNewEntry(entry),
-        onAddEntry: (entry) => _onAddEntry(entry),
-      );
+      keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
+      valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
+      addValueInputFormatters: [VariableStringTextInputFormatter()],
+      valueFlex: 4,
+      entries: _currentSubstitutions,
+      onNewEntryChanged: (entry) => _updateNewEntry(entry),
+      onAddEntry: (entry) => _onAddEntry(entry),
+      validateEditedValue: (String input) {
+        return VARIABLESTRING.hasMatch(input);
+      },
+      invalidEditedValueMessage: i18n(context, 'formulasolver_values_novalidinterpolated'),
+    );
   }
 
   void _onDoCalculation() async {
@@ -137,8 +140,8 @@ class _HashBreakerState extends State<HashBreaker> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<BoolText?>(
               isolatedFunction: breakHashAsync,
               parameter: _buildJobData,
@@ -178,8 +181,7 @@ class _HashBreakerState extends State<HashBreaker> {
       _substitutions.putIfAbsent(entry.key, () => entry.value);
     }
 
-    if (_currentFromInput.isNotEmpty &&
-        _currentToInput.isNotEmpty) {
+    if (_currentFromInput.isNotEmpty && _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 

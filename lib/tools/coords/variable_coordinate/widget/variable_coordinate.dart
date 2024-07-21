@@ -4,25 +4,26 @@ import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_base;
@@ -39,12 +40,12 @@ const _WARNING_COUNT = 500;
 const _TOOMANY_COUNT = 5000;
 
 class VariableCoordinate extends StatefulWidget {
-  final Formula formula;
+  final VariableCoordinateFormula formula;
 
   const VariableCoordinate({Key? key, required this.formula}) : super(key: key);
 
   @override
- _VariableCoordinateState createState() => _VariableCoordinateState();
+  _VariableCoordinateState createState() => _VariableCoordinateState();
 }
 
 class _VariableCoordinateState extends State<VariableCoordinate> {
@@ -107,7 +108,8 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
   void _addEntry(KeyValueBase entry) {
     if (entry.key.isNotEmpty) {
-      var newEntry = formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
+      var newEntry =
+          formula_base.FormulaValue(entry.key, entry.value, type: formula_base.FormulaValueType.INTERPOLATED);
       insertFormulaValue(newEntry, widget.formula);
     }
   }
@@ -209,13 +211,17 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     return GCWKeyValueEditor(
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-      valueInputFormatters: [VariableStringTextInputFormatter()],
+      addValueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
-      onNewEntryChanged: _updateNewEntry,
+      onNewEntryChanged: (entry) => _updateNewEntry(entry),
       entries: widget.formula.values,
       onAddEntry: (entry) => _addEntry(entry),
       onUpdateEntry: (entry) => _updateEntry(entry),
       addOnDispose: true,
+      validateEditedValue: (String input) {
+        return VARIABLESTRING.hasMatch(input);
+      },
+      invalidEditedValueMessage: i18n(context, 'formulasolver_values_novalidinterpolated'),
     );
   }
 
@@ -309,14 +315,11 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
   Map<String, String> _getSubstitutions() {
     Map<String, String> _substitutions = {};
-    if (widget.formula.values.isEmpty) return _substitutions;
-
     for (var value in widget.formula.values) {
       _substitutions.putIfAbsent(value.key, () => value.value);
     }
 
-    if (_currentFromInput.isNotEmpty &&
-        _currentToInput.isNotEmpty) {
+    if (_currentFromInput.isNotEmpty && _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
@@ -357,27 +360,26 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
     var hasLeftPaddedCoords = leftPaddedCoords.isNotEmpty;
 
-    _currentOutput =
-        (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
-          .map((VariableCoordinateSingleResult varCoordResult) {
-            var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
-            return Column(
-              children: [
-                GCWOutputText(text: formattedCoordinate),
-                GCWText(text: _formatVariables(varCoordResult.variables), style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
-              ],
-            );
-          })
-          .toList();
+    _currentOutput = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
+        .map((VariableCoordinateSingleResult varCoordResult) {
+      var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
+      return Column(
+        children: [
+          GCWOutputText(text: formattedCoordinate),
+          GCWText(
+              text: _formatVariables(varCoordResult.variables),
+              style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
+        ],
+      );
+    }).toList();
 
     _currentMapPoints = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
-      .map((VariableCoordinateSingleResult varCoordResult) {
-        return GCWMapPoint(
-            point: varCoordResult.coordinate,
-            markerText: _formatVariables(varCoordResult.variables),
-            coordinateFormat: _currentOutputFormat);
-      })
-      .toList();
+        .map((VariableCoordinateSingleResult varCoordResult) {
+      return GCWMapPoint(
+          point: varCoordResult.coordinate,
+          markerText: _formatVariables(varCoordResult.variables),
+          coordinateFormat: _currentOutputFormat);
+    }).toList();
 
     if (_currentOutput.isEmpty) {
       _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
@@ -418,15 +420,17 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
         setState(() {
           _isOnLocationAccess = false;
         });
-        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+        showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
 
         return;
       }
 
       _location.getLocation().then((locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
-          showToast(i18n(context, 'coords_common_location_lowaccuracy',
-              parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
+          showSnackBar(
+              i18n(context, 'coords_common_location_lowaccuracy',
+                  parameters: [NumberFormat('0.0').format(locationData.accuracy)]),
+              context);
         }
 
         LatLng _coords;
@@ -440,7 +444,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
         String insertedCoord;
         if (defaultCoordinateFormat.type == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
-          insertedCoord = DMM.fromLatLon(coords.toLatLng()!).toString(3);
+          insertedCoord = DMMCoordinate.fromLatLon(coords.toLatLng()!).toString(3);
         } else {
           insertedCoord = formatCoordOutput(coords.toLatLng()!, defaultCoordinateFormat, defaultEllipsoid);
         }

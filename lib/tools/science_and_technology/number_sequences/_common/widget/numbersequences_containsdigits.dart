@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -12,7 +13,7 @@ class NumberSequenceContainsDigits extends StatefulWidget {
   const NumberSequenceContainsDigits({Key? key, required this.mode, required this.maxIndex}) : super(key: key);
 
   @override
- _NumberSequenceContainsDigitsState createState() => _NumberSequenceContainsDigitsState();
+  _NumberSequenceContainsDigitsState createState() => _NumberSequenceContainsDigitsState();
 }
 
 class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
@@ -24,6 +25,10 @@ class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDig
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWTextDivider(
+          text: i18n(context, NUMBERSEQUENCE_TITLE[widget.mode]!),
+          style: const TextStyle(fontSize: 20),
+        ),
         GCWIntegerSpinner(
           value: currentInputN,
           min: 0,
@@ -47,7 +52,7 @@ class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDig
     List<List<String>> columnData = [];
     PositionOfSequenceOutput detailedOutput;
 
-    detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString(), widget.maxIndex);
+    detailedOutput = numberSequencesGetFirstPositionOfSequence(widget.mode, currentInputN.toString(), widget.maxIndex);
 
     columnData.add([
       i18n(context, 'numbersequence_output_col_1'),
@@ -58,11 +63,7 @@ class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDig
         [detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);
 
     _currentOutput = GCWDefaultOutput(
-        child: GCWColumnedMultilineOutput(
-            data: columnData,
-            flexValues: const [4, 2, 1],
-            copyColumn: 0,
-            hasHeader: true
-        ));
+        child:
+            GCWColumnedMultilineOutput(data: columnData, flexValues: const [4, 2, 1], copyColumn: 0, hasHeader: true));
   }
 }

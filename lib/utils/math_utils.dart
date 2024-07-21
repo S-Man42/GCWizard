@@ -1,10 +1,5 @@
 import 'dart:math';
 
-/// Hyperbolic Sine.
-double sinh(double angle) {
-  return (exp(angle) - exp(-angle)) / 2;
-}
-
 double degreesToRadian(double degrees) {
   return degrees * pi / 180.0;
 }
@@ -48,7 +43,7 @@ int gcd(int a, int b) {
   return a.abs();
 }
 
-int lcm(int a, int b){
+int lcm(int a, int b) {
   if (gcd(a, b) == 00) return 0;
 
   int result = (a * b).abs() ~/ gcd(a, b);

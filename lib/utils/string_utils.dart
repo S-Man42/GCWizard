@@ -19,10 +19,12 @@ int extractIntegerFromText(String text, {bool allowNegative = true}) {
 
 String normalizeUmlauts(String input) {
   return input.split('').map((letter) {
-    if (letter == '\u00DF') { //ß
+    if (letter == '\u00DF') {
+      //ß
       return 'ss';
     }
-    if (letter == '\u1E9E') { //ẞ
+    if (letter == '\u1E9E') {
+      //ẞ
       return 'SS';
     }
 
@@ -135,6 +137,12 @@ String removeControlCharacters(String input) {
   return String.fromCharCodes(removedCodes);
 }
 
+String reverse(String input) {
+  if (input.length < 2) return input;
+
+  return input.split('').reversed.join();
+}
+
 String normalizeCharacters(String input) {
   if (input.isEmpty) {
     return input;
@@ -143,9 +151,9 @@ String normalizeCharacters(String input) {
   const Map<String, String> _ALTERNATE_CHARACTERS = {
     // https://www.compart.com/de/unicode/category/Zs and Tab
     ' ': '\u0009\u000B\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2007\u2008\u2009\u200A\u202F\u205F\u3000',
-    '"': '\u201e\u201f\u201d\u201c',
+    '"': '\u201e\u201f\u201d\u201c\u00ab\u00bb',
     '\'': '\u201b\u201a\u2019\u2018',
-    '-': '\u2014\u2013\u02d7\u2212\u2012',
+    '-': '\u2014\u2013\u02d7\u2212\u2012'
   };
 
   _ALTERNATE_CHARACTERS.forEach((key, value) {
@@ -179,4 +187,46 @@ String formatStringForDecimals({int integerPrecision = 2, int decimalPrecision =
   }
 
   return formatString;
+}
+
+String trimCharactersLeft(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  var i = 0;
+
+  while (text.length > i && text.substring(i).startsWith(characters)) {
+    i += characters.length;
+  }
+
+  return text.substring(i);
+}
+
+String trimCharactersRight(String text, String characters) {
+  if (characters.isEmpty || text.isEmpty) {
+    return text;
+  }
+
+  while (text.length >= characters.length && text.endsWith(characters)) {
+    text = text.substring(0, text.length - characters.length);
+  }
+
+  return text;
+}
+
+String trimCharacters(String text, String characters) {
+  return trimCharactersLeft(trimCharactersRight(text, characters), characters);
+}
+
+List<String> splitGroupsOfSameCharacters(String text) {
+  var regex = RegExp(r'(.)\1*');
+  var matches = regex.allMatches(text);
+
+  List<String> out = [];
+  for (final Match m in matches) {
+    out.add(m[0]!);
+  }
+
+  return out;
 }

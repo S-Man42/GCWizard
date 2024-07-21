@@ -45,7 +45,7 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWSymbolTableTextToSymbolsState createState() => _GCWSymbolTableTextToSymbolsState();
+  _GCWSymbolTableTextToSymbolsState createState() => _GCWSymbolTableTextToSymbolsState();
 }
 
 class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
@@ -71,11 +71,11 @@ class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbol
       children: <Widget>[
         widget.fixed
             ? _buildEncryptionOutput(widget.countColumns)
-            : Expanded(child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                primary: true,
-                child: _buildEncryptionOutput(widget.countColumns)
-              )),
+            : Expanded(
+                child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    primary: true,
+                    child: _buildEncryptionOutput(widget.countColumns))),
         widget.showExportButton && _encryptionHasImages
             ? GCWButton(
                 text: i18n(context, 'common_exportfile_saveoutput'),
@@ -104,10 +104,10 @@ class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbol
       String chunk;
       for (i = min(_data.maxSymbolTextLength, _text.length); i > 0; i--) {
         chunk = _text.substring(0, i);
-        
+
         if (_alphabetMap.containsKey(chunk)) {
-            imageIndex = _alphabetMap[chunk];
-            break;
+          imageIndex = _alphabetMap[chunk];
+          break;
         } else if (!isCaseSensitive) {
           if (_alphabetMap.containsKey(chunk.toUpperCase())) {
             imageIndex = _alphabetMap[chunk.toUpperCase()];
@@ -207,7 +207,7 @@ class _GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbol
     var bytes = data?.buffer.asUint8List();
     if (bytes == null) return const Tuple2<bool, Uint8List?>(false, null);
     bytes = trimNullBytes(bytes);
-    return Tuple2<bool, Uint8List?>(await saveByteDataToFile(context, bytes,
-        buildFileNameWithDate('img_', FileType.PNG)), bytes);
+    return Tuple2<bool, Uint8List?>(
+        await saveByteDataToFile(context, bytes, buildFileNameWithDate('img_', FileType.PNG)), bytes);
   }
 }

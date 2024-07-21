@@ -72,10 +72,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
         children: [
           Row(
             children: [
-              Container(
-                  width: 42,
-                  padding: const EdgeInsets.only(right: 10),
-                  child: actionButton),
+              Container(width: 42, padding: const EdgeInsets.only(right: 10), child: actionButton),
               Expanded(
                 child: Container(
                     color: themeColors().secondary(),
@@ -114,7 +111,8 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
                   suppressedButtons: widget.suppressedButtons,
                 )),
           if (file.fileClass == FileClass.TEXT)
-            Container(margin: const EdgeInsets.only(left: 42), child: GCWText(style: gcwMonotypeTextStyle(), text: text)),
+            Container(
+                margin: const EdgeInsets.only(left: 42), child: GCWText(style: gcwMonotypeTextStyle(), text: text)),
           if (file.fileClass == FileClass.SOUND)
             Container(margin: const EdgeInsets.only(left: 42), child: GCWSoundPlayer(file: file)),
           if (hasChildren)
@@ -162,7 +160,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     ];
 
     return GCWPopupMenu(
-      iconData: Icons.open_in_new,
+      icon: Icons.open_in_new,
       size: IconButtonSize.SMALL,
       menuItemBuilder: (context) => actions,
     );
@@ -178,6 +176,5 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       var content = fileClass(file.fileType) == FileClass.IMAGE ? imageContent(context, file.bytes) : null;
       if (value) showExportedFileDialog(context, contentWidget: content);
     });
-
   }
 }

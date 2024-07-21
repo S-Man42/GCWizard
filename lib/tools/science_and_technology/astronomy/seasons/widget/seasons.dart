@@ -10,7 +10,7 @@ class Seasons extends StatefulWidget {
   const Seasons({Key? key}) : super(key: key);
 
   @override
- _SeasonsState createState() => _SeasonsState();
+  _SeasonsState createState() => _SeasonsState();
 }
 
 class _SeasonsState extends State<Seasons> {
@@ -88,9 +88,6 @@ class _SeasonsState extends State<Seasons> {
     ];
 
     return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs,
-        flexValues: const [1, 2]
-    );
+        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs, flexValues: const [1, 2]);
   }
 }

@@ -2,7 +2,8 @@ part of 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagro
 
 List<String> _newFormulas = [];
 
-void _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas, {required void Function(List<Formula>) onOkPressed}) {
+void _showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
+    {required void Function(List<Formula>) onOkPressed}) {
   var _output = formulas.map((formula) => Formula.fromFormula(formula)).toList();
 
   showGCWDialog(
@@ -104,10 +105,10 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
               _buildNewFormulas();
             });
           },
-          fillColor: MaterialStateColor.resolveWith(getFillColor),
+          fillColor: WidgetStateColor.resolveWith(getFillColor),
           checkColor: themeColors().dialog(),
           hoverColor: themeColors().dialog(),
-          overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
+          overlayColor: WidgetStateColor.resolveWith(getOverlayColor),
         ),
         GCWCheckBox(
           value: _currentValueBraces,
@@ -121,10 +122,10 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
               _buildNewFormulas();
             });
           },
-          fillColor: MaterialStateColor.resolveWith(getFillColor),
+          fillColor: WidgetStateColor.resolveWith(getFillColor),
           checkColor: themeColors().dialog(),
           hoverColor: themeColors().dialog(),
-          overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
+          overlayColor: WidgetStateColor.resolveWith(getOverlayColor),
         ),
         GCWCheckBox(
           value: _currentValueMultiply,
@@ -138,20 +139,20 @@ class _FormulaReplaceState extends State<_FormulaReplace> {
               _buildNewFormulas();
             });
           },
-          fillColor: MaterialStateColor.resolveWith(getFillColor),
+          fillColor: WidgetStateColor.resolveWith(getFillColor),
           checkColor: themeColors().dialog(),
           hoverColor: themeColors().dialog(),
-          overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
+          overlayColor: WidgetStateColor.resolveWith(getOverlayColor),
         )
       ],
     );
   }
 
-  Color getOverlayColor(Set<MaterialState> states) {
+  Color getOverlayColor(Set<WidgetState> states) {
     return themeColors().dialog();
   }
 
-  Color getFillColor(Set<MaterialState> states) {
+  Color getFillColor(Set<WidgetState> states) {
     return Colors.black;
   }
 

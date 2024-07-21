@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
-import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
-import 'package:gc_wizard/tools/coords/format_converter/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/logic/external_libs/justkawal.xmp/xmp.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:latlong2/latlong.dart';
 
 const String _TIFF_THUMBNAIL = 'TIFFThumbnail';
@@ -63,7 +63,6 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
         data.containsKey(_GPS_LNG) &&
         data.containsKey(_GPS_LAT_REF) &&
         data.containsKey(_GPS_LNG_REF)) {
-
       IfdTag? latRef = data[_GPS_LAT_REF];
       IfdTag? lat = data[_GPS_LAT];
       double? _lat;
@@ -83,10 +82,9 @@ LatLng? completeGPSData(Map<String, IfdTag> data) {
       if (_lat == 0 && _lng == 0) return null;
 
       // DEC should be the pivot format from EXIF
-      return decToLatLon(DEC(_lat, _lng));
+      return decToLatLon(DECCoordinate(_lat, _lng));
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 
   return null;
 }
@@ -107,8 +105,7 @@ LatLng? completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
         }
       }
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 
   return point;
 }

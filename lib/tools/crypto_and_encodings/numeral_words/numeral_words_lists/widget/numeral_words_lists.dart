@@ -15,7 +15,7 @@ class NumeralWordsLists extends StatefulWidget {
   const NumeralWordsLists({Key? key}) : super(key: key);
 
   @override
- _NumeralWordsListsState createState() => _NumeralWordsListsState();
+  _NumeralWordsListsState createState() => _NumeralWordsListsState();
 }
 
 class _NumeralWordsListsState extends State<NumeralWordsLists> {
@@ -47,7 +47,7 @@ class _NumeralWordsListsState extends State<NumeralWordsLists> {
       _setDefaultLanguage = true;
     }
     _LANGUAGES ??= SplayTreeMap.from(
-          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
+        switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
 
     return Column(
       children: <Widget>[
@@ -105,8 +105,7 @@ class _NumeralWordsListsState extends State<NumeralWordsLists> {
       child: GCWColumnedMultilineOutput(
           data: wordList.where((element) => element.isNotEmpty).toList(),
           flexValues: const [1, 3],
-          fontSize: defaultFontSize() + _valueFontsizeOffset
-      ),
+          fontSize: defaultFontSize() + _valueFontsizeOffset),
     );
   }
 

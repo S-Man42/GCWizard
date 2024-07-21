@@ -7,14 +7,14 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class CallForContribution extends StatefulWidget {
   const CallForContribution({Key? key}) : super(key: key);
 
   @override
- _CallForContributionState createState() => _CallForContributionState();
+  _CallForContributionState createState() => _CallForContributionState();
 }
 
 class _CallForContributionState extends State<CallForContribution> {

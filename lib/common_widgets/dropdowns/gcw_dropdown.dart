@@ -10,6 +10,8 @@ class GCWDropDown<T> extends StatefulWidget {
   final DropdownButtonBuilder? selectedItemBuilder;
   final String? title;
   final bool alternativeColor;
+  final List<int> flexValues;
+  static const _flexValues = [1, 3];
 
   const GCWDropDown(
       {Key? key,
@@ -18,7 +20,8 @@ class GCWDropDown<T> extends StatefulWidget {
       required this.onChanged,
       this.selectedItemBuilder,
       this.title,
-      this.alternativeColor = false})
+      this.alternativeColor = false,
+      this.flexValues = _flexValues})
       : super(key: key);
 
   @override
@@ -41,61 +44,59 @@ class _GCWDropDownState<T> extends State<GCWDropDown<T>> {
       children: [
         if (widget.title != null && widget.title!.isNotEmpty)
           Expanded(
-              flex: 1,
+              flex: widget.flexValues[0],
               child: GCWText(
                 text: widget.title! + ':',
               )),
         Expanded(
-            flex: 3,
+            flex: widget.flexValues[1],
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 39),
-              child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-                  margin: const EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
-                    border: Border.all(
-                        color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
-                        style: BorderStyle.solid,
-                        width: 1.0),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton<T?>(
-                        itemHeight: null,
-                    isExpanded: true,
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      size: 30,
-                      color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
+                constraints: const BoxConstraints(minHeight: 39),
+                child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+                    margin: const EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
+                      border: Border.all(
+                          color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
+                          style: BorderStyle.solid,
+                          width: 1.0),
                     ),
-                    value: _currentValue,// ?? widget.items[0].value,
-                    items: widget.items.map((item) {
-                      return DropdownMenuItem<T>(
-                          value: item._internalValue, child: _buildMenuItemChild<T>(item));
-                    }).toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        widget.onChanged(value);
-                      }
-                    },
-                    style: textStyle,
-                    selectedItemBuilder: widget.selectedItemBuilder ??
-                        (context) {
-                          return widget.items.map((item) {
-                            return Align(
-                              alignment: Alignment.centerLeft,
-                              child: item.child is Widget
-                                  ? item.child as Widget
-                                  : Text(
-                                      item.child.toString(),
-                                      style: textStyle,
-                                    ),
-                            );
-                          }).toList();
-                        },
-                  )))
-          ))
-        ],
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton<T?>(
+                      itemHeight: null,
+                      isExpanded: true,
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        size: 30,
+                        color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
+                      ),
+                      value: _currentValue, // ?? widget.items[0].value,
+                      items: widget.items.map((item) {
+                        return DropdownMenuItem<T>(value: item._internalValue, child: _buildMenuItemChild<T>(item));
+                      }).toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          widget.onChanged(value);
+                        }
+                      },
+                      style: textStyle,
+                      selectedItemBuilder: widget.selectedItemBuilder ??
+                          (context) {
+                            return widget.items.map((item) {
+                              return Align(
+                                alignment: Alignment.centerLeft,
+                                child: item.child is Widget
+                                    ? item.child as Widget
+                                    : Text(
+                                        item.child.toString(),
+                                        style: textStyle,
+                                      ),
+                              );
+                            }).toList();
+                          },
+                    )))))
+      ],
     );
   }
 }

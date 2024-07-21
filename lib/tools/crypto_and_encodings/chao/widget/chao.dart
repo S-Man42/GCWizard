@@ -13,7 +13,7 @@ class Chao extends StatefulWidget {
   const Chao({Key? key}) : super(key: key);
 
   @override
- _ChaoState createState() => _ChaoState();
+  _ChaoState createState() => _ChaoState();
 }
 
 class _ChaoState extends State<Chao> {
@@ -126,7 +126,7 @@ class _ChaoState extends State<Chao> {
     var alphabetPlain = '';
 
     var alphabetAZ = alphabet_AZ.keys.join();
-    var alphabetZA = reverse(alphabetAZ);
+    var alphabetZA = reverseAll(alphabetAZ);
 
     switch (_currentAlphabetTypePlain) {
       case ChaoAlphabet.AZ:

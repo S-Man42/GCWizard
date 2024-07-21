@@ -17,7 +17,7 @@ class SymbolTableExamples extends StatefulWidget {
   const SymbolTableExamples({Key? key, required this.symbolKeys}) : super(key: key);
 
   @override
- _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
+  _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
 }
 
 class _SymbolTableExamplesState extends State<SymbolTableExamples> {
@@ -80,7 +80,13 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
               },
             )),
         Expanded(
-          child: _createSymbols(countColumns),
+          // dismisses the keyboard on iOS devices after editing the sample text
+          child: GestureDetector(
+            // dismisses the keyboard
+              onPanDown: (_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: _createSymbols(countColumns)),
         )
       ],
     );
@@ -116,8 +122,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
                       data: snapshot.data!,
                       showExportButton: false,
                       specialEncryption: false,
-                      fixed: true
-                  );
+                      fixed: true);
                 } else {
                   return Container();
                 }
@@ -127,12 +132,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
     }).toList();
 
     return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        primary: true,
-        child: Column(
-            children: symbols
-        )
-    );
+        physics: const AlwaysScrollableScrollPhysics(), primary: true, child: Column(children: symbols));
   }
 
   Future<SymbolTableData> _loadSymbolData(String symbolKey) async {

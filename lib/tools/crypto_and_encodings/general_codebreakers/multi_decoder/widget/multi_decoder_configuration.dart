@@ -48,7 +48,7 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
   }
 
   void _addNewTool() {
-    var chosenInternalName =  _currentChosenTool != null ? _sortedToolRegistry[_currentChosenTool!] : '';
+    var chosenInternalName = _currentChosenTool != null ? _sortedToolRegistry[_currentChosenTool!] : '';
     var name = _createName(chosenInternalName);
 
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
@@ -171,16 +171,15 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                 )),
           ),
           GCWIconButton(
-            icon: Icons.add,
-            iconColor: _currentEditId == null ? null : themeColors().inActive(),
-            onPressed: () {
+              icon: Icons.add,
+              iconColor: _currentEditId == null ? null : themeColors().inActive(),
+              onPressed: () {
                 if (_currentEditId == null) {
                   setState(() {
                     _addNewTool();
                   });
                 }
-              }
-          ),
+              }),
         ]),
         GCWTextDivider(
           text: i18n(context, 'multidecoder_configuration_configurecreated'),
@@ -226,7 +225,8 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
                               var value = entry.value.toString();
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                value = coordinateFormatMetadataByPersistenceKey(value)?.name ?? UNKNOWN_ELEMENT;
+                                var widgetInfo = coordinateWidgetInfoByByPersistenceKey(value);
+                                value = widgetInfo?.name ?? UNKNOWN_ELEMENT;
                               } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
                                   .contains(tool.internalToolName)) {
                                 value += '_title';
@@ -325,11 +325,11 @@ class _MultiDecoderConfigurationState extends State<_MultiDecoderConfiguration> 
 Column createMultiDecoderToolConfiguration(BuildContext context, Map<String, Widget> widgets) {
   return Column(
       children: widgets.entries.map((entry) {
-        return Row(
-          children: [
-            Expanded(flex: 1, child: GCWText(text: i18n(context, entry.key))),
-            Expanded(flex: 3, child: entry.value),
-          ],
-        );
-      }).toList());
+    return Row(
+      children: [
+        Expanded(flex: 1, child: GCWText(text: i18n(context, entry.key))),
+        Expanded(flex: 3, child: entry.value),
+      ],
+    );
+  }).toList());
 }

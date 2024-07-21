@@ -8,10 +8,10 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_symbol_matrix.dart';
+import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -22,7 +22,7 @@ class SymbolTableExamplesSelect extends StatefulWidget {
   const SymbolTableExamplesSelect({Key? key}) : super(key: key);
 
   @override
- _SymbolTableExamplesSelectState createState() => _SymbolTableExamplesSelectState();
+  _SymbolTableExamplesSelectState createState() => _SymbolTableExamplesSelectState();
 }
 
 class _SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
@@ -53,8 +53,8 @@ class _SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
     final manifestMap = asJsonMapOrNull(json.decode(manifestContent));
 
     final imagePaths = manifestMap == null
-      ? <String>[]
-      : manifestMap.keys.where((String key) => key.contains(_pathKey()) && key.contains(_LOGO_NAME)).toList();
+        ? <String>[]
+        : manifestMap.keys.where((String key) => key.contains(_pathKey()) && key.contains(_LOGO_NAME)).toList();
 
     if (imagePaths.isEmpty) return;
 
@@ -64,9 +64,7 @@ class _SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
 
       images.add({
         key: SymbolData(
-            path: imagePath,
-            bytes: data.buffer.asUint8List(),
-            displayName: i18n(context, 'symboltables_${key}_title'))
+            path: imagePath, bytes: data.buffer.asUint8List(), displayName: i18n(context, 'symboltables_${key}_title'))
       });
     }
 
