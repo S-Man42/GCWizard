@@ -1,10 +1,15 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_license_types.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
-import 'package:gc_wizard/application/tools/widget/tool_licenses.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 
 class Licenses extends StatefulWidget {
   const Licenses({Key? key}) : super(key: key);
@@ -13,28 +18,216 @@ class Licenses extends StatefulWidget {
   _LicensesState createState() => _LicensesState();
 }
 
+Column _licenseContent(Map<String, List<ToolLicenseEntry>> licenses) {
+  return Column(
+    children: licenses.entries.map((entry) {
+      return Column(
+          children: [
+            GCWTextDivider(text: entry.key),
+            Container(
+              padding: const EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
+              child: GCWColumnedMultilineOutput(
+                data: entry.value.map((ToolLicenseEntry license) {
+                  return [
+                    toolLicenseEntry(license.toRow())
+                  ];
+                }).toList(),
+              ),
+            )
+          ]
+      );
+    }).toList()
+  );
+}
+
 class _LicensesState extends State<Licenses> {
   @override
   Widget build(BuildContext context) {
-    var content = registeredTools
-      .where((GCWTool tool) => tool.licenses != null && tool.licenses!.isNotEmpty)
-      .map((GCWTool tool){
-        var name = toolName(context, tool);
-        return [name, Column(
-          children: [
-            GCWTextDivider(text: name),
-            buildToolLicenseContent(tool.licenses!),
-            Container(height: 5 * DOUBLE_DEFAULT_MARGIN,)
-          ],
-        )];
-      }).toList();
 
-    content.sort((a, b) {
-      return a[0].toString().compareTo(b[0].toString());
-    });
+    var tools = registeredTools
+      .where((GCWTool tool) => tool.licenses != null && tool.licenses!.isNotEmpty)
+      .toList();
+
+    var _contentOfflineBook = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentOnlineBook = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentOfflineArticle = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentOnlineArticle = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentPortedCode = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentPrivatePermission = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentCodeLibrary = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentImage = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentFont = SplayTreeMap<String, List<ToolLicenseEntry>>();
+    var _contentAPI = SplayTreeMap<String, List<ToolLicenseEntry>>();
+
+    for (var tool in tools) {
+      var name = toolName(context, tool);
+      for (var license in tool.licenses!) {
+        if (license is ToolLicenseOfflineBook) {
+          if (_contentOfflineBook.containsKey(name)) {
+            _contentOfflineBook[name]!.add(license);
+          } else {
+            _contentOfflineBook.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseOnlineBook) {
+          if (_contentOnlineBook.containsKey(name)) {
+            _contentOnlineBook[name]!.add(license);
+          } else {
+            _contentOnlineBook.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseOfflineArticle) {
+          if (_contentOfflineArticle.containsKey(name)) {
+            _contentOfflineArticle[name]!.add(license);
+          } else {
+            _contentOfflineArticle.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseOnlineArticle) {
+          if (_contentOnlineArticle.containsKey(name)) {
+            _contentOnlineArticle[name]!.add(license);
+          } else {
+            _contentOnlineArticle.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicensePrivatePermittedDigitalSource) {
+          if (_contentPrivatePermission.containsKey(name)) {
+            _contentPrivatePermission[name]!.add(license);
+          } else {
+            _contentPrivatePermission.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseCodeLibrary) {
+          if (_contentCodeLibrary.containsKey(name)) {
+            _contentCodeLibrary[name]!.add(license);
+          } else {
+            _contentCodeLibrary.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicensePortedCode) {
+          if (_contentPortedCode.containsKey(name)) {
+            _contentPortedCode[name]!.add(license);
+          } else {
+            _contentPortedCode.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseImage) {
+          if (_contentImage.containsKey(name)) {
+            _contentImage[name]!.add(license);
+          } else {
+            _contentImage.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseFont) {
+          if (_contentFont.containsKey(name)) {
+            _contentFont[name]!.add(license);
+          } else {
+            _contentFont.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+
+        if (license is ToolLicenseAPI) {
+          if (_contentAPI.containsKey(name)) {
+            _contentAPI[name]!.add(license);
+          } else {
+            _contentAPI.putIfAbsent(name, () => [license]);
+          }
+          continue;
+        }
+      }
+    }
+
+    var content = <Widget>[];
+    if (_contentCodeLibrary.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_codelibrary'),
+          child: _licenseContent(_contentCodeLibrary)
+      ));
+    }
+    if (_contentPortedCode.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_portedcode'),
+          child: _licenseContent(_contentPortedCode)
+      ));
+    }
+    if (_contentPrivatePermission.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_privatepermitteddigitalsource'),
+          child: _licenseContent(_contentPrivatePermission)
+      ));
+    }
+    if (_contentImage.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_image'),
+          child: _licenseContent(_contentImage)
+      ));
+    }
+    if (_contentFont.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_font'),
+          child: _licenseContent(_contentFont)
+      ));
+    }
+    if (_contentAPI.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_api'),
+          child: _licenseContent(_contentAPI)
+      ));
+    }
+    if (_contentOnlineArticle.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_onlinearticle'),
+          child: _licenseContent(_contentOnlineArticle)
+      ));
+    }
+    if (_contentOnlineBook.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_onlinebook'),
+          child: _licenseContent(_contentOnlineBook)
+      ));
+    }
+    if (_contentOfflineArticle.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_offlinearticle'),
+          child: _licenseContent(_contentOfflineArticle)
+      ));
+    }
+    if (_contentOfflineBook.isNotEmpty) {
+      content.add(GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'toollicenses_offlinebook'),
+          child: _licenseContent(_contentOfflineBook)
+      ));
+    }
 
     return MainMenuEntryStub(content: Column(
-      children: content.map((element) => element[1] as Column).toList()
+      children: content
     ));
 
     /*return Column(children: [
