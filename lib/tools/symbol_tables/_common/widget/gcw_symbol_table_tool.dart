@@ -7,14 +7,13 @@ import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 class GCWSymbolTableTool extends GCWTool {
   final String symbolKey;
   final List<String> symbolSearchStrings;
-  final List<ToolLicenseEntry>? licenses;
 
 
   GCWSymbolTableTool({
     Key? key,
     required this.symbolKey,
     required this.symbolSearchStrings,
-    this.licenses,
+    List<ToolLicenseEntry>? licenses,
   }) : super(
             key: key,
             tool: SymbolTable(symbolKey: symbolKey),
@@ -22,5 +21,6 @@ class GCWSymbolTableTool extends GCWTool {
             autoScroll: false,
             iconPath: SYMBOLTABLES_ASSETPATH + symbolKey + '/logo.png',
             helpSearchString: 'symboltables_selection_title',
-            searchKeys: ['symbol'] + symbolSearchStrings);
+            searchKeys: ['symbol'] + symbolSearchStrings,
+            licenses: licenses);
 }

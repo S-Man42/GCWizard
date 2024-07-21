@@ -8,6 +8,7 @@ enum ToolLicenseType {
   FREE_TO_USE,
   APACHE2, // Apache 2.0
   BSD, // BSD
+  CCBY4, // Creative Commons CC BY 4.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
   CCNC25, // Creative Commons CC NC 2.5
@@ -23,6 +24,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.FREE_TO_USE: return i18n(context, 'toollicenses_freetouse');
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
     case ToolLicenseType.BSD: return 'BSD License';
+    case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
     case ToolLicenseType.CCBYSA4: return 'Creative Commons CC BY-SA 4.0';
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
     case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';

@@ -862,7 +862,25 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'fox',
-    ]),
+    ],
+      licenses: [
+        ToolLicenseOfflineBook(
+            context: context,
+            author: 'Markus Gründel',
+            title: 'Geocaching I: Alles rund um die moderne Schatzsuche (Basiswissen für draußen, Band 203',
+            publisher: 'Stein, Conrad',
+            isbn: '978-3866867444',
+            year: 2021,
+            customComment: '8. Edition'),
+        ToolLicenseOfflineBook(
+            context: context,
+            author: 'Ray Nolan',
+            title: 'Das Nostradamus Testament',
+            publisher: 'Langen Müller',
+            isbn: '3-7844-2532-1',
+            year: 1996,
+            customComment: 'Page 200',),
+      ],),
     GCWTool(tool: const Gade(), id: 'gade', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1715,11 +1733,25 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'astronomy',
           'iau_constellation',
+        ],
+        licenses: [
+          ToolLicenseImage(context: context,
+              author: 'The International Astronomical Union',
+              title: 'The Constellations',
+              sourceUrl: 'https://www.iau.org/public/themes/constellations/',
+              licenseType: ToolLicenseType.CCBY4)
         ]),
     GCWTool(
         tool: const IAUSingleConstellation(ConstellationName: 'Andromeda'),
         id: 'iau_constellation',
-        searchKeys: const []),
+        searchKeys: const [],
+        licenses: [
+          ToolLicenseImage(context: context,
+              author: 'The International Astronomical Union',
+              title: 'The Constellations',
+              sourceUrl: 'https://www.iau.org/public/themes/constellations/',
+              licenseType: ToolLicenseType.CCBY4)
+        ]),
     GCWTool(
         tool: const SunRiseSet(),
         id: 'astronomy_sunriseset',
@@ -6136,7 +6168,7 @@ void initializeRegistry(BuildContext context) {
             context: context,
             author: 'Fred B. Wrixon',
             title: 'Geheimsprachen',
-            publisher: 'könemann',
+            publisher: 'Könemann',
             isbn: '978-3-8331-2562-1',
             year: 2006,
             customComment: 'Page 450'),
@@ -6147,7 +6179,18 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'telegraph',
           'symbol_popham_telegraph',
-        ]),
+        ],
+      licenses: [
+        ToolLicenseOfflineBook(
+            context: context,
+            author: 'Fred B. Wrixon',
+            title: 'Geheimsprachen',
+            publisher: 'Könemann',
+            isbn: '978-3-8331-2562-1',
+            year: 2006,
+            customComment: 'Page 446'),
+      ],
+    ),
     GCWSymbolTableTool(
         symbolKey: 'telegraph_prussia',
         symbolSearchStrings: const [
@@ -6403,7 +6446,26 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_schillingcanstatt',
-        ]),
+        ],
+      licenses: [
+        ToolLicenseOfflineBook(
+            context: context,
+            author: 'Volker Aschoff',
+            title: 'Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen',
+            publisher: 'R. Oldenbourg Verlag, München',
+            isbn: '3-486-20691-5',
+            year: 1976,
+            customComment: 'Deutsches Museum Abhandlungen und Berichte 44. Jahrgang 1976 • Heft 3'),
+        ToolLicenseOnlineBook(
+            context: context,
+            author: 'Tal. P. Shaffner',
+            title: 'The telegraph manual : a complete history and description of the semaphoric, electric and magnetic telegraphs of Europe, Asia, Africa, and America, ancient and modern : with six hundred and twenty-five illustrations',
+            publisher: 'D. van Nostrand, New York',
+            isbn: '',
+            year: 1867,
+            customComment: 'Page 139',
+            sourceUrl: 'https://archive.org/details/telegraphmanualc00shafrich/page/6/mode/2up'),
+      ],),
     GCWTool(
         tool: const WheatstoneCookeNeedleTelegraph(),
         id: 'telegraph_wheatstonecooke_needle',
