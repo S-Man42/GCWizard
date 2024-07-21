@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_license_types.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
@@ -6,11 +7,14 @@ import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 class GCWSymbolTableTool extends GCWTool {
   final String symbolKey;
   final List<String> symbolSearchStrings;
+  final List<ToolLicenseEntry>? licenses;
+
 
   GCWSymbolTableTool({
     Key? key,
     required this.symbolKey,
     required this.symbolSearchStrings,
+    this.licenses,
   }) : super(
             key: key,
             tool: SymbolTable(symbolKey: symbolKey),

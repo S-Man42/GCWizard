@@ -235,7 +235,7 @@ class _LicensesState extends State<Licenses> {
           text: i18n(context, 'licenses_additionalcode'),
           child: GCWColumnedMultilineOutput(data: [
             const ['Astronomy Functions', 'astronomie.info, jgiesen.de', 'Personal Permission'],
-            const ['Base58', 'Dark Launch', null],
+            # DONE # const ['Base58', 'Dark Launch', null],
             const ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
             const ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
             const ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
