@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/application/registry.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/tool_licenses.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
@@ -22,7 +23,8 @@ class _LicensesState extends State<Licenses> {
         return [name, Column(
           children: [
             GCWTextDivider(text: name),
-            buildToolLicenseContent(tool.licenses!)
+            buildToolLicenseContent(tool.licenses!),
+            Container(height: 5 * DOUBLE_DEFAULT_MARGIN,)
           ],
         )];
       }).toList();
