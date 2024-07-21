@@ -1734,7 +1734,7 @@ void initializeRegistry(BuildContext context) {
         ToolLicense(
           credit: 'Wikipedia',
           licenseType: 'Creative Commons Attribution-ShareAlike License 4.0',
-          url: 'https://en.wikipedia.org/wiki/Binary-to-text_encoding#Base58',
+          url: 'https://en.wikipedia.org/w/index.php?title=Binary-to-text_encoding&oldid=1228363691',
         ),
         ToolLicense(
           credit: 'NovaCrypto',
@@ -1749,7 +1749,7 @@ void initializeRegistry(BuildContext context) {
         ToolLicense(
           credit: 'Dark Launch',
           licenseType: '',
-          url: 'https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html',
+          url: 'https://web.archive.org/web/20240721072008/https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html',
         ),
       ],
     ),
@@ -2573,7 +2573,11 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',
       'dates_calendar',
-    ]),
+    ],
+        licenses:[
+          ToolLicense(credit: 'Johannes Thomann, University of Zurich Asia-Orient-Institute',
+              licenseType: 'Usage permitted via e-Mail')
+        ]),
     GCWTool(tool: const ExcelTime(), id: 'excel_time', searchKeys: const [
       'dates',
       'excel_time',
@@ -4408,7 +4412,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicense(
           credit: 'Herbert Schildt/James Holmes\nMcGrawHill',
-          licenseType: 'Usage and development permitted',
+          licenseType: 'Usage and development permitted via e-Mail',
         )
       ],
     ),
