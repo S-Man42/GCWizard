@@ -414,6 +414,7 @@ class _LicensesState extends State<Licenses> {
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
             [i18n(context, 'symboltables_geovlog_title'), 'GEOVLOGS.nl (Permitted via email)'],
+            [i18n(context, 'symboltables_ice_lolly_ding_title'), 'Ice Lolly Ding (dafont.com) (by Michaela Peretti) (Free use)'],
             [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
             [
               i18n(context, 'symboltables_kabouter_abc_title'),
