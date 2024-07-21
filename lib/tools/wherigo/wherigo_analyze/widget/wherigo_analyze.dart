@@ -36,7 +36,6 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/wherigo/krevo/logic/ucommons.dart';
-import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
@@ -59,6 +58,7 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_outp
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_timers.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_zones.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_obfuscator.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
@@ -507,20 +507,25 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
           ),
-        if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-          GCWOutput(
-            title: i18n(context, 'wherigo_header_obfuscatorfunction'),
-            child: WherigoCartridgeLUAData.ObfuscatorFunction,
-            suppressCopyButton: (WherigoCartridgeLUAData.ObfuscatorFunction == 'NO_OBFUSCATOR'),
+        GCWColumnedMultilineOutput(
+          data: _buildWidgetToDisplayObfuscatorData(context, [WherigoCartridgeLUAData.ObfuscatorFunction, WherigoCartridgeLUAData.ObfuscatorTable]
           ),
-        if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-          GCWOutput(
-            title: 'dTable',
-            child: GCWOutputText(
-              text: WherigoCartridgeLUAData.ObfuscatorTable,
-              style: gcwMonotypeTextStyle(),
-            ),
-          ),
+        ),
+
+        // if (WherigoCartridgeLUAData.ObfuscatorTable != '')
+        //   GCWOutput(
+        //     title: i18n(context, 'wherigo_header_obfuscatorfunction'),
+        //     child: WherigoCartridgeLUAData.ObfuscatorFunction,
+        //     suppressCopyButton: (WherigoCartridgeLUAData.ObfuscatorFunction == 'NO_OBFUSCATOR'),
+        //   ),
+        // if (WherigoCartridgeLUAData.ObfuscatorTable != '')
+        //   GCWOutput(
+        //     title: 'dTable',
+        //     child: GCWOutputText(
+        //       text: WherigoCartridgeLUAData.ObfuscatorTable,
+        //       style: gcwMonotypeTextStyle(),
+        //     ),
+        //   ),
       ],
     );
   }
@@ -1635,8 +1640,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           LUAFile: '',
           CartridgeLUAName: '',
           CartridgeGUID: '',
-          ObfuscatorTable: '',
-          ObfuscatorFunction: '',
+          ObfuscatorTable: [],
+          ObfuscatorFunction: [],
           Characters: [],
           Items: [],
           Tasks: [],
@@ -1830,7 +1835,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   String _normalizeLUA(String LUAFile, bool deObfuscate) {
     if (deObfuscate) {
-      LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.ObfuscatorFunction, 'deObfuscate');
+      //LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.ObfuscatorFunction, 'deObfuscate');
       LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.CartridgeLUAName,
           'objCartridge_' + WherigoCartridgeLUAData.CartridgeLUAName.replaceAll(' ', ''));
       for (var element in WherigoCartridgeLUAData.Characters) {
@@ -1858,19 +1863,19 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         LUAFile = LUAFile.replaceAll(key, 'objVariable_' + key);
       });
 
-      RegExp(r'deObfuscate\(".*?"\)').allMatches(LUAFile).forEach((obfuscatedText) {
-        var group = obfuscatedText.group(0);
-        if (group == null) return;
-        LUAFile = LUAFile.replaceAll(group, _deObfuscate(group));
-      });
+      // RegExp(r'deObfuscate\(".*?"\)').allMatches(LUAFile).forEach((obfuscatedText) {
+      //   var group = obfuscatedText.group(0);
+      //   if (group == null) return;
+      //   LUAFile = LUAFile.replaceAll(group, _deObfuscate(group));
+      // });
     }
     return LUAFile;
   }
 
-  String _deObfuscate(String obfuscatedText) {
-    obfuscatedText = obfuscatedText.replaceAll('deObfuscate("', '').replaceAll('")', '');
-    return '"' + deobfuscateUrwigoText(obfuscatedText, WherigoCartridgeLUAData.ObfuscatorTable) + '"';
-  }
+  // String _deObfuscate(String obfuscatedText) {
+  //   obfuscatedText = obfuscatedText.replaceAll('deObfuscate("', '').replaceAll('")', '');
+  //   return '"' + deobfuscateUrwigoText(obfuscatedText, WherigoCartridgeLUAData.ObfuscatorTable) + '"';
+  // }
 
   List<GCWMapPoint> _currentZonePoints(String text, WherigoZonePoint point) {
     return [

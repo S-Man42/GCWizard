@@ -11,15 +11,17 @@ String getLUAName(String line) {
   return result;
 }
 
-String getLineData(String analyseLine, String LUAname, String type, String obfuscator, String dtable) {
+String getLineData(String analyseLine, String LUAname, String type, List<String> obfuscator, List<String> dtable) {
   String result = analyseLine.replaceAll(LUAname + '.' + type + ' = ', '');
-  if (result.startsWith(obfuscator)) {
-    result = result.replaceAll(obfuscator + '("', '').replaceAll('")', '');
-    result = deobfuscateUrwigoText(result, dtable);
-  } else if (result.startsWith('WWB_multi')) {
-    result = result.replaceAll('WWB_multiplatform_string("', '').replaceAll('")', '');
-  } else {
-    result = result.replaceAll('"', '');
+  for (int i = 0; i < obfuscator.length; i++) {
+    if (result.startsWith(obfuscator[i])) {
+      result = result.replaceAll(obfuscator[i] + '("', '').replaceAll('")', '');
+      result = deobfuscateUrwigoText(result, dtable[i]);
+    } else if (result.startsWith('WWB_multi')) {
+      result = result.replaceAll('WWB_multiplatform_string("', '').replaceAll('")', '');
+    } else {
+      result = result.replaceAll('"', '');
+    }
   }
 
   return normalizeWIGText(result).trim();
