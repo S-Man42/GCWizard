@@ -104,5 +104,26 @@ class _SpecificToolLicenses {
       publisher: 'Cambridge University Press'
     );
   }
+
+  ToolLicenseEntry get _toolLicenseWrixonGeheimsprachen {
+    return ToolLicenseOfflineBook(
+        context: context,
+        author: 'Fred B. Wrixon',
+        title: 'Geheimsprachen',
+        publisher: 'Könemann Tandem Verlag GmbH',
+        isbn: '978-3-8331-2562-1',
+        year: 2006,
+        );
+  }
+
+  ToolLicenseEntry get _toolLicenseMayaGlyphsWikisource {
+    return ToolLicenseOnlineArticle(
+      context: context,
+      author: 'Sylvanus Griswold Morley',
+      title: 'An Introduction to the Study of the Maya Hieroglyphs, Chapter 3',
+      publisher: 'Wikisource',
+      sourceUrl: 'https://en.wikisource.org/w/index.php?title=An_Introduction_to_the_Study_of_the_Maya_Hieroglyphs/Chapter_3&oldid=12772621',
+    );
+  }
 }
 
