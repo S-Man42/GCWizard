@@ -12,6 +12,7 @@ enum ToolLicenseType {
   BSD3, // BSD v3
   CCBY4, // Creative Commons CC BY 4.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
+  CCBYSA3, // Creative Commons CC BY-SA 2.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
   CCNC25, // Creative Commons CC NC 2.5
   CC0_1, // Creative Commons CC0 1.0
@@ -31,6 +32,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.BSD3: return 'BSD-3-Clause';
     case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
     case ToolLicenseType.CCBYSA4: return 'Creative Commons CC BY-SA 4.0';
+    case ToolLicenseType.CCBYSA3: return 'Creative Commons CC BY-SA 3.0';
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
     case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
     case ToolLicenseType.CC0_1: return 'Creative Commons CC0 1.0';

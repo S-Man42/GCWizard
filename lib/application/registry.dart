@@ -5560,11 +5560,17 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'chain_of_death_direction',
         symbolSearchStrings: const [
           'symbol_chain_of_death_direction',
+        ],
+        licenses: [
+          stl._toolLicenseWrixonGeheimsprachen,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'chain_of_death_pairs',
         symbolSearchStrings: const [
           'symbol_chain_of_death_pairs',
+        ],
+        licenses: [
+          stl._toolLicenseWrixonGeheimsprachen,
         ]),
     GCWSymbolTableTool(symbolKey: 'chappe_1794', symbolSearchStrings: const [
       'telegraph',
@@ -5680,7 +5686,10 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: const [
       'symbol_dancing_men',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicenseWrixonGeheimsprachen,
+        ]),
     GCWSymbolTableTool(symbolKey: 'deafblind', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_deafblind',
@@ -6094,36 +6103,59 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'calendar',
           'symbol_maya_calendar_longcount',
+        ],
+        licenses: [
+          stl._toolLicenseMayaGlyphsWikisource,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_calendar_haab_codices',
         symbolSearchStrings: const [
           'calendar',
           'symbol_maya_calendar_haab',
+        ],
+        licenses: [
+          stl._toolLicenseMayaGlyphsWikisource,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_calendar_haab_inscripts',
         symbolSearchStrings: const [
           'calendar',
           'symbol_maya_calendar_haab',
+        ],
+        licenses: [
+          stl._toolLicenseMayaGlyphsWikisource,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_calendar_tzolkin_codices',
         symbolSearchStrings: const [
           'calendar',
           'symbol_maya_calendar_tzolkin',
+        ],
+        licenses: [
+          stl._toolLicenseMayaGlyphsWikisource,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_calendar_tzolkin_inscripts',
         symbolSearchStrings: const [
           'calendar',
           'symbol_maya_calendar_tzolkin',
+        ],
+        licenses: [
+          stl._toolLicenseMayaGlyphsWikisource,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_numbers_glyphs',
         symbolSearchStrings: const [
           'mayanumbers',
-        ]),
+        ],
+    licenses: [
+      ToolLicenseImage(context: context,
+        author: 'Unity Corps Research Library',
+        title: 'Mayan Numbers',
+        sourceUrl: 'https://web.archive.org/web/20240722213816/https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+      ),
+    ]),
     GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: const [
       'mayanumbers',
       'symbol_maya_number_glyphys',
@@ -6481,14 +6513,7 @@ void initializeRegistry(BuildContext context) {
         'symbol_pasley_telegraph',
       ],
       licenses: [
-        ToolLicenseOfflineBook(
-            context: context,
-            author: 'Fred B. Wrixon',
-            title: 'Geheimsprachen',
-            publisher: 'Könemann',
-            isbn: '978-3-8331-2562-1',
-            year: 2006,
-            customComment: 'Page 450'),
+        stl._toolLicenseWrixonGeheimsprachen,
       ],
     ),
     GCWSymbolTableTool(
@@ -6498,14 +6523,7 @@ void initializeRegistry(BuildContext context) {
           'symbol_popham_telegraph',
         ],
       licenses: [
-        ToolLicenseOfflineBook(
-            context: context,
-            author: 'Fred B. Wrixon',
-            title: 'Geheimsprachen',
-            publisher: 'Könemann',
-            isbn: '978-3-8331-2562-1',
-            year: 2006,
-            customComment: 'Page 446'),
+        stl._toolLicenseWrixonGeheimsprachen,
       ],
     ),
     GCWSymbolTableTool(
