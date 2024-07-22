@@ -73,7 +73,8 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
         i18n(context, "common_year")]);
 
       var switchedList = _flipKeyValue(_currentMap).entries.map((e) => [
-        " " + i18n(context, e.key.toString()), e.value.join(", ")]).toList();
+        i18n(context, e.key.toString()), e.value.join(", ")
+      ]).toList();
       switchedList.sort((a, b) => a[0].toLowerCase().compareTo(b[0].toLowerCase()));
 
       output.addAll(switchedList);
@@ -88,7 +89,7 @@ class _WeddingAnniversariesState extends State<WeddingAnniversaries> {
         for (var word in valueList) {
           values.add(i18n(context, word));
         }
-        output.add([" " + key, values.join(", ")]);
+        output.add([key, values.join(", ")]);
       });
     }
 
