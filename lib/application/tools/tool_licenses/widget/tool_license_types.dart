@@ -8,6 +8,7 @@ enum ToolLicenseType {
   FREE_TO_USE,
   APACHE2, // Apache 2.0
   BSD, // BSD
+  BSD3, // BSD v3
   CCBY4, // Creative Commons CC BY 4.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
@@ -17,6 +18,7 @@ enum ToolLicenseType {
   GPL3, //GNU GPL v3.0
   GITHUB_DEFAULT, //Github Default
   GFDL, // GNU Free Documentation License
+  PUBLIC_DOMAIN, // Public Domain
 }
 
 String _licenseType(BuildContext context, ToolLicenseType licenseType) {
@@ -24,6 +26,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.FREE_TO_USE: return i18n(context, 'toollicenses_freetouse');
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
     case ToolLicenseType.BSD: return 'BSD License';
+    case ToolLicenseType.BSD3: return 'BSD-3-Clause';
     case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
     case ToolLicenseType.CCBYSA4: return 'Creative Commons CC BY-SA 4.0';
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
@@ -33,6 +36,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.GPL3: return 'GNU GPL v3.0 License';
     case ToolLicenseType.GITHUB_DEFAULT: return 'Github Default License';
     case ToolLicenseType.GFDL: return 'GNU Free Documentation License';
+    case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
   }
 }
 
