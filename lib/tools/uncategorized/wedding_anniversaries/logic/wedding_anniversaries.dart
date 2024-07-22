@@ -35,32 +35,3 @@ String getItems(WeddingCountries country, String year) {
   var items = anniversaryList[year];
   return (items != null) ? items.join(", ") : '';
 }
-
-/* For future use in advanced coding/decoding
-
-String getAllItems (String year) {
-  List<String> allItems = [];
-  for (WeddingCountries country in WeddingCountries.values) {
-    var items = getItems(country, year);
-    if (items.isNotEmpty) {
-      allItems.add("${country.name}: $items");
-    }
-  }
-  return allItems.join("\n");
-}
-
-Iterable<String> getAvailableYears(WeddingCountries country) {
-  return countryAnniversaries(country).keys;
-}
-
-String getYearFromItem(WeddingCountries country, String item) {
-  var anniversaryList = countryAnniversaries(country);
-  List<String> years = [];
-  for (var entry in anniversaryList.entries){
-    if (entry.value.contains(item)) {
-      years.add(entry.key);
-    }
-  }
-  return years.join(", ");
-}
-*/
