@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
+import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_license_types.dart';
+import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_licenses.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
@@ -31,7 +34,7 @@ enum ToolCategory {
   MISCELLANEOUS,
 }
 
-final _SEARCH_BLACKLIST = {
+final _MANUAL_SEARCH_BLACKLIST = {
   'code',
   'chiffre',
   'cipher',
@@ -76,7 +79,7 @@ final _SEARCH_BLACKLIST = {
   'ou',
 };
 
-final _SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
+final _MANUAL_SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
@@ -91,9 +94,11 @@ class GCWTool extends StatefulWidget {
   final List<String> searchKeys;
   final List<GCWPopupMenuItem> toolBarItemList;
   final bool suppressHelpButton;
+  final bool suppressAppBarButtons;
   final String helpSearchString;
   final bool isBeta;
   final List<String>? deeplinkAlias;
+  final List<ToolLicenseEntry>? licenses;
 
   GCWSymbolContainer? icon;
   var longId = '';
@@ -119,7 +124,9 @@ class GCWTool extends StatefulWidget {
       this.helpSearchString = '',
       this.isBeta = false,
       this.suppressHelpButton = false,
+      this.suppressAppBarButtons = false,
       this.deeplinkAlias,
+      this.licenses,
       this.toolBarItemList = const []})
       : super(key: key) {
     longId = className(tool) + '_' + (id);
@@ -165,16 +172,16 @@ class _GCWToolState extends State<GCWTool> {
     return Scaffold(
         resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(title: Text(_toolName), actions: [
-          GCWPopupMenu(
+          widget.suppressAppBarButtons == false ? GCWPopupMenu(
             icon: Icons.more_vert,
             buttonNoBorder: true,
             menuItemBuilder: (context) => _buildToolBarItems(),
-          )
+          ) : Container()
         ]),
         body: _buildBody());
   }
 
-  String _normalizeSearchString(String text) {
+  String _normalizeManualSearchString(String text) {
     text = text.trim().toLowerCase();
     text = text
         .replaceAll(RegExp(r"['`´]"), ' ')
@@ -187,8 +194,8 @@ class _GCWToolState extends State<GCWTool> {
         .replaceAll('(', '')
         .replaceAll(')', '');
     //.replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
-    text = substitution(text, _SEARCH_WHITELIST);
-    text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
+    text = substitution(text, _MANUAL_SEARCH_WHITELIST);
+    text = text.split(' ').where((word) => !_MANUAL_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
   }
 
@@ -202,26 +209,26 @@ class _GCWToolState extends State<GCWTool> {
     // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
 
-    String searchString = '';
+    String manualSearchString = '';
 
     if (widget.helpSearchString.isEmpty) {
       if (_needsDefaultHelp(appLocale)) {
         // fallback to en if unsupported locale
-        searchString = _defaultLanguageToolName;
+        manualSearchString = _defaultLanguageToolName;
       } else {
-        searchString = _toolName;
+        manualSearchString = _toolName;
       }
     } else {
-      searchString = i18n(context, widget.helpSearchString,
+      manualSearchString = i18n(context, widget.helpSearchString,
           useDefaultLanguage: _needsDefaultHelp(appLocale), ifTranslationNotExists: widget.helpSearchString);
     }
 
-    searchString = _normalizeSearchString(searchString);
+    manualSearchString = _normalizeManualSearchString(manualSearchString);
     String locale = DEFAULT_LOCALE.languageCode;
 
     if (!_needsDefaultHelp(appLocale)) locale = Localizations.localeOf(context).languageCode;
 
-    var url = HELP_BASE_URL + locale + '/search/' + searchString;
+    var url = HELP_BASE_URL + locale + '/search/' + manualSearchString;
     url = Uri.encodeFull(url);
 
     return GCWPopupMenuItem(
@@ -249,6 +256,26 @@ class _GCWToolState extends State<GCWTool> {
 
     var helpItem = _buildHelpMenuItem();
     if (helpItem != null) menuItems.add(helpItem);
+
+    if (widget.licenses != null && widget.licenses!.isNotEmpty) {
+      menuItems.add(GCWPopupMenuItem(
+          child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, i18n(context, 'toollicenses_title')),
+          action: (index) => setState(() {
+            Navigator.push(
+              context,
+              NoAnimationMaterialPageRoute<GCWTool>(
+                builder: (context) =>
+                  GCWTool(
+                    tool: ToolLicenses(licenses: widget.licenses!),
+                    toolName: i18n(context, 'toollicenses_title') + ': ' + _toolName,
+                    suppressAppBarButtons: true,
+                    id: 'toollicenses',
+                  )
+              )
+            );
+          }))
+      );
+    }
 
     return menuItems;
   }
