@@ -234,26 +234,18 @@ class _LicensesState extends State<Licenses> {
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_additionalcode'),
           child: GCWColumnedMultilineOutput(data: [
-            const ['Astronomy Functions', 'astronomie.info, jgiesen.de', 'Personal Permission'],
+            # DONE # const ['Astronomy Functions', 'astronomie.info, jgiesen.de', 'Personal Permission'],
             # DONE # const ['Base58', 'Dark Launch', null],
-            const ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
-            const ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
-            const ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
-            const [
-              'Calendar conversions',
-              'Johannes Thomann, University of Zurich Asia-Orient-Institute',
-              'Personal Permission'
-            ],
+            # DONE # const ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
+            # DONE # const ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
+            # DONE # const ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
+            # DONE # const ['Calendar conversions','Johannes Thomann, University of Zurich Asia-Orient-Institute','Personal Permission'],
             const ['Centroid Code', 'Andy Eschbacher (carto.com)', 'Personal Permission'],
-            const [
-              'Chef Interpreter',
-              'Wesley Janssen, Joost Rijneveld, Mathijs Vos',
-              'CC0 1.0 Universal Public Domain Dedication'
-            ],
+            # DONE # const ['Chef Interpreter','Wesley Janssen, Joost Rijneveld, Mathijs Vos','CC0 1.0 Universal Public Domain Dedication'],
             const ['Color Picker', 'flutter_hsvcolor_picker (minimized)', null],
             const ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
-            const ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
-            const ['Cow Generator', 'Frank Buss', 'Personal Permission'],
+            # DONE # const ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
+            # DONE # const ['Cow Generator', 'Frank Buss', 'Personal Permission'],
             const ['DutchGrid Code', '@djvanderlaan', 'MIT License'],
             const ['Gauss-Krüger Code', 'moenk', 'Personal Permission'],
             const ['GC Wizard Script Code', 'Herbert Schildt/James Holmes\nMcGrawHill', 'Personal Permission'],

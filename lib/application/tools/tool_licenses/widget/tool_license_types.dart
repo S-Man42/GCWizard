@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 enum ToolLicenseType {
   FREE_TO_USE,
+  AL, // Artistic License
   APACHE2, // Apache 2.0
   BSD, // BSD
   CCBY4, // Creative Commons CC BY 4.0
@@ -17,11 +18,13 @@ enum ToolLicenseType {
   GPL3, //GNU GPL v3.0
   GITHUB_DEFAULT, //Github Default
   GFDL, // GNU Free Documentation License
+  PUBLIC_DOMAIN, // Public Domain
 }
 
 String _licenseType(BuildContext context, ToolLicenseType licenseType) {
   switch (licenseType) {
     case ToolLicenseType.FREE_TO_USE: return i18n(context, 'toollicenses_freetouse');
+    case ToolLicenseType.AL: return 'Artistic License';
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
     case ToolLicenseType.BSD: return 'BSD License';
     case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
@@ -33,6 +36,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.GPL3: return 'GNU GPL v3.0 License';
     case ToolLicenseType.GITHUB_DEFAULT: return 'Github Default License';
     case ToolLicenseType.GFDL: return 'GNU Free Documentation License';
+    case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
   }
 }
 
