@@ -1,5 +1,26 @@
 part of 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/logic/wedding_anniversaries.dart';
 
+/*
+Sources:
+https://de.wikipedia.org/wiki/Hochzeitstag
+https://en.wikipedia.org/wiki/Wedding_anniversary
+https://nl.wikipedia.org/wiki/Trouwdag
+https://da.wikipedia.org/wiki/Bryllupsdag
+https://sv.wikipedia.org/wiki/Lista_över_namn_på_bröllopsdagar
+https://fr.wikipedia.org/wiki/Anniversaire_de_mariage
+https://es.wikipedia.org/wiki/Aniversario_de_bodas
+https://it.wikipedia.org/wiki/Anniversario_di_matrimonio
+
+https://www.welt-der-zahlen.info/hochzeitstage.html
+https://www.trouwplannen.nl/vieren-van-huwelijksjubileum/
+https://bruiloftinspiratie.nl/alle-jubilea-van-het-huwelijk/
+https://skyfly.nl/nieuws/alle-bruiloftsjaren-op-een-rij/
+https://historiek.net/jubilea-benamingen-en-kleuren/156360/
+https://madeformoments.nl/hoe-heten-jubileumjaren
+https://www.wimmeeussen.be/nl/nieuws/huwelijksverjaardag-belgie
+https://www.huwelijk.be/nuttige-tips/huwelijksverjaardagen.asp
+https://www.locomix.eu/nl/blog/huwelijksjubileum-oftewel-de-huwelijksverjaardag/
+*/
 
 const Map<String, List<String>> _anniversariesDE =
 {
@@ -10,7 +31,7 @@ const Map<String, List<String>> _anniversariesDE =
   "3": ["wedding_element_leather", "wedding_element_fruit", "wedding_element_firs", "wedding_element_wheat"],
   "4": ["wedding_element_silk", "wedding_element_amber", "wedding_element_linen", "wedding_element_wine", "wedding_element_wax"],
   "5": ["wedding_element_wood", "wedding_element_gum", "wedding_element_creampuff", "wedding_element_diligence", "wedding_element_ox", "wedding_element_bull"],
-  "6": ["wedding_element_sugar", "wedding_element_ox", "wedding_element_tin", "wedding_element_iron", "common_country_Cyprus"],
+  "6": ["wedding_element_sugar", "wedding_element_ox", "wedding_element_tin", "wedding_element_iron", "wedding_element_cyprus"],
   "6.25": ["wedding_element_mutton", "wedding_element_tin"],
   "6.5": ["wedding_element_tin"],
   "7": ["wedding_element_copper", "wedding_element_brass", "wedding_element_wool", "wedding_element_friendship"],
@@ -22,7 +43,7 @@ const Map<String, List<String>> _anniversariesDE =
   "12.5": ["wedding_element_sheetmetal", "wedding_element_copper", "wedding_element_nickel", "wedding_element_medium", "wedding_element_tin", "wedding_element_bronze", "wedding_element_violet", "wedding_element_parsley"],
   "13": ["wedding_element_violet", "wedding_element_liliesofthevalley", "wedding_element_salt", "wedding_element_lace"],
   "14": ["wedding_element_ivory", "wedding_element_agate", "wedding_element_lead", "wedding_element_blue"],
-  "15": ["wedding_element_glass", "wedding_element_crystal", "Plünnen", "wedding_element_rags", "wedding_element_bottles", "wedding_element_violet"],
+  "15": ["wedding_element_glass", "wedding_element_crystal", "wedding_element_pluennen", "wedding_element_rags", "wedding_element_bottles", "wedding_element_violet"],
   "16": ["wedding_element_sapphire"],
   "17": ["wedding_element_orchid","wedding_element_rose", "wedding_element_soup"],
   "18": ["wedding_element_turquoise"],
@@ -300,7 +321,7 @@ const Map<String, List<String>> _anniversariesFR =
   "3": ["wedding_element_wheat"],
   "4": ["wedding_element_wax"],
   "5": ["wedding_element_wood"],
-  "6": ["common_country_Cyprus"],
+  "6": ["wedding_element_cyprus"],
   "7": ["wedding_element_wool"],
   "8": ["wedding_element_poppy"],
   "9": ["wedding_element_faience"],
