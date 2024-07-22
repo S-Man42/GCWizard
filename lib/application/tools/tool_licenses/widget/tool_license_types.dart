@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 enum ToolLicenseType {
   FREE_TO_USE,
+  AL, // Artistic License
   APACHE2, // Apache 2.0
   BSD, // BSD
   BSD3, // BSD v3
@@ -24,6 +25,7 @@ enum ToolLicenseType {
 String _licenseType(BuildContext context, ToolLicenseType licenseType) {
   switch (licenseType) {
     case ToolLicenseType.FREE_TO_USE: return i18n(context, 'toollicenses_freetouse');
+    case ToolLicenseType.AL: return 'Artistic License';
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
     case ToolLicenseType.BSD: return 'BSD License';
     case ToolLicenseType.BSD3: return 'BSD-3-Clause';

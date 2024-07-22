@@ -577,7 +577,23 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'avemaria',
-    ]),
+    ],
+        licenses:[
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Johannes Trithemius',
+              licenseType: ToolLicenseType.CCBYSA4,
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Johannes_Trithemius&oldid=1228861699'),
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Polygraphia (book)',
+              licenseType: ToolLicenseType.CCBYSA4,
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Polygraphia_(book)&oldid=1217884545'),
+          ToolLicenseOnlineBook(context: context,
+              author: 'Johannes Trithemius',
+              title: 'Polygraphiae libri sex, Ioannis Trithemii abbatis Peapolitani, quondam Spanheimensis, ad Maximilianum Caesarem',
+              sourceUrl: 'https://www.loc.gov/resource/rbc0001.2009fabyan12345/?r=-0.956,-0.016,2.912,1.143,0')
+        ]),
     GCWTool(
         tool: const BabylonNumbersSelection(),
         id: 'babylonnumbers_selection',
@@ -671,6 +687,13 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'burroeswheeler',
+        ],
+        licenses:[
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Burrows–Wheeler transform',
+              licenseType: ToolLicenseType.CCBYSA4,
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Burrows%E2%80%93Wheeler_transform&oldid=1220898169')
         ]),
     GCWTool(tool: Caesar(), id: 'caesar', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1127,7 +1150,14 @@ void initializeRegistry(BuildContext context) {
         id: 'magic_eye',
         isBeta: true,
         categories: const [ToolCategory.IMAGES_AND_FILES],
-        searchKeys: const ['magic_eye', 'images']),
+        searchKeys: const ['magic_eye', 'images'],
+        licenses: [
+          ToolLicensePortedCode(context: context,
+              author: 'Jérémie "piellardj" Piellard',
+              title: 'stereogram-solver',
+              sourceUrl: 'https://web.archive.org/web/20240722204912/https://github.com/piellardj/stereogram-solver?tab=readme-ov-file',
+              licenseType: ToolLicenseType.MIT)
+        ]),
     GCWTool(
         tool: const MathematicalConstants(),
         id: 'mathematical_constants',
@@ -1194,6 +1224,12 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'navajo',
+    ],
+    licenses:[
+      ToolLicenseOnlineArticle(context: context,
+          author: 'Department of Defense',
+          title: 'Navajo Code Talkers\' Dictionary REVISED 15 JUNE 1945',
+          sourceUrl: 'https://web.archive.org/web/20240722205845/https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html')
     ]),
     GCWTool(
         tool: const NonogramSolver(),
@@ -1907,8 +1943,8 @@ void initializeRegistry(BuildContext context) {
             context: context,
             author: 'NovaCrypto',
             title: 'Base58',
-            sourceUrl: 'https://github.com/NovaCrypto/Base58',
-            licenseType: ToolLicenseType.GITHUB_DEFAULT),
+            sourceUrl: 'https://web.archive.org/web/20240722085432/https://github.com/NovaCrypto/Base58',
+            licenseType: ToolLicenseType.GPL3),
         ToolLicenseCodeLibrary(
             context: context,
             author: 'David Keijser',
@@ -1922,7 +1958,7 @@ void initializeRegistry(BuildContext context) {
             title: 'Base58 Decoder and Encoder',
             sourceUrl:
                 'https://web.archive.org/web/20240721175752/https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html',
-            licenseType: ToolLicenseType.FREE_TO_USE),
+            licenseType: ToolLicenseType.PUBLIC_DOMAIN),
       ],
     ),
     GCWTool(tool: Base64(), id: 'base_base64', searchKeys: const [
@@ -2974,7 +3010,19 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',
       'dates_calendar',
-    ]),
+    ],
+      licenses: [
+        ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Johannes Thomann',
+          title: 'Kalenderumrechnung - Islamisch, Jüdisch, Koptisch, Persisch',
+          medium: 'e-Mail',
+          permissionYear: 2021,
+          permissionMonth: 5,
+          permissionDay: 21,
+          sourceUrl: 'https://web.archive.org/web/20240721214347/https://www.aoi.uzh.ch/de/islamwissenschaft/studium/tools/kalenderumrechnung.html',
+        ),
+      ],
+    ),
     GCWTool(tool: const ExcelTime(), id: 'excel_time', searchKeys: const [
       'dates',
       'excel_time',
@@ -3055,7 +3103,18 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Beatnik(), id: 'beatnik', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_beatnik',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Cliff L. Biffle',
+              title: 'Beatnik',
+              sourceUrl: 'https://web.archive.org/web/20240616184504/https://cliffle.com/esoterica/beatnik/'),
+          ToolLicensePortedCode(context: context,
+              author: 'Hendrik Van Belleghem',
+              title: 'Acme-Beatnik-0.02',
+              sourceUrl: 'https://web.archive.org/web/20240722064615/https://metacpan.org/release/BEATNIK/Acme-Beatnik-0.02/source',
+              licenseType: ToolLicenseType.AL),
+        ]),
     GCWTool(
         tool: const Befunge(),
         id: 'befunge',
@@ -3063,53 +3122,239 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'esotericprogramminglanguage',
           'befunge',
-        ]),
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Befunge',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788'),
+          ToolLicensePortedCode(context: context,
+              author: 'catseye',
+              title: 'Befunge-93',
+              sourceUrl: 'https://web.archive.org/web/20240722072403/https://github.com/catseye/Befunge-93',
+              licenseType: ToolLicenseType.BSD),
+                  ]),
     GCWTool(tool: const Brainfk(), id: 'brainfk', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_brainfk',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Brainfuck',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695'),
+          ToolLicensePortedCode(context: context,
+              author: '',
+              title: '',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+          ToolLicensePortedCode(context: context,
+              author: '',
+              title: '',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+        ]),
     GCWTool(tool: const Cow(), id: 'cow', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_cow',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Sean "BigZaphod" Heber',
+              title: 'Cow',
+              sourceUrl: 'https://web.archive.org/web/20240722070525/https://bigzaphod.github.io/COW/'),
+          ToolLicensePortedCode(context: context,
+              author: 'Mark "AtomK F.',
+              title: 'C-Cow-Interpreter',
+              sourceUrl: 'https://web.archive.org/web/20240722070830/https://github.com/Atomk/C-COW-Interpreter/blob/master/cow-interpreter.c',
+              licenseType: ToolLicenseType.MIT),
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'Frank Buß',
+              title: 'Cow',
+              sourceUrl: 'https://web.archive.org/web/20240722071149/https://frank-buss.de/cow.html',
+              medium: 'e-Mail',
+              permissionYear: 2021,
+              permissionMonth: 7,
+              permissionDay: 22)
+        ]),
     GCWTool(tool: const Chef(), id: 'chef', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_chef',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'David Morgan-Mar',
+              title: 'Chef',
+              sourceUrl: 'https://web.archive.org/web/20240722065211/https://www.dangermouse.net/esoteric/chef.html'),
+          ToolLicensePortedCode(context: context,
+              author: 'Wesley Janssen, Joost Rijneveld and Mathijs Vos',
+              title: 'Chef-Interpreter',
+              sourceUrl: 'https://web.archive.org/web/20240722064914/https://github.com/joostrijneveld/Chef-Interpreter',
+              licenseType: ToolLicenseType.CC0_1),
+        ]),
     GCWTool(tool: const Deadfish(), id: 'deadfish', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_deadfish',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Jonathan Todd Skinner',
+              title: 'the Deadfish Programming Language',
+              sourceUrl: 'https://web.archive.org/web/20100425075447/http://www.jonathantoddskinner.com/projects/deadfish.html'),
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Esolang, the esoteric programming languages wiki',
+              title: 'Deadfish',
+              sourceUrl: 'https://esolangs.org/w/index.php?title=Deadfish&oldid=133382'),
+          ToolLicensePortedCode(context: context,
+              author: '',
+              title: '',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+          ToolLicensePortedCode(context: context,
+              author: '',
+              title: '',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+        ]),
     GCWTool(tool: const Hohoho(), id: 'hohoho', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_hohoho',
       'christmas'
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'P. Reichl, S. Claus',
+              title: '”Oh Tanenbaum, oh Tanenbaum...”: Technical Foundations of Xmas 4.0 Research',
+              sourceUrl: 'https://web.archive.org/web/20240722074714/https://arxiv.org/pdf/1712.06259'),
+          ]),
     GCWTool(tool: const KarolRobot(), id: 'karol_robot', searchKeys: const [
       'esoteric_karol_robot',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Karel (programming language)',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127'),
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Robert H. Untch',
+              title: 'Karel the Robot',
+              sourceUrl: 'https://web.archive.org/web/20240722080406/https://www.cs.mtsu.edu/~untch/karel/index.html'),
+          ToolLicenseOnlineBook(context: context,
+              author: 'Richard E. Pattis',
+              title: 'Karel the robot : a gentle introduction to the art of programming',
+              sourceUrl: 'https://archive.org/details/karelrobotgentle0000patt/page/n7/mode/2up',),
+          ]),
     GCWTool(tool: const Malbolge(), id: 'malbolge', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_malbolge',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Malbolge',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335'),
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Ben Olmstead',
+              title: 'Malbolge',
+              sourceUrl: 'https://web.archive.org/web/20240722081619/http://www.lscheffer.com/malbolge_spec.html'),
+          ToolLicensePortedCode(context: context,
+              author: 'Ben Olmstead',
+              title: 'Interpreter for Malbolge',
+              sourceUrl: 'https://web.archive.org/web/20240722081935/http://www.lscheffer.com/malbolge_interp.html',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'Matthias Ernst',
+              title: 'Generator for text printing Malbolge programs',
+              sourceUrl: 'stringout.c, attached to e-Mail',
+              medium: 'e-Mail',
+              permissionYear: 2021,
+          permissionMonth: 1,
+          permissionDay: 12),
+          ]),
     GCWTool(tool: Ook(), id: 'ook', searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_brainfk',
       'esoteric_ook',
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikipedia',
+              title: 'Brainfuck',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695'),
+          ToolLicensePortedCode(context: context,
+              author: '',
+              title: '',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+          ToolLicensePortedCode(context: context,
+              author: '',
+              title: '',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE),
+        ]),
     GCWTool(tool: const Piet(), id: 'piet', isBeta: true, searchKeys: const [
       'esotericprogramminglanguage',
       'esoteric_piet',
       'color',
       'images'
-    ]),
+    ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Wikipedia',
+              title: 'Piet (Programmiersprache)',
+              licenseType: ToolLicenseType.CCBYSA4,
+              sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Piet_(Programmiersprache)&oldid=240673094'),
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'David Morgan-Mar',
+              title: 'Piet',
+              sourceUrl:
+              'https://web.archive.org/web/20240722200934/https://www.dangermouse.net/esoteric/piet.html'),
+          ToolLicenseCodeLibrary(
+              context: context,
+              author: 'Matthew "MatthewMooreZA" Moore',
+              title: 'PietSharp',
+              sourceUrl: 'https://web.archive.org/web/20240722201424/https://github.com/MatthewMooreZA/PietSharp',
+              licenseType: ToolLicenseType.GITHUB_DEFAULT),
+          ToolLicenseCodeLibrary(
+              context: context,
+              author: 'sebbeobe',
+              title: 'piet_message_generator',
+              sourceUrl:
+              'https://web.archive.org/web/20240722201719/https://github.com/sebbeobe/piet_message_generator',
+              licenseType: ToolLicenseType.GPL3),
+        ]),
     GCWTool(
         tool: const WhitespaceLanguage(),
         id: 'whitespace_language',
         searchKeys: const [
           'esotericprogramminglanguage',
           'esoteric_whitespacelanguage',
-        ]),
+        ],
+    licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Wikipedia',
+          title: 'Whitespace (programming language)',
+          licenseType: ToolLicenseType.CCBYSA4,
+          sourceUrl:
+          'https://en.wikipedia.org/w/index.php?title=Whitespace_(programming_language)&oldid=1212567115'),
+      ToolLicenseCodeLibrary(
+          context: context,
+          author: 'Adam "adapap" Papenhausen',
+          title: 'whitespace-interpreter',
+          sourceUrl: 'https://web.archive.org/web/20240722195953/https://github.com/adapap/whitespace-interpreter/blob/master/whitespace_interpreter.py#L1',
+          licenseType: ToolLicenseType.MIT),
+      ToolLicenseCodeLibrary(
+          context: context,
+          author: 'naoki "naokikp" kageyama',
+          title: 'Whitespace Interpreter',
+          sourceUrl:
+          'https://web.archive.org/web/20240722200540/https://github.com/naokikp/naokikp.github.io',
+          licenseType: ToolLicenseType.GITHUB_DEFAULT),
+    ]),
 
     //Hash Selection *****************************************************************************************
     GCWTool(
@@ -4981,6 +5226,23 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'gcwizard_script',
+        ],
+        licenses: [
+          ToolLicenseOfflineBook(context: context,
+              author: 'Herbert SChildt',
+              title: 'The art of C : elegant programming solutions',
+              year: 1991,
+              isbn: '978-0078816918',
+              publisher: 'McGrawHill',
+          customComment: 'No objective letter dated from 2023-01-18'),
+          ToolLicenseOnlineBook(context: context,
+              author: 'Herbert Schildt',
+              title: 'The art of C : elegant programming solutions',
+              isbn: '978-0078816918',
+              publisher: 'McGrawHill',
+              year: 1991,
+              customComment: 'Page 296ff',
+              sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up')
         ]),
 
     //Segments Display *******************************************************************************************
@@ -6546,7 +6808,17 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_prussia',
-        ]),
+        ],
+    licenses: [
+      ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Sandy Lang, Bibliothek, Museum für Kommunikation Frankfurt',
+          title: 'Classe 5.2 Wörterbuch\nInstruction I\nInstruction II',
+          medium: 'e-Mail',
+          permissionYear: 2021,
+          permissionMonth: 11,
+          permissionDay: 26
+      )
+    ]),
     GCWTool(
         tool: const SemaphoreTelegraph(),
         id: 'symboltables_semaphore',
@@ -6727,6 +6999,15 @@ void initializeRegistry(BuildContext context) {
           'vigenerebreaker',
           'vigenere',
           'rotation',
+        ],
+        licenses: [
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'Jens Guballa',
+              title: 'Vigenère Solver',
+              customComment: '',
+              sourceUrl: 'https://web.archive.org/web/20240722204526/https://guballa.de/vigenere-solver',
+              medium: 'e-Mail',
+              permissionYear: 0)
         ]),
     GCWTool(tool: Vigenere(), id: 'vigenere', searchKeys: const [
       'vigenere',
@@ -6750,12 +7031,26 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'wherigo',
       'wherigourwigo',
-    ]),
+    ],
+        licenses: [
+          ToolLicensePortedCode(context: context,
+              author: 'WFoundation',
+              title: 'WF.Compiler',
+              sourceUrl: 'https://web.archive.org/web/20240722202351/https://github.com/WFoundation/WF.Compiler',
+              licenseType: ToolLicenseType.GITHUB_DEFAULT),
+          ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
     GCWTool(
         tool: const UrwigoTextDeobfuscation(),
         id: 'urwigo_textdeobfuscation',
-        searchKeys: const ['wherigo', 'urwigo', 'urwigo_textdeobfuscation']),
+        searchKeys: const ['wherigo', 'urwigo', 'urwigo_textdeobfuscation'],
+        licenses: [
+          ToolLicensePortedCode(context: context,
+              author: 'François "Krevo" Crevola',
+              title: 'Wherigo Tools',
+              sourceUrl: 'https://web.archive.org/web/20240722202750/https://github.com/Krevo/WherigoTools',
+              licenseType: ToolLicenseType.MIT),
+        ]),
     GCWTool(
         tool: const EarwigoTextDeobfuscation(),
         id: 'earwigo_textdeobfuscation',
