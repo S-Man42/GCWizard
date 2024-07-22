@@ -18,6 +18,7 @@ void main() {
       {'sequence' : NumberSequencesMode.FACTORIAL,        'position' : 20, 'expectedOutput' : BigInt.from(2432902008176640000)},
       {'sequence' : NumberSequencesMode.LYCHREL,          'position' : 20, 'expectedOutput' : BigInt.from(1767)},
       {'sequence' : NumberSequencesMode.PRIMES,           'position' : 1818, 'expectedOutput' : BigInt.from(15601)},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'position' : 3, 'expectedOutput' : BigInt.from(107)},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -43,7 +44,9 @@ void main() {
       {'sequence' : NumberSequencesMode.FERMAT,           'maxIndex' : 100, 'expectedOutput' :  5, 'number' : BigInt.from(4294967297)},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(2432902008176640000)},
       {'sequence' : NumberSequencesMode.LYCHREL,          'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(1767)},
-      {'sequence' : NumberSequencesMode.PRIMES,          'maxIndex' : 10000, 'expectedOutput' : 1818, 'number' : BigInt.from(15601)},
+      {'sequence' : NumberSequencesMode.PRIMES,           'maxIndex' : 10000, 'expectedOutput' : 1818, 'number' : BigInt.from(15601)},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'maxIndex' : 4, 'expectedOutput' : 3, 'number' : BigInt.from(107)},
+
     ];
 
     for (var elem in _inputsToExpected) {
@@ -70,6 +73,7 @@ void main() {
       {'sequence' : NumberSequencesMode.FACTORIAL,        'start' : 10, 'stop' : 15, 'expectedOutput' : [3628800, 39916800, 479001600, 6227020800, 87178291200, 1307674368000]},
       {'sequence' : NumberSequencesMode.LYCHREL,          'start' : 10, 'stop' : 15, 'expectedOutput' : [887, 978, 986, 1495, 1497]},
       {'sequence' : NumberSequencesMode.PRIMES,           'start' : 10, 'stop' : 15, 'expectedOutput' : [31, 37, 41, 43, 47, 53]},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'start' : 0, 'stop' : 4, 'expectedOutput' : [1, 6, 11, 107, 47176870 ]},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -98,7 +102,8 @@ void main() {
       {'sequence' : NumberSequencesMode.PELL_LUCAS,       'digits' : 4, 'expectedOutput' : [1154,2786,6726]},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'digits' : 3, 'expectedOutput' : [120,720]},
       {'sequence' : NumberSequencesMode.LYCHREL,          'digits' : 3, 'expectedOutput' : [196, 295, 394, 493, 592, 689, 691, 788, 790, 879, 887, 978, 986]}, // Mark test
-      {'sequence' : NumberSequencesMode.PRIMES,          'digits' : 1, 'expectedOutput' : [2, 3, 5, 7]},
+      {'sequence' : NumberSequencesMode.PRIMES,           'digits' : 1, 'expectedOutput' : [2, 3, 5, 7]},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'digits' : 1, 'expectedOutput' : [1, 6]},
     ];
 
     for (var elem in _inputsToExpected) {
@@ -144,8 +149,10 @@ void main() {
           549, 1118)},
       {'sequence' : NumberSequencesMode.LYCHREL,          'maxIndex' : 1000,  'number' : '996', 'expectedOutput' : PositionOfSequenceOutput('2996',
           38, 2)},
-      {'sequence' : NumberSequencesMode.PRIMES,          'maxIndex' : 1000,  'number' : '1560', 'expectedOutput' : PositionOfSequenceOutput('15601',
+      {'sequence' : NumberSequencesMode.PRIMES,           'maxIndex' : 1000,  'number' : '1560', 'expectedOutput' : PositionOfSequenceOutput('15601',
           1818, 1)},
+      {'sequence' : NumberSequencesMode.BUSY_BEAVER,      'maxIndex' : 4,  'number' : '17', 'expectedOutput' : PositionOfSequenceOutput('47176870 ',
+          5, 3)},
     ];
 
     for (var elem in _inputsToExpected) {
