@@ -368,7 +368,7 @@ class _LicensesState extends State<Licenses> {
           child: GCWColumnedMultilineOutput(data: [
             const ['several', 'myGeoTools'],
             const ['several', 'Wikipedia'],
-            [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
+            # PERMISSION REQUESTED [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
             [
               i18n(context, 'symboltables_base16_title'),
               'https://web.archive.org/web/20221224135846/https://patentimages.storage.googleapis.com/88/54/da/d88ca78fe93623/US3974444.pdf'
@@ -387,7 +387,7 @@ class _LicensesState extends State<Licenses> {
             [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
             [i18n(context, 'symboltables_cosmic_title'), 'https://www.dafont.com/de/modern-cybertronic.font, http://www.pixelsagas.com (Personal Use)'],
             [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
+            # DONE [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
             [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_fantastic_title'),
               'nederlandse-fantasia.fandom.com/wiki/Fantastisch (CC BY-SA 3.0)'],
@@ -420,12 +420,12 @@ class _LicensesState extends State<Licenses> {
               i18n(context, 'symboltables_ninjargon_title'),
               'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
             ],
-            [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
+            # DONE [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
             [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
             [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
             [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
-            [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
+            # DONE [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
             [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_tifinagh_title'), '(WikiCommons, CC BY-SA 4.0)'],
             # DONE [i18n(context, 'symboltables_tll_title'), 'GEOVLOGS.nl (Permitted via email)'],

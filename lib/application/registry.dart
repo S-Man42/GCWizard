@@ -5147,10 +5147,24 @@ void initializeRegistry(BuildContext context) {
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: const [
       'symbol_adlam',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Adlam (Schrift)',
+          licenseType: ToolLicenseType.CCBYSA4,
+          licenseUrl: 'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Adlam_(Schrift)&oldid=223204639'),
     ]),
     GCWSymbolTableTool(symbolKey: 'albhed', symbolSearchStrings: const [
-      'symbol_albhed',
-    ]),
+      'symbol_albhed'
+    ], licenses: [ToolLicenseFont(
+      context: context,
+      author: 'Al-bhed-fans (deviantart.com)',
+      title: 'Al-bhed TTF',
+      sourceUrl: 'https://web.archive.org/web/20231121201318/https://www.deviantart.com/al-bhed-fans/art/Al-bhed-TTF-20702586',
+      licenseType: ToolLicenseType.FREE_TO_USE
+    )]),
     GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: const [
       'symbol_alchemy',
     ]),
@@ -5465,6 +5479,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: const [
       'symbol_eurythmy',
+    ], licenses: [
+      ToolLicensePrivatePermittedDigitalSource(context: context,
+        author: 'Rudolf Steiner Verlag',
+        title: 'Eurythmiefiguren',
+        medium: 'e-mail',
+        permissionYear: 2020, permissionMonth: 11, permissionDay: 14,
+        sourceUrl: 'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
+        customComment: 'Non-commercial use only')
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
@@ -5564,7 +5586,7 @@ void initializeRegistry(BuildContext context) {
       'symbol_geovlog',
     ],licenses: [
       ToolLicensePrivatePermittedDigitalSource(context: context,
-          author: 'Rogier (GeoVlogs.nl)',
+          author: 'GC Rogier (GeoVlogs.nl)',
           title: 'GEOVLOGS-code',
           sourceUrl: 'https://web.archive.org/web/20240223141316/https://www.geovlogs.nl/geovlogs-code/',
           medium: 'e-mail',
@@ -5956,13 +5978,27 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_oak_island_money_pit',
           'oak_island'
-        ]),
+        ], licenses: [
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'www.OakIslandMystery.com',
+              title: 'Oak Island ciphery',
+              medium: 'e-mail',
+              sourceUrl: 'https://web.archive.org/web/20200809015129/https://www.oakislandmystery.com/community/coded-email/view/form',
+              permissionYear: 2023, permissionMonth: 6, permissionDay: 1)
+          ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit_extended',
         symbolSearchStrings: const [
           'symbol_oak_island_money_extended',
           'oak_island'
-        ]),
+        ], licenses: [
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+            author: 'www.OakIslandMystery.com',
+            title: 'Oak Island cipher',
+            medium: 'e-mail',
+            sourceUrl: 'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
+            permissionYear: 2023, permissionMonth: 6, permissionDay: 1)
+          ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit_libyan',
         symbolSearchStrings: const [
@@ -6133,6 +6169,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: const [
       'symbol_solmisation',
+    ], licenses: [
+      ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Breitkopf & Härtel KG (addizio.de)',
+          title: 'Solmisation',
+          medium: 'e-mail',
+          permissionYear: 2020, permissionMonth: 8, permissionDay: 9,
+          sourceUrl: 'https://web.archive.org/web/20240722095602/https://www.addizio.de/wp-content/uploads/2019/04/Solmisation.zip',
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: const [
       'symbol_space_invaders',
@@ -6275,7 +6319,7 @@ void initializeRegistry(BuildContext context) {
       'symbol_tll',
     ], licenses: [
       ToolLicensePrivatePermittedDigitalSource(context: context,
-          author: 'Rogier (GeoVlogs.nl)',
+          author: 'GC Rogier (GeoVlogs.nl)',
           title: 'TLL-code',
           sourceUrl: 'https://web.archive.org/web/20240520113804/https://www.geovlogs.nl/tll-code/',
           medium: 'e-mail',
