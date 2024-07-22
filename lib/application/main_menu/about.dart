@@ -8,8 +8,9 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
 
@@ -35,28 +36,24 @@ class _AboutState extends State<About> {
 
   Container _buildUrl(String key) {
     return Container(
-        padding: const EdgeInsets.only(top: 15, bottom: 10),
-        child: Row(children: <Widget>[
-          Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_$key'))),
-          Expanded(
-              flex: 3,
-              child: InkWell(
-                child: Text(
-                  i18n(context, 'about_${key}_url_text'),
-                  style: gcwHyperlinkTextStyle(),
-                ),
-                onTap: () {
-                  launchUrl(Uri.parse(i18n(context, 'about_${key}_url')));
-                },
-              ))
-        ]));
+      padding: const EdgeInsets.only(top: 15, bottom: 10),
+      child: Row(children: <Widget>[
+        Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_$key'))),
+        Expanded(
+          flex: 3,
+          child: buildUrl(
+            i18n(context, 'about_${key}_url_text'),
+            i18n(context, 'about_${key}_url')
+          )
+        )
+      ]));
   }
 
   @override
   Widget build(BuildContext context) {
     var content = Column(
       children: <Widget>[
-        Text(GCWPackageInfo.getInstance().appName, style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
+        Text(GCWPackageInfo.getInstance().appName, style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold, fontSize: defaultFontSize() + 5)),
         const GCWDivider(),
         Container(
             padding: const EdgeInsets.only(top: 15),
@@ -145,7 +142,7 @@ class _AboutState extends State<About> {
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
                             'Geo-Link (Hardware & Symbol Tables)',
                             'Karl B. (Coords Algorithms)',
-                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
+                            'Ludovic \'LudoO\' Valente (Code & Translation FR)',
                             'Michael D. (Symbol Tables)',
                             'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
                             'moenk (GK Coords)',
@@ -277,7 +274,7 @@ class _AboutState extends State<About> {
         Container(
           padding: const EdgeInsets.only(top: 15, bottom: 10),
           child:
-              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: i18n(context, 'about_notfornazis')),
+              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: '🏳️‍🌈  ' + i18n(context, 'about_notfornazis') + '  🏳️‍🌈'),
         )
       ],
     );
