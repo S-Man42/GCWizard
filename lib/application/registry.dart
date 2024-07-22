@@ -5705,7 +5705,15 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'geovlog', symbolSearchStrings: const [
       'symbol_geovlog',
-    ]),
+    ],licenses: [
+      ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Rogier (GeoVlogs.nl)',
+          title: 'GEOVLOGS-code',
+          sourceUrl: 'https://web.archive.org/web/20240223141316/https://www.geovlogs.nl/geovlogs-code/',
+          medium: 'e-mail',
+          permissionYear: 2024, permissionMonth: 6, permissionDay: 14
+      )
+    ],),
     GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: const [
       'symbol_gernreich',
     ]),
@@ -5805,6 +5813,9 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: const [
       'symbol_hymmnos',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ice_lolly_ding', symbolSearchStrings: const [
+      'symbol_icelolly',
     ]),
     GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: const [
       'icecodes',
@@ -6405,6 +6416,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tll', symbolSearchStrings: const [
       'symbol_tll',
+    ], licenses: [
+      ToolLicensePrivatePermittedDigitalSource(context: context,
+          author: 'Rogier (GeoVlogs.nl)',
+          title: 'TLL-code',
+          sourceUrl: 'https://web.archive.org/web/20240520113804/https://www.geovlogs.nl/tll-code/',
+          medium: 'e-mail',
+          permissionYear: 2024, permissionMonth: 6, permissionDay: 14
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
       'tomtom',
