@@ -113,7 +113,7 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
       if (_currentInputName.isEmpty) {
         return Container();
       } else if (_currentInputName.length < 2) {
-        return GCWOutputText(text: i18n(context, "iataicao_searchtext_too_short") + "!", suppressCopyButton: true);
+        return GCWOutputText(text: i18n(context, "iataicao_searchtext_too_short") + "!");
       }
 
       List<List<String>> data = [];
@@ -125,7 +125,7 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
           }).toList();
 
       if (data.isEmpty) {
-        return GCWOutputText(text: i18n(context, "common_nothingfound") + "!", suppressCopyButton: true);
+        return GCWOutputText(text: i18n(context, "common_nothingfound") + "!");
       }
 
       flexValues = [2, 1, 1, 2];
