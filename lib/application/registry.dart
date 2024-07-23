@@ -594,12 +594,12 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses:[
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Johannes Trithemius',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Johannes_Trithemius&oldid=1228861699'),
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Polygraphia (book)',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Polygraphia_(book)&oldid=1217884545'),
@@ -717,7 +717,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Burrows–Wheeler transform',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Burrows%E2%80%93Wheeler_transform&oldid=1220898169')
@@ -2098,7 +2098,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseOnlineArticle(
             context: context,
-            author: 'Wikipedia',
+            author: 'en.wikipedia.org and contributors',
             title: 'Binary-to-text encoding',
             licenseType: ToolLicenseType.CCBYSA4,
             sourceUrl:
@@ -2148,7 +2148,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseOnlineArticle(
             context: context,
-            author: 'Wikipedia',
+            author: 'en.wikipedia.org and contributors',
             title: 'Binary-to-text encoding',
             licenseType: ToolLicenseType.CCBYSA4,
             sourceUrl:
@@ -2173,7 +2173,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseOnlineArticle(
             context: context,
-            author: 'Wikipedia',
+            author: 'en.wikipedia.org and contributors',
             title: 'Binary-to-text encoding',
             licenseType: ToolLicenseType.CCBYSA4,
             sourceUrl:
@@ -3396,7 +3396,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Befunge',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788'),
           ToolLicensePortedCode(context: context,
@@ -3414,7 +3414,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Brainfuck',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695'),
           ToolLicensePortedCode(context: context,
@@ -3502,7 +3502,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Karel (programming language)',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127'),
           ToolLicenseOnlineArticle(context: context,
@@ -3520,7 +3520,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Malbolge',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335'),
           ToolLicenseOnlineArticle(context: context,
@@ -3548,7 +3548,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Ook!',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Ook!&oldid=223308865'),
           ToolLicensePortedCode(context: context,
@@ -3566,7 +3566,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           ToolLicenseOnlineArticle(
               context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Piet (Programmiersprache)',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl:
@@ -3602,7 +3602,7 @@ void initializeRegistry(BuildContext context) {
     licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'Wikipedia',
+          author: 'en.wikipedia.org and contributors',
           title: 'Whitespace (programming language)',
           licenseType: ToolLicenseType.CCBYSA4,
           sourceUrl:
@@ -5818,7 +5818,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Arabische Zahlschrift',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
         ]),
@@ -6051,7 +6051,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Cistercian numerals',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cistercian_numerals&oldid=1213598900')
         ]),
@@ -6116,7 +6116,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Cooke and Wheatstone telegraph',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
         ]),
@@ -6129,7 +6129,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Cooke and Wheatstone telegraph',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
         ]),
@@ -6142,7 +6142,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Cooke and Wheatstone telegraph',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
         ]),
@@ -6218,7 +6218,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Devanagari numerals',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774')
         ]),
@@ -6289,7 +6289,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Arabische Zahlschrift',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
         ]),
@@ -6300,7 +6300,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Egyptian numerals',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Egyptian_numerals&oldid=1222065795')
         ]),
@@ -6408,7 +6408,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Maritime flag signalling',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184')
         ]),
@@ -6752,7 +6752,7 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const ['iso7010', 'iso7010_firesafety'],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Brandschutzzeichen',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333')
         ]),
@@ -6761,7 +6761,7 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const ['iso7010', 'iso7010_mandatory'],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Gebotszeichen',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314')
         ]),
@@ -6770,7 +6770,7 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const ['iso7010', 'iso7010_prohibition'],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Verbotszeichen',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293')
         ]),
@@ -6779,7 +6779,7 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const ['iso7010', 'iso7010_safecondition'],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Rettungszeichen',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083')
         ]),
@@ -6788,7 +6788,7 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const ['iso7010', 'iso7010_warning'],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Warnzeichen',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614')
         ]),
@@ -6900,7 +6900,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Kurrent',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kurrent&oldid=1205126071')
         ]),
@@ -6935,7 +6935,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Malachim',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821')
         ]),
@@ -7247,7 +7247,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Ogham',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Ogham&oldid=1234313745')
         ]),
@@ -7595,7 +7595,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Sütterlin',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=S%C3%BCtterlin&oldid=1231365683')
         ]),
@@ -7622,7 +7622,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Arabische Zahlschrift',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
         ]),
