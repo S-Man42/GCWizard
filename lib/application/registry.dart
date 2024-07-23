@@ -2394,6 +2394,11 @@ void initializeRegistry(BuildContext context) {
     licenses: [
       stl._toolLicensePackageHttp,
       stl._toolLicensePackageHttpParser,
+      ToolLicenseAPI(context: context,
+          author: 'BINLIST.NET',
+          title: 'BIN Lookup Service API',
+          sourceUrl: 'https://web.archive.org/web/20240723180911/https://binlist.net/',
+          licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
     GCWTool(
         tool: const CheckDigitsCreditCardCalculateCheckDigit(),
