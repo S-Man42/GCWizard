@@ -5751,16 +5751,25 @@ void initializeRegistry(BuildContext context) {
     )]),
     GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: const [
       'symbol_alchemy',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'alchemy_alphabet',
         symbolSearchStrings: const [
           'symbol_alchemy_alphabet',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'alien_mushrooms',
         symbolSearchStrings: const [
           'symbol_alien_mushrooms',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'angerthas_cirth',
@@ -5768,115 +5777,202 @@ void initializeRegistry(BuildContext context) {
           'symbol_lordoftherings',
           'symbol_runes',
           'symbol_angerthas_cirth',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'alphabetum_arabum',
         symbolSearchStrings: const [
           'symbol_alphabetum_arabum',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicenseOnlineBookAlphabetumArabEgipt,
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'alphabetum_egiptiorum',
         symbolSearchStrings: const [
           'symbol_alphabetum_egiptiorum',
+        ],
+        licenses: [
+          stl._toolLicenseOnlineBookAlphabetumArabEgipt,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'alphabetum_gothicum',
         symbolSearchStrings: const [
           'symbol_alphabetum_gothicum',
+        ],
+        licenses: [
+          stl._toolLicenseOnlineBookAlphabetumGoth,
         ]),
     GCWSymbolTableTool(symbolKey: 'antiker', symbolSearchStrings: const [
       'symbol_antiker',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'arabic_indian_numerals',
         symbolSearchStrings: const [
           'symbol_arabic_indian_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ath', symbolSearchStrings: const [
       'symbol_ath',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
       'symbol_atlantean',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
       'symbol_aurebesh',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'australian_sign_language',
         symbolSearchStrings: const [
           'symbol_signlanguage',
           'symbol_australian_sign_language',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'babylonian_numerals',
         symbolSearchStrings: const [
           'babylonian_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: const [
       'symbol_ballet',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: const [
       'braille',
       'symbol_barbier',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
       'barcode39',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'base16_02', symbolSearchStrings: const [
       'symbol_base16_02',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
-        symbolKey: 'base16', symbolSearchStrings: const ['base16']),
+        symbolKey: 'base16', symbolSearchStrings: const ['base16'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
-        symbolKey: 'bibibinary', symbolSearchStrings: const ['bibibinary']),
+        symbolKey: 'bibibinary', symbolSearchStrings: const ['bibibinary'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'birds_on_a_wire',
         symbolSearchStrings: const [
           'symbol_birds_on_a_wire',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
       'symbol_blue_monday',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'brahmi_numerals',
         symbolSearchStrings: const [
           'symbol_brahmi_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: const [
       'braille',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: const [
       'braille',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: const [
       'braille',
       'braille_euro',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: const [
       'braille',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'british_sign_language',
         symbolSearchStrings: const [
           'symbol_signlanguage',
           'symbol_british_sign_language',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'chain_of_death_direction',
@@ -5898,71 +5994,122 @@ void initializeRegistry(BuildContext context) {
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_1794',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: const [
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_1809',
       'zigzag'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: const [
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_v1',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: const [
       'symbol_cherokee',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'chinese_numerals',
         symbolSearchStrings: const [
           'symbol_chinese_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: const [
       'christmas',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_lordoftherings',
       'symbol_cirtherebor',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: const [
       'cistercian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
       'symbol_clocks',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'clocks_2_1', symbolSearchStrings: const [
       'symbol_clocks',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'clocks_2_2', symbolSearchStrings: const [
       'symbol_clocks',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'clocks_3', symbolSearchStrings: const [
       'symbol_clocks',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: const [
       'color',
       'symbol_color_add',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: const [
       'color',
       'symbol_color_code',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: const [
       'color',
       'symbol_color_honey',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'color_tokki', symbolSearchStrings: const [
       'color',
       'symbol_color_tokki',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_1',
         symbolSearchStrings: const [
           'telegraph',
           'symbol_cookewheatstone',
           'symbol_cookewheatstone_1',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_2',
@@ -5970,6 +6117,9 @@ void initializeRegistry(BuildContext context) {
           'telegraph',
           'symbol_cookewheatstone',
           'symbol_cookewheatstone_2',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_5',
@@ -5977,35 +6127,62 @@ void initializeRegistry(BuildContext context) {
           'telegraph',
           'symbol_cookewheatstone',
           'symbol_cookewheatstone_5',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
       'symbol_cosmic',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: const [
       'countries',
       'symbol_flags',
       'countries_flags',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: const [
       'symbol_covenant',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: const [
       'symbol_crystal',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: const [
       'symbol_cyrillic',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'cyrillic_numbers',
         symbolSearchStrings: const [
           'symbol_cyrillic_numbers',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'dagger', symbolSearchStrings: const [
       'symbol_dagger',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: const [
       'symbol_dancing_men',
     ],
@@ -6015,11 +6192,17 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'deafblind', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_deafblind',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'devanagari_numerals',
         symbolSearchStrings: const [
           'symbol_devanagari_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
@@ -6032,50 +6215,89 @@ void initializeRegistry(BuildContext context) {
     )]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: const [
       'color',
       'symbol_dni_colors',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: const [
       'symbol_dni_numbers',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: const [
       'symbol_doop',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: const [
       'symbol_dorabella',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: const [
       'symbol_doremi',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'dragon_language',
         symbolSearchStrings: const [
           'symbol_dragon_language',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
       'symbol_dragon_runes',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'eastern_arabic_indian_numerals',
         symbolSearchStrings: const [
           'symbol_eastern_arabic_indian_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'egyptian_numerals',
         symbolSearchStrings: const [
           'symbol_egyptian_numerals',
+        ],
+        licenses: [
+          
         ]),
     GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: const [
       'elia',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: const [
       'symbol_enochian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'eternity_code', symbolSearchStrings: const [
       'symbol_eternity_code',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: const [
       'symbol_eurythmy',
     ], licenses: [
@@ -6089,97 +6311,172 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: const [
       'symbol_fakoo',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
       'symbol_fantastic',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: const [
       'symbol_fez',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_finger',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'finger_numbers', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_finger_numbers',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: const [
       'symbol_flags',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_german_kriegsmarine',
         symbolSearchStrings: const [
           'symbol_flags',
           'symbol_flags_german_kriegsmarine',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_nato',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_rn_howe',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_rn_marryat',
         symbolSearchStrings: const [
           'symbol_flags',
           'symbol_flags_rn_marryat',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_rn_popham',
         symbolSearchStrings: const [
           'symbol_flags',
           'symbol_flags_rn_popham',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: const [
       'symbol_fonic',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: const [
       'symbol_four_triangles',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'freemason', symbolSearchStrings: const [
       'symbol_freemason',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'freemason_v2',
-        symbolSearchStrings: const ['symbol_freemason']),
+        symbolSearchStrings: const ['symbol_freemason'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'futhark_elder',
-        symbolSearchStrings: const ['symbol_runes', 'symbol_futhark']),
+        symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'futhark_younger',
-        symbolSearchStrings: const ['symbol_runes', 'symbol_futhark']),
+        symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_futhark',
       'symbol_futhorc'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'futurama_2', symbolSearchStrings: const [
       'symbol_futurama_2',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: const [
       'symbol_gallifreyan',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'gargish', symbolSearchStrings: const [
       'symbol_gargish',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'gc_attributes_ids',
         symbolSearchStrings: const [
           'symbol_gc_attributes',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'gc_attributes_meaning',
         symbolSearchStrings: const [
           'symbol_gc_attributes',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'geovlog', symbolSearchStrings: const [
       'symbol_geovlog',
@@ -6194,238 +6491,424 @@ void initializeRegistry(BuildContext context) {
     ],),
     GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: const [
       'symbol_gernreich',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: const [
       'zelda',
       'symbol_gerudo',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: const []),
+    ],
+        licenses: [
+
+        ]),
+    GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: const [],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: const [
       'symbol_greek_numerals',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: const [
       'symbol_hanja',
       'symbol_sino_korean',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hangul_korean', symbolSearchStrings: const [
       'symbol_hangul',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'hangul_sino_korean',
         symbolSearchStrings: const [
           'symbol_hangul',
           'symbol_sino_korean',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: const [
       'symbol_hazard',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hebrew', symbolSearchStrings: const [
       'symbol_hebrew',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hebrew_v2', symbolSearchStrings: const [
       'symbol_hebrew_v2',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hexahue', symbolSearchStrings: const [
       'color',
       'symbol_hexahue',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'hieratic_numerals',
         symbolSearchStrings: const [
           'symbol_hieratic_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'hieroglyphs', symbolSearchStrings: const [
       'symbol_hieroglyphs',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hieroglyphs_v2', symbolSearchStrings: const [
       'symbol_hieroglyphs',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: const [
       'symbol_lordoftherings',
       'symbol_runes',
       'symbol_hobbit_runes',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: const [
       'symbol_hvd',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'hylian_64', symbolSearchStrings: const [
       'zelda',
       'symbol_hylian_64',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_albw_botw',
         symbolSearchStrings: const [
           'zelda',
           'symbol_hylian_albw_botw',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_skyward_sword',
         symbolSearchStrings: const [
           'zelda',
           'symbol_hylian_skywardsword',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: const [
       'zelda',
       'symbol_hylian_symbols',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_twilight_princess_gcn',
         symbolSearchStrings: const [
           'zelda',
           'symbol_hylian_twilightprincess_gcn',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_twilight_princess_wii',
         symbolSearchStrings: const [
           'zelda',
           'symbol_hylian_twilightprincess_wii',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_wind_waker',
         symbolSearchStrings: const [
           'zelda',
           'symbol_hylian_windwaker',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: const [
       'symbol_hymmnos',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ice_lolly_ding', symbolSearchStrings: const [
       'symbol_icelolly',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: const [
       'icecodes',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'iching', symbolSearchStrings: const [
       'symbol_iching',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'illuminati_v1', symbolSearchStrings: const [
       'symbol_illuminati',
       'symbol_illuminati_v1',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'illuminati_v2', symbolSearchStrings: const [
       'symbol_illuminati',
       'symbol_illuminati_v2',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: const [
       'symbol_intergalactic',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'interlac', symbolSearchStrings: const [
       'symbol_interlac',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_firesafety',
-        symbolSearchStrings: const ['iso7010', 'iso7010_firesafety']),
+        symbolSearchStrings: const ['iso7010', 'iso7010_firesafety'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_mandatory',
-        symbolSearchStrings: const ['iso7010', 'iso7010_mandatory']),
+        symbolSearchStrings: const ['iso7010', 'iso7010_mandatory'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_prohibition',
-        symbolSearchStrings: const ['iso7010', 'iso7010_prohibition']),
+        symbolSearchStrings: const ['iso7010', 'iso7010_prohibition'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_safecondition',
-        symbolSearchStrings: const ['iso7010', 'iso7010_safecondition']),
+        symbolSearchStrings: const ['iso7010', 'iso7010_safecondition'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_warning',
-        symbolSearchStrings: const ['iso7010', 'iso7010_warning']),
+        symbolSearchStrings: const ['iso7010', 'iso7010_warning'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const [
       'ccitt',
       'symbol_murray',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: const [
       'ccitt',
       'symbol_murray',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'japanese_numerals',
         symbolSearchStrings: const [
           'japanese_numerals',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'kabouter_abc', symbolSearchStrings: const [
       'symbol_kabouter_abc',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'kabouter_abc_1947',
         symbolSearchStrings: const [
           'symbol_kabouter_abc_1947',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: const [
       'color',
       'barcodes',
       'railways',
       'symbol_kartrak',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'kaktovik',
-        symbolSearchStrings: const ['symbol_kaktovik', 'zigzag']),
+        symbolSearchStrings: const ['symbol_kaktovik', 'zigzag'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'klingon', symbolSearchStrings: const [
       'symbol_klingon',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'klingon_klinzhai',
         symbolSearchStrings: const [
           'symbol_klingon',
           'symbol_klingon_klinzhai',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: const [
       'color',
       'symbol_krempel',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: const [
       'symbol_krypton',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'kurrent', symbolSearchStrings: const [
       'symbol_kurrent',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
       'symbol_la_buse',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
       'symbol_linear_b',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_lorm',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: const [
       'symbol_magicode',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'malachim', symbolSearchStrings: const [
       'symbol_malachim',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'marain', symbolSearchStrings: const [
       'symbol_marain',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'marain_v2', symbolSearchStrings: const [
       'symbol_marain_v2',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: const [
       'symbol_matoran',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_calendar_longcount',
         symbolSearchStrings: const [
@@ -6487,82 +6970,142 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: const [
       'mayanumbers',
       'symbol_maya_number_glyphys',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: const [
       'symbol_maze',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'medieval_runes',
-        symbolSearchStrings: const ['symbol_runes', 'symbol_futhark']),
+        symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: const [
       'symbol_minimoys',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: const [
       'symbol_moon',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'moon_phases', symbolSearchStrings: const [
       'symbol_moon_phases',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'morse_gerke', symbolSearchStrings: const [
       'morse',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'morse_1838_patent',
         symbolSearchStrings: const [
           'morse',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'morse_1844_vail',
         symbolSearchStrings: const [
           'morse',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'morse_steinheil',
         symbolSearchStrings: const [
           'morse',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: const [
       'ccitt',
       'symbol_murraybaudot',
       'teletypewriter'
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: const [
       'music_notes',
       'symbol_musica',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: const [
       'symbol_nazcaan',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'new_zealand_sign_language',
         symbolSearchStrings: const [
           'symbol_signlanguage',
           'symbol_new_zealand_sign_language',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'niessen', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_niessen',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ninjargon', symbolSearchStrings: const [
       'symbol_ninjargon',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_doremi',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'notes_names_altoclef',
         symbolSearchStrings: const [
           'music',
           'music_notes',
           'symbol_notes_names_altoclef',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'notes_names_bassclef',
@@ -6570,6 +7113,9 @@ void initializeRegistry(BuildContext context) {
           'music',
           'music_notes',
           'symbol_notes_names_bassclef',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'notes_names_trebleclef',
@@ -6577,6 +7123,9 @@ void initializeRegistry(BuildContext context) {
           'music',
           'music_notes',
           'symbol_notes_names_trebleclef',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'notes_notevalues',
@@ -6584,6 +7133,9 @@ void initializeRegistry(BuildContext context) {
           'music',
           'music_notes',
           'symbol_notes_notevalues',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'notes_restvalues',
@@ -6591,10 +7143,16 @@ void initializeRegistry(BuildContext context) {
           'music',
           'music_notes',
           'symbol_notes_restvalues',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit',
         symbolSearchStrings: const [
@@ -6626,16 +7184,25 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_oak_island_money_pit_libyan',
           'oak_island'
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: const [
       'symbol_ogham',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'optical_fiber_fotag',
         symbolSearchStrings: const [
           'color',
           'symbol_opticalfiber',
           'symbol_optical_fiber_fotag',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'optical_fiber_iec60304',
@@ -6643,6 +7210,9 @@ void initializeRegistry(BuildContext context) {
           'color',
           'symbol_opticalfiber',
           'symbol_optical_fiber_iec60304',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'optical_fiber_swisscom',
@@ -6650,145 +7220,271 @@ void initializeRegistry(BuildContext context) {
           'color',
           'symbol_opticalfiber',
           'optical_fiber_swisscom',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'phoenician',
-        symbolSearchStrings: const ['symbol_phoenician', 'zigzag']),
+        symbolSearchStrings: const ['symbol_phoenician', 'zigzag'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: const [
       'symbol_pipeline',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'pipeline_din2403',
         symbolSearchStrings: const [
           'color',
           'symbol_pipeline_din2403',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: const [
       'symbol_pixel',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'planet', symbolSearchStrings: const [
       'barcodes',
       'symbol_planet',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: const [
       'symbol_planets',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
       'symbol_pleiadian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: const [
       'pokemon',
       'symbol_pokemon_unown',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: const [
       'barcodes',
       'symbol_postcode01247',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: const [
       'barcodes',
       'symbol_postcode8421',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: const [
       'barcodes',
       'symbol_postnet',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'predator', symbolSearchStrings: const [
       'predator',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'prosyl', symbolSearchStrings: const [
       'symbol_prosyl',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: const [
       'symbol_puzzle',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: const [
       'symbol_puzzle',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'prussian_colors_artillery',
         symbolSearchStrings: const [
           'symbol_prussian_colors_artillery',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'prussian_colors_infantery',
         symbolSearchStrings: const [
           'symbol_prussian_colors_infantery',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
       'symbol_ravkan',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'ravkan_extended',
         symbolSearchStrings: const [
           'symbol_ravkan_extended',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: const [
       'symbol_reality',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'red_herring', symbolSearchStrings: const [
       'symbol_red_herring',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: const [
       'color',
       'resistor_colorcode',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: const [
       'symbol_rhesus',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: const [
       'symbol_rhesus',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: const [
       'symbol_rhesus',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: const [
       'symbol_rhesus',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: const [
       'barcodes',
       'symbol_rm4scc',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'robots', symbolSearchStrings: const [
       'symbol_robots',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: const [
       'symbol_romulan',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'sarati', symbolSearchStrings: const [
       'symbol_sarati',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'semaphore', symbolSearchStrings: const [
       'symbol_semaphore',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: const [
       'shadoksnumbers',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: const [
       'zelda',
       'symbol_sheikah',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: const [
       'symbol_shoes',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'siemens',
-        symbolSearchStrings: const ['symbol_siemens', 'teletypewriter']),
+        symbolSearchStrings: const ['symbol_siemens', 'teletypewriter'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
-        symbolKey: 'sign', symbolSearchStrings: const ['symbol_signlanguage']),
+        symbolKey: 'sign', symbolSearchStrings: const ['symbol_signlanguage'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
-        symbolKey: 'sith', symbolSearchStrings: const ['symbol_sith']),
+        symbolKey: 'sith', symbolSearchStrings: const ['symbol_sith'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: const [
       'symbol_slash_and_pipe',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: const [
       'symbol_solmisation',
     ], licenses: [
@@ -6802,38 +7498,71 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: const [
       'symbol_space_invaders',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: const [
       'symbol_spintype',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
       'symbol_sprykski',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
       'symbol_steinheil',
       'telegraph',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: const [
       'symbol_stippelcode',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'suetterlin', symbolSearchStrings: const [
       'symbol_suetterlin',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: const [
       'symbol_sunuz',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: const [
       'symbol_surf',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'tae', symbolSearchStrings: const [
       'symbol_tae',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: const [
       'symbol_tamil_numerals',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
       symbolKey: 'telegraph_pasley',
       symbolSearchStrings: const [
@@ -6873,56 +7602,95 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'telegraph',
           'telegraph_schmidt',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: const [
       'symbol_templers',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'tenctonese_cursive',
         symbolSearchStrings: const [
           'symbol_tenctonese',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'tenctonese_printed',
         symbolSearchStrings: const [
           'symbol_tenctonese',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'tengwar_beleriand',
         symbolSearchStrings: const [
           'symbol_lordoftherings',
           'symbol_tengwar_beleriand',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'tengwar_classic',
         symbolSearchStrings: const [
           'symbol_lordoftherings',
           'symbol_tengwar_classic',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'tengwar_general',
         symbolSearchStrings: const [
           'symbol_lordoftherings',
           'symbol_tengwar_general',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: const [
       'symbol_terzi',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'thai_numerals', symbolSearchStrings: const [
       'symbol_thai_numerals',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: const [
       'symbol_theban',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: const [
       'symbol_three_squares',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'tifinagh', symbolSearchStrings: const [
       'symbol_tifinagh',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: const [
       'symbol_tines',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'tll', symbolSearchStrings: const [
       'symbol_tll',
     ], licenses: [
@@ -6936,117 +7704,219 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
       'tomtom',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'trafficsigns_germany',
         symbolSearchStrings: const [
           'symbol_trafficsigns_germany',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'ulog', symbolSearchStrings: const [
       'symbol_ulog',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'unitology', symbolSearchStrings: const [
       'symbol_unitology',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'utopian', symbolSearchStrings: const [
       'symbol_utopian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'visitor_1984', symbolSearchStrings: const [
       'symbol_visitor_1984',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: const [
       'symbol_visitor_2009',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'voynich', symbolSearchStrings: const [
       'symbol_voynich',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: const [
       'symbol_vulcanian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: const [
       'symbol_wakandan',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_a',
-        symbolSearchStrings: const ['weather', 'weather_a']),
+        symbolSearchStrings: const ['weather', 'weather_a'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_c',
-        symbolSearchStrings: const ['weather', 'weather_c', 'weather_clouds']),
+        symbolSearchStrings: const ['weather', 'weather_c', 'weather_clouds'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_cl',
-        symbolSearchStrings: const ['weather', 'weather_cl', 'weather_clouds']),
+        symbolSearchStrings: const ['weather', 'weather_cl', 'weather_clouds'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_cm',
-        symbolSearchStrings: const ['weather', 'weather_cm', 'weather_clouds']),
+        symbolSearchStrings: const ['weather', 'weather_cm', 'weather_clouds'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_ch',
-        symbolSearchStrings: const ['weather', 'weather_ch', 'weather_clouds']),
+        symbolSearchStrings: const ['weather', 'weather_ch', 'weather_clouds'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_n',
-        symbolSearchStrings: const ['weather', 'weather_n', 'weather_clouds']),
+        symbolSearchStrings: const ['weather', 'weather_n', 'weather_clouds'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_w',
-        symbolSearchStrings: const ['weather', 'weather_w']),
+        symbolSearchStrings: const ['weather', 'weather_w'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_ww',
-        symbolSearchStrings: const ['weather', 'weather_ww']),
+        symbolSearchStrings: const ['weather', 'weather_ww'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: const [
       'symbol_webdings',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'westernunion',
-        symbolSearchStrings: const ['symbol_westernunion', 'teletypewriter']),
+        symbolSearchStrings: const ['symbol_westernunion', 'teletypewriter'],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'windforce_beaufort',
         symbolSearchStrings: const [
           'beaufort',
           'symbol_windforce_beaufort',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(
         symbolKey: 'windforce_knots',
         symbolSearchStrings: const [
           'beaufort',
           'symbol_windforce_knots',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: const [
       'window',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: const [
       'symbol_wingdings',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: const [
       'symbol_wingdings2',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: const [
       'symbol_wingdings3',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: const [
       'symbol_yan_koryani',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [
       'symbol_zamonian',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: const [
       'symbol_zentradi',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: const [
       'symbol_zodiacsigns',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'zodiac_signs_latin',
         symbolSearchStrings: const [
           'symbol_zodiacsigns',
           'symbol_zodiacsigns_latin',
+        ],
+        licenses: [
+
         ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: const [
       'symbol_zodiac_z340',
-    ]),
+    ],
+        licenses: [
+
+        ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: const [
       'symbol_zodiac_z408',
-    ]),
+    ],
+        licenses: [
+
+        ]),
 
     // TelegraphSelection *********************************************************************************************
     GCWTool(

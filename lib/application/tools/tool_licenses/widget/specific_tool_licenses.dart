@@ -396,5 +396,26 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumArabEgipt {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Giovanni Battista Palatino',
+      title: 'Libro nuovo d\'imparare a scrivere',
+      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala/mode/2up',
+      year: 1548,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumGoth {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Magnus Olaus',
+      title: 'Historia de Gentibus Septentrionalibus',
+      sourceUrl: 'https://archive.org/details/Historiaedegent00Olau',
+      year: 1555,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
 }
 
