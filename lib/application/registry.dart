@@ -909,6 +909,7 @@ void initializeRegistry(BuildContext context) {
       'exif',
     ],
         licenses:[
+          stl._toolLicensePackageExif,
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageImage,
@@ -1466,6 +1467,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageMathExpressions,
         ]),
     GCWTool(tool: const Rabbit(), id: 'rabbit', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1607,6 +1609,7 @@ void initializeRegistry(BuildContext context) {
     ],
     licenses: [
       stl._toolLicensePackageImage,
+      stl._toolLicensePackageEncrypt,
     ]),
     GCWTool(
         tool: const StraddlingCheckerboard(),
@@ -2741,6 +2744,9 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackagePrefs,
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageFlutterMap,
+          stl._toolLicensePackageFlutterMapMarkerPopup,
+          stl._toolLicensePackageFlutterMapTappablePolyLine,
           ToolLicensePortedCode(
               context: context,
               author: 'Paul Kohut',
@@ -2768,6 +2774,7 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicensePackageLatlong2,
       stl._toolLicensePackagePrefs,
       stl._toolLicensePackageIntl,
+      stl._toolLicensePackageMathExpressions,
     ],),
     GCWTool(
         tool: const DMMOffset(),
@@ -3363,6 +3370,8 @@ void initializeRegistry(BuildContext context) {
               sourceUrl: 'https://web.archive.org/web/20240722072403/https://github.com/catseye/Befunge-93',
               licenseType: ToolLicenseType.BSD),
           stl._toolLicensePackageCodeTextField,
+          stl._toolLicensePackageFlutterHighlight,
+          stl._toolLicensePackageHighlight
                   ]),
     GCWTool(tool: const Brainfk(), id: 'brainfk', searchKeys: const [
       'esotericprogramminglanguage',
@@ -5493,6 +5502,8 @@ void initializeRegistry(BuildContext context) {
               sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up'),
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageCodeTextField,
+          stl._toolLicensePackageFlutterHighlight,
+          stl._toolLicensePackageHighlight
         ]),
 
     //Segments Display *******************************************************************************************
