@@ -156,6 +156,16 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageBase32 {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'yuli.dev',
+      title: 'base32',
+      sourceUrl: 'https://pub.dev/packages/base32',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageHttp {
     return ToolLicenseCodeLibrary(
       context: context,

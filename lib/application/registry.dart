@@ -2057,7 +2057,10 @@ void initializeRegistry(BuildContext context) {
       'base32',
     ], deeplinkAlias: const [
       'base32'
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageBase32,
+        ]),
     GCWTool(
       tool: Base58(),
       id: 'base_base58',
