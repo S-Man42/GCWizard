@@ -1914,7 +1914,7 @@
   "coords_map_view_linedialog_path": "Entire Path",
   "coords_output_format": "Output Format",
   "coords_waypointprojection_title": "Waypoint Projection",
-  "coords_waypointprojection_description": "Calculates shortest destination point from start using bearing and distance (geodetic, orthdrome)",
+  "coords_waypointprojection_description": "Calculates shortest destination point from start using bearing and distance (geodetic, orthodrome)",
   "coords_waypointprojection_start": "Start",
   "coords_waypointprojection_end": "Destination",
   "coords_waypointprojection_reverse": "Reverse",
