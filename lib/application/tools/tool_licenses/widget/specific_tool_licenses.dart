@@ -166,6 +166,16 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageCodeTextField {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'code_text_field',
+      sourceUrl: 'https://pub.dev/packages/code_text_field',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageHttp {
     return ToolLicenseCodeLibrary(
       context: context,

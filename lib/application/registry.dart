@@ -633,7 +633,10 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'battleship',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageCodeTextField,
+        ]),
     GCWTool(
         tool: const BloodAlcoholContent(),
         id: 'bloodalcoholcontent',
@@ -3354,6 +3357,7 @@ void initializeRegistry(BuildContext context) {
               title: 'Befunge-93',
               sourceUrl: 'https://web.archive.org/web/20240722072403/https://github.com/catseye/Befunge-93',
               licenseType: ToolLicenseType.BSD),
+          stl._toolLicensePackageCodeTextField,
                   ]),
     GCWTool(tool: const Brainfk(), id: 'brainfk', searchKeys: const [
       'esotericprogramminglanguage',
@@ -5483,6 +5487,7 @@ void initializeRegistry(BuildContext context) {
               customComment: 'Page 296ff',
               sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up'),
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageCodeTextField,
         ]),
 
     //Segments Display *******************************************************************************************
