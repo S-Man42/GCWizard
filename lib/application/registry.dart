@@ -7146,6 +7146,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageTouchable,
+          stl._toolLicenseWrixonGeheimsprachen,
         ]),
     GCWTool(
         tool: const PophamTelegraph(),
@@ -7156,6 +7157,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageTouchable,
+          stl._toolLicenseWrixonGeheimsprachen,
         ]),
     GCWTool(
         tool: const PrussiaTelegraph(),
