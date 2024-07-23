@@ -6398,7 +6398,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_flags_rn_howe',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              publisher: 'Project Gutenberg',
+              author: 'W. G. Perrin',
+              title: 'The Project Gutenberg EBook of British Flags',
+              sourceUrl: 'https://web.archive.org/web/20240723212351/https://www.gutenberg.org/files/46370/46370-h/46370-h.htm')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_rn_marryat',
@@ -6410,7 +6414,7 @@ void initializeRegistry(BuildContext context) {
           ToolLicenseOnlineArticle(context: context,
               author: 'en.wikipedia.org and contributors',
               title: 'Maritime flag signalling',
-              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184')
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184'),,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_rn_popham',
@@ -6419,7 +6423,18 @@ void initializeRegistry(BuildContext context) {
           'symbol_flags_rn_popham',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              publisher: 'Project Gutenberg',
+              author: 'W. G. Perrin',
+              title: 'The Project Gutenberg EBook of British Flags',
+              sourceUrl: 'https://web.archive.org/web/20240723212351/https://www.gutenberg.org/files/46370/46370-h/46370-h.htm'),
+  ToolLicenseOnlineBook(context: context,
+  author: 'Sir Home Riggs Popham',
+  title: 'Telegraphic Signals; Or Marine Vocabulary',
+  publisher: 'T. Egerton, Military Library, near Whitehall',
+  year: 1803,
+  sourceUrl: 'https://archive.org/details/bub_gb_qxZEAAAAYAAJ/page/n5/mode/2up'
+  )
         ]),
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: const [
       'symbol_fonic',
