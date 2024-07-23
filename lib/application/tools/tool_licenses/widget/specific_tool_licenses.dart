@@ -326,6 +326,46 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageQr {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'kevmoo.com',
+      title: 'qr',
+      sourceUrl: 'https://pub.dev/packages/qr',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageRscan {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'rhyme95.cn',
+      title: 'r_scan',
+      sourceUrl: 'https://pub.dev/packages/r_scan',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageStack {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'stack',
+      sourceUrl: 'https://pub.dev/packages/stack',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageTouchable {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'touchable',
+      sourceUrl: 'https://pub.dev/packages/touchable',
+      licenseType: ToolLicenseType.MPL2,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageTuple {
     return ToolLicenseCodeLibrary(
       context: context,
@@ -336,6 +376,25 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageUuid {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'yuli.dev',
+      title: 'uuid',
+      sourceUrl: 'https://pub.dev/packages/uuid',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageWeekOfYear {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'kada.se',
+      title: 'week_of_year',
+      sourceUrl: 'https://pub.dev/packages/week_of_year',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
 
 }
 
