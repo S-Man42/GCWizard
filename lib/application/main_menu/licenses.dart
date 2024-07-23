@@ -244,6 +244,31 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map/license'
             ),
+            ToolLicensePortedCode(context: context, author: 'balanci.ng', title: 'flutter_map_marker_popup',
+              sourceUrl: 'https://web.archive.org/web/20240222173114/https://pub.dev/packages/flutter_map_marker_popup',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240723144921/https://pub.dev/packages/flutter_map_marker_popup/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'ownweb.fr', title: 'flutter_map_tappable_polyline',
+              sourceUrl: 'https://web.archive.org/web/20230927164717/https://pub.dev/packages/flutter_map_tappable_polyline',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240723145110/https://pub.dev/packages/flutter_map_tappable_polyline/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'https://pub.dev/packages/highlight',
+              sourceUrl: 'https://web.archive.org/web/20231103183350/https://pub.dev/packages/highlight',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240723145359/https://pub.dev/packages/highlight/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'http',
+              sourceUrl: 'https://web.archive.org/web/20240708062104/https://pub.dev/packages/http',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240513101105/https://pub.dev/packages/http/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'http_parser',
+              sourceUrl: 'https://web.archive.org/web/20240714172550/https://pub.dev/packages/http_parser',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20230530135251/https://pub.dev/packages/http_parser/license'
+            ),
       ]);
 
       content.add(GCWExpandableTextDivider(
