@@ -316,7 +316,7 @@ class _LicensesState extends State<Licenses> {
             ['http_parser', 'BSD-3-Clause License'],
             ['image', 'Apache 2.0 License'],
             ['intl', 'BSD-3-Clause License'],
-            ['latlong2', 'Apache 2.0 License'],
+            # DONE # ['latlong2', 'Apache 2.0 License'],
             ['location', 'MIT License'],
             ['mask_text_input_formatter', 'MIT License'],
             ['math_expressions', 'MIT License'],
