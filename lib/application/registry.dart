@@ -517,6 +517,9 @@ void initializeRegistry(BuildContext context) {
       'av',
       'buchstabenwerte',
       'bww'
+    ],
+    licenses:[
+      stl._toolLicensePackagePrefs,
     ]),
     GCWTool(tool: const Amsco(), id: 'amsco', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -883,6 +886,8 @@ void initializeRegistry(BuildContext context) {
       searchKeys: const [
         'formulasolver',
       ],
+      licenses: [
+        stl._toolLicensePackagePrefs,]
     ),
     GCWTool(tool: const Fox(), id: 'fox', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -970,7 +975,9 @@ void initializeRegistry(BuildContext context) {
         title: 'Dow Jones API',
         licenseType: ToolLicenseType.FREE_TO_USE,
         sourceUrl: 'http://geo.crox.net/djia',
-      )
+      ),
+      stl._toolLicensePackageHttp,
+      stl._toolLicensePackageHttpParser,
     ]),
     GCWTool(tool: const Gray(), id: 'gray', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1090,6 +1097,9 @@ void initializeRegistry(BuildContext context) {
           'images',
           'color',
           'image_colorcorrections',
+        ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
         ]),
     GCWTool(
         tool: const ImageFlipRotate(),
@@ -1217,6 +1227,9 @@ void initializeRegistry(BuildContext context) {
         'multidecoder',
       ],
       deeplinkAlias: const ['multitool'],
+      licenses:[
+        stl._toolLicensePackagePrefs,
+      ]
     ),
     GCWTool(
         tool: const MusicNotes(),
@@ -1669,6 +1682,9 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'unitconverter',
+        ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
         ]),
     GCWTool(
         tool: const UniversalProductCode(),
@@ -2239,7 +2255,11 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CheckDigitsCreditCardCheckNumber(),
         id: 'checkdigits_creditcard_checknumber',
-        searchKeys: const []),
+        searchKeys: const [],
+    licenses: [
+      stl._toolLicensePackageHttp,
+      stl._toolLicensePackageHttpParser,
+    ]),
     GCWTool(
         tool: const CheckDigitsCreditCardCalculateCheckDigit(),
         id: 'checkdigits_creditcard_calculate_digit',
@@ -2269,6 +2289,8 @@ void initializeRegistry(BuildContext context) {
         id: 'checkdigits_ean_checknumber',
         searchKeys: const [],
         licenses: [
+          stl._toolLicensePackageHttp,
+          stl._toolLicensePackageHttpParser,
           ToolLicenseAPI(
             context: context,
             author: 'https://opengtindb.org/',
@@ -2305,7 +2327,8 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CheckDigitsIBANCheckNumber(),
         id: 'checkdigits_iban_checknumber',
-        searchKeys: const []),
+        searchKeys: const [],
+    ),
     GCWTool(
         tool: const CheckDigitsIBANCalculateCheckDigit(),
         id: 'checkdigits_iban_calculate_digit',
@@ -2605,6 +2628,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicenseFAA8260,
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackagePrefs,
           ToolLicensePortedCode(
               context: context,
               author: 'Paul Kohut',
@@ -2630,6 +2654,7 @@ void initializeRegistry(BuildContext context) {
         ],
     licenses:[
       stl._toolLicensePackageLatlong2,
+      stl._toolLicensePackagePrefs,
     ],),
     GCWTool(
         tool: const DMMOffset(),
@@ -4050,7 +4075,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const MayaCalendar(), id: 'mayacalendar', searchKeys: const [
       'calendar',
       'maya_calendar',
-    ]),
+    ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
+        ]),
 
     //MayaNumbers Selection **************************************************************************************
     GCWTool(tool: const MayaNumbers(), id: 'mayanumbers', searchKeys: const [
@@ -5322,6 +5350,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'segments',
           'segments_seven',
+        ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
         ]),
     GCWTool(
         tool: const FourteenSegments(),
@@ -5331,6 +5362,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'segments',
           'segments_fourteen',
+        ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
         ]),
     GCWTool(
         tool: const SixteenSegments(),
@@ -5340,6 +5374,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'segments',
           'segments_sixteen',
+        ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
         ]),
 
     //Shadoks Selection ******************************************************************************************
@@ -5464,6 +5501,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'symbol',
           'symboltablesexamples',
+        ],
+        licenses:[
+          stl._toolLicensePackagePrefs,
         ]),
     GCWTool(
       tool: const SymbolReplacer(),
@@ -5480,6 +5520,7 @@ void initializeRegistry(BuildContext context) {
           title: 'ImageHashing ',
           sourceUrl: 'https://github.com/jforshee/ImageHashing/blob/master/ImageHashing/ImageHashing.cs',
           licenseType: ToolLicenseType.FREE_TO_USE),
+        stl._toolLicensePackagePrefs,
     ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: const [
@@ -7132,7 +7173,11 @@ void initializeRegistry(BuildContext context) {
               sourceUrl: 'https://web.archive.org/web/20240722202351/https://github.com/WFoundation/WF.Compiler',
               licenseType: ToolLicenseType.GITHUB_DEFAULT),
           stl._toolLicensePackageAudioplayers,
+          stl._toolLicensePackageHttp,
+          stl._toolLicensePackageHttpParser,
+          stl._toolLicensePackageIntl,
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackagePrefs,
           ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
     GCWTool(
