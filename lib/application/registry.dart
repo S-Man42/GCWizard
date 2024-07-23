@@ -5978,7 +5978,13 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
-    ]),
+    ], licenses: [ToolLicenseFont(
+        context: context,
+        author: 'FontStruct (https://fontstruct.com/)',
+        title: 'Dinosaur Three-Toe Bold',
+        sourceUrl: 'https://web.archive.org/save/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
+        licenseType: ToolLicenseType.CCNC30
+    )]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
     ]),

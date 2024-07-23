@@ -16,6 +16,7 @@ enum ToolLicenseType {
   CCBYSA3, // Creative Commons CC BY-SA 2.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
   CCNC25, // Creative Commons CC NC 2.5
+  CCNC30, // Creative Commons CC NC 3.0
   CC0_1, // Creative Commons CC0 1.0
   MIT, // MIT
   GPL3, //GNU GPL v3.0
