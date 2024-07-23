@@ -502,6 +502,9 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'alcoholmass',
+    ],
+    licenses:[
+      stl._toolLicensePackageIntl,
     ]),
     GCWTool(tool: const ALGOL(), id: 'algol', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -632,7 +635,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'alcoholmass',
           'bloodalcoholcontent',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageIntl,
+    ]),
     GCWTool(
         tool: const BrailleSelection(),
         id: 'braille_selection',
@@ -752,6 +758,9 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'complexnumbers',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const CompoundInterest(),
@@ -761,6 +770,9 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'compoundinterest',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const CoordsSelection(),
@@ -879,6 +891,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses:[
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackageIntl,
         ],),
     GCWTool(
       tool: const FormulaSolverFormulaGroups(),
@@ -1386,7 +1399,10 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'projectiles',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(
         tool: const QrCode(),
         id: 'qr_code',
@@ -1405,6 +1421,9 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'quadraticequation',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(tool: const Rabbit(), id: 'rabbit', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1648,7 +1667,10 @@ void initializeRegistry(BuildContext context) {
         tool: const TextAnalysis(),
         id: 'textanalysis',
         categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['alphabetvalues', 'asciivalues', 'textanalysis']),
+        searchKeys: const ['alphabetvalues', 'asciivalues', 'textanalysis'],
+    licenses:[
+      stl._toolLicensePackageIntl,
+    ]),
     GCWTool(tool: const Trifid(), id: 'trifid', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1685,6 +1707,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageIntl
         ]),
     GCWTool(
         tool: const UniversalProductCode(),
@@ -1701,7 +1724,10 @@ void initializeRegistry(BuildContext context) {
         tool: const VelocityAcceleration(),
         id: 'velocity_acceleration',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-        searchKeys: const ['velocity_acceleration']),
+        searchKeys: const ['velocity_acceleration'],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(
         tool: const VanitySelection(),
         id: 'vanity_selection',
@@ -1772,28 +1798,43 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const HeatIndex(), id: 'heatindex', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_heatindex',
-    ]),
+    ],
+        licenses:[
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(tool: const Humidex(), id: 'humidex', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_humidex',
-    ]),
+    ],
+        licenses:[
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(
         tool: const SummerSimmerIndex(),
         id: 'summersimmerindex',
         searchKeys: const [
           'apparenttemperature',
           'apparenttemperature_summersimmerindex',
+        ],
+        licenses:[
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_windchill',
-    ]),
+    ],
+        licenses:[
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(
         tool: const WetBulbTemperature(),
         id: 'wet_bulb_temperature',
         searchKeys: const [
           'apparenttemperature',
           'apparenttemperature_wet_bulb_temperature',
+        ],
+        licenses:[
+          stl._toolLicensePackageIntl,
         ]),
 
     //AstronomySelection  ********************************************************************************************
@@ -1850,6 +1891,7 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicenseAstronomieInfo,
           stl._toolLicenseNASADeltaT,
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const MoonRiseSet(),
@@ -1879,6 +1921,7 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicenseAstronomieInfo,
           stl._toolLicenseNASADeltaT,
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const EasterSelection(),
@@ -1891,6 +1934,7 @@ void initializeRegistry(BuildContext context) {
       'astronomy_seasons',
     ], licenses: [
       stl._toolLicenseJanMeeus,
+      stl._toolLicensePackageIntl,
       ToolLicensePrivatePermittedDigitalSource(
         context: context,
         author: 'Jürgen Giesen (jgiesen.de)',
@@ -1907,7 +1951,8 @@ void initializeRegistry(BuildContext context) {
       'astronomy',
       'astronomy_shadow_length',
     ], licenses: [
-      stl._toolLicenseNASADeltaT
+      stl._toolLicenseNASADeltaT,
+      stl._toolLicensePackageIntl,
     ]),
     GCWTool(
         tool: const RightAscensionToDegree(),
@@ -1937,7 +1982,8 @@ void initializeRegistry(BuildContext context) {
               sourceUrl:
                   'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec',
               licenseUrl:
-                  'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec')
+                  'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec'),
+          stl._toolLicensePackageIntl,
         ]),
 
     //Babylon Numbers Selection **************************************************************************************
@@ -2153,6 +2199,9 @@ void initializeRegistry(BuildContext context) {
     // Beaufort Selection *******************************************************************************************
     GCWTool(tool: const Beaufort(), id: 'beaufort', searchKeys: const [
       'beaufort',
+    ],
+    licenses: [
+      stl._toolLicensePackageIntl,
     ]),
 
     // BundeswehrTalkingBoard Selection *******************************************************************************************
@@ -2392,7 +2441,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const ColorTool(), id: 'colors', searchKeys: const [
       'color',
       'colorpicker',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(
         tool: const RALColorCodes(),
         id: 'ralcolorcodes',
@@ -2629,6 +2681,7 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicenseFAA8260,
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageIntl,
           ToolLicensePortedCode(
               context: context,
               author: 'Paul Kohut',
@@ -2655,6 +2708,7 @@ void initializeRegistry(BuildContext context) {
     licenses:[
       stl._toolLicensePackageLatlong2,
       stl._toolLicensePackagePrefs,
+      stl._toolLicensePackageIntl,
     ],),
     GCWTool(
         tool: const DMMOffset(),
@@ -2681,6 +2735,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackageIntl,
           ToolLicensePortedCode(
               context: context,
               author: 'David Vávra',
@@ -2721,6 +2776,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicenseGeoMidpoint,
           stl._toolLicensePackageLatlong2,
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const CentroidCenterOfGravity(),
@@ -3092,6 +3148,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'dates',
           'dates_calendarweek',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const DayOfTheYear(),
@@ -3099,6 +3158,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'dates',
           'dates_day_of_the_year',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',
@@ -3114,16 +3176,23 @@ void initializeRegistry(BuildContext context) {
           permissionDay: 21,
           sourceUrl: 'https://web.archive.org/web/20240721214347/https://www.aoi.uzh.ch/de/islamwissenschaft/studium/tools/kalenderumrechnung.html',
         ),
+        stl._toolLicensePackageIntl
       ],
     ),
     GCWTool(tool: const ExcelTime(), id: 'excel_time', searchKeys: const [
       'dates',
       'excel_time',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(tool: const UnixTime(), id: 'unix_time', searchKeys: const [
       'dates',
       'unix_time',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
 
     //DNASelection ************************************************************************************************
     GCWTool(
@@ -3180,6 +3249,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseJanMeeus,
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const EasterYears(),
@@ -3284,6 +3354,7 @@ void initializeRegistry(BuildContext context) {
               title: 'Chef-Interpreter',
               sourceUrl: 'https://web.archive.org/web/20240722064914/https://github.com/joostrijneveld/Chef-Interpreter',
               licenseType: ToolLicenseType.CC0_1),
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(tool: const Deadfish(), id: 'deadfish', searchKeys: const [
       'esotericprogramminglanguage',
@@ -4078,6 +4149,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses:[
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageIntl
         ]),
 
     //MayaNumbers Selection **************************************************************************************
@@ -5051,7 +5123,10 @@ void initializeRegistry(BuildContext context) {
 
     //PeriodicTableSelection ***************************************************************************************
     GCWTool(
-        tool: const PeriodicTable(), id: 'periodictable', searchKeys: const []),
+        tool: const PeriodicTable(), id: 'periodictable', searchKeys: const [],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
     GCWTool(
         tool: const PeriodicTableDataView(
           atomicNumber: 1,
@@ -5163,6 +5238,9 @@ void initializeRegistry(BuildContext context) {
           'resistor',
           'color',
           'resistor_colorcode',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
     GCWTool(
         tool: const ResistorEIA96(),
@@ -5170,6 +5248,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'resistor',
           'resistoreia96',
+        ],
+        licenses: [
+          stl._toolLicensePackageIntl,
         ]),
 
     //RomanNumbersSelection **********************************************************************************************
@@ -5338,7 +5419,8 @@ void initializeRegistry(BuildContext context) {
               publisher: 'McGrawHill',
               year: 1991,
               customComment: 'Page 296ff',
-              sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up')
+              sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up'),
+          stl._toolLicensePackageIntl,
         ]),
 
     //Segments Display *******************************************************************************************
@@ -7202,7 +7284,10 @@ void initializeRegistry(BuildContext context) {
       'symbol_planets',
       'symbol_zodiacsigns',
       'symbol_zodiacsigns_latin',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageIntl,
+        ]),
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.id + '_title');
     toolWidget.defaultLanguageToolName =
