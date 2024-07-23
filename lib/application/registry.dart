@@ -693,6 +693,9 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.GAMES
     ], searchKeys: const [
       'bowling',
+    ],
+        licenses: [
+      stl._toolLicensePackageAutoSizeText,
     ]),
     GCWTool(
         tool: const BundeswehrTalkingBoardSelection(),
@@ -1028,6 +1031,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageTuple,
+          stl._toolLicensePackageAutoSizeText,
         ]),
     GCWTool(
         tool: const HashSelection(),
@@ -1057,7 +1061,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'hexadecimal',
           'hexstring2file',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageArchive,
+    ]),
     GCWTool(tool: const HexViewer(), id: 'hexviewer', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
@@ -1892,7 +1899,8 @@ void initializeRegistry(BuildContext context) {
               author: 'The International Astronomical Union',
               title: 'The Constellations',
               sourceUrl: 'https://www.iau.org/public/themes/constellations/',
-              licenseType: ToolLicenseType.CCBY4)
+              licenseType: ToolLicenseType.CCBY4),
+          stl._toolLicensePackageArchive,
         ]),
     GCWTool(
         tool: const IAUSingleConstellation(ConstellationName: 'Andromeda'),
@@ -1903,7 +1911,8 @@ void initializeRegistry(BuildContext context) {
               author: 'The International Astronomical Union',
               title: 'The Constellations',
               sourceUrl: 'https://www.iau.org/public/themes/constellations/',
-              licenseType: ToolLicenseType.CCBY4)
+              licenseType: ToolLicenseType.CCBY4),
+  stl._toolLicensePackageArchive,
         ]),
     GCWTool(
         tool: const SunRiseSet(),
@@ -3127,6 +3136,9 @@ void initializeRegistry(BuildContext context) {
           'countries',
           'symbol_flags',
           'countries_flags',
+        ],
+        licenses: [
+          stl._toolLicensePackageArchive,
         ]),
 
     //CrossSumSelection *******************************************************************************************
@@ -5172,6 +5184,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageTuple,
+          stl._toolLicensePackageAutoSizeText,
         ]),
     GCWTool(
         tool: const PeriodicTableDataView(
@@ -5654,6 +5667,7 @@ void initializeRegistry(BuildContext context) {
         stl._toolLicensePackagePrefs,
         stl._toolLicensePackageTuple,
         stl._toolLicensePackageImage,
+        stl._toolLicensePackageAutoSizeText,
     ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: const [

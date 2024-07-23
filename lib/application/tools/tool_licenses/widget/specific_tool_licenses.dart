@@ -146,6 +146,16 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageAutoSizeText {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'simc.com',
+      title: 'auto_size_text',
+      sourceUrl: 'https://pub.dev/packages/auto_size_text',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageHttp {
     return ToolLicenseCodeLibrary(
       context: context,

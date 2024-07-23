@@ -294,7 +294,7 @@ class _LicensesState extends State<Licenses> {
           expanded: false,
           suppressTopSpace: false,
           child: const GCWColumnedMultilineOutput(data: [
-            ['archive', 'Apache 2.0 License'],
+            # DONE # ['archive', 'Apache 2.0 License'],
             # DONE # ['audioplayers', 'MIT License'],
             ['auto_size_text', 'MIT License'],
             ['base32', 'MIT License'],
