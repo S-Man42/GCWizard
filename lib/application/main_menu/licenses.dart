@@ -229,6 +229,46 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
             ),
+            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'flutter_highlight',
+              sourceUrl: 'https://web.archive.org/web/20240109182902/https://pub.dev/packages/flutter_highlight',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20230208081256/https://pub.dev/packages/flutter_highlight/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@flutter (GitHub, Google Inc.)', title: 'flutter_localizations',
+              sourceUrl: 'https://web.archive.org/web/20240418002509/https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
+            ),
+            ToolLicensePortedCode(context: context, author: 'fleaflet.dev', title: 'flutter_map',
+              sourceUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'balanci.ng', title: 'flutter_map_marker_popup',
+              sourceUrl: 'https://web.archive.org/web/20240222173114/https://pub.dev/packages/flutter_map_marker_popup',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240723144921/https://pub.dev/packages/flutter_map_marker_popup/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'ownweb.fr', title: 'flutter_map_tappable_polyline',
+              sourceUrl: 'https://web.archive.org/web/20230927164717/https://pub.dev/packages/flutter_map_tappable_polyline',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240723145110/https://pub.dev/packages/flutter_map_tappable_polyline/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'https://pub.dev/packages/highlight',
+              sourceUrl: 'https://web.archive.org/web/20231103183350/https://pub.dev/packages/highlight',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240723145359/https://pub.dev/packages/highlight/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'http',
+              sourceUrl: 'https://web.archive.org/web/20240708062104/https://pub.dev/packages/http',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240513101105/https://pub.dev/packages/http/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'http_parser',
+              sourceUrl: 'https://web.archive.org/web/20240714172550/https://pub.dev/packages/http_parser',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20230530135251/https://pub.dev/packages/http_parser/license'
+            ),
       ]);
 
       content.add(GCWExpandableTextDivider(
