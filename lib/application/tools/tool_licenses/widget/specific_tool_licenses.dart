@@ -136,12 +136,52 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageHttp {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'dart.dev',
+      title: 'http',
+      sourceUrl: 'https://pub.dev/packages/http',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageHttpParser {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'dart.dev',
+      title: 'http_parser',
+      sourceUrl: 'https://pub.dev/packages/http_parser',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageIntl {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'dart.dev',
+      title: 'intl',
+      sourceUrl: 'https://pub.dev/packages/intl',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageLatlong2 {
     return ToolLicenseCodeLibrary(
       context: context,
       author: 'defylogic.dev',
       title: 'audioplayers',
       sourceUrl: 'https://pub.dev/packages/latlong2',
+      licenseType: ToolLicenseType.APACHE2,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackagePrefs {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'andrioussolutions.com',
+      title: 'prefs',
+      sourceUrl: 'https://pub.dev/packages/prefs',
       licenseType: ToolLicenseType.APACHE2,
     );
   }
