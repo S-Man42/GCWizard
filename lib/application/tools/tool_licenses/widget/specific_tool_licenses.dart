@@ -126,6 +126,16 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageArchive {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'loki3d.com',
+      title: 'archive',
+      sourceUrl: 'https://pub.dev/packages/archive',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageAudioplayers {
     return ToolLicenseCodeLibrary(
       context: context,
@@ -153,6 +163,16 @@ class _SpecificToolLicenses {
       title: 'http_parser',
       sourceUrl: 'https://pub.dev/packages/http_parser',
       licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageImage {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'loki3d.com',
+      title: 'image',
+      sourceUrl: 'https://pub.dev/packages/image',
+      licenseType: ToolLicenseType.MIT,
     );
   }
 
@@ -185,5 +205,17 @@ class _SpecificToolLicenses {
       licenseType: ToolLicenseType.APACHE2,
     );
   }
+
+  ToolLicenseEntry get _toolLicensePackageTuple {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'google.dev',
+      title: 'tuple',
+      sourceUrl: 'https://pub.dev/packages/tuple',
+      licenseType: ToolLicenseType.BSD2,
+    );
+  }
+
+
 }
 
