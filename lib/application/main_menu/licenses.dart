@@ -229,6 +229,21 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
             ),
+            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'flutter_highlight',
+              sourceUrl: 'https://web.archive.org/web/20240109182902/https://pub.dev/packages/flutter_highlight',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20230208081256/https://pub.dev/packages/flutter_highlight/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@flutter (GitHub, Google Inc.)', title: 'flutter_localizations',
+              sourceUrl: 'https://web.archive.org/web/20240418002509/https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
+            ),
+            ToolLicensePortedCode(context: context, author: 'fleaflet.dev', title: 'flutter_map',
+              sourceUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map/license'
+            ),
       ]);
 
       content.add(GCWExpandableTextDivider(
