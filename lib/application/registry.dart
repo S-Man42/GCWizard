@@ -690,6 +690,7 @@ void initializeRegistry(BuildContext context) {
       'bookcipher',
     ],
         licenses: [
+          stl._toolLicensePackageDiacritic,
           stl._toolLicensePackageTuple,
         ]),
     GCWTool(tool: const Bowling(), id: 'bowling', categories: const [
@@ -1717,6 +1718,7 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['alphabetvalues', 'asciivalues', 'textanalysis'],
     licenses:[
+      stl._toolLicensePackageDiacritic,
       stl._toolLicensePackageIntl,
     ]),
     GCWTool(tool: const Trifid(), id: 'trifid', categories: const [
@@ -3158,6 +3160,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'crosssums',
           'crossumrange',
+        ],
+        licenses: [
+          stl._toolLicensePackageDiacritic,
         ]),
     GCWTool(
         tool: const IteratedCrossSumRange(),
@@ -7210,7 +7215,10 @@ void initializeRegistry(BuildContext context) {
       'railways',
       'uic',
       'uic_wagoncode',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageDiacritic,
+        ]),
     GCWTool(
         tool: const UICWagonCodeVKM(),
         id: 'uic_wagoncode_vkm',

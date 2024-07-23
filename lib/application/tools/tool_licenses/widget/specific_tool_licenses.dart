@@ -176,6 +176,16 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageDiacritic {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'agilord.com',
+      title: 'diacritic',
+      sourceUrl: 'https://pub.dev/packages/diacritic',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageHttp {
     return ToolLicenseCodeLibrary(
       context: context,
