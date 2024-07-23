@@ -972,6 +972,7 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Conways_Spiel_des_Lebens&oldid=246560171'),
+      stl._toolLicensePackageTouchable,
     ]),
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1091,6 +1092,7 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicensePackageArchive,
       stl._toolLicensePackageImage,
       stl._toolLicensePackageTuple,
+      stl._toolLicensePackageUuid,
     ]),
     GCWTool(tool: const Homophone(), id: 'homophone', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1291,7 +1293,10 @@ void initializeRegistry(BuildContext context) {
         tool: const MusicNotes(),
         id: 'music_notes',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-        searchKeys: const ['music', 'music_notes']),
+        searchKeys: const ['music', 'music_notes'],
+        licenses: [
+          stl._toolLicensePackageTouchable,
+        ]),
     GCWTool(tool: const Navajo(), id: 'navajo', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1314,7 +1319,8 @@ void initializeRegistry(BuildContext context) {
             author: 'Thomas Rosenau',
             title: 'NonogramSolver',
             sourceUrl: 'https://github.com/ThomasR/nonogram-solver',
-            licenseType: ToolLicenseType.APACHE2)
+            licenseType: ToolLicenseType.APACHE2),
+          stl._toolLicensePackageTouchable,
     ]),
     GCWTool(
         tool: const NumberPyramidSolver(),
@@ -1332,7 +1338,8 @@ void initializeRegistry(BuildContext context) {
             author: 'Dennis P.',
             title: 'NumberPyramidSolver',
             sourceUrl: 'https://github.com/dennistreysa/Py-Ramid',
-            licenseType: ToolLicenseType.GPL3)
+            licenseType: ToolLicenseType.GPL3),
+      stl._toolLicensePackageTouchable,
     ]),
     GCWTool(
         tool: const NumberSequenceSelection(),
@@ -1455,6 +1462,10 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'qrcode',
+        ],
+        licenses: [
+          stl._toolLicensePackageQr,
+          stl._toolLicensePackageRscan,
         ]),
     GCWTool(
         tool: const QuadraticEquation(),
@@ -1667,7 +1678,8 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://github.com/S-Man42/sudoku_solver',
           licenseType: ToolLicenseType.FREE_TO_USE,
           licenseUrl:
-              'https://github.com/S-Man42/sudoku_solver/blob/5f1889ce8f6c4f0eb1f8ec10caa84cc318c827b8/LICENSE')
+              'https://github.com/S-Man42/sudoku_solver/blob/5f1889ce8f6c4f0eb1f8ec10caa84cc318c827b8/LICENSE'),
+      stl._toolLicensePackageTouchable,
     ]),
     GCWTool(
       tool: const SymbolTableSelection(),
@@ -1714,6 +1726,9 @@ void initializeRegistry(BuildContext context) {
           'symbol_westernunion',
           'symbol_murraybaudot',
           'symbol_baudot'
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
         ]),
     GCWTool(
         tool: const TextAnalysis(),
@@ -2051,6 +2066,9 @@ void initializeRegistry(BuildContext context) {
         id: 'babylonnumbers',
         searchKeys: const [
           'babylonian_numerals',
+        ],
+        licenses: [
+        stl._toolLicensePackageTouchable,
         ]),
 
     //BaseSelection **************************************************************************************************
@@ -2287,12 +2305,18 @@ void initializeRegistry(BuildContext context) {
     //Braille Selection ****************************************************************
     GCWTool(tool: const Braille(), id: 'braille', searchKeys: const [
       'braille',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
+        ]),
     GCWTool(
         tool: const BrailleDotNumbers(),
         id: 'brailledotnumbers',
         searchKeys: const [
           'braille',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
         ]),
 
     //CCITT Selection **********************************************************************************************
@@ -2497,6 +2521,9 @@ void initializeRegistry(BuildContext context) {
         id: 'cistercian',
         searchKeys: const [
           'cistercian',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
         ]),
 
     //ColorsSelection **********************************************************************************************
@@ -2747,6 +2774,7 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicensePackageFlutterMap,
           stl._toolLicensePackageFlutterMapMarkerPopup,
           stl._toolLicensePackageFlutterMapTappablePolyLine,
+          stl._toolLicensePackageUuid,
           ToolLicensePortedCode(
               context: context,
               author: 'Paul Kohut',
@@ -3234,6 +3262,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageWeekOfYear,
         ]),
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',
@@ -3249,7 +3278,8 @@ void initializeRegistry(BuildContext context) {
           permissionDay: 21,
           sourceUrl: 'https://web.archive.org/web/20240721214347/https://www.aoi.uzh.ch/de/islamwissenschaft/studium/tools/kalenderumrechnung.html',
         ),
-        stl._toolLicensePackageIntl
+        stl._toolLicensePackageIntl,
+        stl._toolLicensePackageWeekOfYear,
       ],
     ),
     GCWTool(tool: const ExcelTime(), id: 'excel_time', searchKeys: const [
@@ -4223,7 +4253,10 @@ void initializeRegistry(BuildContext context) {
     //MayaNumbers Selection **************************************************************************************
     GCWTool(tool: const MayaNumbers(), id: 'mayanumbers', searchKeys: const [
       'mayanumbers',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
+        ]),
 
     //Morse Selection ****************************************************************
     GCWTool(tool: Morse(), id: 'morse', searchKeys: const [
@@ -5267,7 +5300,10 @@ void initializeRegistry(BuildContext context) {
     //Predator Selection **************************************************************************************
     GCWTool(tool: const Predator(), id: 'predator', searchKeys: const [
       'predator',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
+        ]),
 
     //PrimesSelection **********************************************************************************************
     GCWTool(tool: const NthPrime(), id: 'primes_nthprime', searchKeys: const [
@@ -5493,7 +5529,8 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageCodeTextField,
           stl._toolLicensePackageFlutterHighlight,
-          stl._toolLicensePackageHighlight
+          stl._toolLicensePackageHighlight,
+          stl._toolLicensePackageStack,
         ]),
 
     //Segments Display *******************************************************************************************
@@ -5543,6 +5580,9 @@ void initializeRegistry(BuildContext context) {
         id: 'shadoksnumbers',
         searchKeys: const [
           'shadoksnumbers',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
         ]),
 
     //Silver Ratio Selection **********************************************************************************************
@@ -7010,6 +7050,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_chappe',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
         ]),
     GCWTool(
         tool: const EdelcrantzTelegraph(),
@@ -7041,6 +7084,7 @@ void initializeRegistry(BuildContext context) {
           permissionMonth: 10,
           permissionDay: 5
         ),
+        stl._toolLicensePackageTouchable,
       ],),
     GCWTool(
         tool: const MurrayTelegraph(),
@@ -7055,6 +7099,8 @@ void initializeRegistry(BuildContext context) {
               title: 'Informationen übertragen - nicht mit der großen Klappe sondern mit sechs kleinen Klappen ... der Klappentelegraph',
               medium: 'e-Mail',
               permissionYear: 2021,
+            permissionMonth: 7,
+            permissionDay: 23,
             sourceUrl: 'https://web.archive.org/web/20240721211725/https://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/',
           ),
           ToolLicensePrivatePermittedDigitalSource(context: context,
@@ -7070,7 +7116,8 @@ void initializeRegistry(BuildContext context) {
               author: 'Unknown',
               title: 'View of the Telegraph erected on the Admiralty Office, Charing Cross in Feby 1796',
               sourceUrl: 'https://www.alamy.com/english-view-of-the-telegraph-erected-on-the-admiralty-office-charing-cross-in-feby-1796-text-in-english-within-plate-the-print-dates-from-the-year-that-the-revd-lord-george-murray-designed-the-original-arrangement-although-telegraph-or-semaphore-signals-were-also-developed-in-france-as-well-as-england-in-the-last-years-of-the-18th-century-murrays-system-was-known-as-the-shutter-telegraph-and-comprised-a-vertical-board-with-six-large-holes-in-its-face-each-of-which-could-be-opened-to-display-the-sky-or-a-light-or-closed-see-mdl0020-depending-on-the-lie-of-the-land-distances-bet-image206595447.html',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+              licenseType: ToolLicenseType.FREE_TO_USE),
+          stl._toolLicensePackageTouchable,
         ]),
     GCWTool(
         tool: const OhlsenTelegraph(),
@@ -7087,7 +7134,8 @@ void initializeRegistry(BuildContext context) {
           permissionYear: 2021,
           permissionMonth: 10,
           permissionDay: 28
-      )
+      ),
+      stl._toolLicensePackageTouchable,
     ]),
     GCWTool(
         tool: const PasleyTelegraph(),
@@ -7095,6 +7143,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_pasley',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
+          stl._toolLicenseWrixonGeheimsprachen,
         ]),
     GCWTool(
         tool: const PophamTelegraph(),
@@ -7102,6 +7154,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_popham',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
+          stl._toolLicenseWrixonGeheimsprachen,
         ]),
     GCWTool(
         tool: const PrussiaTelegraph(),
@@ -7118,7 +7174,8 @@ void initializeRegistry(BuildContext context) {
           permissionYear: 2021,
           permissionMonth: 11,
           permissionDay: 26
-      )
+      ),
+      stl._toolLicensePackageTouchable,
     ]),
     GCWTool(
         tool: const SemaphoreTelegraph(),
@@ -7126,6 +7183,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'telegraph',
           'telegraph_semaphore',
+        ],
+        licenses: [
+          stl._toolLicensePackageTouchable,
         ]),
     GCWTool(
         tool: const WigWagSemaphoreTelegraph(),
@@ -7359,6 +7419,7 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageUuid,
           ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
     GCWTool(
