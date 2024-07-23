@@ -468,6 +468,7 @@ import 'package:gc_wizard/tools/science_and_technology/weather_symbols/widget/we
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_tables_examples_select/widget/symbol_tables_examples_select.dart';
+import 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/widget/wedding_anniversaries.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
@@ -7239,6 +7240,11 @@ void initializeRegistry(BuildContext context) {
       'rotation',
       'trithemius',
     ]),
+    GCWTool(
+        tool: const WeddingAnniversaries(),
+        id: 'wedding_anniversaries',
+        categories: const [ToolCategory.MISCELLANEOUS],
+        searchKeys: const ['weddinganniversaries']),
 
     // WherigoUrwigoSelection ************************************************************************************
     GCWTool(tool: const WherigoAnalyze(), id: 'wherigo', categories: const [
