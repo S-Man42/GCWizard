@@ -1254,10 +1254,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'games',
           'games_numberpyramidsolver',
-        ],licenses: [
+        ], licenses: [
           ToolLicensePortedCode(
             context: context,
-            author: 'Dennis P. ',
+            author: 'Dennis P.',
             title: 'NumberPyramidSolver',
             sourceUrl: 'https://github.com/dennistreysa/Py-Ramid',
             licenseType: ToolLicenseType.GPL3)
@@ -5420,7 +5420,14 @@ void initializeRegistry(BuildContext context) {
         'symbol_replacer',
       ],
       categories: const [ToolCategory.GENERAL_CODEBREAKERS],
-    ),
+      licenses: [
+        ToolLicensePortedCode(
+          context: context,
+          author: 'Zac Forshee',
+          title: 'ImageHashing ',
+          sourceUrl: 'https://github.com/jforshee/ImageHashing/blob/master/ImageHashing/ImageHashing.cs',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: const [
       'symbol_adlam',
