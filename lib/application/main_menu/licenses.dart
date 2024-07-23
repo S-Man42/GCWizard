@@ -295,7 +295,7 @@ class _LicensesState extends State<Licenses> {
           suppressTopSpace: false,
           child: const GCWColumnedMultilineOutput(data: [
             ['archive', 'Apache 2.0 License'],
-            ['audioplayers', 'MIT License'],
+            # DONE # ['audioplayers', 'MIT License'],
             ['auto_size_text', 'MIT License'],
             ['base32', 'MIT License'],
             ['cached_network_image', 'MIT License'],
@@ -315,7 +315,7 @@ class _LicensesState extends State<Licenses> {
             # DONE # ['http', 'BSD-3-Clause License'],
             # DONE # ['http_parser', 'BSD-3-Clause License'],
             ['image', 'Apache 2.0 License'],
-            ['intl', 'BSD-3-Clause License'],
+            # DONE # ['intl', 'BSD-3-Clause License'],
             # DONE # ['latlong2', 'Apache 2.0 License'],
             ['location', 'MIT License'],
             ['mask_text_input_formatter', 'MIT License'],
@@ -326,7 +326,7 @@ class _LicensesState extends State<Licenses> {
             ['permission_handler', 'MIT License'],
             ['photo_view', 'MIT License'],
             # DONE ['pointycastle', 'MIT License'],
-            ['prefs', 'Apache 3.0 License'],
+            # DONE # ['prefs', 'Apache 3.0 License'],
             ['provider', 'MIT License'],
             ['qr', 'BSD-3-Clause License'],
             ['r_scan', 'BSD-3-Clause License'],
@@ -341,10 +341,7 @@ class _LicensesState extends State<Licenses> {
             ['utility', 'MIT License'],
             ['week_of_year', 'BSD-3-Clause License'],
             ['xml', 'MIT License'],
-            [
-              'xmp',
-              'MIT License'
-            ], // it used not in pubspec but directly embedded because of conflicts of internal dependencies
+            ['xmp','MIT License'], // it used not in pubspec but directly embedded because of conflicts of internal dependencies
           ])),
       GCWExpandableTextDivider(
           text: i18n(context, 'licenses_fonts'),
