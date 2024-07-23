@@ -125,5 +125,25 @@ class _SpecificToolLicenses {
       sourceUrl: 'https://en.wikisource.org/w/index.php?title=An_Introduction_to_the_Study_of_the_Maya_Hieroglyphs/Chapter_3&oldid=12772621',
     );
   }
+
+  ToolLicenseEntry get _toolLicensePackageAudioplayers {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'blue-fire.xyz',
+      title: 'audioplayers',
+      sourceUrl: 'https://pub.dev/packages/audioplayers',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageLatlong2 {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'defylogic.dev',
+      title: 'audioplayers',
+      sourceUrl: 'https://pub.dev/packages/latlong2',
+      licenseType: ToolLicenseType.APACHE2,
+    );
+  }
 }
 

@@ -873,7 +873,10 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'exif',
-    ]),
+    ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
+        ],),
     GCWTool(
       tool: const FormulaSolverFormulaGroups(),
       id: 'formulasolver',
@@ -1800,7 +1803,8 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePracticalAstronomy,
           stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT
+          stl._toolLicenseNASADeltaT,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const SunPosition(),
@@ -1813,7 +1817,8 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePracticalAstronomy,
           stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT
+          stl._toolLicenseNASADeltaT,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const MoonRiseSet(),
@@ -1826,7 +1831,8 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePracticalAstronomy,
           stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT
+          stl._toolLicenseNASADeltaT,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const MoonPosition(),
@@ -1840,7 +1846,8 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePracticalAstronomy,
           stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT
+          stl._toolLicenseNASADeltaT,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const EasterSelection(),
@@ -2403,7 +2410,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_geodetic',
         ],
         licenses: [
-          stl._toolLicenseGeographicLib
+          stl._toolLicenseGeographicLib,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const DistanceBearingGeodetic(),
@@ -2411,7 +2419,7 @@ void initializeRegistry(BuildContext context) {
         iconPath:
             'lib/tools/coords/_common/assets/icons/icon_distance_and_bearing.png',
         categories: const [
-          ToolCategory.COORDINATES
+          ToolCategory.COORDINATES,
         ],
         searchKeys: const [
           'coordinates',
@@ -2419,7 +2427,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_geodetic',
         ],
         licenses: [
-          stl._toolLicenseGeographicLib
+          stl._toolLicenseGeographicLib,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const FormatConverter(),
@@ -2562,7 +2571,9 @@ void initializeRegistry(BuildContext context) {
               title: 'Gauß-Krüger',
               medium: 'PN in geoclub.de forum',
               permissionYear: 2013),
-        ]),
+          stl._toolLicensePackageLatlong2,
+        ],
+    ),
     GCWTool(
         tool: const MapView(),
         autoScroll: false,
@@ -2578,6 +2589,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseFAA8260,
+          stl._toolLicensePackageLatlong2,
           ToolLicensePortedCode(
               context: context,
               author: 'Paul Kohut',
@@ -2600,7 +2612,10 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'formulasolver',
           'coordinates_variablecoordinateformulas',
-        ]),
+        ],
+    licenses:[
+      stl._toolLicensePackageLatlong2,
+    ],),
     GCWTool(
         tool: const DMMOffset(),
         id: 'coords_dmmoffset',
@@ -2625,6 +2640,7 @@ void initializeRegistry(BuildContext context) {
           'coordinates_coordinateaveraging',
         ],
         licenses: [
+          stl._toolLicensePackageLatlong2,
           ToolLicensePortedCode(
               context: context,
               author: 'David Vávra',
@@ -2646,6 +2662,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_centertwopoints',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const CentroidArithmeticMean(),
@@ -2660,7 +2679,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_arithmeticmean',
         ],
         licenses: [
-          stl._toolLicenseGeoMidpoint
+          stl._toolLicenseGeoMidpoint,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const CentroidCenterOfGravity(),
@@ -2675,7 +2695,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_centerofgravity',
         ],
         licenses: [
-          stl._toolLicenseGeoMidpoint
+          stl._toolLicenseGeoMidpoint,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const CenterThreePoints(),
@@ -2683,12 +2704,15 @@ void initializeRegistry(BuildContext context) {
         iconPath:
             'lib/tools/coords/_common/assets/icons/icon_center_three_points.png',
         categories: const [
-          ToolCategory.COORDINATES
+          ToolCategory.COORDINATES,
         ],
         searchKeys: const [
           'coordinates',
           'coordinates_centerthreepoints',
-        ]),
+        ],
+    licenses:[
+      stl._toolLicensePackageLatlong2,
+    ]),
     GCWTool(
         tool: const SegmentLine(),
         id: 'coords_segmentline',
@@ -2699,6 +2723,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_segmentline',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const SegmentBearings(),
@@ -2711,6 +2738,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_segmentbearing',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
       tool: const CrossBearing(),
@@ -2721,6 +2751,9 @@ void initializeRegistry(BuildContext context) {
         'coordinates',
         'coordinates_crossbearing',
       ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
+        ]
     ),
     GCWTool(
         tool: const IntersectBearings(),
@@ -2736,7 +2769,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_intersectbearing',
         ],
         licenses: [
-          stl._toolLicenseGeographicLib
+          stl._toolLicenseGeographicLib,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const IntersectFourPoints(),
@@ -2751,7 +2785,8 @@ void initializeRegistry(BuildContext context) {
           'coordinates_intersectfourpoints',
         ],
         licenses: [
-          stl._toolLicenseGeographicLib
+          stl._toolLicenseGeographicLib,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const IntersectGeodeticAndCircle(),
@@ -2768,7 +2803,8 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseFAA8260,
-          stl._toolLicenseMitre
+          stl._toolLicenseMitre,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const IntersectTwoCircles(),
@@ -2784,7 +2820,8 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseFAA8260,
-          stl._toolLicenseMitre
+          stl._toolLicenseMitre,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const IntersectThreeCircles(),
@@ -2800,7 +2837,8 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseFAA8260,
-          stl._toolLicenseMitre
+          stl._toolLicenseMitre,
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const Antipodes(),
@@ -2812,7 +2850,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_antipodes',
-        ]),
+        ],
+    licenses:[
+      stl._toolLicensePackageLatlong2,
+    ]),
     GCWTool(
         tool: const Intersection(),
         id: 'coords_intersection',
@@ -2823,6 +2864,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_intersection',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const Resection(),
@@ -2834,6 +2878,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_resection',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const EquilateralTriangle(),
@@ -2846,6 +2893,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_equilateraltriangle',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
     GCWTool(
         tool: const WaypointProjectionRhumbline(),
@@ -2890,6 +2940,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'coordinates',
           'coordinates_ellipsoidtransform',
+        ],
+        licenses:[
+          stl._toolLicensePackageLatlong2,
         ]),
 
     //Countries Selection ******************************************************************************************
@@ -7056,6 +7109,8 @@ void initializeRegistry(BuildContext context) {
               title: 'WF.Compiler',
               sourceUrl: 'https://web.archive.org/web/20240722202351/https://github.com/WFoundation/WF.Compiler',
               licenseType: ToolLicenseType.GITHUB_DEFAULT),
+          stl._toolLicensePackageAudioplayers,
+          stl._toolLicensePackageLatlong2,
           ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
     GCWTool(
