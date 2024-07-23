@@ -594,12 +594,12 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses:[
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Johannes Trithemius',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Johannes_Trithemius&oldid=1228861699'),
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Polygraphia (book)',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Polygraphia_(book)&oldid=1217884545'),
@@ -717,7 +717,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Burrows–Wheeler transform',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Burrows%E2%80%93Wheeler_transform&oldid=1220898169')
@@ -2098,7 +2098,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseOnlineArticle(
             context: context,
-            author: 'Wikipedia',
+            author: 'en.wikipedia.org and contributors',
             title: 'Binary-to-text encoding',
             licenseType: ToolLicenseType.CCBYSA4,
             sourceUrl:
@@ -2148,7 +2148,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseOnlineArticle(
             context: context,
-            author: 'Wikipedia',
+            author: 'en.wikipedia.org and contributors',
             title: 'Binary-to-text encoding',
             licenseType: ToolLicenseType.CCBYSA4,
             sourceUrl:
@@ -2173,7 +2173,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseOnlineArticle(
             context: context,
-            author: 'Wikipedia',
+            author: 'en.wikipedia.org and contributors',
             title: 'Binary-to-text encoding',
             licenseType: ToolLicenseType.CCBYSA4,
             sourceUrl:
@@ -3396,7 +3396,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Befunge',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788'),
           ToolLicensePortedCode(context: context,
@@ -3414,7 +3414,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Brainfuck',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695'),
           ToolLicensePortedCode(context: context,
@@ -3502,7 +3502,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Karel (programming language)',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127'),
           ToolLicenseOnlineArticle(context: context,
@@ -3520,7 +3520,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'en.wikipedia.org and contributors',
               title: 'Malbolge',
               sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335'),
           ToolLicenseOnlineArticle(context: context,
@@ -3548,7 +3548,7 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           ToolLicenseOnlineArticle(context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Ook!',
               sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Ook!&oldid=223308865'),
           ToolLicensePortedCode(context: context,
@@ -3566,7 +3566,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           ToolLicenseOnlineArticle(
               context: context,
-              author: 'Wikipedia',
+              author: 'de.wikipedia.org and contributors',
               title: 'Piet (Programmiersprache)',
               licenseType: ToolLicenseType.CCBYSA4,
               sourceUrl:
@@ -3602,7 +3602,7 @@ void initializeRegistry(BuildContext context) {
     licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'Wikipedia',
+          author: 'en.wikipedia.org and contributors',
           title: 'Whitespace (programming language)',
           licenseType: ToolLicenseType.CCBYSA4,
           sourceUrl:
@@ -5817,7 +5817,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_arabic_indian_numerals',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Arabische Zahlschrift',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
         ]),
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
@@ -6047,7 +6050,10 @@ void initializeRegistry(BuildContext context) {
       'cistercian',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Cistercian numerals',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cistercian_numerals&oldid=1213598900')
         ]),
     GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
       'symbol_clocks',
@@ -6109,7 +6115,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_cookewheatstone_1',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Cooke and Wheatstone telegraph',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_2',
@@ -6119,7 +6128,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_cookewheatstone_2',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Cooke and Wheatstone telegraph',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_5',
@@ -6129,7 +6141,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_cookewheatstone_5',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Cooke and Wheatstone telegraph',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
         ]),
     GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
       'symbol_cosmic',
@@ -6202,7 +6217,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_devanagari_numerals',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Devanagari numerals',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774')
         ]),
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
@@ -6270,7 +6288,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_eastern_arabic_indian_numerals',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Arabische Zahlschrift',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'egyptian_numerals',
@@ -6278,7 +6299,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_egyptian_numerals',
         ],
         licenses: [
-          
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Egyptian numerals',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Egyptian_numerals&oldid=1222065795')
         ]),
     GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: const [
       'elia',
@@ -6383,7 +6407,10 @@ void initializeRegistry(BuildContext context) {
           'symbol_flags_rn_marryat',
         ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Maritime flag signalling',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_rn_popham',
@@ -6410,13 +6437,19 @@ void initializeRegistry(BuildContext context) {
       'symbol_freemason',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikimedia Commons',
+              title: 'Category:Pigpen cipher',
+              sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Category:Pigpen_cipher&oldid=334624960')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'freemason_v2',
         symbolSearchStrings: const ['symbol_freemason'],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Wikimedia Commons',
+              title: 'Category:Pigpen cipher',
+              sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Category:Pigpen_cipher&oldid=334624960')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'futhark_elder',
@@ -6718,31 +6751,46 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'iso7010_firesafety',
         symbolSearchStrings: const ['iso7010', 'iso7010_firesafety'],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Brandschutzzeichen',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_mandatory',
         symbolSearchStrings: const ['iso7010', 'iso7010_mandatory'],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Gebotszeichen',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_prohibition',
         symbolSearchStrings: const ['iso7010', 'iso7010_prohibition'],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Verbotszeichen',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_safecondition',
         symbolSearchStrings: const ['iso7010', 'iso7010_safecondition'],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Rettungszeichen',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_warning',
         symbolSearchStrings: const ['iso7010', 'iso7010_warning'],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Warnzeichen',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614')
         ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const [
       'ccitt',
@@ -6851,7 +6899,10 @@ void initializeRegistry(BuildContext context) {
       'symbol_kurrent',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Kurrent',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kurrent&oldid=1205126071')
         ]),
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
@@ -6883,7 +6934,10 @@ void initializeRegistry(BuildContext context) {
       'symbol_malachim',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Malachim',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821')
         ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
@@ -7192,7 +7246,10 @@ void initializeRegistry(BuildContext context) {
       'symbol_ogham',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Ogham',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Ogham&oldid=1234313745')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'optical_fiber_fotag',
@@ -7537,7 +7594,10 @@ void initializeRegistry(BuildContext context) {
       'symbol_suetterlin',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Sütterlin',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=S%C3%BCtterlin&oldid=1231365683')
         ]),
     GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: const [
       'symbol_sunuz',
@@ -7561,7 +7621,10 @@ void initializeRegistry(BuildContext context) {
       'symbol_tamil_numerals',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Arabische Zahlschrift',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
         ]),
     GCWSymbolTableTool(
       symbolKey: 'telegraph_pasley',
