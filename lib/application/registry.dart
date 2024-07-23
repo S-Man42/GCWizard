@@ -2152,7 +2152,7 @@ void initializeRegistry(BuildContext context) {
             author: 'Patrick Favre-Bulle',
             title: 'Base122',
             sourceUrl:
-                'https://web.archive.org/web/20240721180901/https://github.com/patrickfav/base122-java/blob/master/src/main/java/at/favre/lib/encoding/Base122.java',
+                'https://web.archive.org/web/20240723104905/https://github.com/patrickfav/base122-java/blob/master/src/main/java/at/favre/lib/encoding/Base122.java',
             licenseType: ToolLicenseType.APACHE2),
       ],
     ),
