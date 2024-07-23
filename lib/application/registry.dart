@@ -1235,7 +1235,15 @@ void initializeRegistry(BuildContext context) {
         tool: const NonogramSolver(),
         id: 'nonogramsolver',
         categories: const [ToolCategory.GAMES],
-        searchKeys: const ['games', 'nonogramsolver', 'grid', 'images']),
+        searchKeys: const ['games', 'nonogramsolver', 'grid', 'images'],
+        licenses: [
+          ToolLicensePortedCode(
+            context: context,
+            author: 'Thomas Rosenau',
+            title: 'NonogramSolver',
+            sourceUrl: 'https://github.com/ThomasR/nonogram-solver',
+            licenseType: ToolLicenseType.APACHE2)
+    ]),
     GCWTool(
         tool: const NumberPyramidSolver(),
         id: 'numberpyramidsolver',
@@ -1246,7 +1254,14 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'games',
           'games_numberpyramidsolver',
-        ]),
+        ],licenses: [
+          ToolLicensePortedCode(
+            context: context,
+            author: 'Dennis P. ',
+            title: 'NumberPyramidSolver',
+            sourceUrl: 'https://github.com/dennistreysa/Py-Ramid',
+            licenseType: ToolLicenseType.GPL3)
+    ]),
     GCWTool(
         tool: const NumberSequenceSelection(),
         id: 'numbersequence',
