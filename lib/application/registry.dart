@@ -633,7 +633,10 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'battleship',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageCodeTextField,
+        ]),
     GCWTool(
         tool: const BloodAlcoholContent(),
         id: 'bloodalcoholcontent',
@@ -687,12 +690,16 @@ void initializeRegistry(BuildContext context) {
       'bookcipher',
     ],
         licenses: [
+          stl._toolLicensePackageDiacritic,
           stl._toolLicensePackageTuple,
         ]),
     GCWTool(tool: const Bowling(), id: 'bowling', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
       'bowling',
+    ],
+        licenses: [
+      stl._toolLicensePackageAutoSizeText,
     ]),
     GCWTool(
         tool: const BundeswehrTalkingBoardSelection(),
@@ -902,6 +909,7 @@ void initializeRegistry(BuildContext context) {
       'exif',
     ],
         licenses:[
+          stl._toolLicensePackageExif,
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageImage,
@@ -1028,6 +1036,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageTuple,
+          stl._toolLicensePackageAutoSizeText,
         ]),
     GCWTool(
         tool: const HashSelection(),
@@ -1057,7 +1066,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'hexadecimal',
           'hexstring2file',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageArchive,
+    ]),
     GCWTool(tool: const HexViewer(), id: 'hexviewer', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
@@ -1455,6 +1467,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageMathExpressions,
         ]),
     GCWTool(tool: const Rabbit(), id: 'rabbit', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1596,6 +1609,7 @@ void initializeRegistry(BuildContext context) {
     ],
     licenses: [
       stl._toolLicensePackageImage,
+      stl._toolLicensePackageEncrypt,
     ]),
     GCWTool(
         tool: const StraddlingCheckerboard(),
@@ -1707,6 +1721,7 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['alphabetvalues', 'asciivalues', 'textanalysis'],
     licenses:[
+      stl._toolLicensePackageDiacritic,
       stl._toolLicensePackageIntl,
     ]),
     GCWTool(tool: const Trifid(), id: 'trifid', categories: const [
@@ -1892,7 +1907,8 @@ void initializeRegistry(BuildContext context) {
               author: 'The International Astronomical Union',
               title: 'The Constellations',
               sourceUrl: 'https://www.iau.org/public/themes/constellations/',
-              licenseType: ToolLicenseType.CCBY4)
+              licenseType: ToolLicenseType.CCBY4),
+          stl._toolLicensePackageArchive,
         ]),
     GCWTool(
         tool: const IAUSingleConstellation(ConstellationName: 'Andromeda'),
@@ -1903,7 +1919,8 @@ void initializeRegistry(BuildContext context) {
               author: 'The International Astronomical Union',
               title: 'The Constellations',
               sourceUrl: 'https://www.iau.org/public/themes/constellations/',
-              licenseType: ToolLicenseType.CCBY4)
+              licenseType: ToolLicenseType.CCBY4),
+  stl._toolLicensePackageArchive,
         ]),
     GCWTool(
         tool: const SunRiseSet(),
@@ -2048,7 +2065,10 @@ void initializeRegistry(BuildContext context) {
       'base32',
     ], deeplinkAlias: const [
       'base32'
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageBase32,
+        ]),
     GCWTool(
       tool: Base58(),
       id: 'base_base58',
@@ -2152,7 +2172,7 @@ void initializeRegistry(BuildContext context) {
             author: 'Patrick Favre-Bulle',
             title: 'Base122',
             sourceUrl:
-                'https://web.archive.org/web/20240721180901/https://github.com/patrickfav/base122-java/blob/master/src/main/java/at/favre/lib/encoding/Base122.java',
+                'https://web.archive.org/web/20240723104905/https://github.com/patrickfav/base122-java/blob/master/src/main/java/at/favre/lib/encoding/Base122.java',
             licenseType: ToolLicenseType.APACHE2),
       ],
     ),
@@ -2724,6 +2744,9 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackagePrefs,
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageFlutterMap,
+          stl._toolLicensePackageFlutterMapMarkerPopup,
+          stl._toolLicensePackageFlutterMapTappablePolyLine,
           ToolLicensePortedCode(
               context: context,
               author: 'Paul Kohut',
@@ -2751,6 +2774,7 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicensePackageLatlong2,
       stl._toolLicensePackagePrefs,
       stl._toolLicensePackageIntl,
+      stl._toolLicensePackageMathExpressions,
     ],),
     GCWTool(
         tool: const DMMOffset(),
@@ -3127,6 +3151,9 @@ void initializeRegistry(BuildContext context) {
           'countries',
           'symbol_flags',
           'countries_flags',
+        ],
+        licenses: [
+          stl._toolLicensePackageArchive,
         ]),
 
     //CrossSumSelection *******************************************************************************************
@@ -3140,6 +3167,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'crosssums',
           'crossumrange',
+        ],
+        licenses: [
+          stl._toolLicensePackageDiacritic,
         ]),
     GCWTool(
         tool: const IteratedCrossSumRange(),
@@ -3339,6 +3369,9 @@ void initializeRegistry(BuildContext context) {
               title: 'Befunge-93',
               sourceUrl: 'https://web.archive.org/web/20240722072403/https://github.com/catseye/Befunge-93',
               licenseType: ToolLicenseType.BSD),
+          stl._toolLicensePackageCodeTextField,
+          stl._toolLicensePackageFlutterHighlight,
+          stl._toolLicensePackageHighlight
                   ]),
     GCWTool(tool: const Brainfk(), id: 'brainfk', searchKeys: const [
       'esotericprogramminglanguage',
@@ -5162,6 +5195,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageTuple,
+          stl._toolLicensePackageAutoSizeText,
         ]),
     GCWTool(
         tool: const PeriodicTableDataView(
@@ -5457,6 +5491,9 @@ void initializeRegistry(BuildContext context) {
               customComment: 'Page 296ff',
               sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up'),
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageCodeTextField,
+          stl._toolLicensePackageFlutterHighlight,
+          stl._toolLicensePackageHighlight
         ]),
 
     //Segments Display *******************************************************************************************
@@ -5644,6 +5681,7 @@ void initializeRegistry(BuildContext context) {
         stl._toolLicensePackagePrefs,
         stl._toolLicensePackageTuple,
         stl._toolLicensePackageImage,
+        stl._toolLicensePackageAutoSizeText,
     ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: const [
@@ -7178,7 +7216,10 @@ void initializeRegistry(BuildContext context) {
       'railways',
       'uic',
       'uic_wagoncode',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageDiacritic,
+        ]),
     GCWTool(
         tool: const UICWagonCodeVKM(),
         id: 'uic_wagoncode_vkm',

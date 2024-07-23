@@ -146,6 +146,116 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePackageAutoSizeText {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'simc.com',
+      title: 'auto_size_text',
+      sourceUrl: 'https://pub.dev/packages/auto_size_text',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageBase32 {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'yuli.dev',
+      title: 'base32',
+      sourceUrl: 'https://pub.dev/packages/base32',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageCodeTextField {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'code_text_field',
+      sourceUrl: 'https://pub.dev/packages/code_text_field',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageDiacritic {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'agilord.com',
+      title: 'diacritic',
+      sourceUrl: 'https://pub.dev/packages/diacritic',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageEncrypt {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'encrypt',
+      sourceUrl: 'https://pub.dev/packages/encrypt',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageExif {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'exif',
+      sourceUrl: 'https://pub.dev/packages/exif',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageFlutterHighlight {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'flutter_highlight',
+      sourceUrl: 'https://pub.dev/packages/flutter_highlight',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageFlutterMap {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'fleaflet.dev',
+      title: 'flutter_map',
+      sourceUrl: 'https://pub.dev/packages/flutter_map',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageFlutterMapMarkerPopup {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'balanci.ng',
+      title: 'flutter_map_marker_popup',
+      sourceUrl: 'https://pub.dev/packages/flutter_map_marker_popup',
+      licenseType: ToolLicenseType.BSD3,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageFlutterMapTappablePolyLine {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'ownweb.fr',
+      title: 'flutter_map_tappable_polyline',
+      sourceUrl: 'https://pub.dev/packages/flutter_map_tappable_polyline',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageHighlight {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'unverified uploader',
+      title: 'highlight',
+      sourceUrl: 'https://pub.dev/packages/highlight',
+      licenseType: ToolLicenseType.MIT,
+    );
+  }
+
   ToolLicenseEntry get _toolLicensePackageHttp {
     return ToolLicenseCodeLibrary(
       context: context,
@@ -193,6 +303,16 @@ class _SpecificToolLicenses {
       title: 'audioplayers',
       sourceUrl: 'https://pub.dev/packages/latlong2',
       licenseType: ToolLicenseType.APACHE2,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePackageMathExpressions {
+    return ToolLicenseCodeLibrary(
+      context: context,
+      author: 'leonhardt.co.nz',
+      title: 'math_expressions',
+      sourceUrl: 'https://pub.dev/packages/math_expressions',
+      licenseType: ToolLicenseType.MIT,
     );
   }
 
