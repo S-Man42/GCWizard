@@ -9,6 +9,7 @@ enum ToolLicenseType {
   AL, // Artistic License
   APACHE2, // Apache 2.0
   BSD, // BSD
+  BSD2, // BSD2
   BSD3, // BSD v3
   CCBY4, // Creative Commons CC BY 4.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
@@ -29,6 +30,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.AL: return 'Artistic License';
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
     case ToolLicenseType.BSD: return 'BSD License';
+    case ToolLicenseType.BSD2: return 'BSD-2-Clause';
     case ToolLicenseType.BSD3: return 'BSD-3-Clause';
     case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
     case ToolLicenseType.CCBYSA4: return 'Creative Commons CC BY-SA 4.0';

@@ -539,6 +539,9 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'animated_images',
+        ],
+        licenses: [
+          stl._toolLicensePackageImage,
         ]),
     GCWTool(
         tool: const AnimatedImageMorseCode(),
@@ -550,7 +553,11 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'animated_images_morse_code',
           'animated_images',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageTuple,
+      stl._toolLicensePackageImage,
+    ]),
     GCWTool(
         tool: const ApparentTemperatureSelection(),
         id: 'apparenttemperature_selection',
@@ -678,7 +685,10 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'bookcipher',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageTuple,
+        ]),
     GCWTool(tool: const Bowling(), id: 'bowling', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
@@ -846,6 +856,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'enigma',
     ], licenses: [
+      stl._toolLicensePackageTuple,
       ToolLicenseOnlineArticle(
         context: context,
         author: 'en.wikipedia.org and contributors',
@@ -893,6 +904,7 @@ void initializeRegistry(BuildContext context) {
         licenses:[
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageImage,
         ],),
     GCWTool(
       tool: const FormulaSolverFormulaGroups(),
@@ -1013,6 +1025,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'music',
           'guitar',
+        ],
+        licenses: [
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const HashSelection(),
@@ -1058,7 +1073,13 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'hiddendata',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageAudioplayers,
+      stl._toolLicensePackageArchive,
+      stl._toolLicensePackageImage,
+      stl._toolLicensePackageTuple,
+    ]),
     GCWTool(tool: const Homophone(), id: 'homophone', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1114,6 +1135,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageImage,
         ]),
     GCWTool(
         tool: const ImageFlipRotate(),
@@ -1122,7 +1144,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'images',
           'image_fliprotate',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageImage,
+    ]),
     GCWTool(
         tool: const ImageStretchShrink(),
         categories: const [ToolCategory.IMAGES_AND_FILES],
@@ -1130,7 +1155,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'images',
           'image_stretchshrink',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageImage,
+    ]),
     GCWTool(
         tool: const IPCodes(),
         id: 'ipcodes',
@@ -1183,7 +1211,9 @@ void initializeRegistry(BuildContext context) {
               author: 'Jérémie "piellardj" Piellard',
               title: 'stereogram-solver',
               sourceUrl: 'https://web.archive.org/web/20240722204912/https://github.com/piellardj/stereogram-solver?tab=readme-ov-file',
-              licenseType: ToolLicenseType.MIT)
+              licenseType: ToolLicenseType.MIT),
+          stl._toolLicensePackageTuple,
+          stl._toolLicensePackageImage,
         ]),
     GCWTool(
         tool: const MathematicalConstants(),
@@ -1515,7 +1545,10 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'solitaire',
-    ]),
+    ],
+        licenses: [
+          stl._toolLicensePackageTuple,
+        ]),
     GCWTool(
         tool: const Sort(),
         id: 'sort',
@@ -1560,6 +1593,9 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'stegano',
+    ],
+    licenses: [
+      stl._toolLicensePackageImage,
     ]),
     GCWTool(
         tool: const StraddlingCheckerboard(),
@@ -1601,7 +1637,8 @@ void initializeRegistry(BuildContext context) {
                   'https://gitlab.com/guballa/SubstitutionBreaker/-/tree/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb',
               licenseType: ToolLicenseType.MIT,
               licenseUrl:
-                  'https://gitlab.com/guballa/SubstitutionBreaker/-/blob/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb/LICENSE')
+                  'https://gitlab.com/guballa/SubstitutionBreaker/-/blob/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb/LICENSE'),
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(tool: const SudokuSolver(), id: 'sudokusolver', categories: const [
       ToolCategory.GAMES
@@ -1749,6 +1786,10 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'visualcryptography',
           'images'
+        ],
+        licenses: [
+          stl._toolLicensePackageTuple,
+          stl._toolLicensePackageImage,
         ]),
     GCWTool(tool: const WASD(), id: 'wasd', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -3152,6 +3193,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const DayOfTheYear(),
@@ -3490,6 +3532,7 @@ void initializeRegistry(BuildContext context) {
               sourceUrl:
               'https://web.archive.org/web/20240722201719/https://github.com/sebbeobe/piet_message_generator',
               licenseType: ToolLicenseType.GPL3),
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const WhitespaceLanguage(),
@@ -3519,6 +3562,7 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
           'https://web.archive.org/web/20240722200540/https://github.com/naokikp/naokikp.github.io',
           licenseType: ToolLicenseType.GITHUB_DEFAULT),
+      stl._toolLicensePackageTuple,
     ]),
 
     //Hash Selection *****************************************************************************************
@@ -5127,6 +5171,7 @@ void initializeRegistry(BuildContext context) {
         tool: const PeriodicTable(), id: 'periodictable', searchKeys: const [],
         licenses: [
           stl._toolLicensePackageIntl,
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const PeriodicTableDataView(
@@ -5436,6 +5481,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const FourteenSegments(),
@@ -5448,6 +5494,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const SixteenSegments(),
@@ -5460,6 +5507,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses:[
           stl._toolLicensePackagePrefs,
+          stl._toolLicensePackageTuple,
         ]),
 
     //Shadoks Selection ******************************************************************************************
@@ -5604,6 +5652,8 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://github.com/jforshee/ImageHashing/blob/master/ImageHashing/ImageHashing.cs',
           licenseType: ToolLicenseType.FREE_TO_USE),
         stl._toolLicensePackagePrefs,
+        stl._toolLicensePackageTuple,
+        stl._toolLicensePackageImage,
     ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: const [
@@ -7181,13 +7231,19 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'vanity',
           'vanitysingletap',
-        ]),
+        ],
+    licenses: [
+      stl._toolLicensePackageTuple,
+    ]),
     GCWTool(
         tool: const VanityMultitap(),
         id: 'vanity_multitap',
         searchKeys: const [
           'vanity',
           'vanitymultitap',
+        ],
+        licenses: [
+          stl._toolLicensePackageTuple,
         ]),
     GCWTool(
         tool: const VanityWordsList(),
