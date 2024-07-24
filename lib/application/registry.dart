@@ -1814,11 +1814,27 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const HeatIndex(), id: 'heatindex', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_heatindex',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Hitzeindex',
+          sourceUrl:
+          'https://de.wikipedia.org/w/index.php?title=Hitzeindex&oldid=243515966',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWTool(tool: const Humidex(), id: 'humidex', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_humidex',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Humidex',
+          sourceUrl:
+          'https://en.wikipedia.org/w/index.php?title=Humidex&oldid=1235632685',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWTool(
         tool: const SummerSimmerIndex(),
         id: 'summersimmerindex',
@@ -1826,11 +1842,24 @@ void initializeRegistry(BuildContext context) {
           'apparenttemperature',
           'apparenttemperature_summersimmerindex',
         ],
-        licenses: []),
+        licenses: [ToolLicenseOnlineArticle(
+            context: context,
+            author: 'vCalc',
+            title: 'Summer Simmer Index',
+            sourceUrl:
+            'https://web.archive.org/web/20240724192214/https://ncalculators.com/meteorology/summer-simmer-index-calculator.htm',)]),
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_windchill',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Windchill',
+          sourceUrl:
+          'https://de.wikipedia.org/w/index.php?title=Windchill&oldid=243515968',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWTool(
         tool: const WetBulbTemperature(),
         id: 'wet_bulb_temperature',
@@ -1839,7 +1868,7 @@ void initializeRegistry(BuildContext context) {
           'apparenttemperature_wet_bulb_temperature',
         ],
         licenses: [
-          ToolLicensePortedCode(
+          ToolLicenseOnlineArticle(
               context: context,
               author: 'de.wikipedia.org and contributors',
               title: 'Kühlgrenztemperatur',
