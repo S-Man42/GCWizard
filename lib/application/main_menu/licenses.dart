@@ -159,67 +159,67 @@ class _LicensesState extends State<Licenses> {
       var common = i18n(context, 'common_common');
       _contentCodeLibrary.putIfAbsent(common, () =>
           [
-            ToolLicensePortedCode(context: context, author: 'loki3d.com', title: 'archive',
+            ToolLicensePortedCode(context: context, author: 'loki3d.com', title: 'Flutter Library: archive',
               sourceUrl: 'https://web.archive.org/web/20240510080116/https://pub.dev/packages/archive',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723102619/https://pub.dev/packages/archive/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'blue-fire.xyz', title: 'audioplayers',
+            ToolLicensePortedCode(context: context, author: 'blue-fire.xyz', title: 'Flutter Library: udioplayers',
               sourceUrl: 'https://web.archive.org/web/20240531121621/https://pub.dev/packages/audioplayers',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240531121707/https://pub.dev/packages/audioplayers/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'simc.dev', title: 'auto_size_text',
+            ToolLicensePortedCode(context: context, author: 'simc.dev', title: 'Flutter Library: auto_size_text',
               sourceUrl: 'https://web.archive.org/web/20240626175457/https://pub.dev/packages/auto_size_text',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240617114646/https://pub.dev/packages/auto_size_text/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'yuli.dev', title: 'base32',
+            ToolLicensePortedCode(context: context, author: 'yuli.dev', title: 'Flutter Library: base32',
               sourceUrl: 'https://web.archive.org/web/20230315051619/https://pub.dev/packages/base32',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723103223/https://pub.dev/packages/base32/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'baseflow.com', title: 'cached_network_image',
+            ToolLicensePortedCode(context: context, author: 'baseflow.com', title: 'Flutter Library: cached_network_image',
               sourceUrl: 'https://web.archive.org/web/20240706134343/https://pub.dev/packages/cached_network_image',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240616042637/https://pub.dev/packages/cached_network_image/license'
             ),
-            ToolLicensePortedCode(context: context, author: '@BertrandBev (GitHub)', title: 'code_text_field',
+            ToolLicensePortedCode(context: context, author: '@BertrandBev (GitHub)', title: 'Flutter Library: code_text_field',
               sourceUrl: 'https://web.archive.org/web/20230331140622/https://pub.dev/packages/code_text_field',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20221203134431/https://pub.dev/packages/code_text_field/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'collection',
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'Flutter Library: collection',
               sourceUrl: 'https://web.archive.org/web/20240710230349/https://pub.dev/packages/collection',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20240512042724/https://pub.dev/packages/collection/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'fluttercommunity.dev', title: 'device_info_plus',
+            ToolLicensePortedCode(context: context, author: 'fluttercommunity.dev', title: 'Flutter Library: device_info_plus',
               sourceUrl: 'https://web.archive.org/web/20240717112621/https://pub.dev/packages/device_info_plus',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20231227005521/https://pub.dev/packages/device_info_plus/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'agilord.com', title: 'diacritic',
+            ToolLicensePortedCode(context: context, author: 'agilord.com', title: 'Flutter Library: diacritic',
               sourceUrl: 'https://web.archive.org/web/20240402144558/https://pub.dev/packages/diacritic',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20231003194728/https://pub.dev/packages/diacritic/license'
             ),
-            ToolLicensePortedCode(context: context, author: '@leocavalcante (GitHub)', title: 'encrypt',
+            ToolLicensePortedCode(context: context, author: '@leocavalcante (GitHub)', title: 'Flutter Library: encrypt',
               sourceUrl: 'https://web.archive.org/web/20240621090542/https://pub.dev/packages/encrypt',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20220625065953/https://pub.dev/packages/encrypt/license'
             ),
-            ToolLicensePortedCode(context: context, author: '@bigflood (GitHub)', title: 'exif',
+            ToolLicensePortedCode(context: context, author: '@bigflood (GitHub)', title: 'Flutter Library: exif',
               sourceUrl: 'https://web.archive.org/web/20240723104405/https://pub.dev/packages/exif',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20220520175714/https://pub.dev/packages/exif/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'miguelruivo.com', title: 'file_picker',
+            ToolLicensePortedCode(context: context, author: 'miguelruivo.com', title: 'Flutter Library: file_picker',
               sourceUrl: 'https://web.archive.org/web/20240627151130/https://pub.dev/packages/file_picker',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240512010848/https://pub.dev/packages/file_picker/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'codeux.design', title: 'file_picker_writable',
+            ToolLicensePortedCode(context: context, author: 'codeux.design', title: 'Flutter Library: file_picker_writable',
               sourceUrl: 'https://web.archive.org/web/20240723104746/https://pub.dev/packages/file_picker_writable',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723104942/https://pub.dev/packages/file_picker_writable/license'
@@ -229,45 +229,185 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
             ),
-            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'flutter_highlight',
+            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'Flutter Library: flutter_highlight',
               sourceUrl: 'https://web.archive.org/web/20240109182902/https://pub.dev/packages/flutter_highlight',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20230208081256/https://pub.dev/packages/flutter_highlight/license'
             ),
-            ToolLicensePortedCode(context: context, author: '@flutter (GitHub, Google Inc.)', title: 'flutter_localizations',
+            ToolLicensePortedCode(context: context, author: '@flutter (GitHub, Google Inc.)', title: 'Flutter Library: flutter_localizations',
               sourceUrl: 'https://web.archive.org/web/20240418002509/https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
             ),
-            ToolLicensePortedCode(context: context, author: 'fleaflet.dev', title: 'flutter_map',
+            ToolLicensePortedCode(context: context, author: 'fleaflet.dev', title: 'Flutter Library: flutter_map',
               sourceUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'balanci.ng', title: 'flutter_map_marker_popup',
+            ToolLicensePortedCode(context: context, author: 'balanci.ng', title: 'Flutter Library: flutter_map_marker_popup',
               sourceUrl: 'https://web.archive.org/web/20240222173114/https://pub.dev/packages/flutter_map_marker_popup',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20240723144921/https://pub.dev/packages/flutter_map_marker_popup/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'ownweb.fr', title: 'flutter_map_tappable_polyline',
+            ToolLicensePortedCode(context: context, author: 'ownweb.fr', title: 'Flutter Library: flutter_map_tappable_polyline',
               sourceUrl: 'https://web.archive.org/web/20230927164717/https://pub.dev/packages/flutter_map_tappable_polyline',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723145110/https://pub.dev/packages/flutter_map_tappable_polyline/license'
             ),
-            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'https://pub.dev/packages/highlight',
+            ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'Flutter Library: highlight',
               sourceUrl: 'https://web.archive.org/web/20231103183350/https://pub.dev/packages/highlight',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723145359/https://pub.dev/packages/highlight/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'http',
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'Flutter Library: http',
               sourceUrl: 'https://web.archive.org/web/20240708062104/https://pub.dev/packages/http',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20240513101105/https://pub.dev/packages/http/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'http_parser',
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'Flutter Library: http_parser',
               sourceUrl: 'https://web.archive.org/web/20240714172550/https://pub.dev/packages/http_parser',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20230530135251/https://pub.dev/packages/http_parser/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'loki3d.com', title: 'Flutter Library: image',
+              sourceUrl: 'https://web.archive.org/web/20240609215904/https://pub.dev/packages/image',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20230202095625/https://pub.dev/packages/image/License'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'Flutter Library: intl',
+              sourceUrl: 'https://web.archive.org/web/20240627151129/https://pub.dev/packages/intl',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240606033135/https://pub.dev/packages/intl/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'defylogic.dev', title: 'Flutter Library: latlong2',
+              sourceUrl: 'https://web.archive.org/web/20240517114556/https://pub.dev/packages/latlong2',
+              licenseType: ToolLicenseType.APACHE2,
+              licenseUrl: '' // TODO
+            ),
+            ToolLicensePortedCode(context: context, author: 'bernos.dev', title: 'Flutter Library: location',
+              sourceUrl: 'https://web.archive.org/web/20240716152026/https://pub.dev/packages/location',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240609105940/https://pub.dev/packages/location/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@siqwin (GitHub)', title: 'Flutter Library: mask_text_input_formatter',
+              sourceUrl: 'http://web.archive.org/web/20240118011919/https://pub.dev/packages/mask_text_input_formatter',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'http://web.archive.org/web/20240724134116/https://pub.dev/packages/mask_text_input_formatter/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'leonhardt.co.nz', title: 'Flutter Library: math_expressions',
+              sourceUrl: 'http://web.archive.org/web/20240724134322/https://pub.dev/packages/math_expressions',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'http://web.archive.org/web/20240724134612/https://pub.dev/packages/math_expressions/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'fluttercommunity.dev', title: 'Flutter Library: package_info_plus',
+              sourceUrl: 'https://web.archive.org/web/20240525065942/https://pub.dev/packages/package_info_plus',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240706192742/https://pub.dev/packages/package_info_plus/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dart.dev', title: 'Flutter Library: path',
+              sourceUrl: 'https://web.archive.org/web/20240615030026/https://pub.dev/packages/path',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240615225506/https://pub.dev/packages/path/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'flutter.dev', title: 'Flutter Library: path_provider',
+              sourceUrl: 'https://web.archive.org/web/20240608170145/https://pub.dev/packages/path_provider',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20231227010215/https://pub.dev/packages/path_provider/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'baseflow.com', title: 'Flutter Library: permission_handler',
+              sourceUrl: 'https://web.archive.org/web/20240627151125/https://pub.dev/packages/permission_handler',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240616020712/https://pub.dev/packages/permission_handler/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'blue-fire.xyz', title: 'Flutter Library: photo_view',
+              sourceUrl: 'https://web.archive.org/web/20240524134826/https://pub.dev/packages/photo_view',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240709210414/http://pub.dev/packages/photo_view/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'andrioussolutions.com', title: 'Flutter Library: prefs',
+              sourceUrl: 'https://web.archive.org/web/20240211025140/https://pub.dev/packages/prefs',
+              licenseType: ToolLicenseType.APACHE2,
+              licenseUrl: 'https://web.archive.org/web/20240724135847/https://pub.dev/packages/prefs/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dash-overflow.net', title: 'Flutter Library: provider',
+              sourceUrl: 'https://web.archive.org/web/20240712231208/https://pub.dev/packages/provider',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240616125445/https://pub.dev/packages/provider/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'kevmoo.com', title: 'Flutter Library: qr',
+              sourceUrl: 'https://web.archive.org/web/20240724141140/https://pub.dev/packages/qr',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240724141155/https://pub.dev/packages/qr/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'rhyme95.cn', title: 'Flutter Library: r_scan',
+              sourceUrl: 'https://web.archive.org/web/20231210172744/https://pub.dev/packages/r_scan',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240724141602/https://pub.dev/packages/r_scan/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'google.dev', title: 'Flutter Library: scrollable_positioned_list',
+              sourceUrl: 'https://web.archive.org/web/20240713040313/https://pub.dev/packages/scrollable_positioned_list',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240511195114/https://pub.dev/packages/scrollable_positioned_list/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'flutter.dev', title: 'Flutter Library: shared_preferences',
+              sourceUrl: 'https://web.archive.org/web/20240608181609/https://pub.dev/packages/shared_preferences',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240606110107/https://pub.dev/packages/shared_preferences/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'Ammar \'ammaratef45\' Hussein (GitHub)', title: 'Flutter Library: stack',
+              sourceUrl: 'https://web.archive.org/web/20240301052612/https://pub.dev/packages/stack',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240511195114/https://pub.dev/packages/scrollable_positioned_list/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'Natesh \'nateshmbhat\' Bhat (GitHub)', title: 'Flutter Library: touchable',
+              sourceUrl: 'https://web.archive.org/web/20231103182722/https://pub.dev/packages/touchable',
+              licenseType: ToolLicenseType.MPL2,
+              licenseUrl: 'https://web.archive.org/web/20240724144914/https://pub.dev/packages/touchable/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'dint.dev', title: 'Flutter Library: universal_html',
+              sourceUrl: 'https://web.archive.org/web/20240215182450/https://pub.dev/packages/universal_html',
+              licenseType: ToolLicenseType.APACHE2,
+              licenseUrl: 'https://web.archive.org/web/20210620015603/https://pub.dev/packages/universal_html/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@syedecryptr (GitHub)', title: 'Flutter Library: unrar_file',
+              sourceUrl: 'https://web.archive.org/web/20240724145340/https://pub.dev/packages/unrar_file',
+              licenseType: ToolLicenseType.APACHE2,
+              licenseUrl: 'https://web.archive.org/web/20240724145538/https://pub.dev/packages/unrar_file/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'flutter.dev', title: 'Flutter Library: url_launcher',
+              sourceUrl: 'https://web.archive.org/web/20240711202509/https://pub.dev/packages/url_launcher',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20231227004216/https://pub.dev/packages/url_launcher/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'justkawal.dev', title: 'Flutter Library: utility',
+              sourceUrl: 'https://web.archive.org/web/20240724150148/https://pub.dev/packages/utility',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240724150243/https://pub.dev/packages/utility/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'kada.se', title: 'Flutter Library: week_of_year',
+              sourceUrl: 'https://web.archive.org/web/20240724150404/https://pub.dev/packages/week_of_year',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240724150627/https://pub.dev/packages/week_of_year/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'lukas-renggli.ch', title: 'Flutter Library: xml',
+              sourceUrl: 'https://web.archive.org/web/20240530021526/https://pub.dev/packages/xml',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20231227004048/https://pub.dev/packages/xml/license'
+            ),
+            ToolLicensePortedCode(context: context, author: '@flutter (GitHub, Google Inc.)', title: 'Flutter Library: flutter_test',
+              sourceUrl: 'https://web.archive.org/web/20240723054155/https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://github.com/S-Man42/flutter/blob/ed470fd1017fd904ad34530f732dee56ab536965/LICENSE'
+            ),
+            ToolLicensePortedCode(context: context, author: 'fluttercommunity.dev', title: 'Flutter Library: flutter_launcher_icons',
+              sourceUrl: 'https://web.archive.org/web/20240713040303/https://pub.dev/packages/flutter_launcher_icons',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240220231946/https://pub.dev/packages/flutter_launcher_icons/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'flutter.dev', title: 'Flutter Library: flutter_lints',
+              sourceUrl: 'https://web.archive.org/web/20240627151128/https://pub.dev/packages/flutter_lints',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl: 'https://web.archive.org/web/20240510075912/https://pub.dev/packages/flutter_lints/license'
             ),
       ]);
 
