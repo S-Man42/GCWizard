@@ -64,6 +64,7 @@ dependencies:
   utility: ^1.0.3
   week_of_year: ^2.0.0
   xml: ^6.3.0
+  flutter_dtmf: ^3.0.2
 
 dev_dependencies:
   flutter_test:

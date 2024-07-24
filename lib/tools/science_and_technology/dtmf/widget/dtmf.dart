@@ -1,6 +1,7 @@
-import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:uuid/uuid.dart';
+//import 'dart:async';
+//import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_dtmf/dtmf.dart';
+//import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -35,8 +36,8 @@ class _DTMFState extends State<DTMF> {
 
   final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
 
-  var player = AudioPlayer(playerId: const Uuid().v4(),);
-  int _index = 0;
+  //var player = AudioPlayer(playerId: const Uuid().v4(),);
+  //int _index = 0;
   String _playlist = '';
 
   // https://discord.com/channels/509714518008528896/533299043686940692/threads/990854105394216970
@@ -71,7 +72,7 @@ class _DTMFState extends State<DTMF> {
   //       });
   //     }
   //
-  void playSound(int index) {
+  /*void playSound(int index) {
     if (index < _playlist.length) {
       player.play(DTMFSOUND[_playlist[index]]!);
       if (index + 1 < _playlist.length) {
@@ -83,7 +84,7 @@ class _DTMFState extends State<DTMF> {
         });
       }
     }
-  }
+  }*/
 
   @override
   void initState() {
@@ -204,7 +205,21 @@ class _DTMFState extends State<DTMF> {
       ),
       GCWIconButton(
         icon: Icons.play_arrow,
-        onPressed: () {
+        onPressed: () async {
+          if (_currentMode == GCWSwitchPosition.left) {
+            _playlist = _currentEncodeInput;
+          } else {
+            _playlist = _currentDecodeInput;
+          }
+          print('playlist '+_playlist);
+          await Dtmf.playTone(
+              digits: "#1234567890*",
+              //digits: _playlist,
+              samplingRate: 8000,
+              durationMs: 160,
+              volume: 0.8);
+        },
+        /*onPressed: () {
           _index = 0;
           if (_currentMode == GCWSwitchPosition.left) {
             _playlist = _currentEncodeInput;
@@ -214,7 +229,7 @@ class _DTMFState extends State<DTMF> {
           if (_playlist.isNotEmpty) {
             playSound(_index);
           }
-        },
+        },*/
       ),
     ]);
   }
