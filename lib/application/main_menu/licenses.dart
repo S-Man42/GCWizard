@@ -164,7 +164,7 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723102619/https://pub.dev/packages/archive/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'blue-fire.xyz', title: 'Flutter Library: udioplayers',
+            ToolLicensePortedCode(context: context, author: 'blue-fire.xyz', title: 'Flutter Library: audioplayers',
               sourceUrl: 'https://web.archive.org/web/20240531121621/https://pub.dev/packages/audioplayers',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240531121707/https://pub.dev/packages/audioplayers/license'
