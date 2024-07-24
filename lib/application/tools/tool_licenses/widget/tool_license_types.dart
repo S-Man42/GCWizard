@@ -77,7 +77,7 @@ String toolLicenseTypeString(BuildContext context, ToolLicenseEntry toolLicense)
   if (toolLicense is ToolLicenseImage) return i18n(context, 'toollicenses_image');
   if (toolLicense is ToolLicenseFont) return i18n(context, 'toollicenses_font');
   if (toolLicense is ToolLicenseAPI) return i18n(context, 'toollicenses_api');
-  if (toolLicense is ToolLicenseOwnReproduction) return i18n(context, 'toollicenses_ownreprodction');
+  if (toolLicense is ToolLicenseOwnReProduction) return i18n(context, 'toollicenses_ownreprodction');
 
   return '';
 }
@@ -431,7 +431,7 @@ class ToolLicenseAPI extends _ToolLicensePublicDigitalSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
  */
-class ToolLicenseOwnReproduction extends _ToolLicensePublicDigitalSource {
-  const ToolLicenseOwnReproduction({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
+class ToolLicenseOwnReProduction extends _ToolLicensePublicDigitalSource {
+  const ToolLicenseOwnReProduction({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
       : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
 }
