@@ -417,5 +417,39 @@ class _SpecificToolLicenses {
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
+
+  ToolLicenseEntry get _toolLicenseCullyLong {
+    return ToolLicenseOfflineBook(context: context,
+        author: 'Cully Long',
+        title: 'How to puzzle caches. Lessons, tips, tricks and hints for solving geocache puzzles',
+      isbn: '978-0-9973488-9-7',
+      publisher: 'single atom books',
+      year: 2019,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseGeocachingToolbox {
+    return ToolLicensePrivatePermittedDigitalSource(context: context,
+      author: 'Japiejoo',
+      title: 'Geocaching Toolbox Codetabellen',
+      medium: 'Message Center geocaching.com',
+      permissionYear: 2021,
+      permissionMonth: 12,
+      permissionDay: 8,
+      customComment: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseMyGeoToolsCodeTabellen {
+    return ToolLicensePrivatePermittedDigitalSource(context: context,
+      author: 'Benny',
+      title: 'myGEOTools Codetabellen',
+      medium: '',
+      permissionYear: 0,
+      permissionMonth: 0,
+      permissionDay: 0,
+      customComment: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+    );
+  }
 }
 
