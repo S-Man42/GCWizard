@@ -111,6 +111,7 @@ Actual Release:
 	- Android:
 		- Promote open test version to public
 		- Save -> Send for review -> Start roll-out
+		- Update Rollout Settings from 20 to 100%
 		- Reviewing may take a few days
 	- iOS:
 		- Go to normal AppStore
@@ -127,7 +128,7 @@ Actual Release:
 		    - Replace normal icons in android/app/src/main/res with android/app/src/main/res/icons_gold
 		    - change package name to gc_wizard_gold:
 			    - in file: android/app/src/main/AndroidManifest.xml (and application/android:label to "GC Wizard Gold", too)
-			    - in file: android/app/build.gradle -> defaultConfig
+			    - in file: android/app/build.gradle -> defaultConfig and android/namespace
 		- iOS:
 		    - Replace normal icons in ios/Runner/Assets.xcassets/AppIcon.appiconset/ with ios/Runner/Assets.xcassets/AppIcon.appiconset/icons_gold
 			- change bundle identifier in XCode/Info.plist in ios/Runner to de.sman42.gcWizardGold
@@ -217,7 +218,23 @@ Xcode 10: unable to attach DB error
 --------------
 Could not find a file named"pubspec.yaml"in
 -> dart pub get
+--------------
+Xcode 14 beta error: Stored properties cannot be marked potentially unavailable with '@available'
+-> Navigate to ios folder and run following commands:
+-> pod install
+-> pod update
 
+Xcode: Command PhaseScriptExecution failed with a nonzero exit code
+->
+flutter clean
+flutter pub get
+flutter pub upgrade
+cd iOS
+pod install
+pod update
+
+XCode No access to accounts:
+Restart XCode or restart entire macOS
 
 ========
 Crowdin Script, install jq using Scoop.sh:
