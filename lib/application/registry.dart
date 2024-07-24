@@ -5962,25 +5962,32 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'base16',
         symbolSearchStrings: const ['base16'],
         licenses: []),
-    GCWSymbolTableTool(
-        symbolKey: 'baudot_1888',
-        symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter'],
-        licenses: [ToolLicenseOwnReProduction(context: context,
-            author: 'Thomas Zimmermann',
-            title: 'Baudot Code, 1888, US-Patent',
-            sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
-            licenseType: ToolLicenseType.FREE_TO_USE)
-        ]),
-    GCWSymbolTableTool(
-        symbolKey: 'baudot_54123',
-        symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter'],
-        licenses: [
-          ToolLicenseOwnReProduction(context: context,
-              author: 'Thomas Zimmermann',
-              title: 'Baudot Code, 1926, Bit-orderb54123',
-              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Baudot-Code&oldid=245951643',
-              licenseType: ToolLicenseType.FREE_TO_USE)
-        ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: const [
+      'ccitt',
+      'symbol_baudot',
+      'teletypewriter'
+    ], licenses: [
+      ToolLicenseOwnReProduction(
+          context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Baudot Code, 1888, US-Patent',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: const [
+      'ccitt',
+      'symbol_baudot',
+      'teletypewriter'
+    ], licenses: [
+      ToolLicenseOwnReProduction(
+          context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Baudot Code, 1926, Bit-orderb54123',
+          sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Baudot-Code&oldid=245951643',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'bibibinary',
         symbolSearchStrings: const ['bibibinary'],
@@ -6011,17 +6018,46 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: const [
       'braille',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(
+          context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Brailleschrift',
+          sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Brailleschrift&oldid=246388105',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: const [
       'braille',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(
+        context: context,
+        author: 'Thomas Zimmermann',
+        title: 'Braille',
+        sourceUrl:
+        'https://en.wikipedia.org/w/index.php?title=Braille&oldid=1232540524',
+        licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: const [
       'braille',
       'braille_euro',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(
+          context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Computerbraille',
+          sourceUrl:
+          'https://de.wikipedia.org/w/index.php?title=Computerbraille&oldid=236592045',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: const [
       'braille',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(
+          context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Braille',
+          sourceUrl:
+          'https://fr.wikipedia.org/w/index.php?title=Braille&oldid=214867784',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(
         symbolKey: 'british_sign_language',
         symbolSearchStrings: const [
@@ -6049,18 +6085,30 @@ void initializeRegistry(BuildContext context) {
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_1794',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Chappe code - c. 1794.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
+    ]),
     GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: const [
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_1809',
       'zigzag'
-    ], licenses: []),
+    ], licenses: [ToolLicenseOnlineArticle(context: context,
+        author: 'commons.wikimedia.org and contributors',
+        title: 'File:Chappe code - c. 1809.svg',
+        sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1809.svg&oldid=876996757')]),
     GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: const [
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_v1',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Chappe.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe.svg&oldid=872347070')]),
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: const [
       'symbol_cherokee',
     ], licenses: [
@@ -6291,7 +6339,13 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: const [
       'symbol_dorabella',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Dorabella',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Dorabella_Cipher&oldid=1227166448',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: const [
       'symbol_doremi',
     ], licenses: []),
@@ -7008,36 +7062,71 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Morse',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Morse_code&oldid=1235898565',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'morse_gerke', symbolSearchStrings: const [
       'morse',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Gerke',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Friedrich_Clemens_Gerke&oldid=243194789',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(
         symbolKey: 'morse_1838_patent',
         symbolSearchStrings: const [
           'morse',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Morse (1838, U.S.Patent 1647, 20.06.1840)',
+              sourceUrl: 'https://web.archive.org/web/20240724104528/https://patentimages.storage.googleapis.com/bb/4a/53/3d3b9d7e4c8619/US1647.pdf',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(
         symbolKey: 'morse_1844_vail',
         symbolSearchStrings: const [
           'morse',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Morse (1844)',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Morse_code&oldid=1235898565',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(
         symbolKey: 'morse_steinheil',
         symbolSearchStrings: const [
           'morse',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Steinheilschrift',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Murray',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: const [
       'ccitt',
       'symbol_murraybaudot',
       'teletypewriter'
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Murray Baudot Code',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: const [
       'music_notes',
       'symbol_musica',
@@ -7258,13 +7347,23 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_prussian_colors_artillery',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Preußische Farbfolge',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Preu%C3%9Fische_Farbfolge&oldid=245158156',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(
         symbolKey: 'prussian_colors_infantery',
         symbolSearchStrings: const [
           'symbol_prussian_colors_infantery',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Preußische Farbfolge',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Preu%C3%9Fische_Farbfolge&oldid=245158156',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
     ], licenses: [
@@ -7347,7 +7446,12 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'siemens',
         symbolSearchStrings: const ['symbol_siemens', 'teletypewriter'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Siemens Fernschreiber',
+              sourceUrl: '',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: const [
       'symbol_signlanguage'
     ], licenses: [
@@ -7399,7 +7503,12 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
       'symbol_steinheil',
       'telegraph',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOwnReProduction(context: context,
+          author: 'Thomas Zimmermann',
+          title: 'Steinheilschrift',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
+          licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
     ], licenses: []),
@@ -7481,7 +7590,12 @@ void initializeRegistry(BuildContext context) {
           'telegraph',
           'telegraph_schmidt',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOwnReProduction(context: context,
+              author: 'Thomas Zimmermann',
+              title: 'Telegraph Cuxhaven-Hamburg',
+              sourceUrl: 'https://cuxpedia.de/index.php?title=Datei:Telegraphentabelle.jpg&oldid=31110',
+              licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: const [
       'symbol_templers',
     ], licenses: [
