@@ -892,6 +892,16 @@ void initializeRegistry(BuildContext context) {
       ],
       licenses: [],
     ),
+
+    GCWTool(
+      tool: const ExifReader(),
+      id: 'exif',
+      categories: const [ToolCategory.IMAGES_AND_FILES],
+      searchKeys: const [
+        'exif',
+      ],
+      licenses: [],
+    ),
     GCWTool(
         tool: const FormulaSolverFormulaGroups(),
         id: 'formulasolver',
@@ -3106,6 +3116,7 @@ void initializeRegistry(BuildContext context) {
           'dates_calendarweek',
         ],
         licenses: []),
+
     GCWTool(
         tool: const DayOfTheYear(),
         id: 'dates_day_of_the_year',
@@ -5598,6 +5609,7 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20231121201318/https://www.deviantart.com/al-bhed-fans/art/Al-bhed-TTF-20702586',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
+
     GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: const [
       'symbol_alchemy',
     ], licenses: [

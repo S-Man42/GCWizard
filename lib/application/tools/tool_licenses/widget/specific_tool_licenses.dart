@@ -36,7 +36,7 @@ class _SpecificToolLicenses {
     return ToolLicenseCodeLibrary(
       context: _context,
       author: 'Legion of the Bouncy Castle Inc',
-      title: 'Pointy Castle',
+      title: 'Flutter Library: Pointy Castle',
       licenseType: ToolLicenseType.MIT,
       licenseUrl: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE',
       sourceUrl: 'https://github.com/S-Man42/pc-dart/tree/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa'
