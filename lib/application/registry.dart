@@ -5793,6 +5793,8 @@ void initializeRegistry(BuildContext context) {
               context: context,
               author: 'Zac Forshee',
               title: 'ImageHashing ',
+              licenseUrl:
+                  'https://web.archive.org/web/20240724150805/https://github.com/jforshee/ImageHashing/blob/master/README.md',
               sourceUrl:
                   'https://web.archive.org/web/20240000000000*/https://github.com/jforshee/ImageHashing/blob/master/ImageHashing/ImageHashing.cs',
               licenseType: ToolLicenseType.FREE_TO_USE),
