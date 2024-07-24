@@ -2,25 +2,6 @@
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
-/*final Map<String, AssetSource> DTMFSOUND = {
-  '0': AssetSource('audio/DTMF0.mp3'),
-  '1': AssetSource('audio/DTMF1.mp3'),
-  '2': AssetSource('audio/DTMF2.mp3'),
-  '3': AssetSource('audio/DTMF3.mp3'),
-  '4': AssetSource('audio/DTMF4.mp3'),
-  '5': AssetSource('audio/DTMF5.mp3'),
-  '6': AssetSource('audio/DTMF6.mp3'),
-  '7': AssetSource('audio/DTMF7.mp3'),
-  '8': AssetSource('audio/DTMF8.mp3'),
-  '9': AssetSource('audio/DTMF9.mp3'),
-  'A': AssetSource('audio/DTMFA.mp3'),
-  'B': AssetSource('audio/DTMFB.mp3'),
-  'C': AssetSource('audio/DTMFC.mp3'),
-  'D': AssetSource('audio/DTMFD.mp3'),
-  '*': AssetSource('audio/DTMFStar.mp3'),
-  '#': AssetSource('audio/DTMFPound.mp3'),
-};*/
-
 const Map<String, List<int>> _DigitToDTMF = {
   '1': [697, 1209],
   '2': [697, 1336],
