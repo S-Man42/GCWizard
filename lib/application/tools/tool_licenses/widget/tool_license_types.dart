@@ -16,6 +16,7 @@ enum ToolLicenseType {
   CCBYSA3, // Creative Commons CC BY-SA 2.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
   CCNC25, // Creative Commons CC NC 2.5
+  CCNC30, // Creative Commons CC NC 3.0
   CC0_1, // Creative Commons CC0 1.0
   MIT, // MIT
   MPL2, // MPL-2.0
@@ -38,13 +39,15 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.CCBYSA3: return 'Creative Commons CC BY-SA 3.0';
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
     case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
+    case ToolLicenseType.CCNC30: return 'Creative Commons CC NC 3.0';
     case ToolLicenseType.CC0_1: return 'Creative Commons CC0 1.0';
     case ToolLicenseType.MIT: return 'MIT License';
-    case ToolLicenseType.MPL2: return 'Mozilla Public License (MPL) v2.0';
+    case ToolLicenseType.MPL2: return 'Mozilla Public License Version 2.0';
     case ToolLicenseType.GPL3: return 'GNU GPL v3.0 License';
     case ToolLicenseType.GITHUB_DEFAULT: return 'Github Default License';
     case ToolLicenseType.GFDL: return 'GNU Free Documentation License';
     case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
+      // TODO: Handle this case.
   }
 }
 
@@ -74,6 +77,7 @@ String toolLicenseTypeString(BuildContext context, ToolLicenseEntry toolLicense)
   if (toolLicense is ToolLicenseImage) return i18n(context, 'toollicenses_image');
   if (toolLicense is ToolLicenseFont) return i18n(context, 'toollicenses_font');
   if (toolLicense is ToolLicenseAPI) return i18n(context, 'toollicenses_api');
+  if (toolLicense is ToolLicenseOwnReProduction) return i18n(context, 'toollicenses_ownreprodction');
 
   return '';
 }
@@ -414,5 +418,20 @@ class ToolLicenseFont extends _ToolLicensePublicDigitalSource {
  */
 class ToolLicenseAPI extends _ToolLicensePublicDigitalSource {
   const ToolLicenseAPI({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
+      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+}
+
+/*
+ OwnReproduction: Image, Text, etc. which is reproduced or produced iaw a public source)
+    author == author(s) and/or organisation(s);
+    title == Source title
+    version == if available
+    customComment == whatever seems to be important..., license clarifications, ...
+    sourceUrl == API entry point (could be invalid without parameters, which is ok I think)
+    licenseType == if available: which license is the used source
+    licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
+ */
+class ToolLicenseOwnReProduction extends _ToolLicensePublicDigitalSource {
+  const ToolLicenseOwnReProduction({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
       : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
 }
