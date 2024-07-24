@@ -6044,7 +6044,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_cirtherebor',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'Cirth alphabet',
+              sourceUrl: 'https://web.archive.org/web/20210917165942/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=cirthAlphabet',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: const [
       'cistercian',
@@ -6105,7 +6109,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_color_tokki',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'Color Tokki code',
+              sourceUrl: 'https://web.archive.org/web/20210508064019/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=colorTokki',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_1',
@@ -6248,7 +6256,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_dni_numbers',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'D''ni numerals',
+              sourceUrl: 'https://web.archive.org/web/20210508072050/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=dniNumerals',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: const [
       'symbol_doop',
@@ -6414,7 +6426,7 @@ void initializeRegistry(BuildContext context) {
           ToolLicenseOnlineArticle(context: context,
               author: 'en.wikipedia.org and contributors',
               title: 'Maritime flag signalling',
-              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184'),,
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_rn_popham',
@@ -6427,7 +6439,7 @@ void initializeRegistry(BuildContext context) {
               publisher: 'Project Gutenberg',
               author: 'W. G. Perrin',
               title: 'The Project Gutenberg EBook of British Flags',
-              sourceUrl: 'https://web.archive.org/web/20240723212351/https://www.gutenberg.org/files/46370/46370-h/46370-h.htm'),
+              sourceUrl: 'https://web.archive.org/web/20240723212351/https://www.gutenberg.org/files/46370/46370-h/46370-h.htm')
   ToolLicenseOnlineBook(context: context,
   author: 'Sir Home Riggs Popham',
   title: 'Telegraphic Signals; Or Marine Vocabulary',
@@ -6829,7 +6841,11 @@ void initializeRegistry(BuildContext context) {
       'teletypewriter'
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'Optical telegraph (Murray)',
+              sourceUrl: 'https://web.archive.org/web/20200621050813/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=shutterTelegraph',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: const [
       'ccitt',
@@ -7047,7 +7063,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_maze',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'Maze code',
+              sourceUrl: 'https://web.archive.org/web/20210917155214/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=mazeCode',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'medieval_runes',
