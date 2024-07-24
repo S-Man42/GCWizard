@@ -77,6 +77,7 @@ String toolLicenseTypeString(BuildContext context, ToolLicenseEntry toolLicense)
   if (toolLicense is ToolLicenseImage) return i18n(context, 'toollicenses_image');
   if (toolLicense is ToolLicenseFont) return i18n(context, 'toollicenses_font');
   if (toolLicense is ToolLicenseAPI) return i18n(context, 'toollicenses_api');
+  if (toolLicense is ToolLicenseOwnReproduction) return i18n(context, 'toollicenses_ownreprodction');
 
   return '';
 }
@@ -417,5 +418,20 @@ class ToolLicenseFont extends _ToolLicensePublicDigitalSource {
  */
 class ToolLicenseAPI extends _ToolLicensePublicDigitalSource {
   const ToolLicenseAPI({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
+      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+}
+
+/*
+ OwnReproduction: Image, Text, etc. which is reproduced or produced iaw a public source)
+    author == author(s) and/or organisation(s);
+    title == Source title
+    version == if available
+    customComment == whatever seems to be important..., license clarifications, ...
+    sourceUrl == API entry point (could be invalid without parameters, which is ok I think)
+    licenseType == if available: which license is the used source
+    licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
+ */
+class ToolLicenseOwnReproduction extends _ToolLicensePublicDigitalSource {
+  const ToolLicenseOwnReproduction({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
       : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
 }

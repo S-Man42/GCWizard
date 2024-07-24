@@ -417,5 +417,15 @@ class _SpecificToolLicenses {
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
+
+  ToolLicenseEntry get _toolLicenseOfflineBook {
+    return ToolLicenseOfflineBook(context: context,
+        author: 'Cully Long',
+        title: 'How to puzzle caches. Lessons, tips, tricks and hints for solving geocache puzzles',
+      isbn: '978-0-9973488-9-7',
+      publisher: 'single atom books',
+      year: 2019,
+    );
+  }
 }
 
