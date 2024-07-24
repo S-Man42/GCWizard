@@ -6840,6 +6840,7 @@ void initializeRegistry(BuildContext context) {
       'symbol_murray',
       'teletypewriter'
     ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
           context: context,
           author: 'Geocaching Toolbox',
