@@ -913,6 +913,11 @@ void initializeRegistry(BuildContext context) {
           stl._toolLicensePackageLatlong2,
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageImage,
+          ToolLicensePortedCode(context: context, author: '@bigflood (GitHub)', title: 'Flutter Library: exif',
+              sourceUrl: 'https://web.archive.org/web/20240723104405/https://pub.dev/packages/exif',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20220520175714/https://pub.dev/packages/exif/license'
+          ),
         ],),
     GCWTool(
       tool: const FormulaSolverFormulaGroups(),
@@ -1455,7 +1460,18 @@ void initializeRegistry(BuildContext context) {
         ],
         searchKeys: const [
           'qrcode',
-        ]),
+        ], licenses: [
+            ToolLicensePortedCode(context: context, author: 'rhyme95.cn', title: 'Flutter Library: r_scan',
+                sourceUrl: 'https://web.archive.org/web/20231210172744/https://pub.dev/packages/r_scan',
+                licenseType: ToolLicenseType.BSD3,
+                licenseUrl: 'https://web.archive.org/web/20240724141602/https://pub.dev/packages/r_scan/license'
+            ),
+            ToolLicensePortedCode(context: context, author: 'kevmoo.com', title: 'Flutter Library: qr',
+                sourceUrl: 'https://web.archive.org/web/20240724141140/https://pub.dev/packages/qr',
+                licenseType: ToolLicenseType.BSD3,
+                licenseUrl: 'https://web.archive.org/web/20240724141155/https://pub.dev/packages/qr/license'
+            ),
+    ]),
     GCWTool(
         tool: const QuadraticEquation(),
         id: 'quadratic_equation',
@@ -2068,6 +2084,11 @@ void initializeRegistry(BuildContext context) {
     ],
         licenses: [
           stl._toolLicensePackageBase32,
+          ToolLicensePortedCode(context: context, author: 'yuli.dev', title: 'Flutter Library: base32',
+              sourceUrl: 'https://web.archive.org/web/20230315051619/https://pub.dev/packages/base32',
+              licenseType: ToolLicenseType.MIT,
+              licenseUrl: 'https://web.archive.org/web/20240723103223/https://pub.dev/packages/base32/license'
+          ),
         ]),
     GCWTool(
       tool: Base58(),
@@ -3224,6 +3245,7 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicensePackageIntl,
           stl._toolLicensePackageTuple,
+          stl._toolLicenseWeekOfYear,
         ]),
     GCWTool(
         tool: const DayOfTheYear(),
@@ -3234,6 +3256,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicensePackageIntl,
+          stl._toolLicenseWeekOfYear,
         ]),
     GCWTool(tool: const Calendar(), id: 'dates_calendar', searchKeys: const [
       'dates',

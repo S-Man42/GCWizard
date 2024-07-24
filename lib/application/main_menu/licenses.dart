@@ -174,11 +174,6 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240617114646/https://pub.dev/packages/auto_size_text/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'yuli.dev', title: 'Flutter Library: base32',
-              sourceUrl: 'https://web.archive.org/web/20230315051619/https://pub.dev/packages/base32',
-              licenseType: ToolLicenseType.MIT,
-              licenseUrl: 'https://web.archive.org/web/20240723103223/https://pub.dev/packages/base32/license'
-            ),
             ToolLicensePortedCode(context: context, author: 'baseflow.com', title: 'Flutter Library: cached_network_image',
               sourceUrl: 'https://web.archive.org/web/20240706134343/https://pub.dev/packages/cached_network_image',
               licenseType: ToolLicenseType.MIT,
@@ -208,11 +203,6 @@ class _LicensesState extends State<Licenses> {
               sourceUrl: 'https://web.archive.org/web/20240621090542/https://pub.dev/packages/encrypt',
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20220625065953/https://pub.dev/packages/encrypt/license'
-            ),
-            ToolLicensePortedCode(context: context, author: '@bigflood (GitHub)', title: 'Flutter Library: exif',
-              sourceUrl: 'https://web.archive.org/web/20240723104405/https://pub.dev/packages/exif',
-              licenseType: ToolLicenseType.MIT,
-              licenseUrl: 'https://web.archive.org/web/20220520175714/https://pub.dev/packages/exif/license'
             ),
             ToolLicensePortedCode(context: context, author: 'miguelruivo.com', title: 'Flutter Library: file_picker',
               sourceUrl: 'https://web.archive.org/web/20240627151130/https://pub.dev/packages/file_picker',
@@ -334,16 +324,6 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240616125445/https://pub.dev/packages/provider/license'
             ),
-            ToolLicensePortedCode(context: context, author: 'kevmoo.com', title: 'Flutter Library: qr',
-              sourceUrl: 'https://web.archive.org/web/20240724141140/https://pub.dev/packages/qr',
-              licenseType: ToolLicenseType.BSD3,
-              licenseUrl: 'https://web.archive.org/web/20240724141155/https://pub.dev/packages/qr/license'
-            ),
-            ToolLicensePortedCode(context: context, author: 'rhyme95.cn', title: 'Flutter Library: r_scan',
-              sourceUrl: 'https://web.archive.org/web/20231210172744/https://pub.dev/packages/r_scan',
-              licenseType: ToolLicenseType.BSD3,
-              licenseUrl: 'https://web.archive.org/web/20240724141602/https://pub.dev/packages/r_scan/license'
-            ),
             ToolLicensePortedCode(context: context, author: 'google.dev', title: 'Flutter Library: scrollable_positioned_list',
               sourceUrl: 'https://web.archive.org/web/20240713040313/https://pub.dev/packages/scrollable_positioned_list',
               licenseType: ToolLicenseType.BSD3,
@@ -383,11 +363,6 @@ class _LicensesState extends State<Licenses> {
               sourceUrl: 'https://web.archive.org/web/20240724150148/https://pub.dev/packages/utility',
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240724150243/https://pub.dev/packages/utility/license'
-            ),
-            ToolLicensePortedCode(context: context, author: 'kada.se', title: 'Flutter Library: week_of_year',
-              sourceUrl: 'https://web.archive.org/web/20240724150404/https://pub.dev/packages/week_of_year',
-              licenseType: ToolLicenseType.BSD3,
-              licenseUrl: 'https://web.archive.org/web/20240724150627/https://pub.dev/packages/week_of_year/license'
             ),
             ToolLicensePortedCode(context: context, author: 'lukas-renggli.ch', title: 'Flutter Library: xml',
               sourceUrl: 'https://web.archive.org/web/20240530021526/https://pub.dev/packages/xml',

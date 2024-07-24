@@ -36,7 +36,7 @@ class _SpecificToolLicenses {
     return ToolLicenseCodeLibrary(
       context: _context,
       author: 'Legion of the Bouncy Castle Inc',
-      title: 'Pointy Castle',
+      title: 'Flutter Library: Pointy Castle',
       licenseType: ToolLicenseType.MIT,
       licenseUrl: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE',
       sourceUrl: 'https://github.com/S-Man42/pc-dart/tree/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa'
@@ -333,6 +333,15 @@ class _SpecificToolLicenses {
       title: 'tuple',
       sourceUrl: 'https://pub.dev/packages/tuple',
       licenseType: ToolLicenseType.BSD2,
+    );
+  }
+  ToolLicenseEntry get _toolLicenseWeekOfYear {
+    return ToolLicensePortedCode(context: context,
+        author: 'kada.se',
+        title: 'Flutter Library: week_of_year',
+        sourceUrl: 'https://web.archive.org/web/20240724150404/https://pub.dev/packages/week_of_year',
+        licenseType: ToolLicenseType.BSD3,
+        licenseUrl: 'https://web.archive.org/web/20240724150627/https://pub.dev/packages/week_of_year/license'
     );
   }
 
