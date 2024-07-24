@@ -5809,7 +5809,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_antiker',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'Antiker code',
+              sourceUrl: 'https://web.archive.org/web/20210513152106/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=antikerCode',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'arabic_indian_numerals',
@@ -6204,7 +6208,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_dagger',
     ],
         licenses: [
-
+          ToolLicenseOnlineArticle(context: context,
+              author: 'Geocaching Toolbox',
+              title: 'Dagger code',
+              sourceUrl: 'https://web.archive.org/web/20210513155613/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=daggerCode',
+              licenseType: ToolLicenseType.CCNC30)
         ]),
     GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: const [
       'symbol_dancing_men',
