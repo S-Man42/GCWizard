@@ -5722,7 +5722,7 @@ void initializeRegistry(BuildContext context) {
       'symbol_albhed'
     ], licenses: [ToolLicenseFont(
       context: context,
-      author: 'Al-bhed-fans (deviantart.com)',
+      author: '@Al-bhed-fans (deviantart.com)',
       title: 'Al-bhed TTF',
       sourceUrl: 'https://web.archive.org/web/20231121201318/https://www.deviantart.com/al-bhed-fans/art/Al-bhed-TTF-20702586',
       licenseType: ToolLicenseType.FREE_TO_USE
