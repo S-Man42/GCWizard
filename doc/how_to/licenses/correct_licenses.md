@@ -7,6 +7,7 @@
 * **EVERY** tool which was written with the help of any source should get the related license/source
 * This means: Not the top groups or something, it should all go into the final tools
 * This can result in huge license text duplications: For this there is a file ``specific_tool_licenses.dart`` where you can put the license object once and reference it as often as you like in the registry
+* If something is not used for a specific tool but in a more global way, like most of the Flutter libraries, they can be added in the ``licenses.dart`` file instead directly.
 ### License types
 There is support for several license types:
 * Included Code Libraries
@@ -136,7 +137,7 @@ There is support for several license types:
 * ``author``: Can be a list of authors or an organization
 * ``sourceUrl``: This is the URL for the source
 * ``licenseURL``: This is the URL of the source's license (e.g. in a code repository the ``sourceUrl`` could be the repo's main url whereas the ``licenseUrl`` is the link directly to the license file)
-* ``licenseType``: enum of type ``ToolLicenseType``. Currently these types are available:
+* ``licenseType``: enum of type ``ToolLicenseType``. Examples of available types:
   * ``FREE_TO_USE``,
   * ``APACHE2, // Apache 2.0``
   * ``CCBYSA4, // Creative Commons CC BY-SA 4.0``
