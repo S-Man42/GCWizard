@@ -126,24 +126,35 @@ class _SpecificToolLicenses {
     );
   }
 
-  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumArabEgipt {
+  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumAlphabetaCharacteres {
     return ToolLicenseOnlineBook(
       context: context,
-      author: 'Giovanni Battista Palatino',
-      title: 'Libro nuovo d\'imparare a scrivere',
-      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala/mode/2up',
-      year: 1548,
+      author: 'Johannes Theodor de Bry, Johannes Israel de Bry',
+      title: 'Alphabeta Et Characteres',
+      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala',
+      year: 1596,
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
 
-  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumGoth {
+  ToolLicenseEntry get _toolLicenseOnlineBookPolygraphieTrithemius {
     return ToolLicenseOnlineBook(
       context: context,
-      author: 'Magnus Olaus',
-      title: 'Historia de Gentibus Septentrionalibus',
+      author: 'Johannes Trithemius',
+      title: 'Polygraphie et universelle escriture cabalistique',
       sourceUrl: 'https://archive.org/details/Historiaedegent00Olau',
-      year: 1555,
+      year: 1557,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookDeOccultaPhilosophia {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Heinrich Cornelius Agrippa von Nettesheim',
+      title: 'De occulta philosophia',
+      sourceUrl: 'https://archive.org/details/17219451458888bsb-10192450',
+      year: 1531,
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
@@ -180,6 +191,19 @@ class _SpecificToolLicenses {
       permissionDay: 0,
       customComment: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
     );
+  }
+
+  ToolLicenseEntry get _toolLicenseOakIslandMystery {
+    return ToolLicensePrivatePermittedDigitalSource(
+        context: context,
+        author: 'www.OakIslandMystery.com',
+        title: 'Oak Island cipher',
+        medium: 'e-mail',
+        sourceUrl:
+        'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
+        permissionYear: 2023,
+        permissionMonth: 6,
+        permissionDay: 1);
   }
 }
 

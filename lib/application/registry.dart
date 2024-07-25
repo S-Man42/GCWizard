@@ -5652,13 +5652,23 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_alchemy_alphabet',
         ],
-        licenses: []),
+        licenses: [
+          stl._toolLicenseOnlineBookPolygraphieTrithemius
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'alien_mushrooms',
         symbolSearchStrings: const [
           'symbol_alien_mushrooms',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicensePrivatePermittedDigitalSource(context: context,
+              author: 'Marcel Zellweger (chank.com)',
+              title: 'Alien Mushrooms',
+              medium: 'e-mail',
+              permissionYear: 2024, permissionMonth: 7, permissionDay: 25,
+              sourceUrl: 'http://web.archive.org/web/20230610084302/https://chank.com/font-AlienMushrooms'
+          )
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'angerthas_cirth',
         symbolSearchStrings: const [
@@ -5675,7 +5685,7 @@ void initializeRegistry(BuildContext context) {
           'symbol_alphabetum_arabum',
         ],
         licenses: [
-          stl._toolLicenseOnlineBookAlphabetumArabEgipt,
+          stl._toolLicenseOnlineBookAlphabetumAlphabetaCharacteres,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'alphabetum_egiptiorum',
@@ -5683,7 +5693,7 @@ void initializeRegistry(BuildContext context) {
           'symbol_alphabetum_egiptiorum',
         ],
         licenses: [
-          stl._toolLicenseOnlineBookAlphabetumArabEgipt,
+          stl._toolLicenseOnlineBookAlphabetumAlphabetaCharacteres,
         ]),
     GCWSymbolTableTool(
         symbolKey: 'alphabetum_gothicum',
@@ -5691,7 +5701,15 @@ void initializeRegistry(BuildContext context) {
           'symbol_alphabetum_gothicum',
         ],
         licenses: [
-          stl._toolLicenseOnlineBookAlphabetumGoth,
+          ToolLicenseOnlineBook(
+            context: context,
+            author: 'Magnus Olaus',
+            title: 'Historia de gentibus septentrionalibus',
+            sourceUrl: 'https://web.archive.org/web/20240607153005/https://runeberg.org/olmagnus/0143.html',
+            year: 1555,
+            licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+            customComment: 'Lib. I, Cap. XXXVI, p. 57'
+          ),
         ]),
     GCWSymbolTableTool(symbolKey: 'antiker', symbolSearchStrings: const [
       'symbol_antiker',
@@ -5921,7 +5939,7 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Chappe code - c. 1794.svg',
+          title: 'Chappe code - c. 1794.svg',
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
     ]),
@@ -5934,7 +5952,7 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Chappe code - c. 1809.svg',
+          title: 'Chappe code - c. 1809.svg',
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1809.svg&oldid=876996757')
     ]),
@@ -5946,7 +5964,7 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Chappe.svg',
+          title: 'Chappe',
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=File:Chappe.svg&oldid=872347070')
     ]),
@@ -6419,8 +6437,8 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'Wikimedia Commons',
-          title: 'Category:Pigpen cipher',
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Pigpen cipher',
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=Category:Pigpen_cipher&oldid=334624960')
     ]),
@@ -6429,8 +6447,8 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'Wikimedia Commons',
-          title: 'Category:Pigpen cipher',
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Pigpen cipher',
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=Category:Pigpen_cipher&oldid=334624960')
     ]),
@@ -7169,16 +7187,7 @@ void initializeRegistry(BuildContext context) {
           'oak_island'
         ],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(
-              context: context,
-              author: 'www.OakIslandMystery.com',
-              title: 'Oak Island ciphery',
-              medium: 'e-mail',
-              sourceUrl:
-                  'https://web.archive.org/web/20200809015129/https://www.oakislandmystery.com/community/coded-email/view/form',
-              permissionYear: 2023,
-              permissionMonth: 6,
-              permissionDay: 1)
+          stl._toolLicenseOakIslandMystery
         ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit_extended',
@@ -7187,16 +7196,7 @@ void initializeRegistry(BuildContext context) {
           'oak_island'
         ],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(
-              context: context,
-              author: 'www.OakIslandMystery.com',
-              title: 'Oak Island cipher',
-              medium: 'e-mail',
-              sourceUrl:
-                  'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
-              permissionYear: 2023,
-              permissionMonth: 6,
-              permissionDay: 1)
+          stl._toolLicenseOakIslandMystery
         ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit_libyan',
@@ -7204,7 +7204,9 @@ void initializeRegistry(BuildContext context) {
           'symbol_oak_island_money_pit_libyan',
           'oak_island'
         ],
-        licenses: []),
+        licenses: [
+          stl._toolLicenseOakIslandMystery
+        ]),
     GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: const [
       'symbol_ogham',
     ], licenses: [
@@ -7673,7 +7675,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: const [
       'symbol_theban',
     ], licenses: [
-      stl._toolLicenseCullyLong,
+      stl._toolLicenseOnlineBookDeOccultaPhilosophia
     ]),
     GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: const [
       'symbol_three_squares',
@@ -7686,7 +7688,7 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Tifinagh_alphabet.png',
+          title: 'Tifinagh alphabet',
           sourceUrl:
             'https://en.wikipedia.org/wiki/Tifinagh#/media/File:Tifinagh_alphabet.png',
           licenseType: ToolLicenseType.CCBYSA4)
@@ -7721,7 +7723,15 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_trafficsigns_germany',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'de.wikipedia.org and contributors',
+              title: 'Bildtafel der Verkehrszeichen in der Bundesrepublik Deutschland seit 2017',
+              sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Bildtafel_der_Verkehrszeichen_in_der_Bundesrepublik_Deutschland_seit_2017&oldid=247018625',
+              licenseType: ToolLicenseType.CCBYSA4)
+        ]),
     GCWSymbolTableTool(symbolKey: 'ulog', symbolSearchStrings: const [
       'symbol_ulog',
     ], licenses: [
@@ -7758,7 +7768,7 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Voynich_EVA.sv',
+          title: 'Voynich EVA',
           sourceUrl:
             'https://commons.wikimedia.org/wiki/File:Voynich_EVA.svg?uselang=en',
           licenseType: ToolLicenseType.CCBYSA4)
@@ -7773,7 +7783,7 @@ void initializeRegistry(BuildContext context) {
           title: 'Vulcan Script',
           sourceUrl:
               'https://web.archive.org/web/20201130173411/https://de.fonts2u.com/vulcan-script.schriftart',
-          licenseType: ToolLicenseType.BYNCND30)
+          licenseType: ToolLicenseType.CCBYNCND30)
     ]),
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: const [
       'symbol_wakandan',
