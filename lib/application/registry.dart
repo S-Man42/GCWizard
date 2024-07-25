@@ -6230,7 +6230,7 @@ void initializeRegistry(BuildContext context) {
               title: 'Dragon Alphabet Font',
               sourceUrl:
                   'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
-              licenseType: ToolLicenseType.FREE_TO_USE,
+              licenseType: ToolLicenseType.CC,
               customComment: 'Free for personal use')
         ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
@@ -6300,7 +6300,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'West Wind Fonts',
+          title: 'Face it!',
+          sourceUrl:
+              'https://web.archive.org/web/20200929020901/https://www.fontspace.com/face-it-font-f10791',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: const [
       'symbol_fakoo',
     ], licenses: [

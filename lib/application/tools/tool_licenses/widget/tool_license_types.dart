@@ -13,7 +13,7 @@ enum ToolLicenseType {
   BSD3, // BSD v3
   CCBY4, // Creative Commons CC BY 4.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
-  CCBYSA3, // Creative Commons CC BY-SA 2.0
+  CCBYSA3, // Creative Commons CC BY-SA 3.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
   CCNC25, // Creative Commons CC NC 2.5
   CCNC30, // Creative Commons CC NC 3.0
