@@ -685,7 +685,7 @@ void _convertFrom(Object source, _GCWList parameter) {
 
     default:
       _handleError(_INVALIDCOORDINATEFORMAT);
-      coord = LatLng(0.0, 0.0);
+      coord = const LatLng(0.0, 0.0);
   }
 
   _setLat(coord!.latitude);
