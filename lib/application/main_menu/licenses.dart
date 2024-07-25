@@ -636,7 +636,7 @@ class _LicensesState extends State<Licenses> {
             ],
             # DONE [i18n(context, 'symboltables_geovlog_title'), 'GEOVLOGS.nl (Permitted via email)'],
             # DONE [i18n(context, 'symboltables_ice_lolly_ding_title'), 'Ice Lolly Ding (dafont.com) (by Michaela Peretti) (Free use)'],
-            [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
             # DONE [
               i18n(context, 'symboltables_kabouter_abc_title'),
               'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'

@@ -6232,7 +6232,7 @@ void initializeRegistry(BuildContext context) {
               title: 'Dragon Alphabet Font',
               sourceUrl:
                   'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
-              licenseType: ToolLicenseType.CC,
+              licenseType: ToolLicenseType.CCBYNC30,
               customComment: 'Free for personal use')
         ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
@@ -6672,7 +6672,16 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Pixel Sagas',
+          title: 'Iokharic',
+          sourceUrl:
+              'https://web.archive.org/web/20201001220330/https://www.fonts4free.net/iokharic-font.html',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'Free for personal use')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'iso7010_firesafety',
         symbolSearchStrings: const [
