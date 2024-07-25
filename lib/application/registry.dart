@@ -6633,7 +6633,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'ice_lolly_ding', symbolSearchStrings: const [
       'symbol_icelolly',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Michaela Peretti',
+          title: 'Ice Lolly Ding',
+          sourceUrl:
+              'https://web.archive.org/web/20210730110407/https://www.1001freefonts.com/de/ice-lolly-ding.font',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: const [
       'icecodes',
     ], licenses: []),
@@ -6770,6 +6778,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'kabouter_abc', symbolSearchStrings: const [
       'symbol_kabouter_abc',
     ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Pascal van Boxel',
+          title: 'Kabouter-ABC',
+          sourceUrl:
+              'http://web.archive.org/web/20200808071342/https://nl.scoutwiki.org/Kabouter-ABC',
+          licenseUrl:
+              'http://web.archive.org/web/20200810033013/https://creativecommons.org/licenses/by-nc-sa/4.0/deed.nl',
+          licenseType: ToolLicenseType.CCBYNC40),
       stl._toolLicenseGeocachingToolbox,
     ]),
     GCWSymbolTableTool(

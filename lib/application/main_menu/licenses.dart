@@ -635,25 +635,25 @@ class _LicensesState extends State<Licenses> {
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
             # DONE [i18n(context, 'symboltables_geovlog_title'), 'GEOVLOGS.nl (Permitted via email)'],
-            [i18n(context, 'symboltables_ice_lolly_ding_title'), 'Ice Lolly Ding (dafont.com) (by Michaela Peretti) (Free use)'],
+            # DONE [i18n(context, 'symboltables_ice_lolly_ding_title'), 'Ice Lolly Ding (dafont.com) (by Michaela Peretti) (Free use)'],
             [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
-            [
+            # DONE [
               i18n(context, 'symboltables_kabouter_abc_title'),
               'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_kurrent_title'),
               'https://commons.wikimedia.org/wiki/File:Deutsche_Kurrentschrift.jpg (Public Domain)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_matoran_title'),
               'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_maya_numbers_glyphs_title'),
               'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reproductions of this educational item are allowed. www.unitycorps.org)'
             ],
-            [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
+            # DONE [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
             [
               i18n(context, 'symboltables_ninjargon_title'),
               'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
