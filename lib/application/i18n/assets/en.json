@@ -4007,7 +4007,7 @@
   "ragbaby_title": "Ragbaby Cipher",
   "ragbaby_description": "Poly-alphabetic substitution cipher with a 24 letters alphabet.",
   "ragbaby_example": "Hello World → igopt zrvqk",
-  "ragbaby_option_24": "Original - 24 characters J→I and X→U",
+  "ragbaby_option_24": "Original - 24 characters J→I and X→W",
   "ragbaby_option_26": "26 characters (A-Z)",
   "ragbaby_option_36": "36 characters (A-Z 0-9)",
   "railfence_title": "Railfence/Zig-Zag",
