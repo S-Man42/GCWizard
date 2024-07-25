@@ -5630,6 +5630,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'albhed', symbolSearchStrings: const [
       'symbol_albhed'
     ], licenses: [
+      stl._toolLicenseCullyLong,
       ToolLicenseFont(
           context: context,
           author: 'Al-bhed-fans (deviantart.com)',
@@ -5693,6 +5694,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'antiker', symbolSearchStrings: const [
       'symbol_antiker',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
@@ -5719,6 +5721,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -5734,6 +5737,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
       'symbol_aurebesh',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(
@@ -5880,7 +5884,9 @@ void initializeRegistry(BuildContext context) {
           'symbol_signlanguage',
           'symbol_british_sign_language',
         ],
-        licenses: []),
+        licenses: [
+          stl._toolLicenseCullyLong,
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'chain_of_death_direction',
         symbolSearchStrings: const [
@@ -6070,7 +6076,9 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: const [
       'symbol_covenant',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: const [
       'symbol_crystal',
     ], licenses: []),
@@ -6088,11 +6096,13 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(symbolKey: 'dagger', symbolSearchStrings: const [
       'symbol_dagger',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
@@ -6142,7 +6152,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: const [
       'color',
       'symbol_dni_colors',
@@ -6150,6 +6162,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: const [
       'symbol_dni_numbers',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
           context: context,
@@ -6161,10 +6174,13 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: const [
       'symbol_doop',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: const [
       'symbol_dorabella',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       ToolLicenseOwnReProduction(
           context: context,
           author: 'Thomas Zimmermann',
@@ -6185,6 +6201,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
       'symbol_dragon_runes',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(
@@ -6219,6 +6236,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: const [
       'symbol_enochian',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       ToolLicenseOnlineArticle(
           context: context,
@@ -6379,6 +6397,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -6393,6 +6412,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'gargish', symbolSearchStrings: const [
       'symbol_gargish',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(
@@ -6437,6 +6457,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(
@@ -6516,7 +6537,9 @@ void initializeRegistry(BuildContext context) {
           'zelda',
           'symbol_hylian_skywardsword',
         ],
-        licenses: []),
+        licenses: [
+          stl._toolLicenseCullyLong,
+        ]),
     GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: const [
       'zelda',
       'symbol_hylian_symbols',
@@ -6546,6 +6569,7 @@ void initializeRegistry(BuildContext context) {
           'symbol_hylian_windwaker',
         ],
         licenses: [
+          stl._toolLicenseCullyLong,
           stl._toolLicenseMyGeoToolsCodeTabellen,
         ]),
     GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: const [
@@ -6568,7 +6592,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'illuminati_v1', symbolSearchStrings: const [
       'symbol_illuminati',
       'symbol_illuminati_v1',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'illuminati_v2', symbolSearchStrings: const [
       'symbol_illuminati',
       'symbol_illuminati_v2',
@@ -6580,7 +6606,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'interlac', symbolSearchStrings: const [
       'symbol_interlac',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
     ], licenses: []),
@@ -6717,6 +6745,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'klingon', symbolSearchStrings: const [
       'symbol_klingon',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -6736,6 +6765,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: const [
       'symbol_krypton',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(symbolKey: 'kurrent', symbolSearchStrings: const [
@@ -6778,7 +6808,9 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'marain', symbolSearchStrings: const [
       'symbol_marain',
     ], licenses: []),
@@ -6790,6 +6822,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: const [
       'symbol_matoran',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -6882,6 +6915,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: const [
       'symbol_moon',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -6982,7 +7016,9 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: const [
       'symbol_nazcaan',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'new_zealand_sign_language',
         symbolSearchStrings: const [
@@ -7044,7 +7080,9 @@ void initializeRegistry(BuildContext context) {
         licenses: []),
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit',
         symbolSearchStrings: const [
@@ -7160,7 +7198,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: const [
       'pokemon',
       'symbol_pokemon_unown',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: const [
       'barcodes',
       'symbol_postcode01247',
@@ -7222,6 +7262,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -7270,6 +7311,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: const [
       'symbol_romulan',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
@@ -7510,7 +7552,9 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: const [
       'symbol_theban',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: const [
       'symbol_three_squares',
     ], licenses: [
@@ -7557,21 +7601,26 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'unitology', symbolSearchStrings: const [
       'symbol_unitology',
-    ], licenses: []),
+    ], licenses: [
+      stl._toolLicenseCullyLong,
+    ]),
     GCWSymbolTableTool(symbolKey: 'utopian', symbolSearchStrings: const [
       'symbol_utopian',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
     GCWSymbolTableTool(symbolKey: 'visitor_1984', symbolSearchStrings: const [
       'symbol_visitor_1984',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseGeocachingToolbox,
     ]),
     GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: const [
       'symbol_visitor_2009',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
     ]),
@@ -7665,6 +7714,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: const [
       'symbol_zentradi',
     ], licenses: [
+      stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: const [
