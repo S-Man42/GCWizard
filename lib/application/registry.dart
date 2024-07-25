@@ -5967,7 +5967,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Studio Mies',
           title: 'Lettertype Mies Christmas Icons',
           sourceUrl:
-          'https://web.archive.org/web/20220726192456/https://www.dafont.com/de/lettertype-mies-christmas-icons.font',
+              'https://web.archive.org/web/20220726192456/https://www.dafont.com/de/lettertype-mies-christmas-icons.font',
           licenseType: ToolLicenseType.FREE_TO_USE,
           customComment: 'Free for personal use')
     ]),
@@ -6085,7 +6085,16 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
       'symbol_cosmic',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Pixel Sagas',
+          title: 'Modern Cybertronic Font',
+          sourceUrl:
+              'https://fontmeme.com/fonts/modern-cybertronic-font/',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'This URL has been excluded from the Wayback Machine')
+    ]),
     GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: const [
       'countries',
       'symbol_flags',
@@ -6214,7 +6223,16 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_dragon_language',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'Matthew Luckow',
+              title: 'Dragon Alphabet Font',
+              sourceUrl:
+                  'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              customComment: 'Free for personal use')
+        ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
       'symbol_dragon_runes',
     ], licenses: [
