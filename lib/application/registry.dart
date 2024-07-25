@@ -7300,7 +7300,15 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'prosyl', symbolSearchStrings: const [
       'symbol_prosyl',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Saali Peter',
+          title: 'ProSyl font',
+          sourceUrl:
+              'http://web.archive.org/web/20211205101934/https://fontineed.com/it/font/prosyl',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: const [
       'symbol_puzzle',
     ], licenses: [
@@ -7309,7 +7317,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: const [
       'symbol_puzzle',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Roci',
+          title: 'Puzzle Font',
+          sourceUrl:
+              'https://web.archive.org/web/20200925235507/https://www.fontspace.com/puzzle-font-f10159',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'prussian_colors_artillery',
         symbolSearchStrings: const [
@@ -7396,6 +7412,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
     ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Leadermassimo',
+          title: 'San Luca code',
+          sourceUrl:
+              'https://web.archive.org/web/20191203174714/https://www.geocachingtoolbox.com/index.php?lang=de&page=codeTables&id=sanLucaCode',
+          licenseType: ToolLicenseType.CCBYSA4,
+          customComment: 'wikimafia.it'),
       stl._toolLicenseGeocachingToolbox,
     ]),
     GCWSymbolTableTool(symbolKey: 'sarati', symbolSearchStrings: const [
@@ -7438,7 +7462,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'sith',
         symbolSearchStrings: const ['symbol_sith'],
-        licenses: []),
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'AurekFonts',
+              title: 'Sith AF',
+              sourceUrl:
+                  'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font',
+              licenseType: ToolLicenseType.CCBY3US)
+        ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
     ], licenses: []),
@@ -7477,7 +7509,16 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'sprykski', symbolSearchStrings: const [
       'symbol_sprykski',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Volnaiskra',
+          title: 'Sprykski Font',
+          sourceUrl:
+              'https://web.archive.org/web/20210306061331/https://www.1001fonts.com/sprykski-font.html',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'Free for personal use')
+    ]),
     GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
       'symbol_steinheil',
       'telegraph',
