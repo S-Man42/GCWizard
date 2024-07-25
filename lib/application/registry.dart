@@ -999,6 +999,7 @@ void initializeRegistry(BuildContext context) {
         author: 'crox.net (geo.crox.net/djia)',
         title: 'Dow Jones API',
         licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseUrl: 'http://web.archive.org/web/20240725231749/https://geohashing.site/index.php?title=Dow_Jones_Industrial_Average&type=revision&diff=21062&oldid=21061',
         sourceUrl: 'http://geo.crox.net/djia',
       ),
     ]),
