@@ -220,7 +220,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             PointF offset;
             var languagefile = File.ReadAllText(languageFileName(path));
             var languagefileEn = File.ReadAllText(languageFileNameEn(path));
-            var licenseEntries = getLicenseEntries(File.ReadAllText(licenseFileName(path)));
+            var licenseEntries = getLicenseEntries(File.ReadAllText(licenseTypesFileName(path)), 
+                File.ReadAllText(licenseTypesSpecificFileName(path)), 
+                File.ReadAllText(registryFileName(path)));
 
             ProjectPath = path;
             PdfPage page = null;
@@ -1029,73 +1031,82 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// <summary>
         /// get text from license-file
         /// </summary>
-        /// <param name="fileContent"></param>
+        /// <param name="licenseTypesContent"></param>
         /// <returns></returns>
-        private Dictionary<String, String> getLicenseEntries(String fileContent)
+        private Dictionary<String, String> getLicenseEntries(String licenseTypesContent, String licenseTypesSpecificContent, String registryContent)
         {
             var start = false;
             var startChildren = false;
             var list = new Dictionary<String, String>();
-            var lines = fileContent.Split('\n');
+            var lines = licenseTypesContent.Split('\n');
 
-            for (var i = 0; i < lines.Length - 1; i++)
-            {
-                var line = lines[i].Trim();
-                if (line.StartsWith("[") && startChildren)
-                {
-                    while (!(line.EndsWith("],") || line.EndsWith("]")))
-                    {
-                        i++;
-                        line += lines[i].Trim();
-                    };
-                }
+			var symboltables = new Regex(@"GCWSymbolTableTool.*?symbolKey\s*:(.*?),.*?licenses\s*\:\s*\[(.*?)]", RegexOptions.Singleline);
+            var registryEntries = symboltables.Matches(registryContent);
 
-                if (!start && line.Contains(@"licenses_symboltablesources"))
-                {
-                    start = true;
-                }
-                //else if (!start && line.Contains(@"licenses_telegraphs"))
-                //{
-                //    start = true;
-                //}
-                else if (start && !startChildren && line.Contains(@"GCWColumnedMultilineOutput"))
-                {
-                    startChildren = true;
-                }
-                else if (startChildren && line.TrimStart().StartsWith(@"["))
-                {
-                    var lineTmp = line.Trim();
-                    lineTmp = lineTmp.Replace("[", "").Replace("]", "").Replace("'", "");
-                    var entrys = lineTmp.Split(',');
-                    if (entrys.Length >= 2)
-                    {
-                        if (entrys[0].Trim() == "i18n(context")
-                        {
-                            entrys[1] = entrys[1].Trim();
-                            if (entrys[1].EndsWith(@")"))
-                                entrys[1] = entrys[1].Substring(0, entrys[1].Length - 1);
+            foreach (Match match in registryEntries)
+            { 
+                if (!String.IsNullOrEmpty( match.Groups[2].Value.Trim()))
+                    list.Add(match.Groups[1].Value.Replace("'", ""), match.Groups[2].Value);
+			}
 
-                            entrys[1] = entrys[1].Replace("symboltables_", "");
-                            entrys[1] = entrys[1].Replace("_title", "");
-                            entrys[0] = entrys[2].Trim();
-                        }
-                        entrys[0] = entrys[0].Trim();
-                        entrys[1] = entrys[1].Trim().ToLower();
+			//for (var i = 0; i < lines.Length - 1; i++)
+			//         {
+			//             var line = lines[i].Trim();
+			//             if (line.StartsWith("[") && startChildren)
+			//             {
+			//                 while (!(line.EndsWith("],") || line.EndsWith("]")))
+			//                 {
+			//                     i++;
+			//                     line += lines[i].Trim();
+			//                 };
+			//             }
 
-                        if (list.ContainsKey(entrys[1]))
-                            list[entrys[1]] += ", " + entrys[0];
-                        else
-                            list[entrys[1]] = entrys[0];
-                    }
-                }
-                else if (startChildren && line.Trim() == (@"),"))
-                {
-                    start = false;
-                    startChildren = false;
-                }
-            }
+			//             if (!start && line.Contains(@"licenses_symboltablesources"))
+			//             {
+			//                 start = true;
+			//             }
+			//             //else if (!start && line.Contains(@"licenses_telegraphs"))
+			//             //{
+			//             //    start = true;
+			//             //}
+			//             else if (start && !startChildren && line.Contains(@"GCWColumnedMultilineOutput"))
+			//             {
+			//                 startChildren = true;
+			//             }
+			//             else if (startChildren && line.TrimStart().StartsWith(@"["))
+			//             {
+			//                 var lineTmp = line.Trim();
+			//                 lineTmp = lineTmp.Replace("[", "").Replace("]", "").Replace("'", "");
+			//                 var entrys = lineTmp.Split(',');
+			//                 if (entrys.Length >= 2)
+			//                 {
+			//                     if (entrys[0].Trim() == "i18n(context")
+			//                     {
+			//                         entrys[1] = entrys[1].Trim();
+			//                         if (entrys[1].EndsWith(@")"))
+			//                             entrys[1] = entrys[1].Substring(0, entrys[1].Length - 1);
 
-            return list;
+			//                         entrys[1] = entrys[1].Replace("symboltables_", "");
+			//                         entrys[1] = entrys[1].Replace("_title", "");
+			//                         entrys[0] = entrys[2].Trim();
+			//                     }
+			//                     entrys[0] = entrys[0].Trim();
+			//                     entrys[1] = entrys[1].Trim().ToLower();
+
+			//                     if (list.ContainsKey(entrys[1]))
+			//                         list[entrys[1]] += ", " + entrys[0];
+			//                     else
+			//                         list[entrys[1]] = entrys[0];
+			//                 }
+			//             }
+			//             else if (startChildren && line.Trim() == (@"),"))
+			//             {
+			//                 start = false;
+			//                 startChildren = false;
+			//             }
+			//         }
+
+			return list;
         }
 
         #endregion
@@ -1167,12 +1178,22 @@ namespace GC_Wizard_SymbolTables_Pdf
         }
 
 
-        private static String licenseFileName(String path)
+        private static String licenseTypesFileName(String path)
         {
-            return Path.Combine(path, @"lib\application\main_menu\licenses.dart");
+            return Path.Combine(path, @"lib/application/tools/tool_licenses/widget/tool_license_types.dart");
         }
 
-        private static String symbolTablesDirectory(String path)
+		private static String licenseTypesSpecificFileName(String path)
+		{
+			return Path.Combine(path, @"lib/application/tools/tool_licenses/widget/specific_tool_licenses.dart");
+		}
+
+		private static String registryFileName(String path)
+		{
+			return Path.Combine(path, @"lib\application\registry.dart");
+		}
+
+		private static String symbolTablesDirectory(String path)
         {
             return Path.Combine(path, @"lib\tools\symbol_tables\_common\assets");
         }
