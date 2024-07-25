@@ -1069,8 +1069,10 @@ namespace GC_Wizard_SymbolTables_Pdf
 				{
 					var text = match.Groups[2].Value.Trim();
 					var i18nMatch = i18nRegEx.Match(text);
-					if (i18nMatch != null)
+					if (i18nMatch.Success)
 						text = getEntryValue(languagefile, i18nMatch.Groups[1].Value) ?? getEntryValue(languagefileEn, i18nMatch.Groups[1].Value) ?? text;
+					else
+						text = text.Replace("'", "");
 					licensesList.Add(match.Groups[1].Value.Trim(), text);
 				}
 			}
@@ -1078,9 +1080,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 			{
 				var entry = list.ElementAt(i);
 				if (licensesList.ContainsKey(entry.Value))
-				{
 					list[entry.Key] = licensesList[entry.Value];
-				}
 			}
 
 			return list;
