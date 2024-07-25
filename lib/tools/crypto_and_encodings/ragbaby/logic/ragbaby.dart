@@ -24,7 +24,7 @@ const Map<RagbabyType, String> RAGBABY_OPTIONS = {
 /// The [password] starts the secret alphabet.
 /// All remaining characters are added at the end.
 /// Every letter of the secret alphabet is unique.
-String _createSecretAlphabet(String password,
+String createSecretAlphabet(String password,
     {RagbabyType type = RagbabyType.NoJX}) {
   String keyAlphabet;
   if (type == RagbabyType.NoJX) {
@@ -58,17 +58,9 @@ String encryptRagbaby(String plainText, String password,
     {RagbabyType type = RagbabyType.NoJX}) {
   if (plainText.isEmpty) return '';
 
-  var alphabet = _createSecretAlphabet(password, type: type);
+  var alphabet = createSecretAlphabet(password, type: type);
   var rotator = Rotator(alphabet: alphabet);
-  var cleanedInput = plainText;
-
-  if (type == RagbabyType.NoJX) {
-    cleanedInput = cleanedInput
-        .replaceAll('X', 'W')
-        .replaceAll('J', 'I')
-        .replaceAll('x', 'w')
-        .replaceAll('j', 'i');
-  }
+  var cleanedInput = _sanitizeInput(plainText, type);
 
   final List<String> words = cleanedInput.split(RegExp('\\s+|[\\n\\r]+'));
   List<String> encryptedText = [];
@@ -79,7 +71,7 @@ String encryptRagbaby(String plainText, String password,
     int corrector = 0;
 
     for (int letterIndex = 0; letterIndex < word.length; letterIndex++) {
-      if (!alphabet.contains(word[letterIndex])) {corrector++;}
+      if (!alphabet.contains(word[letterIndex].toUpperCase())) {corrector++;}
 
       int rotation = wordIndex + letterIndex + 1 - corrector;
       encryptedWord += rotator.rotate(word[letterIndex], rotation);
@@ -96,12 +88,14 @@ String encryptRagbaby(String plainText, String password,
 /// and https://www.dcode.fr/ragbaby-cipher
 String decryptRagbaby(String cipherText, String password,
     {RagbabyType type = RagbabyType.NoJX}) {
+
   if (cipherText.isEmpty) return '';
 
-  var alphabet = _createSecretAlphabet(password, type: type);
+  var alphabet = createSecretAlphabet(password, type: type);
   var rotator = Rotator(alphabet: alphabet);
+  var cleanedInput = _sanitizeInput(cipherText, type);
 
-  final List<String> words = cipherText.split(RegExp('\\s+|[\\n\\r]+'));
+  final List<String> words = cleanedInput.split(RegExp('\\s+|[\\n\\r]+'));
   List<String> decryptedText = [];
 
   for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
@@ -110,7 +104,7 @@ String decryptRagbaby(String cipherText, String password,
     int corrector = 0;
 
     for (int letterIndex = 0; letterIndex < word.length; letterIndex++) {
-      if (!alphabet.contains(word[letterIndex])) {corrector++;}
+      if (!alphabet.contains(word[letterIndex].toUpperCase())) {corrector++;}
 
       int rotation = -(wordIndex + letterIndex + 1) + corrector;
       decryptedWord += rotator.rotate(word[letterIndex], rotation);
@@ -118,4 +112,16 @@ String decryptRagbaby(String cipherText, String password,
     decryptedText.add(decryptedWord);
   }
   return decryptedText.join(' ');
+}
+
+String _sanitizeInput(String text, RagbabyType type) {
+  String output = text;
+  if (type == RagbabyType.NoJX) {
+    output = text
+        .replaceAll('X', 'W')
+        .replaceAll('J', 'I')
+        .replaceAll('x', 'w')
+        .replaceAll('j', 'i');
+  }
+  return output;
 }

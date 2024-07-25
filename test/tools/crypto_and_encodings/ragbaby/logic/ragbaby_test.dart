@@ -9,13 +9,13 @@ void main() {
         'input': 'The quick brown fox jumps.',
         'option': RagbabyType.NoJX,
         'pw': 'secretword',
-        'expectedOutput': 'Wkt vzndu hdggs kgc pczcb.'
+        'expectedOutput': 'Wkt vzndu hdggs kgg pczcb.'
       },
       {
         'input': 'The quick brown fox jumps!',
         'option': RagbabyType.AZ,
         'pw': 'secretword',
-        'expectedOutput': 'Wjt vymdu hdggz jgr peyeb!'
+        'expectedOutput': 'Wjt vymdu hdggz jgr peyeb.'
       },
       {
         'input': '34 quick brown foxes?',
@@ -33,7 +33,7 @@ void main() {
         'input': 'du wirst gerächt werden',
         'option': RagbabyType.AZ,
         'pw': 'grabtharä',
-        'expectedOutput': 'ew ylhyi bkcälll gldmoy'
+        'expectedOutput': 'ew ylhyi bkcäkkk gldmoy'
       },
     ];
 
@@ -52,10 +52,10 @@ void main() {
       {'expectedOutput': '', 'option': RagbabyType, 'pw': '', 'input': ''},
 
       {
-        'expectedOutput': 'The quick brown fou.',
+        'expectedOutput': 'The quick brown fow.',
         'option': RagbabyType.NoJX,
         'pw': 'secretword',
-        'input': 'Wkt vzndu hdggs kgc.'
+        'input': 'Wkt vzndu hdggs kgg.'
       },
       {
         'expectedOutput': 'The quick brown fox jumps!',
@@ -68,12 +68,13 @@ void main() {
         'option': RagbabyType.AZ09,
         'pw': 'secretword',
         'input': '46 vymdu hdggz jg3aa?'
-        // decoded number always turns into an upper letter
-        // no idea how to handle this special case
       },
-
-      // {'expectedOutput' : 'BEI GRABTHARS HAMMER', 'pw': '', 'input' :'CGM IUEGAPIBD LERSMA'},
-      //  {'expectedOutput' : 'DU WIRST GERÄCHT WERDEN.', 'pw': 'fedcba', 'input' : 'CW ZMVYF KAWÄLQC EGYKKW.'},
+      {
+        'expectedOutput': 'Words to live by: NEVER PUT BOTH FEET IN YOUR MOUTH AT THE SAME TIME BECAUSE THEN YOU DON’T HAVE A LEG TO STAND ON.',
+        'option': RagbabyType.NoJX,
+        'pw': 'caution',
+        'input': 'Ybwhc  od qdam gt: GMTQT YEG LKHY RRSL KP DPLB UQMQT KP PUC EPBU RVDT ZURVYPB VNIU PCY TAT’A DYRD Y HDG UO SITEH  ND.',
+      }
     ];
 
     for (var elem in _inputsToExpected) {

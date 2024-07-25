@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/logic/ragbaby.dart';
 
 class Ragbaby extends StatefulWidget {
@@ -79,7 +81,13 @@ class _RagbabyState extends State<Ragbaby> {
             });
           },
         ),
-        _buildOutput(context)
+        GCWOutput(title: "Used Alphabet",
+            child:
+              GCWOutputText(text:createSecretAlphabet(_currentPassword, type: _currentOption)),
+        ),
+
+        _buildOutput(context),
+
       ],
     );
   }
