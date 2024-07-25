@@ -5820,7 +5820,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'blue_monday', symbolSearchStrings: const [
       'symbol_blue_monday',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'New Order (https://www.youtube.com/watch?v=c1GxjzHm5us)',
+          title: 'Song Blue Monday',
+          sourceUrl:
+          'https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'brahmi_numerals',
         symbolSearchStrings: const [
@@ -5947,7 +5955,9 @@ void initializeRegistry(BuildContext context) {
         licenses: []),
     GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: const [
       'christmas',
-    ], licenses: []),
+    ], licenses: [
+      
+    ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_lordoftherings',

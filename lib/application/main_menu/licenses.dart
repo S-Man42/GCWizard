@@ -617,11 +617,11 @@ class _LicensesState extends State<Licenses> {
               i18n(context, 'symboltables_bibibinary_title'),
               'https://en.wikipedia.org/wiki/Bibi-binary#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg (CC BY-SA 4.0)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_blue_monday_title'),
               'adopted from https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/; (Personal Use)'
             ],
-            [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
             [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
             [i18n(context, 'symboltables_cosmic_title'), 'https://www.dafont.com/de/modern-cybertronic.font, http://www.pixelsagas.com (Personal Use)'],
             [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
