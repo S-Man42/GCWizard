@@ -7767,6 +7767,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_vulcanian',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'Nick Polyarush',
+          title: 'Vulcan Script',
+          sourceUrl:
+              'https://web.archive.org/web/20201130173411/https://de.fonts2u.com/vulcan-script.schriftart',
+          licenseType: ToolLicenseType.BYNCND30)
     ]),
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: const [
       'symbol_wakandan',
