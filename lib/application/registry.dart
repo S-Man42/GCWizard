@@ -996,7 +996,7 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20240715180948/https://xkcd.com/426/'),
       ToolLicenseAPI(
         context: context,
-        author: 'crox.net (geo.crox.net/djia)',
+        author: '@Crox (geohashing.site)',
         title: 'Dow Jones API',
         licenseType: ToolLicenseType.FREE_TO_USE,
         licenseUrl: 'http://web.archive.org/web/20240725231749/https://geohashing.site/index.php?title=Dow_Jones_Industrial_Average&type=revision&diff=21062&oldid=21061',
