@@ -177,7 +177,7 @@ class _SpecificToolLicenses {
       permissionYear: 2021,
       permissionMonth: 12,
       permissionDay: 8,
-      customComment: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
+      sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
     );
   }
 
