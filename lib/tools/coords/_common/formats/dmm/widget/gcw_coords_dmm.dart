@@ -11,20 +11,18 @@ class _GCWCoordWidgetInfoDMM extends GCWCoordWidgetInfo {
   String get example => 'N 45° 17.460\' W 122° 24.800\'';
 
   @override
-  _GCWCoordWidget mainWidget({
-    Key? key,
-    required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate? coordinates,
-    bool? initialize
-  }) {
+  _GCWCoordWidget mainWidget(
+      {Key? key,
+      required void Function(BaseCoordinate?) onChanged,
+      required BaseCoordinate? coordinates,
+      bool? initialize}) {
     return _GCWCoordsDMM(key: key, onChanged: onChanged, coordinates: coordinates, initialize: initialize ?? false);
   }
 }
 
 class _GCWCoordsDMM extends _GCWCoordWidget {
-
-  _GCWCoordsDMM({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize}) :
-        super(coordinates: coordinates is DMMCoordinate ? coordinates : DMMFormatDefinition.defaultCoordinate);
+  _GCWCoordsDMM({super.key, required super.onChanged, required BaseCoordinate? coordinates, super.initialize})
+      : super(coordinates: coordinates is DMMCoordinate ? coordinates : DMMFormatDefinition.defaultCoordinate);
 
   @override
   _GCWCoordsDMMState createState() => _GCWCoordsDMMState();
@@ -86,9 +84,10 @@ class _GCWCoordsDMMState extends State<_GCWCoordsDMM> {
   @override
   Widget build(BuildContext context) {
     if (widget.initialize) {
+      var precision = Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
       var dmm = widget.coordinates as DMMCoordinate;
-      var lat = dmm.dmmLatitude.formatParts(10);
-      var lon = dmm.dmmLongitude.formatParts(10);
+      var lat = dmm.dmmLatitude.formatParts(precision);
+      var lon = dmm.dmmLongitude.formatParts(precision);
 
       _currentLatDegrees = lat.degrees;
       _currentLatMinutes = lat.minutes.split('.')[0];

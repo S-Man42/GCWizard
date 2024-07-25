@@ -1,7 +1,7 @@
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/mapcode.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/mapcode.dart';
 import 'package:latlong2/latlong.dart';
 
 const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
@@ -12,17 +12,20 @@ const Map<int, CoordinateFormatKey> MAPCODE_CODE = {
 const int _DEFAULT_PRECISION = 0;
 const defaultMapCodeType = CoordinateFormatKey.MAPCODE_LOCAL;
 const mapCodeKey = 'coords_mapcode';
-final _defaultCoordinate = MapCode.parse('HHHHC.X0KG')!;// MapCode.fromLatLon(LatLng(0, 0), defaultMapCodeType);
+final _defaultCoordinate = MapCode.parse('HHHHC.X0KG')!; // MapCode.fromLatLon(LatLng(0, 0), defaultMapCodeType);
 
 final MapCodeFormatDefinition = CoordinateFormatWithSubtypesDefinition(
-    CoordinateFormatKey.MAPCODE, mapCodeKey, mapCodeKey,
+    CoordinateFormatKey.MAPCODE,
+    mapCodeKey,
+    mapCodeKey,
     [
-      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_mapcode_local',
-          'coords_mapcode_local', MapCode.parse, _defaultCoordinate),
+      CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_LOCAL, 'coords_mapcode_local', 'coords_mapcode_local',
+          MapCode.parse, _defaultCoordinate),
       CoordinateFormatDefinition(CoordinateFormatKey.MAPCODE_INTERNATIONAL, 'coords_mapcode_international',
           'coords_mapcode_international', MapCode.parse, _defaultCoordinate),
     ],
-    MapCode.parse, _defaultCoordinate);
+    MapCode.parse,
+    _defaultCoordinate);
 
 class MapCode extends BaseCoordinateWithSubtypes {
   late CoordinateFormat _format;
@@ -43,6 +46,7 @@ class MapCode extends BaseCoordinateWithSubtypes {
 
   @override
   LatLng? toLatLng() {
+    if (coords.isEmpty || coords.first.fullmapcode.isEmpty) return null;
     return _MapCodeToLatLon(this);
   }
 
@@ -67,7 +71,6 @@ class MapCode extends BaseCoordinateWithSubtypes {
   }
 }
 
-
 MapCode _latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, int precision = _DEFAULT_PRECISION}) {
   if (subtype == CoordinateFormatKey.MAPCODE_INTERNATIONAL) {
     return MapCode(encodeInternationalWithPrecision(coord.latitude, coord.longitude, precision), subtype);
@@ -78,28 +81,33 @@ MapCode _latLonToMapCode(LatLng coord, {required CoordinateFormatKey subtype, in
 
 LatLng? _MapCodeToLatLon(MapCode mapcode) {
   if (mapcode.coords.isEmpty) return null;
-  return decode(mapcode.coords.first.fullmapcode, '');
+  return decode(mapcode.coords.first.fullmapcode, mapcode.coords.first.territoryAlphaCode);
 }
 
 MapCode? _parseMapCode(String input, {String territory = ''}) {
+  input = input.toUpperCase();
+  territory = territory.toUpperCase();
   var match = RegExp(_regexString()).firstMatch(input);
   if (match == null) return null;
 
   var mapCode = match.group(0).toString();
-  if (territory.isNotEmpty) {
-    if (match.group(1) != null) {
-      mapCode = mapCode.replaceFirst(match.group(1)!, territory);
-    } else {
-      mapCode = territory + ' ' + mapCode;
-    }
+  if (territory.trim().isEmpty) {
+    territory = (match.group(1) == null || match.group(1)!.isEmpty) ? '' : match.group(1).toString();
   }
+
+  if (match.group(1) != null) {
+    mapCode = mapCode.replaceFirst(match.group(1)!, '');
+  }
+
   var latLon = decode(mapCode, territory);
   if (latLon == null) {
     return null;
   } else {
     var coords = <McInfo>[];
     var mcInfo = McInfo();
-    mcInfo.fullmapcode = mapCode;
+    mcInfo.mapcode = mapCode.trim();
+    mcInfo.territoryAlphaCode = territory.trim();
+    mcInfo.fullmapcode = (mcInfo.territoryAlphaCode.isNotEmpty ? mcInfo.territoryAlphaCode + ' ' : '') + mapCode;
     coords.add(mcInfo);
 
     return MapCode(coords, defaultMapCodeType);
@@ -117,4 +125,3 @@ String _regexString() {
   rx += r")\s*)?" + letter + r"{2,}\." + letter + r"{2,}(-\d{1,8})?";
   return rx;
 }
-

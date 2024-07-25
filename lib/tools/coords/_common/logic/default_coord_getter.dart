@@ -7,7 +7,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-final defaultCoordinate = LatLng(0.0, 0.0);
+const defaultCoordinate = LatLng(0.0, 0.0);
 
 CoordinateFormatKey? getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   if (isCoordinateFormatWithSubtype(format)) {
@@ -88,7 +88,7 @@ int defaultHemiphereLongitude() {
 }
 
 Ellipsoid get defaultEllipsoid {
-  var _WGS84Ells = getEllipsoidByName(ELLIPSOID_NAME_WGS84)!;
+  var _WGS84Ells = Ellipsoid.WGS84;
 
   String type = Prefs.getString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE);
   if (type.isEmpty) {

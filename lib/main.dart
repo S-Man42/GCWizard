@@ -10,7 +10,7 @@ import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard_editor.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +24,7 @@ void main() async {
 
   await GCWPackageInfo.init();
 
-  runApp(App(
-    appLanguage: appLanguage
-  ));
+  runApp(App(appLanguage: appLanguage));
 }
 
 class App extends StatelessWidget {

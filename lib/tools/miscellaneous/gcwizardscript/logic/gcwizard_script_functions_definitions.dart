@@ -168,13 +168,16 @@ const List<String> _Functions_12 = [
   'READFROMFILE(',
 ];
 const List<String> _Functions_13 = [
+  'BINARYTOFLOAT(',
   'ENCLOSEDAREAS(',
+  'FLOATTOBINARY(',
 ];
 const List<String> _Functions_14 = [
-  'CENTERTWOPINTS(',
   'LISTISNOTEMPTY(',
 ];
-const List<String> _Functions_15 = [];
+const List<String> _Functions_15 = [
+  'CENTERTWOPOINTS(',
+];
 const List<String> _Functions_16 = [];
 const List<String> _Functions_17 = [
   'CENTERTHREEPOINTS(',
@@ -196,7 +199,10 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),
   'WPTSCLEAR': _GCWizardScriptClassFunctionDefinition(_wptsClear, 0, functionReturn: false),
-  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, functionReturn: false),
+  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(
+    _wptsCount,
+    0,
+  ),
   'WPTSLON': _GCWizardScriptClassFunctionDefinition(
     _wptsLon,
     1,
@@ -224,13 +230,14 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LISTISNOTEMPTY': _GCWizardScriptClassFunctionDefinition(_listIsNotEmpty, 1),
   'LISTTOSTRING': _GCWizardScriptClassFunctionDefinition(_listToString, 1),
   'LISTGET': _GCWizardScriptClassFunctionDefinition(_listGet, 2),
-  'LISTFROM': _GCWizardScriptClassFunctionDefinition(_listFrom, 1, functionReturn: false),
+  'LISTFROM': _GCWizardScriptClassFunctionDefinition(_listFrom, 2, functionReturn: false),
 
   // math
   'ABS': _GCWizardScriptClassFunctionDefinition(_abs, 1),
   'ACOS': _GCWizardScriptClassFunctionDefinition(_acos, 1),
   'ASIN': _GCWizardScriptClassFunctionDefinition(_asin, 1),
   'ATAN': _GCWizardScriptClassFunctionDefinition(_atan, 1),
+  'BINARYTOFLOAT': _GCWizardScriptClassFunctionDefinition(_binary2float, 1),
   'CARTHESIAN': _GCWizardScriptClassFunctionDefinition(_carthesian, 3, functionReturn: false),
   'CEIL': _GCWizardScriptClassFunctionDefinition(_ceil, 1),
   'CONVERTBASE': _GCWizardScriptClassFunctionDefinition(_convertBase, 3),
@@ -241,6 +248,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'DIVISORS': _GCWizardScriptClassFunctionDefinition(_divisors, 2),
   'EXP': _GCWizardScriptClassFunctionDefinition(_exp, 1),
   'FAC': _GCWizardScriptClassFunctionDefinition(_fac, 1),
+  'FLOATTOBINARY': _GCWizardScriptClassFunctionDefinition(_float2binary, 2),
   'FLOOR': _GCWizardScriptClassFunctionDefinition(_floor, 1),
   'FRAC': _GCWizardScriptClassFunctionDefinition(_frac, 1),
   'GCD': _GCWizardScriptClassFunctionDefinition(_gcd, 2),

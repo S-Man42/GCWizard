@@ -26,21 +26,22 @@ void main() {
         // see if alphabets (re)convert as expected
         var str = greek_versions[t];
         var enc = convertToAlphabet(str, 1); // to greek
+        var expected = greek_versions[t + 1];
 
-        expect(str, enc);
+        expect(enc, expected);
       });
     }
   });
 
   group("Converter.mapcode.encode_decode:", () {
 
-    for (var i = 0; i < testdata.length; i += 4) {
+    for (var i = 0; i < testdata.length; i += 5) {
       var nrWarnings = 0;
 
-      test('string: ${testdata[i]}', () {
+      test('string: ${testdata[i]} x: ${testdata[i + 2]} y: ${testdata[i + 1]}', () {
         var str = testdata[i] as String;
-        var y = testdata[i + 1] as double;
-        var x = testdata[i + 2] as double;
+        var y = testdata[i + 1] is int ? (testdata[i + 1] as int).toDouble() : testdata[i + 1] as double;
+        var x = testdata[i + 2] is int ? (testdata[i + 2] as int).toDouble() : testdata[i + 2] as double;
         var localsolutions = testdata[i + 3] as int;
         var globalsolutions = testdata[i + 4] as int;
 
@@ -66,7 +67,7 @@ void main() {
           // test that expected solution is there
           var foundlocal = 0;
           for (var i = 0; i < r.length; i++) {
-            if (r[i].fullmapcode.indexOf(str) == 0) {
+            if (r[i].fullmapcode.indexOf(str.toUpperCase()) == 0) {
               foundlocal = 1;
             }
           }
@@ -207,7 +208,7 @@ void main() {
       test('string: ${badcodes[i]}', () {
         var p = decode(badcodes[i], "");
 
-        expect(p != null, true);
+        expect(p == null, true);
       });
     }
   });
@@ -285,9 +286,9 @@ var testdata = [
 "", -15.893144, 180.00000001, 0, 0,
 
 "IN-NL WKS.H6", 26.904854, 95.138497, 5, 21,
-"NLD 00.XX", 52.383984, 4.865401375, 0, 0,
 
 // pasted from handmade explain.html with SHOWDT=1, data version 2.2
+"vat 5d.2j", 41.9035, 12.452000000, 2, 8,      // lower characters
 
 "VAT 5D.2J", 41.9035, 12.452000000, 2, 8,
 "VAT J0PX.VN7", 41.9035, 12.452000000, 2, 8,
@@ -16108,13 +16109,13 @@ var testdata = [
 "CN-XJ Y00.XX", 41.760144, 82.894860000, 4, 6,
 "CN-XJ 123.XXX", 46.1175215, 84.492761000, 3, 7,
 "CN-XJ 12.XXXX", 45.925468, 80.918028500, 2, 5,
-"CN-XJ 0123.XX", 40.917864, 79.977318500, 3, 6,
--1];
+"CN-XJ 0123.XX", 40.917864, 79.977318500, 3, 6,];
 
 
 
 
 var test_territories = [
+  test_territory("aaa", 533, 0, 0, 0),
   test_territory("AAA", 533, 0, 0, 0),
   test_territory("AB", 396, 0, 0, 496),
   test_territory("ABW", 26, 0, 0, 0),

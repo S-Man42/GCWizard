@@ -105,9 +105,7 @@ List<BigInt> numberSequencesGetNumbersWithNDigits(NumberSequencesMode sequence, 
     List<BigInt> bellList = <BigInt>[];
     BigInt number = One;
     int index = 0;
-    while (number
-        .toString()
-        .length < digits + 1) {
+    while (number.toString().length < digits + 1) {
       if (index == 0) {
         number = One;
       } else {
@@ -116,9 +114,7 @@ List<BigInt> numberSequencesGetNumbersWithNDigits(NumberSequencesMode sequence, 
         }
       }
       bellList.add(number);
-      if (number
-          .toString()
-          .length == digits) numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
       index = index + 1;
     }
   } else {
@@ -159,6 +155,9 @@ List<BigInt> numberSequencesGetNumbersWithNDigits(NumberSequencesMode sequence, 
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      case NumberSequencesMode.BUSY_BEAVER:
+        sequenceList.addAll(busy_beaver_numbers);
+        break;
       default:
         return numberList;
     }
@@ -172,5 +171,3 @@ List<BigInt> numberSequencesGetNumbersWithNDigits(NumberSequencesMode sequence, 
 
   return numberList;
 }
-
-

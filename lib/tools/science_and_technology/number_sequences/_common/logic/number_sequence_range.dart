@@ -171,6 +171,9 @@ List<BigInt> numberSequencesGetNumbersInRange(NumberSequencesMode sequence, int?
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      case NumberSequencesMode.BUSY_BEAVER:
+        sequenceList.addAll(busy_beaver_numbers);
+        break;
       default:
         {}
     }
@@ -181,5 +184,3 @@ List<BigInt> numberSequencesGetNumbersInRange(NumberSequencesMode sequence, int?
 
   return numberList;
 }
-
-

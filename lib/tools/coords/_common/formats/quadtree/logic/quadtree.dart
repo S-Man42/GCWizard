@@ -11,8 +11,7 @@ const int _DEFAULT_PRECISION = 40;
 const quadtreeKey = 'coords_quadtree';
 
 final QuadtreeFormatDefinition = CoordinateFormatDefinition(
-  CoordinateFormatKey.QUADTREE, quadtreeKey, quadtreeKey,
-  QuadtreeCoordinate.parse, QuadtreeCoordinate([]));
+    CoordinateFormatKey.QUADTREE, quadtreeKey, quadtreeKey, QuadtreeCoordinate.parse, QuadtreeCoordinate([]));
 
 class QuadtreeCoordinate extends BaseCoordinate {
   @override
@@ -22,7 +21,7 @@ class QuadtreeCoordinate extends BaseCoordinate {
   QuadtreeCoordinate(this.coords);
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return _quadtreeToLatLon(this);
   }
 
@@ -64,10 +63,11 @@ QuadtreeCoordinate _latLonToQuadtree(LatLng coord, {int precision = _DEFAULT_PRE
   return QuadtreeCoordinate(out.reversed.toList());
 }
 
-LatLng _quadtreeToLatLon(QuadtreeCoordinate quadtree) {
+LatLng? _quadtreeToLatLon(QuadtreeCoordinate quadtree) {
   var tileX = 0;
   var tileY = 0;
 
+  if (quadtree.coords.isEmpty) return null;
   for (var i = 0; i < quadtree.coords.length; i++) {
     tileX = 2 * tileX + quadtree.coords[i] % 2;
     tileY = 2 * tileY + (quadtree.coords[i] / 2.0).floor();

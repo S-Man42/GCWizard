@@ -4,8 +4,6 @@ import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
@@ -22,6 +20,8 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
@@ -213,7 +213,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       addValueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
-      onNewEntryChanged: _updateNewEntry,
+      onNewEntryChanged: (entry) => _updateNewEntry(entry),
       entries: widget.formula.values,
       onAddEntry: (entry) => _addEntry(entry),
       onUpdateEntry: (entry) => _updateEntry(entry),
@@ -315,8 +315,6 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
   Map<String, String> _getSubstitutions() {
     Map<String, String> _substitutions = {};
-    if (widget.formula.values.isEmpty) return _substitutions;
-
     for (var value in widget.formula.values) {
       _substitutions.putIfAbsent(value.key, () => value.value);
     }

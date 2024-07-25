@@ -71,7 +71,9 @@ BigInt Function(int)? _getNumberSequenceFunction(NumberSequencesMode mode) {
   }
 }
 
-PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequencesMode sequence, String? check, int maxIndex, {bool checkMode = false}) {
+PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
+    NumberSequencesMode sequence, String? check, int maxIndex,
+    {bool checkMode = false}) {
   if (check == null || check.isEmpty) {
     return PositionOfSequenceOutput('-1', 0, 0);
   }
@@ -308,6 +310,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      case NumberSequencesMode.BUSY_BEAVER:
+        sequenceList.addAll(busy_beaver_numbers);
+        break;
       default:
         {}
     }
@@ -324,5 +329,3 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
 
   return PositionOfSequenceOutput('-1', 0, 0);
 }
-
-
