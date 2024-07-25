@@ -6316,7 +6316,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
       'symbol_fantastic',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Nederlandse fantasia Wiki',
+          title: 'Fantastisch',
+          sourceUrl:
+              'https://web.archive.org/web/20240714203824/https://nederlandse-fantasia.fandom.com/wiki/Fantastisch',
+          licenseType: ToolLicenseType.CCBYSA3)
+    ]),
     GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: const [
       'symbol_fez',
     ], licenses: []),

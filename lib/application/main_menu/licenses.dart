@@ -627,7 +627,7 @@ class _LicensesState extends State<Licenses> {
             # DONE [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
             # DONE [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
             # DONE [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_fantastic_title'),
+            # DONE [i18n(context, 'symboltables_fantastic_title'),
               'nederlandse-fantasia.fandom.com/wiki/Fantastisch (CC BY-SA 3.0)'],
             [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
             [
