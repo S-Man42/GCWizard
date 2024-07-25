@@ -283,7 +283,7 @@ class _LicensesState extends State<Licenses> {
             ToolLicensePortedCode(context: context, author: 'defylogic.dev', title: 'Flutter Library: latlong2',
               sourceUrl: 'https://web.archive.org/web/20240517114556/https://pub.dev/packages/latlong2',
               licenseType: ToolLicenseType.APACHE2,
-              licenseUrl: '' // TODO
+              licenseUrl: 'http://web.archive.org/web/20240725225604/https://pub.dev/packages/latlong2/license'
             ),
             ToolLicensePortedCode(context: context, author: 'bernos.dev', title: 'Flutter Library: location',
               sourceUrl: 'https://web.archive.org/web/20240716152026/https://pub.dev/packages/location',
