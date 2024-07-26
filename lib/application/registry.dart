@@ -5735,7 +5735,17 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
       'symbol_atlantean',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Typeface',
+          title: 'Atlantean',
+          sourceUrl:
+          'https://web.archive.org/web/20240726131815/https://online-fonts.com/fonts/atlantean',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'Non-commercial use only',
+          licenseUrl: 'https://web.archive.org/web/20211208065631/https://www.high-logic.com/font-license-agreement')
+    ]),
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
       'symbol_aurebesh',
     ], licenses: [
@@ -6175,7 +6185,7 @@ void initializeRegistry(BuildContext context) {
           author: 'FontStruct (https://fontstruct.com/)',
           title: 'Dinosaur Three-Toe Bold',
           sourceUrl:
-              'https://web.archive.org/save/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
+              'https://web.archive.org/web/20240726130010/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
           licenseType: ToolLicenseType.CCNC30)
     ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
