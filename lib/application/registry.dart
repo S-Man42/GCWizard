@@ -5842,7 +5842,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'bibibinary',
         symbolSearchStrings: const ['bibibinary'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Bibi-binary&oldid=1218138081#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg'),
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'birds_on_a_wire',
         symbolSearchStrings: const [
@@ -5850,7 +5857,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseGeocachingToolbox,
-        ]),
+    ]),
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
     ], licenses: [
@@ -5864,7 +5871,7 @@ void initializeRegistry(BuildContext context) {
           author: 'New Order (https://www.youtube.com/watch?v=c1GxjzHm5us)',
           title: 'Song Blue Monday',
           sourceUrl:
-          'https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
+              'https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(
@@ -5874,6 +5881,12 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseGeocachingToolbox,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'Brahmi numeral signs.svg',
+              sourceUrl:
+                  'https://commons.wikimedia.org/w/index.php?title=File:Brahmi_numeral_signs.svg&oldid=831438313'),
         ]),
     GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: const [
       'braille',
