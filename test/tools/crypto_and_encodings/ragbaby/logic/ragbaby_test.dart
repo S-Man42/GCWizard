@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/logic/ragbaby.dart';
 
 void main() {
-  group("Ragbaby.encryptRagbaby:", () {
+  group("Ragbaby: encryptRagbaby:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': '', 'option': RagbabyType, 'pw': '', 'expectedOutput': ''},
       {
@@ -47,7 +47,7 @@ void main() {
     }
   });
 
-  group("Ragbaby.decryptRagbaby:", () {
+  group("Ragbaby: decryptRagbaby:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': '', 'option': RagbabyType, 'pw': '', 'input': ''},
 
