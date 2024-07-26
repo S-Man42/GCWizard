@@ -161,11 +161,12 @@ class _DTMFState extends State<DTMF> {
             _playlist = _currentDecodeInput;
           }
           await Dtmf.playTone(
-              digits: "#1234567890*",
-              //digits: _playlist,
+              digits: _playlist,
               samplingRate: 8000,
               durationMs: 160,
-              volume: 1.0);
+              volume: 1.0,
+              //forceMaxVolume: true,
+          );
         },
       ),
     ]);

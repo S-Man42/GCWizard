@@ -23,9 +23,10 @@ dependencies:
   file_picker_writable: ^2.0.3
   flutter:
     sdk: flutter
-  flutter_dtmf:
-    git:
-      url: https://github.com/t-m-z/flutter_dtmf.git
+  flutter_dtmf: ^3.0.2
+  # flutter_dtmf:
+  #   git:
+  #     url: https://github.com/t-m-z/flutter_dtmf.git
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
