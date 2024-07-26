@@ -12,11 +12,15 @@ enum ToolLicenseType {
   BSD2, // BSD2
   BSD3, // BSD v3
   CCBY4, // Creative Commons CC BY 4.0
+  CCBY3US, // Creative Commons CC BY 3.0 US
+  CCBYNC40, // Creative Commons CC BY-NC-SA 4.0
+  CCBYNC30, // Creative Commons CC BY-NC-SA 3.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
-  CCBYSA3, // Creative Commons CC BY-SA 2.0
+  CCBYSA3, // Creative Commons CC BY-SA 3.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
-  CCNC25, // Creative Commons CC NC 2.5
   CCNC30, // Creative Commons CC NC 3.0
+  CCNC25, // Creative Commons CC NC 2.5
+  CCBYNCND30, // Creative Commons BY-NC-ND 3.0
   CC0_1, // Creative Commons CC0 1.0
   MIT, // MIT
   MPL2, // MPL-2.0
@@ -35,11 +39,15 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.BSD2: return 'BSD-2-Clause';
     case ToolLicenseType.BSD3: return 'BSD-3-Clause';
     case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
+    case ToolLicenseType.CCBY3US: return 'Creative Commons CC BY 3.0 US';
+    case ToolLicenseType.CCBYNC40: return 'Creative Commons CC BY-NC-SA 4.0';
+    case ToolLicenseType.CCBYNC30: return 'Creative Commons CC BY-NC-SA 3.0';
     case ToolLicenseType.CCBYSA4: return 'Creative Commons CC BY-SA 4.0';
     case ToolLicenseType.CCBYSA3: return 'Creative Commons CC BY-SA 3.0';
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
-    case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
     case ToolLicenseType.CCNC30: return 'Creative Commons CC NC 3.0';
+    case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
+    case ToolLicenseType.CCBYNCND30: return 'Creative Commons CC BY-NC-ND 3.0';
     case ToolLicenseType.CC0_1: return 'Creative Commons CC0 1.0';
     case ToolLicenseType.MIT: return 'MIT License';
     case ToolLicenseType.MPL2: return 'Mozilla Public License Version 2.0';

@@ -283,7 +283,7 @@ class _LicensesState extends State<Licenses> {
             ToolLicensePortedCode(context: context, author: 'defylogic.dev', title: 'Flutter Library: latlong2',
               sourceUrl: 'https://web.archive.org/web/20240517114556/https://pub.dev/packages/latlong2',
               licenseType: ToolLicenseType.APACHE2,
-              licenseUrl: '' // TODO
+              licenseUrl: 'http://web.archive.org/web/20240725225604/https://pub.dev/packages/latlong2/license'
             ),
             ToolLicensePortedCode(context: context, author: 'bernos.dev', title: 'Flutter Library: location',
               sourceUrl: 'https://web.archive.org/web/20240716152026/https://pub.dev/packages/location',
@@ -617,17 +617,17 @@ class _LicensesState extends State<Licenses> {
               i18n(context, 'symboltables_bibibinary_title'),
               'https://en.wikipedia.org/wiki/Bibi-binary#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg (CC BY-SA 4.0)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_blue_monday_title'),
               'adopted from https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/; (Personal Use)'
             ],
-            [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
-            [i18n(context, 'symboltables_cosmic_title'), 'https://www.dafont.com/de/modern-cybertronic.font, http://www.pixelsagas.com (Personal Use)'],
-            [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
+            # DONE [i18n(context, 'symboltables_cosmic_title'), 'https://www.dafont.com/de/modern-cybertronic.font, http://www.pixelsagas.com (Personal Use)'],
+            # DONE [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
             # DONE [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
-            [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_fantastic_title'),
+            # DONE [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_fantastic_title'),
               'nederlandse-fantasia.fandom.com/wiki/Fantastisch (CC BY-SA 3.0)'],
             [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
             [
@@ -635,41 +635,41 @@ class _LicensesState extends State<Licenses> {
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
             # DONE [i18n(context, 'symboltables_geovlog_title'), 'GEOVLOGS.nl (Permitted via email)'],
-            [i18n(context, 'symboltables_ice_lolly_ding_title'), 'Ice Lolly Ding (dafont.com) (by Michaela Peretti) (Free use)'],
-            [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
-            [
+            # DONE [i18n(context, 'symboltables_ice_lolly_ding_title'), 'Ice Lolly Ding (dafont.com) (by Michaela Peretti) (Free use)'],
+            # DONE [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
+            # DONE [
               i18n(context, 'symboltables_kabouter_abc_title'),
               'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_kurrent_title'),
               'https://commons.wikimedia.org/wiki/File:Deutsche_Kurrentschrift.jpg (Public Domain)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_matoran_title'),
               'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
             ],
-            [
+            # DONE [
               i18n(context, 'symboltables_maya_numbers_glyphs_title'),
               'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reproductions of this educational item are allowed. www.unitycorps.org)'
             ],
-            [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
+            # DONE [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
             [
               i18n(context, 'symboltables_ninjargon_title'),
               'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
             ],
             # DONE [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
-            [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
-            [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
-            [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
+            # DONE [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
+            # DONE [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
+            # DONE [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
             # DONE [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
-            [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
-            [i18n(context, 'symboltables_tifinagh_title'), '(WikiCommons, CC BY-SA 4.0)'],
+            # DONE [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_tifinagh_title'), '(WikiCommons, CC BY-SA 4.0)'],
             # DONE [i18n(context, 'symboltables_tll_title'), 'GEOVLOGS.nl (Permitted via email)'],
-            [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
-            [i18n(context, 'symboltables_steinheil_title'), '(WikiCommons, CC BY-SA 4.0)'],
-            [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
+            # DONE [i18n(context, 'symboltables_voynich_title'), 'VonHaarberg, (WikiCommons, CC BY-SA 4.0)'],
+            # DONE [i18n(context, 'symboltables_steinheil_title'), '(WikiCommons, CC BY-SA 4.0)'],
+            # DONE [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
           ], flexValues: const [
             1,
             2

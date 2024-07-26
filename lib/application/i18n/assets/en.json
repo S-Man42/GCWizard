@@ -3474,7 +3474,7 @@
   "numbersequence_weirdnumbers_description": "OEIS A006037, until n = 34",
   "numbersequence_weirdnumbers_example": "70, 836, 4030, 5830, 7192, 7912, 9272, 1043, ...",
   "numbersequence_busy_beaver_title": "Busy Beaver Numbers",
-  "numbersequence_busy_beaver_description": "OEIS A060843, until n = 4",
+  "numbersequence_busy_beaver_description": "OEIS A060843, until n = 5",
   "numbersequence_busy_beaver_example": "1, 6, 21, 107, 47176870",
   "numbersequence_bell_title": "Bell Sequence",
   "numbersequence_bell_description": "OEIS A000110, bis n = 555",
