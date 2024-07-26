@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -115,29 +117,51 @@ class _BaconState extends State<Bacon> {
       if (_analyzeText) {
         outputWidget = Column(
           children: [
-            GCWTextDivider(text: i18n(context, 'bacon_analyze_casesensitive'),),
-            GCWOutput(child: _inputUpperLower),
-            GCWOutput(
-              child: decodeBacon(
-                  _inputUpperLower,
-                  inverse: _inversMode,
-                  binary: false,
-                  type: BaconType.FULL),
+            GCWTextDivider(
+              text: i18n(context, 'bacon_analyze'),
+              suppressBottomSpace: true,
             ),
-            GCWTextDivider(text: i18n(context, 'bacon_analyze_alphabet'),),
-            GCWOutput(child: _inputAlphabet),
-            GCWOutput(
-            child: decodeBacon(
-                _inputAlphabet,
-                inverse: _inversMode,
-                binary: false,
-                type: BaconType.FULL),
-          ),
+            Row(
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                      child: Column(children: [
+                        GCWTextDivider(
+                          text: i18n(context, 'bacon_analyze_casesensitive'),
+                        ),
+                        GCWOutput(child: _inputUpperLower),
+                        GCWOutput(
+                          child: decodeBacon(_inputUpperLower,
+                              inverse: _inversMode, binary: false, type: type),
+                        ),
+                      ]),
+                    )),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                    child: Column(
+                      children: [
+                        GCWTextDivider(
+                          text: i18n(context, 'bacon_analyze_alphabet'),
+                        ),
+                        GCWOutput(child: _inputAlphabet),
+                        GCWOutput(
+                          child: decodeBacon(_inputAlphabet,
+                              inverse: _inversMode, binary: false, type: type),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         );
       } else {
-        _output = decodeBacon(
-            _currentInput,
+        _output = decodeBacon(_currentInput,
             inverse: _inversMode,
             binary: _binaryMode == GCWSwitchPosition.right,
             type: type);
@@ -156,5 +180,4 @@ class _BaconState extends State<Bacon> {
       return true;
     }
   }
-
 }
