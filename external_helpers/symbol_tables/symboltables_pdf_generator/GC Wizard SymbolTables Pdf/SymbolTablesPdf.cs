@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GC_Wizard_SymbolTables_Pdf
 {
@@ -429,8 +431,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
 			// Draw the name
 			gfx.DrawString(name, font, XBrushes.Black,
-			new XRect(offset.X, offset.Y, page.Width, page.Height),
-			XStringFormats.TopLeft);
+				new XRect(offset.X, offset.Y, page.Width, page.Height),
+				XStringFormats.TopLeft);
 
 			offset.Y += font.Height;
 
@@ -441,8 +443,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
 				// Draw the description
 				gfx.DrawString(description, font, XBrushes.Black,
-				new XRect(offset.X, offset.Y, page.Width, page.Height),
-				XStringFormats.TopLeft);
+					new XRect(offset.X, offset.Y, page.Width, page.Height),
+					XStringFormats.TopLeft);
 
 				offset.Y += font.Height;
 			}
@@ -454,8 +456,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
 				// Draw the license
 				gfx.DrawString(license, font, XBrushes.Black,
-				new XRect(offset.X, offset.Y, page.Width, page.Height),
-				XStringFormats.TopLeft);
+					new XRect(offset.X, offset.Y, page.Width, page.Height),
+					XStringFormats.TopLeft);
 
 				offset.Y += font.Height;
 			}
@@ -476,32 +478,20 @@ namespace GC_Wizard_SymbolTables_Pdf
 		/// <param name="page"></param>
 		/// <param name="gfx"></param>
 		/// <param name="offset"></param>
-		/// <returns></returns>
+		/// <returns>new bottom position</returns>
 		private PointF DrawOverlay(String name, int maxLength, ref XGraphics gfx, PointF offset)
 		{
 			// Create a font
 			XFont font = CreateXFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
 			if (name == " ")
 			{
-				DrawSpaceSymbol(offset, XColors.Blue, font, gfx);
+				offset.Y = (float)DrawSpaceSymbol(offset, XColors.Blue, font, gfx);
 				return offset;
 			}
 
 			// Draw the name
-			name = CheckTextLength(name, maxLength, font, gfx);
-			if (!name.Contains(Environment.NewLine))
-				gfx.DrawString(name, font, XBrushes.Blue, new XRect(offset.X, offset.Y, ImageSize, 2 * FontSizeOverlay), XStringFormats.TopLeft);
-			else
-			{
-				var text = name.Split('\n');
-
-				for (int i = 0; i < text.Length; i++)
-				{
-					text[i] = text[i].Replace("\r", "");
-					gfx.DrawString(text[i], font, XBrushes.Blue, new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance), XStringFormats.TopLeft);
-				}
-			}
-
+			var textLines = SplitText(gfx, font, maxLength, name);
+			offset.Y = (float)DrawTextBlock(gfx, new XRect(offset.X, offset.Y, ImageSize, 2 * FontSizeOverlay), font, XBrushes.Blue, textLines);
 			return offset;
 		}
 
@@ -512,15 +502,17 @@ namespace GC_Wizard_SymbolTables_Pdf
 		/// <param name="color"></param>
 		/// <param name="font"></param>
 		/// <param name="gfx"></param>
-		private void DrawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
+		private static double DrawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
 		{
 			var size = gfx.MeasureString("M", font);
 			var pen = new XPen(color, 1);
+			var yPosition = position.Y + size.Height;
 
-			gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height));
-			gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X, position.Y + size.Height * 0.8));
-			gfx.DrawLine(pen, new XPoint(position.X + size.Width, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height * 0.8));
+			gfx.DrawLine(pen, new XPoint(position.X, yPosition), new XPoint(position.X + size.Width, yPosition));
+			gfx.DrawLine(pen, new XPoint(position.X, yPosition), new XPoint(position.X, yPosition * 0.8));
+			gfx.DrawLine(pen, new XPoint(position.X + size.Width, yPosition), new XPoint(position.X + size.Width, yPosition * 0.8));
 
+			return yPosition;
 		}
 
 		/// <summary>
@@ -623,14 +615,14 @@ namespace GC_Wizard_SymbolTables_Pdf
 				if (name != null)
 				{
 					var textLines = SplitText(gfx, font, nameLength, name);
-					var offsetY1 = DrawTextBlock(page, gfx, offset, font, textLines);
+					var offsetY1 = DrawTextBlock(gfx, new XRect(offset.X, offset.Y, page.Width, page.Height), font, XBrushes.Black, textLines);
 
 					// split textLines
 					var maxSourceLength = (int)(page.Width - offset.X - BorderWidthRight - nameLength);
 					textLines = SplitText(gfx, font, maxSourceLength, entry.Value);
-					var offsetY2 = DrawTextBlock(page, gfx, new PointF(BorderWidthLeft + nameLength, offset.Y), font, textLines);
+					var offsetY2 = DrawTextBlock(gfx, new XRect(BorderWidthLeft + nameLength, offset.Y, page.Width, page.Height), font, XBrushes.Black, textLines);
 
-					offset.Y = Math.Max(offsetY1, offsetY2);
+					offset.Y = (float)Math.Max(offsetY1, offsetY2);
 				}
 			}
 
@@ -647,13 +639,11 @@ namespace GC_Wizard_SymbolTables_Pdf
 		/// <param name="valueOffsetX"></param>
 		/// <param name="textLines"></param>
 		/// <returns></returns>
-		private static float DrawTextBlock(PdfPage page, XGraphics gfx, PointF offset, XFont font, List<string> textLines)
+		private static double DrawTextBlock(XGraphics gfx, XRect offset, XFont font, XBrush brush, List<string> textLines)
 		{
 			for (int i = 0; i < textLines.Count; i++)
 			{
-				gfx.DrawString(textLines[i], font, XBrushes.Black,
-					new XRect(offset.X, offset.Y, page.Width, page.Height),
-					XStringFormats.TopLeft);
+				gfx.DrawString(textLines[i], font, brush, offset, XStringFormats.TopLeft);
 
 				offset.Y += font.Height + ((i == textLines.Count - 1) ? 1 : 0);
 			}
@@ -705,8 +695,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 			textSize = gfx.MeasureString(versionText, font);
 			// draw the version textLines
 			gfx.DrawString(versionText, font, XBrushes.Black,
-					new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
-					XStringFormats.TopLeft);
+				new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
+				XStringFormats.TopLeft);
 
 			// GC Wicard Icon
 			gfx.DrawImage(GcwIcon, 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
