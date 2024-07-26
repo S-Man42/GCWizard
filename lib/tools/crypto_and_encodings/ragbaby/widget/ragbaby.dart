@@ -81,9 +81,9 @@ class _RagbabyState extends State<Ragbaby> {
             });
           },
         ),
-        GCWOutput(title: "Used Alphabet",
+        GCWOutput(title: i18n(context, 'common_alphabet'),
             child:
-              GCWOutputText(text:createSecretAlphabet(_currentPassword, type: _currentOption)),
+              GCWOutputText(text: createSecretAlphabet(_currentPassword, type: _currentOption)),
         ),
 
         _buildOutput(context),

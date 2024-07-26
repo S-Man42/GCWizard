@@ -66,8 +66,8 @@ String encryptRagbaby(String plainText, String password,
   List<String> encryptedText = [];
 
   for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
-    String word = words[wordIndex];
     String encryptedWord = '';
+    String word = words[wordIndex];
     int corrector = 0;
 
     for (int letterIndex = 0; letterIndex < word.length; letterIndex++) {
@@ -88,7 +88,6 @@ String encryptRagbaby(String plainText, String password,
 /// and https://www.dcode.fr/ragbaby-cipher
 String decryptRagbaby(String cipherText, String password,
     {RagbabyType type = RagbabyType.NoJX}) {
-
   if (cipherText.isEmpty) return '';
 
   var alphabet = createSecretAlphabet(password, type: type);
