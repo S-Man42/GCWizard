@@ -7463,13 +7463,16 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'sith',
         symbolSearchStrings: const ['symbol_sith'],
         licenses: [
-          ToolLicenseFont(
+          ToolLicensePrivatePermittedDigitalSource(
               context: context,
               author: 'AurekFonts',
               title: 'Sith AF',
+              medium: 'e-mail',
+              permissionYear: 2024,
+              permissionMonth: 7,
+              permissionDay: 26,
               sourceUrl:
-                  'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font',
-              licenseType: ToolLicenseType.CCBY3US)
+                'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font')
         ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
