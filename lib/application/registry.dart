@@ -5783,14 +5783,36 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
       'barcode39',
-    ], licenses: []),
+    ], licenses: [stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'BarcodesInc',
+          title: 'Free Barcode Font – Code 39',
+          sourceUrl:
+              'https://web.archive.org/web/20200423103716/https://www.barcodesinc.com/free-barcode-font/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'base16_02', symbolSearchStrings: const [
       'symbol_base16_02',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Bruce_Martin_hexadecimal_notation_proposal.png',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Hexadecimal&oldid=1230560724#/media/File:Bruce_Martin_hexadecimal_notation_proposal.png'),
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'base16',
         symbolSearchStrings: const ['base16'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'Base-16_digits.svg',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Hexadecimal&oldid=1230560724#/media/File:Base-16_digits.svg'),
+        ]),
     GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
@@ -5931,7 +5953,7 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Chappe code - c. 1794.svg',
+          title: 'Chappe code - c. 1794.svg',
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
     ]),
