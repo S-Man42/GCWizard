@@ -5754,7 +5754,17 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
       'symbol_atlantean',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Typeface',
+          title: 'Atlantean',
+          sourceUrl:
+          'https://web.archive.org/web/20240726131815/https://online-fonts.com/fonts/atlantean',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'Non-commercial use only',
+          licenseUrl: 'https://web.archive.org/web/20211208065631/https://www.high-logic.com/font-license-agreement')
+    ]),
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
       'symbol_aurebesh',
     ], licenses: [
@@ -5792,14 +5802,36 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
       'barcode39',
-    ], licenses: []),
+    ], licenses: [stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'BarcodesInc',
+          title: 'Free Barcode Font – Code 39',
+          sourceUrl:
+              'https://web.archive.org/web/20200423103716/https://www.barcodesinc.com/free-barcode-font/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'base16_02', symbolSearchStrings: const [
       'symbol_base16_02',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Bruce_Martin_hexadecimal_notation_proposal.png',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Hexadecimal&oldid=1230560724#/media/File:Bruce_Martin_hexadecimal_notation_proposal.png'),
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'base16',
         symbolSearchStrings: const ['base16'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'Base-16_digits.svg',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Hexadecimal&oldid=1230560724#/media/File:Base-16_digits.svg'),
+        ]),
     GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
@@ -5829,7 +5861,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'bibibinary',
         symbolSearchStrings: const ['bibibinary'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Bibi-binary&oldid=1218138081#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg'),
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'birds_on_a_wire',
         symbolSearchStrings: const [
@@ -5837,7 +5876,7 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseGeocachingToolbox,
-        ]),
+    ]),
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: const [
       'symbol_blox',
     ], licenses: [
@@ -5851,7 +5890,7 @@ void initializeRegistry(BuildContext context) {
           author: 'New Order (https://www.youtube.com/watch?v=c1GxjzHm5us)',
           title: 'Song Blue Monday',
           sourceUrl:
-          'https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
+              'https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(
@@ -5861,6 +5900,12 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseGeocachingToolbox,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'Brahmi numeral signs.svg',
+              sourceUrl:
+                  'https://commons.wikimedia.org/w/index.php?title=File:Brahmi_numeral_signs.svg&oldid=831438313'),
         ]),
     GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: const [
       'braille',
@@ -6194,7 +6239,7 @@ void initializeRegistry(BuildContext context) {
           author: 'FontStruct (https://fontstruct.com/)',
           title: 'Dinosaur Three-Toe Bold',
           sourceUrl:
-              'https://web.archive.org/save/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
+              'https://web.archive.org/web/20240726130010/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
           licenseType: ToolLicenseType.CCNC30)
     ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
@@ -7466,13 +7511,16 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'sith',
         symbolSearchStrings: const ['symbol_sith'],
         licenses: [
-          ToolLicenseFont(
+          ToolLicensePrivatePermittedDigitalSource(
               context: context,
               author: 'AurekFonts',
               title: 'Sith AF',
+              medium: 'e-mail',
+              permissionYear: 2024,
+              permissionMonth: 7,
+              permissionDay: 26,
               sourceUrl:
-                  'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font',
-              licenseType: ToolLicenseType.CCBY3US)
+                'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font')
         ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
