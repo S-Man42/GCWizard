@@ -170,40 +170,50 @@ class _SpecificToolLicenses {
   }
 
   ToolLicenseEntry get _toolLicenseGeocachingToolbox {
-    return ToolLicensePrivatePermittedDigitalSource(context: context,
+    return ToolLicenseOnlineArticle(context: context,
       author: 'Japiejoo',
       title: 'Geocaching Toolbox Codetabellen',
-      medium: 'Message Center geocaching.com',
-      permissionYear: 2021,
-      permissionMonth: 12,
-      permissionDay: 8,
+      privatePermission: ToolLicensePrivatePermission(
+        context: context,
+        medium: 'Message Center (geocaching.com)',
+        permissionYear: 0,
+        permissionMonth: 0,
+        permissionDay: 0,
+      ),
       sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
     );
   }
 
   ToolLicenseEntry get _toolLicenseMyGeoToolsCodeTabellen {
-    return ToolLicensePrivatePermittedDigitalSource(context: context,
+    return ToolLicenseOnlineArticle(context: context,
       author: 'Benny',
       title: 'myGEOTools Codetabellen',
-      medium: '',
-      permissionYear: 0,
-      permissionMonth: 0,
-      permissionDay: 0,
-      customComment: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+      privatePermission: ToolLicensePrivatePermission(
+        context: context,
+        medium: '',
+        permissionYear: 0,
+        permissionMonth: 0,
+        permissionDay: 0,
+      ),
+      sourceUrl: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
     );
   }
 
   ToolLicenseEntry get _toolLicenseOakIslandMystery {
-    return ToolLicensePrivatePermittedDigitalSource(
+    return ToolLicenseOnlineArticle (
         context: context,
         author: 'www.OakIslandMystery.com',
         title: 'Oak Island cipher',
-        medium: 'e-mail',
         sourceUrl:
         'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
-        permissionYear: 2023,
-        permissionMonth: 6,
-        permissionDay: 1);
+        privatePermission: ToolLicensePrivatePermission(
+          context: context,
+          permissionYear: 2023,
+          permissionMonth: 6,
+          permissionDay: 1,
+          medium: 'e-mail',
+        )
+    );
   }
 }
 

@@ -53,12 +53,10 @@ class _LicensesState extends State<Licenses> {
     var _contentOfflineArticle = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentOnlineArticle = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentPortedCode = SplayTreeMap<String, List<ToolLicenseEntry>>();
-    var _contentPrivatePermission = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentCodeLibrary = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentImage = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentFont = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentAPI = SplayTreeMap<String, List<ToolLicenseEntry>>();
-    var _contentOwnReProduction = SplayTreeMap<String, List<ToolLicenseEntry>>();
 
     for (var tool in tools) {
       var name = toolName(context, tool);
@@ -95,15 +93,6 @@ class _LicensesState extends State<Licenses> {
             _contentOnlineArticle[name]!.add(license);
           } else {
             _contentOnlineArticle.putIfAbsent(name, () => [license]);
-          }
-          continue;
-        }
-
-        if (license is ToolLicensePrivatePermittedDigitalSource) {
-          if (_contentPrivatePermission.containsKey(name)) {
-            _contentPrivatePermission[name]!.add(license);
-          } else {
-            _contentPrivatePermission.putIfAbsent(name, () => [license]);
           }
           continue;
         }
@@ -152,16 +141,6 @@ class _LicensesState extends State<Licenses> {
           }
           continue;
         }
-
-        if (license is ToolLicenseOwnReProduction) {
-          if (_contentOwnReProduction.containsKey(name)) {
-            _contentOwnReProduction[name]!.add(license);
-          } else {
-            _contentOwnReProduction.putIfAbsent(name, () => [license]);
-          }
-          continue;
-        }
-
       }
     }
 
@@ -410,13 +389,6 @@ class _LicensesState extends State<Licenses> {
           child: _licenseContent(_contentPortedCode)
       ));
     }
-    if (_contentPrivatePermission.isNotEmpty) {
-      content.add(GCWExpandableTextDivider(
-          expanded: false,
-          text: i18n(context, 'toollicenses_privatepermitteddigitalsource'),
-          child: _licenseContent(_contentPrivatePermission)
-      ));
-    }
     if (_contentImage.isNotEmpty) {
       content.add(GCWExpandableTextDivider(
           expanded: false,
@@ -464,13 +436,6 @@ class _LicensesState extends State<Licenses> {
           expanded: false,
           text: i18n(context, 'toollicenses_offlinebook'),
           child: _licenseContent(_contentOfflineBook)
-      ));
-    }
-    if (_contentOwnReProduction.isNotEmpty) {
-      content.add(GCWExpandableTextDivider(
-          expanded: false,
-          text: i18n(context, 'toollicenses_ownreprodction'),
-          child: _licenseContent(_contentOwnReProduction)
       ));
     }
 

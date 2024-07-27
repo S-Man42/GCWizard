@@ -1971,16 +1971,19 @@ void initializeRegistry(BuildContext context) {
       'astronomy_seasons',
     ], licenses: [
       stl._toolLicenseJanMeeus,
-      ToolLicensePrivatePermittedDigitalSource(
+      ToolLicensePortedCode(
         context: context,
         author: 'Jürgen Giesen (jgiesen.de)',
         title: 'Equinoxes and Solstices',
-        medium: 'e-mail',
-        permissionYear: 2020,
-        permissionMonth: 6,
-        permissionDay: 29,
+        privatePermission: ToolLicensePrivatePermission(context: context,
+          medium: 'e-mail',
+          permissionYear: 2020,
+          permissionMonth: 6,
+          permissionDay: 29,
+        ),
         sourceUrl:
             'https://web.archive.org/web/20140805014345/http://www.jgiesen.de/astro/astroJS/seasons2/seasons.js',
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
       )
     ]),
     GCWTool(tool: const ShadowLength(), id: 'shadowlength', searchKeys: const [
@@ -2686,12 +2689,17 @@ void initializeRegistry(BuildContext context) {
             month: 12,
             sourceUrl:
                 'http://web.archive.org/web/20210511074533/https://www.swisstopo.admin.ch/content/swisstopo-internet/de/topics/survey/reference-systems/switzerland/_jcr_content/contentPar/tabs/items/dokumente_publikatio/tabPar/downloadlist/downloadItems/517_1459343190376.download/refsys_d.pdf'),
-        ToolLicensePrivatePermittedDigitalSource(
+        ToolLicensePortedCode(
             context: context,
             author: 'Thomas \'moenk\' Mönkemeier\n(moenk.de)',
-            title: 'Gauß-Krüger',
-            medium: 'PN in geoclub.de forum',
-            permissionYear: 2013),
+            title: 'GK nach GPS/GPS nach GK',
+            privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'PN in geoclub.de forum',
+              permissionYear: 2013,
+            ),
+            sourceUrl: 'http://web.archive.org/web/20121102023141/http://www.moenk.de/index.php?serendipity[subpage]=downloadmanager&level=1&thiscat=4',
+            licenseType: ToolLicenseType.PRIVATE_PERMISSION),
       ],
     ),
     GCWTool(
@@ -3163,16 +3171,19 @@ void initializeRegistry(BuildContext context) {
         'dates_calendar',
       ],
       licenses: [
-        ToolLicensePrivatePermittedDigitalSource(
+        // TODO: @Thomas: PortedCode richtig oder besser OnlineArticle?
+        ToolLicensePortedCode(
           context: context,
           author: 'Johannes Thomann',
           title: 'Kalenderumrechnung - Islamisch, Jüdisch, Koptisch, Persisch',
-          medium: 'e-Mail',
-          permissionYear: 2021,
-          permissionMonth: 5,
-          permissionDay: 21,
-          sourceUrl:
-              'https://web.archive.org/web/20240721214347/https://www.aoi.uzh.ch/de/islamwissenschaft/studium/tools/kalenderumrechnung.html',
+          privatePermission: ToolLicensePrivatePermission(context: context,
+            medium: 'e-Mail',
+            permissionYear: 2021,
+            permissionMonth: 5,
+            permissionDay: 21,
+          ),
+          sourceUrl: 'https://web.archive.org/web/20240721214347/https://www.aoi.uzh.ch/de/islamwissenschaft/studium/tools/kalenderumrechnung.html',
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
         ),
       ],
     ),
@@ -3335,16 +3346,21 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20240722070830/https://github.com/Atomk/C-COW-Interpreter/blob/master/cow-interpreter.c',
           licenseType: ToolLicenseType.MIT),
-      ToolLicensePrivatePermittedDigitalSource(
+      // TODO: @Thomas: PortedCode richtig oder OnlineArticle?
+      ToolLicensePortedCode(
           context: context,
           author: 'Frank Buß',
           title: 'Cow',
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
           sourceUrl:
               'https://web.archive.org/web/20240722071149/https://frank-buss.de/cow.html',
-          medium: 'e-Mail',
-          permissionYear: 2021,
-          permissionMonth: 7,
-          permissionDay: 22)
+          privatePermission: ToolLicensePrivatePermission(context: context,
+            medium: 'e-Mail',
+            permissionYear: 2021,
+            permissionMonth: 7,
+            permissionDay: 22
+          )
+      )
     ]),
     GCWTool(tool: const Chef(), id: 'chef', searchKeys: const [
       'esotericprogramminglanguage',
@@ -3448,15 +3464,20 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20240722081935/http://www.lscheffer.com/malbolge_interp.html',
           licenseType: ToolLicenseType.FREE_TO_USE),
-      ToolLicensePrivatePermittedDigitalSource(
+      ToolLicensePortedCode(
           context: context,
           author: 'Matthias Ernst',
           title: 'Generator for text printing Malbolge programs',
-          sourceUrl: 'stringout.c, attached to e-Mail',
-          medium: 'e-Mail',
-          permissionYear: 2021,
-          permissionMonth: 1,
-          permissionDay: 12),
+          customComment: 'stringout.c, attached to e-Mail',
+          privatePermission: ToolLicensePrivatePermission(context: context,
+            medium: 'e-Mail',
+            permissionYear: 2021,
+            permissionMonth: 1,
+            permissionDay: 12
+          ),
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+          sourceUrl: ''
+      ),
     ]),
     GCWTool(tool: Ook(), id: 'ook', searchKeys: const [
       'esotericprogramminglanguage',
@@ -5662,12 +5683,16 @@ void initializeRegistry(BuildContext context) {
           'symbol_alien_mushrooms',
         ],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(context: context,
+          ToolLicenseFont(context: context,
               author: 'Marcel Zellweger (chank.com)',
               title: 'Alien Mushrooms',
-              medium: 'e-mail',
-              permissionYear: 2024, permissionMonth: 7, permissionDay: 25,
-              sourceUrl: 'http://web.archive.org/web/20230610084302/https://chank.com/font-AlienMushrooms'
+              privatePermission: ToolLicensePrivatePermission(
+                context: context,
+                medium: 'e-mail',
+                permissionYear: 2024, permissionMonth: 7, permissionDay: 25,
+              ),
+              sourceUrl: 'http://web.archive.org/web/20230610084302/https://chank.com/font-AlienMushrooms',
+              licenseType: ToolLicenseType.PRIVATE_PERMISSION
           )
         ]),
     GCWSymbolTableTool(
@@ -6352,17 +6377,20 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: const [
       'symbol_eurythmy',
     ], licenses: [
-      ToolLicensePrivatePermittedDigitalSource(
+      ToolLicenseImage(
           context: context,
           author: 'Rudolf Steiner Verlag',
           title: 'Eurythmiefiguren',
-          medium: 'e-mail',
-          permissionYear: 2020,
-          permissionMonth: 11,
-          permissionDay: 14,
+          privatePermission: ToolLicensePrivatePermission(
+            medium: 'e-mail',
+            permissionYear: 2020,
+            permissionMonth: 11,
+            permissionDay: 14, context: context, 
+          ),
           sourceUrl:
               'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
-          customComment: 'Non-commercial use only')
+          licenseType: ToolLicenseType.NON_COMMERCIAL
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
@@ -6550,16 +6578,20 @@ void initializeRegistry(BuildContext context) {
         'symbol_geovlog',
       ],
       licenses: [
-        ToolLicensePrivatePermittedDigitalSource(
+        ToolLicenseImage(
             context: context,
             author: 'GC Rogier (GeoVlogs.nl)',
             title: 'GEOVLOGS-code',
             sourceUrl:
                 'https://web.archive.org/web/20240223141316/https://www.geovlogs.nl/geovlogs-code/',
-            medium: 'e-mail',
-            permissionYear: 2024,
-            permissionMonth: 6,
-            permissionDay: 14)
+            privatePermission: ToolLicensePrivatePermission(context: context,
+              medium: 'e-mail',
+              permissionYear: 2024,
+              permissionMonth: 6,
+              permissionDay: 14
+            ),
+            licenseType: ToolLicenseType.PRIVATE_PERMISSION
+        )
       ],
     ),
     GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: const [
@@ -7511,16 +7543,20 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'sith',
         symbolSearchStrings: const ['symbol_sith'],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(
+          ToolLicenseFont(
               context: context,
               author: 'AurekFonts',
               title: 'Sith AF',
-              medium: 'e-mail',
-              permissionYear: 2024,
-              permissionMonth: 7,
-              permissionDay: 26,
+              privatePermission: ToolLicensePrivatePermission(
+                context: context,
+                medium: 'e-mail',
+                permissionYear: 2024,
+                permissionMonth: 7,
+                permissionDay: 26,
+              ),
               sourceUrl:
-                'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font')
+                'https://web.archive.org/web/20220729045524/https://www.dafont.com/de/sith-af.font',
+              licenseType: ToolLicenseType.PRIVATE_PERMISSION)
         ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
@@ -7535,16 +7571,19 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
-      ToolLicensePrivatePermittedDigitalSource(
+      ToolLicenseImage(
         context: context,
         author: 'Breitkopf & Härtel KG (addizio.de)',
         title: 'Solmisation',
-        medium: 'e-mail',
-        permissionYear: 2020,
-        permissionMonth: 8,
-        permissionDay: 9,
+        privatePermission: ToolLicensePrivatePermission(context: context,
+          medium: 'e-mail',
+          permissionYear: 2020,
+          permissionMonth: 8,
+          permissionDay: 9,
+        ),
         sourceUrl:
             'https://web.archive.org/web/20240722095602/https://www.addizio.de/wp-content/uploads/2019/04/Solmisation.zip',
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: const [
@@ -7750,16 +7789,20 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'tll', symbolSearchStrings: const [
       'symbol_tll',
     ], licenses: [
-      ToolLicensePrivatePermittedDigitalSource(
+      ToolLicenseImage(
           context: context,
           author: 'GC Rogier (GeoVlogs.nl)',
-          title: 'TLL-code',
+          title: 'GEOVLOGS-code',
           sourceUrl:
-              'https://web.archive.org/web/20240520113804/https://www.geovlogs.nl/tll-code/',
-          medium: 'e-mail',
-          permissionYear: 2024,
-          permissionMonth: 6,
-          permissionDay: 14)
+          'https://web.archive.org/web/20240223141316/https://www.geovlogs.nl/geovlogs-code/',
+          privatePermission: ToolLicensePrivatePermission(context: context,
+              medium: 'e-mail',
+              permissionYear: 2024,
+              permissionMonth: 6,
+              permissionDay: 14
+          ),
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
       'tomtom',
@@ -7971,15 +8014,20 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
                 'https://web.archive.org/web/20240721203438/https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y',
             customComment: 'Page 23ff'),
-        ToolLicensePrivatePermittedDigitalSource(
+        // TODO: @Thomas: Haben wir hier noch einen originalen Autoren?
+        ToolLicenseOfflineBook(
             context: context,
-            author:
-                'Anders Lindeberg-Lindvet; Kurator Schwedisches Technikmuseum',
-            title: 'Telegrafiske Chiffertabeller 1808',
-            medium: 'e-Mail',
-            permissionYear: 2021,
-            permissionMonth: 10,
-            permissionDay: 5),
+            author: i18n(context, 'common_unknown'),
+            title: 'Telegrafiske Chiffertabeller',
+            year: 1808,
+            privatePermission: ToolLicensePrivatePermission(context: context,
+              medium: 'e-Mail',
+              permissionYear: 2021,
+              permissionMonth: 10,
+              permissionDay: 5,
+              permissionAuthor: 'Anders Lindeberg-Lindvet; Kurator Schwedisches Technikmuseum'
+            )
+        ),
       ],
     ),
     GCWTool(
@@ -7990,29 +8038,35 @@ void initializeRegistry(BuildContext context) {
           'telegraph_murray',
         ],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(
+          ToolLicenseOnlineArticle(
             context: context,
             author: 'Helmar Fischer',
             title:
                 'Informationen übertragen - nicht mit der großen Klappe sondern mit sechs kleinen Klappen ... der Klappentelegraph',
-            medium: 'e-Mail',
-            permissionYear: 2021,
-            permissionMonth: 7,
-            permissionDay: 23,
+            privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2021,
+              permissionMonth: 7,
+              permissionDay: 23
+            ),
             sourceUrl:
                 'https://web.archive.org/web/20240721211725/https://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/',
           ),
-          ToolLicensePrivatePermittedDigitalSource(
+          ToolLicenseOnlineArticle(
             context: context,
             author:
                 'John Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux',
-            title: '',
-            medium: 'e-Mail',
-            permissionYear: 2021,
-            permissionMonth: 12,
-            permissionDay: 13,
+            title: 'Dunstable Signalling Station',
+            privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2021,
+              permissionMonth: 12,
+              permissionDay: 13,
+            ),
             sourceUrl:
-                'https://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_two.htm',
+                'http://web.archive.org/web/20240727121255/https://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_two.htm',
           ),
           ToolLicenseImage(
               context: context,
@@ -8031,14 +8085,19 @@ void initializeRegistry(BuildContext context) {
           'telegraph_ohlsen',
         ],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(
+          ToolLicenseOfflineBook(
               context: context,
-              author: 'Anne Solberg, Museumsbibliotekar, Norsk Teknisk Museum',
-              title: 'Telegrafiske Chiffertabeller 1808',
-              medium: 'e-Mail',
-              permissionYear: 2021,
-              permissionMonth: 10,
-              permissionDay: 28),
+              author: 'Ole Ohlsen',
+              title: 'Den Optiske Telegraf',
+              year: 1808,
+              privatePermission: ToolLicensePrivatePermission(context: context,
+                permissionAuthor: 'Anne Solberg, Museumsbibliotekar, Norsk Teknisk Museum',
+                medium: 'e-Mail',
+                permissionYear: 2021,
+                permissionMonth: 10,
+                permissionDay: 28
+              )
+          ),
         ]),
     GCWTool(
         tool: const PasleyTelegraph(),
@@ -8068,15 +8127,21 @@ void initializeRegistry(BuildContext context) {
           'telegraph_prussia',
         ],
         licenses: [
-          ToolLicensePrivatePermittedDigitalSource(
+          // TODO: @Thomas: OfflineArticle richtiger als OfflineBook? Haben wir hier noch einen Originalen Autoren?
+          // PS: Vielleicht kannst du mir die originalen Dateien nochmal ins Postfach schicken, weil die Links von Sandy Lang sind nicht mehr gültig
+          ToolLicenseOfflineArticle(
               context: context,
-              author:
-                  'Sandy Lang, Bibliothek, Museum für Kommunikation Frankfurt',
+              author: i18n(context, 'common_unknown'),
               title: 'Classe 5.2 Wörterbuch\nInstruction I\nInstruction II',
-              medium: 'e-Mail',
-              permissionYear: 2021,
-              permissionMonth: 11,
-              permissionDay: 26),
+              privatePermission: ToolLicensePrivatePermission(
+                context: context,
+                medium: 'e-Mail',
+                permissionYear: 2021,
+                permissionMonth: 11,
+                permissionDay: 26,
+                permissionAuthor: 'Sandy Lang, Bibliothek, Museum für Kommunikation Frankfurt',
+              )
+          ),
         ]),
     GCWTool(
         tool: const SemaphoreTelegraph(),
