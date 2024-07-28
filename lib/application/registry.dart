@@ -1892,7 +1892,9 @@ void initializeRegistry(BuildContext context) {
               author: 'The International Astronomical Union',
               title: 'The Constellations',
               sourceUrl: 'https://www.iau.org/public/themes/constellations/',
-              licenseType: ToolLicenseType.CCBY4),
+              licenseType: ToolLicenseType.CCBY4,
+            licenseUseType: ToolLicenseUseType.COPY,
+          ),
         ]),
     GCWTool(
         tool: const IAUSingleConstellation(ConstellationName: 'Andromeda'),
@@ -1904,7 +1906,8 @@ void initializeRegistry(BuildContext context) {
               author: 'The International Astronomical Union',
               title: 'The Constellations',
               sourceUrl: 'https://www.iau.org/public/themes/constellations/',
-              licenseType: ToolLicenseType.CCBY4),
+              licenseType: ToolLicenseType.CCBY4,
+            licenseUseType: ToolLicenseUseType.COPY,),
         ]),
     GCWTool(
         tool: const SunRiseSet(),
@@ -5867,26 +5870,26 @@ void initializeRegistry(BuildContext context) {
       'symbol_baudot',
       'teletypewriter'
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'en.wikipedia.org and contributors',
           title: 'Baudot Code, 1888, US-Patent',
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: const [
       'ccitt',
       'symbol_baudot',
       'teletypewriter'
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'de.wikipedia.org and contributors',
           title: 'Baudot Code, 1926, Bit-orderb54123',
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Baudot-Code&oldid=245951643',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'bibibinary',
@@ -5940,47 +5943,47 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: const [
       'braille',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'de.wikipedia.org and contributors',
           title: 'Brailleschrift',
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Brailleschrift&oldid=246388105',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: const [
       'braille',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'en.wikipedia.org and contributors',
           title: 'Braille',
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Braille&oldid=1232540524',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: const [
       'braille',
       'braille_euro',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'de.wikipedia.org and contributors',
           title: 'Computerbraille',
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Computerbraille&oldid=236592045',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: const [
       'braille',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'fr.wikipedia.org and contributors',
           title: 'Braille',
           sourceUrl:
               'https://fr.wikipedia.org/w/index.php?title=Braille&oldid=214867784',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'british_sign_language',
@@ -6319,13 +6322,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_dorabella',
     ], licenses: [
       stl._toolLicenseCullyLong,
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'en.wikipedia.org and contributors',
           title: 'Dorabella',
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Dorabella_Cipher&oldid=1227166448',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: const [
       'symbol_doremi',
@@ -6410,7 +6413,8 @@ void initializeRegistry(BuildContext context) {
           ),
           sourceUrl:
               'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
-          licenseType: ToolLicenseType.NON_COMMERCIAL
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
+        licenseUseType: ToolLicenseUseType.COPY,
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
@@ -6586,13 +6590,35 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_gc_attributes',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseImage(
+              context: context,
+              author: 'Geocaching HQ',
+              title: 'Attributes',
+              sourceUrl:
+              'https://web.archive.org/web/20240728194855/https://www.geocaching.com/about/icons.aspx',
+              licenseUseType: ToolLicenseUseType.REPRODUCTION,
+              licenseType: ToolLicenseType.REPRODUCTION_NEEDED,
+          ),
+          stl._toolLicenseCullyLong,
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'gc_attributes_meaning',
         symbolSearchStrings: const [
           'symbol_gc_attributes',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseImage(
+            context: context,
+            author: 'Geocaching HQ',
+            title: 'Attributes',
+            sourceUrl:
+            'https://web.archive.org/web/20240728194855/https://www.geocaching.com/about/icons.aspx',
+            licenseUseType: ToolLicenseUseType.REPRODUCTION,
+            licenseType: ToolLicenseType.REPRODUCTION_NEEDED,
+          ),
+          stl._toolLicenseCullyLong,
+        ]),
     GCWSymbolTableTool(
       symbolKey: 'geovlog',
       symbolSearchStrings: const [
@@ -6609,9 +6635,10 @@ void initializeRegistry(BuildContext context) {
               medium: 'e-mail',
               permissionYear: 2024,
               permissionMonth: 6,
-              permissionDay: 14
+              permissionDay: 14,
             ),
-            licenseType: ToolLicenseType.PRIVATE_PERMISSION
+            licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+          licenseUseType: ToolLicenseUseType.COPY,
         )
       ],
     ),
@@ -7080,6 +7107,7 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
                 'https://web.archive.org/web/20240722213816/https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif',
             licenseType: ToolLicenseType.FREE_TO_USE,
+            licenseUseType: ToolLicenseUseType.COPY,
           ),
         ]),
     GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: const [
@@ -7121,24 +7149,24 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'en.wikipedia.org and contributors',
           title: 'Morse',
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Morse_code&oldid=1235898565',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'morse_gerke', symbolSearchStrings: const [
       'morse',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'de.wikipedia.org and contributors',
           title: 'Gerke',
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Friedrich_Clemens_Gerke&oldid=243194789',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'morse_1838_patent',
@@ -7146,13 +7174,12 @@ void initializeRegistry(BuildContext context) {
           'morse',
         ],
         licenses: [
-          ToolLicenseOwnReProduction(
+          ToolLicenseOnlineArticle(
               context: context,
-              author: 'Thomas Zimmermann',
+              author: 'Samuel Morse',
               title: 'Morse (1838, U.S.Patent 1647, 20.06.1840)',
               sourceUrl:
-                  'https://web.archive.org/web/20240724104528/https://patentimages.storage.googleapis.com/bb/4a/53/3d3b9d7e4c8619/US1647.pdf',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+                  'https://web.archive.org/web/20240724104528/https://patentimages.storage.googleapis.com/bb/4a/53/3d3b9d7e4c8619/US1647.pdf',)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'morse_1844_vail',
@@ -7160,13 +7187,13 @@ void initializeRegistry(BuildContext context) {
           'morse',
         ],
         licenses: [
-          ToolLicenseOwnReProduction(
+          ToolLicenseOnlineArticle(
               context: context,
-              author: 'Thomas Zimmermann',
+              author: 'en.wikipedia.org and contributors',
               title: 'Morse (1844)',
               sourceUrl:
                   'https://en.wikipedia.org/w/index.php?title=Morse_code&oldid=1235898565',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+              licenseType: ToolLicenseType.CCBYSA4)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'morse_steinheil',
@@ -7174,37 +7201,37 @@ void initializeRegistry(BuildContext context) {
           'morse',
         ],
         licenses: [
-          ToolLicenseOwnReProduction(
+          ToolLicenseOnlineArticle(
               context: context,
-              author: 'Thomas Zimmermann',
+              author: 'de.wikipedia.org and contributors',
               title: 'Steinheilschrift',
               sourceUrl:
                   'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+              licenseType: ToolLicenseType.CCBYSA4)
         ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'en.wikipedia.org and contributors',
           title: 'Murray',
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: const [
       'ccitt',
       'symbol_murraybaudot',
       'teletypewriter'
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'en.wikipedia.org and contributors',
           title: 'Murray Baudot Code',
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: const [
       'music_notes',
@@ -7433,13 +7460,13 @@ void initializeRegistry(BuildContext context) {
           'symbol_prussian_colors_artillery',
         ],
         licenses: [
-          ToolLicenseOwnReProduction(
+          ToolLicenseOnlineArticle(
               context: context,
-              author: 'Thomas Zimmermann',
+              author: 'de.wikipedia.org and contributors',
               title: 'Preußische Farbfolge',
               sourceUrl:
                   'https://de.wikipedia.org/w/index.php?title=Preu%C3%9Fische_Farbfolge&oldid=245158156',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+              licenseType: ToolLicenseType.CCBYSA4)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'prussian_colors_infantery',
@@ -7447,13 +7474,13 @@ void initializeRegistry(BuildContext context) {
           'symbol_prussian_colors_infantery',
         ],
         licenses: [
-          ToolLicenseOwnReProduction(
+          ToolLicenseOnlineArticle(
               context: context,
-              author: 'Thomas Zimmermann',
+              author: 'de.wikipedia.org and contributors',
               title: 'Preußische Farbfolge',
               sourceUrl:
                   'https://de.wikipedia.org/w/index.php?title=Preu%C3%9Fische_Farbfolge&oldid=245158156',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+              licenseType: ToolLicenseType.CCBYSA4)
         ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: const [
       'symbol_quadoo',
@@ -7548,9 +7575,9 @@ void initializeRegistry(BuildContext context) {
       'symbol_siemens',
       'teletypewriter'
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: '',
           title: 'Siemens Fernschreiber',
           sourceUrl: '',
           licenseType: ToolLicenseType.FREE_TO_USE)
@@ -7605,6 +7632,7 @@ void initializeRegistry(BuildContext context) {
         sourceUrl:
             'https://web.archive.org/web/20240722095602/https://www.addizio.de/wp-content/uploads/2019/04/Solmisation.zip',
         licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: const [
@@ -7634,13 +7662,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_steinheil',
       'telegraph',
     ], licenses: [
-      ToolLicenseOwnReProduction(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Thomas Zimmermann',
+          author: 'de.wikipedia.org and contributors',
           title: 'Steinheilschrift',
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
-          licenseType: ToolLicenseType.FREE_TO_USE),
+          licenseType: ToolLicenseType.CCBYSA4),
     ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
@@ -7715,7 +7743,8 @@ void initializeRegistry(BuildContext context) {
               sourceUrl: '',
               licenseUrl:
                   'https://www.bilder.mspt.de/Nutzungsbedingungen%20fu%CC%88r%20Bildmaterial%20der%20MSPT.pdf',
-              licenseType: ToolLicenseType.CCBYSA4)
+              licenseType: ToolLicenseType.CCBYSA4,
+            licenseUseType: ToolLicenseUseType.COPY,)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'telegraph_schmidt',
@@ -7724,13 +7753,13 @@ void initializeRegistry(BuildContext context) {
           'telegraph_schmidt',
         ],
         licenses: [
-          ToolLicenseOwnReProduction(
+          ToolLicenseOnlineArticle(
               context: context,
-              author: 'Thomas Zimmermann',
+              author: 'Museumsstiftung Post und Kommunikation ',
               title: 'Telegraph Cuxhaven-Hamburg',
               sourceUrl:
                   'https://cuxpedia.de/index.php?title=Datei:Telegraphentabelle.jpg&oldid=31110',
-              licenseType: ToolLicenseType.FREE_TO_USE)
+              licenseType: ToolLicenseType.CCBYSA4)
         ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: const [
       'symbol_templers',
@@ -7822,7 +7851,8 @@ void initializeRegistry(BuildContext context) {
               permissionMonth: 6,
               permissionDay: 14
           ),
-          licenseType: ToolLicenseType.PRIVATE_PERMISSION
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: const [
@@ -8096,7 +8126,8 @@ void initializeRegistry(BuildContext context) {
                   'View of the Telegraph erected on the Admiralty Office, Charing Cross in Feby 1796',
               sourceUrl:
                   'https://www.alamy.com/english-view-of-the-telegraph-erected-on-the-admiralty-office-charing-cross-in-feby-1796-text-in-english-within-plate-the-print-dates-from-the-year-that-the-revd-lord-george-murray-designed-the-original-arrangement-although-telegraph-or-semaphore-signals-were-also-developed-in-france-as-well-as-england-in-the-last-years-of-the-18th-century-murrays-system-was-known-as-the-shutter-telegraph-and-comprised-a-vertical-board-with-six-large-holes-in-its-face-each-of-which-could-be-opened-to-display-the-sky-or-a-light-or-closed-see-mdl0020-depending-on-the-lie-of-the-land-distances-bet-image206595447.html',
-              licenseType: ToolLicenseType.FREE_TO_USE),
+              licenseType: ToolLicenseType.FREE_TO_USE,
+            licenseUseType: ToolLicenseUseType.COPY,),
         ]),
     GCWTool(
         tool: const OhlsenTelegraph(),
