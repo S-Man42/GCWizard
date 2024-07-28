@@ -6010,6 +6010,7 @@
   "toollicenses_image": "External Image",
   "toollicenses_font": "External Font",
   "toollicenses_api": "Public API",
+  "toollicenses_reproduction_needed": "Not free to use, source has to be reproduced",
   "toollicenses_usetype_copy": "Use exact copy of source",
   "toollicenses_usetype_reproduction": "Created own reproduction of the source",
   "trifid_title": "Trifid Cipher",

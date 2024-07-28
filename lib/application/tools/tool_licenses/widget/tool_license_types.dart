@@ -30,7 +30,8 @@ enum ToolLicenseType {
   GITHUB_DEFAULT, //Github Default
   GFDL, // GNU Free Documentation License
   PUBLIC_DOMAIN,// Public Domain
-  NON_COMMERCIAL
+  NON_COMMERCIAL,
+  REPRODUCTION_NEEDED,
 }
 
 /*
@@ -68,6 +69,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.GFDL: return 'GNU Free Documentation License';
     case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
     case ToolLicenseType.NON_COMMERCIAL: return i18n(context, 'toollicenses_noncommercial');
+    case ToolLicenseType.REPRODUCTION_NEEDED: return i18n(context, 'toollicenses_reproduction_needed');
   }
 }
 
@@ -544,7 +546,7 @@ class ToolLicenseImage extends ToolLicenseEntry {
     this.privatePermission,
     this.year, this.month, this.day,
     this.version,
-    this.customComment
+    this.customComment, required licenseUseType
   });
 
   @override
