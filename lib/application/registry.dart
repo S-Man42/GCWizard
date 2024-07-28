@@ -7753,13 +7753,17 @@ void initializeRegistry(BuildContext context) {
           'telegraph_schmidt',
         ],
         licenses: [
+          // https://www.cuxhaven-seiten.de/telegraph/telegraph.htm
+          // https://web.archive.org/web/20240728210555/https://www.cuxhaven-seiten.de/telegraph/telegraph.htm
+          // https://cuxpedia.de/index.php?title=Datei:Telegraphentabelle.jpg&oldid=31110
           ToolLicenseOnlineArticle(
               context: context,
-              author: 'Museumsstiftung Post und Kommunikation ',
-              title: 'Telegraph Cuxhaven-Hamburg',
+              author: 'Museumsstiftung Post und Kommunikation',
+              title: 'Lithografie: "Deutsche Volks-Telegraphie" mit der Darstellung des Zeichensystem des optischen Telegrafen von Schmidt',
               sourceUrl:
-                  'https://cuxpedia.de/index.php?title=Datei:Telegraphentabelle.jpg&oldid=31110',
-              licenseType: ToolLicenseType.CCBYSA4)
+              'https://sammlungen.museumsstiftung.de/',
+              licenseType: ToolLicenseType.CCBYSA4,
+          customComment: 'Inventarnummer 4.2012.518')
         ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: const [
       'symbol_templers',
