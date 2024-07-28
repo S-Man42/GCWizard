@@ -5793,8 +5793,13 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
       'symbol_aurebesh',
     ], licenses: [
-      stl._toolLicenseCullyLong,
-      stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Pixel Sagas',
+          title: 'Aurebesh',
+          sourceUrl: 'http://web.archive.org/web/20240221062740/https://www.pixelsagas.com/?download=aurebesh',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUrl: 'http://web.archive.org/web/20240728140247/https://www.pixelsagas.com/?p=55285#comment-92401')
     ]),
     GCWSymbolTableTool(
         symbolKey: 'australian_sign_language',
@@ -6068,13 +6073,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_cirtherebor',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
-      ToolLicenseOnlineArticle(
+      ToolLicenseFont(
           context: context,
-          author: 'Geocaching Toolbox',
-          title: 'Cirth alphabet',
+          author: 'Daniel Steven Smith',
+          title: 'Cirth Erebor',
           sourceUrl:
-              'https://web.archive.org/web/20210917165942/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=cirthAlphabet',
-          licenseType: ToolLicenseType.CCNC30)
+              'http://web.archive.org/web/20220501000000*/https://dl.dafont.com/dl/?f=cirth_erebor',
+          licenseType: ToolLicenseType.NON_COMMERCIAL)
     ]),
     GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: const [
       'cistercian',
@@ -6112,22 +6117,27 @@ void initializeRegistry(BuildContext context) {
       'color',
       'symbol_color_honey',
     ], licenses: [
-      stl._toolLicenseMyGeoToolsCodeTabellen,
-      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(context: context,
+        author: 'Kim Godgul',
+        title: '칼라하니(ColorHoney) 알파벳 만들기, 로마자 알파벳을 할당하는 방법',
+        sourceUrl: 'http://web.archive.org/web/20090403065210/https://chogul.tistory.com/413',
+        year: 2009, month: 3, day: 3,
+        licenseType: ToolLicenseType.CCBYNCND20,
+        licenseUrl: 'http://web.archive.org/web/20090408213051/http://creativecommons.org/licenses/by-nc-nd/2.0/kr'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'color_tokki', symbolSearchStrings: const [
       'color',
       'symbol_color_tokki',
     ], licenses: [
-      stl._toolLicenseMyGeoToolsCodeTabellen,
-      stl._toolLicenseGeocachingToolbox,
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Geocaching Toolbox',
-          title: 'Color Tokki code',
-          sourceUrl:
-              'https://web.archive.org/web/20210508064019/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=colorTokki',
-          licenseType: ToolLicenseType.CCNC30)
+      ToolLicenseOnlineArticle(context: context,
+          author: 'Kim Godgul',
+          title: '칼라토끼(ColorTokki) - 칼라하니(ColorHoney)와 쌍둥이',
+          sourceUrl: 'http://web.archive.org/web/20240728121027/https://chogul.tistory.com/414',
+          year: 2009, month: 3, day: 3,
+          licenseType: ToolLicenseType.CCBYNCND20,
+          licenseUrl: 'http://web.archive.org/web/20090408213051/http://creativecommons.org/licenses/by-nc-nd/2.0/kr'
+      )
     ]),
     GCWSymbolTableTool(
         symbolKey: 'cookewheatstone_1',
@@ -6180,11 +6190,10 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseFont(
           context: context,
           author: 'Pixel Sagas',
-          title: 'Modern Cybertronic Font',
-          sourceUrl:
-              'https://fontmeme.com/fonts/modern-cybertronic-font/',
+          title: 'Modern Cybertronic',
+          sourceUrl: 'http://web.archive.org/web/20240403144459/https://www.pixelsagas.com/?download=modern-cybertronic',
           licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'This URL has been excluded from the Wayback Machine')
+          licenseUrl: 'http://web.archive.org/web/20240728140247/https://www.pixelsagas.com/?p=55285#comment-92401')
     ]),
     GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: const [
       'countries',
@@ -6213,29 +6222,41 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
     ], licenses: [
-      stl._toolLicenseCullyLong,
-      stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(context: context,
+        author: '@TheRealLurlock (en.uesp.net)',
+        title: 'Oblivion',
+        year: 2007, month: 11, day: 29,
+        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseUrl: 'http://web.archive.org/web/20240514014436/https://en.uesp.net/wiki/File:Obliviontt.zip#Licensing',
+        sourceUrl: 'http://web.archive.org/web/20240514014436/https://en.uesp.net/wiki/File:Obliviontt.zip'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'dagger', symbolSearchStrings: const [
       'symbol_dagger',
     ], licenses: [
       stl._toolLicenseCullyLong,
-      stl._toolLicenseMyGeoToolsCodeTabellen,
-      stl._toolLicenseGeocachingToolbox,
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Geocaching Toolbox',
-          title: 'Dagger code',
-          sourceUrl:
-              'https://web.archive.org/web/20210513155613/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=daggerCode',
-          licenseType: ToolLicenseType.CCNC30)
+      ToolLicenseFont(
+        context: context,
+        author: 'Stefan Baitz',
+        year: 1997,
+        title: 'Alphabet of Daggers',
+        licenseType: ToolLicenseType.NON_COMMERCIAL,
+        sourceUrl: 'http://web.archive.org/web/20110714122346/http://www.mouserfonts.com/Files/baitz/dagger.zip',
+        customComment: 'License text in source file'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: const [
       'symbol_dancing_men',
     ], licenses: [
-      stl._toolLicenseMyGeoToolsCodeTabellen,
-      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineBook(
+        context: context,
+        author: 'Arthur Conan Doyle',
+        title: 'The Return of Sherlock Holmes - Chapter III: The Adventure of the Dancing Men',
+        year: 1905,
+        sourceUrl: 'http://web.archive.org/web/20230310063322/https://en.wikisource.org/wiki/The_Return_of_Sherlock_Holmes/Chapter_3'
+      ),
       stl._toolLicenseWrixonGeheimsprachen,
+      stl._toolLicenseGeocachingToolbox
     ]),
     GCWSymbolTableTool(symbolKey: 'deafblind', symbolSearchStrings: const [
       'symbol_signlanguage',

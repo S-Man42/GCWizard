@@ -22,6 +22,7 @@ enum ToolLicenseType {
   CCNC30, // Creative Commons CC NC 3.0
   CCNC25, // Creative Commons CC NC 2.5
   CCBYNCND30, // Creative Commons BY-NC-ND 3.0
+  CCBYNCND20, // Creative Commons BY-NC-ND 2.0
   CC0_1, // Creative Commons CC0 1.0
   MIT, // MIT
   MPL2, // MPL-2.0
@@ -57,7 +58,8 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
     case ToolLicenseType.CCNC30: return 'Creative Commons CC NC 3.0';
     case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
-    case ToolLicenseType.CCBYNCND30: return 'Creative Commons CC BY-NC-ND 3.0';
+    case ToolLicenseType.CCBYNCND20: return 'Creative Commons CC BY-NC-ND 3.0';
+    case ToolLicenseType.CCBYNCND30: return 'Creative Commons CC BY-NC-ND 2.0';
     case ToolLicenseType.CC0_1: return 'Creative Commons CC0 1.0';
     case ToolLicenseType.MIT: return 'MIT License';
     case ToolLicenseType.MPL2: return 'Mozilla Public License Version 2.0';
@@ -400,6 +402,9 @@ class ToolLicenseCodeLibrary extends ToolLicenseEntry {
   final String sourceUrl;
   final String? licenseUrl;
   final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
 
   const ToolLicenseCodeLibrary({
     required this.context,
@@ -407,6 +412,7 @@ class ToolLicenseCodeLibrary extends ToolLicenseEntry {
     required this.title,
     this.customComment,
     this.privatePermission,
+    this.year, this.month, this.day,
     required this.sourceUrl,
     this.licenseUrl,
     required this.licenseType,
@@ -419,6 +425,8 @@ class ToolLicenseCodeLibrary extends ToolLicenseEntry {
     var _title = title;
     if (version != null) _title += ' (' + version! + ')';
     out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
     if (privatePermission != null) out.add(privatePermission.toString());
 
     if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
@@ -457,6 +465,9 @@ class ToolLicensePortedCode extends ToolLicenseEntry {
   final String sourceUrl;
   final String? licenseUrl;
   final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
 
   const ToolLicensePortedCode({
     required this.context,
@@ -464,6 +475,7 @@ class ToolLicensePortedCode extends ToolLicenseEntry {
     required this.title,
     this.customComment,
     this.privatePermission,
+    this.year, this.month, this.day,
     required this.sourceUrl,
     this.licenseUrl,
     required this.licenseType,
@@ -476,6 +488,8 @@ class ToolLicensePortedCode extends ToolLicenseEntry {
     var _title = title;
     if (version != null) _title += ' (' + version! + ')';
     out.add(sourceUrl.isEmpty ? _title : buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
     if (privatePermission != null) out.add(privatePermission.toString());
 
     if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
@@ -515,6 +529,9 @@ class ToolLicenseImage extends ToolLicenseEntry {
   final ToolLicenseType licenseType;
   final ToolLicenseUseType? useType;
   final String? version;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
 
   const ToolLicenseImage({
     required this.context,
@@ -525,6 +542,7 @@ class ToolLicenseImage extends ToolLicenseEntry {
     required this.licenseType,
     this.useType,
     this.privatePermission,
+    this.year, this.month, this.day,
     this.version,
     this.customComment
   });
@@ -535,6 +553,8 @@ class ToolLicenseImage extends ToolLicenseEntry {
     var _title = title;
     if (version != null) _title += ' (' + version! + ')';
     out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
     if (privatePermission != null) out.add(privatePermission.toString());
 
     if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
@@ -576,6 +596,9 @@ class ToolLicenseFont extends ToolLicenseEntry {
   final String sourceUrl;
   final String? licenseUrl;
   final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
 
   const ToolLicenseFont({
     required this.context,
@@ -583,6 +606,7 @@ class ToolLicenseFont extends ToolLicenseEntry {
     required this.title,
     this.customComment,
     this.privatePermission,
+    this.year, this.month, this.day,
     required this.sourceUrl,
     this.licenseUrl,
     required this.licenseType,
@@ -595,6 +619,8 @@ class ToolLicenseFont extends ToolLicenseEntry {
     var _title = title;
     if (version != null) _title += ' (' + version! + ')';
     out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
     if (privatePermission != null) out.add(privatePermission.toString());
 
     if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
@@ -633,6 +659,9 @@ class ToolLicenseAPI extends ToolLicenseEntry {
   final String sourceUrl;
   final String? licenseUrl;
   final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
 
   const ToolLicenseAPI({
     required this.context,
@@ -640,6 +669,7 @@ class ToolLicenseAPI extends ToolLicenseEntry {
     required this.title,
     this.customComment,
     this.privatePermission,
+    this.year, this.month, this.day,
     required this.sourceUrl,
     this.licenseUrl,
     required this.licenseType,
@@ -652,6 +682,8 @@ class ToolLicenseAPI extends ToolLicenseEntry {
     var _title = title;
     if (version != null) _title += ' (' + version! + ')';
     out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
     if (privatePermission != null) out.add(privatePermission.toString());
 
     if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {

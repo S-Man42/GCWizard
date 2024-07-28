@@ -173,14 +173,9 @@ class _SpecificToolLicenses {
     return ToolLicenseOnlineArticle(context: context,
       author: 'Japiejoo',
       title: 'Geocaching Toolbox Codetabellen',
-      privatePermission: ToolLicensePrivatePermission(
-        context: context,
-        medium: 'Message Center (geocaching.com)',
-        permissionYear: 0,
-        permissionMonth: 0,
-        permissionDay: 0,
-      ),
-      sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
+      licenseType: ToolLicenseType.CCBYNCND30,
+      licenseUrl: 'http://web.archive.org/web/20240728042550/https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en',
+      sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com',
     );
   }
 
