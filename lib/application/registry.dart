@@ -6283,10 +6283,19 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
     ], licenses: [
+      ToolLicenseOfflineBook(
+        context: context,
+        author: 'James Gurney',
+        title: 'Dinotopia: The World Beneath',
+        year: 1995,
+        isbn: '9781570361647',
+        publisher: 'Turner Publishing'
+      ),
       ToolLicenseFont(
           context: context,
           author: 'Mike H. Lee, Josh Dixon',
           title: 'Dinotopian',
+          year: 1998,
           sourceUrl: 'http://web.archive.org/web/20210923113944/https://www.oocities.org/timessquare/4965/sffont.html#dino',
           licenseType: ToolLicenseType.FREE_TO_USE,
           customComment: 'License text in first section of the website'
