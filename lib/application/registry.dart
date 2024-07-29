@@ -5992,6 +5992,12 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseCullyLong,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'British Sign Language chart.png',
+              sourceUrl:
+                'https://web.archive.org/web/20220126171505/https://commons.wikimedia.org/wiki/File:British_Sign_Language_chart.png')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'chain_of_death_direction',
