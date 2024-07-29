@@ -210,5 +210,16 @@ class _SpecificToolLicenses {
         )
     );
   }
+
+  ToolLicenseEntry get _toolLicenseDni {
+    return ToolLicenseFont(context: context,
+        author: 'Colin Arenz, Sebastian Ochs',
+        year: 2000,
+        title: 'D\'ni Script',
+        sourceUrl: 'http://web.archive.org/web/20240729092553/http://linguists.riedl.org/old/sebastian/index.htm',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseUrl: 'http://web.archive.org/web/20230604223058/http://linguists.riedl.org/old/sebastian/readme.htm'
+    );
+  }
 }
 
