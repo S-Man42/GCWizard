@@ -6207,31 +6207,55 @@ void initializeRegistry(BuildContext context) {
       'countries',
       'symbol_flags',
       'countries_flags',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Gallery of sovereign state flags',
+          sourceUrl:
+          'http://web.archive.org/web/20210109105312/https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags')
+    ]),
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: const [
       'symbol_covenant',
     ], licenses: [
       stl._toolLicenseCullyLong,
       ToolLicenseFont(
           context: context,
-          author: '	Alex joystikX',
+          author: 'Alex joystikX',
           title: 'COVENANT FONT',
           sourceUrl: 'https://web.archive.org/web/20170616100744/https://www.fonts4free.net/covenant-font.html',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: const [
       'symbol_crystal',
-    ], licenses: []),
+    ], licenses: [ToolLicenseFont(
+        context: context,
+        author: 'MagnusArania',
+        title: 'Crystallic Alphabet',
+        sourceUrl: 'https://web.archive.org/web/20221213100809/https://www.deviantart.com/magnusarania/art/Crystallic-Alphabet-457870324',
+        licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: const [
       'symbol_cyrillic',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Cyrillic script',
+          sourceUrl:
+          'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'cyrillic_numbers',
         symbolSearchStrings: const [
           'symbol_cyrillic_numbers',
         ],
         licenses: [
-          stl._toolLicenseGeocachingToolbox,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'wikipedia.org and contributors',
+              title: 'Cyrillic script',
+              sourceUrl:
+              'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
         ]),
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
