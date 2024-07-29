@@ -572,13 +572,13 @@ class _LicensesState extends State<Licenses> {
             const ['several', 'myGeoTools'],
             const ['several', 'Wikipedia'],
             # PERMISSION REQUESTED [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
-            [
+            # DONE [
               i18n(context, 'symboltables_base16_title'),
               'https://web.archive.org/web/20221224135846/https://patentimages.storage.googleapis.com/88/54/da/d88ca78fe93623/US3974444.pdf'
             ],
-            [i18n(context, 'symboltables_base16_02_title'), 'https://dl.acm.org/doi/pdf/10.1145/364096.364107'],
-            [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
-            [
+            # DONE [i18n(context, 'symboltables_base16_02_title'), 'https://dl.acm.org/doi/pdf/10.1145/364096.364107'],
+            # CADAVER [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
+            # DONE [
               i18n(context, 'symboltables_bibibinary_title'),
               'https://en.wikipedia.org/wiki/Bibi-binary#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg (CC BY-SA 4.0)'
             ],
@@ -594,8 +594,8 @@ class _LicensesState extends State<Licenses> {
             # DONE [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
             # DONE [i18n(context, 'symboltables_fantastic_title'),
               'nederlandse-fantasia.fandom.com/wiki/Fantastisch (CC BY-SA 3.0)'],
-            [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
-            [
+            # DONE [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
+            # DONE [
               i18n(context, 'symboltables_gc_attributes_ids_title'),
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
@@ -619,7 +619,7 @@ class _LicensesState extends State<Licenses> {
               'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reproductions of this educational item are allowed. www.unitycorps.org)'
             ],
             # DONE [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
-            [
+            # DONE [
               i18n(context, 'symboltables_ninjargon_title'),
               'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
             ],

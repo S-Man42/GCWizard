@@ -5788,9 +5788,8 @@ void initializeRegistry(BuildContext context) {
           author: 'Typeface',
           title: 'Atlantean',
           sourceUrl:
-          'https://web.archive.org/web/20240726131815/https://online-fonts.com/fonts/atlantean',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Non-commercial use only',
+              'https://web.archive.org/web/20240726131815/https://online-fonts.com/fonts/atlantean',
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
           licenseUrl: 'https://web.archive.org/web/20211208065631/https://www.high-logic.com/font-license-agreement')
     ]),
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
@@ -6420,7 +6419,7 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
           licenseType: ToolLicenseType.NON_COMMERCIAL,
-        licenseUseType: ToolLicenseUseType.COPY,
+          licenseUseType: ToolLicenseUseType.COPY,
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
@@ -6581,6 +6580,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_futurama_2',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'Leandro Pardini',
+          title: 'Futurama Alien Alphabet Two Fonts Free Downloads',
+          sourceUrl:
+              'https://web.archive.org/web/20240729050515/https://www.onlinewebfonts.com/download/4eebd3cb48fdd4571269e580ed1b1c11',
+          licenseType: ToolLicenseType.CCBYSA3)
     ]),
     GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: const [
       'symbol_gallifreyan',
@@ -7261,7 +7267,15 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'ninjargon', symbolSearchStrings: const [
       'symbol_ninjargon',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Mia N',
+          title: 'Ninjargon Font',
+          sourceUrl:
+              'https://web.archive.org/web/20240729052359/https://www.cufonfonts.com/font/ninjargon',
+          licenseType: ToolLicenseType.NON_COMMERCIAL)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: const [
       'music',
       'music_notes',
