@@ -6212,6 +6212,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_covenant',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: '	Alex joystikX',
+          title: 'COVENANT FONT',
+          sourceUrl: 'https://web.archive.org/web/20170616100744/https://www.fonts4free.net/covenant-font.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: const [
       'symbol_crystal',
