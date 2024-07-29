@@ -5788,9 +5788,8 @@ void initializeRegistry(BuildContext context) {
           author: 'Typeface',
           title: 'Atlantean',
           sourceUrl:
-          'https://web.archive.org/web/20240726131815/https://online-fonts.com/fonts/atlantean',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Non-commercial use only',
+              'https://web.archive.org/web/20240726131815/https://online-fonts.com/fonts/atlantean',
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
           licenseUrl: 'https://web.archive.org/web/20211208065631/https://www.high-logic.com/font-license-agreement')
     ]),
     GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: const [
@@ -5993,6 +5992,12 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseCullyLong,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: 'British Sign Language chart.png',
+              sourceUrl:
+                'https://web.archive.org/web/20220126171505/https://commons.wikimedia.org/wiki/File:British_Sign_Language_chart.png')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'chain_of_death_direction',
@@ -6202,25 +6207,55 @@ void initializeRegistry(BuildContext context) {
       'countries',
       'symbol_flags',
       'countries_flags',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Gallery of sovereign state flags',
+          sourceUrl:
+          'http://web.archive.org/web/20210109105312/https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags')
+    ]),
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: const [
       'symbol_covenant',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'Alex joystikX',
+          title: 'COVENANT FONT',
+          sourceUrl: 'https://web.archive.org/web/20170616100744/https://www.fonts4free.net/covenant-font.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: const [
       'symbol_crystal',
-    ], licenses: []),
+    ], licenses: [ToolLicenseFont(
+        context: context,
+        author: 'MagnusArania',
+        title: 'Crystallic Alphabet',
+        sourceUrl: 'https://web.archive.org/web/20221213100809/https://www.deviantart.com/magnusarania/art/Crystallic-Alphabet-457870324',
+        licenseType: ToolLicenseType.FREE_TO_USE)]),
     GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: const [
       'symbol_cyrillic',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Cyrillic script',
+          sourceUrl:
+          'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'cyrillic_numbers',
         symbolSearchStrings: const [
           'symbol_cyrillic_numbers',
         ],
         licenses: [
-          stl._toolLicenseGeocachingToolbox,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'wikipedia.org and contributors',
+              title: 'Cyrillic script',
+              sourceUrl:
+              'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
         ]),
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
@@ -6258,6 +6293,12 @@ void initializeRegistry(BuildContext context) {
         year: 1905,
         sourceUrl: 'http://web.archive.org/web/20230310063322/https://en.wikisource.org/wiki/The_Return_of_Sherlock_Holmes/Chapter_3'
       ),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'The Adventure of the Dancing Men',
+          sourceUrl:
+            'http://web.archive.org/web/20210108115120/https://en.wikipedia.org/wiki/The_Adventure_of_the_Dancing_Men'),
       stl._toolLicenseWrixonGeheimsprachen,
       stl._toolLicenseGeocachingToolbox
     ]),
@@ -6283,40 +6324,60 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
     ], licenses: [
+      ToolLicenseOfflineBook(
+        context: context,
+        author: 'James Gurney',
+        title: 'Dinotopia: The World Beneath',
+        year: 1995,
+        isbn: '9781570361647',
+        publisher: 'Turner Publishing'
+      ),
       ToolLicenseFont(
           context: context,
-          author: 'FontStruct (https://fontstruct.com/)',
-          title: 'Dinosaur Three-Toe Bold',
-          sourceUrl:
-              'https://web.archive.org/web/20240726130010/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
-          licenseType: ToolLicenseType.CCNC30)
+          author: 'Mike H. Lee, Josh Dixon',
+          title: 'Dinotopian',
+          year: 1998,
+          sourceUrl: 'http://web.archive.org/web/20210923113944/https://www.oocities.org/timessquare/4965/sffont.html#dino',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'License text in first section of the website'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
     ], licenses: [
-      stl._toolLicenseCullyLong,
+      stl._toolLicenseDni
     ]),
     GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: const [
       'color',
       'symbol_dni_colors',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: ' Robin Lionheart',
+        year: 2001,
+        title: 'D\'ni Color Symbols',
+        sourceUrl: 'http://web.archive.org/web/20220929100934/http://www.robinlionheart.com/conlang/dnicolors'
+      ),
+      stl._toolLicenseDni
+    ]),
     GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: const [
       'symbol_dni_numbers',
     ], licenses: [
-      stl._toolLicenseCullyLong,
-      stl._toolLicenseGeocachingToolbox,
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Geocaching Toolbox',
-          title: 'D' 'ni numerals',
-          sourceUrl:
-              'https://web.archive.org/web/20210508072050/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=dniNumerals',
-          licenseType: ToolLicenseType.CCNC30)
+      stl._toolLicenseDni
     ]),
     GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: const [
       'symbol_doop',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'West Wind Fonts',
+          title: '"Roswell Wreckage" Font',
+          sourceUrl:
+          'https://web.archive.org/web/20240729163459/https://blambot.com/collections/dialogue-fonts/products/roswell-wreckage?variant=20500735164470',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'for Non-profit/ Indie Comics'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: const [
       'symbol_dorabella',
@@ -6414,7 +6475,7 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
           licenseType: ToolLicenseType.NON_COMMERCIAL,
-        licenseUseType: ToolLicenseUseType.COPY,
+          licenseUseType: ToolLicenseUseType.COPY,
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
@@ -6459,7 +6520,14 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: const [
       'symbol_flags',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'International maritime signal flags',
+          sourceUrl:
+          'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_german_kriegsmarine',
         symbolSearchStrings: const [
@@ -6470,7 +6538,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_nato',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'International maritime signal flags',
+          sourceUrl:
+          'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+    ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_rn_howe',
@@ -6554,27 +6629,55 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'futhark_elder',
         symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Elder Futhark',
+              sourceUrl: 'https://en.wikipedia.org/wiki/Elder_Futhark?variant=zh-cn')
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'futhark_younger',
         symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Younger Futhark',
+              sourceUrl: 'https://en.wikipedia.org/wiki/Younger_Futhark')
+        ]),
     GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_futhark',
       'symbol_futhorc'
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Anglo-Saxon runes',
+          sourceUrl: 'https://en.wikipedia.org/wiki/Anglo-Saxon_runes')
+    ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
     ], licenses: [
-      stl._toolLicenseCullyLong,
-      stl._toolLicenseMyGeoToolsCodeTabellen,
-      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+        context: context,
+        author: 'Darrell Johnson, Leandro Pardini',
+        title: 'Futurama Alien Alphabet One',
+        sourceUrl: 'https://web.archive.org/web/20190704113955/www.futurama-madhouse.net/fonts/index.shtml',
+        licenseType: ToolLicenseType.FREE_TO_USE
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'futurama_2', symbolSearchStrings: const [
       'symbol_futurama_2',
     ], licenses: [
-      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+        context: context,
+        author: 'Leandro Pardini',
+        title: 'Futurama Alien Alphabet Two',
+        sourceUrl: 'https://web.archive.org/web/20190704113955/www.futurama-madhouse.net/fonts/index.shtml',
+        licenseType: ToolLicenseType.FREE_TO_USE
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: const [
       'symbol_gallifreyan',
@@ -6584,6 +6687,13 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Pixel Sagas',
+          title: 'Gargish Font',
+          sourceUrl: 'https://web.archive.org/web/20200919013856/https://www.pixelsagas.com/?download=gargish',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: "Free for personal use")
     ]),
     GCWSymbolTableTool(
         symbolKey: 'gc_attributes_ids',
@@ -6650,7 +6760,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: const [
       'zelda',
       'symbol_gerudo',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Sarinilli',
+          title: 'Gerudo Typography - Font',
+          sourceUrl: 'https://web.archive.org/web/20200906044202/https://www.deviantart.com/sarinilli/art/Gerudo-Typography-Font-278213135',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: "Free for personal use")
+    ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
     ], licenses: [
@@ -7255,7 +7373,15 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'ninjargon', symbolSearchStrings: const [
       'symbol_ninjargon',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Mia N',
+          title: 'Ninjargon Font',
+          sourceUrl:
+              'https://web.archive.org/web/20240729052359/https://www.cufonfonts.com/font/ninjargon',
+          licenseType: ToolLicenseType.NON_COMMERCIAL)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: const [
       'music',
       'music_notes',
