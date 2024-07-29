@@ -6285,33 +6285,35 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseFont(
           context: context,
-          author: 'FontStruct (https://fontstruct.com/)',
-          title: 'Dinosaur Three-Toe Bold',
-          sourceUrl:
-              'https://web.archive.org/web/20240726130010/https://fontstruct.com/fontstructions/show/327333/dinosaur_three_toe_bold',
-          licenseType: ToolLicenseType.CCNC30)
+          author: 'Mike H. Lee, Josh Dixon',
+          title: 'Dinotopian',
+          sourceUrl: 'http://web.archive.org/web/20210923113944/https://www.oocities.org/timessquare/4965/sffont.html#dino',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'License text in first section of the website'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: const [
       'symbol_dni',
     ], licenses: [
-      stl._toolLicenseCullyLong,
+      stl._toolLicenseDni
     ]),
     GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: const [
       'color',
       'symbol_dni_colors',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: ' Robin Lionheart',
+        year: 2001,
+        title: 'D\'ni Color Symbols',
+        sourceUrl: 'http://web.archive.org/web/20220929100934/http://www.robinlionheart.com/conlang/dnicolors'
+      ),
+      stl._toolLicenseDni
+    ]),
     GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: const [
       'symbol_dni_numbers',
     ], licenses: [
-      stl._toolLicenseCullyLong,
-      stl._toolLicenseGeocachingToolbox,
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Geocaching Toolbox',
-          title: 'D' 'ni numerals',
-          sourceUrl:
-              'https://web.archive.org/web/20210508072050/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=dniNumerals',
-          licenseType: ToolLicenseType.CCNC30)
+      stl._toolLicenseDni
     ]),
     GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: const [
       'symbol_doop',
