@@ -6578,14 +6578,24 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
     ], licenses: [
-      stl._toolLicenseCullyLong,
-      stl._toolLicenseMyGeoToolsCodeTabellen,
-      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+        context: context,
+        author: 'Darrell Johnson, Leandro Pardini',
+        title: 'Futurama Alien Alphabet One',
+        sourceUrl: 'https://web.archive.org/web/20190704113955/www.futurama-madhouse.net/fonts/index.shtml',
+        licenseType: ToolLicenseType.FREE_TO_USE
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'futurama_2', symbolSearchStrings: const [
       'symbol_futurama_2',
     ], licenses: [
-      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+        context: context,
+        author: 'Leandro Pardini',
+        title: 'Futurama Alien Alphabet Two',
+        sourceUrl: 'https://web.archive.org/web/20190704113955/www.futurama-madhouse.net/fonts/index.shtml',
+        licenseType: ToolLicenseType.FREE_TO_USE
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: const [
       'symbol_gallifreyan',
