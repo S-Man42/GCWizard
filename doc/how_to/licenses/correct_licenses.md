@@ -9,6 +9,16 @@
 * This can result in huge license text duplications: For this there is a file ``specific_tool_licenses.dart`` where you can put the license object once and reference it as often as you like in the registry
 * If something is not used for a specific tool but in a more global way, like most of the Flutter libraries, they can be added in the ``licenses.dart`` file instead directly.
 ### License types
+* Every license type described below has field for private permission, which means: This can be used to describe if something was explicitly use permitted to us (via email, forum, whatever...):
+  * class type ``ToolLicensePrivatePermission``
+  * required fields:
+    * ``medium``: How was the permission granted (possible values are ``e-mail``, ``PN in geoclub.de forum``)
+    * ``permissionYear`` (at least the year should be clear)
+  * optional fields:
+    * ``permissionMonth``, ``permissionDay`` (if available)
+    * ``permissionAuthor`` (if someone else but the original artifact author permitted the usage, e.g. a museum allowed us the use of an older document)
+  * some license types require ``licenseType`` mandatorily. In that case use ``ToolLicenseType.PRIVATE_PERMISSION``
+
 There is support for several license types:
 * Included Code Libraries
   * class type ``ToolLibraryCodeLibrary``
@@ -22,6 +32,7 @@ There is support for several license types:
   * optional fields:
     * ``version`` (if available)
     * ``licenseUrl`` (if available)
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * Ported Code
   * class type ``ToolLicensePortedCode``
@@ -34,18 +45,7 @@ There is support for several license types:
   * optional fields:
     * ``version`` (if available)
     * ``licenseUrl`` (if available)
-    * ``customComment`` (for anything important, like license clarifications)
-* Anything which can we use due to personal/private permission (e.g. via e-mail, ...)
-  * class type ``ToolLicensePrivatePermittedDigitalSource``
-  * required fields:
-    * ``author``
-    * ``title``
-    * ``medium``: How was the permission granted (possible values are ``e-mail``, ``PN in geoclub.de forum``)
-    * ``permissionYear`` (at least the year should be clear)
-  * optional fields:
-    * ``version`` (if available)
-    * ``sourceUrl`` (if the permission is for something online available)
-    * ``permissionMonth``, ``permissionDay`` (if available)
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * External Images
   * class type ``ToolLicenseImage``
@@ -59,6 +59,7 @@ There is support for several license types:
   * optional fields:
     * ``version`` (if available)
     * ``licenseUrl`` (if available)
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * External Fonts
   * class type ``ToolLicenseFont``
@@ -73,6 +74,7 @@ There is support for several license types:
   * optional fields:
     * ``version`` (if available)
     * ``licenseUrl`` (if available)
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * External API
   * class type ``ToolLicenseAPI``
@@ -85,6 +87,7 @@ There is support for several license types:
   * optional fields:
     * ``version`` (if available)
     * ``licenseUrl`` (if available)
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * Books which are online available
   * class type ``ToolLicenseOnlineBook``
@@ -98,6 +101,7 @@ There is support for several license types:
     * ``year``, ``month``, ``day`` (publishing date; you can give ``year`` without ``month`` and ``day`` as well as ``year`` and ``month`` without ``day``)
     * ``isbn`` (if available)
     * ``publisher`` ("Verlag")
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * Books which we used/read offline
   * class type ``ToolLicenseOfflineBook``
@@ -108,6 +112,7 @@ There is support for several license types:
     * ``year``, ``month``, ``day`` (publishing date; you can give ``year`` without ``month`` and ``day`` as well as ``year`` and ``month`` without ``day``)
     * ``isbn`` (if available)
     * ``publisher`` ("Verlag")
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * Web Articles
   * class type ``ToolLicenseOnlineArticle``
@@ -122,6 +127,7 @@ There is support for several license types:
     * ``licenseUrl`` (if available)
     * ``year``, ``month``, ``day`` (publishing date; you can give ``year`` without ``month`` and ``day`` as well as ``year`` and ``month`` without ``day``)
     * ``publisher`` ("Verlag")
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 * Offline Articles
   * class type ``ToolLicenseOfflineArticle``
@@ -132,6 +138,7 @@ There is support for several license types:
   * optional fields:
     * ``year``, ``month``, ``day`` (publishing date; you can give ``year`` without ``month`` and ``day`` as well as ``year`` and ``month`` without ``day``)
     * ``publisher`` ("Verlag")
+    * ``privatePermission`` (if exists)
     * ``customComment`` (for anything important, like license clarifications)
 ### Field Descriptions
 * ``author``: Can be a list of authors or an organization
