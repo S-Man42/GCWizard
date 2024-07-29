@@ -6369,6 +6369,15 @@ void initializeRegistry(BuildContext context) {
       'symbol_doop',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'West Wind Fonts',
+          title: '"Roswell Wreckage" Font',
+          sourceUrl:
+          'https://web.archive.org/web/20240729163459/https://blambot.com/collections/dialogue-fonts/products/roswell-wreckage?variant=20500735164470',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'for Non-profit/ Indie Comics'
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: const [
       'symbol_dorabella',
@@ -6511,7 +6520,14 @@ void initializeRegistry(BuildContext context) {
     ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: const [
       'symbol_flags',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'International maritime signal flags',
+          sourceUrl:
+          'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'flags_german_kriegsmarine',
         symbolSearchStrings: const [
@@ -6522,7 +6538,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_nato',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'International maritime signal flags',
+          sourceUrl:
+          'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+    ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_rn_howe',
@@ -6606,16 +6629,34 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'futhark_elder',
         symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Elder Futhark',
+              sourceUrl: 'https://en.wikipedia.org/wiki/Elder_Futhark?variant=zh-cn')
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'futhark_younger',
         symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Younger Futhark',
+              sourceUrl: 'https://en.wikipedia.org/wiki/Younger_Futhark')
+        ]),
     GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_futhark',
       'symbol_futhorc'
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Anglo-Saxon runes',
+          sourceUrl: 'https://en.wikipedia.org/wiki/Anglo-Saxon_runes')
+    ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
     ], licenses: [
