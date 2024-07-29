@@ -6687,6 +6687,13 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Pixel Sagas',
+          title: 'Gargish Font',
+          sourceUrl: 'https://web.archive.org/web/20200919013856/https://www.pixelsagas.com/?download=gargish',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: "Free for personal use")
     ]),
     GCWSymbolTableTool(
         symbolKey: 'gc_attributes_ids',
@@ -6753,7 +6760,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: const [
       'zelda',
       'symbol_gerudo',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Sarinilli',
+          title: 'Gerudo Typography - Font',
+          sourceUrl: 'https://web.archive.org/web/20200906044202/https://www.deviantart.com/sarinilli/art/Gerudo-Typography-Font-278213135',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: "Free for personal use")
+    ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
     ], licenses: [
