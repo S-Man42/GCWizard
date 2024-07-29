@@ -6258,6 +6258,12 @@ void initializeRegistry(BuildContext context) {
         year: 1905,
         sourceUrl: 'http://web.archive.org/web/20230310063322/https://en.wikisource.org/wiki/The_Return_of_Sherlock_Holmes/Chapter_3'
       ),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'The Adventure of the Dancing Men',
+          sourceUrl:
+            'http://web.archive.org/web/20210108115120/https://en.wikipedia.org/wiki/The_Adventure_of_the_Dancing_Men'),
       stl._toolLicenseWrixonGeheimsprachen,
       stl._toolLicenseGeocachingToolbox
     ]),
