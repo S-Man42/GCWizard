@@ -244,10 +244,10 @@ namespace GC_Wizard_SymbolTables_Pdf
 			foreach (var entry in directorys)
 			{
 				//Debug.Print(licenseEntry.Value);
-				offset = DrawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, languagefileEn, licenseEntries);
+				//offset = DrawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, languagefileEn, licenseEntries);
 
-				offset.X = BorderWidthLeft;
-				offset.Y += ImageSize + 20;
+				//offset.X = BorderWidthLeft;
+				//offset.Y += ImageSize + 20;
 
 				Progress += progress_offset;
 			}
@@ -571,7 +571,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 		/// <param name="licenseEntries"></param>
 		private PointF DrawLicenses(PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, String languagefileEn, Dictionary<string, string> licenseEntries)
 		{
-			var licenseLabel = GetLicenseLabel(languagefile);
+			var licenseLabel = (GetLicenseLabel(languagefile) ?? GetLicenseLabel(languagefileEn)) + "/ " + (GetLicenseLabel1(languagefile) ?? GetLicenseLabel1(languagefileEn));
 
 			// Create a font
 			XFont font = CreateXFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
@@ -1073,6 +1073,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 			var symboltablesRegEx = new Regex(@"GCWSymbolTableTool.*?symbolKey\s*:(.*?),.*?licenses\s*\:\s*\[(.*?)]", RegexOptions.Singleline);
 			var licensesTypeRegEx = new Regex(@"ToolLicense.*?licenseType\s*:(.*?)[,|\)]", RegexOptions.Singleline);
 			var licensesSourceUrlRegEx = new Regex(@"ToolLicense.*?sourceUrl\s*:(.*?)[,|\)]", RegexOptions.Singleline);
+			var licensesPrivatePermissionRegEx = new Regex(@"ToolLicensePrivatePermission.*?medium\s*:(.*?)[,|\)]", RegexOptions.Singleline);
 			var registryEntries = symboltablesRegEx.Matches(registryContent);
 
 			foreach (Match match in registryEntries)
@@ -1082,12 +1083,19 @@ namespace GC_Wizard_SymbolTables_Pdf
 					var licensesEntries = licensesTypeRegEx.Matches(match.Groups[2].Value);
 					if (licensesEntries.Count > 0) //licenseEntry with licenseType ?
 					{
-						var title = RemoveQuotationMark(match.Groups[1].Value);
+						var title = RemoveQuotationMark(match.Groups[1].Value).Trim();
 						var usedEntry = licensesEntries[0]; // first license with licenseType
 
 						var licenseEntry = usedEntry.Groups[1].Value.Trim();
 						if (licensesList.ContainsKey(licenseEntry))
 							licenseEntry = licensesList[licenseEntry];
+
+						if (String.IsNullOrEmpty (licenseEntry)) 
+						{
+							var privatePermission = licensesPrivatePermissionRegEx.Match(match.Groups[0].Value);
+							if (privatePermission.Success)
+								licenseEntry = RemoveQuotationMark(privatePermission.Groups[1].Value).Trim();
+						}
 
 						var entry = "(" + licenseEntry + ")";
 
@@ -1099,7 +1107,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 								entry = sourceEntry + " " + entry;
 						}
 
-						list.Add(title.Trim(), entry);
+						list.Add(title, entry);
 					}
 				}
 			}
@@ -1300,6 +1308,10 @@ namespace GC_Wizard_SymbolTables_Pdf
 			return GetEntryValue(languagefile, "licenses_symboltablesources");
 		}
 
+		private static String GetLicenseLabel1(String languagefile)
+		{
+			return GetEntryValue(languagefile, "licenses_title");
+		}
 
 		private static string TranslatedText(string languagefile, string languagefileEn, string entry, string notTranslatedText)
 		{
@@ -1573,6 +1585,37 @@ namespace GC_Wizard_SymbolTables_Pdf
 					return "Kaynak";
 				default:
 					return "Source";
+			}
+		}
+
+		private String GetLicenseLabel()
+		{
+			switch (Language)
+			{
+				case "de":
+					return "Lizenz";
+				case "fr":
+					return "Licence";
+				case "ko":
+					return "특허";
+				case "it":
+					return "Licenza";
+				case "es":
+					return "Licencia";
+				case "nl":
+					return "Licentie";
+				case "pl":
+					return "Licencja";
+				case "ru":
+					return "Лицензия";
+				case "sk":
+					return "Licencia";
+				case "sv":
+					return "Licenca";
+				case "tr":
+					return "Lisans";
+				default:
+					return "License";
 			}
 		}
 
