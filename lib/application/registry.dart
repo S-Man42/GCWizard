@@ -6634,7 +6634,7 @@ void initializeRegistry(BuildContext context) {
               context: context,
               author: 'en.wikipedia.org and contributors',
               title: 'Elder Futhark',
-              sourceUrl: 'https://en.wikipedia.org/wiki/Elder_Futhark?variant=zh-cn')
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Elder_Futhark&oldid=1236807910')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'futhark_younger',
@@ -6644,7 +6644,7 @@ void initializeRegistry(BuildContext context) {
               context: context,
               author: 'en.wikipedia.org and contributors',
               title: 'Younger Futhark',
-              sourceUrl: 'https://en.wikipedia.org/wiki/Younger_Futhark')
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Younger_Futhark&oldid=1226247571')
         ]),
     GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
       'symbol_runes',
@@ -6655,7 +6655,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Anglo-Saxon runes',
-          sourceUrl: 'https://en.wikipedia.org/wiki/Anglo-Saxon_runes')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Anglo-Saxon_runes&oldid=1231842934')
     ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
@@ -6767,33 +6767,70 @@ void initializeRegistry(BuildContext context) {
           title: 'Gerudo Typography - Font',
           sourceUrl: 'https://web.archive.org/web/20200906044202/https://www.deviantart.com/sarinilli/art/Gerudo-Typography-Font-278213135',
           licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: "Free for personal use")
+          customComment: 'Free for personal use')
     ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Glagolitische Schrift',
+          sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Glagolitische_Schrift&oldid=242590359')
     ]),
     GCWSymbolTableTool(
-        symbolKey: 'gnommish', symbolSearchStrings: const [], licenses: []),
+        symbolKey: 'gnommish', symbolSearchStrings: const [], licenses: [
+        ToolLicenseFont(
+          context: context,
+          author: 'Sylvarmyst',
+          title: 'Gnommish',
+          sourceUrl: 'https://web.archive.org/web/20240730050939/https://fontstruct.com/fontstructions/show/677781/gnommish_31',
+          licenseType: ToolLicenseType.CCBYSA3)
+    ]),
     GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: const [
       'symbol_greek_numerals',
-    ], licenses: []),
-    GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: const [
-      'symbol_hanja',
-      'symbol_sino_korean',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Greek numerals',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Greek_numerals&oldid=1236399172')
+    ]),
     GCWSymbolTableTool(symbolKey: 'hangul_korean', symbolSearchStrings: const [
       'symbol_hangul',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Hangul',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Hangul&oldid=1236544404')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'hangul_sino_korean',
         symbolSearchStrings: const [
           'symbol_hangul',
           'symbol_sino_korean',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'wikipedia.org and contributors',
+              title: 'Sino Korean numbers',
+              sourceUrl: 'https://www.koreanwikiproject.com/wiki/index.php?title=Sino_Korean_numbers&oldid=30107')
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: const [
+      'symbol_hanja',
+      'symbol_sino_korean',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Korean numerals',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Korean_numerals&oldid=1229158459')
+    ]),
     GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: const [
       'symbol_hazard',
     ], licenses: []),
@@ -6829,7 +6866,14 @@ void initializeRegistry(BuildContext context) {
       'symbol_lordoftherings',
       'symbol_runes',
       'symbol_hobbit_runes',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown author',
+          title: 'Tolkien Dwarf Runes',
+          sourceUrl: 'http://web.archive.org/web/20180401000000*/https://fonts2u.com/tolkien-dwarf-runes.font',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: const [
       'symbol_hvd',
     ], licenses: [
