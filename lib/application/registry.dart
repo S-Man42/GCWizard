@@ -6896,7 +6896,14 @@ void initializeRegistry(BuildContext context) {
           'zelda',
           'symbol_hylian_albw_botw',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'Plaguelily',
+              title: 'ABLW BOTW HYLIAN',
+              sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+              licenseType: ToolLicenseType.FREE_TO_USE)
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_skyward_sword',
         symbolSearchStrings: const [
@@ -6905,11 +6912,24 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseCullyLong,
+          ToolLicenseFont(
+              context: context,
+              author: 'Sarinilli',
+              title: 'SS ANCIENT HYLIAN',
+              sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+              licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
     GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: const [
       'zelda',
       'symbol_hylian_symbols',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Various Zelda Games',
+          title: 'Hylian Symbols',
+          sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_twilight_princess_gcn',
         symbolSearchStrings: const [
@@ -6918,6 +6938,12 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseMyGeoToolsCodeTabellen,
+          ToolLicenseFont(
+              context: context,
+              author: 'Unknown',
+              title: 'TP HYLIAN',
+              sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+              licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_twilight_princess_wii',
@@ -6927,6 +6953,12 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseMyGeoToolsCodeTabellen,
+          ToolLicenseFont(
+              context: context,
+              author: 'Martin Anderson - mdta Design',
+              title: 'TP Hylian - Wii Regular Fonts Free Downloads',
+              sourceUrl: 'https://web.archive.org/web/20240730150257/https://www.onlinewebfonts.com/download/722c88b417177812725b0943f5470a72',
+              licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_wind_waker',
@@ -6937,6 +6969,12 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           stl._toolLicenseCullyLong,
           stl._toolLicenseMyGeoToolsCodeTabellen,
+          ToolLicenseFont(
+              context: context,
+              author: 'Sarinilli',
+              title: 'ANCIENT HYLIAN',
+              sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+              licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
     GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: const [
       'symbol_hymmnos',
@@ -7744,7 +7782,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: const [
       'zelda',
       'symbol_sheikah',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Sarinilli',
+          title: 'BOTW SHEIKAH',
+          sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: const [
       'symbol_shoes',
     ], licenses: []),
