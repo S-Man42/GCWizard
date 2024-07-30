@@ -42,7 +42,7 @@ class _PortaState extends State<Porta> {
     return Column(
       children: <Widget>[
         GCWTextField(
-          hintText: i18n(context,"common_input"),
+          hintText: i18n(context,'common_input'),
           controller: _inputController,
           onChanged: (text) {
             setState(() {
@@ -51,7 +51,7 @@ class _PortaState extends State<Porta> {
           },
         ),
         GCWTextField(
-          hintText: i18n(context,"common_key"),
+          hintText: i18n(context,'common_key'),
           controller: _keyController,
           onChanged: (text) {
             setState(() {

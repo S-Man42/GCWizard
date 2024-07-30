@@ -2,8 +2,8 @@
 List<String>? _createTable(int version) {
   if (![1, 2].contains(version)) { return null; }
 
-  String head = "ABCDEFGHIJKLM";
-  String initialLine = "NOPQRSTUVWXYZ";
+  String head = 'ABCDEFGHIJKLM';
+  String initialLine = 'NOPQRSTUVWXYZ';
   List<String> table = [head, initialLine];
   String line = initialLine;
   for (int i = 0; i < 12; i++) {
