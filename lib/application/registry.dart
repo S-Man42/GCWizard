@@ -6882,7 +6882,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'hylian_64', symbolSearchStrings: const [
       'zelda',
       'symbol_hylian_64',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Ocarina of Time/Majora''s Mask',
+          title: 'Hylian 64',
+          sourceUrl: 'https://web.archive.org/web/20200406201743/https://www.zeldaxtreme.com/fonts/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'hylian_albw_botw',
         symbolSearchStrings: const [
