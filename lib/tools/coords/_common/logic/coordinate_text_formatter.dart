@@ -6,15 +6,18 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-String formatCoordOutput(LatLng _coords, CoordinateFormat _outputFormat, [Ellipsoid? ells]) {
+String formatCoordOutput(LatLng _coords, CoordinateFormat _outputFormat, [Ellipsoid? ellipsoid, bool rounded = true]) {
   int? precision;
-  switch (_outputFormat.type) {
-    case CoordinateFormatKey.DMM:
-      precision = Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
-      break;
-    default:
-      break;
+
+  if (rounded) {
+    switch (_outputFormat.type) {
+      case CoordinateFormatKey.DMM:
+        precision = Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM);
+        break;
+      default:
+        break;
+    }
   }
 
-  return buildCoordinate(_outputFormat, _coords, ells).toString(precision);
+  return buildCoordinate(_outputFormat, _coords, ellipsoid).toString(precision);
 }
