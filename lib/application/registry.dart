@@ -7010,7 +7010,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'illuminati_v2', symbolSearchStrings: const [
       'symbol_illuminati',
       'symbol_illuminati_v2',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Berlin Version Font',
+          title: 'Illuminati Dirigens Cipher',
+          sourceUrl: 'https://fontmeme.com/fonts/illuminati-dirigens-cipher-berlin-version-font/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: const [
       'symbol_intergalactic',
     ], licenses: [
