@@ -1410,7 +1410,7 @@ void initializeRegistry(BuildContext context) {
     ToolLicenseOnlineArticle(
       context: context,
       author: 'Didier Müller',
-      title: 'Le chiffre da porta',
+      title: 'Le chiffre da Porta',
       sourceUrl: 'https://web.archive.org/web/20240726132205/https://www.apprendre-en-ligne.net/crypto/porta/index.html',
       year: 2021,
       month: 01,
