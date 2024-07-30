@@ -7022,11 +7022,23 @@ void initializeRegistry(BuildContext context) {
       'symbol_intergalactic',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Aaqil A. Azhar (Foneer)',
+          title: 'Robotica SGA',
+          sourceUrl: 'https://web.archive.org/web/20240730195127/https://fontstruct.com/fontstructions/show/2324755/robotica-sga',
+          licenseType: ToolLicenseType.NON_COMMERCIAL)
     ]),
     GCWSymbolTableTool(symbolKey: 'interlac', symbolSearchStrings: const [
       'symbol_interlac',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'blue panther',
+          title: 'Interlac Font',
+          sourceUrl: 'https://web.archive.org/web/20191026172055/https://legionfonts.com/fonts/interlac--by-blue-panther-',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: const [
       'symbol_iokharic',
@@ -7113,7 +7125,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'ita1_1926',
         symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Baudot code',
+              sourceUrl:
+                'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507')
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'ita1_1929',
         symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter'],
