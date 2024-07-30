@@ -3906,6 +3906,8 @@
   "polybios_mode_za90": "Z-A 9-0",
   "polybios_mode_90za": "9-0 Z-A",
   "polybios_usedgrid": "Used Grid",
+  "porta_title": "Porta",
+  "porta_description": "Polygraphic substitution cipher invented by Giovanni Battista della Porta",
   "predator_selection_title": "Predator",
   "predator_selection_description": "Font tools for encoding/decoding Predator symbols from the movie 'Predator'",
   "predator_title": "Predator",

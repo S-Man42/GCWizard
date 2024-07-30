@@ -1,8 +1,6 @@
 
 List<String>? _createTable(int version) {
-  if (![1, 2].contains(version)) {
-    return null;
-  }
+  if (![1, 2].contains(version)) { return null; }
 
   String head = "ABCDEFGHIJKLM";
   String initialLine = "NOPQRSTUVWXYZ";
@@ -18,7 +16,7 @@ List<String>? _createTable(int version) {
 }
 
 String togglePorta(String text, String key, { int version = 1 }) {
-  var table = _createTable(version);
+  List<String>? table = _createTable(version);
 
   if (text.isEmpty || key.isEmpty || table == null) { return ""; }
 
