@@ -1,13 +1,14 @@
+import 'package:gc_wizard/utils/alphabets.dart';
 
 List<String>? _createTable(int version, {bool classic = false}) {
   if (![1, 2].contains(version)) { return null; }
 
-  String head = 'ABCDEFGHIJKLM';
-  String initialLine = 'NOPQRSTUVWXYZ';
-  if (classic) {
-    head = head.replaceAll('J', '');
-    initialLine = initialLine.replaceAll('U', '');
-  }
+  String alphabet = alphabet_AZ.keys.join('');
+  if (classic) {alphabet = alphabet.replaceAll(RegExp('[JKUW]'), '');}
+
+  String head = alphabet.substring(0, alphabet.length ~/ 2);
+  String initialLine = alphabet.substring(alphabet.length ~/ 2);
+
   List<String> table = [head, initialLine];
   String line = initialLine;
   for (int i = 0; i < head.length - 1; i++) {
