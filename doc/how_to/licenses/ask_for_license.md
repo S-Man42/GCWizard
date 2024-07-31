@@ -6,11 +6,10 @@ Subject: Request for permission of symbol tables
 
 Hello '<...>',
 we are a small team which is providing a free open source app for Geocacher – The "GC Wizard" - https://gcwizard.net/
-For Geocaching it could be necessary to solve certain riddles and codes. The GC Wizard is a tool collection with numerous numbers of functions to solve riddles / puzzles in the field with the help of calculators or symbol tables.
+For Geocaching it could be necessary to solve certain riddles and codes. The GC Wizard is a tool collection with numerous numbers of functions to solve riddles / puzzles in the field with the help of calculators or symbol tables. With these symbols geocachers will be able to solve such riddles and even may provide new ones with your symbols.
 
 One of our users requested us to add your symbols from the following page:
 '<...>'
-With these symbols geocachers will be able to solve such riddles and even may provide new ones with your symbols.
 
 I would like to request the permission to use these symbols in a size of 150x150px.
 Our app and its images are provided under the GNU General Public License https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -34,11 +33,10 @@ Subject: Bitte um Genehmigung zur Nutzung von '<...>'
 
 Hallo '<...>',
 wir sind ein kleines Team, das eine kostenlose Open-Source-App für Geocacher bereitstellt - den "„"GC Wizard"“" - https://gcwizard.net/
-Beim Geocaching ist es manchmal notwendig, Rätsel und Codes zu lösen. Der GC Wizard ist eine Werkzeugsammlung mit einer Vielzahl von Funktionen, um mit Hilfe von bestimmten Rechnern oder Symboltabellen Rätsel im Gelände zu lösen.
+Beim Geocaching ist es manchmal notwendig, Rätsel und Codes zu lösen. Der GC Wizard ist eine Werkzeugsammlung mit einer Vielzahl von Funktionen, um mit Hilfe von bestimmten Rechnern oder Symboltabellen Rätsel im Gelände zu lösen. Mit diesen Symbolen würden Geocacher in der Lage sein, entsprechende Rätsel zu lösen und vielleicht sogar neue Rätsel mit Ihren Symbolen zu erstellen.
 
 Einer unserer Benutzer hat uns gebeten, Ihre Symbole von der folgenden Seite hinzuzufügen:
 '<...>'
-Mit diesen Symbolen würden Geocacher in der Lage sein, entsprechende Rätsel zu lösen und vielleicht sogar neue Rätsel mit Ihren Symbolen zu erstellen.
 
 Ich bitte Sie um die Erlaubnis, diese Symbole in einer Größe von 150x150px in unserer App verwenden zu dürfen.
 Unsere App und ihre Bilder werden unter der GNU General Public License https://www.gnu.org/licenses/gpl-3.0.en.html zur Verfügung gestellt.
