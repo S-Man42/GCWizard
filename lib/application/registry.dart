@@ -1091,7 +1091,15 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'judoon',
-    ]),
+    ], licenses: [
+      ToolLicenseOnlineArticle(context: context,
+          author: 'Whooligan',
+          title: 'Whooligan\'s Judoon Language Translator',
+          customComment: 'This tool is inspired by the site https://whooligan.weebly.com/index.html'
+              'Whooligan is an index of Doctor Who stuff (It is  a fan forum). '
+              'Last updates were about 4 years ago.',
+          sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
+      )]),
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
