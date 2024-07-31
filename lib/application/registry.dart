@@ -1456,6 +1456,13 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'ragbaby',
+    ], licenses: [
+      ToolLicenseOnlineArticle(context: context,
+          author: 'Lionel',
+          title: 'Ragbaby Cipher Young Tyros',
+          year: 2023, month: 02, day: 24,
+          sourceUrl: 'https://web.archive.org/web/20240415085406/https://youngtyros.com/2023/02/19/ragbaby-cipher/'
+      )
     ]),
     GCWTool(tool: const RailFence(), id: 'railfence', categories: const [
       ToolCategory.CRYPTOGRAPHY
