@@ -2309,7 +2309,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CheckDigitsCreditCardSelection(),
         id: 'checkdigits_creditcard_selection',
-        searchKeys: const ['checkdigits', '']),
+        searchKeys: const ['checkdigits']),
     GCWTool(
         tool: const CheckDigitsDETaxIDSelection(),
         id: 'checkdigits_de_taxid_selection',
@@ -6681,19 +6681,28 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: const [
       'symbol_gallifreyan',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseImage(
+        context: context,
+        author: 'wikiHow Staff',
+        title: 'Gallifreyisch schreiben wie Doktor Who',
+        sourceUrl:
+            'https://web.archive.org/web/20150725002038/https://de.wikihow.com/Gallifreyisch-schreiben-wie-Doktor-Who',
+        licenseUseType: ToolLicenseUseType.REPRODUCTION,
+        licenseType: ToolLicenseType.REPRODUCTION_NEEDED)
+    ]),
     GCWSymbolTableTool(symbolKey: 'gargish', symbolSearchStrings: const [
       'symbol_gargish',
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       ToolLicenseFont(
-          context: context,
-          author: 'Pixel Sagas',
-          title: 'Gargish Font',
-          sourceUrl: 'https://web.archive.org/web/20200919013856/https://www.pixelsagas.com/?download=gargish',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: "Free for personal use")
+        context: context,
+        author: 'Pixel Sagas',
+        title: 'Gargish Font',
+        sourceUrl: 'https://web.archive.org/web/20200919013856/https://www.pixelsagas.com/?download=gargish',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+        customComment: 'Free for personal use')
     ]),
     GCWSymbolTableTool(
         symbolKey: 'gc_attributes_ids',
@@ -7188,15 +7197,35 @@ void initializeRegistry(BuildContext context) {
       'barcodes',
       'railways',
       'symbol_kartrak',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'KarTrak',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=KarTrak&oldid=1231296757')
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'kaktovik',
         symbolSearchStrings: const ['symbol_kaktovik', 'zigzag'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Kaktovik numerals',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Kaktovik_numerals&oldid=1236877061')
+        ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Kharosthi',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Kharosthi&oldid=1234511037')
     ]),
     GCWSymbolTableTool(symbolKey: 'klingon', symbolSearchStrings: const [
       'symbol_klingon',
@@ -7204,6 +7233,13 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown',
+          title: 'KLINGON',
+          sourceUrl:
+              'https://web.archive.org/web/20170614203232/https://de.fonts2u.com/klingon.schriftart',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'klingon_klinzhai',
@@ -7213,11 +7249,28 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseGeocachingToolbox,
+          ToolLicenseFont(
+              context: context,
+              author: 'PsychoGlyph',
+              title: 'Klinzhai font',
+              sourceUrl:
+                  'http://web.archive.org/web/20210227191441/https://www.whatfontis.com/FF_Klinzhai.font',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              customComment: 'Free for personal use')
         ]),
     GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: const [
       'color',
       'symbol_krempel',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Ralf Krempel',
+          title: 'Krempel-Code',
+          sourceUrl:
+              'https://web.archive.org/web/20240731053812/https://de.everybodywiki.com/Krempel-Code',
+          licenseUseType: ToolLicenseUseType.REPRODUCTION,
+          licenseType: ToolLicenseType.REPRODUCTION_NEEDED)
+    ]),
     GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: const [
       'symbol_krypton',
     ], licenses: [
@@ -7237,10 +7290,26 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
       'symbol_la_buse',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Jérémie Dupuis',
+          title: 'Pigpen Cipher Font',
+          sourceUrl:
+              'https://fontmeme.com/fonts/pigpen-cipher-font/',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
       'symbol_linear_b',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown',
+          title: 'Noto Sans Linear B',
+          sourceUrl:
+              'https://fonts.google.com/noto/specimen/Noto+Sans+Linear+B',
+          licenseType: ToolLicenseType.OFL11)
+    ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_lorm',
