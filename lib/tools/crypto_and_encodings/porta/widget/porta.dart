@@ -20,6 +20,7 @@ class _PortaState extends State<Porta> {
   var _currentInput = '';
   var _currentKey = '';
   var _currentTableVersion = GCWSwitchPosition.left;
+  var _classicMode = GCWSwitchPosition.right;
 
   String _output = '';
 
@@ -60,8 +61,18 @@ class _PortaState extends State<Porta> {
           },
         ),
         GCWTwoOptionsSwitch(
-          leftValue: 'v1',
-          rightValue: 'v2',
+          leftValue: '22 ' + i18n(context, 'common_letters'),
+          rightValue: '26 ' + i18n(context, 'common_letters'),
+          value: _classicMode,
+          onChanged: (value) {
+            setState(() {
+              _classicMode = value;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context,'common_version') + ' 1',
+          rightValue: i18n(context,'common_version') + ' 2',
           value: _currentTableVersion,
           onChanged: (value) {
             setState(() {
@@ -76,13 +87,9 @@ class _PortaState extends State<Porta> {
   }
 
   Widget _buildOutput() {
-    if (_currentTableVersion == GCWSwitchPosition.left) {
-      _output =
-          togglePorta(_currentInput, _currentKey, version: 1);
-    } else {
-      _output =
-          togglePorta(_currentInput, _currentKey, version: 2);
-    }
+    bool classic = _classicMode == GCWSwitchPosition.left;
+    int table = (_currentTableVersion == GCWSwitchPosition.left)  ? 1  : 2;
+    _output = togglePorta(_currentInput, _currentKey, version: table, classic: classic);
 
     return GCWDefaultOutput(child: _output);
   }
