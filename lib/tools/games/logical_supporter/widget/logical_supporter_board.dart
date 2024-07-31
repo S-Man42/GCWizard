@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/games/logical_solver/widget/logical_solver.dart';
+part of 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter.dart';
 
 const _boxSize = 20.0;
 const _fontSize = _boxSize * 0.7;

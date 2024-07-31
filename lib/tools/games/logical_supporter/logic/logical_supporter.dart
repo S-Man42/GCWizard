@@ -197,7 +197,7 @@ class _LogicalBlock {
 class Logical {
 	late List<List<_LogicalBlock>> blocks;
 	late List<List<String>> logicalItems;
-	List<_LogicalSolverSolution>? solutions;
+	List<_LogicalSupporterSolution>? solutions;
 	int categoriesCount = 4;
 	int itemsCount = 5;
 	LogicalState state = LogicalState.Ok;
@@ -661,10 +661,10 @@ class Logical {
 	}
 }
 
-class _LogicalSolverSolution {
+class _LogicalSupporterSolution {
 	final List<List<int?>> solution;
 
-	_LogicalSolverSolution(this.solution);
+	_LogicalSupporterSolution(this.solution);
 
 	int? getValue (int x, int y) {
 		if (y < 0 || y >= solution.length || x < 0 || x >= solution[y].length) return null;

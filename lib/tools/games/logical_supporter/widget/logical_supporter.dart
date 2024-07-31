@@ -16,22 +16,22 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/games/logical_solver/logic/logical_solver.dart';
+import 'package:gc_wizard/tools/games/logical_supporter/logic/logical_supporter.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:touchable/touchable.dart';
 
-part 'package:gc_wizard/tools/games/logical_solver/widget/logical_solver_board.dart';
+part 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter_board.dart';
 
-class LogicalSolver extends StatefulWidget {
-  const LogicalSolver({Key? key}) : super(key: key);
+class LogicalSupporter extends StatefulWidget {
+  const LogicalSupporter({Key? key}) : super(key: key);
 
   @override
-  LogicalSolverState createState() => LogicalSolverState();
+  LogicalSupporterState createState() => LogicalSupporterState();
 }
 
-class LogicalSolverState extends State<LogicalSolver> {
+class LogicalSupporterState extends State<LogicalSupporter> {
   late Logical _currentBoard;
   var _categoriesCount = 4;
   var _itemsCount = 5;
@@ -51,7 +51,7 @@ class LogicalSolverState extends State<LogicalSolver> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: const [FileType.TXT, FileType.JSON],
-          title: i18n(context, 'logicalsolver_load'),
+          title: i18n(context, 'logicalsupporter_load'),
           onLoaded: (GCWFile? value) {
             if (value == null) {
               showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
@@ -74,7 +74,7 @@ class LogicalSolverState extends State<LogicalSolver> {
           child: Column(
             children: <Widget>[
               GCWIntegerSpinner(
-                title: i18n(context, 'logicalsolver_categories'),
+                title: i18n(context, 'logicalsupporter_categories'),
                 value: _categoriesCount,
                 flexValues: const [1, 1],
                 overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
@@ -88,7 +88,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                 },
               ),
               GCWIntegerSpinner(
-                title: i18n(context, 'logicalsolver_items'),
+                title: i18n(context, 'logicalsupporter_items'),
                 value: _itemsCount,
                 flexValues: const [1, 1],
                 overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
@@ -128,7 +128,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                 child: Container(
                   padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                   child: GCWButton(
-                    text: i18n(context, 'logicalsolver_clear_relations'),
+                    text: i18n(context, 'logicalsupporter_clear_relations'),
                     onPressed: () {
                       setState(() {
                         _currentBoard.removeRelations();
@@ -141,7 +141,7 @@ class LogicalSolverState extends State<LogicalSolver> {
                 child: Container(
                   padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
                   child: GCWButton(
-                    text: i18n(context, 'logicalsolver_clear_items'),
+                    text: i18n(context, 'logicalsupporter_clear_items'),
                     onPressed: () {
                       setState(() {
                         //_unselectBoardBox();
@@ -153,7 +153,7 @@ class LogicalSolverState extends State<LogicalSolver> {
           ],
         ),
         GCWButton(
-          text: i18n(context, 'logicalsolver_save'),
+          text: i18n(context, 'logicalsupporter_save'),
           onPressed: () {
             setState(() {
               _exportJsonFile(context, _currentBoard.toJson());
@@ -214,14 +214,14 @@ class LogicalSolverState extends State<LogicalSolver> {
         }
     }
     if (!validChange) {
-      showSnackBar(i18n(context, 'logicalsolver_contradiction'), context);
+      showSnackBar(i18n(context, 'logicalsupporter_contradiction'), context);
     }
   }
 
   Logical _importJsonFile(Uint8List bytes) {
     var logical = Logical.parseJson(convertBytesToString(bytes));
     if (logical.state != LogicalState.Ok) {
-      showSnackBar(i18n(context, 'logicalsolver_dataerror'), context);
+      showSnackBar(i18n(context, 'logicalsupporter_dataerror'), context);
     }
     return logical;
   }
