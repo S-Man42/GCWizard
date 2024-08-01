@@ -191,6 +191,19 @@ class _LogicalBlock {
 			}
 		}
 	}
+
+	@override
+	String toString() {
+		var output = '';
+		for (var row in block) {
+			output += '[';
+			for (var value in row) {
+				output += value?.value.toString() ?? '' + ',';
+			}
+			output += ']';
+		}
+		return output;
+	}
 }
 
 
@@ -532,6 +545,21 @@ class Logical {
 		logicalItems = List<List<String>>.generate(
 				categoriesCount, (rowIndex) => List<String>.generate(
 				itemsCount, (lineIndex) => rowIndex.toString() + lineIndex.toString()));
+	}
+
+	String blocksToString() {
+		var output = '';
+		for (var blockRow in blocks) {
+			output += '[';
+			for (var block in blockRow) {
+				output += '[';
+				output += block.toString();
+				output += ']';
+			}
+			output += ']';
+		}
+
+		return output.replaceAll('null', '').replaceAll(' ', '');
 	}
 
 	static const String _jsonItems = 'items';
