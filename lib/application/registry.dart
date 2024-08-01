@@ -7335,14 +7335,36 @@ void initializeRegistry(BuildContext context) {
       'symbol_mandalorian',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'Erikstormtrooper',
+          title: 'Mandalorian Font',
+          sourceUrl:
+              'https://web.archive.org/web/20170725020609/http://www.erikstormtrooper.com/mandalorian.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'marain', symbolSearchStrings: const [
       'symbol_marain',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'TTFTCUTS',
+          title: 'Marain',
+          sourceUrl:
+              'https://web.archive.org/web/20210823033202/https://fontstruct.com/fontstructions/show/1446008/marain-5',
+          licenseType: ToolLicenseType.CCBYSA3)
+    ]),
     GCWSymbolTableTool(symbolKey: 'marain_v2', symbolSearchStrings: const [
       'symbol_marain_v2',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'TTFTCUTS',
+          title: 'Marain Dots',
+          sourceUrl:
+              'https://web.archive.org/web/20240801172315/https://fontstruct.com/fontstructions/show/1445997/marain-dots',
+          licenseType: ToolLicenseType.CCBYSA3)
     ]),
     GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: const [
       'symbol_matoran',
@@ -7350,6 +7372,14 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'daniel-u-thibault',
+          title: 'Matoran',
+          sourceUrl:
+            'https://web.archive.org/web/20160320142824/https://fonts2u.com/matoran.font#google_vignette',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'Free for personal use')
     ]),
     GCWSymbolTableTool(
         symbolKey: 'maya_calendar_longcount',
@@ -7434,7 +7464,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'medieval_runes',
         symbolSearchStrings: const ['symbol_runes', 'symbol_futhark'],
-        licenses: []),
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'Trackah',
+              title: 'Medieval Runes',
+              sourceUrl:
+                  'https://fontstruct.com/fontstructions/show/491366/medieval_runes',
+              licenseType: ToolLicenseType.CCBYSA3)
+        ]),
     GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: const [
       'symbol_minimoys',
     ], licenses: []),
