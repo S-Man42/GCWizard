@@ -21,7 +21,7 @@ import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -625,14 +625,14 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayMediaFilesData(BuildContext context) {
-    if ((WherigoCartridgeLUAData.Media.isEmpty) && (WherigoCartridgeGWCData.MediaFilesContents.isEmpty)) {
+    if (WherigoCartridgeGWCData.MediaFilesContents.length == 1) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
       );
     }
 
-    if (WherigoCartridgeGWCData.MediaFilesContents.isEmpty) {
+    if ((WherigoCartridgeLUAData.Media.isEmpty)) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1100,7 +1100,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                         ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
                   ),
-                  copyColumn: 2,
+                  copyColumn: 1,
                   flexValues: const [3, 2, 2]),
               GCWExpandableTextDivider(
                 expanded: false,
@@ -1491,7 +1491,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                id: 'coords_map_view',
+                id: 'coords_openmap',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }
