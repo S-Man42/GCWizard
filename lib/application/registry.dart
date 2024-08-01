@@ -1372,7 +1372,15 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'postcode',
       'symbol_postcode01247',
-      'symbol_postcode8421'
+      'symbol_postcode8421',
+      'binary'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Zielcode',
+          sourceUrl:
+            'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
     ]),
     GCWTool(tool: const PiSelection(), id: 'pi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
