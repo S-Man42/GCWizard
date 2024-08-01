@@ -231,7 +231,13 @@ class Logical {
 					logicalItems[itemBlock][item] = logical.logicalItems[itemBlock][item];
 				}
 			}
-		} else if (categoriesCount == 4 && itemsCount == 5) {
+		} else {
+			_initExampleItems();
+		}
+	}
+
+	void _initExampleItems() {
+		if (categoriesCount == 4 && itemsCount == 5) {
 			logicalItems[0][0] = 'Steffi';
 			logicalItems[0][1] = 'George';
 			logicalItems[0][2] = 'Barack';
@@ -527,7 +533,6 @@ class Logical {
 				categoriesCount, (rowIndex) => List<String>.generate(
 				itemsCount, (lineIndex) => rowIndex.toString() + lineIndex.toString()));
 	}
-
 
 	static const String _jsonItems = 'items';
 	static const String _jsonDataMinus = 'n';
