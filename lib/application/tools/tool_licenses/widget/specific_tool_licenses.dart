@@ -36,7 +36,7 @@ class _SpecificToolLicenses {
     return ToolLicenseCodeLibrary(
       context: _context,
       author: 'Legion of the Bouncy Castle Inc',
-      title: 'Pointy Castle',
+      title: 'Flutter Library: Pointy Castle',
       licenseType: ToolLicenseType.MIT,
       licenseUrl: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE',
       sourceUrl: 'https://github.com/S-Man42/pc-dart/tree/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa'
@@ -102,6 +102,123 @@ class _SpecificToolLicenses {
       isbn: '978-0521356992',
       year: 1989, month: 3, day: 1,
       publisher: 'Cambridge University Press'
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseWrixonGeheimsprachen {
+    return ToolLicenseOfflineBook(
+        context: context,
+        author: 'Fred B. Wrixon',
+        title: 'Geheimsprachen',
+        publisher: 'Könemann Tandem Verlag GmbH',
+        isbn: '978-3-8331-2562-1',
+        year: 2006,
+        );
+  }
+
+  ToolLicenseEntry get _toolLicenseMayaGlyphsWikisource {
+    return ToolLicenseOnlineArticle(
+      context: context,
+      author: 'Sylvanus Griswold Morley',
+      title: 'An Introduction to the Study of the Maya Hieroglyphs, Chapter 3',
+      publisher: 'Wikisource',
+      sourceUrl: 'https://en.wikisource.org/w/index.php?title=An_Introduction_to_the_Study_of_the_Maya_Hieroglyphs/Chapter_3&oldid=12772621',
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumAlphabetaCharacteres {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Johannes Theodor de Bry, Johannes Israel de Bry',
+      title: 'Alphabeta Et Characteres',
+      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala',
+      year: 1596,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookPolygraphieTrithemius {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Johannes Trithemius',
+      title: 'Polygraphie et universelle escriture cabalistique',
+      sourceUrl: 'https://archive.org/details/Historiaedegent00Olau',
+      year: 1557,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookDeOccultaPhilosophia {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Heinrich Cornelius Agrippa von Nettesheim',
+      title: 'De occulta philosophia',
+      sourceUrl: 'https://archive.org/details/17219451458888bsb-10192450',
+      year: 1531,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseCullyLong {
+    return ToolLicenseOfflineBook(context: context,
+        author: 'Cully Long',
+        title: 'How to puzzle caches. Lessons, tips, tricks and hints for solving geocache puzzles',
+      isbn: '978-0-9973488-9-7',
+      publisher: 'single atom books',
+      year: 2019,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseGeocachingToolbox {
+    return ToolLicenseOnlineArticle(context: context,
+      author: 'Japiejoo',
+      title: 'Geocaching Toolbox Codetabellen',
+      licenseType: ToolLicenseType.CCBYNCND30,
+      licenseUrl: 'http://web.archive.org/web/20240728042550/https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en',
+      sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com',
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseMyGeoToolsCodeTabellen {
+    return ToolLicenseOnlineArticle(context: context,
+      author: 'Benny',
+      title: 'myGEOTools Codetabellen',
+      privatePermission: ToolLicensePrivatePermission(
+        context: context,
+        medium: '',
+        permissionYear: 0,
+        permissionMonth: 0,
+        permissionDay: 0,
+      ),
+      sourceUrl: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOakIslandMystery {
+    return ToolLicenseOnlineArticle (
+        context: context,
+        author: 'www.OakIslandMystery.com',
+        title: 'Oak Island cipher',
+        sourceUrl:
+        'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
+        privatePermission: ToolLicensePrivatePermission(
+          context: context,
+          permissionYear: 2023,
+          permissionMonth: 6,
+          permissionDay: 1,
+          medium: 'e-mail',
+        )
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseDni {
+    return ToolLicenseFont(context: context,
+        author: 'Colin Arenz, Sebastian Ochs',
+        year: 2000,
+        title: 'D\'ni Script',
+        sourceUrl: 'http://web.archive.org/web/20240729092553/http://linguists.riedl.org/old/sebastian/index.htm',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseUrl: 'http://web.archive.org/web/20230604223058/http://linguists.riedl.org/old/sebastian/readme.htm'
     );
   }
 }
