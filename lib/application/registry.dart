@@ -7315,6 +7315,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_lorm',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: 'The Lorm Alphabet',
+          sourceUrl:
+              'https://web.archive.org/web/20211202070642/https://fakoo.de/en/lorm.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: const [
       'symbol_magicode',
