@@ -328,7 +328,7 @@ String encodePostcode(String postalCode, int streetCode, int houseNumber, int fe
 }
 
 PostcodeResult _decode(String code, PostcodeFormat format) {
-  var invalidResult = PostcodeResult(code, '','',false, '','','', PostcodeFormat.Linear30, ErrorCode.Invalid);
+  var invalidResult = PostcodeResult(code, '','',false, '','','', format, ErrorCode.Invalid);
 
   switch (format) {
     case PostcodeFormat.Linear30:

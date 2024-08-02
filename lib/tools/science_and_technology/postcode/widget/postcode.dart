@@ -1,11 +1,13 @@
+import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -19,6 +21,7 @@ class Postcode extends StatefulWidget {
 }
 
 class PostcodeState extends State<Postcode> {
+  late CodeController _decodeGraphicController;
   late TextEditingController _decodeController;
   late TextEditingController _encodePostalCodeController;
 
@@ -34,6 +37,7 @@ class PostcodeState extends State<Postcode> {
   @override
   void initState() {
     super.initState();
+    _decodeGraphicController = CodeController();
     _decodeController = TextEditingController(text: _currentDecodeInput);
     _encodePostalCodeController = TextEditingController(text: _currentEncodePostalCode);
   }
@@ -243,15 +247,24 @@ class PostcodeState extends State<Postcode> {
               i18n(context, 'postcode_streetcode'),
               i18n(context, 'postcode_housenumber'),
               i18n(context, 'postcode_feeprotectioncode'));
-
+          _decodeGraphicController.text = extendedOutput;
 
           return Column(children: [
             GCWDefaultOutput(child:
               GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]),
             ),
+            GCWTextDivider(text: i18n(context, 'common_details')),
             extendedOutput.isEmpty
               ? Container()
-              : GCWOutput(title: i18n(context, 'common_details'), child: extendedOutput)
+              : CodeField(
+                  controller: _decodeGraphicController,
+                  textStyle: gcwMonotypeTextStyle(),
+                  lineNumbers: false,
+                  lineNumberStyle: const LineNumberStyle(
+                    width: 0.0,
+                    margin: 0.0,
+                    textStyle: TextStyle(fontSize: 0.0))
+                ),
           ]);
 
         case ErrorCode.Length:
