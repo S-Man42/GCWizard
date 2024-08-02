@@ -87,7 +87,7 @@ double _getArcExtent(_LLPoint center, double radius, double startCrs, double end
 
 bool _ptIsOnArc(_LLPoint center, double radius, double startCrs, double endCrs, _ArcDirection orientation, _LLPoint testPt, double tol, Ellipsoid ellipsoid) {
 
-  double distToPoint, crsToPoint;
+  double distToPoint, crsToPoint, crsFromPoint;
   _LLPoint startPoint, endPoint;
   double arcExtent, subExtent;
 
@@ -110,6 +110,7 @@ bool _ptIsOnArc(_LLPoint center, double radius, double startCrs, double endCrs, 
   distBear = distanceBearing(center.toLatLng(), testPt.toLatLng(), ellipsoid);
   distToPoint = distBear.distance;
   crsToPoint = distBear.bearingAToBInRadian;
+  crsFromPoint = distBear.bearingBToAInRadian;
 
   //Check if the test point is outside the neighborhood around the arc for a distance of tol
   //The arc extent may be assumed to be a full circle at this point

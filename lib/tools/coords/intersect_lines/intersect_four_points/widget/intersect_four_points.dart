@@ -156,4 +156,8 @@ class _IntersectFourPointsState extends State<IntersectFourPoints> {
       setState(() {});
     });
   }
+
+  void _showOutput(LatLng? output) {
+
+  }
 }

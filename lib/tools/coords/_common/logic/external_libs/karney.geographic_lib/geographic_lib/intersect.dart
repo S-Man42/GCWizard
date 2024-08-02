@@ -72,7 +72,10 @@ class _Intersect {
       _t3,                      // 1/2 furthest min dist to next intersection
       _t4,                      // capture radius for spherical sol in Solve0
       _t5,                      // longest shortest geodesic
-      _d1;                      // tile spacing for Closest
+      _d1,                      // tile spacing for Closest
+      _d2,                      // tile spacing for Next
+      _d3;                      // tile spacing for All
+  late int _cnt0, _cnt1, _cnt2, _cnt3, _cnt4;
   late final SetComp _comp;
 
   _Intersect(this._a, this._f) {
@@ -83,6 +86,11 @@ class _Intersect {
     _tol = _d * pow(practical_epsilon, 3/4.0);
     _delta = _d * pow(practical_epsilon, 1/5.0);
     _comp = SetComp(_delta);
+    _cnt0 = 0;
+    _cnt1 = 0;
+    _cnt2 = 0;
+    _cnt3 = 0;
+    _cnt4 = 0;
 
     _t1 = _a * (1 - _f) * _GeoMath.pi();
     _t2 = 2 * distpolar(90).ret;
@@ -185,7 +193,7 @@ class _Intersect {
     }
     double azi0 = 46;
     _ConjDistReturn cdr = conjdist(azi0);
-    double ds0 = cdr.ds, sa = cdr.sp, sb = cdr.sm;
+    double s0 = cdr.ret, ds0 = cdr.ds, sa = cdr.sp, sb = cdr.sm;
     double azi1 = 44;
     cdr = conjdist(azi1);
     double s1 = cdr.ret, ds1 = cdr.ds; sa = cdr.sp; sb = cdr.sm;
