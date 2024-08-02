@@ -5,6 +5,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -70,7 +71,7 @@ class PostcodeState extends State<Postcode> {
       children: <Widget>[
         GCWTextField(
           controller: _decodeController,
-          hintText: '0.-_ 1Il|',
+          hintText: i18n(context, 'postcode_valid_character') + ' (0 => 0.-_  1 => 1Il|)',
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[/./-_ 01Il/|]')),
           ],
@@ -236,9 +237,23 @@ class PostcodeState extends State<Postcode> {
           if (result.errorCode == ErrorCode.Invalid) {
             output.add([i18n(context, 'postcode_invalid_data'), '']);
           }
-          return GCWDefaultOutput(child:
-            GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]),
-          );
+          var extendedOutput = result.extendedOutput(
+              i18n(context, 'postcode_postalcode'),
+              'CS',
+              i18n(context, 'postcode_streetcode'),
+              i18n(context, 'postcode_housenumber'),
+              i18n(context, 'postcode_feeprotectioncode'));
+
+
+          return Column(children: [
+            GCWDefaultOutput(child:
+              GCWColumnedMultilineOutput(data: output, flexValues: const [3, 2]),
+            ),
+            extendedOutput.isEmpty
+              ? Container()
+              : GCWOutput(title: i18n(context, 'common_details'), child: extendedOutput)
+          ]);
+
         case ErrorCode.Length:
           if (_currentDecodeInput.isNotEmpty) {
             return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_length') + ' (30, 36, 69, 80)');

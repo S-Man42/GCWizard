@@ -1,12 +1,18 @@
+import 'dart:math';
+
+import 'package:collection/collection.dart' as colllection;
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:utility/utility.dart';
 
 enum PostcodeFormat { Linear30, Linear36, Linear69, Linear80 }
 enum ErrorCode { Ok, Character, Length, Invalid }
 
 class PostcodeResult {
+  final String code;
   final String postalCode;
   final String postalCodeCheckDigit;
   final bool postalCodeCheckDigitOk;
@@ -16,14 +22,213 @@ class PostcodeResult {
   final PostcodeFormat format;
   final ErrorCode errorCode;
 
-  const PostcodeResult(this.postalCode, this.postalCodeCheckDigit, this.postalCodeCheckDigitOk , this.streetCode,
+  const PostcodeResult(this.code, this.postalCode, this.postalCodeCheckDigit, this.postalCodeCheckDigitOk , this.streetCode,
       this.houseNumber, this.feeProtectionCode, this.format, this.errorCode);
+
   @override
   String toString() {
     return 'postalCode: ' + postalCode + ' postalCodeCheckDigit: ' + postalCodeCheckDigit +
         ' postalCodeCheckDigitOk: ' + postalCodeCheckDigitOk.toString() + ' streetCode: ' + streetCode +
         ' houseNumber: ' + houseNumber + ' feeProtectionCode: ' + feeProtectionCode +
         ' format: ' + format.toString() + ' errorCode: ' + errorCode.toString();
+  }
+
+  static const _blockSplitter = ':';
+  static const _numberSplitter = '.';
+
+  String extendedOutput(String postalCodeLabel, String postalCodeCheckDigitLabel, String streetCodeLabel, String houseNumberLabel, String feeProtectionCodeLabel) {
+    var output = <String>[];
+    if (!(errorCode == ErrorCode.Ok || errorCode == ErrorCode.Invalid)) return  '';
+
+    var _code = code.replaceAll('0', ' ').replaceAll('1', '|');
+    const _8421 = '8421';
+    const _01247 = '01247';
+
+    switch (format) {
+      case PostcodeFormat.Linear30:
+        var blockLengths = [23, 5];
+        var numberLengths = [[5, 5, 5], <int>[]];
+
+        output.add(
+            _insertSeperators(
+                _headerLabel(postalCodeLabel, blockLengths[0]) +
+                _headerLabel(postalCodeCheckDigitLabel, blockLengths[1]),
+                blockLengths, []));
+        output.add(
+            _insertSeperators(
+                _01247+ _01247+ _01247+ _01247 +
+                _01247,
+                blockLengths, numberLengths));
+        output.add(_code);
+        output.add(_buildNumbersLine(_code, output[1]));
+        output.add(_buildSumLine(output[3], output[1]));
+        output.add(_buildMovedLine(output[4]));
+        output.add(_buildMovedLine(output[4], true));
+        break;
+
+      case PostcodeFormat.Linear36:
+        var blockLengths = [29, 5];
+        var numberLengths = [[5, 5, 5, 5], <int>[]];
+
+        output.add(
+            _insertSeperators(
+                _headerLabel(postalCodeLabel, blockLengths[0]) +
+                _headerLabel(postalCodeCheckDigitLabel, blockLengths[1]),
+                blockLengths, []));
+        output.add(
+            _insertSeperators(
+                _01247+ _01247+ _01247+ _01247 + _01247 +
+                _01247,
+                blockLengths, numberLengths));
+        output.add(_code);
+        output.add(_buildNumbersLine(_code, output[1]));
+        output.add(_buildSumLine(output[3], output[1]));
+        output.add(_buildMovedLine(output[4]));
+        output.add(_buildMovedLine(output[4], true));
+        break;
+
+      case PostcodeFormat.Linear69:
+        var splitPositions = [0, 14, 14, 29, 5];
+        var numberLengths = [<int>[], [4, 4], [4, 4], [5, 5, 5, 5], <int>[]];
+
+        output.add(
+          _insertSeperators(
+              _headerLabel(houseNumberLabel, splitPositions[1]) +
+              _headerLabel(streetCodeLabel, splitPositions[2]) +
+              _headerLabel(postalCodeLabel, splitPositions[3]) +
+              _headerLabel(postalCodeCheckDigitLabel, splitPositions[4]),
+              splitPositions, []));
+        output.add(
+          _insertSeperators(
+              _8421 + _8421 + _8421 +
+              _8421 + _8421 + _8421 +
+              _01247+ _01247+ _01247+ _01247 + _01247 +
+              _01247,
+              splitPositions, numberLengths));
+        output.add(_code);
+        output.add(_buildNumbersLine(_code, output[1]));
+        output.add(_buildSumLine(output[3], output[1]));
+        output.add(_buildMovedLine(output[4]));
+        output.add(_buildMovedLine(output[4], true));
+        break;
+
+      case PostcodeFormat.Linear80:
+        var blockLengths = [0, 9, 14, 14, 29, 5];
+        var numberLengths = [<int>[], [4], [4, 4], [4, 4], [5, 5, 5, 5], <int>[]];
+
+        output.add(
+            _insertSeperators(
+                _headerLabel(feeProtectionCodeLabel, blockLengths[1]) +
+                _headerLabel(houseNumberLabel, blockLengths[2]) +
+                _headerLabel(streetCodeLabel, blockLengths[3]) +
+                _headerLabel(postalCodeLabel, blockLengths[4]) +
+                _headerLabel(postalCodeCheckDigitLabel, blockLengths[5]),
+                blockLengths, []));
+          output.add(
+            _insertSeperators(
+                _8421 + _8421 +
+                _8421 + _8421 + _8421 +
+                _8421 + _8421 + _8421 +
+                _01247+ _01247+ _01247+ _01247 + _01247 +
+                _01247,
+                blockLengths, numberLengths));
+          output.add(_code);
+          output.add(_buildNumbersLine(_code, output[1]));
+          output.add(_buildSumLine(output[3], output[1]));
+          output.add(_buildMovedLine(output[4]));
+          output.add(_buildMovedLine(output[4], true));
+          break;
+    }
+    return output.join('\r\n');
+  }
+
+  String _insertSeperators(String text, List<int> blockLengths, List<List<int>> numberLengths) {
+    var startPosition = 0;
+    var startPosition_ = startPosition;
+    for (var i = 0; i < blockLengths.length; i++) {
+      startPosition_ = startPosition;
+
+      if (numberLengths.isNotEmpty && numberLengths[i].isNotEmpty) {
+        for (var s = 0; s < numberLengths[i].length; s++) {
+          startPosition_ += numberLengths[i][s];
+          if (startPosition_ <= text.length) {
+            text = insertCharacter(text, startPosition_, _numberSplitter);
+          } else {
+            text += _numberSplitter;
+          }
+          startPosition_++;
+        }
+      }
+
+      startPosition += blockLengths[i];
+      if (startPosition <= text.length) {
+        text = insertCharacter(text, startPosition, _blockSplitter);
+      } else {
+        text += _blockSplitter;
+      }
+      startPosition++;
+    }
+    return text;
+  }
+
+  String _headerLabel(String label, int length) {
+    label = label.substring(0, min(label.length, length));
+    label = label.padLeft(((length - label.length)/ 2 + label.length).floor(),'-');
+    return label.padRight(length,'-');
+  }
+
+  String _buildNumbersLine(String code, String values) {
+    var output = ''.padLeft(max(code.length, values.length), ' ');
+
+    output.split('').forEachIndexed((i, e) {
+      var binary = i < code.length ? code.characters.elementAt(i) : '';
+      if (i < values.characters.length) {
+        var value = values.characters.elementAt(i);
+        if ((binary == ' ' && value.isNumber) || (value == _blockSplitter) || (value == _numberSplitter)) {
+          output = output.replaceRange(i, i, value);
+        }
+      }
+    });
+    return output;
+  }
+
+  String _buildSumLine(String numbers, String values) {
+    var output = ''.padLeft(numbers.length, ' ');
+    var sum = 0;
+
+    numbers.split('').forEachIndexed((i, e) {
+      if (e.isNumber) {
+        sum += int.parse(e);
+      } else if (e != ' ') {
+        output = output.replaceRange(i, i, e);
+        if (i > 3) {
+          if (sum > 9) sum = 0;
+          var text = '=' + sum.toString();
+          output = output.replaceRange(i - text.length, i, text);
+          sum = 0;
+        }
+      }
+    });
+    return output;
+  }
+
+  String _buildMovedLine(String sumLine, [bool reversed = false]) {
+    var output = ''.padLeft(sumLine.length, ' ');
+    var moved = '';
+
+    sumLine.split('').forEachIndexed((i, e) {
+      if (e.isNumber) {
+        moved += e;
+      } else if (e == _blockSplitter) {
+        output = output.replaceRange(i, i, e);
+        if (i > 3) {
+          var text = reversed ? reverse(moved): moved;
+          output = output.replaceRange(i - text.length, i, text);
+          moved = '';
+        }
+      }
+    });
+    return output;
   }
 }
 
@@ -56,11 +261,11 @@ const Map<String, String> _8421 = {
 PostcodeResult decodePostcode(String code) {
   var _code = _cleanCode(code);
   if (_code == null) {
-    return const PostcodeResult('','',false,'','','', PostcodeFormat.Linear30, ErrorCode.Character);
+    return PostcodeResult(code, '','',false,'','','', PostcodeFormat.Linear30, ErrorCode.Character);
   }
   var format = _getFormat(_code);
   if (format == null) {
-    return const PostcodeResult('','',false,'','','', PostcodeFormat.Linear30, ErrorCode.Length);
+    return PostcodeResult(code, '','',false,'','','', PostcodeFormat.Linear30, ErrorCode.Length);
   }
   return _decode(_code, format);
 }
@@ -123,7 +328,7 @@ String encodePostcode(String postalCode, int streetCode, int houseNumber, int fe
 }
 
 PostcodeResult _decode(String code, PostcodeFormat format) {
-  const invalidResult = PostcodeResult('','',false, '','','', PostcodeFormat.Linear30, ErrorCode.Invalid);
+  var invalidResult = PostcodeResult(code, '','',false, '','','', PostcodeFormat.Linear30, ErrorCode.Invalid);
 
   switch (format) {
     case PostcodeFormat.Linear30:
@@ -143,6 +348,7 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
       var postalCodeCheckSum = _decode01247(numbers[4]);
 
       return PostcodeResult(
+          code,
           postalCode,
           postalCodeCheckSum.isEmpty ? '?' : postalCodeCheckSum,
           postalCodeCheckSum == _calcChecksum(postalCode),
@@ -168,6 +374,7 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
       var postalCodeCheckSum = _decode01247(numbers[5]);
 
       return PostcodeResult(
+          code,
           postalCode,
           postalCodeCheckSum.isEmpty ? '?' : postalCodeCheckSum,
           postalCodeCheckSum == _calcChecksum(postalCode),
@@ -204,6 +411,7 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
       var postalCodeCheckSum = _decode01247(numbers[11]);
 
       return PostcodeResult(
+          code,
           postalCode,
           postalCodeCheckSum.isEmpty ? '?' : postalCodeCheckSum,
           postalCodeCheckSum == _calcChecksum(postalCode),
@@ -244,6 +452,7 @@ PostcodeResult _decode(String code, PostcodeFormat format) {
       var postalCodeCheckSum = _decode01247(numbers[13]);
 
       return PostcodeResult(
+          code,
           postalCode,
           postalCodeCheckSum.isEmpty ? '?' : postalCodeCheckSum,
           postalCodeCheckSum == _calcChecksum(postalCode),
