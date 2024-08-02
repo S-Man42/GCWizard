@@ -6062,7 +6062,14 @@ void initializeRegistry(BuildContext context) {
         symbolSearchStrings: const [
           'symbol_chinese_numerals',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Chinese numerals',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Chinese_numerals&oldid=1233670341')
+        ]),
     GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: const [
       'christmas',
     ], licenses: [
@@ -7492,7 +7499,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'moon_phases', symbolSearchStrings: const [
       'symbol_moon_phases',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Lunar phase',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Lunar_phase&oldid=1231773726')
+    ]),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
     ], licenses: [
@@ -7592,6 +7606,15 @@ void initializeRegistry(BuildContext context) {
       'symbol_nazcaan',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: 'Ni_no_Kuni',
+          title: 'NazcaanRegular Regular',
+          sourceUrl:
+              'https://web.archive.org/web/20240802171148/https://drive.google.com/file/d/0B50-IT1pATGoZDBkbU0yQXNEWlk/view?resourcekey=0-wgv-U23dbvlsc1Wbq30Oug',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUrl:
+              'https://web.archive.org/web/20221217105805/https://www.reddit.com/r/Ni_no_Kuni/comments/zo3xji/nazcaan_font/')
     ]),
     GCWSymbolTableTool(
         symbolKey: 'new_zealand_sign_language',
@@ -7603,7 +7626,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'niessen', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_niessen',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Johannes Niessen',
+          title: 'The Niessen Alphabet',
+          sourceUrl:
+              'https://web.archive.org/web/20211202062443/https://fakoo.de/en/niessen.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'ninjargon', symbolSearchStrings: const [
       'symbol_ninjargon',
     ], licenses: [
@@ -7664,6 +7695,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_nyctography',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+          context: context,
+          author: '	Pixel Sagas',
+          title: 'NYCTOGRAPHIC FONT',
+          sourceUrl:
+              'https://web.archive.org/web/20170627190841/https://www.fonts4free.net/nyctographic-font.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'oak_island_money_pit',
