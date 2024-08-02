@@ -90,6 +90,8 @@ String encodeBacon(String input, {bool inverse = false, bool binary = false, Bac
 
 String decodeBacon(String input, {bool inverse = false, bool binary = false, BaconType type = BaconType.ORIGINAL}) {
   if (input.isEmpty) return '';
+// I has same code as J, so I replaces J in mapping; J will not occur in this map
+// U has same code as V, so U replaces V in mapping; V will not occur in this map
 
   if (binary) {
     input = input.replaceAll(RegExp(r'[^01]'), '');
@@ -115,4 +117,46 @@ String decodeBacon(String input, {bool inverse = false, bool binary = false, Bac
 
 String _inverseString(String text) {
   return substitution(text, {'A': 'B', 'B': 'A'});
+}
+
+String analyzeBaconCodeAlphabet(String code){
+  List<String> listAM = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
+  List<String> listNZ = ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  List<String> result = [];
+  String codeWord = '';
+
+  for (String word in code.toUpperCase().split(' ')) {
+    if (word.isNotEmpty) {
+      if (listAM.contains(word[0])) {
+        codeWord = 'A';
+      } else if (listNZ.contains(word[0])) {
+        codeWord = 'B';
+      } else {
+        codeWord = '';
+      }
+      result.add(codeWord);
+    }
+  }
+  return result.join('');
+}
+
+String analyzeBaconCodeUpperLowerCase(String code){
+  List<String> result = [];
+  String codeWord = '';
+
+  for (String word in code.split(' ')) {
+    if (word.isNotEmpty) {
+      if (65 <= word.codeUnitAt(0) && word.codeUnitAt(0) <= 90) {
+        codeWord = 'A';
+      } else {
+        if (97 <= word.codeUnitAt(0) && word.codeUnitAt(0) <= 122) {
+          codeWord = 'B';
+        } else {
+          codeWord = '';
+        }
+      }
+      result.add(codeWord);
+    }
+  }
+  return result.join('');
 }

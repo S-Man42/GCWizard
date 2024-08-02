@@ -363,9 +363,10 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     _currentOutput = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
         .map((VariableCoordinateSingleResult varCoordResult) {
       var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
+      var copyformattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid, false);
       return Column(
         children: [
-          GCWOutputText(text: formattedCoordinate),
+          GCWOutputText(text: formattedCoordinate, copyText: copyformattedCoordinate),
           GCWText(
               text: _formatVariables(varCoordResult.variables),
               style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))

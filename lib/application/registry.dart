@@ -5748,11 +5748,11 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'Geocaching Toolbox',
-          title: 'Antiker code',
-          sourceUrl:
-              'https://web.archive.org/web/20210513152106/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=antikerCode',
-          licenseType: ToolLicenseType.CCNC30)
+          author: '@SFH (stargate.fandom.com)',
+          title: 'Ancient alphabet',
+          licenseUrl: 'http://web.archive.org/web/20230224043116/https://www.fandom.com/licensing',
+          sourceUrl: 'http://web.archive.org/web/20220609042351/https://stargate.fandom.com/wiki/Ancient_language?file=Ancient_alpahabet.png',
+          licenseType: ToolLicenseType.CCBYSA3)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'arabic_indian_numerals',
