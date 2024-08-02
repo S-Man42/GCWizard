@@ -7528,34 +7528,30 @@ void initializeRegistry(BuildContext context) {
               sourceUrl:
                   'https://web.archive.org/web/20240724104528/https://patentimages.storage.googleapis.com/bb/4a/53/3d3b9d7e4c8619/US1647.pdf',)
         ]),
-    GCWSymbolTableTool(
-        symbolKey: 'morse_1844_vail',
-        symbolSearchStrings: const [
-          'morse',
-        ],
-        licenses: [
-          ToolLicenseOnlineArticle(
-              context: context,
-              author: 'en.wikipedia.org and contributors',
-              title: 'Morse (1844)',
-              sourceUrl:
-                  'https://en.wikipedia.org/w/index.php?title=Morse_code&oldid=1235898565',
-              licenseType: ToolLicenseType.CCBYSA4)
-        ]),
-    GCWSymbolTableTool(
-        symbolKey: 'morse_steinheil',
-        symbolSearchStrings: const [
-          'morse',
-        ],
-        licenses: [
-          ToolLicenseOnlineArticle(
-              context: context,
-              author: 'de.wikipedia.org and contributors',
-              title: 'Steinheilschrift',
-              sourceUrl:
-                  'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
-              licenseType: ToolLicenseType.CCBYSA4)
-        ]),
+    GCWSymbolTableTool(symbolKey: 'morse_1844_vail', symbolSearchStrings: const [
+      'morse',
+    ],
+    licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Morse (1844)',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Morse_code&oldid=1235898565',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_steinheil', symbolSearchStrings: const [
+      'morse',
+    ],
+    licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Steinheilschrift',
+          sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
     ], licenses: [
@@ -7583,7 +7579,15 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: const [
       'music_notes',
       'symbol_musica',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'WC Fonts',
+          title: 'WC Musica Bta Font',
+          sourceUrl:
+              'https://fontmeme.com/fonts/wc-musica-bta-font/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: const [
       'symbol_nazcaan',
     ], licenses: [
