@@ -121,7 +121,7 @@ class _ShadowLengthState extends State<ShadowLength> {
 
     Widget outputLocation = GCWCoordsOutput(
       title: i18n(context, 'shadowlength_location'),
-      outputs: [buildCoordinate(_currentOutputFormat.format, shadowLen.shadowEndPosition, defaultEllipsoid).toString()],
+      outputs: [buildCoordinate(_currentOutputFormat.format, shadowLen.shadowEndPosition)],
       points: _currentMapPoints,
       polylines: [
         GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]])
