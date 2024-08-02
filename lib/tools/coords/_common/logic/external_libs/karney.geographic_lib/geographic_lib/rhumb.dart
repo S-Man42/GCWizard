@@ -135,7 +135,6 @@ class _Rhumb {
    * No output.
    * @hideinitializer
    **********************************************************************/
-  static const int _MASK_NONE = 0;
   /**
    * Calculate latitude \e lat2.
    * @hideinitializer
@@ -170,7 +169,6 @@ class _Rhumb {
    * Calculate everything.  (LONG_UNROLL is not included in this mask.)
    * @hideinitializer
    **********************************************************************/
-  static const int _MASK_ALL = 0x7F80;
 
   /**
    * Solve the direct rhumb problem returning also the area.
@@ -458,8 +456,8 @@ class RhumbInverseReturn {
 
 class _RhumbLine {
   late final _Rhumb _rh;
-  late final double _lat1, _lon1, _azi12;
-  late final double _salp, _calp, _mu1, _psi1, _r1;
+  late final double _lon1, _azi12;
+  late final double _salp, _calp, _mu1;
 
   late _AuxAngle _phi1, _chi1;
 
@@ -478,7 +476,6 @@ class _RhumbLine {
     _phi1 = _AuxAngle.degrees(lat1);
     _mu1 = _rh._aux.Convert(_AuxLatitude._PHI, _AuxLatitude._MU, _phi1, _rh._exact).degrees0();
     _chi1 = _rh._aux.Convert(_AuxLatitude._PHI, _AuxLatitude._CHI, _phi1, _rh._exact);
-    _psi1 = _chi1.lam();
   }
 
   /**

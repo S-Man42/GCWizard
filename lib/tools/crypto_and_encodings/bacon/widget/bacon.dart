@@ -126,7 +126,7 @@ class _BaconState extends State<Bacon> {
                 Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                       child: Column(children: [
                         GCWTextDivider(
                           text: i18n(context, 'bacon_analyze_casesensitive'),
@@ -141,7 +141,7 @@ class _BaconState extends State<Bacon> {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                    padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                     child: Column(
                       children: [
                         GCWTextDivider(
