@@ -7767,7 +7767,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'phoenician',
         symbolSearchStrings: const ['symbol_phoenician', 'zigzag'],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Phoenician (Unicode block)',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Phoenician_(Unicode_block)&oldid=1236804525')
+        ]),
     GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: const [
       'symbol_pipeline',
     ], licenses: [
@@ -7779,7 +7786,14 @@ void initializeRegistry(BuildContext context) {
           'color',
           'symbol_pipeline_din2403',
         ],
-        licenses: []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'wikipedia.org and contributors',
+              title: 'DIN 2403',
+              sourceUrl:
+                  'https://de.wikipedia.org/w/index.php?title=DIN_2403&oldid=220693795')
+        ]),
     GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: const [
       'symbol_pixel',
     ], licenses: [
