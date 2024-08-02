@@ -473,7 +473,7 @@ bool _checkDataValid(List<String> numbers) {
 }
 
 String _calcChecksum(String postalCode) {
-  return (10 - (crossSum([int.parse(postalCode)]).toInt() % 10)).toString();
+  return ((10 - (crossSum([int.parse(postalCode)]).toInt() % 10)) % 10).toString();
 }
 
 String _decode01247(String code) {
