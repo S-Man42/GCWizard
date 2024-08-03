@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -13,18 +12,18 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
-import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/logic/chappe.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/foy_breguet/logic/foy_breguet.dart';
 
-part 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe_segment_display.dart';
+part 'package:gc_wizard/tools/science_and_technology/telegraphs/foy_breguet/widget/foy_breguet_segment_display.dart';
 
-class ChappeTelegraph extends StatefulWidget {
-  const ChappeTelegraph({Key? key}) : super(key: key);
+class FoyBreguetTelegraph extends StatefulWidget {
+  const FoyBreguetTelegraph({Key? key}) : super(key: key);
 
   @override
   _ChappeTelegraphState createState() => _ChappeTelegraphState();
 }
 
-class _ChappeTelegraphState extends State<ChappeTelegraph> {
+class _ChappeTelegraphState extends State<FoyBreguetTelegraph> {
   String _currentEncodeInput = '';
   late TextEditingController _encodeController;
 
@@ -34,8 +33,6 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
   Segments _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
-
-  var _currentLanguage = ChappeCodebook.ALPHABET;
 
   @override
   void initState() {
@@ -55,18 +52,6 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown<ChappeCodebook>(
-        value: _currentLanguage,
-        onChanged: (value) {
-          setState(() {
-            _currentLanguage = value;
-          });
-        },
-        items: CHAPPE_CODEBOOK.entries.map((mode) {
-          return GCWDropDownMenuItem(
-              value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
-        }).toList(),
-      ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -142,7 +127,7 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: _ChappeTelegraphSegmentDisplay(
+                child: _FoyBreguetTelegraphSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -183,7 +168,7 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildDigitalOutput(Segments segments) {
     return SegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          return _ChappeTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return _FoyBreguetTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);
@@ -192,7 +177,7 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      var segments = encodeChappe(_currentEncodeInput, _currentLanguage);
+      var segments = encodeFoyBreguet(_currentEncodeInput,);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -203,11 +188,11 @@ class _ChappeTelegraphState extends State<ChappeTelegraph> {
       SegmentsText segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // decode text mode
-        segments = decodeTextChappeTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
+        segments = decodeTextFoyBreguetTelegraph(_currentDecodeInput.toUpperCase());
       } else {
         // decode visual mode
         var output = _currentDisplays.buildOutput();
-        segments = decodeVisualChappe(output, _currentLanguage);
+        segments = decodeVisualFoyBreguet(output);
       }
       return Column(
         children: <Widget>[
