@@ -6057,6 +6057,14 @@ void initializeRegistry(BuildContext context) {
       'telegraph',
       'symbol_chappe',
       'symbol_chappe_v1',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Museum für Post und Telekommunikation',
+          title: 'Kupferstich: Optischer Telegraf auf dem Louvre in Paris mit Zeichenalphabet',
+          sourceUrl:
+          '',
+          customComment: 'Inventarnummer 4.2012.446')
     ]),
     GCWSymbolTableTool(symbolKey: 'foybreguet', symbolSearchStrings: const [
       'telegraph',
