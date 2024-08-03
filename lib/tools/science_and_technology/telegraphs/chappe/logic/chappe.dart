@@ -3,7 +3,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/lo
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum ChappeCodebook { ALPHABET, CODEPOINTS, CODEPOINTS_ASCII, DIGITS, KULIBIN, ALPHABET_2, FOYBREGUET }
+enum ChappeCodebook { ALPHABET, CODEPOINTS, CODEPOINTS_ASCII, DIGITS, KULIBIN, FOYBREGUET }
 
 const Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   ChappeCodebook.DIGITS:
@@ -14,8 +14,6 @@ const Map<ChappeCodebook, CodebookConfig> CHAPPE_CODEBOOK = {
   CodebookConfig(title: 'telegraph_chappe_codepoints_ascii_title', subtitle: 'telegraph_chappe_codepoints_ascii_description'),
   ChappeCodebook.ALPHABET:
       CodebookConfig(title: 'telegraph_chappe_alphabet_title', subtitle: 'telegraph_chappe_alphabet_description'),
-  ChappeCodebook.ALPHABET_2:
-  CodebookConfig(title: 'telegraph_chappe_alphabet_2_title', subtitle: 'telegraph_chappe_alphabet_2_description'),
   ChappeCodebook.KULIBIN:
       CodebookConfig(title: 'telegraph_chappe_kulibin_title', subtitle: 'telegraph_chappe_kulibin_description'),
   ChappeCodebook.FOYBREGUET:
@@ -388,9 +386,6 @@ Segments encodeChappe(String input, ChappeCodebook language) {
     case ChappeCodebook.ALPHABET:
       CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET;
       break;
-    case ChappeCodebook.ALPHABET_2:
-      CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET_2;
-      break;
     case ChappeCodebook.CODEPOINTS:
       CODEBOOK = _CODEBOOK_CHAPPE_CODEPOINTS;
       break;
@@ -409,10 +404,7 @@ Segments encodeChappe(String input, ChappeCodebook language) {
   }
   String char = '';
   for (int i = 0; i < inputs.length; i++) {
-    char = inputs[i];
-    if (language != ChappeCodebook.ALPHABET_2) {
-      char = char.toUpperCase();
-    }
+    char = inputs[i].toUpperCase();
     if (CODEBOOK[char] != null) {
       result.add(CODEBOOK[char]!);
     }
@@ -431,9 +423,6 @@ SegmentsText decodeVisualChappe(List<String>? inputs, ChappeCodebook language) {
   switch (language) {
     case ChappeCodebook.ALPHABET:
       CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_ALPHABET);
-      break;
-    case ChappeCodebook.ALPHABET_2:
-      CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_ALPHABET_2);
       break;
     case ChappeCodebook.CODEPOINTS:
       CODEBOOK = switchMapKeyValue(_CODEBOOK_CHAPPE_CODEPOINTS);
@@ -498,9 +487,6 @@ SegmentsText decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
   switch (language) {
     case ChappeCodebook.ALPHABET:
       CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET;
-      break;
-    case ChappeCodebook.ALPHABET_2:
-      CODEBOOK = _CODEBOOK_CHAPPE_ALPHABET_2;
       break;
     case ChappeCodebook.CODEPOINTS:
       CODEBOOK = _CODEBOOK_CHAPPE_CODEPOINTS;
