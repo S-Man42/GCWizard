@@ -3550,6 +3550,7 @@
   "numbersequence_inputn": "Position",
   "numbersequence_inputstart": "Begin",
   "numbersequence_inputstop": "End",
+  "numbersequence_maxindex": "max. Index",
   "numbersequence_mode": "Number sequence",
   "numbersequence_output_col_1": "Number",
   "numbersequence_output_col_2": "Index",
