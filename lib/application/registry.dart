@@ -3175,7 +3175,6 @@ void initializeRegistry(BuildContext context) {
         'dates_calendar',
       ],
       licenses: [
-        // TODO: @Thomas: PortedCode richtig oder besser OnlineArticle?
         ToolLicensePortedCode(
           context: context,
           author: 'Johannes Thomann',
@@ -8626,12 +8625,10 @@ void initializeRegistry(BuildContext context) {
           'telegraph_prussia',
         ],
         licenses: [
-          // TODO: @Thomas: OfflineArticle richtiger als OfflineBook? Haben wir hier noch einen Originalen Autoren?
-          // PS: Vielleicht kannst du mir die originalen Dateien nochmal ins Postfach schicken, weil die Links von Sandy Lang sind nicht mehr gültig
-          ToolLicenseOfflineArticle(
+          ToolLicenseOfflineBook(
               context: context,
-              author: i18n(context, 'common_unknown'),
-              title: 'Classe 5.2 Wörterbuch\nInstruction I\nInstruction II',
+              author: 'Königl. Pruess. Telegraphendirection',
+              title: 'Classe 5.2 Wörterbuch für die Telegraphisten-Correspondenz\nInstruction. Erster Abschnitt. Die Behandlung des Apparates.\nInstruction. Zweiter Abschnitt. Das Telegraphieren.',
               privatePermission: ToolLicensePrivatePermission(
                 context: context,
                 medium: 'e-Mail',
