@@ -1,12 +1,5 @@
 part of 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence.dart';
 
-
-/*
-List<BigInt> numberSequencesGetNumbersInRange(sequence, start, stop){
-  return [];
-}
-*/
-
 class GetNumberRangeJobData{
   final NumberSequencesMode sequence;
   final int start;

@@ -66,10 +66,6 @@ class _NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
     );
   }
 
-  /*Widget _buildOutput() {
-    return GCWDefaultOutput(child: numberSequencesGetNumberAt(widget.mode, _currentInputN).toString());
-  }
-*/
   void _calculateNumberAt() async {
     await showDialog<bool>(
       context: context,

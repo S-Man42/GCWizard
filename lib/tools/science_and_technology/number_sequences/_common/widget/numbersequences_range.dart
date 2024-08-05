@@ -113,9 +113,9 @@ class _NumberSequenceRangeState extends State<NumberSequenceRange> {
 
   void _showOutput(List<BigInt> output) {
     List<List<String>> columnData = [];
-    output.forEach((element) {
+    for (BigInt element in output) {
       columnData.add([element.toString()]);
-    });
+    }
 
     _currentOutput = GCWDefaultOutput(child: GCWColumnedMultilineOutput(data: columnData));
 

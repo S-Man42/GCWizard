@@ -94,8 +94,6 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
 
   var numberSequenceFunction = _getNumberSequenceFunction(sequence);
   if (numberSequenceFunction != null) {
-    print('found non recursive number sequence');
-    print(numberSequenceFunction);
     while (index <= maxIndex) {
       number = numberSequenceFunction(index);
       numberString = number.toString();
