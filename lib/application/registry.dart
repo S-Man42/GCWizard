@@ -7999,31 +7999,92 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: const [
       'color',
       'resistor_colorcode',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Resistor color codes',
+          sourceUrl:
+              'https://en.wikiversity.org/w/index.php?title=Resistor_color_codes&oldid=2580031')
+    ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: const [
       'symbol_rhesus',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Atypeek Magazine',
+          title: 'WC Rhesus A Bta',
+          sourceUrl:
+              'https://web.archive.org/web/20140831024200/https://fonts2u.com/wc-rhesus-a-bta.font',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: const [
       'symbol_rhesus',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Atypeek Magazine',
+          title: 'WC Rhesus B Bta',
+          sourceUrl:
+              'https://web.archive.org/web/20140830000224/http://www.fonts2u.com/wc-rhesus-b-bta.font',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: const [
       'symbol_rhesus',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+        context: context,
+        author: 'Atypeek Magazine',
+        title: 'WC Rhesus C 1Bta font',
+        sourceUrl:
+            'https://web.archive.org/web/20140831023848/http://www.fonts2u.com/wc-rhesus-c-1bta.font',
+        licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: const [
       'symbol_rhesus',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Atypeek Magazine',
+          title: 'WC Rhesus C 2Bta Italic',
+          sourceUrl:
+              'https://web.archive.org/web/20150309131933/http://www.fonts2u.com/wc-rhesus-c-2bta-italic.font',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: const [
       'barcodes',
       'symbol_rm4scc',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'RM4SCC',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=RM4SCC&oldid=1214051326'),
+    ]),
     GCWSymbolTableTool(symbolKey: 'robots', symbolSearchStrings: const [
       'symbol_robots',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Woodcutter',
+          title: 'Robots Font',
+          sourceUrl:
+              'https://web.archive.org/web/20140226111938/https://www.fontriver.com/font/robots/',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: const [
       'symbol_romulan',
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown',
+          title: 'Romulan',
+          sourceUrl:
+            'https://web.archive.org/web/20170401035807/https://fonts2u.com/romulan.font',
+          licenseType: ToolLicenseType.NON_COMMERCIAL),
     ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
