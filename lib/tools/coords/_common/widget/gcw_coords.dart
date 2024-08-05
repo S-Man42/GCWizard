@@ -107,7 +107,7 @@ class GCWCoords extends StatefulWidget {
   final LatLng? coordinates;
   final CoordinateFormat coordsFormat;
   final String? title;
-  final bool? notitle;
+  final bool suppressTopSpace;
 
   const GCWCoords(
       {Key? key,
@@ -115,7 +115,8 @@ class GCWCoords extends StatefulWidget {
       required this.onChanged,
       this.coordinates,
       required this.coordsFormat,
-      this.notitle = false})
+      this.suppressTopSpace = false
+      })
       : super(key: key);
 
   @override
@@ -156,30 +157,17 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   @override
   Widget build(BuildContext context) {
-    Column _widget;
-    if (widget.notitle != null && widget.notitle! ||
-        widget.title == null ||
-        widget.title != null && widget.title!.isNotEmpty) {
-      _widget = Column(
-        children: <Widget>[
-          Row(
-            children: [
-              Expanded(child: _buildInputFormatSelector()),
-              Container(
-                  padding: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
-                  child: _buildTrailingButtons(IconButtonSize.NORMAL))
-            ],
-          )
-        ],
-      );
-    } else {
-      _widget = Column(
-        children: <Widget>[
-          GCWTextDivider(text: widget.title!, trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
-          _buildInputFormatSelector()
-        ],
-      );
-    }
+    Column _widget = Column(
+      children: <Widget>[
+        GCWTextDivider(
+            text: widget.title ?? '',
+            trailing: _buildTrailingButtons(IconButtonSize.SMALL),
+            suppressBottomSpace: true,
+            suppressTopSpace: widget.suppressTopSpace
+        ),
+        _buildInputFormatSelector()
+      ],
+    );
 
     var rawWidget = allCoordinateWidgetInfos
         .firstWhereOrNull((GCWCoordWidgetInfo entry) => entry.type == _currentCoordinateFormat.type);
@@ -237,7 +225,7 @@ class _GCWCoordsState extends State<GCWCoords> {
               insertIntoGCWClipboard(
                   context,
                   _currentCoordsLatLng != null
-                      ? formatCoordOutput(_currentCoordsLatLng, _currentCoordinateFormat, defaultEllipsoid)
+                      ? formatCoordOutput(_currentCoordsLatLng, _currentCoordinateFormat, defaultEllipsoid, false)
                       : '');
             }),
         Container(width: DEFAULT_MARGIN),

@@ -5,6 +5,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 enum ToolLicenseType {
+  PRIVATE_PERMISSION, // use as dummy; data will be taken from ToolLicensePrivatePermission object
   FREE_TO_USE,
   AL, // Artistic License
   APACHE2, // Apache 2.0
@@ -12,22 +13,38 @@ enum ToolLicenseType {
   BSD2, // BSD2
   BSD3, // BSD v3
   CCBY4, // Creative Commons CC BY 4.0
+  CCBY3US, // Creative Commons CC BY 3.0 US
+  CCBYNC40, // Creative Commons CC BY-NC-SA 4.0
+  CCBYNC30, // Creative Commons CC BY-NC-SA 3.0
   CCBYSA4, // Creative Commons CC BY-SA 4.0
-  CCBYSA3, // Creative Commons CC BY-SA 2.0
+  CCBYSA3, // Creative Commons CC BY-SA 3.0
   CCBYSA2, // Creative Commons CC BY-SA 2.0
-  CCNC25, // Creative Commons CC NC 2.5
   CCNC30, // Creative Commons CC NC 3.0
+  CCNC25, // Creative Commons CC NC 2.5
+  CCBYNCND30, // Creative Commons BY-NC-ND 3.0
+  CCBYNCND20, // Creative Commons BY-NC-ND 2.0
   CC0_1, // Creative Commons CC0 1.0
   MIT, // MIT
   MPL2, // MPL-2.0
   GPL3, //GNU GPL v3.0
   GITHUB_DEFAULT, //Github Default
   GFDL, // GNU Free Documentation License
-  PUBLIC_DOMAIN, // Public Domain
+  PUBLIC_DOMAIN,// Public Domain
+  NON_COMMERCIAL,
+  REPRODUCTION_NEEDED,
+  OFL11
 }
+
+/*
+  if you want to describe WHAT you did with the source, e.g.
+  COPY: You copied an image from a source (via screenshot, whatever), so took the original image
+  REPRODUCTION: You only took an image as a template for your own work: drawed a symbol by your own, just by looking/compare it with the source without making an exact copy
+ */
+enum ToolLicenseUseType {COPY, REPRODUCTION}
 
 String _licenseType(BuildContext context, ToolLicenseType licenseType) {
   switch (licenseType) {
+    case ToolLicenseType.PRIVATE_PERMISSION: return ''; // data will be taken from ToolLicensePrivatePermission object instead
     case ToolLicenseType.FREE_TO_USE: return i18n(context, 'toollicenses_freetouse');
     case ToolLicenseType.AL: return 'Artistic License';
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
@@ -35,11 +52,16 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.BSD2: return 'BSD-2-Clause';
     case ToolLicenseType.BSD3: return 'BSD-3-Clause';
     case ToolLicenseType.CCBY4: return 'Creative Commons CC BY 4.0';
+    case ToolLicenseType.CCBY3US: return 'Creative Commons CC BY 3.0 US';
+    case ToolLicenseType.CCBYNC40: return 'Creative Commons CC BY-NC-SA 4.0';
+    case ToolLicenseType.CCBYNC30: return 'Creative Commons CC BY-NC-SA 3.0';
     case ToolLicenseType.CCBYSA4: return 'Creative Commons CC BY-SA 4.0';
     case ToolLicenseType.CCBYSA3: return 'Creative Commons CC BY-SA 3.0';
     case ToolLicenseType.CCBYSA2: return 'Creative Commons CC BY-SA 2.0';
-    case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
     case ToolLicenseType.CCNC30: return 'Creative Commons CC NC 3.0';
+    case ToolLicenseType.CCNC25: return 'Creative Commons CC NC 2.5';
+    case ToolLicenseType.CCBYNCND20: return 'Creative Commons CC BY-NC-ND 3.0';
+    case ToolLicenseType.CCBYNCND30: return 'Creative Commons CC BY-NC-ND 2.0';
     case ToolLicenseType.CC0_1: return 'Creative Commons CC0 1.0';
     case ToolLicenseType.MIT: return 'MIT License';
     case ToolLicenseType.MPL2: return 'Mozilla Public License Version 2.0';
@@ -47,7 +69,9 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.GITHUB_DEFAULT: return 'Github Default License';
     case ToolLicenseType.GFDL: return 'GNU Free Documentation License';
     case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
-      // TODO: Handle this case.
+    case ToolLicenseType.NON_COMMERCIAL: return i18n(context, 'toollicenses_noncommercial');
+    case ToolLicenseType.REPRODUCTION_NEEDED: return i18n(context, 'toollicenses_reproduction_needed');
+    case ToolLicenseType.OFL11: return 'SIL Open Font License Version 1.1';
   }
 }
 
@@ -71,45 +95,59 @@ String toolLicenseTypeString(BuildContext context, ToolLicenseEntry toolLicense)
   if (toolLicense is ToolLicenseOnlineBook) return i18n(context, 'toollicenses_onlinebook');
   if (toolLicense is ToolLicenseOfflineArticle) return i18n(context, 'toollicenses_offlinearticle');
   if (toolLicense is ToolLicenseOnlineArticle) return i18n(context, 'toollicenses_onlinearticle');
-  if (toolLicense is ToolLicensePrivatePermittedDigitalSource) return i18n(context, 'toollicenses_privatepermitteddigitalsource');
   if (toolLicense is ToolLicenseCodeLibrary) return i18n(context, 'toollicenses_codelibrary');
   if (toolLicense is ToolLicensePortedCode) return i18n(context, 'toollicenses_portedcode');
   if (toolLicense is ToolLicenseImage) return i18n(context, 'toollicenses_image');
   if (toolLicense is ToolLicenseFont) return i18n(context, 'toollicenses_font');
   if (toolLicense is ToolLicenseAPI) return i18n(context, 'toollicenses_api');
-  if (toolLicense is ToolLicenseOwnReProduction) return i18n(context, 'toollicenses_ownreprodction');
 
   return '';
 }
 
 abstract class ToolLicenseEntry {
-  final BuildContext context;
-  final String author;
-  final String title;
-  final String? customComment;
-
-  const ToolLicenseEntry({required this.context, required this.author, required this.title, this.customComment});
+  const ToolLicenseEntry();
 
   List<Object> toRow();
 }
 
-abstract class _ToolLicenseTextSource extends ToolLicenseEntry {
-  final int? year;
-  final int? month; // 01-12
-  final int? day;
-  final String? publisher;
+/*
+  Privately permitted usage (i.e. author explicitly allow usage via e-mail)  -> cite with:
+  medium == how was use granted (e-mail, web forum, chat, ...)
+  permissionYear, permissionMonth, permissionDay == at least the year: when was use granted
+*/
+class ToolLicensePrivatePermission {
+  final BuildContext context;
+  final String medium;
+  final int permissionYear;
+  final int? permissionMonth; // 01-12
+  final int? permissionDay;
+  final String? permissionAuthor;
 
-  const _ToolLicenseTextSource({required BuildContext context, required String author, required String title, this.year, this.month, this.day, this.publisher, String? customComment})
-      : super(context: context, author: author, title: title, customComment: customComment);
+  const ToolLicensePrivatePermission({
+    required this.context,
+    required this.medium,
+    required this.permissionYear,
+    this.permissionMonth,
+    this.permissionDay,
+    this.permissionAuthor,
+  });
+
+  @override
+  String toString() {
+    return i18n(context, 'toollicenses_usepermission') + ' '
+        + medium
+        + ' ('
+          + (permissionAuthor != null ? permissionAuthor! + ', ' : '')
+          + _getDate(context, permissionYear, permissionMonth, permissionDay)!
+        + ')';
+  }
 }
 
-abstract class _ToolLicenseOnlineTextSource extends _ToolLicenseTextSource {
-  final String sourceUrl;
-  final String? licenseUrl;
-  final ToolLicenseType? licenseType;
-
-  const _ToolLicenseOnlineTextSource({required BuildContext context, required String author, required String title, int? year, int? month, int? day, String? publisher, String? customComment, required this.sourceUrl, this.licenseType, this.licenseUrl})
-      : super(context: context, author: author, title: title, year: year, month: month, day: day, publisher: publisher, customComment: customComment);
+String _getUseType(BuildContext context, ToolLicenseUseType useType) {
+  switch (useType) {
+    case ToolLicenseUseType.COPY: return i18n(context, 'toollicenses_usetype_copy');
+    case ToolLicenseUseType.REPRODUCTION: return i18n(context, 'toollicenses_usetype_reproduction');
+  }
 }
 
 String? _getDate(BuildContext context, int? year, int? month, int? day) {
@@ -135,11 +173,28 @@ String? _getDate(BuildContext context, int? year, int? month, int? day) {
     publisher == publisher (Verlag) if available
     customComment == whatever, maybe a page number; license clarifications, ...
  */
-class ToolLicenseOfflineBook extends _ToolLicenseTextSource {
+class ToolLicenseOfflineBook extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
   final String? isbn;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+  final String? publisher;
 
-  const ToolLicenseOfflineBook({required BuildContext context, required String author, required String title, int? year, int? month, int? day, String? customComment, this.isbn, String? publisher})
-      : super(context: context, author: author, title: title, year: year, month: month, day: day, customComment: customComment);
+  const ToolLicenseOfflineBook({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    this.publisher,
+    this.isbn
+  });
 
   @override
   List<Object> toRow() {
@@ -148,6 +203,7 @@ class ToolLicenseOfflineBook extends _ToolLicenseTextSource {
     if (date != null) out.add(date);
     if (isbn != null) out.add('ISBN: ' + isbn!);
     if (publisher != null) out.add(publisher!);
+    if (privatePermission != null) out.add(privatePermission.toString());
     if (customComment != null) out.add(customComment!);
 
     return out;
@@ -166,11 +222,34 @@ class ToolLicenseOfflineBook extends _ToolLicenseTextSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Internet Archive snapshot)
  */
-class ToolLicenseOnlineBook extends _ToolLicenseOnlineTextSource {
+class ToolLicenseOnlineBook extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
   final String? isbn;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+  final String? publisher;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType? licenseType;
 
-  const ToolLicenseOnlineBook({required BuildContext context, required String author, required String title, int? year, int? month, int? day, required String sourceUrl, String? licenseUrl, ToolLicenseType? licenseType, String? customComment, this.isbn, String? publisher})
-      : super(context: context, author: author, title: title, year: year, month: month, day: day, publisher: publisher, sourceUrl: sourceUrl, licenseType: licenseType, licenseUrl: licenseUrl, customComment: customComment);
+  const ToolLicenseOnlineBook({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    this.publisher,
+    required this.sourceUrl,
+    this.licenseType,
+    this.licenseUrl,
+    this.isbn
+  });
 
   @override
   List<Object> toRow() {
@@ -181,10 +260,10 @@ class ToolLicenseOnlineBook extends _ToolLicenseOnlineTextSource {
     if (date != null) out.add(date);
     if (isbn != null) out.add('ISBN: ' + isbn!);
     if (publisher != null) out.add(publisher!);
-    if (customComment != null) out.add(customComment!);
+    if (privatePermission != null) out.add(privatePermission.toString());
 
     Object? _license;
-    if (licenseType != null) {
+    if (licenseType != null && licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
       var _lType = _licenseType(context, licenseType!);
       if (licenseUrl != null) {
         _license = buildUrl(_lType, licenseUrl!);
@@ -193,6 +272,8 @@ class ToolLicenseOnlineBook extends _ToolLicenseOnlineTextSource {
       }
     }
     if (_license != null) out.add(_license);
+
+    if (customComment != null) out.add(customComment!);
 
     return out;
   }
@@ -206,10 +287,26 @@ class ToolLicenseOnlineBook extends _ToolLicenseOnlineTextSource {
     publisher == publisher (Verlag) if available
     customComment == whatever, maybe a page number; license clarifications, ...
  */
-class ToolLicenseOfflineArticle extends _ToolLicenseTextSource {
+class ToolLicenseOfflineArticle extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+  final String? publisher;
 
-  const ToolLicenseOfflineArticle({required BuildContext context, required String author, required String title, int? year, int? month, int? day, String? customComment, String? publisher})
-      : super(context: context, author: author, title: title, year: year, month: month, day: day, publisher: publisher, customComment: customComment);
+  const ToolLicenseOfflineArticle({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    this.publisher
+  });
 
   @override
   List<Object> toRow() {
@@ -217,6 +314,7 @@ class ToolLicenseOfflineArticle extends _ToolLicenseTextSource {
     var date = _getDate(context, year, month, day);
     if (date != null) out.add(date);
     if (publisher != null) out.add(publisher!);
+    if (privatePermission != null) out.add(privatePermission.toString());
     if (customComment != null) out.add(customComment!);
 
     return out;
@@ -234,20 +332,32 @@ class ToolLicenseOfflineArticle extends _ToolLicenseTextSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Internet Archive snapshot)
  */
-class ToolLicenseOnlineArticle extends _ToolLicenseOnlineTextSource {
+class ToolLicenseOnlineArticle extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+  final String? publisher;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType? licenseType;
 
   const ToolLicenseOnlineArticle({
-    required BuildContext context,
-    required String author,
-    required String title,
-    int? year, int? month, int? day,
-    required String sourceUrl,
-    String? licenseUrl,
-    ToolLicenseType? licenseType,
-    String? customComment,
-    String? publisher
-  })
-      : super(context: context, author: author, title: title, year: year, month: month, day: day, publisher: publisher, sourceUrl: sourceUrl, licenseType: licenseType, licenseUrl: licenseUrl, customComment: customComment);
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    this.publisher,
+    required this.sourceUrl,
+    this.licenseType,
+    this.licenseUrl
+  });
 
   @override
   List<Object> toRow() {
@@ -257,10 +367,10 @@ class ToolLicenseOnlineArticle extends _ToolLicenseOnlineTextSource {
     var date = _getDate(context, year, month, day);
     if (date != null) out.add(date);
     if (publisher != null) out.add(publisher!);
-    if (customComment != null) out.add(customComment!);
+    if (privatePermission != null) out.add(privatePermission.toString());
 
     Object? _license;
-    if (licenseType != null) {
+    if (licenseType != null && licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
       var _lType = _licenseType(context, licenseType!);
       if (licenseUrl != null) {
         _license = buildUrl(_lType, licenseUrl!);
@@ -270,77 +380,7 @@ class ToolLicenseOnlineArticle extends _ToolLicenseOnlineTextSource {
     }
     if (_license != null) out.add(_license);
 
-    return out;
-  }
-}
-
-abstract class _ToolLicenseDigitalSource extends ToolLicenseEntry {
-  final String? version;
-
-  const _ToolLicenseDigitalSource({required BuildContext context, required String author, required String title, this.version, String? customComment})
-      : super(context: context, author: author, title: title, customComment: customComment);
-}
-
-/*
- Privately permitted usage (i.e. author explicitly allow usage via e-mail)  -> cite with:
-    author == author(s) and/or organisation(s);
-    title == source title
-    version == if available
-    medium == how was use granted (e-mail, web forum, chat, ...)
-    permissionYear, permissionMonth, permissionDay == at least the year: when was use granted
-    customComment == whatever, maybe license clarifications, ...
- */
-class ToolLicensePrivatePermittedDigitalSource extends _ToolLicenseDigitalSource {
-  final String medium;
-  final int permissionYear;
-  final int? permissionMonth; // 01-12
-  final int? permissionDay;
-  final String? sourceUrl;
-
-  const ToolLicensePrivatePermittedDigitalSource({required BuildContext context, required String author, required String title, required this.medium, required this.permissionYear, this.permissionMonth, this.permissionDay, String? version, this.sourceUrl, String? customComment})
-      : super(context: context, author: author, title: title, version: version, customComment: customComment);
-
-  @override
-  List<Object> toRow() {
-    var out = <Object>[author];
-    var _title = title;
-    if (version != null) _title += ' (' + version! + ')';
-    if (sourceUrl != null) {
-      out.add(buildUrl(_title, sourceUrl!));
-    } else {
-      out.add(_title);
-    }
     if (customComment != null) out.add(customComment!);
-
-    var _medium = i18n(context, 'toollicenses_usepermission') + ' ' + medium + ' (' + _getDate(context, permissionYear, permissionMonth, permissionDay)! + ')';
-    out.add(_medium);
-    return out;
-  }
-}
-
-abstract class _ToolLicensePublicDigitalSource extends _ToolLicenseDigitalSource {
-  final String sourceUrl;
-  final String? licenseUrl;
-  final ToolLicenseType licenseType;
-
-  const _ToolLicensePublicDigitalSource({required BuildContext context, required String author, required String title, required this.sourceUrl, this.licenseUrl, required this.licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, customComment: customComment);
-
-  @override
-  List<Object> toRow() {
-    var out = <Object>[author];
-    var _title = title;
-    if (version != null) _title += ' (' + version! + ')';
-    out.add(buildUrl(_title, sourceUrl));
-    if (customComment != null) out.add(customComment!);
-
-    Object _license;
-    if (licenseUrl != null) {
-      _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
-    } else {
-      _license = _licenseType(context, licenseType);
-    }
-    out.add(_license);
 
     return out;
   }
@@ -356,9 +396,57 @@ abstract class _ToolLicensePublicDigitalSource extends _ToolLicenseDigitalSource
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
  */
-class ToolLicenseCodeLibrary extends _ToolLicensePublicDigitalSource {
-  const ToolLicenseCodeLibrary({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+class ToolLicenseCodeLibrary extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final String? version;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+
+  const ToolLicenseCodeLibrary({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    required this.sourceUrl,
+    this.licenseUrl,
+    required this.licenseType,
+    this.version
+  });
+
+  @override
+  List<Object> toRow() {
+    var out = <Object>[author];
+    var _title = title;
+    if (version != null) _title += ' (' + version! + ')';
+    out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
+    if (privatePermission != null) out.add(privatePermission.toString());
+
+    if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
+      Object _license;
+      if (licenseUrl != null) {
+        _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
+      } else {
+        _license = _licenseType(context, licenseType);
+      }
+      out.add(_license);
+    }
+
+    if (customComment != null) out.add(customComment!);
+
+    return out;
+  }
 }
 
 /*
@@ -371,9 +459,57 @@ class ToolLicenseCodeLibrary extends _ToolLicensePublicDigitalSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
  */
-class ToolLicensePortedCode extends _ToolLicensePublicDigitalSource {
-  const ToolLicensePortedCode({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+class ToolLicensePortedCode extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final String? version;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+
+  const ToolLicensePortedCode({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    required this.sourceUrl,
+    this.licenseUrl,
+    required this.licenseType,
+    this.version
+  });
+
+  @override
+  List<Object> toRow() {
+    var out = <Object>[author];
+    var _title = title;
+    if (version != null) _title += ' (' + version! + ')';
+    out.add(sourceUrl.isEmpty ? _title : buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
+    if (privatePermission != null) out.add(privatePermission.toString());
+
+    if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
+      Object _license;
+      if (licenseUrl != null) {
+        _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
+      } else {
+        _license = _licenseType(context, licenseType);
+      }
+      out.add(_license);
+    }
+
+    if (customComment != null) out.add(customComment!);
+
+    return out;
+  }
 }
 
 /*
@@ -386,9 +522,62 @@ class ToolLicensePortedCode extends _ToolLicensePublicDigitalSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
  */
-class ToolLicenseImage extends _ToolLicensePublicDigitalSource {
-  const ToolLicenseImage({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+class ToolLicenseImage extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType licenseType;
+  final ToolLicenseUseType? useType;
+  final String? version;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+
+  const ToolLicenseImage({
+    required this.context,
+    required this.author,
+    required this.title,
+    required this.sourceUrl,
+    this.licenseUrl,
+    required this.licenseType,
+    this.useType,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    this.version,
+    this.customComment, required licenseUseType
+  });
+
+  @override
+  List<Object> toRow() {
+    var out = <Object>[author];
+    var _title = title;
+    if (version != null) _title += ' (' + version! + ')';
+    out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
+    if (privatePermission != null) out.add(privatePermission.toString());
+
+    if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
+      Object _license;
+      if (licenseUrl != null) {
+        _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
+      } else {
+        _license = _licenseType(context, licenseType);
+      }
+      out.add(_license);
+    }
+    if (useType != null) {
+      out.add(_getUseType(context, useType!));
+    }
+
+    if (customComment != null) out.add(customComment!);
+
+    return out;
+  }
 }
 
 /*
@@ -401,9 +590,57 @@ class ToolLicenseImage extends _ToolLicensePublicDigitalSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
  */
-class ToolLicenseFont extends _ToolLicensePublicDigitalSource {
-  const ToolLicenseFont({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+class ToolLicenseFont extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final String? version;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+
+  const ToolLicenseFont({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    required this.sourceUrl,
+    this.licenseUrl,
+    required this.licenseType,
+    this.version
+  });
+
+  @override
+  List<Object> toRow() {
+    var out = <Object>[author];
+    var _title = title;
+    if (version != null) _title += ' (' + version! + ')';
+    out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
+    if (privatePermission != null) out.add(privatePermission.toString());
+
+    if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
+      Object _license;
+      if (licenseUrl != null) {
+        _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
+      } else {
+        _license = _licenseType(context, licenseType);
+      }
+      out.add(_license);
+    }
+
+    if (customComment != null) out.add(customComment!);
+
+    return out;
+  }
 }
 
 /*
@@ -416,22 +653,55 @@ class ToolLicenseFont extends _ToolLicensePublicDigitalSource {
     licenseType == if available: which license is the used source
     licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
  */
-class ToolLicenseAPI extends _ToolLicensePublicDigitalSource {
-  const ToolLicenseAPI({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
-}
+class ToolLicenseAPI extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final String? version;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType licenseType;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
 
-/*
- OwnReproduction: Image, Text, etc. which is reproduced or produced iaw a public source)
-    author == author(s) and/or organisation(s);
-    title == Source title
-    version == if available
-    customComment == whatever seems to be important..., license clarifications, ...
-    sourceUrl == API entry point (could be invalid without parameters, which is ok I think)
-    licenseType == if available: which license is the used source
-    licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
- */
-class ToolLicenseOwnReProduction extends _ToolLicensePublicDigitalSource {
-  const ToolLicenseOwnReProduction({required BuildContext context, required String author, required String title, required String sourceUrl, String? licenseUrl, required ToolLicenseType licenseType, String? version, String? customComment})
-      : super(context: context, author: author, title: title, version: version, sourceUrl: sourceUrl, licenseUrl: licenseUrl, licenseType: licenseType, customComment: customComment);
+  const ToolLicenseAPI({
+    required this.context,
+    required this.author,
+    required this.title,
+    this.customComment,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    required this.sourceUrl,
+    this.licenseUrl,
+    required this.licenseType,
+    this.version
+  });
+
+  @override
+  List<Object> toRow() {
+    var out = <Object>[author];
+    var _title = title;
+    if (version != null) _title += ' (' + version! + ')';
+    out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
+    if (privatePermission != null) out.add(privatePermission.toString());
+
+    if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
+      Object _license;
+      if (licenseUrl != null) {
+        _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
+      } else {
+        _license = _licenseType(context, licenseType);
+      }
+      out.add(_license);
+    }
+
+    if (customComment != null) out.add(customComment!);
+
+    return out;
+  }
 }

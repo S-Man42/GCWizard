@@ -36,7 +36,7 @@ class _SpecificToolLicenses {
     return ToolLicenseCodeLibrary(
       context: _context,
       author: 'Legion of the Bouncy Castle Inc',
-      title: 'Pointy Castle',
+      title: 'Flutter Library: Pointy Castle',
       licenseType: ToolLicenseType.MIT,
       licenseUrl: 'https://github.com/S-Man42/pc-dart/blob/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa/LICENSE',
       sourceUrl: 'https://github.com/S-Man42/pc-dart/tree/c7009dbf7785f4ff865ddb4eefdaed8c18ef3baa'
@@ -126,294 +126,35 @@ class _SpecificToolLicenses {
     );
   }
 
-  ToolLicenseEntry get _toolLicensePackageArchive {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'loki3d.com',
-      title: 'archive',
-      sourceUrl: 'https://pub.dev/packages/archive',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageAudioplayers {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'blue-fire.xyz',
-      title: 'audioplayers',
-      sourceUrl: 'https://pub.dev/packages/audioplayers',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageAutoSizeText {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'simc.com',
-      title: 'auto_size_text',
-      sourceUrl: 'https://pub.dev/packages/auto_size_text',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageBase32 {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'yuli.dev',
-      title: 'base32',
-      sourceUrl: 'https://pub.dev/packages/base32',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageCodeTextField {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'code_text_field',
-      sourceUrl: 'https://pub.dev/packages/code_text_field',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageDiacritic {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'agilord.com',
-      title: 'diacritic',
-      sourceUrl: 'https://pub.dev/packages/diacritic',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageEncrypt {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'encrypt',
-      sourceUrl: 'https://pub.dev/packages/encrypt',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageExif {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'exif',
-      sourceUrl: 'https://pub.dev/packages/exif',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageFlutterHighlight {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'flutter_highlight',
-      sourceUrl: 'https://pub.dev/packages/flutter_highlight',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageFlutterMap {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'fleaflet.dev',
-      title: 'flutter_map',
-      sourceUrl: 'https://pub.dev/packages/flutter_map',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageFlutterMapMarkerPopup {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'balanci.ng',
-      title: 'flutter_map_marker_popup',
-      sourceUrl: 'https://pub.dev/packages/flutter_map_marker_popup',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageFlutterMapTappablePolyLine {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'ownweb.fr',
-      title: 'flutter_map_tappable_polyline',
-      sourceUrl: 'https://pub.dev/packages/flutter_map_tappable_polyline',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageHighlight {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'highlight',
-      sourceUrl: 'https://pub.dev/packages/highlight',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageHttp {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'dart.dev',
-      title: 'http',
-      sourceUrl: 'https://pub.dev/packages/http',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageHttpParser {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'dart.dev',
-      title: 'http_parser',
-      sourceUrl: 'https://pub.dev/packages/http_parser',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageImage {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'loki3d.com',
-      title: 'image',
-      sourceUrl: 'https://pub.dev/packages/image',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageIntl {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'dart.dev',
-      title: 'intl',
-      sourceUrl: 'https://pub.dev/packages/intl',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageLatlong2 {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'defylogic.dev',
-      title: 'audioplayers',
-      sourceUrl: 'https://pub.dev/packages/latlong2',
-      licenseType: ToolLicenseType.APACHE2,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageMathExpressions {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'leonhardt.co.nz',
-      title: 'math_expressions',
-      sourceUrl: 'https://pub.dev/packages/math_expressions',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackagePrefs {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'andrioussolutions.com',
-      title: 'prefs',
-      sourceUrl: 'https://pub.dev/packages/prefs',
-      licenseType: ToolLicenseType.APACHE2,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageQr {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'kevmoo.com',
-      title: 'qr',
-      sourceUrl: 'https://pub.dev/packages/qr',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageRscan {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'rhyme95.cn',
-      title: 'r_scan',
-      sourceUrl: 'https://pub.dev/packages/r_scan',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageStack {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'stack',
-      sourceUrl: 'https://pub.dev/packages/stack',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageTouchable {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'unverified uploader',
-      title: 'touchable',
-      sourceUrl: 'https://pub.dev/packages/touchable',
-      licenseType: ToolLicenseType.MPL2,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageTuple {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'google.dev',
-      title: 'tuple',
-      sourceUrl: 'https://pub.dev/packages/tuple',
-      licenseType: ToolLicenseType.BSD2,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageUuid {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'yuli.dev',
-      title: 'uuid',
-      sourceUrl: 'https://pub.dev/packages/uuid',
-      licenseType: ToolLicenseType.MIT,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicensePackageWeekOfYear {
-    return ToolLicenseCodeLibrary(
-      context: context,
-      author: 'kada.se',
-      title: 'week_of_year',
-      sourceUrl: 'https://pub.dev/packages/week_of_year',
-      licenseType: ToolLicenseType.BSD3,
-    );
-  }
-
-  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumArabEgipt {
+  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumAlphabetaCharacteres {
     return ToolLicenseOnlineBook(
       context: context,
-      author: 'Giovanni Battista Palatino',
-      title: 'Libro nuovo d\'imparare a scrivere',
-      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala/mode/2up',
-      year: 1548,
+      author: 'Johannes Theodor de Bry, Johannes Israel de Bry',
+      title: 'Alphabeta Et Characteres',
+      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala',
+      year: 1596,
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
 
-  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumGoth {
+  ToolLicenseEntry get _toolLicenseOnlineBookPolygraphieTrithemius {
     return ToolLicenseOnlineBook(
       context: context,
-      author: 'Magnus Olaus',
-      title: 'Historia de Gentibus Septentrionalibus',
+      author: 'Johannes Trithemius',
+      title: 'Polygraphie et universelle escriture cabalistique',
       sourceUrl: 'https://archive.org/details/Historiaedegent00Olau',
-      year: 1555,
+      year: 1557,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookDeOccultaPhilosophia {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Heinrich Cornelius Agrippa von Nettesheim',
+      title: 'De occulta philosophia',
+      sourceUrl: 'https://archive.org/details/17219451458888bsb-10192450',
+      year: 1531,
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
@@ -429,26 +170,55 @@ class _SpecificToolLicenses {
   }
 
   ToolLicenseEntry get _toolLicenseGeocachingToolbox {
-    return ToolLicensePrivatePermittedDigitalSource(context: context,
+    return ToolLicenseOnlineArticle(context: context,
       author: 'Japiejoo',
       title: 'Geocaching Toolbox Codetabellen',
-      medium: 'Message Center geocaching.com',
-      permissionYear: 2021,
-      permissionMonth: 12,
-      permissionDay: 8,
-      customComment: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
+      licenseType: ToolLicenseType.CCBYNCND30,
+      licenseUrl: 'http://web.archive.org/web/20240728042550/https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en',
+      sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com',
     );
   }
 
   ToolLicenseEntry get _toolLicenseMyGeoToolsCodeTabellen {
-    return ToolLicensePrivatePermittedDigitalSource(context: context,
+    return ToolLicenseOnlineArticle(context: context,
       author: 'Benny',
       title: 'myGEOTools Codetabellen',
-      medium: '',
-      permissionYear: 0,
-      permissionMonth: 0,
-      permissionDay: 0,
-      customComment: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+      privatePermission: ToolLicensePrivatePermission(
+        context: context,
+        medium: '',
+        permissionYear: 0,
+        permissionMonth: 0,
+        permissionDay: 0,
+      ),
+      sourceUrl: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOakIslandMystery {
+    return ToolLicenseOnlineArticle (
+        context: context,
+        author: 'www.OakIslandMystery.com',
+        title: 'Oak Island cipher',
+        sourceUrl:
+        'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
+        privatePermission: ToolLicensePrivatePermission(
+          context: context,
+          permissionYear: 2023,
+          permissionMonth: 6,
+          permissionDay: 1,
+          medium: 'e-mail',
+        )
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseDni {
+    return ToolLicenseFont(context: context,
+        author: 'Colin Arenz, Sebastian Ochs',
+        year: 2000,
+        title: 'D\'ni Script',
+        sourceUrl: 'http://web.archive.org/web/20240729092553/http://linguists.riedl.org/old/sebastian/index.htm',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseUrl: 'http://web.archive.org/web/20230604223058/http://linguists.riedl.org/old/sebastian/readme.htm'
     );
   }
 }
