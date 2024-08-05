@@ -8112,7 +8112,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: const [
       'shadoksnumbers',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Université de Lille',
+          title: 'L’alphabet shadok',
+          sourceUrl:
+              'https://web.archive.org/web/20240805184521/https://www.fil.univ-lille.fr/~L1S1Info/Doc/HTML/tp_numeration_shadok.html')
+    ]),
     GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: const [
       'zelda',
       'symbol_sheikah',
@@ -8164,7 +8171,14 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Googe',
+          title: 'Skullz',
+          sourceUrl: 'https://fontmeme.com/schriftarten/skullz-schriftart/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: const [
       'symbol_slash_and_pipe',
     ], licenses: [
