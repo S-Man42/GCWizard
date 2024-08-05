@@ -427,6 +427,7 @@ import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelli
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/foy_breguet/widget/foy_breguet.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/murray/widget/murray.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/ohlsen_telegraph/widget/ohlsen_telegraph.dart';
@@ -3174,7 +3175,6 @@ void initializeRegistry(BuildContext context) {
         'dates_calendar',
       ],
       licenses: [
-        // TODO: @Thomas: PortedCode richtig oder besser OnlineArticle?
         ToolLicensePortedCode(
           context: context,
           author: 'Johannes Thomann',
@@ -6052,6 +6052,31 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://commons.wikimedia.org/w/index.php?title=File:Chappe.svg&oldid=872347070')
     ]),
+    GCWSymbolTableTool(symbolKey: 'chappe_v2', symbolSearchStrings: const [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_chappe_v1',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Museum für Post und Telekommunikation',
+          title: 'Kupferstich: Optischer Telegraf auf dem Louvre in Paris mit Zeichenalphabet',
+          sourceUrl:
+          '',
+          customComment: 'Inventarnummer 4.2012.446')
+    ]),
+    GCWSymbolTableTool(symbolKey: 'foybreguet', symbolSearchStrings: const [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_foybreguet',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Foy–Breguet telegraph',
+          sourceUrl:
+          'https://en.wikipedia.org/w/index.php?title=Foy%E2%80%93Breguet_telegraph&oldid=1169555630')
+    ]),
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: const [
       'symbol_cherokee',
     ], licenses: [
@@ -8473,7 +8498,6 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
                 'https://web.archive.org/web/20240721203438/https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y',
             customComment: 'Page 23ff'),
-        // TODO: @Thomas: Haben wir hier noch einen originalen Autoren?
         ToolLicenseOfflineBook(
             context: context,
             author: i18n(context, 'common_unknown'),
@@ -8489,6 +8513,20 @@ void initializeRegistry(BuildContext context) {
         ),
       ],
     ),
+    GCWTool(
+        tool: const FoyBreguetTelegraph(),
+        id: 'telegraph_chappe_foybreguet',
+        searchKeys: const [
+          'telegraph',
+          'telegraph_chappe',
+          'telegraph_foybreguet'
+        ],
+        licenses: [ToolLicenseOnlineArticle(
+            context: context,
+            author: 'commons.wikimedia.org and contributors',
+            title: 'Foy–Breguet telegraph',
+            sourceUrl:
+            'https://en.wikipedia.org/w/index.php?title=Foy%E2%80%93Breguet_telegraph&oldid=1169555630')]),
     GCWTool(
         tool: const MurrayTelegraph(),
         id: 'telegraph_murray',
@@ -8587,12 +8625,10 @@ void initializeRegistry(BuildContext context) {
           'telegraph_prussia',
         ],
         licenses: [
-          // TODO: @Thomas: OfflineArticle richtiger als OfflineBook? Haben wir hier noch einen Originalen Autoren?
-          // PS: Vielleicht kannst du mir die originalen Dateien nochmal ins Postfach schicken, weil die Links von Sandy Lang sind nicht mehr gültig
-          ToolLicenseOfflineArticle(
+          ToolLicenseOfflineBook(
               context: context,
-              author: i18n(context, 'common_unknown'),
-              title: 'Classe 5.2 Wörterbuch\nInstruction I\nInstruction II',
+              author: 'Königl. Pruess. Telegraphendirection',
+              title: 'Classe 5.2 Wörterbuch für die Telegraphisten-Correspondenz\nInstruction. Erster Abschnitt. Die Behandlung des Apparates.\nInstruction. Zweiter Abschnitt. Das Telegraphieren.',
               privatePermission: ToolLicensePrivatePermission(
                 context: context,
                 medium: 'e-Mail',
