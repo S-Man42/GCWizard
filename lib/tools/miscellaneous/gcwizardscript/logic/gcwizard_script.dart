@@ -1613,7 +1613,7 @@ class _GCWizardSCriptInterpreter {
           _handleError(_MISSINGPARAMETER);
           return;
         } else {
-          getToken();
+         getToken();
           partialResult2 = evaluateExpressionAddSubOperators();
           if (state.token == ')') {
             _handleError(_INVALIDNUMBEROFPARAMETER);
@@ -2140,10 +2140,9 @@ class _GCWizardSCriptInterpreter {
   Object? evaluateExpressionUnaryFunctionOperator() {
     Object? result;
     String op = '';
-
-    if ((state.tokenType == DELIMITER) && state.token == "+" ||
+    if ((state.tokenType == DELIMITER) && (state.token == "+" ||
         state.token == "-" ||
-        state.token == "~") {
+        state.token == "~")) {
       op = state.token;
       getToken();
       if (state.tokenType == 0) return op;
@@ -2153,15 +2152,18 @@ class _GCWizardSCriptInterpreter {
     } else {
       result = evaluateExpressionParantheses();
     }
-
-    if (op == "-") {
-      result = -(result as dynamic);
+    if (result == null) {
+      result = op;
     } else {
-      if (op == "~") {
-        if (_isNotAInt(result)) {
-          _handleError(_INVALIDTYPECAST);
-        } else {
-          result = ~(result as dynamic);
+      if (op == "-") {
+        result = -(result as dynamic);
+      } else {
+        if (op == "~") {
+          if (_isNotAInt(result)) {
+            _handleError(_INVALIDTYPECAST);
+          } else {
+            result = ~(result as dynamic);
+          }
         }
       }
     }

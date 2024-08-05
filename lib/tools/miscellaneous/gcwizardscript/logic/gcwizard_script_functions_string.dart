@@ -94,7 +94,8 @@ String _padleft(Object text, Object char, Object width,){
     _handleError(_INVALIDTYPECAST);
     return '';
   }
-  return (text as String).padLeft(width as int, char as String);
+  String result = (text as String).padLeft(width as int, char as String);
+  return result;
 }
 
 String _padright(Object text, Object char, Object width,){
