@@ -126,24 +126,35 @@ class _SpecificToolLicenses {
     );
   }
 
-  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumArabEgipt {
+  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumAlphabetaCharacteres {
     return ToolLicenseOnlineBook(
       context: context,
-      author: 'Giovanni Battista Palatino',
-      title: 'Libro nuovo d\'imparare a scrivere',
-      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala/mode/2up',
-      year: 1548,
+      author: 'Johannes Theodor de Bry, Johannes Israel de Bry',
+      title: 'Alphabeta Et Characteres',
+      sourceUrl: 'https://archive.org/details/librodimgiovanba00pala',
+      year: 1596,
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
 
-  ToolLicenseEntry get _toolLicenseOnlineBookAlphabetumGoth {
+  ToolLicenseEntry get _toolLicenseOnlineBookPolygraphieTrithemius {
     return ToolLicenseOnlineBook(
       context: context,
-      author: 'Magnus Olaus',
-      title: 'Historia de Gentibus Septentrionalibus',
+      author: 'Johannes Trithemius',
+      title: 'Polygraphie et universelle escriture cabalistique',
       sourceUrl: 'https://archive.org/details/Historiaedegent00Olau',
-      year: 1555,
+      year: 1557,
+      licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOnlineBookDeOccultaPhilosophia {
+    return ToolLicenseOnlineBook(
+      context: context,
+      author: 'Heinrich Cornelius Agrippa von Nettesheim',
+      title: 'De occulta philosophia',
+      sourceUrl: 'https://archive.org/details/17219451458888bsb-10192450',
+      year: 1531,
       licenseType: ToolLicenseType.PUBLIC_DOMAIN,
     );
   }
@@ -159,26 +170,55 @@ class _SpecificToolLicenses {
   }
 
   ToolLicenseEntry get _toolLicenseGeocachingToolbox {
-    return ToolLicensePrivatePermittedDigitalSource(context: context,
+    return ToolLicenseOnlineArticle(context: context,
       author: 'Japiejoo',
       title: 'Geocaching Toolbox Codetabellen',
-      medium: 'Message Center geocaching.com',
-      permissionYear: 2021,
-      permissionMonth: 12,
-      permissionDay: 8,
-      customComment: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com/index.php?lang=en',
+      licenseType: ToolLicenseType.CCBYNCND30,
+      licenseUrl: 'http://web.archive.org/web/20240728042550/https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en',
+      sourceUrl: 'https://web.archive.org/web/20240724071603/https://www.geocachingtoolbox.com',
     );
   }
 
   ToolLicenseEntry get _toolLicenseMyGeoToolsCodeTabellen {
-    return ToolLicensePrivatePermittedDigitalSource(context: context,
+    return ToolLicenseOnlineArticle(context: context,
       author: 'Benny',
       title: 'myGEOTools Codetabellen',
-      medium: '',
-      permissionYear: 0,
-      permissionMonth: 0,
-      permissionDay: 0,
-      customComment: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+      privatePermission: ToolLicensePrivatePermission(
+        context: context,
+        medium: '',
+        permissionYear: 0,
+        permissionMonth: 0,
+        permissionDay: 0,
+      ),
+      sourceUrl: 'https://web.archive.org/web/20240724071757/https://www.docdroid.net/fnNHMWs/alle-codetabellen-von-mygeotools-pdf',
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseOakIslandMystery {
+    return ToolLicenseOnlineArticle (
+        context: context,
+        author: 'www.OakIslandMystery.com',
+        title: 'Oak Island cipher',
+        sourceUrl:
+        'https://web.archive.org/web/20230322224111/https://www.oakislandmystery.com/community/coded-email',
+        privatePermission: ToolLicensePrivatePermission(
+          context: context,
+          permissionYear: 2023,
+          permissionMonth: 6,
+          permissionDay: 1,
+          medium: 'e-mail',
+        )
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseDni {
+    return ToolLicenseFont(context: context,
+        author: 'Colin Arenz, Sebastian Ochs',
+        year: 2000,
+        title: 'D\'ni Script',
+        sourceUrl: 'http://web.archive.org/web/20240729092553/http://linguists.riedl.org/old/sebastian/index.htm',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseUrl: 'http://web.archive.org/web/20230604223058/http://linguists.riedl.org/old/sebastian/readme.htm'
     );
   }
 }

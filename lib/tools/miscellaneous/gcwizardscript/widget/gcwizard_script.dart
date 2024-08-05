@@ -579,7 +579,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                id: 'coords_map_view',
+                id: 'coords_openmap',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }

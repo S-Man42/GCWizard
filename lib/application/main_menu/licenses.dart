@@ -53,12 +53,10 @@ class _LicensesState extends State<Licenses> {
     var _contentOfflineArticle = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentOnlineArticle = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentPortedCode = SplayTreeMap<String, List<ToolLicenseEntry>>();
-    var _contentPrivatePermission = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentCodeLibrary = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentImage = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentFont = SplayTreeMap<String, List<ToolLicenseEntry>>();
     var _contentAPI = SplayTreeMap<String, List<ToolLicenseEntry>>();
-    var _contentOwnReProduction = SplayTreeMap<String, List<ToolLicenseEntry>>();
 
     for (var tool in tools) {
       var name = toolName(context, tool);
@@ -95,15 +93,6 @@ class _LicensesState extends State<Licenses> {
             _contentOnlineArticle[name]!.add(license);
           } else {
             _contentOnlineArticle.putIfAbsent(name, () => [license]);
-          }
-          continue;
-        }
-
-        if (license is ToolLicensePrivatePermittedDigitalSource) {
-          if (_contentPrivatePermission.containsKey(name)) {
-            _contentPrivatePermission[name]!.add(license);
-          } else {
-            _contentPrivatePermission.putIfAbsent(name, () => [license]);
           }
           continue;
         }
@@ -152,16 +141,6 @@ class _LicensesState extends State<Licenses> {
           }
           continue;
         }
-
-        if (license is ToolLicenseOwnReProduction) {
-          if (_contentOwnReProduction.containsKey(name)) {
-            _contentOwnReProduction[name]!.add(license);
-          } else {
-            _contentOwnReProduction.putIfAbsent(name, () => [license]);
-          }
-          continue;
-        }
-
       }
     }
 
@@ -283,7 +262,7 @@ class _LicensesState extends State<Licenses> {
             ToolLicensePortedCode(context: context, author: 'defylogic.dev', title: 'Flutter Library: latlong2',
               sourceUrl: 'https://web.archive.org/web/20240517114556/https://pub.dev/packages/latlong2',
               licenseType: ToolLicenseType.APACHE2,
-              licenseUrl: '' // TODO
+              licenseUrl: 'http://web.archive.org/web/20240725225604/https://pub.dev/packages/latlong2/license'
             ),
             ToolLicensePortedCode(context: context, author: 'bernos.dev', title: 'Flutter Library: location',
               sourceUrl: 'https://web.archive.org/web/20240716152026/https://pub.dev/packages/location',
@@ -410,13 +389,6 @@ class _LicensesState extends State<Licenses> {
           child: _licenseContent(_contentPortedCode)
       ));
     }
-    if (_contentPrivatePermission.isNotEmpty) {
-      content.add(GCWExpandableTextDivider(
-          expanded: false,
-          text: i18n(context, 'toollicenses_privatepermitteddigitalsource'),
-          child: _licenseContent(_contentPrivatePermission)
-      ));
-    }
     if (_contentImage.isNotEmpty) {
       content.add(GCWExpandableTextDivider(
           expanded: false,
@@ -464,13 +436,6 @@ class _LicensesState extends State<Licenses> {
           expanded: false,
           text: i18n(context, 'toollicenses_offlinebook'),
           child: _licenseContent(_contentOfflineBook)
-      ));
-    }
-    if (_contentOwnReProduction.isNotEmpty) {
-      content.add(GCWExpandableTextDivider(
-          expanded: false,
-          text: i18n(context, 'toollicenses_ownreprodction'),
-          child: _licenseContent(_contentOwnReProduction)
       ));
     }
 
@@ -607,13 +572,13 @@ class _LicensesState extends State<Licenses> {
             const ['several', 'myGeoTools'],
             const ['several', 'Wikipedia'],
             # PERMISSION REQUESTED [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
-            [
+            # DONE [
               i18n(context, 'symboltables_base16_title'),
               'https://web.archive.org/web/20221224135846/https://patentimages.storage.googleapis.com/88/54/da/d88ca78fe93623/US3974444.pdf'
             ],
-            [i18n(context, 'symboltables_base16_02_title'), 'https://dl.acm.org/doi/pdf/10.1145/364096.364107'],
-            [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
-            [
+            # DONE [i18n(context, 'symboltables_base16_02_title'), 'https://dl.acm.org/doi/pdf/10.1145/364096.364107'],
+            # CADAVER [i18n(context, 'symboltables_berber_title'), 'https://en.wikipedia.org/wiki/Tifinagh (Wiki Commons)'],
+            # DONE [
               i18n(context, 'symboltables_bibibinary_title'),
               'https://en.wikipedia.org/wiki/Bibi-binary#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg (CC BY-SA 4.0)'
             ],
@@ -629,8 +594,8 @@ class _LicensesState extends State<Licenses> {
             # DONE [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
             # DONE [i18n(context, 'symboltables_fantastic_title'),
               'nederlandse-fantasia.fandom.com/wiki/Fantastisch (CC BY-SA 3.0)'],
-            [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
-            [
+            # DONE [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
+            # DONE [
               i18n(context, 'symboltables_gc_attributes_ids_title'),
               'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
             ],
@@ -654,7 +619,7 @@ class _LicensesState extends State<Licenses> {
               'https://www.mayan-calendar.org/images/reference/mayan-numbers_mayan-number-system_720x570.gif (Reproductions of this educational item are allowed. www.unitycorps.org)'
             ],
             # DONE [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
-            [
+            # DONE [
               i18n(context, 'symboltables_ninjargon_title'),
               'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
             ],
