@@ -7809,7 +7809,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: const [
       'symbol_planets',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Astrological symbols',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Astrological_symbols&oldid=1227161520')
+    ]),
     GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
       'symbol_pleiadian',
     ], licenses: []),
@@ -7818,15 +7825,35 @@ void initializeRegistry(BuildContext context) {
       'symbol_pokemon_unown',
     ], licenses: [
       stl._toolLicenseCullyLong,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Unown',
+          sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Unown&oldid=1238601379')
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: const [
       'barcodes',
       'symbol_postcode01247',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Zielcode',
+          sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+    ]),
     GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: const [
       'barcodes',
       'symbol_postcode8421',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'wikipedia.org and contributors',
+          title: 'Zielcode',
+          sourceUrl:
+          'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+    ]),
     GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: const [
       'barcodes',
       'symbol_postnet',
@@ -7836,7 +7863,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'predator', symbolSearchStrings: const [
       'predator',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: '	Giedi Prime',
+          title: 'Predator Font',
+          sourceUrl:
+            'https://web.archive.org/web/20200831204648/https://www.fontspace.com/predator-font-f5510',
+          licenseType: ToolLicenseType.NON_COMMERCIAL)
+    ]),
     GCWSymbolTableTool(symbolKey: 'prosyl', symbolSearchStrings: const [
       'symbol_prosyl',
     ], licenses: [
@@ -7853,6 +7888,13 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'Josh Ragsdell',
+          title: 'Puzzle Code',
+          sourceUrl:
+              'https://web.archive.org/web/20210625060800/https://www.omniglot.com/conscripts/puzzlecode.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: const [
       'symbol_puzzle',
@@ -7902,7 +7944,17 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
       'symbol_ravkan',
-    ], licenses: []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'patrocool',
+          title: 'Ravkan',
+          sourceUrl:
+              'https://web.archive.org/web/20240228064125/https://fontstruct.com/fontstructions/show/2220712/ravkan-27',
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
+          licenseUrl:
+              'https://web.archive.org/web/20240805121408/https://fontstruct.com/fontstructions/license/2220712/ravkan-27'),
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'ravkan_extended',
         symbolSearchStrings: const [
