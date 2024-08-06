@@ -119,7 +119,7 @@ String _inverseString(String text) {
   return substitution(text, {'A': 'B', 'B': 'A'});
 }
 
-String analyzeBaconCodeAlphabet(String code){
+String analyzeBaconCodeWordwiseAlphabet(String code){
   List<String> listAM = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
   List<String> listNZ = ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   List<String> result = [];
@@ -140,7 +140,7 @@ String analyzeBaconCodeAlphabet(String code){
   return result.join('');
 }
 
-String analyzeBaconCodeUpperLowerCase(String code){
+String analyzeBaconCodeWordwiseUpperLowerCase(String code){
   List<String> result = [];
   String codeWord = '';
 
@@ -157,6 +157,44 @@ String analyzeBaconCodeUpperLowerCase(String code){
       }
       result.add(codeWord);
     }
+  }
+  return result.join('');
+}
+
+String analyzeBaconCodeLetterwiseAlphabet(String code){
+  List<String> listAM = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
+  List<String> listNZ = ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  List<String> result = [];
+  String codeWord = '';
+
+  for (String letter in code.toUpperCase().split('')) {
+      if (listAM.contains(letter[0])) {
+        codeWord = 'A';
+      } else if (listNZ.contains(letter[0])) {
+        codeWord = 'B';
+      } else {
+        codeWord = '';
+      }
+      result.add(codeWord);
+  }
+  return result.join('');
+}
+
+String analyzeBaconCodeLetterwiseUpperLowerCase(String code){
+  List<String> result = [];
+  String codeWord = '';
+
+  for (String letter in code.split('')) {
+      if (65 <= letter.codeUnitAt(0) && letter.codeUnitAt(0) <= 90) {
+        codeWord = 'A';
+      } else {
+        if (97 <= letter.codeUnitAt(0) && letter.codeUnitAt(0) <= 122) {
+          codeWord = 'B';
+        } else {
+          codeWord = '';
+        }
+      }
+      result.add(codeWord);
   }
   return result.join('');
 }

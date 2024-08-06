@@ -6631,6 +6631,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_fonic',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown',
+          title: 'Fonic',
+          sourceUrl: 'https://web.archive.org/web/20200814001421/https://www.omniglot.com/conscripts/fonime.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: const [
       'symbol_four_triangles',
@@ -8112,7 +8118,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: const [
       'shadoksnumbers',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Université de Lille',
+          title: 'L’alphabet shadok',
+          sourceUrl:
+              'https://web.archive.org/web/20240805184521/https://www.fil.univ-lille.fr/~L1S1Info/Doc/HTML/tp_numeration_shadok.html')
+    ]),
     GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: const [
       'zelda',
       'symbol_sheikah',
@@ -8164,7 +8177,14 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Googe',
+          title: 'Skullz',
+          sourceUrl: 'https://fontmeme.com/schriftarten/skullz-schriftart/',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: const [
       'symbol_slash_and_pipe',
     ], licenses: [
@@ -8248,13 +8268,34 @@ void initializeRegistry(BuildContext context) {
       'symbol_sunuz',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown',
+          title: 'Tékumelani Languages',
+          sourceUrl:
+              'http://web.archive.org/web/20160719051617/https://www.tekumel.com/blueroom_fonts.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: const [
       'symbol_surf',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'WOODCUTTER',
+          title: 'Surf',
+          sourceUrl: 'https://web.archive.org/web/20150424085318/https://www.dafont.com/surf.font',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'tae', symbolSearchStrings: const [
       'symbol_tae',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'TAE connector',
+          sourceUrl:
+              'https://simple.wikipedia.org/w/index.php?title=TAE_connector&oldid=8424911')
+    ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: const [
       'symbol_tamil_numerals',
     ], licenses: [
@@ -8349,21 +8390,43 @@ void initializeRegistry(BuildContext context) {
           'symbol_lordoftherings',
           'symbol_tengwar_beleriand',
         ],
-        licenses: const []),
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'Enrique Mombello',
+              title: 'Las Tengwar de Fëanor',
+              sourceUrl:
+              'https://web.archive.org/web/20230605163745/https://www.oocities.org/enrombell/eng_dir/Index.htm',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              licenseUrl:
+                  'https://web.archive.org/web/20220210114601/https://freetengwar.sourceforge.net/links.html#unicode_tengwar_fonts')
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'tengwar_classic',
         symbolSearchStrings: const [
           'symbol_lordoftherings',
           'symbol_tengwar_classic',
         ],
-        licenses: const []),
+        licenses: const [
+
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'tengwar_general',
         symbolSearchStrings: const [
           'symbol_lordoftherings',
           'symbol_tengwar_general',
         ],
-        licenses: const []),
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'Enrique Mombello',
+              title: 'Las Tengwar de Fëanor',
+              sourceUrl:
+              'https://web.archive.org/web/20230605163745/https://www.oocities.org/enrombell/eng_dir/Index.htm',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              licenseUrl:
+                  'https://web.archive.org/web/20220210114601/https://freetengwar.sourceforge.net/links.html#unicode_tengwar_fonts')
+        ]),
     GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: const [
       'symbol_terzi',
     ], licenses: const []),
