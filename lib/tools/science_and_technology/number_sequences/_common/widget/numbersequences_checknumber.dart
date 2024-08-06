@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -18,6 +19,8 @@ class NumberSequenceCheckNumber extends StatefulWidget {
 class _NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
   String _currentInputN = '0';
   late TextEditingController currentInputController;
+
+  Widget _currentOutput = const GCWDefaultOutput();
 
   @override
   void initState() {
@@ -54,12 +57,17 @@ class _NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
             });
           },
         ),
-        _buildOutput()
+        GCWSubmitButton(onPressed: () {
+          setState(() {
+            _buildOutput();
+          });
+        }),
+        _currentOutput,
       ],
     );
   }
 
-  Widget _buildOutput() {
+  void _buildOutput() {
     var checked = numberSequencesCheckNumber(widget.mode, BigInt.parse(_currentInputN), widget.maxIndex);
 
     String output;
@@ -69,7 +77,7 @@ class _NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
       output = i18n(context, 'numbersequence_check_isnotinsequence');
     }
 
-    return GCWDefaultOutput(
+    _currentOutput = GCWDefaultOutput(
       child: output.toString(),
       copyText: checked.toString(),
       suppressCopyButton: checked < 0,

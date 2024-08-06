@@ -36,7 +36,7 @@ void main() {
    // _inputsToExpected.addAll(_inputsCryptoToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsGeocachingToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsDateTimeToExpected); // passed 05.05.2024
-   // _inputsToExpected.addAll(_inputsStringToExpected); // passed 05.05.2024
+    _inputsToExpected.addAll(_inputsStringToExpected); // passed 05.05.2024
 /*
     _inputsToExpected.addAll(_inputsGraphicToExpected);
 */
@@ -49,7 +49,7 @@ void main() {
    // _inputsToExpected.addAll(_inputsCommandsPRINTToExpected); // passed 22.05.2024
    // _inputsToExpected.addAll(_inputsCommandsIFToExpected); // passed 20.07.2024
    // _inputsToExpected.addAll(_inputsCommandsFORIFToExpected); // passed 20.07.2024
-    _inputsToExpected.addAll(_inputsCommandsFORCASEToExpected); // passed 20.07.2024
+   // _inputsToExpected.addAll(_inputsCommandsFORCASEToExpected); // passed 20.07.2024
 
 
     for (var elem in _inputsToExpected) {
