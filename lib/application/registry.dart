@@ -8408,7 +8408,15 @@ void initializeRegistry(BuildContext context) {
           'symbol_tengwar_classic',
         ],
         licenses: const [
-
+          ToolLicenseFont(
+              context: context,
+              author: 'Enrique Mombello',
+              title: 'Las Tengwar de Fëanor',
+              sourceUrl:
+                  'https://web.archive.org/web/20230605163745/https://www.oocities.org/enrombell/eng_dir/Index.htm',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              licenseUrl:
+                  'https://web.archive.org/web/20220210114601/https://freetengwar.sourceforge.net/links.html#unicode_tengwar_fonts')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'tengwar_general',
@@ -8422,7 +8430,7 @@ void initializeRegistry(BuildContext context) {
               author: 'Enrique Mombello',
               title: 'Las Tengwar de Fëanor',
               sourceUrl:
-              'https://web.archive.org/web/20230605163745/https://www.oocities.org/enrombell/eng_dir/Index.htm',
+                  'https://web.archive.org/web/20230605163745/https://www.oocities.org/enrombell/eng_dir/Index.htm',
               licenseType: ToolLicenseType.FREE_TO_USE,
               licenseUrl:
                   'https://web.archive.org/web/20220210114601/https://freetengwar.sourceforge.net/links.html#unicode_tengwar_fonts')
@@ -8432,7 +8440,17 @@ void initializeRegistry(BuildContext context) {
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'thai_numerals', symbolSearchStrings: const [
       'symbol_thai_numerals',
-    ], licenses: const []),
+    ], licenses: const [
+      ToolLicenseFont(
+          context: context,
+          author: 'Enrique Mombello',
+          title: 'Las Tengwar de Fëanor',
+          sourceUrl:
+              'https://web.archive.org/web/20230605163745/https://www.oocities.org/enrombell/eng_dir/Index.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUrl:
+              'https://web.archive.org/web/20220210114601/https://freetengwar.sourceforge.net/links.html#unicode_tengwar_fonts')
+    ]),
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: const [
       'symbol_theban',
     ], licenses: [
