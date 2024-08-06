@@ -8407,7 +8407,7 @@ void initializeRegistry(BuildContext context) {
           'symbol_lordoftherings',
           'symbol_tengwar_classic',
         ],
-        licenses: const [
+        licenses: [
           ToolLicenseFont(
               context: context,
               author: 'Enrique Mombello',
