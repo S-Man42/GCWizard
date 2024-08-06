@@ -8248,6 +8248,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_sunuz',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Unknown',
+          title: 'Tékumelani Languages',
+          sourceUrl:
+              'http://web.archive.org/web/20160719051617/https://www.tekumel.com/blueroom_fonts.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: const [
       'symbol_surf',
