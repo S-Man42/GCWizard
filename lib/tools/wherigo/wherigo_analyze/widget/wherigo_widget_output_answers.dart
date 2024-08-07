@@ -11,7 +11,7 @@ String _answerIsVariable(String answer) {
   return '';
 }
 
-List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputData input, WherigoAnswerData data) {
+List<List<String>> _buildOutputListAnswers(BuildContext context, WherigoInputData input, WherigoAnswerData data, String LUASource) {
   List<List<String>> result;
   List<String> answers = data.AnswerAnswer.split('\x01');
   var hash = answers[0].trim();
