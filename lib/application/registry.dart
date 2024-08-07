@@ -8440,7 +8440,7 @@ void initializeRegistry(BuildContext context) {
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'thai_numerals', symbolSearchStrings: const [
       'symbol_thai_numerals',
-    ], licenses: const [
+    ], licenses: [
       ToolLicenseFont(
           context: context,
           author: 'Enrique Mombello',
