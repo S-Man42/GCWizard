@@ -1088,7 +1088,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                     (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
                         ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
-                      _LUA_SourceCode,
+                      WherigoCartridgeLUAData.LUAFile,
                   ),
                   copyColumn: 1,
                   flexValues: const [3, 2, 2]),
