@@ -630,14 +630,14 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayMediaFilesData(BuildContext context) {
-    if ((WherigoCartridgeLUAData.Media.isEmpty) && (WherigoCartridgeGWCData.MediaFilesContents.isEmpty)) {
+    if (WherigoCartridgeGWCData.MediaFilesContents.length == 1) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
       );
     }
 
-    if (WherigoCartridgeGWCData.MediaFilesContents.isEmpty) {
+    if ((WherigoCartridgeLUAData.Media.isEmpty)) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -1496,7 +1496,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                id: 'coords_map_view',
+                id: 'coords_openmap',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }

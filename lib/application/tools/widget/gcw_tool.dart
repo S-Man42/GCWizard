@@ -9,7 +9,8 @@ import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/tools/widget/tool_licenses.dart';
+import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_license_types.dart';
+import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_licenses.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
@@ -97,7 +98,7 @@ class GCWTool extends StatefulWidget {
   final String helpSearchString;
   final bool isBeta;
   final List<String>? deeplinkAlias;
-  final List<ToolLicense>? licenses;
+  final List<ToolLicenseEntry>? licenses;
 
   GCWSymbolContainer? icon;
   var longId = '';
