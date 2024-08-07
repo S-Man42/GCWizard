@@ -84,10 +84,13 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
           var file = _getFileFrom(context, element.ActionMessageContent);
           if (file == null) break;
 
-          resultWidget.add(GCWImageView(
-            imageData: GCWImageViewData(file),
-            suppressedButtons: const {GCWImageViewButtons.ALL},
+          resultWidget.add(GCWFilesOutput(
+            suppressHiddenDataMessage: true,
+            files: [
+              GCWFile(bytes: file.bytes, name: file.name),
+            ],
           ));
+
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.BUTTON:
@@ -105,6 +108,7 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
           break;
 
         case WHERIGO_ACTIONMESSAGETYPE.COMMAND:
+          resultWidget.add(GCWText(text: element.ActionMessageContent,));
           if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
             String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
             if (WHERIGONameToObject[LUAName] == null ||
@@ -115,7 +119,6 @@ List<Widget> _outputAnswerActionsWidgets(BuildContext context, WherigoAnswerData
             if (WherigoCartridgeGWCData.MediaFilesContents.isNotEmpty) {
               resultWidget.add(GCWFilesOutput(
                 suppressHiddenDataMessage: true,
-                suppressedButtons: const {GCWImageViewButtons.SAVE},
                 files: [
                   GCWFile(
                       //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
