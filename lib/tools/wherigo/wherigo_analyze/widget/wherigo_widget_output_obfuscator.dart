@@ -3,12 +3,6 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.
 List<List<String>> _buildWidgetToDisplayObfuscatorData(BuildContext context, List<List<String>> data) {
   List<List<String>> result = [];
 
-  if (WherigoCartridgeLUAData.ObfuscatorTable.isEmpty) {
-    return [
-      [i18n(context, 'wherigo_header_obfuscatorfunction'), '']
-    ];
-  }
-
   if (WHERIGOExpertMode) {
     result = _buildOutputListOfObfuscatorDataExpertMode(context, data);
   } else {
@@ -17,21 +11,6 @@ List<List<String>> _buildWidgetToDisplayObfuscatorData(BuildContext context, Lis
 
  return result;
 }
-
-// if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-//   GCWOutput(
-//     title: i18n(context, 'wherigo_header_obfuscatorfunction'),
-//     child: WherigoCartridgeLUAData.ObfuscatorFunction,
-//     suppressCopyButton: (WherigoCartridgeLUAData.ObfuscatorFunction == 'NO_OBFUSCATOR'),
-//   ),
-// if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-//   GCWOutput(
-//     title: 'dTable',
-//     child: GCWOutputText(
-//       text: WherigoCartridgeLUAData.ObfuscatorTable,
-//       style: gcwMonotypeTextStyle(),
-//     ),
-//   ),
 
 List<List<String>> _buildOutputListOfObfuscatorDataUserMode(BuildContext context, List<List<String>> data) {
   List<List<String>> result = [];

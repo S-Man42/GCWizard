@@ -10,11 +10,6 @@ void _deObfuscateAllTexts() {
       _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction[i], _obfuscatorTable[i]) + '"');
     });
   }
-  // RegExp(r'' + _obfuscatorFunction + '\\(".*?"\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-  //   var group = obfuscatedText.group(0);
-  //   if (group == null) return;
-  //   _LUAFile = _LUAFile.replaceAll(group, '"' + deObfuscateText(group, _obfuscatorFunction, _obfuscatorTable) + '"');
-  // });
 }
 
 void _checkAndGetObfuscatorURWIGO(List<String> lines) {
@@ -24,21 +19,12 @@ void _checkAndGetObfuscatorURWIGO(List<String> lines) {
     lines[i] = lines[i].trim();
 
     if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
-      obFunction = lines[i - 2].trim().substring(9);
-      for (int j = _obfuscatorFunction.length - 1; j > 0; j--) {
-        if (_obfuscatorFunction[j] == '(') {
-          obFunction = obFunction.substring(0, j);
-          j = 0;
-        }
-      }
+      obFunction = lines[i - 2].replaceAll('function ', '').replaceAll('(str)', '');
       _obfuscatorFunction.add(obFunction);
       _obfuscatorFound = true;
 
-      obTable = lines[i].trim().substring(0, lines[i].length - 1);
-      obTable = obTable.trimLeft().replaceAll('local dtable = "', '');
-
+      obTable = lines[i].trim().substring(0, lines[i].length - 1).replaceAll('local dtable = "', '');
       _obfuscatorTable.add(obTable);
-      //i = lines.length;
     }
   }
 }

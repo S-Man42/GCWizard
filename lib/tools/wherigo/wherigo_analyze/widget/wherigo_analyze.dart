@@ -511,21 +511,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           data: _buildWidgetToDisplayObfuscatorData(context, [WherigoCartridgeLUAData.ObfuscatorFunction, WherigoCartridgeLUAData.ObfuscatorTable]
           ),
         ),
-
-        // if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-        //   GCWOutput(
-        //     title: i18n(context, 'wherigo_header_obfuscatorfunction'),
-        //     child: WherigoCartridgeLUAData.ObfuscatorFunction,
-        //     suppressCopyButton: (WherigoCartridgeLUAData.ObfuscatorFunction == 'NO_OBFUSCATOR'),
-        //   ),
-        // if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-        //   GCWOutput(
-        //     title: 'dTable',
-        //     child: GCWOutputText(
-        //       text: WherigoCartridgeLUAData.ObfuscatorTable,
-        //       style: gcwMonotypeTextStyle(),
-        //     ),
-        //   ),
       ],
     );
   }
