@@ -4,8 +4,8 @@ String _LUAFile = '';
 
 String _CartridgeLUAName = '';
 
-String _obfuscatorTable = '';
-String _obfuscatorFunction = 'NO_OBFUSCATOR';
+List<String> _obfuscatorTable = [];
+List<String> _obfuscatorFunction = []; //'NO_OBFUSCATOR';
 bool _obfuscatorFound = false;
 
 String _LUACartridgeName = '';
