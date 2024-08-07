@@ -95,7 +95,7 @@ String getTextData(
   return normalizeWIGText(result);
 }
 
-List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obfuscator, String dtable) {
+List<String> getChoicesSingleLine(String choicesLine, String LUAname, List<String> obfuscator, List<String> dtable) {
   List<String> result = [];
   choicesLine
       .replaceAll(LUAname + '.Choices = {', '')
