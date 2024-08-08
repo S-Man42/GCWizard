@@ -5082,6 +5082,17 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://en.wikipedia.org/w/index.php?title=Bibi-binary&oldid=1218138081#/media/File:Table_de_correspondance_entre_le_Bibinaire_et_les_autres_notations.svg'),
     ]),
+    GCWSymbolTableTool(symbolKey: 'billiard_balls', symbolSearchStrings: const [
+      'symbol_billiard_balls',
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Billiard Gear Vector by Cgvector.com',
+          title: 'Billiard Balls',
+          sourceUrl: 'https://web.archive.org/web/20240524133920/https://www.freevector.com/billiard-balls',
+          licenseType: ToolLicenseType.CCBY4,
+          licenseUseType: ToolLicenseUseType.REPRODUCTION)
+    ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: const [
       'symbol_birds_on_a_wire',
     ], licenses: [
