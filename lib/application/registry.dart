@@ -5610,6 +5610,10 @@ void initializeRegistry(BuildContext context) {
         ]),
 
     //Symbol Tables **********************************************************************************************
+    // https://docs.google.com/spreadsheets/d/1yPCPTHXHWqRxkAQFCAktz9E1-dGCiQRHmwwh06h9kWs/edit?gid=0#gid=0
+    // TODO get/search/request license and add license information
+    // TODO keep google sheet up to date
+
     GCWTool(
         tool: const SymbolTableExamplesSelect(),
         autoScroll: false,
@@ -5671,6 +5675,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_alchemy',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+        title: 'Alchemical symbol',
+        sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Alchemical_symbol&oldid=1228852947',
+      ),
     ]),
     GCWSymbolTableTool(
         symbolKey: 'alchemy_alphabet',
@@ -5818,7 +5828,12 @@ void initializeRegistry(BuildContext context) {
           'babylonian_numerals',
         ],
         licenses: [
-          stl._toolLicenseGeocachingToolbox,
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Babylonian cuneiform numerals',
+              sourceUrl:
+              'https://en.wikipedia.org/w/index.php?title=Babylonian_cuneiform_numerals&oldid=1218528028')
         ]),
     GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: const [
       'symbol_ballet',
@@ -6080,7 +6095,12 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: const [
       'symbol_cherokee',
     ], licenses: [
-      stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Cherokee language',
+          sourceUrl:
+          'https://en.wikipedia.org/w/index.php?title=Cherokee_language&oldid=1238063152')
     ]),
     GCWSymbolTableTool(
         symbolKey: 'chinese_numerals',
