@@ -2865,7 +2865,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Befunge',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicensePortedCode(
           context: context,
           author: 'catseye',
@@ -2881,7 +2882,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Brainfuck',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicensePortedCode(
           context: context,
           author: 'Fabian Mastenbroek',
@@ -2978,7 +2980,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Karel (programming language)',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicenseOnlineArticle(
           context: context,
           author: 'Robert H. Untch',
@@ -2999,7 +3002,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Malbolge',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicenseOnlineArticle(
           context: context,
           author: 'Ben Olmstead',
@@ -3030,7 +3034,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Ook!',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Ook!&oldid=223308865'),
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Ook!&oldid=223308865',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicensePortedCode(
           context: context,
           author: 'David Morgan-Mar',
@@ -4826,6 +4831,7 @@ void initializeRegistry(BuildContext context) {
         author: 'en.wikipedia.org and contributors',
         title: 'Alchemical symbol',
         sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Alchemical_symbol&oldid=1228852947',
+        licenseType: ToolLicenseType.CCBYSA4,
       ),
     ]),
     GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', symbolSearchStrings: const [
@@ -4901,7 +4907,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Arabische Zahlschrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
@@ -4975,7 +4982,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Babylonian cuneiform numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Babylonian_cuneiform_numerals&oldid=1218528028')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Babylonian_cuneiform_numerals&oldid=1218528028',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: const [
       'symbol_ballet',
@@ -4998,7 +5006,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Charles Barbier',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Charles_Barbier&oldid=1216652066'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Charles_Barbier&oldid=1216652066',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicenseOnlineBook(
           context: context,
           author: 'Charles Barbier',
@@ -5230,7 +5239,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cherokee language',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cherokee_language&oldid=1238063152')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cherokee_language&oldid=1238063152',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: const [
       'symbol_chinese_numerals',
@@ -5239,7 +5249,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Chinese numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Chinese_numerals&oldid=1233670341')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Chinese_numerals&oldid=1233670341',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: const [
       'christmas',
@@ -5273,7 +5284,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cistercian numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cistercian_numerals&oldid=1213598900')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cistercian_numerals&oldid=1213598900',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
       'symbol_clocks',
@@ -5336,7 +5348,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cooke and Wheatstone telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cookewheatstone_2', symbolSearchStrings: const [
       'telegraph',
@@ -5347,7 +5360,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cooke and Wheatstone telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cookewheatstone_5', symbolSearchStrings: const [
       'telegraph',
@@ -5358,7 +5372,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cooke and Wheatstone telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
       'symbol_cosmic',
@@ -5382,7 +5397,8 @@ void initializeRegistry(BuildContext context) {
           author: 'wikipedia.org and contributors',
           title: 'Gallery of sovereign state flags',
           sourceUrl:
-              'http://web.archive.org/web/20210109105312/https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags')
+              'http://web.archive.org/web/20210109105312/https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: const [
       'symbol_covenant',
@@ -5413,7 +5429,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Cyrillic script',
-          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
+          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cyrillic_numbers', symbolSearchStrings: const [
       'symbol_cyrillic_numbers',
@@ -5422,7 +5439,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Cyrillic script',
-          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
+          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
@@ -5467,7 +5485,8 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'The Adventure of the Dancing Men',
           sourceUrl:
-              'http://web.archive.org/web/20210108115120/https://en.wikipedia.org/wiki/The_Adventure_of_the_Dancing_Men'),
+              'http://web.archive.org/web/20210108115120/https://en.wikipedia.org/wiki/The_Adventure_of_the_Dancing_Men',
+          licenseType: ToolLicenseType.CCBYSA4),
       stl._toolLicenseWrixonGeheimsprachen,
       stl._toolLicenseGeocachingToolbox
     ]),
@@ -5486,7 +5505,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Two-handed manual alphabets',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Two-handed_manual_alphabets&oldid=1182989428')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Two-handed_manual_alphabets&oldid=1182989428',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
       'symbol_devanagari_numerals',
@@ -5495,7 +5515,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Devanagari numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
@@ -5561,6 +5582,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Dorabella',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Dorabella_Cipher&oldid=1227166448',
+          licenseType: ToolLicenseType.CCBYSA4,
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: const [
@@ -5597,7 +5619,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Arabische Zahlschrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'egyptian_numerals', symbolSearchStrings: const [
       'symbol_egyptian_numerals',
@@ -5606,7 +5629,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Egyptian numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Egyptian_numerals&oldid=1222065795')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Egyptian_numerals&oldid=1222065795',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: const [
       'elia',
@@ -5620,7 +5644,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Enochian',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Enochian&oldid=1232294087')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Enochian&oldid=1232294087',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'eternity_code', symbolSearchStrings: const [
       'symbol_eternity_code',
@@ -5697,7 +5722,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Fingeralphabet',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Fingeralphabet&oldid=247429082')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Fingeralphabet&oldid=247429082',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'finger_numbers', symbolSearchStrings: const [
       'symbol_signlanguage',
@@ -5707,7 +5733,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Fingeralphabet',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Fingeralphabet&oldid=247429082')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Fingeralphabet&oldid=247429082',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: const [
       'symbol_flags',
@@ -5716,7 +5743,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'International maritime signal flags',
-          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags_german_kriegsmarine', symbolSearchStrings: const [
       'symbol_flags',
@@ -5741,7 +5769,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'International maritime signal flags',
-          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: const [
       'symbol_flags',
@@ -5763,7 +5792,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Maritime flag signalling',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_popham', symbolSearchStrings: const [
       'symbol_flags',
@@ -5827,7 +5857,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Elder Futhark',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Elder_Futhark&oldid=1236807910')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Elder_Futhark&oldid=1236807910',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'futhark_younger', symbolSearchStrings: const [
       'symbol_runes',
@@ -5837,7 +5868,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Younger Futhark',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Younger_Futhark&oldid=1226247571')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Younger_Futhark&oldid=1226247571',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
       'symbol_runes',
@@ -5848,7 +5880,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Anglo-Saxon runes',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Anglo-Saxon_runes&oldid=1231842934')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Anglo-Saxon_runes&oldid=1231842934',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
@@ -5971,7 +6004,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Glagolitische Schrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Glagolitische_Schrift&oldid=242590359')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Glagolitische_Schrift&oldid=242590359',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: const [], licenses: [
       ToolLicenseFont(
@@ -5989,7 +6023,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Greek numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Greek_numerals&oldid=1236399172')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Greek_numerals&oldid=1236399172',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hangul_korean', symbolSearchStrings: const [
       'symbol_hangul',
@@ -5998,7 +6033,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Hangul',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Hangul&oldid=1236544404')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Hangul&oldid=1236544404',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hangul_sino_korean', symbolSearchStrings: const [
       'symbol_hangul',
@@ -6008,7 +6044,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Sino Korean numbers',
-          sourceUrl: 'https://www.koreanwikiproject.com/wiki/index.php?title=Sino_Korean_numbers&oldid=30107')
+          sourceUrl: 'https://www.koreanwikiproject.com/wiki/index.php?title=Sino_Korean_numbers&oldid=30107',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: const [
       'symbol_hanja',
@@ -6018,7 +6055,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Korean numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Korean_numerals&oldid=1229158459')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Korean_numerals&oldid=1229158459',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: const [
       'symbol_hazard',
@@ -6232,7 +6270,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Brandschutzzeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333',
+  licenseType: ToolLicenseType.CCBYSA4
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_mandatory', symbolSearchStrings: const [
       'iso7010',
@@ -6242,7 +6281,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Gebotszeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_prohibition', symbolSearchStrings: const [
       'iso7010',
@@ -6252,7 +6292,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Verbotszeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_safecondition', symbolSearchStrings: const [
       'iso7010',
@@ -6262,7 +6303,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Rettungszeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_warning', symbolSearchStrings: const [
       'iso7010',
@@ -6272,7 +6314,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Warnzeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const [
       'ccitt',
@@ -6283,7 +6326,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Baudot code',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const [
       'ccitt',
@@ -6334,7 +6378,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'KarTrak',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=KarTrak&oldid=1231296757')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=KarTrak&oldid=1231296757',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const [
       'symbol_kaktovik',
@@ -6344,7 +6389,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Kaktovik numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kaktovik_numerals&oldid=1236877061')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kaktovik_numerals&oldid=1236877061',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
@@ -6407,7 +6453,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Kurrent',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kurrent&oldid=1205126071')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kurrent&oldid=1205126071',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
@@ -6454,7 +6501,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Malachim',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
@@ -6587,7 +6635,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Lunar phase',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Lunar_phase&oldid=1231773726')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Lunar_phase&oldid=1231773726',
+  licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
@@ -6765,32 +6814,69 @@ void initializeRegistry(BuildContext context) {
       'music',
       'music_notes',
       'symbol_notes_doremi',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Solresol',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Solresol&oldid=242474951',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_names_altoclef',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'en.wikipedia.org and contributors',
+        title: 'Clef',
+        sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+        licenseType: ToolLicenseType.CCBYSA4)]),
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_names_bassclef',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Clef',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+          licenseType: ToolLicenseType.CCBYSA4)]),
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_names_trebleclef',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Clef',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+          licenseType: ToolLicenseType.CCBYSA4)]),
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_notevalues',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Musical note',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Musical_note&oldid=1238867492',
+          licenseType: ToolLicenseType.CCBYSA4)]),
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_restvalues',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Rest (music)',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Rest_(music)&oldid=1226810233',
+          licenseType: ToolLicenseType.CCBYSA4)]),
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
     ], licenses: [
@@ -6821,7 +6907,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Ogham',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Ogham&oldid=1234313745')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Ogham&oldid=1234313745',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: const [
       'color',
@@ -6846,7 +6933,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Phoenician (Unicode block)',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Phoenician_(Unicode_block)&oldid=1236804525')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Phoenician_(Unicode_block)&oldid=1236804525',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: const [
       'symbol_pipeline',
@@ -6861,7 +6949,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'DIN 2403',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=DIN_2403&oldid=220693795')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=DIN_2403&oldid=220693795',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: const [
       'symbol_pixel',
@@ -6883,7 +6972,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Astrological symbols',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Astrological_symbols&oldid=1227161520')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Astrological_symbols&oldid=1227161520',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
       'symbol_pleiadian',
@@ -6897,7 +6987,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Unown',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Unown&oldid=1238601379')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Unown&oldid=1238601379',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: const [
       'barcodes',
@@ -6907,7 +6998,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Zielcode',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: const [
       'barcodes',
@@ -6917,7 +7009,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Zielcode',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: const [
       'barcodes',
@@ -7029,7 +7122,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Resistor color codes',
-          sourceUrl: 'https://en.wikiversity.org/w/index.php?title=Resistor_color_codes&oldid=2580031')
+          sourceUrl: 'https://en.wikiversity.org/w/index.php?title=Resistor_color_codes&oldid=2580031',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: const [
       'symbol_rhesus',
@@ -7079,7 +7173,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'RM4SCC',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=RM4SCC&oldid=1214051326'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=RM4SCC&oldid=1214051326',
+          licenseType: ToolLicenseType.CCBYSA4),
     ]),
     GCWSymbolTableTool(symbolKey: 'robots', symbolSearchStrings: const [
       'symbol_robots',
@@ -7275,7 +7370,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Sütterlin',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=S%C3%BCtterlin&oldid=1231365683')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=S%C3%BCtterlin&oldid=1231365683',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: const [
       'symbol_sunuz',
@@ -7305,7 +7401,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'TAE connector',
-          sourceUrl: 'https://simple.wikipedia.org/w/index.php?title=TAE_connector&oldid=8424911')
+          sourceUrl: 'https://simple.wikipedia.org/w/index.php?title=TAE_connector&oldid=8424911',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: const [
       'symbol_tamil_numerals',
@@ -7314,7 +7411,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Arabische Zahlschrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(
       symbolKey: 'telegraph_pasley',
@@ -7680,7 +7778,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'commons.wikimedia.org and contributors',
           title: 'Foy–Breguet telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Foy%E2%80%93Breguet_telegraph&oldid=1169555630')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Foy%E2%80%93Breguet_telegraph&oldid=1169555630',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWTool(tool: const MurrayTelegraph(), id: 'telegraph_murray', searchKeys: const [
       'telegraph',
