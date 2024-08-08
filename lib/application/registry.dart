@@ -7690,90 +7690,111 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: const [
-      'weather', 'weather_a'
+      'weather',
+      'weather_a'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'Pressure Tendency',
-          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: const [
-      'weather', 'weather_c', 'weather_clouds'
+      'weather',
+      'weather_c',
+      'weather_clouds'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'WEATHER FIGURES AND SYMBOLS',
-          sourceUrl: 'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          sourceUrl:
+              'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: const [
-      'weather', 'weather_cl', 'weather_clouds'
+      'weather',
+      'weather_cl',
+      'weather_clouds'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'Low Clouds',
-          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: const [
-      'weather', 'weather_cm', 'weather_clouds'
+      'weather',
+      'weather_cm',
+      'weather_clouds'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'Middle Clouds',
-          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
-        ]),
+    ]),
     GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: const [
-      'weather', 'weather_ch', 'weather_clouds'
+      'weather',
+      'weather_ch',
+      'weather_clouds'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'High Clouds',
-          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
-        ]),
+    ]),
     GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: const [
-      'weather', 'weather_n', 'weather_clouds'
+      'weather',
+      'weather_n',
+      'weather_clouds'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'Sky Cover',
-          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: const [
-      'weather', 'weather_w'
+      'weather',
+      'weather_w'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'Past Weather',
-          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: const [
-      'weather', 'weather_ww'
+      'weather',
+      'weather_ww'
     ], licenses: [
       ToolLicenseImage(
           context: context,
           author: 'Unknown',
           title: 'WEATHER FIGURES AND SYMBOLS',
-          sourceUrl: 'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          sourceUrl:
+              'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
@@ -7790,7 +7811,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'westernunion',
         symbolSearchStrings: const ['symbol_westernunion', 'teletypewriter'],
-        licenses: const []),
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'commons.wikimedia.org and contributors',
+              title: "RTTY.COM's CODE-CARD CORNER",
+              sourceUrl: 'https://web.archive.org/web/20240808182500/https://www.rtty.com/CODECARD/codecrd1.htm',
+              licenseType: ToolLicenseType.FREE_TO_USE)
+        ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_beaufort',
@@ -7801,7 +7829,13 @@ void initializeRegistry(BuildContext context) {
           title: 'Wind speed',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
           licenseType: ToolLicenseType.CCBYSA4)
-=======
+    ]),
+    GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: const [
+      'symbol_wingdings',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
           title: 'Wingdings',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
