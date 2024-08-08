@@ -287,6 +287,7 @@ import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
+import 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/widget/wedding_anniversaries.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
@@ -772,6 +773,7 @@ void _initStaticToolList() {
       className(const WASD()),
       className(const WaypointProjectionGeodetic()),
       className(const WaypointProjectionRhumbline()),
+      className(const WeddingAnniversaries()),
       className(const Weekday()),
       className(const WetBulbTemperature()),
       className(const WetBulbGlobeTemperature()),

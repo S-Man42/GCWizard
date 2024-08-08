@@ -37,8 +37,10 @@
 // https://oeis.org/A008336   RecamánII           a(n+1) = a(n)/n if n|a(n) else a(n)*n, a(1) = 1.
 // https://oeis.org/A000058   Sylvester           a(n) = 1 + a(0)*a(1)*...*a(n-1)
 
+import 'dart:isolate';
 import 'dart:math';
 
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/busybeaver/logic/list_busy_beaver_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/happy_numbers/logic/list_happy_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/lucky_numbers/logic/list_lucky_numbers.dart';
@@ -53,7 +55,7 @@ import 'package:gc_wizard/tools/science_and_technology/number_sequences/sublime_
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/superperfect_numbers/logic/list_super_perfect_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/weird_numbers/logic/list_weird_numbers.dart';
 
-part 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence_check.dart';
+part 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence_checknumber.dart';
 part 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence_containsdigits.dart';
 part 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence_digits.dart';
 part 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence_nthnumber.dart';
