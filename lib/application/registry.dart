@@ -5582,7 +5582,6 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Dorabella',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Dorabella_Cipher&oldid=1227166448',
-          licenseType: ToolLicenseType.CCBYSA4,
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: const [
@@ -5708,10 +5707,9 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'CalTrask',
           title: 'Zuish',
-          sourceUrl:
-          'https://web.archive.org/web/20240808110634/https://www.dafont.com/zuish.font',
+          sourceUrl: 'https://web.archive.org/web/20240808110634/https://www.dafont.com/zuish.font',
           licenseType: ToolLicenseType.FREE_TO_USE,
-      customComment: 'dafont.com')
+          customComment: 'dafont.com')
     ]),
     GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: const [
       'symbol_signlanguage',
@@ -6271,7 +6269,7 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Brandschutzzeichen',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333',
-  licenseType: ToolLicenseType.CCBYSA4
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_mandatory', symbolSearchStrings: const [
       'iso7010',
@@ -6282,7 +6280,7 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Gebotszeichen',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_prohibition', symbolSearchStrings: const [
       'iso7010',
@@ -6293,7 +6291,7 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Verbotszeichen',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_safecondition', symbolSearchStrings: const [
       'iso7010',
@@ -6304,7 +6302,7 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Rettungszeichen',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_warning', symbolSearchStrings: const [
       'iso7010',
@@ -6315,7 +6313,7 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Warnzeichen',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const [
       'ccitt',
@@ -6327,7 +6325,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Baudot code',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const [
       'ccitt',
@@ -6379,7 +6377,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'KarTrak',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=KarTrak&oldid=1231296757',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const [
       'symbol_kaktovik',
@@ -6390,7 +6388,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Kaktovik numerals',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kaktovik_numerals&oldid=1236877061',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
@@ -6502,7 +6500,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Malachim',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
@@ -6606,7 +6604,7 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
-      ]),
+    ]),
     GCWSymbolTableTool(symbolKey: 'medieval_runes', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_futhark'
@@ -6636,7 +6634,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Lunar phase',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Lunar_phase&oldid=1231773726',
-  licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
@@ -6696,14 +6694,16 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Helmar Fischer',
           title: 'Der Klappentelegraph',
-          sourceUrl: 'https://web.archive.org/web/20240808115703/https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf',
+          sourceUrl:
+              'https://web.archive.org/web/20240808115703/https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf',
           licenseType: ToolLicenseType.PRIVATE_PERMISSION,
-      privatePermission: ToolLicensePrivatePermission(context: context,
-          medium: 'e-Mail',
-          permissionYear: 2024,
-          permissionMonth: 7,
-          permissionDay: 23,
-          permissionAuthor: 'Helmar Fischer')),
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2024,
+              permissionMonth: 7,
+              permissionDay: 23,
+              permissionAuthor: 'Helmar Fischer')),
     ]),
     GCWSymbolTableTool(symbolKey: 'murray_v2_fischer_corrected', symbolSearchStrings: const [
       'symbol_murray',
@@ -6712,9 +6712,11 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Helmar Fischer',
           title: 'Der Klappentelegraph',
-          sourceUrl: 'https://web.archive.org/web/20240808115529/https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf',
+          sourceUrl:
+              'https://web.archive.org/web/20240808115529/https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf',
           licenseType: ToolLicenseType.PRIVATE_PERMISSION,
-          privatePermission: ToolLicensePrivatePermission(context: context,
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
               medium: 'e-Mail',
               permissionYear: 2024,
               permissionMonth: 7,
@@ -6739,9 +6741,11 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Omar Roucoux',
           title: 'Dunstable Signalling Station',
-          sourceUrl: 'https://web.archive.org/web/20240808120043/https://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm',
+          sourceUrl:
+              'https://web.archive.org/web/20240808120043/https://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm',
           licenseType: ToolLicenseType.PRIVATE_PERMISSION,
-          privatePermission: ToolLicensePrivatePermission(context: context,
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
               medium: 'e-Mail',
               permissionYear: 2021,
               permissionMonth: 12,
@@ -6828,11 +6832,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_notes_names_altoclef',
     ], licenses: [
       ToolLicenseOnlineArticle(
-        context: context,
-        author: 'en.wikipedia.org and contributors',
-        title: 'Clef',
-        sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
-        licenseType: ToolLicenseType.CCBYSA4)]),
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Clef',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -6843,7 +6848,8 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Clef',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
-          licenseType: ToolLicenseType.CCBYSA4)]),
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -6854,7 +6860,8 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Clef',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
-          licenseType: ToolLicenseType.CCBYSA4)]),
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -6865,7 +6872,8 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Musical note',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Musical_note&oldid=1238867492',
-          licenseType: ToolLicenseType.CCBYSA4)]),
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -6876,7 +6884,8 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Rest (music)',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Rest_(music)&oldid=1226810233',
-          licenseType: ToolLicenseType.CCBYSA4)]),
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
     ], licenses: [
@@ -6914,17 +6923,36 @@ void initializeRegistry(BuildContext context) {
       'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_fotag',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'TIA-598-C',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=TIA-598-C&oldid=919612867',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_iec60304',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Opternus',
+          title: 'LWL Farbcodierungen',
+          sourceUrl: 'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',)
+    ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
       'optical_fiber_swisscom',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Opternus',
+          title: 'LWL Farbcodierungen',
+          sourceUrl: 'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',)
+    ]),
     GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: const [
       'symbol_phoenician',
       'zigzag'
@@ -7087,6 +7115,12 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: 'Das Quadoo-Alphabet',
+          sourceUrl: 'https://web.archive.org/web/20240808130803/https://fakoo.de/quadoo.html',
+          licenseType: ToolLicenseType.CCBYNCND40)
     ]),
     GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
       'symbol_ravkan',
