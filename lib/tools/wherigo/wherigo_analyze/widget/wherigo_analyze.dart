@@ -720,7 +720,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         WherigoCartridgeGWCData.MediaFilesContents[_mediaFileIndex].MediaFileBytes.isNotEmpty
             ? GCWFilesOutput(
                 suppressHiddenDataMessage: true,
-                suppressedButtons: const {GCWImageViewButtons.SAVE},
                 files: [
                   GCWFile(
                       bytes: _getBytes(WherigoCartridgeGWCData.MediaFilesContents, _mediaFileIndex), name: filename),
@@ -1078,6 +1077,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                     (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
                         ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
+                      WherigoCartridgeLUAData.LUAFile,
                   ),
                   copyColumn: 1,
                   flexValues: const [3, 2, 2]),

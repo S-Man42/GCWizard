@@ -7313,6 +7313,7 @@
   "wherigo_output_action_cse": "Else",
   "wherigo_output_alttext": "Alternate Text",
   "wherigo_output_answer": "Answer",
+  "wherigo_output_answervariable": "Answer was stored in Variable",
   "wherigo_output_answerdecrypted": "Answer (Decrypted)",
   "wherigo_output_answeractions": "Actions",
   "wherigo_output_answeractions_correct": "Actions when correct",
