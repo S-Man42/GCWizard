@@ -7680,107 +7680,112 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.CCBYNCND30)
     ]),
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: const [
-      'symbol_wakandan',
+      'symbol_wakandan'
     ], licenses: [
       ToolLicenseFont(
           context: context,
-          author: 'Omniglot',
-          title: 'Wakandan',
-          sourceUrl: 'https://web.archive.org/web/20240808180913/https://www.omniglot.com/conscripts/wakandan.htm',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-      customComment: 'Alphabet designed by Hannah Beachler, and used in the 2018 film Black Panther. It is based on Nsibidi symbols')
+          author: 'Adam Pypstra',
+          title: 'Wakanda Forever',
+          sourceUrl: 'https://web.archive.org/web/20200615000000*/https://dribbble.com/shots/4269681-Wakanda-Forever',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: const [
-      'weather',
-      'weather_a'
+      'weather', 'weather_a'
     ], licenses: [
-      ToolLicenseOnlineArticle(
+      ToolLicenseImage(
           context: context,
-          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          author: 'Unknown',
           title: 'Pressure Tendency',
-          sourceUrl:
-              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_c',
-        symbolSearchStrings: const ['weather', 'weather_c', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: const [
-      'weather',
-      'weather_cl',
-      'weather_clouds'
+    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: const [
+      'weather', 'weather_c', 'weather_clouds'
     ], licenses: [
-      ToolLicenseOnlineArticle(
+      ToolLicenseImage(
           context: context,
-          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
-          title: 'Cloud Type - Low Clouds',
-          sourceUrl:
-              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          author: 'Unknown',
+          title: 'WEATHER FIGURES AND SYMBOLS',
+          sourceUrl: 'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: const [
+      'weather', 'weather_cl', 'weather_clouds'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'Low Clouds',
+          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: const [
-      'weather',
-      'weather_cm',
-      'weather_clouds'
+      'weather', 'weather_cm', 'weather_clouds'
     ], licenses: [
-      ToolLicenseOnlineArticle(
+      ToolLicenseImage(
           context: context,
-          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
-          title: 'Cloud Type - Middle Clouds',
-          sourceUrl:
-              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
-    ]),
+          author: 'Unknown',
+          title: 'Middle Clouds',
+          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+        ]),
     GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: const [
-      'weather',
-      'weather_ch',
-      'weather_clouds'
+      'weather', 'weather_ch', 'weather_clouds'
     ], licenses: [
-      ToolLicenseOnlineArticle(
+      ToolLicenseImage(
           context: context,
-          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
-          title: 'Cloud Type - High Clouds',
-          sourceUrl:
-              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
-    ]),
+          author: 'Unknown',
+          title: 'High Clouds',
+          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+        ]),
     GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: const [
-      'weather',
-      'weather_n',
-      'weather_clouds'
+      'weather', 'weather_n', 'weather_clouds'
     ], licenses: [
-      ToolLicenseOnlineArticle(
+      ToolLicenseImage(
           context: context,
-          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          author: 'Unknown',
           title: 'Sky Cover',
-          sourceUrl:
-              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: const [
-      'weather',
-      'weather_w'
+      'weather', 'weather_w'
     ], licenses: [
-      ToolLicenseOnlineArticle(
+      ToolLicenseImage(
           context: context,
-          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          author: 'Unknown',
           title: 'Past Weather',
-          sourceUrl:
-              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          sourceUrl: 'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_ww', symbolSearchStrings: const ['weather', 'weather_ww'], licenses: const []),
+    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: const [
+      'weather', 'weather_ww'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'WEATHER FIGURES AND SYMBOLS',
+          sourceUrl: 'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: const [
       'symbol_webdings',
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Webdings-big.png',
+          title: 'Webdings',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Webdings-big.png&oldid=899647144',
-          licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(
         symbolKey: 'westernunion',
@@ -7796,6 +7801,10 @@ void initializeRegistry(BuildContext context) {
           title: 'Wind speed',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
           licenseType: ToolLicenseType.CCBYSA4)
+=======
+          title: 'Wingdings',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: const [
       'beaufort',
@@ -7806,7 +7815,7 @@ void initializeRegistry(BuildContext context) {
           author: 'commons.wikimedia.org and contributors',
           title: 'Wind speed',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
-          licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: const [
       'window',
@@ -7816,30 +7825,30 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: 'Wingdings',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1239241193',
-          licenseType: ToolLicenseType.CCBYSA4)
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: const [
       'symbol_wingdings2',
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'en.wikipedia.org and contributors',
+          author: 'commons.wikimedia.org and contributors',
           title: 'Wingdings',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1239241193',
-          licenseType: ToolLicenseType.CCBYSA4)
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1234924688',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: const [
       'symbol_wingdings3',
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'en.wikipedia.org and contributors',
+          author: 'commons.wikimedia.org and contributors',
           title: 'Wingdings',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1239241193',
-          licenseType: ToolLicenseType.CCBYSA4)
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1234924688',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: const [
       'symbol_yan_koryani',
