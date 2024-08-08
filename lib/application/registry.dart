@@ -5789,6 +5789,20 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'WurdBentur',
+          title: 'Dadh Ath',
+          sourceUrl:
+          'https://web.archive.org/web/20240808095142/https://www.deviantart.com/wurdbendur/art/Dadh-Ath-9821558',
+          licenseType: ToolLicenseType.FREE_TO_USE,),
+      ToolLicenseFont(
+        context: context,
+        author: 'Omniglot',
+        title: 'Ath alphabet',
+        sourceUrl:
+        'https://web.archive.org/web/20240808095601/https://www.omniglot.com/conscripts/ath.htm',
+        licenseType: ToolLicenseType.FREE_TO_USE,)
     ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
       'symbol_atlantean',
@@ -5821,6 +5835,15 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           stl._toolLicenseGeocachingToolbox,
+          ToolLicenseOnlineBook(
+              context: context,
+              author: 'Trevor A Johnston',
+              title: 'Auslan: The Sign Language of the Australian Deaf community. Unpublished doctoral dissertation, University of Sydney, Sydney.',
+              year: 1989,
+              month: 1,
+                  day: 1,
+              sourceUrl:
+              'https://web.archive.org/web/20240808102336/https://www.academia.edu/792102')
         ]),
     GCWSymbolTableTool(
         symbolKey: 'babylonian_numerals',
@@ -5839,12 +5862,34 @@ void initializeRegistry(BuildContext context) {
       'symbol_ballet',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'WOODCUTTER',
+          title: 'Ballet',
+          sourceUrl:
+          'https://web.archive.org/web/20240808101306/https://www.dafont.com/ballet.font',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+      customComment: 'dafont.com')
     ]),
     GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: const [
       'braille',
       'symbol_barbier',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Charles Barbier',
+          sourceUrl:
+          'https://en.wikipedia.org/w/index.php?title=Charles_Barbier&oldid=1216652066'),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'Charles Barbier',
+          title: "Essai sur divers procédés d'expéditive française",
+          year: 1815,
+          sourceUrl:
+          "https://books.google.de/books?id=lkVzrUr1RvEC&q=essai+sur+divers+proc%C3%A9d%C3%A9s+d%27exp%C3%A9ditive+fran%C3%A7aise&pg=PA1&redir_esc=y#v=snippet&q=essai%20sur%20divers%20proc%C3%A9d%C3%A9s%20d'exp%C3%A9ditive%20fran%C3%A7aise&f=false"
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
