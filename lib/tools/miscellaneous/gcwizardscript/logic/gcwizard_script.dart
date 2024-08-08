@@ -618,7 +618,7 @@ class _GCWizardSCriptInterpreter {
   void executeCommandVERSION() {
     state.STDOUT = state.STDOUT +
         '********** GC Wizard  Skript **********\n' +
-        '*      Version as of  2024.07.20      *\n' +
+        '*      Version as of  2024.08.07      *\n' +
         '*  based on the work of Herb Schildt  *\n' +
         '*  The Art of C, 1991, © McGraw Hill  *\n' +
         '* Enhancement for GC Wizard permitted *\n' +
