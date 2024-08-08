@@ -6937,10 +6937,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_optical_fiber_iec60304',
     ], licenses: [
       ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Opternus',
-          title: 'LWL Farbcodierungen',
-          sourceUrl: 'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',)
+        context: context,
+        author: 'Opternus',
+        title: 'LWL Farbcodierungen',
+        sourceUrl:
+            'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: const [
       'color',
@@ -6948,10 +6950,12 @@ void initializeRegistry(BuildContext context) {
       'optical_fiber_swisscom',
     ], licenses: [
       ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Opternus',
-          title: 'LWL Farbcodierungen',
-          sourceUrl: 'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',)
+        context: context,
+        author: 'Opternus',
+        title: 'LWL Farbcodierungen',
+        sourceUrl:
+            'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: const [
       'symbol_phoenician',
@@ -7794,6 +7798,10 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.CCBYSA4)
+=======
           title: 'Wingdings',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
@@ -7846,32 +7854,80 @@ void initializeRegistry(BuildContext context) {
       'symbol_yan_koryani',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Omniglot',
+          title: 'Tékumel writing systems',
+          sourceUrl: 'https://web.archive.org/web/20140802011409/http://www.omniglot.com/writing/tekumel.php',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [
       'symbol_zamonian',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zamonische zahlen.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zamonische_zahlen.svg&oldid=529684347',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: const [
       'symbol_zentradi',
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zentradi Alphabet.jpg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zentradi_Alphabet.jpg&oldid=722312236',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: const [
       'symbol_zodiacsigns',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Zodiac',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs_latin', symbolSearchStrings: const [
       'symbol_zodiacsigns',
       'symbol_zodiacsigns_latin',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Zodiac',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: const [
       'symbol_zodiac_z340',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zodiac Z340 cipher key.png',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zodiac_Z340_cipher_key.png&oldid=759087501',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: const [
       'symbol_zodiac_z408',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikisource.org and contributors; Donald and Bettye Harden',
+          title: 'Zodiac Killer cipher translated',
+          sourceUrl:
+              'https://en.wikisource.org/w/index.php?title=Index:Zodiac_Killer_cipher_deciphered_by_Donald_and_Bettye_Harden.pdf&oldid=11214165',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
 
     // TelegraphSelection *********************************************************************************************
     GCWTool(tool: const ChappeTelegraph(), id: 'telegraph_chappe', searchKeys: const [
