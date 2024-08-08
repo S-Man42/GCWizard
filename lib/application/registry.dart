@@ -6937,10 +6937,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_optical_fiber_iec60304',
     ], licenses: [
       ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Opternus',
-          title: 'LWL Farbcodierungen',
-          sourceUrl: 'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',)
+        context: context,
+        author: 'Opternus',
+        title: 'LWL Farbcodierungen',
+        sourceUrl:
+            'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: const [
       'color',
@@ -6948,10 +6950,12 @@ void initializeRegistry(BuildContext context) {
       'optical_fiber_swisscom',
     ], licenses: [
       ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Opternus',
-          title: 'LWL Farbcodierungen',
-          sourceUrl: 'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',)
+        context: context,
+        author: 'Opternus',
+        title: 'LWL Farbcodierungen',
+        sourceUrl:
+            'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: const [
       'symbol_phoenician',
@@ -7677,34 +7681,107 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: const [
       'symbol_wakandan',
-    ], licenses: const []),
-    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: const ['weather', 'weather_a'], licenses: const []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Omniglot',
+          title: 'Wakandan',
+          sourceUrl: 'https://web.archive.org/web/20240808180913/https://www.omniglot.com/conscripts/wakandan.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+      customComment: 'Alphabet designed by Hannah Beachler, and used in the 2018 film Black Panther. It is based on Nsibidi symbols')
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: const [
+      'weather',
+      'weather_a'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          title: 'Pressure Tendency',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_c',
         symbolSearchStrings: const ['weather', 'weather_c', 'weather_clouds'],
         licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_cl',
-        symbolSearchStrings: const ['weather', 'weather_cl', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_cm',
-        symbolSearchStrings: const ['weather', 'weather_cm', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_ch',
-        symbolSearchStrings: const ['weather', 'weather_ch', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_n',
-        symbolSearchStrings: const ['weather', 'weather_n', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: const ['weather', 'weather_w'], licenses: const []),
+    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: const [
+      'weather',
+      'weather_cl',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          title: 'Cloud Type - Low Clouds',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: const [
+      'weather',
+      'weather_cm',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          title: 'Cloud Type - Middle Clouds',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: const [
+      'weather',
+      'weather_ch',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          title: 'Cloud Type - High Clouds',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: const [
+      'weather',
+      'weather_n',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          title: 'Sky Cover',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: const [
+      'weather',
+      'weather_w'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Weather Prediction CenterNational Oceanic and Atmospheric Administration',
+          title: 'Past Weather',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'weather_ww', symbolSearchStrings: const ['weather', 'weather_ww'], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: const [
       'symbol_webdings',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Webdings-big.png',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Webdings-big.png&oldid=899647144',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'westernunion',
         symbolSearchStrings: const ['symbol_westernunion', 'teletypewriter'],
@@ -7712,53 +7789,136 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_beaufort',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_knots',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: const [
       'window',
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: const [
       'symbol_wingdings',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1239241193',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: const [
       'symbol_wingdings2',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1239241193',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: const [
       'symbol_wingdings3',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1239241193',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: const [
       'symbol_yan_koryani',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Omniglot',
+          title: 'Tékumel writing systems',
+          sourceUrl: 'https://web.archive.org/web/20140802011409/http://www.omniglot.com/writing/tekumel.php',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [
       'symbol_zamonian',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zamonische zahlen.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zamonische_zahlen.svg&oldid=529684347',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: const [
       'symbol_zentradi',
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zentradi Alphabet.jpg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zentradi_Alphabet.jpg&oldid=722312236',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: const [
       'symbol_zodiacsigns',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Zodiac',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs_latin', symbolSearchStrings: const [
       'symbol_zodiacsigns',
       'symbol_zodiacsigns_latin',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Zodiac',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: const [
       'symbol_zodiac_z340',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zodiac Z340 cipher key.png',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zodiac_Z340_cipher_key.png&oldid=759087501',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: const [
       'symbol_zodiac_z408',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikisource.org and contributors; Donald and Bettye Harden',
+          title: 'Zodiac Killer cipher translated',
+          sourceUrl:
+              'https://en.wikisource.org/w/index.php?title=Index:Zodiac_Killer_cipher_deciphered_by_Donald_and_Bettye_Harden.pdf&oldid=11214165',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
 
     // TelegraphSelection *********************************************************************************************
     GCWTool(tool: const ChappeTelegraph(), id: 'telegraph_chappe', searchKeys: const [
