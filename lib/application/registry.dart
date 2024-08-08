@@ -7698,7 +7698,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: const [
       'weather', 'weather_c', 'weather_clouds'
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'WEATHER FIGURES AND SYMBOLS',
+          sourceUrl: 'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
     GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: const [
       'weather', 'weather_cl', 'weather_clouds'
     ], licenses: [
@@ -7754,14 +7762,23 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_ww', symbolSearchStrings: const ['weather', 'weather_ww'], licenses: const []),
+    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: const [
+      'weather', 'weather_ww'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'WEATHER FIGURES AND SYMBOLS',
+          sourceUrl: 'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: const [
       'symbol_webdings',
     ], licenses: [
-      ToolLicenseFont(
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'Unknown',
+          author: 'commons.wikimedia.org and contributors',
           title: 'Webdings',
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Webdings-big.png&oldid=899647144',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
@@ -7773,23 +7790,58 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_beaufort',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_knots',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: const [
       'window',
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: const [
       'symbol_wingdings',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: const [
       'symbol_wingdings2',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1234924688',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: const [
       'symbol_wingdings3',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1234924688',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: const [
       'symbol_yan_koryani',
     ], licenses: [
