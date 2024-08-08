@@ -15,6 +15,7 @@ import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/pressure.dart';
@@ -122,9 +123,11 @@ class UTCIState extends State<UTCI> {
                     child: GCWCoords(
                       title: i18n(context, 'common_location'),
                       coordsFormat: _currentCoords.format,
-                      onChanged: (BaseCoordinate ret) {
+                      onChanged: (ret) {
                         setState(() {
-                          _currentCoords = ret;
+                          if (ret != null) {
+                            _currentCoords = ret;
+                          }
                         });
                       },
                     ),
