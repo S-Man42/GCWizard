@@ -5091,7 +5091,7 @@ void initializeRegistry(BuildContext context) {
           title: 'Billiard Balls',
           sourceUrl: 'https://web.archive.org/web/20240524133920/https://www.freevector.com/billiard-balls',
           licenseType: ToolLicenseType.CCBY4,
-          licenseUseType: ToolLicenseUseType.REPRODUCTION)
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: const [
       'symbol_birds_on_a_wire',
