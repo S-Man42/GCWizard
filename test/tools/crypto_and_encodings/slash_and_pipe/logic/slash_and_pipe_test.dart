@@ -30,7 +30,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = encryptSlashAndPipe(elem['input'] as String, elem['replaceCharacters'] as Map<String, String>?);
+        var _actual = encryptSlashAndPipe(elem['input'] as String, SLASHANDPIPE_TYPES.COMMON, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -61,13 +61,13 @@ void main() {
       {'input' : '[ [][ [[[[', 'replaceCharacters': {'/': ']', '|': '['}, 'expectedOutput' : 'ANZ'},
 
       // https://www.geocaching.com/geocache/GCA5MD9
-      {'input' : '|/ \ // ||/    |/| \ // ||\    \\ // / |//    |||| \ \/ ||/|    /| / ||/    // |/|', 'expectedOutput' : 'DPUH NPUF UIO ZPR TIH UN'},
+      {'input' : '|/ \\ // ||/    |/| \\ // ||\\    \\ // / |//    |||| \\ \\/ ||/|    /| / ||/    // |/|', 'expectedOutput' : 'DPUH NPUF UIO ZPR TIH UN'},
 
     ];
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
-        var _actual = decryptSlashAndPipe(elem['input'] as String, elem['replaceCharacters'] as Map<String, String>?);
+        var _actual = decryptSlashAndPipe(elem['input'] as String, SLASHANDPIPE_TYPES.COMMON, elem['replaceCharacters'] as Map<String, String>?);
         expect(_actual, elem['expectedOutput']);
       });
     }

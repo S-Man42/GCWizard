@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -30,6 +31,8 @@ class _SlashAndPipeState extends State<SlashAndPipe> {
   var _currentA = '/';
   var _currentB = '|';
   var _currentC = '\\';
+
+  var _currentCode = SLASHANDPIPE_TYPES.COMMON;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -67,7 +70,20 @@ class _SlashAndPipeState extends State<SlashAndPipe> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+        GCWDropDown<SLASHANDPIPE_TYPES>(
+          value: _currentCode,
+          onChanged: (value) {
+            setState(() {
+              _currentCode = value;
+            });
+          },
+          items: SLASHANDPIPE_CODEBOOKS.entries.map((mode) {
+            return GCWDropDownMenuItem(
+                value: mode.key,
+                child: i18n(context, mode.value.title),
+                subtitle: i18n(context, mode.value.subtitle));
+          }).toList(),
+        ),GCWTextDivider(text: i18n(context, 'common_key')),
         Row(
           children: <Widget>[
             Expanded(
@@ -192,7 +208,7 @@ class _SlashAndPipeState extends State<SlashAndPipe> {
     var key = {'/': _currentA, '|': _currentB, '\\': _currentC};
 
     return _currentMode == GCWSwitchPosition.left
-        ? encryptSlashAndPipe(_currentInputEncrypt, key)
-        : decryptSlashAndPipe(_currentInputDecrypt, key);
+        ? encryptSlashAndPipe(_currentInputEncrypt, _currentCode, key)
+        : decryptSlashAndPipe(_currentInputDecrypt, _currentCode, key);
   }
 }

@@ -7344,6 +7344,31 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
     ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe_codeofclaw', symbolSearchStrings: const [
+      'symbol_slash_and_pipe',
+      'symbol_slash_and_pipe_codeofclaw',
+      'symbol_slash_and_pipe_underland',
+    ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia and contributors',
+          title: 'Gregor and the Code of Claw',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe_underland', symbolSearchStrings: const [
+      'symbol_slash_and_pipe',
+      'symbol_slash_and_pipe_underland',
+    ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia and contributors',
+          title: 'Gregor and the Code of Claw',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: const [
       'symbol_solmisation',
     ], licenses: [
