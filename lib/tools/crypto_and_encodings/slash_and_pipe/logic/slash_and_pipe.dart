@@ -127,8 +127,8 @@ String encryptSlashAndPipe(String input, SLASHANDPIPE_TYPES codetype, Map<String
   var slashandpipe = normalizeUmlauts(input)
       .toUpperCase()
       .split('')
-      .where((character) => SLASHANDPIPE_CODES[codetype][character] != null)
-      .map((character) => substitution(character, SLASHANDPIPE_CODES[codetype]))
+      .where((character) => SLASHANDPIPE_CODES[codetype]?[character] != null)
+      .map((character) => substitution(character, SLASHANDPIPE_CODES[codetype]!))
       .join(' ');
 
   if (replaceCharacters != null) slashandpipe = substitution(slashandpipe, replaceCharacters);
@@ -141,7 +141,7 @@ String decryptSlashAndPipe(String input, SLASHANDPIPE_TYPES codetype, Map<String
 
   if (replaceCharacters != null) input = substitution(input, switchMapKeyValue(replaceCharacters));
 
-  final SlashAndPipeToAZ = switchMapKeyValue(SLASHANDPIPE_CODES[codetype]);
+  final SlashAndPipeToAZ = switchMapKeyValue(SLASHANDPIPE_CODES[codetype]!);
 
   return input
       .split(RegExp(r'[^|/\\]'))
