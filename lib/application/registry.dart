@@ -83,6 +83,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/scrabble_sel
 import 'package:gc_wizard/application/category_views/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/slash_and_pipe_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt2_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt3_selection.dart';
@@ -253,6 +254,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_phi_calculator/widg
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_primes_calculator/widget/rsa_primes_calculator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/shadoks_numbers/widget/shadoks_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/slash_and_pipe/widget/slash_and_pipe.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/widget/straddling_checkerboard.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
@@ -1375,6 +1377,11 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'skytale',
     ]),
+    GCWTool(
+        tool: const SlashAndPipeSelection(),
+        id: 'slash_and_pipe_selection',
+        categories: const [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: const []),
     GCWTool(tool: const Solitaire(), id: 'solitaire', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -4719,6 +4726,11 @@ void initializeRegistry(BuildContext context) {
           'silverratiosearch',
         ]),
 
+    // SlashAndPipeSelection *********************************************************************************************
+    GCWTool(tool: const SlashAndPipe(), id: 'slash_and_pipe', searchKeys: const [
+      'slash_and_pipe',
+    ]),
+
     //SQRT 2 Selection **********************************************************************************************
     GCWTool(tool: const SQRT2NthDecimal(), id: 'irrationalnumbers_nthdecimal', id_prefix: 'sqrt_2_', searchKeys: const [
       '',
@@ -7338,6 +7350,31 @@ void initializeRegistry(BuildContext context) {
       'symbol_slash_and_pipe',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+    ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe_codeofclaw', symbolSearchStrings: const [
+      'symbol_slash_and_pipe',
+      'symbol_slash_and_pipe_codeofclaw',
+      'symbol_slash_and_pipe_underland',
+    ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia and contributors',
+          title: 'Gregor and the Code of Claw',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe_underland', symbolSearchStrings: const [
+      'symbol_slash_and_pipe',
+      'symbol_slash_and_pipe_underland',
+    ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia and contributors',
+          title: 'Gregor and the Code of Claw',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: const [
       'symbol_solmisation',
