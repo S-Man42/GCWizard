@@ -5289,7 +5289,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
       'symbol_clocks',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Der Clock Code/ das Uhrenalphabet',
+          sourceUrl: 'https://web.archive.org/web/20221206164006/https://www.bergziege-owl.de/clock-code/',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
     GCWSymbolTableTool(symbolKey: 'clocks_2_1', symbolSearchStrings: const [
       'symbol_clocks',
     ], licenses: const []),
@@ -5665,8 +5673,7 @@ void initializeRegistry(BuildContext context) {
         ),
         sourceUrl: 'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
         licenseType: ToolLicenseType.NON_COMMERCIAL,
-        licenseUseType: ToolLicenseUseType.COPY,
-      )
+        licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
