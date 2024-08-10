@@ -89,7 +89,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
   List<String> lines = _LUAFile.split('\n');
 
-  if (!_obfuscatorFound) _checkAndGetObfuscatorURWIGO(lines);
+  _checkAndGetObfuscatorURWIGO(lines);
 
   if (_obfuscatorFound) {
     _deObfuscateAllTexts();
