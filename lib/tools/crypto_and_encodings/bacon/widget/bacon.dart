@@ -112,13 +112,17 @@ class _BaconState extends State<Bacon> {
       outputWidget = GCWDefaultOutput(child: _output);
     } else {
       _analyzeText = _testText(_currentInput);
-      String _inputUpperLower = analyzeBaconCodeUpperLowerCase(_currentInput);
-      String _inputAlphabet = analyzeBaconCodeAlphabet(_currentInput);
+
+      String _inputWordwiseUpperLower = analyzeBaconCodeWordwiseUpperLowerCase(_currentInput);
+      String _inputWordwiseAlphabet = analyzeBaconCodeWordwiseAlphabet(_currentInput);
+      String _inputLetterwiseUpperLower = analyzeBaconCodeLetterwiseUpperLowerCase(_currentInput);
+      String _inputLetterwiseAlphabet = analyzeBaconCodeLetterwiseAlphabet(_currentInput);
+
       if (_analyzeText) {
         outputWidget = Column(
           children: [
             GCWTextDivider(
-              text: i18n(context, 'bacon_analyze'),
+              text: i18n(context, 'bacon_analyze_wordwise'),
               suppressBottomSpace: true,
             ),
             Row(
@@ -126,14 +130,14 @@ class _BaconState extends State<Bacon> {
                 Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                       child: Column(children: [
                         GCWTextDivider(
                           text: i18n(context, 'bacon_analyze_casesensitive'),
                         ),
-                        GCWOutput(child: _inputUpperLower),
+                        GCWOutput(child: _inputWordwiseUpperLower),
                         GCWOutput(
-                          child: decodeBacon(_inputUpperLower,
+                          child: decodeBacon(_inputWordwiseUpperLower,
                               inverse: _inversMode, binary: false, type: type),
                         ),
                       ]),
@@ -141,15 +145,56 @@ class _BaconState extends State<Bacon> {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                    padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                     child: Column(
                       children: [
                         GCWTextDivider(
                           text: i18n(context, 'bacon_analyze_alphabet'),
                         ),
-                        GCWOutput(child: _inputAlphabet),
+                        GCWOutput(child: _inputWordwiseAlphabet),
                         GCWOutput(
-                          child: decodeBacon(_inputAlphabet,
+                          child: decodeBacon(_inputWordwiseAlphabet,
+                              inverse: _inversMode, binary: false, type: type),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            GCWTextDivider(
+              text: i18n(context, 'bacon_analyze_letterwise'),
+              suppressBottomSpace: true,
+            ),
+            Row(
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                      child: Column(children: [
+                        GCWTextDivider(
+                          text: i18n(context, 'bacon_analyze_casesensitive'),
+                        ),
+                        GCWOutput(child: _inputLetterwiseUpperLower),
+                        GCWOutput(
+                          child: decodeBacon(_inputLetterwiseUpperLower,
+                              inverse: _inversMode, binary: false, type: type),
+                        ),
+                      ]),
+                    )),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                    child: Column(
+                      children: [
+                        GCWTextDivider(
+                          text: i18n(context, 'bacon_analyze_alphabet'),
+                        ),
+                        GCWOutput(child: _inputLetterwiseAlphabet),
+                        GCWOutput(
+                          child: decodeBacon(_inputLetterwiseAlphabet,
                               inverse: _inversMode, binary: false, type: type),
                         ),
                       ],
