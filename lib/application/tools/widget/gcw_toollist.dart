@@ -34,18 +34,20 @@ class _GCWToolListState extends State<GCWToolList> {
     );
   }
 
+
+
   Widget _buildItems() {
     return ListView.separated(
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: widget.toolList.length + 1,
       separatorBuilder: (BuildContext context, int index) => const Divider(),
       itemBuilder: (BuildContext context, int i) {
-        return _buildRow(context, i);
+        return _buildFutureRowItems(context, i);
       },
     );
   }
 
-  Widget _buildRow(BuildContext context, int index) {
+  Widget _buildFutureRowItems(BuildContext context, int index) {
     // Vertical space after the list items
     if (index == widget.toolList.length) {
       return const ListTile();
@@ -53,6 +55,19 @@ class _GCWToolListState extends State<GCWToolList> {
 
     var tool = widget.toolList[index];
 
+    return FutureBuilder<ListTile>(
+        future: _buildRow(context, tool),
+        builder: (BuildContext context, AsyncSnapshot<ListTile> snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data!;
+          } else {
+            return Container();
+          }
+        });
+  }
+
+  Future<ListTile> _buildRow(BuildContext context, GCWTool tool) async {
+    
     Future<void> _navigateToSubPage(BuildContext context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => tool));
     }
