@@ -31,11 +31,9 @@ void main() {
 
         var _actual = Logical(elem['categoriesCount'] as int, elem['itemsCount'] as int);
         var valid = true;
-        print(_actual.blocksToString());
         for (var e in (elem['setValues'] as List<List<int>>)) {
           valid &= _actual.setValue(e[0], e[1], e[2], LogicalFillType.USER_FILLED);
         }
-        print(_actual.blocksToString());
         expect(valid, elem['expectedValidOutput']);
 
         expect(_actual.blocksToString(), elem['expectedOutput']);
