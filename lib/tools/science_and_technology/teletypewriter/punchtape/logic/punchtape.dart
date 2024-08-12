@@ -239,7 +239,7 @@ Segments encodePunchtape(String input, TeletypewriterCodebook language, bool ord
   return Segments(displays: result);
 }
 
-SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool order12345) {
+SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool number, bool order12345) {
   if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
@@ -259,7 +259,7 @@ SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language,
   return SegmentsText(displays: displays, text: text.join(''));
 }
 
-SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool order12345) {
+SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool number, bool order12345) {
   if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];

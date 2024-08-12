@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
@@ -33,9 +35,10 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
 
   var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; // encrypt - decrypt
-  var _currentOrderMode = GCWSwitchPosition.right; // 54321 - 12345
+  var _currentOrderMode = GCWSwitchPosition.left; // 54321 - 12345
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
   var _currentDecodeTextMode = GCWSwitchPosition.right; // decimal - binary
+  var _currentNumberMode = true;
 
   var _currentCode = TeletypewriterCodebook.BAUDOT_12345;
 
@@ -71,17 +74,6 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       ),
       if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
         GCWTwoOptionsSwitch(
-          // 54321 - 12345
-          value: _currentOrderMode,
-          leftValue: i18n(context, 'punchtape_mode_binary'),
-          rightValue: i18n(context, 'punchtape_mode_original'),
-          onChanged: (value) {
-            setState(() {
-              _currentOrderMode = value;
-            });
-          },
-        ),
-      GCWTwoOptionsSwitch(
         // encrypt - decrypt
         value: _currentMode,
         onChanged: (value) {
@@ -103,6 +95,15 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         Column(
           // decrpyt: input segment => output number
           children: <Widget>[
+            GCWOnOffSwitch(
+              title: i18n(context, 'punchtape_mode_numberonly'),
+              value: _currentNumberMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentNumberMode = value;
+                });
+              },
+            ),
             GCWTwoOptionsSwitch(
               value: _currentDecodeMode,
               leftValue: i18n(context, 'telegraph_decode_textmode'),
@@ -152,7 +153,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                     },
                   )
               ]),
-          ],
+            ],
         ),
       _buildOutput()
     ]);
@@ -243,95 +244,148 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     return result.join(' ');
   }
 
-  Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      //encode
-      var segments = encodePunchtape(
-          _currentEncodeInput,
+  Widget _buildOutputEncrypt(){
+    _currentOrderMode = GCWSwitchPosition.left;
+    var segments = encodePunchtape(
+        _currentEncodeInput,
+        _currentCode,
+        (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+            ? false
+            : (_currentOrderMode == GCWSwitchPosition.left));
+    List<String> binaryList = [];
+    List<String?> decimalList = [];
+    for (var segment in segments.displays) {
+      binaryList.add(segments2binary(
+          segment,
           _currentCode,
           (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
               ? false
-              : (_currentOrderMode == GCWSwitchPosition.left));
-      List<String> binaryList = [];
-      List<String?> decimalList = [];
-      for (var segment in segments.displays) {
-        binaryList.add(segments2binary(
-            segment,
+              : (_currentOrderMode == GCWSwitchPosition.left)));
+      decimalList.add(convertBase(
+          segments2binary(
+              segment,
+              _currentCode,
+              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
+                  _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                  ? false
+                  : (_currentOrderMode == GCWSwitchPosition.left)),
+          2,
+          10));
+    }
+    return Column(
+      children: <Widget>[
+        _buildDigitalOutput(segments),
+        GCWOutput(
+          title: i18n(context, 'telegraph_decode_textmodedecimal'),
+          child: REVERSE_CODEBOOK.contains(_currentCode)
+              ? _mirrorListOfBinaryToDecimal(binaryList)
+              : decimalList.join(' '),
+        ),
+        GCWOutput(
+          title: i18n(context, 'telegraph_decode_textmodebinary'),
+          child: (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
+              _currentCode == TeletypewriterCodebook.CCITT_IA5)
+              ? binaryList.join(' ')
+              : (_currentOrderMode == GCWSwitchPosition.left)
+              ? binaryList.join(' ')
+              : _mirrorListOfBinary(binaryList),
+        )
+      ],
+    );
+  }
+
+  Widget _buildOutputDecrypt(){
+    SegmentsText segmentsOriginal;
+    SegmentsText segmentsMirrored;
+    if (_currentDecodeMode == GCWSwitchPosition.left) {
+      // decode text mode
+      if (_currentDecodeTextMode == GCWSwitchPosition.left) {
+        // input decimal
+        segmentsOriginal = decodeTextPunchtape(
+            _decimalToBinary(_currentDecodeInput, _currentCode),
             _currentCode,
+            _currentNumberMode,
             (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
                 ? false
-                : (_currentOrderMode == GCWSwitchPosition.left)));
-        decimalList.add(convertBase(
-            segments2binary(
-                segment,
-                _currentCode,
-                (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-                        _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                    ? false
-                    : (_currentOrderMode == GCWSwitchPosition.left)),
-            2,
-            10));
+                : false);
+        segmentsMirrored = decodeTextPunchtape(
+            _decimalToBinary(_currentDecodeInput, _currentCode),
+            _currentCode,
+            _currentNumberMode,
+            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                ? false
+                : true);
+      } else {
+        // input binary
+        segmentsOriginal = decodeTextPunchtape(
+            _mirrorListOfBinary(_currentDecodeInput.split(' ')),
+            _currentCode,
+            _currentNumberMode,
+            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                ? false
+                : false);
+        segmentsMirrored = decodeTextPunchtape(
+            _mirrorListOfBinary(_currentDecodeInput.split(' ')),
+            _currentCode,
+            _currentNumberMode,
+            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                ? false
+                : true);
       }
-      return Column(
-        children: <Widget>[
-          _buildDigitalOutput(segments),
-          GCWOutput(
-            title: i18n(context, 'telegraph_decode_textmodedecimal'),
-            child: REVERSE_CODEBOOK.contains(_currentCode)
-                ? _mirrorListOfBinaryToDecimal(binaryList)
-                : decimalList.join(' '),
-          ),
-          GCWOutput(
-            title: i18n(context, 'telegraph_decode_textmodebinary'),
-            child: (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-                    _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                ? binaryList.join(' ')
-                : (_currentOrderMode == GCWSwitchPosition.left)
-                    ? binaryList.join(' ')
-                    : _mirrorListOfBinary(binaryList),
-          )
-        ],
-      );
+    } else {
+      // decode visual mode
+      var output = _currentDisplays.displays.map((character) {
+        return character.join('');
+      }).toList();
+      segmentsOriginal = decodeVisualPunchtape(
+          output,
+          _currentCode,
+          _currentNumberMode,
+          (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+              ? false
+              : false);
+      segmentsMirrored = decodeVisualPunchtape(
+          output,
+          _currentCode,
+          _currentNumberMode,
+          (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+              ? false
+              : true);
+    }
+    return Column(
+      children: <Widget>[
+        Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    GCWTextDivider(text: i18n(context, 'punchtape_mode_original') + '\n' + i18n(context, CODEBOOK_BITS_ORIGINAL[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
+                    GCWText(text: segmentsOriginal.text),
+                  ],
+                )),
+            Expanded(
+                flex: 1,
+                child: Column(
+                    children: [
+                      GCWTextDivider(text: i18n(context, 'punchtape_mode_mirrored') + '\n' + i18n(context, CODEBOOK_BITS_MIRRORED[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
+                      GCWText(text: segmentsMirrored.text),
+                    ]
+                )),
+          ],
+        ),
+        _buildDigitalOutput(segmentsOriginal),
+      ],
+    );
+  }
+
+  Widget _buildOutput() {
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
+      return _buildOutputEncrypt();
     } else {
       //decode
-      SegmentsText segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left) {
-        // decode text mode
-        if (_currentDecodeTextMode == GCWSwitchPosition.left) {
-          // input decimal
-          segments = decodeTextPunchtape(
-              _decimalToBinary(_currentDecodeInput, _currentCode),
-              _currentCode,
-              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                  ? false
-                  : (_currentOrderMode == GCWSwitchPosition.left));
-        } else {
-          // input binary
-          segments = decodeTextPunchtape(
-              _mirrorListOfBinary(_currentDecodeInput.split(' ')),
-              _currentCode,
-              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                  ? false
-                  : (_currentOrderMode == GCWSwitchPosition.left));
-        }
-      } else {
-        // decode visual mode
-        var output = _currentDisplays.displays.map((character) {
-          return character.join('');
-        }).toList();
-        segments = decodeVisualPunchtape(
-            output,
-            _currentCode,
-            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                ? false
-                : (_currentOrderMode == GCWSwitchPosition.right));
-      }
-      return Column(
-        children: <Widget>[
-          GCWDefaultOutput(child: segments.text),
-          _buildDigitalOutput(segments),
-        ],
-      );
+      return _buildOutputDecrypt();
     }
   }
 }

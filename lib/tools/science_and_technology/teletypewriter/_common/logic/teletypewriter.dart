@@ -70,6 +70,20 @@ class PunchtapeConfig {
   });
 }
 
+const Map<int, String> CODEBOOK_BITS_ORIGINAL = {
+  5: 'punchtape_mode_bitorder_54321',
+  6: 'punchtape_mode_bitorder_654321',
+  7: 'punchtape_mode_bitorder_7654321',
+  8: 'punchtape_mode_bitorder_87654321',
+};
+
+const Map<int, String> CODEBOOK_BITS_MIRRORED = {
+  5: 'punchtape_mode_bitorder_12345',
+  6: 'punchtape_mode_bitorder_123456',
+  7: 'punchtape_mode_bitorder_1234567',
+  8: 'punchtape_mode_bitorder_12345678',
+};
+
 const Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT_12345:
       CodebookConfig(title: 'punchtape_baudot_title', subtitle: 'punchtape_baudot_description'),
@@ -1963,7 +1977,7 @@ String encodeTeletypewriter_ZC1(String input) {
   return out.join(' ');
 }
 
-String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
+String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, {bool numbers = false}) {
   if (values.isEmpty) return '';
 
   String out = '';
@@ -1981,22 +1995,26 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCITT_ITA1_EU:
     case TeletypewriterCodebook.CCITT_ITA1_UK:
       for (var value in values) {
-        if (value == _NUMBERS_FOLLOW[language]) {
-          if (out.isNotEmpty) out += ' ';
-          isLetterMode = false;
-          continue;
-        }
-
-        if (value == _LETTERS_FOLLOW[language]) {
-          out += ' ';
-          isLetterMode = true;
-          continue;
-        }
-
-        if (isLetterMode) {
-          out += _DecodeAZ(language, value) ?? '';
-        } else {
+        if (numbers) {
           out += _DecodeNumber(language, value) ?? '';
+        } else {
+          if (value == _NUMBERS_FOLLOW[language]) {
+            if (out.isNotEmpty) out += ' ';
+            isLetterMode = false;
+            continue;
+          }
+
+          if (value == _LETTERS_FOLLOW[language]) {
+            out += ' ';
+            isLetterMode = true;
+            continue;
+          }
+
+          if (isLetterMode) {
+            out += _DecodeAZ(language, value) ?? '';
+          } else {
+            out += _DecodeNumber(language, value) ?? '';
+          }
         }
       }
 
@@ -2015,20 +2033,24 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.TTS:
     case TeletypewriterCodebook.ALGOL:
       for (var value in values) {
-        if (value == _NUMBERS_FOLLOW[language]) {
-          isLetterMode = false;
-          continue;
-        }
-
-        if (value == _LETTERS_FOLLOW[language]) {
-          isLetterMode = true;
-          continue;
-        }
-
-        if (isLetterMode) {
-          out += _DecodeAZ(language, value) ?? '';
-        } else {
+        if (numbers) {
           out += _DecodeNumber(language, value) ?? '';
+        } else {
+          if (value == _NUMBERS_FOLLOW[language]) {
+            isLetterMode = false;
+            continue;
+          }
+
+          if (value == _LETTERS_FOLLOW[language]) {
+            isLetterMode = true;
+            continue;
+          }
+
+          if (isLetterMode) {
+            out += _DecodeAZ(language, value) ?? '';
+          } else {
+            out += _DecodeNumber(language, value) ?? '';
+          }
         }
       }
 
