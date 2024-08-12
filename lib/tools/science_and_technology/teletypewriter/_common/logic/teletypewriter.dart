@@ -1977,7 +1977,7 @@ String encodeTeletypewriter_ZC1(String input) {
   return out.join(' ');
 }
 
-String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, {bool numbers = false}) {
+String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, {bool numbersOnly = false}) {
   if (values.isEmpty) return '';
 
   String out = '';
@@ -1995,7 +1995,7 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, {
     case TeletypewriterCodebook.CCITT_ITA1_EU:
     case TeletypewriterCodebook.CCITT_ITA1_UK:
       for (var value in values) {
-        if (numbers) {
+        if (numbersOnly) {
           out += _DecodeNumber(language, value) ?? '';
         } else {
           if (value == _NUMBERS_FOLLOW[language]) {
@@ -2033,7 +2033,7 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, {
     case TeletypewriterCodebook.TTS:
     case TeletypewriterCodebook.ALGOL:
       for (var value in values) {
-        if (numbers) {
+        if (numbersOnly) {
           out += _DecodeNumber(language, value) ?? '';
         } else {
           if (value == _NUMBERS_FOLLOW[language]) {

@@ -72,8 +72,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
               value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
         }).toList(),
       ),
-      if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
-        GCWTwoOptionsSwitch(
+      GCWTwoOptionsSwitch(
         // encrypt - decrypt
         value: _currentMode,
         onChanged: (value) {
@@ -153,7 +152,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                     },
                   )
               ]),
-            ],
+          ],
         ),
       _buildOutput()
     ]);
@@ -244,7 +243,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     return result.join(' ');
   }
 
-  Widget _buildOutputEncrypt(){
+  Widget _buildOutputEncrypt() {
     _currentOrderMode = GCWSwitchPosition.left;
     var segments = encodePunchtape(
         _currentEncodeInput,
@@ -265,8 +264,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
           segments2binary(
               segment,
               _currentCode,
-              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-                  _currentCode == TeletypewriterCodebook.CCITT_IA5)
+              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
                   ? false
                   : (_currentOrderMode == GCWSwitchPosition.left)),
           2,
@@ -283,18 +281,18 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         ),
         GCWOutput(
           title: i18n(context, 'telegraph_decode_textmodebinary'),
-          child: (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
-              _currentCode == TeletypewriterCodebook.CCITT_IA5)
-              ? binaryList.join(' ')
-              : (_currentOrderMode == GCWSwitchPosition.left)
-              ? binaryList.join(' ')
-              : _mirrorListOfBinary(binaryList),
+          child:
+              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                  ? binaryList.join(' ')
+                  : (_currentOrderMode == GCWSwitchPosition.left)
+                      ? binaryList.join(' ')
+                      : _mirrorListOfBinary(binaryList),
         )
       ],
     );
   }
 
-  Widget _buildOutputDecrypt(){
+  Widget _buildOutputDecrypt() {
     SegmentsText segmentsOriginal;
     SegmentsText segmentsMirrored;
     if (_currentDecodeMode == GCWSwitchPosition.left) {
@@ -354,26 +352,34 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     }
     return Column(
       children: <Widget>[
-        Row(
-          children: [
-            Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    GCWTextDivider(text: i18n(context, 'punchtape_mode_original') + '\n' + i18n(context, CODEBOOK_BITS_ORIGINAL[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
-                    GCWText(text: segmentsOriginal.text),
-                  ],
-                )),
-            Expanded(
-                flex: 1,
-                child: Column(
+        GCWTextDivider(text: i18n(context, 'common_output')),
+        if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
+          Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Column(
                     children: [
-                      GCWTextDivider(text: i18n(context, 'punchtape_mode_mirrored') + '\n' + i18n(context, CODEBOOK_BITS_MIRRORED[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
-                      GCWText(text: segmentsMirrored.text),
-                    ]
-                )),
-          ],
-        ),
+                      GCWTextDivider(
+                          text: i18n(context, 'punchtape_mode_original') +
+                              '\n' +
+                              i18n(context, CODEBOOK_BITS_ORIGINAL[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
+                      GCWText(text: segmentsOriginal.text),
+                    ],
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Column(children: [
+                    GCWTextDivider(
+                        text: i18n(context, 'punchtape_mode_mirrored') +
+                            '\n' +
+                            i18n(context, CODEBOOK_BITS_MIRRORED[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
+                    GCWText(text: segmentsMirrored.text),
+                  ])),
+            ],
+          )
+        else
+          GCWText(text: segmentsOriginal.text),
         _buildDigitalOutput(segmentsOriginal),
       ],
     );
