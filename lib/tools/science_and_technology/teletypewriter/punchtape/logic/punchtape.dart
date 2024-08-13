@@ -245,16 +245,12 @@ SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language,
   if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
-  List<String> text = [];
-  //List<int> intList = List<int>.filled(1, 0);
   List<int> intList = [];
-  
+
   inputs.split(' ').forEach((element) {
     var val = int.tryParse(convertBase(element, 2, 10));
     if (val != null) {
       intList.add(val);
-      //intList[0] = val;
-      //text.add(decodeTeletypewriter(intList, language, numbersOnly: numbersOnly));
     }
   });
 
@@ -262,7 +258,6 @@ SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language,
     displays.add(binary2segments(element, language));
   });
 
-  //return SegmentsText(displays: displays, text: text.join(''));
   return SegmentsText(displays: displays, text: decodeTeletypewriter(intList, language, numbersOnly: numbersOnly));
 }
 
