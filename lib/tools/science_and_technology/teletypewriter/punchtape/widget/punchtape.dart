@@ -5,10 +5,9 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_toolbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
@@ -36,9 +35,9 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   var _currentDisplays = Segments.Empty();
   var _currentMode = GCWSwitchPosition.right; // encrypt - decrypt
   var _currentOrderMode = GCWSwitchPosition.left; // 54321 - 12345
+  var _currentNumberMode = GCWSwitchPosition.right; // Letters & Numbers - Numbers only
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
   var _currentDecodeTextMode = GCWSwitchPosition.right; // decimal - binary
-  var _currentNumberMode = true;
 
   var _currentCode = TeletypewriterCodebook.BAUDOT_12345;
 
@@ -94,9 +93,10 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         Column(
           // decrpyt: input segment => output number
           children: <Widget>[
-            GCWOnOffSwitch(
-              title: i18n(context, 'punchtape_mode_numberonly'),
+            GCWTwoOptionsSwitch(
               value: _currentNumberMode,
+              leftValue: i18n(context, 'punchtape_mode_lettersandnumbers'),
+              rightValue: i18n(context, 'punchtape_mode_numberonly'),
               onChanged: (value) {
                 setState(() {
                   _currentNumberMode = value;
@@ -295,91 +295,143 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   Widget _buildOutputDecrypt() {
     SegmentsText segmentsOriginal;
     SegmentsText segmentsMirrored;
+    SegmentsText segmentsBaudot;
+
+    String DecodeInput = _currentDecodeInput;
+    String DecodeBaudotInput = _currentDecodeInput;
+
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       // decode text mode
       if (_currentDecodeTextMode == GCWSwitchPosition.left) {
         // input decimal
-        segmentsOriginal = decodeTextPunchtape(
-            _decimalToBinary(_currentDecodeInput, _currentCode),
-            _currentCode,
-            _currentNumberMode,
-            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                ? false
-                : false);
-        segmentsMirrored = decodeTextPunchtape(
-            _decimalToBinary(_currentDecodeInput, _currentCode),
-            _currentCode,
-            _currentNumberMode,
-            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                ? false
-                : true);
-      } else {
-        // input binary
-        segmentsOriginal = decodeTextPunchtape(
-            _mirrorListOfBinary(_currentDecodeInput.split(' ')),
-            _currentCode,
-            _currentNumberMode,
-            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                ? false
-                : false);
-        segmentsMirrored = decodeTextPunchtape(
-            _mirrorListOfBinary(_currentDecodeInput.split(' ')),
-            _currentCode,
-            _currentNumberMode,
-            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-                ? false
-                : true);
+        DecodeInput = _decimalToBinary(_currentDecodeInput, _currentCode);
       }
+      segmentsOriginal = decodeTextPunchtape(
+        DecodeInput,
+        _currentCode,
+        (_currentNumberMode == GCWSwitchPosition.right),
+      );
+
+      segmentsBaudot = segmentsOriginal;
+      if (_currentCode == TeletypewriterCodebook.BAUDOT_54123) {
+        DecodeBaudotInput = _build54321FromBaudot(DecodeInput);
+        segmentsOriginal = decodeTextPunchtape(
+          DecodeBaudotInput,
+          _currentCode,
+          (_currentNumberMode == GCWSwitchPosition.right),
+        );
+      }
+
+      DecodeBaudotInput = _mirrorListOfBinary(DecodeBaudotInput.split(' '));
+      segmentsMirrored = decodeTextPunchtape(
+        DecodeBaudotInput,
+        _currentCode,
+        (_currentNumberMode == GCWSwitchPosition.right),
+      );
     } else {
       // decode visual mode
       var output = _currentDisplays.displays.map((character) {
         return character.join('');
       }).toList();
       segmentsOriginal = decodeVisualPunchtape(
-          output,
-          _currentCode,
-          _currentNumberMode,
-          (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-              ? false
-              : false);
+        output,
+        _currentCode,
+        (_currentNumberMode == GCWSwitchPosition.right),
+        true,
+      );
+
+      segmentsBaudot = segmentsOriginal;
+      if (_currentCode == TeletypewriterCodebook.BAUDOT_54123) {
+
+      }
+
       segmentsMirrored = decodeVisualPunchtape(
-          output,
-          _currentCode,
-          _currentNumberMode,
-          (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
-              ? false
-              : true);
+        _mirrorListOfBinary(output).split(' '),
+        _currentCode,
+        (_currentNumberMode == GCWSwitchPosition.right),
+        false,
+      );
     }
+
     return Column(
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'common_output')),
-        if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
+        if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123))
           Row(
             children: [
               Expanded(
                   flex: 1,
-                  child: Column(
-                    children: [
-                      GCWTextDivider(
-                          text: i18n(context, 'punchtape_mode_original') +
-                              '\n' +
-                              i18n(context, CODEBOOK_BITS_ORIGINAL[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
-                      GCWText(text: segmentsOriginal.text),
-                    ],
+                  child: Container(
+                      padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN * 2),
+                      child: Column(
+                        children: [
+                          GCWTextDivider(
+                              text: i18n(context, 'punchtape_mode_original') +
+                                  '\n' +
+                                  i18n(context, CODEBOOK_BITS_ORIGINAL[5]!)),
+                          GCWOutputText(text: segmentsOriginal.text),
+                        ],
+                      )
                   )),
               Expanded(
                   flex: 1,
-                  child: Column(children: [
-                    GCWTextDivider(
-                        text: i18n(context, 'punchtape_mode_mirrored') +
-                            '\n' +
-                            i18n(context, CODEBOOK_BITS_MIRRORED[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
-                    GCWText(text: segmentsMirrored.text),
-                  ])),
+                  child: Container(
+                      padding: const EdgeInsets.only(left: DEFAULT_MARGIN * 2),
+                      child: Column(children: [
+                        GCWTextDivider(
+                            text: i18n(context, 'punchtape_mode_mirrored') +
+                                '\n' +
+                                i18n(context, CODEBOOK_BITS_MIRRORED[5]!)),
+                        GCWOutputText(text: segmentsMirrored.text),
+                      ])
+                  )),
             ],
           )
         else
-          GCWText(text: segmentsOriginal.text),
+          Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.only(right: DEFAULT_MARGIN * 2),
+                    child: Column(
+                      children: [
+                        GCWTextDivider(
+                            text: i18n(context, 'punchtape_mode_baudot') +
+                                '\n' +
+                                i18n(context, 'punchtape_mode_bitorder_54123')),
+                        GCWOutputText(text: segmentsBaudot.text),
+                      ],
+                    ),
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN * 2, right: DEFAULT_MARGIN * 2),
+                    child: Column(
+                      children: [
+                        GCWTextDivider(
+                            text: i18n(context, 'punchtape_mode_original') +
+                                '\n' +
+                                i18n(context, CODEBOOK_BITS_ORIGINAL[5]!)),
+                        GCWOutputText(text: segmentsOriginal.text),
+                      ],
+                    )
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN * 2),
+                    child: Column(children: [
+                      GCWTextDivider(
+                          text: i18n(context, 'punchtape_mode_mirrored') +
+                              '\n' +
+                              i18n(context, CODEBOOK_BITS_MIRRORED[5]!)),
+                      GCWOutputText(text: segmentsMirrored.text),
+                    ])
+                  )),
+            ],
+          ),
         _buildDigitalOutput(segmentsOriginal),
       ],
     );
@@ -408,6 +460,32 @@ String _mirrorListOfBinary(List<String> binaryList) {
   List<String> result = [];
   for (var element in binaryList) {
     result.add(element.split('').reversed.join(''));
+  }
+  return result.join(' ');
+}
+
+String _build54321FromBaudot(String DecodeInput) {
+  List<String> result = [];
+  for (var element in DecodeInput.split(' ')) {
+    switch (element.length) {
+      case 1:
+        result.add(element[0]);
+        break;
+      case 2:
+        result.add(element[1] + element[0]);
+        break;
+      case 3:
+        result.add(element[2] + element[1] + element[0]);
+        break;
+      case 4:
+        result.add(element[2] + element[3] + element[1] + element[0]);
+        break;
+      case 5:
+        result.add(element[2] + element[3] + element[4] + element[1] + element[0]);
+        break;
+      default:
+        result.add('');
+    }
   }
   return result.join(' ');
 }

@@ -149,7 +149,8 @@ String segments2binary(List<String> segments2convert, TeletypewriterCodebook lan
   return result;
 }
 
-String? segments2decenary(List<String> segments, bool order54321, TeletypewriterCodebook language) {
+String? _segments2decenary(List<String> segments, bool order54321,
+ TeletypewriterCodebook language) {
   // [1,2,3,4,5] => 0 ... 31
   String result = '';
 
@@ -226,6 +227,7 @@ String? segments2decenary(List<String> segments, bool order54321, Teletypewriter
   }
 
   if (order54321) result = result.split('').reversed.join('');
+  result = result.split('').reversed.join('');
   return convertBase(result, 2, 10);
 }
 
@@ -239,27 +241,33 @@ Segments encodePunchtape(String input, TeletypewriterCodebook language, bool ord
   return Segments(displays: result);
 }
 
-SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool numbersOnly, bool order12345) {
+SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool numbersOnly, ) {
   if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
   List<String> text = [];
-  List<int> intList = List<int>.filled(1, 0);
-
+  //List<int> intList = List<int>.filled(1, 0);
+  List<int> intList = [];
+  
   inputs.split(' ').forEach((element) {
     var val = int.tryParse(convertBase(element, 2, 10));
     if (val != null) {
-      intList[0] = val;
-      text.add(decodeTeletypewriter(intList, language, numbersOnly: numbersOnly));
+      intList.add(val);
+      //intList[0] = val;
+      //text.add(decodeTeletypewriter(intList, language, numbersOnly: numbersOnly));
     }
-    if (!order12345) element = element.split('').reversed.join('');
+  });
 
+  inputs.split(' ').forEach((element) {
     displays.add(binary2segments(element, language));
   });
-  return SegmentsText(displays: displays, text: text.join(''));
+
+  //return SegmentsText(displays: displays, text: text.join(''));
+  return SegmentsText(displays: displays, text: decodeTeletypewriter(intList, language, numbersOnly: numbersOnly));
 }
 
-SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool numbersOnly, bool order12345) {
+SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook language, bool numbersOnly, bool order54321
+    ) {
   if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
 
   var displays = <List<String>>[];
@@ -276,10 +284,10 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
   // convert list of displays to list of decimal using String segments2decenary(List<String> segments)
   List<int> intList = [];
   for (var element in displays) {
-    var value = int.parse(segments2decenary(element, order12345, language) ?? '');
+    var value = int.parse(_segments2decenary(element, order54321,
+        language) ?? '');
     intList.add(value);
   }
 
-  // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
   return SegmentsText(displays: displays, text: decodeTeletypewriter(intList, language, numbersOnly: numbersOnly));
 }
