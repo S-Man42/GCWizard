@@ -2,6 +2,8 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/_common/logic/teletypewriter.dart';
 
+enum PUNCHTAPE_INTERPRETER_MODE {MODE_54321, MODE_12345, MODE_54123}
+
 List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111
   String? binary = convertBase(decenary, 10, 2).padLeft(BINARY_LENGTH[language]!, '0');
@@ -231,6 +233,40 @@ String? _segments2decenary(List<String> segments, bool order54321,
   return convertBase(result, 2, 10);
 }
 
+String _build54321FromBaudot(String DecodeInput) {
+  List<String> result = [];
+  for (var element in DecodeInput.split(' ')) {
+    switch (element.length) {
+      case 1:
+        result.add(element[0]);
+        break;
+      case 2:
+        result.add(element[1] + element[0]);
+        break;
+      case 3:
+        result.add(element[2] + element[1] + element[0]);
+        break;
+      case 4:
+        result.add(element[2] + element[3] + element[1] + element[0]);
+        break;
+      case 5:
+        result.add(element[2] + element[3] + element[4] + element[1] + element[0]);
+        break;
+      default:
+        result.add('');
+    }
+  }
+  return result.join(' ');
+}
+
+String mirrorListOfBinary(List<String> binaryList) {
+  List<String> result = [];
+  for (var element in binaryList) {
+    result.add(element.split('').reversed.join(''));
+  }
+  return result.join(' ');
+}
+
 Segments encodePunchtape(String input, TeletypewriterCodebook language, bool order12345) {
   List<List<String>> result = [];
   List<String> code = [];
@@ -241,8 +277,21 @@ Segments encodePunchtape(String input, TeletypewriterCodebook language, bool ord
   return Segments(displays: result);
 }
 
-SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool numbersOnly, ) {
+SegmentsText decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool numbersOnly, PUNCHTAPE_INTERPRETER_MODE interpreterMode) {
   if (inputs.isEmpty) return SegmentsText(displays: [], text: '');
+
+  switch (interpreterMode) {
+    case PUNCHTAPE_INTERPRETER_MODE.MODE_54321: break;
+    case PUNCHTAPE_INTERPRETER_MODE.MODE_12345:
+      if (language == TeletypewriterCodebook.BAUDOT_54123) {
+        inputs = _build54321FromBaudot(inputs);
+      }
+      inputs = mirrorListOfBinary(inputs.split(' '));
+      break;
+    case PUNCHTAPE_INTERPRETER_MODE.MODE_54123:
+      inputs = _build54321FromBaudot(inputs);
+      break;
+  }
 
   var displays = <List<String>>[];
   List<int> intList = [];

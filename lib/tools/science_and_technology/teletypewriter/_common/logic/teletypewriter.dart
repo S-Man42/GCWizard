@@ -254,7 +254,7 @@ const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.ALGOL: 5,
 };
 
-const Map<String, int> _AZToBaudot_12345 = {
+Map<String, int> _AZToBaudot_12345 = {
 // Original code from US Patent in Bit-Order 12345
   'A': 16,
   'B': 6,
@@ -271,7 +271,7 @@ const Map<String, int> _AZToBaudot_12345 = {
   'L': 27,
   'M': 11,
   'N': 15,
-  'O': 18,
+  'O': 28,
   'P': 31,
   'Q': 23,
   'R': 7,
@@ -286,6 +286,8 @@ const Map<String, int> _AZToBaudot_12345 = {
   'Ṯ': 17,
   '✲': 3,
   ' ': 0,
+  ' ': 1,
+  ' ': 2,
 };
 final Map<int, String> _Baudot_12345ToAZ = switchMapKeyValue(_AZToBaudot_12345);
 

@@ -286,7 +286,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                   ? binaryList.join(' ')
                   : (_currentOrderMode == GCWSwitchPosition.left)
                       ? binaryList.join(' ')
-                      : _mirrorListOfBinary(binaryList),
+                      : mirrorListOfBinary(binaryList),
         )
       ],
     );
@@ -298,7 +298,6 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     SegmentsText segmentsBaudot;
 
     String DecodeInput = _currentDecodeInput;
-    String DecodeBaudotInput = _currentDecodeInput;
 
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       // decode text mode
@@ -310,23 +309,24 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         DecodeInput,
         _currentCode,
         (_currentNumberMode == GCWSwitchPosition.right),
+        PUNCHTAPE_INTERPRETER_MODE.MODE_54321,
       );
 
       segmentsBaudot = segmentsOriginal;
       if (_currentCode == TeletypewriterCodebook.BAUDOT_54123) {
-        DecodeBaudotInput = _build54321FromBaudot(DecodeInput);
-        segmentsOriginal = decodeTextPunchtape(
-          DecodeBaudotInput,
+        segmentsBaudot = decodeTextPunchtape(
+          DecodeInput,
           _currentCode,
           (_currentNumberMode == GCWSwitchPosition.right),
+          PUNCHTAPE_INTERPRETER_MODE.MODE_54123,
         );
       }
 
-      DecodeBaudotInput = _mirrorListOfBinary(DecodeBaudotInput.split(' '));
       segmentsMirrored = decodeTextPunchtape(
-        DecodeBaudotInput,
+        DecodeInput,
         _currentCode,
         (_currentNumberMode == GCWSwitchPosition.right),
+        PUNCHTAPE_INTERPRETER_MODE.MODE_12345,
       );
     } else {
       // decode visual mode
@@ -346,7 +346,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       }
 
       segmentsMirrored = decodeVisualPunchtape(
-        _mirrorListOfBinary(output).split(' '),
+        mirrorListOfBinary(output).split(' '),
         _currentCode,
         (_currentNumberMode == GCWSwitchPosition.right),
         false,
@@ -400,7 +400,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                             text: i18n(context, 'punchtape_mode_baudot') +
                                 '\n' +
                                 i18n(context, 'punchtape_mode_bitorder_54123')),
-                        GCWOutputText(text: segmentsBaudot.text),
+                        GCWOutputText(text: segmentsOriginal.text),
                       ],
                     ),
                   )),
@@ -414,7 +414,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                             text: i18n(context, 'punchtape_mode_original') +
                                 '\n' +
                                 i18n(context, CODEBOOK_BITS_ORIGINAL[5]!)),
-                        GCWOutputText(text: segmentsOriginal.text),
+                        GCWOutputText(text: segmentsBaudot.text),
                       ],
                     )
                   )),
@@ -456,36 +456,4 @@ String _mirrorListOfBinaryToDecimal(List<String> binaryList) {
   return result.join(' ');
 }
 
-String _mirrorListOfBinary(List<String> binaryList) {
-  List<String> result = [];
-  for (var element in binaryList) {
-    result.add(element.split('').reversed.join(''));
-  }
-  return result.join(' ');
-}
 
-String _build54321FromBaudot(String DecodeInput) {
-  List<String> result = [];
-  for (var element in DecodeInput.split(' ')) {
-    switch (element.length) {
-      case 1:
-        result.add(element[0]);
-        break;
-      case 2:
-        result.add(element[1] + element[0]);
-        break;
-      case 3:
-        result.add(element[2] + element[1] + element[0]);
-        break;
-      case 4:
-        result.add(element[2] + element[3] + element[1] + element[0]);
-        break;
-      case 5:
-        result.add(element[2] + element[3] + element[4] + element[1] + element[0]);
-        break;
-      default:
-        result.add('');
-    }
-  }
-  return result.join(' ');
-}
