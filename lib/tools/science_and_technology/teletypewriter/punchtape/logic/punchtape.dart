@@ -74,12 +74,28 @@ String _build54321FromBaudot(String DecodeInput) {
   return result.join(' ');
 }
 
-String mirrorListOfBinary(List<String> binaryList) {
+String _mirrorListOfBinary(List<String> binaryList) {
   List<String> result = [];
   for (var element in binaryList) {
     result.add(element.split('').reversed.join(''));
   }
   return result.join(' ');
+}
+
+List<String> _buildBinaryListFromDecimalList(List<int> input) {
+  List<String> result = [];
+  for (int element in input) {
+    result.add(convertBase(element.toString(), 10, 2).padLeft(5, '0'));
+  }
+  return result;
+}
+
+List<int> _buildIntListFromBinaryList(List<String> input) {
+  List<int> result = [];
+  for (String element in input) {
+    result.add(int.parse(convertBase(element, 2, 10)));
+  }
+  return result;
 }
 
 Segments encodePunchtape(String input, TeletypewriterCodebook language, bool order12345) {
@@ -103,7 +119,7 @@ SegmentsText decodeTextPunchtape(
       if (language == TeletypewriterCodebook.BAUDOT_54123) {
         inputs = _build54321FromBaudot(inputs);
       }
-      inputs = mirrorListOfBinary(inputs.split(' '));
+      inputs = _mirrorListOfBinary(inputs.split(' '));
       break;
     case PUNCHTAPE_INTERPRETER_MODE.MODE_54123:
       inputs = _build54321FromBaudot(inputs);
@@ -163,7 +179,7 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
     case PUNCHTAPE_INTERPRETER_MODE.MODE_12345:
       List<String> binaryList = _buildBinaryListFromDecimalList(intList);
       String binaryInputToDecode = _build54321FromBaudot(binaryList.join(' '));
-      binaryList = mirrorListOfBinary(binaryInputToDecode.split(' ')).split(' ');
+      binaryList = _mirrorListOfBinary(binaryInputToDecode.split(' ')).split(' ');
       intList = _buildIntListFromBinaryList(binaryList);
       text = decodeTeletypewriter(intList, language, numbersOnly: numbersOnly);
       break;
@@ -172,18 +188,3 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
   return SegmentsText(displays: displays, text: text);
 }
 
-List<String> _buildBinaryListFromDecimalList(List<int> input) {
-  List<String> result = [];
-  for (int element in input) {
-    result.add(convertBase(element.toString(), 10, 2).padLeft(5, '0'));
-  }
-  return result;
-}
-
-List<int> _buildIntListFromBinaryList(List<String> input) {
-  List<int> result = [];
-  for (String element in input) {
-    result.add(int.parse(convertBase(element, 2, 10)));
-  }
-  return result;
-}

@@ -234,14 +234,6 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         codeBook: _currentCode);
   }
 
-  String _decimalToBinary(String decimal, TeletypewriterCodebook language) {
-    List<String?> result = [];
-    decimal.split(' ').forEach((decimalNumber) {
-      result.add(convertBase(decimalNumber, 10, 2).padLeft(BINARY_LENGTH[language]!, '0'));
-    });
-    return result.join(' ');
-  }
-
   Widget _buildOutputEncrypt() {
     var segments = encodePunchtape(
         _currentEncodeInput,
@@ -474,4 +466,12 @@ String _segments2binary(List<String> segments2convert, TeletypewriterCodebook la
   result = result.substring(0, BINARY_LENGTH[language]);
 
   return result;
+}
+
+String _decimalToBinary(String decimal, TeletypewriterCodebook language) {
+  List<String?> result = [];
+  decimal.split(' ').forEach((decimalNumber) {
+    result.add(convertBase(decimalNumber, 10, 2).padLeft(BINARY_LENGTH[language]!, '0'));
+  });
+  return result.join(' ');
 }
