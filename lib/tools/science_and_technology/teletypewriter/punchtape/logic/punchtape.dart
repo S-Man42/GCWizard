@@ -93,7 +93,9 @@ List<String> _buildBinaryListFromDecimalList(List<int> input) {
 List<int> _buildIntListFromBinaryList(List<String> input) {
   List<int> result = [];
   for (String element in input) {
-    result.add(int.parse(convertBase(element, 2, 10)));
+    if (int.tryParse(convertBase(element, 2, 10))!= null ) {
+      result.add(int.parse(convertBase(element, 2, 10)));
+    }
   }
   return result;
 }
@@ -178,8 +180,7 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
       break;
     case PUNCHTAPE_INTERPRETER_MODE.MODE_12345:
       List<String> binaryList = _buildBinaryListFromDecimalList(intList);
-      String binaryInputToDecode = _build54321FromBaudot(binaryList.join(' '));
-      binaryList = _mirrorListOfBinary(binaryInputToDecode.split(' ')).split(' ');
+      binaryList = _mirrorListOfBinary(binaryList).split(' ');
       intList = _buildIntListFromBinaryList(binaryList);
       text = decodeTeletypewriter(intList, language, numbersOnly: numbersOnly);
       break;

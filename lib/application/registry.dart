@@ -840,16 +840,6 @@ void initializeRegistry(BuildContext context) {
       ],
       licenses: const [],
     ),
-
-    GCWTool(
-      tool: const ExifReader(),
-      id: 'exif',
-      categories: const [ToolCategory.IMAGES_AND_FILES],
-      searchKeys: const [
-        'exif',
-      ],
-      licenses: const [],
-    ),
     GCWTool(tool: const FormulaSolverFormulaGroups(), id: 'formulasolver', searchKeys: const [
       'formulasolver',
     ], licenses: const []),

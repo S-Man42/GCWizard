@@ -359,7 +359,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                           GCWTextDivider(
                               text: i18n(context, 'punchtape_mode_bitorder') +
                                   '\n' +
-                                  i18n(context, CODEBOOK_BITS_54321[5]!)),
+                                  i18n(context, CODEBOOK_BITS_54321[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
                           GCWOutputText(text: segmentsOriginal.text),
                         ],
                       ))),
@@ -371,7 +371,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                         GCWTextDivider(
                             text: i18n(context, 'punchtape_mode_bitorder') +
                                 '\n' +
-                                i18n(context, CODEBOOK_BITS_12345[5]!)),
+                                i18n(context, CODEBOOK_BITS_12345[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
                         GCWOutputText(text: segmentsMirrored.text),
                       ]))),
             ],
