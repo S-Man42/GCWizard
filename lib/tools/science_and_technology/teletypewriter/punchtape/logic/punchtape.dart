@@ -180,7 +180,8 @@ SegmentsText decodeVisualPunchtape(List<String?> inputs, TeletypewriterCodebook 
       break;
     case PUNCHTAPE_INTERPRETER_MODE.MODE_12345:
       List<String> binaryList = _buildBinaryListFromDecimalList(intList);
-      binaryList = _mirrorListOfBinary(binaryList).split(' ');
+      String binaryInputToDecode = _build54321FromBaudot(binaryList.join(' '));
+      binaryList = _mirrorListOfBinary(binaryInputToDecode.split(' ')).split(' ');
       intList = _buildIntListFromBinaryList(binaryList);
       text = decodeTeletypewriter(intList, language, numbersOnly: numbersOnly);
       break;
