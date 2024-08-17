@@ -1261,8 +1261,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Zielcode',
-          sourceUrl:
-            'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
     ]),
     GCWTool(tool: const PiSelection(), id: 'pi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -5697,19 +5696,20 @@ void initializeRegistry(BuildContext context) {
       'symbol_eurythmy',
     ], licenses: [
       ToolLicenseImage(
-        context: context,
-        author: 'Rudolf Steiner Verlag',
-        title: 'Eurythmiefiguren',
-        privatePermission: ToolLicensePrivatePermission(
-          medium: 'e-mail',
-          permissionYear: 2020,
-          permissionMonth: 11,
-          permissionDay: 14,
           context: context,
-        ),
-        sourceUrl: 'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
-        licenseType: ToolLicenseType.NON_COMMERCIAL,
-        licenseUseType: ToolLicenseUseType.COPY)
+          author: 'Rudolf Steiner Verlag',
+          title: 'Eurythmiefiguren',
+          privatePermission: ToolLicensePrivatePermission(
+            medium: 'e-mail',
+            permissionYear: 2020,
+            permissionMonth: 11,
+            permissionDay: 14,
+            context: context,
+          ),
+          sourceUrl:
+              'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
@@ -6728,7 +6728,16 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Steinheilschrift',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
-          licenseType: ToolLicenseType.CCBYSA4)
+          licenseType: ToolLicenseType.CCBYSA4),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'Taliaferro Preston Shaffner',
+          title:
+          'The Telegraph Manual: A Complete History and Description of the Semaphoric, Electri and Magnetic Telegraphs of Europe, Asia, Africa, and America, Ancient and Modern',
+          sourceUrl: '',
+          year: 1859,
+          publisher: 'Pudney & Russell',
+          customComment: 'Chapter XII, Page 178')
     ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
       'symbol_murray',
@@ -7460,6 +7469,15 @@ void initializeRegistry(BuildContext context) {
           title: 'Steinheilschrift',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
           licenseType: ToolLicenseType.CCBYSA4),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'Taliaferro Preston Shaffner',
+          title:
+          'The Telegraph Manual: A Complete History and Description of the Semaphoric, Electri and Magnetic Telegraphs of Europe, Asia, Africa, and America, Ancient and Modern',
+          sourceUrl: '',
+          year: 1859,
+          publisher: 'Pudney & Russell',
+          customComment: 'Chapter XII, Page 178')
     ]),
     GCWSymbolTableTool(symbolKey: 'stenography', symbolSearchStrings: const [
       'symbol_stenography',
@@ -7876,17 +7894,17 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Webdings-big.png&oldid=899647144',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'westernunion',
-        symbolSearchStrings: const ['symbol_westernunion', 'teletypewriter'],
-        licenses: [
-          ToolLicenseOnlineArticle(
-              context: context,
-              author: 'commons.wikimedia.org and contributors',
-              title: "RTTY.COM's CODE-CARD CORNER",
-              sourceUrl: 'https://web.archive.org/web/20240808182500/https://www.rtty.com/CODECARD/codecrd1.htm',
-              licenseType: ToolLicenseType.FREE_TO_USE)
-        ]),
+    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: const [
+      'symbol_westernunion',
+      'teletypewriter'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: "RTTY.COM's CODE-CARD CORNER",
+          sourceUrl: 'https://web.archive.org/web/20240808182500/https://www.rtty.com/CODECARD/codecrd1.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_beaufort',
@@ -8178,7 +8196,23 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const SteinheilTelegraph(), id: 'telegraph_steinheil', searchKeys: const [
       'telegraph',
       'telegraph_steinheil',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Steinheilschrift',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Steinheilschrift&oldid=225516165',
+          licenseType: ToolLicenseType.CCBYSA4),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'Taliaferro Preston Shaffner',
+          title:
+              'The Telegraph Manual: A Complete History and Description of the Semaphoric, Electri and Magnetic Telegraphs of Europe, Asia, Africa, and America, Ancient and Modern',
+          sourceUrl: '',
+          year: 1859,
+          publisher: 'Pudney & Russell',
+          customComment: 'Chapter XII, Page 178')
+    ]),
     GCWTool(tool: const WigWagSemaphoreTelegraph(), id: 'telegraph_wigwag', searchKeys: const [
       'telegraph',
       'telegraph_wigwag',

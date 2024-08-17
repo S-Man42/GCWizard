@@ -13,7 +13,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 
 const _STEINHEIL_RELATIVE_DISPLAY_WIDTH = 100;
 const _STEINHEIL_RELATIVE_DISPLAY_HEIGHT = 100;
-const _STEINHEIL_RADIUS = 12;
+const _STEINHEIL_RADIUS = 10;
 
 
 class _SteinheilSegmentDisplay extends NSegmentDisplay {
@@ -58,6 +58,138 @@ class _SteinheilSegmentDisplay extends NSegmentDisplay {
             setSegmentState(key, !segmentActive(currentSegments, key));
           });
 
+          if (currentSegments['a']! && currentSegments['b']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['a']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['a']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['b']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['b']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['a']! && currentSegments['f']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['a']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['a']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['f']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['f']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['c']! && currentSegments['b']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['c']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['c']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['b']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['b']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['g']! && currentSegments['b']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['g']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['g']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['b']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['b']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['c']! && currentSegments['d']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['c']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['c']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['d']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['d']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['c']! && currentSegments['h']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['c']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['c']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['h']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['h']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['e']! && currentSegments['b']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+                Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['e']![0],
+                    size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['e']![1]),
+                Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['b']![0],
+                    size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['b']![1]),
+                paint,
+            );
+          }
+          if (currentSegments['e']! && currentSegments['f']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['e']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['e']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['f']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['f']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['f']! && currentSegments['c']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['f']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['f']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['c']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['c']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['f']! && currentSegments['g']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['f']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['f']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['g']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['g']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['g']! && currentSegments['d']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['g']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['g']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['d']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['d']![1]),
+              paint,
+            );
+          }
+          if (currentSegments['g']! && currentSegments['h']!) {
+            paint.color = SEGMENTS_COLOR_ON;
+            paint.strokeWidth = 2.0;
+            canvas.touchCanvas.drawLine(
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['g']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['g']![1]),
+              Offset(size.width / _STEINHEIL_RELATIVE_DISPLAY_WIDTH * circles['h']![0],
+                  size.height / _STEINHEIL_RELATIVE_DISPLAY_HEIGHT * circles['h']![1]),
+              paint,
+            );
+          }
           if (size.height < 50) return;
 
         });
