@@ -152,7 +152,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           i18n(context, 'wherigo_decompile_title'),
           SizedBox(
             width: 250,
-            height: 380,
+            height: 480,
             child: GCWText(
               text: i18n(context, 'wherigo_decompile_message'),
               style: gcwDialogTextStyle(),
