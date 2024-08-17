@@ -232,7 +232,7 @@ String _decodeVisualPunchtapeSingleMode(List<List<String>> displays, Teletypewri
 
 PunchtapeOutput decodeVisualPunchtape(List<List<String>> displays, TeletypewriterCodebook language, bool numbersOnly) {
   if (displays.isEmpty) return PunchtapeOutput(displays: [], text54321: '', text54123: '', text12345: '');
-  
+
   return PunchtapeOutput(
       displays: displays,
       text54321: _decodeVisualPunchtapeSingleMode(displays, language, numbersOnly, PUNCHTAPE_INTERPRETER_MODE.MODE_54321),
