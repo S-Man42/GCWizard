@@ -3998,7 +3998,7 @@
   "punchtape_mode_numberonly" : "Only Numbers",
   "punchtape_mode_lettersandnumbers" : "Letters & Numbers",
   "punchtape_mode_baudot" : "Baudot",
-  "punchtape_mode_bitorder" : "Bit Order",
+  "punchtape_mode_bitorder" : "Bit Sequence",
   "punchtape_mode_bitorder_54123" : "54 123",
   "punchtape_mode_bitorder_54321" : "54321",
   "punchtape_mode_bitorder_12345" : "12345",
