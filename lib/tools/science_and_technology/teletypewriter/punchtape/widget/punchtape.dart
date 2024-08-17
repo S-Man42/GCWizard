@@ -278,9 +278,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   }
 
   Widget _buildOutputDecrypt() {
-    SegmentsText segmentsOriginal;
-    SegmentsText segmentsMirrored;
-    SegmentsText segmentsBaudot;
+    PunchtapeOutput outputDecodePunchtape;
 
     String DecodeInput = _currentDecodeInput;
 
@@ -290,57 +288,17 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         // input decimal
         DecodeInput = _decimalToBinary(_currentDecodeInput, _currentCode);
       }
-      segmentsOriginal = decodeTextPunchtape(
+      outputDecodePunchtape = decodeTextPunchtape(
         DecodeInput,
         _currentCode,
         (_currentNumberMode == GCWSwitchPosition.right),
-        PUNCHTAPE_INTERPRETER_MODE.MODE_54321,
-      );
-
-      segmentsBaudot = segmentsOriginal;
-      if (_currentCode == TeletypewriterCodebook.BAUDOT_54123) {
-        segmentsBaudot = decodeTextPunchtape(
-          DecodeInput,
-          _currentCode,
-          (_currentNumberMode == GCWSwitchPosition.right),
-          PUNCHTAPE_INTERPRETER_MODE.MODE_54123,
-        );
-      }
-
-      segmentsMirrored = decodeTextPunchtape(
-        DecodeInput,
-        _currentCode,
-        (_currentNumberMode == GCWSwitchPosition.right),
-        PUNCHTAPE_INTERPRETER_MODE.MODE_12345,
       );
     } else {
       // decode visual mode
-      var output = _currentDisplays.displays.map((character) {
-        return character.join('');
-      }).toList();
-
-      segmentsOriginal = decodeVisualPunchtape(
-        output,
+      outputDecodePunchtape = decodeVisualPunchtape(
+        _currentDisplays.displays,
         _currentCode,
         (_currentNumberMode == GCWSwitchPosition.right),
-        PUNCHTAPE_INTERPRETER_MODE.MODE_54321,
-      );
-
-      segmentsBaudot = segmentsOriginal;
-      if (_currentCode == TeletypewriterCodebook.BAUDOT_54123) {
-        segmentsBaudot = decodeVisualPunchtape(
-          output,
-          _currentCode,
-          (_currentNumberMode == GCWSwitchPosition.right),
-          PUNCHTAPE_INTERPRETER_MODE.MODE_54123,
-        );
-      }
-
-      segmentsMirrored = decodeVisualPunchtape(
-        output,
-        _currentCode,
-        (_currentNumberMode == GCWSwitchPosition.right),
-        PUNCHTAPE_INTERPRETER_MODE.MODE_12345,
       );
     }
 
@@ -360,7 +318,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                               text: i18n(context, 'punchtape_mode_bitorder') +
                                   '\n' +
                                   i18n(context, CODEBOOK_BITS_54321[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
-                          GCWOutputText(text: segmentsOriginal.text),
+                          GCWOutputText(text: outputDecodePunchtape.text54321),
                         ],
                       ))),
               Expanded(
@@ -372,7 +330,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                             text: i18n(context, 'punchtape_mode_bitorder') +
                                 '\n' +
                                 i18n(context, CODEBOOK_BITS_12345[PUNCHTAPE_DEFINITION[_currentCode]?.punchHoles]!)),
-                        GCWOutputText(text: segmentsMirrored.text),
+                        GCWOutputText(text: outputDecodePunchtape.text12345),
                       ]))),
             ],
           )
@@ -389,7 +347,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                             text: i18n(context, 'punchtape_mode_baudot') +
                                 '\n' +
                                 i18n(context, 'punchtape_mode_bitorder_54123')),
-                        GCWOutputText(text: segmentsOriginal.text),
+                        GCWOutputText(text: outputDecodePunchtape.text54123),
                       ],
                     ),
                   )),
@@ -403,7 +361,7 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                               text: i18n(context, 'punchtape_mode_bitorder') +
                                   '\n' +
                                   i18n(context, CODEBOOK_BITS_12345[5]!)),
-                          GCWOutputText(text: segmentsBaudot.text),
+                          GCWOutputText(text: outputDecodePunchtape.text12345),
                         ],
                       ))),
               Expanded(
@@ -415,11 +373,11 @@ class _TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
                             text: i18n(context, 'punchtape_mode_bitorder') +
                                 '\n' +
                                 i18n(context, CODEBOOK_BITS_54321[5]!)),
-                        GCWOutputText(text: segmentsMirrored.text),
+                        GCWOutputText(text: outputDecodePunchtape.text54321),
                       ]))),
             ],
           ),
-        _buildDigitalOutput(segmentsOriginal),
+        _buildDigitalOutput(Segments(displays: outputDecodePunchtape.displays)),
       ],
     );
   }
