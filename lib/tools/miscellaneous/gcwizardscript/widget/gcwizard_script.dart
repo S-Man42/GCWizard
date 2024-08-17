@@ -9,15 +9,13 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart'
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -26,6 +24,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
@@ -171,7 +171,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
             coordsFormat: _currentCoords.format,
             onChanged: (ret) {
               setState(() {
-                _currentCoords = ret;
+                if (ret != null) {
+                  _currentCoords = ret;
+                }
               });
             },
           ),
@@ -245,18 +247,24 @@ class GCWizardScriptState extends State<GCWizardScript> {
   Widget _builOutputGraphics() {
     if (_currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
         _currentOutput.Graphic.GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
-      return GCWDefaultOutput(
-        child: (_outGraphicData.isNotEmpty)
-            ? GCWImageView(
-                imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
-                suppressOpenInTool: const {
-                  GCWImageViewOpenInTools.METADATA,
-                  GCWImageViewOpenInTools.HIDDENDATA,
-                  GCWImageViewOpenInTools.HEXVIEW
-                },
-              )
-            : Container(),
-      );
+      return Column(children: <Widget>[
+        GCWTextDivider(
+          suppressTopSpace: false,
+            text: i18n(context, 'gcwizard_script_help_graphics'),
+        ),
+        GCWDefaultOutput(
+          child: (_outGraphicData.isNotEmpty)
+              ? GCWImageView(
+                  imageData: GCWImageViewData(GCWFile(bytes: _outGraphicData)),
+                  suppressOpenInTool: const {
+                    GCWImageViewOpenInTools.METADATA,
+                    GCWImageViewOpenInTools.HIDDENDATA,
+                    GCWImageViewOpenInTools.HEXVIEW
+                  },
+                )
+              : Container(),
+        )
+      ]);
     } else {
       return Container();
     }
@@ -266,6 +274,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     if (_currentOutput.Points.isNotEmpty) {
       return Column(children: <Widget>[
         GCWTextDivider(
+          suppressTopSpace: false,
           trailing: Row(
             children: <Widget>[
               GCWIconButton(
@@ -325,19 +334,21 @@ class GCWizardScriptState extends State<GCWizardScript> {
     } else {
       return Column(
         children: <Widget>[
+          GCWTextDivider(
+            suppressTopSpace: false,
+            text: i18n(context, 'common_programming_error_aborted_program'),
+          ),
           GCWOutputText(
             style: gcwMonotypeTextStyle(),
-            text: _currentOutput.STDOUT +
-                '\n' +
-                i18n(context, _currentOutput.ErrorMessage) +
-                '\n' +
-                i18n(context, 'gcwizard_script_error_line') +
-                ' ' +
-                _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
+            text: i18n(context, _currentOutput.ErrorMessage) +
                 '\n' +
                 i18n(context, 'gcwizard_script_error_position') +
-                ' ' +
+                ': ' +
                 _currentOutput.ErrorPosition.toString() +
+                '\n' +
+                i18n(context, 'gcwizard_script_error_line') +
+                ': ' +
+                _printFaultyLine(_currentProgram, _currentOutput.ErrorPosition) +
                 '\n' +
                 '=> ' +
                 _printFaultyProgram(_currentProgram, _currentOutput.ErrorPosition),
@@ -420,8 +431,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
       builder: (context) {
         return Center(
           child: SizedBox(
-            height: 220,
-            width: 150,
+            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
+            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
             child: GCWAsyncExecuter<GCWizardScriptOutput>(
               isolatedFunction: GCWizardScriptInterpretScriptAsync,
               parameter: _buildInterpreterJobData,
@@ -568,7 +579,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                id: 'coords_map_view',
+                id: 'coords_openmap',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }

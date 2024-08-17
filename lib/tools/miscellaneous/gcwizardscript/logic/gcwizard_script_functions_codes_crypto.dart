@@ -37,12 +37,12 @@ String _abaddon(Object text, Object mode) {
   return output;
 }
 
-String _atbash(Object text) {
-  if (_isNotAString(text)) {
+String _atbash(Object text, Object mode) {
+  if (_isNotAString(text) || _isNotANumber(mode)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
-  return atbash(text as String);
+  return atbash(text as String, historicHebrew: (mode as int) == 0);
 }
 
 String _avemaria(Object text, Object mode) {
@@ -62,19 +62,35 @@ String _avemaria(Object text, Object mode) {
   return output;
 }
 
-String _morse(Object text, Object mode) {
-  if (_isNotAString(text) || _isNotAInt(mode)) {
+String _morse(Object text, Object mode, Object code) {
+  if (_isNotAString(text) || _isNotAInt(mode) || _isNotAInt(code)) {
     _handleError(_INVALIDTYPECAST);
     return '';
   }
+
+  final Map<int, MorseType> CODETABLE = {
+    0: MorseType.MORSE_ITU,
+    10: MorseType.MORSE1838,
+    11: MorseType.MORSE1844,
+    2: MorseType.GERKE,
+    3: MorseType.STEINHEIL,
+  };
+
   String output = '';
+
+  if (CODETABLE[code as int] == null) {
+    return '';
+  }
+
   switch (mode) {
     case _DECODE:
-      output = decodeMorse(text as String);
+      output = decodeMorse(text as String, type: CODETABLE[code]!);
       break;
     case _ENCODE:
-      output = encodeMorse(text as String);
+      output = encodeMorse(text as String, type: CODETABLE[code]!);
       break;
+    default:
+      return '';
   }
   return output;
 }
@@ -178,4 +194,85 @@ Object _GCCode(Object text, Object mode) {
       break;
   }
   return output;
+}
+
+const Map<int, AlphabetModificationMode> _AlphabetModificationMode = {
+  1: AlphabetModificationMode.J_TO_I,
+  2: AlphabetModificationMode.C_TO_K,
+  3: AlphabetModificationMode.W_TO_VV,
+  4: AlphabetModificationMode.REMOVE_Q,
+};
+
+const Map<int, PolybiosMode> _PolybiosMode = {
+  0: PolybiosMode.CUSTOM,
+  1: PolybiosMode.AZ09,
+  2: PolybiosMode.ZA90,
+  3: PolybiosMode.x90ZA,
+  4: PolybiosMode.x09AZ,
+};
+
+const Map<int, String> _key = {
+  5: '12345',
+  6: '123456'
+};
+
+bool _invalidAlphabet(String alphabet){
+  return incompleteCustomAlphabet(alphabet);
+}
+
+Object _bifid(Object text, Object key, Object mode, Object polybiosMode, Object alphabet, Object modification) {
+  if (_isNotAInt(mode) || _isNotAInt(key) || _isNotAInt(polybiosMode) || _isNotAInt(modification) || _isNotAString(text) || _isNotAString(alphabet)) {
+    _handleError(_INVALIDTYPECAST);
+    return '';
+  }
+
+  if (polybiosMode as int < 0 || polybiosMode > 4) {
+    _handleError(_UNKNOWNPARAMETER);
+    return '';
+  }
+
+  if (modification as int < 1 || polybiosMode > 4) {
+    _handleError(_UNKNOWNPARAMETER);
+    return '';
+  }
+
+  if (key as int < 5 || polybiosMode > 6) {
+    _handleError(_UNKNOWNPARAMETER);
+    return '';
+  }
+
+  BifidOutput output;
+
+  if ((mode as int) == _DECODE) {
+    output = decryptBifid(text as String, _key[key]!, mode: _PolybiosMode[polybiosMode]!, alphabet: alphabet as String, alphabetMode: _AlphabetModificationMode[modification]!);
+  } else {
+    output = encryptBifid(text as String, _key[key]!, mode: _PolybiosMode[polybiosMode]!, alphabet: alphabet as String, alphabetMode: _AlphabetModificationMode[modification]!);
+  }
+
+  return output.output;
+}
+
+Object _trifid(Object text, Object blockSize, Object mode, Object polybiosMode, Object alphabet,) {
+  if (_isNotAInt(mode) || _isNotAInt(blockSize) || _isNotAInt(polybiosMode) ||
+      _isNotAString(text) || _isNotAString(alphabet)) {
+    _handleError(_INVALIDTYPECAST);
+    return '';
+  }
+
+  if (polybiosMode as int < 0 || polybiosMode > 2) {
+    _handleError(_UNKNOWNPARAMETER);
+    return '';
+  }
+
+  TrifidOutput output;
+
+  if ((mode as int) == _DECODE) {
+    output = decryptTrifid(
+      text as String, blockSize as int, mode: _PolybiosMode[polybiosMode]!, alphabet: alphabet as String,);
+  } else {
+    output = encryptTrifid(
+      text as String, blockSize as int, mode: _PolybiosMode[polybiosMode]!, alphabet: alphabet as String,);
+  }
+
+  return output.output;
 }

@@ -4,8 +4,8 @@ String _LUAFile = '';
 
 String _CartridgeLUAName = '';
 
-String _obfuscatorTable = '';
-String _obfuscatorFunction = 'NO_OBFUSCATOR';
+List<String> _obfuscatorTable = [];
+List<String> _obfuscatorFunction = []; //'NO_OBFUSCATOR';
 bool _obfuscatorFound = false;
 
 String _LUACartridgeName = '';
@@ -89,7 +89,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
 
   List<String> lines = _LUAFile.split('\n');
 
-  if (!_obfuscatorFound) _checkAndGetObfuscatorURWIGO(lines);
+  _checkAndGetObfuscatorURWIGO(lines);
 
   if (_obfuscatorFound) {
     _deObfuscateAllTexts();
@@ -114,12 +114,12 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
   List<WherigoTaskData> _cartridgeTasks = [];
   List<WherigoZoneData> _cartridgeZones = [];
   List<WherigoTimerData> _cartridgeTimers = [];
-  List<WherigoMediaData> _cartridgeMedia = [];
+  List<WherigoMediaData> _cartridgeMedia = [];//EMPTY_WHERIGOMEDIADATA];
 
   bool _sectionVariables = true;
   bool _sectionBuilderVariables = true;
 
-  int index = 0;
+  int index = 1;
   int progress = 0;
   int progressStep = max(lines.length ~/ 200, 1); // 2 * 100 steps
   List<String> analyzeLines = [];
@@ -138,6 +138,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
     // search and get Media Object
     //
     late WherigoMediaData cartridgeMediaData;
+    index = 1;
     try {
       if (RegExp(r'(Wherigo.ZMedia\()').hasMatch(lines[i])) {
         WHERIGOcurrentObjectSection = WHERIGO_OBJECT_TYPE.MEDIA;
@@ -321,10 +322,11 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
               .replaceAll('{', '')
               .replaceAll('}', '')
               .split(' = ');
-
-          _cartridgeVariables.add(WherigoVariableData(
-              VariableLUAName: _declaration[1].trim(), VariableName: _declaration[2].replaceAll('"', '')));
-          i++;
+          if (_declaration.length == 3) {
+            _cartridgeVariables.add(WherigoVariableData(
+                VariableLUAName: _declaration[1].trim(), VariableName: _declaration[2].replaceAll('"', '')));
+            i++;
+          }
         } else {
           i++;
           do {
@@ -469,7 +471,7 @@ Future<WherigoCartridge> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonlin
         InputType: _cartridgeInputs[i].InputType,
         InputText: _cartridgeInputs[i].InputText,
         InputChoices: _cartridgeInputs[i].InputChoices,
-        InputAnswers: _Answers[i].InputAnswers));
+        InputAnswers: _Answers.isEmpty ? [] : _Answers[i].InputAnswers));
   }
   _cartridgeInputs = _resultInputs;
 
@@ -547,10 +549,14 @@ void _checkAndGetCartridgeMetaData(String currentLine) {
 
   if (currentLine.startsWith('.StartingLocation =')) {
     currentLine = currentLine.replaceAll('.StartingLocation = ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '');
-    _StartLocation = WherigoZonePoint(
-        Latitude: double.parse(currentLine.split(',')[0]),
-        Longitude: double.parse(currentLine.split(',')[1]),
-        Altitude: double.parse(currentLine.split(',')[2]));
+    if (double.tryParse(currentLine.split(',')[0]) != null &&
+        double.tryParse(currentLine.split(',')[1]) == null &&
+        double.tryParse(currentLine.split(',')[2]) == null) {
+      _StartLocation = WherigoZonePoint(
+          Latitude: double.parse(currentLine.split(',')[0]),
+          Longitude: double.parse(currentLine.split(',')[1]),
+          Altitude: double.parse(currentLine.split(',')[2]));
+    }
   }
   if (currentLine.startsWith('.CountryId')) {
     _CountryID = currentLine.replaceAll('.CountryId = ', '').replaceAll('"', '').trim();

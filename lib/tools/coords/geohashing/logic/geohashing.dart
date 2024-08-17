@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -71,11 +71,11 @@ Geohashing? parseGeohashing(String input) {
   if (regExp.hasMatch(input)) {
     var match = regExp.firstMatch(input);
     var decString = input.substring(0, match!.start);
-    var dec = DEC.parse(decString, wholeString: false); // test before date
+    var dec = DECCoordinate.parse(decString); // test before date
 
     if (dec == null) {
       decString = input.substring(match.end);
-      dec = DEC.parse(decString, wholeString: false); // test after date
+      dec = DECCoordinate.parse(decString); // test after date
     }
     if (dec != null) {
       return Geohashing(DateTime(int.parse(match.group(1)!), int.parse(match.group(2)!), int.parse(match.group(3)!)),

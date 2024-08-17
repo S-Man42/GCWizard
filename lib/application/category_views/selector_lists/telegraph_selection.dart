@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/foy_breguet/widget/foy_breguet.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/murray/widget/murray.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/ohlsen_telegraph/widget/ohlsen_telegraph.dart';
@@ -27,6 +28,7 @@ class TelegraphSelection extends GCWSelection {
       return [
         className(const ChappeTelegraph()),
         className(const EdelcrantzTelegraph()),
+        className(const FoyBreguetTelegraph()),
         className(const MurrayTelegraph()),
         className(const OhlsenTelegraph()),
         className(const PasleyTelegraph()),
