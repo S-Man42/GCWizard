@@ -250,7 +250,7 @@ const Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
 };
 final DIGITS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
-const Map<GaussWeberTelegraphMode, CodebookConfig> GAUSSWEBER = {
+const Map<GaussWeberTelegraphMode, CodebookConfig> GAUSSWEBERVERSION = {
   GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1: CodebookConfig(
       title: 'telegraph_gausswebertelegraph_v1_title', subtitle: 'telegraph_gausswebertelegraph_v1_description'),
   GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V2: CodebookConfig(

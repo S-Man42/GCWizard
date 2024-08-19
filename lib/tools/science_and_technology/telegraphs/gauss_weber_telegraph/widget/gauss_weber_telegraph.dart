@@ -25,6 +25,7 @@ class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
 
   var _currentMode = GCWSwitchPosition.right;
   var _currentNeedleNumber = GaussWeberTelegraphMode.WHEATSTONE_COOKE_5;
+  var _currentGaussVersion = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1;
 
   @override
   void initState() {
@@ -55,6 +56,21 @@ class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
               });
             },
             items: WHEATSTONECOOKENEEDLENUMBER.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: i18n(context, mode.value.title),
+                  subtitle: mode.value.subtitle.isNotEmpty ? i18n(context, mode.value.subtitle) : null);
+            }).toList(),
+          ),
+        if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1)
+          GCWDropDown<GaussWeberTelegraphMode>(
+            value: _currentGaussVersion,
+            onChanged: (value) {
+              setState(() {
+                _currentGaussVersion = value;
+              });
+            },
+            items: GAUSSWEBERVERSION.entries.map((mode) {
               return GCWDropDownMenuItem(
                   value: mode.key,
                   child: i18n(context, mode.value.title),
@@ -95,13 +111,17 @@ class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1) {
       if (_currentMode == GCWSwitchPosition.left) {
         var outputOriginal =
-            encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1);
+            encodeGaussWeberTelegraph(_currentEncodeInput, _currentGaussVersion);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
-        return Column(children: [
-          GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original')),
-          GCWOutput(child: outputAlt, title: i18n(context, 'telegraph_gausswebertelegraph_alternative')),
-        ]);
+        if (_currentGaussVersion == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1) {
+          return GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original'));
+        } else {
+          return Column(children: [
+            GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original')),
+            GCWOutput(child: outputAlt, title: i18n(context, 'telegraph_gausswebertelegraph_alternative')),
+          ]);
+        }
       } else {
         var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;
         var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
