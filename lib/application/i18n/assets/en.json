@@ -4809,6 +4809,8 @@
   "symboltables_baudot_54123_backspace": "DELETE",
   "symboltables_bibibinary_title" : "BiBi-Binary",
   "symboltables_bibibinary_description" : "Hexadecimal numeral system first described in 1968 by Robert 'Boby' Lapointe",
+  "symboltables_billiard_balls_title": "Billiard Balls",
+  "symboltables_billiard_balls_description": "Numbers and colors of Billiard balls",
   "symboltables_birds_on_a_wire_title": "Birds On A Wire",
   "symboltables_birds_on_a_wire_description": "Birds",
   "symboltables_blox_title": "Blox",
