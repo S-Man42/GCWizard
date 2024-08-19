@@ -648,6 +648,74 @@ class ToolLicenseFont extends ToolLicenseEntry {
 }
 
 /*
+ File: Any file type which is not yet specified separately -> cite with:
+    author == author(s) and/or organisation(s);
+    title == Source title
+    version == if available
+    customComment == whatever seems to be important..., license clarifications, ...
+    sourceUrl == main URL of the source (in best case: Github fork or/and explicit repository commit)
+    licenseType == if available: which license is the used source
+    licenseUrl == if available: url of the license (in best case: Github fork or/and explicit repository commit)
+ */
+class ToolLicenseFile extends ToolLicenseEntry {
+  final BuildContext context;
+  final String author;
+  final String title;
+  final String? customComment;
+  final ToolLicensePrivatePermission? privatePermission;
+  final String sourceUrl;
+  final String? licenseUrl;
+  final ToolLicenseType licenseType;
+  final ToolLicenseUseType? useType;
+  final String? version;
+  final int? year;
+  final int? month; // 01-12
+  final int? day;
+
+  const ToolLicenseFile({
+    required this.context,
+    required this.author,
+    required this.title,
+    required this.sourceUrl,
+    this.licenseUrl,
+    required this.licenseType,
+    this.useType,
+    this.privatePermission,
+    this.year, this.month, this.day,
+    this.version,
+    this.customComment, required licenseUseType
+  });
+
+  @override
+  List<Object> toRow() {
+    var out = <Object>[author];
+    var _title = title;
+    if (version != null) _title += ' (' + version! + ')';
+    out.add(buildUrl(_title, sourceUrl));
+    var date = _getDate(context, year, month, day);
+    if (date != null) out.add(date);
+    if (privatePermission != null) out.add(privatePermission.toString());
+
+    if (licenseType != ToolLicenseType.PRIVATE_PERMISSION) {
+      Object _license;
+      if (licenseUrl != null) {
+        _license = buildUrl(_licenseType(context, licenseType), licenseUrl!);
+      } else {
+        _license = _licenseType(context, licenseType);
+      }
+      out.add(_license);
+    }
+    if (useType != null) {
+      out.add(_getUseType(context, useType!));
+    }
+
+    if (customComment != null) out.add(customComment!);
+
+    return out;
+  }
+}
+
+/*
  API: Public API that is used (e.g. the geo.crox.net API for the Dow Jones)
     author == author(s) and/or organisation(s);
     title == Source title

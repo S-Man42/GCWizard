@@ -8249,8 +8249,21 @@ void initializeRegistry(BuildContext context) {
       'uic_wagoncode',
       'uic_wagoncode_vkm',
     ], licenses: [
-      stl._toolLicenseUICWiki,
-      stl._toolLicenseUIC
+      ToolLicenseOnlineArticle(context: context,
+          author: 'ERA - European Railway Agency',
+          title: 'Application Guide for Vehicle Keeper Marking Code (VKM) Register',
+          sourceUrl: 'http://web.archive.org/web/20240819164253/https://www.era.europa.eu/system/files/2022-11/Application%20guide%20for%20VKM%20Register.pdf?t=1724057016',
+          year: 2014, month: 4, day: 1
+      ),
+      ToolLicenseFile(
+        context: context,
+        author: 'ERA - European Railway Agency',
+        title: '168th list of VKMs',
+        year: 2024, month: 3,
+        sourceUrl: 'http://web.archive.org/save/https://www.era.europa.eu/system/files/2024-03/IU-VKM-publiclist-168.xls',
+        licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+        licenseUseType: ToolLicenseUseType.COPY,
+      )
     ]),
     GCWTool(tool: const UICWagonCodeCountryCodes(), id: 'uic_wagoncode_countrycodes', searchKeys: const [
       'railways',
