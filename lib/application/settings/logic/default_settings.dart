@@ -169,10 +169,10 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
     Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, HemisphereLongitude.East.toString());
   }
 
-  if (reinitSinglePreference == PREFERENCE_COORD_PRECISION_DMM ||
+  if (reinitSinglePreference == PREFERENCE_COORD_PRECISION_DMM_COPY ||
       _reinitAll ||
-      Prefs.get(PREFERENCE_COORD_PRECISION_DMM) == null) {
-    Prefs.setInt(PREFERENCE_COORD_PRECISION_DMM, 3);
+      Prefs.get(PREFERENCE_COORD_PRECISION_DMM_COPY) == null) {
+    Prefs.setInt(PREFERENCE_COORD_PRECISION_DMM_COPY, 3);
   }
 
   if (reinitSinglePreference == PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS ||
