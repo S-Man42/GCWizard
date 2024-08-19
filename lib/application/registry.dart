@@ -1176,9 +1176,10 @@ void initializeRegistry(BuildContext context) {
       ToolLicensePortedCode(
           context: context,
           author: 'Thomas Rosenau',
-          title: 'NonogramSolver',
-          sourceUrl: 'https://github.com/ThomasR/nonogram-solver',
-          licenseType: ToolLicenseType.APACHE2),
+          title: 'Nonogram Solver',
+          sourceUrl: 'http://web.archive.org/web/20240819161712/https://github.com/ThomasR/nonogram-solver',
+          licenseType: ToolLicenseType.APACHE2,
+          licenseUrl: 'http://web.archive.org/web/20240819161901/https://github.com/ThomasR/nonogram-solver?tab=Apache-2.0-1-ov-file'),
     ]),
     GCWTool(tool: const NumberPyramidSolver(), id: 'numberpyramidsolver', categories: const [
       ToolCategory.GAMES,
@@ -1189,10 +1190,11 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicensePortedCode(
           context: context,
-          author: 'Dennis P.',
-          title: 'NumberPyramidSolver',
-          sourceUrl: 'https://github.com/dennistreysa/Py-Ramid',
-          licenseType: ToolLicenseType.GPL3),
+          author: 'Dennis \'dennistreysa\' P.',
+          title: 'Py-Ramid',
+          sourceUrl: 'http://web.archive.org/web/20240819161342/https://github.com/dennistreysa/Py-Ramid',
+          licenseType: ToolLicenseType.GPL3,
+          licenseUrl: 'http://web.archive.org/web/20240819161613/https://github.com/dennistreysa/Py-Ramid?tab=GPL-3.0-1-ov-file'),
     ]),
     GCWTool(
         tool: const NumberSequenceSelection(),
@@ -1487,9 +1489,9 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Demis Bellot, Adam Singer, Matias Meno',
           title: 'Sudoku Solver',
-          sourceUrl: 'https://github.com/S-Man42/sudoku_solver',
+          sourceUrl: 'http://web.archive.org/web/20240819162156/https://github.com/dartist/sudoku_solver',
           licenseType: ToolLicenseType.FREE_TO_USE,
-          licenseUrl: 'https://github.com/S-Man42/sudoku_solver/blob/5f1889ce8f6c4f0eb1f8ec10caa84cc318c827b8/LICENSE'),
+          licenseUrl: 'http://web.archive.org/web/20240819162341/https://github.com/dartist/sudoku_solver/blob/master/LICENSE'),
     ]),
     GCWTool(
       tool: const SymbolTableSelection(),
@@ -1812,8 +1814,7 @@ void initializeRegistry(BuildContext context) {
               author: '@max-mapper',
               title: 'equatorial',
               licenseType: ToolLicenseType.GITHUB_DEFAULT,
-              sourceUrl: 'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec',
-              licenseUrl: 'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec'),
+              sourceUrl: 'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec'),
         ]),
 
     //Babylon Numbers Selection **************************************************************************************
