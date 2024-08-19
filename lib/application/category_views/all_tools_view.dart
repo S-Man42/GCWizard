@@ -142,6 +142,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rail_fence/widget/rail_fence.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rc4/widget/rc4.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/reverse/widget/reverse.dart';
@@ -705,6 +706,7 @@ void _initStaticToolList() {
       className(const QrCode()),
       className(const QuadraticEquation()),
       className(const Rabbit()),
+      className(const Ragbaby()),
       className(const RailFence()),
       className(const RALColorCodes()),
       className(const RC4()),
