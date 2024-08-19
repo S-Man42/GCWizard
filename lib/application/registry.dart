@@ -8060,7 +8060,7 @@ void initializeRegistry(BuildContext context) {
         author: 'Unknown',
         title: 'View of the Telegraph erected on the Admiralty Office, Charing Cross in Feby 1796',
         sourceUrl:
-            'http://web.archive.org/web/20240819160122/https://c7.alamy.com/comp/P036GR/english-view-of-the-telegraph-erected-on-the-admiralty-office-charing-cross-in-feby-1796-text-in-english-within-plate-the-print-dates-from-the-year-that-the-revd-lord-george-murray-designed-the-original-arrangement-although-telegraph-or-semaphore-signals-were-also-developed-in-france-as-well-as-england-in-the-last-years-of-the-18th-century-murrays-system-was-known-as-the-shutter-telegraph-and-comprised-a-vertical-board-with-six-large-holes-in-its-face-each-of-which-could-be-opened-to-display-the-sky-or-a-light-or-closed-see-mdl0020-depending-on-the-lie-of-the-land-distances-bet-P036GR.jpg',
+            'https://web.archive.org/web/20240819160122/https://c7.alamy.com/comp/P036GR/english-view-of-the-telegraph-erected-on-the-admiralty-office-charing-cross-in-feby-1796-text-in-english-within-plate-the-print-dates-from-the-year-that-the-revd-lord-george-murray-designed-the-original-arrangement-although-telegraph-or-semaphore-signals-were-also-developed-in-france-as-well-as-england-in-the-last-years-of-the-18th-century-murrays-system-was-known-as-the-shutter-telegraph-and-comprised-a-vertical-board-with-six-large-holes-in-its-face-each-of-which-could-be-opened-to-display-the-sky-or-a-light-or-closed-see-mdl0020-depending-on-the-lie-of-the-land-distances-bet-P036GR.jpg',
         licenseType: ToolLicenseType.FREE_TO_USE,
         licenseUseType: ToolLicenseUseType.COPY,
       ),
