@@ -10,7 +10,7 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_te
 class GaussWeberTelegraph extends StatefulWidget {
   final GaussWeberTelegraphMode mode;
 
-  const GaussWeberTelegraph({Key? key, this.mode = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL}) : super(key: key);
+  const GaussWeberTelegraph({Key? key, this.mode = GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1}) : super(key: key);
 
   @override
   _GaussWeberTelegraphState createState() => _GaussWeberTelegraphState();
@@ -92,10 +92,10 @@ class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
   }
 
   Widget _buildOutput() {
-    if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL) {
+    if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1) {
       if (_currentMode == GCWSwitchPosition.left) {
         var outputOriginal =
-            encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
+            encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
         return Column(children: [
@@ -107,7 +107,7 @@ class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
         var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
 
         var mode = countOriginal >= countAlt
-            ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL
+            ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1
             : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
             child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)

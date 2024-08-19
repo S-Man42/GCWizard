@@ -7,10 +7,14 @@ import 'package:gc_wizard/utils/collection_utils.dart';
   Volker Aschoff
   "Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen"
   ISBN 3-486-20691-5
+
+ https://www.forum-wissen.de/blog/das-gausssche-telegraphenalphabet/
+
  */
 
 enum GaussWeberTelegraphMode {
-  GAUSS_WEBER_ORIGINAL,
+  GAUSS_WEBER_ORIGINAL_V1,
+  GAUSS_WEBER_ORIGINAL_V2,
   GAUSS_WEBER_ALTERNATIVE,
   SCHILLING_CANSTATT,
   WHEATSTONE_COOKE_5,
@@ -18,7 +22,35 @@ enum GaussWeberTelegraphMode {
   WHEATSTONE_COOKE_1
 }
 
-const Map<String, String> _GAUSS_WEBER_ORIGINAL = {
+const Map<String, String> _GAUSS_WEBER_ORIGINAL_V1 = {
+  'A': '+++++',
+  'B': '++++-',
+  'C': '+++-+',
+  'D': '+++--',
+  'E': '++-++',
+  'F': '++-+-',
+  'G': '++--+',
+  'H': '++---',
+  'I': '+-+++',
+  'K': '+-++-',
+  'L': '+-+-+',
+  'M': '+-+--',
+  'N': '+--++',
+  'O': '+--+-',
+  'P': '+---+',
+  'Q': '+----',
+  'R': '-++++',
+  'S': '-+++-',
+  'T': '-++-+',
+  'U': '-++--',
+  'V': '-+-++',
+  'W': '-+-+-',
+  'X': '-+--+',
+  'Y': '-+---',
+  'Z': '--+++',
+};
+
+const Map<String, String> _GAUSS_WEBER_ORIGINAL_V2 = {
   'A': '+',
   'B': '-',
   'C': '++',
@@ -218,6 +250,13 @@ const Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
 };
 final DIGITS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
+const Map<GaussWeberTelegraphMode, CodebookConfig> GAUSSWEBER = {
+  GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1: CodebookConfig(
+      title: 'telegraph_gausswebertelegraph_v1_title', subtitle: 'telegraph_gausswebertelegraph_v1_description'),
+  GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V2: CodebookConfig(
+      title: 'telegraph_gausswebertelegraph_v2_title', subtitle: 'telegraph_gausswebertelegraph_v2_description'),
+};
+
 const Map<GaussWeberTelegraphMode, CodebookConfig> WHEATSTONECOOKENEEDLENUMBER = {
   GaussWeberTelegraphMode.WHEATSTONE_COOKE_1: CodebookConfig(
       title: 'telegraph_wheatstonecooke_1_needle_title', subtitle: 'telegraph_wheatstonecooke_1_needle_description'),
@@ -232,8 +271,11 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
 
   Map<String, String> map;
   switch (mode) {
-    case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL:
-      map = switchMapKeyValue(_GAUSS_WEBER_ORIGINAL);
+    case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1:
+      map = switchMapKeyValue(_GAUSS_WEBER_ORIGINAL_V1);
+      break;
+    case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V2:
+      map = switchMapKeyValue(_GAUSS_WEBER_ORIGINAL_V2);
       break;
     case GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE:
       map = switchMapKeyValue(_GAUSS_WEBER_ALTERNATIVE);
@@ -299,8 +341,11 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
 
   Map<String, String> map;
   switch (mode) {
-    case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL:
-      map = _GAUSS_WEBER_ORIGINAL;
+    case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1:
+      map = _GAUSS_WEBER_ORIGINAL_V1;
+      break;
+    case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V2:
+      map = _GAUSS_WEBER_ORIGINAL_V2;
       break;
     case GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE:
       map = _GAUSS_WEBER_ALTERNATIVE;
