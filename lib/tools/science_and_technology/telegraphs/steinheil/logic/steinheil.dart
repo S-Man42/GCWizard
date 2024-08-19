@@ -9,12 +9,12 @@ import 'package:gc_wizard/utils/constants.dart';
 // https://books.google.de/books/about/The_Telegraph_Manual.html?id=2q5LAAAAYAAJ&redir_esc=y
 // Page 178
 
-Map<String, List<String>> _CODEBOOK_STEINHEIL_V3 = {
+const Map<String, List<String>> _CODEBOOK_STEINHEIL_V3 = {
   'E': ['h'],
   'I': ['d'],
   'J': ['d'],
 };
-Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
+const Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
   'D': ['c', 'h', ],
   'E': ['g'],
   'I': ['c'],
@@ -23,7 +23,7 @@ Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
   'R': ['g', 'h'],
   'T': ['d', 'g'],
 };
-Map<String, List<String>> _CODEBOOK_STEINHEIL_V1 = {
+const Map<String, List<String>> _CODEBOOK_STEINHEIL_V1 = {
   'A': ['c', 'f', 'h', ],
   'C': ['d', 'f', 'g'],
   'D': ['b', 'g', ],
