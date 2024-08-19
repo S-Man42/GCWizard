@@ -81,11 +81,6 @@ class _RagbabyState extends State<Ragbaby> {
             });
           },
         ),
-        GCWOutput(title: i18n(context, 'common_alphabet'),
-            child:
-              GCWOutputText(text: createSecretAlphabet(_currentPassword, type: _currentOption)),
-        ),
-
         _buildOutput(context),
 
       ],
@@ -93,6 +88,10 @@ class _RagbabyState extends State<Ragbaby> {
   }
 
   Widget _buildOutput(BuildContext context) {
+    if (_currentInput.isEmpty) {
+      return const GCWDefaultOutput();
+    }
+
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
@@ -109,6 +108,14 @@ class _RagbabyState extends State<Ragbaby> {
       );
     }
 
-    return GCWDefaultOutput(child: output);
+    return Column(
+      children: [
+        GCWDefaultOutput(child: output),
+        GCWOutput(title: i18n(context, 'common_alphabet'),
+          child:
+          GCWOutputText(text: createSecretAlphabet(_currentPassword, type: _currentOption)),
+        ),
+      ]
+    );
   }
 }
