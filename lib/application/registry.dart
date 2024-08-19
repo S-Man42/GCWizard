@@ -2099,7 +2099,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CheckDigitsUICSelection(),
         id: 'checkdigits_uic_selection',
-        searchKeys: const ['checkdigits', 'checkdigits_uic']),
+        searchKeys: const ['checkdigits', 'checkdigits_uic'], licenses: [stl._toolLicenseUICWiki]),
 
     //CheckDigitsCreditCardSelection  ********************************************************************************************
     GCWTool(
