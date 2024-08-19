@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 enum ToolLicenseType {
   PRIVATE_PERMISSION, // use as dummy; data will be taken from ToolLicensePrivatePermission object
   FREE_TO_USE,
+  PERSONAL_USE,
   AL, // Artistic License
   APACHE2, // Apache 2.0
   BSD, // BSD
@@ -47,6 +48,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
   switch (licenseType) {
     case ToolLicenseType.PRIVATE_PERMISSION: return ''; // data will be taken from ToolLicensePrivatePermission object instead
     case ToolLicenseType.FREE_TO_USE: return i18n(context, 'toollicenses_freetouse');
+    case ToolLicenseType.PERSONAL_USE: return i18n(context, 'toollicenses_personaluse');
     case ToolLicenseType.AL: return 'Artistic License';
     case ToolLicenseType.APACHE2: return 'Apache 2.0 License';
     case ToolLicenseType.BSD: return 'BSD License';

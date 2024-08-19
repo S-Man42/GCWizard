@@ -5129,6 +5129,7 @@ void initializeRegistry(BuildContext context) {
           title: 'Billiard Balls',
           sourceUrl: 'https://web.archive.org/web/20240524133920/https://www.freevector.com/billiard-balls',
           licenseType: ToolLicenseType.CCBY4,
+          licenseUrl: 'https://web.archive.org/web/20240524133455/https://creativecommons.org/licenses/by/4.0/',
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: const [
@@ -5310,8 +5311,7 @@ void initializeRegistry(BuildContext context) {
           title: 'Lettertype Mies Christmas Icons',
           sourceUrl:
               'https://web.archive.org/web/20220726192456/https://www.dafont.com/de/lettertype-mies-christmas-icons.font',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: const [
       'symbol_runes',
@@ -5659,8 +5659,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Matthew Luckow',
           title: 'Dragon Alphabet Font',
           sourceUrl: 'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
-          licenseType: ToolLicenseType.CCBYNC30,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
       'symbol_dragon_runes',
@@ -5979,8 +5978,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Pixel Sagas',
           title: 'Gargish Font',
           sourceUrl: 'https://web.archive.org/web/20200919013856/https://www.pixelsagas.com/?download=gargish',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'gc_attributes_ids', symbolSearchStrings: const [
       'symbol_gc_attributes',
@@ -6046,8 +6044,7 @@ void initializeRegistry(BuildContext context) {
           title: 'Gerudo Typography - Font',
           sourceUrl:
               'https://web.archive.org/web/20200906044202/https://www.deviantart.com/sarinilli/art/Gerudo-Typography-Font-278213135',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
@@ -6313,8 +6310,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Pixel Sagas',
           title: 'Iokharic',
           sourceUrl: 'https://web.archive.org/web/20201001220330/https://www.fonts4free.net/iokharic-font.html',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_firesafety', symbolSearchStrings: const [
       'iso7010',
@@ -6479,8 +6475,7 @@ void initializeRegistry(BuildContext context) {
           author: 'PsychoGlyph',
           title: 'Klinzhai font',
           sourceUrl: 'http://web.archive.org/web/20210227191441/https://www.whatfontis.com/FF_Klinzhai.font',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: const [
       'color',
@@ -6603,8 +6598,7 @@ void initializeRegistry(BuildContext context) {
           author: 'daniel-u-thibault',
           title: 'Matoran',
           sourceUrl: 'https://web.archive.org/web/20160320142824/https://fonts2u.com/matoran.font#google_vignette',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_calendar_longcount', symbolSearchStrings: const [
       'calendar',
@@ -7460,8 +7454,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Volnaiskra',
           title: 'Sprykski Font',
           sourceUrl: 'https://web.archive.org/web/20210306061331/https://www.1001fonts.com/sprykski-font.html',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Free for personal use')
+          licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
       'symbol_steinheil',
