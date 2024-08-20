@@ -112,28 +112,12 @@ class _GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
       if (_currentMode == GCWSwitchPosition.left) {
         var outputOriginal =
             encodeGaussWeberTelegraph(_currentEncodeInput, _currentGaussVersion);
-        var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
-        if (_currentGaussVersion == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1) {
-          return GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original'));
-        } else {
-          return Column(children: [
-            GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original')),
-            GCWOutput(child: outputAlt, title: i18n(context, 'telegraph_gausswebertelegraph_alternative')),
-          ]);
-        }
+        return GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original'));
       } else {
-        var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;
-        var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
 
-        var mode = countOriginal >= countAlt
-            ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL_V1
-            : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
-            child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
-                .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
-                .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
-                .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish')));
+            child: decodeGaussWeberTelegraph(_currentDecodeInput, _currentGaussVersion));
       }
     } else {
       String output;
