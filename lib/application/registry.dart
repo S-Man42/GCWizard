@@ -8190,6 +8190,11 @@ void initializeRegistry(BuildContext context) {
             year: 1867,
             customComment: 'Page 139',
             sourceUrl: 'https://archive.org/details/telegraphmanualc00shafrich/page/6/mode/2up'),
+        ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Eva Völker',
+            title: 'Forum Wissen. Das Gauß’sche Telegraphenalphabet',
+            sourceUrl: 'https://web.archive.org/web/20240820183159/https://www.forum-wissen.de/blog/das-gausssche-telegraphenalphabet/')
       ],
     ),
     GCWTool(tool: const WheatstoneCookeNeedleTelegraph(), id: 'telegraph_wheatstonecooke_needle', searchKeys: const [
