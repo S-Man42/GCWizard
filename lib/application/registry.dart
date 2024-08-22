@@ -3678,10 +3678,12 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(context: context,
         author: 'Whooligan',
         title: 'Whooligan\'s Judoon Language Translator',
-        customComment: 'This tool is inspired by the site https://whooligan.weebly.com/index.html'
-            'Whooligan is an index of Doctor Who stuff (It is  a fan forum). '
-            'Last updates were about 4 years ago.',
         sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
+      ),
+      ToolLicenseOnlineArticle(context: context,
+        author: 'Whooligan',
+        title: 'Doctor Who Fan Forum',
+        sourceUrl: 'http://www.judoon.com/judoon-translator.php',
       )]),
     GCWTool(tool: const PigLatin(), id: 'piglatin', searchKeys: const [
       'languagegames',

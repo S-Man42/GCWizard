@@ -23,6 +23,7 @@ const Map<String, String> alphabetJudoon  = {
 String encryptJudoon(String input) {
   if (input.isEmpty) return "";
 
+  input = input.trim();
   return input
       .split('')
       .map((char) => alphabetJudoon[char.toLowerCase()] ?? UNKNOWN_ELEMENT)
@@ -32,6 +33,7 @@ String encryptJudoon(String input) {
 String decryptJudoon(String input) {
   if (input.isEmpty) return "";
 
+  input = input.trim();
   final invertedDict = switchMapKeyValue(alphabetJudoon);
 
   return input
