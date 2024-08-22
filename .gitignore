@@ -111,13 +111,3 @@ coverage
 /macos/Podfile
 /windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/
 /windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/
-/windows/flutter/ephemeral/.plugin_symlinks/audioplayers_windows/
-/windows/flutter/ephemeral/.plugin_symlinks/device_info_plus/
-/windows/flutter/ephemeral/.plugin_symlinks/package_info_plus/
-/windows/flutter/ephemeral/.plugin_symlinks/audioplayers_windows/
-/windows/flutter/ephemeral/.plugin_symlinks/device_info_plus/
-/windows/flutter/ephemeral/.plugin_symlinks/package_info_plus/
-/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/
-/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows/
-/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/
-/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/
