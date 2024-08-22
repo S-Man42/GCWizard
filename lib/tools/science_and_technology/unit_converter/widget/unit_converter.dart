@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
@@ -79,7 +80,6 @@ class _UnitConverterState extends State<UnitConverter> {
   var _currentValue = 1.0;
   late GCWUnitsValue _currentFromUnit;
   late GCWUnitsValue _currentToUnit;
-
   late UnitCategoryConfig _currentCategory;
 
   @override
@@ -158,6 +158,15 @@ class _UnitConverterState extends State<UnitConverter> {
                 ))
           ],
         ),
+        GCWButton(
+            text: i18n(context, 'unitconverter_button'),
+            onPressed: () {
+              setState(() {
+                var tempUnit = _currentFromUnit;
+                _currentFromUnit = _currentToUnit;
+                _currentToUnit = tempUnit;
+              });
+            }),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );

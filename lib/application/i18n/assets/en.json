@@ -6748,6 +6748,7 @@
   "universalproductcode_openinbarcodetool": "Open in Barcode tool",
   "unitconverter_title": "Unit Converter",
   "unitconverter_description": "Converts values from one unit into another",
+  "unitconverter_button": "Flip units",
   "unitconverter_example": "km/h → mph, °C → °F",
   "unitconverter_from": "From",
   "unitconverter_to": "To",
