@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/judoon//logic/judoon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon//logic/judoon.dart';
 
 class Judoon extends StatefulWidget {
   const Judoon({super.key});
@@ -44,13 +42,6 @@ class _JudoonState extends State<Judoon> {
               _currentInput = text;
             });
           },
-        ),
-        GCWText(
-          text: i18n(
-              context,
-              (_currentMode == GCWSwitchPosition.left)
-                  ? 'judoon_unknown_character'
-                  : "judoon_unknown_words"),
         ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
