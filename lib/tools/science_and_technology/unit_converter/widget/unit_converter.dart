@@ -3,6 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
@@ -158,6 +159,15 @@ class _UnitConverterState extends State<UnitConverter> {
                 ))
           ],
         ),
+        GCWButton(
+            text: i18n(context, 'unitconverter_button_swap'),
+            onPressed: () {
+              setState(() {
+                var tempUnit = _currentFromUnit;
+                _currentFromUnit = _currentToUnit;
+                _currentToUnit = tempUnit;
+              });
+            }),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
