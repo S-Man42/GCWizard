@@ -202,7 +202,6 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
               ),
               Expanded(
                 flex: 2,
-                //child: Text(_currentOutputUnit.symbol),
                 child: Container(
                     margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                     child: GCWUnitDropDown(

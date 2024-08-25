@@ -9,7 +9,6 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summ
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class ApparentTemperatureSelection extends GCWSelection {
@@ -25,8 +24,7 @@ class ApparentTemperatureSelection extends GCWSelection {
         className(const Windchill()),
         className(const WetBulbTemperature()),
         className(const WetBulbGlobeTemperature()),
-        className(const UTCI()),
-      ].contains(className(element.tool));
+       ].contains(className(element.tool));
     }).toList();
 
     return GCWToolList(toolList: _toolList);

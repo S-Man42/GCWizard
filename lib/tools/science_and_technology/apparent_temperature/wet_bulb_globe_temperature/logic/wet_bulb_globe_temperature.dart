@@ -3,10 +3,16 @@
 // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
 //
 // https://climatechip.org/excel-wbgt-calculator
-// https://wbgt.app/
-// https://www.osha.gov/heat-exposure/wbgt-calculator
+// https://web.archive.org/web/20240825152849/https://climatechip.org/excel-wbgt-calculator
 //
+// https://wbgt.app/
+//
+// https://www.osha.gov/heat-exposure/wbgt-calculator
+// https://web.archive.org/web/20240825152957/https://www.osha.gov/heat-exposure/wbgt-calculator
+//
+// https://raw.githubusercontent.com/mdljts/wbgt/master/src/wbgt.c.original
 // https://github.com/mdljts/wbgt
+
 
 import 'dart:core';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
@@ -20,10 +26,11 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 enum WBGT_HEATSTRESS_CONDITION { WHITE, GREEN, YELLOW, RED, BLACK }
 
 final Map<WBGT_HEATSTRESS_CONDITION, double> WBGT_HEAT_STRESS = {
-  WBGT_HEATSTRESS_CONDITION.WHITE: 24.9,
-  WBGT_HEATSTRESS_CONDITION.GREEN: 27.7,
-  WBGT_HEATSTRESS_CONDITION.YELLOW: 29.4,
-  WBGT_HEATSTRESS_CONDITION.RED: 31.6,
+  // https://en.wikipedia.org/wiki/Wet-bulb_globe_temperature
+  WBGT_HEATSTRESS_CONDITION.WHITE: 27.7,   // max value
+  WBGT_HEATSTRESS_CONDITION.GREEN: 29.4,   // max value
+  WBGT_HEATSTRESS_CONDITION.YELLOW: 31.0,  // max value
+  WBGT_HEATSTRESS_CONDITION.RED: 32.1,     // max value
 };
 
 class WBGTOutput {

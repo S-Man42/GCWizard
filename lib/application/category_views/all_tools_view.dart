@@ -197,7 +197,6 @@ import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/m
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
@@ -773,7 +772,6 @@ void _initStaticToolList() {
       className(const UnixTime()),
       className(const UrwigoHashBreaker()),
       className(const UrwigoTextDeobfuscation()),
-      className(const UTCI()),
       className(const VanitySelection()),
       className(const VariableCoordinateFormulas()),
       className(const VelocityAcceleration()),

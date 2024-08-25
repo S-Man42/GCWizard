@@ -302,7 +302,6 @@ import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/m
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
@@ -1662,11 +1661,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Humidex&oldid=1235632685',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-    GCWTool(tool: const UTCI(), id: 'utci', searchKeys: const [
-      'apparenttemperature',
-      'apparenttemperature_utci',
-    ]),
-
     GCWTool(tool: const SummerSimmerIndex(), id: 'summersimmerindex', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_summersimmerindex',
@@ -1696,14 +1690,46 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'de.wikipedia.org and contributors',
-          title: 'Kühlgrenztemperatur',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=K%C3%BChlgrenztemperatur&oldid=246986523',
+          author: 'en.wikipedia.org and contributors',
+          title: 'Wet-bulb globe temperature',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wet-bulb_globe_temperature&oldid=1237580210',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWTool(tool: const WetBulbGlobeTemperature(), id: 'wet_bulb_globe_temperature', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_wet_bulb_globe_temperature',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Kühlgrenztemperatur',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=K%C3%BChlgrenztemperatur&oldid=246986523',
+          licenseType: ToolLicenseType.CCBYSA4),
+      ToolLicenseOfflineArticle(
+          context: context,
+          author: 'Liljegren JC, Carhart RA, Lawday P, Tschopp S, Sharp R. ',
+          title: 'Modeling the wet bulb globe temperature using standard meteorological measurements',
+          year: 2008,
+          publisher: 'J Occup Environ Hyg',
+          customComment: '5(10):645-55'),
+      ToolLicensePortedCode(
+          context: context,
+          author: 'Max Lieblich, University of Washington',
+          title: 'wbgt',
+          sourceUrl: 'https://web.archive.org/web/20240825151151/https://github.com/mdljts/wbgt',
+          licenseType: ToolLicenseType.GITHUB_DEFAULT),
+      ToolLicensePortedCode(
+          context: context,
+          author: 'Qinkong',
+          title: 'PyWBGT',
+          sourceUrl: 'https://web.archive.org/web/20240825151539/https://github.com/QINQINKONG/PyWBGT',
+          licenseType: ToolLicenseType.CCBYNC40),
+      ToolLicensePortedCode(
+          context: context,
+          author: 'James C. Liljegren',
+          title: 'calc_wbgt',
+          sourceUrl: 'https://web.archive.org/web/20240825152223/https://raw.githubusercontent.com/mdljts/wbgt/master/src/wbgt.c.original',
+          licenseType: ToolLicenseType.OPEN_SOURCE)
     ]),
 
 
