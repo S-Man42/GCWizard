@@ -50,9 +50,34 @@ double calculateDewPoint(double t, double rh) {
   return (b * v) / (a - v);
 }
 
-double calculateMeanRadiantTemperature(double GT, double va, double e, double D, double Ta){
+double calculateMeanRadiantTemperature(double Tg, double va, double e, double D, double Ta){
   // https://en.wikipedia.org/wiki/Mean_radiant_temperature
-  double MRT = pow(pow(GT + 2784.15, 4) + 0.25 * pow(10, 8) * pow(va, 0.6)  * (GT - Ta), 0.25) - 273.15;
+  double MRT = pow(pow(Tg + 2784.15, 4) + 0.25 * pow(10, 8) * pow(va, 0.6)  * (Tg - Ta), 0.25) - 273.15;
 
   return MRT;
+}
+
+double calculateGlobeTemperature(
+    double Ta,   // T ambient in °C
+    double Td,   // T DewPoint in C°
+    double P,    // Barometric pressure
+    double u,    // Wind speed in m/s
+    double S,    // Solar irridiance in W/m/m
+    double fdb,  // direct beam radiation from the sun
+    double fdif, // diffuse radiation from the sun
+    double z,    // Zenith angle in radians
+    ){
+  // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
+  const h = 0.315;
+  final sb = 5.67 * pow(10, -8);
+  double Tg = 0.0;
+
+  double ea = exp() * ;
+  double epsilona = 0.575 * pow(ea, 1/7);
+
+  double B = S * (fdb / 4 / sb / cos(z) + 1.2 / sb * fdif) + epsilona *pow(Ta, 4);
+  double C = h * pow(u, 0.58) / (5.3865 * pow(10, -8));
+
+  Tg = (B + C * Ta + 7680000) / (C + 256000);
+  return Tg;
 }
