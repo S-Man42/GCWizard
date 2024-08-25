@@ -28,14 +28,14 @@ Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
   CLOUD_COVER.OBSCURED_9 : 1.0,
 };
 
-double calc_solar_irradiance({double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
+double calculateSolarIrradiance({double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
   // https://scool.larc.nasa.gov/lesson_plans/CloudCoverSolarRadiation.pdf#:~:text=There%20is%20a%20simple%20formula%20to%20predict%20how,%280%25%20no%20clouds%29%20to%201.0%20%28100%25%20complete%20coverage%29.
   double R0 = 990 * sin(solarElevationAngle * pi / 180) - 30;
   double cloudCoverFraction = CLOUD_COVER_VALUE[cloudcover]!;
   return R0 * (1.0 - 0.75 * pow(cloudCoverFraction, 3.4));
 }
 
-double calculateDewpoint(double t, double rh) {
+double calculateDewPoint(double t, double rh) {
   // https://energie-m.de/tools/taupunkt.html
   // https://myscope.net/taupunkttemperatur/
   double log10(double x) {
@@ -48,4 +48,11 @@ double calculateDewpoint(double t, double rh) {
   double dd = sdd * (rh / 100); // Dampfdruck (hPa)
   double v = log10(dd / 6.1078);
   return (b * v) / (a - v);
+}
+
+double calculateMeanRadiantTemperature(double GT, double va, double e, double D, double Ta){
+  // https://en.wikipedia.org/wiki/Mean_radiant_temperature
+  double MRT = pow(pow(GT + 2784.15, 4) + 0.25 * pow(10, 8) * pow(va, 0.6)  * (GT - Ta), 0.25) - 273.15;
+
+  return MRT;
 }
