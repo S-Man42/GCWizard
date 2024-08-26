@@ -7965,7 +7965,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
-    ], licenses: const []),
+    ], licenses: [
+      stl._toolLicenseOmniglot,
+      ToolLicenseOfflineArticle(
+        context: context,
+        author: 'Erik Moreno',
+        year: 2006, month: 2,
+        title: 'Yin yang Alphalines'
+      )
+    ]),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [
       'symbol_zamonian',
     ], licenses: [
