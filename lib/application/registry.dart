@@ -4947,7 +4947,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
     ], licenses: [
-      stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+        context: context,
+        author: 'Skies of Arcadia Island (arcadia.island.free.fr)',
+        title: 'La police d\'Arcadia',
+        sourceUrl:
+        'https://web.archive.org/web/20230628184941/http://arcadia.island.free.fr/down/police.zip',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+      ),
     ]),
     GCWSymbolTableTool(symbolKey: 'ath', symbolSearchStrings: const [
       'symbol_ath',
@@ -5650,11 +5657,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_dragon_language',
     ], licenses: [
       ToolLicenseFont(
-          context: context,
-          author: 'Matthew Luckow',
-          title: 'Dragon Alphabet Font',
-          sourceUrl: 'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
-          licenseType: ToolLicenseType.PERSONAL_USE)
+        context: context,
+        author: 'Matthew Luckow',
+        title: 'Dragon Alphabet Font',
+        sourceUrl: 'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
+        licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
       'symbol_dragon_runes',
