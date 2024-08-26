@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_units.dart';
@@ -128,34 +131,56 @@ class _UnitConverterState extends State<UnitConverter> {
         ),
         Row(
           children: [
-            Expanded(flex: 1, child: GCWText(text: i18n(context, 'unitconverter_from'))),
-            Expanded(
-                flex: 4,
-                child: GCWUnits(
-                  value: _currentFromUnit,
-                  unitCategory: _currentCategory.category,
-                  onChanged: (GCWUnitsValue value) {
-                    setState(() {
-                      _currentFromUnit = value;
-                    });
-                  },
-                ))
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(flex: 1, child: GCWText(text: i18n(context, 'unitconverter_to'))),
-            Expanded(
-                flex: 4,
-                child: GCWUnits(
-                  value: _currentToUnit,
-                  unitCategory: _currentCategory.category,
-                  onChanged: (GCWUnitsValue value) {
-                    setState(() {
-                      _currentToUnit = value;
-                    });
-                  },
-                ))
+            Expanded(flex: 1, child:
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: GCWText(text: i18n(context, 'unitconverter_from'))),
+                      Expanded(
+                          flex: 4,
+                          child: GCWUnits(
+                            value: _currentFromUnit,
+                            unitCategory: _currentCategory.category,
+                            onChanged: (GCWUnitsValue value) {
+                              setState(() {
+                                _currentFromUnit = value;
+                              });
+                            },
+                          ))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: GCWText(text: i18n(context, 'unitconverter_to'))),
+                      Expanded(
+                          flex: 4,
+                          child: GCWUnits(
+                            value: _currentToUnit,
+                            unitCategory: _currentCategory.category,
+                            onChanged: (GCWUnitsValue value) {
+                              setState(() {
+                                _currentToUnit = value;
+                              });
+                            },
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(width: DEFAULT_MARGIN),
+            GCWIconButton(
+                icon: Icons.swap_vert,
+                // size: IconButtonSize.SMALL,
+                onPressed: () {
+                  setState(() {
+                    var tempUnit = _currentFromUnit;
+                    _currentFromUnit = _currentToUnit;
+                    _currentToUnit = tempUnit;
+                  });
+                }
+            ),
           ],
         ),
         GCWDefaultOutput(child: _buildOutput())
