@@ -1,4 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/_common/logic/number_sequence.dart';
 
 void main() {
@@ -22,8 +23,9 @@ void main() {
     ];
 
     for (var elem in _inputsToExpected) {
-      test('sequence: ${elem['sequence']}, position: ${elem['position']}', () {
-        var _actual = numberSequencesGetNumberAt(elem['sequence'] as NumberSequencesMode, elem['position'] as int?);
+      test('sequence: ${elem['sequence']}, position: ${elem['position']}', () async {
+        //var _actual = numberSequencesGetNumberAt(elem['sequence'] as NumberSequencesMode, elem['position'] as int?);
+        var _actual = await calculateNumberAtAsync(GetNumberAtJobData(sequence: elem['sequence'] as NumberSequencesMode, n: elem['position'] as int,) as GCWAsyncExecuterParameters?, );
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -77,8 +79,9 @@ void main() {
     ];
 
     for (var elem in _inputsToExpected) {
-      test('sequence: ${elem['sequence']}, start: ${elem['start']}, stop: ${elem['stop']}', () {
-        var _actual = numberSequencesGetNumbersInRange(elem['sequence'] as NumberSequencesMode, elem['start'] as int?, elem['stop'] as int?);
+      test('sequence: ${elem['sequence']}, start: ${elem['start']}, stop: ${elem['stop']}', () async {
+        //var _actual = numberSequencesGetNumbersInRange(elem['sequence'] as NumberSequencesMode, elem['start'] as int?, elem['stop'] as int?);
+        var _actual = await calculateRange(GetNumberRangeJobData(sequence: elem['sequence'] as NumberSequencesMode, start: elem['start'] as int, stop: elem['stop'] as int));
         var length = (elem['expectedOutput'] as List<int>).length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], BigInt.from((elem['expectedOutput'] as List<int>)[i]));

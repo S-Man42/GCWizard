@@ -106,6 +106,9 @@ void main() {
       {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': '12'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
       {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F', 'F': '2'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
       {'formula' : 'A', 'values': {'A': 'B', 'B': 'C', 'C': 'DE', 'D': '1', 'E': 'F'}, 'expectedOutput' : {'state': 'error', 'output': [{'result': '1F', 'state': 'error'}]}},
+      {'formula' : 'A', 'values': {'A': 'A'}, 'expectedOutput' : {'state': 'error', 'output': [{'result': 'A', 'state': 'error'}]}},
+      {'formula' : '[A][B]', 'values': {'A': 'len(a)'}, 'expectedOutput' : {'state': 'error', 'output': [{'result': '[len(A)][B]', 'state': 'error'}]}}, // expected no recursion because recursion times: values.length^2, whereas B is not set and hence no countable value
+      {'formula' : '[A][B]', 'values': {'A': 'len(a)', 'B': '1'}, 'expectedOutput' : {'state': 'error', 'output': [{'result': '[len(len(len(len(A))))]1', 'state': 'error'}]}}, // recursion 4 times because values.length^2 on two countable values
 
       // special characters
       {'formula' : 'A\u0009+\u00A0B', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '23', 'state': 'ok'}]}},

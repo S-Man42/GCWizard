@@ -221,5 +221,23 @@ class _SpecificToolLicenses {
         licenseUrl: 'http://web.archive.org/web/20230604223058/http://linguists.riedl.org/old/sebastian/readme.htm'
     );
   }
+
+  ToolLicenseEntry get _toolLicenseUICWiki {
+    return ToolLicenseOnlineArticle(context: context,
+        author: '*.wikipedia.org and contributors',
+        title: 'UIC Wagennummer',
+        sourceUrl: 'https://de.wikipedia.org/w/index.php?title=UIC-Wagennummer&oldid=247540929',
+        licenseType: ToolLicenseType.CCBYSA4,
+        licenseUrl: 'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+        customComment: 'incl. linked pages and different languages'
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseUIC {
+    return ToolLicenseOfflineArticle(context: context,
+      author: 'UIC - Union Internationale des Chemins de fer',
+      title: 'UIC 438-X'
+    );
+  }
 }
 

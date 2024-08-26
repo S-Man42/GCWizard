@@ -23,6 +23,7 @@ dependencies:
   file_picker_writable: ^2.0.3
   flutter:
     sdk: flutter
+  flutter_dtmf: ^3.0.2
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
@@ -126,6 +127,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
     - lib/tools/symbol_tables/_common/assets/bibibinary/
+    - lib/tools/symbol_tables/_common/assets/billiard_balls/
     - lib/tools/symbol_tables/_common/assets/birds_on_a_wire/
     - lib/tools/symbol_tables/_common/assets/blox/
     - lib/tools/symbol_tables/_common/assets/blue_monday/
@@ -140,6 +142,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/chappe_1794/
     - lib/tools/symbol_tables/_common/assets/chappe_1809/
     - lib/tools/symbol_tables/_common/assets/chappe_v1/
+    - lib/tools/symbol_tables/_common/assets/chappe_v2/
     - lib/tools/symbol_tables/_common/assets/cherokee/
     - lib/tools/symbol_tables/_common/assets/chinese_numerals/
     - lib/tools/symbol_tables/_common/assets/christmas/
@@ -196,6 +199,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/flags_rn_popham/
     - lib/tools/symbol_tables/_common/assets/fonic/
     - lib/tools/symbol_tables/_common/assets/four_triangles/
+    - lib/tools/symbol_tables/_common/assets/foybreguet/
     - lib/tools/symbol_tables/_common/assets/freemason/
     - lib/tools/symbol_tables/_common/assets/freemason_v2/
     - lib/tools/symbol_tables/_common/assets/futhark_elder/
@@ -352,6 +356,8 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/sith/
     - lib/tools/symbol_tables/_common/assets/skullz/
     - lib/tools/symbol_tables/_common/assets/slash_and_pipe/
+    - lib/tools/symbol_tables/_common/assets/slash_and_pipe_underland/
+    - lib/tools/symbol_tables/_common/assets/slash_and_pipe_codeofclaw/
     - lib/tools/symbol_tables/_common/assets/solmisation/
     - lib/tools/symbol_tables/_common/assets/space_invaders/
     - lib/tools/symbol_tables/_common/assets/spintype/
