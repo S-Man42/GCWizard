@@ -210,6 +210,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_identificatio
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_overview/widget/hashes_overview.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/widget/homophone.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/widget/houdini.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
@@ -1056,6 +1057,7 @@ void initializeRegistry(BuildContext context) {
         id: 'ipcodes',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const ['ipcodes']),
+
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -3582,6 +3584,19 @@ void initializeRegistry(BuildContext context) {
       'languagegames',
       'duckspeak',
     ]),
+    GCWTool(tool: const Judoon(), id: 'judoon', searchKeys: const [
+      'judoon'
+    ], licenses: [
+      ToolLicenseOnlineArticle(context: context,
+        author: 'Whooligan',
+        title: 'Whooligan\'s Judoon Language Translator',
+        sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
+      ),
+      ToolLicenseOnlineArticle(context: context,
+        author: 'Whooligan',
+        title: 'Doctor Who Fan Forum',
+        sourceUrl: 'http://www.judoon.com/judoon-translator.php',
+      )]),
     GCWTool(tool: const PigLatin(), id: 'piglatin', searchKeys: const [
       'languagegames',
       'languagegames_piglatin',
@@ -4985,7 +5000,14 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
     ], licenses: [
-      stl._toolLicenseCullyLong,
+      ToolLicenseFont(
+        context: context,
+        author: 'Skies of Arcadia Island (arcadia.island.free.fr)',
+        title: 'La police d\'Arcadia',
+        sourceUrl:
+        'https://web.archive.org/web/20230628184941/http://arcadia.island.free.fr/down/police.zip',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+      ),
     ]),
     GCWSymbolTableTool(symbolKey: 'ath', symbolSearchStrings: const [
       'symbol_ath',
@@ -4998,12 +5020,21 @@ void initializeRegistry(BuildContext context) {
             'https://web.archive.org/web/20240808095142/https://www.deviantart.com/wurdbendur/art/Dadh-Ath-9821558',
         licenseType: ToolLicenseType.FREE_TO_USE,
       ),
-      ToolLicenseFont(
+      ToolLicenseImage(
         context: context,
-        author: 'Omniglot',
+        author: 'Morioka Hiroyuki',
         title: 'Ath alphabet',
         sourceUrl: 'https://web.archive.org/web/20240808095601/https://www.omniglot.com/conscripts/ath.htm',
-        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
@@ -5388,7 +5419,22 @@ void initializeRegistry(BuildContext context) {
       'color',
       'symbol_color_code',
     ], licenses: [
-      stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseImage(
+          context: context,
+          author: 'ColorADD.net',
+          title: 'ColorADD - The Color Alphabet',
+          privatePermission: ToolLicensePrivatePermission(
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 8,
+            permissionDay: 20,
+            context: context,
+            permissionAuthor: 'Silvia Couto'
+          ),
+          sourceUrl:
+          'https://web.archive.org/web/20240629170653/https://www.coloradd.net/en/coloradd-code/',
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: const [
       'color',
@@ -5673,11 +5719,11 @@ void initializeRegistry(BuildContext context) {
       'symbol_dragon_language',
     ], licenses: [
       ToolLicenseFont(
-          context: context,
-          author: 'Matthew Luckow',
-          title: 'Dragon Alphabet Font',
-          sourceUrl: 'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
-          licenseType: ToolLicenseType.PERSONAL_USE)
+        context: context,
+        author: 'Matthew Luckow',
+        title: 'Dragon Alphabet Font',
+        sourceUrl: 'https://web.archive.org/web/20230324082609/https://www.fontget.com/font/dragon-alphabet/',
+        licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: const [
       'symbol_dragon_runes',
@@ -5884,12 +5930,22 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: const [
       'symbol_fonic',
     ], licenses: [
-      ToolLicenseFont(
+      ToolLicenseImage(
+        context: context,
+        author: 'Unknown',
+        title: 'Fonic',
+        sourceUrl: 'https://web.archive.org/web/20200814001421/https://www.omniglot.com/conscripts/fonime.htm',
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
+        privatePermission: ToolLicensePrivatePermission(
           context: context,
-          author: 'Unknown',
-          title: 'Fonic',
-          sourceUrl: 'https://web.archive.org/web/20200814001421/https://www.omniglot.com/conscripts/fonime.htm',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          medium: 'e-mail',
+          permissionYear: 2024,
+          permissionMonth: 7,
+          permissionDay: 31,
+          permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: const [
       'symbol_four_triangles',
@@ -7116,12 +7172,22 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: const [
       'symbol_puzzle',
     ], licenses: [
-      ToolLicenseFont(
+      ToolLicenseImage(
+        context: context,
+        author: 'Josh Ragsdell',
+        title: 'Puzzle Code',
+        sourceUrl: 'https://web.archive.org/web/20210625060800/https://www.omniglot.com/conscripts/puzzlecode.htm',
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
+        privatePermission: ToolLicensePrivatePermission(
           context: context,
-          author: 'Josh Ragsdell',
-          title: 'Puzzle Code',
-          sourceUrl: 'https://web.archive.org/web/20210625060800/https://www.omniglot.com/conscripts/puzzlecode.htm',
-          licenseType: ToolLicenseType.FREE_TO_USE),
+          medium: 'e-mail',
+          permissionYear: 2024,
+          permissionMonth: 7,
+          permissionDay: 31,
+          permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
+      ),
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: const [
       'symbol_puzzle',
@@ -7478,12 +7544,21 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: const [
       'symbol_sunuz',
     ], licenses: [
-      ToolLicenseFont(
-          context: context,
-          author: 'Unknown',
-          title: 'Tékumelani Languages',
-          sourceUrl: 'https://web.archive.org/web/20160719051617/https://www.tekumel.com/blueroom_fonts.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+      ToolLicenseImage(
+        context: context,
+        author: 'Muhammad Abd-el-Rahman Barker',
+        title: 'Tékumel writing systems',
+        sourceUrl: 'http://web.archive.org/web/20240418033554/https://www.omniglot.com/conscripts/tekumel.php',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),)
     ]),
     GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: const [
       'symbol_surf',
@@ -7957,16 +8032,43 @@ void initializeRegistry(BuildContext context) {
       'symbol_yan_koryani',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
-      ToolLicenseFont(
-          context: context,
-          author: 'Omniglot',
-          title: 'Tékumel writing systems',
-          sourceUrl: 'https://web.archive.org/web/20140802011409/http://www.omniglot.com/writing/tekumel.php',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+      ToolLicenseImage(
+        context: context,
+        author: 'Muhammad Abd-el-Rahman Barker',
+        title: 'Tékumel writing systems',
+        sourceUrl: 'http://web.archive.org/web/20240418033554/https://www.omniglot.com/conscripts/tekumel.php',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),)
     ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseImage(
+        context: context,
+        author: 'Erik Moreno',
+        year: 2006, month: 2,
+        title: 'Yin yang Alphalines',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
+        sourceUrl: 'http://web.archive.org/web/20240224073021/https://www.omniglot.com/conscripts/yyal.htm',
+      )
+    ]),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [
       'symbol_zamonian',
     ], licenses: [
