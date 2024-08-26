@@ -210,6 +210,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_identificatio
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hashes_overview/widget/hashes_overview.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/widget/homophone.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/widget/houdini.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
@@ -1055,6 +1056,7 @@ void initializeRegistry(BuildContext context) {
         id: 'ipcodes',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const ['ipcodes']),
+
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -3544,6 +3546,19 @@ void initializeRegistry(BuildContext context) {
       'languagegames',
       'duckspeak',
     ]),
+    GCWTool(tool: const Judoon(), id: 'judoon', searchKeys: const [
+      'judoon'
+    ], licenses: [
+      ToolLicenseOnlineArticle(context: context,
+        author: 'Whooligan',
+        title: 'Whooligan\'s Judoon Language Translator',
+        sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
+      ),
+      ToolLicenseOnlineArticle(context: context,
+        author: 'Whooligan',
+        title: 'Doctor Who Fan Forum',
+        sourceUrl: 'http://www.judoon.com/judoon-translator.php',
+      )]),
     GCWTool(tool: const PigLatin(), id: 'piglatin', searchKeys: const [
       'languagegames',
       'languagegames_piglatin',
