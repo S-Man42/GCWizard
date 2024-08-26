@@ -4982,12 +4982,21 @@ void initializeRegistry(BuildContext context) {
             'https://web.archive.org/web/20240808095142/https://www.deviantart.com/wurdbendur/art/Dadh-Ath-9821558',
         licenseType: ToolLicenseType.FREE_TO_USE,
       ),
-      ToolLicenseFont(
+      ToolLicenseImage(
         context: context,
-        author: 'Omniglot',
+        author: 'Morioka Hiroyuki',
         title: 'Ath alphabet',
         sourceUrl: 'https://web.archive.org/web/20240808095601/https://www.omniglot.com/conscripts/ath.htm',
-        licenseType: ToolLicenseType.FREE_TO_USE,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
@@ -5883,12 +5892,22 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: const [
       'symbol_fonic',
     ], licenses: [
-      ToolLicenseFont(
+      ToolLicenseImage(
+        context: context,
+        author: 'Unknown',
+        title: 'Fonic',
+        sourceUrl: 'https://web.archive.org/web/20200814001421/https://www.omniglot.com/conscripts/fonime.htm',
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
+        privatePermission: ToolLicensePrivatePermission(
           context: context,
-          author: 'Unknown',
-          title: 'Fonic',
-          sourceUrl: 'https://web.archive.org/web/20200814001421/https://www.omniglot.com/conscripts/fonime.htm',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+          medium: 'e-mail',
+          permissionYear: 2024,
+          permissionMonth: 7,
+          permissionDay: 31,
+          permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: const [
       'symbol_four_triangles',
@@ -7115,12 +7134,22 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: const [
       'symbol_puzzle',
     ], licenses: [
-      ToolLicenseFont(
+      ToolLicenseImage(
+        context: context,
+        author: 'Josh Ragsdell',
+        title: 'Puzzle Code',
+        sourceUrl: 'https://web.archive.org/web/20210625060800/https://www.omniglot.com/conscripts/puzzlecode.htm',
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        licenseUseType: ToolLicenseUseType.COPY,
+        privatePermission: ToolLicensePrivatePermission(
           context: context,
-          author: 'Josh Ragsdell',
-          title: 'Puzzle Code',
-          sourceUrl: 'https://web.archive.org/web/20210625060800/https://www.omniglot.com/conscripts/puzzlecode.htm',
-          licenseType: ToolLicenseType.FREE_TO_USE),
+          medium: 'e-mail',
+          permissionYear: 2024,
+          permissionMonth: 7,
+          permissionDay: 31,
+          permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
+      ),
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: const [
       'symbol_puzzle',
@@ -7477,12 +7506,21 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: const [
       'symbol_sunuz',
     ], licenses: [
-      ToolLicenseFont(
-          context: context,
-          author: 'Unknown',
-          title: 'Tékumelani Languages',
-          sourceUrl: 'https://web.archive.org/web/20160719051617/https://www.tekumel.com/blueroom_fonts.html',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+      ToolLicenseImage(
+        context: context,
+        author: 'Muhammad Abd-el-Rahman Barker',
+        title: 'Tékumel writing systems',
+        sourceUrl: 'http://web.archive.org/web/20240418033554/https://www.omniglot.com/conscripts/tekumel.php',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),)
     ]),
     GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: const [
       'symbol_surf',
@@ -7956,22 +7994,41 @@ void initializeRegistry(BuildContext context) {
       'symbol_yan_koryani',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
-      ToolLicenseFont(
-          context: context,
-          author: 'Omniglot',
-          title: 'Tékumel writing systems',
-          sourceUrl: 'https://web.archive.org/web/20140802011409/http://www.omniglot.com/writing/tekumel.php',
-          licenseType: ToolLicenseType.FREE_TO_USE)
+      ToolLicenseImage(
+        context: context,
+        author: 'Muhammad Abd-el-Rahman Barker',
+        title: 'Tékumel writing systems',
+        sourceUrl: 'http://web.archive.org/web/20240418033554/https://www.omniglot.com/conscripts/tekumel.php',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),)
     ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
     ], licenses: [
-      stl._toolLicenseOmniglot,
-      ToolLicenseOfflineArticle(
+      ToolLicenseImage(
         context: context,
         author: 'Erik Moreno',
         year: 2006, month: 2,
-        title: 'Yin yang Alphalines'
+        title: 'Yin yang Alphalines',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),
+        sourceUrl: 'http://web.archive.org/web/20240224073021/https://www.omniglot.com/conscripts/yyal.htm',
       )
     ]),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [

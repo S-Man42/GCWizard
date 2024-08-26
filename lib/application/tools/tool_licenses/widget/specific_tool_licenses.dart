@@ -239,23 +239,5 @@ class _SpecificToolLicenses {
       title: 'UIC 438-X'
     );
   }
-
-  ToolLicenseEntry get _toolLicenseOmniglot {
-    return ToolLicenseImage(
-      context: context,
-      author: 'Simon Ager (omniglot.com)',
-      title: 'Omniglot',
-      sourceUrl: 'https://web.archive.org/web/20240823011546/https://www.omniglot.com/',
-      licenseType: ToolLicenseType.PRIVATE_PERMISSION,
-      privatePermission: ToolLicensePrivatePermission(
-        context: context,
-        medium: 'e-mail',
-        permissionYear: 2024,
-        permissionMonth: 7,
-        permissionDay: 31,
-      ),
-      licenseUseType: ToolLicenseUseType.COPY,
-    );
-  }
 }
 
