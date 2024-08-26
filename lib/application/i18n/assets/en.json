@@ -960,6 +960,8 @@
   "common_decrypt": "Decrypt",
   "common_deletealtert_title": "Really remove?",
   "common_deletealtert_text": "Do you really want to remove '%s1'?",
+  "common_deletealtert_favorite_title": "Remove favorite?",
+  "common_deletealtert_favorite_text": "Do you really want to remove '%s1' from your favorites list?",
   "common_description": "Description",
   "common_details": "Details",
   "common_distance_hint": "Enter distance",
