@@ -299,6 +299,7 @@ class FormulaParser {
     formula = normalizeCharacters(formula);
     formula = normalizeMathematicalSymbols(formula);
     safedFormulasMap = {};
+    safedTextsMap = {};
 
     List<FormulaValue> preparedValues = _prepareValues(values);
 

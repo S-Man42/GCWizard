@@ -4,7 +4,8 @@ import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
@@ -33,7 +34,7 @@ class _CenterThreePointsState extends State<CenterThreePoints> {
 
   var _currentOutputFormat = defaultCoordinateFormat;
   Length _currentOutputUnit = defaultLengthUnit;
-  List<String> _currentOutput = [];
+  List<Object> _currentOutput = [];
 
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
@@ -135,10 +136,13 @@ class _CenterThreePointsState extends State<CenterThreePoints> {
     _currentDistance = output.first.distance;
 
     _currentOutput = output.map((coord) {
-      return formatCoordOutput(coord.centerPoint, _currentOutputFormat, defaultEllipsoid);
+      return buildCoordinate(_currentOutputFormat, coord.centerPoint);
     }).toList();
-    _currentOutput.add(
-        '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
+    _currentOutput.add(GCWOutputText(
+        text: '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}',
+        copyText: _currentOutputUnit.fromMeter(_currentDistance).toString(),
+      )
+    );
 
     var mapPointCurrentCoords1 = GCWMapPoint(
         point: _currentCoords1.toLatLng()!,

@@ -21,7 +21,7 @@ import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -29,14 +29,13 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_files_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/wherigo/krevo/logic/ucommons.dart';
-import 'package:gc_wizard/tools/wherigo/logic/urwigo_tools.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
@@ -59,6 +58,7 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_outp
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_timers.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_zones.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_obfuscator.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   const WherigoAnalyze({Key? key}) : super(key: key);
@@ -152,7 +152,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           i18n(context, 'wherigo_decompile_title'),
           SizedBox(
             width: 250,
-            height: 380,
+            height: 480,
             child: GCWText(
               text: i18n(context, 'wherigo_decompile_message'),
               style: gcwDialogTextStyle(),
@@ -507,20 +507,10 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
           ),
-        if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-          GCWOutput(
-            title: i18n(context, 'wherigo_header_obfuscatorfunction'),
-            child: WherigoCartridgeLUAData.ObfuscatorFunction,
-            suppressCopyButton: (WherigoCartridgeLUAData.ObfuscatorFunction == 'NO_OBFUSCATOR'),
-          ),
-        if (WherigoCartridgeLUAData.ObfuscatorTable != '')
-          GCWOutput(
-            title: 'dTable',
-            child: GCWOutputText(
-              text: WherigoCartridgeLUAData.ObfuscatorTable,
-              style: gcwMonotypeTextStyle(),
-            ),
-          ),
+        GCWColumnedMultilineOutput(
+          data: _buildWidgetToDisplayObfuscatorData(
+              context, [WherigoCartridgeLUAData.ObfuscatorFunction, WherigoCartridgeLUAData.ObfuscatorTable]),
+        ),
       ],
     );
   }
@@ -556,7 +546,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     return Column(
       children: <Widget>[
-        // openInHexViewer(BuildContext context, PlatformFile file)
         GCWDefaultOutput(
           child: i18n(context, 'wherigo_media_size') +
               ': ' +
@@ -577,9 +566,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         ),
         GCWOutput(
           title: i18n(context, 'wherigo_bytecode'),
-          child: Column(
-              //children: columnedMultiLineOutput(context, _GWCStructure, flexValues: [1, 3, 2])
-              children: _GWCFileStructure),
+          child: Column(children: _GWCFileStructure),
         ),
       ],
     );
@@ -590,7 +577,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     return Column(
       children: <Widget>[
-        // openInHexViewer(BuildContext context, PlatformFile file)
         GCWDefaultOutput(
           child: i18n(context, 'wherigo_media_size') +
               ': ' +
@@ -625,14 +611,14 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Widget _buildWidgetToDisplayMediaFilesData(BuildContext context) {
-    if ((WherigoCartridgeLUAData.Media.isEmpty) && (WherigoCartridgeGWCData.MediaFilesContents.isEmpty)) {
+    if (WherigoCartridgeGWCData.MediaFilesContents.length == 1) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
       );
     }
 
-    if (WherigoCartridgeGWCData.MediaFilesContents.isEmpty) {
+    if ((WherigoCartridgeLUAData.Media.isEmpty)) {
       return GCWDefaultOutput(
         child: i18n(context, 'wherigo_data_nodata'),
         suppressCopyButton: true,
@@ -734,12 +720,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         WherigoCartridgeGWCData.MediaFilesContents[_mediaFileIndex].MediaFileBytes.isNotEmpty
             ? GCWFilesOutput(
                 suppressHiddenDataMessage: true,
-                suppressedButtons: const {GCWImageViewButtons.SAVE},
                 files: [
                   GCWFile(
-                      //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
-                      bytes: _getBytes(WherigoCartridgeGWCData.MediaFilesContents, _mediaFileIndex),
-                      name: filename),
+                      bytes: _getBytes(WherigoCartridgeGWCData.MediaFilesContents, _mediaFileIndex), name: filename),
                 ],
               )
             : GCWOutputText(
@@ -798,12 +781,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   size: IconButtonSize.SMALL,
                   iconColor: themeColors().mainFont(),
                   onPressed: () {
-                    _exportFile(
-                        context,
-                        Uint8List.fromList(_LUA_SourceCode.codeUnits),
-                        //_normalizeLUA(WherigoCartridgeLUAData.LUAFile, _currentDeObfuscate).codeUnits),
-                        'LUAsourceCode',
-                        FileType.LUA);
+                    _exportFile(context, Uint8List.fromList(_LUA_SourceCode.codeUnits), 'LUAsourceCode', FileType.LUA);
                   },
                 ),
               ],
@@ -1099,8 +1077,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                     (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
                         ? WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
+                      WherigoCartridgeLUAData.LUAFile,
                   ),
-                  copyColumn: 2,
+                  copyColumn: 1,
                   flexValues: const [3, 2, 2]),
               GCWExpandableTextDivider(
                 expanded: false,
@@ -1491,7 +1470,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   isEditable: false, // false: open in Map
                   // true:  open in FreeMap
                 ),
-                id: 'coords_map_view',
+                id: 'coords_openmap',
                 autoScroll: false,
                 suppressToolMargin: true)));
   }
@@ -1598,7 +1577,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         } else {
           _fileLoadedState = WHERIGO_FILE_LOAD_STATE.FULL;
           _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-          //showSnackBar(toastMessage, duration: toastDuration, context);
 
           _updateOutput();
         }
@@ -1635,8 +1613,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           LUAFile: '',
           CartridgeLUAName: '',
           CartridgeGUID: '',
-          ObfuscatorTable: '',
-          ObfuscatorFunction: '',
+          ObfuscatorTable: [],
+          ObfuscatorFunction: [],
           Characters: [],
           Items: [],
           Tasks: [],
@@ -1682,7 +1660,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       default:
         {}
     } // outData != null
-    ///showSnackBar(toastMessage, duration: toastDuration, context);
   }
 
   void _showCartridgeOutputGWC(WherigoCartridge output) {
@@ -1717,15 +1694,11 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       _WherigoShowLUASourcecodeDialog = true;
       toastMessage =
           i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2');
-      //showSnackBar(toastMessage, context, duration: 10);
     }
     _fileLoadedState = WHERIGO_FILE_LOAD_STATE.GWC;
     _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
 
-    //showSnackBar(toastMessage, duration: toastDuration, context);
-
     _updateOutput();
-    // outData != null
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       showSnackBar(toastMessage, duration: toastDuration, context);
@@ -1830,7 +1803,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   String _normalizeLUA(String LUAFile, bool deObfuscate) {
     if (deObfuscate) {
-      LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.ObfuscatorFunction, 'deObfuscate');
       LUAFile = LUAFile.replaceAll(WherigoCartridgeLUAData.CartridgeLUAName,
           'objCartridge_' + WherigoCartridgeLUAData.CartridgeLUAName.replaceAll(' ', ''));
       for (var element in WherigoCartridgeLUAData.Characters) {
@@ -1857,19 +1829,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       WHERIGONameToObject.forEach((key, value) {
         LUAFile = LUAFile.replaceAll(key, 'objVariable_' + key);
       });
-
-      RegExp(r'deObfuscate\(".*?"\)').allMatches(LUAFile).forEach((obfuscatedText) {
-        var group = obfuscatedText.group(0);
-        if (group == null) return;
-        LUAFile = LUAFile.replaceAll(group, _deObfuscate(group));
-      });
     }
     return LUAFile;
-  }
-
-  String _deObfuscate(String obfuscatedText) {
-    obfuscatedText = obfuscatedText.replaceAll('deObfuscate("', '').replaceAll('")', '');
-    return '"' + deobfuscateUrwigoText(obfuscatedText, WherigoCartridgeLUAData.ObfuscatorTable) + '"';
   }
 
   List<GCWMapPoint> _currentZonePoints(String text, WherigoZonePoint point) {
