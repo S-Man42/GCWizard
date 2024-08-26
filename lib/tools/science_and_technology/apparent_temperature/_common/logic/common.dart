@@ -70,14 +70,12 @@ double calculateGlobeTemperature(
   // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
   const h = 0.315;
   final sb = 5.67 * pow(10, -8);
-  double Tg = 0.0;
 
-  double ea = exp() * ;
+  double ea = exp(17.67 * (Td - Td) / (Td + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * Ta / (240.97 + Ta));
   double epsilona = 0.575 * pow(ea, 1/7);
 
   double B = S * (fdb / 4 / sb / cos(z) + 1.2 / sb * fdif) + epsilona *pow(Ta, 4);
   double C = h * pow(u, 0.58) / (5.3865 * pow(10, -8));
 
-  Tg = (B + C * Ta + 7680000) / (C + 256000);
-  return Tg;
+  return (B + C * Ta + 7680000) / (C + 256000);
 }
