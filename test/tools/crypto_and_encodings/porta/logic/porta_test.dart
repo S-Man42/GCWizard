@@ -4,46 +4,46 @@ import 'package:gc_wizard/tools/crypto_and_encodings/porta/logic/porta.dart';
 void main() {
   group("Porta: togglePorta:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': '', 'key': '', 'version': PortaTableVersion.v1, 'classic': false, 'expectedOutput': ''},
+      {'input': '', 'key': '', 'version': PortaTableVersion.STANDARD, 'classic': false, 'expectedOutput': ''},
       {
         'input': 'The quick brown fox jumps.',
         'key': 'foxbrown',
-        'version': PortaTableVersion.v1,
+        'version': PortaTableVersion.STANDARD,
         'classic': true,
         'expectedOutput': 'INRDNTTGIASLEREB'
       },
       {
         'input': 'INRDNTTGIASLEREB',
         'key': 'foxbrown',
-        'version': PortaTableVersion.v1,
+        'version': PortaTableVersion.STANDARD,
         'classic': true,
         'expectedOutput': 'THEQICBRONFOXMPS'
       },
       {
         'input': 'Defend the eastwall of the castle',
         'key': 'kingarthur',
-        'version': PortaTableVersion.v2,
+        'version': PortaTableVersion.REVERSE,
         'classic': false,
         'expectedOutput': 'VVYUAYKXOZSBAGNTULPLZVVQFLUU'
       },
       {
         'input': 'VVYUAYKXOZSBAGNTULPLZVVQFLUU',
         'key': 'kingarthur',
-        'version': PortaTableVersion.v2,
+        'version': PortaTableVersion.REVERSE,
         'classic': false,
         'expectedOutput': 'DEFENDTHEEASTWALLOFTHECASTLE'
       },
       {
         'input': 'chiffredeporta',
         'key': 'acier',
-        'version': PortaTableVersion.v1,
+        'version': PortaTableVersion.STANDARD,
         'classic': false,
         'expectedOutput': 'PTRQXEQZPKBFKY'
       },
       {
         'input': 'ABCDEFG',
         'key': 'ABCDEFG',
-        'version': PortaTableVersion.v1,
+        'version': PortaTableVersion.STANDARD,
         'classic': false,
         'expectedOutput': 'NOOPPQQ'
       },

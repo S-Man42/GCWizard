@@ -1,7 +1,7 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-enum PortaTableVersion { v1, v2 }
+enum PortaTableVersion { STANDARD, REVERSE }
 
 List<String>? _createPortaTable(PortaTableVersion version, {bool classic = false}) {
   String alphabet = alphabet_AZ.keys.join('');
@@ -9,7 +9,7 @@ List<String>? _createPortaTable(PortaTableVersion version, {bool classic = false
 
   String head = alphabet.substring(0, alphabet.length ~/ 2);
   String initialLine = alphabet.substring(alphabet.length ~/ 2);
-  int shift = (version == PortaTableVersion.v1) ? -1 : 1;
+  int shift = (version == PortaTableVersion.STANDARD) ? -1 : 1;
 
   List<String> table = [head];
   for (int i = 0; i < initialLine.length; i++) {
@@ -19,7 +19,7 @@ List<String>? _createPortaTable(PortaTableVersion version, {bool classic = false
   return table;
 }
 
-String togglePorta(String text, String key, { PortaTableVersion version = PortaTableVersion.v1, bool classic = false }) {
+String togglePorta(String text, String key, { PortaTableVersion version = PortaTableVersion.STANDARD, bool classic = false }) {
   List<String>? table = _createPortaTable(version, classic: classic);
 
   if (text.isEmpty || key.isEmpty || table == null) { return ""; }

@@ -88,7 +88,7 @@ class _PortaState extends State<Porta> {
 
   Widget _buildOutput() {
     bool classic = _classicMode == GCWSwitchPosition.left;
-    PortaTableVersion version = (_currentTableVersion == GCWSwitchPosition.left)  ? PortaTableVersion.v1  : PortaTableVersion.v2;
+    PortaTableVersion version = (_currentTableVersion == GCWSwitchPosition.left)  ? PortaTableVersion.STANDARD  : PortaTableVersion.REVERSE;
     _output = togglePorta(_currentInput, _currentKey, version: version, classic: classic);
 
     return GCWDefaultOutput(child: _output);
