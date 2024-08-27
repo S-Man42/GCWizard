@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -24,7 +28,9 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/wet_bulb_globe_temperature.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:intl/intl.dart';
 
 class WetBulbGlobeTemperature extends StatefulWidget {
@@ -35,7 +41,8 @@ class WetBulbGlobeTemperature extends StatefulWidget {
 }
 
 class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
-  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTimezone _currentDateTime = DateTimeTimezone(
+      datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   double _currentTemperature = 0.0;
@@ -48,23 +55,72 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
 
+  List<Map<String, SymbolData>> _images = [];
+  final String _ASSET_PATH =
+      'lib/tools/symbol_tables/_common/assets/weather_n/weather_n.zip';
+
+  Future<ui.Image> _initializeImage(Uint8List bytes) async {
+    return decodeImageFromList(bytes);
+  }
+
+  Future<void> _initalizeImages() async {
+    // Read the Zip file from disk.
+    final bytes = await DefaultAssetBundle.of(context).load(_ASSET_PATH);
+    InputStream input = InputStream(bytes.buffer.asByteData());
+    // Decode the Zip file
+    final archive = ZipDecoder().decodeBuffer(input);
+
+    _images = [];
+    for (ArchiveFile file in archive) {
+      var key = file.name.split('.png')[0];
+
+      var imagePath = (file.isFile &&
+              SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name))
+          ? file.name
+          : null;
+      if (imagePath == null) continue;
+
+      var data = toUint8ListOrNull(file.content);
+      if (data != null) {
+        var standardImage = await _initializeImage(data);
+        ui.Image? specialEncryptionImage;
+
+        _images.add({
+          key: SymbolData(
+              path: imagePath,
+              bytes: data,
+              standardImage: standardImage,
+              specialEncryptionImage: specialEncryptionImage)
+        });
+      }
+    }
+
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _initalizeImages();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWExpandableTextDivider(
           text: i18n(context, 'common_location'),
           child: GCWCoords(
-            title: i18n(context, 'common_location'),
-            coordsFormat: _currentCoords.format,
-            onChanged: (ret) {
-              setState(() {
-                if (ret != null) {
-                  _currentCoords = ret;
-                }
-              });
-            }),
+              title: i18n(context, 'common_location'),
+              coordsFormat: _currentCoords.format,
+              onChanged: (ret) {
+                setState(() {
+                  if (ret != null) {
+                    _currentCoords = ret;
+                  }
+                });
+              }),
         ),
         GCWExpandableTextDivider(
           text: i18n(context, 'astronomy_postion_datetime'),
@@ -128,7 +184,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             });
           },
         ),
-        GCWDropDown(
+        GCWDropDown<CLOUD_COVER>(
           title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
           value: _currentCloudCover,
           onChanged: (value) {
@@ -136,18 +192,42 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
               _currentCloudCover = value;
             });
           },
-        items: CLOUD_COVER_LIST.entries.map((entry) {
-          return GCWDropDownMenuItem(
-            value: entry.key,
-            child: i18n(context, entry.value),
-          );
-        }).toList(),
+          items: CLOUD_COVER_MAP.entries.map((entry) {
+            //items: CLOUD_COVER_LIST.entries.map((entry) {
+            return GCWDropDownMenuItem(
+              value: entry.key,
+              child: Row(
+                children: [
+                  Container(
+                      padding: const EdgeInsets.only(right: DEFAULT_MARGIN * 2),
+                      child: _images.isEmpty
+                          ? Container()
+                          : Image.memory(
+                        _images[int.parse(entry.value.image)]
+                            .values
+                            .first
+                            .bytes,
+                        width: 30,
+                        height: 30,
+                      ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN * 2),
+                    child: Text(i18n(context, entry.value.title),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }).toList(),
         ),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'wet_bulb_globe_temperature_area'),
           leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
           rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
-          value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          value: _currentAreaUrban
+              ? GCWSwitchPosition.left
+              : GCWSwitchPosition.right,
           onChanged: (value) {
             setState(() {
               _currentAreaUrban = value == GCWSwitchPosition.left;
@@ -176,7 +256,8 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
     String unit = _currentOutputUnit.symbol;
     String hintWBGT = _calculateHintWBGT(output.Twbg);
-    double WBGT = _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Twbg));
+    double WBGT = _currentOutputUnit
+        .fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Twbg));
 
     var _outputFurtherInformation = [
       [
@@ -185,44 +266,55 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
       ],
       [
         i18n(context, 'common_measure_dewpoint'),
-        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew)).toStringAsFixed(2) + ' ' + unit
+        _currentOutputUnit
+                .fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew))
+                .toStringAsFixed(2) +
+            ' ' +
+            unit
       ],
       [i18n(context, 'astronomy_sunposition_title'), ''],
-      [i18n(context, 'astronomy_position_altitude'), output.SunPos.altitude.toStringAsFixed(2) + ' °'],
-      [i18n(context, 'astronomy_position_azimuth'), output.SunPos.azimuth.toStringAsFixed(2) + ' °'],
+      [
+        i18n(context, 'astronomy_position_altitude'),
+        output.SunPos.altitude.toStringAsFixed(2) + ' °'
+      ],
+      [
+        i18n(context, 'astronomy_position_azimuth'),
+        output.SunPos.azimuth.toStringAsFixed(2) + ' °'
+      ],
     ];
 
     return Column(
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'wet_bulb_globe_temperature_title')),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWUnitDropDown(
-                      value: _currentOutputUnit,
-                      onlyShowSymbols: true,
-                      unitList: temperatures,
-                      unitCategory: UNITCATEGORY_TEMPERATURE,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentOutputUnit = value;
-                        });
-                      },
-                    )),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWOutput(child: NumberFormat('#.##').format(WBGT))),
-              ),
-            ])),
+          Expanded(
+            flex: 4,
+            child: Text(i18n(context, 'wet_bulb_globe_temperature_title')),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(
+                    left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                child: GCWUnitDropDown(
+                  value: _currentOutputUnit,
+                  onlyShowSymbols: true,
+                  unitList: temperatures,
+                  unitCategory: UNITCATEGORY_TEMPERATURE,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputUnit = value;
+                    });
+                  },
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                child: GCWOutput(child: NumberFormat('#.##').format(WBGT))),
+          ),
+        ])),
         const GCWDivider(),
         Row(
           children: [
