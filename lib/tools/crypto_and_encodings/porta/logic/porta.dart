@@ -1,31 +1,30 @@
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-List<String>? _createTable(int version, {bool classic = false}) {
-  if (![1, 2].contains(version)) { return null; }
+enum PortaTableVersion { v1, v2 }
 
+List<String>? _createPortaTable(PortaTableVersion version, {bool classic = false}) {
   String alphabet = alphabet_AZ.keys.join('');
   if (classic) {alphabet = alphabet.replaceAll(RegExp('[JKUW]'), '');}
 
   String head = alphabet.substring(0, alphabet.length ~/ 2);
   String initialLine = alphabet.substring(alphabet.length ~/ 2);
+  int shift = (version == PortaTableVersion.v1) ? -1 : 1;
 
-  List<String> table = [head, initialLine];
-  String line = initialLine;
-  for (int i = 0; i < head.length - 1; i++) {
-    (version == 1)
-        ? line = line[line.length - 1] + line.substring(0, line.length - 1)
-        : line = line.substring(1) + line[0];
-    table.add(line);
+  List<String> table = [head];
+  for (int i = 0; i < initialLine.length; i++) {
+    table.add(Rotator(alphabet: initialLine).rotate(initialLine, shift * i));
   }
+
   return table;
 }
 
-String togglePorta(String text, String key, { int version = 1, bool classic = false }) {
-  List<String>? table = _createTable(version, classic: classic);
+String togglePorta(String text, String key, { PortaTableVersion version = PortaTableVersion.v1, bool classic = false }) {
+  List<String>? table = _createPortaTable(version, classic: classic);
 
   if (text.isEmpty || key.isEmpty || table == null) { return ""; }
 
-  String output = '';
+  StringBuffer output = StringBuffer();
   int rowLength = table[0].length;
   text = text.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
   key = key.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
@@ -37,9 +36,10 @@ String togglePorta(String text, String key, { int version = 1, bool classic = fa
 
   for (var i = 0; i < text.length; i++) {
     var row = ((key[i % key.length].codeUnitAt(0) - 65) ~/ 2) % rowLength + 1;
-    (table[row].contains(text[i]))
-        ? output += table[0][table[row].indexOf(text[i])]
-        : output += table[row][table[0].indexOf(text[i])];
+    output.write( (table[row].contains(text[i]))
+        ? table[0][table[row].indexOf(text[i])]
+        : table[row][table[0].indexOf(text[i])]
+    );
   }
-  return output;
+  return output.toString();
 }
