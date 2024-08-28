@@ -4,18 +4,18 @@ import 'package:gc_wizard/tools/crypto_and_encodings/porta/logic/porta.dart';
 void main() {
   group("Porta: togglePorta:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'input': '', 'key': '', 'version': PortaTableVersion.STANDARD, 'classic': false, 'expectedOutput': ''},
+      {'input': '', 'key': '', 'version': PortaTableVersion.ORIGINAL, 'classic': false, 'expectedOutput': ''},
       {
         'input': 'The quick brown fox jumps.',
         'key': 'foxbrown',
-        'version': PortaTableVersion.STANDARD,
+        'version': PortaTableVersion.ORIGINAL,
         'classic': true,
         'expectedOutput': 'INRDNTTGIASLEREB'
       },
       {
         'input': 'INRDNTTGIASLEREB',
         'key': 'foxbrown',
-        'version': PortaTableVersion.STANDARD,
+        'version': PortaTableVersion.ORIGINAL,
         'classic': true,
         'expectedOutput': 'THEQICBRONFOXMPS'
       },
@@ -36,14 +36,14 @@ void main() {
       {
         'input': 'chiffredeporta',
         'key': 'acier',
-        'version': PortaTableVersion.STANDARD,
+        'version': PortaTableVersion.ORIGINAL,
         'classic': false,
         'expectedOutput': 'PTRQXEQZPKBFKY'
       },
       {
         'input': 'ABCDEFG',
         'key': 'ABCDEFG',
-        'version': PortaTableVersion.STANDARD,
+        'version': PortaTableVersion.ORIGINAL,
         'classic': false,
         'expectedOutput': 'NOOPPQQ'
       },

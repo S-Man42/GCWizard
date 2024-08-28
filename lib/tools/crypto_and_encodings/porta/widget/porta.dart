@@ -61,7 +61,7 @@ class _PortaState extends State<Porta> {
           },
         ),
         GCWTwoOptionsSwitch(
-          leftValue: '22 ' + i18n(context, 'common_letters'),
+          leftValue: i18n(context,'common_original') + " - " + i18n(context, 'porta_without'),
           rightValue: '26 ' + i18n(context, 'common_letters'),
           value: _classicMode,
           onChanged: (value) {
@@ -71,8 +71,8 @@ class _PortaState extends State<Porta> {
           },
         ),
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context,'common_version') + ' 1',
-          rightValue: i18n(context,'common_version') + ' 2',
+          leftValue: i18n(context,'common_original'),
+          rightValue: i18n(context,'porta_reverse'),
           value: _currentTableVersion,
           onChanged: (value) {
             setState(() {
@@ -88,7 +88,7 @@ class _PortaState extends State<Porta> {
 
   Widget _buildOutput() {
     bool classic = _classicMode == GCWSwitchPosition.left;
-    PortaTableVersion version = (_currentTableVersion == GCWSwitchPosition.left)  ? PortaTableVersion.STANDARD  : PortaTableVersion.REVERSE;
+    PortaTableVersion version = (_currentTableVersion == GCWSwitchPosition.left)  ? PortaTableVersion.ORIGINAL  : PortaTableVersion.REVERSE;
     _output = togglePorta(_currentInput, _currentKey, version: version, classic: classic);
 
     return GCWDefaultOutput(child: _output);
