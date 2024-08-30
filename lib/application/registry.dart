@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/bacon_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/beaufort_selection.dart';
@@ -145,6 +146,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/babylon_numbers/widget/babylon_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon_analyze.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base122/widget/base122.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base16/widget/base16.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/base32/widget/base32.dart';
@@ -598,12 +600,11 @@ void initializeRegistry(BuildContext context) {
         id: 'babylonnumbers_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
-    GCWTool(tool: const Bacon(), id: 'bacon', categories: const [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: const [
-      'bacon',
-      'binary',
-    ]),
+    GCWTool(
+        tool: const BaconSelection(),
+        id: 'bacon_selection',
+        categories: const [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: const []),
     GCWTool(
         tool: const BaseSelection(),
         id: 'base_selection',
@@ -1839,6 +1840,18 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const BabylonNumbers(), id: 'babylonnumbers', searchKeys: const [
       'babylonian_numerals',
     ], licenses: const []),
+
+    //BaconSelection **************************************************************************************************
+    GCWTool(tool: const Bacon(), id: 'bacon', categories: const [
+    ], searchKeys: const [
+      'bacon',
+      'binary',
+    ]),
+    GCWTool(tool: const BaconAnalyze(), id: 'bacon_analyze', categories: const [
+    ], searchKeys: const [
+      'bacon',
+      'binary',
+    ]),
 
     //BaseSelection **************************************************************************************************
     GCWTool(tool: Base16(), id: 'base_base16', searchKeys: const [
