@@ -140,6 +140,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_tim
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
@@ -701,6 +702,7 @@ void _initStaticToolList() {
       className(const Pokemon()),
       className(const Pollux()),
       className(const Polybios()),
+      className(const Porta()),
       className(const PredatorSelection()),
       className(const PrimeAlphabet()),
       className(const PrimesSelection()),
