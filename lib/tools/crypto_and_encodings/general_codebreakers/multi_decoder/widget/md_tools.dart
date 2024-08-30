@@ -33,6 +33,7 @@ const List<String> _mdtToolsRegistry = [
   MDT_INTERNALNAMES_POLYBIOS,
   MDT_INTERNALNAMES_POKEMON,
   MDT_INTERNALNAMES_TAPIR,
+  MDT_INTERNALNAMES_RAGBABY,
   MDT_INTERNALNAMES_ONETIMEPAD,
   MDT_INTERNALNAMES_VIGENERE,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK,
@@ -84,6 +85,7 @@ final _initialOptions = <String, Map<String, Object>>{
   MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
   MDT_INTERNALNAMES_VIGENERE: {MDT_VIGENERE_OPTION_KEY: 1},
   MDT_INTERNALNAMES_WASD: {MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]!},
+  MDT_INTERNALNAMES_RAGBABY: {MDT_RAGBABY_OPTION_MODE: 'ragbaby_option_24'},
 };
 
 Object? getDefaultValue(String internalToolName, String option) {
@@ -231,7 +233,10 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
       gcwTool = MultiDecoderToolReverse(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ROMANNUMBERS:
-      gcwTool = MultiDecoderToolRomanNumbers(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolRomanNumbers(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
+    case MDT_INTERNALNAMES_RAGBABY:
+      gcwTool = MultiDecoderToolRagbaby(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ROT18:
       gcwTool = MultiDecoderToolROT18(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -391,6 +396,7 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BEGHILOS), MDT_INTERNALNAMES_BEGHILOS),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_ONETIMEPAD), MDT_INTERNALNAMES_ONETIMEPAD),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_KENNY), MDT_INTERNALNAMES_KENNY),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_RAGBABY), MDT_INTERNALNAMES_RAGBABY),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BINARY2IMAGE), MDT_INTERNALNAMES_BINARY2IMAGE),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
