@@ -42,17 +42,17 @@ class _MultiDecoderToolVanityMultitapState extends State<MultiDecoderToolVanityW
   @override
   Widget build(BuildContext context) {
     return createMultiDecoderToolConfiguration(context, {
-      MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE: GCWDropDown<NumeralWordsLanguage>(
-          value: _parseStringToEnum(checkStringFormatOrDefaultOption(
-              MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH, widget.options, MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE)),
+      MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE: GCWDropDown<String>(
+          value: checkStringFormatOrDefaultOption(
+              MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH, widget.options, MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE),
           onChanged: (newValue) {
             setState(() {
-              widget.options[MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE] = numeralWordsLanguage(newValue);
+              widget.options[MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE] = newValue;
             });
           },
           items: VANITYWORDS_LANGUAGES.entries.map((mode) {
             return GCWDropDownMenuItem(
-              value: mode.key,
+              value: mode.value,
               child: i18n(context, mode.value),
             );
           }).toList(),
@@ -62,8 +62,8 @@ class _MultiDecoderToolVanityMultitapState extends State<MultiDecoderToolVanityW
 }
 
 NumeralWordsLanguage _parseStringToEnum(String? item) {
-  var result = NumeralWordsLanguage.values.firstWhereOrNull((e) => numeralWordsLanguage(e) == item);
-  if (result != null) return result;
+  var result = VANITYWORDS_LANGUAGES.entries.firstWhereOrNull((e) => e.value == item);
+  if (result != null) return result.key;
   var value =
   _parseStringToEnum((getDefaultValue(MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH, MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE) ?? '').toString());
   return value;
