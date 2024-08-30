@@ -292,6 +292,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           onPressed: () {
             setState(() {
               WHERIGOExpertMode = !WHERIGOExpertMode;
+              _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
               Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, WHERIGOExpertMode);
               _displayCartridgeDataList = _setDisplayCartridgeDataList();
               showSnackBar(
