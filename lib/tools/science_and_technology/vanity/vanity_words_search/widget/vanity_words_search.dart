@@ -78,7 +78,7 @@ class _VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   Widget _buildOutput(BuildContext context) {
     var detailedOutput = decodeVanityWords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage);
 
-    String output = buildOutputString(detailedOutput, context);
+    String output = buildVanityWordSearchOutputString(detailedOutput, context);
 
     List<List<String>> columnData = <List<String>>[];
 
@@ -113,7 +113,7 @@ class _VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   }
 }
 
-String buildOutputString(List<VanityWordsDecodeOutput> detailedOutput, BuildContext context) {
+String buildVanityWordSearchOutputString(List<VanityWordsDecodeOutput> detailedOutput, BuildContext context) {
   String output = '';
   int ambiguous = 0;
   for (int i = 0; i < detailedOutput.length; i++) {

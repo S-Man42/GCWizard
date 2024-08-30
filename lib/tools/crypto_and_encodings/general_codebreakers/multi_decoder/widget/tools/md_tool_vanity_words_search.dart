@@ -28,7 +28,7 @@ class MultiDecoderToolVanityWordsTextSearch extends AbstractMultiDecoderTool {
 
               var detailedOutput = decodeVanityWords(removeAccents(input.toLowerCase()), language);
 
-              var output = buildOutputString(detailedOutput, context);
+              var output = buildVanityWordSearchOutputString(detailedOutput, context);
               if (output.replaceAll(' ', '').replaceAll('.', '').isEmpty) return null;
               return output;
             },
