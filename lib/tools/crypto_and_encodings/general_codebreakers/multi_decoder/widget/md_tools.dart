@@ -20,8 +20,8 @@ const List<String> _mdtToolsRegistry = [
   MDT_INTERNALNAMES_ENCLOSEDAREAS,
   MDT_INTERNALNAMES_BEGHILOS,
   MDT_INTERNALNAMES_SEGMENTDISPLAY,
-  MDT_INTERNALNAMES_VANITYMULTITAP,
-  MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH,
+  MDT_INTERNALNAMES_VANITY_MULTITAP,
+  MDT_INTERNALNAMES_VANITY_NUMBERSEARCH,
   MDT_INTERNALNAMES_ROMANNUMBERS,
   MDT_INTERNALNAMES_BINARY2IMAGE,
   MDT_INTERNALNAMES_KEYBOARDLAYOUT,
@@ -83,9 +83,9 @@ final _initialOptions = <String, Map<String, Object>>{
   MDT_INTERNALNAMES_ROMANNUMBERS: {MDT_ROMANNUMBERS_OPTION_MODE: MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION},
   MDT_INTERNALNAMES_ROTATION: {MDT_ROTATION_OPTION_KEY: 13},
   MDT_INTERNALNAMES_SEGMENTDISPLAY: {MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: 7},
-  MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
-  MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH: {
-    MDT_VANITYORDSTEXTSEARCH_OPTION_LANGUAGE: 'common_language_german'},
+  MDT_INTERNALNAMES_VANITY_MULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
+  MDT_INTERNALNAMES_VANITY_NUMBERSEARCH: {
+    MDT_VANITY_NUMBERSEARCH_OPTION_LANGUAGE: 'common_language_german'},
   MDT_INTERNALNAMES_VIGENERE: {MDT_VIGENERE_OPTION_KEY: 1},
   MDT_INTERNALNAMES_WASD: {MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]!},
   MDT_INTERNALNAMES_RAGBABY: {MDT_RAGBABY_OPTION_MODE: 'ragbaby_option_24'},
@@ -132,7 +132,7 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
 
   switch (mdtTool.internalToolName) {
     case MDT_INTERNALNAMES_ALPHABETVALUES:
-      gcwTool = MultiDecoderToolAlphabetValues(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolAlphabetValues(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ASCII:
       gcwTool = MultiDecoderToolASCII(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -144,10 +144,10 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
       gcwTool = MultiDecoderToolBacon(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_BASE:
-      gcwTool = MultiDecoderToolBase(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolBase(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_BCD:
-      gcwTool = MultiDecoderToolBCD(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolBCD(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_BEGHILOS:
       gcwTool = MultiDecoderToolBeghilos(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -159,17 +159,17 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
       gcwTool = MultiDecoderToolBrailleDotNumbers(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_CCITT1:
-      gcwTool = MultiDecoderToolCcitt1(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolCcitt1(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_CCITT2:
-      gcwTool = MultiDecoderToolCcitt2(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolCcitt2(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_CHRONOGRAM:
       gcwTool = MultiDecoderToolChronogram(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_COORDINATEFORMATS:
       gcwTool =
-          MultiDecoderToolCoordinateFormats(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+          MultiDecoderToolCoordinateFormats(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK:
       gcwTool = MultiDecoderToolEsotericLanguageBeatnik(
@@ -212,10 +212,10 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
       gcwTool = MultiDecoderToolKenny(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_KEYBOARDLAYOUT:
-      gcwTool = MultiDecoderToolKeyboardLayout(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolKeyboardLayout(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_KEYBOARDNUMBERS:
-      gcwTool = MultiDecoderToolKeyboardNumbers(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolKeyboardNumbers(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_NUMERALBASES:
       gcwTool = MultiDecoderToolNumeralBases(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -259,17 +259,17 @@ AbstractMultiDecoderTool _multiDecoderToolToGCWMultiDecoderTool(BuildContext con
     case MDT_INTERNALNAMES_TAPIR:
       gcwTool = MultiDecoderToolTapir(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
-    case MDT_INTERNALNAMES_VANITYMULTITAP:
-      gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+    case MDT_INTERNALNAMES_VANITY_MULTITAP:
+      gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
-    case MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH:
+    case MDT_INTERNALNAMES_VANITY_NUMBERSEARCH:
       gcwTool = MultiDecoderToolVanityWordsTextSearch(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_VIGENERE:
       gcwTool = MultiDecoderToolVigenere(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_WASD:
-      gcwTool = MultiDecoderToolWasd(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolWasd(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     default:
       gcwTool = MultiDecoderToolDummy();
@@ -294,9 +294,9 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_ROMANNUMBERS), MDT_INTERNALNAMES_ROMANNUMBERS,
         options: [MultiDecoderToolOption(MDT_ROMANNUMBERS_OPTION_MODE, MDT_ROMANNUMBERS_OPTION_MODE_ADDITION)]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_CHRONOGRAM), MDT_INTERNALNAMES_CHRONOGRAM),
-    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VANITYMULTITAP), MDT_INTERNALNAMES_VANITYMULTITAP,
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VANITY_MULTITAP), MDT_INTERNALNAMES_VANITY_MULTITAP,
         options: [MultiDecoderToolOption(MDT_VANITYMULTITAP_OPTION_PHONEMODEL, NAME_PHONEMODEL_SIMPLE_SPACE_0)]),
-    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH), MDT_INTERNALNAMES_VANITYWORDSTEXTSEARCH),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VANITY_NUMBERSEARCH), MDT_INTERNALNAMES_VANITY_NUMBERSEARCH),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
         options: [MultiDecoderToolOption(MDT_NUMERALBASES_OPTION_FROM, 2)]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
@@ -403,7 +403,8 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BEGHILOS), MDT_INTERNALNAMES_BEGHILOS),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_ONETIMEPAD), MDT_INTERNALNAMES_ONETIMEPAD),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_KENNY), MDT_INTERNALNAMES_KENNY),
-    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_RAGBABY), MDT_INTERNALNAMES_RAGBABY),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_RAGBABY), MDT_INTERNALNAMES_RAGBABY,
+        options: [MultiDecoderToolOption(MDT_RAGBABY_OPTION_MODE, 'ragbaby_option_24')]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BINARY2IMAGE), MDT_INTERNALNAMES_BINARY2IMAGE),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
