@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
@@ -36,6 +38,7 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappoint_editor.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappolyline_editor.dart';
+
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
@@ -46,6 +49,9 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/tools/coords/map_view/widget/scalebar/gcw_mapview_scalebar.dart';
+part 'package:gc_wizard/tools/coords/map_view/widget/scalebar/gcw_mapview_scalebar_painter.dart';
 
 enum MapMarkerIcon {CROSSLINES, LOCATION}
 
@@ -318,6 +324,9 @@ class _GCWMapViewState extends State<GCWMapView> {
 
           _showPolylineDialog(polylines.first as _GCWTappablePolyline);
         },
+      ),
+      const GCWMapViewScalebar(
+        alignment: Alignment.bottomLeft,
       ),
       PopupMarkerLayer(
           options: PopupMarkerLayerOptions(

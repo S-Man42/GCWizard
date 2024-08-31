@@ -240,7 +240,7 @@
   "bacon_title": "Bacon Cipher",
   "bacon_description": "Letters to five-element groups of A and B",
   "bacon_example": "XYZ → BABABBABBABABBB / 101011011010111",
-  "bacon_analyze_title": "Analyze Texts regarding Bacon Cipher",
+  "bacon_analyze_title": "Bacon Cipher: Analyze Texts",
   "bacon_analyze_description": "Check a text for Bacon Cipher using 1st letter or all letters of the given text",
   "bacon_coding": "Coding",
   "bacon_type_full": "Full Alphabet",

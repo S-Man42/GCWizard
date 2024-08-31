@@ -2456,7 +2456,15 @@ void initializeRegistry(BuildContext context) {
               licenseType: ToolLicenseType.APACHE2,
               licenseUrl:
               'https://github.com/S-Man42/GeoFormulas/tree/ac40eb5589883999f830908cd1db45c73e1e1267?tab=readme-ov-file#legal-stuff',
-              sourceUrl: 'https://github.com/S-Man42/GeoFormulas/tree/ac40eb5589883999f830908cd1db45c73e1e1267')
+              sourceUrl: 'http://web.archive.org/web/20240812021538/https://github.com/pkohut/GeoFormulas'),
+          ToolLicensePortedCode(
+              context: context,
+              author: '@josxha (Github)',
+              title: 'Flutter Map: Scalebar',
+              licenseType: ToolLicenseType.BSD3,
+              licenseUrl:
+              'https://web.archive.org/web/20240606210131/https://pub.dev/packages/flutter_map/license',
+              sourceUrl: 'http://web.archive.org/web/20240831132524/https://github.com/josxha/flutter_map/blob/477bbdf41e5e99b74b8f2f6b7054f38e1e8d64c7/lib/src/layer/scalebar/scalebar.dart')
         ]),
     GCWTool(
       tool: const VariableCoordinateFormulas(),
@@ -6564,7 +6572,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Unknown',
           title: 'Noto Sans Linear B',
           sourceUrl: 'https://fonts.google.com/noto/specimen/Noto+Sans+Linear+B',
-          licenseType: ToolLicenseType.OFL11)
+          licenseType: ToolLicenseType.SIL_OFL11)
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
