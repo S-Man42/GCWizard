@@ -6,7 +6,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/_common/logic/vanity_words.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_words_search/widget/vanity_words_search.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 
 const MDT_INTERNALNAMES_VANITY_NUMBERSEARCH = 'multidecoder_tool_vanity_numbersearch_title';
 const MDT_VANITY_NUMBERSEARCH_OPTION_LANGUAGE = 'multidecoder_tool_vanity_numbersearch_option_language';
