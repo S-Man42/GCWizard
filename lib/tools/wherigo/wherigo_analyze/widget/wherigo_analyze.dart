@@ -28,6 +28,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_files_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -90,6 +91,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _currentSyntaxHighlighting = false;
   bool _WherigoShowLUASourcecodeDialog = true;
   bool _getLUAOnline = true;
+
+  var _currentDecompileMode = GCWSwitchPosition.left;
 
   late TextEditingController _codeControllerHighlightedLUA;
   String _LUA_SourceCode = '';
@@ -360,6 +363,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
+  /*
   Widget _widgetOpenLUAFile(BuildContext context) {
     return GCWExpandableTextDivider(
       text: i18n(context, 'wherigo_open_lua'),
@@ -406,6 +410,60 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                     });
                   },
                 ))),
+      ]),
+    );
+  }
+  */
+
+  Widget _widgetOpenLUAFile(BuildContext context) {
+    return GCWExpandableTextDivider(
+      text: i18n(context, 'wherigo_open_lua'),
+      suppressTopSpace: false,
+      suppressBottomSpace: false,
+      child: Column(
+          children: <Widget>[
+            GCWTwoOptionsSwitch(
+                title: i18n(context, 'wherigo_decompile_button'),
+                leftValue: i18n(context, 'wherigo_decompile_button_online'),
+                rightValue: i18n(context, 'wherigo_decompile_button_offline'),
+                value: _currentDecompileMode,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDecompileMode = value;
+                  });                }),
+            _currentDecompileMode == GCWSwitchPosition.left
+            ? GCWButton(
+              text: i18n(context, 'wherigo_decompile_button'),
+              onPressed: () {
+                _askForOnlineDecompiling();
+              },
+            )
+            : GCWOpenFile(
+              title: i18n(context, 'wherigo_open_lua'),
+              onLoaded: (_LUAfile) {
+                if (_LUAfile == null) {
+                  showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+                  return;
+                }
+                if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
+                  showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_lua'), context);
+                  return;
+                }
+
+                _setLUAData(_LUAfile.bytes);
+
+                _getLUAOnline = false;
+
+                _resetIndices();
+
+                _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
+
+                setState(() {
+                  _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
+                  _displayCartridgeDataList = _setDisplayCartridgeDataList();
+                });
+              },
+            ),
       ]),
     );
   }
