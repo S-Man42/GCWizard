@@ -256,9 +256,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                   menuItemBuilder: (context) => _buildPopupMenuButtons(),
                 )
             ),
-            widget.isEditable
-                ? Positioned(top: 15.0, left: 15.0, child: Column(children: _buildAddButtons()))
-                : Container(),
+            Positioned(top: 15.0, left: 15.0, child: Column(children: _buildAddButtons())),
             Positioned(
               bottom: 5.0,
               left: 5.0,
@@ -636,7 +634,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   List<Widget> _buildAddButtons() {
     var buttons = [
-      GCWIconButton(
+      widget.isEditable ? GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(iconFromMapMarkerValues(_markerIcon), stacked: Icons.add),
         onPressed: () {
@@ -662,8 +660,8 @@ class _GCWMapViewState extends State<GCWMapView> {
               });
           }
         },
-      ),
-      GCWIconButton(
+      ) : Container(),
+      widget.isEditable ? GCWIconButton(
         backgroundColor: _isPolylineDrawing ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _isPolylineDrawing
             ? _createIconButtonIcons(Icons.timeline, stacked: Icons.priority_high)
@@ -682,7 +680,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             _isPolylineDrawingFirstPoint = true;
           });
         },
-      ),
+      ) : Container(),
       GCWIconButton(
         backgroundColor: _isPointsHidden ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(_negativeIconFromMapMarkerValues(_markerIcon)),
