@@ -3214,7 +3214,7 @@
   "irrationalnumbers_error_nonumbers": "Please enter at least one number.",
   "irrationalnumbers_search_description": "Searches all occurences of number groups within the first 1 000 000 digits",
   "judoon_title": "Judoon",
-  "judoon_description": "Each letter is spelled with a special 'o' loud ; inspired by 'Doctor Who'",
+  "judoon_description": "An O sound is added to each letter ; inspired by 'Doctor Who'",
   "judoon_example": "plo no flo → one",
   "kamasutra_title": "Kamasutra",
   "kamasutra_description": "Default: ROT-13; Customized with own alphabet: rotation by half of alphabet length",
