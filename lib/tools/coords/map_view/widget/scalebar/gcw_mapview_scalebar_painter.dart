@@ -60,15 +60,15 @@ class GCWMapViewScalebarPainter extends CustomPainter {
     final linePoints = Float32List.fromList(<double>[
       //main line
       0.0,
+      0.0 - _halfStrokeWidth,
       0.0,
-      0.0,
-      length,
+      length - _halfStrokeWidth,
 
       // bottom marker
       _halfStrokeWidth,
-      0.0,
+      0.0 - _halfStrokeWidth,
       lineWidth,
-      0.0,
+      0.0 - _halfStrokeWidth,
 
       // 1. section
       _halfStrokeWidth,

@@ -58,6 +58,13 @@ void main(){
         'expectedOutput' : [
           VanityWordsDecodeOutput('?', '', '', false),
           VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
+          VanityWordsDecodeOutput('?', '', '', false),
           VanityWordsDecodeOutput('33473', 'DEGRÉ', '°', false),
         ]},
     ];
