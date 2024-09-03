@@ -234,6 +234,11 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723145110/https://pub.dev/packages/flutter_map_tappable_polyline/license'
             ),
+            ToolLicenseCodeLibrary(context: context, author: 'dart.dev', title: 'Flutter Library: fixnum',
+                sourceUrl: 'https://web.archive.org/web/20240609183042/https://pub.dev/packages/fixnum',
+                licenseType: ToolLicenseType.BSD3,
+                licenseUrl: 'https://web.archive.org/web/20230310201533/https://pub.dev/packages/fixnum/license'
+            ),
             ToolLicenseCodeLibrary(context: context, author: '@GitTouch (GitHub)', title: 'Flutter Library: highlight',
               sourceUrl: 'https://web.archive.org/web/20231103183350/https://pub.dev/packages/highlight',
               licenseType: ToolLicenseType.MIT,

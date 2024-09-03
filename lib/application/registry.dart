@@ -2432,6 +2432,14 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
             'https://web.archive.org/web/20121102023141/http://www.moenk.de/index.php?serendipity[subpage]=downloadmanager&level=1&thiscat=4',
             licenseType: ToolLicenseType.PRIVATE_PERMISSION),
+        ToolLicensePortedCode(
+            context: context,
+            author: 'Google Inc.',
+            title: 's2-geometry-library-java',
+            sourceUrl:
+            'https://web.archive.org/web/20240903110359/https://github.com/google/s2-geometry-library-java/tree/master',
+            licenseType: ToolLicenseType.APACHE2,
+            licenseUrl: 'https://web.archive.org/web/20240903110701/https://github.com/google/s2-geometry-library-java/tree/master?tab=Apache-2.0-1-ov-file'),
       ],
     ),
     GCWTool(

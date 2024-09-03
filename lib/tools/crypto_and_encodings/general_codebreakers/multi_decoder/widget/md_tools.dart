@@ -341,6 +341,11 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.LAMBERT).persistenceKey)
+        ]),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [
+          MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
               coordinateFormatDefinitionByKey(CoordinateFormatKey.GEOHEX).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
@@ -382,6 +387,11 @@ void _initializeMultiToolDecoder(BuildContext context) {
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
               coordinateFormatDefinitionByKey(CoordinateFormatKey.GARS).persistenceKey)
+        ]),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [
+          MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.S2CELLS_HILBERT).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
