@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'dart:ui';
 
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
@@ -602,7 +603,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
     final canvasRecorder = ui.PictureRecorder();
     final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, imageWidth, imageHeight));
 
-    final paint = Paint()
+    Paint paint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill
       ..strokeWidth = pointsize.toDouble();
@@ -648,8 +649,12 @@ class GCWizardScriptState extends State<GCWizardScript> {
               Offset(double.parse(graphicCommand[3]), double.parse(graphicCommand[4])), paint);
           break;
         case 'POINT':
-          canvas.drawCircle(Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), 2.0, paint);
-          //canvas.drawLine(Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2])), paint);
+          Paint _paint = Paint()
+            ..color = paint.color
+            ..isAntiAlias = paint.isAntiAlias
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = paint.strokeWidth;
+            canvas.drawPoints(PointMode.points, [Offset(double.parse(graphicCommand[1]), double.parse(graphicCommand[2]))], _paint);
           break;
         case 'COLOR':
           paint.color = Color.fromARGB(
@@ -682,6 +687,13 @@ class GCWizardScriptState extends State<GCWizardScript> {
               double.parse(graphicCommand[5]),
               true,
               paint);
+          break;
+        case 'ANTIALIAS':
+          if (graphicCommand[1] == '0') {
+            paint.isAntiAlias = false;
+          } else {
+            paint.isAntiAlias = true;
+          }
           break;
         case 'FILL':
           if (graphicCommand[1] == '0') {
