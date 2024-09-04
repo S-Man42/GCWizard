@@ -10,42 +10,42 @@ void main() {
         'key': 'foxbrown',
         'version': PortaTableVersion.ORIGINAL,
         'classic': true,
-        'expectedOutput': 'INRDN TTGIA SLERE B'
+        'expectedOutput': 'INRDNTTGIASLEREB'
       },
       {
         'input': 'INRDNTTGIASLEREB',
         'key': 'foxbrown',
         'version': PortaTableVersion.ORIGINAL,
         'classic': true,
-        'expectedOutput': 'THEQI CBRON FOXMP S'
+        'expectedOutput': 'THEQICBRONFOXMPS'
       },
       {
         'input': 'Defend the eastwall of the castle',
         'key': 'kingarthur',
         'version': PortaTableVersion.REVERSE,
         'classic': false,
-        'expectedOutput': 'VVYUA YKXOZ SBAGN TULPL ZVVQF LUU'
+        'expectedOutput': 'VVYUAYKXOZSBAGNTULPLZVVQFLUU'
       },
       {
         'input': 'VVYUAYKXOZSBAGNTULPLZVVQFLUU',
         'key': 'kingarthur',
         'version': PortaTableVersion.REVERSE,
         'classic': false,
-        'expectedOutput': 'DEFEN DTHEE ASTWA LLOFT HECAS TLE'
+        'expectedOutput': 'DEFENDTHEEASTWALLOFTHECASTLE'
       },
       {
         'input': 'chiffredeporta',
         'key': 'acier',
         'version': PortaTableVersion.ORIGINAL,
         'classic': false,
-        'expectedOutput': 'PTRQX EQZPK BFKY'
+        'expectedOutput': 'PTRQXEQZPKBFKY'
       },
       {
         'input': 'ABCDEFG',
         'key': 'ABCDEFG',
         'version': PortaTableVersion.ORIGINAL,
         'classic': false,
-        'expectedOutput': 'NOOPP QQ'
+        'expectedOutput': 'NOOPPQQ'
       },
     ];
 
