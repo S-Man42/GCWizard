@@ -391,7 +391,7 @@ class _S2CellId  {
     // occurrence of "00" has the effect of reversing the SWAP_MASK bit.
     // assert (S2.POS_TO_ORIENTATION[2] == 0);
     // assert (S2.POS_TO_ORIENTATION[0] == S2.SWAP_MASK);
-    if ((lowestOnBitId() & 0x1111111111111110) != 0) {
+    if ((lowestOnBitId() & Int64.parseHex('1111111111111110')) != 0) {
       bits ^= _S2.SWAP_MASK;
     }
     int orientation = bits;
