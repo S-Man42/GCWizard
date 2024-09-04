@@ -1,6 +1,5 @@
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
 
 enum PortaTableVersion { ORIGINAL, REVERSE }
 
@@ -43,5 +42,5 @@ String togglePorta(String text, String key, { PortaTableVersion version = PortaT
     );
   }
 
-  return insertSpaceEveryNthCharacter(output.toString(), 5);
+  return output.toString();
 }
