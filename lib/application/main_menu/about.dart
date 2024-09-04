@@ -67,6 +67,24 @@ class _AboutState extends State<About> {
               Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_maintainer'))),
               const Expanded(flex: 3, child: GCWText(text: _ABOUT_MAINTAINER))
             ])),
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(children: [
+            TextSpan(text: i18n(context, 'about_team') + '\n', style: gcwBoldTextStyle()),
+            TextSpan(
+                text: [
+                  'Andy \'Puma66\' (Special Support)',
+                  'Andreas \'TeamBirdy2404\'',
+                  'Mike B. (Code)',
+                  'Thomas \'TMZ\' Z. (Code & Manual)',
+                  'Maria \'Nebelsturm\' (Test)',
+                  'Henrike \'69and71\' (Translations)',
+                  'Marcia \'Linsty\' (Test)',
+                  'Olli \'Rinser\' (Code)',
+                ].join('\n') +
+                    '\n')
+          ], style: gcwTextStyle()),
+        ),
         const GCWDivider(),
         _buildUrl('contact_email'),
         _buildUrl('manual'),
@@ -104,24 +122,6 @@ class _AboutState extends State<About> {
           padding: const EdgeInsets.only(top: 15, bottom: 10),
           child: Column(
             children: <Widget>[
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_team') + '\n', style: gcwBoldTextStyle()),
-                  TextSpan(
-                      text: [
-                            'Andy \'Puma66\' (Special Support)',
-                            'Andreas \'TeamBirdy2404\' (Manual & Symbol Tables)',
-                            'Mike B. (Code & Symbol Tables)',
-                            'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
-                            'Maria \'Nebelsturm\' (Test)',
-                            'Henrike \'69and71\' (Test & Translations)',
-                            'Marcia \'Linsty\' (Test & Translations)',
-                            'Olli \'Rinser\' (Code & Symbol Tables)',
-                          ].join('\n') +
-                          '\n')
-                ], style: gcwTextStyle()),
-              ),
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
