@@ -4,6 +4,8 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/paperformat/logic/paperformat.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/area.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 
 class PaperFormats extends StatefulWidget {
   const PaperFormats({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class _PaperFormatState extends State<PaperFormats> {
     List<List<String>> output = [];
     output.add([i18n(context, 'common_name'), i18n(context, 'common_size'), i18n(context, 'common_area')]);
     _currentDINFormat.forEach((name, formatInfo) {
-      output.add([name, formatInfo.size, formatInfo.area]);
+      output.add([name, formatInfo.size(LENGTH_METER), formatInfo.area(AREA_SQUAREMETER)]);
     });
 
     return GCWColumnedMultilineOutput(
