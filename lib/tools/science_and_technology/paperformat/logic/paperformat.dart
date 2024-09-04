@@ -1,39 +1,40 @@
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 import 'package:intl/intl.dart';
 
-import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/area.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
+const double _inchFactor = 0.3048 / 12.0 * 1000;
 
 class FormatInfo {
   // width in mm
-  final int width;
+  final double width;
   // height in mm
-  final int height;
+  final double height;
 
   const FormatInfo(this.width, this.height);
 
-  String size(Length unit) {
-    var fromPrefix = 1.0e-3;
+  String size(UnitPrefix unitPrefix, Length unit) {
+    var fromPrefix = UNITPREFIX_MILLI.value;
     var fromUnit = LENGTH_METER;
-    var toPrefix = 1.0e-3;
-    var toUnit = LENGTH_METER;
+    var toPrefix = unitPrefix.value;
+    var toUnit = unit;
 
-    var _width = NumberFormat('0.' + '#' * 8).format(convert(width * fromPrefix, fromUnit, toUnit) / toPrefix);
-    var _height = NumberFormat('0.' + '#' * 8).format(convert(height * fromPrefix, fromUnit, toUnit) / toPrefix);
+    var _width = NumberFormat('0.' + '#' * 3).format(convert(width * fromPrefix, fromUnit, toUnit) / toPrefix);
+    var _height = NumberFormat('0.' + '#' * 3).format(convert(height * fromPrefix, fromUnit, toUnit) / toPrefix);
 
-    return _width + ' x ' + _height + ' ' + 'mm';
+    return _width + ' x ' + _height + ' ' + unitPrefix.symbol + unit.symbol;
   }
 
-  String area(Area unit) {
-    var fromPrefix = 1.0e-3;
-    var fromUnit = AREA_SQUAREMETER;
-    var toPrefix = 1.0e-2;
-    var toUnit = AREA_SQUAREMETER;
+  String area(UnitPrefix unitPrefix, Length unit) {
+    var fromPrefix = UNITPREFIX_MILLI.value;
+    var fromUnit = LENGTH_METER;
+    var toPrefix = unitPrefix.value;
+    var toUnit = unit;
 
-    var _area = NumberFormat('0.' + '#' * 8).format(convert((width * height) * fromPrefix, fromUnit, toUnit) / toPrefix);
+    var _area = NumberFormat('0.' + '#' * 3).format(convert((width * fromPrefix * height * fromPrefix), fromUnit, toUnit) / toPrefix/ toPrefix);
 
-    return ((width * height)/ 100).toString() + ' ' + 'cm' + '²';
+    return _area + ' ' + unitPrefix.symbol + unit.symbol + '\u00B2';
   }
 }
 
@@ -94,30 +95,30 @@ const Map<String, FormatInfo> DIND_FORMAT = {
 };
 
 const Map<String, FormatInfo> US_FORMAT = {
-  'Tabloid': FormatInfo(432, 279),
-  'Ledger': FormatInfo(279, 432),
-  'Legal': FormatInfo(216, 356),
-  'Letter': FormatInfo(216, 279),
-  'Junior Legal': FormatInfo(203, 127),
-  'Junior': FormatInfo(127, 203),
-  'Half Letter': FormatInfo(140, 216),
+  'Tabloid': FormatInfo(17 * _inchFactor, 11 * _inchFactor),
+  'Ledger': FormatInfo(11 * _inchFactor, 17 * _inchFactor),
+  'Legal': FormatInfo(8.5 * _inchFactor, 14 * _inchFactor),
+  'Letter': FormatInfo(8.5 * _inchFactor, 11 * _inchFactor),
+  'Junior Legal': FormatInfo(8 * _inchFactor, 5 * _inchFactor),
+  'Junior': FormatInfo(5 * _inchFactor, 8 * _inchFactor),
+  'Half Letter': FormatInfo(5.5 * _inchFactor, 8.5 * _inchFactor),
 };
 
 const Map<String, FormatInfo> US_ANSI_FORMAT = {
-  'Ansi E': FormatInfo(864, 1118),
-  'Ansi D': FormatInfo(559, 864),
-  'Ansi C': FormatInfo(432, 559),
-  'Ansi B': FormatInfo(279, 432),
-  'Ansi A': FormatInfo(216, 279),
+  'Ansi E': FormatInfo(34 * _inchFactor, 44 * _inchFactor),
+  'Ansi D': FormatInfo(22 * _inchFactor, 34 * _inchFactor),
+  'Ansi C': FormatInfo(17 * _inchFactor, 22 * _inchFactor),
+  'Ansi B': FormatInfo(11 * _inchFactor, 17 * _inchFactor),
+  'Ansi A': FormatInfo(8.5 * _inchFactor, 11 * _inchFactor),
 };
 
 const Map<String, FormatInfo> US_ARCH_FORMAT = {
-  'Arch E': FormatInfo(914, 1219),
-  'Arch E1': FormatInfo(762, 1067),
-  'Arch D': FormatInfo(610, 914),
-  'Arch C': FormatInfo(457, 610),
-  'Arch B': FormatInfo(305, 457),
-  'Arch A': FormatInfo(229, 305),
+  'Arch E': FormatInfo(36 * _inchFactor, 48 * _inchFactor),
+  'Arch E1': FormatInfo(30 * _inchFactor, 42 * _inchFactor),
+  'Arch D': FormatInfo(24 * _inchFactor, 36 * _inchFactor),
+  'Arch C': FormatInfo(18 * _inchFactor, 24 * _inchFactor),
+  'Arch B': FormatInfo(12 * _inchFactor, 18 * _inchFactor),
+  'Arch A': FormatInfo(9 * _inchFactor, 12 * _inchFactor),
 };
 
 // const Map<String, FormatInfo> DINA_FORMAT = {
