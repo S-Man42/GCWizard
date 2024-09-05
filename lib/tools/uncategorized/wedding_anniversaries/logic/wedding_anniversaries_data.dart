@@ -70,7 +70,7 @@ const Map<String, List<String>> _anniversariesDE =
   '37.5': ['wedding_element_aluminium'],
   '38': ['wedding_element_fire', 'wedding_element_mercury'],
   '39': ['wedding_element_sun', 'wedding_element_krepp'],
-  '40': ['wedding_element_ruby', 'wedding_element_garnet', 'wedding_element_ruby', 'wedding_element_emerald'],
+  '40': ['wedding_element_ruby', 'wedding_element_garnet', 'wedding_element_emerald'],
   '41': ['wedding_element_birches', 'wedding_element_iron'],
   '42': ['wedding_element_garnet', 'wedding_element_motherofpearl'],
   '43': ['wedding_element_lead', 'wedding_element_flannel'],
