@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/area.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_prefix.dart';
 import 'package:intl/intl.dart';
 
@@ -26,15 +27,14 @@ class FormatInfo {
     return _width + ' x ' + _height + ' ' + unitPrefix.symbol + unit.symbol;
   }
 
-  String area(UnitPrefix unitPrefix, Length unit) {
+  String area(Area unit) {
     var fromPrefix = UNITPREFIX_MILLI.value;
-    var fromUnit = LENGTH_METER;
-    var toPrefix = unitPrefix.value;
+    var fromUnit = AREA_SQUAREMETER;
     var toUnit = unit;
 
-    var _area = NumberFormat('0.' + '#' * 3).format(convert((width * fromPrefix * height * fromPrefix), fromUnit, toUnit) / toPrefix/ toPrefix);
+    var _area = NumberFormat('0.' + '#' * 3).format(convert(width * fromPrefix * height * fromPrefix, fromUnit, toUnit));
 
-    return _area + ' ' + unitPrefix.symbol + unit.symbol + '\u00B2';
+    return _area + ' ' + unit.symbol;
   }
 }
 
