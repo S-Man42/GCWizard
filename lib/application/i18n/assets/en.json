@@ -6009,7 +6009,7 @@
   "telegraph_gausswebertelegraph_v1a_description": "ABC → rrrrr rrrrl rrrlr",
   "telegraph_gausswebertelegraph_v2_title": "Gauss Weber Telegraph, Morse like Code +-",
   "telegraph_gausswebertelegraph_v2_description": "ABC → + - ++",
-  "telegraph_gausswebertelegraph_v2a_title": "Gauss Weber Telegraph, Adapted Morse like Code l/r",
+  "telegraph_gausswebertelegraph_v2a_title": "Gauss Weber Telegraph, Adapted Morse like Code lr",
   "telegraph_gausswebertelegraph_v2a_description": "ABC → r ll rrr",
   "telegraph_murray_title" : "Murray Telegraph (England)",
   "telegraph_murray_description" : "Optical Telegraph with 6 shutters invented by George Murray, 1795",
