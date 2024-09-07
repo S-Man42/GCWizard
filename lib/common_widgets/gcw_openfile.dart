@@ -17,7 +17,6 @@ import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
@@ -27,6 +26,8 @@ import 'package:http/http.dart' as http;
 // Not supported by file picker plugin
 const _UNSUPPORTED_FILEPICKERPLUGIN_TYPES = [FileType.GPX, FileType.GCW];
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
+
+enum OpenFileType { FILE, URL, IMAGE }
 
 class GCWOpenFile extends StatefulWidget {
   final void Function(GCWFile?) onLoaded;
@@ -52,10 +53,10 @@ class GCWOpenFile extends StatefulWidget {
 
 class _GCWOpenFileState extends State<GCWOpenFile> {
   late TextEditingController _urlController;
+  OpenFileType _currentMode = OpenFileType.URL;
   String? _currentUrl;
   Uri? _currentUri;
 
-  var _currentMode = GCWSwitchPosition.left;
   var _currentExpanded = true;
 
   GCWFile? _loadedFile;
@@ -90,6 +91,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
           }
         });
+      },
+    );
+  }
+
+  GCWButton _buildOpenFromGallery() {
+    return GCWButton(
+      text: 'Album',
+      onPressed: () {
+
       },
     );
   }
@@ -198,27 +208,47 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   Widget build(BuildContext context) {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
-    var content = Column(
-      children: [
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          alternativeColor: widget.isDialog,
-          title: i18n(context, 'common_loadfile_openfrom'),
-          leftValue: i18n(context, 'common_loadfile_openfrom_file'),
-          rightValue: i18n(context, 'common_loadfile_openfrom_url'),
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
-        if (_currentMode == GCWSwitchPosition.left) _buildOpenFromDevice(),
-        if (_currentMode == GCWSwitchPosition.right) _buildOpenFromURL(),
-      ],
-    );
+    Widget content;
+
+    switch (_currentMode) {
+      case OpenFileType.FILE:
+        content = _buildOpenFromDevice();
+        break;
+      case OpenFileType.URL:
+        content = _buildOpenFromURL();
+        break;
+      case OpenFileType.IMAGE:
+        content = _buildOpenFromGallery();
+        break;
+    }
 
     return Column(
       children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          GCWButton(
+            text: i18n(context, 'common_loadfile_openfrom_file'),
+            onPressed: () {
+              setState(() {
+                _currentMode = OpenFileType.FILE;
+              });
+            },
+          ),
+          GCWButton(
+            text: i18n(context, 'common_loadfile_openfrom_url_address'),
+            onPressed: () {
+              setState(() {
+                _currentMode = OpenFileType.URL;
+              });
+            },
+          ),
+          GCWButton(
+              text: 'Album',
+              onPressed: () {
+                setState(() {
+                  _currentMode = OpenFileType.IMAGE;
+                });
+              }),
+        ]),
         widget.isDialog || widget.suppressHeader
             ? content
             : GCWExpandableTextDivider(
@@ -233,12 +263,16 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 child: content),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile?.name ?? ''),
+            text: i18n(context, 'common_loadfile_currentlyloaded') +
+                ': ' +
+                (_loadedFile?.name ?? ''),
             style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
           ),
         if (!_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_loaded') + ': ' + (_loadedFile?.name ?? ''),
+            text: i18n(context, 'common_loadfile_loaded') +
+                ': ' +
+                (_loadedFile?.name ?? ''),
           )
       ],
     );
