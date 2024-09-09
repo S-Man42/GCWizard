@@ -4,7 +4,7 @@ import 'dart:isolate';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart' as filePicker;
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as imagePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -100,8 +100,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return GCWButton(
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () async {
-        final ImagePicker picker = ImagePicker();
-        final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+        final imagePicker.ImagePicker picker = imagePicker.ImagePicker();
+        final imagePicker.XFile? pickedFile = await picker.pickImage(source: imagePicker.ImageSource.gallery);
 
         if (pickedFile != null) {
           final bytes = await pickedFile.readAsBytes();
