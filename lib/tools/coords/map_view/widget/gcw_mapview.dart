@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
@@ -320,16 +319,18 @@ class _GCWMapViewState extends State<GCWMapView> {
     _polylines.addAll(_circlePolylines);
 
     layers.addAll([
-      TappablePolylineLayer(
-        polylineCulling: true,
-        polylines: _polylines as List<TaggedPolyline>,
-        onTap: (polylines, details) {
-          if (polylines.isEmpty) {
-            return;
-          }
-
-          _showPolylineDialog(polylines.first as _GCWTappablePolyline);
-        },
+        MouseRegion(
+          hitTestBehavior: HitTestBehavior.deferToChild,
+          cursor: SystemMouseCursors.click, // Use a special cursor to indicate interactivity
+          child: GestureDetector(
+          onTap: () {
+            _polylineHitNotifier();
+          },
+          child: PolylineLayer(
+            polylines: _polylines,
+            hitNotifier: _hitNotifier,
+          ),
+        )
       ),
       const GCWMapViewScalebar(
         alignment: Alignment.bottomLeft,
@@ -345,9 +346,20 @@ class _GCWMapViewState extends State<GCWMapView> {
               snap: PopupSnap.markerTop,
             ),
       )),
-    ]);
-
+  ]);
     return layers;
+  }
+
+  final LayerHitNotifier<Object> _hitNotifier = ValueNotifier(null);
+
+  void _polylineHitNotifier() {
+    if (_hitNotifier.value?.hitValues.first is GCWMapLine) {
+      var line = _hitNotifier.value?.hitValues.first as GCWMapLine; //hitValue?.value?.hitValues.first;
+      var _line = _GCWTappablePolyline(
+          points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: line.parent.color, child: line);
+
+      _showPolylineDialog(_line);
+    }
   }
 
   void _showPolylineDialog(_GCWTappablePolyline polyline) {
@@ -1141,12 +1153,12 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   List<Polyline> _addPolylines() {
-    var _polylines = <TaggedPolyline>[];
+    var _polylines = <Polyline>[];
 
     for (var polyline in widget.polylines) {
       for (var line in polyline.lines) {
-        _polylines.add(_GCWTappablePolyline(
-            points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: polyline.color, child: line));
+        _polylines.add(Polyline(points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH,
+            color: polyline.color, hitValue: line));
       }
     }
 
@@ -1252,15 +1264,17 @@ class _GCWMarker extends Marker {
   }) : super(point: mapPoint.point, child: child, width: width, height: height, alignment: alignment);
 }
 
-class _GCWTappablePolyline extends TaggedPolyline {
+class _GCWTappablePolyline extends Polyline {
   GCWMapSimpleGeometry child;
 
   _GCWTappablePolyline(
-      {required List<LatLng> points, required double strokeWidth, required Color color, required this.child})
+      {required List<LatLng> points, required double strokeWidth, required Color color, required this.child,
+        Object? hitValue})
       : super(
           points: points,
           strokeWidth: strokeWidth,
           color: color,
+          hitValue: hitValue
         );
 }
 
