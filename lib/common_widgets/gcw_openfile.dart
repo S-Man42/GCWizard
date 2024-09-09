@@ -231,6 +231,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
               (Platform.isIOS)
                 ? GCWButton(
                     text: i18n(context, 'common_ios_photos'),
+                    activated: _currentMode == OpenFileType.IMAGE,
                     onPressed: () {
                       setState(() {
                         _currentMode = OpenFileType.IMAGE;
@@ -241,6 +242,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 text: (!Platform.isIOS)
                     ? i18n(context, 'common_loadfile_openfrom_file')
                     : i18n(context, 'common_ios_loadfile_openfrom_files'),
+                activated: _currentMode == OpenFileType.FILE,
                 onPressed: () {
                   setState(() {
                     _currentMode = OpenFileType.FILE;
@@ -249,6 +251,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
               ),
               GCWButton(
                 text: i18n(context, 'common_loadfile_openfrom_url_address'),
+                activated: _currentMode == OpenFileType.URL,
                 onPressed: () {
                   setState(() {
                     _currentMode = OpenFileType.URL;
