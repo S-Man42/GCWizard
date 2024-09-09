@@ -54,7 +54,7 @@ class GCWOpenFile extends StatefulWidget {
 
 class _GCWOpenFileState extends State<GCWOpenFile> {
   late TextEditingController _urlController;
-  OpenFileType _currentMode = OpenFileType.URL;
+  OpenFileType _currentMode = OpenFileType.FILE;
   String? _currentUrl;
   Uri? _currentUri;
 
@@ -224,51 +224,45 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   Widget build(BuildContext context) {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
-    Widget content;
-
-    switch (_currentMode) {
-      case OpenFileType.FILE:
-        content = _buildOpenFromDevice();
-        break;
-      case OpenFileType.URL:
-        content = _buildOpenFromURL();
-        break;
-      case OpenFileType.IMAGE:
-        content = _buildOpenFromGallery();
-        break;
-    }
+    var content =
+        Column(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              (Platform.isIOS)
+                ? GCWButton(
+                    text: i18n(context, 'common_ios_photos'),
+                    onPressed: () {
+                      setState(() {
+                        _currentMode = OpenFileType.IMAGE;
+                      });
+                    })
+                : Container(),
+              GCWButton(
+                text: (!Platform.isIOS)
+                    ? i18n(context, 'common_loadfile_openfrom_file')
+                    : i18n(context, 'common_ios_loadfile_openfrom_files'),
+                onPressed: () {
+                  setState(() {
+                    _currentMode = OpenFileType.FILE;
+                  });
+                },
+              ),
+              GCWButton(
+                text: i18n(context, 'common_loadfile_openfrom_url_address'),
+                onPressed: () {
+                  setState(() {
+                    _currentMode = OpenFileType.URL;
+                  });
+                },
+              ),
+            ]),
+            if (_currentMode == OpenFileType.FILE) _buildOpenFromDevice(),
+            if (_currentMode == OpenFileType.URL) _buildOpenFromURL(),
+            if (_currentMode == OpenFileType.IMAGE) _buildOpenFromGallery(),
+          ]);
 
     return Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          (Platform.isIOS)
-              ? GCWButton(
-                  text: i18n(context, 'common_ios_photos'),
-                  onPressed: () {
-                    setState(() {
-                      _currentMode = OpenFileType.IMAGE;
-                    });
-                  })
-              : Container(),
-          GCWButton(
-            text: (!Platform.isIOS)
-                ? i18n(context, 'common_loadfile_openfrom_file')
-                : i18n(context, 'common_ios_loadfile_openfrom_files'),
-            onPressed: () {
-              setState(() {
-                _currentMode = OpenFileType.FILE;
-              });
-            },
-          ),
-          GCWButton(
-            text: i18n(context, 'common_loadfile_openfrom_url_address'),
-            onPressed: () {
-              setState(() {
-                _currentMode = OpenFileType.URL;
-              });
-            },
-          ),
-        ]),
         widget.isDialog || widget.suppressHeader
             ? content
             : GCWExpandableTextDivider(
@@ -281,6 +275,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                   });
                 },
                 child: content),
+
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') +
@@ -296,6 +291,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           )
       ],
     );
+
   }
 
   bool _validateContentType(String contentType) {
