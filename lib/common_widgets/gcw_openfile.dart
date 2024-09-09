@@ -228,20 +228,16 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              (Platform.isIOS)
-                ? GCWButton(
-                    text: i18n(context, 'common_ios_photos'),
-                    activated: _currentMode == OpenFileType.IMAGE,
-                    onPressed: () {
-                      setState(() {
-                        _currentMode = OpenFileType.IMAGE;
-                      });
-                    })
-                : Container(),
               GCWButton(
-                text: (!Platform.isIOS)
-                    ? i18n(context, 'common_loadfile_openfrom_file')
-                    : i18n(context, 'common_ios_loadfile_openfrom_files'),
+                  text: i18n(context, 'common_ios_photos'),
+                  activated: _currentMode == OpenFileType.IMAGE,
+                  onPressed: () {
+                    setState(() {
+                      _currentMode = OpenFileType.IMAGE;
+                    });
+                  }),
+              GCWButton(
+                text: i18n(context, 'common_loadfile_openfrom_file'),
                 activated: _currentMode == OpenFileType.FILE,
                 onPressed: () {
                   setState(() {
