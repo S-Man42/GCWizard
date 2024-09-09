@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart' as filePicker;
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -97,9 +98,24 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   GCWButton _buildOpenFromGallery() {
     return GCWButton(
-      text: 'Album',
-      onPressed: () {
+      text: i18n(context, 'common_loadfile_open'),
+      onPressed: () async {
+        final ImagePicker picker = ImagePicker();
+        final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
+        if (pickedFile != null) {
+          final bytes = await pickedFile.readAsBytes();
+          setState(() {
+            _loadedFile = GCWFile(
+              name: pickedFile.name,
+              path: pickedFile.path,
+              bytes: bytes,
+            );
+          });
+          widget.onLoaded(_loadedFile);
+        } else {
+          showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
+        }
       },
     );
   }
@@ -225,8 +241,18 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          if (Platform.isIOS)
+            GCWButton(
+                text: i18n(context, 'common_ios_photos'),
+                onPressed: () {
+                  setState(() {
+                    _currentMode = OpenFileType.IMAGE;
+                  });
+                }),
           GCWButton(
-            text: i18n(context, 'common_loadfile_openfrom_file'),
+            text: (!Platform.isIOS)
+                ? i18n(context, 'common_loadfile_openfrom_file')
+                : i18n(context, 'common_ios_loadfile_openfrom_files'),
             onPressed: () {
               setState(() {
                 _currentMode = OpenFileType.FILE;
@@ -241,13 +267,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
               });
             },
           ),
-          GCWButton(
-              text: 'Album',
-              onPressed: () {
-                setState(() {
-                  _currentMode = OpenFileType.IMAGE;
-                });
-              }),
         ]),
         widget.isDialog || widget.suppressHeader
             ? content
