@@ -249,13 +249,14 @@ class _GCWMapViewState extends State<GCWMapView> {
                   : null),
               children: layers,
             ),
-            Positioned(
+            Positioned(top: 15.0, right: 15.0, child: Column(children: _buildLayerButtons())),
+            widget.isEditable ? Positioned(
                 bottom: 15.0, right: 15.0, child: GCWPopupMenu(
                   customIcon: _createIconButtonIcons(Icons.more_vert),
                   backgroundColor: COLOR_MAP_ICONBUTTONS,
                   menuItemBuilder: (context) => _buildPopupMenuButtons(),
                 )
-            ),
+            ) : Container(),
             Positioned(top: 15.0, left: 15.0, child: Column(children: _buildAddButtons())),
             Positioned(
               bottom: 5.0,
@@ -290,7 +291,8 @@ class _GCWMapViewState extends State<GCWMapView> {
     if (_locationSubscription != null &&
         !_locationSubscription!.isPaused &&
         _currentAccuracy != null &&
-        _currentPosition != null) {
+        _currentPosition != null &&
+        _isPointsHidden == false) {
       var circleColor = COLOR_MAP_USERPOSITION.withOpacity(0.0);
 
       layers.add(CircleLayer(circles: [
@@ -632,6 +634,44 @@ class _GCWMapViewState extends State<GCWMapView> {
     );
   }
 
+  List<GCWIconButton> _buildLayerButtons() {
+    var buttons = [
+      GCWIconButton(
+          backgroundColor: COLOR_MAP_ICONBUTTONS,
+          customIcon: _createIconButtonIcons(Icons.layers),
+          onPressed: () {
+            _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK
+                ? _LayerType.MAPBOX_SATELLITE
+                : _LayerType.OPENSTREETMAP_MAPNIK;
+
+            if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken!.isEmpty)) {
+              _loadToken('mapbox').then((token) {
+                setState(() {
+                  _mapBoxToken = token;
+                });
+              });
+            } else {
+              setState(() {});
+            }
+          }),
+    ];
+
+    if (_currentLocationPermissionGranted != null &&
+        _currentLocationPermissionGranted! &&
+        _locationSubscription != null) {
+      buttons.add(GCWIconButton(
+          backgroundColor: _locationSubscription!.isPaused ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
+          customIcon: _createIconButtonIcons(Icons.person_off),
+          onPressed: () {
+            _popupLayerController.hidePopup();
+            _toggleLocationListening();
+            if (!_locationSubscription!.isPaused) _manuallyToggledPosition = true;
+          }));
+    }
+
+    return buttons;
+  }
+
   List<Widget> _buildAddButtons() {
     var buttons = [
       widget.isEditable ? GCWIconButton(
@@ -726,6 +766,17 @@ class _GCWMapViewState extends State<GCWMapView> {
         },
       ),
       GCWPopupMenuItem(
+        child: iconedGCWPopupMenuItem(context,
+          _isPointsHidden ? iconFromMapMarkerValues(_markerIcon) : _negativeIconFromMapMarkerValues(_markerIcon),
+          _isPointsHidden ?  i18n(context, 'coords_openmap_showpoints') : i18n(context, 'coords_openmap_hidepoints'),
+        ),
+        action: (index) {
+          setState(() {
+            _isPointsHidden = !_isPointsHidden;
+          });
+        }
+      ),
+      GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.merge_type, i18n(context, 'coords_openmap_mergepoints'), rotateDegrees: 180),
         action: (index) {
           setState(() {
@@ -813,7 +864,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         _locationSubscription != null) {
       buttons.add(GCWPopupMenuItem(
           child: iconedGCWPopupMenuItem(context,
-              _locationSubscription!.isPaused ? iconFromMapMarkerValues(_markerIcon) : _negativeIconFromMapMarkerValues(_markerIcon),
+              _locationSubscription!.isPaused ? Icons.person : Icons.person_off,
               _locationSubscription!.isPaused ?  i18n(context, 'coords_openmap_showownposition') : i18n(context, 'coords_openmap_hideownposition'),
 
           ),
@@ -850,7 +901,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     }
   }
 
-  String? _buildPopupCoordinateText(GCWMapPoint point, {required bool rounded}) {
+  String _buildPopupCoordinateText(GCWMapPoint point, {required bool rounded}) {
     var coordinateFormat = defaultCoordinateFormat;
     if (point.coordinateFormat != null) coordinateFormat = point.coordinateFormat!;
 
@@ -935,7 +986,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             Container(margin: const EdgeInsets.only(bottom: 5)),
             GCWOutputText(
               text: _buildPopupCoordinateText(gcwMarker.mapPoint, rounded: true),
-              copyText: _buildPopupCoordinateText(gcwMarker.mapPoint, rounded: false),
+              copyText: _buildPopupCoordinateText(gcwMarker.mapPoint, rounded: false).replaceAll('\n', ' '),
               style: gcwDialogTextStyle()
             ),
             gcwMarker.mapPoint.hasCircle()

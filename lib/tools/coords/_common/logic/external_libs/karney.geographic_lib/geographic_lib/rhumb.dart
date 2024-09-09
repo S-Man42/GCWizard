@@ -472,7 +472,7 @@ class _RhumbLine {
     _azi12 = _GeoMath.AngNormalize(azi12);
 
     var p = _Pair();
-    _GeoMath.sincosd(p, _azi12);
+    _GeoMath.sincosd(_azi12, p);
     _salp = p.first;
     _calp = p.second;
     _phi1 = _AuxAngle.degrees(lat1);
