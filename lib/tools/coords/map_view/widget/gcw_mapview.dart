@@ -354,7 +354,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   void _polylineHitNotifier() {
     if (_hitNotifier.value?.hitValues.first is GCWMapLine) {
-      var line = _hitNotifier.value?.hitValues.first as GCWMapLine; //hitValue?.value?.hitValues.first;
+      var line = _hitNotifier.value?.hitValues.first as GCWMapLine;
       var _line = _GCWTappablePolyline(
           points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: line.parent.color, child: line);
 
