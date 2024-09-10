@@ -132,27 +132,27 @@ class _SummerSimmerIndexState extends State<SummerSimmerIndex> {
             if (summersimmer > SUMMERSIMMER_HEAT_STRESS[SUMMERSIMMER_HEATSTRESS_CONDITION.RED]!) {
               if (summersimmer > SUMMERSIMMER_HEAT_STRESS[SUMMERSIMMER_HEATSTRESS_CONDITION.BROWN]!) {
                 if (summersimmer > SUMMERSIMMER_HEAT_STRESS[SUMMERSIMMER_HEATSTRESS_CONDITION.BLACK]!) {
-                  return 'summersimmerindex_index_8_black';
+                  return 'summersimmerindex_index_8';
                 } else {
-                  return 'summersimmerindex_index_7_brown';
+                  return 'summersimmerindex_index_7';
                 }
               } else {
-                return 'summersimmerindex_index_6_red';
+                return 'summersimmerindex_index_6';
               }
             } else {
-              return 'summersimmerindex_index_5_purple';
+              return 'summersimmerindex_index_5';
             }
           } else {
-            return 'summersimmerindex_index_4_green';
+            return 'summersimmerindex_index_4';
           }
         } else {
-          return 'summersimmerindex_index_3_orange';
+          return 'summersimmerindex_index_3';
         }
       } else {
-        return 'summersimmerindex_index_2_pink';
+        return 'summersimmerindex_index_2';
       }
     } else {
-      return 'summersimmerindex_index_1_blue';
+      return 'summersimmerindex_index_1';
     }
   }
 
