@@ -76,35 +76,30 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     super.dispose();
   }
 
-  GCWButton _buildOpenFromDevice() {
-    return GCWButton(
-      text: i18n(context, 'common_loadfile_open'),
-      onPressed: () {
-        _currentExpanded = true;
-        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile? file) {
-          if (file != null) {
-            setState(() {
-              _loadedFile = file;
-              _currentExpanded = false;
-            });
-            widget.onLoaded(file);
-          } else {
-            showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
-          }
+  void _buildOpenFromDevice() {
+    // todo: open only the filebrowser in android
+    openFileExplorer(allowedFileTypes: widget.supportedFileTypes)
+        .then((GCWFile? file) {
+      if (file != null) {
+        setState(() {
+          _loadedFile = file;
+          _currentExpanded = false;
         });
-      },
-    );
+        widget.onLoaded(file);
+      } else {
+        showSnackBar(
+            i18n(context, 'common_loadfile_exception_nofile'), context);
+      }
+    });
   }
 
-  GCWButton _buildOpenFromGallery() {
-    return GCWButton(
-      text: i18n(context, 'common_loadfile_open'),
-      onPressed: () async {
-        final imagePicker.ImagePicker picker = imagePicker.ImagePicker();
-        final imagePicker.XFile? pickedFile = await picker.pickImage(source: imagePicker.ImageSource.gallery);
-
-        if (pickedFile != null) {
-          final bytes = await pickedFile.readAsBytes();
+  void _buildOpenFromGallery() {
+    final imagePicker.ImagePicker picker = imagePicker.ImagePicker();
+    picker
+        .pickImage(source: imagePicker.ImageSource.gallery)
+        .then((imagePicker.XFile? pickedFile) {
+      if (pickedFile != null) {
+        pickedFile.readAsBytes().then((Uint8List bytes) {
           setState(() {
             _loadedFile = GCWFile(
               name: pickedFile.name,
@@ -113,11 +108,12 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             );
           });
           widget.onLoaded(_loadedFile);
-        } else {
-          showSnackBar(i18n(context, 'common_loadfile_exception_nofile'), context);
-        }
-      },
-    );
+        });
+      } else {
+        showSnackBar(
+            i18n(context, 'common_loadfile_exception_nofile'), context);
+      }
+    });
   }
 
   Widget _buildDownloadButton() {
@@ -171,7 +167,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         controller: _urlController,
         filled: widget.isDialog,
         hintText: i18n(context, 'common_loadfile_openfrom_url_address'),
-        hintColor: widget.isDialog ? const Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
+        hintColor: widget.isDialog
+            ? const Color.fromRGBO(150, 150, 150, 1.0)
+            : themeColors().textFieldHintText(),
         onChanged: (String value) {
           if (value.trim().isEmpty) {
             _currentUrl = null;
@@ -224,41 +222,30 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   Widget build(BuildContext context) {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
-    var content =
-        Column(
-          children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              GCWButton(
-                  text: i18n(context, 'common_ios_photos'),
-                  activated: _currentMode == OpenFileType.IMAGE,
-                  onPressed: () {
-                    setState(() {
-                      _currentMode = OpenFileType.IMAGE;
-                    });
-                  }),
-              GCWButton(
-                text: i18n(context, 'common_loadfile_openfrom_file'),
-                activated: _currentMode == OpenFileType.FILE,
-                onPressed: () {
-                  setState(() {
-                    _currentMode = OpenFileType.FILE;
-                  });
-                },
-              ),
-              GCWButton(
-                text: i18n(context, 'common_loadfile_openfrom_url_address'),
-                activated: _currentMode == OpenFileType.URL,
-                onPressed: () {
-                  setState(() {
-                    _currentMode = OpenFileType.URL;
-                  });
-                },
-              ),
-            ]),
-            if (_currentMode == OpenFileType.FILE) _buildOpenFromDevice(),
-            if (_currentMode == OpenFileType.URL) _buildOpenFromURL(),
-            if (_currentMode == OpenFileType.IMAGE) _buildOpenFromGallery(),
-          ]);
+    var content = Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        GCWButton(
+            text: i18n(context, 'common_loadfile_openfrom_gallery'),
+            onPressed: () {
+              _buildOpenFromGallery();
+            }),
+        GCWButton(
+          text: i18n(context, 'common_loadfile_openfrom_file'),
+          onPressed: () {
+            _buildOpenFromDevice();
+          },
+        ),
+        GCWButton(
+          text: i18n(context, 'common_loadfile_openfrom_url_address'),
+          onPressed: () {
+            setState(() {
+              _currentMode = OpenFileType.URL;
+            });
+          },
+        ),
+      ]),
+      if (_currentMode == OpenFileType.URL) _buildOpenFromURL(),
+    ]);
 
     return Column(
       children: [
@@ -274,7 +261,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                   });
                 },
                 child: content),
-
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') +
@@ -290,7 +276,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           )
       ],
     );
-
   }
 
   bool _validateContentType(String contentType) {
