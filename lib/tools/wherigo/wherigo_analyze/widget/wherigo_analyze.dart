@@ -363,58 +363,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
-  /*
-  Widget _widgetOpenLUAFile(BuildContext context) {
-    return GCWExpandableTextDivider(
-      text: i18n(context, 'wherigo_open_lua'),
-      suppressTopSpace: false,
-      suppressBottomSpace: false,
-      child: Row(children: <Widget>[
-        SizedBox(
-            width: 70,
-            height: 160,
-            child: GCWButton(
-              text: i18n(context, 'wherigo_decompile_button'),
-              onPressed: () {
-                _askForOnlineDecompiling();
-              },
-            )),
-        Expanded(
-            child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 2 * DOUBLE_DEFAULT_MARGIN,
-                ),
-                child: GCWOpenFile(
-                  title: i18n(context, 'wherigo_open_lua'),
-                  onLoaded: (_LUAfile) {
-                    if (_LUAfile == null) {
-                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-                      return;
-                    }
-                    if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-                      showSnackBar(i18n(context, 'common_loadfile_exception_wrongtype_lua'), context);
-                      return;
-                    }
-
-                    _setLUAData(_LUAfile.bytes);
-
-                    _getLUAOnline = false;
-
-                    _resetIndices();
-
-                    _analyseCartridgeFileAsync(WHERIGO_CARTRIDGE_DATA_TYPE.LUA);
-
-                    setState(() {
-                      _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
-                      _displayCartridgeDataList = _setDisplayCartridgeDataList();
-                    });
-                  },
-                ))),
-      ]),
-    );
-  }
-  */
-
   Widget _widgetOpenLUAFile(BuildContext context) {
     return GCWExpandableTextDivider(
       text: i18n(context, 'wherigo_open_lua'),
@@ -1042,7 +990,6 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         suppressCopyButton: true,
       );
     }
-
     return Column(children: <Widget>[
       const GCWDefaultOutput(),
       Row(
@@ -1080,7 +1027,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
         ],
       ),
 
-      // Widget for Answer-Details
+      // Widget for Input-Details
       _buildImageView(
           context,
           WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputMedia != '' &&
@@ -1089,6 +1036,8 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
       GCWColumnedMultilineOutput(
           data: _buildOutputListOfInputData(context, WherigoCartridgeLUAData.Inputs[_inputIndex - 1]),
           flexValues: const [3, 4]),
+
+
       if (WherigoCartridgeLUAData.Inputs[_inputIndex - 1].InputAnswers.isNotEmpty)
         Column(children: <Widget>[
           Row(
