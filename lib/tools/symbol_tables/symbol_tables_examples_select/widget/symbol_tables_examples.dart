@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -93,7 +94,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
   }
 
   Widget _createSymbols(int countColumns) {
-    var symbols = symbolKeys.map<Widget>((symbolKey) {
+    var symbols = symbolKeys.mapIndexed<Widget>((index, symbolKey) {
       return Column(
         children: [
           GCWTextDivider(
@@ -112,7 +113,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
                 },
               )),
           FutureBuilder<SymbolTableData>(
-              future: _loadSymbolData(symbolKey),
+              future: _loadSymbolData(symbolKey, index),
               builder: (BuildContext context, AsyncSnapshot<SymbolTableData> snapshot) {
                 if (snapshot.hasData && snapshot.data is SymbolTableData) {
                   return GCWSymbolTableTextToSymbols(
@@ -135,9 +136,9 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
         physics: const AlwaysScrollableScrollPhysics(), primary: true, child: Column(children: symbols));
   }
 
-  Future<SymbolTableData> _loadSymbolData(String symbolKey) async {
+  Future<SymbolTableData> _loadSymbolData(String symbolKey, int index) async {
     var symbolTableData = SymbolTableData(context, symbolKey);
-    await symbolTableData.initialize();
+    await Future.delayed(Duration(milliseconds: (index/ 25).toInt() * 200) , () => symbolTableData.initialize());
 
     return symbolTableData;
   }
