@@ -223,7 +223,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
     var content = Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+
+          children: [
         GCWButton(
             text: i18n(context, 'common_loadfile_openfrom_gallery'),
             onPressed: () {
@@ -231,6 +233,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             }),
         GCWButton(
           text: i18n(context, 'common_loadfile_openfrom_file'),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           onPressed: () {
             _buildOpenFromDevice();
           },
