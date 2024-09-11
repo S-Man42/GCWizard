@@ -2443,7 +2443,7 @@ void initializeRegistry(BuildContext context) {
       ],
     ),
     GCWTool(
-        tool: const MapView(),
+        tool: MapView(),
         autoScroll: false,
         suppressToolMargin: true,
         id: 'coords_openmap',

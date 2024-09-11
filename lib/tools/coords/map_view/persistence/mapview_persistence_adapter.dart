@@ -41,7 +41,7 @@ class MapViewPersistenceAdapter {
         gcwMapPoint.isEditable);
   }
 
-  GCWMapPoint _mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
+  static GCWMapPoint mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
     var coords = LatLng(mapPointDAO.latitude, mapPointDAO.longitude);
 
     return GCWMapPoint(
@@ -66,12 +66,12 @@ class MapViewPersistenceAdapter {
         colorToHexString(gcwMapPolyline.color), gcwMapLineTypeFromEnumValue(gcwMapPolyline.type));
   }
 
-  GCWMapPolyline _mapPolylineDAOToGCWMapPolyline(MapPolylineDAO mapPolylineDAO) {
+  static GCWMapPolyline mapPolylineDAOToGCWMapPolyline(MapPolylineDAO mapPolylineDAO, List<GCWMapPoint> refPoints) {
     return GCWMapPolyline(
         uuid: mapPolylineDAO.uuid,
         points: mapPolylineDAO.pointUUIDs
-            .where((uuid) => mapWidget.points.firstWhereOrNull((GCWMapPoint point) => point.uuid == uuid) != null)
-            .map((uuid) => mapWidget.points.firstWhere((GCWMapPoint point) => point.uuid == uuid))
+            .where((uuid) => refPoints.firstWhereOrNull((GCWMapPoint point) => point.uuid == uuid) != null)
+            .map((uuid) => refPoints.firstWhere((GCWMapPoint point) => point.uuid == uuid))
             .toList(),
         color: hexStringToColor(mapPolylineDAO.color),
         type: GCWMapLineType.values.firstWhere((element) => gcwMapLineTypeFromEnumValue(element) == mapPolylineDAO.type,
@@ -96,7 +96,7 @@ class MapViewPersistenceAdapter {
 
     mapWidget.points.addAll(_mapViewDAO.points
         .where((pointDAO) => !mapWidget.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
-        .map((pointDAO) => _mapPointDAOToGCWMapPoint(pointDAO))
+        .map((pointDAO) => mapPointDAOToGCWMapPoint(pointDAO))
         .toList());
 
     _mapViewDAO.polylines.addAll(mapWidget.polylines
@@ -108,7 +108,7 @@ class MapViewPersistenceAdapter {
     mapWidget.polylines.addAll(_mapViewDAO.polylines
         .where((polylineDAO) =>
             !mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
-        .map((polylineDAO) => _mapPolylineDAOToGCWMapPolyline(polylineDAO))
+        .map((polylineDAO) => mapPolylineDAOToGCWMapPolyline(polylineDAO, mapWidget.points))
         .toList());
 
     updateMapViews();
@@ -363,12 +363,12 @@ class MapViewPersistenceAdapter {
       id++;
     });
     json = _removeEmptyElements(json);
-    return _replaceJsonMarker(json, false);
+    return replaceJsonMarker(json, false);
   }
 
   bool setJsonMapViewData(String json) {
     try {
-      json = _replaceJsonMarker(json, true);
+      json = replaceJsonMarker(json, true);
       json = _restoreUUIDs(json);
       var viewData = restoreJsonMapViewData(json);
 
@@ -384,7 +384,7 @@ class MapViewPersistenceAdapter {
     updateMapViews();
   }
 
-  String _replaceJsonMarker(String json, bool restore) {
+  static String replaceJsonMarker(String json, bool restore) {
     var replaceMap = {
       "\"uuid\":": "\"uid\":",
       "\"pointUUIDs\":": "\"pointIDs\":",

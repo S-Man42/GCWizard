@@ -64,7 +64,7 @@ const _OSM_TEXT = 'coords_mapview_osm';
 const _OSM_URL = 'coords_mapview_osm_url';
 const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
-const _uriContent = 'content';
+const uriContent = 'content';
 const _mapViewId = 'coords_openmap';
 
 final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
@@ -803,16 +803,11 @@ class _GCWMapViewState extends State<GCWMapView> {
                 setState(() {
                   _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
                 });
-              } else if(_isValidMapVieUri(text)) {
-                var uri = Uri.parse(text);
-                var parameter = uri.queryParameters;
-                if (parameter.keys.contains(_uriContent)) {
-                  var json = decodeBase64(parameter[_uriContent]!);
-                  if (_persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(json)) {
-                    setState(() {
+              } else if(_mapViewUriContent(text).isNotEmpty) {
+                if (_importJsonContent(_mapViewUriContent(text))) {
+                  setState(() {
                     _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
-                    });
-                  }
+                  });
                 }
               } else {
                 var pastedCoordinate = _parseCoords(text);
@@ -853,7 +848,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         action: (index) {
           var url = deepLinkURL(GCWTool(tool: Container(), id: _mapViewId));
           var content = _persistanceAdapter!.getJsonMapViewData();
-          var uri = Uri(path: url, queryParameters: {_uriContent: encodeBase64(content)});
+          var uri = Uri(path: url, queryParameters: {uriContent: encodeBase64(content)});
           if (kIsWeb) {
             launchUrl(uri);
           } else {
@@ -950,14 +945,17 @@ class _GCWMapViewState extends State<GCWMapView> {
     return text;
   }
 
-  bool _isValidMapVieUri(String text) {
+  String _mapViewUriContent(String text) {
     var uri = Uri.parse(text);
-    if (uri.hasEmptyPath) return false;
-    if (!uri.pathSegments.contains(_mapViewId)) return false;
+    if (uri.hasEmptyPath) return '';
+    if (!uri.pathSegments.contains(_mapViewId)) return '';
     var parameter = uri.queryParameters;
-    if (!parameter.keys.contains(_uriContent)) return false;
-    if (decodeBase64(parameter[_uriContent]!).isEmpty) return false;
-    return true;
+    if (!parameter.keys.contains(uriContent)) return '';
+    return decodeBase64(parameter[uriContent]!);
+  }
+
+  bool _importJsonContent(String json) {
+    return _persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(json);
   }
 
   Widget _buildPopup(Marker marker) {
