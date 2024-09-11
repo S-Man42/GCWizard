@@ -93,6 +93,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
+        suppressGalleryButton: true,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
@@ -210,7 +211,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           }
         },
       ),
-      Container(child: _highImage != null ? Image.memory(_highImage!) : const SizedBox(height: 50, width: 200)),
+      Container(child: _highImage != null ? Image.memory(_highImage!) : const SizedBox(height: 20)),
 
       GCWTextDivider(text: i18n(context, 'animated_image_morse_code_low_signal')),
         Column(children: [

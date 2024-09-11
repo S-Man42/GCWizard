@@ -37,6 +37,7 @@ class GCWOpenFile extends StatefulWidget {
   final String? title;
   final GCWFile? file;
   final bool suppressHeader;
+  final bool suppressGalleryButton;
 
   const GCWOpenFile(
       {Key? key,
@@ -45,7 +46,8 @@ class GCWOpenFile extends StatefulWidget {
       this.title,
       this.isDialog = false,
       this.file,
-      this.suppressHeader = false})
+      this.suppressHeader = false,
+      this.suppressGalleryButton = false})
       : super(key: key);
 
   @override
@@ -72,7 +74,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   @override
   void dispose() {
     _urlController.dispose();
-
     super.dispose();
   }
 
@@ -223,14 +224,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
     var content = Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.center,
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        (widget.suppressGalleryButton)
+            ? const SizedBox()
+            : GCWButton(
+                text: i18n(context, 'common_loadfile_openfrom_gallery'),
+                onPressed: () {
+                  _buildOpenFromGallery();
+                }),
 
-          children: [
-        GCWButton(
-            text: i18n(context, 'common_loadfile_openfrom_gallery'),
-            onPressed: () {
-              _buildOpenFromGallery();
-            }),
         GCWButton(
           text: i18n(context, 'common_loadfile_openfrom_file'),
           margin: const EdgeInsets.symmetric(horizontal: 10),
