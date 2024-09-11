@@ -64,19 +64,19 @@ List<List<String>> _buildOutputListAnswers(BuildContext context,
           ''
         ]);
       } else {
-        result.add([i18n(context, 'wherigo_output_answervariable'), hash, '']);
-        //TODO RegExp sorgt für freeze
+        hash = hash.replaceAll('.', '\\.').replaceAll('|', '\\|');
         if (RegExp(r'' + hash + ' = .*').hasMatch(LUASourceCode)) {
-          RegExp(r'' + hash + ' = .*')
-              .allMatches(LUASourceCode)
-              .forEach((variableWithValue) {
+          result.add([i18n(context, 'wherigo_output_answervariable'), hash, '']);
+
+          RegExp(r'' + hash + ' = .*').allMatches(LUASourceCode).forEach((variableWithValue) {
             var group = variableWithValue.group(0);
             if (group != null) {
               result.add([i18n(context, 'wherigo_data_answer'), group, '']);
             }
           });
+        } else {
+          result.add([i18n(context, 'wherigo_output_answer'), hash, '']);
         }
-
       }
     }
     if (answerAlphabetical != null) {
