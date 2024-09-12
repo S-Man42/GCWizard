@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
-import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
-import 'package:gc_wizard/utils/json_utils.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 
 const String _apiSpecification = '''
 {
@@ -24,7 +21,7 @@ const String _apiSpecification = '''
           "in": "query",
           "name": "content",
           "required": false,
-          "description": "Base64 coded json data",
+          "description": "gzip compressed json data",
           "schema": {
             "type": "string"
           }
@@ -56,15 +53,21 @@ class _MapViewState extends State<MapView> {
 
     if (widget.hasWebParameter()) {
       if (widget.getWebParameter(uriContent) != null && widget.getWebParameter(uriContent)!.isNotEmpty) {
-        var json = decodeBase64(widget.getWebParameter(uriContent)!);
+        String? json;
+        try {
+          json = decompressString(widget.getWebParameter(uriContent)!);
+        } catch (e) {
+          json = '';
+        }
+
         if (json.isNotEmpty) {
           json = MapViewPersistenceAdapter.replaceJsonMarker(json, true);
-          var mapViewDAO = MapViewDAO.fromJson(asJsonMap(jsonDecode(json)));
+          var viewData = restoreJsonMapViewData(json);
 
           points.clear();
           polyGeodetics.clear();
-          points.addAll(mapViewDAO.points.map((point) => MapViewPersistenceAdapter.mapPointDAOToGCWMapPoint(point)));
-          polyGeodetics.addAll(mapViewDAO.polylines.map((polyline) =>
+          points.addAll(viewData.points.map((point) => MapViewPersistenceAdapter.mapPointDAOToGCWMapPoint(point)));
+          polyGeodetics.addAll(viewData.polylines.map((polyline) =>
               MapViewPersistenceAdapter.mapPolylineDAOToGCWMapPolyline(polyline, points)));
         }
       }

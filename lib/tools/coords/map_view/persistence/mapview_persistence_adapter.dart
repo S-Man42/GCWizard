@@ -406,7 +406,12 @@ class MapViewPersistenceAdapter {
       "(,\")([^\"]+)(\":null})": "}",
       "(\"name\":\"\",)": "",
       "(\"isVisible\":true,)": "",
-      "(\"isVisible\":true})": "}"
+      "(\",isVisible\":true})": "}",
+      "(\"isEditable\":true,)": "",
+      "(\",isEditable\":true})": "}",
+      "(\"type\":geodetic,)": "",
+      "(\",type\":geodetic})": "}",
+      "(\"circleColorSameAsColor\":true,)": "",
     };
 
     regExpList.forEach((key, value) {

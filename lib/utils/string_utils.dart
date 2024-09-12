@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:archive/archive_io.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
@@ -229,4 +231,21 @@ List<String> splitGroupsOfSameCharacters(String text) {
   }
 
   return out;
+}
+
+String compressString(String text) {
+  if (text.isEmpty) return '';
+  var bytes = utf8.encode(text);
+  var compressedBytes = const ZLibEncoder().encode(bytes);
+  var e = base64.encode(compressedBytes);
+  var o = base64.decode(e);
+
+  return base64.encode(compressedBytes);
+}
+
+String decompressString(String text) {
+  if (text.isEmpty) return '';
+  var compressedBytes = base64.decode(text);
+  var decompressedBytes = const ZLibDecoder().decodeBytes(compressedBytes);
+  return utf8.decode(decompressedBytes);
 }

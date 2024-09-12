@@ -39,13 +39,13 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappoint_editor.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappolyline_editor.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/deeplink_utils.dart';
 import 'package:intl/intl.dart';
@@ -846,9 +846,9 @@ class _GCWMapViewState extends State<GCWMapView> {
       GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.link, i18n(context, kIsWeb ? 'gcwtool_weblink' : 'gcwtool_copyweblink')),
         action: (index) {
-          var url = deepLinkURL(GCWTool(tool: Container(), id: _mapViewId));
           var content = _persistanceAdapter!.getJsonMapViewData();
-          var uri = Uri(path: url, queryParameters: {uriContent: encodeBase64(content)});
+          var uri = deepLinkUriWithParameter(GCWTool(tool: Container(), id: _mapViewId),
+              {uriContent: compressString(content)});
           if (kIsWeb) {
             launchUrl(uri);
           } else {
@@ -946,17 +946,22 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   String _mapViewUriContent(String text) {
-    var uri = Uri.parse(text);
+    var uri = Uri.parse(text.replaceFirst('/#/', '/')); // remove /#/ -> Uri.parse not ok on App Version
     if (uri.hasEmptyPath) return '';
-    if (!uri.pathSegments.contains(_mapViewId)) return '';
+    if (!uri.toString().contains(_mapViewId)) return '';
     var parameter = uri.queryParameters;
     if (!parameter.keys.contains(uriContent)) return '';
-    return decodeBase64(parameter[uriContent]!);
+    try {
+      return decompressString(parameter[uriContent]!);
+    } catch (e) {
+      return '';
+    }
   }
 
   bool _importJsonContent(String json) {
     return _persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(json);
   }
+
 
   Widget _buildPopup(Marker marker) {
     ThemeColors colors = themeColors();
