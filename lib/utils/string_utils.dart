@@ -237,9 +237,6 @@ String compressString(String text) {
   if (text.isEmpty) return '';
   var bytes = utf8.encode(text);
   var compressedBytes = const ZLibEncoder().encode(bytes);
-  var e = base64.encode(compressedBytes);
-  var o = base64.decode(e);
-
   return base64.encode(compressedBytes);
 }
 

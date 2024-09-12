@@ -392,7 +392,8 @@ class MapViewPersistenceAdapter {
       "\"longitude\":": "\"lon\":",
       "\"isVisible\":": "\"visible\":",
       "\"coordinateFormat\":": "\"format\":",
-      "\"circleColorSameAsColor\":": "\"sameColor\":"
+      "\"circleColorSameAsColor\":": "\"sameColor\":",
+      "\"isEditable\":": "\"edit\":"
     };
 
     if (restore) replaceMap = switchMapKeyValue(replaceMap);
