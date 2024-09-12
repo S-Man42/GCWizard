@@ -1685,10 +1685,24 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
         context: context,
+        author: 'John W. Pepi, Maynard, MA',
+        title: 'Summer Simmer Index - The NEW SUMMER SIMMER INDEX - A COMFORT INDEX FOR THE NEW MILLENNIUM',
+        sourceUrl:
+        'https://web.archive.org/web/20240910160710/http://summersimmer.com/home.htm',
+      ),
+      ToolLicenseOnlineArticle(
+        context: context,
         author: 'vCalc',
         title: 'Summer Simmer Index',
         sourceUrl:
         'https://web.archive.org/web/20240724192214/https://ncalculators.com/meteorology/summer-simmer-index-calculator.htm',
+      ),
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'ncalculators.com',
+        title: 'Summer Simmer Index Calculator',
+        sourceUrl:
+        'https://web.archive.org/web/20240910160327/https://ncalculators.com/meteorology/summer-simmer-index-calculator.htm',
       )
     ]),
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
