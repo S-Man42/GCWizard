@@ -225,14 +225,12 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   Widget build(BuildContext context) {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
-    var backgroundColour = themeColors().secondary();
     var content = Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         (!widget.suppressGallery)
             ? GCWIconButton(
                 icon: Icons.photo_library,
                 size: IconButtonSize.LARGE,
-                backgroundColor: backgroundColour,
                 onPressed: () {
                   setState(() {
                     _currentMode = OpenFileType.GALLERY;
@@ -243,7 +241,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         GCWIconButton(
             icon: Icons.folder,
             size: IconButtonSize.LARGE,
-            backgroundColor: backgroundColour,
             onPressed: () {
               setState(() {
                 _currentMode = OpenFileType.GALLERY;
@@ -253,7 +250,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         GCWIconButton(
           icon: Icons.public,
           size: IconButtonSize.LARGE,
-          backgroundColor: backgroundColour,
           onPressed: () {
             setState(() {
               _currentMode = OpenFileType.URL;
