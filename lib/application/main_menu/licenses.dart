@@ -379,6 +379,11 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.BSD3,
               licenseUrl: 'https://web.archive.org/web/20240510075912/https://pub.dev/packages/flutter_lints/license'
             ),
+            ToolLicenseCodeLibrary(context: context, author: 'flutter.dev', title: 'Flutter Library: image_picker',
+                sourceUrl: 'https://web.archive.org/web/20240901131858/https://pub.dev/packages/image_picker',
+                licenseType: ToolLicenseType.BSD3,
+                licenseUrl: 'https://web.archive.org/web/20240512011029/https://pub.dev/packages/image_picker/license'
+            ),
       ]);
 
       content.add(GCWExpandableTextDivider(
