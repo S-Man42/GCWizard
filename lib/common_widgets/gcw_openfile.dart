@@ -25,11 +25,9 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:http/http.dart' as http;
 
-// Not supported by file picker plugin
-const _UNSUPPORTED_FILEPICKERPLUGIN_TYPES = [FileType.GPX, FileType.GCW];
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
-enum OpenFileType { FILE, URL, GALLERY, CAMERA }
+enum OpenFileType {FILE, URL, GALLERY, CAMERA}
 
 class GCWOpenFile extends StatefulWidget {
   final void Function(GCWFile?) onLoaded;
@@ -230,6 +228,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         (!widget.suppressGallery)
             ? GCWIconButton(
                 icon: Icons.photo_library,
+                iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
                 size: IconButtonSize.LARGE,
                 onPressed: () {
                   setState(() {
@@ -238,17 +237,21 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                   _buildOpenFromGallery();
                 })
             : const SizedBox(),
+        Container(width: widget.suppressGallery ? null : DOUBLE_DEFAULT_MARGIN),
         GCWIconButton(
             icon: Icons.folder,
+            iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
             size: IconButtonSize.LARGE,
             onPressed: () {
               setState(() {
-                _currentMode = OpenFileType.GALLERY;
+                _currentMode = OpenFileType.FILE;
               });
               _buildOpenFromDevice();
             }),
+        Container(width: DOUBLE_DEFAULT_MARGIN),
         GCWIconButton(
           icon: Icons.public,
+          iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
           size: IconButtonSize.LARGE,
           onPressed: () {
             setState(() {
@@ -422,19 +425,14 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
 ///
 /// Returns null if nothing was selected.
 ///
-/// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
 Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
-    if (allowedFileTypes == null || _hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = [];
+     var files = (await filePicker.FilePicker.platform.pickFiles(
+            type: filePicker.FileType.any,
+            allowMultiple: false
+         ))?.files;
 
-    var files = (await filePicker.FilePicker.platform.pickFiles(
-            type: allowedFileTypes.isEmpty ? filePicker.FileType.any : filePicker.FileType.custom,
-            allowMultiple: false,
-            allowedExtensions:
-                allowedFileTypes.isEmpty ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
-        ?.files;
-
-    if (allowedFileTypes.isNotEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
+    if (allowedFileTypes != null && allowedFileTypes.isNotEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
 
     if (files == null || files.isEmpty) return null;
 
@@ -459,15 +457,4 @@ List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, 
   var allowedExtensions = fileExtensions(allowedFileTypes);
 
   return files.where((element) => allowedExtensions.contains(element.extension.toString().toLowerCase())).toList();
-}
-
-bool _hasUnsupportedTypes(List<FileType>? allowedExtensions) {
-  if (allowedExtensions == null) return false;
-  if (kIsWeb) return false;
-
-  for (int i = 0; i < allowedExtensions.length; i++) {
-    if (_UNSUPPORTED_FILEPICKERPLUGIN_TYPES.contains(allowedExtensions[i])) return true;
-  }
-
-  return false;
 }
