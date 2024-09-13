@@ -48,7 +48,7 @@ class _AnimatedImageState extends State<AnimatedImage> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
-        suppressGallery: true,
+        suppressGallery: false,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
