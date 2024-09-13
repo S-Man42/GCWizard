@@ -10,7 +10,6 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -380,8 +379,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                     _currentDecompileMode = value;
                   });                }),
             _currentDecompileMode == GCWSwitchPosition.left
-            ? GCWButton(
-              text: i18n(context, 'wherigo_decompile_button'),
+            ? GCWIconButton(
+              icon: Icons.search,
+              size: IconButtonSize.LARGE,
               onPressed: () {
                 _askForOnlineDecompiling();
               },
@@ -1088,6 +1088,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                       WherigoCartridgeLUAData.LUAFile,
                   ),
                   copyColumn: 2,
+                  suppressCopyButtons: false,
                   flexValues: const [3, 2, 2]),
               GCWExpandableTextDivider(
                 expanded: false,

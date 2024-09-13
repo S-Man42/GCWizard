@@ -22,14 +22,14 @@ List<List<String>> _buildOutputListAnswers(BuildContext context,
     if (answers.length > 1) {
       result.add([
         i18n(context, 'wherigo_output_hash'),
+        '',
         hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash,
-        ''
       ]);
     } else {
       result.add([
         i18n(context, 'wherigo_output_answer'),
+        '',
         hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash,
-        ''
       ]);
     }
     if (hash != '0') {
@@ -37,8 +37,8 @@ List<List<String>> _buildOutputListAnswers(BuildContext context,
         if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash) {
           result.add([
             i18n(context, 'wherigo_output_answerdecrypted'),
+            '',
             input.InputChoices[i],
-            ''
           ]);
         }
       }
@@ -47,35 +47,35 @@ List<List<String>> _buildOutputListAnswers(BuildContext context,
     String _variable = answers.length > 1 ? _answerIsVariable(answers[1]) : '';
 
     if (_variable.isNotEmpty) {
-      result.add([i18n(context, 'wherigo_output_answer'), _variable, '']);
+      result.add([i18n(context, 'wherigo_output_answer'), '', _variable]);
     }
     //else {
     if (answers.length > 1) {
       result.add([
         i18n(context, 'wherigo_output_hash'),
+        '',
         hash == '-<ELSE>-' ? i18n(context, 'wherigo_answer_else') : hash,
-        ''
       ]);
     } else {
       if (hash == '-<ELSE>-') {
         result.add([
           i18n(context, 'wherigo_output_answer'),
+          '',
           i18n(context, 'wherigo_answer_else'),
-          ''
         ]);
       } else {
         hash = hash.replaceAll('.', '\\.').replaceAll('|', '\\|');
         if (RegExp(r'' + hash + ' = .*').hasMatch(LUASourceCode)) {
-          result.add([i18n(context, 'wherigo_output_answervariable'), hash, '']);
+          result.add([i18n(context, 'wherigo_output_answervariable'), '', hash]);
 
           RegExp(r'' + hash + ' = .*').allMatches(LUASourceCode).forEach((variableWithValue) {
             var group = variableWithValue.group(0);
             if (group != null) {
-              result.add([i18n(context, 'wherigo_data_answer'), group, '']);
+              result.add([i18n(context, 'wherigo_data_answer'), '', group]);
             }
           });
         } else {
-          result.add([i18n(context, 'wherigo_output_answer'), hash, '']);
+          result.add([i18n(context, 'wherigo_output_answer'), '', hash]);
         }
       }
     }
@@ -95,7 +95,6 @@ List<List<String>> _buildOutputListAnswers(BuildContext context,
     }
     //}
   }
-
   return result;
 }
 
