@@ -85,6 +85,7 @@ class _HiddenDataState extends State<HiddenData> {
         GCWOpenFile(
           title: i18n(context, 'hiddendata_openpublicfile'),
           file: _publicFile,
+          suppressGallery: false,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
               showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);

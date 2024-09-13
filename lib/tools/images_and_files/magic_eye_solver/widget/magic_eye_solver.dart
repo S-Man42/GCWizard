@@ -56,6 +56,7 @@ class _MagicEyeSolverState extends State<MagicEyeSolver> {
     return Column(children: [
       GCWOpenFile(
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        suppressGallery: false,
         file: _decodeImage,
         onLoaded: (_file) {
           if (_file == null) {

@@ -93,7 +93,6 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
-        suppressGalleryButton: true,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
@@ -203,6 +202,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       GCWTextDivider(text: i18n(context, 'animated_image_morse_code_high_signal')),
       GCWOpenFile(
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
+        suppressGallery: false,
         onLoaded: (GCWFile? value) {
           if (value != null) {
             setState(() {
@@ -217,6 +217,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Column(children: [
           GCWOpenFile(
             supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
+            suppressGallery: false,
             onLoaded: (GCWFile? value) {
               if (value != null) {
                 setState(() {
