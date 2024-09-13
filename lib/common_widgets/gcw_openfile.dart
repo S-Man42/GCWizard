@@ -348,7 +348,6 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
           GCWOpenFile(
             supportedFileTypes: supportedFileTypes,
             isDialog: true,
-            suppressGallery: false,
             onLoaded: (GCWFile? _file) {
               onLoaded(_file);
 
