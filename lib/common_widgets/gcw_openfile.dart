@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart' as filePicker;
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:image_picker/image_picker.dart' as imagePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ import 'package:http/http.dart' as http;
 const _UNSUPPORTED_FILEPICKERPLUGIN_TYPES = [FileType.GPX, FileType.GCW];
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
-enum OpenFileType { FILE, URL, IMAGE }
+enum OpenFileType { FILE, URL, GALLERY, CAMERA }
 
 class GCWOpenFile extends StatefulWidget {
   final void Function(GCWFile?) onLoaded;
@@ -37,7 +38,7 @@ class GCWOpenFile extends StatefulWidget {
   final String? title;
   final GCWFile? file;
   final bool suppressHeader;
-  final bool suppressGalleryButton;
+  final bool suppressGallery;
 
   const GCWOpenFile(
       {Key? key,
@@ -47,7 +48,8 @@ class GCWOpenFile extends StatefulWidget {
       this.isDialog = false,
       this.file,
       this.suppressHeader = false,
-      this.suppressGalleryButton = false})
+      this.suppressGallery = true}
+      )
       : super(key: key);
 
   @override
@@ -223,25 +225,35 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   Widget build(BuildContext context) {
     if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
+    var backgroundColour = themeColors().secondary();
     var content = Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        (widget.suppressGalleryButton)
-            ? const SizedBox()
-            : GCWButton(
-                text: i18n(context, 'common_loadfile_openfrom_gallery'),
+        (!widget.suppressGallery)
+            ? GCWIconButton(
+                icon: Icons.photo_library,
+                size: IconButtonSize.LARGE,
+                backgroundColor: backgroundColour,
                 onPressed: () {
+                  setState(() {
+                    _currentMode = OpenFileType.GALLERY;
+                  });
                   _buildOpenFromGallery();
-                }),
-
-        GCWButton(
-          text: i18n(context, 'common_loadfile_openfrom_file'),
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          onPressed: () {
-            _buildOpenFromDevice();
-          },
-        ),
-        GCWButton(
-          text: i18n(context, 'common_loadfile_openfrom_url_address'),
+                })
+            : const SizedBox(),
+        GCWIconButton(
+            icon: Icons.folder,
+            size: IconButtonSize.LARGE,
+            backgroundColor: backgroundColour,
+            onPressed: () {
+              setState(() {
+                _currentMode = OpenFileType.GALLERY;
+              });
+              _buildOpenFromDevice();
+            }),
+        GCWIconButton(
+          icon: Icons.public,
+          size: IconButtonSize.LARGE,
+          backgroundColor: backgroundColour,
           onPressed: () {
             setState(() {
               _currentMode = OpenFileType.URL;
