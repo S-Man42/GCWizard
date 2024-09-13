@@ -1087,7 +1087,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                         : WherigoAnswerData(AnswerAnswer: '', AnswerHash: '', AnswerActions: []),
                       WherigoCartridgeLUAData.LUAFile,
                   ),
-                  copyColumn: 1,
+                  copyColumn: 2,
                   flexValues: const [3, 2, 2]),
               GCWExpandableTextDivider(
                 expanded: false,
