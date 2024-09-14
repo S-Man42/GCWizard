@@ -67,12 +67,11 @@ class _AboutState extends State<About> {
               Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_maintainer'))),
               const Expanded(flex: 3, child: GCWText(text: _ABOUT_MAINTAINER))
             ])),
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(children: [
-            TextSpan(text: i18n(context, 'about_team') + '\n', style: gcwBoldTextStyle()),
-            TextSpan(
-                text: [
+        Container(
+            padding: const EdgeInsets.only(top: 15, bottom: 10),
+            child: Row(children: <Widget>[
+              Expanded(flex: 2, child: GCWText(text: i18n(context, 'about_team'))),
+              Expanded(flex: 3, child: GCWText(text: [
                   'Andy \'Puma66\' (Special Support)',
                   'Andreas \'TeamBirdy2404\'',
                   'Mike B. (Code)',
@@ -81,10 +80,8 @@ class _AboutState extends State<About> {
                   'Henrike \'69and71\' (Translations)',
                   'Marcia \'Linsty\' (Test)',
                   'Olli \'Rinser\' (Code)',
-                ].join('\n') +
-                    '\n')
-          ], style: gcwTextStyle()),
-        ),
+                  ].join('\n')))
+            ])),
         const GCWDivider(),
         _buildUrl('contact_email'),
         _buildUrl('manual'),
