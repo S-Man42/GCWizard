@@ -21,7 +21,7 @@ const String _apiSpecification = '''
           "in": "query",
           "name": "content",
           "required": false,
-          "description": "gzip compressed json data",
+          "description": "Base64 encoded and gzip compressed JSON export data. (Base64 includes / + = characters, which are replaced by _ - ~ characters due to URL-safe encoding.)",
           "schema": {
             "type": "string"
           }
@@ -42,26 +42,27 @@ class MapView extends GCWWebStatefulWidget {
 class _MapViewState extends State<MapView> {
   var points = <GCWMapPoint>[];
   var polyGeodetics = <GCWMapPolyline>[];
+  var isEditable = true;
 
   @override
   Widget build(BuildContext context) {
-    var mapView =  GCWMapView(
-      points: points,
-      polylines: polyGeodetics,
-      isEditable: true,
-    );
 
     if (widget.hasWebParameter()) {
       if (widget.getWebParameter(uriContent) != null && widget.getWebParameter(uriContent)!.isNotEmpty) {
-        String? json;
+        String json;
         try {
-          json = decompressString(widget.getWebParameter(uriContent)!);
+          json = decompressString(widget.getWebParameter(uriContent)!
+              .replaceAll('_', '/')
+              .replaceAll('-', '+')
+              .replaceAll('~', '=')
+          );
         } catch (e) {
           json = '';
         }
 
         if (json.isNotEmpty) {
           json = MapViewPersistenceAdapter.replaceJsonMarker(json, true);
+          json = MapViewPersistenceAdapter.restoreUUIDs(json);
           var viewData = restoreJsonMapViewData(json);
 
           points.clear();
@@ -69,11 +70,17 @@ class _MapViewState extends State<MapView> {
           points.addAll(viewData.points.map((point) => MapViewPersistenceAdapter.mapPointDAOToGCWMapPoint(point)));
           polyGeodetics.addAll(viewData.polylines.map((polyline) =>
               MapViewPersistenceAdapter.mapPolylineDAOToGCWMapPolyline(polyline, points)));
+
+          isEditable = false;
         }
       }
       widget.webParameter = null;
     }
 
-    return mapView;
+    return GCWMapView(
+      points: points,
+      polylines: polyGeodetics,
+      isEditable: isEditable,
+    );
   }
 }

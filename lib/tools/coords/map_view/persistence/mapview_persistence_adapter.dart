@@ -19,10 +19,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
 class MapViewPersistenceAdapter {
-  final GCWMapView mapWidget;
+  final GCWMapView _mapWidget;
   late MapViewDAO _mapViewDAO;
 
-  MapViewPersistenceAdapter(this.mapWidget) {
+  MapViewPersistenceAdapter(this._mapWidget) {
     _initializeMapView();
   }
 
@@ -88,27 +88,46 @@ class MapViewPersistenceAdapter {
     _restoreMapViewDAO();
   }
 
+  static MapViewDAO mapViewDAOfromMapWidget(GCWMapView mapWidget) {
+    var mapViewDAO = MapViewDAO([], []);
+    _addMapWidgetDataToMapViewDAO(mapViewDAO, mapWidget);
+
+    return mapViewDAO;
+  }
+
+  static void _addMapWidgetDataToMapViewDAO(MapViewDAO mapViewDAO, GCWMapView mapWidget) {
+    mapViewDAO.points.addAll(mapWidget.points
+        .where((point) => !mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
+        .map((point) => gcwMapPointToMapPointDAO(point))
+        .toList());
+
+    mapViewDAO.polylines.addAll(mapWidget.polylines
+        .where((polyline) => !mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
+        .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
+        .toList());
+  }
+
   void _restoreMapViewDAO() {
-    _mapViewDAO.points.addAll(mapWidget.points
+    _mapViewDAO.points.addAll(_mapWidget.points
         .where((point) => !_mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
         .map((point) => gcwMapPointToMapPointDAO(point))
         .toList());
 
-    mapWidget.points.addAll(_mapViewDAO.points
-        .where((pointDAO) => !mapWidget.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
+    _mapWidget.points.addAll(_mapViewDAO.points
+        .where((pointDAO) => !_mapWidget.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
         .map((pointDAO) => mapPointDAOToGCWMapPoint(pointDAO))
         .toList());
 
-    _mapViewDAO.polylines.addAll(mapWidget.polylines
+    _mapViewDAO.polylines.addAll(_mapWidget.polylines
         .where((polyline) =>
             !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
         .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
         .toList());
 
-    mapWidget.polylines.addAll(_mapViewDAO.polylines
+    _mapWidget.polylines.addAll(_mapViewDAO.polylines
         .where((polylineDAO) =>
-            !mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
-        .map((polylineDAO) => mapPolylineDAOToGCWMapPolyline(polylineDAO, mapWidget.points))
+            !_mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
+        .map((polylineDAO) => mapPolylineDAOToGCWMapPolyline(polylineDAO, _mapWidget.points))
         .toList());
 
     updateMapViews();
@@ -125,7 +144,7 @@ class MapViewPersistenceAdapter {
 
     insertMapPointDAO(gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
 
-    mapWidget.points.add(mapPoint);
+    _mapWidget.points.add(mapPoint);
     return mapPoint;
   }
 
@@ -155,7 +174,7 @@ class MapViewPersistenceAdapter {
 
     updateMapPointDAO(mapPointDAO, _mapViewDAO);
 
-    mapWidget.polylines
+    _mapWidget.polylines
         .where((polyline) => polyline.points.contains(mapPoint))
         .forEach((polyline) => updateMapPolyline(polyline));
   }
@@ -173,7 +192,7 @@ class MapViewPersistenceAdapter {
 
   void removeMapPointFromMapPolyline(GCWMapPoint mapPoint) {
     var removablePolylines = <GCWMapPolyline>[];
-    for (var polyline in mapWidget.polylines) {
+    for (var polyline in _mapWidget.polylines) {
       var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid!);
 
       while (polyline.points.contains(mapPoint)) {
@@ -197,17 +216,17 @@ class MapViewPersistenceAdapter {
   void removeMapPoint(GCWMapPoint mapPoint) {
     removeMapPointFromMapPolyline(mapPoint);
 
-    mapWidget.points.remove(mapPoint);
+    _mapWidget.points.remove(mapPoint);
     deleteMapPointDAO(mapPoint.uuid!, _mapViewDAO);
   }
 
   void removeMapPolyline(GCWMapPolyline polyline, {bool removePoints = false}) {
-    mapWidget.polylines.remove(polyline);
+    _mapWidget.polylines.remove(polyline);
     deleteMapPolylineDAO(polyline.uuid!, _mapViewDAO);
 
     if (removePoints) {
       for (var point in polyline.points) {
-        for (GCWMapPolyline anotherPolyline in mapWidget.polylines) {
+        for (GCWMapPolyline anotherPolyline in _mapWidget.polylines) {
           if (anotherPolyline.uuid == polyline.uuid) continue;
 
           if (anotherPolyline.points.contains(point)) continue;
@@ -219,14 +238,14 @@ class MapViewPersistenceAdapter {
   }
 
   void clearMapView() {
-    mapWidget.points.clear();
-    mapWidget.polylines.clear();
+    _mapWidget.points.clear();
+    _mapWidget.polylines.clear();
     clearMapViewDAO(_mapViewDAO);
   }
 
   GCWMapPolyline createMapPolyline() {
     var polyline = GCWMapPolyline(points: []);
-    mapWidget.polylines.add(polyline);
+    _mapWidget.polylines.add(polyline);
     insertMapPolylineDAO(gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
 
     return polyline;
@@ -275,7 +294,7 @@ class MapViewPersistenceAdapter {
   }
 
   void cleanPolylines() {
-    for (var polyline in mapWidget.polylines) {
+    for (var polyline in _mapWidget.polylines) {
       cleanPolyLine(polyline);
     }
   }
@@ -308,7 +327,7 @@ class MapViewPersistenceAdapter {
   }
 
   List<GCWMapPolyline> polylinesWithPoint(GCWMapPoint point) {
-    return mapWidget.polylines.where((polyline) => polylineContains(polyline, point)).toList();
+    return _mapWidget.polylines.where((polyline) => polylineContains(polyline, point)).toList();
   }
 
   void mergePoint(List<GCWMapPoint> samePoints) {
@@ -337,7 +356,7 @@ class MapViewPersistenceAdapter {
   }
 
   void mergePoints() {
-    var checkPoints = List<GCWMapPoint>.from(mapWidget.points);
+    var checkPoints = List<GCWMapPoint>.from(_mapWidget.points);
     while (checkPoints.isNotEmpty) {
       var mergeablePoints = [checkPoints.last];
       checkPoints.removeLast();
@@ -353,7 +372,11 @@ class MapViewPersistenceAdapter {
   }
 
   String getJsonMapViewData() {
-    var json = jsonMapViewData(_mapViewDAO);
+    return readJsonMapViewData(_mapViewDAO);
+  }
+
+  static String readJsonMapViewData(MapViewDAO mapViewDAO) {
+    var json = jsonMapViewData(mapViewDAO);
     var regExp = RegExp("(\"uuid\":\")([^\"]+)(\")");
     var id = 1;
     regExp.allMatches(json).forEach((uuid) {
@@ -369,7 +392,7 @@ class MapViewPersistenceAdapter {
   bool setJsonMapViewData(String json) {
     try {
       json = replaceJsonMarker(json, true);
-      json = _restoreUUIDs(json);
+      json = restoreUUIDs(json);
       var viewData = restoreJsonMapViewData(json);
 
       addViewData(viewData);
@@ -401,19 +424,19 @@ class MapViewPersistenceAdapter {
     return substitution(json, replaceMap);
   }
 
-  String _removeEmptyElements(String json) {
+  static String _removeEmptyElements(String json) {
     var regExpList = {
       "(\")([^\"]+)(\":null,)": "",
       "(,\")([^\"]+)(\":null})": "}",
       "(\"name\":\"\",)": "",
       "(\"isVisible\":true,)": "",
       "(\",isVisible\":true})": "}",
-      "(\"isEditable\":true,)": "",
-      "(\",isEditable\":true})": "}",
+      "(\"isEditable\":false,)": "",
+      "(\",isEditable\":false})": "}",
       "(\"type\":geodetic,)": "",
       "(\",type\":geodetic})": "}",
       "(\"circleColorSameAsColor\":true,)": "",
-    };
+   };
 
     regExpList.forEach((key, value) {
       json = json.replaceAll(RegExp(key), value);
@@ -421,7 +444,7 @@ class MapViewPersistenceAdapter {
     return json;
   }
 
-  String _restoreUUIDs(String json) {
+  static String restoreUUIDs(String json) {
     var regExp = RegExp("(\"uuid\":\")([^\"]+)(\")");
     var regExpPoly = RegExp("(\"pointUUIDs\":\\[)([^\\]]+)(\\])");
 
