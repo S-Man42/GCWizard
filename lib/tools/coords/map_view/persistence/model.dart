@@ -98,7 +98,7 @@ class MapPointDAO {
         radius = toDoubleOrNull(json['radius']),
         circleColorSameAsColor = toBoolOrNull(json['circleColorSameAsColor']) ?? true,
         circleColor = toStringOrNull(json['circleColor']) ?? colorToHexString(COLOR_MAP_POINT),
-        isEditable = toBoolOrNull(json['isEditable']) ?? false;
+        isEditable = toBoolOrNull(json['isEditable']) ?? true;
 
   @override
   String toString() {

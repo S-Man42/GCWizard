@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +19,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
+import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -44,7 +45,9 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/leng
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/deeplink_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -61,6 +64,8 @@ const _OSM_TEXT = 'coords_mapview_osm';
 const _OSM_URL = 'coords_mapview_osm_url';
 const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
+const uriContent = 'content';
+const _mapViewId = 'coords_openmap';
 
 final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
@@ -798,6 +803,12 @@ class _GCWMapViewState extends State<GCWMapView> {
                 setState(() {
                   _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
                 });
+              } else if(_mapViewUriContent(text).isNotEmpty) {
+                if (_importJsonContent(_mapViewUriContent(text))) {
+                  setState(() {
+                    _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+                  });
+                }
               } else {
                 var pastedCoordinate = _parseCoords(text);
                 if (pastedCoordinate == null || pastedCoordinate.isEmpty || pastedCoordinate.first.toLatLng() == null) {
@@ -829,6 +840,19 @@ class _GCWMapViewState extends State<GCWMapView> {
           if (_persistanceAdapter != null) {
             showCoordinatesExportDialog(context, widget.points, widget.polylines,
                 json: _persistanceAdapter!.getJsonMapViewData());
+          }
+        },
+      ),
+      GCWPopupMenuItem(
+        child: iconedGCWPopupMenuItem(context, Icons.link, i18n(context, kIsWeb ? 'gcwtool_weblink' : 'gcwtool_copyweblink')),
+        action: (index) {
+          var content = _persistanceAdapter!.getJsonMapViewData();
+          var uri = deepLinkUriWithParameter(GCWTool(tool: Container(), id: _mapViewId),
+              {uriContent: compressString(content)});
+          if (kIsWeb) {
+            launchUrl(uri);
+          } else {
+            insertIntoGCWClipboard(context, uri.toString());
           }
         },
       ),
@@ -920,6 +944,24 @@ class _GCWMapViewState extends State<GCWMapView> {
 
     return text;
   }
+
+  String _mapViewUriContent(String text) {
+    var uri = Uri.parse(text.replaceFirst('/#/', '/')); // remove /#/ -> Uri.parse not ok on App Version
+    if (uri.hasEmptyPath) return '';
+    if (!uri.toString().contains(_mapViewId)) return '';
+    var parameter = uri.queryParameters;
+    if (!parameter.keys.contains(uriContent)) return '';
+    try {
+      return decompressString(parameter[uriContent]!);
+    } catch (e) {
+      return '';
+    }
+  }
+
+  bool _importJsonContent(String json) {
+    return _persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(json);
+  }
+
 
   Widget _buildPopup(Marker marker) {
     ThemeColors colors = themeColors();

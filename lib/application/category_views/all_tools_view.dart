@@ -663,7 +663,7 @@ void _initStaticToolList() {
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
-      className(const MapView()),
+      className(MapView()),
       className(const MayaCalendarSelection()),
       className(const MayaNumbersSelection()),
       className(const MexicanArmyCipherWheel()),
