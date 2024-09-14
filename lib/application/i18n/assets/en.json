@@ -2174,7 +2174,6 @@
   "coords_openmap_showpoints": "Show all points",
   "coords_openmap_hidepoints": "Hide all points",
   "coords_openmap_weblinkview": "Weblink for current view",
-  "coords_openmap_copyweblinkview": "Copy weblink for current view",
   "coords_averaging_title": "Coordinate Measurement",
   "coords_averaging_start": "Start Measurement",
   "coords_averaging_stop": "Stop Measurement",

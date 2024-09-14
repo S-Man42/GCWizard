@@ -843,7 +843,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         },
       ),
       GCWPopupMenuItem(
-        child: iconedGCWPopupMenuItem(context, Icons.link, i18n(context, kIsWeb ? 'coords_openmap_weblinkview' : 'coords_openmap_copyweblinkview')),
+        child: iconedGCWPopupMenuItem(context, Icons.link, i18n(context, 'coords_openmap_weblinkview')),
         action: (index) {
           var content = _jsonDataFromMapView();
           var uri = deepLinkUriWithParameter(GCWTool(tool: Container(), id: _mapViewId),
