@@ -21,13 +21,13 @@ const MAX_QR_TEXT_LENGTH_FOR_EXPORT = 1000;
 class GCWTextExport extends StatefulWidget {
   final String text;
   final void Function(TextExportMode)? onModeChanged;
-  final PossibleExportMode possibleExportMode;
-  final TextExportMode initMode;
+  late PossibleExportMode possibleExportMode;
+  late TextExportMode initMode;
   final bool addSaveButton;
   final FileType? saveFileType;
   final String? saveFilenamePrefix;
 
-  const GCWTextExport(
+  GCWTextExport(
       {Key? key,
       required this.text,
       this.onModeChanged,
@@ -36,7 +36,12 @@ class GCWTextExport extends StatefulWidget {
       this.addSaveButton = false,
       this.saveFileType,
       this.saveFilenamePrefix})
-      : super(key: key);
+      : super(key: key) {
+    if (text.length > MAX_QR_TEXT_LENGTH_FOR_EXPORT) {
+      possibleExportMode = PossibleExportMode.TEXTONLY;
+      initMode = TextExportMode.TEXT;
+    }
+  }
 
   @override
   _GCWTextExportState createState() => _GCWTextExportState();

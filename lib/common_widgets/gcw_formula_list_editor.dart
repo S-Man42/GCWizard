@@ -271,15 +271,16 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
   }
 
   void _exportGroup(FormulaBase entry) {
-    var mode = TextExportMode.QR;
     String text = jsonEncode(entry.toMap()).toString();
     text = normalizeCharacters(text);
+    var mode = text.length > MAX_QR_TEXT_LENGTH_FOR_EXPORT ? TextExportMode.TEXT : TextExportMode.QR;
 
     var contentWidget = GCWTextExport(
       text: text,
-      onModeChanged: (value) {
+      initMode: mode,
+      onModeChanged: (TextExportMode value) {
         mode = value;
-      },
+      }
     );
     showGCWDialog(
         context,
