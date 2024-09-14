@@ -20,9 +20,8 @@ void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points,
                   GCWTextExport(
                     text: json,
                     initMode: TextExportMode.TEXT,
-                    addSaveButton: true,
                     saveFilenamePrefix: 'coords',
-                    saveFileType: FileType.JSON,
+                    saveFileTypeText: FileType.JSON,
                   ),
                   [GCWDialogButton(text: i18n(context, 'common_ok'))],
                   cancelButton: false);

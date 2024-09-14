@@ -23,8 +23,7 @@ class GCWTextExport extends StatefulWidget {
   final void Function(TextExportMode)? onModeChanged;
   late PossibleExportMode possibleExportMode;
   late TextExportMode initMode;
-  final bool addSaveButton;
-  final FileType? saveFileType;
+  final FileType? saveFileTypeText;
   final String? saveFilenamePrefix;
 
   GCWTextExport(
@@ -33,8 +32,7 @@ class GCWTextExport extends StatefulWidget {
       this.onModeChanged,
       this.possibleExportMode = PossibleExportMode.BOTH,
       this.initMode = TextExportMode.QR,
-      this.addSaveButton = false,
-      this.saveFileType,
+      this.saveFileTypeText,
       this.saveFilenamePrefix})
       : super(key: key) {
     if (text.length > MAX_QR_TEXT_LENGTH_FOR_EXPORT) {
@@ -99,7 +97,7 @@ class _GCWTextExportState extends State<GCWTextExport> {
 
     return SizedBox(
         width: 300,
-        height: 360,
+        height: 420,
         child: Column(
           children: <Widget>[
             _currentPossibleMode == PossibleExportMode.BOTH
@@ -119,7 +117,22 @@ class _GCWTextExportState extends State<GCWTextExport> {
                   )
                 : Container(),
             _currentMode == TextExportMode.QR
-                ? (_qrImageData == null ? Container() : Image.memory(_qrImageData!))
+                ? (
+                    _qrImageData == null ? Container() : Column(
+                      children: [
+                        Image.memory(_qrImageData!),
+                        GCWButton(
+                          text: i18n(context, 'common_save'),
+                          onPressed: () {
+                            var fileName = buildFileNameWithDate((widget.saveFilenamePrefix ?? 'export') + '_', FileType.PNG);
+                            saveByteDataToFile(context, _qrImageData!, fileName).then((value) {
+                              if (value) showExportedFileDialog(context, contentWidget: imageContent(context, _qrImageData!));
+                            });
+                          },
+                        )
+                      ]
+                    )
+                  )
                 : Column(
                     children: <Widget>[
                       GCWTextField(
@@ -142,41 +155,23 @@ class _GCWTextExportState extends State<GCWTextExport> {
                               if (_currentExportText != null) insertIntoGCWClipboard(context, _currentExportText!);
                             },
                           ),
-                          widget.addSaveButton ? Container(width: 50) : Container(),
-                          widget.addSaveButton ? GCWButton(
+                          Container(width: 50),
+                          GCWButton(
                             text: i18n(context, 'common_save'),
                             onPressed: () {
                               if (_currentExportText != null) {
                                 try {
-                                  var fileName = buildFileNameWithDate((widget.saveFilenamePrefix ?? 'export') + '_', widget.saveFileType ?? FileType.TXT);
+                                  var fileName = buildFileNameWithDate((widget.saveFilenamePrefix ?? 'export') + '_', widget.saveFileTypeText ?? FileType.TXT);
                                   saveStringToFile(context, _currentExportText!, fileName).whenComplete(() => Navigator.pop(context));
                                 } on Exception {}
                               }
                             },
-                          ) : Container(),
+                          ) ,
                         ]
                       )
                     ],
                   ),
           ],
         ));
-  }
-}
-
-Future<void> exportFile(String text, TextExportMode mode, BuildContext context) async {
-  if (mode == TextExportMode.TEXT) {
-    saveStringToFile(context, text, buildFileNameWithDate('txt_', FileType.TXT)).then((value) {
-      if (value == false) return;
-
-      showExportedFileDialog(context);
-    });
-  } else {
-    var qrCode = generateBarCode(text);
-    if (qrCode == null) return;
-    input2Image(qrCode).then((data) async {
-      saveByteDataToFile(context, data, buildFileNameWithDate('img_', FileType.PNG)).then((value) {
-        if (value) showExportedFileDialog(context, contentWidget: imageContent(context, data));
-      });
-    });
   }
 }
