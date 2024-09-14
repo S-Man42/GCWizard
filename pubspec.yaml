@@ -1,10 +1,10 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.1.1+270
+version: 3.2.0+285
 publish_to: none
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   archive: ^3.5.1
@@ -21,8 +21,10 @@ dependencies:
   exif: ^3.1.4
   file_picker: ^8.0.3
   file_picker_writable: ^2.0.3
+  fixnum: ^1.1.0
   flutter:
     sdk: flutter
+  flutter_dtmf: ^3.0.2
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
@@ -33,6 +35,7 @@ dependencies:
   http: ^1.2.1
   http_parser: ^4.0.2
   image: 4.1.3
+  image_picker: ^1.1.1
   intl: ^0.19.0
   latlong2: ^0.9.0
   location: ^6.0.2
@@ -126,6 +129,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/baudot_1888/
     - lib/tools/symbol_tables/_common/assets/baudot_54123/
     - lib/tools/symbol_tables/_common/assets/bibibinary/
+    - lib/tools/symbol_tables/_common/assets/billiard_balls/
     - lib/tools/symbol_tables/_common/assets/birds_on_a_wire/
     - lib/tools/symbol_tables/_common/assets/blox/
     - lib/tools/symbol_tables/_common/assets/blue_monday/
@@ -140,6 +144,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/chappe_1794/
     - lib/tools/symbol_tables/_common/assets/chappe_1809/
     - lib/tools/symbol_tables/_common/assets/chappe_v1/
+    - lib/tools/symbol_tables/_common/assets/chappe_v2/
     - lib/tools/symbol_tables/_common/assets/cherokee/
     - lib/tools/symbol_tables/_common/assets/chinese_numerals/
     - lib/tools/symbol_tables/_common/assets/christmas/
@@ -196,6 +201,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/flags_rn_popham/
     - lib/tools/symbol_tables/_common/assets/fonic/
     - lib/tools/symbol_tables/_common/assets/four_triangles/
+    - lib/tools/symbol_tables/_common/assets/foybreguet/
     - lib/tools/symbol_tables/_common/assets/freemason/
     - lib/tools/symbol_tables/_common/assets/freemason_v2/
     - lib/tools/symbol_tables/_common/assets/futhark_elder/
@@ -233,6 +239,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/hylian_twilight_princess_wii/
     - lib/tools/symbol_tables/_common/assets/hylian_wind_waker/
     - lib/tools/symbol_tables/_common/assets/hymmnos/
+    - lib/tools/symbol_tables/_common/assets/ice_lolly_ding/
     - lib/tools/symbol_tables/_common/assets/icecodes/
     - lib/tools/symbol_tables/_common/assets/iching/
     - lib/tools/symbol_tables/_common/assets/illuminati_v1/
@@ -351,6 +358,8 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/sith/
     - lib/tools/symbol_tables/_common/assets/skullz/
     - lib/tools/symbol_tables/_common/assets/slash_and_pipe/
+    - lib/tools/symbol_tables/_common/assets/slash_and_pipe_underland/
+    - lib/tools/symbol_tables/_common/assets/slash_and_pipe_codeofclaw/
     - lib/tools/symbol_tables/_common/assets/solmisation/
     - lib/tools/symbol_tables/_common/assets/space_invaders/
     - lib/tools/symbol_tables/_common/assets/spintype/

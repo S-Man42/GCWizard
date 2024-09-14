@@ -19,7 +19,6 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
     if (onGetInputLines[i].endsWith(':OnGetInput(input)')) {
       resultInputFunction = onGetInputLines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '').trim();
     }
-
     if (onGetInputLines[i].trim().endsWith('= tonumber(input)')) {
       _answerVariable = onGetInputLines[i].trim().replaceAll(' = tonumber(input)', '');
     } else if (onGetInputLines[i].trim().endsWith(' = input')) {
@@ -45,6 +44,7 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
       // found Answer
       _answerActions = [];
       _answerAnswerList = _getAnswers(i, onGetInputLines[i], onGetInputLines[i - 1], _cartridgeVariables);
+
       for (var answer in _answerAnswerList) {
         if (answer != 'NIL') {
           resultAnswerData.add(WherigoAnswerData(
@@ -58,21 +58,23 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
       do {
         i++;
         onGetInputLines[i] = onGetInputLines[i].trim();
-        if (!(onGetInputLines[i].trim() == '}' || onGetInputLines[i].trim() == '},')) {
-          if (onGetInputLines[i].trimLeft().startsWith(_obfuscatorFunction)) {
+        if (!(onGetInputLines[i] == '}' || onGetInputLines[i] == '},')) {
+          int obfuscation = _getObfuscatorFunction(onGetInputLines[i], _obfuscatorFunction);
+          //if (onGetInputLines[i].startsWith()) {
+          if (obfuscation > 0) {
             _answerActions.add(WherigoActionMessageElementData(
                 ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                 ActionMessageContent: deobfuscateUrwigoText(
-                    onGetInputLines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''),
-                    _obfuscatorTable)));
+                    onGetInputLines[i].trim().replaceAll(_obfuscatorFunction[obfuscation] + '("', '').replaceAll('")', ''),
+                    _obfuscatorTable[obfuscation])));
           } else {
             _answerActions.add(WherigoActionMessageElementData(
                 ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.BUTTON,
                 ActionMessageContent:
-                    onGetInputLines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
+                    onGetInputLines[i]));
           }
         }
-      } while (!onGetInputLines[i].trim().startsWith('}'));
+      } while (!onGetInputLines[i].startsWith('}'));
     } // end buttons
 
     else {
@@ -85,6 +87,17 @@ WherigoAnswer _analyzeAndExtractOnGetInputSectionData(List<String> onGetInputLin
     InputFunction: resultInputFunction,
     InputAnswers: resultAnswerData,
   );
+}
+
+int _getObfuscatorFunction(String line, List<String> obfuscatorFunction) {
+  int result = 0;
+  for (int i = 0; i < obfuscatorFunction.length; i++) {
+    if (line.contains(obfuscatorFunction[i])) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 }
 
 List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVariableData> variables) {
@@ -131,8 +144,8 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
         //.replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .replaceAll('"', '')
-        .replaceAll('and', ' && ')
-        .replaceAll('or', ' || ');
+        .replaceAll('and', ' && ');
+        //.replaceAll('or', ' || ');
     if (answers.length > _answerVariable.length) {
       answers = answers.replaceAll(_answerVariable, '');
     }
@@ -173,6 +186,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
           '\x01' +
           breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
     });
+
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals')) {
@@ -207,6 +221,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, List<WherigoVari
     if (line.isEmpty) {
       return ['NIL'];
     }
+
     return [line];
   }
   return [];

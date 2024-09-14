@@ -93,6 +93,7 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
+        suppressGallery: false,
         onLoaded: (GCWFile? value) {
           if (value == null) {
             showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
@@ -199,44 +200,36 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   Widget _encodeWidgets() {
     return Column(children: [
-      Row(children: [
-        Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_high_signal'))),
-        Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_low_signal'))),
-      ]),
-      Row(children: [
-        Expanded(
-          child: Column(children: [
-            GCWOpenFile(
-              supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
-              onLoaded: (GCWFile? value) {
-                if (value != null) {
-                  setState(() {
-                    _highImage = value.bytes;
-                  });
-                }
-              },
-            ),
-          ]),
-        ),
-        Expanded(
-          child: Column(children: [
-            GCWOpenFile(
-              supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
-              onLoaded: (GCWFile? value) {
-                if (value != null) {
-                  setState(() {
-                    _lowImage = value.bytes;
-                  });
-                }
-              },
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Expanded(child: _highImage != null ? Image.memory(_highImage!) : Container()),
-        Expanded(child: _lowImage != null ? Image.memory(_lowImage!) : Container()),
-      ]),
+      GCWTextDivider(text: i18n(context, 'animated_image_morse_code_high_signal')),
+      GCWOpenFile(
+        supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
+        suppressGallery: false,
+        onLoaded: (GCWFile? value) {
+          if (value != null) {
+            setState(() {
+              _highImage = value.bytes;
+            });
+          }
+        },
+      ),
+      Container(child: _highImage != null ? Image.memory(_highImage!) : const SizedBox(height: 20)),
+
+      GCWTextDivider(text: i18n(context, 'animated_image_morse_code_low_signal')),
+        Column(children: [
+          GCWOpenFile(
+            supportedFileTypes: ANIMATED_IMAGE_ALLOWED_FILETYPES,
+            suppressGallery: false,
+            onLoaded: (GCWFile? value) {
+              if (value != null) {
+                setState(() {
+                  _lowImage = value.bytes;
+                });
+              }
+            },
+          ),
+          Container(child: _lowImage != null ? Image.memory(_lowImage!) : const SizedBox(height: 50, width: 200)),
+         ]),
+
       Row(children: <Widget>[
         Expanded(flex: 1, child: GCWText(text: i18n(context, 'animated_image_morse_code_dot_duration') + ':')),
         Expanded(
@@ -406,15 +399,18 @@ class _AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < _outData!.images.length; i++) {
         _outData!.images[i] = _outData!.images[linkList[i]];
       }
-      showSnackBar(i18n(context, 'animated_image_select_on_image'), context);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          showSnackBar(i18n(context, 'animated_image_select_on_image'), context);
+        });
+      });
     } else {
-      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-      return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+        });
+      });
     }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
   }
 
   void _saveOutputEncode(Uint8List? output) {

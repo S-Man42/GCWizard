@@ -8,9 +8,10 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 import 'dialogs/gcw_delete_alertdialog.dart';
@@ -271,15 +272,17 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
   }
 
   void _exportGroup(FormulaBase entry) {
-    var mode = TextExportMode.QR;
     String text = jsonEncode(entry.toMap()).toString();
     text = normalizeCharacters(text);
+    var mode = text.length > MAX_QR_TEXT_LENGTH_FOR_EXPORT ? TextExportMode.TEXT : TextExportMode.QR;
 
     var contentWidget = GCWTextExport(
       text: text,
-      onModeChanged: (value) {
+      initMode: mode,
+      saveFileTypeText: FileType.JSON,
+      onModeChanged: (TextExportMode value) {
         mode = value;
-      },
+      }
     );
     showGCWDialog(
         context,
@@ -287,12 +290,6 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
             widget.formulaGroups ? 'formulasolver_groups_exportgroup' : 'formulasolver_formulas_exportformula'),
         contentWidget,
         [
-          GCWDialogButton(
-            text: i18n(context, 'common_exportfile_saveoutput'),
-            onPressed: () {
-              exportFile(text, mode, context);
-            },
-          ),
           GCWDialogButton(
             text: i18n(context, 'common_ok'),
           )
