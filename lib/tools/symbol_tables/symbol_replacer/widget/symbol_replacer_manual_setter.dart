@@ -239,6 +239,7 @@ class _SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter>
         value: symbolData,
         child: Row(children: [
           Container(
+            constraints: const BoxConstraints(maxHeight : 60),
             margin: const EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
             child: (iconBytes != null)
                 ? GCWSymbolContainer(symbol: Image.memory(iconBytes))
