@@ -90,6 +90,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
 
     return Column(children: <Widget>[
       GCWOpenFile(
+        suppressGallery: false,
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
           if (_file == null) {
