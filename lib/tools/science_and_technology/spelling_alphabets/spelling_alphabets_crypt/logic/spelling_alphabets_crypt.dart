@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_commo
 
 String encodeSpellingAlphabets(String plain, SPELLING language) {
   List<String> result = [];
-  Map<String, String> alphabet = SPELLING_ALPHABETS[language]!;
+  entry alphabet = SPELLING_ALPHABETS[language]!;
 
   if (plain.isEmpty) return '';
 
@@ -22,8 +22,8 @@ String decodeSpellingAlphabets(String chiffre, SPELLING language) {
 
   if (chiffre.isEmpty) return '';
 
-  SPELLING_ALPHABETS[language]!.forEach((key, value) {
-    alphabet[value.toUpperCase()] = key;
+  SPELLING_ALPHABETS[language]!.forEach((entry) {
+    alphabet[entry.value.toUpperCase()] = entry.key;
   });
 
   return substitution(chiffre.toUpperCase(), alphabet, caseSensitive: false).replaceAll(' ', '');
