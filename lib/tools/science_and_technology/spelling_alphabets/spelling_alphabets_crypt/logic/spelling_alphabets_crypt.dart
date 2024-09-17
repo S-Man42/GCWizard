@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_commo
 String encodeSpellingAlphabets(String plain, SPELLING language) {
   List<String> result = [];
   var _alphabet = SPELLING_ALPHABETS[language]!;
-var alphabet =  Map.fromEntries(_alphabet);
+  var alphabet =  Map.fromEntries(_alphabet);
 
   if (plain.isEmpty) return '';
 
