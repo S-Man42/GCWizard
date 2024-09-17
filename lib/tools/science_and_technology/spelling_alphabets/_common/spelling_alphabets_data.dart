@@ -382,7 +382,7 @@ const List<MapEntry<String, String>> _spellingAPCO1967 = [
 ];
 const List<MapEntry<String, String>> _spellingNATO = [
   MapEntry<String, String>("A", "Alpha"),
-//  MapEntry<String, String>("A", "Alfa"),
+  MapEntry<String, String>("A", "Alfa"),
   MapEntry<String, String>("B", "Bravo"),
   MapEntry<String, String>("C", "Charlie"),
   MapEntry<String, String>("D", "Delta"),
@@ -989,7 +989,7 @@ const List<MapEntry<String, String>> _spellingCZE = [
   MapEntry<String, String>("W", "dvojité V"),
   MapEntry<String, String>("X", "Xaver"),
   MapEntry<String, String>("Y", "Ypsilon"),
-  MapEntry<String, String>("Z", "Zuzana"
+  MapEntry<String, String>("Z", "Zuzana"),
 ];
 const List<MapEntry<String, String>> _spellingSLO = [
   MapEntry<String, String>("A", "Ankaran"),
@@ -1018,7 +1018,7 @@ const List<MapEntry<String, String>> _spellingSLO = [
   MapEntry<String, String>("W", "Dvojni v"),
   MapEntry<String, String>("X", "Iks"),
   MapEntry<String, String>("Y", "Ipsilon"),
-  MapEntry<String, String>("Z", "Zalog"
+  MapEntry<String, String>("Z", "Zalog"),
 ];
 const List<MapEntry<String, String>> _spellingSRB = [
   MapEntry<String, String>("A", "Avala"),
