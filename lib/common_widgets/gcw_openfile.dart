@@ -225,8 +225,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
     var content = Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        (!widget.suppressGallery)
-            ? GCWIconButton(
+        (widget.suppressGallery || kIsWeb)
+            ? const SizedBox()
+            : GCWIconButton(
                 icon: Icons.photo_library,
                 iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
                 size: IconButtonSize.LARGE,
@@ -235,8 +236,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                     _currentMode = OpenFileType.GALLERY;
                   });
                   _buildOpenFromGallery();
-                })
-            : const SizedBox(),
+                }),
         Container(width: widget.suppressGallery ? null : DOUBLE_DEFAULT_MARGIN),
         GCWIconButton(
             icon: Icons.folder,
