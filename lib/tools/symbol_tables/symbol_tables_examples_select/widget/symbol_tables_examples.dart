@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
@@ -24,6 +25,7 @@ class SymbolTableExamples extends StatefulWidget {
 class _SymbolTableExamplesState extends State<SymbolTableExamples> {
   late TextEditingController _controller;
   String _currentInput = 'ABC123';
+  Widget? _createdSymbols;
 
   var symbolKeys = <String>[];
 
@@ -40,7 +42,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
       return;
     }
 
-    symbolKeys = List.from(widget.symbolKeys);
+    symbolKeys = List<String>.from(widget.symbolKeys);
   }
 
   @override
@@ -56,6 +58,8 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
         ? Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
         : Prefs.getInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
+    _createdSymbols ??= _createSymbols(countColumns);
+
     return Column(
       children: <Widget>[
         GCWTextDivider(
@@ -69,6 +73,13 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
               _currentInput = text;
             });
           },
+        ),
+        GCWSubmitButton(
+          onPressed: () {
+            setState(() {
+              _createdSymbols = _createSymbols(countColumns);
+            });
+          }
         ),
         GCWTextDivider(
             text: i18n(context, 'common_output'),
@@ -87,7 +98,7 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
               onPanDown: (_) {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
-              child: _createSymbols(countColumns)),
+              child: _createdSymbols),
         )
       ],
     );
