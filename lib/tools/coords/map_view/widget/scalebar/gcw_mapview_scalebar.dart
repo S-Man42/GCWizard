@@ -97,7 +97,7 @@ class GCWMapViewScalebar extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: Padding(
-        padding: EdgeInsets.only(left: 10, bottom: 30),//padding,
+        padding: const EdgeInsets.only(left: 10, bottom: 30),//padding,
         child: CustomPaint(
           // size: scalebarPainter.widgetSize,
           painter: scalebarPainter,
