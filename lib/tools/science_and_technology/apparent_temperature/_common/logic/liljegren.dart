@@ -2,7 +2,6 @@ import 'dart:math';
 
 class liljegrenOutputWBGT {
   final int Status;
-  final double Solar;
   final double Tg;
   final double Tnwb;
   final double Tpsy;
@@ -12,7 +11,6 @@ class liljegrenOutputWBGT {
 
   liljegrenOutputWBGT(
       {this.Status = 0,
-      this.Solar = 0.0,
       this.Tg = 0.0,
       this.Tnwb = 0.0,
       this.Tpsy = 0.0,
@@ -26,24 +24,24 @@ class liljegrenOutputSolarPosition {
   final double ap_ra; // Apparent solar right ascension.
   final double ap_dec; // Apparent solar declination.
   //  [degrees; -90.0 <= *ap_dec <= 90.0]
-  final double altitude; // Solar altitude, uncorrected for refraction.
+  final double elev; // Solar altitude, uncorrected for refraction.
   //  [degrees; -90.0 <= *altitude <= 90.0]
-  final double refraction; // Refraction correction for solar altitude.
+  final double refr; // Refraction correction for solar altitude.
   //  Add this to altitude to compensate for refraction.
   //  [degrees; 0.0 <= *refraction]
-  final double azimuth; // Solar azimuth.
+  final double azim; // Solar azimuth.
   //  [degrees; 0.0 <= *azimuth < 360.0, East is 90.0]
-  final double distance; // Distance of Sun from Earth (heliocentric-geocentric).
+  final double soldist; // Distance of Sun from Earth (heliocentric-geocentric).
   //  [astronomical units; 1 a.u. is mean distance]
 
   liljegrenOutputSolarPosition(
       {this.Status = 0,
       this.ap_ra = 0.0,
       this.ap_dec = 0.0,
-      this.altitude = 0.0,
-      this.refraction = 0.0,
-      this.azimuth = 0.0,
-      this.distance = 0.0});
+      this.elev = 0.0,
+      this.refr = 0.0,
+      this.azim = 0.0,
+      this.soldist = 0.0});
 }
 
 class liljegrenOutputSolarParameter {
@@ -56,6 +54,7 @@ class liljegrenOutputSolarParameter {
 }
 
 // https://raw.githubusercontent.com/mdljts/wbgt/master/src/wbgt.c.original
+// https://github.com/mdljts/wbgt/blob/master/src/wbgt.c
 
 /*
                Copyright © 2008, UChicago Argonne, LLC
@@ -211,8 +210,6 @@ liljegrenOutputWBGT calc_wbgt({
   required int minute, // minutes past the hour
   required int gmt, // LST-GMT difference, hours (negative in USA)
   required int avg, // averaging time of meteorological inputs, minutes
-  required int urban, // select "urban" (1) or "rural" (0) wind speed power law exponent
-
   required double lat, // north latitude, decimal
   required double lon, // east longitude, decimal (negative in USA)
   required double solar, // solar irradiance, W/m2
@@ -222,6 +219,7 @@ liljegrenOutputWBGT calc_wbgt({
   required double speed, // wind speed, m/s
   required double zspeed, // height of wind speed measurement, m
   required double dT, // vertical temperature difference (upper minus lower), degC
+  required int urban, // select "urban" (1) or "rural" (0) wind speed power law exponent
 }) {
   double Tg = 0.0; // globe temperature, degC
   double Tnwb = 0.0; // natural wet bulb temperature, degC
@@ -229,26 +227,30 @@ liljegrenOutputWBGT calc_wbgt({
   double Twbg = 0.0; // wet bulb globe temperature, degC
   double Tdew = 0.0; // dew point temperAture
   double est_speed = 0.0; // estimated speed at reference height, m/s
-  // double cza,	      // cosine of solar zenith angle
-  // fdir,	            // fraction of solar irradiance due to direct beam
+  double cza = 0.0; // cosine of solar zenith angle
+  double fdir = 0.0; // fraction of solar irradiance due to direct beam
   double tk = 0.0; // temperature converted to kelvin
   double rh = 0.0; // relative humidity, fraction between 0 and 1
   double hour_gmt = 0.0;
   double dday = 0.0;
 
-  // convert time to GMT and center in avg period;
   int daytime;
   int stability_class;
+
+  // convert time to GMT and center in avg period;
   hour_gmt = hour - gmt + (minute - 0.5 * avg) / 60.0;
   dday = day + hour_gmt / 24.0;
 
   // calculate the cosine of the solar zenith angle and fraction of solar irradiance
   // due to the direct beam; adjust the solar irradiance if it is out of bounds
-  liljegrenOutputSolarParameter solpar = calc_solar_parameters(year, month, dday, solar, lat, lon);
+  liljegrenOutputSolarParameter solpar = _calc_solar_parameters(year, month, dday, solar, lat, lon);
+  solar = solpar.solar;
+  cza = solpar.cza;
+  fdir = solpar.fdir;
 
   // estimate the wind speed, if necessary
   if (zspeed != REF_HEIGHT) {
-    if (solpar.cza > 0.0) {
+    if (cza > 0.0) {
       daytime = 1;
     } else {
       daytime = 0;
@@ -263,17 +265,16 @@ liljegrenOutputWBGT calc_wbgt({
   rh = 0.01 * relhum; // % to fraction
 
   // calculate the globe, natural wet bulb, psychrometric wet bulb and outdoor wet bulb globe temperatures
-  Tg = Tglobe(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza);
-  Tnwb = _Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 1) - 273.15;
-  Tpsy = _Twb(tk, rh, pres, speed, solar, solpar.fdir, solpar.cza, 0) - 273.15;
+  Tg = Tglobe(tk, rh, pres, speed, solar, fdir, cza);
+  Tnwb = _Twb(tk, rh, pres, speed, solar, fdir, cza, 1); // - 273.15;
+  Tpsy = _Twb(tk, rh, pres, speed, solar, fdir, cza, 0); // - 273.15;
   Twbg = 0.1 * Tair + 0.2 * Tg + 0.7 * Tnwb;
   Tdew = _dew_point(rh * _esat(tk, 0), 0) - 273.15;
 
   if (Tg == -9999 || Tnwb == -9999) {
     Twbg = -9999;
     return liljegrenOutputWBGT(
-      Status: -1,
-    );
+        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed);
   } else {
     return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed);
   }
@@ -287,7 +288,7 @@ liljegrenOutputWBGT calc_wbgt({
  *		 Decision and Information Sciences Division
  *		 Argonne National Laboratory
  */
-liljegrenOutputSolarParameter calc_solar_parameters(
+liljegrenOutputSolarParameter _calc_solar_parameters(
   int year, // 4-digit year, e.g., 2007
   int month, // 2-digit month; month = 0 implies day = day of year
   double day, // day.fraction of month if month > 0;
@@ -299,14 +300,27 @@ liljegrenOutputSolarParameter calc_solar_parameters(
   double cza; // cosine of solar zenith angle
   double fdir; // fraction of solar irradiance due to direct beam
 
-  double toasolar;
-  double normsolar;
+  double toasolar = 0.0;
+  double normsolar = 0.0;
 
   double days_1900 = 0.0;
+  double ap_ra = 0.0;
+  double ap_dec = 0.0;
+  double elev = 0.0;
+  double refr = 0.0;
+  double azim = 0.0;
+  double soldist = 0.0;
 
   liljegrenOutputSolarPosition solpos = _solarposition(year, month, day, days_1900, lat, lon);
-  cza = cos((90.0 - solpos.altitude) * _DEG_RAD);
-  toasolar = SOLAR_CONST * _max(0.0, cza) / (solpos.distance * solpos.distance);
+  ap_ra = solpos.ap_ra;
+  ap_dec = solpos.ap_dec;
+  elev = solpos.elev;
+  refr = solpos.refr;
+  azim = solpos.azim;
+  soldist = solpos.soldist;
+
+  cza = cos((90.0 - elev) * _DEG_RAD);
+  toasolar = SOLAR_CONST * _max(0.0, cza) / soldist * soldist;
 
   //  if the sun is not fully above the horizon set the maximum (top of atmosphere) solar = 0
   if (cza < CZA_MIN) toasolar = 0.0;
@@ -344,9 +358,10 @@ double _Twb(
   double fdir, // fraction of solar irradiance due to direct beam
   double cza, // cosine of solar zenith angle
   int rad, // switch to enable/disable radiative heating;
-  //  no radiative heating --> pyschrometric wet bulb temp
+  // no radiative heating --> pyschrometric wet bulb temp
 ) {
   double a = 0.56; // from Bedingfield and Drew
+
   double sza = 0.0;
   double Tsfc = 0.0;
   double Tdew = 0.0;
@@ -364,10 +379,10 @@ double _Twb(
   int iter;
 
   Tsfc = Tair;
-  sza = acos(cza); //* solar zenith angle, radians
+  sza = acos(cza); // solar zenith angle, radians
   eair = rh * _esat(Tair, 0);
   Tdew = _dew_point(eair, 0);
-  Twb_prev = Tdew; //* first guess is the dew point temperature
+  Twb_prev = Tdew; // first guess is the dew point temperature
   converged = FALSE;
   iter = 0;
   do {
@@ -390,8 +405,7 @@ double _Twb(
     Twb_prev = 0.9 * Twb_prev + 0.1 * Twb_new;
   } while (!converged && iter < MAX_ITER);
   if (converged) {
-    //return (Twb_new - 273.15);
-    return (Twb_new);
+    return (Twb_new - 273.15);
   } else {
     return (-9999.0);
   }
@@ -414,6 +428,7 @@ double _h_cylinder_in_air(
   double a = 0.56; // parameters from Bedingfield and Drew
   double b = 0.281;
   double c = 0.4;
+
   double density = 0.0;
   double Re = 0.0; // Reynolds number
   double Nu = 0.0; // Nusselt number
@@ -440,7 +455,12 @@ double Tglobe(
   double fdir, // fraction of solar irradiance due to direct beam
   double cza, // cosine of solar zenith angle
 ) {
-  double Tsfc, Tref, Tglobe_prev, Tglobe_new, h;
+  double Tsfc = 0.0;
+  double Tref = 0.0;
+  double Tglobe_prev = 0.0;
+  double Tglobe_new = 0.0;
+  double h = 0.0;
+
   bool converged;
   int iter;
 
@@ -484,9 +504,9 @@ double _h_sphere_in_air(
   double Pair, // barometric pressure, mb
   double speed, // fluid (air) speed, m/s
 ) {
-  double density,
-      Re, // Reynolds number
-      Nu; // Nusselt number
+  double density = 0.0;
+  double Re = 0.0; // Reynolds number
+  double Nu = 0.0; // Nusselt number
 
   density = Pair * 100.0 / (R_AIR * Tair);
   Re = _max(speed, MIN_SPEED) * density * diameter / _viscosity(Tair);
@@ -504,7 +524,8 @@ double _esat(
     double tk, // air temperature, K
     int phase) {
   // 0 = over liquid water; 1 = over ice
-  double y, es;
+  double y = 0.0;
+  double es = 0.0;
 
   if (phase == 0) {
     /* over liquid water */
@@ -533,7 +554,8 @@ double _dew_point(
     int phase) {
   // 0 = dewpoint; 1 = frostpoint
 
-  double z, tdk;
+  double z = 0.0;
+  double tdk = 0.0;
 
   if (phase == 0) {
     /* dew point */
@@ -555,9 +577,11 @@ double _dew_point(
  */
 double _viscosity(double Tair) {
   /* air temperature, K */
-  double sigma = 3.617, eps_kappa = 97.0;
+  double sigma = 3.617;
+  double eps_kappa = 97.0;
 
-  double Tr, omega;
+  double Tr = 0.0;
+  double omega = 0.0;
 
   Tr = Tair / eps_kappa;
   omega = (Tr - 2.9) / 0.4 * (-0.034) + 1.048;
@@ -569,8 +593,8 @@ double _viscosity(double Tair) {
  *
  *  Reference: BSL, page 257.
  */
-double _thermal_cond(double Tair) {
-  /* air temperature, K */
+double _thermal_cond(double Tair // air temperature, K
+    ) {
   return ((Cp + 1.25 * R_AIR) * _viscosity(Tair));
 }
 
@@ -580,11 +604,9 @@ double _thermal_cond(double Tair) {
  *  Reference: BSL, page 505.
  */
 double _diffusivity(
-    double Tair,
-    /* Air temperature, K */
-    double Pair) {
-  /* Barometric pressure, mb */
-
+  double Tair, // Air temperature, K
+  double Pair, // Barometric pressure, mb
+) {
   double Pcrit_air = 36.4;
   double Pcrit_h2o = 218.0;
   double Tcrit_air = 132.0;
@@ -609,8 +631,8 @@ double _diffusivity(
  *
  *  Reference: Van Wylen and Sonntag, Table A.1.1
  */
-double _evap(double Tair) {
-  /* air temperature, K */
+double _evap(double Tair // air temperature, K
+    ) {
   return ((313.15 - Tair) / 30.0 * (-71100.0) + 2.4073E6);
 }
 
@@ -620,10 +642,9 @@ double _evap(double Tair) {
  *  Reference: Oke (2nd edition), page 373.
  */
 double _emis_atm(
-    double Tair,
-    /* air temperature, K */
-    double rh) {
-  /* relative humidity, fraction between 0 and 1 */
+    double Tair, // air temperature, K
+    double rh // relative humidity, fraction between 0 and 1
+    ) {
 
   double e = rh * _esat(Tair, 0);
   return (0.575 * pow(e, 0.143));
@@ -703,6 +724,7 @@ liljegrenOutputSolarPosition _solarposition(
   double latitude, // Observation site geographic latitude.  [degrees.fraction, North positive]
   double longitude, // Observation site geographic longitude. [degrees.fraction, East positive]
 ) {
+
   double ap_ra = 0.0; /* Apparent solar right ascension. [hours; 0.0 <= *ap_ra < 24.0] */
   double ap_dec = 0.0; /* Apparent solar declination. [degrees; -90.0 <= *ap_dec <= 90.0] */
   double altitude = 0.0; // Solar altitude, uncorrected for refraction. [degrees; -90.0 <= *altitude <= 90.0]
@@ -711,6 +733,7 @@ liljegrenOutputSolarPosition _solarposition(
   double azimuth = 0.0; // Solar azimuth. [degrees; 0.0 <= *azimuth < 360.0, East is 90.0]
   double distance =
       0.0; // Distance of Sun from Earth (heliocentric-geocentric). [astronomical units; 1 a.u. is mean distance]
+
   int daynumber = 0; // Sequential daynumber during a year.
   int delta_days = 0; // Whole days since 2000 January 0.
   int delta_years = 0; // Whole years since 2000./
@@ -740,7 +763,7 @@ liljegrenOutputSolarPosition _solarposition(
   /* Check latitude and longitude for proper range before calculating dates.
    */
   if (latitude < -90.0 || latitude > 90.0 || longitude < -180.0 || longitude > 180.0) {
-    return liljegrenOutputSolarPosition(Status: -1);
+    return liljegrenOutputSolarPosition(Status: -1, ap_ra: ap_ra, ap_dec: ap_dec, elev: altitude, azim: azimuth, soldist: distance, refr: refraction);
   }
 
   /* If year is not zero then assume date is specified by year, month, day.
@@ -750,17 +773,17 @@ liljegrenOutputSolarPosition _solarposition(
   /* Date given by {year, month, day} or {year, 0, daynumber}. */
   {
     if (year < 1950 || year > 2049) {
-      return liljegrenOutputSolarPosition(Status: -1);
+      return liljegrenOutputSolarPosition(Status: -1, ap_ra: ap_ra, ap_dec: ap_dec, elev: altitude, azim: azimuth, soldist: distance, refr: refraction);
     }
     if (month != 0) {
       if (month < 1 || month > 12 || day < 0.0 || day > 33.0) {
-        return liljegrenOutputSolarPosition(Status: -1);
+        return liljegrenOutputSolarPosition(Status: -1, ap_ra: ap_ra, ap_dec: ap_dec, elev: altitude, azim: azimuth, soldist: distance, refr: refraction);
       }
 
       daynumber = _daynum(year, month, day.toInt());
     } else {
       if (day < 0.0 || day > 368.0) {
-        return liljegrenOutputSolarPosition(Status: -1);
+        return liljegrenOutputSolarPosition(Status: -1, ap_ra: ap_ra, ap_dec: ap_dec, elev: altitude, azim: azimuth, soldist: distance, refr: refraction);
       }
 
       daynumber = day.toInt();
@@ -789,7 +812,7 @@ liljegrenOutputSolarPosition _solarposition(
     /* days_1900 is 18262 for 1950/01/00, and 54788 for 2049/12/32.
      * A. A. 1990, K2-K4. */
     if (days_1900 < 18262.0 || days_1900 > 54788.0) {
-      return liljegrenOutputSolarPosition(Status: -1);
+      return liljegrenOutputSolarPosition(Status: -1, ap_ra: ap_ra, ap_dec: ap_dec, elev: altitude, azim: azimuth, soldist: distance, refr: refraction);
     }
 
     /* Construct days.fraction since J2000, UT hours, and
@@ -930,13 +953,7 @@ liljegrenOutputSolarPosition _solarposition(
  */
   altitude = altitude + refraction;
   return liljegrenOutputSolarPosition(
-      Status: 0,
-      altitude: altitude,
-      refraction: refraction,
-      azimuth: azimuth,
-      distance: distance,
-      ap_dec: ap_dec,
-      ap_ra: ap_ra);
+      Status: 0, elev: altitude, refr: refraction, azim: azimuth, soldist: distance, ap_dec: ap_dec, ap_ra: ap_ra);
 }
 
 /* ============================================================================

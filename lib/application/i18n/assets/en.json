@@ -7276,6 +7276,7 @@
   "wet_bulb_globe_temperature_area_urban": "Urban",
   "wet_bulb_globe_temperature_area_rural": "Rural",
   "wet_bulb_globe_temperature_cloud": "Cloud cover",
+  "wet_bulb_globe_temperature_invalid_input": "Invalid input. Nothing to calculate",
   "wet_bulb_globe_temperature_hint_temperature_low": "To get valid values the temperature should be above %s1.",
   "wet_bulb_globe_temperature_hint_temperature_high": "To get valid values the temperature should be below %s1.",
   "wet_bulb_globe_temperature_hint_humidity_low": "To get valid values the humidity should be above 5 %.",

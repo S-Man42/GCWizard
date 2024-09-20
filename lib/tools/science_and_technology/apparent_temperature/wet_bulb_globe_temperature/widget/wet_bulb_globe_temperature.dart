@@ -41,8 +41,8 @@ class WetBulbGlobeTemperature extends StatefulWidget {
 }
 
 class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
-  DateTimeTimezone _currentDateTime = DateTimeTimezone(
-      datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTimezone _currentDateTime =
+      DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   double _currentTemperature = 0.0;
@@ -56,8 +56,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
   Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
 
   List<Map<String, SymbolData>> _images = [];
-  final String _ASSET_PATH =
-      'lib/tools/symbol_tables/_common/assets/weather_n/weather_n.zip';
+  final String _ASSET_PATH = 'lib/tools/symbol_tables/_common/assets/weather_n/weather_n.zip';
 
   Future<ui.Image> _initializeImage(Uint8List bytes) async {
     return decodeImageFromList(bytes);
@@ -74,10 +73,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
     for (ArchiveFile file in archive) {
       var key = file.name.split('.png')[0];
 
-      var imagePath = (file.isFile &&
-              SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name))
-          ? file.name
-          : null;
+      var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
       if (imagePath == null) continue;
 
       var data = toUint8ListOrNull(file.content);
@@ -199,21 +195,19 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
               child: Row(
                 children: [
                   Container(
-                      padding: const EdgeInsets.only(right: DEFAULT_MARGIN * 2),
-                      child: _images.isEmpty
-                          ? Container()
-                          : Image.memory(
-                        _images[int.parse(entry.value.image)]
-                            .values
-                            .first
-                            .bytes,
-                        width: 30,
-                        height: 30,
-                      ),
+                    padding: const EdgeInsets.only(right: DEFAULT_MARGIN * 2),
+                    child: _images.isEmpty
+                        ? Container()
+                        : Image.memory(
+                            _images[int.parse(entry.value.image)].values.first.bytes,
+                            width: 30,
+                            height: 30,
+                          ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: DEFAULT_MARGIN * 2),
-                    child: Text(i18n(context, entry.value.title),
+                    child: Text(
+                      i18n(context, entry.value.title),
                     ),
                   )
                 ],
@@ -225,9 +219,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
           title: i18n(context, 'wet_bulb_globe_temperature_area'),
           leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
           rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
-          value: _currentAreaUrban
-              ? GCWSwitchPosition.left
-              : GCWSwitchPosition.right,
+          value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
           onChanged: (value) {
             setState(() {
               _currentAreaUrban = value == GCWSwitchPosition.left;
@@ -251,13 +243,14 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         _currentAreaUrban,
         _currentCloudCover);
     if (output.Status == -1) {
-      return Container();
+      return GCWDefaultOutput(
+        child: i18n(context, 'wet_bulb_globe_temperature_invalid_input'),
+      );
     }
 
     String unit = _currentOutputUnit.symbol;
     String hintWBGT = _calculateHintWBGT(output.Twbg);
-    double WBGT = _currentOutputUnit
-        .fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Twbg));
+    double WBGT = _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Twbg));
 
     var _outputFurtherInformation = [
       [
@@ -266,21 +259,11 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
       ],
       [
         i18n(context, 'common_measure_dewpoint'),
-        _currentOutputUnit
-                .fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew))
-                .toStringAsFixed(2) +
-            ' ' +
-            unit
+        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew)).toStringAsFixed(2) + ' ' + unit
       ],
       [i18n(context, 'astronomy_sunposition_title'), ''],
-      [
-        i18n(context, 'astronomy_position_altitude'),
-        output.SunPos.altitude.toStringAsFixed(2) + ' °'
-      ],
-      [
-        i18n(context, 'astronomy_position_azimuth'),
-        output.SunPos.azimuth.toStringAsFixed(2) + ' °'
-      ],
+      [i18n(context, 'astronomy_position_altitude'), output.SunPos.altitude.toStringAsFixed(2) + ' °'],
+      [i18n(context, 'astronomy_position_azimuth'), output.SunPos.azimuth.toStringAsFixed(2) + ' °'],
     ];
 
     return Column(
@@ -294,8 +277,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
           Expanded(
             flex: 2,
             child: Container(
-                margin: const EdgeInsets.only(
-                    left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                 child: GCWUnitDropDown(
                   value: _currentOutputUnit,
                   onlyShowSymbols: true,
@@ -337,6 +319,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         ),
         GCWExpandableTextDivider(
           expanded: false,
+          suppressTopSpace: false,
           text: i18n(context, 'common_further_information'),
           child: GCWColumnedMultilineOutput(data: _outputFurtherInformation),
         )
