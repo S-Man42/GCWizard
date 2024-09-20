@@ -22,7 +22,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_com
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/liljegren.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 
@@ -44,6 +44,7 @@ class WBGTOutput {
   final double Tpsy;
   final double Twbg;
   final double Tdew;
+  final double Tmrt;
   final sunposition.SunPosition SunPos;
 
   WBGTOutput(
@@ -54,6 +55,7 @@ class WBGTOutput {
       this.Tpsy = 0.0,
       this.Twbg = 0.0,
       this.Tdew = 0.0,
+      this.Tmrt = 0.0,
       required this.SunPos});
 }
 
@@ -67,6 +69,7 @@ WBGTOutput calculateWetBulbGlobeTemperature(
     double airPressure,
     bool urban,
     CLOUD_COVER cloudcover) {
+
   var sunPosition = sunposition.SunPosition(LatLng(coords.latitude, coords.longitude), JulianDate(dateTime),
       const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
 
@@ -95,5 +98,8 @@ WBGTOutput calculateWetBulbGlobeTemperature(
   if (WBGT.Status != 0) {
     return WBGTOutput(Status: -1, SunPos: sunPosition);
   }
-  return WBGTOutput(Status: 0, Twbg: WBGT.Twbg, Solar: solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, SunPos: sunPosition);
+
+  double Tmrt = calculateMeanRadiantTemperature(Tg: WBGT.Tg, va: windSpeed, e: 0.95, D: 0.15, Ta: temperature, );
+
+  return WBGTOutput(Status: 0, Twbg: WBGT.Twbg, Solar: solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, Tmrt: Tmrt, SunPos: sunPosition);
 }

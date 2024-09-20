@@ -261,6 +261,10 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         i18n(context, 'common_measure_dewpoint'),
         _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew)).toStringAsFixed(2) + ' ' + unit
       ],
+      [
+        i18n(context, 'common_measure_mean_radiant_temperature'),
+        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tmrt)).toStringAsFixed(2) + ' ' + unit
+      ],
       [i18n(context, 'astronomy_sunposition_title'), ''],
       [i18n(context, 'astronomy_position_altitude'), output.SunPos.altitude.toStringAsFixed(2) + ' °'],
       [i18n(context, 'astronomy_position_azimuth'), output.SunPos.azimuth.toStringAsFixed(2) + ' °'],

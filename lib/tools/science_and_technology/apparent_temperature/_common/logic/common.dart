@@ -40,26 +40,16 @@ class CloudCoverConfig {
 }
 
 const Map<CLOUD_COVER, CloudCoverConfig> CLOUD_COVER_MAP = {
-  CLOUD_COVER.CLEAR_0:
-      CloudCoverConfig(image: '0', title: 'weathersymbols_n_0', subtitle: ''),
-  CLOUD_COVER.FEW_1:
-      CloudCoverConfig(image: '1', title: 'weathersymbols_n_1', subtitle: ''),
-  CLOUD_COVER.FEW_2:
-      CloudCoverConfig(image: '2', title: 'weathersymbols_n_2', subtitle: ''),
-  CLOUD_COVER.SCATTERED_3:
-      CloudCoverConfig(image: '3', title: 'weathersymbols_n_3', subtitle: ''),
-  CLOUD_COVER.SCATTERED_4:
-      CloudCoverConfig(image: '4', title: 'weathersymbols_n_4', subtitle: ''),
-  CLOUD_COVER.BROKEN_5:
-      CloudCoverConfig(image: '5', title: 'weathersymbols_n_5', subtitle: ''),
-  CLOUD_COVER.BROKEN_6:
-      CloudCoverConfig(image: '6', title: 'weathersymbols_n_6', subtitle: ''),
-  CLOUD_COVER.BROKEN_7:
-      CloudCoverConfig(image: '7', title: 'weathersymbols_n_7', subtitle: ''),
-  CLOUD_COVER.OVERCAST_8:
-      CloudCoverConfig(image: '8', title: 'weathersymbols_n_8', subtitle: ''),
-  CLOUD_COVER.OBSCURED_9:
-      CloudCoverConfig(image: '9', title: 'weathersymbols_n_9', subtitle: ''),
+  CLOUD_COVER.CLEAR_0: CloudCoverConfig(image: '0', title: 'weathersymbols_n_0', subtitle: ''),
+  CLOUD_COVER.FEW_1: CloudCoverConfig(image: '1', title: 'weathersymbols_n_1', subtitle: ''),
+  CLOUD_COVER.FEW_2: CloudCoverConfig(image: '2', title: 'weathersymbols_n_2', subtitle: ''),
+  CLOUD_COVER.SCATTERED_3: CloudCoverConfig(image: '3', title: 'weathersymbols_n_3', subtitle: ''),
+  CLOUD_COVER.SCATTERED_4: CloudCoverConfig(image: '4', title: 'weathersymbols_n_4', subtitle: ''),
+  CLOUD_COVER.BROKEN_5: CloudCoverConfig(image: '5', title: 'weathersymbols_n_5', subtitle: ''),
+  CLOUD_COVER.BROKEN_6: CloudCoverConfig(image: '6', title: 'weathersymbols_n_6', subtitle: ''),
+  CLOUD_COVER.BROKEN_7: CloudCoverConfig(image: '7', title: 'weathersymbols_n_7', subtitle: ''),
+  CLOUD_COVER.OVERCAST_8: CloudCoverConfig(image: '8', title: 'weathersymbols_n_8', subtitle: ''),
+  CLOUD_COVER.OBSCURED_9: CloudCoverConfig(image: '9', title: 'weathersymbols_n_9', subtitle: ''),
 };
 
 Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
@@ -75,8 +65,7 @@ Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
   CLOUD_COVER.OBSCURED_9: 1.0,
 };
 
-double calculateSolarIrradiance(
-    {double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
+double calculateSolarIrradiance({double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
   // https://scool.larc.nasa.gov/lesson_plans/CloudCoverSolarRadiation.pdf#:~:text=There%20is%20a%20simple%20formula%20to%20predict%20how,%280%25%20no%20clouds%29%20to%201.0%20%28100%25%20complete%20coverage%29.
   // https://web.archive.org/web/20240920192708/https://scool.larc.nasa.gov/lesson_plans/CloudCoverSolarRadiation.pdf#:~:text=There%20is%20a%20simple%20formula%20to%20predict%20how,%280%25%20no%20clouds%29%20to%201.0%20%28100%25%20complete%20coverage%29
 
@@ -87,29 +76,57 @@ double calculateSolarIrradiance(
   return R0 * (1.0 - 0.75 * pow(cloudCoverFraction, 3.4));
 }
 
-double calculateDewPoint(double t, double rh) {
+double calculateDewPoint(
+  double t, // temperature in °C
+  double rh, // relative humidity in %
+) {
   // https://energie-m.de/tools/taupunkt.html
   // https://myscope.net/taupunkttemperatur/
+  // https://web.archive.org/web/20240920213646/https://myscope.net/taupunkttemperatur/
   double log10(double x) {
     return log(x) / log(10);
   }
 
-  double a = 7.5;
-  double b = 237.3;
-  double sdd =
-      6.1078 * pow(10, (a * t) / (b + t)); // Sättigungsdampfdruck (hPa)
-  double dd = sdd * (rh / 100); // Dampfdruck (hPa)
+  var mw = 18.016; // Molekulargewicht des Wasserdampfes (kg/kmol)
+  var gk = 8214.3; // universelle Gaskonstante (J/(kmol*K))
+  var t0 = 273.15; // Absolute Temperatur von 0 °C (Kelvin)
+  var tk = t + t0; // Temperatur in Kelvin
+
+  double a = 0;
+  double b = 0;
+
+  if (t >= 0) {
+    a = 7.5;
+    b = 237.3;
+  } else if (t < 0) {
+    a = 7.6;
+    b = 240.7;
+  }
+
+  // Sättigungsdampfdruck (hPa)
+  double sdd = 6.1078 * pow(10, (a * t) / (b + t));
+
+  // Dampfdruck (hPa)
+  double dd = sdd * (rh / 100);
+
+  // Wasserdampfdichte bzw. absolute Feuchte (g/m3)
+  double af = pow(10, 5) * mw / gk * dd / tk;
+
+  // v-Parameter
   double v = log10(dd / 6.1078);
+
   return (b * v) / (a - v);
 }
 
-double calculateMeanRadiantTemperature(
-    double Tg, double va, double e, double D, double Ta) {
+double calculateMeanRadiantTemperature({
+  required double Tg, // globe temperature (°C)
+  required double va, // air velocity at the level of the globe (m/s)
+  required double e, // emissivity of the globe (no dimension)
+  required double D, // diameter of the globe (m)
+  required double Ta, // air temperature (°C)
+}) {
   // https://en.wikipedia.org/wiki/Mean_radiant_temperature
-  double MRT = pow(
-          pow(Tg + 2784.15, 4) + 0.25 * pow(10, 8) * pow(va, 0.6) * (Tg - Ta),
-          0.25) -
-      273.15;
+  double MRT = pow(pow(Tg + 273.15, 4) + 1.1 * pow(10, 8) * pow(va, 0.6) * (Tg - Ta) / e / pow(D, 0.4), 0.25) - 273.15;
 
   return MRT;
 }
@@ -125,17 +142,15 @@ double calculateGlobeTemperature(
   double z, // Zenith angle in radians
 ) {
   // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
+  // https://web.archive.org/web/20240920214629/https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
   const h = 0.315;
   final sb = 5.67 * pow(10, -8);
 
-  double ea = exp(17.67 * (Td - Td) / (Td + 243.5)) *
-      (1.0007 + 0.00000346 * P) *
-      6.112 *
-      exp(17.502 * Ta / (240.97 + Ta));
+  double ea =
+      exp(17.67 * (Td - Td) / (Td + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * Ta / (240.97 + Ta));
   double epsilona = 0.575 * pow(ea, 1 / 7);
 
-  double B =
-      S * (fdb / 4 / sb / cos(z) + 1.2 / sb * fdif) + epsilona * pow(Ta, 4);
+  double B = S * (fdb / 4 / sb / cos(z) + 1.2 / sb * fdif) + epsilona * pow(Ta, 4);
   double C = h * pow(u, 0.58) / (5.3865 * pow(10, -8));
 
   return (B + C * Ta + 7680000) / (C + 256000);
