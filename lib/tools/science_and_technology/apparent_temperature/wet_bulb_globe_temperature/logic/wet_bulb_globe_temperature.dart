@@ -74,6 +74,10 @@ WBGTOutput calculateWetBulbGlobeTemperature(
       const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
 
   double solar = calculateSolarIrradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover);
+  print('calculateSolarIrradiance --------------------------------------------------------------------------------------');
+  print(solar);
+  print(sunPosition.altitude);
+  print(sunPosition.azimuth);
 
   liljegrenOutputWBGT WBGT = calc_wbgt(
     year: dateTime.datetime.year,
@@ -92,7 +96,7 @@ WBGTOutput calculateWetBulbGlobeTemperature(
     speed: windSpeed,
     zspeed: windSpeedHeight,
     dT: 0,
-    solar: solar,
+    //solar: solar,
   );
 
   if (WBGT.Status != 0) {

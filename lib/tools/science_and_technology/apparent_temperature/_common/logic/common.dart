@@ -53,14 +53,21 @@ const Map<CLOUD_COVER, CloudCoverConfig> CLOUD_COVER_MAP = {
 };
 
 Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
+  // https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Practical_Meteorology_(Stull)/06%3A_Clouds/6.05%3A_Sky_Cover_(Cloud_Amount)
+  // https://earthscience.stackexchange.com/questions/16471/how-do-i-interpret-this-sky-cover-chart
+  // sunny - clear - CLR - 1/8 or less - 0.000 to 0.125
   CLOUD_COVER.CLEAR_0: 0.0,
-  CLOUD_COVER.FEW_1: 0.05,
-  CLOUD_COVER.FEW_2: 0.10,
-  CLOUD_COVER.SCATTERED_3: 0.25,
-  CLOUD_COVER.SCATTERED_4: 0.40,
-  CLOUD_COVER.BROKEN_5: 0.50,
-  CLOUD_COVER.BROKEN_6: 0.65,
-  CLOUD_COVER.BROKEN_7: 0.80,
+  // mostly sunny - mostly clear - FEW - 1/8 - 3/8 - 0.125 to 0.375
+  CLOUD_COVER.FEW_1: 0.125,
+  CLOUD_COVER.FEW_2: 0.250,
+  // partly sunny - partly cloudy - SCT - 3/8 - 5/8 - 0.375 to 0.625
+  CLOUD_COVER.SCATTERED_3: 0.375,
+  CLOUD_COVER.SCATTERED_4: 0.500,
+  // mostly cloudy - mostly cloudy - BKN - 5/8 - 7/8 - 0.625 to 0.875
+  CLOUD_COVER.BROKEN_5: 0.625,
+  CLOUD_COVER.BROKEN_6: 0.750,
+  CLOUD_COVER.BROKEN_7: 0.875,
+  // cloudy - cloudy - OVC - 7/8 - 9/8 - 0.875 to 1.000
   CLOUD_COVER.OVERCAST_8: 1.0,
   CLOUD_COVER.OBSCURED_9: 1.0,
 };

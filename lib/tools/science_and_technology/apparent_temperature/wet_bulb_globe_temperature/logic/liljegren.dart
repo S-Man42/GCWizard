@@ -212,7 +212,7 @@ liljegrenOutputWBGT calc_wbgt({
   required int avg, // averaging time of meteorological inputs, minutes
   required double lat, // north latitude, decimal
   required double lon, // east longitude, decimal (negative in USA)
-  required double solar, // solar irradiance, W/m2
+  //required double solar, // solar irradiance, W/m2
   required double pres, // barometric pressure, mb
   required double Tair, // air (dry bulb) temperature, degC	*/
   required double relhum, // relative humidity, %
@@ -227,6 +227,7 @@ liljegrenOutputWBGT calc_wbgt({
   double Twbg = 0.0; // wet bulb globe temperature, degC
   double Tdew = 0.0; // dew point temperAture
   double est_speed = 0.0; // estimated speed at reference height, m/s
+  double solar = 0.0; // solar irradiance, W/m2
   double cza = 0.0; // cosine of solar zenith angle
   double fdir = 0.0; // fraction of solar irradiance due to direct beam
   double tk = 0.0; // temperature converted to kelvin
@@ -243,10 +244,13 @@ liljegrenOutputWBGT calc_wbgt({
 
   // calculate the cosine of the solar zenith angle and fraction of solar irradiance
   // due to the direct beam; adjust the solar irradiance if it is out of bounds
-  liljegrenOutputSolarParameter solpar = _calc_solar_parameters(year, month, dday, solar, lat, lon);
+  liljegrenOutputSolarParameter solpar = _calc_solar_parameters(year, month, dday, //solar,
+      lat, lon);
   solar = solpar.solar;
   cza = solpar.cza;
   fdir = solpar.fdir;
+  print('_calc_solar_parameters --------------------------------------------------------------------------------------');
+  print(solar);
 
   // estimate the wind speed, if necessary
   if (zspeed != REF_HEIGHT) {
@@ -293,7 +297,7 @@ liljegrenOutputSolarParameter _calc_solar_parameters(
   int month, // 2-digit month; month = 0 implies day = day of year
   double day, // day.fraction of month if month > 0;
   // else day.fraction of year if month = 0 (GMT)
-  double solar, // solar irradiance (W/m2)
+  // double solar, // solar irradiance (W/m2)
   double lat, // north latitude
   double lon, // east latitude (negative in USA)
 ) {
@@ -310,6 +314,7 @@ liljegrenOutputSolarParameter _calc_solar_parameters(
   double refr = 0.0;
   double azim = 0.0;
   double soldist = 0.0;
+  double solar = SOLAR_CONST;
 
   liljegrenOutputSolarPosition solpos = _solarposition(year, month, day, days_1900, lat, lon);
   ap_ra = solpos.ap_ra;
@@ -318,6 +323,9 @@ liljegrenOutputSolarParameter _calc_solar_parameters(
   refr = solpos.refr;
   azim = solpos.azim;
   soldist = solpos.soldist;
+  print('_solarposition ----------------------------------------------------');
+  print(elev);
+  print(azim);
 
   cza = cos((90.0 - elev) * _DEG_RAD);
   toasolar = SOLAR_CONST * _max(0.0, cza) / soldist * soldist;
@@ -788,7 +796,7 @@ liljegrenOutputSolarPosition _solarposition(
 
       daynumber = day.toInt();
     }
-
+print(daynumber);
     /* Construct Julian centuries since J2000 at 0 hours UT of date,
      * days.fraction since J2000, and UT hours.
      */
