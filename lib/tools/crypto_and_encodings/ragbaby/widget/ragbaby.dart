@@ -44,17 +44,6 @@ class _RagbabyState extends State<Ragbaby> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown<RagbabyType>(
-            value: _currentOption,
-            items: RAGBABY_OPTIONS.entries.map((mode) {
-              return GCWDropDownMenuItem(
-                  value: mode.key, child: i18n(context, mode.value));
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentOption = value;
-              });
-            }),
         GCWTextField(
           hintText: i18n(context, 'common_programming_hint_input'),
           controller: _inputController,
@@ -73,6 +62,17 @@ class _RagbabyState extends State<Ragbaby> {
             });
           },
         ),
+        GCWDropDown<RagbabyType>(
+          value: _currentOption,
+          items: RAGBABY_OPTIONS.entries.map((mode) {
+            return GCWDropDownMenuItem(
+                value: mode.key, child: i18n(context, mode.value));
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentOption = value;
+            });
+          }),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {

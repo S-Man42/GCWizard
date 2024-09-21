@@ -149,6 +149,7 @@ const List<String> _Functions_9 = [
   'PADCENTER(',
   'WPTSCLEAR(',
   'WPTSCOUNT(',
+  'ANTIALIAS('
 ];
 const List<String> _Functions_10 = [
   'CARTHESIAN(',
@@ -201,6 +202,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'TEXT': _GCWizardScriptClassFunctionDefinition(_text, 4, functionReturn: false),
   'BOX': _GCWizardScriptClassFunctionDefinition(_box, 4, functionReturn: false),
   'OVAL': _GCWizardScriptClassFunctionDefinition(_oval, 4, functionReturn: false),
+  'ANTIALIAS': _GCWizardScriptClassFunctionDefinition(_antialias, 1, functionReturn: false),
 
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),

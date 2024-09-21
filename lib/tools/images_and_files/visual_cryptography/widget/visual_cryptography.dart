@@ -74,6 +74,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
       GCWOpenFile(
         title: i18n(context, 'visual_cryptography_image') + ' 1',
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        suppressGallery: false,
         file: _decodeImage1,
         onLoaded: (_file) {
           if (_file == null) {
@@ -90,6 +91,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
       GCWOpenFile(
         title: i18n(context, 'visual_cryptography_image') + ' 2',
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        suppressGallery: false,
         file: _decodeImage2,
         onLoaded: (_file) {
           if (_file == null) {
@@ -157,9 +159,9 @@ class _VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _encodeWidgets() {
     return Column(children: <Widget>[
-      Container(),
       GCWOpenFile(
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        suppressGallery: false,
         file: _encodeImage,
         onLoaded: (_file) {
           if (_file == null) {
@@ -195,6 +197,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
                 GCWOpenFile(
                   supportedFileTypes: SUPPORTED_IMAGE_TYPES,
                   suppressHeader: true,
+                  suppressGallery: false,
                   file: _encodeKeyImage,
                   onLoaded: (_file) {
                     if (_file == null) {

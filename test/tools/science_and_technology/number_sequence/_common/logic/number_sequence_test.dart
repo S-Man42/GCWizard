@@ -25,7 +25,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('sequence: ${elem['sequence']}, position: ${elem['position']}', () async {
         //var _actual = numberSequencesGetNumberAt(elem['sequence'] as NumberSequencesMode, elem['position'] as int?);
-        var _actual = await calculateNumberAtAsync(GetNumberAtJobData(sequence: elem['sequence'] as NumberSequencesMode, n: elem['position'] as int,) as GCWAsyncExecuterParameters?, );
+        var _actual = await calculateNumberAtAsync(GCWAsyncExecuterParameters(GetNumberAtJobData(sequence: elem['sequence'] as NumberSequencesMode, n: elem['position'] as int)));
         expect(_actual, elem['expectedOutput']);
       });
     }
