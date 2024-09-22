@@ -153,12 +153,20 @@ String toolName(BuildContext context, GCWTool tool) {
 class _GCWToolState extends State<GCWTool> {
   late String _toolName;
   late String _defaultLanguageToolName;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
     _setToolCount(widget.longId);
+    _focusNode = FocusNode();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -170,15 +178,23 @@ class _GCWToolState extends State<GCWTool> {
         widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
 
     return Scaffold(
-        resizeToAvoidBottomInset: widget.autoScroll,
-        appBar: AppBar(title: Text(_toolName), actions: [
-          widget.suppressAppBarButtons == false ? GCWPopupMenu(
-            icon: Icons.more_vert,
-            buttonNoBorder: true,
-            menuItemBuilder: (context) => _buildToolBarItems(),
-          ) : Container()
-        ]),
-        body: _buildBody());
+      resizeToAvoidBottomInset: widget.autoScroll,
+      appBar: AppBar(title: Text(_toolName), actions: [
+        widget.suppressAppBarButtons == false ? GCWPopupMenu(
+          icon: Icons.more_vert,
+          buttonNoBorder: true,
+          menuItemBuilder: (context) => _buildToolBarItems(),
+        ) : Container()
+      ]),
+
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(_focusNode),
+        child: Focus(
+          focusNode: _focusNode,
+          child: _buildBody(),
+        ),
+      ),
+    );
   }
 
   String _normalizeManualSearchString(String text) {
