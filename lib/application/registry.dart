@@ -6640,6 +6640,22 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://fontmeme.com/fonts/pigpen-cipher-font/',
           licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
+    GCWSymbolTableTool(symbolKey: 'leitz_orgacolor', symbolSearchStrings: const [
+      'symbol_leitz_orgacolor',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Leitz',
+          title: 'Buchstabensignale',
+          sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale.html',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Leitz',
+          title: 'Ziffernsignale',
+          sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale,b-ziffernsignale.html',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
       'symbol_linear_b',
     ], licenses: [
