@@ -161,6 +161,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        suppressGallery: false,
         file: _encodeImage,
         onLoaded: (_file) {
           if (_file == null) {
