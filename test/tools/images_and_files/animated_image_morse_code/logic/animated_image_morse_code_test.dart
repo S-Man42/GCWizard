@@ -97,7 +97,7 @@ void main() {
       {'input' : 'Der kleine Preuße.gif', ''
           'expectedOutputMorse' : ' | ..-. ..- . -. ..-. -.. .-. . .. -.. .-. . .. .- -.-. .... - -. . ..- -. -. ..- .-.. .-.. -. . ..- -. | -. ..- .-.. -. ..- .-.. .-.. .- -.-. .... - --.. .-- . .. -. . ..- -. ... . -.-. .... ... -. . .. | -. ...- .. . .-. ',
           'expectedOutputText' : ' FUENFDREIDREIACHTNEUNNULLNEUN NULNULLACHTZWEINEUNSECHSNEI NVIER'},
-      {'input' : 'LEUCHTTURM.gif',
+      {'input' : 'LEUCHTTURM.gif', 'secondMarked' : '1',
           'expectedOutputMorse' : ' | -.-.- -. ..... ----- ..... --... .-.-.- .---- .---- -.... . ----- .---- .---- .---- ---.. .---- ---.. ....- | -.-. ',
           'expectedOutputText' : ' N5057.116E01118184 C'},
       {'input' : 'bibliothek.gif', 'secondMarked' : '12',
