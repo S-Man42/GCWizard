@@ -254,6 +254,7 @@ Object? _listGet(_GCWList? list, Object? index) {
     _handleError(_INVALIDLIST);
     return null;
   }
+  return null;
 }
 
 void _listFrom(Object? listName, Object? value) {
