@@ -90,6 +90,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
 
     return Column(children: <Widget>[
       GCWOpenFile(
+        suppressGallery: false,
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
           if (_file == null) {
@@ -456,8 +457,9 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
   Widget _buildDropDownMenuItem(GCWSymbolContainer? icon, String? toolName, String? description) {
     return Row(children: [
       Container(
+        constraints: const BoxConstraints(maxHeight : DEFAULT_LISTITEM_SIZE + 18),
         margin: const EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
-        child: (icon != null) ? icon : Container(width: 50),
+        child: (icon != null) ? icon : Container(width: DEFAULT_LISTITEM_SIZE),
       ),
       Expanded(
           child: Column(
