@@ -307,7 +307,6 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_date/widget/easter_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_years/widget/easter_years.dart';
@@ -1251,6 +1250,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'postcode',
+      'barcodes',
       'symbol_postcode01247',
       'symbol_postcode8421',
       'binary'
@@ -1332,6 +1332,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'qrcode',
+      'barcodes',
     ], licenses: const []),
     GCWTool(tool: const QuadraticEquation(), id: 'quadratic_equation', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -1728,43 +1729,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wet-bulb_globe_temperature&oldid=1237580210',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-    GCWTool(tool: const WetBulbGlobeTemperature(), id: 'wet_bulb_globe_temperature', searchKeys: const [
-      'apparenttemperature',
-      'apparenttemperature_wet_bulb_globe_temperature',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: 'Kühlgrenztemperatur',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=K%C3%BChlgrenztemperatur&oldid=246986523',
-          licenseType: ToolLicenseType.CCBYSA4),
-      ToolLicenseOfflineArticle(
-          context: context,
-          author: 'Liljegren JC, Carhart RA, Lawday P, Tschopp S, Sharp R. ',
-          title: 'Modeling the wet bulb globe temperature using standard meteorological measurements',
-          year: 2008,
-          publisher: 'J Occup Environ Hyg',
-          customComment: '5(10):645-55'),
-      ToolLicensePortedCode(
-          context: context,
-          author: 'Max Lieblich, University of Washington',
-          title: 'wbgt',
-          sourceUrl: 'https://web.archive.org/web/20240825151151/https://github.com/mdljts/wbgt',
-          licenseType: ToolLicenseType.GITHUB_DEFAULT),
-      ToolLicensePortedCode(
-          context: context,
-          author: 'Qinkong',
-          title: 'PyWBGT',
-          sourceUrl: 'https://web.archive.org/web/20240825151539/https://github.com/QINQINKONG/PyWBGT',
-          licenseType: ToolLicenseType.CCBYNC40),
-      ToolLicensePortedCode(
-          context: context,
-          author: 'James C. Liljegren',
-          title: 'calc_wbgt',
-          sourceUrl: 'https://web.archive.org/web/20240825152223/https://raw.githubusercontent.com/mdljts/wbgt/master/src/wbgt.c.original',
-          licenseType: ToolLicenseType.OPEN_SOURCE)
-    ]),
-
 
     //AstronomySelection  ********************************************************************************************
     GCWTool(tool: const IAUAllConstellations(), id: 'iau_constellation', searchKeys: const [
@@ -6642,6 +6606,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'leitz_orgacolor', symbolSearchStrings: const [
       'symbol_leitz_orgacolor',
+      'barcodes',
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
@@ -6664,7 +6629,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Unknown',
           title: 'Noto Sans Linear B',
           sourceUrl: 'https://fonts.google.com/noto/specimen/Noto+Sans+Linear+B',
-          licenseType: ToolLicenseType.SIL_OFL11)
+          licenseType: ToolLicenseType.OFL11)
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',

@@ -413,7 +413,7 @@ class _LicensesState extends State<Licenses> {
             context: context,
             title: 'CourierPrime',
             author: 'Quote-Unquote Apps (Github)',
-            licenseType: ToolLicenseType.SIL_OFL11,
+            licenseType: ToolLicenseType.OFL11,
             licenseUrl: 'http://web.archive.org/web/20240831133744/https://github.com/quoteunquoteapps/CourierPrime/blob/master/OFL.txt',
             sourceUrl: 'http://web.archive.org/web/20220103114221/https://github.com/quoteunquoteapps/CourierPrime'
         ),
