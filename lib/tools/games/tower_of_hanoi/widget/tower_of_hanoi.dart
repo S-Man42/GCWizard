@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -39,6 +40,8 @@ class _TowerOfHanoiState extends State<TowerOfHanoi> {
 
   Widget _buildOutput(BuildContext context) {
     var moveString = i18n(context, 'tower_of_hanoi_move_message');
+    var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
+
     return Column(
         children: <Widget>[
           GCWColumnedMultilineOutput(
@@ -49,14 +52,16 @@ class _TowerOfHanoiState extends State<TowerOfHanoi> {
           Container(padding: const EdgeInsets.only(bottom: 10)),
           GCWColumnedMultilineOutput(
             hasHeader: true,
-            firstRows: [Row(children: [Expanded(flex: 2, child: GCWText(text: i18n(context, 'tower_of_hanoi_move'))),
-              Expanded(flex: 4, child: GCWText(text: i18n(context, 'tower_of_hanoi_towers')))])],
+            textStyle: gcwMonotypeTextStyle(),
+            firstRows: [Row(children: [
+              Expanded(flex: 2, child: GCWText(text: i18n(context, 'tower_of_hanoi_move'), style: boldTextStyle )),
+              Expanded(flex: 4, child: GCWText(text: i18n(context, 'tower_of_hanoi_towers'), style: boldTextStyle))])],
             data: moves(_currentID).mapIndexed((index, entry) {
               var move = moveString.replaceFirst('${0}', entry.$2.toString());
               move = move.replaceFirst('${1}', entry.$3.toString());
               move = move.replaceFirst('${2}', entry.$4.toString());
               return [index.toString(), entry.$1 + '\n' + move];}).toList(),
-            flexValues: const [2, 4]
+            flexValues: const [1, 4]
           ),
     ]);
   }
