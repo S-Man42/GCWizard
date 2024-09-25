@@ -33,9 +33,6 @@ class _towerOfHanoi {
       _movetower(n - 1, from, other, to);
       _towers[to - 1].push(_towers[from - 1].pop());
       _addTowersOutput(n, from, to);
-      // Console.WriteLine("Move disk {0} from tower {1} to tower {2}",
-      //     n, from, to, _towers[to - 1].Peek().ToString());
-
       _movetower(n - 1, other, to, from);
     }
   }
