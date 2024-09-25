@@ -5,7 +5,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/science_and_technology/tower_of_hanoi/logic/tower_of_hanoi.dart';
+import 'package:gc_wizard/tools/games/tower_of_hanoi/logic/tower_of_hanoi.dart';
 
 class TowerOfHanoi extends StatefulWidget {
   const TowerOfHanoi({Key? key}) : super(key: key);
