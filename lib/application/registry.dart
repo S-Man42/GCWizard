@@ -1574,6 +1574,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const TowerOfHanoi(), id: 'tower_of_hanoi', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
+      'games',
       'tower_of_hanoi',
     ]),
     GCWTool(tool: const TTS(), id: 'tts', categories: const [

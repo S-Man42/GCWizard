@@ -9,19 +9,19 @@ int moveCount(int discCount) {
   return (2^discCount) - 1;
 }
 
-List<String> moves(int discCount) {
-  var moveList = <String>[];
-  if (moveCount(discCount) <= 0) return moveList;
+List<(String, int, int, int)> moves(int discCount) {
   var t = _towerOfHanoi(discCount);
   return t.towersOutput;
 }
 
 class _towerOfHanoi {
-  final towersOutput = <String>[];
+  final towersOutput = <(String, int, int, int)>[];
   final _towers = <Stack<int>> [ Stack<int>(), Stack<int>(), Stack<int>() ];
   final int _numdiscs;
 
   _towerOfHanoi(this._numdiscs) {
+    if (moveCount(_numdiscs) <= 0) return;
+
     for (int i = _numdiscs; i > 0; i--) {
       _towers[0].push(i);
     }
@@ -32,7 +32,7 @@ class _towerOfHanoi {
     if (n > 0) {
       _movetower(n - 1, from, other, to);
       _towers[to - 1].push(_towers[from - 1].pop());
-      _addTowersOutput();
+      _addTowersOutput(n, from, to);
       // Console.WriteLine("Move disk {0} from tower {1} to tower {2}",
       //     n, from, to, _towers[to - 1].Peek().ToString());
 
@@ -40,8 +40,8 @@ class _towerOfHanoi {
     }
   }
 
-  void _addTowersOutput() {
-    var output = "";
+  void _addTowersOutput(int n, int from, int to) {
+    var output = '';
     int offset;
     var rowCount = max(_towers[0].length, max(_towers[1].length, _towers[2].length));
 
@@ -52,6 +52,6 @@ class _towerOfHanoi {
       }
       output += "\n";
     }
-    towersOutput.add(output.trimRight());
+    towersOutput.add((output.trimRight(), n, from, to));
   }
 }
