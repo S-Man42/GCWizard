@@ -23,22 +23,18 @@ class _TowerOfHanoiState extends State<TowerOfHanoi> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(child: GCWText(text: i18n(context, 'tower_of_hanoi_disc_count') + ':')),
-            Expanded(
-              child: GCWIntegerSpinner(
-                  value: _discCount,
-                  min: 1,
-                  max: MAXDISCCOUNT,
-                  onChanged: (value) {
-                    setState(() {
-                      _discCount = value;
-                    });
-                  },
-                ),
-            ),
-          ]
+         Expanded(
+          child: GCWIntegerSpinner(
+            title: i18n(context, 'tower_of_hanoi_disc_count') + ':',
+            value: _discCount,
+            min: 1,
+            max: MAXDISCCOUNT,
+            onChanged: (value) {
+              setState(() {
+                _discCount = value;
+              });
+            },
+          ),
         ),
         GCWDefaultOutput(child: _buildOutput(context))
       ],
