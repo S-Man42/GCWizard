@@ -17,19 +17,19 @@ class TowerOfHanoi extends StatefulWidget {
 
 class _TowerOfHanoiState extends State<TowerOfHanoi> {
 
-  int _currentID = 1;
+  int _discCount = 1;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: _currentID,
+          value: _discCount,
           min: 1,
           max: 10,
           onChanged: (value) {
             setState(() {
-              _currentID = value;
+              _discCount = value;
             });
           },
         ),
@@ -46,21 +46,21 @@ class _TowerOfHanoiState extends State<TowerOfHanoi> {
         children: <Widget>[
           GCWColumnedMultilineOutput(
             data: [[i18n(context, 'tower_of_hanoi_move_count'),
-              moveCount(_currentID).toString()]],
+              moveCount(_discCount).toString()]],
             flexValues: const [2, 4]
           ),
           Container(padding: const EdgeInsets.only(bottom: 10)),
           GCWColumnedMultilineOutput(
             hasHeader: true,
-            textStyle: gcwMonotypeTextStyle(),
+            style: gcwMonotypeTextStyle(),
             firstRows: [Row(children: [
               Expanded(flex: 2, child: GCWText(text: i18n(context, 'tower_of_hanoi_move'), style: boldTextStyle )),
               Expanded(flex: 4, child: GCWText(text: i18n(context, 'tower_of_hanoi_towers'), style: boldTextStyle))])],
-            data: moves(_currentID).mapIndexed((index, entry) {
-              var move = moveString.replaceFirst('${0}', entry.$2.toString());
-              move = move.replaceFirst('${1}', entry.$3.toString());
-              move = move.replaceFirst('${2}', entry.$4.toString());
-              return [index.toString(), entry.$1 + '\n' + move];}).toList(),
+            data: moves(_discCount).mapIndexed((index, entry) {
+              var move = moveString.replaceFirst('{0}', entry.$2.toString());
+              move = move.replaceFirst('{1}', entry.$3.toString());
+              move = move.replaceFirst('{2}', entry.$4.toString());
+              return [(index + 1).toString(), entry.$1 + '\n' + move];}).toList(),
             flexValues: const [1, 4]
           ),
     ]);

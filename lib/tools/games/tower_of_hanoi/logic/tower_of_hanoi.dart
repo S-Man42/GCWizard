@@ -6,7 +6,7 @@ const MAXDISCCOUNT = 10;
 
 int moveCount(int discCount) {
   if (discCount <= 0) return 0;
-  return (2^discCount) - 1;
+  return pow(2, discCount).toInt() - 1;
 }
 
 List<(String, int, int, int)> moves(int discCount) {
