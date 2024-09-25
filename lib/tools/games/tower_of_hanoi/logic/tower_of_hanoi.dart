@@ -2,11 +2,12 @@ import 'dart:core';
 import 'dart:math';
 import 'package:stack/stack.dart';
 
-const MAXDISCCOUNT = 10;
+const MAXDISCCOUNT = 100;
+const MAXDISCVIEWCOUNT = 9;
 
-int moveCount(int discCount) {
-  if (discCount <= 0) return 0;
-  return pow(2, discCount).toInt() - 1;
+BigInt moveCount(int discCount) {
+  if (discCount <= 0) return BigInt.zero;
+  return BigInt.from(2).pow(discCount) - BigInt.one;
 }
 
 List<(String, int, int, int)> moves(int discCount) {
@@ -20,7 +21,7 @@ class _towerOfHanoi {
   final int _numdiscs;
 
   _towerOfHanoi(this._numdiscs) {
-    if (moveCount(_numdiscs) <= 0) return;
+    if (moveCount(_numdiscs) <= BigInt.zero || _numdiscs > MAXDISCVIEWCOUNT) return;
 
     for (int i = _numdiscs; i > 0; i--) {
       _towers[0].push(i);
@@ -41,6 +42,7 @@ class _towerOfHanoi {
     var output = '';
     int offset;
     var rowCount = max(_towers[0].length, max(_towers[1].length, _towers[2].length));
+    rowCount = max(2, rowCount);
 
     for (int row = 0; row < rowCount; row++) {
       for (var tower = 0; tower < _towers.length; tower++) {

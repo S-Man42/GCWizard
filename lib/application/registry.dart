@@ -1576,6 +1576,13 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'games',
       'tower_of_hanoi',
+    ], licenses: [
+    ToolLicenseOnlineArticle(
+      context: context,
+      author: 'Manish Bhojasia',
+      title: 'Tower of Hanoi Program in C#',
+      sourceUrl: 'https://web.archive.org/web/20170504070744/https://www.sanfoundry.com/csharp-program-tower-of-hanoi/',
+      licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWTool(tool: const TTS(), id: 'tts', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
