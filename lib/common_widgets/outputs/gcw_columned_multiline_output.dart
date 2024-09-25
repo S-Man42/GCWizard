@@ -52,12 +52,13 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
     int index = 0;
     return widget.data.map((rowData) {
       Widget output;
+      var textStyle = gcwTextStyle(fontSize: widget.fontSize);
 
       var columns = rowData
           .asMap()
           .map((index, column) {
-            var textStyle = gcwTextStyle(fontSize: widget.fontSize);
-            if (isFirst && widget.hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
+            var _textStyle = textStyle;
+            if (isFirst && widget.hasHeader) _textStyle = _textStyle.copyWith(fontWeight: FontWeight.bold);
 
             Widget child;
 
@@ -65,9 +66,9 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
               child = column;
             } else {
               if (widget.tappables == null || widget.tappables!.isEmpty) {
-                child = GCWText(text: column != null ? column.toString() : '', style: textStyle);
+                child = GCWText(text: column != null ? column.toString() : '', style: _textStyle);
               } else {
-                child = Text(column != null ? column.toString() : '', style: textStyle);
+                child = Text(column != null ? column.toString() : '', style: _textStyle);
               }
             }
 
