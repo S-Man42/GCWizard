@@ -165,34 +165,37 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
 
 Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
     Uint8List image, Uint8List? keyImage, int offsetX, int offsetY, int scale, int pixelSize) {
-  var _image = decodeImage4ChannelFormat(image);
-  if (_image == null) return Future.value(null);
+  try {
+    var _image = decodeImage4ChannelFormat(image);
+    if (_image == null) return Future.value(null);
 
-  var hasKeyImage = keyImage != null;
-  Image.Image? _keyImage;
-  if (hasKeyImage) {
-    _keyImage = decodeImage4ChannelFormat(keyImage);
-    if (_keyImage == null) return Future.value(null);
+    var hasKeyImage = keyImage != null;
+    Image.Image? _keyImage;
+    if (hasKeyImage) {
+      _keyImage = decodeImage4ChannelFormat(keyImage);
+      if (_keyImage == null) return Future.value(null);
 
-    scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();
-  }
+      scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();
+    }
+    pixelSize = max(1, pixelSize);
+    if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: _image.height * scale ~/ 100);
 
-  if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: _image.height * scale ~/ 100);
+    if (hasKeyImage) {
+      var _dstImage = Image.Image(width: _keyImage!.width ~/ 2, height: _keyImage.height ~/ 2);
+      _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: _whiteColor);
 
-  if (hasKeyImage) {
-    var _dstImage = Image.Image(width: _keyImage!.width ~/ 2, height: _keyImage.height ~/ 2);
-    _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: _whiteColor);
+      var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
+      var _dstYOffset = (_dstImage.height - _image.height) ~/ 2;
 
-    var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
-    var _dstYOffset = (_dstImage.height - _image.height) ~/ 2;
+      _dstImage = Image.compositeImage(_dstImage, _image,
+          dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
 
-    _dstImage = Image.compositeImage(_dstImage, _image,
-        dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
-
-    return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage, pixelSize);
-  } else {
-    return _encodeWithoutKeyImage(offsetX, offsetY, _image, pixelSize);
-  }
+      return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage, pixelSize);
+    } else {
+      return _encodeWithoutKeyImage(offsetX, offsetY, _image, pixelSize);
+    }
+  } catch (e) {}
+  return Future.value(null);
 }
 
 List<bool> _keyPixels(Image.Image _keyImage, int x, int y) {
@@ -206,7 +209,7 @@ List<bool> _keyPixels(Image.Image _keyImage, int x, int y) {
 
 Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
     int offsetX, int offsetY, Image.Image _image, Image.Image _keyImage, int pixelSize) {
-  pixelSize = max(1, pixelSize);
+
   var image1 = Image.Image(width: _image.width * 2 * pixelSize, height: _image.height * 2 * pixelSize);
 
   for (var x = 0; x < _image.width; x++) {
@@ -249,7 +252,6 @@ Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int off
   var image1OffsetY = max(offsetY, 0).abs();
   var image2OffsetX = min(offsetX, 0).abs();
   var image2OffsetY = min(offsetY, 0).abs();
-  pixelSize = max(1, pixelSize);
   var image1 = Image.Image(
       width: (_image.width * 2 + image1OffsetX + image2OffsetX) * pixelSize,
       height: (_image.height * 2 + image1OffsetY + image2OffsetY) * pixelSize);

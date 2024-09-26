@@ -488,8 +488,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
         _currentEncryptionWithKeyMode ? _encodeKeyImage?.bytes ?? Uint8List(0) : null,
         _encodeOffsetsX,
         _encodeOffsetsY,
-        _encodeScale,
-        _pixelSize));
+        _currentEncryptionWithKeyMode ? 100 : _encodeScale,
+        _currentEncryptionWithKeyMode ? 1 : _pixelSize));
   }
 
   void _saveOutputEncode(Tuple2<Uint8List, Uint8List?>? output) {
