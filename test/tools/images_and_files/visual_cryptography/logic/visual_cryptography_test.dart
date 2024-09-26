@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/logic/visual_cryptography.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/list_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:tuple/tuple.dart';
