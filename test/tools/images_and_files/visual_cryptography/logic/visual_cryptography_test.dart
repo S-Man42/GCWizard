@@ -50,9 +50,6 @@ void main() {
             elem['offsetX'] as int, elem['offsetY'] as int,
             elem['scale'] as int, elem['pixelSize'] as int);
         var _actual = await encodeImagesAsync(GCWAsyncExecuterParameters(para));
-        //var f = io.File(path.join(testDirPath, 'Key.png'));
-        //f.writeAsBytes(_actual!.item1);
-print(_actual!.item1.length.toString() + ' ' + _getFileData(elem['expectedOutput1'] as String).length.toString());
         expect(listEquals(_actual.item1, _getFileData(elem['expectedOutput1'] as String)), true);
       });
     }
