@@ -50,7 +50,7 @@ void main() {
             elem['offsetX'] as int, elem['offsetY'] as int,
             elem['scale'] as int, elem['pixelSize'] as int);
         var _actual = await encodeImagesAsync(GCWAsyncExecuterParameters(para));
-        expect(listEquals(_actual.item1, _getFileData(elem['expectedOutput1'] as String)), true);
+        expect(listEquals(_actual!.item1, _getFileData(elem['expectedOutput1'] as String)), true);
       });
     }
   });
