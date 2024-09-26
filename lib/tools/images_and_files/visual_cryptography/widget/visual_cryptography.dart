@@ -483,12 +483,13 @@ class _VisualCryptographyState extends State<VisualCryptography> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(Tuple5<Uint8List, Uint8List?, int, int, int>(
+    return GCWAsyncExecuterParameters(Tuple6<Uint8List, Uint8List?, int, int, int, int>(
         _encodeImage?.bytes ?? Uint8List(0),
         _currentEncryptionWithKeyMode ? _encodeKeyImage?.bytes ?? Uint8List(0) : null,
         _encodeOffsetsX,
         _encodeOffsetsY,
-        _encodeScale));
+        _encodeScale,
+        _pixelSize));
   }
 
   void _saveOutputEncode(Tuple2<Uint8List, Uint8List?>? output) {

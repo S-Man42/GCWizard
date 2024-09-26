@@ -153,10 +153,10 @@ Uint8List? cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offse
 }
 
 Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! Tuple5<Uint8List, Uint8List?, int, int, int>) return null;
+  if (jobData?.parameters is! Tuple6<Uint8List, Uint8List?, int, int, int, int>) return null;
 
-  var data = jobData!.parameters as Tuple5<Uint8List, Uint8List?, int, int, int>;
-  var output = await _encodeImage(data.item1, data.item2, data.item3, data.item4, data.item5);
+  var data = jobData!.parameters as Tuple6<Uint8List, Uint8List?, int, int, int, int>;
+  var output = await _encodeImage(data.item1, data.item2, data.item3, data.item4, data.item5, data.item6);
 
   jobData.sendAsyncPort?.send(output);
 
@@ -164,7 +164,7 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
 }
 
 Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
-    Uint8List image, Uint8List? keyImage, int offsetX, int offsetY, int scale) {
+    Uint8List image, Uint8List? keyImage, int offsetX, int offsetY, int scale, int pixelSize) {
   var _image = decodeImage4ChannelFormat(image);
   if (_image == null) return Future.value(null);
 
@@ -189,9 +189,9 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
     _dstImage = Image.compositeImage(_dstImage, _image,
         dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
 
-    return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage);
+    return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage, pixelSize);
   } else {
-    return _encodeWithoutKeyImage(offsetX, offsetY, _image);
+    return _encodeWithoutKeyImage(offsetX, offsetY, _image, pixelSize);
   }
 }
 
@@ -205,7 +205,7 @@ List<bool> _keyPixels(Image.Image _keyImage, int x, int y) {
 }
 
 Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
-    int offsetX, int offsetY, Image.Image _image, Image.Image _keyImage, {int pixelSize = 1}) {
+    int offsetX, int offsetY, Image.Image _image, Image.Image _keyImage, int pixelSize) {
   pixelSize = max(1, pixelSize);
   var image1 = Image.Image(width: _image.width * 2 * pixelSize, height: _image.height * 2 * pixelSize);
 
@@ -216,7 +216,7 @@ Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
         for (var y1 = 0; y1 < 2; y1++) {
           var _paintX = x * 2 + x1;
           var _paintY = y * 2 + y1;
-          _setPixel(image1, _paintX, _paintY, pixel[2 * x1 + y1] ? _whiteColor : _blackColor, pixelSize);
+          _setPixel(image1, _paintX, _paintY, pixelSize, pixel[2 * x1 + y1] ? _whiteColor : _blackColor);
         }
       }
     }
@@ -232,8 +232,8 @@ Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
         for (var y1 = 0; y1 < 2; y1++) {
           var _paintX = x * 2 + x1 + offsetX;
           var _paintY = y * 2 + y1 + offsetY;
-          if (_checkLimits(_paintX, _paintY, image1.width, image1.height)) {
-            _setPixel(image1, _paintX, _paintY, pixel[2 * x1 + y1] ? _whiteColor : _blackColor, pixelSize);
+          if (_checkLimits(_paintX * pixelSize, _paintY * pixelSize, image1.width, image1.height)) {
+            _setPixel(image1, _paintX, _paintY, pixelSize, pixel[2 * x1 + y1] ? _whiteColor : _blackColor);
           }
         }
       }
@@ -243,8 +243,8 @@ Future<Tuple2<Uint8List, Uint8List?>> _encodeWithKeyImage(
   return Future.value(Tuple2<Uint8List, Uint8List?>(encodeTrimmedPng(image1), null));
 }
 
-Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int offsetY, Image.Image _image
-    , {int pixelSize = 1}) {
+Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int offsetY, Image.Image _image,
+    int pixelSize) {
   var image1OffsetX = max(offsetX, 0).abs();
   var image1OffsetY = max(offsetY, 0).abs();
   var image2OffsetX = min(offsetX, 0).abs();
@@ -264,14 +264,14 @@ Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int off
         for (var y1 = 0; y1 < 2; y1++) {
           var offsetX = x * 2 + image1OffsetX + x1;
           var offsetY = y * 2 + image1OffsetY + y1;
-          if (_checkLimits(offsetX, offsetY, image1.width, image1.height)) {
-            _setPixel(image1, offsetX, offsetY, pixel.item1[2 * x1 + y1] ? _whiteColor : _blackColor, pixelSize);
+          if (_checkLimits(offsetX * pixelSize, offsetY * pixelSize, image1.width, image1.height)) {
+            _setPixel(image1, offsetX, offsetY, pixelSize, pixel.item1[2 * x1 + y1] ? _whiteColor : _blackColor);
           }
 
           offsetX = x * 2 + image2OffsetX + x1;
           offsetY = y * 2 + image2OffsetY + y1;
-          if (_checkLimits(offsetX, offsetY, image2.width, image2.height)) {
-            _setPixel(image2, offsetX, offsetY, pixel.item2[2 * x1 + y1] ? _whiteColor : _blackColor, pixelSize);
+          if (_checkLimits(offsetX * pixelSize, offsetY * pixelSize, image2.width, image2.height)) {
+            _setPixel(image2, offsetX, offsetY, pixelSize, pixel.item2[2 * x1 + y1] ? _whiteColor : _blackColor);
           }
         }
       }
@@ -295,8 +295,12 @@ List<bool> _pixelsFromKey(bool black, List<bool> keyPixel) {
   return pixels;
 }
 
-void _setPixel(Image.Image image, int offsetX, int offsetY, Image.ColorRgb8 color, int pixelSize) {
-  image.setPixel(offsetX, offsetY, color);
+void _setPixel(Image.Image image, int offsetX, int offsetY, int pixelSize, Image.ColorRgb8 color) {
+  for (var x = 0; x < pixelSize; x++ ) {
+    for (var y = 0; y < pixelSize; y++ ) {
+      image.setPixel(offsetX * pixelSize + x, offsetY * pixelSize + y, color);
+    }
+  }
 }
 
 Tuple2<List<bool>, List<bool>> _randomPixel(bool black) {
