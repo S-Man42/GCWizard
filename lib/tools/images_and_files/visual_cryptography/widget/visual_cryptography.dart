@@ -328,8 +328,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
 
     var encodeScale = _currentEncryptionWithKeyMode ? 100 : _encodeScale;
 
-    var width = (_currentImageWidth! * encodeScale ~/ 100 * 2 + _decodeOffsetsX.abs()) * _pixelSize;
-    var height = (_currentImageHeight! * encodeScale ~/ 100 * 2 + _decodeOffsetsY.abs()) * _pixelSize;
+    var width = (_currentImageWidth! * encodeScale ~/ 100 * 2 + _encodeOffsetsX.abs()) * _pixelSize;
+    var height = (_currentImageHeight! * encodeScale ~/ 100 * 2 + _encodeOffsetsY.abs()) * _pixelSize;
     _encodeImageSize = '$width × $height px';
   }
 
