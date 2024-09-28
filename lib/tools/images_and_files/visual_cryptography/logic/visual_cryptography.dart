@@ -35,6 +35,7 @@ Future<Uint8List?> _decodeImages(Uint8List image1, Uint8List image2, int offsetX
   var _image2 = decoder2.decode(image2);
   if (_image1 == null || _image2 == null) return Future.value(null);
 
+  _detectPixelSize(_image1, _image2);
   var image = Image.Image(
       width: max(_image1.width, _image2.width) + offsetX.abs(),
       height: max(_image1.height, _image2.height) + offsetY.abs());
@@ -74,6 +75,72 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
   jobData.sendAsyncPort?.send(output);
 
   return output;
+}
+
+int _detectPixelSize(Image.Image image1, Image.Image image2) {
+  var sizeMap = <int, int>{};
+  sizeMap = __detectPixelSize(image1, sizeMap);
+  sizeMap = __detectPixelSize(image2, sizeMap);
+
+  if (sizeMap.isEmpty) return 1;
+  var maxCountSize = const MapEntry<int, int>(1, 1);
+  sizeMap.forEach((key, value) {
+    if(maxCountSize.value < value){
+      maxCountSize = MapEntry<int, int>(key, value);
+    }
+  });
+  print(maxCountSize);
+  return maxCountSize.key;
+}
+
+Map<int, int> __detectPixelSize(Image.Image image, Map<int, int> sizeMap) {
+  for (var x = 0; x < image.width; x++) {
+    sizeMap = ___detectPixelSize(image, sizeMap, -1, x);
+  }
+  for (var y = 0; y < image.height; y++) {
+    sizeMap = ___detectPixelSize(image, sizeMap, y, -1);
+  }
+  return sizeMap;
+}
+
+Map<int, int> ___detectPixelSize(Image.Image image, Map<int, int> sizeMap, int row, int column) {
+  var prevPixel = false;
+  var count = 1;
+  if (row >= 0) {
+    prevPixel = _blackPixel(image.getPixel(0, row));
+    for (var x = 1; x < image.width; x++) {
+      var currentPixel = _blackPixel(image.getPixel(x, row));
+      count = _checkPixelLength(currentPixel, prevPixel, sizeMap, count);
+      prevPixel = currentPixel;
+    }
+  } else {
+    prevPixel = _blackPixel(image.getPixel(column, 0));
+    for (var y = 1; y < image.height; y++) {
+      var currentPixel = _blackPixel(image.getPixel(column, y));
+      count = _checkPixelLength(currentPixel, prevPixel, sizeMap, count);
+      prevPixel = currentPixel;
+    }
+  }
+  if (sizeMap.containsKey(count)) {
+    sizeMap[count] = sizeMap[count]! + 1;
+  } else {
+    sizeMap.addAll({count: 1});
+  }
+  return sizeMap;
+}
+
+int _checkPixelLength(bool currentPixel, bool prevPixel, Map<int, int> sizeMap, int count) {
+  if (currentPixel != prevPixel) {
+    if (sizeMap.containsKey(count)) {
+      sizeMap[count] = sizeMap[count]! + 1;
+    } else {
+      sizeMap.addAll({count: 1});
+    }
+    count = 1;
+  } else {
+    count++;
+  }
+  return count;
 }
 
 Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, int? offsetX, int? offsetY,
