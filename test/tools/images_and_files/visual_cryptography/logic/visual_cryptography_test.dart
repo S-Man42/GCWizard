@@ -21,7 +21,7 @@ void main() {
     List<Map<String, Object?>> _inputsToExpected = [
       {'image1' : 'test1_1.png', 'image2' : 'test1_2.png', 'offsetX' : 0, 'offsetY' : 0, 'expectedOutput' : 'result1.png'},
       {'image1' : 'test2_1.png', 'image2' : 'test2_2.png', 'offsetX' : 2, 'offsetY' : 1, 'expectedOutput' : 'result2.png'},
-      {'image1' : 'test3_1.png', 'image2' : 'test3_2.png', 'offsetX' : 4, 'offsetY' : 2, 'expectedOutput' : 'result3.png'},
+      {'image1' : 'test3_1.png', 'image2' : 'test3_2.png', 'offsetX' : 2, 'offsetY' : 1, 'expectedOutput' : 'result3.png'},
     ];
 
     for (var elem in _inputsToExpected) {

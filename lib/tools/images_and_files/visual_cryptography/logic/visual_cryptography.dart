@@ -35,7 +35,9 @@ Future<Uint8List?> _decodeImages(Uint8List image1, Uint8List image2, int offsetX
   var _image2 = decoder2.decode(image2);
   if (_image1 == null || _image2 == null) return Future.value(null);
 
-  _detectPixelSize(_image1, _image2);
+  var blockSize = _detectPixelSize(_image1, _image2);
+  offsetX *= blockSize;
+  offsetY *= blockSize;
   var image = Image.Image(
       width: max(_image1.width, _image2.width) + offsetX.abs(),
       height: max(_image1.height, _image2.height) + offsetY.abs());
@@ -89,16 +91,23 @@ int _detectPixelSize(Image.Image image1, Image.Image image2) {
       maxCountSize = MapEntry<int, int>(key, value);
     }
   });
-  print(maxCountSize);
   return maxCountSize.key;
 }
 
 Map<int, int> __detectPixelSize(Image.Image image, Map<int, int> sizeMap) {
-  for (var x = 0; x < image.width; x++) {
-    sizeMap = ___detectPixelSize(image, sizeMap, -1, x);
-  }
-  for (var y = 0; y < image.height; y++) {
-    sizeMap = ___detectPixelSize(image, sizeMap, y, -1);
+  var offset = 0;
+  for (var offset = 0; offset < max(image.width, image.height); offset++) {
+    if (offset + 1 < image.width) {
+      for (var x = offset; x < offset + 1; x++) {
+        sizeMap = ___detectPixelSize(image, sizeMap, -1, x);
+      }
+    }
+    if (offset + 1 < image.height) {
+      for (var y = 0; y < offset + 1; y++) {
+        sizeMap = ___detectPixelSize(image, sizeMap, y, -1);
+      }
+    }
+    if (sizeMap.values.reduce((a, b) => a + b) > 100) break;
   }
   return sizeMap;
 }
