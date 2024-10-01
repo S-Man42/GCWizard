@@ -127,7 +127,7 @@ class GCWPopupMenuItem {
 }
 
 Row iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
-    {double rotateDegrees = 0.0, Function? onLongPress, Color? color}) {
+    {double rotateDegrees = 0.0, Function? onLongPress, Color? color, bool? softWrap}) {
   var _color = color ?? themeColors().dialogText();
 
   return Row(
@@ -142,7 +142,12 @@ Row iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
         ),
         onLongPress: () => onLongPress,
       ),
-      Text(i18n(context, title, ifTranslationNotExists: title), style: TextStyle(color: themeColors().dialogText()))
+      Expanded(
+        child: Text(i18n(context, title, ifTranslationNotExists: title),
+          style: TextStyle(color: themeColors().dialogText()),
+          softWrap: softWrap,
+        )
+      )
     ],
   );
 }
