@@ -288,7 +288,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.METADATA))
                     GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata', softWrap: true),
+                      child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
@@ -302,8 +302,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.HEXVIEW))
                     GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer',
-                          softWrap: true),
+                      child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
@@ -317,8 +316,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.HIDDENDATA))
                     GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata',
-                          softWrap: true),
+                      child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
                       action: (index) => setState(() {
                         if (widget.onBeforeLoadBigImage != null) {
                           widget.onBeforeLoadBigImage!().then((imgData) {
@@ -333,7 +331,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
                     GCWPopupMenuItem(
                         child: iconedGCWPopupMenuItem(
-                            context, Icons.brush, 'image_colorcorrections_openincolorcorrection', softWrap: true),
+                            context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
@@ -346,8 +344,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool!.contains(GCWImageViewOpenInTools.FLIPROTATE))
                     GCWPopupMenuItem(
-                        child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_fliprotate_openinfliprotate',
-                            softWrap: true),
+                        child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_fliprotate_openinfliprotate'),
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage!().then((imgData) {
