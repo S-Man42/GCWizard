@@ -216,10 +216,6 @@ const Map<int, String> _key = {
   6: '123456'
 };
 
-bool _invalidAlphabet(String alphabet){
-  return incompleteCustomAlphabet(alphabet);
-}
-
 Object _bifid(Object text, Object key, Object mode, Object polybiosMode, Object alphabet, Object modification) {
   if (_isNotAInt(mode) || _isNotAInt(key) || _isNotAInt(polybiosMode) || _isNotAInt(modification) || _isNotAString(text) || _isNotAString(alphabet)) {
     _handleError(_INVALIDTYPECAST);

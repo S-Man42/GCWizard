@@ -1250,6 +1250,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'postcode',
+      'barcodes',
       'symbol_postcode01247',
       'symbol_postcode8421',
       'binary'
@@ -1331,6 +1332,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'qrcode',
+      'barcodes',
     ], licenses: const []),
     GCWTool(tool: const QuadraticEquation(), id: 'quadratic_equation', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -1722,9 +1724,9 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'de.wikipedia.org and contributors',
-          title: 'Kühlgrenztemperatur',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=K%C3%BChlgrenztemperatur&oldid=246986523',
+          author: 'en.wikipedia.org and contributors',
+          title: 'Wet-bulb globe temperature',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wet-bulb_globe_temperature&oldid=1237580210',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
 
@@ -6602,6 +6604,23 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://fontmeme.com/fonts/pigpen-cipher-font/',
           licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
+    GCWSymbolTableTool(symbolKey: 'leitz_orgacolor', symbolSearchStrings: const [
+      'symbol_leitz_orgacolor',
+      'barcodes',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Leitz',
+          title: 'Buchstabensignale',
+          sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale.html',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Leitz',
+          title: 'Ziffernsignale',
+          sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale,b-ziffernsignale.html',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
       'symbol_linear_b',
     ], licenses: [
@@ -6610,7 +6629,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Unknown',
           title: 'Noto Sans Linear B',
           sourceUrl: 'https://fonts.google.com/noto/specimen/Noto+Sans+Linear+B',
-          licenseType: ToolLicenseType.SIL_OFL11)
+          licenseType: ToolLicenseType.OFL11)
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',
