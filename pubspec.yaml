@@ -28,9 +28,8 @@ dependencies:
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^6.2.1
-  flutter_map_marker_popup: ^6.1.2
-  flutter_map_tappable_polyline: ^6.0.0
+  flutter_map: ^7.0.2
+  flutter_map_marker_popup: ^7.0.0
   highlight: ^0.7.0
   http: ^1.2.2
   http_parser: ^4.0.2
