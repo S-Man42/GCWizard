@@ -741,7 +741,7 @@ const Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
 };
 
 final Map<String, String> _NAVAJO_DECODE_DICTIONARY = _addSpecialEntries(
-    switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY), {'DINEH-NAY-YE-HI': 'TRANSPORT', 'NEH-DIH': 'EXCEPT'});
+    switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY), const {'DINEH-NAY-YE-HI': 'TRANSPORT', 'NEH-DIH': 'EXCEPT'});
 
 const Map<String, String> _NAVAJO_DECODE_ALPHABET = {
   '.': '.',
