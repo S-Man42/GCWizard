@@ -153,6 +153,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/clocks_2_1/
     - lib/tools/symbol_tables/_common/assets/clocks_2_2/
     - lib/tools/symbol_tables/_common/assets/clocks_3/
+    - lib/tools/symbol_tables/_common/assets/codescript/
     - lib/tools/symbol_tables/_common/assets/color_add/
     - lib/tools/symbol_tables/_common/assets/color_code/
     - lib/tools/symbol_tables/_common/assets/color_honey/

@@ -5448,6 +5448,25 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'clocks_3', symbolSearchStrings: const [
       'symbol_clocks',
     ], licenses: const []),
+    GCWSymbolTableTool(symbolKey: 'codescript', symbolSearchStrings: const [
+      'symbol_codescript',
+    ], licenses: [
+      ToolLicenseImage(
+        context: context,
+        author: 'Massimo Monagheddu',
+        title: 'Code Script',
+        sourceUrl: 'https://web.archive.org/web/20241002202157/https://www.omniglot.com/conscripts/codescript.htm',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),)
+    ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: const [
       'color',
       'symbol_color_add',
