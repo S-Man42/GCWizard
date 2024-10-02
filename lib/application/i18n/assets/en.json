@@ -4910,6 +4910,8 @@
   "symboltables_clocks_2_2_shift_to_letter_table": "SPACE, LETTERS FOLLOW",
   "symboltables_clocks_3_title": "Clocks V3 A-Z 0-9",
   "symboltables_clocks_3_description": "Time symbol code A-Z 0-9 unique",
+  "symboltables_codescript_title": "Code Script",
+  "symboltables_codescript_description": "Code Script is an alternative alphabet for English invented by Massimo Monagheddu and derived from geometric forms",
   "symboltables_color_add_title": "ColorADD",
   "symboltables_color_add_description": "Color identification system from Miguel Neiva for colorblind people",
   "symboltables_color_code_title": "Color Code",
