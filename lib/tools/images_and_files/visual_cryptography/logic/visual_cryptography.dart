@@ -80,76 +80,49 @@ Future<Tuple2<int, int>?> offsetAutoCalcAsync(GCWAsyncExecuterParameters? jobDat
 }
 
 int _detectPixelSize(Image.Image image1, Image.Image image2) {
-  var sizeMap = <int, int>{};
-  sizeMap = __detectPixelSize(image1, sizeMap);
-  sizeMap = __detectPixelSize(image2, sizeMap);
-
-  if (sizeMap.isEmpty) return 1;
-  var maxCountSize = const MapEntry<int, int>(1, 1);
-  sizeMap.forEach((key, value) {
-    if(maxCountSize.value < value){
-      maxCountSize = MapEntry<int, int>(key, value);
-    }
-  });
-  return maxCountSize.key;
+  return __detectPixelSize(image1);
 }
 
-Map<int, int> __detectPixelSize(Image.Image image, Map<int, int> sizeMap) {
-  var offset = 0;
-  for (var offset = 0; offset < max(image.width, image.height); offset++) {
-    if (offset + 1 < image.width) {
-      for (var x = offset; x < offset + 1; x++) {
-        sizeMap = ___detectPixelSize(image, sizeMap, -1, x);
+int __detectPixelSize(Image.Image image) {
+  var refOffset = _detectReferenceCorner(image);
+  var refPixel = _blackPixel(image.getPixel(refOffset.x, refOffset.y));
+
+  for (var offset = 1; offset < min(image.width - refOffset.x, image.height - refOffset.y); offset++) {
+    if ((_blackPixel(image.getPixel(refOffset.x + offset, refOffset.y)) != refPixel) ||
+        (_blackPixel(image.getPixel(refOffset.x, refOffset.y + offset)) != refPixel)) {
+      return offset;
+    }
+  }
+  return 1;
+}
+
+Point<int> _detectReferenceCorner(Image.Image image) {
+  var offsetX = 0;
+  var offsetY = 0;
+  var found = false;
+
+  for (var x = 0; x < image.width; x++) {
+    for (var y = 0; y < image.height; y++) {
+      if (_blackPixel(image.getPixel(x, y))) {
+        offsetX = x;
+        found = true;
+        break;
       }
     }
-    if (offset + 1 < image.height) {
-      for (var y = 0; y < offset + 1; y++) {
-        sizeMap = ___detectPixelSize(image, sizeMap, y, -1);
+    if (found) break;
+  }
+  found = false;
+  for (var y = 0; y < image.height; y++) {
+    for (var x = 0; x < image.width; x++) {
+      if (_blackPixel(image.getPixel(x, y))) {
+        offsetY = y;
+        found = true;
+        break;
       }
     }
-    if (sizeMap.values.reduce((a, b) => a + b) > 100) break;
+    if (found) break;
   }
-  return sizeMap;
-}
-
-Map<int, int> ___detectPixelSize(Image.Image image, Map<int, int> sizeMap, int row, int column) {
-  var prevPixel = false;
-  var count = 1;
-  if (row >= 0) {
-    prevPixel = _blackPixel(image.getPixel(0, row));
-    for (var x = 1; x < image.width; x++) {
-      var currentPixel = _blackPixel(image.getPixel(x, row));
-      count = _checkPixelLength(currentPixel, prevPixel, sizeMap, count);
-      prevPixel = currentPixel;
-    }
-  } else {
-    prevPixel = _blackPixel(image.getPixel(column, 0));
-    for (var y = 1; y < image.height; y++) {
-      var currentPixel = _blackPixel(image.getPixel(column, y));
-      count = _checkPixelLength(currentPixel, prevPixel, sizeMap, count);
-      prevPixel = currentPixel;
-    }
-  }
-  if (sizeMap.containsKey(count)) {
-    sizeMap[count] = sizeMap[count]! + 1;
-  } else {
-    sizeMap.addAll({count: 1});
-  }
-  return sizeMap;
-}
-
-int _checkPixelLength(bool currentPixel, bool prevPixel, Map<int, int> sizeMap, int count) {
-  if (currentPixel != prevPixel) {
-    if (sizeMap.containsKey(count)) {
-      sizeMap[count] = sizeMap[count]! + 1;
-    } else {
-      sizeMap.addAll({count: 1});
-    }
-    count = 1;
-  } else {
-    count++;
-  }
-  return count;
+  return Point<int>(offsetX, offsetY);
 }
 
 Future<Tuple2<int, int>?> _offsetAutoCalc(Uint8List image1, Uint8List image2, int? offsetX, int? offsetY,

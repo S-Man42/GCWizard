@@ -22,6 +22,7 @@ void main() {
       {'image1' : 'test1_1.png', 'image2' : 'test1_2.png', 'offsetX' : 0, 'offsetY' : 0, 'expectedOutput' : 'result1.png'},
       {'image1' : 'test2_1.png', 'image2' : 'test2_2.png', 'offsetX' : 2, 'offsetY' : 1, 'expectedOutput' : 'result2.png'},
       {'image1' : 'test3_1.png', 'image2' : 'test3_2.png', 'offsetX' : 2, 'offsetY' : 1, 'expectedOutput' : 'result3.png'},
+      {'image1' : 'test4_1.png', 'image2' : 'test4_2.png', 'offsetX' : -3, 'offsetY' : -1, 'expectedOutput' : 'result4.png'},
     ];
 
     for (var elem in _inputsToExpected) {
