@@ -211,6 +211,21 @@ Future<Tuple2<Uint8List, Uint8List?>?> encodeImagesAsync(GCWAsyncExecuterParamet
 
   return output;
 }
+int encodeImageWidth(int imageWidth, bool withKeyImage, int offsetX, int scale, int pixelSize ) {
+  if (withKeyImage) {
+    scale = 100;
+    pixelSize = 1;
+  }
+  return (((imageWidth * scale/ 100.0).round() * 2 + offsetX.abs()) * pixelSize).round();
+}
+
+int encodeImageHight(int imageHeight, bool withKeyImage, int offsetY, int scale, int pixelSize ) {
+  if (withKeyImage) {
+    scale = 100;
+    pixelSize = 1;
+  }
+  return (((imageHeight * scale/ 100.0).round() * 2 + offsetY.abs()) * pixelSize).round();
+}
 
 Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
     Uint8List image, Uint8List? keyImage, int offsetX, int offsetY, int scale, int pixelSize) {
@@ -220,17 +235,15 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
 
     var hasKeyImage = keyImage != null;
     Image.Image? _keyImage;
+
     if (hasKeyImage) {
       _keyImage = decodeImage4ChannelFormat(keyImage);
       if (_keyImage == null) return Future.value(null);
 
+      pixelSize =1;
       scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();
-    }
-    pixelSize = max(1, pixelSize);
-    if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: _image.height * scale ~/ 100);
 
-    if (hasKeyImage) {
-      var _dstImage = Image.Image(width: _keyImage!.width ~/ 2, height: _keyImage.height ~/ 2);
+      var _dstImage = Image.Image(width: _keyImage.width ~/ 2, height: _keyImage.height ~/ 2);
       _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: _whiteColor);
 
       var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
@@ -241,6 +254,9 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
 
       return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage, pixelSize);
     } else {
+      pixelSize = max(1, pixelSize);
+      if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: (_image.height * scale/ 100.0).round());
+
       return _encodeWithoutKeyImage(offsetX, offsetY, _image, pixelSize);
     }
   } catch (e) {}

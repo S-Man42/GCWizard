@@ -50,6 +50,8 @@ class _VisualCryptographyState extends State<VisualCryptography> {
 
   int? _currentImageWidth;
   int? _currentImageHeight;
+  int? _currentKeyImageWidth;
+  int? _currentKeyImageHeight;
 
   var _currentEncryptionWithKeyMode = false;
   var _currentEncryptionAdvancedMode = GCWSwitchPosition.left;
@@ -209,6 +211,7 @@ class _VisualCryptographyState extends State<VisualCryptography> {
                     setState(() {
                       _encodeKeyImage = _file;
                       _encodeOutputImages = null;
+                      __encodeKeyImageSize();
                     });
                   },
                 ),
@@ -320,16 +323,31 @@ class _VisualCryptographyState extends State<VisualCryptography> {
     });
   }
 
+  void __encodeKeyImageSize() {
+    if (_encodeKeyImage == null) return;
+    var _image = img.decodeImage(_encodeKeyImage!.bytes);
+    if (_image == null) return;
+
+    _currentKeyImageWidth = _image.width;
+    _currentKeyImageHeight = _image.height;
+
+    setState(() {
+      _updateEncodeImageSize();
+    });
+  }
+
   void _updateEncodeImageSize() {
     if (_currentImageWidth == null || _currentImageHeight == null) {
       _encodeImageSize = null;
       return;
     }
 
-    var encodeScale = _currentEncryptionWithKeyMode ? 100 : _encodeScale;
+    var hasKeyImage = _currentEncryptionWithKeyMode && (_encodeKeyImage != null);
 
-    var width = (_currentImageWidth! * encodeScale ~/ 100 * 2 + _encodeOffsetsX.abs()) * _pixelSize;
-    var height = (_currentImageHeight! * encodeScale ~/ 100 * 2 + _encodeOffsetsY.abs()) * _pixelSize;
+    var width = encodeImageWidth(hasKeyImage ? _currentKeyImageWidth! : _currentImageWidth!,
+        hasKeyImage, _encodeOffsetsX, _encodeScale, _pixelSize);
+    var height = encodeImageHight(hasKeyImage ? _currentKeyImageHeight! : _currentImageHeight!,
+        hasKeyImage, _encodeOffsetsY, _encodeScale, _pixelSize);
     _encodeImageSize = '$width × $height px';
   }
 
