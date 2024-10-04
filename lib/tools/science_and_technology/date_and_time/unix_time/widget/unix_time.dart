@@ -41,28 +41,29 @@ class _UnixTimeState extends State<UnixTime> {
             });
           },
         ),
-        if (_currentMode == GCWSwitchPosition.right)
-          GCWIntegerSpinner(
-              value: _currentTimeStamp,
-              min: 0,
-              onChanged: (value) {
-                setState(() {
-                  _currentTimeStamp = value;
-                });
-              }),
-        if (_currentMode == GCWSwitchPosition.left)
-          GCWDateTimePicker(
-            config: const {
-              DateTimePickerConfig.DATE,
-              DateTimePickerConfig.TIME,
-              DateTimePickerConfig.SECOND_AS_INT,
-            },
-            onChanged: (datetime) {
-              setState(() {
-                _currentDateTime = datetime.datetime;
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.right
+            ? GCWIntegerSpinner(
+                value: _currentTimeStamp,
+                min: 0,
+                onChanged: (value) {
+                  setState(() {
+                    _currentTimeStamp = value;
+                  });
+                })
+            // : GCWDateTimePicker(
+            //     config: const {
+            //       DateTimePickerConfig.DATE,
+            //       DateTimePickerConfig.TIME,
+            //       DateTimePickerConfig.SECOND_AS_INT,
+            //       DateTimePickerConfig.TIMEZONES,
+            //     },
+            //     onChanged: (datetime) {
+            //       setState(() {
+            //         _currentDateTime = datetime.datetime;
+            //       });
+            //     },
+            //   ),
+        : Row(),
         _buildOutput()
       ],
     );
