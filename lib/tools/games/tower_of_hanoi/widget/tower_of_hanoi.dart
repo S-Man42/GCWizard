@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -42,7 +44,35 @@ class _TowerOfHanoiState extends State<TowerOfHanoi> {
 
   Widget _buildOutput(BuildContext context) {
     var moveString = i18n(context, 'tower_of_hanoi_move_message');
-    var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
+
+    var dataMoves = <List<Object>>[];
+    if (_discCount <= MAXDISCVIEWCOUNT) {
+      dataMoves = moves(_discCount).mapIndexed((index, entry) {
+        var move = moveString.replaceFirst('{0}', entry.$2.toString());
+        move = move.replaceFirst('{1}', entry.$3.toString());
+        move = move.replaceFirst('{2}', entry.$4.toString());
+        return <Object>[(index + 1).toString(),
+          Column(
+            children: [
+              GCWText(text: move),
+              Container(height: 2 * DOUBLE_DEFAULT_MARGIN),
+              Container(
+                color: themeColors().dialog(),
+                child: GCWText(
+                  text: entry.$1,
+                  style: gcwMonotypeTextStyle().copyWith(color: themeColors().dialogText()),
+                ),
+              ),
+            ],
+          )
+        ];
+      }).toList();
+
+      dataMoves.insert(0, [
+        i18n(context, 'tower_of_hanoi_move'),
+        i18n(context, 'tower_of_hanoi_towers')
+      ]);
+    }
 
     return Column(
         children: <Widget>[
@@ -52,21 +82,14 @@ class _TowerOfHanoiState extends State<TowerOfHanoi> {
             flexValues: const [2, 4]
           ),
           Container(padding: const EdgeInsets.only(bottom: 10)),
+          GCWTextDivider(text: i18n(context, 'tower_of_hanoi_moves')),
           (_discCount > MAXDISCVIEWCOUNT)
-          ? GCWText(text: i18n(context, 'tower_of_hanoi_to_many_moves'))
-          : GCWColumnedMultilineOutput(
-              hasHeader: true,
-              style: gcwMonotypeTextStyle(),
-              firstRows: [Row(children: [
-                Expanded(flex: 2, child: GCWText(text: i18n(context, 'tower_of_hanoi_move'), style: boldTextStyle )),
-                Expanded(flex: 4, child: GCWText(text: i18n(context, 'tower_of_hanoi_towers'), style: boldTextStyle))])],
-              data: moves(_discCount).mapIndexed((index, entry) {
-                var move = moveString.replaceFirst('{0}', entry.$2.toString());
-                move = move.replaceFirst('{1}', entry.$3.toString());
-                move = move.replaceFirst('{2}', entry.$4.toString());
-                return [(index + 1).toString(), entry.$1 + '\n' + move];}).toList(),
-              flexValues: const [1, 4]
-            ),
+            ? GCWText(text: i18n(context, 'tower_of_hanoi_to_many_moves'))
+            : GCWColumnedMultilineOutput(
+                hasHeader: true,
+                flexValues: const [1, 4],
+                data: dataMoves
+              ),
     ]);
   }
 }

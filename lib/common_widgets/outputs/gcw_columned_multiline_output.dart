@@ -74,14 +74,12 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
               }
             }
 
-            isFirst = false;
             return MapEntry(
                 index, Expanded(flex: index < widget.flexValues.length ? widget.flexValues[index] : 1, child: child));
           })
           .values
           .toList();
 
-      isFirst = true;
       String? copyText;
       copyColumn ??= rowData.length - 1;
       if (copyColumn != null && copyColumn! >= 0) {
@@ -126,7 +124,7 @@ class _GCWColumnedMultilineOutputState extends State<GCWColumnedMultilineOutput>
       }
       odd = !odd;
 
-
+      isFirst = false;
       if (widget.tappables != null) {
         return InkWell(
           onTap: widget.tappables![index++],
