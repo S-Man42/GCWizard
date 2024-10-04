@@ -283,6 +283,7 @@ import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solve
 import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
@@ -1250,6 +1251,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'postcode',
+      'barcodes',
       'symbol_postcode01247',
       'symbol_postcode8421',
       'binary'
@@ -1331,6 +1333,7 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'qrcode',
+      'barcodes',
     ], licenses: const []),
     GCWTool(tool: const QuadraticEquation(), id: 'quadratic_equation', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -1570,6 +1573,19 @@ void initializeRegistry(BuildContext context) {
         id: 'tomtom_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
+    GCWTool(tool: const TowerOfHanoi(), id: 'tower_of_hanoi', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'games',
+      'tower_of_hanoi',
+    ], licenses: [
+    ToolLicenseOnlineArticle(
+      context: context,
+      author: 'Manish Bhojasia',
+      title: 'Tower of Hanoi Program in C#',
+      sourceUrl: 'https://web.archive.org/web/20170504070744/https://www.sanfoundry.com/csharp-program-tower-of-hanoi/',
+      licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWTool(tool: const TTS(), id: 'tts', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1722,9 +1738,9 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'de.wikipedia.org and contributors',
-          title: 'Kühlgrenztemperatur',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=K%C3%BChlgrenztemperatur&oldid=246986523',
+          author: 'en.wikipedia.org and contributors',
+          title: 'Wet-bulb globe temperature',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wet-bulb_globe_temperature&oldid=1237580210',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
 
@@ -1844,10 +1860,10 @@ void initializeRegistry(BuildContext context) {
           ),
           ToolLicensePortedCode(
               context: context,
-              author: '@max-mapper',
+              author: '@max-mapper (Github)',
               title: 'equatorial',
               licenseType: ToolLicenseType.GITHUB_DEFAULT,
-              sourceUrl: 'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec'),
+              sourceUrl: 'https://web.archive.org/web/20240819162607/https://github.com/max-mapper/equatorial'),
         ]),
 
     //Babylon Numbers Selection **************************************************************************************
@@ -2872,7 +2888,15 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const CalendarWeek(), id: 'dates_calendarweek', searchKeys: const [
       'dates',
       'dates_calendarweek',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicensePortedCode(context: context,
+        author: '@Samurai8 (StackOverflow)',
+        title: 'Answer: Week number in US format',
+        sourceUrl: 'https://web.archive.org/web/20241004130845/https://stackoverflow.com/questions/34369722/week-number-in-us-format/34373514#34373514',
+        licenseType: ToolLicenseType.CCBYSA3,
+        licenseUrl: 'https://web.archive.org/web/20241004043710/https://creativecommons.org/licenses/by-sa/3.0/'
+      )
+    ]),
 
     GCWTool(tool: const DayOfTheYear(), id: 'dates_day_of_the_year', searchKeys: const [
       'dates',
@@ -5448,6 +5472,25 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'clocks_3', symbolSearchStrings: const [
       'symbol_clocks',
     ], licenses: const []),
+    GCWSymbolTableTool(symbolKey: 'codescript', symbolSearchStrings: const [
+      'symbol_codescript',
+    ], licenses: [
+      ToolLicenseImage(
+        context: context,
+        author: 'Massimo Monagheddu',
+        title: 'Code Script',
+        sourceUrl: 'https://web.archive.org/web/20241002202157/https://www.omniglot.com/conscripts/codescript.htm',
+        licenseUseType: ToolLicenseUseType.COPY,
+        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+        privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 7,
+            permissionDay: 31,
+            permissionAuthor: 'Simon Ager (Omniglot)'
+        ),)
+    ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: const [
       'color',
       'symbol_color_add',
@@ -6602,6 +6645,23 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://fontmeme.com/fonts/pigpen-cipher-font/',
           licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
+    GCWSymbolTableTool(symbolKey: 'leitz_orgacolor', symbolSearchStrings: const [
+      'symbol_leitz_orgacolor',
+      'barcodes',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Leitz',
+          title: 'Buchstabensignale',
+          sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale.html',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Leitz',
+          title: 'Ziffernsignale',
+          sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale,b-ziffernsignale.html',
+          licenseType: ToolLicenseType.FREE_TO_USE),
+    ]),
     GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
       'symbol_linear_b',
     ], licenses: [
@@ -6610,7 +6670,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Unknown',
           title: 'Noto Sans Linear B',
           sourceUrl: 'https://fonts.google.com/noto/specimen/Noto+Sans+Linear+B',
-          licenseType: ToolLicenseType.SIL_OFL11)
+          licenseType: ToolLicenseType.OFL11)
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: const [
       'symbol_signlanguage',

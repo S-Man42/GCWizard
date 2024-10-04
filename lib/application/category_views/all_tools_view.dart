@@ -178,6 +178,7 @@ import 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter
 import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
@@ -767,6 +768,7 @@ void _initStaticToolList() {
       className(const TextAnalysis()),
       className(const TimeCalculator()),
       className(const TomTomSelection()),
+      className(const TowerOfHanoi()),
       className(const Trifid()),
       className(const Trithemius()),
       className(const TTS()),

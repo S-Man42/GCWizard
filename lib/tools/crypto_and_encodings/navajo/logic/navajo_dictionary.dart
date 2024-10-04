@@ -123,7 +123,7 @@ const Map<String, List<String>> _NAVAJO_ENCODE_ALPHABET = {
   ],
 };
 
-final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
+const Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
   'CORPS': 'DIN-NEH-IH',
   'DIVISION': 'ASHIH-HI',
   'REGIMENT': 'TABAHA',
@@ -741,9 +741,9 @@ final Map<String, String> _NAVAJO_ENCODE_DICTIONARY = {
 };
 
 final Map<String, String> _NAVAJO_DECODE_DICTIONARY = _addSpecialEntries(
-    switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY), {'DINEH-NAY-YE-HI': 'TRANSPORT', 'NEH-DIH': 'EXCEPT'});
+    switchMapKeyValue(_NAVAJO_ENCODE_DICTIONARY), const {'DINEH-NAY-YE-HI': 'TRANSPORT', 'NEH-DIH': 'EXCEPT'});
 
-final Map<String, String> _NAVAJO_DECODE_ALPHABET = {
+const Map<String, String> _NAVAJO_DECODE_ALPHABET = {
   '.': '.',
   'WOL-LA-CHEE': 'A',
   'BE-LA-SANA': 'A',
