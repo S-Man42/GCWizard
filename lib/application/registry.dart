@@ -1846,10 +1846,10 @@ void initializeRegistry(BuildContext context) {
           ),
           ToolLicensePortedCode(
               context: context,
-              author: '@max-mapper',
+              author: '@max-mapper (Github)',
               title: 'equatorial',
               licenseType: ToolLicenseType.GITHUB_DEFAULT,
-              sourceUrl: 'https://github.com/S-Man42/equatorial/tree/f11b2a91be12721d87b108cc495953bc96565fec'),
+              sourceUrl: 'https://web.archive.org/web/20240819162607/https://github.com/max-mapper/equatorial'),
         ]),
 
     //Babylon Numbers Selection **************************************************************************************
@@ -2874,7 +2874,15 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const CalendarWeek(), id: 'dates_calendarweek', searchKeys: const [
       'dates',
       'dates_calendarweek',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicensePortedCode(context: context,
+        author: '@Samurai8 (StackOverflow)',
+        title: 'Answer: Week number in US format',
+        sourceUrl: 'https://web.archive.org/web/20241004130845/https://stackoverflow.com/questions/34369722/week-number-in-us-format/34373514#34373514',
+        licenseType: ToolLicenseType.CCBYSA3,
+        licenseUrl: 'https://web.archive.org/web/20241004043710/https://creativecommons.org/licenses/by-sa/3.0/'
+      )
+    ]),
 
     GCWTool(tool: const DayOfTheYear(), id: 'dates_day_of_the_year', searchKeys: const [
       'dates',
