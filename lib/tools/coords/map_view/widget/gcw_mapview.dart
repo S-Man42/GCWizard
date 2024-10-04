@@ -548,28 +548,24 @@ class _GCWMapViewState extends State<GCWMapView> {
     }
 
     return points.map((_point) {
-      var icon = Stack(
-        alignment: Alignment.center,
-        children: [
-          Icon(
-            iconFromMapMarkerValues(_markerIcon),
-            size: 28.3,
-            color: COLOR_MAP_POINT_OUTLINE,
+      var icon = Icon(
+        iconFromMapMarkerValues(_markerIcon),
+        size: 25.0,
+        color: _point.color,
+        shadows: const [
+          Shadow(
+            color: Colors.white,
+            blurRadius: 5.0,
           ),
-          Icon(
-            iconFromMapMarkerValues(_markerIcon),
-            size: 25.0,
-            color: _point.color,
-          )
-        ],
+        ]
       );
 
       var marker = widget.isEditable && _point.isEditable ? _createDragableIcon(_point, icon) : icon;
 
       return _GCWMarker(
           coordinateDescription: _buildPopupCoordinateDescription(_point),
-          width: 28.3,
-          height: 28.3,
+          width: 25,
+          height: _markerIcon == MapMarkerIcon.CROSSLINES ? 24.5 : 23,
           mapPoint: _point,
           child: marker,
           alignment: _mapMarkerAlignment(_markerIcon)
