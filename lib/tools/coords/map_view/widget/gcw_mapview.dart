@@ -554,7 +554,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         color: _point.color,
         shadows: const [
           Shadow(
-            color: Colors.white,
+            color: COLOR_MAP_POINT_OUTLINE,
             blurRadius: 5.0,
           ),
         ]
