@@ -240,8 +240,8 @@ Future<Tuple2<Uint8List, Uint8List?>?> _encodeImage(
       _keyImage = decodeImage4ChannelFormat(keyImage);
       if (_keyImage == null) return Future.value(null);
 
-      pixelSize =1;
-      scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();
+      pixelSize = 1;
+      scale = (min<double>(_keyImage.width / 2.0 / _image.width, _keyImage.height / 2.0 / _image.height) * 100).round();
 
       var _dstImage = Image.Image(width: _keyImage.width ~/ 2, height: _keyImage.height ~/ 2);
       _dstImage = Image.drawRect(_dstImage, x1: 0, y1: 0, x2: _dstImage.width, y2: _dstImage.height, color: _whiteColor);
