@@ -16,11 +16,12 @@ class UnixTime extends StatefulWidget {
 
 class _UnixTimeState extends State<UnixTime> {
   int _currentTimeStamp = 0;
-  var _currentDateTime = DateTime.now();
+  late DateTime _currentDateTime;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
+    _currentDateTime = DateTime.now().toUtc();
     super.initState();
   }
 
