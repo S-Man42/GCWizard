@@ -25,13 +25,13 @@ void main() {
       {'expectedOutput' : DateTime(2023, 6, 22, 19, 40, 31), 'UnixTimeSTamp' : 1687455631},
       {'expectedOutput' : DateTime(1994, 2, 11, 1, 0, 0), 'UnixTimeSTamp' : 760924800},
       {'expectedOutput' : DateTime(1970, 1, 16, 2, 11, 57), 'UnixTimeSTamp' : 1300317},
-      {'expectedOutput' : DateTime(1970, 1, 1, 0, 0, 0), 'UnixTimeSTamp' : 0},
+      {'expectedOutput' : DateTime(1970, 1, 1, 1, 0, 0), 'UnixTimeSTamp' : 0},
     ];
 
     for (var elem in _inputsToExpected) {
       test('date: ${elem['jd']}', () {
         var _actual = UnixTimeToDateTime(elem['UnixTimeSTamp'] as int);
-        expect(_actual.GregorianDateTime, elem['expectedOutput']);
+        expect(_actual.loc, elem['expectedOutput']);
       });
     }
   });

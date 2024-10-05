@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -50,20 +51,19 @@ class _UnixTimeState extends State<UnixTime> {
                     _currentTimeStamp = value;
                   });
                 })
-            // : GCWDateTimePicker(
-            //     config: const {
-            //       DateTimePickerConfig.DATE,
-            //       DateTimePickerConfig.TIME,
-            //       DateTimePickerConfig.SECOND_AS_INT,
-            //       DateTimePickerConfig.TIMEZONES,
-            //     },
-            //     onChanged: (datetime) {
-            //       setState(() {
-            //         _currentDateTime = datetime.datetime;
-            //       });
-            //     },
-            //   ),
-        : Row(),
+            : GCWDateTimePicker(
+                datetime: _currentDateTime,
+                config: const {
+                  DateTimePickerConfig.DATE,
+                  DateTimePickerConfig.TIME,
+                  DateTimePickerConfig.SECOND_AS_INT,
+                },
+                onChanged: (datetime) {
+                  setState(() {
+                    _currentDateTime = datetime.datetime;
+                  });
+                },
+              ),
         _buildOutput()
       ],
     );
@@ -83,7 +83,21 @@ class _UnixTimeState extends State<UnixTime> {
           ? i18n(context, output.Error)
           : _currentMode == GCWSwitchPosition.left
               ? output.UnixTimeStamp
-              : _formatDate(context, output.GregorianDateTime),
+              : GCWColumnedMultilineOutput(
+                  flexValues: [5, 1, 4],
+                  data: [
+                    [
+                      output.UTC.timeZoneName,
+                      output.UTC.timeZoneOffset.inHours,
+                      _formatDate(context, output.UTC),
+                    ],
+                    [
+                      output.loc.timeZoneName,
+                      output.loc.timeZoneOffset.inHours,
+                      _formatDate(context, output.loc),
+                    ]
+                  ],
+                ),
     );
   }
 
