@@ -35,31 +35,33 @@ Future<Uint8List?> _decodeImages(Uint8List image1, Uint8List image2, int offsetX
   var _image2 = decoder2.decode(image2);
   if (_image1 == null || _image2 == null) return Future.value(null);
 
-  var blockSize = _detectPixelSize(_image1, _image2);
-  offsetX *= blockSize;
-  offsetY *= blockSize;
+  var pixelSize = _detectPixelSize(_image1, _image2);
+  offsetX *= pixelSize;
+  offsetY *= pixelSize;
   var image = Image.Image(
-      width: max(_image1.width, _image2.width) + offsetX.abs(),
-      height: max(_image1.height, _image2.height) + offsetY.abs());
+      width: (max(_image1.width, _image2.width)/ pixelSize).ceil() + offsetX.abs(),
+      height: (max(_image1.height, _image2.height)/ pixelSize).ceil() + offsetY.abs());
 
-  image = _pasteImage(image, _image1, min(offsetX, 0).abs(), min(offsetY, 0).abs(), false);
-  image = _pasteImage(image, _image2, max(offsetX, 0).abs(), max(offsetY, 0).abs(), true);
+  image = _pasteImage(image, _image1, min(offsetX, 0).abs(), min(offsetY, 0).abs(), false, pixelSize);
+  image = _pasteImage(image, _image2, max(offsetX, 0).abs(), max(offsetY, 0).abs(), true, pixelSize);
 
   Uint8List output = encodeTrimmedPng(image);
   return Future.value(output);
 }
 
-Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX, int offsetY, bool secondLayer) {
+Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX, int offsetY, bool secondLayer,
+    int pixelSize) {
   if (secondLayer) {
     for (var x = 0; x < image.width; x++) {
       for (var y = 0; y < image.height; y++) {
-        if (_blackPixel(image.getPixel(x, y))) targetImage.setPixel(x + offsetX, y + offsetY, _blackColor);
+        if (_blackPixel(image.getPixel(x * pixelSize, y * pixelSize))) targetImage.setPixel(x + offsetX, y + offsetY, _blackColor);
       }
     }
   } else {
     for (var x = 0; x < image.width; x++) {
       for (var y = 0; y < image.height; y++) {
-        targetImage.setPixel(x + offsetX, y + offsetY, _blackPixel(image.getPixel(x, y)) ? _blackColor : _whiteColor);
+        targetImage.setPixel(x + offsetX, y + offsetY,
+            _blackPixel(image.getPixel(x * pixelSize, y * pixelSize)) ? _blackColor : _whiteColor);
       }
     }
   }
