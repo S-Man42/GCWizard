@@ -37,6 +37,24 @@ void main() {
     }
   });
 
+  group("visual_cryptography.cleanImage:", () {
+    List<Map<String, Object?>> _inputsToExpected = [
+      {'image1' : 'test1_1.png', 'image2' : 'test1_2.png', 'offsetX' : 0, 'offsetY' : 0, 'expectedOutput' : 'result1clean.png'},
+      {'image1' : 'test3_1.png', 'image2' : 'test3_2.png', 'offsetX' : 2, 'offsetY' : 1, 'expectedOutput' : 'result3clean.png'},
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test('image1: ${elem['image1']} image2: ${elem['image2']}', () async {
+        var para = Tuple4<Uint8List, Uint8List, int, int>(
+            _getFileData(elem['image1'] as String),
+            _getFileData(elem['image2'] as String),
+            elem['offsetX'] as int, elem['offsetY'] as int);
+        var _actual = cleanImage(para.item1, para.item2, para.item3, para.item4);
+        expect(listEquals(_actual!, _getFileData(elem['expectedOutput'] as String)), true);
+      });
+    }
+  });
+
   group("visual_cryptography.encodeImagesAsync:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput1' : 'resultKey1.png', 'offsetX' : 0, 'offsetY' : 0, 'scale' : 100, 'pixelSize' : 1, 'image1' : 'source1.png', 'image2' : 'test1_1.png'},
