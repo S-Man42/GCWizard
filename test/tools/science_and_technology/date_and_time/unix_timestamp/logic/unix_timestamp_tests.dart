@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/logic/unix_time.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/unix_time/logic/unix_time.dart';
 
 void main() {
 
@@ -15,7 +15,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('date: ${elem['date']}', () {
         var _actual = DateTimeToUnixTime(elem['date'] as DateTime);
-        expect(_actual.Error == '' ? _actual.UnixTimeStamp : _actual.Error, (elem['expectedOutput']));
+        expect(_actual.Error == '' ? _actual.timeStamp : _actual.Error, (elem['expectedOutput']));
       });
     }
   });
@@ -31,7 +31,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('date: ${elem['jd']}', () {
         var _actual = UnixTimeToDateTime(elem['UnixTimeSTamp'] as int);
-        expect(_actual.loc, elem['expectedOutput']);
+        expect(_actual.local, elem['expectedOutput']);
       });
     }
   });

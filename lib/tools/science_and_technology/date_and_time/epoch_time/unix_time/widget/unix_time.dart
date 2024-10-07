@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/logic/unix_time.dart';
-import 'package:intl/intl.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/_common/logic/common_time.dart';
+// import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+// import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
+// import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+// import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+// import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+// import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+// import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time_calculations/_common/logic/common_time.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/_common/widget/epoch_time.dart';
+import 'package:gc_wizard/utils/constants.dart';
+// import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time_calculations/unix_time/logic/unix_time.dart';
+// import 'package:intl/intl.dart';
 
+class UnixTime extends EpochTime {
+  const UnixTime({Key? key}) : super(key: key, min: 0, max: MAX_INT, epochType: EPOCH.UNIX);
+
+}
+/*
 class UnixTime extends StatefulWidget {
   const UnixTime({Key? key}) : super(key: key);
 
@@ -70,7 +79,7 @@ class _UnixTimeState extends State<UnixTime> {
   }
 
   Widget _buildOutput() {
-    UnixTimeOutput output;
+    EpochTimeOutput output;
     if (_currentMode == GCWSwitchPosition.left) {
       //Date to Unix
       output = DateTimeToUnixTime(_currentDateTime);
@@ -82,19 +91,25 @@ class _UnixTimeState extends State<UnixTime> {
       child: output.Error.startsWith('dates_')
           ? i18n(context, output.Error)
           : _currentMode == GCWSwitchPosition.left
-              ? output.UnixTimeStamp
+              ? output.timeStamp
               : GCWColumnedMultilineOutput(
+                  hasHeader: true,
                   flexValues: [5, 1, 4],
                   data: [
+                    [
+                      i18n(context, 'common_time_timezone_name'),
+                      i18n(context, 'common_time_timezone_offset'),
+                      i18n(context, 'common_time_timezone_date_time'),
+                    ],
                     [
                       output.UTC.timeZoneName,
                       output.UTC.timeZoneOffset.inHours,
                       _formatDate(context, output.UTC),
                     ],
                     [
-                      output.loc.timeZoneName,
-                      output.loc.timeZoneOffset.inHours,
-                      _formatDate(context, output.loc),
+                      output.local.timeZoneName,
+                      output.local.timeZoneOffset.inHours,
+                      _formatDate(context, output.local),
                     ]
                   ],
                 ),
@@ -106,3 +121,4 @@ class _UnixTimeState extends State<UnixTime> {
     return DateFormat.yMd(loc).add_jms().format(datetime).toString();
   }
 }
+*/

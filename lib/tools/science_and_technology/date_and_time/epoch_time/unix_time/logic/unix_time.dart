@@ -1,27 +1,14 @@
 //https://de.wikipedia.org/wiki/Unixzeit
 
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/_common/logic/common_time.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
-class UnixTimeOutput {
-  final int UnixTimeStamp;
-  final DateTime loc;
-  final DateTime UTC;
-  final String Error;
-
-  UnixTimeOutput({
-    required this.UnixTimeStamp,
-    required this.UTC,
-    required this.loc,
-    required this.Error,
-  });
-}
-
-UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
+EpochTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
   if (_invalidUnixDate(gregorianCalendarToJulianDate(currentDateTime))) {
-    return UnixTimeOutput(
+    return EpochTimeOutput(
       Error: 'dates_calendar_unix_error',
-      UnixTimeStamp: 0,
+      timeStamp: 0,
       UTC: DateTime.utc(
           currentDateTime.year,
           currentDateTime.month,
@@ -29,17 +16,9 @@ UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
           currentDateTime.hour,
           currentDateTime.minute,
           currentDateTime.second),
-      loc: currentDateTime,
+      local: currentDateTime,
     );
   }
- print(currentDateTime);
-  print(DateTime.utc(
-      currentDateTime.year,
-      currentDateTime.month,
-      currentDateTime.day,
-      currentDateTime.hour,
-      currentDateTime.minute,
-      currentDateTime.second));
 
   int jahr = currentDateTime.year;
   int monat = currentDateTime.month;
@@ -66,9 +45,9 @@ UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
   if ((monat > 2) && (jahr % 4 == 0 && (jahr % 100 != 0 || jahr % 400 == 0))) {
     tage_seit_1970 += 1;
   } /* +Schalttag, wenn jahr Schaltjahr ist */
-  return UnixTimeOutput(
-      UnixTimeStamp:
-          sekunde + 60 * (minute + 60 * (stunde + 24 * tage_seit_1970)),
+  return EpochTimeOutput(
+      timeStamp:
+          (sekunde + 60 * (minute + 60 * (stunde + 24 * tage_seit_1970))).toDouble(),
       UTC: DateTime.utc(
           currentDateTime.year,
           currentDateTime.month,
@@ -76,15 +55,15 @@ UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
           currentDateTime.hour,
           currentDateTime.minute,
           currentDateTime.second),
-      loc: currentDateTime,
+      local: currentDateTime,
       Error: '');
 }
 
-UnixTimeOutput UnixTimeToDateTime(int unixtime) {
-  return UnixTimeOutput(
-      UnixTimeStamp: unixtime,
+EpochTimeOutput UnixTimeToDateTime(int unixtime) {
+  return EpochTimeOutput(
+      timeStamp: unixtime.toDouble(),
       UTC: DateTime.fromMillisecondsSinceEpoch(unixtime * 1000, isUtc: true),
-      loc: DateTime.fromMillisecondsSinceEpoch(unixtime * 1000, isUtc: false),
+      local: DateTime.fromMillisecondsSinceEpoch(unixtime * 1000, isUtc: false),
       Error: '');
 }
 

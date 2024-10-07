@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/excel_time/logic/excel_time.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/excel_time/logic/excel_time.dart';
 
 void main() {
 
@@ -18,7 +18,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('date: ${elem['date']}', () {
         var _actual = DateTimeToExcelTime(elem['date'] as DateTime);
-        expect(_actual.Error == '' ? _actual.ExcelTimeStamp : _actual.Error, (elem['expectedOutput']));
+        expect(_actual.Error == '' ? _actual.timeStamp : _actual.Error, (elem['expectedOutput']));
       });
     }
   });
@@ -38,7 +38,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('expectedOutput: ${elem['expectedOutput']}', () {
         var _actual = ExcelTimeToDateTime(elem['ExcelTimeStamp'] as double);
-        expect(_actual.GregorianDateTime, elem['expectedOutput']);
+        expect(_actual.local, elem['expectedOutput']);
       });
     }
   });
