@@ -184,12 +184,12 @@ Uint8List? cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offse
   if (_image1 == null || _image2 == null) return null;
 
   var pixelSize = _detectPixelSize(_image1, _image2);
+  offsetX *= pixelSize;
+  offsetY *= pixelSize;
   var coreImageSize = _coreImageSize(_image1, _image2, offsetX, offsetY, pixelSize);
   var image =
       Image.Image(width: coreImageSize.item2 - coreImageSize.item1, height: coreImageSize.item4 - coreImageSize.item3);
 
-  offsetX *= pixelSize;
-  offsetY *= pixelSize;
   for (var x = coreImageSize.item1; x < coreImageSize.item2 - 1; x += 2) {
     for (var y = coreImageSize.item3; y < coreImageSize.item4 - 1; y += 2) {
       if (!(_blackArea(_image1, _image2, x * pixelSize, y * pixelSize, offsetX, offsetY, pixelSize))) {
@@ -394,9 +394,9 @@ Tuple2<List<bool>, List<bool>> _randomPixel(bool black) {
 int _calcBlackBlockCount(Image.Image image1, Image.Image image2, int offsetX, int offsetY) {
   var counter = 0;
   var pixelSize = _detectPixelSize(image1, image2);
-  var coreImageSize = _coreImageSize(image1, image2, offsetX, offsetY, pixelSize);
   offsetX *= pixelSize;
   offsetY *= pixelSize;
+  var coreImageSize = _coreImageSize(image1, image2, offsetX, offsetY, pixelSize);
   for (var x = coreImageSize.item1; x < coreImageSize.item2 - 1; x += 2) {
     for (var y = coreImageSize.item3; y < coreImageSize.item4 - 1; y += 2) {
       if (_blackArea(image1, image2, x * pixelSize, y * pixelSize, offsetX, offsetY, pixelSize)) counter++;
@@ -424,9 +424,9 @@ bool _blackArea(Image.Image image1, Image.Image image2, int x, int y, int offset
 Tuple4<int, int, int, int> _coreImageSize(Image.Image image1, Image.Image image2, int offsetX, int offsetY,
     int pixelSize) {
   var minX = max(offsetX * pixelSize, 0);
-  var maxX = (min(image1.width, image2.width + offsetX * pixelSize)/ pixelSize).ceil();
+  var maxX = (min(image1.width, image2.width + offsetX)/ pixelSize).ceil();
   var minY = max(offsetY * pixelSize, 0);
-  var maxY = (min(image1.height, image2.height + offsetY * pixelSize)/ pixelSize).ceil();
+  var maxY = (min(image1.height, image2.height + offsetY)/ pixelSize).ceil();
 
   return Tuple4<int, int, int, int>(minX, maxX, minY, maxY);
 }
