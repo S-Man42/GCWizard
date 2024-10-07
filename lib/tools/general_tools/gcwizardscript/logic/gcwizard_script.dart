@@ -72,27 +72,27 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:stack/stack.dart' as datastack;
 
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_classes.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_consts.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_enums.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_error_handling.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_base.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_crypto.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_codes_hash.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_coordinates.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_datetime.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_definitions.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_files.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_geocaching.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_graphic.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_list.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_math.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_string.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_typetests.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_functions_waypoints.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_help.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_test_datatypes.dart';
-part 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script_variables.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_classes.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_consts.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_enums.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_error_handling.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_codes_base.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_codes_crypto.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_codes_hash.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_coordinates.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_datetime.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_definitions.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_files.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_geocaching.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_graphic.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_list.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_math.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_string.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_typetests.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_functions_waypoints.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_help.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_test_datatypes.dart';
+part 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script_variables.dart';
 
 // Tiny BASIC
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff

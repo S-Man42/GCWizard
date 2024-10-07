@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 
 class InterpreterJobData {
   final String jobDataScript;

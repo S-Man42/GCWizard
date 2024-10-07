@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 
 const _COORD_DEC = 0;
 const _COORD_DMM = 1;

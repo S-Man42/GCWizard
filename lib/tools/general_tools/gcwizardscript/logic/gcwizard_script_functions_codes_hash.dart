@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 
 String _hash(Object type, Object bitrate, Object keyMode, Object key, Object x) {
   if (_isNotAString(type) || _isNotAInt(bitrate) || _isNotAInt(keyMode) || _isNotAString(key)) {

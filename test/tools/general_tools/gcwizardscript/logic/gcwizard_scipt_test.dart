@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
+import 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 

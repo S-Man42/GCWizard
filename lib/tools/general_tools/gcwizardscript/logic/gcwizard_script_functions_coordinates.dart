@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 
 String _wgs84(Object x, Object y) {
   if (_isNotANumber(x) || _isNotANumber(y)) {

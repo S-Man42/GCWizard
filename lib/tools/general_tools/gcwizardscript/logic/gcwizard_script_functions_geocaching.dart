@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/miscellaneous/gcwizardscript/logic/gcwizard_script.dart';
+part of 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 
 const _defaultAlphabetAlpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const _defaultAlphabetDigits = '0123456789';
