@@ -189,7 +189,6 @@ void main() {
       var date = elem['date'] as DateTime;
       test('date: $date, year: ${elem['year'] as int}, week: ${elem['week']}, iso: ${elem['iso']}', () {
         var _actual = datesForCalendarWeek(elem['year'] as int, elem['week'] as int, iso: elem['iso'] as bool);
-        print(_actual);
         expect(true, date.compareTo(_actual.item1) >= 0 && date.compareTo(_actual.item2) <= 0);
       });
     }
