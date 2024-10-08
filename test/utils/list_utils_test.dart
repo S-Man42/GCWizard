@@ -28,7 +28,7 @@ void main() {
     }
   });
 
-  group("ListUtils.listEquals:", () {
+  group("ListUtils.uint8ListEquals:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'list1' : Uint8List.fromList([]), 'list2': Uint8List.fromList([]), 'expectedOutput' : true},
       {'list1' : Uint8List.fromList([]), 'list2': Uint8List.fromList([1]), 'expectedOutput' : false},
@@ -41,7 +41,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('list: ${elem['list']}, list2: ${elem['list2']}', () {
-        var _actual = listEquals(elem['list1'] as Uint8List, elem['list2'] as Uint8List);
+        var _actual = uint8ListEquals(elem['list1'] as Uint8List, elem['list2'] as Uint8List);
         expect(_actual, elem['expectedOutput']);
       });
     }

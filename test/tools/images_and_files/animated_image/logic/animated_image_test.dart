@@ -43,7 +43,7 @@ void main() {
       test('input: ${elem['input']} index: ${elem['index']}', () async {
         var _outData = await analyseImage(_getFileData(elem['input'] as String));
 
-        expect(listEquals(_outData!.images[elem['index']! as int], _getFileData(elem['expectedOutput'] as String)), true);
+        expect(uint8ListEquals(_outData!.images[elem['index']! as int], _getFileData(elem['expectedOutput'] as String)), true);
       });
     }
   });
