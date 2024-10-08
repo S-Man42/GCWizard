@@ -14,7 +14,7 @@ bool isSublist<T>(List<T> list, List<T> sublist) {
   return _sublist.isEmpty;
 }
 
-bool listEquals(Uint8List list1, Uint8List list2) {
+bool uint8ListEquals(Uint8List list1, Uint8List list2) {
   if (list1.length != list2.length) return false;
 
   for (var x =0; x < list1.length; x++) {
