@@ -34,6 +34,7 @@ double calculateDewPoint(
   double dd = sdd * (rh / 100);
 
   // Wasserdampfdichte bzw. absolute Feuchte (g/m3)
+  // ignore: unused_local_variable
   double af = pow(10, 5) * mw / gk * dd / tk;
 
   // v-Parameter
