@@ -137,6 +137,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_langua
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo_list.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_time_pad.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
@@ -678,6 +679,7 @@ void _initStaticToolList() {
       className(const NonogramSolver()),
       className(const NumberPyramidSolver()),
       className(const Navajo()),
+      className(const NavajoList()),
       className(const NumberSequenceSelection()),
       className(MultiDecoder()),
       className(const NumeralBases()),

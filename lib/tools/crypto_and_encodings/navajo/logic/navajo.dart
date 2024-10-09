@@ -78,3 +78,18 @@ String encodeLetterWise(String plainText) {
   });
   return result.join(' ');
 }
+
+List<MapEntry<String, String>> navajoAlphabet() {
+  return _NAVAJO_ALPHABET;
+}
+
+List<MapEntry<String, String>> navajoDictionary() {
+  var _enfoldMap = switchMapKeyValue(_NAVAJO_FOLD_MAP);
+  return _NAVAJO_DICTIONARY.map((entry) {
+    if (_enfoldMap[entry.key] == null) {
+      return entry;
+    } else {
+      return MapEntry<String, String>(_enfoldMap[entry.key]!, entry.value);
+    }
+  }).toList();
+}

@@ -225,6 +225,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/w
 import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/widget/morse.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo_list.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words_converter/widget/numeral_words_converter.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words_identify_languages/widget/numeral_words_identify_languages.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/numeral_words_lists/widget/numeral_words_lists.dart';
@@ -1160,6 +1161,18 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const ['music', 'music_notes'],
         licenses: const []),
     GCWTool(tool: const Navajo(), id: 'navajo', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'navajo',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Department of Defense',
+          title: 'Navajo Code Talkers\' Dictionary REVISED 15 JUNE 1945',
+          sourceUrl:
+          'https://web.archive.org/web/20240722205845/https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html')
+    ]),
+    GCWTool(tool: const NavajoList(), id: 'navajolist', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'navajo',
