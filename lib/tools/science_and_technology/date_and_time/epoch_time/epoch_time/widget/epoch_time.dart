@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/_common/logic/common_time.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/epoch_time/logic/epoch_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/excel_time/logic/excel_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/unix_time/logic/unix_time.dart';
 import 'package:intl/intl.dart';
@@ -103,7 +103,7 @@ class _EpochTimeState extends State<EpochTime> {
         case EPOCH.UNIX:
           output = DateTimeToUnixTime(_currentDateTime);
           break;
-        case EPOCH.EXCEL:
+        case EPOCH.EXCEL1900:
           output = DateTimeToExcelTime(_currentDateTime);
           break;
       }
@@ -113,7 +113,7 @@ class _EpochTimeState extends State<EpochTime> {
         case EPOCH.UNIX:
           output = UnixTimeToDateTime(_currentTimeStamp as int);
           break;
-        case EPOCH.EXCEL:
+        case EPOCH.EXCEL1900:
           output = ExcelTimeToDateTime(_currentTimeStamp as double);
           break;
       }

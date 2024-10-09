@@ -3,7 +3,7 @@
 
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/logic/day_calculator.dart';
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/_common/logic/common_time.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/epoch_time/logic/epoch_time.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 EpochTimeOutput DateTimeToExcelTime(DateTime currentDateTime) {

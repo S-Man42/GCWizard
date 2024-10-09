@@ -1,5 +1,5 @@
 
-enum EPOCH {EXCEL, UNIX}
+enum EPOCH {EXCEL1900, UNIX}
 
 class EpochTimeOutput {
   final double timeStamp;
