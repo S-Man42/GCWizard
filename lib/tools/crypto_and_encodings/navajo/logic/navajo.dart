@@ -3,15 +3,10 @@
 
 import 'dart:math';
 
-import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/navajo/logic/navajo_dictionary.dart';
-
-Map<String, String> _addSpecialEntries(Map<String, String> source, Map<String, String> special) {
-  source.addAll(special);
-  return source;
-}
 
 String _shrinkText(String input) {
   return input
@@ -93,19 +88,21 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
 
   cipherText.split('  ').forEach((element) {
     element.split(' ').forEach((element) {
-      if (_NAVAJO_DECODE_ALPHABET[element] == null) {
+      var entry = _NAVAJO_ALPHABET.firstWhereOrNull((entry) => entry.value == element);
+      if (entry == null) {
         if (useOnlyAlphabet) {
           result.add(UNKNOWN_ELEMENT);
         } else {
-          if (_NAVAJO_DECODE_DICTIONARY[element] == null) {
+          var entry = _NAVAJO_DICTIONARY.firstWhereOrNull((entry) => entry.value == element);
+          if (entry == null) {
             result.add(UNKNOWN_ELEMENT);
           } else {
-            result.add(_enfoldText(_NAVAJO_DECODE_DICTIONARY[element]!));
+            result.add(_enfoldText(entry.key));
             result.add(' ');
           }
         }
       } else {
-        result.add(_NAVAJO_DECODE_ALPHABET[element]!);
+        result.add(entry.key);
       }
     });
     result.add(' ');
@@ -116,14 +113,15 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
 String encodeNavajo(String plainText, bool useOnlyAlphabet) {
   List<String> result = <String>[];
   if (plainText.isEmpty) return '';
+  var dictionary =  Map.fromEntries(_NAVAJO_DICTIONARY);
 
   _shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
     if (useOnlyAlphabet) {
       result.add(encodeLetterWise(element));
-    } else if (_NAVAJO_ENCODE_DICTIONARY[element] == null) {
+    } else if (dictionary[element] == null) {
       result.add(encodeLetterWise(element));
     } else {
-      result.add(_NAVAJO_ENCODE_DICTIONARY[element]!);
+      result.add(dictionary[element]!);
     }
     result.add('');
   });
@@ -133,10 +131,11 @@ String encodeNavajo(String plainText, bool useOnlyAlphabet) {
 String encodeLetterWise(String plainText) {
   List<String> result = <String>[];
   plainText.split('').forEach((element) {
-    if (_NAVAJO_ENCODE_ALPHABET[element] == null) {
+    var entrys = _NAVAJO_ALPHABET.where((entry) => entry.key == element);
+    if (entrys.isEmpty) {
       result.add(element);
     } else {
-      result.add(_NAVAJO_ENCODE_ALPHABET[element]![Random().nextInt(_NAVAJO_ENCODE_ALPHABET[element]!.length)]);
+      result.add(entrys.elementAt(Random().nextInt(entrys.length)).value);
     }
   });
   return result.join(' ');
