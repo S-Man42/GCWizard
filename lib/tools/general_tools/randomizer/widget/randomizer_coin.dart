@@ -68,7 +68,7 @@ class _RandomizerCoinState extends State<RandomizerCoin> {
 
     var output = <Widget>[
       GCWOutput(child: outText),
-      GCWTextDivider(text: i18n(context, 'randomizer_total')),
+      GCWTextDivider(text: i18n(context, 'randomizer_coin_count')),
       GCWColumnedMultilineOutput(data: [
         [i18n(context, 'randomizer_coin_head'), out.where((int value) => value == 0).length],
         [i18n(context, 'randomizer_coin_tail'), out.where((int value) => value == 1).length],

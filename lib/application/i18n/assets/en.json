@@ -4350,7 +4350,6 @@
   "randomizer_from": "From",
   "randomizer_to": "To",
   "randomizer_repeat": "Repeat Values",
-  "randomizer_total": "Total",
   "randomizer_integer_title": "Random Integer Numbers",
   "randomizer_integer_description": "Random generator for integer numbers",
   "randomizer_integer_notenoughdistinct": "There are not enough distinct values in the range for chosen number of random values.",
