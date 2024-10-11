@@ -83,12 +83,14 @@ class _RandomizerListsState extends State<RandomizerLists> {
                 onSelected: (String data) {
                   try {
                     setState(() {
-                      _importListsFromJson(context, data);
+                      _importLists(data);
                     });
+
                     showSnackBar(i18n(context, 'randomizer_lists_imported'), context);
                   } catch (e) {
                     showSnackBar(i18n(context, 'randomizer_lists_importerror'), context);
                   }
+
                 })),
         Row(
           children: [
@@ -313,9 +315,20 @@ class _RandomizerListsState extends State<RandomizerLists> {
     updateRandomizerLists();
   }
 
-  void _importListsFromJson(BuildContext context, String data) {
+  void _importLists(String data) {
     data = normalizeCharacters(data);
-    var lists = randomizerListsFromJson(asJsonMap(jsonDecode(data))).toList();
+    if (data.isEmpty) {
+      throw Exception();
+    }
+
+    List<RandomizerList> lists;
+    try {
+      lists = randomizerListsFromJson(asJsonMap(jsonDecode(data))).toList();
+    } catch (e) {
+      var newList = RandomizerList(i18n(context, 'randomizer_lists_importedtitle'));
+      newList.list = data.split(RegExp(r'[ ,]+')).toList();
+      lists = [newList];
+    }
 
     _insertLists(lists);
   }
