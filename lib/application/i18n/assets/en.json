@@ -6960,6 +6960,7 @@
   "visual_cryptography_offset": "Offset",
   "visual_cryptography_auto": "Auto",
   "visual_cryptography_clear": "Clear image",
+  "visual_cryptography_pixel_size": "Pixel size",
   "visual_cryptography_scale": "Scale (%)",
   "visual_cryptography_outputsize": "Output Size",
   "visual_cryptography_keyimage": "Key Image",
