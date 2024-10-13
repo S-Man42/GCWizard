@@ -80,7 +80,7 @@ String encodeLetterWise(String plainText) {
 }
 
 List<MapEntry<String, String>> navajoAlphabet() {
-  return _NAVAJO_ALPHABET;
+  return _NAVAJO_ALPHABET.whereNot((entry) => entry.key == '.').toList();
 }
 
 List<MapEntry<String, String>> navajoDictionary() {
