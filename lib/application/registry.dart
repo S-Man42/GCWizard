@@ -536,7 +536,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'amsco',
     ]),
-    GCWTool(tool: const AnimatedImage(), id: 'animated_image', isBeta: true, categories: const [
+    GCWTool(tool: const AnimatedImage(), id: 'animated_image', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'animated_images',
@@ -1021,7 +1021,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'illiac',
     ]),
-    GCWTool(tool: const ImagesAndFilesSelection(), id: 'imagesandfiles_selection', isBeta: true, searchKeys: const [
+    GCWTool(tool: const ImagesAndFilesSelection(), id: 'imagesandfiles_selection', searchKeys: const [
       'images',
       'imagesandfilesselection',
     ]),
@@ -1329,7 +1329,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'projectiles',
     ], licenses: const []),
-    GCWTool(tool: const QrCode(), id: 'qr_code', isBeta: true, categories: const [
+    GCWTool(tool: const QrCode(), id: 'qr_code', categories: const [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'qrcode',
