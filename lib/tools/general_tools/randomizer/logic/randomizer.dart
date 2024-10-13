@@ -1,7 +1,10 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:latlong2/latlong.dart';
 
 String randomLetter(Alphabet alphabet, bool caseSensitive) {
   var length = alphabet.alphabet.length;
@@ -64,4 +67,31 @@ DateTime randomDateTime(DateTime from, DateTime to) {
   var seconds = to.difference(from).inSeconds;
   var randomSeconds = randomInteger(0, seconds);
   return from.add(Duration(seconds: randomSeconds));
+}
+
+LatLng randomCoordinateAroundPoint(LatLng center, double maxDistance, Ellipsoid ellipsoid) {
+  var bearing = randomDouble(0.0, 360.0);
+  var distance = randomDouble(0.0, maxDistance);
+
+  return projection(center, bearing, distance, ellipsoid);
+}
+
+LatLng randomCoordinateInsideBounds(LatLng northWest, LatLng southEast) {
+  var north = northWest.latitude;
+  var west = northWest.longitude;
+  var south = southEast.latitude;
+  var east = southEast.longitude;
+
+  if (west > east) {
+    east += 360.0;
+  }
+
+  var lat = randomDouble(south, north);
+  var lon = randomDouble(west, east);
+
+  if (lon > 180.0) {
+    lon -= 360.0;
+  }
+
+  return LatLng(lat, lon);
 }

@@ -289,6 +289,7 @@ import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.da
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_cards.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coin.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_color.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coords.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_dice.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_double.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_integer.dart';
@@ -4675,6 +4676,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const RandomizerInteger(), id: 'randomizer_integer', searchKeys: const []),
     GCWTool(tool: const RandomizerDouble(), id: 'randomizer_double', searchKeys: const []),
     GCWTool(tool: const RandomizerLetter(), id: 'randomizer_letter', searchKeys: const []),
+    GCWTool(tool: const RandomizerCoordinates(), id: 'randomizer_coords', searchKeys: const []),
     GCWTool(tool: const RandomizerColor(), id: 'randomizer_color', searchKeys: const []),
     GCWTool(tool: const RandomizerLists(), id: 'randomizer_lists', searchKeys: const []),
 

@@ -6,6 +6,7 @@ import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_cards.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coin.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_color.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coords.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_dice.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_double.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_integer.dart';
@@ -28,6 +29,7 @@ class RandomizerSelection extends GCWSelection {
         className(const RandomizerInteger()),
         className(const RandomizerDouble()),
         className(const RandomizerLetter()),
+        className(const RandomizerCoordinates()),
         className(const RandomizerColor()),
         className(const RandomizerLists()),
       ].contains(className(element.tool));
