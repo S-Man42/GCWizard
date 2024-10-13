@@ -96,15 +96,20 @@ class _EpochTimeState extends State<EpochTime> {
   }
 
   Widget _buildOutput() {
+
     EpochTimeOutput output;
+    late Object timeStamp;
+
     if (_currentMode == GCWSwitchPosition.left) {
       //Date to EPOCH
       switch (widget.epochType) {
         case EPOCH.UNIX:
           output = DateTimeToUnixTime(_currentDateTime);
+          timeStamp = output.timeStamp.toInt();
           break;
         case EPOCH.EXCEL1900:
           output = DateTimeToExcelTime(_currentDateTime);
+          timeStamp = output.timeStamp;
           break;
       }
     } else {
@@ -122,7 +127,7 @@ class _EpochTimeState extends State<EpochTime> {
       child: output.Error.startsWith('dates_')
           ? i18n(context, output.Error)
           : _currentMode == GCWSwitchPosition.left
-              ? output.timeStamp
+              ? timeStamp
               : GCWColumnedMultilineOutput(
                   hasHeader: false,
                   flexValues: [5, 2, 4],
