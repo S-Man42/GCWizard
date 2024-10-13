@@ -5494,28 +5494,26 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: const [
       'color',
       'symbol_color_add',
-    ], licenses: const []),
+    ], licenses: [ToolLicenseImage(
+        context: context,
+        author: 'ColorADD.net',
+        title: 'ColorADD - The Color Alphabet',
+        privatePermission: ToolLicensePrivatePermission(
+            medium: 'e-mail',
+            permissionYear: 2024,
+            permissionMonth: 8,
+            permissionDay: 20,
+            context: context,
+            permissionAuthor: 'Silvia Couto'
+        ),
+        sourceUrl:
+        'https://web.archive.org/web/20240629170653/https://www.coloradd.net/en/coloradd-code/',
+        licenseType: ToolLicenseType.NON_COMMERCIAL,
+        licenseUseType: ToolLicenseUseType.COPY)]),
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: const [
       'color',
       'symbol_color_code',
-    ], licenses: [
-      ToolLicenseImage(
-          context: context,
-          author: 'ColorADD.net',
-          title: 'ColorADD - The Color Alphabet',
-          privatePermission: ToolLicensePrivatePermission(
-              medium: 'e-mail',
-              permissionYear: 2024,
-              permissionMonth: 8,
-              permissionDay: 20,
-              context: context,
-              permissionAuthor: 'Silvia Couto'
-          ),
-          sourceUrl:
-          'https://web.archive.org/web/20240629170653/https://www.coloradd.net/en/coloradd-code/',
-          licenseType: ToolLicenseType.NON_COMMERCIAL,
-          licenseUseType: ToolLicenseUseType.COPY)
-    ]),
+    ], licenses: []),
     GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: const [
       'color',
       'symbol_color_honey',
