@@ -249,7 +249,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
               _buildOpenFromDevice();
             }),
         Container(width: DOUBLE_DEFAULT_MARGIN),
-        GCWIconButton(
+        kIsWeb ? Container() : GCWIconButton(
           icon: Icons.public,
           iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
           size: IconButtonSize.LARGE,
