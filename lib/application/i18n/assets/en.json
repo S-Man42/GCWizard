@@ -3487,6 +3487,8 @@
   "navajo_source": "Using",
   "navajo_source_dictionary": "whole Dictionary",
   "navajo_source_alphabet": "only Alphabet",
+  "navajolist_title": "Navajo List",
+  "navajolist_description": "List of Navajo words",
   "nonogramsolver_title": "Nonogram Solver",
   "nonogramsolver_description": "Creates a solution for a given Nonogram (Japanese crosswords)",
   "nonogramsolver_clear_all_data": "Are you sure?",
