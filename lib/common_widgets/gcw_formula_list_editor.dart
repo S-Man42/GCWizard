@@ -14,10 +14,10 @@ import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
-import 'dialogs/gcw_delete_alertdialog.dart';
-import 'dialogs/gcw_dialog.dart';
-import 'gcw_popup_menu.dart';
-import 'gcw_text_export.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
+import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
 
 class GCWFormulaListEditor extends StatefulWidget {
   final List<FormulaBase> formulaList;

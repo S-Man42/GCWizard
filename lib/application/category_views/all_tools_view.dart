@@ -181,6 +181,7 @@ import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solve
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selection.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -719,6 +720,7 @@ void _initStaticToolList() {
       className(const Ragbaby()),
       className(const RailFence()),
       className(const RALColorCodes()),
+      className(const RandomizerSelection()),
       className(const RC4()),
       className(const Recycling()),
       className(const Resection()),
