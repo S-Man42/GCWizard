@@ -4584,7 +4584,7 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const []),
 
     //PeriodicTableSelection ***************************************************************************************
-    GCWTool(tool: const PeriodicTable(), id: 'periodictable', searchKeys: const [], licenses: const []),
+    GCWTool(tool: const PeriodicTable(), id: 'periodictable', searchKeys: const [], licenses: [stl._toolLicensePSEWiki]),
     GCWTool(
         tool: const PeriodicTableDataView(
           atomicNumber: 1,
@@ -4592,7 +4592,7 @@ void initializeRegistry(BuildContext context) {
         id: 'periodictable_dataview',
         searchKeys: const [
           'periodictabledataview',
-        ]),
+        ], licenses: [stl._toolLicensePSEWiki]),
     GCWTool(tool: const AtomicNumbersToText(), id: 'atomicnumberstotext', searchKeys: const [
       'periodictable_atomicnumbers',
     ]),
