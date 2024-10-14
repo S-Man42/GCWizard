@@ -523,7 +523,7 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
     var output = DateTimeDuration(
         dateTimeUtc: DateTimeTimezone.fromLocalTime(DateTime.utc(_currentYear, _currentMonth, _currentDay,
             _currentHour, _currentMinute, _currentSecond, _currentMilliSecond), timezone).dateTimeUtc,
-        timezone: Duration(minutes: _currentTimezoneOffset),
+        timezone: timezone,
         duration: duration);
 
     widget.onChanged(output);
