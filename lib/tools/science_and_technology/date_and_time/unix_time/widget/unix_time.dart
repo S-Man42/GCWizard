@@ -59,7 +59,7 @@ class _UnixTimeState extends State<UnixTime> {
             },
             onChanged: (datetime) {
               setState(() {
-                _currentDateTime = datetime.datetime;
+                _currentDateTime = datetime.dateTimeUtc;
               });
             },
           ),

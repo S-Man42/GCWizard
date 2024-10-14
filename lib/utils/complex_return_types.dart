@@ -43,15 +43,27 @@ class Uint8ListText {
 class DateTimeDuration extends DateTimeTimezone {
   Duration duration;
 
-  DateTimeDuration({required DateTime dateTime, required Duration timezone, required this.duration})
-      : super(datetime: dateTime, timezone: timezone);
+  DateTimeDuration({required DateTime dateTimeUtc, required Duration timezone, required this.duration})
+      : super(dateTimeUtc: dateTimeUtc, timezone: timezone);
 }
 
 class DateTimeTimezone {
-  DateTime datetime;
+  DateTime dateTimeUtc;
   Duration timezone;
 
-  DateTimeTimezone({required this.datetime, required this.timezone});
+  DateTimeTimezone({required this.dateTimeUtc, required this.timezone});
+
+  static DateTimeTimezone now() {
+    return fromLocalTime(DateTime.now(), DateTime.now().timeZoneOffset);
+  }
+
+  static DateTimeTimezone fromLocalTime(DateTime datetime, Duration timezone) {
+    return DateTimeTimezone(dateTimeUtc: datetime.add(-timezone), timezone: timezone);
+  }
+
+  DateTime toLocalTime() {
+    return dateTimeUtc.toUtc().add(timezone);
+  }
 }
 
 class DateTimeDouble {

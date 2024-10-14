@@ -59,7 +59,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
                 datetime: _currentEncryptionDate,
                 onChanged: (value) {
                   setState(() {
-                    _currentEncryptionDate = value.datetime;
+                    _currentEncryptionDate = value.dateTimeUtc;
                   });
                 },
               )
