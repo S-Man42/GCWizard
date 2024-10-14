@@ -62,7 +62,7 @@ class _ExcelTimeState extends State<ExcelTime> {
             },
             onChanged: (datetime) {
               setState(() {
-                _currentDateTime = datetime.datetime;
+                _currentDateTime = datetime.dateTimeUtc;
               });
             },
           ),
