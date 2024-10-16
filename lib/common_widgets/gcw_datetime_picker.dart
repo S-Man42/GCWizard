@@ -520,6 +520,10 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
     duration *= _currentSign;
 
     var timezone = Duration(minutes: _currentTimezoneOffset);
+    if (!widget.config.contains(DateTimePickerConfig.TIMEZONES)) {
+      timezone = DateTime(_currentYear, _currentMonth, _currentDay,
+          _currentHour, _currentMinute, _currentSecond, _currentMilliSecond).timeZoneOffset;
+    }
     var output = DateTimeDuration(
         dateTimeUtc: DateTimeTimezone.fromLocalTime(DateTime.utc(_currentYear, _currentMonth, _currentDay,
             _currentHour, _currentMinute, _currentSecond, _currentMilliSecond), timezone).dateTimeUtc,
