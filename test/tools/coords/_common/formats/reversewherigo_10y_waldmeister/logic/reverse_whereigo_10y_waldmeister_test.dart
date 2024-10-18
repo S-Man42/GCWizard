@@ -9,6 +9,8 @@ void main() {
       {'coord': const LatLng(0.0, 0.0), 'expectedOutput': ['123556', '784012', '344678']},
       {'coord': const LatLng(52.78956, 14.03168), 'expectedOutput': ['720598', '545963', '823979']},
       {'coord': const LatLng(50.83091, 10.74893), 'expectedOutput': ['128537', '874302', '720371']},
+      {'coord': const LatLng(53.23521, 14.013), 'expectedOutput': ['628587', '886336', '460608']},
+      {'coord': const LatLng(52.35191, 9.76738), 'expectedOutput': ['228527', '717501', '976396']},
 
     ];
 
