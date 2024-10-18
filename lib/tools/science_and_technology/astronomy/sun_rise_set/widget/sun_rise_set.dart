@@ -18,7 +18,7 @@ class SunRiseSet extends StatefulWidget {
 }
 
 class _SunRiseSetState extends State<SunRiseSet> {
-  var _currentDateTime = DateTimeTimezone.now();
+  var _currentDateTime = DateTimeTZ.now();
   var _currentCoords = defaultBaseCoordinate;
 
   @override

@@ -9,7 +9,7 @@ class JulianDate {
   late double deltaT;
   late double terrestrialDynamicalTime;
 
-  JulianDate(DateTimeTimezone datetime) {
+  JulianDate(DateTimeTZ datetime) {
     julianDateUTCNoon = gregorianCalendarToJulianDate(datetime.dateTimeUtc);
 
     julianDate = julianDateUTCNoon +

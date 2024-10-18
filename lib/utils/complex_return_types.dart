@@ -40,37 +40,30 @@ class Uint8ListText {
   Uint8ListText(this.text, this.value);
 }
 
-class DateTimeDuration extends DateTimeTimezone {
+class DateTimeTZDuration extends DateTimeTZ {
   Duration duration;
 
-  DateTimeDuration({required DateTime dateTimeUtc, required Duration timezone, required this.duration})
+  DateTimeTZDuration({required DateTime dateTimeUtc, Duration timezone = const Duration(), required this.duration})
       : super(dateTimeUtc: dateTimeUtc, timezone: timezone);
 }
 
-class DateTimeTimezone {
+class DateTimeTZ {
   DateTime dateTimeUtc;
   Duration timezone;
 
-  DateTimeTimezone({required this.dateTimeUtc, required this.timezone});
+  DateTimeTZ({required this.dateTimeUtc, this.timezone = const Duration()});
 
-  static DateTimeTimezone now() {
+  static DateTimeTZ now() {
     return fromLocalTime(DateTime.now(), DateTime.now().timeZoneOffset);
   }
 
-  static DateTimeTimezone fromLocalTime(DateTime datetime, Duration timezone) {
-    return DateTimeTimezone(dateTimeUtc: datetime.add(-timezone), timezone: timezone);
+  static DateTimeTZ fromLocalTime(DateTime localDatetime, Duration timezone) {
+    return DateTimeTZ(dateTimeUtc: localDatetime.add(-timezone), timezone: timezone);
   }
 
   DateTime toLocalTime() {
     return dateTimeUtc.toUtc().add(timezone);
   }
-}
-
-class DateTimeDouble {
-  DateTime datetime;
-  double value;
-
-  DateTimeDouble({required this.datetime, required this.value});
 }
 
 class KeyValueBase {

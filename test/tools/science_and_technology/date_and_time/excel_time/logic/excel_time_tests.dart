@@ -38,7 +38,7 @@ void main() {
     for (var elem in _inputsToExpected) {
       test('expectedOutput: ${elem['expectedOutput']}', () {
         var _actual = ExcelTimeToDateTime(elem['ExcelTimeStamp'] as double);
-        expect(_actual.GregorianDateTime, elem['expectedOutput']);
+        expect(_actual.GregorianDateTimeUTC, elem['expectedOutput']);
       });
     }
   });

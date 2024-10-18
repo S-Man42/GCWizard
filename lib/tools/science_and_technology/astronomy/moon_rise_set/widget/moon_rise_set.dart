@@ -18,7 +18,7 @@ class MoonRiseSet extends StatefulWidget {
 }
 
 class _MoonRiseSetState extends State<MoonRiseSet> {
-  var _currentDateTime = DateTimeTimezone.now();
+  var _currentDateTime = DateTimeTZ.now();
   var _currentCoords = defaultBaseCoordinate;
 
   @override
