@@ -26,7 +26,7 @@ List<Card> initializeCardDeck(CardDeck deckType) {
   var suits = ['\u2660', '\u2665', '\u2666', '\u2663'];
   var values = ['7', '8', '9', '10', 'randomizer_cards_jack', 'randomizer_cards_queen', 'randomizer_cards_king', 'randomizer_cards_ace'];
   if (deckType == CardDeck.POKER || deckType == CardDeck.ROMME) {
-    values.addAll(['2', '3', '4', '5', '6']);
+    values.addAll(const ['2', '3', '4', '5', '6']);
   }
   for (var suit in suits) {
     for (var value in values) {

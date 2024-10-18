@@ -170,7 +170,9 @@ class _RandomizerListsState extends State<RandomizerLists> {
               ? GCWIconButton(
                   icon: Icons.check,
                   onPressed: () {
-                    _updateList(_currentEditName!, _currentEditedName);
+                    if (_currentEditName != _currentEditedName) {
+                      _updateList(_currentEditName!, _currentEditedName);
+                    }
 
                     setState(() {
                       _currentEditName = null;
