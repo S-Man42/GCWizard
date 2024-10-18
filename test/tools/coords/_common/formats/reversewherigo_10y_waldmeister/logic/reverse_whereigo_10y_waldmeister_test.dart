@@ -27,6 +27,8 @@ void main() {
       {'expectedOutput': const LatLng(0.0, 0.0), 'input': ['123556', '784012', '344678']},
       {'expectedOutput': const LatLng(52.78956, 14.03168), 'input': ['720598', '545963', '823979']},
       {'expectedOutput': const LatLng(50.83091, 10.74893), 'input': ['128537', '874302', '720371']},
+      {'expectedOutput': const LatLng(53.23521, 14.013), 'input': ['628587', '886336', '460608']},
+      {'expectedOutput': const LatLng(52.35191, 9.76738), 'input': ['228527', '717501', '976396']},
     ];
 
     for (var elem in _inputsToExpected) {
