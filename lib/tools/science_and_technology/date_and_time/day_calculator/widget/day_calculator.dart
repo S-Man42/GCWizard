@@ -34,22 +34,22 @@ class _DayCalculatorState extends State<DayCalculator> {
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'dates_daycalculator_startdate')),
         GCWDateTimePicker(
-          config: const {DateTimePickerConfig.DATE},
+          config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
           datetime: _currentStartDate,
           onChanged: (value) {
             setState(() {
-              _currentStartDate = value.datetime;
+               _currentStartDate = value.dateTimeUtc;
             });
           },
         ),
         GCWTextDivider(text: i18n(context, 'dates_daycalculator_enddate')),
         GCWDateTimePicker(
-          config: const {DateTimePickerConfig.DATE},
+          config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
           datetime: _currentEndDate,
           onChanged: (value) {
             setState(() {
-              _currentEndDate = value.datetime;
-            });
+              _currentEndDate = value.dateTimeUtc;
+             });
           },
         ),
         GCWOnOffSwitch(

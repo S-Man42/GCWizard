@@ -7,27 +7,27 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class ExcelTimeOutput {
   final double ExcelTimeStamp;
-  final DateTime GregorianDateTime;
+  final DateTime GregorianDateTimeUTC;
   final String Error;
 
   ExcelTimeOutput({
     required this.ExcelTimeStamp,
-    required this.GregorianDateTime,
+    required this.GregorianDateTimeUTC,
     required this.Error,
   });
 }
 
-ExcelTimeOutput DateTimeToExcelTime(DateTime currentDateTime) {
-  if (_invalidExcelDate(gregorianCalendarToJulianDate(currentDateTime))) {
-    return ExcelTimeOutput(Error: 'dates_calendar_excel_error', ExcelTimeStamp: 0, GregorianDateTime: currentDateTime);
+ExcelTimeOutput DateTimeToExcelTime(DateTime currentDateTimeUTC) {
+  if (_invalidExcelDate(gregorianCalendarToJulianDate(currentDateTimeUTC))) {
+    return ExcelTimeOutput(Error: 'dates_calendar_excel_error', ExcelTimeStamp: 0, GregorianDateTimeUTC: currentDateTimeUTC);
   }
 
-  int year = currentDateTime.year;
-  int month = currentDateTime.month;
-  int day = currentDateTime.day;
-  int hour = currentDateTime.hour;
-  int minute = currentDateTime.minute;
-  int second = currentDateTime.second;
+  int year = currentDateTimeUTC.year;
+  int month = currentDateTimeUTC.month;
+  int day = currentDateTimeUTC.day;
+  int hour = currentDateTimeUTC.hour;
+  int minute = currentDateTimeUTC.minute;
+  int second = currentDateTimeUTC.second;
 
   double excelTimestampFrac = (hour * 60 * 60 + minute * 60 + second) / 86400;
   double excelTimestampInt = 0.0;
@@ -39,7 +39,7 @@ ExcelTimeOutput DateTimeToExcelTime(DateTime currentDateTime) {
   }
 
   return ExcelTimeOutput(
-      ExcelTimeStamp: excelTimestampInt + excelTimestampFrac, GregorianDateTime: currentDateTime, Error: '');
+      ExcelTimeStamp: excelTimestampInt + excelTimestampFrac, GregorianDateTimeUTC: currentDateTimeUTC, Error: '');
 }
 
 ExcelTimeOutput ExcelTimeToDateTime(double excelTimestamp) {
@@ -48,7 +48,7 @@ ExcelTimeOutput ExcelTimeToDateTime(double excelTimestamp) {
   if (excelTimestamp.truncate() == 60) {
     difference = Duration(seconds: (86400 * (excelTimestamp - excelTimestamp.truncate())).toInt());
     return ExcelTimeOutput(
-        GregorianDateTime: DateTime(1900, 2, 29, 0, 0, 0).add(difference),
+        GregorianDateTimeUTC: DateTime(1900, 2, 29, 0, 0, 0).add(difference),
         ExcelTimeStamp: excelTimestamp,
         Error: 'EXCEL_BUG');
   } else if (excelTimestamp.truncate() < 60) {
@@ -60,7 +60,7 @@ ExcelTimeOutput ExcelTimeToDateTime(double excelTimestamp) {
         Duration(seconds: (86400 * (excelTimestamp - excelTimestamp.truncate())).toInt());
   }
   return ExcelTimeOutput(
-      GregorianDateTime: DateTime(1900, 1, 0, 0, 0, 0).add(difference), ExcelTimeStamp: excelTimestamp, Error: '');
+      GregorianDateTimeUTC: DateTime.utc(1900, 1, 0, 0, 0, 0).add(difference), ExcelTimeStamp: excelTimestamp, Error: '');
 }
 
 bool _invalidExcelDate(double jd) {

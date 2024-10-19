@@ -118,7 +118,7 @@ DateTime _JDToDateTime(double JD) {
   var hour = 24.0 * (JD + 0.5 - JD0);
   var time = hoursToHHmmss(hour);
 
-  return DateTime(year, month, day, time.hour, time.minute, time.second, time.millisecond);
+  return DateTime.utc(year, month, day, time.hour, time.minute, time.second, time.millisecond);
 }
 
 DateTime _spring(int year) {

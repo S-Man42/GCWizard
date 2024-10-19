@@ -5,6 +5,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/excel_time/logic/excel_time.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
 class ExcelTime extends StatefulWidget {
@@ -16,7 +17,8 @@ class ExcelTime extends StatefulWidget {
 
 class _ExcelTimeState extends State<ExcelTime> {
   double _currentTimeStamp = 0;
-  var _currentDateTime = DateTime.now();
+  var _currentDateTimeEncrypt = DateTimeTZ.now();
+  var _currentDateTimeDecrypt = DateTimeTZ.now();
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -41,28 +43,42 @@ class _ExcelTimeState extends State<ExcelTime> {
             });
           },
         ),
-        if (_currentMode == GCWSwitchPosition.right)
-          GCWDoubleSpinner(
-              value: _currentTimeStamp,
-              min: 0,
-              max:
+        (_currentMode == GCWSwitchPosition.right)
+          ? Column(
+            children: [
+              GCWDoubleSpinner(
+                  value: _currentTimeStamp,
+                  min: 0,
+                  max:
                   100000000, //max days according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
-              numberDecimalDigits: 11,
-              onChanged: (value) {
-                setState(() {
-                  _currentTimeStamp = value;
-                });
-              }),
-        if (_currentMode == GCWSwitchPosition.left)
-          GCWDateTimePicker(
+                  numberDecimalDigits: 11,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentTimeStamp = value;
+                    });
+                  }),
+              GCWDateTimePicker(
+                config: const {
+                  DateTimePickerConfig.TIMEZONES
+                },
+                onChanged: (datetime) {
+                  setState(() {
+                    _currentDateTimeDecrypt = datetime;
+                  });
+                },
+              ),
+            ],
+          )
+        : GCWDateTimePicker(
             config: const {
               DateTimePickerConfig.DATE,
               DateTimePickerConfig.TIME,
               DateTimePickerConfig.SECOND_AS_INT,
+              DateTimePickerConfig.TIMEZONES
             },
             onChanged: (datetime) {
               setState(() {
-                _currentDateTime = datetime.datetime;
+                _currentDateTimeEncrypt = datetime;
               });
             },
           ),
@@ -75,7 +91,7 @@ class _ExcelTimeState extends State<ExcelTime> {
     ExcelTimeOutput output;
     if (_currentMode == GCWSwitchPosition.left) {
       //Date to Unix
-      output = DateTimeToExcelTime(_currentDateTime);
+      output = DateTimeToExcelTime(_currentDateTimeEncrypt.dateTimeUtc);
     } else {
       //EXCEL to Date
       output = ExcelTimeToDateTime(_currentTimeStamp);
@@ -85,7 +101,7 @@ class _ExcelTimeState extends State<ExcelTime> {
           ? i18n(context, output.Error)
           : _currentMode == GCWSwitchPosition.left
               ? output.ExcelTimeStamp
-              : _formatDate(context, output.GregorianDateTime, (output.Error == 'EXCEL_BUG')),
+              : _formatDate(context, DateTimeTZ(dateTimeUtc: output.GregorianDateTimeUTC, timezone: _currentDateTimeDecrypt.timezone).toLocalTime(), (output.Error == 'EXCEL_BUG')),
     );
   }
 
