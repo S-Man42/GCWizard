@@ -336,42 +336,46 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
     showGCWDialog(
         context,
         '',
-        Column(children: <Widget>[
-          GCWTextDivider(
-            text: i18n(context, 'symbol_replacer_automatic_header'),
-            style: gcwDialogTextStyle(),
-            suppressTopSpace: true,
-          ),
-          GCWDropDown<SubstitutionBreakerAlphabet>(
-            value: _currentAlphabet,
-            alternativeColor: true,
-            onChanged: (value) {
-              setState(() {
-                _currentAlphabet = value;
-              });
-            },
-            items: SubstitutionBreakerAlphabetItems(context).entries.map((alphabet) {
-              return GCWDropDownMenuItem(
-                value: alphabet.key,
-                child: alphabet.value,
-              );
-            }).toList(),
-          ),
-          GCWDialogButton(
-            text: i18n(context, 'symbol_replacer_start'),
-            onPressed: () {
-              _startSubstitutionBreaker();
-            },
-          ),
-          Container(height: 20),
-          GCWTextDivider(text: i18n(context, 'symbol_replacer_symboltable_search_header'), style: gcwDialogTextStyle()),
-          GCWDialogButton(
-            text: i18n(context, 'symbol_replacer_start'),
-            onPressed: () {
-              _startJobDataSearchSymbolTable();
-            },
-          ),
-        ]),
+        StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Column(children: <Widget>[
+              GCWTextDivider(
+                text: i18n(context, 'symbol_replacer_automatic_header'),
+                style: gcwDialogTextStyle(),
+                suppressTopSpace: true,
+              ),
+              GCWDropDown<SubstitutionBreakerAlphabet>(
+                value: _currentAlphabet,
+                alternativeColor: true,
+                onChanged: (value) {
+                  setState(() {
+                    _currentAlphabet = value;
+                  });
+                },
+                items: SubstitutionBreakerAlphabetItems(context).entries.map((alphabet) {
+                  return GCWDropDownMenuItem(
+                    value: alphabet.key,
+                    child: alphabet.value,
+                  );
+                }).toList(),
+              ),
+              GCWDialogButton(
+                text: i18n(context, 'symbol_replacer_start'),
+                onPressed: () {
+                  _startSubstitutionBreaker();
+                },
+              ),
+              Container(height: 20),
+              GCWTextDivider(text: i18n(context, 'symbol_replacer_symboltable_search_header'), style: gcwDialogTextStyle()),
+              GCWDialogButton(
+                text: i18n(context, 'symbol_replacer_start'),
+                onPressed: () {
+                  _startJobDataSearchSymbolTable();
+                },
+              ),
+            ]);
+          }
+        ),
         []);
   }
 
