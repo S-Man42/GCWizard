@@ -7480,6 +7480,13 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://web.archive.org/web/20170401035807/https://fonts2u.com/romulan.font',
           licenseType: ToolLicenseType.NON_COMMERCIAL),
     ]),
+    GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark',
+      'symbol_futhorc'
+    ], licenses: [
+      stl._toolLicenseMyGeoToolsCodeTabellen,
+    ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
     ], licenses: [
