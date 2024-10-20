@@ -15,6 +15,9 @@ import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
 
+const Color PARKINGCOLOR = Colors.blue;
+const Color WPTCOLOR = Colors.teal;
+
 Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
   var type = fileTypeByFilename(file.name!);
 
@@ -125,10 +128,19 @@ class _GpxReader {
   GCWMapPoint? _readPoint(XmlElement xmlElement) {
     var lat = xmlElement.getAttribute('lat');
     var lon = xmlElement.getAttribute('lon');
+
     if (lat != null && lon != null) {
       var wpt = GCWMapPoint(point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0), isEditable: true);
-      wpt.markerText = xmlElement.getElement('name')?.innerText;
-      if (wpt.markerText == null || wpt.markerText!.isEmpty) {
+      var name = xmlElement.getElement('name')?.innerText ?? '';
+
+      if (name.isNotEmpty) {
+        wpt.markerText = name;
+        if (name.startsWith("P")) { // Parking coordinate
+          wpt.color = PARKINGCOLOR;
+        } else if (name.startsWith(RegExp('[0-9]'))) { // waypoint
+          wpt.color = WPTCOLOR;
+        }
+      } else {
         wpt.markerText = xmlElement.getElement('desc')?.innerText;
       }
       return wpt;
