@@ -22,16 +22,6 @@ class _ExcelTimeState extends State<ExcelTime> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -40,11 +30,6 @@ class _ExcelTimeState extends State<ExcelTime> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-              if (_currentMode == GCWSwitchPosition.left) {
-                _currentDateTimeEncrypt = DateTimeTZ.now();
-              } else {
-                _currentDateTimeDecrypt = DateTimeTZ.now();
-              }
             });
           },
         ),
@@ -63,6 +48,7 @@ class _ExcelTimeState extends State<ExcelTime> {
                     });
                   }),
               GCWDateTimePicker(
+                datetime: _currentDateTimeDecrypt,
                 config: const {
                   DateTimePickerConfig.TIMEZONES
                 },
@@ -75,6 +61,7 @@ class _ExcelTimeState extends State<ExcelTime> {
             ],
           )
         : GCWDateTimePicker(
+            datetime: _currentDateTimeEncrypt,
             config: const {
               DateTimePickerConfig.DATE,
               DateTimePickerConfig.TIME,
