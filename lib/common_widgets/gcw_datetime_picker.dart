@@ -225,7 +225,6 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
           max: 5000,
           onChanged: (value) {
             setState(() {
-              print('dtp ' + value.toString()+ ':'+ (widget.yearController?.text ?? ' null10'));
               _currentYear = value;
               _setCurrentValueAndEmitOnChange();
 
