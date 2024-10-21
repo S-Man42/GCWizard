@@ -135,9 +135,9 @@ class _GpxReader {
 
       if (name.isNotEmpty) {
         wpt.markerText = name;
-        if (name.startsWith("P")) { // Parking coordinate
+        if (name.startsWith("P")) { // Parking coordinate only for gc.com
           wpt.color = PARKINGCOLOR;
-        } else if (name.startsWith(RegExp('[0-9]'))) { // waypoint
+        } else if (name.startsWith(RegExp('[0-9]')) || RegExp(r'-.{2}$').hasMatch(name)) { // waypoint gc.com or oc.com
           wpt.color = WPTCOLOR;
         }
       } else {
