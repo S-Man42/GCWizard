@@ -348,6 +348,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/rm4scc/
     - lib/tools/symbol_tables/_common/assets/robots/
     - lib/tools/symbol_tables/_common/assets/romulan/
+    - lib/tools/symbol_tables/_common/assets/runes/
     - lib/tools/symbol_tables/_common/assets/sanluca/
     - lib/tools/symbol_tables/_common/assets/sarati/
     - lib/tools/symbol_tables/_common/assets/semaphore/

@@ -5561,7 +5561,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: const [
       'color',
       'symbol_color_code',
-    ], licenses: []),
+    ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: const [
       'color',
       'symbol_color_honey',
@@ -7479,6 +7479,13 @@ void initializeRegistry(BuildContext context) {
           title: 'Romulan',
           sourceUrl: 'https://web.archive.org/web/20170401035807/https://fonts2u.com/romulan.font',
           licenseType: ToolLicenseType.NON_COMMERCIAL),
+    ]),
+    GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark',
+      'symbol_futhorc'
+    ], licenses: [
+      stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
