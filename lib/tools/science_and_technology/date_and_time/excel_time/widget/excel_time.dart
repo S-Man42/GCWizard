@@ -30,6 +30,11 @@ class _ExcelTimeState extends State<ExcelTime> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+              if (_currentMode == GCWSwitchPosition.left) {
+                _currentDateTimeEncrypt = DateTimeTZ.now();
+              } else {
+                _currentDateTimeDecrypt = DateTimeTZ.now();
+              }
             });
           },
         ),
