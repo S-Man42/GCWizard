@@ -64,7 +64,7 @@ class DateTimeTZ {
   }
 
   DateTime toLocalTime() {
-    return dateTimeUtc.toUtc().add(timezone);
+    return dateTimeUtc.add(timezone);
   }
 
   String toLocalTimezoneAllNames(){
