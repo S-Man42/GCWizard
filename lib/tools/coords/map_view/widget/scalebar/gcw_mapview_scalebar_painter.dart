@@ -53,7 +53,7 @@ class GCWMapViewScalebarPainter extends CustomPainter {
     var textY = 18.0;
 
     // draw text label
-    final labelX = 3.0;
+    const labelX = 3.0;
     _textPainters[0].paint(
       canvas,
       Offset(max(0, labelX), - textY),
