@@ -22,16 +22,6 @@ class _UnixTimeState extends State<UnixTime> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -60,6 +50,7 @@ class _UnixTimeState extends State<UnixTime> {
                     });
                   }),
               GCWDateTimePicker(
+                datetime: _currentDateTimeDecrypt,
                 config: const {
                   DateTimePickerConfig.TIMEZONES
                 },
@@ -71,6 +62,7 @@ class _UnixTimeState extends State<UnixTime> {
               ),
             ],
           ) : GCWDateTimePicker(
+            datetime: _currentDateTimeEncrypt,
             config: const {
               DateTimePickerConfig.DATE,
               DateTimePickerConfig.TIME,
