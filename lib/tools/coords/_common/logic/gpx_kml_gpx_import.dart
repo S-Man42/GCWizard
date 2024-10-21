@@ -10,13 +10,11 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
-
-const Color PARKINGCOLOR = Colors.blue;
-const Color WPTCOLOR = Colors.teal;
 
 Future<MapViewDAO?> importCoordinatesFile(GCWFile file) async {
   var type = fileTypeByFilename(file.name!);
@@ -136,9 +134,9 @@ class _GpxReader {
       if (name.isNotEmpty) {
         wpt.markerText = name;
         if (name.startsWith("P")) { // Parking coordinate only for gc.com
-          wpt.color = PARKINGCOLOR;
+          wpt.color = COLOR_MAP_GPX_IMPORT_PARKING;
         } else if (name.startsWith(RegExp('[0-9]')) || RegExp(r'-.{2}$').hasMatch(name)) { // waypoint gc.com or oc.com
-          wpt.color = WPTCOLOR;
+          wpt.color = COLOR_MAP_GPX_IMPORT_WAYPOINT;
         }
       } else {
         wpt.markerText = xmlElement.getElement('desc')?.innerText;
