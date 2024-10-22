@@ -42,7 +42,7 @@ class TimeZone {
 }
 
 const TIMEZONES = [
-  TimeZone(720, 'IDLW'),
+  TimeZone(-720, 'IDLW'),
   TimeZone(-660, ''),
   TimeZone(-600, 'HAST'),
   TimeZone(-570, ''),
