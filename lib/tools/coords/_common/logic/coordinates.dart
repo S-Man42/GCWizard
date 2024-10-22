@@ -147,7 +147,7 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976Coordinate.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_10Y_WALDMEISTER:
-      return ReverseWherigoWaldmeisterCoordinate.fromLatLon(coords);
+      return ReverseWherigo10YWaldmeisterCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.MAPCODE:
       return MapCode.fromLatLon(coords, format.subtype!);
     case CoordinateFormatKey.BOSCH:
