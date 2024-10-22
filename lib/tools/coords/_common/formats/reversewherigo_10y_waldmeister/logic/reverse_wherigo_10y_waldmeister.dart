@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-const reverseWherigo10YWaldmeisterKey = 'coords_reversewherigo_10Y_waldmeister';
+const reverseWherigo10YWaldmeisterKey = 'coords_reversewherigo_10y_waldmeister';
 
 final ReverseWherigo10YWaldmeisterFormatDefinition = CoordinateFormatDefinition(
     CoordinateFormatKey.REVERSE_WIG_10Y_WALDMEISTER,
