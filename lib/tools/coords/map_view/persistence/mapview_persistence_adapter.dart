@@ -408,7 +408,7 @@ class MapViewPersistenceAdapter {
   }
 
   static String replaceJsonMarker(String json, bool restore) {
-    var replaceMap = {
+    const replaceMap = {
       "\"uuid\":": "\"uid\":",
       "\"pointUUIDs\":": "\"pointIDs\":",
       "\"latitude\":": "\"lat\":",
@@ -419,13 +419,11 @@ class MapViewPersistenceAdapter {
       "\"isEditable\":": "\"edit\":"
     };
 
-    if (restore) replaceMap = switchMapKeyValue(replaceMap);
-
-    return substitution(json, replaceMap);
+    return substitution(json, restore ? switchMapKeyValue(replaceMap) : replaceMap);
   }
 
   static String _removeEmptyElements(String json) {
-    var regExpList = {
+    const regExpList = {
       "(\")([^\"]+)(\":null,)": "",
       "(,\")([^\"]+)(\":null})": "}",
       "(\"name\":\"\",)": "",

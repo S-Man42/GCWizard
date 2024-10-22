@@ -95,6 +95,7 @@ void main() {
       {'formula' : '\u03a6 * \u03c6 + 1', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3.61803398875', 'state': 'ok'}]}},
       {'formula' : 'A + 1', 'values': {'A': '\u03a6'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2.61803398875', 'state': 'ok'}]}},
       {'formula' : '5! + 1', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '121', 'state': 'ok'}]}},
+      {'formula' : 'nth(round(11653180/56*0.006,0),2)', 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
 
       //Referencing values
       {'formula' : 'F', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},

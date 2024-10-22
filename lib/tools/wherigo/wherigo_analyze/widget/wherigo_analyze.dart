@@ -230,7 +230,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     // https://api.flutter.dev/flutter/widgets/PopScope-class.html
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         // show the confirm dialog
         if (didPop) {
           return;

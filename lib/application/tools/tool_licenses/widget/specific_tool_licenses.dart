@@ -233,6 +233,17 @@ class _SpecificToolLicenses {
     );
   }
 
+  ToolLicenseEntry get _toolLicensePSEWiki {
+    return ToolLicenseOnlineArticle(context: context,
+        author: 'de.wikipedia.org and contributors',
+        title: 'Periodensystem',
+        sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Periodensystem&oldid=247338338',
+        licenseType: ToolLicenseType.CCBYSA4,
+        licenseUrl: 'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+        customComment: 'incl. linked pages and different languages'
+    );
+  }
+
   ToolLicenseEntry get _toolLicenseUIC {
     return ToolLicenseOfflineArticle(context: context,
       author: 'UIC - Union Internationale des Chemins de fer',

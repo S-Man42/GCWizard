@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/permissions/user_location.dart';
@@ -108,15 +107,15 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   late Length defaultLengthUnitGCWMapView;
 
-  LatLngBounds _getBounds() {
-    if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
+  CameraFit _getBounds() {
+    if (widget.points.isEmpty) return CameraFit.bounds(bounds: _DEFAULT_BOUNDS);
 
     var _bounds = LatLngBounds(widget.points.first.point, widget.points.first.point);
     for (var point in widget.points.skip(1)) {
       _bounds.extend(point.point);
     }
 
-    return _bounds;
+    return CameraFit.bounds(bounds: _bounds, padding: const EdgeInsets.all(30.0));
   }
 
   Future<String> _loadToken(String tokenName) async {
@@ -231,7 +230,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                initialCameraFit: CameraFit.bounds(bounds: _getBounds(), padding: const EdgeInsets.all(30.0)),
+                initialCameraFit: _getBounds(),
                 /// IMPORTANT for dragging
                 minZoom: 1.0,
                 maxZoom: 18.0,
@@ -320,16 +319,19 @@ class _GCWMapViewState extends State<GCWMapView> {
     _polylines.addAll(_circlePolylines);
 
     layers.addAll([
-      TappablePolylineLayer(
-        polylineCulling: true,
-        polylines: _polylines as List<TaggedPolyline>,
-        onTap: (polylines, details) {
-          if (polylines.isEmpty) {
-            return;
-          }
-
-          _showPolylineDialog(polylines.first as _GCWTappablePolyline);
-        },
+        MouseRegion(
+          hitTestBehavior: HitTestBehavior.deferToChild,
+          cursor: SystemMouseCursors.click, // Use a special cursor to indicate interactivity
+          child: GestureDetector(
+          onTap: () {
+            _polylineHitNotifier();
+          },
+          child: PolylineLayer(
+            simplificationTolerance: 0,
+            polylines: _polylines,
+            hitNotifier: _hitNotifier,
+          ),
+        )
       ),
       const GCWMapViewScalebar(
         alignment: Alignment.bottomLeft,
@@ -345,9 +347,20 @@ class _GCWMapViewState extends State<GCWMapView> {
               snap: PopupSnap.markerTop,
             ),
       )),
-    ]);
-
+  ]);
     return layers;
+  }
+
+  final LayerHitNotifier<Object> _hitNotifier = ValueNotifier(null);
+
+  void _polylineHitNotifier() {
+    if (_hitNotifier.value?.hitValues.first is GCWMapLine) {
+      var line = _hitNotifier.value?.hitValues.first as GCWMapLine;
+      var _line = _GCWTappablePolyline(
+          points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: line.parent.color, child: line);
+
+      _showPolylineDialog(_line);
+    }
   }
 
   void _showPolylineDialog(_GCWTappablePolyline polyline) {
@@ -536,28 +549,24 @@ class _GCWMapViewState extends State<GCWMapView> {
     }
 
     return points.map((_point) {
-      var icon = Stack(
-        alignment: Alignment.center,
-        children: [
-          Icon(
-            iconFromMapMarkerValues(_markerIcon),
-            size: 28.3,
+      var icon = Icon(
+        iconFromMapMarkerValues(_markerIcon),
+        size: 25.0,
+        color: _point.color,
+        shadows: const [
+          Shadow(
             color: COLOR_MAP_POINT_OUTLINE,
+            blurRadius: 5.0,
           ),
-          Icon(
-            iconFromMapMarkerValues(_markerIcon),
-            size: 25.0,
-            color: _point.color,
-          )
-        ],
+        ]
       );
 
       var marker = widget.isEditable && _point.isEditable ? _createDragableIcon(_point, icon) : icon;
 
       return _GCWMarker(
           coordinateDescription: _buildPopupCoordinateDescription(_point),
-          width: 28.3,
-          height: 28.3,
+          width: 25,
+          height: _markerIcon == MapMarkerIcon.CROSSLINES ? 24.5 : 23,
           mapPoint: _point,
           child: marker,
           alignment: _mapMarkerAlignment(_markerIcon)
@@ -802,12 +811,12 @@ class _GCWMapViewState extends State<GCWMapView> {
               if (_importGpxKml(text) ||
                   (widget.isEditable && _persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(text))) {
                 setState(() {
-                  _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+                  _mapController.fitCamera(_getBounds());
                 });
               } else if(_mapViewUriContent(text).isNotEmpty) {
                 if (_importJsonContent(_mapViewUriContent(text))) {
                   setState(() {
-                    _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+                    _mapController.fitCamera(_getBounds());
                   });
                 }
               } else {
@@ -1141,12 +1150,12 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   List<Polyline> _addPolylines() {
-    var _polylines = <TaggedPolyline>[];
+    var _polylines = <Polyline>[];
 
     for (var polyline in widget.polylines) {
       for (var line in polyline.lines) {
-        _polylines.add(_GCWTappablePolyline(
-            points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: polyline.color, child: line));
+        _polylines.add(Polyline(points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH,
+            color: polyline.color, hitValue: line));
       }
     }
 
@@ -1200,7 +1209,7 @@ class _GCWMapViewState extends State<GCWMapView> {
           var json = convertBytesToString(file.bytes);
           setState(() {
             if (!(_persistanceAdapter?.setJsonMapViewData(json) ?? false)) return;
-            _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+            _mapController.fitCamera(_getBounds());
           });
           break;
         default:
@@ -1209,7 +1218,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             setState(() {
               _isPolylineDrawing = false;
               _persistanceAdapter?.addViewData(viewData);
-              _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+              _mapController.fitCamera(_getBounds());
             });
           });
       }
@@ -1252,15 +1261,17 @@ class _GCWMarker extends Marker {
   }) : super(point: mapPoint.point, child: child, width: width, height: height, alignment: alignment);
 }
 
-class _GCWTappablePolyline extends TaggedPolyline {
+class _GCWTappablePolyline extends Polyline {
   GCWMapSimpleGeometry child;
 
   _GCWTappablePolyline(
-      {required List<LatLng> points, required double strokeWidth, required Color color, required this.child})
+      {required List<LatLng> points, required double strokeWidth, required Color color, required this.child,
+        Object? hitValue})
       : super(
           points: points,
           strokeWidth: strokeWidth,
           color: color,
+          hitValue: hitValue
         );
 }
 
