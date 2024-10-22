@@ -327,6 +327,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             _polylineHitNotifier();
           },
           child: PolylineLayer(
+            simplificationTolerance: 0,
             polylines: _polylines,
             hitNotifier: _hitNotifier,
           ),

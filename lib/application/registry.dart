@@ -287,6 +287,17 @@ import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_cards.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coin.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_color.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coords.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_dice.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_double.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_integer.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_letter.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_lists/randomizer_lists.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_password.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selection.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -1374,6 +1385,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'railfence',
+    ]),
+    GCWTool(tool: const RandomizerSelection(), id: 'randomizer_selection', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'randomizer',
     ]),
     GCWTool(tool: const RC4(), id: 'rc4', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -2475,6 +2491,13 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
             'https://web.archive.org/web/20121102023141/http://www.moenk.de/index.php?serendipity[subpage]=downloadmanager&level=1&thiscat=4',
             licenseType: ToolLicenseType.PRIVATE_PERMISSION),
+        ToolLicensePortedCode( //TODO: When webarchive save working again: Store links in WebArchive
+            context: context,
+            author: 'Patrick \'PattuX\' Wienhöft (GitHub)',
+            title: 'Auto Reverse Wherigo Solver',
+            sourceUrl: 'https://github.com/PattuX/auto_reverse_wig_solver',
+            licenseType: ToolLicenseType.MIT,
+            licenseUrl: 'https://github.com/PattuX/auto_reverse_wig_solver/blob/master/LICENSE.txt'),
         ToolLicensePortedCode(
             context: context,
             author: 'Google Inc.',
@@ -4665,6 +4688,18 @@ void initializeRegistry(BuildContext context) {
       'primes_integerfactorization',
     ]),
 
+    //RandomizerSelection ********************************************************************************************
+    GCWTool(tool: const RandomizerCoin(), id: 'randomizer_coin', searchKeys: const []),
+    GCWTool(tool: const RandomizerDice(), id: 'randomizer_dice', searchKeys: const []),
+    GCWTool(tool: const RandomizerCards(), id: 'randomizer_cards', searchKeys: const []),
+    GCWTool(tool: const RandomizerPassword(), id: 'randomizer_password', searchKeys: const []),
+    GCWTool(tool: const RandomizerInteger(), id: 'randomizer_integer', searchKeys: const []),
+    GCWTool(tool: const RandomizerDouble(), id: 'randomizer_double', searchKeys: const []),
+    GCWTool(tool: const RandomizerLetter(), id: 'randomizer_letter', searchKeys: const []),
+    GCWTool(tool: const RandomizerCoordinates(), id: 'randomizer_coords', searchKeys: const []),
+    GCWTool(tool: const RandomizerColor(), id: 'randomizer_color', searchKeys: const []),
+    GCWTool(tool: const RandomizerLists(), id: 'randomizer_lists', searchKeys: const []),
+
     //ResistorSelection **********************************************************************************************
     GCWTool(tool: const ResistorColorCodeCalculator(), id: 'resistor_colorcodecalculator', searchKeys: const [
       'resistor',
@@ -5526,7 +5561,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: const [
       'color',
       'symbol_color_code',
-    ], licenses: []),
+    ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: const [
       'color',
       'symbol_color_honey',
@@ -7444,6 +7479,13 @@ void initializeRegistry(BuildContext context) {
           title: 'Romulan',
           sourceUrl: 'https://web.archive.org/web/20170401035807/https://fonts2u.com/romulan.font',
           licenseType: ToolLicenseType.NON_COMMERCIAL),
+    ]),
+    GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: const [
+      'symbol_runes',
+      'symbol_futhark',
+      'symbol_futhorc'
+    ], licenses: [
+      stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',

@@ -5,27 +5,27 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class UnixTimeOutput {
   final int UnixTimeStamp;
-  final DateTime GregorianDateTime;
+  final DateTime GregorianDateTimeUTC;
   final String Error;
 
   UnixTimeOutput({
     required this.UnixTimeStamp,
-    required this.GregorianDateTime,
+    required this.GregorianDateTimeUTC,
     required this.Error,
   });
 }
 
-UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
-  if (_invalidUnixDate(gregorianCalendarToJulianDate(currentDateTime))) {
-    return UnixTimeOutput(Error: 'dates_calendar_unix_error', UnixTimeStamp: 0, GregorianDateTime: currentDateTime);
+UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTimeUTC) {
+  if (_invalidUnixDate(gregorianCalendarToJulianDate(currentDateTimeUTC))) {
+    return UnixTimeOutput(Error: 'dates_calendar_unix_error', UnixTimeStamp: 0, GregorianDateTimeUTC: currentDateTimeUTC);
   }
 
-  int jahr = currentDateTime.year;
-  int monat = currentDateTime.month;
-  int tag = currentDateTime.day;
-  int stunde = currentDateTime.hour;
-  int minute = currentDateTime.minute;
-  int sekunde = currentDateTime.second;
+  int jahr = currentDateTimeUTC.year;
+  int monat = currentDateTimeUTC.month;
+  int tag = currentDateTimeUTC.day;
+  int stunde = currentDateTimeUTC.hour;
+  int minute = currentDateTimeUTC.minute;
+  int sekunde = currentDateTimeUTC.second;
 
   const tage_seit_jahresanfang = /* Anzahl der Tage seit Jahresanfang ohne Tage des aktuellen Monats und ohne Schalttag */
       [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
@@ -42,13 +42,13 @@ UnixTimeOutput DateTimeToUnixTime(DateTime currentDateTime) {
   } /* +Schalttag, wenn jahr Schaltjahr ist */
   return UnixTimeOutput(
       UnixTimeStamp: sekunde + 60 * (minute + 60 * (stunde + 24 * tage_seit_1970)),
-      GregorianDateTime: currentDateTime,
+      GregorianDateTimeUTC: currentDateTimeUTC,
       Error: '');
 }
 
 UnixTimeOutput UnixTimeToDateTime(int unixtime) {
   return UnixTimeOutput(
-      GregorianDateTime: DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: unixtime)),
+      GregorianDateTimeUTC: DateTime.utc(1970, 1, 1, 0, 0, 0).add(Duration(seconds: unixtime)),
       UnixTimeStamp: unixtime,
       Error: '');
 }
