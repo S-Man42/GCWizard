@@ -127,6 +127,7 @@ final allCoordinateFormatDefinitions = [
   MGRSFormatDefinition,
   ReverseWherigoWaldmeisterFormatDefinition,
   ReverseWherigoDay1976FormatDefinition,
+  ReverseWherigo10YWaldmeisterFormatDefinition,
   XYZFormatDefinition,
   SwissGridFormatDefinition,
   SwissGridPlusFormatDefinition,
@@ -146,7 +147,6 @@ final allCoordinateFormatDefinitions = [
   BoschFormatDefinition,
   GARSFormatDefinition,
   S2CellsHilbertFormatDefinition,
-  ReverseWherigo10YWaldmeisterFormatDefinition,
 
   GeohashFormatDefinition, // Must be last one in list!
 ];

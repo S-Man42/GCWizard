@@ -381,6 +381,11 @@ void _initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [
           MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
+              coordinateFormatDefinitionByKey(CoordinateFormatKey.REVERSE_WIG_10Y_WALDMEISTER).persistenceKey)
+        ]),
+    MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [
+          MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT,
               coordinateFormatDefinitionByKey(CoordinateFormatKey.BOSCH).persistenceKey)
         ]),
     MultiDecoderToolEntity(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
