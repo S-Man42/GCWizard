@@ -5,12 +5,12 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:latlong2/latlong.dart';
 
-const reverseWhereigoWaldmeisterKey = 'coords_reversewhereigo_waldmeister'; /* typo known. DO NOT change!*/
+const reverseWherigoWaldmeisterKey = 'coords_reversewhereigo_waldmeister'; /* typo known. DO NOT change!*/
 
 final ReverseWherigoWaldmeisterFormatDefinition = CoordinateFormatDefinition(
     CoordinateFormatKey.REVERSE_WIG_WALDMEISTER,
-    reverseWhereigoWaldmeisterKey,
-    reverseWhereigoWaldmeisterKey,
+    reverseWherigoWaldmeisterKey,
+    reverseWherigoWaldmeisterKey,
     ReverseWherigoWaldmeisterCoordinate.parse,
     ReverseWherigoWaldmeisterCoordinate(0, 0, 0));
 

@@ -4,11 +4,11 @@ class _GCWCoordWidgetInfoReverseWherigo10YWaldmeister extends GCWCoordWidgetInfo
   @override
   CoordinateFormatKey get type => CoordinateFormatKey.REVERSE_WIG_10Y_WALDMEISTER;
   @override
-  String get i18nKey => reverseWhereigo10YWaldmeisterKey;
+  String get i18nKey => reverseWherigo10YWaldmeisterKey;
   @override
   String get name => 'Reverse Wherigo (10Y Waldmeister)';
   @override
-  String get example => '720598, 545963, 823979';
+  String get example => '237787, 953944, 469026';
 
   @override
   _GCWCoordWidget mainWidget(
@@ -117,6 +117,6 @@ class _GCWCoordsReverseWherigo10YWaldmeisterState extends State<_GCWCoordsRevers
   }
 
   void _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(ReverseWherigoWaldmeisterCoordinate(_currentA, _currentB, _currentC));
+    widget.onChanged(ReverseWherigo10YWaldmeisterCoordinate(_currentA, _currentB, _currentC));
   }
 }

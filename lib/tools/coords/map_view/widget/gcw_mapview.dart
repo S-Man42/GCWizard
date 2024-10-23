@@ -107,15 +107,15 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   late Length defaultLengthUnitGCWMapView;
 
-  LatLngBounds _getBounds() {
-    if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
+  CameraFit _getBounds() {
+    if (widget.points.isEmpty) return CameraFit.bounds(bounds: _DEFAULT_BOUNDS);
 
     var _bounds = LatLngBounds(widget.points.first.point, widget.points.first.point);
     for (var point in widget.points.skip(1)) {
       _bounds.extend(point.point);
     }
 
-    return _bounds;
+    return CameraFit.bounds(bounds: _bounds, padding: const EdgeInsets.all(30.0));
   }
 
   Future<String> _loadToken(String tokenName) async {
@@ -230,7 +230,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                initialCameraFit: CameraFit.bounds(bounds: _getBounds(), padding: const EdgeInsets.all(30.0)),
+                initialCameraFit: _getBounds(),
                 /// IMPORTANT for dragging
                 minZoom: 1.0,
                 maxZoom: 18.0,
@@ -811,12 +811,12 @@ class _GCWMapViewState extends State<GCWMapView> {
               if (_importGpxKml(text) ||
                   (widget.isEditable && _persistanceAdapter != null && _persistanceAdapter!.setJsonMapViewData(text))) {
                 setState(() {
-                  _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+                  _mapController.fitCamera(_getBounds());
                 });
               } else if(_mapViewUriContent(text).isNotEmpty) {
                 if (_importJsonContent(_mapViewUriContent(text))) {
                   setState(() {
-                    _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+                    _mapController.fitCamera(_getBounds());
                   });
                 }
               } else {
@@ -1209,7 +1209,7 @@ class _GCWMapViewState extends State<GCWMapView> {
           var json = convertBytesToString(file.bytes);
           setState(() {
             if (!(_persistanceAdapter?.setJsonMapViewData(json) ?? false)) return;
-            _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+            _mapController.fitCamera(_getBounds());
           });
           break;
         default:
@@ -1218,7 +1218,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             setState(() {
               _isPolylineDrawing = false;
               _persistanceAdapter?.addViewData(viewData);
-              _mapController.fitCamera(CameraFit.bounds(bounds: _getBounds()));
+              _mapController.fitCamera(_getBounds());
             });
           });
       }
