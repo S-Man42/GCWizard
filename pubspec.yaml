@@ -161,10 +161,10 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/cookewheatstone_1/
     - lib/tools/symbol_tables/_common/assets/cookewheatstone_2/
     - lib/tools/symbol_tables/_common/assets/cookewheatstone_5/
-    - lib/tools/symbol_tables/_common/assets/cosmic/
     - lib/tools/symbol_tables/_common/assets/country_flags/
     - lib/tools/symbol_tables/_common/assets/covenant/
     - lib/tools/symbol_tables/_common/assets/crystal/
+    - lib/tools/symbol_tables/_common/assets/cybertronic/
     - lib/tools/symbol_tables/_common/assets/cyrillic/
     - lib/tools/symbol_tables/_common/assets/cyrillic_numbers/
     - lib/tools/symbol_tables/_common/assets/daedric/

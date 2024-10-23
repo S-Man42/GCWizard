@@ -5628,18 +5628,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-    GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
-      'symbol_cosmic',
-    ], licenses: [
-      ToolLicenseFont(
-          context: context,
-          author: 'Pixel Sagas',
-          title: 'Modern Cybertronic',
-          sourceUrl:
-          'https://web.archive.org/web/20240403144459/https://www.pixelsagas.com/?download=modern-cybertronic',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          licenseUrl: 'https://web.archive.org/web/20240728140247/https://www.pixelsagas.com/?p=55285#comment-92401')
-    ]),
     GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: const [
       'countries',
       'symbol_flags',
@@ -5673,6 +5661,18 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
           'https://web.archive.org/web/20221213100809/https://www.deviantart.com/magnusarania/art/Crystallic-Alphabet-457870324',
           licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+	GCWSymbolTableTool(symbolKey: 'cybertronic', symbolSearchStrings: const [
+      'symbol_cybertronic',
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Pixel Sagas',
+          title: 'Modern Cybertronic',
+          sourceUrl:
+          'https://web.archive.org/web/20240403144459/https://www.pixelsagas.com/?download=modern-cybertronic',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUrl: 'https://web.archive.org/web/20240728140247/https://www.pixelsagas.com/?p=55285#comment-92401')
     ]),
     GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: const [
       'symbol_cyrillic',
