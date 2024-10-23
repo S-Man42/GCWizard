@@ -1603,7 +1603,7 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
     GCWTool(tool: const TowerOfHanoi(), id: 'tower_of_hanoi', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ToolCategory.GAMES
     ], searchKeys: const [
       'games',
       'tower_of_hanoi',
