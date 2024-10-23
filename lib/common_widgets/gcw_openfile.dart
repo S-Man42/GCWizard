@@ -364,13 +364,30 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
 
 Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! Uri) return null;
+
+  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
+  Uri? uri = jobData!.parameters as Uri;
+
+  var result = await _downloadWithStream(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) {
+    result = await _downloadWithGet(uri, sendAsyncPort);
+  }
+  if (result.text.isNotEmpty) {
+    result = await _downloadWithProxy(uri, sendAsyncPort);
+  }
+
+// ToDo only working with AsyncPort (await not working)
+  if (result.text.isNotEmpty) {
+    sendAsyncPort?.send(result);
+  }
+  return Future.value(result);
+}
+
+Future<Uint8ListText> _downloadWithStream(Uri uri, SendPort? sendAsyncPort) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
-  Uri? uri = jobData!.parameters as Uri;
   var result = Uint8ListText('', Uint8List.fromList(_bytes));
-
   var request = http.Request("GET", uri);
   var client = http.Client();
 
@@ -413,12 +430,34 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
   } on SocketException catch (_) {
     result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
+  return result;
+}
 
-// ToDo only working with AsyncPort (await not working)
-  if (result.text.isNotEmpty) {
-    sendAsyncPort?.send(result);
+Future<Uint8ListText> _downloadWithGet(Uri uri, SendPort? sendAsyncPort) async {
+  var result = Uint8ListText('',  Uint8List(0));
+  var client = http.Client();
+
+  try {
+    var response = await client.get(uri);
+    if (response.statusCode != 200) {
+      result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+    } else {
+      result = Uint8ListText('', response.bodyBytes);
+    }
+  } on TimeoutException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+  } on SocketException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
-  return Future.value(result);
+  return result;
+}
+
+Future<Uint8ListText> _downloadWithProxy(Uri uri, SendPort? sendAsyncPort) async {
+
+  var proxyUrl = 'https://cors-anywhere.herokuapp.com/' + uri.path;
+  var proxyUri = Uri.parse(proxyUrl);
+
+  return _downloadWithGet(proxyUri, sendAsyncPort);
 }
 
 /// Open File Picker dialog
