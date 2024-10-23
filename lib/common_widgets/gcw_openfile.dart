@@ -294,51 +294,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     );
   }
 
-  bool _validateContentType(String contentType) {
-    if (widget.supportedFileTypes == null || widget.supportedFileTypes!.isEmpty) return true;
-    for (FileType fileType in widget.supportedFileTypes ?? []) {
-      var mimeTypeList = mimeTypes(fileType);
-      if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
-    }
-
-    var _fileName = _currentUrl?.split('?').first;
-    var _urlFileType = _fileName == null ? null : fileTypeByFilename(_fileName);
-
-    if (_urlFileType != null && (widget.supportedFileTypes ?? []).contains(_urlFileType)) {
-      return true;
-    }
-
-    return false;
-  }
-
   Future<Uri?> _getAndValidateUri(String url) async {
     const _HTTP = 'http://';
     const _HTTPS = 'https://';
 
-    var prefixes = [_HTTP, _HTTPS];
-    if (url.startsWith(_HTTP)) {
-      url = url.replaceAll(_HTTP, '');
-    } else if (url.startsWith(_HTTPS)) {
-      prefixes = [''];
+    if (url.startsWith(_HTTP) || url.startsWith(_HTTPS)) {
+    } else {
+      url = _HTTPS + url;
     }
-
-    for (var prefix in prefixes) {
-      try {
-        Uri uri = Uri.parse(prefix + url);
-        var response = await http.head(uri);
-
-        if (response.statusCode ~/ 100 == 2) {
-          var contentType = response.headers[HttpHeaders.contentTypeHeader];
-          if ((contentType != null) && _validateContentType(contentType)) {
-            return uri;
-          } else {
-            showSnackBar(i18n(context, 'common_loadfile_exception_supportedfiletype'), context);
-          }
-        }
-      } catch (e) {}
-    }
-
-    return null;
+    return Future<Uri?>.value(Uri.parse(url));
   }
 }
 
@@ -364,13 +328,25 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
 
 Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! Uri) return null;
+
+  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
+  Uri? uri = jobData!.parameters as Uri;
+  
+  var result = await _downloadWithStream(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) result = await _downloadWithProxyStream(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) result = await _downloadWithGet(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) result = await _downloadWithGetProxy(uri, sendAsyncPort);
+
+// ToDo only working with AsyncPort (await not working)
+  sendAsyncPort?.send(result);
+  return Future.value(result);
+}
+
+Future<Uint8ListText> _downloadWithStream(Uri uri, SendPort? sendAsyncPort) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
-  Uri? uri = jobData!.parameters as Uri;
   var result = Uint8ListText('', Uint8List.fromList(_bytes));
-
   var request = http.Request("GET", uri);
   var client = http.Client();
 
@@ -400,7 +376,6 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
             if (_bytes.isEmpty) {
               result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
             } else {
-              sendAsyncPort?.send(Uint8ListText('', Uint8List.fromList(_bytes)));
               result = Uint8ListText('', Uint8List.fromList(_bytes));
             }
           },
@@ -413,12 +388,39 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
   } on SocketException catch (_) {
     result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
+  return result;
+}
 
-// ToDo only working with AsyncPort (await not working)
-  if (result.text.isNotEmpty) {
-    sendAsyncPort?.send(result);
+Future<Uint8ListText> _downloadWithGet(Uri uri, SendPort? sendAsyncPort) async {
+  var result = Uint8ListText('',  Uint8List(0));
+  var client = http.Client();
+
+  try {
+    var response = await client.get(uri);
+    if (response.statusCode != 200) {
+      result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+    } else {
+      result = Uint8ListText('', response.bodyBytes);
+    }
+  } on TimeoutException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+  } on SocketException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
-  return Future.value(result);
+  return result;
+}
+
+const _proxyServer  = 'https://corsproxy.io/?';
+Future<Uint8ListText> _downloadWithGetProxy(Uri uri, SendPort? sendAsyncPort) async {
+  var proxyUri = Uri.parse(_proxyServer + uri.toString());
+
+  return _downloadWithGet(proxyUri, sendAsyncPort);
+}
+
+Future<Uint8ListText> _downloadWithProxyStream(Uri uri, SendPort? sendAsyncPort) async {
+  var proxyUri = Uri.parse(_proxyServer + uri.toString());
+
+  return _downloadWithStream(proxyUri, sendAsyncPort);
 }
 
 /// Open File Picker dialog
